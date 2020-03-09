@@ -75,9 +75,6 @@ public abstract class DataboundTable<TRow> extends Composite {
 	/*A listener for whenever the contents of the table are sorted.*/
 	private Runnable sortListener;
 	
-	/*A listener for whenever an item is added to or removed from the table.*/
-	private Runnable changeListener;
-	
     /**
      * Instantiates a new databound table.
      *
@@ -130,11 +127,6 @@ public abstract class DataboundTable<TRow> extends Composite {
 	public void setRows(Collection<TRow> rows) {
 		if (!table.isDisposed()) {
 			viewer.setInput(new WritableList<TRow>(rows, null));
-			
-			//method might be called before the listener is set
-			if(changeListener != null) {
-			    changeListener.run();
-			}
 		}
 	}
 	
@@ -253,15 +245,6 @@ public abstract class DataboundTable<TRow> extends Composite {
 	 */
 	public void setSortListener(Runnable runnable) {
 	    sortListener = runnable;
-	}
-	
-	/**
-     * Sets the a listener which will be run whenever items are added to or
-     * removed from the table.
-     * @param runnable the new change listener of the table.
-     */
-	public void setChangeListener(Runnable runnable) {
-	    changeListener = runnable;
 	}
 	
     /**

@@ -26,13 +26,12 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
-import java.util.LinkedList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.eclipse.core.databinding.observable.map.IObservableMap;
+import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.map.ObservableMap;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
@@ -55,23 +54,27 @@ public class CheckboxLabelProviderTest {
     
     private CheckboxLabelProvider<String> labelProvider;
     
-    private final LinkedList<String> tableModelList = new LinkedList<>();
-    
     private Map<String, AtomicBoolean> unmodifiableMapView;
     
     private final String[] testModels = {"block", "ioc"};
     
+    private HashMap<String, String> testContentsMap;
+    
+    private ObservableMap<String, String> testMap;
+    
     @Mock
     private DataboundTable<String> table;
     
+    @Mock
+    private Realm mockRealm;
+    
     public CheckboxLabelProviderTest() {
         MockitoAnnotations.initMocks(this);
-        IObservableMap mockProperties = mock(ObservableMap.class);
         
-        when(table.viewer()).thenReturn(mock(TableViewer.class));
-        when(table.viewer().getInput()).thenReturn(tableModelList);
+        testContentsMap = new HashMap<>();
+        testMap = new ObservableMap<>(mockRealm, testContentsMap);
         
-        labelProvider = new CheckboxLabelProvider<String>(mockProperties, table) {
+        labelProvider = new CheckboxLabelProvider<String>(testMap, table) {
             @Override
             protected boolean checked(String model) {
                 return true;
@@ -93,22 +96,21 @@ public class CheckboxLabelProviderTest {
     
     @Before
     public void resetUpdateFlagMap() {
-        tableModelList.clear();
-        labelProvider.updateCheckboxListenerUpdateFlags();
+        mockRealm = mock(Realm.class);
+        testContentsMap = new HashMap<>();
+        testMap = new ObservableMap<>(mockRealm, testContentsMap);
     }
     
     @Test
     public void GIVEN_empty_update_flags_map_WHEN_adding_new_models_THEN_all_new_models_added() {
-        tableModelList.add(testModels[0]);
-        tableModelList.add(testModels[1]);
-        
-        for(String s: tableModelList) {
+        for(String s: testModels) {
             assertEquals(false, unmodifiableMapView.containsKey(s));
         }
+              
+        testContentsMap.put(testModels[0], "a");
+        testContentsMap.put(testModels[1], "a");
         
-        labelProvider.updateCheckboxListenerUpdateFlags();
-        
-        for(String s: tableModelList) {
+        for(String s: testModels) {
             assertEquals(true, unmodifiableMapView.containsKey(s));
             assertEquals(true, unmodifiableMapView.get(s).get());
         }
@@ -116,47 +118,25 @@ public class CheckboxLabelProviderTest {
     
     @Test
     public void GIVEN_update_flags_map_WHEN_table_now_empty_THEN_remove_old_map_entries() {
-        tableModelList.add(testModels[0]);
-        tableModelList.add(testModels[1]);
+        testContentsMap.put(testModels[0], "a");
+        testContentsMap.put(testModels[1], "a");
         
-        labelProvider.updateCheckboxListenerUpdateFlags();
-        
-        for(String s: tableModelList) {
+        for(String s: testModels) {
             assertEquals(true, unmodifiableMapView.containsKey(s));
         }
         
-        tableModelList.clear();
-        labelProvider.updateCheckboxListenerUpdateFlags();
+        testContentsMap.clear();
         
         assertEquals(false, unmodifiableMapView.containsKey(testModels[0]));
         assertEquals(false, unmodifiableMapView.containsKey(testModels[1]));
     }
     
     @Test
-    public void GIVEN_update_flags_map_WHEN_table_unchanged_THEN_map_unchanged() {
-        tableModelList.add(testModels[0]);
-        tableModelList.add(testModels[1]);
-        
-        labelProvider.updateCheckboxListenerUpdateFlags();
-        
-        for(String s: tableModelList) {
-            assertEquals(true, unmodifiableMapView.containsKey(s));
-        }
-        
-        labelProvider.updateCheckboxListenerUpdateFlags();
-        
-        assertEquals(true, unmodifiableMapView.containsKey(testModels[0]));
-        assertEquals(true, unmodifiableMapView.containsKey(testModels[1]));
-    }
-    
-    @Test
     public void GIVEN_update_flags_map_WHEN_reset_update_flags_THEN_all_flags_true() {
-        tableModelList.add(testModels[0]);
-        tableModelList.add(testModels[1]);
+        testContentsMap.put(testModels[0], "a");
+        testContentsMap.put(testModels[1], "a");
         
-        labelProvider.updateCheckboxListenerUpdateFlags();
-        
-        for(String model: unmodifiableMapView.keySet()) {
+        for(String model: testModels) {
             unmodifiableMapView.get(model).set(false);
             assertEquals(false, unmodifiableMapView.get(model).get());
         }

@@ -20,11 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.configserver;
 
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -53,9 +50,6 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
      * value of the flag is false, unless an item has just been added or removed
      * from the table.*/
     private Map<T, AtomicBoolean> checkboxListenerUpdateFlags = new WeakHashMap<>();
-    
-    /**The data bound table that owns this label provider.*/
-    private final DataboundTable<T> databoundTable;
     
     /**
      * A selection listener that binds models to check boxes.
@@ -89,7 +83,10 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	 */
 	public CheckboxLabelProvider(IObservableMap<T, ?> stateProperties, DataboundTable<T> table) {
 		super(stateProperties);
-		this.databoundTable = table;
+		
+		stateProperties.addMapChangeListener(event -> {
+		    updateCheckboxListenerUpdateFlags(stateProperties);
+		});
 	}
 
 	@SuppressWarnings("unchecked")
@@ -125,39 +122,12 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	 * associated with models no longer in the table are removed, and all update
 	 * flags are set to true.
 	 */
-	@SuppressWarnings("unchecked")
-	public void updateCheckboxListenerUpdateFlags() {
-	    Set<T> tableModels = new HashSet<>((List<T>) databoundTable.viewer().getInput());
-        
-        removeModelsNoLongerInTable(tableModels);
-        resetCheckBoxListenerUpdateFlags();
-        addNewModelsToUpdateFlagsMap(tableModels);
+	public void updateCheckboxListenerUpdateFlags(IObservableMap<T, ?> stateProperties) {
+	    checkboxListenerUpdateFlags.clear();
+	    for(T model: stateProperties.keySet()) {
+	        checkboxListenerUpdateFlags.put(model, new AtomicBoolean(true));
+	    }
     }
-	
-	/**
-     * Removes mappings for models that are no longer in the table of this 
-     * label provider from the update flags map.
-     * @param tableModels the set of models currently in the table of this
-     * label provider.
-     */
-    private void removeModelsNoLongerInTable(Set<T> tableModels) {
-        checkboxListenerUpdateFlags.entrySet().removeIf(entry -> !tableModels.contains(
-                entry.getKey()));
-    }
-    
-	/**
-	 * Adds mappings for models newly added to the table of this label provider 
-	 * to the update flags map.
-     * @param tableModels the set of models currently in the table of this
-     * label provider.
-	 */
-	private void addNewModelsToUpdateFlagsMap(Set<T> tableModels) {
-	    for(T model: tableModels) {
-            if(!checkboxListenerUpdateFlags.containsKey(model)) {
-                checkboxListenerUpdateFlags.put(model, new AtomicBoolean(true));
-            }
-        }
-	}
 	
 	/**
 	 * Sets the update flag of each model of the table to true.

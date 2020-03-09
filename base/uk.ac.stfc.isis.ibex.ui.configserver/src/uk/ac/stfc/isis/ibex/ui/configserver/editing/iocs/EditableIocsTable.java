@@ -109,7 +109,7 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
     public EditableIocsTable(Composite parent, int style, int tableStyle) {
 		super(parent, style, tableStyle | SWT.NO_SCROLL | SWT.V_SCROLL);
 		
-		setChangeListener(() -> updateCheckboxLabelProviders());
+		//setChangeListener(() -> updateCheckboxLabelProviders());
         setSortListener(() -> resetCheckboxLabelProvidersUpdateFlags());
 				
         initialise();
@@ -212,10 +212,10 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
     
     /**Updates the check box listener update flags of the autoStart and 
      * autoRestart label providers.*/
-    private void updateCheckboxLabelProviders() {
-        autoStartLabelProvider.updateCheckboxListenerUpdateFlags();
-        autoRestartLabelProvider.updateCheckboxListenerUpdateFlags();
-    }
+//    private void updateCheckboxLabelProviders() {
+//        autoStartLabelProvider.updateCheckboxListenerUpdateFlags();
+//        autoRestartLabelProvider.updateCheckboxListenerUpdateFlags();
+//    }
     
     /**Resets the check box listener update flags of the autoStart and 
      * autoRestart label providers.*/
