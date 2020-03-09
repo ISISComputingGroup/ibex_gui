@@ -19,10 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.devicescreens.desc;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -114,7 +114,7 @@ public class DeviceScreensDescription {
     public String toString() {
         try {
             return XMLUtil.toXml(this, DeviceScreensDescription.class).replaceAll("><", ">\n<");
-        } catch (JAXBException e) {
+        } catch (IOException e) {
             LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
             return e.toString();
         }
