@@ -558,7 +558,7 @@
       </children>
     </children>
   </snippets>
-  <snippets xsi:type="advanced:Perspective" xmi:id="_xohCoBgVEeqNCfSxpw4Lrg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.reflectometry" accessibilityPhrase="Reflectometry" selectedElement="_QZEw8AEXEeig2LifGCNPPQ" label="Reflectometry" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.devicescreens/icons/components/thumbs/reflectometry_tb.png" tooltip="The front panel for reflectometry experiments">
+  <snippets xsi:type="advanced:Perspective" xmi:id="_xohCoBgVEeqNCfSxpw4Lrg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.reflectometry" accessibilityPhrase="Reflectometry" selectedElement="_QZEw8AEXEeig2LifGCNPPQ" label="Reflectometry" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.reflectometry/icons/reflectometry_24x24.png" tooltip="The front panel for reflectometry experiments">
     <children xsi:type="basic:PartSashContainer" xmi:id="_QZEw8AEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.27" selectedElement="_NvInsBgZEeqNCfSxpw4Lrg">
       <children xsi:type="basic:PartSashContainer" xmi:id="_Rqjm8AEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.28" containerData="30" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_eQS_cAEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.30" containerData="35">
