@@ -18,12 +18,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.SpectrumInformation;
@@ -66,14 +63,7 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
     public void bind(DetectorDiagnosticsViewModel model) {
         (new DataBindingContext()).bindValue(WidgetProperties.enabled().observe(this), BeanProperties.value("diagnosticsEnabled").observe(model)); 
         
-        model.addPropertyChangeListener("spectra", new PropertyChangeListener() {
-            
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                setRows(model.getSpectra());
-            }
-        });
-        
+        model.addPropertyChangeListener("spectra", evt -> setRows(model.getSpectra()));
         model.startObserving(); 
     } 
 
