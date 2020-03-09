@@ -20,10 +20,9 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.SWTObservables;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.jface.databinding.viewers.ViewersObservables;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.databinding.viewers.typed.ViewerProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
@@ -169,12 +168,12 @@ public class PvDetailView extends Composite {
         bindingContext.bindValue(WidgetProperties.visible().observe(selectionComposite),
                 BeanProperties.value("selectionVisible").observe(model));
         bindingContext.bindValue(WidgetProperties.visible().observe(noSelectionComposite),
-                BeanProperties.value("selectionVisible").observe(model), null, UIUtils.NOT_CONVERTER);
-        bindingContext.bindValue(SWTObservables.observeText(txtName, SWT.Modify),
+                BeanProperties.value("selectionVisible", Boolean.class).observe(model), null, UIUtils.NOT_CONVERTER);
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtName),
                 BeanProperties.value("pvName").observe(model));
-        bindingContext.bindValue(SWTObservables.observeText(txtAddress, SWT.Modify),
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtAddress),
                 BeanProperties.value("pvAddress").observe(model));
-        bindingContext.bindValue(ViewersObservables.observeSingleSelection(cmboMode),
+        bindingContext.bindValue(ViewerProperties.singleSelection().observe(cmboMode),
                 BeanProperties.value("pvMode").observe(model));
     }
 }

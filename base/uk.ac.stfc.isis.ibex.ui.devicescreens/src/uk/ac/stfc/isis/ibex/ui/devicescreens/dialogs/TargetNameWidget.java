@@ -23,8 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
@@ -85,7 +85,7 @@ public class TargetNameWidget extends Composite {
 
         DataBindingContext bindingContext = new DataBindingContext();
 
-        bindingContext.bindValue(WidgetProperties.selection().observe(cmboOpiName.getCombo()),
+        bindingContext.bindValue(WidgetProperties.comboSelection().observe(cmboOpiName.getCombo()),
                 BeanProperties.value("key").observe(viewModel));
 
         bindingContext.bindValue(WidgetProperties.enabled().observe(cmboOpiName.getCombo()),
