@@ -1,7 +1,5 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.macros;
 
-import java.util.Optional;
-
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro.HasDefault;
 import uk.ac.stfc.isis.ibex.model.ModelObject;

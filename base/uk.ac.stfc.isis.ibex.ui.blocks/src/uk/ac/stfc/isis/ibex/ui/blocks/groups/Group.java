@@ -45,7 +45,6 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
  * showing and hiding of selected blocks.
  * 
  */
-@SuppressWarnings("checkstyle:magicnumber")
 public class Group extends Composite {
 	private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
 	private static final int TITLE_HEIGHT = 30;
