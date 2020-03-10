@@ -210,6 +210,7 @@
 		<module>../uk.ac.stfc.isis.ibex.targets</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.targets</module>
 		<module>../uk.ac.stfc.isis.ibex.targets.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.reflectometry</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.configserver.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.scriptgenerator</module>
 		<module>../uk.ac.stfc.isis.ibex.scriptgenerator</module>
@@ -234,16 +235,17 @@
 		<module>../uk.ac.stfc.isis.ibex.alarm.tests</module>
 	    <module>../uk.ac.stfc.isis.ibex.ui.experimentdetails.tests</module>
         <module>../uk.ac.stfc.isis.ibex.scriptgenerator.tests</module>
-        
+		
         <!-- 
 			Tests disabled as they use JAXB which doesn't work correctly under surefire. 
 			See https://github.com/ISISComputingGroup/IBEX/issues/5239
 		
-			<module>../uk.ac.stfc.isis.ibex.opis.tests</module>
-			<module>../uk.ac.stfc.isis.ibex.synoptic.tests</module>
-		    <module>../uk.ac.stfc.isis.ibex.ui.scripting.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.opis.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.synoptic.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.scripting.tests</module>
 			<module>../uk.ac.stfc.isis.ibex.devicescreens.tests</module> 
 		-->
+		
 	</modules>
 </project>
 
