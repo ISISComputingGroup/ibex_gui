@@ -35,7 +35,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TypedListener;
 
-import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.widgets.ButtonCellLabelProvider;
 
 /**
@@ -81,7 +80,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	 * @param stateProperties The properties that this label provider should be observing.
 	 * @param table The data bound table that owns this label provider.
 	 */
-	public CheckboxLabelProvider(IObservableMap<T, ?> stateProperties, DataboundTable<T> table) {
+	public CheckboxLabelProvider(IObservableMap<T, ?> stateProperties) {
 		super(stateProperties);
 		
 		stateProperties.addMapChangeListener(event -> {
