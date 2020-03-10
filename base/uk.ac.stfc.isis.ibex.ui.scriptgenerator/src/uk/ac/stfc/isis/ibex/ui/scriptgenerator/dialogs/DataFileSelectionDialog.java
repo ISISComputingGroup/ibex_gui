@@ -4,11 +4,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
@@ -18,9 +15,9 @@ import uk.ac.stfc.isis.ibex.ui.dialogs.SelectionDialog;
  * @author mjq34833
  *
  */
-public class DataFileSelectionDialog extends SelectionDialog{
+public class DataFileSelectionDialog extends SelectionDialog {
 	/**
-	 *List of available data file
+	 *List of available data file.
 	 */
 	private List<String> available;
 	/**
@@ -44,11 +41,6 @@ public class DataFileSelectionDialog extends SelectionDialog{
         names = available.toArray(new String[0]);
         Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
         setItems(names);
-        
-		Group group = new Group(container, SWT.SHADOW_IN);
-		group.setLayout(new RowLayout(SWT.HORIZONTAL));
-
-		
 	}
 	
 	@Override
@@ -58,7 +50,7 @@ public class DataFileSelectionDialog extends SelectionDialog{
 	}
 
 	/**
-	 * Return user selected file
+	 * Return user selected file.
 	 * @return String representation of user selected file name
 	 */
 	public String selectedFile() {

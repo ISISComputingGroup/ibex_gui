@@ -673,14 +673,15 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * Loads parameter values from a file.
 	 * 
-	 * @param filePath path to user selected file
+	 * @param fileName name of data file user wants to load
 	 * @throws NoScriptDefinitionSelectedException when script definition has not been selected
 	 * @throws ScriptDefinitionNotMatched when the script definition used to generate data file does not match with the one used to load it
 	 */
-	public void loadParameterValues(String fileName) throws NoScriptDefinitionSelectedException, ScriptDefinitionNotMatched {
+	public void loadParameterValues(String fileName) throws NoScriptDefinitionSelectedException, ScriptDefinitionNotMatched, UnsupportedOperationException {
 		ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException("No Configuration Selected"));
-		List<Map<ActionParameter, String>> list = scriptGenFileHandler.getParameterValues(fileName, scriptDefinition.getName());
+		List<Map<ActionParameter, String>> list = scriptGenFileHandler.getParameterValues(preferenceSupplier.scriptGeneratorDataFileFolder() + fileName + ".json", 
+				preferenceSupplier.scriptGeneratorScriptDefinitionFolders() + scriptDefinition.getName() + ".py");
 		scriptGeneratorTable.addMultipleActions(list);
 		currentlyLoadedDataFileContent = scriptGenFileHandler.getCurrentlyLoadedDataFileContent();
 	}
@@ -697,7 +698,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException("No Configuration Selected"));
 		try {
 			scriptGenFileHandler.saveParameters(this.scriptGeneratorTable.getActions(), preferenceSupplier.scriptGeneratorScriptDefinitionFolders() + scriptDefinition.getName() + ".py"
-					, preferenceSupplier.scriptGeneratorDataFileFolder() + fileName);
+					, preferenceSupplier.scriptGeneratorDataFileFolder() + fileName + ".json");
 		} catch (InterruptedException | ExecutionException e) {
 			firePropertyChange(THREAD_ERROR_PROPERTY, threadError, true);
 			LOG.error(e);

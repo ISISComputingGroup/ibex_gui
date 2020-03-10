@@ -770,7 +770,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 					userWantsToOverwrite = MessageDialog.openConfirm(DISPLAY.getActiveShell(), "Duplicate Name" ,String.format("File name %s already exist\nDo you want to overwrite it?", fileName));
 				}
 				if (userWantsToOverwrite) {
-					scriptGeneratorModel.saveParameters(fileName + ".json");
+					scriptGeneratorModel.saveParameters(fileName);
 					MessageDialog.openInformation(DISPLAY.getActiveShell(), "Saved", "File saved!");
 				}
 			} catch (NoScriptDefinitionSelectedException e) {
@@ -798,9 +798,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
 				LOG.error(e);
 				MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
 						"Cannot generate script. No script definition has been selected");
-			} catch (ScriptDefinitionNotMatched e) {
+			} catch (ScriptDefinitionNotMatched | UnsupportedOperationException e) {
 				LOG.error(e);
-				MessageDialog.openError(DISPLAY.getActiveShell(), "ERROR", e.getMessage());
+				MessageDialog.openError(DISPLAY.getActiveShell(), "Error", e.getMessage());
 			}
 		}
 		
@@ -814,7 +814,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		try {
 			return scriptGeneratorModel.getListOfdataFiles();
 		} catch (FileNotFoundException e) {
-			MessageDialog.openError(Display.getDefault().getActiveShell(), "ERROR", "C:/DataFile folder where parameters values will be saved"
+			MessageDialog.openError(Display.getDefault().getActiveShell(), "Error", "C:/DataFile folder where parameters values will be saved"
 					+ " not found");
 		}
 		return Collections.emptyList();
