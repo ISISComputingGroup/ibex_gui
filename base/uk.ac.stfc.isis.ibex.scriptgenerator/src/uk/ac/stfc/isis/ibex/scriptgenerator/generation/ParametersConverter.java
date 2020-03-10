@@ -6,19 +6,41 @@ import java.util.Map;
 /**
  * Holds the content for converting user data to json format and also used for
  * holding content from json file.
- * 
- * @author Bishal Rai
  *
  */
 public class ParametersConverter {
 
-	String version;
+	/**
+	 * Json format version.
+	 */
+	String versionJSONFormat;
+	/**
+	 * Script Generator version.
+	 */
 	String scriptGeneratorVersion;
+	/**
+	 * Date the data file is first saved.
+	 */
 	String date;
+	/**
+	 * Time the data file is first saved.
+	 */
 	String time;
+	/**
+	 * Script Definition File path
+	 */
 	String scriptDefinitionFilePath;
+	/**
+	 * Git hash of script definition file
+	 */
 	String scriptDefinitionFileGitHash;
+	/**
+	 * Genie python version number
+	 */
 	String geniePythonVersion;
+	/**
+	 * Content of script definition
+	 */
 	String scriptDefinitionContent;
 	/**
 	 * Parameter values mapped to its actions
@@ -40,7 +62,7 @@ public class ParametersConverter {
 	public ParametersConverter(String version, List<Map<String, String>> actions, String content,
 			String scriptGeneratorVersion, String date, String time, String scriptDefinitionFilePath,
 			String scriptDefinitionFileGitHash, String geniePythonVersion) {
-		this.version = version;
+		this.versionJSONFormat = version;
 		this.actions = actions;
 		this.scriptDefinitionContent = content;
 		this.scriptGeneratorVersion = scriptGeneratorVersion;
@@ -61,21 +83,21 @@ public class ParametersConverter {
 	}
 
 	/**
-	 * Gets version number
+	 * Gets version number of JSON format supported by us
 	 * 
 	 * @return version number
 	 */
-	public String getVersionNumber() {
-		return version;
+	public String getJSONFormatVersionNumber() {
+		return versionJSONFormat;
 	}
 
 	/**
-	 * Sets version number
+	 * Sets version number of JSON format
 	 * 
 	 * @param version version number
 	 */
-	public void setVersion(String version) {
-		this.version = version;
+	public void setJSONFormatVersion(String version) {
+		this.versionJSONFormat = version;
 	}
 
 	/**
@@ -91,7 +113,7 @@ public class ParametersConverter {
 	 * get the content of script definition file 
 	 * @return content of script definition file
 	 */
-	public String getConfigContent() {
+	public String getScriptDefinitionContent() {
 		return scriptDefinitionContent;
 	}
 

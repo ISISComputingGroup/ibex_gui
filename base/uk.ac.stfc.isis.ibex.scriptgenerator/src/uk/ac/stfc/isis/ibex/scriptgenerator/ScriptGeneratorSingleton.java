@@ -696,11 +696,16 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException("No Configuration Selected"));
 		try {
-			scriptGenFileHandle.saveParameters(this.scriptGeneratorTable.getActions(), scriptDefinition.getName(), preferenceSupplier.scriptGeneratorScriptDefinitionFolders() + fileName);
+			scriptGenFileHandle.saveParameters(this.scriptGeneratorTable.getActions(), preferenceSupplier.scriptGeneratorScriptDefinitionFolders() + scriptDefinition.getName() + ".py"
+					, preferenceSupplier.scriptGeneratorDataFileFolder() + fileName);
 		} catch (InterruptedException | ExecutionException e) {
 			firePropertyChange(THREAD_ERROR_PROPERTY, threadError, true);
 			LOG.error(e);
 			threadError = true;
 		}
+	}
+
+	public String filePathPrefix() {
+		return preferenceSupplier.scriptGeneratorScriptDefinitionFolders();
 	}
 }

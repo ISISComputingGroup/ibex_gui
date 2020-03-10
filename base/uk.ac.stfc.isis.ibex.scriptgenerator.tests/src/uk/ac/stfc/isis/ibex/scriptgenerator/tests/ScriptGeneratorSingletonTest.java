@@ -4,10 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
@@ -217,9 +213,5 @@ public class ScriptGeneratorSingletonTest {
 		} catch(NoScriptDefinitionSelectedException e) {
 			fail("We have mocked out getConfig() so should always return a config");
 		}
-	}
-	
-	@Test
-	public void test_
-	
+	}	
 }

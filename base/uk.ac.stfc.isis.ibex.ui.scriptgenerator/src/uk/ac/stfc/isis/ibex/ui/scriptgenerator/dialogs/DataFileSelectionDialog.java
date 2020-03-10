@@ -32,12 +32,10 @@ public class DataFileSelectionDialog extends SelectionDialog{
 		super(parentShell, title);
 		this.available = availableData;
 		
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	protected void createSelection(Composite container) {
-		// TODO Auto-generated method stub
 		Label lblSelect = new Label(container, SWT.NONE);
         lblSelect.setText("Select a file to load:");
         items = createTable(container, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);

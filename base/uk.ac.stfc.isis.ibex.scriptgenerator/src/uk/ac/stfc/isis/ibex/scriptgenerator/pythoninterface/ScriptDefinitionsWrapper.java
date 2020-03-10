@@ -30,6 +30,7 @@ public interface ScriptDefinitionsWrapper {
 	 * Generate a script from a list of script generator actions for the given script definition.
 	 * 
 	 * @param scriptGenContent The list of actions to generate a script for.
+	 * @param jsonString string to write to script defintion file
 	 * @param scriptDefinition The script definition to generate the script with.
 	 * @return A string containing the generated script.
 	 */
