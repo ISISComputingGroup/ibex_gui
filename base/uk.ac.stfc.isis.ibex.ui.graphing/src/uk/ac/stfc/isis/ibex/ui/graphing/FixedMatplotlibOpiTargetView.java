@@ -23,6 +23,10 @@
 package uk.ac.stfc.isis.ibex.ui.graphing;
 
 import org.apache.logging.log4j.Logger;
+import org.eclipse.ui.IViewSite;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
@@ -32,12 +36,12 @@ import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 /**
  * The WebLinksOpiTargetView shows a stand-alone OPI for weblinks.
  */
-public class MatplotlibOpiTargetView extends OpiTargetView {
-	
+public class FixedMatplotlibOpiTargetView extends OpiTargetView {
+
     /**
      * Class ID.
      */
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.graphing.MatplotlibOpiTargetView";
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.graphing.FixedMatplotlibOpiTargetView";
     
     /**
      * Name of the OPI.
@@ -45,43 +49,66 @@ public class MatplotlibOpiTargetView extends OpiTargetView {
     private static final String NAME = "Matplotlib";
 
     /**
-     * File name of the matplotlib OPI.
+     * File name of the compact matplotlib OPI.
      */
-    private static final String OPI = "matplotlib.opi";
+    private static final String OPI = "matplotlib_compact.opi";
     
     /**
-     * The OPI target for the matplotlib opi.
+     * The OPI target for the compact matplotlib opi.
      */
     private static final OpiTarget TARGET = new OpiTarget(NAME, OPI);
     
     /**
      * Logger for errors.
      */
-    private static final Logger LOG = IsisLog.getLogger(MatplotlibOpiTargetView.class);
+    private static final Logger LOG = IsisLog.getLogger(FixedMatplotlibOpiTargetView.class);
     
     /**
      * Macro name for the URL.
      */
     private static final String URL_MACRO_NAME = "URL";
+    
+    /**
+     * The default URL for the page showing the matplotlib plot.
+     */
+    private static final String DEFAULT_URL = "http://127.0.0.1:8988";
 
     /**
-	 * Display the OPI for the matplotlib graph.
-	 * 
-	 * @param url the url for the graph.
-	 *
-	 * @throws OPIViewCreationException when opi can not be created
-	 */
-	public static synchronized void displayOpi(final String url) {
+     * Display the OPI for the matplotlib graph in a fixed view.
+     * 
+     * @param url the url for the graph.
+     *
+     * @throws OPIViewCreationException when opi can not be created
+     */
+    public static synchronized void displayOpi(final String url) {
 		if (TARGET.properties().containsKey(URL_MACRO_NAME)) {
 			TARGET.properties().remove(URL_MACRO_NAME);
 		}
 		TARGET.addProperty(URL_MACRO_NAME, url);
 		
-		try {
-			displayOpi(TARGET, ID);
+        IWorkbenchPage workbenchPage = null;
+        FixedMatplotlibOpiTargetView view = null;
+        try {
+            workbenchPage = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+            view = (FixedMatplotlibOpiTargetView) workbenchPage.findView(ID);
+            view.setOpi(TARGET);
+            view.setPartName(TARGET.name());
 		} catch (OPIViewCreationException e) {
 			LOG.error(e.getMessage(), e);
 		}
+    }
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void init(IViewSite site) throws PartInitException {
+		super.init(site);
+		try {
+			TARGET.addProperty(URL_MACRO_NAME, DEFAULT_URL);
+			setOpi(TARGET);
+		} catch (OPIViewCreationException e) {
+			throw new PartInitException(e.getMessage(), e);
+		}
 	}
 }
