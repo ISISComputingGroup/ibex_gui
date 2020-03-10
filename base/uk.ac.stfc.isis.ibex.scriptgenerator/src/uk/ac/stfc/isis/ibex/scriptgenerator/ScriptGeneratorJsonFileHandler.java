@@ -38,7 +38,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
  * @author Bishal Rai
  *
  */
-public class ScriptGeneratorFileHandle {
+public class ScriptGeneratorJsonFileHandler {
 	/** 
 	 * Currently supported JSON file version by us.
 	 */

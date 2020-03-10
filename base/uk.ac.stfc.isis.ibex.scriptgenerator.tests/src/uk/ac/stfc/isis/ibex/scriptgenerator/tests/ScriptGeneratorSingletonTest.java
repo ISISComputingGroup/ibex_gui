@@ -10,7 +10,6 @@ import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.junit.After;
 
 import static org.mockito.Mockito.mock;
@@ -21,7 +20,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 import uk.ac.stfc.isis.ibex.scriptgenerator.NoScriptDefinitionSelectedException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
@@ -30,9 +28,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 
 public class ScriptGeneratorSingletonTest {
-	
-	@Mock
-	private PreferenceSupplier preferenceSupplier;
+
 	ScriptGeneratorSingleton model;
 	HashMap<Integer, String> validityErrors;
 	ActionsTable mockActionsTable;
@@ -49,7 +45,6 @@ public class ScriptGeneratorSingletonTest {
 	
 	@Before
 	public void setUp() {
-		preferenceSupplier = mock(PreferenceSupplier.class);
 		mockPythonInterface = mock(PythonInterface.class);
 		mockConfigLoader = mock(ScriptDefinitionLoader.class);
 		mockActionsTable = mock(ActionsTable.class);
@@ -68,7 +63,6 @@ public class ScriptGeneratorSingletonTest {
 		when(mockModel.getTimestamp()).thenReturn(timestamp);
 		when(mockModel.getScriptDefinition()).thenReturn(Optional.of(mockConfig));
 		when(mockConfig.getName()).thenReturn(configName);
-		when(preferenceSupplier.scriptGeneratorScriptDefinitionFolders()).thenReturn(filepathPrefix);
 		try {
 			when(mockModel.generateTo(scriptLines, filepathPrefix)).thenCallRealMethod();
 			

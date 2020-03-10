@@ -174,7 +174,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	private static final int BAD_RESPONSE_CODE = 300;
 	
-	private ScriptGeneratorFileHandle scriptGenFileHandle = new ScriptGeneratorFileHandle();
+	private ScriptGeneratorJsonFileHandler scriptGenFileHandler = new ScriptGeneratorJsonFileHandler();
 	
 	/**
 	 * The constructor, will create without a script definition loader and without loading
@@ -667,7 +667,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @throws FileNotFoundException when DataFiles folder does not exist
 	 */
 	public List<String> getListOfdataFiles() throws FileNotFoundException {
-		return this.scriptGenFileHandle.getListOfdataFiles();
+		return this.scriptGenFileHandler.getListOfdataFiles();
 	}
 	
 	/**
@@ -680,9 +680,9 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	public void loadParameterValues(String fileName) throws NoScriptDefinitionSelectedException, ScriptDefinitionNotMatched {
 		ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException("No Configuration Selected"));
-		List<Map<ActionParameter, String>> list = scriptGenFileHandle.getParameterValues(fileName, scriptDefinition.getName());
+		List<Map<ActionParameter, String>> list = scriptGenFileHandler.getParameterValues(fileName, scriptDefinition.getName());
 		scriptGeneratorTable.addMultipleActions(list);
-		currentlyLoadedDataFileContent = scriptGenFileHandle.getCurrentlyLoadedDataFileContent();
+		currentlyLoadedDataFileContent = scriptGenFileHandler.getCurrentlyLoadedDataFileContent();
 	}
 	
 	/**
@@ -696,16 +696,12 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException("No Configuration Selected"));
 		try {
-			scriptGenFileHandle.saveParameters(this.scriptGeneratorTable.getActions(), preferenceSupplier.scriptGeneratorScriptDefinitionFolders() + scriptDefinition.getName() + ".py"
+			scriptGenFileHandler.saveParameters(this.scriptGeneratorTable.getActions(), preferenceSupplier.scriptGeneratorScriptDefinitionFolders() + scriptDefinition.getName() + ".py"
 					, preferenceSupplier.scriptGeneratorDataFileFolder() + fileName);
 		} catch (InterruptedException | ExecutionException e) {
 			firePropertyChange(THREAD_ERROR_PROPERTY, threadError, true);
 			LOG.error(e);
 			threadError = true;
 		}
-	}
-
-	public String filePathPrefix() {
-		return preferenceSupplier.scriptGeneratorScriptDefinitionFolders();
 	}
 }
