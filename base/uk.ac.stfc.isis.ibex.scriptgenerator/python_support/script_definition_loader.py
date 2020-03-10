@@ -238,7 +238,19 @@ class ScriptDefinitionsWrapper(object):
         return True
 
 def get_script_definitions(search_folders: List[str] = None) -> Tuple[Dict[AnyStr, ScriptDefinition], Dict[AnyStr, AnyStr]]:
-    """ Dynamically import all the Python modules in the search folders"""
+    """
+    Dynamically import all the Python modules in the search folders
+    
+    Parameters:
+        search_folders: List[str]
+            The folders to search for actions in
+
+    Returns:
+        A tuple. 
+        The first element being a dictionary with keys as the module name and actions as the values.
+        The second element is also a dictionary with keys as the module name, 
+         but with values as the reason they could not be imported.
+    """
     if search_folders is None:
         this_file_path = os.path.split(__file__)[0]
         search_folder = [os.path.join(this_file_path, "instruments")]
@@ -247,12 +259,14 @@ def get_script_definitions(search_folders: List[str] = None) -> Tuple[Dict[AnySt
     for search_folder in search_folders:
         try:
             for filename in os.listdir(search_folder):
+                # Check if we have found a python file or not
                 filenameparts = filename.split(".")
                 module_name = filenameparts[0]
                 if len(filenameparts) > 1:
                     file_extension = filenameparts[-1]
                 else:
                     file_extension = ""
+                # Found a script definition (python file) import the DoRun class
                 if file_extension == "py":
                     try:
                         loader = importlib.machinery.SourceFileLoader(module_name, os.path.join(search_folder, filename))
@@ -261,10 +275,12 @@ def get_script_definitions(search_folders: List[str] = None) -> Tuple[Dict[AnySt
                         loader.exec_module(sys.modules[module_name])
                         script_definitions[module_name] = sys.modules[module_name].DoRun
                     except Exception as e:
+                        # On failure to load ensure we return the reason
                         script_definition_load_errors[module_name] = str(e)
                         # Print any errors to stderr, Java will catch and throw to the user
                         print("Error loading {}: {}".format(module_name, e), file=sys.stderr)
         except FileNotFoundError as e:
+            # On failure to load ensure we return the reason
             script_definition_load_errors[search_folder] = str(e)
             print("Error loading from {}".format(search_folder), file=sys.stderr)
     return script_definitions, script_definition_load_errors
