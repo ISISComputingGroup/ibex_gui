@@ -185,7 +185,7 @@ public class PreferenceSupplier {
     /**
      * Default place to save data file
      */
-    private static final String DEFAULT_DATA_FILE_GENERATE_FOLDER = "C:/DataFile/";
+    private static final String DEFAULT_DATA_FILE_GENERATE_FOLDER = "C:/ScriptGeneratorDataFiles/";
     
     /**
      * Define where to generate data files to
@@ -326,7 +326,7 @@ public class PreferenceSupplier {
 	 * Gets the preference for the folder to save data from script generator parameters to
 	 * @return The folder to save script generator parameter data
 	 */
-	public String dataFileFolder() {
+	public String scriptGeneratorDataFileFolder() {
 		return getString(DATA_FILE_GENERATE_FOLDER, DEFAULT_DATA_FILE_GENERATE_FOLDER);
 	}
 	

@@ -238,4 +238,16 @@ public class ActionsTable extends ModelObject {
 	public void reloadActions() {
 		firePropertyChange(ACTIONS_PROPERTY, null, actions);
 	}
+	
+	/**
+	 * check if actions table is empty
+	 * @return true if empty
+	 */
+	public boolean isEmpty() {
+		boolean retVal = false;
+		if (actions.size() == 0) {
+			retVal = true;
+		}
+		return retVal;
+	}
 }

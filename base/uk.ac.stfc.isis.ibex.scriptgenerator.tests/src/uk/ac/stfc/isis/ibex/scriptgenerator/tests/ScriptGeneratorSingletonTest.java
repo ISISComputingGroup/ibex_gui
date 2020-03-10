@@ -14,6 +14,7 @@ import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.junit.After;
 
 import static org.mockito.Mockito.mock;
@@ -24,6 +25,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 import uk.ac.stfc.isis.ibex.scriptgenerator.NoScriptDefinitionSelectedException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
@@ -33,6 +35,8 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 
 public class ScriptGeneratorSingletonTest {
 	
+	@Mock
+	private PreferenceSupplier preferenceSupplier;
 	ScriptGeneratorSingleton model;
 	HashMap<Integer, String> validityErrors;
 	ActionsTable mockActionsTable;
@@ -49,6 +53,7 @@ public class ScriptGeneratorSingletonTest {
 	
 	@Before
 	public void setUp() {
+		preferenceSupplier = mock(PreferenceSupplier.class);
 		mockPythonInterface = mock(PythonInterface.class);
 		mockConfigLoader = mock(ScriptDefinitionLoader.class);
 		mockActionsTable = mock(ActionsTable.class);
@@ -67,9 +72,10 @@ public class ScriptGeneratorSingletonTest {
 		when(mockModel.getTimestamp()).thenReturn(timestamp);
 		when(mockModel.getScriptDefinition()).thenReturn(Optional.of(mockConfig));
 		when(mockConfig.getName()).thenReturn(configName);
+		when(preferenceSupplier.scriptGeneratorScriptDefinitionFolders()).thenReturn(filepathPrefix);
 		try {
-			when(mockModel.generateTo("python", scriptLines, filepathPrefix, "py")).thenCallRealMethod();
-			when(mockModel.generateTo("json", jsonLine, filepathPrefix, "json")).thenCallRealMethod();
+			when(mockModel.generateTo(scriptLines, filepathPrefix)).thenCallRealMethod();
+			
 		} catch (NoScriptDefinitionSelectedException e) {
 			fail("We have mocked out getConfig() so should always return a config");
 		}
@@ -154,7 +160,7 @@ public class ScriptGeneratorSingletonTest {
 		String expectedFilepath = String.format("%s%s-%s.py", filepathPrefix, configName, timestamp);
 		try {
 			// Act
-			String filepath = mockModel.generateTo("python", scriptLines, filepathPrefix, "py").get();
+			String filepath = mockModel.generateTo(scriptLines, filepathPrefix).get();
 			// Assert
 			assertThat("Should generate filepath with the config name and a timestamp",
 					filepath, equalTo(expectedFilepath));
@@ -168,7 +174,7 @@ public class ScriptGeneratorSingletonTest {
 		// Arrange in setUp
 		// Act
 		try {
-			String filepath = mockModel.generateTo("python", scriptLines, filepathPrefix, "py").get();
+			String filepath = mockModel.generateTo(scriptLines, filepathPrefix).get();
 			String[] splitScriptLines = scriptLines.split("\n");
 			// Assert
 			try(BufferedReader reader = new BufferedReader(new FileReader(filepath))){
@@ -189,40 +195,7 @@ public class ScriptGeneratorSingletonTest {
 			fail("We have mocked out getConfig() so should always return a config");
 		}
 	}
-	
-	@Test
-	public void test_GIVEN_new_json_file_WHEN_generate_THEN_file_contents_as_expected() {
-		
-		String filepath;
-		try {
-			// use MD5 
-			String algorithm = "MD5";
-			filepath = mockModel.generateTo("json", jsonLine, filepathPrefix, "json").get();
-			try {
-				MessageDigest md = MessageDigest.getInstance(algorithm);
-				md.update(jsonLine.getBytes());
-				// get hash
-				byte [] expected = md.digest();
-				byte[] fileContent = Files.readAllBytes(Paths.get(filepath));
-				// reset for next use
-				md.reset();
-				md.update(fileContent);
-				byte [] actual = md.digest();
-				assertThat("Content should be the same", actual, equalTo(expected));
-			} catch (NoSuchAlgorithmException e) {
-				fail(algorithm + " does not exist");
-			} catch (IOException e) {
-				fail("Should not fail to read from file");
-			}
-			
-		} catch (NoScriptDefinitionSelectedException e) {
-			// TODO Auto-generated catch block
-			fail("We have mocked out getConfig() so should always return a config");
-		} 
-		
-	
-	}
-	
+
 	@Test
 	public void test_GIVEN_new_and_old_file_WHEN_generate_THEN_filename_with_version() {
 		// Arrange
@@ -231,9 +204,9 @@ public class ScriptGeneratorSingletonTest {
 		String expectedNewNewFilepath = String.format("%s%s-%s(2).py", filepathPrefix, configName, timestamp);
 		try {
 			// Act
-			String oldFilepath = mockModel.generateTo("python", scriptLines, filepathPrefix, "py").get();
-			String newFilepath = mockModel.generateTo("python", scriptLines, filepathPrefix, "py").get();
-			String newNewFilepath = mockModel.generateTo("python", scriptLines, filepathPrefix, "py").get();
+			String oldFilepath = mockModel.generateTo(scriptLines, filepathPrefix).get();
+			String newFilepath = mockModel.generateTo(scriptLines, filepathPrefix).get();
+			String newNewFilepath = mockModel.generateTo(scriptLines, filepathPrefix).get();
 			// Assert
 			assertThat("Should generate filepath with the config name and a timestamp",
 					oldFilepath, equalTo(expectedOldFilepath));
@@ -246,7 +219,7 @@ public class ScriptGeneratorSingletonTest {
 		}
 	}
 	
-	
-	
+	@Test
+	public void test_
 	
 }

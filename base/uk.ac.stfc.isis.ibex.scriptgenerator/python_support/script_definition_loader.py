@@ -282,8 +282,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     search_folders = args.search_folders.split(",")
-    f = open("C:\\scripts\\letsee.txt", "w+")
-    f.write("test")
+    
     script_definitions: Dict[AnyStr, ScriptDefinition] = {}
     script_definition_load_errors: Dict[AnyStr, AnyStr] = {}
     script_definitions, script_definition_load_errors = get_script_definitions(search_folders=search_folders)

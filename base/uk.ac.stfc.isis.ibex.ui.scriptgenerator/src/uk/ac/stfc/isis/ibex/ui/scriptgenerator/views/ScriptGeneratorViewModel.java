@@ -4,7 +4,7 @@ import java.net.URL;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -33,12 +33,14 @@ import org.apache.logging.log4j.Logger;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
 import uk.ac.stfc.isis.ibex.scriptgenerator.NoScriptDefinitionSelectedException;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptDefinitionNotMatched;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
-import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedTypeException;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.DataFileSelectionDialog;
+import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.SaveParametersDialog;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.widgets.FileMessageDialog;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
@@ -120,11 +122,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	private static final String GENERATED_SCRIPT_FILEPATH_PROPERTY = "generated script filepath";
 	
 	/**
-	 * The property to listen for changes in Generator containing the generated parameter values data 
-	 */
-	private static final String GENERATED_DATA_EXCHANGE_FILEPATH_PROPERTY = "generated data exchange filepath";
-	
-	/**
 	 * A property to listen to for when actions change in the model.
 	 */
 	private static final String ACTIONS_PROPERTY = "actions";
@@ -145,9 +142,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	private static final String PYTHON_READINESS_PROPERTY = "python ready";
 	
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
-	
-	private final String CONFIG_NOT_MATCHED_ERROR = "Configuration that was used to generate the selected data "
-			+ "file is not the same as Coniguration used to load it";
 	
 	/**
 	 * The reference to the singleton model that the ViewModel is to use.
@@ -372,54 +366,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 				);
 			});
 		};
-		
-	
-	/**
-	 * Listen for generated scripts and display the correct dialog (error or success and open file).
-	 */
-	private PropertyChangeListener generatedDataExchangeFileListener = evt -> {
-			@SuppressWarnings("unchecked")
-			Optional<String> optionalScriptFilePath = Optional.class.cast(evt.getNewValue());
-			DISPLAY.asyncExec(() -> {
-				optionalScriptFilePath.ifPresentOrElse(
-						scriptFilePath -> {
-							openFileDialog("Data File Generated", "Data file", scriptFilePath);
-						},
-						() -> {
-							MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate data file");
-						}
-				);
-			});
-		};
-		
-		/**
-		 * Listen for all the data files that has been read and is ready to be displayed to the user for selection.
-		 */
-		private PropertyChangeListener loadDataFileListener = evt -> {
-			@SuppressWarnings("unchecked")
-			DataFileSelectionDialog dialog = new DataFileSelectionDialog(Display.getDefault().getActiveShell(),
-					"list of files", (List<String>)evt.getNewValue());
-			if (dialog.open() == Window.OK) {
-				String selectedFile = dialog.selectedFile();
-				scriptGeneratorModel.getContent(selectedFile);
-			}
 			
-		};
-		
-		/**
-		 * Listen if the data file that user tried is load is of the correct version.
-		 */
-		 private PropertyChangeListener unsupportedFileVersionListener = evt->{
-				
-				@SuppressWarnings("unchecked")
-				ArrayList<String> val =(ArrayList<String>)evt.getNewValue();
-				String error = String.format("File version not supported: \n\n"
-						+ "Selected file version: %s\nSupported file version: %s", val.get(0),
-						val.get(1));
-				MessageDialog.openError(Display.getDefault().getActiveShell(), "ERROR", error);
-		 };
-				
-		
 	/**
 	 * Listen to changes on the actions and action validity property of the scriptGenerator table and
 	 *  update the view table.
@@ -442,23 +389,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		this.scriptGeneratorModel.removePropertyChangeListener(GENERATED_SCRIPT_FILEPATH_PROPERTY, generatedScriptListener);
 		this.scriptGeneratorModel.addPropertyChangeListener(GENERATED_SCRIPT_FILEPATH_PROPERTY, generatedScriptListener);
 		
-		this.scriptGeneratorModel.removePropertyChangeListener(GENERATED_DATA_EXCHANGE_FILEPATH_PROPERTY, generatedDataExchangeFileListener);
-		this.scriptGeneratorModel.addPropertyChangeListener(GENERATED_DATA_EXCHANGE_FILEPATH_PROPERTY, generatedDataExchangeFileListener);
-		
-		this.scriptGeneratorModel.removePropertyChangeListener("data files", loadDataFileListener);
-		this.scriptGeneratorModel.addPropertyChangeListener("data files", loadDataFileListener);
-		
-		this.scriptGeneratorModel.removePropertyChangeListener("unsupported version",unsupportedFileVersionListener);
-		this.scriptGeneratorModel.addPropertyChangeListener("unsupported version", unsupportedFileVersionListener);
-		
-		this.scriptGeneratorModel.removePropertyChangeListener("Script definition not matched", evt->{
-			MessageDialog.openError(Display.getDefault().getActiveShell(), "ERROR", CONFIG_NOT_MATCHED_ERROR);
-		});
-		
-		this.scriptGeneratorModel.addPropertyChangeListener("Script definition not matched", evt->{
-			MessageDialog.openError(Display.getDefault().getActiveShell(), "ERROR", CONFIG_NOT_MATCHED_ERROR);
-		});
-	
 	}
 	
 	private void openFileDialog(String title, String type, String filePath) {
@@ -784,6 +714,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 
     /**
      * Generate a script and display the file it was generated to. If fail display warnings.
+     * @throws UnsupportedLanguageException 
      */
     public void generate() {
     	try {
@@ -791,7 +722,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		} catch (InvalidParamsException e) {
 			MessageDialog.openWarning(DISPLAY.getActiveShell(), "Params Invalid", 
 					"Cannot generate script. Parameters are invalid.");
-		} catch (UnsupportedTypeException e) {
+		} catch (UnsupportedLanguageException e) {
 			LOG.error(e);
 			MessageDialog.openWarning(DISPLAY.getActiveShell(), "Unsupported language", 
 					"Cannot generate script. Language to generate in is unsupported.");
@@ -826,41 +757,69 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	}
 	
 	/**
-	 * Save Parameter Values to a file.
+	 * Save Parameter Values to a file. Checks if file already exists and asks if user wants to overwrite it.
 	 */
-	public void saveParameterValues() {
-	
-		try {
-			scriptGeneratorModel.saveParameterValues();
-		} catch (UnsupportedTypeException e) {
-			MessageDialog.openWarning(DISPLAY.getActiveShell(), "Unsupported language", 
-					"Cannot generate script. Language to generate in is unsupported.");
-			LOG.error(e);
-		} catch (InvalidParamsException e) {
-			MessageDialog.openWarning(DISPLAY.getActiveShell(), "Params Invalid", 
-					"Cannot generate script. Parameters are invalid.");
-			LOG.error(e);
+	public void saveParameterValues() {		
+		SaveParametersDialog dialog = new SaveParametersDialog(null);
+		if (dialog.open() == Window.OK) {
+			String fileName = dialog.getFileName();
+			try {
+				boolean userWantsToOverwrite = true;
+				List<String> listOfDataFiles = scriptGeneratorModel.getListOfdataFiles();
+				if (listOfDataFiles.stream().anyMatch(fileName::equalsIgnoreCase)) {
+					userWantsToOverwrite = MessageDialog.openConfirm(DISPLAY.getActiveShell(), "Duplicate Name" ,String.format("File name %s already exist\nDo you want to overwrite it?", fileName));
+				}
+				if (userWantsToOverwrite) {
+					scriptGeneratorModel.saveParameters(fileName + ".json");
+					MessageDialog.openInformation(DISPLAY.getActiveShell(), "Saved", "File saved!");
+				}
+			} catch (NoScriptDefinitionSelectedException e) {
+				LOG.error(e);
+				MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
+						"Cannot generate script. No script definition has been selected");
+			} catch (FileNotFoundException e) {
+				MessageDialog.openWarning(DISPLAY.getActiveShell(), "C:/ScriptGeneratorDataFiles not found ","Folder to save data files not found");
+			}
 		}
-	
+		 
 	}
 	
 	/**
-	 * Load parameter Values for saved data files
+	 * Load parameter values.
 	 */
 	public void loadParameterValues() {
+		DataFileSelectionDialog dialog = new DataFileSelectionDialog(Display.getDefault().getActiveShell(),
+				"list of files", this.getListOfDataFiles());
+		if (dialog.open() == Window.OK) {
+			String selectedFile = dialog.selectedFile();
+			try {
+				scriptGeneratorModel.loadParameterValues(selectedFile);
+			} catch (NoScriptDefinitionSelectedException e) {
+				LOG.error(e);
+				MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
+						"Cannot generate script. No script definition has been selected");
+			} catch (ScriptDefinitionNotMatched e) {
+				LOG.error(e);
+				MessageDialog.openError(DISPLAY.getActiveShell(), "ERROR", e.getMessage());
+			}
+		}
+		
+	};
+		
+	/**
+	 * Get list of data files.
+	 * @return list of data files
+	 */
+	public List<String> getListOfDataFiles() {
 		try {
-			scriptGeneratorModel.loadFileNames();
+			return scriptGeneratorModel.getListOfdataFiles();
 		} catch (FileNotFoundException e) {
 			MessageDialog.openError(Display.getDefault().getActiveShell(), "ERROR", "C:/DataFile folder where parameters values will be saved"
 					+ " not found");
-			LOG.error(e);
 		}
-
+		return Collections.emptyList();
 	}
-
-
 	
-
 	/** Get the user manual URL for the script generator from the model.
 	 * 
 	 * @return An optional with a value containing the URL if there is a user manual to load.

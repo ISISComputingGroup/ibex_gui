@@ -341,7 +341,6 @@ public class ScriptGeneratorView {
 		       	loadExperimentalParametersButton.addListener(SWT.Selection, e->scriptGeneratorViewModel.loadParameterValues());
 		        // Bind the context and the validity checking listeners
 		        bind(scriptDefinitionSelector, table, btnGetValidityErrors, generateScriptButton, helpText, saveExperimentalParametersButton, manualButton);
-
 				
 			} else {
 				
@@ -429,6 +428,5 @@ public class ScriptGeneratorView {
 		scriptGeneratorViewModel.bindManualButton(manualButton);
 
 	}
-	
 
 }

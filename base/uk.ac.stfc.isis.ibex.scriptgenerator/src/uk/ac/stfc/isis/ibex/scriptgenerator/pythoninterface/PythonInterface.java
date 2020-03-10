@@ -23,12 +23,9 @@ import org.apache.logging.log4j.Logger;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 
-import com.google.gson.Gson;
-
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
-import uk.ac.stfc.isis.ibex.scriptgenerator.generation.ParametersConverter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
@@ -413,22 +410,18 @@ public class PythonInterface extends ModelObject {
 	 * Generate a script in python and refresh the generated script property.
 	 * 
 	 * @param scriptGenContent The contents to generate the script with. An optional that is empty if parameters are invalid.
+	 * @oaram currentlyLoadedDataFileContent The content of currently loaded data file by user
 	 * @param scriptDefinition           The script definition to generate the script with.
 	 * @throws ExecutionException     A failure to execute the py4j call
 	 * @throws InterruptedException   The Py4J call was interrupted
 	 * @throws PythonNotReadyException When python is not ready to accept calls.
 	 */
-	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, ParametersConverter currentlyLoadedDataFile, ScriptDefinitionWrapper scriptDefinition)
+	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent,String currentlyLoadedDataFileContent, ScriptDefinitionWrapper scriptDefinition)
 			throws InterruptedException, ExecutionException, PythonNotReadyException {
 		if (pythonReady) {
 			CompletableFuture.supplyAsync(() -> {
 				try {
-					String jsonString = "";
-					if (currentlyLoadedDataFile != null) {
-						Gson gson = new Gson();
-						jsonString = gson.toJson(currentlyLoadedDataFile);
-					}
-					return scriptDefinitionsWrapper.generate(convertScriptGenContentToPython(scriptGenContent), jsonString, scriptDefinition);
+					return scriptDefinitionsWrapper.generate(convertScriptGenContentToPython(scriptGenContent), currentlyLoadedDataFileContent, scriptDefinition);
 				} catch (Py4JException e) {
 					LOG.error(e);
 					handlePythonReadinessChange(false);

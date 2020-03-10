@@ -1,3 +1,4 @@
+
 package uk.ac.stfc.isis.ibex.scriptgenerator.generation;
 
 /**
@@ -7,27 +8,19 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.generation;
  * @author James King
  *
  */
-public enum GeneratedProgrammingLanguage implements GenerationType {
+public enum GeneratedLanguage {
 	
 	PYTHON("Python"), UNSUPPORTED_LANGUAGE("Unsupported"); // Unsupported language is to be used only for testing
 	
 	private final String name;
 	
-	private GeneratedProgrammingLanguage(String name) {
+	private GeneratedLanguage(String name) {
 		this.name = name;
 	}
 	
-	/**
-	 * Get string representation of enum 
-	 * @return name of enum in string
-	 */
+	@Override
 	public String toString() {
 		return name;
-	}
-	
-	@Override
-	public String getType() {
-		return GenerationType.PROGRAMMING_LANGUAGE;
 	}
 	
 }

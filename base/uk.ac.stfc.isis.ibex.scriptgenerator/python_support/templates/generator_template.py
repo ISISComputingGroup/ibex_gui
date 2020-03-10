@@ -1,9 +1,9 @@
 # pylint: skip-file
 
-{% include inserted_config %}
+{% include inserted_script_definition %}
 
 def runscript():
-    config = DoRun()
+    script_definition = DoRun()
     {% for action in script_generator_actions -%}
     config.run(**{{ action }})
     {% endfor %}

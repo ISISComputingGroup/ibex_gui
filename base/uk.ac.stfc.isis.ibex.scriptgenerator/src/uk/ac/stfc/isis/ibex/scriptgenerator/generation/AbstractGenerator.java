@@ -19,8 +19,8 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
  * @author James King
  *
  */
-public abstract class AbstractProgrammingLanguageGenerator extends ModelObject implements Strategy {
-
+public abstract class AbstractGenerator extends ModelObject {
+	
 	/**
 	 * The property to fire a change of when the validity error messages (Map<Integer, String>)
 	 *  have been retrieved. This will get caught by the GeneratorContext and dealt with up the chain.
@@ -43,6 +43,17 @@ public abstract class AbstractProgrammingLanguageGenerator extends ModelObject i
 	protected static final String GENERATED_SCRIPT_PROPERTY = "generated script";
 	
 	/**
+	 * Refresh the generated script property with a script (String).
+	 * 
+	 * @param scriptGenContent The script generator content to produce the script from.
+	 * @param scriptDefinition The instrument script definition to generate the script with.
+	 * @param currentlyLoadedDataFileContent the data file that user has currently loaded to generate script
+	 * @throws ExecutionException A failure to execute the call to generate a script
+	 * @throws InterruptedException The call to generate a script was interrupted
+	 */
+	public abstract void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, String currentlyLoadedDataFileContent) throws InterruptedException, ExecutionException;
+	
+	/**
 	 * Refresh the property of whether the contents of the script generator (actionsTable) are valid (bool).
 	 * 
 	 * @param scriptGenContent The contents of the script generator to validate.
@@ -61,11 +72,5 @@ public abstract class AbstractProgrammingLanguageGenerator extends ModelObject i
 	 * @throws InterruptedException The call to generate a script was interrupted
 	 */
 	public abstract void refreshValidityErrors(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition) throws InterruptedException, ExecutionException;
-	
-	/**
-	 * This specific generate method is only required by classes inherited from AbstractDataExchangeFileGenerator
-	 */
-	public void generate(List<ScriptGeneratorAction> scriptGenContent, String configName) throws InterruptedException, ExecutionException {
-		throw new UnsupportedOperationException();
-	}
+
 }
