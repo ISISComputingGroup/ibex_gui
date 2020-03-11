@@ -63,7 +63,8 @@ public class CheckboxLabelProviderTest {
     @Mock
     private Realm mockRealm;
     
-    public CheckboxLabelProviderTest() {
+    @Before
+    public void prepareForTest() {
         MockitoAnnotations.initMocks(this);
         when(mockRealm.isCurrent()).thenReturn(true);
         
@@ -104,11 +105,6 @@ public class CheckboxLabelProviderTest {
         };
         
         unmodifiableMapView = labelProvider.getUnmodifiableUpdateFlagsMap();
-    }
-    
-    @Before
-    public void resetUpdateFlagMap() {
-        testMap.clear();
     }
     
     @Test
