@@ -52,7 +52,7 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 	/**
 	 * The file extenstion for Python files.
 	 */
-	private String PYTHON_EXT = ".py";
+	private static final String PYTHON_EXT = ".py";
 	
 	/**
 	 * The script generator model.
