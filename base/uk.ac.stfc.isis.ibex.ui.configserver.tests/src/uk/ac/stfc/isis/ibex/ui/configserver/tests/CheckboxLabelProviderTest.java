@@ -26,6 +26,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -139,7 +140,11 @@ public class CheckboxLabelProviderTest {
         
         ArgumentCaptor<SelectionListener> captor = ArgumentCaptor.forClass(SelectionListener.class);
         verify(checkBox, times(3)).addSelectionListener(captor.capture());
-        assertEquals(captor.getValue().getClass(), CheckboxSelectionAdapter.class);
+        
+        List<SelectionListener> capturedListeners = captor.getAllValues();
+        for(SelectionListener listener: capturedListeners) {
+            assertEquals(listener.getClass(), CheckboxSelectionAdapter.class);
+        }
     }
     
     @Test
@@ -168,21 +173,32 @@ public class CheckboxLabelProviderTest {
     }
     
     @Test
-    public void GIVEN_update_flags_map_WHEN_reset_update_flags_THEN_all_flags_true() {
+    public void GIVEN_table_WHEN_checkboxes_updated_then_table_sorted_THEN_checkbox_listeners_readded() {
+        when(checkBox.getListeners(SWT.Selection)).thenReturn(new Listener[0]);
+        assertEquals(checkBox.getListeners(SWT.Selection).length, 0);
+        
         testMap.put(testModels[0], "a");
         testMap.put(testModels[1], "a");
         testMap.put(testModels[2], "a");
         
-        for(String model: testModels) {
-            unmodifiableMapView.get(model).set(false);
-            assertEquals(false, unmodifiableMapView.get(model).get());
-        }
+        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
+        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
+        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
         
-        labelProvider.resetCheckBoxListenerUpdateFlags();
+        verify(checkBox, times(3)).addSelectionListener(any());
         
-        for(String model: unmodifiableMapView.keySet()) {
-            assertEquals(true, unmodifiableMapView.get(model).get());
-        }
+        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
+        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
+        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
+        
+        verify(checkBox, times(3)).addSelectionListener(any());
+        
+        mockCheckboxLabelProvider.resetCheckBoxListenerUpdateFlags();
+        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
+        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
+        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
+        
+        verify(checkBox, times(6)).addSelectionListener(any());
     }
     
     @Test
