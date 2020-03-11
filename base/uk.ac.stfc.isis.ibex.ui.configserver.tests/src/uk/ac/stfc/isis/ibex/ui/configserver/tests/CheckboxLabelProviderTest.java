@@ -254,17 +254,4 @@ public class CheckboxLabelProviderTest {
         
         verify(mockCheckBox, never()).addSelectionListener(any());
     }
-    
-    @Test
-    public void GIVEN_checkbox_and_model_WHEN_should_update_THEN_label_provider_listeners_added() {
-        Button mockCheckBox = mock(Button.class);
-        when(mockCheckBox.getListeners(SWT.Selection)).thenReturn(new Listener[0]);
-        
-        labelProvider.resetCheckBoxListeners(true, mockCheckBox, testModels[0]);
-        
-        ArgumentCaptor<SelectionListener> captor = ArgumentCaptor.forClass(SelectionListener.class);
-        verify(mockCheckBox, times(1)).addSelectionListener(captor.capture());
-        
-        assertEquals(captor.getValue().getClass(), CheckboxSelectionAdapter.class);
-    }
 }
