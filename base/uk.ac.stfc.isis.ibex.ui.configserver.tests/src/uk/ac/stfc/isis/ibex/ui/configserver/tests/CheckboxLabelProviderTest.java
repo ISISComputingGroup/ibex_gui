@@ -57,7 +57,7 @@ public class CheckboxLabelProviderTest {
     
     private Map<String, AtomicBoolean> unmodifiableMapView;
     
-    private final String[] testModels = {"block", "ioc"};
+    private final String[] testModels = {"block", "ioc", "synoptic"};
     
     private WritableMap<String, String> testMap;
     
@@ -117,6 +117,12 @@ public class CheckboxLabelProviderTest {
         unmodifiableMapView = labelProvider.getUnmodifiableUpdateFlagsMap();
     }
     
+    private ViewerCell getMockedViewerCell(String element) {
+        ViewerCell cell = mock(ViewerCell.class);
+        when(cell.getElement()).thenReturn(element);
+        return cell;
+    }
+    
     @Test
     public void GIVEN_empty_table_WHEN_adding_models_THEN_checkbox_listeners_added() {
         when(checkBox.getListeners(SWT.Selection)).thenReturn(new Listener[0]);
@@ -125,38 +131,47 @@ public class CheckboxLabelProviderTest {
               
         testMap.put(testModels[0], "a");
         testMap.put(testModels[1], "a");
+        testMap.put(testModels[2], "a");
         
-        ViewerCell cell = mock(ViewerCell.class);
-        when(cell.getElement()).thenReturn(testModels[0]);
-        mockCheckboxLabelProvider.update(cell);
-        
-        when(cell.getElement()).thenReturn(testModels[1]);
-        mockCheckboxLabelProvider.update(cell);
+        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
+        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
+        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
         
         ArgumentCaptor<SelectionListener> captor = ArgumentCaptor.forClass(SelectionListener.class);
-        verify(checkBox, times(2)).addSelectionListener(captor.capture());
+        verify(checkBox, times(3)).addSelectionListener(captor.capture());
         assertEquals(captor.getValue().getClass(), CheckboxSelectionAdapter.class);
     }
     
     @Test
-    public void GIVEN_update_flags_map_WHEN_table_now_empty_THEN_remove_old_map_entries() {
+    public void GIVEN_nonempty_table_WHEN_table_removes_element_then_is_sorted_THEN_no_listeners_added_removed_elements_checkbox() {
+        when(checkBox.getListeners(SWT.Selection)).thenReturn(new Listener[0]);
+        assertEquals(checkBox.getListeners(SWT.Selection).length, 0);
+        
         testMap.put(testModels[0], "a");
         testMap.put(testModels[1], "a");
+        testMap.put(testModels[2], "a");
         
-        for(String s: testModels) {
-            assertEquals(true, unmodifiableMapView.containsKey(s));
-        }
+        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
+        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
+        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
         
-        testMap.clear();
+        verify(checkBox, times(3)).addSelectionListener(any());
         
-        assertEquals(false, unmodifiableMapView.containsKey(testModels[0]));
-        assertEquals(false, unmodifiableMapView.containsKey(testModels[1]));
+        testMap.remove(testModels[2]);
+        
+        mockCheckboxLabelProvider.resetCheckBoxListenerUpdateFlags();
+        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
+        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
+        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
+        
+        verify(checkBox, times(5)).addSelectionListener(any());
     }
     
     @Test
     public void GIVEN_update_flags_map_WHEN_reset_update_flags_THEN_all_flags_true() {
         testMap.put(testModels[0], "a");
         testMap.put(testModels[1], "a");
+        testMap.put(testModels[2], "a");
         
         for(String model: testModels) {
             unmodifiableMapView.get(model).set(false);
