@@ -60,7 +60,7 @@ public class CheckboxLabelProviderTest {
     
     private final String[] testModels = {"block", "ioc", "synoptic"};
     
-    private WritableMap<String, String> testMap;
+    private WritableMap<String, String> tableContents;
     
     private Button checkBox;
     
@@ -72,9 +72,9 @@ public class CheckboxLabelProviderTest {
         MockitoAnnotations.initMocks(this);
         when(mockRealm.isCurrent()).thenReturn(true);
         
-        testMap = new WritableMap<>(mockRealm);
+        tableContents = new WritableMap<>(mockRealm);
         
-        labelProvider = new CheckboxLabelProvider<String>(testMap) {
+        labelProvider = new CheckboxLabelProvider<String>(tableContents) {
             @Override
             protected boolean checked(String model) {
                 return true;
@@ -93,7 +93,7 @@ public class CheckboxLabelProviderTest {
         
         checkBox = mock(Button.class);
         
-        mockCheckboxLabelProvider = new CheckboxLabelProvider<>(testMap) {
+        mockCheckboxLabelProvider = new CheckboxLabelProvider<>(tableContents) {
             @Override
             protected boolean checked(String model) {
                 return true;
@@ -127,13 +127,13 @@ public class CheckboxLabelProviderTest {
     @Test
     public void GIVEN_empty_table_WHEN_adding_models_THEN_checkbox_listeners_added() {
         when(checkBox.getListeners(SWT.Selection)).thenReturn(new Listener[0]);
-        
         assertEquals(checkBox.getListeners(SWT.Selection).length, 0);
               
-        testMap.put(testModels[0], "a");
-        testMap.put(testModels[1], "a");
-        testMap.put(testModels[2], "a");
+        tableContents.put(testModels[0], "a");
+        tableContents.put(testModels[1], "a");
+        tableContents.put(testModels[2], "a");
         
+        //update the check box for the given model
         mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
         mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
         mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
@@ -148,22 +148,24 @@ public class CheckboxLabelProviderTest {
     }
     
     @Test
-    public void GIVEN_nonempty_table_WHEN_table_removes_element_then_is_sorted_THEN_no_listeners_added_removed_elements_checkbox() {
+    public void GIVEN_nonempty_table_WHEN_table_removes_element_then_is_sorted_THEN_no_listeners_added_for_removed_elements_checkbox() {
         when(checkBox.getListeners(SWT.Selection)).thenReturn(new Listener[0]);
         assertEquals(checkBox.getListeners(SWT.Selection).length, 0);
         
-        testMap.put(testModels[0], "a");
-        testMap.put(testModels[1], "a");
-        testMap.put(testModels[2], "a");
+        tableContents.put(testModels[0], "a");
+        tableContents.put(testModels[1], "a");
+        tableContents.put(testModels[2], "a");
         
+        //update the check box for the given model
         mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
         mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
         mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
         
         verify(checkBox, times(3)).addSelectionListener(any());
         
-        testMap.remove(testModels[2]);
+        tableContents.remove(testModels[2]);
         
+        /*the reset method is called after sorting the table, so this simulates sorting.*/
         mockCheckboxLabelProvider.resetCheckBoxListenerUpdateFlags();
         mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
         mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
@@ -177,10 +179,11 @@ public class CheckboxLabelProviderTest {
         when(checkBox.getListeners(SWT.Selection)).thenReturn(new Listener[0]);
         assertEquals(checkBox.getListeners(SWT.Selection).length, 0);
         
-        testMap.put(testModels[0], "a");
-        testMap.put(testModels[1], "a");
-        testMap.put(testModels[2], "a");
+        tableContents.put(testModels[0], "a");
+        tableContents.put(testModels[1], "a");
+        tableContents.put(testModels[2], "a");
         
+        //update the check box for the given model
         mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
         mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
         mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
