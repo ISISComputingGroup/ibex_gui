@@ -571,11 +571,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
-	 * Generate a filename to write the script to
+	 * Generate a filename to write the script to.
 	 * 
 	 * @param filepathPrefix The prefix to the file path of the file that is to be created e.g. C:/Scripts/
 	 * @return The filename to prepend a path to write the script to.
-	 * @throws NoConfigSelectedException Thrown when we have no config selected to generate the script file with.
+	 * @throws NoScriptDefinitionSelectedException Thrown when we have no config selected to generate the script file with.
 	 */
 	public String generateScriptFileName(String filepathPrefix) throws NoScriptDefinitionSelectedException {
 		String configName = getScriptDefinition()
