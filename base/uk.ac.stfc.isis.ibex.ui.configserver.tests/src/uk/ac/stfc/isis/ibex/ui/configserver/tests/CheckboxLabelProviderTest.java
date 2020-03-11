@@ -118,7 +118,7 @@ public class CheckboxLabelProviderTest {
     }
     
     @Test
-    public void GIVEN_empty_update_flags_map_WHEN_adding_new_models_THEN_all_new_models_added() {
+    public void GIVEN_empty_table_WHEN_adding_models_THEN_checkbox_listeners_added() {
         when(checkBox.getListeners(SWT.Selection)).thenReturn(new Listener[0]);
         
         assertEquals(checkBox.getListeners(SWT.Selection).length, 0);
