@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver;
 
-import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 import java.util.WeakHashMap;
@@ -121,7 +120,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	 * associated with models no longer in the table are removed, and all update
 	 * flags are set to true.
 	 */
-	public void updateCheckboxListenerUpdateFlags(IObservableMap<T, ?> stateProperties) {
+	private void updateCheckboxListenerUpdateFlags(IObservableMap<T, ?> stateProperties) {
 	    checkboxListenerUpdateFlags.clear();
 	    for(T model: stateProperties.keySet()) {
 	        checkboxListenerUpdateFlags.put(model, new AtomicBoolean(true));
@@ -187,15 +186,6 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
             }
         }
     }
-	
-	/**
-	 * Gets an unmodifiable version of the map between models and their update 
-	 * flag. Was added to make unit testing easier.
-	 * @return an unmodifiable map with models as keys and update flags as values.
-	 */
-	public Map<T, AtomicBoolean> getUnmodifiableUpdateFlagsMap() {
-	    return Collections.unmodifiableMap(checkboxListenerUpdateFlags);
-	}
 	
 	/**Says whether the check box should be checked or not.
 	 * @param model the model.

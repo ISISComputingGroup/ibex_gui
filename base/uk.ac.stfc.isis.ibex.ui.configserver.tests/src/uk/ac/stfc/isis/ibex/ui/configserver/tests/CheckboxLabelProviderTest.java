@@ -27,8 +27,6 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.map.WritableMap;
@@ -55,8 +53,6 @@ public class CheckboxLabelProviderTest {
     private CheckboxLabelProvider<String> labelProvider;
     
     private CheckboxLabelProvider<String> mockCheckboxLabelProvider;
-    
-    private Map<String, AtomicBoolean> unmodifiableMapView;
     
     private final String[] testModels = {"block", "ioc", "synoptic"};
     
@@ -114,8 +110,6 @@ public class CheckboxLabelProviderTest {
                 return checkBox;
             }
         };
-        
-        unmodifiableMapView = labelProvider.getUnmodifiableUpdateFlagsMap();
     }
     
     private ViewerCell getMockedViewerCell(String element) {
@@ -171,7 +165,13 @@ public class CheckboxLabelProviderTest {
         mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
         mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
         
-        verify(checkBox, times(5)).addSelectionListener(any());
+        ArgumentCaptor<SelectionListener> captor = ArgumentCaptor.forClass(SelectionListener.class);
+        verify(checkBox, times(5)).addSelectionListener(captor.capture());
+        
+        List<SelectionListener> capturedListeners = captor.getAllValues();
+        for(SelectionListener listener: capturedListeners) {
+            assertEquals(listener.getClass(), CheckboxSelectionAdapter.class);
+        }
     }
     
     @Test
@@ -206,7 +206,13 @@ public class CheckboxLabelProviderTest {
         mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
         mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
         
-        verify(checkBox, times(6)).addSelectionListener(any());
+        ArgumentCaptor<SelectionListener> captor = ArgumentCaptor.forClass(SelectionListener.class);
+        verify(checkBox, times(6)).addSelectionListener(captor.capture());
+        
+        List<SelectionListener> capturedListeners = captor.getAllValues();
+        for(SelectionListener listener: capturedListeners) {
+            assertEquals(listener.getClass(), CheckboxSelectionAdapter.class);
+        }
     }
     
     @Test
