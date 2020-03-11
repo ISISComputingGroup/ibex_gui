@@ -50,9 +50,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.CheckboxLabelProvider.CheckboxSelect
  */
 public class CheckboxLabelProviderTest {
     
-    private CheckboxLabelProvider<String> labelProvider;
-    
-    private CheckboxLabelProvider<String> mockCheckboxLabelProvider;
+    private CheckboxLabelProvider<String> modifiedCheckboxLabelProvider;
     
     private final String[] testModels = {"block", "ioc", "synoptic"};
     
@@ -69,28 +67,11 @@ public class CheckboxLabelProviderTest {
         when(mockRealm.isCurrent()).thenReturn(true);
         
         tableContents = new WritableMap<>(mockRealm);
-        
-        labelProvider = new CheckboxLabelProvider<String>(tableContents) {
-            @Override
-            protected boolean checked(String model) {
-                return true;
-            }
 
-            @Override
-            protected void setChecked(String model, boolean checked) {
-                
-            }
-
-            @Override
-            protected boolean isEditable(String model) {
-                return true;
-            }
-        };
-        
         checkBox = mock(Button.class);
         when(checkBox.getListeners(SWT.Selection)).thenReturn(new Listener[0]);
         
-        mockCheckboxLabelProvider = new CheckboxLabelProvider<>(tableContents) {
+        modifiedCheckboxLabelProvider = new CheckboxLabelProvider<>(tableContents) {
             @Override
             protected boolean checked(String model) {
                 return true;
@@ -128,9 +109,9 @@ public class CheckboxLabelProviderTest {
         tableContents.put(testModels[2], "a");
         
         //update the check box for the given model
-        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
-        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
-        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
+        modifiedCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
+        modifiedCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
+        modifiedCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
         
         ArgumentCaptor<SelectionListener> captor = ArgumentCaptor.forClass(SelectionListener.class);
         verify(checkBox, times(3)).addSelectionListener(captor.capture());
@@ -150,19 +131,19 @@ public class CheckboxLabelProviderTest {
         tableContents.put(testModels[2], "a");
         
         //update the check box for the given model
-        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
-        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
-        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
+        modifiedCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
+        modifiedCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
+        modifiedCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
         
         verify(checkBox, times(3)).addSelectionListener(any());
         
         tableContents.remove(testModels[2]);
         
         /*the reset method is called after sorting the table, so this simulates sorting.*/
-        mockCheckboxLabelProvider.resetCheckBoxListenerUpdateFlags();
-        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
-        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
-        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
+        modifiedCheckboxLabelProvider.resetCheckBoxListenerUpdateFlags();
+        modifiedCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
+        modifiedCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
+        modifiedCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
         
         ArgumentCaptor<SelectionListener> captor = ArgumentCaptor.forClass(SelectionListener.class);
         verify(checkBox, times(5)).addSelectionListener(captor.capture());
@@ -182,15 +163,15 @@ public class CheckboxLabelProviderTest {
         tableContents.put(testModels[2], "a");
         
         //update the check box for the given model
-        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
-        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
-        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
+        modifiedCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
+        modifiedCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
+        modifiedCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
         
         verify(checkBox, times(3)).addSelectionListener(any());
         
-        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
-        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
-        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
+        modifiedCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
+        modifiedCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
+        modifiedCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
         
         /*after the update method calls, the check box update flags are set to false,
          * so the subsequent update calls are not supposed to add any listeners*/
@@ -206,19 +187,19 @@ public class CheckboxLabelProviderTest {
         tableContents.put(testModels[2], "a");
         
         //update the check box for the given model
-        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
-        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
-        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
+        modifiedCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
+        modifiedCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
+        modifiedCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
         
         verify(checkBox, times(3)).addSelectionListener(any());
         
         /*the reset method is called after sorting the table, so this simulates sorting.
          * After sorting, the models correspond to other check boxes, the label provider
          * update flags need to be set to true so old listeners are removed.*/
-        mockCheckboxLabelProvider.resetCheckBoxListenerUpdateFlags();
-        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
-        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
-        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
+        modifiedCheckboxLabelProvider.resetCheckBoxListenerUpdateFlags();
+        modifiedCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
+        modifiedCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
+        modifiedCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
         
         ArgumentCaptor<SelectionListener> captor = ArgumentCaptor.forClass(SelectionListener.class);
         verify(checkBox, times(6)).addSelectionListener(captor.capture());
@@ -234,8 +215,8 @@ public class CheckboxLabelProviderTest {
         Button mockCheckBox = mock(Button.class);
         
         TypedListener[] checkBoxListeners = new TypedListener[2];
-        checkBoxListeners[0] = new TypedListener(labelProvider.new CheckboxSelectionAdapter(mockCheckBox, testModels[0]));
-        checkBoxListeners[1] = new TypedListener(labelProvider.new CheckboxSelectionAdapter(mockCheckBox, testModels[1]));
+        checkBoxListeners[0] = new TypedListener(modifiedCheckboxLabelProvider.new CheckboxSelectionAdapter(mockCheckBox, testModels[0]));
+        checkBoxListeners[1] = new TypedListener(modifiedCheckboxLabelProvider.new CheckboxSelectionAdapter(mockCheckBox, testModels[1]));
         
         when(mockCheckBox.getListeners(SWT.Selection)).thenReturn(checkBoxListeners);
         
