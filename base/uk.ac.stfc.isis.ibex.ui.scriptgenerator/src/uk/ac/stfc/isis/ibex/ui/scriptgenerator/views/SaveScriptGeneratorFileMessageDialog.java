@@ -85,6 +85,8 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 	 * @param defaultIndex       the index in the button label array of the default
 	 *                           button
 	 * @param defaultFilename	 The default file name to save the script files with.
+	 * @param generatedScript The generated script to write to file.
+	 * @param model The script generator model to get the file handler from.
 	 */
 	public SaveScriptGeneratorFileMessageDialog(Shell parentShell, String dialogTitle, Image dialogTitleImage, String dialogMessage, String filepathPrefix,
 			int dialogImageType, String[] dialogButtonLabels, int defaultIndex, String defaultFilename, String generatedScript, ScriptGeneratorSingleton model) {
