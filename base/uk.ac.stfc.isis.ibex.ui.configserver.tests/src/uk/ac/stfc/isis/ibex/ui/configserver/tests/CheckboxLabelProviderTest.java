@@ -31,6 +31,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.map.WritableMap;
+import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
@@ -60,6 +61,8 @@ public class CheckboxLabelProviderTest {
     
     private WritableMap<String, String> testMap;
     
+    private Button checkBox;
+    
     @Mock
     private Realm mockRealm;
     
@@ -87,6 +90,8 @@ public class CheckboxLabelProviderTest {
             }
         };
         
+        checkBox = mock(Button.class);
+        
         mockCheckboxLabelProvider = new CheckboxLabelProvider<>(testMap) {
             @Override
             protected boolean checked(String model) {
@@ -102,6 +107,11 @@ public class CheckboxLabelProviderTest {
             protected boolean isEditable(String model) {
                 return true;
             }
+            
+            @Override
+            protected Button getControl(ViewerCell cell, int style) {
+                return checkBox;
+            }
         };
         
         unmodifiableMapView = labelProvider.getUnmodifiableUpdateFlagsMap();
@@ -109,17 +119,23 @@ public class CheckboxLabelProviderTest {
     
     @Test
     public void GIVEN_empty_update_flags_map_WHEN_adding_new_models_THEN_all_new_models_added() {
-        for(String s: testModels) {
-            assertEquals(false, unmodifiableMapView.containsKey(s));
-        }
+        when(checkBox.getListeners(SWT.Selection)).thenReturn(new Listener[0]);
+        
+        assertEquals(checkBox.getListeners(SWT.Selection).length, 0);
               
         testMap.put(testModels[0], "a");
         testMap.put(testModels[1], "a");
         
-        for(String s: testModels) {
-            assertEquals(true, unmodifiableMapView.containsKey(s));
-            assertEquals(true, unmodifiableMapView.get(s).get());
-        }
+        ViewerCell cell = mock(ViewerCell.class);
+        when(cell.getElement()).thenReturn(testModels[0]);
+        mockCheckboxLabelProvider.update(cell);
+        
+        when(cell.getElement()).thenReturn(testModels[1]);
+        mockCheckboxLabelProvider.update(cell);
+        
+        ArgumentCaptor<SelectionListener> captor = ArgumentCaptor.forClass(SelectionListener.class);
+        verify(checkBox, times(2)).addSelectionListener(captor.capture());
+        assertEquals(captor.getValue().getClass(), CheckboxSelectionAdapter.class);
     }
     
     @Test
