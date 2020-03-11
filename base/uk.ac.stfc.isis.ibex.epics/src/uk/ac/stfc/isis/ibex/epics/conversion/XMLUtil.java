@@ -76,7 +76,7 @@ public final class XMLUtil {
      * @param clazz
      *            the type to parse the XML into
      * @return the xml data converted into the specified type
-     * @throws JAXBException
+     * @throws IOException
      *             XML Exception thrown if the conversion failed
      */
     public static synchronized <T> T fromXml(String xml, Class<T> clazz) throws IOException {
@@ -95,8 +95,6 @@ public final class XMLUtil {
      * @return the XML that the object has been converted into
      * @throws IOException
      *             XML Exception for if the conversion to xml failed
-     * @throws SAXException
-     *             XML Exception for if the xml doesn't conform to the schema
      */
     public static synchronized <T> String toXml(T toConvert, Class<T> clazz)
             throws IOException {
@@ -117,10 +115,8 @@ public final class XMLUtil {
      * @param rawSchema
      *            the schema to check against
      * @return the XML that the object has been converted into
-     * @throws JAXBException
+     * @throws IOException
      *             XML Exception for if the conversion to xml failed
-     * @throws SAXException
-     *             XML Exception for if the xml doesn't conform to the schema
      */
     public static synchronized <T> String toXml(T toConvert, Class<T> clazz, String rawSchema)
             throws IOException {
