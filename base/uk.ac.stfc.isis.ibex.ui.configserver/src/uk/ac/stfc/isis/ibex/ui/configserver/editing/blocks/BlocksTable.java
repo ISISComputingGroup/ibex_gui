@@ -100,6 +100,11 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 		super.setRows(rows);
 	}
 	
+//	@Override
+//    protected void updateLabelProvidersAfterSort(int columnIndex) {
+//	    visibilityLabelProvider.resetCheckBoxListenerUpdateFlags();
+//	}
+	
 	private void clear() {
 		if (isBlockVisibilityShown) {
 			enabled.setLabelProvider(visibilityLabelProvider);
