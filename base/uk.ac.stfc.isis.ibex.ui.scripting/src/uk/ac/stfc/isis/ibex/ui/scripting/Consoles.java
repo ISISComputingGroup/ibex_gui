@@ -62,9 +62,13 @@ public class Consoles extends AbstractUIPlugin {
 	public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.scripting"; // $NON-NLS-1$
 
 	/**
-	 * The perspective ID.
+	 * The ID for the scripting perspective.
 	 */
 	public static final String SCRIPTING_PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.ui.scripting.perspective";
+	
+	/**
+	 * The ID for the reflectometry perspective.
+	 */
 	public static final String REFL_PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.reflectometry";
 
 	// The shared instance
@@ -173,9 +177,11 @@ public class Consoles extends AbstractUIPlugin {
 
 	/**
 	 * Create a new pydev console based on the current instrument.
+	 * 
+	 * @param perspectiveId The id for the perspective to create the console on.
 	 */
-	public void createConsole(String perspective_id) {
-		boolean compactPlot = perspective_id.equals(REFL_PERSPECTIVE_ID) ? true : false;
+	public void createConsole(String perspectiveId) {
+		boolean compactPlot = perspectiveId.equals(REFL_PERSPECTIVE_ID) ? true : false;
 		Display.getDefault().syncExec(new Runnable() {
 			@Override
 			public void run() {
