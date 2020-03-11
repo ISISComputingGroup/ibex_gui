@@ -33,16 +33,24 @@ class ScriptDefinitionWrapper(object):
         """
         return self.name
 
-    def getParameters(self) -> list:
+    def getParameters(self) -> Dict[AnyStr, AnyStr]:
         """
-        Gets the parameters from the script_definition defined in this script_definition
+        Gets the parameters and default values from the script_definition defined in this script_definition
 
         Returns:
             arguments: List of the parameter names (strings)
         """
         arguments = signature(self.script_definition.run).parameters
 
-        return ListConverter().convert(arguments, gateway._gateway_client)
+        kwargs_with_defaults = {}
+
+        for arg in arguments:
+            if arguments[arg].default == arguments[arg].empty:
+                kwargs_with_defaults[arg] = arg
+            else:
+                kwargs_with_defaults[arg] = str(arguments[arg].default)
+
+        return MapConverter().convert(kwargs_with_defaults, gateway._gateway_client)
 
     def getHelp(self) -> str:
         """

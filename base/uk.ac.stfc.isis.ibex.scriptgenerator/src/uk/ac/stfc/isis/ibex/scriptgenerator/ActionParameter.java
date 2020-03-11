@@ -28,12 +28,15 @@ public class ActionParameter {
 
 	private final String name;
 	
+	private final String defaultValue;
+	
 	/**
 	 * This class holds the name about an action parameter.
 	 * @param name The name of the action parameter (column header)
 	 */
-	public ActionParameter(String name) {
+	public ActionParameter(String name, String defaultValue) {
 		this.name = name;
+		this.defaultValue = defaultValue;
 	}
 
 	/**
@@ -41,6 +44,13 @@ public class ActionParameter {
 	 */
 	public String getName() {
 		return name;
+	}
+	
+	/**
+	 * @return The default value for this parameter.
+	 */
+	public String getDefaultValue() {
+		return defaultValue;
 	}
 
 	

@@ -97,7 +97,7 @@ public class ActionsTable extends ModelObject {
 		var parametersMap = new HashMap<ActionParameter, String>();
 		// Make a parameter/string pair for each parameter in the action
 		for (ActionParameter actionParameter: this.actionParameters) {
-			parametersMap.put(actionParameter, actionParameter.getName() + Integer.toString(actions.size()));
+			parametersMap.put(actionParameter, actionParameter.getDefaultValue());
 		}
 		
 		var newAction = createAction(parametersMap);
