@@ -230,11 +230,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 				try {
 					String generatedScriptFilename = generateScriptFileName(getScriptFilepathPrefix());
 					firePropertyChange(GENERATED_SCRIPT_FILENAME_PROPERTY, null, generatedScriptFilename);
-				} catch(NoScriptDefinitionSelectedException e) {
+				} catch (NoScriptDefinitionSelectedException e) {
 					LOG.error(e);
 				}
 			}, () -> {
-				firePropertyChange(SCRIPT_GENERATION_ERROR_PROPERTY , null, true);
+				firePropertyChange(SCRIPT_GENERATION_ERROR_PROPERTY, null, true);
 			});
 			
 		});
@@ -317,6 +317,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
     
     /**
      * Get the area to generate scripts to.
+     * 
+     * @return The directory path to generate scripts to.
      */
     public String getScriptFilepathPrefix() {
     	return preferenceSupplier.scriptGenerationFolder();
@@ -324,6 +326,9 @@ public class ScriptGeneratorSingleton extends ModelObject {
     
     /**
      * Get the last generated script.
+     * 
+     * @return An optional that is empty if no script has been generated successfully,
+     *   or the contents is the generated script.
      */
     public Optional<String> getLastGeneratedScript() {
     	return lastGeneratedScript;
