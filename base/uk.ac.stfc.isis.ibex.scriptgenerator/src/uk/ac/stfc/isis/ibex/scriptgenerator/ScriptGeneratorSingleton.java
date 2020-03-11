@@ -591,7 +591,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 				filename = String.format("%s-%s(%s)", configName, timestamp, version);
 			}
 			version += 1;
-		} while(new File(String.format("%s%s", filepathPrefix, filename)).exists());
+		} while (new File(String.format("%s%s", filepathPrefix, filename)).exists());
 		return filename;
 	}
 	
@@ -613,6 +613,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	
 	/**
 	 * Get the file writer to use to write scripts to file.
+	 * 
+	 * @return the file handler to write scripts to file.
 	 */
 	public ScriptGeneratorFileHandler getFileHandler() {
 		return fileHandler;
