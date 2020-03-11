@@ -64,7 +64,8 @@ public class Consoles extends AbstractUIPlugin {
 	/**
 	 * The perspective ID.
 	 */
-	public static final String PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.ui.scripting.perspective";
+	public static final String SCRIPTING_PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.ui.scripting.perspective";
+	public static final String REFL_PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.reflectometry";
 
 	// The shared instance
 	private static Consoles plugin;
@@ -115,9 +116,9 @@ public class Consoles extends AbstractUIPlugin {
 				if (!(newValue instanceof MPerspective)) {
 					return;
 				}
-
-				if (((MPerspective) newValue).getElementId().equals(PERSPECTIVE_ID)) {
-					createConsole();
+				String id = ((MPerspective) newValue).getElementId();
+				if (id.equals(SCRIPTING_PERSPECTIVE_ID) || id.equals(REFL_PERSPECTIVE_ID)) {
+					createConsole(id);
 				}
 			}
 		};
@@ -173,7 +174,8 @@ public class Consoles extends AbstractUIPlugin {
 	/**
 	 * Create a new pydev console based on the current instrument.
 	 */
-	public void createConsole() {
+	public void createConsole(String perspective_id) {
+		boolean compactPlot = perspective_id.equals(REFL_PERSPECTIVE_ID) ? true : false;
 		Display.getDefault().syncExec(new Runnable() {
 			@Override
 			public void run() {
@@ -190,7 +192,7 @@ public class Consoles extends AbstractUIPlugin {
 					// exception as it is in a worker thread. Nevertheless, this is better than the confusion 
 					// that follows the scripting console getting accidentally opened in the wrong perspective.
 					new ConsoleView();
-					GENIE_CONSOLE_FACTORY.createConsole(Commands.setInstrument());
+					GENIE_CONSOLE_FACTORY.configureAndCreateConsole(Commands.getSetInstrumentCommand(), compactPlot);
 				}
 			}
 		});

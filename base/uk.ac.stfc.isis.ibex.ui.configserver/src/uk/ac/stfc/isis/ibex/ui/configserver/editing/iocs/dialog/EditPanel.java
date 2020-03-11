@@ -22,9 +22,9 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.jface.databinding.viewers.ViewersObservables;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.databinding.viewers.typed.ViewerProperties;
 import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -179,11 +179,11 @@ public class EditPanel extends Composite {
         DataBindingContext bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.text(SWT.NONE).observe(selectedIoc),
                 BeanProperties.value("name").observe(editableIoc));
-        bindingContext.bindValue(WidgetProperties.selection().observe(autoStart),
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(autoStart),
                 BeanProperties.value("autostart").observe(editableIoc));
-        bindingContext.bindValue(WidgetProperties.selection().observe(autoRestart),
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(autoRestart),
                 BeanProperties.value("restart").observe(editableIoc));
-        bindingContext.bindValue(ViewersObservables.observeSingleSelection(simLevel),
+        bindingContext.bindValue(ViewerProperties.singleSelection().observe(simLevel),
                 BeanProperties.value("simLevel").observe(editableIoc));
         bindingContext.bindValue(WidgetProperties.enabled().observe(autoStart),
                 BeanProperties.value("editable").observe(editableIoc));

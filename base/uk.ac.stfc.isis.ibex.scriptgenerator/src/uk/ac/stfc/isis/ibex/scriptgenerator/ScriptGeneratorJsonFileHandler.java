@@ -137,12 +137,12 @@ public class ScriptGeneratorJsonFileHandler {
 	}
 	
 	/**
-	 * Get Content from give filename.
-	 * @return 
-	 * filePath path of file to get content from
+	 * Get Content from give filename. 
+	 * @param filePath path of file to get content from
 	 * @throws JsonSyntaxException JSON syntax incorrect
 	 * @throws JsonIOException trouble reading JSON file
 	 * @throws FileNotFoundException JSON file does not exist
+	 * @return object representation of JSON which is read from a file
 	 */
 	private ParametersConverter convertJSONtoObject(String filePath) throws JsonSyntaxException, JsonIOException, FileNotFoundException{
 		
