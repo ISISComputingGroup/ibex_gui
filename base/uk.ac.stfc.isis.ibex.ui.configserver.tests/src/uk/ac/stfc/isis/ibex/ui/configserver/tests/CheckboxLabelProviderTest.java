@@ -175,7 +175,7 @@ public class CheckboxLabelProviderTest {
     }
     
     @Test
-    public void GIVEN_table_WHEN_checkboxes_updated_then_table_sorted_THEN_checkbox_listeners_readded() {
+    public void GIVEN_nonempty_table_WHEN_checkbox_already_updated_then_update_called_THEN_no_new_listeners_added() {
         when(checkBox.getListeners(SWT.Selection)).thenReturn(new Listener[0]);
         assertEquals(checkBox.getListeners(SWT.Selection).length, 0);
         
@@ -196,6 +196,23 @@ public class CheckboxLabelProviderTest {
         
         /*after the update method calls, the check box update flags are set to false,
          * so the subsequent update calls are not supposed to add any listeners*/
+        verify(checkBox, times(3)).addSelectionListener(any());
+    }
+    
+    @Test
+    public void GIVEN_table_WHEN_checkboxes_updated_then_table_sorted_THEN_checkbox_listeners_readded() {
+        when(checkBox.getListeners(SWT.Selection)).thenReturn(new Listener[0]);
+        assertEquals(checkBox.getListeners(SWT.Selection).length, 0);
+        
+        tableContents.put(testModels[0], "a");
+        tableContents.put(testModels[1], "a");
+        tableContents.put(testModels[2], "a");
+        
+        //update the check box for the given model
+        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
+        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
+        mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
+        
         verify(checkBox, times(3)).addSelectionListener(any());
         
         /*the reset method is called after sorting the table, so this simulates sorting.
@@ -244,14 +261,5 @@ public class CheckboxLabelProviderTest {
         CheckboxLabelProvider.clearCheckBoxSelectListeners(mockCheckBox);
         
         verify(mockCheckBox, never()).removeSelectionListener(any());
-    }
-    
-    @Test
-    public void GIVEN_checkbox_and_model_WHEN_should_not_update_THEN_label_provider_listeners_not_changed() {
-        Button mockCheckBox = mock(Button.class);
-        
-        labelProvider.resetCheckBoxListeners(false, mockCheckBox, testModels[0]);
-        
-        verify(mockCheckBox, never()).addSelectionListener(any());
     }
 }
