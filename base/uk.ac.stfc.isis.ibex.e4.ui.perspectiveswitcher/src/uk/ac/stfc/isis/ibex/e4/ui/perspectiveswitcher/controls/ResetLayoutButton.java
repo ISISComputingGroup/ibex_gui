@@ -12,7 +12,6 @@ import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 public class ResetLayoutButton extends Button {
 
     private final PerspectiveResetAdapter resetAdapter;
-    private final ResetLayoutButtonViewModel model;
     private static final String RESET_PERSPECTIVE_URI = "platform:/plugin/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/icons/reset.png";
 
     /**
@@ -28,7 +27,6 @@ public class ResetLayoutButton extends Button {
     public ResetLayoutButton(Composite parent, PerspectivesProvider perspectivesProvider, ResetLayoutButtonViewModel model) {
         super(parent, RESET_PERSPECTIVE_URI, "Reset Layout: Sets the layout of the current perspective back to its default", model);
         resetAdapter = new PerspectiveResetAdapter(perspectivesProvider);
-        this.model = model;
     }
 
     @Override

@@ -24,11 +24,11 @@ import java.util.concurrent.TimeoutException;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.core.databinding.observable.list.IObservableList;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
-import org.eclipse.jface.databinding.viewers.ViewerProperties;
+import org.eclipse.jface.databinding.viewers.typed.ViewerProperties;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -208,6 +208,7 @@ public class GroupsEditorPanel extends Composite {
         BlockServerNameValidator groupRules = Configurations.getInstance().variables().groupRules.getValue();
         final GroupNameValidator groupNamesValidator = new GroupNameValidator(
                 configurationViewModels.getConfigModel().getValue(), messageDisplayer, groupRules);
+        
         strategy.setBeforeSetValidator(groupNamesValidator);
         bindingContext.bindValue(
                 WidgetProperties.text(SWT.Modify).observe(name), ViewerProperties.singleSelection()
@@ -216,8 +217,8 @@ public class GroupsEditorPanel extends Composite {
 
 		name.addModifyListener(e -> groupsViewer.refresh());
 
-		IObservableList<EditableBlock> selectedBlocks = ViewerProperties.singleSelection().list(BeanProperties.list("selectedBlocks", EditableGroup.class)).observe(groupsViewer);
-		IObservableList<EditableBlock> unselectedBlocks = ViewerProperties.singleSelection().list(BeanProperties.list("unselectedBlocks", EditableGroup.class)).observe(groupsViewer);
+		IObservableList<EditableBlock> selectedBlocks = ViewerProperties.singleSelection().list(BeanProperties.list("selectedBlocks", EditableBlock.class)).observe(groupsViewer);
+		IObservableList<EditableBlock> unselectedBlocks = ViewerProperties.singleSelection().list(BeanProperties.list("unselectedBlocks", EditableBlock.class)).observe(groupsViewer);
 
 		Button spacerButton = new Button(grpGroups, SWT.NONE);
 		GridData gd_spacerButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
