@@ -149,6 +149,7 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 	 * 
 	 * @param parent The parent to put the buttons in.
 	 */
+	@SuppressWarnings("checkstyle:magicnumber")
 	@Override 
 	protected void createButtonsForButtonBar(Composite parent) {
 		parent.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
