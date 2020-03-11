@@ -126,7 +126,7 @@ public class MacroTable extends DataboundTable<MacroViewModel> {
 	}
 	
 	private void useDefault() {
-	    CheckboxLabelProvider<MacroViewModel> defaultUseLabelProvider = new CheckboxLabelProvider<MacroViewModel>(observeProperty("useDefault"), this) {
+	    CheckboxLabelProvider<MacroViewModel> defaultUseLabelProvider = new CheckboxLabelProvider<MacroViewModel>(observeProperty("useDefault")) {
 
             @Override
             protected boolean checked(MacroViewModel macro) {

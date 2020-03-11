@@ -78,7 +78,7 @@ public class IocPVSetsTable extends DataboundTable<EditablePVSet> {
 	}
 	
 	private void enable() {
-	    CheckboxLabelProvider<EditablePVSet> enableStatusLabelProvider = new CheckboxLabelProvider<EditablePVSet>(observeProperty("enabled"), this) {  
+	    CheckboxLabelProvider<EditablePVSet> enableStatusLabelProvider = new CheckboxLabelProvider<EditablePVSet>(observeProperty("enabled")) {  
             @Override
             protected boolean checked(EditablePVSet pvset) {
                 return pvset.getEnabled();

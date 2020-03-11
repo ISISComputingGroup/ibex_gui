@@ -49,7 +49,7 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 	private CellDecorator<EditableBlock> rowDecorator = new BlockRowCellDecorator();
 	
 	private CheckboxLabelProvider<EditableBlock> visibilityLabelProvider = 
-			new CheckboxLabelProvider<EditableBlock>(observeProperty("isVisible"), this) {
+			new CheckboxLabelProvider<EditableBlock>(observeProperty("isVisible")) {
 		@Override
 		protected boolean checked(EditableBlock block) {
 			return block.getIsVisible();

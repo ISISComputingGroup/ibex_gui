@@ -55,7 +55,7 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
     /**
      * Checkbox Label provider for the auto-start column.
      */
-    private CheckboxLabelProvider<EditableIoc> autoStartLabelProvider = new CheckboxLabelProvider<EditableIoc>(observeProperty("autostart"), this) {
+    private CheckboxLabelProvider<EditableIoc> autoStartLabelProvider = new CheckboxLabelProvider<EditableIoc>(observeProperty("autostart")) {
 
     @Override
     protected boolean checked(EditableIoc ioc) {
@@ -74,7 +74,7 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
     /**
      * Checkbox Label provider for the auto-restart column.
      */
-    private CheckboxLabelProvider<EditableIoc> autoRestartLabelProvider = new CheckboxLabelProvider<EditableIoc>(observeProperty("restart"), this) {
+    private CheckboxLabelProvider<EditableIoc> autoRestartLabelProvider = new CheckboxLabelProvider<EditableIoc>(observeProperty("restart")) {
         @Override
         protected boolean checked(EditableIoc ioc) {
             return ioc.getRestart();
