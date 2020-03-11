@@ -191,8 +191,13 @@ public class CheckboxLabelProviderTest {
         mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
         mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
         
+        /*after the update method calls, the check box update flags are set to false,
+         * so the subsequent update calls are not supposed to add any listeners*/
         verify(checkBox, times(3)).addSelectionListener(any());
         
+        /*the reset method is called after sorting the table, so this simulates sorting.
+         * After sorting, the models correspond to other check boxes, the label provider
+         * update flags need to be set to true so old listeners are removed.*/
         mockCheckboxLabelProvider.resetCheckBoxListenerUpdateFlags();
         mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[0]));
         mockCheckboxLabelProvider.update(getMockedViewerCell(testModels[1]));
