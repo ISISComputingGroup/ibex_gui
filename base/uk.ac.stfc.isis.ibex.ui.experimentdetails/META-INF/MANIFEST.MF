@@ -14,5 +14,6 @@ Require-Bundle: uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
  org.eclipse.e4.ui.di,
  javax.annotation;bundle-version="1.2.0",
  uk.ac.stfc.isis.ibex.ui.widgets.epics,
- org.eclipse.swt
+ org.eclipse.swt,
+ javax.inject;bundle-version="1.0.0"
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.experimentdetails

@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.synoptic;
 
-import javax.xml.bind.JAXBException;
+import java.io.IOException;
 
 import com.google.common.base.Strings;
 
@@ -66,7 +66,7 @@ public class SynopticWriter extends TransformingWriter<SynopticDescription, Stri
         }
 		try {
             return XMLUtil.toXml(value, SynopticDescription.class, schema.getValue());
-		} catch (JAXBException e) {
+		} catch (IOException e) {
 			onError(e);
 		}
 		
