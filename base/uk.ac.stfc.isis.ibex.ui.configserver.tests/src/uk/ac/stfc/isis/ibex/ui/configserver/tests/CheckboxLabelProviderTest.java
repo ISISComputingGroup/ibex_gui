@@ -88,6 +88,7 @@ public class CheckboxLabelProviderTest {
         };
         
         checkBox = mock(Button.class);
+        when(checkBox.getListeners(SWT.Selection)).thenReturn(new Listener[0]);
         
         mockCheckboxLabelProvider = new CheckboxLabelProvider<>(tableContents) {
             @Override
@@ -120,7 +121,6 @@ public class CheckboxLabelProviderTest {
     
     @Test
     public void GIVEN_empty_table_WHEN_adding_models_THEN_checkbox_listeners_added() {
-        when(checkBox.getListeners(SWT.Selection)).thenReturn(new Listener[0]);
         assertEquals(checkBox.getListeners(SWT.Selection).length, 0);
               
         tableContents.put(testModels[0], "a");
@@ -143,7 +143,6 @@ public class CheckboxLabelProviderTest {
     
     @Test
     public void GIVEN_nonempty_table_WHEN_table_removes_element_then_is_sorted_THEN_no_listeners_added_for_removed_elements_checkbox() {
-        when(checkBox.getListeners(SWT.Selection)).thenReturn(new Listener[0]);
         assertEquals(checkBox.getListeners(SWT.Selection).length, 0);
         
         tableContents.put(testModels[0], "a");
@@ -176,7 +175,6 @@ public class CheckboxLabelProviderTest {
     
     @Test
     public void GIVEN_nonempty_table_WHEN_checkbox_already_updated_then_update_called_THEN_no_new_listeners_added() {
-        when(checkBox.getListeners(SWT.Selection)).thenReturn(new Listener[0]);
         assertEquals(checkBox.getListeners(SWT.Selection).length, 0);
         
         tableContents.put(testModels[0], "a");
@@ -201,7 +199,6 @@ public class CheckboxLabelProviderTest {
     
     @Test
     public void GIVEN_table_WHEN_checkboxes_updated_then_table_sorted_THEN_checkbox_listeners_readded() {
-        when(checkBox.getListeners(SWT.Selection)).thenReturn(new Listener[0]);
         assertEquals(checkBox.getListeners(SWT.Selection).length, 0);
         
         tableContents.put(testModels[0], "a");
