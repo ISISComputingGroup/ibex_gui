@@ -14,6 +14,10 @@ import org.eclipse.persistence.jaxb.JAXBContextFactory;
  */
 public class JAXB {
 	
+	private JAXB() {
+		// prevents calls from subclass
+	}
+	
 	static {
 		System.setProperty("javax.xml.bind.context.factory", JAXBContextFactory.class.getName());
 	}
