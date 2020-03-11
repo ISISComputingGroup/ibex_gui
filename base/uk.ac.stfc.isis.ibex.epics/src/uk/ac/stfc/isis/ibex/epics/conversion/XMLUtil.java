@@ -54,7 +54,7 @@ public final class XMLUtil {
      * @param clazz
      *            the type to parse the XML into
      * @return the xml data converted into the specified type
-     * @throws JAXBException
+     * @throws IOException
      *             XML Exception thrown if the conversion failed
      */
     @SuppressWarnings("unchecked")
