@@ -78,16 +78,11 @@ class ScriptDefinitionWrapper(object):
         kwargs_with_defaults = []
 
         for arg in arguments:
-            with open("C:\\Instrument\\Apps\PythonLog.txt", "w") as log_file:
-                print(kwargs_with_defaults, file=log_file)
             if arguments[arg].default == arguments[arg].empty:
                 action_parameter = PythonActionParameter(arg, arg)
             else:
                 action_parameter = PythonActionParameter(arg, str(arguments[arg].default))
             kwargs_with_defaults.append(action_parameter)
-
-        with open("C:\\Instrument\\Apps\PythonLog.txt", "w") as log_file:
-            print(kwargs_with_defaults, file=log_file)
             
         return ListConverter().convert(kwargs_with_defaults, gateway._gateway_client)
 
