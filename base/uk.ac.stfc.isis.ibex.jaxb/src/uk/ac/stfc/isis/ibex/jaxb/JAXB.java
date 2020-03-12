@@ -14,6 +14,10 @@ import org.eclipse.persistence.jaxb.JAXBContextFactory;
  */
 public class JAXB {
 	
+	private JAXB() {
+		// prevents calls from subclass
+	}
+	
 	static {
 		System.setProperty("javax.xml.bind.context.factory", JAXBContextFactory.class.getName());
 	}
@@ -21,7 +25,7 @@ public class JAXB {
     private static <T> JAXBContext getJaxbContext(Class<T> clazz) throws JAXBException {
     	try {
     		// For running the full GUI
-    	    return JAXBContextFactory.createContext(new Class [] { clazz }, Collections.emptyMap(), JAXBContextFactory.class.getClassLoader());
+    	    return JAXBContextFactory.createContext(new Class[] {clazz}, Collections.emptyMap(), JAXBContextFactory.class.getClassLoader());
     	} catch (Exception | LinkageError e) {
     		// For unit tests
     		return JAXBContext.newInstance(clazz.getPackageName(), clazz.getClassLoader());
