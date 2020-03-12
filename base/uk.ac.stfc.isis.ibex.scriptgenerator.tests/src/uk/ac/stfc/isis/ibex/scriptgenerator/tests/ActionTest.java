@@ -7,19 +7,19 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
+import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 public class ActionTest {
 
 	private ScriptGeneratorAction action;
 	
-	private ActionParameter parameterOneName = new ActionParameter("parameter one");
-	private ActionParameter parameterTwoName = new ActionParameter("parameter two");
+	private JavaActionParameter parameterOneName = new JavaActionParameter("parameter one", "value one");
+	private JavaActionParameter parameterTwoName = new JavaActionParameter("parameter two", "value one");
 	
 	@Before
 	public void setUp() {
-		var testValues = new HashMap<ActionParameter, String>();
+		var testValues = new HashMap<JavaActionParameter, String>();
 		
 		testValues.put(parameterOneName, "1");
 		testValues.put(parameterTwoName, "12.3");
@@ -43,7 +43,7 @@ public class ActionTest {
 				
 		var duplicatedAction = new ScriptGeneratorAction(action);
 		
-		assertEquals(duplicatedAction.getAllActionParameters(), action.getAllActionParameters());
+		assertEquals(duplicatedAction.getActionParameterValueMap(), action.getActionParameterValueMap());
 	}
 	
 }

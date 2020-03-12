@@ -1,5 +1,6 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -8,9 +9,9 @@ import java.util.Map;
 public interface ScriptDefinitionWrapper {
 	
 	/**
-	 * @return The names of the parameters that each action requires.
+	 * @return The parameter names and their values. e.g. ["param1", "val1", "param2", "val2"]
 	 */
-	Map<String, String> getParameters();
+	List<ActionParameter> getParameters();
 	
 	/**
 	 * Performs the defined action.

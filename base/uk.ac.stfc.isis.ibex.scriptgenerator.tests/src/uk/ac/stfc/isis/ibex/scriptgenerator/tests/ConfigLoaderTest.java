@@ -4,14 +4,17 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
+import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionLoader;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonNotReadyException;
 
@@ -28,8 +31,8 @@ public class ConfigLoaderTest {
 	@Before
 	public void setUp() {
 		
-		mockedConfig1 = createMockConfig("Config1", "Param1");
-		mockedConfig2 = createMockConfig("Config2", "Param2");
+		mockedConfig1 = createMockConfig("Config1", "Param1", "Val1");
+		mockedConfig2 = createMockConfig("Config2", "Param2", "Val2");
 		
 		availableConfigs = new ArrayList<ScriptDefinitionWrapper>();
 		availableConfigs.add(mockedConfig1);
@@ -46,13 +49,14 @@ public class ConfigLoaderTest {
 		configLoader = new ScriptDefinitionLoader(mockPythonInterface);
 	}
 
-	private ScriptDefinitionWrapper createMockConfig(String configName, String action_parameter_name) {
+	private ScriptDefinitionWrapper createMockConfig(String configName, String action_parameter_name,
+			String action_parameter_value) {
 		ScriptDefinitionWrapper mockedConfig = mock(ScriptDefinitionWrapper.class);
 		
 		when(mockedConfig.getName()).thenReturn(configName);
 		
-		ArrayList<String> configParams = new ArrayList<String>();
-		configParams.add(action_parameter_name);
+		List<ActionParameter> configParams = new ArrayList<ActionParameter>();
+		configParams.add(new JavaActionParameter("param1", "val1"));
 		when(mockedConfig.getParameters()).thenReturn(configParams);
 		
 		return mockedConfig;
@@ -77,7 +81,7 @@ public class ConfigLoaderTest {
 		assertEquals(mockedConfig2, configLoader.getScriptDefinition());
 		
 		// Compare the parameters in the mocked Config to the ActionParameter in the configLoader.
-		assertEquals(mockedConfig2.getParameters().get(0), configLoader.getParameters().get(0).getName());
+		assertEquals(mockedConfig2.getParameters().get(0).getName(), configLoader.getParameters().get(0).getName());
 	}
 	
 	@Test
@@ -87,11 +91,18 @@ public class ConfigLoaderTest {
 		
 		when(mockedConfigManyParameters.getName()).thenReturn("ConfigManyParams");
 		
-		ArrayList<String> configParams = new ArrayList<String>();
+		List<ActionParameter> configParams = new ArrayList<ActionParameter>();
 		
-		String param1 = "parameter one";
-		String param2 = "parameter two";
-		String param3 = "parameter three";
+		String param1name = "parameter one";
+		String param1val = "one";
+		String param2name = "parameter two";
+		String param2val = "two";
+		String param3name = "parameter three";
+		String param3val = "three";
+		
+		ActionParameter param1 = new JavaActionParameter(param1name, param1val);
+		ActionParameter param2 = new JavaActionParameter(param2name, param2val);
+		ActionParameter param3 = new JavaActionParameter(param3name, param3val);
 		
 		configParams.add(param1);
 		configParams.add(param2);
@@ -99,11 +110,11 @@ public class ConfigLoaderTest {
 		
 		when(mockedConfigManyParameters.getParameters()).thenReturn(configParams);
 		
-		ArrayList<ActionParameter> actionParamList = new ArrayList<ActionParameter>();
+		List<ActionParameter> actionParamList = new ArrayList<ActionParameter>();
 		
-		actionParamList.add(new ActionParameter(param1));
-		actionParamList.add(new ActionParameter(param2));
-		actionParamList.add(new ActionParameter(param3));
+		actionParamList.add(param1);
+		actionParamList.add(param2);
+		actionParamList.add(param3);
 		
 		// Act
 		configLoader.setScriptDefinition(mockedConfigManyParameters);

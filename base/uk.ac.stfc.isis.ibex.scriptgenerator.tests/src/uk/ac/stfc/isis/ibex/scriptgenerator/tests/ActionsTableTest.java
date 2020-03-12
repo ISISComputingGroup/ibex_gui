@@ -15,7 +15,7 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
+import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 
 /**
@@ -26,15 +26,15 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 public class ActionsTableTest {
 
 	private ActionsTable table;
-	private List<ActionParameter> actionParameters;
+	private List<JavaActionParameter> actionParameters;
 	
 	@Before
 	public void setUp() {
-		table = new ActionsTable(new ArrayList<ActionParameter>());
+		table = new ActionsTable(new ArrayList<JavaActionParameter>());
 		
-		var testParameter = new ActionParameter("Test Parameter");
+		var testParameter = new JavaActionParameter("Test Parameter", "test value");
 		
-		actionParameters = new ArrayList<ActionParameter>();
+		actionParameters = new ArrayList<JavaActionParameter>();
 		actionParameters.add(testParameter);
 	}
 	
@@ -61,7 +61,7 @@ public class ActionsTableTest {
 		
 		assertEquals(table.getActions().size(), 2);
 		
-		assertEquals(allActions.get(0).getAllActionParameters(), allActions.get(1).getAllActionParameters());
+		assertEquals(allActions.get(0).getActionParameterValueMap(), allActions.get(1).getActionParameterValueMap());
 	}
 	
 	@Test

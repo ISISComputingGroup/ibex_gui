@@ -62,7 +62,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * The table containing the script generator contents (actions).
 	 */
 	private ActionsTable scriptGeneratorTable =
-			new ActionsTable(new ArrayList<ActionParameter>());
+			new ActionsTable(new ArrayList<JavaActionParameter>());
 	
 	/**
 	 * The loader to select and update the script definition being used.
@@ -368,7 +368,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @param actionParameters
 	 * 			the action parameters to use in the script generator table
 	 */
-	private void setActionParameters(ArrayList<ActionParameter> actionParameters) {
+	private void setActionParameters(ArrayList<JavaActionParameter> actionParameters) {
 		// Setting new action parameters drops the current table
 		scriptGeneratorTable.setActionParameters(actionParameters);
 		scriptGeneratorTable.clearActions();
@@ -444,7 +444,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @return The action parameters used in this table.
 	 * 
 	 */
-	public List<ActionParameter> getActionParameters() {
+	public List<JavaActionParameter> getActionParameters() {
 		return scriptGeneratorTable.getActionParameters();
 	}
 

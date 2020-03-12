@@ -13,6 +13,39 @@ import importlib.machinery
 import importlib.util
 
 
+class PythonActionParameter(object):
+    """
+    Class containing a parameter name and value.
+    """
+    class Java:
+        implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter']
+    
+    def __init__(self, name, default_value):
+        """
+        Initialise the name and default value of the action parameter.
+        """
+        self.name = name
+        self.default_value = default_value
+
+    def getName(self) -> str:
+        """
+        Returns the name of this action parameter.
+
+        Returns:
+              name: String, the name of this action parameter
+        """
+        return self.name
+
+    def getDefaultValue(self) -> str:
+        """
+        Returns the default value of this action parameter.
+
+        Returns:
+              name: String, default value of this action parameter.
+        """
+        return self.default_value
+
+
 class ScriptDefinitionWrapper(object):
     """
     Class containing the definition and validation functions of a single script_definition.
@@ -33,7 +66,7 @@ class ScriptDefinitionWrapper(object):
         """
         return self.name
 
-    def getParameters(self) -> Dict[AnyStr, AnyStr]:
+    def getParameters(self) -> List[PythonActionParameter]:
         """
         Gets the parameters and default values from the script_definition defined in this script_definition
 
@@ -42,15 +75,21 @@ class ScriptDefinitionWrapper(object):
         """
         arguments = signature(self.script_definition.run).parameters
 
-        kwargs_with_defaults = {}
+        kwargs_with_defaults = []
 
         for arg in arguments:
+            with open("C:\\Instrument\\Apps\PythonLog.txt", "w") as log_file:
+                print(kwargs_with_defaults, file=log_file)
             if arguments[arg].default == arguments[arg].empty:
-                kwargs_with_defaults[arg] = arg
+                action_parameter = PythonActionParameter(arg, arg)
             else:
-                kwargs_with_defaults[arg] = str(arguments[arg].default)
+                action_parameter = PythonActionParameter(arg, str(arguments[arg].default))
+            kwargs_with_defaults.append(action_parameter)
 
-        return MapConverter().convert(kwargs_with_defaults, gateway._gateway_client)
+        with open("C:\\Instrument\\Apps\PythonLog.txt", "w") as log_file:
+            print(kwargs_with_defaults, file=log_file)
+            
+        return ListConverter().convert(kwargs_with_defaults, gateway._gateway_client)
 
     def getHelp(self) -> str:
         """
