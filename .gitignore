@@ -19,3 +19,5 @@ build/jdk.zip
 built_script_gen/
 built_client/
 build/Output
+.vscode
+__pycache__

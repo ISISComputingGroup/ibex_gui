@@ -14,6 +14,7 @@ icon_location = "platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-ico
                 "platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web48.gif," \
                 "platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web64.gif"
 
+
 # Walks only a certain number of levels through the directory
 def walklevel(some_dir, level=1):
     some_dir = some_dir.rstrip(os.path.sep)
@@ -68,11 +69,14 @@ def main(build_root_path):
                 return ICON_LOCATION_POINTER_WRONG
     return SUCCESS
 
+
 if __name__ == '__main__':
     success = SUCCESS
     if len(sys.argv) != 2:
+        print("Incorrect arguments, expected path to build base directory")
         success = INCORRECT_ARGS
     else:
+        print("check_build: Build correct")
         success = main(sys.argv[1])
 
     sys.exit(success)
