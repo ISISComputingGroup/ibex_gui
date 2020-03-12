@@ -74,7 +74,7 @@ public abstract class DataboundTable<TRow> extends Composite {
 	private ObservableListContentProvider<TRow> contentProvider = new ObservableListContentProvider<TRow>();
 	
 	/*A listener for whenever the contents of the table are sorted.*/
-	private Optional<Runnable> sortListener;
+	private Optional<Runnable> sortAction;
 	
     /**
      * Instantiates a new databound table.
@@ -244,8 +244,8 @@ public abstract class DataboundTable<TRow> extends Composite {
 	 * are sorted.
 	 * @param runnable the new sort listener of the table.
 	 */
-	public void setSortListener(Runnable runnable) {
-	    sortListener = Optional.of(runnable);
+	public void setSortAction(Runnable runnable) {
+	    sortAction = Optional.of(runnable);
 	}
 	
     /**
@@ -403,7 +403,7 @@ public abstract class DataboundTable<TRow> extends Composite {
                 viewer.getTable().setSortDirection(dir);
                 viewer.getTable().setSortColumn(column);
                 
-                sortListener.ifPresent(runnable -> runnable.run());
+                sortAction.ifPresent(runnable -> runnable.run());
         
                 viewer.refresh();
             }

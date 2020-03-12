@@ -95,7 +95,7 @@ public class IocPVSetsTable extends DataboundTable<EditablePVSet> {
             }
         };
         
-        setSortListener(() -> enableStatusLabelProvider.resetCheckBoxListenerUpdateFlags());
+        setSortAction(() -> enableStatusLabelProvider.resetCheckBoxListenerUpdateFlags());
         
 		createColumn("Enabled?", 2, enableStatusLabelProvider);
 	}
