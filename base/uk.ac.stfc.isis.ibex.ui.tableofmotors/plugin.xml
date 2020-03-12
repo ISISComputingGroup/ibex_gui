@@ -4,9 +4,10 @@
    <extension
          point="org.eclipse.ui.views">
       <view
+            allowMultiple="true"
             class="uk.ac.stfc.isis.ibex.ui.tableofmotors.TableOfMotorsOpiTargetView"
             id="uk.ac.stfc.isis.ibex.ui.tableofmotors.TableOfMotorsOpiTargetView"
-            name="name"
+            name="TableOfMotorsOpiTargetView"
             restorable="true">
       </view>
    </extension>

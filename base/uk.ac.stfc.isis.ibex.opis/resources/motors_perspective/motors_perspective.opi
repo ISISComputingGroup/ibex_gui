@@ -121,7 +121,7 @@ else:
       <color red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>62</height>
+    <height>55</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
@@ -161,7 +161,7 @@ else:
       <color red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>517</height>
+    <height>547</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
       <MM>MOT:MTR0101</MM>

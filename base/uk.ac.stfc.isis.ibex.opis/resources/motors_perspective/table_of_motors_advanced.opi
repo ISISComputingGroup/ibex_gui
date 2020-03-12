@@ -6,7 +6,7 @@
     <min_width>-1</min_width>
     <min_height>-1</min_height>
   </auto_scale_widgets>
-  <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
+  <auto_zoom_to_fit_all>true</auto_zoom_to_fit_all>
   <background_color>
     <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
   </background_color>
@@ -69,7 +69,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>19b4166d:1702efd9e91:-7fd9</wuid>
     <x>78</x>
     <y>36</y>
@@ -110,7 +110,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7fe0</wuid>
     <x>159</x>
     <y>36</y>
@@ -151,7 +151,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7fd7</wuid>
     <x>240</x>
     <y>36</y>
@@ -192,7 +192,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7fc8</wuid>
     <x>321</x>
     <y>36</y>
@@ -233,7 +233,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7fbd</wuid>
     <x>402</x>
     <y>36</y>
@@ -274,7 +274,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7fb2</wuid>
     <x>483</x>
     <y>36</y>
@@ -315,7 +315,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7fa7</wuid>
     <x>564</x>
     <y>36</y>
@@ -356,7 +356,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7f9c</wuid>
     <x>645</x>
     <y>36</y>
@@ -397,7 +397,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7f61</wuid>
     <x>78</x>
     <y>120</y>
@@ -438,7 +438,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7f5c</wuid>
     <x>159</x>
     <y>120</y>
@@ -479,7 +479,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7f57</wuid>
     <x>240</x>
     <y>120</y>
@@ -520,7 +520,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7f52</wuid>
     <x>321</x>
     <y>120</y>
@@ -561,7 +561,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7f4d</wuid>
     <x>402</x>
     <y>120</y>
@@ -602,7 +602,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7f48</wuid>
     <x>483</x>
     <y>120</y>
@@ -643,7 +643,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7f43</wuid>
     <x>564</x>
     <y>120</y>
@@ -684,7 +684,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7f3e</wuid>
     <x>645</x>
     <y>120</y>
@@ -725,7 +725,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7f27</wuid>
     <x>78</x>
     <y>204</y>
@@ -766,7 +766,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7f22</wuid>
     <x>159</x>
     <y>204</y>
@@ -807,7 +807,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7f1d</wuid>
     <x>240</x>
     <y>204</y>
@@ -848,7 +848,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7f18</wuid>
     <x>321</x>
     <y>204</y>
@@ -889,7 +889,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7f13</wuid>
     <x>402</x>
     <y>204</y>
@@ -930,7 +930,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7f0e</wuid>
     <x>483</x>
     <y>204</y>
@@ -971,7 +971,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7f09</wuid>
     <x>564</x>
     <y>204</y>
@@ -1012,7 +1012,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7f04</wuid>
     <x>645</x>
     <y>204</y>
@@ -1053,7 +1053,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7eed</wuid>
     <x>78</x>
     <y>288</y>
@@ -1094,7 +1094,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7ee8</wuid>
     <x>159</x>
     <y>288</y>
@@ -1135,7 +1135,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7ee3</wuid>
     <x>240</x>
     <y>288</y>
@@ -1176,7 +1176,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7ede</wuid>
     <x>321</x>
     <y>288</y>
@@ -1217,7 +1217,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7ed9</wuid>
     <x>402</x>
     <y>288</y>
@@ -1258,7 +1258,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7ed4</wuid>
     <x>483</x>
     <y>288</y>
@@ -1299,7 +1299,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7ecf</wuid>
     <x>564</x>
     <y>288</y>
@@ -1340,7 +1340,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7eca</wuid>
     <x>645</x>
     <y>288</y>
@@ -1381,7 +1381,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7e61</wuid>
     <x>78</x>
     <y>372</y>
@@ -1422,7 +1422,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7e5c</wuid>
     <x>159</x>
     <y>372</y>
@@ -1463,7 +1463,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-5908</wuid>
     <x>240</x>
     <y>372</y>
@@ -1504,7 +1504,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7e52</wuid>
     <x>321</x>
     <y>372</y>
@@ -1545,7 +1545,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7e4d</wuid>
     <x>402</x>
     <y>372</y>
@@ -1586,7 +1586,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7e48</wuid>
     <x>483</x>
     <y>372</y>
@@ -1627,7 +1627,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7e43</wuid>
     <x>564</x>
     <y>372</y>
@@ -1668,7 +1668,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7e3e</wuid>
     <x>645</x>
     <y>372</y>
@@ -1709,7 +1709,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7e39</wuid>
     <x>78</x>
     <y>456</y>
@@ -1750,7 +1750,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7e34</wuid>
     <x>159</x>
     <y>456</y>
@@ -1791,7 +1791,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7e2f</wuid>
     <x>240</x>
     <y>456</y>
@@ -1832,7 +1832,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7e2a</wuid>
     <x>321</x>
     <y>456</y>
@@ -1873,7 +1873,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7e25</wuid>
     <x>402</x>
     <y>456</y>
@@ -1914,7 +1914,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7e20</wuid>
     <x>483</x>
     <y>456</y>
@@ -1955,7 +1955,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7e1b</wuid>
     <x>564</x>
     <y>456</y>
@@ -1996,7 +1996,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7e16</wuid>
     <x>645</x>
     <y>456</y>
@@ -2037,7 +2037,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7e11</wuid>
     <x>78</x>
     <y>540</y>
@@ -2078,7 +2078,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7e0c</wuid>
     <x>159</x>
     <y>540</y>
@@ -2119,7 +2119,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7e07</wuid>
     <x>240</x>
     <y>540</y>
@@ -2160,7 +2160,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7e02</wuid>
     <x>321</x>
     <y>540</y>
@@ -2201,7 +2201,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7dfd</wuid>
     <x>402</x>
     <y>540</y>
@@ -2242,7 +2242,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7df8</wuid>
     <x>483</x>
     <y>540</y>
@@ -2283,7 +2283,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7df3</wuid>
     <x>564</x>
     <y>540</y>
@@ -2324,7 +2324,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7dee</wuid>
     <x>645</x>
     <y>540</y>
@@ -2365,7 +2365,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7de9</wuid>
     <x>78</x>
     <y>624</y>
@@ -2406,7 +2406,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7de4</wuid>
     <x>159</x>
     <y>624</y>
@@ -2447,7 +2447,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7ddf</wuid>
     <x>240</x>
     <y>624</y>
@@ -2488,7 +2488,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7dda</wuid>
     <x>321</x>
     <y>624</y>
@@ -2529,7 +2529,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7dd5</wuid>
     <x>402</x>
     <y>624</y>
@@ -2570,7 +2570,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7dd0</wuid>
     <x>483</x>
     <y>624</y>
@@ -2611,7 +2611,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7dcb</wuid>
     <x>564</x>
     <y>624</y>
@@ -2652,7 +2652,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>121</width>
+    <width>101</width>
     <wuid>-1669e5af:170829a6fda:-7dc6</wuid>
     <x>645</x>
     <y>624</y>
