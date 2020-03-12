@@ -1062,13 +1062,6 @@
          unpack="false"/>
 
    <plugin
-         id="javax.xml.bind"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="javax.xml.rpc"
          download-size="0"
          install-size="0"
@@ -1082,13 +1075,6 @@
 
    <plugin
          id="org.apache.felix.scr"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="javax.mail"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -1403,6 +1389,27 @@
 
    <plugin
          id="uk.ac.stfc.isis.ibex.ui.widgets.epics"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.reflectometry"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.jaxb"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="javax.xml.stream"
          download-size="0"
          install-size="0"
          version="0.0.0"

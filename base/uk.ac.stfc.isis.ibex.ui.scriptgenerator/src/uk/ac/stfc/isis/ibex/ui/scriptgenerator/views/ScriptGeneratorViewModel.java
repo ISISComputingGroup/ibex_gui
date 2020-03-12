@@ -37,7 +37,6 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageExcept
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
-import uk.ac.stfc.isis.ibex.ui.widgets.FileMessageDialog;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
@@ -113,7 +112,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	/**
 	 * The property to listen for changes in a Generator containing the generated script (String).
 	 */
-	private static final String GENERATED_SCRIPT_FILEPATH_PROPERTY = "generated script filepath";
+	private static final String GENERATED_SCRIPT_FILENAME_PROPERTY = "generated script filename";
 	
 	/**
 	 * A property to listen to for when actions change in the model.
@@ -191,6 +190,23 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		scriptGeneratorModel.addPropertyChangeListener(SCRIPT_GENERATION_ERROR_PROPERTY, evt -> {
 			LOG.info("Generation error");
 			displayGenerationError();
+		});
+		// Listen for generated script refreshes
+		scriptGeneratorModel.addPropertyChangeListener(GENERATED_SCRIPT_FILENAME_PROPERTY, evt -> {
+			String scriptFilename = (String) evt.getNewValue();
+			DISPLAY.asyncExec(() -> {
+				scriptGeneratorModel.getLastGeneratedScript().ifPresentOrElse(
+						generatedScript -> {
+							SaveScriptGeneratorFileMessageDialog.openInformation(Display.getDefault().getActiveShell(),
+									"Script Generated", "",
+									scriptGeneratorModel.getScriptFilepathPrefix(),
+									scriptFilename, generatedScript, scriptGeneratorModel);
+						},
+						() -> {
+							MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
+						}
+				);
+			});
 		});
 	}
 	
@@ -287,7 +303,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	protected void cleanUp() {
 		scriptGeneratorModel.cleanUp();
 	}
-	
+
 	/**
 	 * Get a list of available script definitions.
 	 * 
@@ -330,30 +346,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		    }
 		};
 	}
-	
+
 	/**
 	 * Listen for changes in actions and activate the handler.
 	 */
 	private PropertyChangeListener actionChangeListener = evt -> {
 			actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript);
-		};
-	
-	/**
-	 * Listen for generated scripts and display the correct dialog (error or success and open file).
-	 */
-	private PropertyChangeListener generatedScriptListener = evt -> {
-			@SuppressWarnings("unchecked")
-			Optional<String> optionalScriptFilePath = Optional.class.cast(evt.getNewValue());
-			DISPLAY.asyncExec(() -> {
-				optionalScriptFilePath.ifPresentOrElse(
-						scriptFilePath -> {
-							openFileDialog(scriptFilePath);
-						},
-						() -> {
-							MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
-						}
-				);
-			});
 		};
 
 	/**
@@ -373,14 +371,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
 		this.scriptGeneratorModel.removePropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
 		this.scriptGeneratorModel.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
-		// Listen for generated script refreshes
-		this.scriptGeneratorModel.removePropertyChangeListener(GENERATED_SCRIPT_FILEPATH_PROPERTY, generatedScriptListener);
-		this.scriptGeneratorModel.addPropertyChangeListener(GENERATED_SCRIPT_FILEPATH_PROPERTY, generatedScriptListener);
-	}
-	
-	private void openFileDialog(String filePath) {
-		FileMessageDialog.openInformation(Display.getDefault().getActiveShell(),
-				"Script Generated", "Script generated at: ", filePath);
 	}
 	
 	/**

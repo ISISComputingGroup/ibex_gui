@@ -41,7 +41,6 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 /**
  * The panel that shows blocks and groups in the main IBEX perspective.
  */
-@SuppressWarnings("checkstyle:magicnumber")
 public class GroupsPanel extends Composite {
 	
 	private final Display display = Display.getCurrent();
