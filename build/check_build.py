@@ -8,7 +8,7 @@ NO_BUILD_PROPERTIES = 2
 ICONS_NOT_INCLUDED = 3
 ICON_LOCATION_POINTER_WRONG = 4
 
-exceptions = ["ibex.client.product", "ibex.example", "uk.ac.stfc.isis.ibex.e4.client.product", "uk.ac.stfc.isis.scriptgenerator.client.product"]
+exceptions = ["ibex.client.product", "ibex.example", "uk.ac.stfc.isis.ibex.e4.client.product", "uk.ac.stfc.isis.scriptgenerator.client.product", "uk.ac.stfc.isis.ibex.opis\\resources"]
 icon_location = "platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web16.gif," \
                 "platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web32.gif," \
                 "platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web48.gif," \
