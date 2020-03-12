@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.core.databinding.observable.list.WritableList;
@@ -73,7 +74,7 @@ public abstract class DataboundTable<TRow> extends Composite {
 	private ObservableListContentProvider<TRow> contentProvider = new ObservableListContentProvider<TRow>();
 	
 	/*A listener for whenever the contents of the table are sorted.*/
-	private Runnable sortListener;
+	private Optional<Runnable> sortListener;
 	
     /**
      * Instantiates a new databound table.
@@ -244,7 +245,7 @@ public abstract class DataboundTable<TRow> extends Composite {
 	 * @param runnable the new sort listener of the table.
 	 */
 	public void setSortListener(Runnable runnable) {
-	    sortListener = runnable;
+	    sortListener = Optional.of(runnable);
 	}
 	
     /**
@@ -402,9 +403,7 @@ public abstract class DataboundTable<TRow> extends Composite {
                 viewer.getTable().setSortDirection(dir);
                 viewer.getTable().setSortColumn(column);
                 
-                if(sortListener != null) {
-                    sortListener.run();
-                }
+                sortListener.ifPresent(runnable -> runnable.run());
         
                 viewer.refresh();
             }
