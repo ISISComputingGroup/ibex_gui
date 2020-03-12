@@ -48,6 +48,7 @@ public class MacroTable extends DataboundTable<MacroViewModel> {
     private MacroValueValidator valueValidator;
     private StringEditingSupport<MacroViewModel> editingSupport;
     private boolean canEdit;
+    
     private static final Color READONLY_COLOR = ResourceManager.getColor(SWT.COLOR_DARK_GRAY);
     
     /**

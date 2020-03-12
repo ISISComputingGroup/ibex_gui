@@ -402,24 +402,15 @@ public abstract class DataboundTable<TRow> extends Composite {
                 viewer.getTable().setSortDirection(dir);
                 viewer.getTable().setSortColumn(column);
                 
-                TableColumn[] columns = viewer.getTable().getColumns();
-                int columnIndex = -1;
-                
-                for(int i = 0; i < columns.length; i++) {
-                    if(columns[i].equals(column)) {
-                        columnIndex = i;
-                    }
+                if(sortListener != null) {
+                    sortListener.run();
                 }
-                
-                //updateLabelProvidersAfterSort(columnIndex);
         
                 viewer.refresh();
             }
         };
         return selectionAdapter;
     }
-	
-	//protected abstract void updateLabelProvidersAfterSort(int columnIndex);
 	
     /**
      * Creates a new resizeable column in the table at the end of the column
