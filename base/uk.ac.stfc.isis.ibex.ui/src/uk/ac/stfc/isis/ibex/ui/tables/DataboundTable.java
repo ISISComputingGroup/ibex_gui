@@ -240,9 +240,9 @@ public abstract class DataboundTable<TRow> extends Composite {
 	}
 	
 	/**
-	 * Sets the a listener which will be run whenever the items of the table 
+	 * Sets the an action which will be run whenever the items of the table 
 	 * are sorted.
-	 * @param runnable the new sort listener of the table.
+	 * @param runnable the new sort action of the table.
 	 */
 	public void setSortAction(Runnable runnable) {
 	    sortAction = Optional.of(runnable);
