@@ -115,6 +115,8 @@ public class ScriptGeneratorFileHandler {
 	/**
 	 * Open the file specified in this dialog by the filepathPrefix, filename and passed fileExtension in notepad++.
 	 * 
+	 * @param filepathPrefix The prefix to add to the filename to place it in the file system.
+	 * @param filename The name of the file to open.
 	 * @param fileExtension The file extension of the file to open.
 	 * @throws OpenFileException Thrown when failing to find notepad to open the file.
 	 * @throws IOException Thrown when attempting to open the file.

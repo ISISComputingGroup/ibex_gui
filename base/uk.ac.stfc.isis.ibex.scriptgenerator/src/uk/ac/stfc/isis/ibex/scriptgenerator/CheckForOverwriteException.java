@@ -7,6 +7,11 @@ package uk.ac.stfc.isis.ibex.scriptgenerator;
 @SuppressWarnings("serial")
 public class CheckForOverwriteException extends Exception {
 	
+	/**
+	 * Fill in the exception details with a message.
+	 * 
+	 * @param message The message to use to describe the specific exception instance.
+	 */
 	public CheckForOverwriteException(String message) {
 		super(message);
 	}
