@@ -15,7 +15,7 @@ public class ActionTest {
 	private ScriptGeneratorAction action;
 	
 	private JavaActionParameter parameterOneName = new JavaActionParameter("parameter one", "value one");
-	private JavaActionParameter parameterTwoName = new JavaActionParameter("parameter two", "value one");
+	private JavaActionParameter parameterTwoName = new JavaActionParameter("parameter two", "value two");
 	
 	@Before
 	public void setUp() {
