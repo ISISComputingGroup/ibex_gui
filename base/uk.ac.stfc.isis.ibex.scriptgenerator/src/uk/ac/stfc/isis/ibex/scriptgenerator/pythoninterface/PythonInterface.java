@@ -416,7 +416,7 @@ public class PythonInterface extends ModelObject {
 	 * @throws InterruptedException   The Py4J call was interrupted
 	 * @throws PythonNotReadyException When python is not ready to accept calls.
 	 */
-	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent,String currentlyLoadedDataFileContent, ScriptDefinitionWrapper scriptDefinition)
+	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, String currentlyLoadedDataFileContent, ScriptDefinitionWrapper scriptDefinition)
 			throws InterruptedException, ExecutionException, PythonNotReadyException {
 		if (pythonReady) {
 			CompletableFuture.supplyAsync(() -> {

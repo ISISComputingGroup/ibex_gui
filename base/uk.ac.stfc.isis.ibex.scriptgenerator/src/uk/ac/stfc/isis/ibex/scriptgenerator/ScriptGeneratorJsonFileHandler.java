@@ -45,8 +45,6 @@ public class ScriptGeneratorJsonFileHandler {
 	private final PreferenceSupplier preferenceSupplier = new PreferenceSupplier();
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorSingleton.class);
 	private ParametersConverter currentlyLoadedJSONFileContent = null;
-	
-	
 
 	/**
 	 * Get list of data files from the directory where data files are saved.

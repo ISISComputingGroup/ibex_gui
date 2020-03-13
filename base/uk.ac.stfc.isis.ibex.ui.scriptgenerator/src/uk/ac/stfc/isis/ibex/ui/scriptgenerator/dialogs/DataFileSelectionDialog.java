@@ -11,8 +11,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.ui.dialogs.SelectionDialog;
 /**
- * Dialog for asking user to select the data file they want to load on script generator
- * @author mjq34833
+ * Dialog for asking user to select the data file they want to load on script generator.
  *
  */
 public class DataFileSelectionDialog extends SelectionDialog {
@@ -21,14 +20,13 @@ public class DataFileSelectionDialog extends SelectionDialog {
 	 */
 	private List<String> available;
 	/**
-	 * User selected file
+	 * User selected file.
 	 */
 	private Collection<String> selected;
 	
 	public DataFileSelectionDialog(Shell parentShell, String title, List<String> availableData) {
 		super(parentShell, title);
 		this.available = availableData;
-		
 	}
 
 	@Override
@@ -56,6 +54,4 @@ public class DataFileSelectionDialog extends SelectionDialog {
 	public String selectedFile() {
 		return selected.toArray(new String[1])[0];
 	}
-
-
 }

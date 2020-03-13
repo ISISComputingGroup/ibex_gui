@@ -228,7 +228,7 @@ class ScriptDefinitionsWrapper(object):
 
     def generate(self, list_of_actions, jsonString, script_definition: ScriptDefinitionWrapper) -> Union[None, AnyStr]:
         """
-        Generates a script from a list of parameters and script_definitionuration
+        Generates a script from a list of parameters and script_definition
 
         Returns:
            None if parameters are invalid, otherwise a string of a generated script.

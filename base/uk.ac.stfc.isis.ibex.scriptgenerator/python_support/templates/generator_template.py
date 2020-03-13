@@ -5,7 +5,7 @@
 def runscript():
     script_definition = DoRun()
     {% for action in script_generator_actions -%}
-    config.run(**{{ action }})
+    script_definition.run(**{{ action }})
     {% endfor %}
 
 

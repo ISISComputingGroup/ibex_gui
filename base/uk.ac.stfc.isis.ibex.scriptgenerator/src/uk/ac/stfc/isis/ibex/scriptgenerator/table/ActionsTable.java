@@ -76,10 +76,10 @@ public class ActionsTable extends ModelObject {
 	 * @param parametersMap The user-set value (string) for the specified ActionParameter.
 	 * @return the action.
 	 */
-	private ScriptGeneratorAction createAction(Map<ActionParameter, String> paremetersMap) {
+	private ScriptGeneratorAction createAction(Map<ActionParameter, String> parametersMap) {
 		// Ensure is not shallow copy
 		Map<ActionParameter, String> newParamsMap = new HashMap<ActionParameter, String>();
-		for (Map.Entry<ActionParameter, String> entry: paremetersMap.entrySet()) {
+		for (Map.Entry<ActionParameter, String> entry: parametersMap.entrySet()) {
 			newParamsMap.put(entry.getKey(), entry.getValue());
 		}
 		// Create action and attach listeners
