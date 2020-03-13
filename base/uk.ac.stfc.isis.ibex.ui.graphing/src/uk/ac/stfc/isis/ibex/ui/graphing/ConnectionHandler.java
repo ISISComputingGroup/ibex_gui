@@ -30,7 +30,7 @@ public class ConnectionHandler {
     	    	IPerspectiveDescriptor currentPerspective = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getPerspective();
     			boolean isReflectometryView = currentPerspective.getId().equals(REFL_PERSPECTIVE_ID);
     			
-    			if(isReflectometryView) {
+    			if (isReflectometryView) {
     				FixedMatplotlibOpiTargetView.displayOpi(url);
     			} else {
     				MatplotlibOpiTargetView.displayOpi(url);
