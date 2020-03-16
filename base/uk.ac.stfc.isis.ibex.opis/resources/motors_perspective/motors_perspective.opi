@@ -6,7 +6,7 @@
     <min_width>-1</min_width>
     <min_height>-1</min_height>
   </auto_scale_widgets>
-  <auto_zoom_to_fit_all>true</auto_zoom_to_fit_all>
+  <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
   <background_color>
     <color red="240" green="240" blue="240" />
   </background_color>
@@ -121,7 +121,7 @@ else:
       <color red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>55</height>
+    <height>62</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
@@ -161,7 +161,7 @@ else:
       <color red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>547</height>
+    <height>307</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
       <MM>MOT:MTR0101</MM>
@@ -217,7 +217,7 @@ else:
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>848</width>
+    <width>476</width>
     <wuid>-1669e5af:170829a6fda:-50b8</wuid>
     <x>594</x>
     <y>54</y>

@@ -30,6 +30,7 @@ import org.eclipse.ui.PartInitException;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.opis.Opi;
+import uk.ac.stfc.isis.ibex.ui.tableofmotors.displayoptions.AccessibilityPv;
 import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 
 public class TableOfMotorsOpiTargetView extends OpiTargetView {
@@ -59,16 +60,19 @@ public class TableOfMotorsOpiTargetView extends OpiTargetView {
 		super.init(site);
 		try {
 			initialiseOPI();
+			new AccessibilityPv().writeInitialValue();
 		} catch (OPIViewCreationException e) {
 			throw new PartInitException(e.getMessage(), e);
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public MacrosInput macros() {
 		MacrosInput macros = emptyMacrosInput();
 		macros.put("P", Instrument.getInstance().getPvPrefix());
 		return macros;
 	}
-
 }

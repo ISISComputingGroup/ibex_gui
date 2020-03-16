@@ -17,16 +17,16 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.ui.motor.displayoptions;
+package uk.ac.stfc.isis.ibex.ui.tableofmotors.displayoptions;
 
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.model.application.ui.menu.MHandledMenuItem;
 
 /**
- * Sets the current motor background palette to the alternative colourblind-friendly scheme.
+ * Sets the current motor background palette to the standard colour scheme.
  */
-public class AlternativeColourSchemeHandler {
-
+public class StandardColourSchemeHandler {
+	
     /**
      * Method to execute when command corresponding to this handler is triggered.
      * 
@@ -34,9 +34,8 @@ public class AlternativeColourSchemeHandler {
      */
     @Execute
     public void execute(MHandledMenuItem menuItem) {
-
     	if (menuItem.isSelected()) {
-            DisplayPreferences.getInstance().setMotorBackgroundPalette(ColourOption.COLOURBLIND);
+    		AccessibilityModel.getInstance().setAccessibilityEnabled(false);
     	}
     }
 }

@@ -74,12 +74,28 @@
     <name>$(NAME)</name>
     <rules>
       <rule name="IF motor moving THEN change background colour" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0==0">
+        <exp bool_exp="pv0==0 &amp;&amp; pv1==0">
           <value>
             <color red="213" green="255" blue="213" />
           </value>
         </exp>
+        <exp bool_exp="pv0==0 &amp;&amp; pv1==1">
+          <value>
+            <color red="0" green="255" blue="0" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==1 &amp;&amp; pv1==0">
+          <value>
+            <color red="255" green="204" blue="204" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==1 &amp;&amp; pv1==1">
+          <value>
+            <color red="120" green="120" blue="255" />
+          </value>
+        </exp>
         <pv trig="true">$(PV_ROOT)$(MTR).DMOV</pv>
+        <pv trig="true">loc://accessibility:colour_scheme</pv>
       </rule>
     </rules>
     <scale_options>
