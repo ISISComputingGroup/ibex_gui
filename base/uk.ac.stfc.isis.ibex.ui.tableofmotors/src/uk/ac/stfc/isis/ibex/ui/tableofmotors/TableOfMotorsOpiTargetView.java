@@ -22,6 +22,8 @@
  */
 package uk.ac.stfc.isis.ibex.ui.tableofmotors;
 
+import java.util.List;
+
 import org.csstudio.opibuilder.util.MacrosInput;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.ui.IViewSite;
@@ -33,7 +35,7 @@ import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.ui.tableofmotors.displayoptions.AccessibilityPv;
 import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 
-public class TableOfMotorsOpiTargetView extends OpiTargetView {
+public abstract class TableOfMotorsOpiTargetView extends OpiTargetView {
     /**
      * Class ID.
      */
@@ -73,6 +75,27 @@ public class TableOfMotorsOpiTargetView extends OpiTargetView {
 	public MacrosInput macros() {
 		MacrosInput macros = emptyMacrosInput();
 		macros.put("P", Instrument.getInstance().getPvPrefix());
+		macros.put("PERSPECTIVE_NAME", getViewName());
+		
+		List<Integer> controllerIndices = getControllerIndices();
+		
+		if (controllerIndices.size() != 8) {
+			throw new IllegalStateException("Expected 8 controller indices, got " + controllerIndices.size());
+		}
+		
+		int i = 0;
+		for (int controller : controllerIndices) {
+			macros.put(String.format("MOTORS_PERSPECTIVE_ROW%d", ++i), String.format("%02d", controller));
+		}
+		
 		return macros;
 	}
+	
+	/**
+	 * Returns the name of this OPI.
+	 * @return the name of this OPI
+	 */
+	protected abstract String getViewName();
+	
+	protected abstract List<Integer> getControllerIndices();
 }

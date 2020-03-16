@@ -481,7 +481,9 @@
         </children>
       </children>
       <children xsi:type="basic:PartStack" xmi:id="_kZPFsD6oEeqw8MKP5CJ4zA" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.22" containerData="70">
-        <children xsi:type="basic:Part" xmi:id="_k5ujoD6oEeqw8MKP5CJ4zA" elementId="uk.ac.stfc.isis.ibex.ui.tableofmotors.TableOfMotorsOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView"/>
+        <children xsi:type="basic:Part" xmi:id="_k5ujoD6oEeqw8MKP5CJ4zA" elementId="uk.ac.stfc.isis.ibex.ui.tableofmotors.TableOfMotors1To8" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Motors 1-8"/>
+        <children xsi:type="basic:Part" xmi:id="_vxfOQGejEeqbOdNtsKmAyQ" elementId="uk.ac.stfc.isis.ibex.ui.tableofmotors.TableOfMotors9To16" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Motors 9-16"/>
+        <children xsi:type="basic:Part" xmi:id="_yDpeIGejEeqbOdNtsKmAyQ" elementId="uk.ac.stfc.isis.ibex.ui.tableofmotors.TableOfMotors17To24" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Motors 17-24"/>
       </children>
     </children>
   </snippets>
