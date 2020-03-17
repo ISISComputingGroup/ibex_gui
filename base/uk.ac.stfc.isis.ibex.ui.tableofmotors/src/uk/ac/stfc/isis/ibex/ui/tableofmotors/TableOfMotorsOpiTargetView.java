@@ -45,6 +45,8 @@ public abstract class TableOfMotorsOpiTargetView extends OpiTargetView {
      * File name of the web links OPI.
      */
     private static final String TABLE_OF_MOTORS_OPI_PATH = "motors_perspective/motors_perspective.opi";
+    
+    private static final int MOTOR_CONTROLLERS_PER_TAB = 8;
 
     /**
      * {@inheritDoc}
@@ -75,17 +77,19 @@ public abstract class TableOfMotorsOpiTargetView extends OpiTargetView {
 	public MacrosInput macros() {
 		MacrosInput macros = emptyMacrosInput();
 		macros.put("P", Instrument.getInstance().getPvPrefix());
-		macros.put("PERSPECTIVE_NAME", getViewName());
+		macros.put("MOTORS_PERSPECTIVE_NAME", getViewName());
 		
-		List<Integer> controllerIndices = getControllerIndices();
+		final List<Integer> controllers = getMotorControllers();
 		
-		if (controllerIndices.size() != 8) {
-			throw new IllegalStateException("Expected 8 controller indices, got " + controllerIndices.size());
+		if (controllers.size() != MOTOR_CONTROLLERS_PER_TAB) {
+			throw new IllegalStateException("Expected " + MOTOR_CONTROLLERS_PER_TAB + " motor controllers, got " + controllers.size());
 		}
 		
-		int i = 0;
-		for (int controller : controllerIndices) {
-			macros.put(String.format("MOTORS_PERSPECTIVE_ROW%d", ++i), String.format("%02d", controller));
+		// We populate macros of the form MOTORS_PERSPECTIVE_ROW1=09 to indicate to the ToM that it
+		// should display motor controller 09 in row 1 of the table. Rows are indexed 1..8.
+		int row = 0;
+		for (int controller : controllers) {
+			macros.put(String.format("MOTORS_PERSPECTIVE_ROW%d", ++row), String.format("%02d", controller));
 		}
 		
 		return macros;
@@ -97,5 +101,12 @@ public abstract class TableOfMotorsOpiTargetView extends OpiTargetView {
 	 */
 	protected abstract String getViewName();
 	
-	protected abstract List<Integer> getControllerIndices();
+	/**
+	 * Gets the motor controller numbers which should be shown on this tab.
+	 * 
+	 * The length of this list must be equal to MOTOR_CONTROLLERS_PER_TAB
+	 * 
+	 * @return the motor controller numbers which should be shown on this tab.
+	 */
+	protected abstract List<Integer> getMotorControllers();
 }

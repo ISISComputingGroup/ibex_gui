@@ -7,21 +7,21 @@
             allowMultiple="true"
             class="uk.ac.stfc.isis.ibex.ui.tableofmotors.TableOfMotors1To8"
             id="uk.ac.stfc.isis.ibex.ui.tableofmotors.TableOfMotors1To8"
-            name="Motors 1-8"
+            name="Motor controllers 1-8"
             restorable="true">
       </view>
       <view
             allowMultiple="true"
             class="uk.ac.stfc.isis.ibex.ui.tableofmotors.TableOfMotors9to16"
             id="uk.ac.stfc.isis.ibex.ui.tableofmotors.TableOfMotors9To16"
-            name="Motors 9-16"
+            name="Motor controllers 9-16"
             restorable="true">
       </view>
       <view
             allowMultiple="true"
             class="uk.ac.stfc.isis.ibex.ui.tableofmotors.TableOfMotors17to24"
             id="uk.ac.stfc.isis.ibex.ui.tableofmotors.TableOfMotors17To24"
-            name="Motors 17-24"
+            name="Motor controllers 17-24"
             restorable="true">
       </view>
    </extension>
