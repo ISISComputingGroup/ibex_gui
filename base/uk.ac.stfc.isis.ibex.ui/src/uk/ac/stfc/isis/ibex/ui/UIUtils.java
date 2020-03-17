@@ -36,21 +36,11 @@ public final class UIUtils {
 
     /** The mu unicode character. */
     public static final String MU = "\u03BC";
-
-    /**
-     * An update strategy for inverting an observed boolean value.
-     */
-    public static final UpdateValueStrategy NOT_CONVERTER = new UpdateValueStrategy() {
-        @Override
-        public Object convert(Object value) {
-            return !(Boolean) value;
-        }
-    };
     
     /**
      * A typed update strategy for inverting an observed boolean value.
      */
-    public static final UpdateValueStrategy<Boolean, Boolean> TYPED_NOT_CONVERTER = new UpdateValueStrategy<Boolean, Boolean>() {
+    public static final UpdateValueStrategy<Boolean, Boolean> NOT_CONVERTER = new UpdateValueStrategy<Boolean, Boolean>() {
         @Override
         public Boolean convert(Boolean value) {
             return !(Boolean) value;

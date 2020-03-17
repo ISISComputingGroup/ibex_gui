@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
+import org.python.pydev.ast.interpreter_managers.InterpreterManagersAPI;
 import org.python.pydev.core.IInterpreterInfo;
 import org.python.pydev.core.IInterpreterManager;
 import org.python.pydev.debug.newconsole.PydevConsoleConstants;
@@ -35,7 +36,6 @@ import org.python.pydev.debug.newconsole.PydevConsoleFactory;
 import org.python.pydev.debug.newconsole.PydevConsoleInterpreter;
 import org.python.pydev.debug.newconsole.env.PydevIProcessFactory;
 import org.python.pydev.debug.newconsole.env.PydevIProcessFactory.PydevConsoleLaunchInfo;
-import org.python.pydev.plugin.PydevPlugin;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
@@ -80,12 +80,24 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 	};
 
 	/**
+	 * Creates the scripting console after configuring the set of default
+	 * interpreter commands.
+	 * 
+	 * @param additionalInitialCommands Additional commands to run on startup
+	 * @param compactPlot               Flag indicating whether matplotlib plots
+	 *                                  should be shrunk to a compact size.
+	 */
+	public void configureAndCreateConsole(String additionalInitialCommands, boolean compactPlot) {
+		setInitialInterpreterCommands(compactPlot);
+		createConsole(additionalInitialCommands);
+	}
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void createConsole(String additionalInitialComands) {
 		try {
-			setInitialInterpreterCommands();
 			super.createConsole(createGeniePydevInterpreter(), additionalInitialComands);
 		} catch (Exception e) {
 			LOG.error(e);
@@ -96,12 +108,12 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 		Job.getJobManager().addJobChangeListener(JOB_CHANGE_LISTENER);
 	}
 
-	private void setInitialInterpreterCommands() {
+	private void setInitialInterpreterCommands(boolean compactPlot) {
 		IPreferenceStore pydevDebugPreferenceStore = new ScopedPreferenceStore(InstanceScope.INSTANCE,
 				"org.python.pydev.debug");
 
 		pydevDebugPreferenceStore.setDefault(PydevConsoleConstants.INITIAL_INTERPRETER_CMDS,
-				Commands.GENIE_INITIALISATION);
+				Commands.getInitialisationCommands(compactPlot));
 	}
 
 	/**
@@ -112,7 +124,7 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 	 *             can throw several different exceptions
 	 */
 	PydevConsoleInterpreter createGeniePydevInterpreter() throws Exception {
-		IInterpreterManager manager = PydevPlugin.getPythonInterpreterManager(true);
+		IInterpreterManager manager = InterpreterManagersAPI.getPythonInterpreterManager();
 		IInterpreterInfo interpreterInfo = manager.createInterpreterInfo(new PreferenceSupplier().pythonInterpreterPath(),
 				monitor, false);
 
