@@ -1,16 +1,25 @@
+from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
 from org.csstudio.opibuilder.scriptUtil import PVUtil
+from org.csstudio.ui.util.thread import UIBundlingThread
+from org.eclipse.swt.widgets import Display
+
 from java.lang import Thread, Runnable
 
-background_x = display.getWidget("JawBackground").getPropertyValue("x")
-background_y = display.getWidget("JawBackground").getPropertyValue("y")
+currentDisplay = Display.getCurrent()
+motNumber = widget.getMacroValue("NUMBER")
 
-background_width = display.getWidget("JawBackground").getPropertyValue("width")
-background_height = display.getWidget("JawBackground").getPropertyValue("height")
 
-north_blade = display.getWidget("North_Blade")
-south_blade = display.getWidget("South_Blade")
-east_blade = display.getWidget("East_Blade")
-west_blade = display.getWidget("West_Blade")
+jawBackground = display.getWidget("JawBackground"+motNumber)
+background_x = jawBackground.getPropertyValue("x")
+background_y = jawBackground.getPropertyValue("y")
+
+background_width = jawBackground.getPropertyValue("width")
+background_height = jawBackground.getPropertyValue("height")
+
+north_blade = display.getWidget("North_Blade"+motNumber)
+south_blade = display.getWidget("South_Blade"+motNumber)
+east_blade = display.getWidget("East_Blade"+motNumber)
+west_blade = display.getWidget("West_Blade"+motNumber)
 
 
 def bound_value(value, upper_bound):
@@ -52,23 +61,26 @@ class UpdateJaws(Runnable):
                 return
 
             self.get_pvs()
-
+                        
             north_height, south_height = self.calc_pair_height((self.north, self.south), self.max_y, background_height)
             east_width, west_width = self.calc_pair_height((self.east, self.west), self.max_x, background_width)
 
             south_y = background_y + background_height - south_height
             east_x = background_x + background_width - east_width
+            
+            class UITask(Runnable):
+                def run(self):
+                    north_blade.setPropertyValue("height", north_height)
+                    south_blade.setPropertyValue("height", south_height)
+                    south_blade.setPropertyValue("y", south_y)
 
-            north_blade.setPropertyValue("height", north_height)
-            south_blade.setPropertyValue("height", south_height)
-            south_blade.setPropertyValue("y", south_y)
-
-            west_blade.setPropertyValue("width", west_width)
-            east_blade.setPropertyValue("width", east_width)
-            east_blade.setPropertyValue("x", east_x)
-
+                    west_blade.setPropertyValue("width", west_width)
+                    east_blade.setPropertyValue("width", east_width)
+                    east_blade.setPropertyValue("x", east_x)
+            UIBundlingThread.getInstance().addRunnable(currentDisplay, UITask())
+            
             Thread.sleep(200)
-
-
+            
+            
 thread = Thread(UpdateJaws())
 thread.start()
