@@ -53,8 +53,9 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 	/**
 	 * The file extenstion for Python files.
 	 */
-	private String PYTHON_EXT = ".py";
-		
+
+	private static final String PYTHON_EXT = ".py";
+	
 	/**
 	 * The script generator model.
 	 */
@@ -86,6 +87,8 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 	 * @param defaultIndex       the index in the button label array of the default
 	 *                           button
 	 * @param defaultFilename	 The default file name to save the script files with.
+	 * @param generatedScript The generated script to write to file.
+	 * @param model The script generator model to get the file handler from.
 	 */
 	public SaveScriptGeneratorFileMessageDialog(Shell parentShell, String dialogTitle, Image dialogTitleImage, String dialogMessage, String filepathPrefix,
 			int dialogImageType, String[] dialogButtonLabels, int defaultIndex, String defaultFilename, String generatedScript, ScriptGeneratorSingleton model) {
@@ -142,10 +145,11 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 	}
 	
 	/**
-	 * Create a save and, save and open file button to place in the dialog
+	 * Create a save and, save and open file button to place in the dialog.
 	 * 
 	 * @param parent The parent to put the buttons in.
 	 */
+	@SuppressWarnings("checkstyle:magicnumber")
 	@Override 
 	protected void createButtonsForButtonBar(Composite parent) {
 		parent.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
@@ -178,12 +182,12 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 			model.getFileHandler().generateWithOverwriteCheck(filepathPrefix, filename, generatedScript, PYTHON_EXT);
 			model.saveParameters(filename);
 			fileWritten = true;
-		} catch(CheckForOverwriteException e) {
+		} catch (CheckForOverwriteException e) {
 			// Ask the user if they want to overwrite and try again
 			boolean overwriteChosen = MessageDialog.openQuestion(Display.getDefault().getActiveShell(),
 				"File already exists",
 				"File already exists, would you like to overwite?");
-			if(overwriteChosen) {
+			if (overwriteChosen) {
 				// We have asked to overwrite to attempt to do so
 				try {
 					model.getFileHandler().generateWithoutOverwriteCheck(filepathPrefix, filename, generatedScript, PYTHON_EXT);
@@ -197,11 +201,11 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 							"Error", "No Script Definition selected");
 				}
 			}
-		} catch(FileGeneratorException e) {
+		} catch (FileGeneratorException e) {
 			MessageDialog.openWarning(
 					Display.getDefault().getActiveShell(),
 					"Cannot save", "Cannot save: filename contains a . ; / or \\");
-		} catch(IOException e) {
+		} catch (IOException e) {
 			MessageDialog.openError(Display.getDefault().getActiveShell(), "Error", "Failed to write generated script to file");
 		} catch (NoScriptDefinitionSelectedException e) {
 			MessageDialog.openError(Display.getDefault().getActiveShell(),
@@ -209,12 +213,12 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 		}
 		
 		// Only close the dialog if we have successfully written to file
-		if(fileWritten) {
-			if(openFile) {
+		if (fileWritten) {
+			if (openFile) {
 				try {
 					model.getFileHandler().openFile(filepathPrefix, filename, PYTHON_EXT);
-				} catch(OpenFileException | IOException e) {
-					Display.getDefault().asyncExec( () -> {
+				} catch (OpenFileException | IOException e) {
+					Display.getDefault().asyncExec(() -> {
 						MessageDialog.openWarning(Display.getDefault().getActiveShell(),
 								"Error", "Failed to open file: " + e.getMessage());
 					});
@@ -234,7 +238,8 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 	 * @param message The message to display in front of the filepath for the box.
 	 * @param filepath The filepath of the file this box refers to.
 	 * @param defaultFilename The default filename to save the script with
-	 * @param generatedScript 
+	 * @param generatedScript The generated script to write to file
+	 * @param model The model to get the file handler from
 	 */
 	public static void openInformation(Shell parent, String title,  String message, String filepath, String defaultFilename, String generatedScript,
 			ScriptGeneratorSingleton model) {

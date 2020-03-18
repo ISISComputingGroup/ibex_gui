@@ -251,11 +251,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 				try {
 					String generatedScriptFilename = generateScriptFileName(getScriptFilepathPrefix());
 					firePropertyChange(GENERATED_SCRIPT_FILENAME_PROPERTY, null, generatedScriptFilename);
-				} catch(NoScriptDefinitionSelectedException e) {
+				} catch (NoScriptDefinitionSelectedException e) {
 					LOG.error(e);
 				}
 			}, () -> {
-				firePropertyChange(SCRIPT_GENERATION_ERROR_PROPERTY , null, true);
+				firePropertyChange(SCRIPT_GENERATION_ERROR_PROPERTY, null, true);
 			});
 			
 		});
@@ -340,6 +340,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
     
     /**
      * Get the area to generate scripts to.
+     * 
+     * @return The directory path to generate scripts to.
      */
     public String getScriptFilepathPrefix() {
     	return preferenceSupplier.scriptGenerationFolder();
@@ -347,6 +349,9 @@ public class ScriptGeneratorSingleton extends ModelObject {
     
     /**
      * Get the last generated script.
+     * 
+     * @return An optional that is empty if no script has been generated successfully,
+     *   or the contents is the generated script.
      */
     public Optional<String> getLastGeneratedScript() {
     	return lastGeneratedScript;
@@ -603,7 +608,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * 
 	 * @param filepathPrefix The prefix to the file path of the file that is to be created e.g. C:/Scripts/
 	 * @return The filename to prepend a path to write the script to.
-	 * @throws NoConfigSelectedException Thrown when we have no config selected to generate the script file with.
+	 * @throws NoScriptDefinitionSelectedException Thrown when we have no config selected to generate the script file with.
 	 */
 	public String generateScriptFileName(String filepathPrefix) throws NoScriptDefinitionSelectedException {
 		String configName = getScriptDefinition()
@@ -619,7 +624,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 				filename = String.format("%s-%s(%s)", configName, timestamp, version);
 			}
 			version += 1;
-		} while(new File(String.format("%s%s", filepathPrefix, filename)).exists());
+		} while (new File(String.format("%s%s", filepathPrefix, filename)).exists());
 		return filename;
 	}
 
@@ -681,6 +686,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	
 	/**
 	 * Get the file writer to use to write scripts to file.
+	 * 
+	 * @return the file handler to write scripts to file.
 	 */
 	public ScriptGeneratorFileHandler getFileHandler() {
 		return fileHandler;
