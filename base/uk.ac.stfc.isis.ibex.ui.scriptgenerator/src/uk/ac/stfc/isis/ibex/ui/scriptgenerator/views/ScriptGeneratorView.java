@@ -336,7 +336,7 @@ public class ScriptGeneratorView {
 		       	saveExperimentalParametersButton.addListener(SWT.Selection, e->scriptGeneratorViewModel.saveParameterValues());
 		       	
 		       	final Button loadExperimentalParametersButton = new Button(generateButtonsGrp, SWT.NONE);
-		       	loadExperimentalParametersButton.setText("Load data");
+		       	loadExperimentalParametersButton.setText("Load Parameters");
 		       	loadExperimentalParametersButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		       	loadExperimentalParametersButton.addListener(SWT.Selection, e->scriptGeneratorViewModel.loadParameterValues());
 		        // Bind the context and the validity checking listeners

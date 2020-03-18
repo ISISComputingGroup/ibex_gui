@@ -83,9 +83,9 @@ public class GeneratorPython extends AbstractGenerator {
 
 	@Override
 	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent,
-			ScriptDefinitionWrapper scriptDefinition, String currentlyLoadedDataFileContent) throws InterruptedException, ExecutionException {
+			ScriptDefinitionWrapper scriptDefinition, String JsonContent) throws InterruptedException, ExecutionException {
 		try {
-			pythonInterface.refreshGeneratedScript(scriptGenContent, currentlyLoadedDataFileContent, scriptDefinition);
+			pythonInterface.refreshGeneratedScript(scriptGenContent, JsonContent, scriptDefinition);
 		} catch(PythonNotReadyException e) {
 			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
 			LOG.error(e);

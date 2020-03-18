@@ -3,8 +3,6 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 import java.net.URL;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.FileNotFoundException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -23,6 +21,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PartInitException;
@@ -39,8 +38,6 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
-import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.DataFileSelectionDialog;
-import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.SaveParametersDialog;
 import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.SaveScriptGeneratorFileMessageDialog;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
@@ -48,7 +45,6 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-import org.eclipse.jface.window.Window;
 
 /**
  * The ViewModel for the ScriptGeneratorView.
@@ -750,40 +746,49 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * Save Parameter Values to a file. Checks if file already exists and asks if user wants to overwrite it.
 	 */
 	public void saveParameterValues() {		
-		SaveParametersDialog dialog = new SaveParametersDialog(null);
-		if (dialog.open() == Window.OK) {
-			String fileName = dialog.getFileName();
+		Optional<String> fileName  = openFileDialog(SWT.SAVE);
+		// filename will be null if user has clicked cancel button
+		if (fileName.isPresent()) {
 			try {
-				boolean userWantsToOverwrite = true;
-				List<String> listOfDataFiles = scriptGeneratorModel.getListOfdataFiles();
-				if (listOfDataFiles.stream().anyMatch(fileName::equalsIgnoreCase)) {
-					userWantsToOverwrite = MessageDialog.openConfirm(DISPLAY.getActiveShell(), "Duplicate Name" ,String.format("File name %s already exist\nDo you want to overwrite it?", fileName));
-				}
-				if (userWantsToOverwrite) {
-					scriptGeneratorModel.saveParameters(fileName);
-					MessageDialog.openInformation(DISPLAY.getActiveShell(), "Saved", "File saved!");
-				}
+				scriptGeneratorModel.saveParameters(fileName.get());
+				MessageDialog.openInformation(DISPLAY.getActiveShell(), "Saved", "File saved!");
+	
 			} catch (NoScriptDefinitionSelectedException e) {
 				LOG.error(e);
 				MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
 						"Cannot generate script. No script definition has been selected");
-			} catch (FileNotFoundException e) {
-				MessageDialog.openWarning(DISPLAY.getActiveShell(), "C:/ScriptGeneratorDataFiles not found ","Folder to save data files not found");
-			}
+			} 
 		}
-		 
+	}
+	
+	/**
+	 * Open file dialog which opens file browser for saving and loading parameter values.
+	 * @param action save or load
+	 * @return filename to save or load
+	 */
+	private Optional<String> openFileDialog(int action) {
+		FileDialog dialog = new FileDialog(Display.getDefault().getActiveShell(), action);
+		dialog.setFilterPath("C:/scripts");
+		dialog.setFilterExtensions(new String [] {"*.json"});
+		dialog.setOverwrite(true);
+		if (action == SWT.SAVE ) {
+			dialog.setText("Save as");
+
+		} else {
+			dialog.setText("Load");
+		}
+		return Optional.ofNullable(dialog.open());
 	}
 	
 	/**
 	 * Load parameter values.
 	 */
 	public void loadParameterValues() {
-		DataFileSelectionDialog dialog = new DataFileSelectionDialog(Display.getDefault().getActiveShell(),
-				"list of files", this.getListOfDataFiles());
-		if (dialog.open() == Window.OK) {
-			String selectedFile = dialog.selectedFile();
+		Optional<String> selectedFile = openFileDialog(SWT.OPEN);
+		// filename will be null if user has clicked cancel button
+		if (selectedFile.isPresent()) {
 			try {
-				scriptGeneratorModel.loadParameterValues(selectedFile);
+				scriptGeneratorModel.loadParameterValues(selectedFile.get());
 			} catch (NoScriptDefinitionSelectedException e) {
 				LOG.error(e);
 				MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
@@ -793,23 +798,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
 				MessageDialog.openError(DISPLAY.getActiveShell(), "Error", e.getMessage());
 			}
 		}
-		
 	};
 		
-	/**
-	 * Get list of data files.
-	 * @return list of data files
-	 */
-	public List<String> getListOfDataFiles() {
-		try {
-			return scriptGeneratorModel.getListOfdataFiles();
-		} catch (FileNotFoundException e) {
-			MessageDialog.openError(Display.getDefault().getActiveShell(), "Error", "C:/DataFile folder where parameters values will be saved"
-					+ " not found");
-		}
-		return Collections.emptyList();
-	}
-	
+
 	/** Get the user manual URL for the script generator from the model.
 	 * 
 	 * @return An optional with a value containing the URL if there is a user manual to load.
