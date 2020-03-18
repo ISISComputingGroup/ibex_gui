@@ -1,17 +1,14 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
-import org.junit.Before;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.junit.After;
+
 import static org.junit.Assert.fail;
 import static org.junit.Assert.assertEquals;
 
@@ -21,107 +18,137 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorJsonFileHandler;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
 public class ScriptGeneratorJsonFileHandlerTest {
 	
-	String filePathPrefix;
+	String geniePythonVersion = "1";
+	String dateAndTime = "20/03/2010 00:00";
 	PreferenceSupplier prefSupplier = mock(PreferenceSupplier.class);
 	public ScriptGeneratorJsonFileHandler fileHandler = new ScriptGeneratorJsonFileHandler();
-	String scriptDefName = "scriptDefTest";
+	String scriptDefName = "scriptDefTest.py";
 	String JsonFileName =  "jsonFileTest.json";
+	final String scriptDefContent = "from genie_python.genie_script_generator import ScriptDefinition";
 	
-	@Before 
-	public void setUp() {
-		filePathPrefix = (System.getProperty("user.dir") + "\\test_script_gen_handler\\");
-		if (!(new File(filePathPrefix).mkdir())) {
-			fail("We need to create this directory to write files to it");
-		}
-		when(prefSupplier.scriptGeneratorDataFileFolder()).thenReturn(filePathPrefix);
-	}
+	final String actualJsonContent = String.format("{\r\n" + 
+			"  \"version_JSON_format\": \"1\",\r\n" + 
+			"  \"script_generator_version\": \"\",\r\n" + 
+			"  \"date_and_time\": \"%s\",\r\n" + 
+			"  \"script_definition_file_path\": \"C:/ScriptDefinitions/imat.py\",\r\n" + 
+			"  \"script_definition_file_git_hash\": \"\",\r\n" + 
+			"  \"genie_python_version\": \"%s\",\r\n" + 
+			"  \"script_definition_content\": \"%s\",\r\n" + 
+			"  \"actions\": [\r\n" + 
+			"    {\r\n" + 
+			"      \"action_name\": \"default\",\r\n" + 
+			"      \"parameters\": [\r\n" + 
+			"        {\r\n" + 
+			"          \"field\": \"1\",\r\n" + 
+			"          \"temperature\": \"2\"\r\n" + 
+			"        }\r\n" + 
+			"      ]\r\n" + 
+			"    }\r\n" + 
+			"  ]\r\n" + 
+			"}", dateAndTime, geniePythonVersion, scriptDefContent);
 	
-	@After
-	public void tearDown() {
-		File test_scripts_folder = new File(filePathPrefix);
-		if(test_scripts_folder.exists()) {
-			for (String entry : test_scripts_folder.list()) {
-				if(!new File(test_scripts_folder.getPath(), entry).delete()) {
-					fail("Failed to delete file " + entry);
-				}
-			}
-			if(!test_scripts_folder.delete()) {
-				fail("Failed to delete folder " + test_scripts_folder.getPath());
-			}
-		}
-	}
-	
+
 	@Test 
 	public void Test_GIVEN_user_parameters_THEN_read_correctly() {
-		ActionParameter actionParamOne = new ActionParameter("temp");
-		ActionParameter actionParamTwo = new ActionParameter("uamps");
+		ActionParameter actionParamOne = new ActionParameter("temperature");
+		ActionParameter actionParamTwo = new ActionParameter("field");
 		
 		Map<ActionParameter, String> actionOne = new HashMap<ActionParameter, String>();
-		actionOne.put(actionParamOne, "1");
-		actionOne.put(actionParamTwo, "2");
-		
-		ScriptGeneratorAction action = new ScriptGeneratorAction(actionOne);
-		List<ScriptGeneratorAction> actions = new ArrayList<ScriptGeneratorAction>();
-		actions.add(action);
-		
+		actionOne.put(actionParamOne, "2");
+		actionOne.put(actionParamTwo, "1");
 		try {
-			
-			String filepath = filePathPrefix + scriptDefName + ".py";
-			File file = new File(filepath);
-			file.createNewFile();
-			
+						
 			ScriptGeneratorJsonFileHandler fileHandlerSpy = Mockito.spy(fileHandler);
-			Mockito.doReturn(ScriptGeneratorJsonFileHandler.CURRENT_VERSION).when(fileHandlerSpy).getCurrentGenieVersionNumber();
+			Mockito.doReturn(actualJsonContent).when(fileHandlerSpy).readFileContent(JsonFileName);
+			Mockito.doReturn(scriptDefContent).when(fileHandlerSpy).readFileContent(scriptDefName);
 			
-			fileHandlerSpy.saveParameters(actions, filepath, filePathPrefix + JsonFileName);
-			List<Map<ActionParameter, String>> actual = fileHandlerSpy.getParameterValues(filePathPrefix + JsonFileName, filepath);
+			List<Map<ActionParameter, String>> actual = fileHandlerSpy.getParameterValues(JsonFileName, scriptDefName);
 			List<Map<ActionParameter, String>> expected = new ArrayList<Map<ActionParameter, String>>();
 			expected.add(actionOne);
 			assertEquals(expected, actual);
-		} catch (InterruptedException | ExecutionException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (UnsupportedOperationException | ScriptDefinitionNotMatched e) {
-			// TODO Auto-generated catch block
 			fail(e.getMessage());
+		} catch (IOException e) {
+			fail("should not be reading from a file");
 		} 
 	}
 	
-	@SuppressWarnings("static-access")
+	@Test
+	public void test_GIVEN_different_script_defintion_THEN_do_not_load_the_data_file() {
+	
+		try {
+			String scriptDeftwo = "this is script definition";
+			ScriptGeneratorJsonFileHandler fileHandlerSpy = Mockito.spy(fileHandler);
+			Mockito.doReturn(actualJsonContent).when(fileHandlerSpy).readFileContent("jsonFile");
+			Mockito.doReturn(scriptDeftwo).when(fileHandlerSpy).readFileContent("pythonFile");
+			fileHandlerSpy.getParameterValues("jsonFile", "pythonFile");
+		} catch (UnsupportedOperationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ScriptDefinitionNotMatched e) {
+			assertEquals(e.getMessage(), "Current script definition does not match with the "
+					+ "script definition that was used to generate the selected data file");
+		} catch (IOException e) {
+			fail("should not be reading from a file");
+		}
+	}
+	
 	@Test 
 	public void test_GIVEN_old_json_file_version_THEN_give_error() {
 		
 		String randomVersion = "3234";
 		String originalVersion = ScriptGeneratorJsonFileHandler.CURRENT_VERSION;
-		List<ScriptGeneratorAction> actions = new ArrayList<ScriptGeneratorAction>();
+
 		try {
 			
-			// create script definition
-			String filepath = filePathPrefix + scriptDefName + ".py";
-			File file = new File(filepath);
-			file.createNewFile();
-		
-
+			String incorrectVersion = String.format("{\"versionJSONFormat\": \"%s\"}", randomVersion);
+			
 			ScriptGeneratorJsonFileHandler fileHandlerSpy = Mockito.spy(fileHandler);
-			Mockito.doReturn(ScriptGeneratorJsonFileHandler.CURRENT_VERSION).when(fileHandlerSpy).getCurrentGenieVersionNumber();
-			// use random version number 
-			fileHandlerSpy.CURRENT_VERSION = randomVersion;
-			fileHandlerSpy.saveParameters(actions, filepath, filePathPrefix + JsonFileName);
-			// change it back to original
-			fileHandlerSpy.CURRENT_VERSION = originalVersion;
-			fileHandlerSpy.getParameterValues(filePathPrefix + JsonFileName, filepath);
-		} catch (InterruptedException | ExecutionException | IOException e) {
-			e.printStackTrace();
+			Mockito.doReturn(incorrectVersion).when(fileHandlerSpy).readFileContent(JsonFileName);
+			
+			fileHandlerSpy.getParameterValues(JsonFileName, scriptDefName);
 		} catch (UnsupportedOperationException e) {
 			assertEquals(e.getMessage(), String.format("Data file version %s is not supported.\nSupported version %s",randomVersion, originalVersion));
 		} catch (ScriptDefinitionNotMatched e) {
 			fail("Something went wrong when creating script defintion");
+		} catch (IOException e) {
+			fail("should not be reading from a file");
 		}
 	}
 	
+	@Test
+	public void test_GIVEN_script_def_and_actions_THEN_generate_valid_Json() {
+		
+		class ScriptGeneratorFileHandlerForTest extends ScriptGeneratorJsonFileHandler {
+			protected String getGeniePythonVersion() {
+				return geniePythonVersion;
+			}
+			protected String getCurrentDateAndTime() {
+				return dateAndTime;
+			}
+		}
+		
+		ScriptGeneratorFileHandlerForTest fileHandlerTemp = new ScriptGeneratorFileHandlerForTest();
+		
+		ActionParameter actionParamOne = new ActionParameter("temperature");
+		ActionParameter actionParamTwo = new ActionParameter("field");
+		
+		Map<ActionParameter, String> actionOne = new HashMap<ActionParameter, String>();
+		
+		actionOne.put(actionParamOne, "2");
+		actionOne.put(actionParamTwo, "1");
+		
+		List<ScriptGeneratorAction> actions = new ArrayList<ScriptGeneratorAction>();
+		actions.add(new ScriptGeneratorAction(actionOne));
+	
+		String actual = fileHandlerTemp.createJsonString(actions, scriptDefContent, "C:/ScriptDefinitions/imat.py");
+		// remove carriage return and test
+		assertEquals(actualJsonContent.replace("\r", ""), actual);
+	}
+	
+
 }

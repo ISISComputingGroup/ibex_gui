@@ -95,14 +95,15 @@ public class GeneratorContext extends ModelObject {
 	 * @param actionsTable The script generator contents to generate the script from.
 	 * @param scriptDefinition The script definition to generate the script from.
 	 * @param generatedLanguage The language to generate the script in.
+	 * @param jsonContent Content of the JSON file 
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
 	 */
-	public void refreshGeneratedScript(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage, String currentlyLoadedDataFileContent)
+	public void refreshGeneratedScript(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage, String jsonContent)
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
 		AbstractGenerator generator = getGenerator(generatedLanguage);
-		generator.refreshGeneratedScript(actionsTable.getActions(), scriptDefinition, currentlyLoadedDataFileContent);
+		generator.refreshGeneratedScript(actionsTable.getActions(), scriptDefinition, jsonContent);
 	}
 	
 	/**
@@ -110,14 +111,14 @@ public class GeneratorContext extends ModelObject {
 	 * 
 	 * @param actionsTable The script generator contents to generate the script from.
 	 * @param scriptDefinition The script definition to generate the script from.
-	 * @param currentlyLoadedDataFileContent The currently loaded data file content used for generating script
+	 * @param jsonContent The JSON content created when generating script
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
 	 */
-	public void refreshGeneratedScript(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, String currentlyLoadedDataFileContent) 
+	public void refreshGeneratedScript(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, String jsonContent) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
-		refreshGeneratedScript(actionsTable, scriptDefinition, GeneratedLanguage.PYTHON, currentlyLoadedDataFileContent);
+		refreshGeneratedScript(actionsTable, scriptDefinition, GeneratedLanguage.PYTHON, jsonContent);
 	}
 	
 	/**

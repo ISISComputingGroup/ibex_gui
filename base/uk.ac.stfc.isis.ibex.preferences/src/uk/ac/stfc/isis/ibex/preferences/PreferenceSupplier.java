@@ -181,17 +181,7 @@ public class PreferenceSupplier {
      * The default place to store script generator script definition files.
      */
     private static final String DEFAULT_SCRIPT_DEFINITIONS_FOLDER = "C:/ScriptDefinitions/";
-    
-    /**
-     * Default place to save data file
-     */
-    private static final String DEFAULT_DATA_FILE_GENERATE_FOLDER = "C:/ScriptGeneratorDataFiles/";
-    
-    /**
-     * Define where to generate data files to
-     */
-    private static final String DATA_FILE_GENERATE_FOLDER = "data_file_generate_folder";
-    
+            
     /**
      * Defines where to find generator script definition files from.
      */
@@ -321,16 +311,7 @@ public class PreferenceSupplier {
     public String scriptGeneratorManualURL() {
         return getString(SCRIPT_GENERATOR_MANUAL_URL, DEFAULT_SCRIPT_GENERATOR_MANUAL_URL);
     }
-	
-	/**
-	 * Gets the preference for the folder to save data from script generator parameters to
-	 * @return The folder to save script generator parameter data
-	 */
-	public String scriptGeneratorDataFileFolder() {
-		return getString(DATA_FILE_GENERATE_FOLDER, DEFAULT_DATA_FILE_GENERATE_FOLDER);
-	}
-	
-	
+		
 	/** 
 	 * Get whether to hide the script gen script definition error table.
 	 * 

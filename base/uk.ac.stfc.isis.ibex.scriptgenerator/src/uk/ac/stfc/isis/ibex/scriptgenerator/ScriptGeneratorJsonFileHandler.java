@@ -1,9 +1,7 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,12 +9,11 @@ import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
@@ -29,48 +26,22 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.ParametersConverter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorActionConverter;
 
 /**
  * Class to handle JSON file operations such as read/write, check for file duplicates.
  *
  */
 public class ScriptGeneratorJsonFileHandler {
+	
 	/** 
 	 * Currently supported JSON file version by us.
 	 */
 	public static String CURRENT_VERSION = "1";
-	private final PreferenceSupplier preferenceSupplier = new PreferenceSupplier();
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorSingleton.class);
-	private ParametersConverter currentlyLoadedJSONFileContent = null;
-
-	/**
-	 * Get list of data files from the directory where data files are saved.
-	 * @return list of files 
-	 * @throws FileNotFoundException when DataFiles folder does not exist
-	 */
-	public List<String> getListOfdataFiles() throws FileNotFoundException {
-		List<String> list = new ArrayList<String>();
-		if (Files.isDirectory(Paths.get(preferenceSupplier.scriptGeneratorDataFileFolder()))) {
-			File folder = new File(getScriptGenDataFileFolder());
-			list = Arrays.asList(folder.list((dir, name) ->(name.endsWith(".json"))));
-			// remove extension
-			for (ListIterator<String> itr = list.listIterator(); itr.hasNext();) {
-				list.set(itr.nextIndex(), itr.next().replace(".json", ""));
-			}
-			
-		} else {
-			throw new FileNotFoundException();
-		}
-		return list;
-	}
-
-	private String getScriptGenDataFileFolder() {
-		return preferenceSupplier.scriptGeneratorDataFileFolder();
-	}
-	
+	private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	/**
 	 * Save Parameters to a JSON file.
 	 * @param scriptGenContent content to generate data file with
@@ -79,24 +50,32 @@ public class ScriptGeneratorJsonFileHandler {
 	 */
 	public void saveParameters(List<ScriptGeneratorAction> scriptGenContent, String scriptDefPath, String absoluteFilePath) throws InterruptedException, ExecutionException {
 		try {
-			// scriptDefinition content
-			String content = new String(Files.readAllBytes(Paths.get(scriptDefPath)));
-			Gson gson = new GsonBuilder().setPrettyPrinting().create();
-			String jsonContent = gson.toJson(new ParametersConverter(CURRENT_VERSION, convertScriptGenContent(scriptGenContent), content, "",
-					getCurrentDate(), getCurrentTime(), scriptDefPath, "", getCurrentGenieVersionNumber()));
-			writeParametersToJSONFile(jsonContent, absoluteFilePath);
+			
+			String content = createJsonString(scriptGenContent, readFileContent(scriptDefPath), scriptDefPath);
+			writeParametersToJSONFile(content, absoluteFilePath);
+
 		} catch (IOException e) {
-			e.printStackTrace();
+			LOG.error(e);
 		}
 	}
 	
 	/**
-	 * Get current version number of genie python.
-	 * @return current genie python version number
+	 * Adds metadata and creates JSON string using script generator content.
+	 * @param scriptGenContent content of script generator
+	 * @param scriptDefCotnent content of script definition
+	 * @param scriptDefPath path of script definition file
+	 * @return JSON string 
+	 * @throws IOException
 	 */
-	public String getCurrentGenieVersionNumber() {
-		return Platform.getProduct().getDefiningBundle().getVersion().toString();
+	public String createJsonString(List<ScriptGeneratorAction> scriptGenContent, String scriptDefContent, String scriptDefPath) {
+		
+		List<ScriptGeneratorActionConverter> actions = new ArrayList<ScriptGeneratorActionConverter>();
+		actions.add(new ScriptGeneratorActionConverter("default", convertScriptGenContent(scriptGenContent)));
+		String jsonContent = gson.toJson(new ParametersConverter(CURRENT_VERSION, actions, scriptDefContent, "",
+				getCurrentDateAndTime(), scriptDefPath, "", getGeniePythonVersion()));
+		return jsonContent;
 	}
+
 	/**
 	 * Load parameter values from a file only if the currently loaded script definition is the same as script definition in JSON file.
 	 * @param filePath path of file to load parameter values from
@@ -105,53 +84,44 @@ public class ScriptGeneratorJsonFileHandler {
 	 */
 	public List<Map<ActionParameter, String>> getParameterValues(String filePath, String scriptDefinitionFilePath) throws ScriptDefinitionNotMatched,
 	UnsupportedOperationException {
-		List<Map<ActionParameter, String>> newMappedParameterToValues = null;
+		List<Map<ActionParameter, String>> newMappedParameterToValues = Collections.emptyList();
 		try {
-			this.currentlyLoadedJSONFileContent = convertJSONtoObject(filePath);
-			String scriptDefStoredInJson = currentlyLoadedJSONFileContent.getScriptDefinitionContent();
-			String actualScriptDefcontent = new String(
-					Files.readAllBytes(Paths.get(scriptDefinitionFilePath)));
-			if (scriptDefStoredInJson.equals(actualScriptDefcontent)) {
-				List<Map<String, String>> mappedParamToValue =  currentlyLoadedJSONFileContent.getParameterValues();
-				newMappedParameterToValues =  getMappedParamToValue(mappedParamToValue);
-			} else {
-				throw new ScriptDefinitionNotMatched("Current script definition does not match with the "
-						+ "script definition that was used to generate the selected data file");
+			Optional<ParametersConverter> currentlyLoadedJSONFileContent = convertJSONtoObject(readFileContent(filePath));
+				if (currentlyLoadedJSONFileContent.isPresent()) {
+					String scriptDefStoredInJson = currentlyLoadedJSONFileContent.get().getScriptDefinitionContent();
+					String currentlyLoadedScriptDef = readFileContent(scriptDefinitionFilePath);
+				if (scriptDefStoredInJson.equals(currentlyLoadedScriptDef)) {
+					// currently there is only one table so we just get parameters from default table
+					List<Map<String, String>> mappedParamToValue =  currentlyLoadedJSONFileContent.get().getParameterValues("default");
+					newMappedParameterToValues =  getMappedParamToValue(mappedParamToValue);
+				} else {
+					throw new ScriptDefinitionNotMatched("Current script definition does not match with the "
+							+ "script definition that was used to generate the selected data file");
+				}
 			}
 		} catch(JsonSyntaxException | JsonIOException | IOException e) {
 			LOG.error(e);
 		} 
 		
+		
 		return newMappedParameterToValues;
 	}
 	
 	/**
-	 * Content of data file that is currently loaded by user.
-	 * @return content of currently loaded data file in string format.
-	 */
-	public String getCurrentlyLoadedDataFileContent() {
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		return gson.toJson(currentlyLoadedJSONFileContent);
-	}
-	
-	/**
 	 * Get Content from give filename. 
-	 * @param filePath path of file to get content from
+	 * @param jsonString json string to convert to an object
 	 * @throws JsonSyntaxException JSON syntax incorrect
 	 * @throws JsonIOException trouble reading JSON file
 	 * @throws FileNotFoundException JSON file does not exist
 	 * @return object representation of JSON which is read from a file
 	 */
-	private ParametersConverter convertJSONtoObject(String filePath) throws JsonSyntaxException, JsonIOException, FileNotFoundException{
+	private Optional<ParametersConverter> convertJSONtoObject(String jsonString) throws JsonSyntaxException, JsonIOException, FileNotFoundException{
 		
 		// Check if version number match
 		try {
-			Gson gson = new Gson();
-			FileReader reader = new FileReader(filePath);
-			ParametersConverter jsonContent = gson.fromJson(reader, ParametersConverter.class);
-			reader.close();
+			ParametersConverter jsonContent = gson.fromJson(jsonString, ParametersConverter.class);
 			if (jsonContent.getJSONFormatVersionNumber().equals(CURRENT_VERSION)) {
-				return jsonContent;
+				return Optional.ofNullable(jsonContent);
 			} else {
 				LOG.error("Json " + jsonContent.getJSONFormatVersionNumber() + " version not supported");
 				throw new UnsupportedOperationException(String.format("Data file version %s is not supported.\nSupported version %s"
@@ -159,11 +129,8 @@ public class ScriptGeneratorJsonFileHandler {
 			}
 		} catch (NullPointerException e) {
 			LOG.error(e + ": Json version number is null");
-		} catch (IOException e) {
-			LOG.error(e);
 		}
-		
-		return null;
+		return Optional.ofNullable(null);
 	}
 		
 	/**
@@ -171,16 +138,9 @@ public class ScriptGeneratorJsonFileHandler {
 	 * @param mappedParamToValue list of parameters mapped to its value
 	 * @return List of Map<ActionParameter, String> values
 	 */
-	private ArrayList<Map<ActionParameter, String>> getMappedParamToValue(List<Map<String, String>> mappedParamToValue) {
-		ArrayList<Map<ActionParameter, String>> newMappedParamToValue = new ArrayList<Map<ActionParameter, String>>();
-		for (Map<String, String> map : mappedParamToValue) {
-			Map<ActionParameter, String> tempMap = new HashMap<ActionParameter, String>();
-			for (Map.Entry<String, String> entry : map.entrySet()) {
-				tempMap.put(new ActionParameter(entry.getKey()), entry.getValue());
-			}
-			newMappedParamToValue.add(tempMap);
-		}
-		return newMappedParamToValue;
+	private List<Map<ActionParameter, String>> getMappedParamToValue(List<Map<String, String>> mappedParamToValue) {
+		return  mappedParamToValue.stream().map(m -> m.entrySet().stream().collect(Collectors.toMap(p ->
+			new ActionParameter(p.getKey()), p-> p.getValue()))).collect(Collectors.toList());
 	}
 	
 	/**
@@ -191,11 +151,19 @@ public class ScriptGeneratorJsonFileHandler {
 	 */
 	private void writeParametersToJSONFile(String content, String absoluteFilePath) 
 			throws IOException {
-		@SuppressWarnings("resource")
 		BufferedWriter fileWriter = new BufferedWriter(new FileWriter(absoluteFilePath));
 		fileWriter.write(content);	
 		fileWriter.flush();
 		fileWriter.close();
+	}
+	
+	/**
+	 * Reads given file's content.
+	 * @return string of JSON content
+	 */
+	 public String readFileContent(String filePath) throws IOException {
+		String content = new String(Files.readAllBytes(Paths.get(filePath)));
+		return content;
 	}
 	
 	/**
@@ -209,24 +177,22 @@ public class ScriptGeneratorJsonFileHandler {
 	}
 
 	  /**
-     * Get current Date.
+     * Get current Date and Time. Access modifier is protected in order to override this method during unit test.
      * @return current date
      */
-    private String getCurrentDate() {
-    	DateFormat dateFormat = new SimpleDateFormat("yyy/MM/dd");
+    protected String getCurrentDateAndTime() {
+    	DateFormat dateFormat = new SimpleDateFormat("yyy/MM/dd HH:mm:ss");
     	Date date = new Date();
     	return dateFormat.format(date);
     }
     
     /**
-     * Get current time.
-     * @return current time
+     * Gets genie python version number. It is protected so that it can be overridden during unit test to avoid
+     * run time error.
+     * @return Genie python version number.
      */
-    private String getCurrentTime() {
-    	DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-    	Date date = new Date();
-    	return dateFormat.format(date);
+    protected String getGeniePythonVersion() {
+    	return Platform.getProduct().getDefiningBundle().getVersion().toString();
     }
-
-
+ 
 }

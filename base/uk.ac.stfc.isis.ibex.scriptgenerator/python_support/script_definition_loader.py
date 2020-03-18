@@ -147,8 +147,6 @@ class Generator(object):
             script_definition_template = self.env.get_template(script_definition_file_path)
             try:
                 val = str(utilities.compress_and_hex(jsonString))
-                if not jsonString:
-                    val = "None"
                 rendered_template = self.template.render(inserted_script_definition=script_definition_template,
                     script_generator_actions=list_of_actions, hexed_value=val)
             except Exception:
