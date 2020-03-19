@@ -129,14 +129,14 @@
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <fontdata fontName="Arial" height="8" style="0" pixels="true" />
+        <fontdata fontName="Arial Narrow" height="10" style="0" pixels="true" />
       </font>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <format_type>0</format_type>
-      <height>14</height>
+      <height>17</height>
       <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update</name>
       <precision>3</precision>
@@ -159,11 +159,11 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
-      <width>35</width>
+      <width>33</width>
       <wrap_words>false</wrap_words>
       <wuid>45ac5117:170aa52194d:2645</wuid>
       <x>14</x>
-      <y>25</y>
+      <y>22</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -181,14 +181,14 @@ $(pv_value)</tooltip>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <fontdata fontName="Arial" height="8" style="0" pixels="true" />
+        <fontdata fontName="Arial Narrow" height="10" style="0" pixels="true" />
       </font>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <format_type>0</format_type>
-      <height>14</height>
+      <height>17</height>
       <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update</name>
       <precision>3</precision>
@@ -211,11 +211,11 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
-      <width>35</width>
+      <width>33</width>
       <wrap_words>false</wrap_words>
       <wuid>45ac5117:170aa52194d:2646</wuid>
       <x>14</x>
-      <y>13</y>
+      <y>9</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -230,7 +230,7 @@ $(pv_value)</tooltip>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <fontdata fontName="Arial" height="8" style="0" pixels="true" />
+        <fontdata fontName="Arial Narrow" height="10" style="1" pixels="true" />
       </font>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -251,11 +251,11 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>13</width>
+      <width>15</width>
       <wrap_words>false</wrap_words>
       <wuid>45ac5117:170aa52194d:2647</wuid>
-      <x>2</x>
-      <y>13</y>
+      <x>0</x>
+      <y>12</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -270,7 +270,7 @@ $(pv_value)</tooltip>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <fontdata fontName="Arial" height="8" style="0" pixels="true" />
+        <fontdata fontName="Arial Narrow" height="10" style="1" pixels="true" />
       </font>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -291,10 +291,10 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>13</width>
+      <width>14</width>
       <wrap_words>false</wrap_words>
       <wuid>45ac5117:170aa52194d:2648</wuid>
-      <x>2</x>
+      <x>0</x>
       <y>25</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -313,7 +313,7 @@ $(pv_value)</tooltip>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <fontdata fontName="Arial" height="9" style="1" pixels="true" />
+        <fontdata fontName="Arial" height="10" style="1" pixels="true" />
       </font>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
@@ -759,14 +759,14 @@ $(pv_value)</tooltip>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <fontdata fontName="Arial" height="8" style="0" pixels="true" />
+        <fontdata fontName="Arial Narrow" height="10" style="0" pixels="true" />
       </font>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <format_type>0</format_type>
-      <height>14</height>
+      <height>17</height>
       <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update_3</name>
       <precision>3</precision>
@@ -789,11 +789,11 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
-      <width>36</width>
+      <width>34</width>
       <wrap_words>false</wrap_words>
       <wuid>45ac5117:170aa52194d:2651</wuid>
-      <x>61</x>
-      <y>25</y>
+      <x>62</x>
+      <y>22</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -811,14 +811,14 @@ $(pv_value)</tooltip>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <fontdata fontName="Arial" height="8" style="0" pixels="true" />
+        <fontdata fontName="Arial Narrow" height="10" style="0" pixels="true" />
       </font>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <format_type>0</format_type>
-      <height>14</height>
+      <height>17</height>
       <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update_4</name>
       <precision>3</precision>
@@ -841,11 +841,11 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
-      <width>36</width>
+      <width>34</width>
       <wrap_words>false</wrap_words>
       <wuid>45ac5117:170aa52194d:2652</wuid>
-      <x>61</x>
-      <y>13</y>
+      <x>62</x>
+      <y>9</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -860,7 +860,7 @@ $(pv_value)</tooltip>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <fontdata fontName="Arial" height="8" style="0" pixels="true" />
+        <fontdata fontName="Arial Narrow" height="10" style="1" pixels="true" />
       </font>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -881,11 +881,11 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>14</width>
+      <width>15</width>
       <wrap_words>false</wrap_words>
       <wuid>45ac5117:170aa52194d:2653</wuid>
       <x>49</x>
-      <y>13</y>
+      <y>12</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -900,7 +900,7 @@ $(pv_value)</tooltip>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <fontdata fontName="Arial" height="8" style="0" pixels="true" />
+        <fontdata fontName="Arial Narrow" height="10" style="1" pixels="true" />
       </font>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -921,11 +921,11 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>14</width>
+      <width>15</width>
       <wrap_words>false</wrap_words>
       <wuid>45ac5117:170aa52194d:2654</wuid>
       <x>49</x>
-      <y>25</y>
+      <y>23</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -943,14 +943,14 @@ $(pv_value)</tooltip>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <fontdata fontName="Arial" height="8" style="0" pixels="true" />
+        <fontdata fontName="Arial Narrow" height="10" style="0" pixels="true" />
       </font>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <format_type>0</format_type>
-      <height>14</height>
+      <height>17</height>
       <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update</name>
       <precision>3</precision>
@@ -973,11 +973,11 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
-      <width>35</width>
+      <width>33</width>
       <wrap_words>false</wrap_words>
       <wuid>661849b:170e424926c:-7286</wuid>
       <x>14</x>
-      <y>37</y>
+      <y>34</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -992,7 +992,7 @@ $(pv_value)</tooltip>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <fontdata fontName="Arial" height="8" style="0" pixels="true" />
+        <fontdata fontName="Arial Narrow" height="10" style="1" pixels="true" />
       </font>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -1013,10 +1013,10 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>13</width>
+      <width>14</width>
       <wrap_words>false</wrap_words>
       <wuid>661849b:170e424926c:-7285</wuid>
-      <x>2</x>
+      <x>0</x>
       <y>37</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -1035,14 +1035,14 @@ $(pv_value)</tooltip>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <fontdata fontName="Arial" height="8" style="0" pixels="true" />
+        <fontdata fontName="Arial Narrow" height="10" style="0" pixels="true" />
       </font>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <format_type>0</format_type>
-      <height>14</height>
+      <height>17</height>
       <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update_3</name>
       <precision>3</precision>
@@ -1065,11 +1065,11 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
-      <width>36</width>
+      <width>34</width>
       <wrap_words>false</wrap_words>
       <wuid>661849b:170e424926c:-7284</wuid>
-      <x>61</x>
-      <y>37</y>
+      <x>62</x>
+      <y>34</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -1084,7 +1084,7 @@ $(pv_value)</tooltip>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <fontdata fontName="Arial" height="8" style="0" pixels="true" />
+        <fontdata fontName="Arial Narrow" height="10" style="1" pixels="true" />
       </font>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
@@ -1105,7 +1105,7 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>14</width>
+      <width>15</width>
       <wrap_words>false</wrap_words>
       <wuid>661849b:170e424926c:-7283</wuid>
       <x>49</x>

@@ -164,7 +164,7 @@ else:
     <height>307</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
-      <MM>MOT:MTR0101</MM>
+      <MM>MOT:MTR$(MOTORS_PERSPECTIVE_ROW1)01</MM>
     </macros>
     <name>Motor details</name>
     <opi_file>../Motor/mymotor.opi</opi_file>
@@ -182,14 +182,8 @@ else:
 from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
 from org.csstudio.opibuilder.scriptUtil import DataUtil
 
-#DEFAULT_MOTOR = "MOT:MTR0101"
-
 # Get the macro for the widget that has just been clicked.
 new_macro = PVUtil.getString(pvArray[0])
-# Set default if null value
-#if new_macro=="":
-#    new_macro = DEFAULT_MOTOR
-#    pvArray[0].setValue(new_macro)
 
 # Check if more details triggered
 if PVUtil.getString(pvArray[1]) == "enabled":
