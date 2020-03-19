@@ -295,7 +295,7 @@ public class ScriptGeneratorView {
 		        // Composite for laying out new/delete/duplicate action buttons
 		        Composite actionsControlsGrp = new Composite(mainParent, SWT.NONE);
 		        actionsControlsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		        GridLayout ssgLayout = new GridLayout(3, false);
+		        GridLayout ssgLayout = new GridLayout(4, false);
 		        ssgLayout.marginHeight = 10;
 		        ssgLayout.marginWidth = 10;
 		        actionsControlsGrp.setLayout(ssgLayout);
@@ -316,6 +316,11 @@ public class ScriptGeneratorView {
 		        btnDuplicateAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		        btnDuplicateAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.duplicateAction(table.getSelectionIndex()));
 		        
+                final Button btnClearAction = new Button(actionsControlsGrp, SWT.NONE);
+                btnClearAction.setText("Clear All Actions");
+                btnClearAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+                btnClearAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.clearAction());
+                
 		        // Composite for generate buttons
 		        Composite generateButtonsGrp = new Composite(mainParent, SWT.NONE);
 		        generateButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));

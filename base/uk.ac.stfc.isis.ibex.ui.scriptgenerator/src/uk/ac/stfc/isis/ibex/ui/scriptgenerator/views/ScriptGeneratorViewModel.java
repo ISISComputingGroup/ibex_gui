@@ -277,6 +277,13 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		scriptGeneratorModel.duplicateAction(index);
 	}
 	
+    /**
+     * Clears all actions from the ActionsTable.
+     */
+    protected void clearAction() {
+        scriptGeneratorModel.clearAction();
+    }
+    
 	/**
 	 * Moves action one row up in table.
 	 * 
