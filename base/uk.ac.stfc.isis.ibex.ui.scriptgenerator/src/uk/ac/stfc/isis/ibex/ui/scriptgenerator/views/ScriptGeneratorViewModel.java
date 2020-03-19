@@ -281,7 +281,14 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Clears all actions from the ActionsTable.
      */
     protected void clearAction() {
-        scriptGeneratorModel.clearAction();
+        DISPLAY.asyncExec(() -> {
+            boolean userConfirmation = MessageDialog.openConfirm(DISPLAY.getActiveShell(),
+                    "Warning",
+                    "This will delete all actions, are you sure you want to continue?");
+            if (userConfirmation) {
+                scriptGeneratorModel.clearAction();
+            }
+        });
     }
     
 	/**
