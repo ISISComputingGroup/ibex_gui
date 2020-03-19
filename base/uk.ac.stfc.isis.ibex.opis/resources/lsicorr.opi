@@ -194,7 +194,7 @@
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>488</height>
+      <height>478</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -210,7 +210,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>443</width>
       <wuid>47114686:16fe750af01:-7bc1</wuid>
@@ -663,7 +663,7 @@ $(pv_value)</tooltip>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
-          <format_type>0</format_type>
+          <format_type>1</format_type>
           <height>20</height>
           <horizontal_alignment>0</horizontal_alignment>
           <limits_from_pv>false</limits_from_pv>
@@ -911,7 +911,7 @@ $(pv_value)</tooltip>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
-          <format_type>0</format_type>
+          <format_type>1</format_type>
           <height>20</height>
           <horizontal_alignment>0</horizontal_alignment>
           <limits_from_pv>false</limits_from_pv>
@@ -1334,7 +1334,7 @@ $(pv_value)</tooltip>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
-          <format_type>0</format_type>
+          <format_type>1</format_type>
           <height>20</height>
           <horizontal_alignment>0</horizontal_alignment>
           <limits_from_pv>false</limits_from_pv>
@@ -1484,7 +1484,7 @@ $(pv_value)</tooltip>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
-          <format_type>0</format_type>
+          <format_type>1</format_type>
           <height>20</height>
           <horizontal_alignment>0</horizontal_alignment>
           <limits_from_pv>false</limits_from_pv>
@@ -1634,7 +1634,7 @@ $(pv_value)</tooltip>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
-          <format_type>0</format_type>
+          <format_type>1</format_type>
           <height>20</height>
           <horizontal_alignment>0</horizontal_alignment>
           <limits_from_pv>false</limits_from_pv>
@@ -1784,7 +1784,7 @@ $(pv_value)</tooltip>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
-          <format_type>0</format_type>
+          <format_type>1</format_type>
           <height>20</height>
           <horizontal_alignment>0</horizontal_alignment>
           <limits_from_pv>false</limits_from_pv>
@@ -1934,7 +1934,7 @@ $(pv_value)</tooltip>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
-          <format_type>0</format_type>
+          <format_type>1</format_type>
           <height>20</height>
           <horizontal_alignment>0</horizontal_alignment>
           <limits_from_pv>false</limits_from_pv>
@@ -1988,7 +1988,7 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>488</height>
+      <height>478</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -2004,7 +2004,7 @@ $(pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>443</width>
       <wuid>47114686:16fe750af01:-7bbd</wuid>
@@ -2112,7 +2112,7 @@ $(pv_value)</tooltip>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
-          <height>23</height>
+          <height>33</height>
           <items_from_pv>true</items_from_pv>
           <name>Combo</name>
           <pv_name>$(PV_ROOT)CORRELATIONTYPE:SP</pv_name>
@@ -2195,7 +2195,7 @@ $(pv_value)</tooltip>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
-          <height>23</height>
+          <height>33</height>
           <items_from_pv>true</items_from_pv>
           <name>Combo_1</name>
           <pv_name>$(PV_ROOT)SAMPLINGTIMEMULTIT:SP</pv_name>
@@ -2278,7 +2278,7 @@ $(pv_value)</tooltip>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
-          <height>23</height>
+          <height>33</height>
           <items_from_pv>true</items_from_pv>
           <name>Combo_2</name>
           <pv_name>$(PV_ROOT)SWAPCHANNELS:SP</pv_name>
@@ -2361,7 +2361,7 @@ $(pv_value)</tooltip>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
-          <height>23</height>
+          <height>33</height>
           <items_from_pv>true</items_from_pv>
           <name>Combo_3</name>
           <pv_name>$(PV_ROOT)NORMALIZATION:SP</pv_name>
@@ -2444,7 +2444,7 @@ $(pv_value)</tooltip>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
-          <height>23</height>
+          <height>33</height>
           <items_from_pv>true</items_from_pv>
           <name>Combo_4</name>
           <pv_name>$(PV_ROOT)TRANSFERRATE:SP</pv_name>
@@ -2882,7 +2882,7 @@ $(pv_value)</tooltip>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
-          <format_type>0</format_type>
+          <format_type>1</format_type>
           <height>20</height>
           <horizontal_alignment>0</horizontal_alignment>
           <limits_from_pv>false</limits_from_pv>
@@ -3032,7 +3032,7 @@ $(pv_value)</tooltip>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
-          <format_type>0</format_type>
+          <format_type>1</format_type>
           <height>20</height>
           <horizontal_alignment>0</horizontal_alignment>
           <limits_from_pv>false</limits_from_pv>
