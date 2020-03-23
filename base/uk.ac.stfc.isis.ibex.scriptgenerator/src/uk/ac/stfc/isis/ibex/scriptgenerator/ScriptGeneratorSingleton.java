@@ -436,6 +436,13 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		scriptGeneratorTable.duplicateAction(index);
 	}
 
+    /**
+     * Clears all actions from the ActionsTable.
+     */
+    public void clearAction() {
+        scriptGeneratorTable.clearAction();
+    }
+    
 	/**
 	 * Moves action one row up in table.
 	 * 

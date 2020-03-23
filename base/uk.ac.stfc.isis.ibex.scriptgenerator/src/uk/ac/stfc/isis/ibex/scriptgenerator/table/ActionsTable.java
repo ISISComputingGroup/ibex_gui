@@ -152,6 +152,14 @@ public class ActionsTable extends ModelObject {
 			firePropertyChange(ACTIONS_PROPERTY, actions, this.actions = newActions);
 		}
 	}
+    
+    /**
+     * Clears the list of actions.
+     */
+    public void clearAction() {
+        final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>();
+        firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
+    }
 
 	/**
 	 * Moves action to a new position in the table.

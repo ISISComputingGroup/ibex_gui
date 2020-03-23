@@ -285,6 +285,20 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		scriptGeneratorModel.duplicateAction(index);
 	}
 	
+    /**
+     * Clears all actions from the ActionsTable.
+     */
+    protected void clearAction() {
+        DISPLAY.asyncExec(() -> {
+            boolean userConfirmation = MessageDialog.openConfirm(DISPLAY.getActiveShell(),
+                    "Warning",
+                    "This will delete all actions, are you sure you want to continue?");
+            if (userConfirmation) {
+                scriptGeneratorModel.clearAction();
+            }
+        });
+    }
+    
 	/**
 	 * Moves action one row up in table.
 	 * 
