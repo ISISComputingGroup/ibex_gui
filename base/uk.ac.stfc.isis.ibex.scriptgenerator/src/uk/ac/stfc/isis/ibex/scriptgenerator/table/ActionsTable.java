@@ -131,10 +131,6 @@ public class ActionsTable extends ModelObject {
 			final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
 			newList.remove(index);
 			firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
-			// if actions are empty then set the value of currentLoadedDataFile to null
-			if (newList.isEmpty()) {
-				firePropertyChange("empty actions", null, null);
-			}
 		}
 	}
 
@@ -237,17 +233,5 @@ public class ActionsTable extends ModelObject {
 	 */
 	public void reloadActions() {
 		firePropertyChange(ACTIONS_PROPERTY, null, actions);
-	}
-	
-	/**
-	 * check if actions table is empty
-	 * @return true if empty
-	 */
-	public boolean isEmpty() {
-		boolean retVal = false;
-		if (actions.size() == 0) {
-			retVal = true;
-		}
-		return retVal;
 	}
 }
