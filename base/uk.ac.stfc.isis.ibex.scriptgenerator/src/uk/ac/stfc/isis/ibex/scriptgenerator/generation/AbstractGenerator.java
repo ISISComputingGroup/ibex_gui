@@ -47,10 +47,11 @@ public abstract class AbstractGenerator extends ModelObject {
 	 * 
 	 * @param scriptGenContent The script generator content to produce the script from.
 	 * @param scriptDefinition The instrument script definition to generate the script with.
+	 * @param currentlyLoadedDataFileContent the data file that user has currently loaded to generate script
 	 * @throws ExecutionException A failure to execute the call to generate a script
 	 * @throws InterruptedException The call to generate a script was interrupted
 	 */
-	public abstract void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition) throws InterruptedException, ExecutionException;
+	public abstract void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, String currentlyLoadedDataFileContent) throws InterruptedException, ExecutionException;
 	
 	/**
 	 * Refresh the property of whether the contents of the script generator (actionsTable) are valid (bool).
@@ -71,5 +72,5 @@ public abstract class AbstractGenerator extends ModelObject {
 	 * @throws InterruptedException The call to generate a script was interrupted
 	 */
 	public abstract void refreshValidityErrors(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition) throws InterruptedException, ExecutionException;
-	
+
 }

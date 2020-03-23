@@ -30,10 +30,11 @@ public interface ScriptDefinitionsWrapper {
 	 * Generate a script from a list of script generator actions for the given script definition.
 	 * 
 	 * @param scriptGenContent The list of actions to generate a script for.
+	 * @param jsonString string to write to script defintion file
 	 * @param scriptDefinition The script definition to generate the script with.
 	 * @return A string containing the generated script.
 	 */
-	String generate(List<Map<String, String>> scriptGenContent, ScriptDefinitionWrapper scriptDefinition);
+	String generate(List<Map<String, String>> scriptGenContent, String jsonString, ScriptDefinitionWrapper scriptDefinition);
 	
 	/**
 	 * Get a mapping of validity errors of the scriptGenContent against the script definition.

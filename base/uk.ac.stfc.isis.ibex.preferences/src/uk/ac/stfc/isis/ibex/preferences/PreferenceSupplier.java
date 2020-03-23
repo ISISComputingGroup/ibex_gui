@@ -181,7 +181,7 @@ public class PreferenceSupplier {
      * The default place to store script generator script definition files.
      */
     private static final String DEFAULT_SCRIPT_DEFINITIONS_FOLDER = "C:/ScriptDefinitions/";
-    
+            
     /**
      * Defines where to find generator script definition files from.
      */
@@ -311,8 +311,8 @@ public class PreferenceSupplier {
     public String scriptGeneratorManualURL() {
         return getString(SCRIPT_GENERATOR_MANUAL_URL, DEFAULT_SCRIPT_GENERATOR_MANUAL_URL);
     }
-	
-	/**
+		
+	/** 
 	 * Get whether to hide the script gen script definition error table.
 	 * 
 	 * @return true if we should hide the table, false if not.
