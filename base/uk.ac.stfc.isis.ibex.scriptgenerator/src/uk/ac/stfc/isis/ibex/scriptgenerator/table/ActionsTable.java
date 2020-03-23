@@ -76,10 +76,10 @@ public class ActionsTable extends ModelObject {
 	 * @param parametersMap The user-set value (string) for the specified ActionParameter.
 	 * @return the action.
 	 */
-	private ScriptGeneratorAction createAction(Map<JavaActionParameter, String> paremetersMap) {
+	private ScriptGeneratorAction createAction(Map<JavaActionParameter, String> parametersMap) {
 		// Ensure is not shallow copy
 		Map<JavaActionParameter, String> newParamsMap = new HashMap<JavaActionParameter, String>();
-		for (Map.Entry<JavaActionParameter, String> entry: paremetersMap.entrySet()) {
+		for (Map.Entry<JavaActionParameter, String> entry: parametersMap.entrySet()) {
 			newParamsMap.put(entry.getKey(), entry.getValue());
 		}
 		// Create action and attach listeners
@@ -105,6 +105,20 @@ public class ActionsTable extends ModelObject {
 		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
 		newList.add(newAction);
 		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
+	}
+	
+	/**
+	 * Add multiple actions
+	 * @param list contains mapped action parameters to its values
+	 */
+	public void addMultipleActions(List<Map<JavaActionParameter, String>> list) {
+		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
+		for (Map<JavaActionParameter, String> map : list) {
+			var newAction = createAction(map);
+			newList.add(newAction);
+		}
+		firePropertyChange(ACTIONS_PROPERTY, actions, actions=newList);
+
 	}
 
 	/**
@@ -138,6 +152,14 @@ public class ActionsTable extends ModelObject {
 			firePropertyChange(ACTIONS_PROPERTY, actions, this.actions = newActions);
 		}
 	}
+    
+    /**
+     * Clears the list of actions.
+     */
+    public void clearAction() {
+        final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>();
+        firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
+    }
 
 	/**
 	 * Moves action to a new position in the table.

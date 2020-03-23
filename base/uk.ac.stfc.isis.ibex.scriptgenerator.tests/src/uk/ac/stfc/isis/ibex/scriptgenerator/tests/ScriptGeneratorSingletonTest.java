@@ -26,7 +26,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 
 public class ScriptGeneratorSingletonTest {
-	
+
 	ScriptGeneratorSingleton model;
 	HashMap<Integer, String> validityErrors;
 	ActionsTable mockActionsTable;
@@ -35,6 +35,7 @@ public class ScriptGeneratorSingletonTest {
 	
 	ScriptGeneratorSingleton mockModel;
 	String scriptLines;
+	String jsonLine;
 	String timestamp;
 	ScriptDefinitionWrapper mockConfig;
 	String configName;
@@ -50,6 +51,7 @@ public class ScriptGeneratorSingletonTest {
 		// Mock out the model to test some methods and make real calls to others
 		mockModel = mock(ScriptGeneratorSingleton.class);
 		scriptLines = "test\ntest2";
+		jsonLine = "{\"test:me\"}";
 		timestamp = "timestamp";
 		mockConfig = mock(ScriptDefinitionWrapper.class);
 		configName = "config";
@@ -169,6 +171,7 @@ public class ScriptGeneratorSingletonTest {
 			System.err.println(e.getMessage());
 			fail("We have failed when creating the file");
 		}
+
 	}
 	
 }
