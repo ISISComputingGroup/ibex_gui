@@ -1,4 +1,4 @@
-package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
+package uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs;
 
 import static org.eclipse.swt.events.SelectionListener.widgetSelectedAdapter;
 
@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.CheckForOverwriteException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.FileGeneratorException;
+import uk.ac.stfc.isis.ibex.scriptgenerator.NoScriptDefinitionSelectedException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.OpenFileException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 
@@ -52,6 +53,7 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 	/**
 	 * The file extenstion for Python files.
 	 */
+
 	private static final String PYTHON_EXT = ".py";
 	
 	/**
@@ -116,12 +118,11 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 		}
 		
 		// Create filename edit area
-		
 		Label filenameLabel = new Label(composite, SWT.NONE);
 		
 		filenameLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-		filenameLabel.setText("File name: ");
-			
+		filenameLabel.setText("Script file name: ");
+		
 		Text msg = new Text(composite, SWT.BORDER);
 		
 		msg.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
@@ -135,12 +136,11 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 				filename = msg.getText();
 			}
 		});
-
+		
 		GridData data = new GridData(SWT.FILL, SWT.TOP, true, false);
 		data.widthHint = convertHorizontalDLUsToPixels(IDialogConstants.MINIMUM_MESSAGE_AREA_WIDTH);
-
 		msg.setLayoutData(data);
-
+		
 		return composite;
 	}
 	
@@ -180,6 +180,7 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 		// Attempt to save the generated script
 		try {
 			model.getFileHandler().generateWithOverwriteCheck(filepathPrefix, filename, generatedScript, PYTHON_EXT);
+			model.saveParameters(filename);
 			fileWritten = true;
 		} catch (CheckForOverwriteException e) {
 			// Ask the user if they want to overwrite and try again
@@ -190,10 +191,14 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 				// We have asked to overwrite to attempt to do so
 				try {
 					model.getFileHandler().generateWithoutOverwriteCheck(filepathPrefix, filename, generatedScript, PYTHON_EXT);
+					model.saveParameters(filename);
 					fileWritten = true;
 				} catch (FileGeneratorException | IOException e1) {
 					MessageDialog.openError(Display.getDefault().getActiveShell(),
 							"Error", "Failed to write generated script to file");
+				} catch (NoScriptDefinitionSelectedException e1) {
+					MessageDialog.openError(Display.getDefault().getActiveShell(),
+							"Error", "No Script Definition selected");
 				}
 			}
 		} catch (FileGeneratorException e) {
@@ -202,6 +207,9 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 					"Cannot save", "Cannot save: filename contains a . ; / or \\");
 		} catch (IOException e) {
 			MessageDialog.openError(Display.getDefault().getActiveShell(), "Error", "Failed to write generated script to file");
+		} catch (NoScriptDefinitionSelectedException e) {
+			MessageDialog.openError(Display.getDefault().getActiveShell(),
+							"Error", "No Script Definition selected");
 		}
 		
 		// Only close the dialog if we have successfully written to file

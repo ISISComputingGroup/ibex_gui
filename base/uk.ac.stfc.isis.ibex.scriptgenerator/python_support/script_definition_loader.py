@@ -9,6 +9,7 @@ import argparse
 import os
 import sys
 from jinja2 import Environment, FileSystemLoader, Markup, TemplateNotFound
+from genie_python import utilities
 import importlib.machinery
 import importlib.util
 
@@ -134,7 +135,7 @@ class Generator(object):
             current_action_index += 1
         return validityCheck
 
-    def generate(self, list_of_actions, script_definition: ScriptDefinitionWrapper) -> Union[None, AnyStr]:
+    def generate(self, list_of_actions, jsonString, script_definition: ScriptDefinitionWrapper) -> Union[None, AnyStr]:
         """
         Generates a script from a list of parameters and script_definition
 
@@ -145,8 +146,9 @@ class Generator(object):
             script_definition_file_path = "{}.py".format(script_definition.getName())
             script_definition_template = self.env.get_template(script_definition_file_path)
             try:
+                val = str(utilities.compress_and_hex(jsonString))
                 rendered_template = self.template.render(inserted_script_definition=script_definition_template,
-                    script_generator_actions=list_of_actions)
+                    script_generator_actions=list_of_actions, hexed_value=val)
             except Exception:
                 rendered_template = None
             return rendered_template
@@ -222,14 +224,14 @@ class ScriptDefinitionsWrapper(object):
                 self.convert_list_of_actions_to_python(list_of_actions), script_definition),
             gateway._gateway_client)
 
-    def generate(self, list_of_actions, script_definition: ScriptDefinitionWrapper) -> Union[None, AnyStr]:
+    def generate(self, list_of_actions, jsonString, script_definition: ScriptDefinitionWrapper) -> Union[None, AnyStr]:
         """
-        Generates a script from a list of parameters and script_definitionuration
+        Generates a script from a list of parameters and script_definition
 
         Returns:
            None if parameters are invalid, otherwise a string of a generated script.
         """
-        return self.generator.generate(self.convert_list_of_actions_to_python(list_of_actions), script_definition)
+        return self.generator.generate(self.convert_list_of_actions_to_python(list_of_actions), jsonString, script_definition)
 
     def isPythonReady(self) -> bool:
         """
@@ -294,7 +296,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     search_folders = args.search_folders.split(",")
-
+    
     script_definitions: Dict[AnyStr, ScriptDefinition] = {}
     script_definition_load_errors: Dict[AnyStr, AnyStr] = {}
     script_definitions, script_definition_load_errors = get_script_definitions(search_folders=search_folders)

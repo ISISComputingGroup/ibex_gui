@@ -30,6 +30,7 @@ public class GeneratorPython extends AbstractGenerator {
 	 * @param pythonInterface The py4j python interface to use to communicate with python.
 	 */
 	public GeneratorPython(PythonInterface pythonInterface) {
+	
 		this.pythonInterface = pythonInterface;
 		this.pythonInterface.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
 			firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
@@ -40,25 +41,9 @@ public class GeneratorPython extends AbstractGenerator {
 		this.pythonInterface.addPropertyChangeListener(GENERATED_SCRIPT_PROPERTY, evt -> {
 			firePropertyChange(GENERATED_SCRIPT_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
+	
 	}
 
-	/**
-	 * Refresh the generated python script property.
-	 * 
-	 * @param scriptGenContent The script generator content to produce the script from.
-	 * @param scriptDefinition The script definition to generate the script with.
-	 * @throws ExecutionException A failure to execute the py4j call.
-	 * @throws InterruptedException The Py4J call was interrupted.
-	 */
-	@Override
-	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition) throws InterruptedException, ExecutionException {
-		try {
-			pythonInterface.refreshGeneratedScript(scriptGenContent, scriptDefinition);
-		} catch(PythonNotReadyException e) {
-			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
-			LOG.error(e);
-		}
-	}
 	
 	/**
 	 * Refresh the property of whether the contents of the script generator (actionsTable) are valid against Python.
@@ -94,5 +79,17 @@ public class GeneratorPython extends AbstractGenerator {
 			LOG.error(e);
 		}
 	}
-	
+
+
+	@Override
+	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent,
+			ScriptDefinitionWrapper scriptDefinition, String JsonContent) throws InterruptedException, ExecutionException {
+		try {
+			pythonInterface.refreshGeneratedScript(scriptGenContent, JsonContent, scriptDefinition);
+		} catch(PythonNotReadyException e) {
+			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
+			LOG.error(e);
+		}
+		
+	}
 }

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.junit.Before;
@@ -53,6 +54,7 @@ public class ActionsTableTest {
 	
 	@Test
 	public void test_GIVEN_action_duplicated_WHEN_action_selected_THEN_action_is_duplicated() {
+		Map<ActionParameter, String> multipleActions = new HashMap<ActionParameter, String>();
 		table.addEmptyAction();
 		
 		table.duplicateAction(0);
@@ -165,6 +167,22 @@ public class ActionsTableTest {
 				table.getActions().get(3).isValid(), is(false));
 		assertThat("We set 3 to invalid so should give same invalidity error string",
 				table.getActions().get(3).getInvalidityReason().get(), equalTo("invalid 2"));
+	}
+	
+	@Test
+	public void test_GIVEN_multiple_actions_THEN_multiple_actions_are_added() {
+		List<Map<ActionParameter, String>> list = new ArrayList<Map<ActionParameter, String>>();
+		// create multiple actions
+		Map<ActionParameter, String> exampleOne = new HashMap<ActionParameter, String>();
+		Map<ActionParameter, String> exampleTwo = new HashMap<ActionParameter, String>();
+		
+		list.add(exampleOne);
+		list.add(exampleTwo);
+		
+		table.addMultipleActions(list);
+		
+		assertEquals(table.getActions().size(), 2);
+		
 	}
 
 }
