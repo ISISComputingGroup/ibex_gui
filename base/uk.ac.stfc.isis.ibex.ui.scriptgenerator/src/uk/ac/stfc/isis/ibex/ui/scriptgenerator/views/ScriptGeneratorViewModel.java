@@ -130,7 +130,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	/**
 	 * A property that is changed when script definitions are switched.
 	 */
-	private static final String SCRIPT_DEFINITION_SWITCH_PROPERTY = "script definition";
+	private static final String SCRIPT_DEFINITION_SWITCH_PROPERTY = "scriptDefinition";
 	
 	/**
 	 * A property to notify listeners when python becomes ready or not ready.
