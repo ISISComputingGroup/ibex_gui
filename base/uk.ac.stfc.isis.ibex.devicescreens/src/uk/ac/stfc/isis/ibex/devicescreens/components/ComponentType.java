@@ -175,7 +175,7 @@ public enum ComponentType {
 	/** Zero field */
 	ZERO_FIELD,
 	/** LSI correlator */
-	LSI_CORR;
+	LSICORR;
 	
 	
 	private Target target;

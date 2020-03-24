@@ -2302,7 +2302,7 @@
     <entry>
       <key>LSI correlator</key>
       <value>
-        <type>LSI_CORR</type>
+        <type>LSICORR</type>
         <path>lsicorr.opi</path>
         <description>OPI for the LSI correlator</description>
         <categories/>
