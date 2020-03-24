@@ -21,15 +21,11 @@ package uk.ac.stfc.isis.ibex.journal.tests;
 
 import static org.junit.Assert.assertEquals;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.Calendar;
 import java.util.Optional;
 import java.util.OptionalInt;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 
 import uk.ac.stfc.isis.ibex.journal.EmptySearch;
 import uk.ac.stfc.isis.ibex.journal.JournalField;

@@ -23,9 +23,6 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 import org.junit.Before;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerButton;
 import uk.ac.stfc.isis.ibex.configserver.configuration.CustomBannerData;

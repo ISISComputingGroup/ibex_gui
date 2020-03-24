@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2020 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -166,6 +166,46 @@ public class PreferenceSupplier {
      * True means show the value, False means show N/A
      */
     private static final String SHOW_VALUES_OF_INVALID_BLOCKS = "show_values_of_invalid_blocks";
+    
+    /**
+     * The default place to generate scripts to.
+     */
+    private static final String DEFAULT_SCRIPT_GENERATION_FOLDER = "C:/Scripts/";
+    
+    /**
+     * Defines where to generate scripts to.
+     */
+    private static final String SCRIPT_GENERATION_FOLDER = "script_generation_folder";
+    
+    /**
+     * The default place to store script generator script definition files.
+     */
+    private static final String DEFAULT_SCRIPT_DEFINITIONS_FOLDER = "C:/ScriptDefinitions/";
+    
+    /**
+     * Defines where to find generator script definition files from.
+     */
+    private static final String SCRIPT_DEFINITIONS_FOLDER = "script_definitions_folder";
+    
+    /**
+     * The default URL for the Script Generator manual page
+     */
+    private static final String DEFAULT_SCRIPT_GENERATOR_MANUAL_URL = "http://shadow.nd.rl.ac.uk/ibex_user_manual/Using-the-Script-Generator";
+    
+    /**
+     * Defines the URL of the Script Generator page on the user manual
+     */
+    private static final String SCRIPT_GENERATOR_MANUAL_URL = "script_generator_manual_url";
+    
+    /**
+     * The default of whether to hide the script definition error table or not.
+     */
+    private static final boolean DEFAULT_HIDE_SCRIPT_DEFINITION_ERRORS = false;
+    
+    /**
+     * Defines whether to hide script definition error table.
+     */
+    private static final String HIDE_SCRIPT_DEFINITION_ERRORS = "hide_script_definition_error_table";
 	
     /**
      * Gets a string from the IBEX preference store.
@@ -174,6 +214,15 @@ public class PreferenceSupplier {
      */
 	private String getString(String name, String def) {
 		return preferenceService.getString(PREFERENCE_NODE, name, def, null);
+	}
+	
+	/**
+     * Gets a boolean from the IBEX preference store.
+     * 
+     * @return the preferences boolean, or the default if it was not present.
+     */
+	private boolean getBoolean(String name, boolean def) {
+		return preferenceService.getBoolean(PREFERENCE_NODE, name, def, null);
 	}
 		
     /**
@@ -226,11 +275,49 @@ public class PreferenceSupplier {
 	}
 	
 	/**
-	 * Whether the values of invalid blocks should be shown
+	 * Whether the values of invalid blocks should be shown.
+	 * 
 	 * @return true if invalid blocks should be shown with their current value and the relevant alarm border, 
-	 * false if invalid blocks should be shown with placeholder text and an alarm border
+	 *  false if invalid blocks should be shown with placeholder text and an alarm border
 	 */
 	public boolean showInvalidBlockValues() {
 		return preferenceService.getBoolean(PREFERENCE_NODE, SHOW_VALUES_OF_INVALID_BLOCKS, false, null);
+	}
+	
+	/**
+	 * Get the preference for the folder to generate scripts to.
+	 * 
+	 * @return The folder to generate scripts to.
+	 */
+	public String scriptGenerationFolder() {
+		return getString(SCRIPT_GENERATION_FOLDER, DEFAULT_SCRIPT_GENERATION_FOLDER);
+	}
+	
+	 /**
+     * Gets a list of the folders containing script generator script definitions.
+     * To implement many separate with commas (this is handled in the Python side).
+     * 
+     * @return a list of of folders paths that contain script generator script definitions.
+     */
+	public String scriptGeneratorScriptDefinitionFolders() {
+		return getString(SCRIPT_DEFINITIONS_FOLDER, DEFAULT_SCRIPT_DEFINITIONS_FOLDER);
+	}
+	
+    /**
+     * Get a list of URLs pointing to the Script Generator page on the user manual.
+     * 
+     * @return a comma-separated list of URLs
+     */
+    public String scriptGeneratorManualURL() {
+        return getString(SCRIPT_GENERATOR_MANUAL_URL, DEFAULT_SCRIPT_GENERATOR_MANUAL_URL);
+    }
+	
+	/**
+	 * Get whether to hide the script gen script definition error table.
+	 * 
+	 * @return true if we should hide the table, false if not.
+	 */
+	public boolean hideScriptGenScriptDefinitionErrorTable() {
+		return getBoolean(HIDE_SCRIPT_DEFINITION_ERRORS, DEFAULT_HIDE_SCRIPT_DEFINITION_ERRORS);
 	}
 }

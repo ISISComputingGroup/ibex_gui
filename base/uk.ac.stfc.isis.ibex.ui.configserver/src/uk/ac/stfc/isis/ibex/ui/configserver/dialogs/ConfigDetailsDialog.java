@@ -87,7 +87,7 @@ public class ConfigDetailsDialog extends TitleAreaDialog implements
 		setTitle(subTitle);
 		return editor;
 	}
-
+	
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);

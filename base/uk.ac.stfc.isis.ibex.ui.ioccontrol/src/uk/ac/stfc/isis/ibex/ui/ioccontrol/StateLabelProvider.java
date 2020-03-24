@@ -50,7 +50,7 @@ public class StateLabelProvider extends SortableObservableMapCellLabelProvider<I
 	 * 
 	 * @param attributeMaps A map of the attributes that this cell will observe.
 	 */
-	public StateLabelProvider(IObservableMap attributeMaps) {
+	public StateLabelProvider(IObservableMap<IocState, ?> attributeMaps) {
 		super(attributeMaps);
 	}
 

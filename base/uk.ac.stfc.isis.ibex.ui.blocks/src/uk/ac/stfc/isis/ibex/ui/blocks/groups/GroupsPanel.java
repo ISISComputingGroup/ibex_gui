@@ -41,7 +41,6 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 /**
  * The panel that shows blocks and groups in the main IBEX perspective.
  */
-@SuppressWarnings("checkstyle:magicnumber")
 public class GroupsPanel extends Composite {
 	
 	private final Display display = Display.getCurrent();
@@ -151,7 +150,7 @@ public class GroupsPanel extends Composite {
 	 */
 	public synchronized void updateGroups(final Optional<List<DisplayGroup>> groups) {
 		
-		this.displayGroups = HiddenGroupFilter.getVisibleGroups(groups, showHiddenBlocks);
+		this.displayGroups = groups;
 		
 		display.syncExec(new Runnable() {
 			@Override
@@ -194,7 +193,8 @@ public class GroupsPanel extends Composite {
 	}
 	
 	private void addGroups() {
-		for (DisplayGroup group : displayGroups.orElseThrow(IllegalStateException::new)) {
+		Optional<List<DisplayGroup>> visibleGroups = HiddenGroupFilter.getVisibleGroups(displayGroups, showHiddenBlocks);
+		for (DisplayGroup group : visibleGroups.orElseThrow(IllegalStateException::new)) {
 		    groups.add(groupWidget(group));
 		}
 	}

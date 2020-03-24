@@ -27,19 +27,43 @@ package uk.ac.stfc.isis.ibex.epics.observing;
  *            The type of the value that you are observing.
  */
 public class ForwardingObservable<T> extends TransformingObservable<T, T> {
-		
+
+    public final String name;
+
     /**
-     * Sets up a forwarding observable with a closable source.
+     * Sets up an unnamed forwarding observable with a closable source.
      * 
      * @param source
      *            the source observable
      */
     public ForwardingObservable(ClosableObservable<T> source) {
-    	setSource(source);
+	this("", source);
     }
 
-	@Override
-	protected T transform(T value) {
-		return value;
+    /**
+     * Sets up a named forwarding observable with a closable source.
+     * 
+     * @param source
+     *            the source observable
+     * @param name
+     * 				an optional name for this forwarding observable to help with identification
+     */
+    public ForwardingObservable(String name, ClosableObservable<T> source) {
+	setSource(source);
+	this.name = name;
+    }
+
+    @Override
+    protected T transform(T value) {
+	return value;
+    }
+    
+    @Override
+    public String toString() {
+	String asString = super.toString();	
+	if (this.name != "") {
+	    asString = this.name + " which is " + asString;
 	}
+        return asString;
+    }
 }

@@ -3,8 +3,12 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.generation;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.Config;
+import org.apache.logging.log4j.Logger;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonNotReadyException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
@@ -16,6 +20,8 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 public class GeneratorPython extends AbstractGenerator {
 	
 	private final PythonInterface pythonInterface;
+	
+	private static final Logger LOG = IsisLog.getLogger(GeneratorPython.class);
 	
 	/**
 	 * Create a python generator with the specified python interface.
@@ -40,38 +46,53 @@ public class GeneratorPython extends AbstractGenerator {
 	 * Refresh the generated python script property.
 	 * 
 	 * @param scriptGenContent The script generator content to produce the script from.
-	 * @param config The instrument config to generate the script with.
+	 * @param scriptDefinition The script definition to generate the script with.
 	 * @throws ExecutionException A failure to execute the py4j call.
 	 * @throws InterruptedException The Py4J call was interrupted.
 	 */
 	@Override
-	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, Config config) throws InterruptedException, ExecutionException {
-		pythonInterface.refreshGeneratedScript(scriptGenContent, config);
+	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition) throws InterruptedException, ExecutionException {
+		try {
+			pythonInterface.refreshGeneratedScript(scriptGenContent, scriptDefinition);
+		} catch(PythonNotReadyException e) {
+			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
+			LOG.error(e);
+		}
 	}
 	
 	/**
 	 * Refresh the property of whether the contents of the script generator (actionsTable) are valid against Python.
 	 * 
 	 * @param scriptGenContent The contents of the script generator to validate.
-	 * @param config The instrument config to validate the script against.
+	 * @param scriptDefinition The script definition to validate the script against.
 	 * @throws ExecutionException A failure to execute the py4j call.
 	 * @throws InterruptedException The Py4J call was interrupted.
 	 */
-	public void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, Config config) throws InterruptedException, ExecutionException {
-		pythonInterface.refreshAreParamsValid(scriptGenContent, config);
+	public void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition) throws InterruptedException, ExecutionException {
+		try {	
+			pythonInterface.refreshAreParamsValid(scriptGenContent, scriptDefinition);
+		} catch(PythonNotReadyException e) {
+			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
+			LOG.error(e);
+		}
 	}
 
 	/**
 	 * Refresh the validity errors returned when checking validity.
 	 * 
 	 * @param scriptGenContent The contents of the script generator to check for validity errors with.
-	 * @param config The instrument config to validate the script against.
+	 * @param scriptDefintion The script definition to validate the script against.
 	 * @throws ExecutionException A failure to execute the py4j call.
 	 * @throws InterruptedException The Py4J call was interrupted.
 	 */
 	@Override
-	public void refreshValidityErrors(List<ScriptGeneratorAction> scriptGenContent, Config config) throws InterruptedException, ExecutionException {
-		pythonInterface.refreshValidityErrors(scriptGenContent, config);
+	public void refreshValidityErrors(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefintion) throws InterruptedException, ExecutionException {
+		try {
+			pythonInterface.refreshValidityErrors(scriptGenContent, scriptDefintion);
+		} catch(PythonNotReadyException e) {
+			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
+			LOG.error(e);
+		}
 	}
 	
 }

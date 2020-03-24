@@ -8,13 +8,17 @@ if %errcode% GEQ 4 (
 	exit /b %errcode%
 )
 
-REM Copy python into the client
-call copy_python.bat %~dp0..\base\uk.ac.stfc.isis.ibex.preferences\resources\Python3
+call copy_in_maven.bat
 if %errorlevel% neq 0 exit /b %errorlevel%
+set "PATH=%PATH%;%~dp0maven\bin"
 
 SET "JAVA_HOME=%~dp0\jdk"
+
+if "%PYTHON3%" == "" (
+	set "PYTHON3=C:\Instrument\Apps\Python3\python.exe"
+)
  
-python .\check_build.py ..\base\
+%PYTHON3% .\check_build.py ..\base\
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 if "%BUILD_NUMBER%" == "" (
@@ -25,10 +29,17 @@ set mvnErr=
 call mvn --settings=%~dp0..\mvn_user_settings.xml -f %~dp0..\base\uk.ac.stfc.isis.scriptgenerator.tycho.parent\pom.xml -DforceContextQualifier=%BUILD_NUMBER% clean verify || set mvnErr=1
 if defined mvnErr exit /b 1
 
-REM Copy built client into a sensible directory to run it
+REM Copy built client into a sensible clean directory to run it
 set built_client="%~dp0..\base\uk.ac.stfc.isis.scriptgenerator.client.product\target\products\scriptgenerator.product\win32\win32\x86_64"
 set sensible_build_dir="%~dp0..\built_script_gen"
-robocopy "%built_client%" "%sensible_build_dir%" /E /PURGE /R:2 /MT /XF "install.log" /NFL /NDL /NP
+RMDIR /S /Q %sensible_build_dir%
+robocopy "%built_client%" "%sensible_build_dir%" /E /PURGE /R:2 /XF "install.log" /NFL /NDL /NP /NS /NC
+
+REM Copy python into the client
+%PYTHON3% get_python_write_dir.py %sensible_build_dir% > Output
+set /p PythonWriteDir=<Output
+call copy_python.bat %PythonWriteDir%
+if %errorlevel% neq 0 exit /b %errorlevel%
 
 set errcode=%ERRORLEVEL%
 if %errcode% GEQ 4 (

@@ -7,10 +7,10 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<tycho.version>1.4.0</tycho.version>
+		<tycho.version>1.6.0</tycho.version>
 		<tycho-repo.url>https://oss.sonatype.org/content/groups/public/</tycho-repo.url>
-		<photon-repo.url>http://download.eclipse.org/releases/2019-06</photon-repo.url>
-		<photon-updates-repo.url>http://download.eclipse.org/eclipse/updates/4.12</photon-updates-repo.url>
+		<photon-repo.url>http://download.eclipse.org/releases/2019-12</photon-repo.url>
+		<photon-updates-repo.url>http://download.eclipse.org/eclipse/updates/4.14</photon-updates-repo.url>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -101,30 +101,6 @@
 					<linkXRef>true</linkXRef>
 				</configuration>
 			</plugin>
-			<plugin>
-		        <artifactId>maven-resources-plugin</artifactId>
-		        <version>3.1.0</version>
-		        <executions>
-		          <execution>
-		            <id>copy-resources</id>
-		            <!-- here the phase you need -->
-		            <phase>package</phase>
-		            <goals>
-		              <goal>copy-resources</goal>
-		            </goals>
-		            <configuration>
-		              <skip>true</skip>
-		              <outputDirectory>${basedir}/../uk.ac.stfc.isis.ibex.e4.client.product/target/products/ibex.product/win32/win32/x86_64/plugins/uk.ac.stfc.isis.ibex.preferences_${project.version}/resources/Python3</outputDirectory>
-		              <resources>          
-		                <resource>
-		                  <directory>${basedir}/../uk.ac.stfc.isis.ibex.preferences/resources/Python3</directory>
-		                </resource>
-		              </resources>               
-		            </configuration>            
-		          </execution>
-		        </executions>
-		      </plugin>
-
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -234,11 +210,11 @@
 		<module>../uk.ac.stfc.isis.ibex.targets</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.targets</module>
 		<module>../uk.ac.stfc.isis.ibex.targets.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.reflectometry</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.configserver.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.scriptgenerator</module>
 		<module>../uk.ac.stfc.isis.ibex.scriptgenerator</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.dae.tests</module>
-		<module>../uk.ac.stfc.isis.ibex.ui.dashboard.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.devicescreens.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.synoptic.editor.tests</module>
@@ -254,14 +230,22 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.nicos.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.graphing</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.widgets.epics</module>
+		<module>../uk.ac.stfc.isis.ibex.jaxb</module>
+
+		<module>../uk.ac.stfc.isis.ibex.alarm.tests</module>
+	    <module>../uk.ac.stfc.isis.ibex.ui.experimentdetails.tests</module>
+        <module>../uk.ac.stfc.isis.ibex.scriptgenerator.tests</module>
+		
+        <!-- 
+			Tests disabled as they use JAXB which doesn't work correctly under surefire. 
+			See https://github.com/ISISComputingGroup/IBEX/issues/5239
 		
 		<module>../uk.ac.stfc.isis.ibex.opis.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.synoptic.tests</module>
-		<module>../uk.ac.stfc.isis.ibex.devicescreens.tests</module>
-		<module>../uk.ac.stfc.isis.ibex.alarm.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.scripting.tests</module>
-	    <module>../uk.ac.stfc.isis.ibex.ui.experimentdetails.tests</module>
-        <module>../uk.ac.stfc.isis.ibex.scriptgenerator.tests</module>
+			<module>../uk.ac.stfc.isis.ibex.devicescreens.tests</module> 
+		-->
+		
 	</modules>
 </project>
 

@@ -13,7 +13,6 @@ package uk.ac.stfc.isis.ibex.ui.widgets;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
 

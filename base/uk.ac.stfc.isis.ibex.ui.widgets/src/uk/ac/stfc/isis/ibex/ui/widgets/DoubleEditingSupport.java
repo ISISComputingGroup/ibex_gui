@@ -45,7 +45,7 @@ public abstract class DoubleEditingSupport<TRow> extends GenericEditingSupport<T
 			protected void doSetValue(final Object value) {
 				if (value == null) {
 					// If value is null set to zero instead
-					super.doSetValue(String.valueOf(new Double(0)));
+					super.doSetValue(String.valueOf(Double.valueOf(0)));
 				} else {
 					super.doSetValue(String.valueOf(value.toString()));
 				}
