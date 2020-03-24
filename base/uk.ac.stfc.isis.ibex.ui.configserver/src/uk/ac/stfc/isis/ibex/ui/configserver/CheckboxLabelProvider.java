@@ -128,7 +128,9 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
     }
 	
 	/**
-	 * Sets the update flag of each model of the table to true.
+	 * Sets the update flag of each model of the table to true. Meaning that next
+	 * time the view updates listeners will be reset on all checkboxes (to ensure
+	 * they are listening to the correct model).
 	 */
 	public void resetCheckBoxListenerUpdateFlags() {
         for(AtomicBoolean flag: checkboxListenerUpdateFlags.values()) {

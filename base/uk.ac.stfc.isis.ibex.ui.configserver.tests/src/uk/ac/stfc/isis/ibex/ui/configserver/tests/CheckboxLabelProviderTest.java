@@ -146,7 +146,8 @@ public class CheckboxLabelProviderTest {
         modifiedCheckboxLabelProvider.update(getMockedViewerCell(testModels[2]));
         
         ArgumentCaptor<SelectionListener> captor = ArgumentCaptor.forClass(SelectionListener.class);
-        verify(checkBox, times(5)).addSelectionListener(captor.capture());
+        // 5 calls as 3 from first adding of models but only 2 now one has been removed
+        verify(checkBox, times(5)).addSelectionListener(captor.capture()); 
         
         List<SelectionListener> capturedListeners = captor.getAllValues();
         for(SelectionListener listener: capturedListeners) {
