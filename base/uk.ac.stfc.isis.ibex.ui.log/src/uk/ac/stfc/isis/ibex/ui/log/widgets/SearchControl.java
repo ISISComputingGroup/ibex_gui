@@ -95,7 +95,7 @@ public class SearchControl extends Canvas {
 	 * Instantiates a new search control.
 	 *
 	 * @param parent the parent in which this control resides
-	 * @param model model for the log display
+	 * @param model a model to allow searching of log messages
 	 */
 	public SearchControl(LogDisplay parent, final LogDisplayModel model) {
 		super(parent, SWT.NONE);

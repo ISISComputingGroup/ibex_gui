@@ -751,7 +751,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      */
     public void setEnableOrDisableSaveButton() {
 	String errorMessage = noError;
-	if (inManagerMode != null) {
+	if (inManagerMode == null) {
 	    // Do nothing
 	} else if (this.originalProtectedFlag && !isProtected  && inManagerMode) {
 
