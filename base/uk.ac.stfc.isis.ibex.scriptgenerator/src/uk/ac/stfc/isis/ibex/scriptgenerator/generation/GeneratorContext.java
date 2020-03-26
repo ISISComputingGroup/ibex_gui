@@ -6,7 +6,6 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 
@@ -49,7 +48,6 @@ public class GeneratorContext extends ModelObject {
 	 * @param generatedLanguage The language the new generator uses.
 	 * @param generator The generator to use.
 	 */
-	@SuppressWarnings("unchecked")
 	public void putGenerator(GeneratedLanguage generatedLanguage, AbstractGenerator generator) {
 		generator.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
 			firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
@@ -76,13 +74,14 @@ public class GeneratorContext extends ModelObject {
 				.orElseThrow(() -> new UnsupportedLanguageException("Language " + generatedLanguage + " not supported"));
 	}
 	
+	
 	/**
 	 * Add each language's generator to the strategies.
-	 * 
-	 * @param pythonInterface The python interface to set up the python generator with.
+	 * @param language The language of that generator
+	 * @generator generator Generator for generating script
 	 */
-	public GeneratorContext(PythonInterface pythonInterface) {
-		putGenerator(GeneratedLanguage.PYTHON, new GeneratorPython(pythonInterface));
+	public GeneratorContext(GeneratedLanguage language, AbstractGenerator generator) {
+		putGenerator(language, generator);
 	}
 	
 	/**
@@ -93,14 +92,15 @@ public class GeneratorContext extends ModelObject {
 	 * @param actionsTable The script generator contents to generate the script from.
 	 * @param scriptDefinition The script definition to generate the script from.
 	 * @param generatedLanguage The language to generate the script in.
+	 * @param jsonContent Content of the JSON file 
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
 	 */
-	public void refreshGeneratedScript(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage) 
+	public void refreshGeneratedScript(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage, String jsonContent)
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
 		AbstractGenerator generator = getGenerator(generatedLanguage);
-		generator.refreshGeneratedScript(actionsTable.getActions(), scriptDefinition);
+		generator.refreshGeneratedScript(actionsTable.getActions(), scriptDefinition, jsonContent);
 	}
 	
 	/**
@@ -108,13 +108,14 @@ public class GeneratorContext extends ModelObject {
 	 * 
 	 * @param actionsTable The script generator contents to generate the script from.
 	 * @param scriptDefinition The script definition to generate the script from.
+	 * @param jsonContent The JSON content created when generating script
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
 	 */
-	public void refreshGeneratedScript(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition) 
+	public void refreshGeneratedScript(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, String jsonContent) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
-		refreshGeneratedScript(actionsTable, scriptDefinition, GeneratedLanguage.PYTHON);
+		refreshGeneratedScript(actionsTable, scriptDefinition, GeneratedLanguage.PYTHON, jsonContent);
 	}
 	
 	/**
