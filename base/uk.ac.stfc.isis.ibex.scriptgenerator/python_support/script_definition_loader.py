@@ -14,6 +14,39 @@ import importlib.machinery
 import importlib.util
 
 
+class PythonActionParameter(object):
+    """
+    Class containing a parameter name and value.
+    """
+    class Java:
+        implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter']
+    
+    def __init__(self, name, default_value):
+        """
+        Initialise the name and default value of the action parameter.
+        """
+        self.name = name
+        self.default_value = default_value
+
+    def getName(self) -> str:
+        """
+        Returns the name of this action parameter.
+
+        Returns:
+              name: String, the name of this action parameter
+        """
+        return self.name
+
+    def getDefaultValue(self) -> str:
+        """
+        Returns the default value of this action parameter.
+
+        Returns:
+              name: String, default value of this action parameter.
+        """
+        return self.default_value
+
+
 class ScriptDefinitionWrapper(object):
     """
     Class containing the definition and validation functions of a single script_definition.
@@ -34,16 +67,25 @@ class ScriptDefinitionWrapper(object):
         """
         return self.name
 
-    def getParameters(self) -> list:
+    def getParameters(self) -> List[PythonActionParameter]:
         """
-        Gets the parameters from the script_definition defined in this script_definition
+        Gets the parameters and default values from the script_definition defined in this script_definition
 
         Returns:
             arguments: List of the parameter names (strings)
         """
         arguments = signature(self.script_definition.run).parameters
 
-        return ListConverter().convert(arguments, gateway._gateway_client)
+        kwargs_with_defaults = []
+
+        for arg in arguments:
+            if arguments[arg].default == arguments[arg].empty:
+                action_parameter = PythonActionParameter(arg, arg)
+            else:
+                action_parameter = PythonActionParameter(arg, str(arguments[arg].default))
+            kwargs_with_defaults.append(action_parameter)
+            
+        return ListConverter().convert(kwargs_with_defaults, gateway._gateway_client)
 
     def getHelp(self) -> str:
         """

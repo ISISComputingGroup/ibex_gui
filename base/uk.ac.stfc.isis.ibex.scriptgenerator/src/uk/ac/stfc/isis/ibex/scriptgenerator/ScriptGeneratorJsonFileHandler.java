@@ -11,8 +11,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
@@ -79,21 +81,22 @@ public class ScriptGeneratorJsonFileHandler {
 	/**
 	 * Load parameter values from a file only if the currently loaded script definition is the same as script definition in JSON file.
 	 * @param filePath path of file to load parameter values from
-	 * @param scriptDefinitionFilePath file path to script definition
+	 * @param scriptDefinitionPath file path to current script definition
+	 * @param currentActionsParams the list of actions in the current script definition
 	 * @throws ScriptDefinitionNotMatched script definition used to load and save the data file does not match
 	 */
-	public List<Map<ActionParameter, String>> getParameterValues(String filePath, String scriptDefinitionFilePath) throws ScriptDefinitionNotMatched,
+	public List<Map<JavaActionParameter, String>> getParameterValues(String filePath, String scriptDefinitionPath, List<JavaActionParameter> currentActionsParams) throws ScriptDefinitionNotMatched,
 	UnsupportedOperationException {
-		List<Map<ActionParameter, String>> newMappedParameterToValues = Collections.emptyList();
+		List<Map<JavaActionParameter, String>> newMappedParameterToValues = Collections.emptyList();
 		try {
-			Optional<ParametersConverter> currentlyLoadedJSONFileContent = convertJSONtoObject(readFileContent(filePath));
-				if (currentlyLoadedJSONFileContent.isPresent()) {
-					String scriptDefStoredInJson = currentlyLoadedJSONFileContent.get().getScriptDefinitionContent();
-					String currentlyLoadedScriptDef = readFileContent(scriptDefinitionFilePath);
+			Optional<ParametersConverter> JSONFileContent = convertJSONtoObject(readFileContent(filePath));
+				if (JSONFileContent.isPresent()) {
+					String scriptDefStoredInJson = JSONFileContent.get().getScriptDefinitionContent();
+					String currentlyLoadedScriptDef = readFileContent(scriptDefinitionPath);
 				if (scriptDefStoredInJson.equals(currentlyLoadedScriptDef)) {
 					// currently there is only one table so we just get parameters from default table
-					List<Map<String, String>> mappedParamToValue =  currentlyLoadedJSONFileContent.get().getParameterValues("default");
-					newMappedParameterToValues =  getMappedParamToValue(mappedParamToValue);
+					List<Map<String, String>> mappedParamToValue =  JSONFileContent.get().getParameterValues("default");
+					newMappedParameterToValues =  getMappedParamToValue(currentActionsParams, mappedParamToValue);
 				} else {
 					throw new ScriptDefinitionNotMatched("Current script definition does not match with the "
 							+ "script definition that was used to generate the selected data file");
@@ -134,13 +137,22 @@ public class ScriptGeneratorJsonFileHandler {
 	}
 		
 	/**
-	 * Translate from List<Map<String, String>> to List<Map<ActionParameter, String>>.
+	 * Translate from List<Map<String, String>> to List<Map<ActionParameter, String>> by mapping to the specified current action parameters.
+	 * @param currentParameters list of the parameters that are in the current script definition
 	 * @param mappedParamToValue list of parameters mapped to its value
 	 * @return List of Map<ActionParameter, String> values
 	 */
-	private List<Map<ActionParameter, String>> getMappedParamToValue(List<Map<String, String>> mappedParamToValue) {
-		return  mappedParamToValue.stream().map(m -> m.entrySet().stream().collect(Collectors.toMap(p ->
-			new ActionParameter(p.getKey()), p-> p.getValue()))).collect(Collectors.toList());
+	private List<Map<JavaActionParameter, String>> getMappedParamToValue(List<JavaActionParameter> currentParameters, List<Map<String, String>> mappedParamToValue) {
+		List<Map<JavaActionParameter, String>> mappedParamsAllTables = new ArrayList<Map<JavaActionParameter,String>>();
+		for (Map<String, String> table: mappedParamToValue) {
+			Map<JavaActionParameter, String> mappedParams = new HashMap<JavaActionParameter, String>();
+			for (Entry<String, String> entry : table.entrySet()) {
+				JavaActionParameter matchedParam = currentParameters.stream().filter(curr -> curr.getName().equals(entry.getKey())).findFirst().get();
+				mappedParams.put(matchedParam, entry.getValue());
+			}
+			mappedParamsAllTables.add(mappedParams);
+		}
+		return mappedParamsAllTables;
 	}
 	
 	/**
@@ -173,7 +185,7 @@ public class ScriptGeneratorJsonFileHandler {
 	 */
 	private List<Map<String, String>> convertScriptGenContent(List<ScriptGeneratorAction> scriptGenContent) {
 		return scriptGenContent.stream()
-				.map(action -> action.getAllActionParametersAsString()).collect(Collectors.toList());
+				.map(action -> action.getActionParameterValueMapAsStrings()).collect(Collectors.toList());
 	}
 
 	  /**

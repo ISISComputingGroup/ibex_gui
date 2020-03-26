@@ -74,7 +74,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * The table containing the script generator contents (actions).
 	 */
-	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<ActionParameter>());
+	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<JavaActionParameter>());
 
 	/**
 	 * The loader to select and update the script definition being used.
@@ -150,6 +150,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * The generator to generate scripts with and check parameter validity with.
 	 */
 	private GeneratorContext generator;
+
+	/**
+	 * The time to wait before timing out from trying to connect to the manual.
+	 */
+	private static final int URL_TIMEOUT = 3;
 
 	/**
 	 * A property to fire a change of when there is an error generating a script.
@@ -285,28 +290,30 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 *         or an optional containing the url.
 	 */
 	public Optional<URL> getUserManualUrl() {
-		String preferenceProperty = preferenceSupplier.scriptGeneratorManualURL();
 
-		// Loop through all URLs in the preference property
-		// and return the first one reachable from the user's network
-		for (String url : preferenceProperty.split(",")) {
-			try {
-				URL possibleUrl = new URL(url);
-
-				HttpURLConnection connection = (HttpURLConnection) possibleUrl.openConnection();
-				connection.setRequestMethod("GET");
-				connection.connect();
-				int responseCode = connection.getResponseCode();
-				if (responseCode >= GOOD_RESPONSE_CODE && responseCode < BAD_RESPONSE_CODE) {
-					return Optional.of(possibleUrl);
-				}
-			} catch (IOException ex) {
-				LOG.debug("Invalid URL for user manual was found: " + url);
-			}
-		}
-
-		LOG.warn("No valid URLs for the user manual were found");
-		return Optional.empty();
+	    String preferenceProperty = preferenceSupplier.scriptGeneratorManualURL();
+	    
+	    // Loop through all URLs in the preference property
+	    // and return the first one reachable from the user's network
+	    for (String url : preferenceProperty.split(",")) {
+	        try {
+	            URL possibleUrl = new URL(url);
+	            
+	            HttpURLConnection connection = (HttpURLConnection) possibleUrl.openConnection();
+	            connection.setConnectTimeout(URL_TIMEOUT);
+	            connection.setRequestMethod("GET");
+	            connection.connect();
+	            int responseCode = connection.getResponseCode();
+	            if (responseCode >= GOOD_RESPONSE_CODE && responseCode < BAD_RESPONSE_CODE) {
+	                return Optional.of(possibleUrl);
+	            }
+	        } catch (IOException ex) {
+	            LOG.debug("Invalid URL for user manual was found: " + url);
+	        }
+	    }
+	    
+	    LOG.warn("No valid URLs for the user manual were found");
+	    return Optional.empty();
 	}
 
 	/**
@@ -395,7 +402,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @param actionParameters the action parameters to use in the script generator
 	 *                         table
 	 */
-	private void setActionParameters(ArrayList<ActionParameter> actionParameters) {
+	private void setActionParameters(ArrayList<JavaActionParameter> actionParameters) {
 		// Setting new action parameters drops the current table
 		scriptGeneratorTable.setActionParameters(actionParameters);
 		scriptGeneratorTable.clearActions();
@@ -473,7 +480,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @return The action parameters used in this table.
 	 * 
 	 */
-	public List<ActionParameter> getActionParameters() {
+	public List<JavaActionParameter> getActionParameters() {
 		return scriptGeneratorTable.getActionParameters();
 	}
 
@@ -658,15 +665,15 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	public void loadParameterValues(String fileName) throws NoScriptDefinitionSelectedException, ScriptDefinitionNotMatched, UnsupportedOperationException {
 		ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException("No Configuration Selected"));
-		List<Map<ActionParameter, String>> list = scriptGenFileHandler.getParameterValues(fileName, 
-				preferenceSupplier.scriptGeneratorScriptDefinitionFolders() + scriptDefinition.getName() + PYTHON_EXT);
+		String currentDefinitionPath = preferenceSupplier.scriptGeneratorScriptDefinitionFolders() + scriptDefinition.getName() + PYTHON_EXT;
+		List<Map<JavaActionParameter, String>> list = scriptGenFileHandler.getParameterValues(fileName, currentDefinitionPath, getActionParameters());
 		scriptGeneratorTable.addMultipleActions(list);
 	}
 	
 	/**
 	 * Save parameter values to a file.
 	 * 
-	 * @fileName file name to save data file as
+	 * @param fileName file name to save data file as
 	 * @throws ExecutionException 
 	 * @throws InterruptedException 
 	 */

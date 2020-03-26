@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
+import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
 
 /**
  * This class holds the script actions and their positions in the script.
@@ -19,7 +19,7 @@ public class ActionsTable extends ModelObject {
 	/**
 	 * The action parameters (columns) of the table that all actions in the table conform to.
 	 */
-	private List<ActionParameter> actionParameters;
+	private List<JavaActionParameter> actionParameters;
 	
 	/**
 	 * The actions (rows) of the table that have values for the action parameters.
@@ -49,7 +49,7 @@ public class ActionsTable extends ModelObject {
 	 * @param actionParameters
 	 * 			The parameters taken from the script definition to use in this table.
 	 */
-	public ActionsTable(List<ActionParameter> actionParameters) {
+	public ActionsTable(List<JavaActionParameter> actionParameters) {
 		setActionParameters(actionParameters);
 	}
 
@@ -58,7 +58,7 @@ public class ActionsTable extends ModelObject {
 	 * @param actionParameters
 	 * 		  		The list of parameters used to define each action.
 	 */
-	public void setActionParameters(List<ActionParameter> actionParameters) {
+	public void setActionParameters(List<JavaActionParameter> actionParameters) {
 		firePropertyChange("actionParameters", this.actionParameters, this.actionParameters = actionParameters);
 	}
 	
@@ -66,7 +66,7 @@ public class ActionsTable extends ModelObject {
 	 * @return The action parameters used in this table.
 	 * 
 	 */
-	public List<ActionParameter> getActionParameters() {
+	public List<JavaActionParameter> getActionParameters() {
 		return actionParameters;
 	}
 	
@@ -76,10 +76,10 @@ public class ActionsTable extends ModelObject {
 	 * @param parametersMap The user-set value (string) for the specified ActionParameter.
 	 * @return the action.
 	 */
-	private ScriptGeneratorAction createAction(Map<ActionParameter, String> parametersMap) {
+	private ScriptGeneratorAction createAction(Map<JavaActionParameter, String> parametersMap) {
 		// Ensure is not shallow copy
-		Map<ActionParameter, String> newParamsMap = new HashMap<ActionParameter, String>();
-		for (Map.Entry<ActionParameter, String> entry: parametersMap.entrySet()) {
+		Map<JavaActionParameter, String> newParamsMap = new HashMap<JavaActionParameter, String>();
+		for (Map.Entry<JavaActionParameter, String> entry: parametersMap.entrySet()) {
 			newParamsMap.put(entry.getKey(), entry.getValue());
 		}
 		// Create action and attach listeners
@@ -94,10 +94,10 @@ public class ActionsTable extends ModelObject {
 	 * Adds a new action with default parameters to the list of actions.
 	 */
 	public void addEmptyAction() {
-		var parametersMap = new HashMap<ActionParameter, String>();
+		var parametersMap = new HashMap<JavaActionParameter, String>();
 		// Make a parameter/string pair for each parameter in the action
-		for (ActionParameter actionParameter: this.actionParameters) {
-			parametersMap.put(actionParameter, actionParameter.getName() + Integer.toString(actions.size()));
+		for (JavaActionParameter actionParameter: this.actionParameters) {
+			parametersMap.put(actionParameter, actionParameter.getDefaultValue());
 		}
 		
 		var newAction = createAction(parametersMap);
@@ -111,9 +111,9 @@ public class ActionsTable extends ModelObject {
 	 * Add multiple actions
 	 * @param list contains mapped action parameters to its values
 	 */
-	public void addMultipleActions(List<Map<ActionParameter, String>> list) {
+	public void addMultipleActions(List<Map<JavaActionParameter, String>> list) {
 		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
-		for (Map<ActionParameter, String> map : list) {
+		for (Map<JavaActionParameter, String> map : list) {
 			var newAction = createAction(map);
 			newList.add(newAction);
 		}
@@ -142,7 +142,7 @@ public class ActionsTable extends ModelObject {
 	public void duplicateAction(int index) {
 		if (isValidIndex(index)) {
 			var actionToDuplicate = actions.get(index);
-			var newAction = createAction(actionToDuplicate.getAllActionParameters());
+			var newAction = createAction(actionToDuplicate.getActionParameterValueMap());
 			final var newActions = new ArrayList<ScriptGeneratorAction>();
 			
 			newActions.addAll(actions);
