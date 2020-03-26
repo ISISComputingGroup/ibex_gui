@@ -20,20 +20,25 @@ package uk.ac.stfc.isis.ibex.scriptgenerator;
 
 import java.util.Objects;
 
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
+
 /**
  * Data type for an action parameter.
  * 
  */
-public class ActionParameter {
+public class JavaActionParameter implements ActionParameter {
 
 	private final String name;
+	
+	private final String defaultValue;
 	
 	/**
 	 * This class holds the name about an action parameter.
 	 * @param name The name of the action parameter (column header)
 	 */
-	public ActionParameter(String name) {
+	public JavaActionParameter(String name, String defaultValue) {
 		this.name = name;
+		this.defaultValue = defaultValue;
 	}
 
 	/**
@@ -41,6 +46,13 @@ public class ActionParameter {
 	 */
 	public String getName() {
 		return name;
+	}
+	
+	/**
+	 * @return The default value for this parameter.
+	 */
+	public String getDefaultValue() {
+		return defaultValue;
 	}
 
 	
@@ -51,11 +63,11 @@ public class ActionParameter {
 	@Override
 	public boolean equals(Object o) {
 		if (o == this) return true;
-		if (!(o instanceof ActionParameter)) return false;	
+		if (!(o instanceof JavaActionParameter)) return false;	
 		
-		ActionParameter actionParameter = (ActionParameter) o;
-		return Objects.equals(this.getName(), actionParameter.getName());
-		
+		JavaActionParameter actionParameter = (JavaActionParameter) o;
+		return Objects.equals(this.getName(), actionParameter.getName()) &&
+				Objects.equals(this.getDefaultValue(), actionParameter.getDefaultValue());
 	}
 	
 	/**
@@ -63,7 +75,7 @@ public class ActionParameter {
 	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.getName());
+		return Objects.hash(this.getName() + this.getDefaultValue());
 	}
 
 }

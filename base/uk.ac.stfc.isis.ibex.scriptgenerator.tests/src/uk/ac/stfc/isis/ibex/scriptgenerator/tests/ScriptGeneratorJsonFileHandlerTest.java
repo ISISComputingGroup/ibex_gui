@@ -2,6 +2,7 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +13,7 @@ import org.mockito.Mockito;
 import static org.junit.Assert.fail;
 import static org.junit.Assert.assertEquals;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
+import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptDefinitionNotMatched;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorJsonFileHandler;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
@@ -54,10 +55,12 @@ public class ScriptGeneratorJsonFileHandlerTest {
 
 	@Test 
 	public void Test_GIVEN_user_parameters_THEN_read_correctly() {
-		ActionParameter actionParamOne = new ActionParameter("temperature");
-		ActionParameter actionParamTwo = new ActionParameter("field");
+		JavaActionParameter actionParamOne = new JavaActionParameter("temperature", "");
+		JavaActionParameter actionParamTwo = new JavaActionParameter("field", "");
+		ArrayList<JavaActionParameter> actionParams = new ArrayList<JavaActionParameter>(
+				Arrays.asList(actionParamOne, actionParamTwo));
 		
-		Map<ActionParameter, String> actionOne = new HashMap<ActionParameter, String>();
+		Map<JavaActionParameter, String> actionOne = new HashMap<JavaActionParameter, String>();
 		actionOne.put(actionParamOne, "2");
 		actionOne.put(actionParamTwo, "1");
 		try {
@@ -66,8 +69,8 @@ public class ScriptGeneratorJsonFileHandlerTest {
 			Mockito.doReturn(actualJsonContent).when(fileHandlerSpy).readFileContent(JsonFileName);
 			Mockito.doReturn(scriptDefContent).when(fileHandlerSpy).readFileContent(scriptDefName);
 			
-			List<Map<ActionParameter, String>> actual = fileHandlerSpy.getParameterValues(JsonFileName, scriptDefName);
-			List<Map<ActionParameter, String>> expected = new ArrayList<Map<ActionParameter, String>>();
+			List<Map<JavaActionParameter, String>> actual = fileHandlerSpy.getParameterValues(JsonFileName, scriptDefName, actionParams);
+			List<Map<JavaActionParameter, String>> expected = new ArrayList<Map<JavaActionParameter, String>>();
 			expected.add(actionOne);
 			assertEquals(expected, actual);
 		} catch (UnsupportedOperationException | ScriptDefinitionNotMatched e) {
@@ -85,7 +88,7 @@ public class ScriptGeneratorJsonFileHandlerTest {
 			ScriptGeneratorJsonFileHandler fileHandlerSpy = Mockito.spy(fileHandler);
 			Mockito.doReturn(actualJsonContent).when(fileHandlerSpy).readFileContent("jsonFile");
 			Mockito.doReturn(scriptDeftwo).when(fileHandlerSpy).readFileContent("pythonFile");
-			fileHandlerSpy.getParameterValues("jsonFile", "pythonFile");
+			fileHandlerSpy.getParameterValues("jsonFile", "pythonFile", new ArrayList<JavaActionParameter>());
 		} catch (UnsupportedOperationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -110,7 +113,7 @@ public class ScriptGeneratorJsonFileHandlerTest {
 			ScriptGeneratorJsonFileHandler fileHandlerSpy = Mockito.spy(fileHandler);
 			Mockito.doReturn(incorrectVersion).when(fileHandlerSpy).readFileContent(JsonFileName);
 			
-			fileHandlerSpy.getParameterValues(JsonFileName, scriptDefName);
+			fileHandlerSpy.getParameterValues(JsonFileName, scriptDefName, new ArrayList<JavaActionParameter>());
 		} catch (UnsupportedOperationException e) {
 			assertEquals(e.getMessage(), String.format("Data file version %s is not supported.\nSupported version %s",randomVersion, originalVersion));
 		} catch (ScriptDefinitionNotMatched e) {
@@ -134,10 +137,10 @@ public class ScriptGeneratorJsonFileHandlerTest {
 		
 		ScriptGeneratorFileHandlerForTest fileHandlerTemp = new ScriptGeneratorFileHandlerForTest();
 		
-		ActionParameter actionParamOne = new ActionParameter("temperature");
-		ActionParameter actionParamTwo = new ActionParameter("field");
+		JavaActionParameter actionParamOne = new JavaActionParameter("temperature", "10");
+		JavaActionParameter actionParamTwo = new JavaActionParameter("field", "10");
 		
-		Map<ActionParameter, String> actionOne = new HashMap<ActionParameter, String>();
+		Map<JavaActionParameter, String> actionOne = new HashMap<JavaActionParameter, String>();
 		
 		actionOne.put(actionParamOne, "2");
 		actionOne.put(actionParamTwo, "1");

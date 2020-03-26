@@ -339,7 +339,7 @@ public class PythonInterface extends ModelObject {
 	
 	private List<Map<String, String>> convertScriptGenContentToPython(List<ScriptGeneratorAction> scriptGenContent) {
 		return scriptGenContent.stream()
-				.map(action -> action.getAllActionParametersAsString()).collect(Collectors.toList());
+				.map(action -> action.getActionParameterValueMapAsStrings()).collect(Collectors.toList());
 	}
 
 	/**

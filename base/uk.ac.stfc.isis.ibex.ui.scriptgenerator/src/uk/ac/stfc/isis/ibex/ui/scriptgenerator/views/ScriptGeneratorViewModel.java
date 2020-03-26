@@ -29,7 +29,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
 import org.apache.logging.log4j.Logger;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
+import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
 import uk.ac.stfc.isis.ibex.scriptgenerator.NoScriptDefinitionSelectedException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptDefinitionNotMatched;
@@ -607,7 +607,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     protected void addColumns(ActionsViewTable viewTable) {    	
     	// Add action parameter columns
-        for (ActionParameter actionParameter: scriptGeneratorModel.getActionParameters()) {
+        for (JavaActionParameter actionParameter: scriptGeneratorModel.getActionParameters()) {
 			String columnName = actionParameter.getName();
 			TableViewerColumn column = viewTable.createColumn(
 					columnName, 
