@@ -23,7 +23,7 @@
     namespace = "", 
     elementFormDefault = XmlNsForm.QUALIFIED,
     
-	xmlns={
+	xmlns = {
         @XmlNs(prefix = "", namespaceURI = "")
     }) 
 package uk.ac.stfc.isis.ibex.opis.desc;

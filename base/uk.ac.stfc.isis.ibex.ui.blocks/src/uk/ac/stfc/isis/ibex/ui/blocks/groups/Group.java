@@ -153,8 +153,7 @@ public class Group extends Composite {
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				if (!group.getParent().isDisposed())
-				{
+				if (!group.getParent().isDisposed()) {
 					group.getParent().layout();
 					group.getParent().pack();
 				}

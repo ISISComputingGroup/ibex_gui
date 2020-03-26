@@ -27,7 +27,6 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.WorkbenchException;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.ui.UI;
 
 /**
  * Oversees perspective switching.

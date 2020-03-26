@@ -173,7 +173,7 @@ public class ScriptGeneratorView {
 			FontData[] fD = loadingMessage.getFont().getFontData();
 			fD[0].setHeight(16);
 			loadingMessage.setFont(new Font(Display.getDefault(), fD[0]));
-			if(scriptDefinitionsLoadedOnce) {
+			if (scriptDefinitionsLoadedOnce) {
 				loadingMessage.setText(RELOADING_MESSAGE);
 			} else {
 				loadingMessage.setText(LOADING_MESSAGE);

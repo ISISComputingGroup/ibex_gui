@@ -49,7 +49,7 @@ public abstract class StringEditingSupport<TRow> extends GenericEditingSupport<T
         };
     }
 
-    protected void onModify(ModifyEvent e, String newValue) {} 
+    protected void onModify(ModifyEvent e, String newValue) { }
     
 	@Override
 	protected boolean canEdit(Object element) {

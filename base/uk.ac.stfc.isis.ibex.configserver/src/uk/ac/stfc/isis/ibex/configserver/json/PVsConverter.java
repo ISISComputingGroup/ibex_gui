@@ -29,7 +29,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
 /**
- * Converts a JSON representation of a PV into a java object representation.s
+ * Converts a JSON representation of a PV into a java object representation.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class PVsConverter extends Converter<String[][], Collection<PV>> {

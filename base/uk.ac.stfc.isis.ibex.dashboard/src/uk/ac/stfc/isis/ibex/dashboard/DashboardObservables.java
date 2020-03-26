@@ -75,7 +75,7 @@ public class DashboardObservables extends Closer {
 	}
     
     /**
-     * Return an observable observing the label of the provided DashboardPv
+     * Return an observable observing the label of the provided DashboardPv.
      * @param pv the dashboard pv to observe
      * @return the observable
      */
@@ -84,7 +84,7 @@ public class DashboardObservables extends Closer {
     }
     
     /**
-     * Return an observable observing the value of the provided DashboardPv
+     * Return an observable observing the value of the provided DashboardPv.
      * @param pv the dashboard pv to observe
      * @return the observable
      */

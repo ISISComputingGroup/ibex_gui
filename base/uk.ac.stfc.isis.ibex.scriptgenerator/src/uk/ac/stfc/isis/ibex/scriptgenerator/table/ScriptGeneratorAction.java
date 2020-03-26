@@ -71,8 +71,8 @@ public class ScriptGeneratorAction extends ModelObject {
 	
 	/**
 	 * Gets an action parameter value.
-	 * @param parameterName
-	 * 			The name of the parameter to get.
+	 * @param parameter
+	 * 			The parameter to get.
 	 * @return 
 	 * 			The value of the parameter.
 	 */
@@ -96,7 +96,7 @@ public class ScriptGeneratorAction extends ModelObject {
 	 */
 	public Map<String, String> getAllActionParametersAsString() {
 		Map<String, String> actionParametersAsString = new HashMap<>();
-		for(Map.Entry<ActionParameter, String> actionParam : actionParameterValues.entrySet()) {
+		for (Map.Entry<ActionParameter, String> actionParam : actionParameterValues.entrySet()) {
 			actionParametersAsString.put(actionParam.getKey().getName(), actionParam.getValue());
 		}
 		return actionParametersAsString;

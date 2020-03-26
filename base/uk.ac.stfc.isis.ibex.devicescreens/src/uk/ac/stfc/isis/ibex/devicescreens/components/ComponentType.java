@@ -172,7 +172,7 @@ public enum ComponentType {
 	FILM_FABRICATION,
 	/** Coherent OBIS Laser Remote. */
 	OBIS_LASER_REMOTE,
-	/** Zero field */
+	/** Zero field. */
 	ZERO_FIELD;
 	
 	

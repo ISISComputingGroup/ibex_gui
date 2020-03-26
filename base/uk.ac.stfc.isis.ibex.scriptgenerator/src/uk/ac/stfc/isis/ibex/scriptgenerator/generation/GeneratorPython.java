@@ -54,7 +54,7 @@ public class GeneratorPython extends AbstractGenerator {
 	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition) throws InterruptedException, ExecutionException {
 		try {
 			pythonInterface.refreshGeneratedScript(scriptGenContent, scriptDefinition);
-		} catch(PythonNotReadyException e) {
+		} catch (PythonNotReadyException e) {
 			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
 			LOG.error(e);
 		}
@@ -71,7 +71,7 @@ public class GeneratorPython extends AbstractGenerator {
 	public void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition) throws InterruptedException, ExecutionException {
 		try {	
 			pythonInterface.refreshAreParamsValid(scriptGenContent, scriptDefinition);
-		} catch(PythonNotReadyException e) {
+		} catch (PythonNotReadyException e) {
 			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
 			LOG.error(e);
 		}
@@ -89,7 +89,7 @@ public class GeneratorPython extends AbstractGenerator {
 	public void refreshValidityErrors(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefintion) throws InterruptedException, ExecutionException {
 		try {
 			pythonInterface.refreshValidityErrors(scriptGenContent, scriptDefintion);
-		} catch(PythonNotReadyException e) {
+		} catch (PythonNotReadyException e) {
 			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
 			LOG.error(e);
 		}

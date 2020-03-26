@@ -45,13 +45,17 @@ public class ActionParameter {
 
 	
 	/**
-	 * Check to see if the ActionParameter's attributes are equal to provided object
-	 * @param The object to compare against
+	 * Check to see if the ActionParameter's attributes are equal to provided object.
+	 * @param o The object to compare against
 	 */
 	@Override
 	public boolean equals(Object o) {
-		if (o == this) return true;
-		if (!(o instanceof ActionParameter)) return false;	
+		if (o == this) {
+		    return true;
+		}
+		if (!(o instanceof ActionParameter)) {
+		    return false;	
+		}
 		
 		ActionParameter actionParameter = (ActionParameter) o;
 		return Objects.equals(this.getName(), actionParameter.getName());

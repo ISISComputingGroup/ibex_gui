@@ -281,7 +281,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	        } catch (IOException ex) {
 	            LOG.debug("Invalid URL for user manual was found: " + url);
 	        }
-	    };
+	    }
 	    
 	    LOG.warn("No valid URLs for the user manual were found");
 	    return Optional.empty();

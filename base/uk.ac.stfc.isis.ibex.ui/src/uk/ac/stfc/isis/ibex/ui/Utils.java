@@ -28,9 +28,9 @@ package uk.ac.stfc.isis.ibex.ui;
 public final class Utils {
 
 	/**
-	 * Takes a value and if that value is in the range min_value to max_value returns that value
-	 * If it is outside that range the return is constrained to be the closest of either min_value or max_value
-	 * If the max value is greater than the min value then the max value is returned
+	 * Takes a value and if that value is in the range min_value to max_value returns that value.
+	 * If it is outside that range the return is constrained to be the closest of either min_value or max_value.
+	 * If the max value is greater than the min value then the max value is returned.
 	 * 
 	 * @param value The value to constrain
 	 * @param min_value The lower bound to constrain value to

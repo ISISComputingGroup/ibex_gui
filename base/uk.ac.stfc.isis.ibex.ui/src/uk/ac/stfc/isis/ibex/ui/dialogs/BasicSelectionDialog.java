@@ -166,7 +166,7 @@ public abstract class BasicSelectionDialog extends Dialog {
      * @param configNamesWithFlags
      *            Names of the configuration and its protection flag
      */
-    protected void setItems(String[] names, Map <String, Boolean> configNamesWithFlags) {
+    protected void setItems(String[] names, Map<String, Boolean> configNamesWithFlags) {
         this.items.clearAll();
         for (String name : names) {
             TableItem item = new TableItem(this.items, SWT.NONE);

@@ -122,7 +122,7 @@ public class LogCounter extends ModelObject implements IMessageConsumer<LogMessa
      */
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if(Objects.equals(evt.getPropertyName(), switchToOrFromIOCLogProperty)) {
+		if (Objects.equals(evt.getPropertyName(), switchToOrFromIOCLogProperty)) {
 			start();
 		}
 	}

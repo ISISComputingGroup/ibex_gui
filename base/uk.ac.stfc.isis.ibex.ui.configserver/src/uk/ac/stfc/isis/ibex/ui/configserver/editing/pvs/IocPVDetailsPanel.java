@@ -131,7 +131,7 @@ public class IocPVDetailsPanel extends Composite {
 		
 		bindingContext = new DataBindingContext();
 		
-		UpdateValueStrategy<String,String> strategy = new UpdateValueStrategy<String, String>();
+		UpdateValueStrategy<String, String> strategy = new UpdateValueStrategy<String, String>();
         strategy.setBeforeSetValidator(new PVNameValidator(ioc, pv, messageDisplayer));
 		
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(name), BeanProperties.value("name", String.class).observe(pv), strategy, null); 
