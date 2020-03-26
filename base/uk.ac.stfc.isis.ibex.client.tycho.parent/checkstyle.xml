@@ -6,8 +6,7 @@
 -->
 <!--
     Checkstyle-Configuration: IBEX Checks
-    Description: 
-IBEX Gui Checkstyle checks
+    Description: none
 -->
 <module name="Checker">
   <property name="severity" value="warning"/>
@@ -16,7 +15,6 @@ IBEX Gui Checkstyle checks
     <module name="ConstantName"/>
     <module name="JavadocMethod">
       <property name="scope" value="protected"/>
-      <property name="suppressLoadErrors" value="true"/>
     </module>
     <module name="JavadocType">
       <property name="scope" value="protected"/>
@@ -89,5 +87,7 @@ IBEX Gui Checkstyle checks
   </module>
   <module name="SuppressWarningsFilter"/>
   <module name="Translation"/>
-  <module name="SuppressionFilter"/>
+  <module name="SuppressionFilter">
+   <property name="file" value="${checkstyle.suppressions.file}"/>
+  </module>
 </module>
