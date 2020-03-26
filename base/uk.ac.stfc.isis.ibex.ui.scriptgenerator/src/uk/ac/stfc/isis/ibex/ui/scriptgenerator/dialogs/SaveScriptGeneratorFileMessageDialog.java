@@ -33,6 +33,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
  * @author https://stackoverflow.com/a/30630475 modified by James King
  *
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 	
 	/**
@@ -149,7 +150,6 @@ public class SaveScriptGeneratorFileMessageDialog extends MessageDialog {
 	 * 
 	 * @param parent The parent to put the buttons in.
 	 */
-	@SuppressWarnings("checkstyle:magicnumber")
 	@Override 
 	protected void createButtonsForButtonBar(Composite parent) {
 		parent.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));

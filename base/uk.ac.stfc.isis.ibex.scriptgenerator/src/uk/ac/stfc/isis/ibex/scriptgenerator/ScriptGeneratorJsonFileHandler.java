@@ -30,7 +30,6 @@ import com.google.gson.JsonSyntaxException;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.ParametersConverter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
-import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorActionConverter;
 
 /**
  * Class to handle JSON file operations such as read/write, check for file duplicates.
@@ -41,7 +40,7 @@ public class ScriptGeneratorJsonFileHandler {
 	/** 
 	 * Currently supported JSON file version by us.
 	 */
-	public static String CURRENT_VERSION = "1";
+	public static final String CURRENT_VERSION = "1";
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorSingleton.class);
 	private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	/**
@@ -64,7 +63,7 @@ public class ScriptGeneratorJsonFileHandler {
 	/**
 	 * Adds metadata and creates JSON string using script generator content.
 	 * @param scriptGenContent content of script generator
-	 * @param scriptDefCotnent content of script definition
+	 * @param scriptDefContent content of script definition
 	 * @param scriptDefPath path of script definition file
 	 * @return JSON string 
 	 * @throws IOException
@@ -83,6 +82,7 @@ public class ScriptGeneratorJsonFileHandler {
 	 * @param filePath path of file to load parameter values from
 	 * @param scriptDefinitionPath file path to current script definition
 	 * @param currentActionsParams the list of actions in the current script definition
+	 * @return mapped values and parameter
 	 * @throws ScriptDefinitionNotMatched script definition used to load and save the data file does not match
 	 */
 	public List<Map<JavaActionParameter, String>> getParameterValues(String filePath, String scriptDefinitionPath, List<JavaActionParameter> currentActionsParams) throws ScriptDefinitionNotMatched,
@@ -102,7 +102,7 @@ public class ScriptGeneratorJsonFileHandler {
 							+ "script definition that was used to generate the selected data file");
 				}
 			}
-		} catch(JsonSyntaxException | JsonIOException | IOException e) {
+		} catch (JsonSyntaxException | JsonIOException | IOException e) {
 			LOG.error(e);
 		} 
 		
@@ -118,7 +118,7 @@ public class ScriptGeneratorJsonFileHandler {
 	 * @throws FileNotFoundException JSON file does not exist
 	 * @return object representation of JSON which is read from a file
 	 */
-	private Optional<ParametersConverter> convertJSONtoObject(String jsonString) throws JsonSyntaxException, JsonIOException, FileNotFoundException{
+	private Optional<ParametersConverter> convertJSONtoObject(String jsonString) throws JsonSyntaxException, JsonIOException, FileNotFoundException {
 		
 		// Check if version number match
 		try {
@@ -127,8 +127,8 @@ public class ScriptGeneratorJsonFileHandler {
 				return Optional.ofNullable(jsonContent);
 			} else {
 				LOG.error("Json " + jsonContent.getJSONFormatVersionNumber() + " version not supported");
-				throw new UnsupportedOperationException(String.format("Data file version %s is not supported.\nSupported version %s"
-						, jsonContent.getJSONFormatVersionNumber(), CURRENT_VERSION)); 
+				throw new UnsupportedOperationException(String.format("Data file version %s is not supported.\nSupported version %s",
+						jsonContent.getJSONFormatVersionNumber(), CURRENT_VERSION)); 
 			}
 		} catch (NullPointerException e) {
 			LOG.error(e + ": Json version number is null");
@@ -143,7 +143,7 @@ public class ScriptGeneratorJsonFileHandler {
 	 * @return List of Map<ActionParameter, String> values
 	 */
 	private List<Map<JavaActionParameter, String>> getMappedParamToValue(List<JavaActionParameter> currentParameters, List<Map<String, String>> mappedParamToValue) {
-		List<Map<JavaActionParameter, String>> mappedParamsAllTables = new ArrayList<Map<JavaActionParameter,String>>();
+		List<Map<JavaActionParameter, String>> mappedParamsAllTables = new ArrayList<Map<JavaActionParameter, String>>();
 		for (Map<String, String> table: mappedParamToValue) {
 			Map<JavaActionParameter, String> mappedParams = new HashMap<JavaActionParameter, String>();
 			for (Entry<String, String> entry : table.entrySet()) {
@@ -171,6 +171,7 @@ public class ScriptGeneratorJsonFileHandler {
 	
 	/**
 	 * Reads given file's content.
+	 * @param filePath file path
 	 * @return string of JSON content
 	 */
 	 public String readFileContent(String filePath) throws IOException {

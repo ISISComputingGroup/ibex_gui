@@ -324,7 +324,7 @@ public class SearchControl extends Canvas {
                 final Calendar from = chkFrom.getSelection()
                         ? dtFromDate.getDateTime() : null;
                 final Calendar to = chkTo.getSelection()
-                        ? dtToDate.getDateTime(): null;
+                        ? dtToDate.getDateTime() : null;
 
                 runSearchJob(field, value, from, to);
 

@@ -33,7 +33,7 @@ public class ScriptGeneratorActionConverter {
 	
 	/**
 	 * Sets parameters.
-	 * @param mapped parameters to its value.
+	 * @param parameters mapped parameters to its value.
 	 */
 	public void setParameters(List<Map<String, String>> parameters) {
 		this.parameters = parameters;

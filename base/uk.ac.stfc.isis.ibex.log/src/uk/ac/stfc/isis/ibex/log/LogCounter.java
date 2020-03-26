@@ -43,7 +43,7 @@ public class LogCounter extends ModelObject implements IMessageConsumer<LogMessa
     private MessageCounter counter = new MessageCounter();
     private boolean running = true;
     
-    private static final String switchToOrFromIOCLogProperty = "switchToOrFromIOCLog";
+    private static final String SWITCH_TO_OR_FROM_IOC_LOG_PROPERTY = "switchToOrFromIOCLog";
     
     /**
      * Create a new log constructor and add it as observed by {@link uk.ac.stfc.isis.ibex.ui.UI}.
@@ -122,7 +122,7 @@ public class LogCounter extends ModelObject implements IMessageConsumer<LogMessa
      */
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (Objects.equals(evt.getPropertyName(), switchToOrFromIOCLogProperty)) {
+		if (Objects.equals(evt.getPropertyName(), SWITCH_TO_OR_FROM_IOC_LOG_PROPERTY)) {
 			start();
 		}
 	}

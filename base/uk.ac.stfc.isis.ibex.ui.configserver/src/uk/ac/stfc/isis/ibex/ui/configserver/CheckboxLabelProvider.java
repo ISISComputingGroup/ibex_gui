@@ -77,7 +77,6 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	/**
 	 * The default constructor for the CheckboxLabelProvider.
 	 * @param stateProperties The properties that this label provider should be observing.
-	 * @param table The data bound table that owns this label provider.
 	 */
 	public CheckboxLabelProvider(IObservableMap<T, ?> stateProperties) {
 		super(stateProperties);
@@ -122,7 +121,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	 */
 	private void updateCheckboxListenerUpdateFlags(IObservableMap<T, ?> stateProperties) {
 	    checkboxListenerUpdateFlags.clear();
-	    for(T model: stateProperties.keySet()) {
+	    for (T model: stateProperties.keySet()) {
 	        checkboxListenerUpdateFlags.put(model, new AtomicBoolean(true));
 	    }
     }
@@ -133,7 +132,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	 * they are listening to the correct model).
 	 */
 	public void resetCheckBoxListenerUpdateFlags() {
-        for(AtomicBoolean flag: checkboxListenerUpdateFlags.values()) {
+        for (AtomicBoolean flag: checkboxListenerUpdateFlags.values()) {
             flag.set(true);
         }
     }
@@ -161,7 +160,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	 * @param model The model that will be bound to the check box by the new listeners.
 	 */
 	private void resetCheckBoxListeners(boolean doUpdate, Button checkBox, T model) {
-	    if(doUpdate) {
+	    if (doUpdate) {
             clearCheckBoxSelectListeners(checkBox);
           
             checkBox.addSelectionListener(new CheckboxSelectionAdapter(checkBox, model));
@@ -175,12 +174,11 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	 * will remove.
 	 */
 	public static void clearCheckBoxSelectListeners(Button checkBox) {
-        for(Listener listener: checkBox.getListeners(SWT.Selection)) {
+        for (Listener listener: checkBox.getListeners(SWT.Selection)) {
             if (listener instanceof TypedListener) {
                 TypedListener typedListener = (TypedListener) listener;
                 
-                if(typedListener.getEventListener() instanceof 
-                        CheckboxLabelProvider.CheckboxSelectionAdapter) {
+                if (typedListener.getEventListener() instanceof CheckboxLabelProvider.CheckboxSelectionAdapter) {
                     
                     checkBox.removeSelectionListener((SelectionListener)
                         typedListener.getEventListener());
