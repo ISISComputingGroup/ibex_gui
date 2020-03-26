@@ -53,7 +53,7 @@ public class DashboardObservables extends Closer {
     public final ForwardingObservable<String> title;
 	public final ForwardingObservable<DaeRunState> runState;
 	
-	private final SwitchableObservable<String> getObservable(final String pv) {
+	private SwitchableObservable<String> getObservable(final String pv) {
 		return registerForClose(obsFactory.getSwitchableObservable(new StringChannel(), pv));
 	}
 
