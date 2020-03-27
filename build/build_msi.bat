@@ -1,4 +1,4 @@
-@echo on
+@echo off
 setlocal
 set "MYDIR=%~dp0"
 
@@ -66,8 +66,6 @@ del ibex_client.wixpdb
 cd /d %OLDDIR%
 subst /d q:
 
-@echo off
-
 goto :EOF
 
 :ERROR
@@ -78,7 +76,5 @@ del ibex_client.*
 
 cd /d %OLDDIR%
 subst /d q:
-
-@echo off
 
 exit /b 1
