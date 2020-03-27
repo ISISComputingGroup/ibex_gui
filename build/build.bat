@@ -1,6 +1,6 @@
 REM We bundle our own JRE with the client, this is where it is
-set JRELOCATION=\\isis\inst$\Kits$\CompGroup\ICP\ibex_client_jre
-set LOCAL_JRE_LOCATION=%~dp0\jdk
+set "JRELOCATION=\\isis\inst$\Kits$\CompGroup\ICP\ibex_client_jre"
+set "LOCAL_JRE_LOCATION=%~dp0\jdk"
 robocopy "%JRELOCATION%" "%LOCAL_JRE_LOCATION%" /E /PURGE /R:2 /MT /XF "install.log" /NFL /NDL /NC /NS /NP /LOG:NUL
 set errcode=%ERRORLEVEL%
 if %errcode% GEQ 4 (
@@ -40,7 +40,7 @@ RMDIR /S /Q %sensible_build_dir%
 robocopy "%built_client%" "%sensible_build_dir%" /MT /E /PURGE /R:2 /XF "install.log" /NFL /NDL /NP /NS /NC /LOG:NUL
 
 REM Copy the JRE across 
-robocopy %LOCAL_JRE_LOCATION% %sensible_build_dir%\jre /MT /MIR /R:1 /XF "install.log" /NFL /NDL /NP /NS /NC /LOG:NUL
+robocopy "%LOCAL_JRE_LOCATION%" "%sensible_build_dir%\jre" /MT /MIR /R:1 /XF "install.log" /NFL /NDL /NP /NS /NC /LOG:NUL
 if %errorlevel% geq 4 (
     @echo Failed to copy JRE across
     exit /b 1
