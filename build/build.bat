@@ -1,6 +1,6 @@
 REM We bundle our own JRE with the client, this is where it is
 set "JRELOCATION=\\isis\inst$\Kits$\CompGroup\ICP\ibex_client_jre"
-set "LOCAL_JRE_LOCATION=%~dp0\jdk"
+set "LOCAL_JRE_LOCATION=%~dp0jdk"
 robocopy "%JRELOCATION%" "%LOCAL_JRE_LOCATION%" /E /PURGE /R:2 /MT /XF "install.log" /NFL /NDL /NC /NS /NP /LOG:NUL
 set errcode=%ERRORLEVEL%
 if %errcode% GEQ 4 (
@@ -14,7 +14,7 @@ call copy_in_maven.bat
 if %errorlevel% neq 0 exit /b %errorlevel%
 set "PATH=%PATH%;%~dp0maven\bin"
 
-SET "JAVA_HOME=%~dp0\jdk"
+SET "JAVA_HOME=%~dp0jdk"
 
 if "%PYTHON3%" == "" (
 	set "PYTHON3=C:\Instrument\Apps\Python3\python.exe"
