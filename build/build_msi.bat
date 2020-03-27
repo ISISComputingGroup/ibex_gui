@@ -2,6 +2,8 @@
 setlocal
 set "MYDIR=%~dp0"
 
+@echo %TIME% Building MSI Kit
+
 set "CLIENTDIR=built_client"
 
 REM FILESROOT is the directory above the CLIENTDIR directory
@@ -20,29 +22,41 @@ if not "%BUILD_NUMBER%" == "" (
 set IBEXVERSIONLONG=%IBEXMAJOR%.%IBEXMINOR%.%IBEXPATCH%.%IBEXBUILD%
 set IBEXVERSIONSHORT=%IBEXMAJOR%.%IBEXMINOR%
 
-REM change directory to avoid too long path errors, use pushd as it works with UNC paths
-pushd %FILESROOT%
+REM change directory to avoid too long path errors
+subst q: %FILESROOT%
+set "OLDDIR=%CD%"
+cd /d q:\
 
+del ibex_client.msi
+
+@echo %TIME% Running HEAT
 REM -sw5150 supresses warning about self registering DLLs
 "%WIXBIN%\heat.exe" dir .\%CLIENTDIR% -gg -scom -sreg -svb6 -sfrag -sw5150 -template feature -var var.MySource -dr INSTALLDIR -cg MyCG -t %MYDIR%wxs2wxi.xsl -out ibex_client.wxi
 if %errorlevel% neq 0 goto ERROR
 
-copy %MYDIR%ibex_client_master.wxs ibex_client.wxs
+copy /y %MYDIR%ibex_client_master.wxs ibex_client.wxs
+@echo %TIME% Running CANDLE
 "%WIXBIN%\candle.exe" -dMySource=.\%CLIENTDIR% -dVersionLong=%IBEXVERSIONLONG% -dVersionShort=%IBEXVERSIONSHORT% ibex_client.wxs
 if %errorlevel% neq 0 goto ERROR
 
+@echo %TIME% Running LIGHT
 REM -sice:ICE60 is to stop font install warnings (from JRE)
 "%WIXBIN%\light.exe" -sice:ICE60 -ext WixUIExtension ibex_client.wixobj
 if %errorlevel% neq 0 goto ERROR
 
-@echo Successfully created ibex_client.msi
+if exist "ibex_client.msi" (
+    @echo %TIME% Successfully created ibex_client.msi
+) else (
+    goto ERROR
+)
 
 del ibex_client.wxs
 del ibex_client.wxi
 del ibex_client.wixobj
 del ibex_client.wixpdb
 
-popd
+cd /d %OLDDIR%
+subst /d q:
 
 goto :EOF
 
@@ -52,6 +66,7 @@ goto :EOF
 
 del ibex_client.*
 
-popd
+cd /d %OLDDIR%
+subst /d q:
 
 exit /b 1

@@ -18,7 +18,7 @@ if "%IS_E4%" == "YES" (
 call build.bat "LOG" %BUILT_CLIENT_DIR%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-call build_msi.bat %BASEDIR%\..
+call build_msi.bat %BASEDIR%..
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM set EXIT=YES will change error code to 1 if not set previously so store the current
