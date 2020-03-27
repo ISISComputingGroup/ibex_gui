@@ -27,12 +27,17 @@ subst q: %FILESROOT%
 set "OLDDIR=%CD%"
 cd /d q:\
 
+del ibex_client.wxi
 del ibex_client.msi
 
 @echo %TIME% Running HEAT
 REM -sw5150 supresses warning about self registering DLLs
 "%WIXBIN%\heat.exe" dir .\%CLIENTDIR% -gg -scom -sreg -svb6 -sfrag -sw5150 -template feature -var var.MySource -dr INSTALLDIR -cg MyCG -t %MYDIR%wxs2wxi.xsl -out ibex_client.wxi
 if %errorlevel% neq 0 goto ERROR
+if not exist "ibex_client.wxi" (
+    @echo %TIME% Unable to create ibex_client.wxi
+	goto ERROR
+)
 
 copy /y %MYDIR%ibex_client_master.wxs ibex_client.wxs
 @echo %TIME% Running CANDLE
