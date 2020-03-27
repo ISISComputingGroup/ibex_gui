@@ -59,6 +59,7 @@ public class NicosCurrentScriptContainer {
                     if (currentLine > 0 && currentLine <= txtCurrentScript.getLineCount()) {
                         txtCurrentScript.setLineBackground(model.getLineNumber() - 1, 1,
                                 scriptStatusViewModel.getHighlightColour());
+                    	txtCurrentScript.setSelection(txtCurrentScript.getOffsetAtLine(currentLine - 1));
                     }
                 }
             });
