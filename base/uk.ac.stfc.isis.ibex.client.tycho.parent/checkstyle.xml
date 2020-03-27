@@ -84,10 +84,16 @@
       <property name="scope" value="protected"/>
     </module>
     <module name="SuppressionCommentFilter"/>
+    <module name="MissingJavadocMethod">
+      <property name="scope" value="package"/>
+    </module>
+    <module name="MissingJavadocType">
+      <property name="scope" value="package"/>
+    </module>
   </module>
   <module name="SuppressWarningsFilter"/>
   <module name="Translation"/>
   <module name="SuppressionFilter">
-   <property name="file" value="${checkstyle.suppressions.file}"/>
+    <property name="file" value="${checkstyle.suppressions.file}"/>
   </module>
 </module>
