@@ -18,6 +18,9 @@ if "%IS_E4%" == "YES" (
 call build.bat "LOG" %BUILT_CLIENT_DIR%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
+call build_msi.bat %BASEDIR%\..
+if %errorlevel% neq 0 exit /b %errorlevel%
+
 REM set EXIT=YES will change error code to 1 if not set previously so store the current
 set build_error_level=%errorlevel%
 
@@ -110,5 +113,3 @@ if %errorlevel% neq 0 (
 if not "%RELEASE%" == "YES" (
     @echo %BUILD_NUMBER%>%INSTALLDIR%\..\LATEST_BUILD.txt 
 )
-
-call build_msi.bat %BASEDIR%\..
