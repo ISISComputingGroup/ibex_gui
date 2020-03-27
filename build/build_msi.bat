@@ -43,12 +43,15 @@ copy /y %MYDIR%ibex_client_master.wxs ibex_client.wxs
 @echo %TIME% Running CANDLE
 "%WIXBIN%\candle.exe" -dMySource=.\%CLIENTDIR% -dVersionLong=%IBEXVERSIONLONG% -dVersionShort=%IBEXVERSIONSHORT% ibex_client.wxs
 if %errorlevel% neq 0 goto ERROR
+if not exist "ibex_client.wixobj" (
+    @echo %TIME% Unable to create ibex_client.wixobj
+	goto ERROR
+)
 
 @echo %TIME% Running LIGHT
 REM -sice:ICE60 is to stop font install warnings (from JRE)
 "%WIXBIN%\light.exe" -sice:ICE60 -ext WixUIExtension ibex_client.wixobj
 if %errorlevel% neq 0 goto ERROR
-
 if exist "ibex_client.msi" (
     @echo %TIME% Successfully created ibex_client.msi
 ) else (
