@@ -35,6 +35,7 @@ public class JavaActionParameter implements ActionParameter {
 	/**
 	 * This class holds the name about an action parameter.
 	 * @param name The name of the action parameter (column header)
+	 * @param defaultValue The value this parameter should have as a default
 	 */
 	public JavaActionParameter(String name, String defaultValue) {
 		this.name = name;
@@ -57,17 +58,21 @@ public class JavaActionParameter implements ActionParameter {
 
 	
 	/**
-	 * Check to see if the ActionParameter's attributes are equal to provided object
-	 * @param The object to compare against
+	 * Check to see if the ActionParameter's attributes are equal to provided object.
+	 * @param other The object to compare against
 	 */
 	@Override
-	public boolean equals(Object o) {
-		if (o == this) return true;
-		if (!(o instanceof JavaActionParameter)) return false;	
+	public boolean equals(Object other) {
+		if (other == this) {
+		    return true;
+		}
+		if (!(other instanceof JavaActionParameter)) {
+		    return false;	
+		}
 		
-		JavaActionParameter actionParameter = (JavaActionParameter) o;
-		return Objects.equals(this.getName(), actionParameter.getName()) &&
-				Objects.equals(this.getDefaultValue(), actionParameter.getDefaultValue());
+		JavaActionParameter actionParameter = (JavaActionParameter) other;
+		return Objects.equals(this.getName(), actionParameter.getName()) 
+			&& Objects.equals(this.getDefaultValue(), actionParameter.getDefaultValue());
 	}
 	
 	/**

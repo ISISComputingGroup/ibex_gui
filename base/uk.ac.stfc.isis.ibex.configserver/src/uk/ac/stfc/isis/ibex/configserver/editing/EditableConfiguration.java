@@ -121,7 +121,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     /** Manager mode Observable **/
     private ManagerModeObservable managerModePv;
     /** Initial Flag of a config/component **/
-    final private boolean originalProtectedFlag;
+    private final boolean originalProtectedFlag;
     /** Warning to be shown when saving protected config in non manager mode **/
     private final String savingProtectedConfigWarning = "Info : To modify/save a protected "
 	    + "configuration you have to be in Manager Mode";
@@ -157,7 +157,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	}
     };
 
-    private Optional<ManagerModeObserver> manager_mode_observable = Optional.empty();
+    private Optional<ManagerModeObserver> managerModeObservable = Optional.empty();
 
 
     /**
@@ -753,14 +753,14 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	String errorMessage = noError;
 	if (inManagerMode == null) {
 	    // Do nothing
-	} else if ((this.originalProtectedFlag == true) && isProtected == false && inManagerMode) {
+	} else if (this.originalProtectedFlag && !isProtected  && inManagerMode) {
 
 	    String compOrConfName = isComponent ? "component" : "configuration";
 	    errorMessage = "Warning! If saved, the " + compOrConfName + " " + this.name + " "
 		    + "will be downgraded to an unprotected " + compOrConfName;
 	    firePropertyChange("enableOrDisableSaveButton", isSaveButtonEnabled, this.isSaveButtonEnabled = true);
 
-	} else if ((this.originalProtectedFlag == true) && isProtected == false && !inManagerMode) {
+	} else if (this.originalProtectedFlag && !isProtected && !inManagerMode) {
 	    errorMessage = isComponent ? this.savingProtectedCompWarning : this.savingProtectedConfigWarning;
 	    firePropertyChange("enableOrDisableSaveButton", isSaveButtonEnabled, this.isSaveButtonEnabled = false);
 
@@ -788,18 +788,17 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * Decides if save as Button needs to be enabled or disabled.
      */
     public void setEnableSaveAsButton() {
-	if (inManagerMode == null) {
-
-	} else if ((this.originalProtectedFlag == true) && isProtected == false) {
-	    firePropertyChange("enableSaveAsButton", enableSaveAsButton, this.enableSaveAsButton = true);
-
-	} else if (isProtected && (!inManagerMode)) {
-	    firePropertyChange("enableSaveAsButton", enableSaveAsButton, this.enableSaveAsButton = false);
-
-	} else if (inManagerMode || (!isProtected && !inManagerMode)) {
-	    firePropertyChange("enableSaveAsButton", enableSaveAsButton, this.enableSaveAsButton = true);
-
-	}
+	if (inManagerMode != null) {
+        	if (this.originalProtectedFlag && !isProtected) {
+        	    firePropertyChange("enableSaveAsButton", enableSaveAsButton, this.enableSaveAsButton = true);
+        
+        	} else if (isProtected && (!inManagerMode)) {
+        	    firePropertyChange("enableSaveAsButton", enableSaveAsButton, this.enableSaveAsButton = false);
+        
+        	} else if (inManagerMode || (!isProtected && !inManagerMode)) {
+        	    firePropertyChange("enableSaveAsButton", enableSaveAsButton, this.enableSaveAsButton = true);
+        	}
+    	}
     }
 
     /**
@@ -824,7 +823,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      */
     private void addObserver() {
 
-	this.manager_mode_observable = Optional.of(new ManagerModeObserver(managerModePv.observable) {
+	this.managerModeObservable = Optional.of(new ManagerModeObserver(managerModePv.observable) {
 
 	    @Override
 	    protected void setManagerMode(Boolean value) {
@@ -851,7 +850,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
     @Override
     public void close() {
-	this.manager_mode_observable.ifPresent(ManagerModeObserver::close);
-	this.manager_mode_observable = Optional.empty();
+	this.managerModeObservable.ifPresent(ManagerModeObserver::close);
+	this.managerModeObservable = Optional.empty();
     }
 }

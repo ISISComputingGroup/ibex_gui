@@ -85,6 +85,6 @@ public class ConfigEditing extends Closer implements Editing {
 	}
 
 	private ObservableEditableConfiguration edit(ClosableObservable<Configuration> config) { 		
-		return registerForClose(new ObservableEditableConfiguration(config,configServer));
+		return registerForClose(new ObservableEditableConfiguration(config, configServer));
 	}
 }

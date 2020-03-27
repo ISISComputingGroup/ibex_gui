@@ -72,10 +72,9 @@ public class ParametersConverter {
 	 * @param actions Actions from table
 	 * @param content Content of script definition
 	 * @param scriptGeneratorVersion Script generator version
-	 * @param date Current date
-	 * @param time Current time
+	 * @param dateAndTime Current date and time
 	 * @param scriptDefinitionFilePath File path of script definition that is used to generate data file
-	 * @param scriptDefinitionFileGitHash Git hash of Script defintion file 
+	 * @param scriptDefinitionFileGitHash Git hash of Script definition file 
 	 * @param geniePythonVersion Current version of genie python
 	 */
 	public ParametersConverter(String version, List<ScriptGeneratorActionConverter> actions, String content,
@@ -103,7 +102,9 @@ public class ParametersConverter {
 				parameterValues = action.getParameters(); 
 			}
 		}
-		if (parameterValues.isEmpty()) LOG.error(String.format("Table name %s does not exist", actionName));
+		if (parameterValues.isEmpty()) {
+		    LOG.error(String.format("Table name %s does not exist", actionName));
+		}
 		return parameterValues;
 	}
 

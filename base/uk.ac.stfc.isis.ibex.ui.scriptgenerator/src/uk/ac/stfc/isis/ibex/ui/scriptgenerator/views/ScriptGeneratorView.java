@@ -52,6 +52,7 @@ import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
  * 
  * Uses code from http://www.java2s.com/Code/Java/SWT-JFace-Eclipse/SWTTableSimpleDemo.htm
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class ScriptGeneratorView {
 	
 	private static PreferenceSupplier preferences = new PreferenceSupplier();
@@ -172,7 +173,7 @@ public class ScriptGeneratorView {
 			FontData[] fD = loadingMessage.getFont().getFontData();
 			fD[0].setHeight(16);
 			loadingMessage.setFont(new Font(Display.getDefault(), fD[0]));
-			if(scriptDefinitionsLoadedOnce) {
+			if (scriptDefinitionsLoadedOnce) {
 				loadingMessage.setText(RELOADING_MESSAGE);
 			} else {
 				loadingMessage.setText(LOADING_MESSAGE);
@@ -338,12 +339,12 @@ public class ScriptGeneratorView {
 		       	final Button saveExperimentalParametersButton = new Button(generateButtonsGrp, SWT.NONE);
 		       	saveExperimentalParametersButton.setText("Save Parameters");
 		       	saveExperimentalParametersButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		       	saveExperimentalParametersButton.addListener(SWT.Selection, e->scriptGeneratorViewModel.saveParameterValues());
+		       	saveExperimentalParametersButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.saveParameterValues());
 		       	
 		       	final Button loadExperimentalParametersButton = new Button(generateButtonsGrp, SWT.NONE);
 		       	loadExperimentalParametersButton.setText("Load Parameters");
 		       	loadExperimentalParametersButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		       	loadExperimentalParametersButton.addListener(SWT.Selection, e->scriptGeneratorViewModel.loadParameterValues());
+		       	loadExperimentalParametersButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.loadParameterValues());
 		        // Bind the context and the validity checking listeners
 		        bind(scriptDefinitionSelector, table, btnGetValidityErrors, generateScriptButton, helpText, saveExperimentalParametersButton, manualButton);
 				

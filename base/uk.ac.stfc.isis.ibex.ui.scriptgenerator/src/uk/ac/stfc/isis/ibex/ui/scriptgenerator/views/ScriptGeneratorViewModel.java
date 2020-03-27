@@ -783,9 +783,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	private Optional<String> openFileDialog(int action) {
 		FileDialog dialog = new FileDialog(Display.getDefault().getActiveShell(), action);
 		dialog.setFilterPath("C:/scripts");
-		dialog.setFilterExtensions(new String [] {"*.json"});
+		dialog.setFilterExtensions(new String[] {"*.json"});
 		dialog.setOverwrite(true);
-		if (action == SWT.SAVE ) {
+		if (action == SWT.SAVE) {
 			dialog.setText("Save as");
 
 		} else {

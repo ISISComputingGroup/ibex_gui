@@ -43,7 +43,6 @@ public class GeneratorPython extends AbstractGenerator {
 		});
 	
 	}
-
 	
 	/**
 	 * Refresh the property of whether the contents of the script generator (actionsTable) are valid against Python.
@@ -56,7 +55,7 @@ public class GeneratorPython extends AbstractGenerator {
 	public void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition) throws InterruptedException, ExecutionException {
 		try {	
 			pythonInterface.refreshAreParamsValid(scriptGenContent, scriptDefinition);
-		} catch(PythonNotReadyException e) {
+		} catch (PythonNotReadyException e) {
 			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
 			LOG.error(e);
 		}
@@ -74,7 +73,7 @@ public class GeneratorPython extends AbstractGenerator {
 	public void refreshValidityErrors(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefintion) throws InterruptedException, ExecutionException {
 		try {
 			pythonInterface.refreshValidityErrors(scriptGenContent, scriptDefintion);
-		} catch(PythonNotReadyException e) {
+		} catch (PythonNotReadyException e) {
 			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
 			LOG.error(e);
 		}
@@ -83,10 +82,10 @@ public class GeneratorPython extends AbstractGenerator {
 
 	@Override
 	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent,
-			ScriptDefinitionWrapper scriptDefinition, String JsonContent) throws InterruptedException, ExecutionException {
+			ScriptDefinitionWrapper scriptDefinition, String jsonContent) throws InterruptedException, ExecutionException {
 		try {
-			pythonInterface.refreshGeneratedScript(scriptGenContent, JsonContent, scriptDefinition);
-		} catch(PythonNotReadyException e) {
+			pythonInterface.refreshGeneratedScript(scriptGenContent, jsonContent, scriptDefinition);
+		} catch (PythonNotReadyException e) {
 			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
 			LOG.error(e);
 		}

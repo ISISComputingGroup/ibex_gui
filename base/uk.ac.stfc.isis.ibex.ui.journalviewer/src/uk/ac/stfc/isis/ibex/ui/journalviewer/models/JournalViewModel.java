@@ -257,7 +257,7 @@ public class JournalViewModel extends ModelObject {
 	/**
 	 * Set new end number.
 	 * 
-	 * @param ToNumber
+	 * @param toNumber the number to set to value to
 	 */
 	public void setToNumber(int toNumber) {
 		this.toNumber = toNumber;

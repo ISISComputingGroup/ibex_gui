@@ -168,7 +168,7 @@ public class PythonInterface extends ModelObject {
 	protected void handlePythonReadinessChange(boolean ready) {
 		boolean wasPythonReady = pythonReady;
 		firePropertyChange(PYTHON_READINESS_PROPERTY, pythonReady, pythonReady = ready);
-		if (ready == false && wasPythonReady != ready) {
+		if (!ready && wasPythonReady != ready) {
 			THREAD.submit(() -> restartPython());
 		}
 	}
@@ -417,7 +417,7 @@ public class PythonInterface extends ModelObject {
 	 * @throws PythonNotReadyException When python is not ready to accept calls.
 	 */
 
-	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent,String jsonContent, ScriptDefinitionWrapper scriptDefinition)
+	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, String jsonContent, ScriptDefinitionWrapper scriptDefinition)
 			throws InterruptedException, ExecutionException, PythonNotReadyException {
 		if (pythonReady) {
 			CompletableFuture.supplyAsync(() -> {

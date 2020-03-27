@@ -108,7 +108,7 @@ public class ActionsTable extends ModelObject {
 	}
 	
 	/**
-	 * Add multiple actions
+	 * Add multiple actions.
 	 * @param list contains mapped action parameters to its values
 	 */
 	public void addMultipleActions(List<Map<JavaActionParameter, String>> list) {
@@ -117,7 +117,7 @@ public class ActionsTable extends ModelObject {
 			var newAction = createAction(map);
 			newList.add(newAction);
 		}
-		firePropertyChange(ACTIONS_PROPERTY, actions, actions=newList);
+		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
 
 	}
 
@@ -209,8 +209,8 @@ public class ActionsTable extends ModelObject {
 	 * @param validityErrors The hashmap to set validity errors based on.
 	 */
 	public void setValidityErrors(Map<Integer, String> validityErrors) {
-		for(int i = 0; i< actions.size(); i++) {
-			if(validityErrors.containsKey(i)) {
+		for (int i = 0; i < actions.size(); i++) {
+			if (validityErrors.containsKey(i)) {
 				actions.get(i).setInvalid(validityErrors.get(i));
 			} else {
 				actions.get(i).setValid();
@@ -228,7 +228,7 @@ public class ActionsTable extends ModelObject {
 		for (int i = 0; i < actions.size(); i++) {
 			ScriptGeneratorAction action = actions.get(i);
 			if (!action.isValid()) {
-				String errorString = "Row: " + (i+1) + ", Reason: " + "\n" + action.getInvalidityReason().get() + "\n";
+				String errorString = "Row: " + (i + 1) + ", Reason: " + "\n" + action.getInvalidityReason().get() + "\n";
 				
 				errors.addAll(Arrays.asList(errorString.split("\n")));
 			}

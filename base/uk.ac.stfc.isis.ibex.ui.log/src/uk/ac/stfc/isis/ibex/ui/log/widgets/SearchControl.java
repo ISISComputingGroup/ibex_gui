@@ -95,7 +95,7 @@ public class SearchControl extends Canvas {
 	 * Instantiates a new search control.
 	 *
 	 * @param parent the parent in which this control resides
-	 * @param searcher a model to allow searching of log messages
+	 * @param model a model to allow searching of log messages
 	 */
 	public SearchControl(LogDisplay parent, final LogDisplayModel model) {
 		super(parent, SWT.NONE);
@@ -322,9 +322,9 @@ public class SearchControl extends Canvas {
                 final String value = txtValue.getText();
 
                 final Calendar from = chkFrom.getSelection()
-                        ? dtFromDate.getDateTime(): null;
+                        ? dtFromDate.getDateTime() : null;
                 final Calendar to = chkTo.getSelection()
-                        ? dtToDate.getDateTime(): null;
+                        ? dtToDate.getDateTime() : null;
 
                 runSearchJob(field, value, from, to);
 

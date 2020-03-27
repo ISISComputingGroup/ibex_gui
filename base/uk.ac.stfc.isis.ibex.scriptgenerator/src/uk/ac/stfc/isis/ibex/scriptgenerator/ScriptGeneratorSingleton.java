@@ -60,11 +60,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * JSON file extension.
 	 */
-	private final String JSON_EXT = ".json";
+	private static final String JSON_EXT = ".json";
 	/**
 	 * Python file extension.
 	 */
-	private final String PYTHON_EXT = ".py";
+	private static final String PYTHON_EXT = ".py";
 	
 	/**
 	 * The preferences supplier to get the area to generate scripts from.
@@ -290,6 +290,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 *         or an optional containing the url.
 	 */
 	public Optional<URL> getUserManualUrl() {
+
 	    String preferenceProperty = preferenceSupplier.scriptGeneratorManualURL();
 	    
 	    // Loop through all URLs in the preference property
@@ -309,7 +310,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	        } catch (IOException ex) {
 	            LOG.debug("Invalid URL for user manual was found: " + url);
 	        }
-	    };
+	    }
 	    
 	    LOG.warn("No valid URLs for the user manual were found");
 	    return Optional.empty();
@@ -672,7 +673,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * Save parameter values to a file.
 	 * 
-	 * @fileName file name to save data file as
+	 * @param fileName file name to save data file as
 	 * @throws ExecutionException 
 	 * @throws InterruptedException 
 	 */
@@ -685,8 +686,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			if (!fileName.contains(JSON_EXT)) {
 				fileName = preferenceSupplier.scriptGenerationFolder() + fileName + JSON_EXT;
 			}
-			scriptGenFileHandler.saveParameters(this.scriptGeneratorTable.getActions(), preferenceSupplier.scriptGeneratorScriptDefinitionFolders() + scriptDefinition.getName() + PYTHON_EXT
-					, fileName);
+			scriptGenFileHandler.saveParameters(this.scriptGeneratorTable.getActions(), preferenceSupplier.scriptGeneratorScriptDefinitionFolders() + scriptDefinition.getName() + PYTHON_EXT,
+					fileName);
 		} catch (InterruptedException | ExecutionException e) {
 			firePropertyChange(THREAD_ERROR_PROPERTY, threadError, true);
 			LOG.error(e);

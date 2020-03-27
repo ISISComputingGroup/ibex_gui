@@ -135,11 +135,11 @@ public class ConfigInfo {
      * @param infos
      * @return collection of Pair i.e config/comp name and its proteciton flag
      */
-    public static Map<String, Boolean> mapNamesWithTheirProtectionFlag(Collection <ConfigInfo>infos) {
+    public static Map<String, Boolean> mapNamesWithTheirProtectionFlag(Collection<ConfigInfo> infos) {
         if (infos == null) {
             return Collections.emptyMap();
         }
-        Map <String, Boolean> namesWithProtectionFlag = new HashMap<String, Boolean>();
+        Map<String, Boolean> namesWithProtectionFlag = new HashMap<String, Boolean>();
         for (ConfigInfo config: infos) {
             namesWithProtectionFlag.put(config.name(), config.isProtected());
         }
