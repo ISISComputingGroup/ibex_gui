@@ -7,9 +7,6 @@ set M2=%MAVEN%bin
 set PYTHON3=C:\Instrument\Apps\Python3\python.exe
 set PYTHON_HOME=C:\Instrument\Apps\Python3
 
-REM We bundle our own JRE with the client, this is where it is
-set JRELOCATION=p:\Kits$\CompGroup\ICP\ibex_client_jre
-
 set PATH=%M2%;%JAVA_HOME%;%PATH%
 
 if "%IS_E4%" == "YES" (
@@ -87,13 +84,6 @@ if %errorlevel% geq 4 (
         rd /q /s %INSTALLDIR%\Client
     )
     @echo Client copy failed
-    exit /b 1
-)
-
-REM Copy the JRE across 
-robocopy %JRELOCATION% %INSTALLDIR%\Client\jre /MT /MIR /R:1 /NFL /NDL /NP /NS /NC /LOG:NUL
-if %errorlevel% geq 4 (
-    @echo Failed to copy JRE across
     exit /b 1
 )
 
