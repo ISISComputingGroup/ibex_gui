@@ -25,6 +25,7 @@ import java.util.List;
 
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.observable.MotorVariables;
 import uk.ac.stfc.isis.ibex.motor.observable.ObservableMotor;

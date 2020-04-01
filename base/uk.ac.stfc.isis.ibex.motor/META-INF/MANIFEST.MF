@@ -10,7 +10,8 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.preferences,
  uk.ac.stfc.isis.ibex.instrument,
  uk.ac.stfc.isis.ibex.epics,
- uk.ac.stfc.isis.ibex.epics.switching;bundle-version="1.0.0"
+ uk.ac.stfc.isis.ibex.epics.switching;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.logger
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.motor,

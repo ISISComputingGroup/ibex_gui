@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.motor.views;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
@@ -46,12 +47,31 @@ public class MinimalMotionIndicator extends Composite {
 
 	private final Display display = Display.getDefault();
 
-    private EnableableImageLabel lowerDirectionLimit;
-    private EnableableImageLabel leftDirection;
-    private EnableableImageLabel home;
-    private EnableableImageLabel rightDirection;
-    private EnableableImageLabel upperDirectionLimit;
-
+    private BooleanImageLabel lowerDirectionLimit;
+    private BooleanImageLabel leftDirection;
+    private BooleanImageLabel home;
+    private BooleanImageLabel rightDirection;
+    private BooleanImageLabel upperDirectionLimit;
+    
+    /**
+     * Storing these images as static fields means that they can be re-used by each motor view that needs them,
+     * rather than being re-created each time a new instance of this class is constructed.
+     */
+    private static final Image LOW_LIMIT_IMAGE_ENABLED = getImage("lower_limit_minimal.png");
+    private static final Image LOW_LIMIT_IMAGE_DISABLED = new Image(Display.getDefault(), LOW_LIMIT_IMAGE_ENABLED, SWT.IMAGE_DISABLE);
+    
+    private static final Image LEFT_MOVE_IMAGE_ENABLED = getImage("arrow_left_minimal.png");
+    private static final Image LEFT_MOVE_IMAGE_DISABLED = new Image(Display.getDefault(), LEFT_MOVE_IMAGE_ENABLED, SWT.IMAGE_DISABLE);
+    
+    private static final Image HOME_IMAGE_ENABLED = getImage("home_minimal.png");
+    private static final Image HOME_IMAGE_DISABLED = new Image(Display.getDefault(), HOME_IMAGE_ENABLED, SWT.IMAGE_DISABLE);
+    
+    private static final Image RIGHT_MOVE_IMAGE_ENABLED = getImage("arrow_right_minimal.png");
+    private static final Image RIGHT_MOVE_IMAGE_DISABLED = new Image(Display.getDefault(), RIGHT_MOVE_IMAGE_ENABLED, SWT.IMAGE_DISABLE);
+    
+    private static final Image UPPER_LIMIT_IMAGE_ENABLED = getImage("upper_limit_minimal.png");
+    private static final Image UPPER_LIMIT_IMAGE_DISABLED = new Image(Display.getDefault(), UPPER_LIMIT_IMAGE_ENABLED, SWT.IMAGE_DISABLE);
+    
     /**
      * Creates an indicator bar that gives information about an axis at a
      * glance.
@@ -70,16 +90,16 @@ public class MinimalMotionIndicator extends Composite {
 		gridLayout1.horizontalSpacing = 0;
 		setLayout(gridLayout1);
 		
-        lowerDirectionLimit = new EnableableImageLabel(this, getImage("lower_limit_minimal.png"), LOW_LIMIT_TOOLTIP);
+        lowerDirectionLimit = new BooleanImageLabel(this, LOW_LIMIT_IMAGE_ENABLED, LOW_LIMIT_IMAGE_DISABLED, LOW_LIMIT_TOOLTIP);
 
-        leftDirection = new EnableableImageLabel(this, getImage("arrow_left_minimal.png"), LOW_MOVE_TOOLTIP);
+        leftDirection = new BooleanImageLabel(this, LEFT_MOVE_IMAGE_ENABLED, LEFT_MOVE_IMAGE_DISABLED, LOW_MOVE_TOOLTIP);
 		
-        home = new EnableableImageLabel(this, getImage("home_minimal.png"), HOME_TOOLTIP);
+        home = new BooleanImageLabel(this, HOME_IMAGE_ENABLED, HOME_IMAGE_DISABLED, HOME_TOOLTIP);
 		
-        rightDirection = new EnableableImageLabel(this, getImage("arrow_right_minimal.png"), HIGH_MOVE_TOOLTIP);
+        rightDirection = new BooleanImageLabel(this, RIGHT_MOVE_IMAGE_ENABLED, RIGHT_MOVE_IMAGE_DISABLED, HIGH_MOVE_TOOLTIP);
 		
-        upperDirectionLimit = new EnableableImageLabel(this, getImage("upper_limit_minimal.png"), HIGH_LIMIT_TOOLTIP);
-		
+        upperDirectionLimit = new BooleanImageLabel(this, UPPER_LIMIT_IMAGE_ENABLED, UPPER_LIMIT_IMAGE_DISABLED, HIGH_LIMIT_TOOLTIP);
+        
 		setInitialState();
 	}
 
@@ -154,7 +174,7 @@ public class MinimalMotionIndicator extends Composite {
         setLimit(lowerDirectionLimit, enable);
 	}
 
-    private void setLimit(final EnableableImageLabel limit, final Boolean enable) {
+    private void setLimit(final BooleanImageLabel limit, final Boolean enable) {
 		display.asyncExec(new Runnable() {
 			@Override
 			public void run() {
@@ -207,7 +227,7 @@ public class MinimalMotionIndicator extends Composite {
 		});
 	}
 	
-	private Image getImage(String image) {
+	private static Image getImage(String image) {
 		return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.motor", "icons/" + image);
 	}
 

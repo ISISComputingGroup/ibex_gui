@@ -28,7 +28,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- * Stores all the display options (for example colour blindness palettes).
+ * Stores all the display options (for example accessibility palettes).
  */
 public final class DisplayPreferences extends ModelObject {
 	
@@ -39,10 +39,10 @@ public final class DisplayPreferences extends ModelObject {
     private static final Color NORMAL_VISION_DISABLED_COLOR = SWTResourceManager.getColor(200, 200, 200);
     private static final Color NORMAL_VISION_UNNAMED_COLOR = SWTResourceManager.getColor(220, 220, 220);
 
-    private static final Color COLOURBLIND_MOVING_COLOR = SWTResourceManager.getColor(0, 255, 0);
-    private static final Color COLOURBLIND_STOPPED_COLOR = SWTResourceManager.getColor(120, 120, 255);
-    private static final Color COLOURBLIND_DISABLED_COLOR = SWTResourceManager.getColor(200, 200, 200);
-    private static final Color COLOURBLIND_UNNAMED_COLOR = SWTResourceManager.getColor(220, 220, 220);
+    private static final Color ACCESSIBLE_MOVING_COLOR = SWTResourceManager.getColor(0, 255, 0);
+    private static final Color ACCESSIBLE_STOPPED_COLOR = SWTResourceManager.getColor(120, 120, 255);
+    private static final Color ACCESSIBLE_DISABLED_COLOR = SWTResourceManager.getColor(200, 200, 200);
+    private static final Color ACCESSIBLE_UNNAMED_COLOR = SWTResourceManager.getColor(220, 220, 220);
 
     /**
      * Private constructor for this utility singleton class.
@@ -67,8 +67,8 @@ public final class DisplayPreferences extends ModelObject {
         PALETTE_OPTIONS.put(ColourOption.NORMAL_VISION,
                 new MotorBackgroundPalette(NORMAL_VISION_MOVING_COLOR, NORMAL_VISION_STOPPED_COLOR,
                 NORMAL_VISION_DISABLED_COLOR, NORMAL_VISION_UNNAMED_COLOR));
-        PALETTE_OPTIONS.put(ColourOption.COLOURBLIND, new MotorBackgroundPalette(COLOURBLIND_MOVING_COLOR,
-                COLOURBLIND_STOPPED_COLOR, COLOURBLIND_DISABLED_COLOR, COLOURBLIND_UNNAMED_COLOR));
+        PALETTE_OPTIONS.put(ColourOption.ACCESSIBLE, new MotorBackgroundPalette(ACCESSIBLE_MOVING_COLOR,
+                ACCESSIBLE_STOPPED_COLOR, ACCESSIBLE_DISABLED_COLOR, ACCESSIBLE_UNNAMED_COLOR));
     }
 
     private MotorBackgroundPalette currentMotorBackgroundPalette =

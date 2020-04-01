@@ -14,6 +14,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.motor.Motors;
 import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
 
@@ -66,8 +68,8 @@ public class TableOfMotorsView {
      */
 	@PostConstruct
 	public void createPartControl(Composite parent) {
-        setMotorsTable();
 
+        setMotorsTable();
 		GridLayout glParent = new GridLayout(2, false);
 		glParent.verticalSpacing = 0;
 		glParent.marginWidth = 0;
@@ -96,8 +98,9 @@ public class TableOfMotorsView {
 
 		Label spacer = new Label(parent, SWT.NONE);
 		spacer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
+		
         motorsOverview.setMotors(motorsTable, getTableControllerOffset());
+        
 	}
 
 	/**

@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
 
@@ -98,7 +99,9 @@ public class MotorsOverview extends Composite {
 	
 	private void addMinimalView(Motor motor) {
         MinimalMotorViewModel model = new MinimalMotorViewModel();
+
         model.setMotor(motor);
+        
         MinimalMotorView view = new MinimalMotorView(motorComposite, SWT.NONE, model);
 		view.setLayoutData(viewLayout());
 		

@@ -29,13 +29,13 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 
 /**
- * A label that holds an image that can be greyed out.
+ * A label that toggles it's image between two possible states.
  */
-public class EnableableImageLabel {
+public class BooleanImageLabel {
 
     private final Label label;
-	private final Image enabled;
-	private final Image disabled;
+	private final Image enabledImage;
+	private final Image disabledImage;
 	
     /**
      * Creates a label that holds an image that can be greyed out.
@@ -43,17 +43,18 @@ public class EnableableImageLabel {
      * @param parent
      *            The parent composite for the label.
      * @param enabled
-     *            The image to show when enabled (the disabled image will be
-     *            constructed from this)
+     *            The image to show when enabled
+     * @param disabled
+     *            The image to show when disabled
      * @param tooltip
      *            The tooltip that will show when hovering over this image
      */
-    public EnableableImageLabel(final Composite parent, Image enabled, String tooltip) {
+    public BooleanImageLabel(final Composite parent, Image enabled, Image disabled, String tooltip) {
         label = new Label(parent, SWT.NONE);
         label.setAlignment(SWT.CENTER);
         label.setImage(enabled);
-		this.enabled = enabled;
-        disabled = new Image(parent.getDisplay(), enabled, SWT.IMAGE_DISABLE);
+		this.enabledImage = enabled;
+		this.disabledImage = disabled;
 
         // Add a listener so that clicking on this image does the same thing as
         // clicking on the parent container.
@@ -74,14 +75,14 @@ public class EnableableImageLabel {
      * Enable the image.
      */
     public void enable() {
-        label.setImage(enabled);
+        label.setImage(enabledImage);
 	}
 	
     /**
      * Disable the image.
      */
     public void disable() {
-        label.setImage(disabled);
+        label.setImage(disabledImage);
 	}
 	
     /**
