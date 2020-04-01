@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.log.widgets;
 import java.util.Calendar;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
@@ -95,7 +95,7 @@ public class SearchControl extends Canvas {
 	 * Instantiates a new search control.
 	 *
 	 * @param parent the parent in which this control resides
-	 * @param searcher a model to allow searching of log messages
+	 * @param model a model to allow searching of log messages
 	 */
 	public SearchControl(LogDisplay parent, final LogDisplayModel model) {
 		super(parent, SWT.NONE);
@@ -322,9 +322,9 @@ public class SearchControl extends Canvas {
                 final String value = txtValue.getText();
 
                 final Calendar from = chkFrom.getSelection()
-                        ? dtFromDate.getDateTime(): null;
+                        ? dtFromDate.getDateTime() : null;
                 final Calendar to = chkTo.getSelection()
-                        ? dtToDate.getDateTime(): null;
+                        ? dtToDate.getDateTime() : null;
 
                 runSearchJob(field, value, from, to);
 

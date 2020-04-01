@@ -267,7 +267,7 @@ public class LogDisplayModel extends ModelObject
 	}
 	
 	/**
-	 * sets start date and time
+	 * Sets start date and time.
 	 * 
 	 * @param fromDate sets start date
 	 * @param fromTime set start time
@@ -280,7 +280,7 @@ public class LogDisplayModel extends ModelObject
 	}
 
 	/**
-	 * sets end date and time
+	 * Sets end date and time.
 	 * 
 	 * @param toDate end date
 	 * @param toTime end time
@@ -301,7 +301,7 @@ public class LogDisplayModel extends ModelObject
     }
     
     /**
-     * Set new from date
+     * Set new from date.
      * @param fromDate new from date
      */
     public void setFromDate(Calendar fromDate) {
@@ -312,7 +312,7 @@ public class LogDisplayModel extends ModelObject
    
     
     /**
-     * sets new from time
+     * sets new from time.
      * @param fromTime new from time
      */
     public void setFromTime(Calendar fromTime) {
@@ -322,7 +322,7 @@ public class LogDisplayModel extends ModelObject
     }
     
     /**
-     * set new to time
+     * set new to time.
      * @param toTime new to time
      */
     public void setToTime(Calendar toTime) {
@@ -332,7 +332,7 @@ public class LogDisplayModel extends ModelObject
     }
     
     /**
-     * set new to date
+     * set new to date.
      * @param toDate new to Date
      */
     public void setToDate(Calendar toDate) {
@@ -342,7 +342,7 @@ public class LogDisplayModel extends ModelObject
     }
     
     /**
-     * sets the visibility of error on the screen
+     * sets the visibility of error on the screen.
      * @param isVisible if error should be visibile or not
      */
     public void setErrorVisibility(boolean isVisible) {	
@@ -350,7 +350,7 @@ public class LogDisplayModel extends ModelObject
     }
     
     /**
-     * Checks if the date entered are on the correct order in the date fields
+     * Checks if the date entered are on the correct order in the date fields.
      * @return true if dates are entered right way
      */
     public boolean validateDateAndTime() {
@@ -363,7 +363,7 @@ public class LogDisplayModel extends ModelObject
     }
     
     /**
-     * return the visibility of error message
+     * return the visibility of error message.
      * @return true if error message needs to be visible
      */
     public boolean geterrorVisibility() {

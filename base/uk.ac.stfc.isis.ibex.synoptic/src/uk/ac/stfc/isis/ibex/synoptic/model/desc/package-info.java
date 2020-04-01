@@ -24,7 +24,7 @@
     namespace = "http://www.isis.stfc.ac.uk//instrument", 
     elementFormDefault = XmlNsForm.QUALIFIED,
     
-	xmlns={
+	xmlns = {
         @XmlNs(prefix = "", namespaceURI = "http://www.isis.stfc.ac.uk//instrument")
     }) 
 package uk.ac.stfc.isis.ibex.synoptic.model.desc;

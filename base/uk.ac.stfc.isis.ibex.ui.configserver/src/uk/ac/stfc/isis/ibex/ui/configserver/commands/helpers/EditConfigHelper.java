@@ -63,6 +63,9 @@ public class EditConfigHelper extends ConfigHelper {
                         editBlockFirst);
         if (dialog.open() == Window.OK) {
             server.ifDoAsComponentChooseSave(config, isCurrent, dialog.doAsComponent(), dialog.switchConfigOnSaveAs(), dialog.calledSwitchConfigOnSaveAs());
+            if (dialog.switchConfigOnSaveAs()) {
+                server.load().uncheckedWrite(dialog.getConfig().name());
+            }
         }
     }
     

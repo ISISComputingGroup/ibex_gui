@@ -26,24 +26,20 @@ import java.util.ArrayList;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
-import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
-import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.tables.NullComparator;
-import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
+import uk.ac.stfc.isis.ibex.ui.tables.SortableObservableMapCellLabelProvider;
 
 /**
  * A table that holds the properties for a target.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
-
-    private ActionsTable actionsTable;
+	
+	private final ScriptGeneratorViewModel scriptGeneratorViewModel;
     
 	/**
      * Default constructor for the table. Creates all the correct columns.
@@ -54,51 +50,16 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
      *            The SWT style of the composite that this creates.
      * @param tableStyle
      *            The SWT style of the table.
-     * @param actionsTable 
+     * @param scriptGeneratorViewModel 
      * 			  The table of actions (rows) to display/write data to.
      */
-    public ActionsViewTable(Composite parent, int style, int tableStyle, ActionsTable actionsTable) {
+    public ActionsViewTable(Composite parent, int style, int tableStyle, ScriptGeneratorViewModel scriptGeneratorViewModel) {
         super(parent, style, tableStyle | SWT.BORDER);
-        this.actionsTable = actionsTable;
+        this.scriptGeneratorViewModel = scriptGeneratorViewModel;
         initialise();
         
-        actionsTable.addPropertyChangeListener("actionParameters", e -> Display.getCurrent().asyncExec(
-        		() -> updateTableColumns()));
+        scriptGeneratorViewModel.addActionParamPropertyListener(this);
     }
-
-    
-    /**
-     * Adds a parameter to this actions table.
-     */
-    @Override
-    protected void addColumns() {    	
-        for (ActionParameter actionParameter: actionsTable.getActionParameters()) {
-			String columnName = actionParameter.getName();
-			TableViewerColumn column = createColumn(
-					columnName, 
-					2,
-					new DataboundCellLabelProvider<ScriptGeneratorAction>(observeProperty(columnName)) {
-						@Override
-						protected String stringFromRow(ScriptGeneratorAction row) {
-							return row.getActionParameterValue(actionParameter);
-						}
-						
-					});
-			
-	        column.setEditingSupport(new StringEditingSupport<ScriptGeneratorAction>(viewer(), ScriptGeneratorAction.class) {
-	
-	            @Override
-	            protected String valueFromRow(ScriptGeneratorAction row) {
-	                return row.getActionParameterValue(actionParameter);
-	            }
-	
-	            @Override
-	            protected void setValueForRow(ScriptGeneratorAction row, String value) {
-	                row.setActionParameterValue(actionParameter, value);
-	            }
-	        });	
-        }
-	}
 	
     /**
      * Using a null comparator here stops the columns getting reordered in the UI.
@@ -109,11 +70,33 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	}
 	
 	/**
-	 * Updates the table columns after a config change.
+	 * Updates the table columns after a script definition change.
 	 */
 	@Override
 	public void updateTableColumns() {
 		super.updateTableColumns();
 		setRows(new ArrayList<ScriptGeneratorAction>());
+	}
+
+	/**
+	 * Add action parameter and validity check columns.
+	 */
+	@Override
+	protected void addColumns() {
+		scriptGeneratorViewModel.addColumns(this);
+	}
+	
+	/**
+	 * Create a TableViewerColumn.
+	 * 
+	 * @param columnName The title of the column.
+	 * @param widthWeighting The sizing weight for the width.
+	 * @param labelProvider The object to provide labels for the TableViewerColumn.
+	 * @return the table viewer column.
+	 */
+	@Override
+	public TableViewerColumn createColumn(String columnName, int widthWeighting,
+			SortableObservableMapCellLabelProvider<ScriptGeneratorAction> labelProvider) {
+		return super.createColumn(columnName, widthWeighting, labelProvider);
 	}
 }

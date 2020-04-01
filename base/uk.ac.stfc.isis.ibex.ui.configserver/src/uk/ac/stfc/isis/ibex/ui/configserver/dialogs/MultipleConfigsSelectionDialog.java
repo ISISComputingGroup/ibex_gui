@@ -68,7 +68,7 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
      */
     protected int extraListOptions;
     
-    protected Map <String, Boolean> compOrConfigNamesWithFlags;
+    protected Map<String, Boolean> compOrConfigNamesWithFlags;
 
 	/**
      * @param parentShell The shell to create the dialog in.

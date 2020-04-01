@@ -7,10 +7,10 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<tycho.version>1.4.0</tycho.version>
+		<tycho.version>1.6.0</tycho.version>
 		<tycho-repo.url>https://oss.sonatype.org/content/groups/public/</tycho-repo.url>
-		<photon-repo.url>http://download.eclipse.org/releases/2019-06</photon-repo.url>
-		<photon-updates-repo.url>http://download.eclipse.org/eclipse/updates/4.12</photon-updates-repo.url>
+		<photon-repo.url>http://download.eclipse.org/releases/2019-12</photon-repo.url>
+		<photon-updates-repo.url>http://download.eclipse.org/eclipse/updates/4.14</photon-updates-repo.url>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -100,29 +100,6 @@
 					<linkXRef>true</linkXRef>
 				</configuration>
 			</plugin>
-			<plugin>
-		        <artifactId>maven-resources-plugin</artifactId>
-		        <version>3.1.0</version>
-		        <executions>
-		          <execution>
-		            <id>copy-resources</id>
-		            <!-- here the phase you need -->
-		            <phase>package</phase>
-		            <goals>
-		              <goal>copy-resources</goal>
-		            </goals>
-		            <configuration>
-		              <skip>true</skip>
-		              <outputDirectory>${basedir}/../uk.ac.stfc.isis.scriptgenerator.client.product/target/products/scriptgenerator.product/win32/win32/x86_64/plugins/uk.ac.stfc.isis.ibex.preferences_1.0.0.SNAPSHOT/resources/Python3</outputDirectory>
-		              <resources>          
-		                <resource>
-		                  <directory>${basedir}/resources/Python3</directory>
-		                </resource>
-		              </resources>               
-		            </configuration>            
-		          </execution>
-		        </executions>
-		      </plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>

@@ -16,7 +16,7 @@
 -clearPersistedState
       </programArgs>
       <vmArgs>-Xms40m 
--Xmx512m
+-Xmx1024m
 -Dpython.console.encoding=UTF-8
 -Dpython.import.site=false
 -XX:+CreateCoredumpOnCrash
@@ -35,11 +35,9 @@
       </win>
    </launcher>
 
-
    <vm>
       <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11</windows>
    </vm>
-
 
    <plugins>
    </plugins>

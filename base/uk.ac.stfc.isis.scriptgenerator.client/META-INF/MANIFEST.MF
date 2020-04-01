@@ -1,4 +1,5 @@
 Manifest-Version: 1.0
+Eclipse-BundleShape: dir
 Bundle-SymbolicName: uk.ac.stfc.isis.scriptgenerator.client;singleton:=true
 Bundle-Name: IBEX
 Bundle-Version: 1.0.0.qualifier

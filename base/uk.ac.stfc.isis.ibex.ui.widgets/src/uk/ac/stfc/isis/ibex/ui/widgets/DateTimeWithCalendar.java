@@ -13,7 +13,6 @@ package uk.ac.stfc.isis.ibex.ui.widgets;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
 
@@ -29,7 +28,7 @@ public class DateTimeWithCalendar extends DateTime {
 
 
 	@Override
-	protected void checkSubclass () {
+	protected void checkSubclass() {
 		/** 
 		 * Do nothing, overriding the function that checks if this is subclass or else 
 		 * eclipse will not allow to create subclass of DateTime.

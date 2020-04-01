@@ -4,10 +4,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.SWTObservables;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.jface.databinding.viewers.ViewersObservables;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.databinding.viewers.typed.ViewerProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -116,9 +115,9 @@ public class RBLookupPanel extends Composite {
 		bindingContext = new DataBindingContext();
 		
 		bindingContext.bindValue(WidgetProperties.enabled().observe(date), BeanProperties.value("dateEnabled").observe(viewModel));
-		bindingContext.bindValue(WidgetProperties.selection().observe(date), BeanProperties.value("dateSearch").observe(viewModel));
-		bindingContext.bindValue(ViewersObservables.observeSingleSelection(cmboRole), BeanProperties.value("roleSearch").observe(viewModel));
-        bindingContext.bindValue(SWTObservables.observeText(txtName, SWT.Modify), BeanProperties.value("nameSearch").observe(viewModel));
+		bindingContext.bindValue(WidgetProperties.dateTimeSelection().observe(date), BeanProperties.value("dateSearch").observe(viewModel));
+		bindingContext.bindValue(ViewerProperties.singleSelection().observe(cmboRole), BeanProperties.value("roleSearch").observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtName), BeanProperties.value("nameSearch").observe(viewModel));
         
 		experimentIDTable.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override

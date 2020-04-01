@@ -22,7 +22,7 @@
 package uk.ac.stfc.isis.ibex.ui.devicescreens.models;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
 
 import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreensModel;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
