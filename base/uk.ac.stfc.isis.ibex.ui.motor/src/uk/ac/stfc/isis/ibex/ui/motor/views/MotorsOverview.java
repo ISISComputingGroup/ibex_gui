@@ -30,10 +30,8 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
 
@@ -51,9 +49,9 @@ public class MotorsOverview extends Composite {
 
     private static final Color GREY_COLOUR = SWTResourceManager.getColor(192, 192, 192);
 
-    private static final int MINIMUM_GRID_WIDTH = 10;
-    private static final int HEIGHT_DIMENSION = 74;
-    private static final int WIDTH_DIMENSION = 85;
+    public static final int HEIGHT_DIMENSION = 72;
+    public static final int WIDTH_DIMENSION = 107;
+    public static final int MARGIN = 3;
 
     /**
      * Constructor for the motors overview.
@@ -76,23 +74,17 @@ public class MotorsOverview extends Composite {
      * @param controllerIndexOffset - The offset from 1 of the controller
      *            numbers (e.g. tab starting at controller 9 has offset of 8).
      */
-    public void setMotors(MotorsTable motorsTable, int controllerIndexOffset) {
-		motorComposite.setLayout(new GridLayout(motorsTable.getNumMotors() + 1, false));
-		
-		addSpacerLabel();		
-		for (int i = 1; i <= motorsTable.getNumMotors(); i++) {
-            addMotorNumberLabel(i);
-		}		
+    public void setMotors(MotorsTable motorsTable) {
+    	GridLayout motorsGrid = new GridLayout(motorsTable.getNumMotors(), true);
+    	motorsGrid.verticalSpacing = MARGIN;
+    	motorsGrid.horizontalSpacing = MARGIN;
+    	motorsGrid.marginWidth = MARGIN;
+    	motorsGrid.marginHeight = MARGIN;
+		motorComposite.setLayout(motorsGrid);	
 		
 		resetViews();
 		
-		int i = 0;
 		for (Motor motor : motorsTable.motors()) {
-			if (i % motorsTable.getNumMotors() == 0) {
-                addControllerNumberLabel(i, motorsTable, controllerIndexOffset);
-			}
-			i++;
-
 			addMinimalView(motor);
 		}
 	}
@@ -112,22 +104,6 @@ public class MotorsOverview extends Composite {
 		}
 	}
 	
-	private void addSpacerLabel() {
-		Label spacer = new Label(motorComposite, SWT.NONE);
-		spacer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-        spacer.setBackground(BACKGROUND_COLOUR);
-	}
-	
-	private void addNumberLabel(int columnNumber) {
-		Label columnLabel = new Label(motorComposite, SWT.NONE);
-		GridData gd = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-        gd.minimumWidth = MINIMUM_GRID_WIDTH;
-		columnLabel.setLayoutData(gd);
-		columnLabel.setAlignment(SWT.CENTER);
-		columnLabel.setText(Integer.toString(columnNumber));
-        columnLabel.setBackground(BACKGROUND_COLOUR);
-	}
-	
 	private void resetViews() {
 		for (MinimalMotorView view : minimalViews) {
 			view.dispose();
@@ -136,7 +112,7 @@ public class MotorsOverview extends Composite {
 	}
 	
 	private static GridData viewLayout() {
-		final GridData gd = new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1);
+		final GridData gd = new GridData(SWT.FILL, SWT.FILL, false, false);
         gd.minimumHeight = HEIGHT_DIMENSION;
         gd.minimumWidth = WIDTH_DIMENSION;
         gd.widthHint = WIDTH_DIMENSION;
@@ -144,12 +120,4 @@ public class MotorsOverview extends Composite {
 		
 		return gd;
 	}
-
-    private void addMotorNumberLabel(int i) {
-        addNumberLabel(i);
-	}
-
-    private void addControllerNumberLabel(int i, MotorsTable motorsTable, int controllerIndexOffset) {
-        addNumberLabel(1 + i / motorsTable.getNumMotors() + controllerIndexOffset);
-    }
 }

@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.motor.observable;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.MotorDirection;
 import uk.ac.stfc.isis.ibex.motor.MotorEnable;
@@ -39,11 +38,15 @@ public class ObservableMotor extends Motor {
 	private final UpdatedObservableAdapter<MotorEnable> enabled;
 	private final UpdatedObservableAdapter<Double> lowerLimit;
 	private final UpdatedObservableAdapter<Double> upperLimit;
+	private final UpdatedObservableAdapter<Double> offset;
+	private final UpdatedObservableAdapter<Double> error;
 	private final UpdatedObservableAdapter<MotorDirection> direction;
 	private final UpdatedObservableAdapter<Boolean> moving;
 	private final UpdatedObservableAdapter<Boolean> atHome;
 	private final UpdatedObservableAdapter<Boolean> atLowerLimitSwitch;
 	private final UpdatedObservableAdapter<Boolean> atUpperLimitSwitch;
+	private final UpdatedObservableAdapter<Boolean> usingEncoder;
+	private final UpdatedObservableAdapter<Boolean> energised;
 	private final TextUpdatedObservableAdapter status;
 	
     /**
@@ -60,6 +63,9 @@ public class ObservableMotor extends Motor {
 		enabled = adapt(variables.enable, "enabled");		
 		lowerLimit = adapt(variables.lowerLimit, "lowerLimit");
 		upperLimit = adapt(variables.upperLimit, "upperLimit");
+
+		offset = adapt(variables.offset, "offset");
+		error = adapt(variables.error, "error");
 		
 		direction = adapt(variables.direction, "direction");
 		moving = adapt(variables.moving, "moving");
@@ -67,69 +73,143 @@ public class ObservableMotor extends Motor {
 		atLowerLimitSwitch = adapt(variables.atLowerLimitSwitch, "atLowerLimitSwitch");
 		atUpperLimitSwitch = adapt(variables.atUpperLimitSwitch, "atUpperLimitSwitch");
 		
+		usingEncoder = adapt(variables.usingEncoder, "usingEncoder");
+		energised = adapt(variables.energised, "energised");
+		
 		status = textAdapt(variables.status, "status");
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String name() {
 		return variables.motorName;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String motorAddress() {
 		return variables.motorAddress();
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getDescription() {
 		return description.getValue();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public MotorSetpoint getSetpoint() {
 		return setpoint;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public MotorEnable getEnabled() {
 		return enabled.getValue();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Double getLowerLimit() {
 		return lowerLimit.getValue();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Double getUpperLimit() {
 		return upperLimit.getValue();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Double getOffset() {
+		return offset.getValue();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Double getError() {
+		return error.getValue();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public MotorDirection getDirection() {
 		return direction.getValue();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Boolean getMoving() {
 		return moving.getValue();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Boolean getAtHome() {
 		return atHome.getValue();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Boolean getAtLowerLimitSwtich() {
 		return atLowerLimitSwitch.getValue();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Boolean getAtUpperLimitSwitch() {
 		return atUpperLimitSwitch.getValue();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean isUsingEncoder() {
+		return usingEncoder.getValue();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean isEnergised() {
+		return energised.getValue();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getStatus() {
 		return status.getValue();

@@ -19,12 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.motor.views;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.util.Optional;
 
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.typed.BeanProperties;
-import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.MouseAdapter;
@@ -36,6 +32,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
+import com.google.common.base.Objects;
 import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -47,10 +44,12 @@ import uk.ac.stfc.isis.ibex.motor.Motor;
  */
 public class MinimalMotorView extends Composite {
 	
-	MotorInfoStdView standardView;
-	MotorInfoAdvView advancedView;
+	private Optional<Composite> standardView = Optional.empty();
+	private Optional<Composite> advancedView = Optional.empty();
 
 	private MinimalMotorViewModel minimalMotorViewModel;
+	
+	private final StackLayout stackLayout;
 
 	/**
      * Constructor. Creates a new instance of the MinimalMotorView object.
@@ -67,26 +66,27 @@ public class MinimalMotorView extends Composite {
        
         this.minimalMotorViewModel = minimalMotorViewModel;
 
-        final StackLayout layout = new StackLayout();
-        setLayout(layout);
+        stackLayout = new StackLayout();
+        setLayout(stackLayout);
         
-        standardView = new MotorInfoStdView(this, SWT.NONE, minimalMotorViewModel);
-        advancedView = new MotorInfoAdvView(this, SWT.BORDER, minimalMotorViewModel);
+        setActiveView(minimalMotorViewModel.isAdvancedMinimalMotorView());
 
-        layout.topControl = standardView;
-        this.requestLayout();
-
-        minimalMotorViewModel.addPropertyChangeListener("advancedMinimalMotorView", new PropertyChangeListener() {
-        	@Override
-        	public void propertyChange(PropertyChangeEvent evt) {
-                layout.topControl = minimalMotorViewModel.isAdvancedMinimalMotorView() == false ? standardView : advancedView;
-                MinimalMotorView.this.requestLayout();
-        	}
-        });
-        
-		standardView.addMouseListener(motorSelection);
-		advancedView.addMouseListener(motorSelection);
+        minimalMotorViewModel.addPropertyChangeListener("advancedMinimalMotorView", event -> setActiveView(minimalMotorViewModel.isAdvancedMinimalMotorView()));
 	}
+    
+    private void setActiveView(boolean advanced) {
+    	Composite newTopControl;
+		if (minimalMotorViewModel.isAdvancedMinimalMotorView()) {
+			newTopControl = advancedView.orElseGet(MinimalMotorView.this::createNewAdvancedView);
+		} else {
+			newTopControl = standardView.orElseGet(MinimalMotorView.this::createNewStandardView);
+		}
+		
+		if (!Objects.equal(newTopControl, stackLayout.topControl)) {
+			stackLayout.topControl = newTopControl;
+			requestLayout();
+		}
+    }
 
     /**
      * Gets the MinimalMotorViewModel used by the cell.
@@ -107,6 +107,28 @@ public class MinimalMotorView extends Composite {
 			}
 		}
 	};
+	
+	/**
+	 * Creates a new standard view and registers necessary listeners.
+	 * @return the created view
+	 */
+	private Composite createNewStandardView() {
+		Composite view = new MotorInfoStdView(this, SWT.NONE, minimalMotorViewModel);
+		view.addMouseListener(motorSelection);
+		standardView = Optional.of(view);
+		return view;
+	}
+	
+	/**
+	 * Creates a new advanced view and registers necessary listeners.
+	 * @return the created view
+	 */
+	private Composite createNewAdvancedView() {
+		Composite view = new MotorInfoAdvView(this, SWT.NONE, minimalMotorViewModel);
+		view.addMouseListener(motorSelection);
+		advancedView = Optional.of(view);
+		return view;
+	}
 	
 	/**
 	 * Opens the motor OPI for a particular motor.

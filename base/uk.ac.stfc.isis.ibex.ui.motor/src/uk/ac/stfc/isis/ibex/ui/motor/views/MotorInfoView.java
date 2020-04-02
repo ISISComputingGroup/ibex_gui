@@ -14,15 +14,15 @@ import org.eclipse.swt.widgets.Label;
  */
 public abstract class MotorInfoView extends Composite {
 	
-	protected static final Integer MOTOR_COMPOSITE_VERTIAL_SPACING = 2; 
-	protected static final Integer MOTOR_COMPOSITE_MARGIN_WIDTH = 2;
-	protected static final Integer MOTOR_COMPOSITE_MARGIN_HEIGHT = 2;
-	protected static final Integer MOTOR_NAME_MINIMUM_WIDTH = 80;
-	protected static final Integer MOTOR_NAME_WIDTHHINT = 80;
+	protected static final int MOTOR_COMPOSITE_VERTIAL_SPACING = 1; 
+	protected static final int MOTOR_COMPOSITE_MARGIN_WIDTH = 1;
+	protected static final int MOTOR_COMPOSITE_MARGIN_HEIGHT = 1;
+	protected static final int MOTOR_NAME_MINIMUM_WIDTH = MotorsOverview.WIDTH_DIMENSION;
+	protected static final int MOTOR_NAME_WIDTHHINT = MOTOR_NAME_MINIMUM_WIDTH;
 	
 	private MinimalMotorViewModel minimalMotorViewModel;
 	protected DataBindingContext bindingContext = new DataBindingContext();
-	protected MinimalMotionIndicator indicator;
+	protected MinimalMotionIndicator minimalMotionIndicator;
 	
 	protected Label motorName;
 	protected Label value;
@@ -44,7 +44,7 @@ public abstract class MotorInfoView extends Composite {
 	    return minimalMotorViewModel;
 	}
 	
-	MouseListener forwardDoubleClick = new MouseAdapter() {
+	protected MouseListener forwardDoubleClick = new MouseAdapter() {
 		@Override
 		public void mouseDoubleClick(MouseEvent e) {
 			Event event = new Event();

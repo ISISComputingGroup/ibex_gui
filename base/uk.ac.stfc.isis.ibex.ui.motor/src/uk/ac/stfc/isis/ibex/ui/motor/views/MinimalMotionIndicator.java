@@ -19,9 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.motor.views;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -44,8 +41,6 @@ public class MinimalMotionIndicator extends Composite {
     private static final String HIGH_LIMIT_TOOLTIP = "High (forward) limit";
     private static final String HIGH_MOVE_TOOLTIP = "High (forward) movement";
     private static final String HOME_TOOLTIP = "Axis homed";
-
-	private final Display display = Display.getDefault();
 
     private BooleanImageLabel lowerDirectionLimit;
     private BooleanImageLabel leftDirection;
@@ -83,12 +78,12 @@ public class MinimalMotionIndicator extends Composite {
      */
 	public MinimalMotionIndicator(Composite parent, int style) {
 		super(parent, style);
-        GridLayout gridLayout1 = new GridLayout(5, false);
-		gridLayout1.verticalSpacing = 0;
-		gridLayout1.marginWidth = 0;
-		gridLayout1.marginHeight = 0;
-		gridLayout1.horizontalSpacing = 0;
-		setLayout(gridLayout1);
+        GridLayout container = new GridLayout(5, false);
+		container.verticalSpacing = 0;
+		container.marginWidth = 0;
+		container.marginHeight = 0;
+		container.horizontalSpacing = 0;
+		setLayout(container);
 		
         lowerDirectionLimit = new BooleanImageLabel(this, LOW_LIMIT_IMAGE_ENABLED, LOW_LIMIT_IMAGE_DISABLED, LOW_LIMIT_TOOLTIP);
 
@@ -112,40 +107,17 @@ public class MinimalMotionIndicator extends Composite {
 	public void setMotor(final Motor motor) {
 	
 		setArrows(motor);
-		motor.addPropertyChangeListener("direction", new PropertyChangeListener() {	
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				setArrows(motor);
-			}
-		});
-		motor.addPropertyChangeListener("moving", new PropertyChangeListener() {	
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				setArrows(motor);
-			}
-		});
+		motor.addPropertyChangeListener("direction", evt -> setArrows(motor));
+		motor.addPropertyChangeListener("moving", evt -> setArrows(motor));
 		
 		enableHome(motor.getAtHome());
-		motor.addPropertyChangeListener("atHome", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				enableHome(motor.getAtHome());
-			}
-		});
+		motor.addPropertyChangeListener("atHome", evt -> enableHome(motor.getAtHome()));
 
 		setLowerLimit(motor.getAtLowerLimitSwtich());
-		motor.addPropertyChangeListener("atLowerLimitSwitch", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				setLowerLimit(motor.getAtLowerLimitSwtich());
-			} });
+		motor.addPropertyChangeListener("atLowerLimitSwitch", evt -> setLowerLimit(motor.getAtLowerLimitSwtich()));
 		
 		setUpperLimit(motor.getAtUpperLimitSwitch());
-		motor.addPropertyChangeListener("atUpperLimitSwitch", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				setUpperLimit(motor.getAtUpperLimitSwitch());
-			} });
+		motor.addPropertyChangeListener("atUpperLimitSwitch", evt -> setUpperLimit(motor.getAtUpperLimitSwitch()));
 	}
 
 	@Override
@@ -175,21 +147,11 @@ public class MinimalMotionIndicator extends Composite {
 	}
 
     private void setLimit(final BooleanImageLabel limit, final Boolean enable) {
-		display.asyncExec(new Runnable() {
-			@Override
-			public void run() {
-                limit.enable(disableIfNull(enable));
-			}
-		});
+        limit.enable(disableIfNull(enable));
 	}
 	
 	private void setArrows(final Motor motor) {
-		display.asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				setArrows(motor.getDirection(), motor.getMoving());
-			}
-		});
+		setArrows(motor.getDirection(), motor.getMoving());
 	}	
 	
 	private void setArrows(MotorDirection motorDirection, Boolean moving) {
@@ -219,12 +181,7 @@ public class MinimalMotionIndicator extends Composite {
 	}
 	
 	private void enableHome(final Boolean enable) {
-		display.asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				home.enable(disableIfNull(enable));				
-			}
-		});
+		home.enable(disableIfNull(enable));				
 	}
 	
 	private static Image getImage(String image) {

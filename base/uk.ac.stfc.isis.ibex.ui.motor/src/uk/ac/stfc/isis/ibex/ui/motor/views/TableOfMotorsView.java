@@ -13,9 +13,6 @@ import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
-
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.motor.Motors;
 import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
 
@@ -23,11 +20,11 @@ import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
 public class TableOfMotorsView {
 
 	/** Pixel height of the minimalMotorView in table of motors. */
-	private static final int MOTOR_HEIGHT = 79;
+	private static final int MOTOR_HEIGHT = MotorsOverview.HEIGHT_DIMENSION + 2 * MotorsOverview.MARGIN;
 	/** Pixel width of the minimalMotorView in table of motors. */
-	private static final int MOTOR_WIDTH = 90;
+	private static final int MOTOR_WIDTH = MotorsOverview.WIDTH_DIMENSION + 2 * MotorsOverview.MARGIN;
 	/** Pixel margin to add on the right and bottom of the table. */
-	private static final int TABLE_MARGIN = 20;
+	private static final int TABLE_MARGIN = MotorsOverview.MARGIN;
 
 	/** List of the tab titles as defined in plugin.xml for this class. */
 	private static final List<String> TAB_TITLES = Arrays.asList("Main Motors (Controllers 1 - 8)",
@@ -36,14 +33,6 @@ public class TableOfMotorsView {
 
 	/** The ID of the table of motors shown in this view */
 	private int motorTableID;
-
-    /**
-     * List the offset for the index of the first controller in the table. Used
-     * to set labels down left hand side.
-     */
-    private static final List<Integer> TAB_CONTROLLER_OFFSETS = Arrays.asList(0, 8, 16);
-
-
 
     /** The MotorsTable used for this particular table of motors view. */
     protected MotorsTable motorsTable;
@@ -95,11 +84,8 @@ public class TableOfMotorsView {
 		motorsOverview.setLayoutData(gdOverview);
 
 		scrolledComposite.setContent(motorsOverview);
-
-		Label spacer = new Label(parent, SWT.NONE);
-		spacer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-        motorsOverview.setMotors(motorsTable, getTableControllerOffset());
+        motorsOverview.setMotors(motorsTable);
         
 	}
 
@@ -110,11 +96,4 @@ public class TableOfMotorsView {
 	protected void setMotorsTable() {
 		this.motorsTable = Motors.getInstance().getMotorsTablesList().get(motorTableID);
 	}
-
-    /**
-     * @return The controller number offset for this particular tab
-     */
-    protected int getTableControllerOffset() {
-        return TAB_CONTROLLER_OFFSETS.get(motorTableID);
-    }
 }

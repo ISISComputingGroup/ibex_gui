@@ -17,11 +17,11 @@ public class TableOfMotorsSettingsViewModel extends ModelObject {
 				BeanProperties.value("advancedMinimalMotorView").observe(motorSettingsModel));
 	}
 
-	public Boolean getAdvancedMinimalMotorView() {
+	public boolean getAdvancedMinimalMotorView() {
 		return advancedMinimalMotorView;
 	}
 
-	public void setAdvancedMinimalMotorView(Boolean newSetting) {
+	public void setAdvancedMinimalMotorView(boolean newSetting) {
 		firePropertyChange("advancedMinimalMotorView", this.advancedMinimalMotorView, this.advancedMinimalMotorView = newSetting);
 	}
 }

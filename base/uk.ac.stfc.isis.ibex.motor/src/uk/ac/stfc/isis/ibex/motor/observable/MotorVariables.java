@@ -94,6 +94,12 @@ public class MotorVariables extends Closer {
     /** The upper limit observable. */
 	public final ForwardingObservable<Double> upperLimit;
 	
+    /** The offset observable. */
+	public final ForwardingObservable<Double> offset;
+
+    /** The error observable. */
+	public final ForwardingObservable<Double> error;
+	
     /** The direction observable. */
 	public final ForwardingObservable<MotorDirection> direction;
 
@@ -102,6 +108,12 @@ public class MotorVariables extends Closer {
 
     /** The "at home" observable. */
 	public final ForwardingObservable<Boolean> atHome;
+	
+	/** The "using encoder" observable. */
+	public final ForwardingObservable<Boolean> usingEncoder;
+	
+	/** The "energised" observable. */
+	public final ForwardingObservable<Boolean> energised;
 
     /** The "at upper limit" observable. */
 	public final ForwardingObservable<Boolean> atUpperLimitSwitch;
@@ -132,6 +144,14 @@ public class MotorVariables extends Closer {
 		
         lowerLimit = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWithField("DLLM"));
         upperLimit = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWithField("DHLM"));
+        
+        offset = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWithField("OFF"));
+        error = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWithField("DIFF"));
+        
+        usingEncoder = InstrumentUtils.convert(
+        		obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("UEIP")), TO_BOOLEAN);
+        energised = InstrumentUtils.convert(
+        		obsFactory.getSwitchableObservable(new ShortChannel(), motorAddress.toString() + "_ON_STATUS"), TO_BOOLEAN);
 		
         direction = InstrumentUtils.convert(
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("TDIR")),

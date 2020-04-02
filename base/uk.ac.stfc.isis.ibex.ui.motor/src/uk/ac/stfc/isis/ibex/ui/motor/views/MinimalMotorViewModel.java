@@ -52,7 +52,7 @@ import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorBackgroundPalette;
  * The view model for an individual motor.
  */
 public class MinimalMotorViewModel extends ModelObject {
-    private static final Integer MAX_NAME_LENGTH = 12;
+    private static final Integer MAX_NAME_LENGTH = 16;
     private static final Font ENABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.BOLD);
     private static final Font DISABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.ITALIC);
     private static final Color NOPALETTECOLOR = SWTResourceManager.getColor(200, 200, 200);
@@ -60,10 +60,16 @@ public class MinimalMotorViewModel extends ModelObject {
 
     private String value;
     private String setpoint;
+    private String lowLimit;
+    private String highLimit;
+    private String offset;
+    private String error;
     private String motorName;
     private String tooltip;
     private Boolean enabled;
     private Boolean moving;
+    private Boolean usingEncoder;
+    private Boolean energised;
     private boolean advancedMinimalMotorView;
     private MotorBackgroundPalette palette;
     private Font font;
@@ -110,7 +116,7 @@ public class MinimalMotorViewModel extends ModelObject {
 
         boolean isMoving = (moving != null) && (moving);
         boolean isEnabled = (enabled != null) && (enabled);
-        boolean isNamed = (motorName != null) && !(motorName.isEmpty());
+        boolean isNamed = !Strings.isNullOrEmpty(motorName);
 
         Color backgroundColour;
 
@@ -128,11 +134,15 @@ public class MinimalMotorViewModel extends ModelObject {
     }
 
     private String formatForMotorDisplay(String prefix, Double value) {
-        if (value != null) {
-            return String.format("%s: %.2f", prefix, value);
-        } else {
-            return "";
+        if (value == null) {
+        	return "";
         }
+        
+    	if (advancedMinimalMotorView) {
+            return String.format("%s %.3f", prefix, value);
+    	} else {
+    		return String.format("%s: %.2f", prefix, value);
+    	}
     }
 
     /**
@@ -266,6 +276,17 @@ public class MinimalMotorViewModel extends ModelObject {
             this.enabled = false;
         }
     }
+    
+    private void refreshLabels() {
+    	setSetpoint(formatForMotorDisplay("SP", motor.getSetpoint().getSetpoint()));
+        setValue(formatForMotorDisplay("Val", motor.getSetpoint().getValue()));
+        
+        setLowLimit(formatForMotorDisplay("Lo", motor.getLowerLimit()));
+        setHighLimit(formatForMotorDisplay("Hi", motor.getUpperLimit()));
+
+        setOffset(formatForMotorDisplay("Off", motor.getOffset()));
+        setError(formatForMotorDisplay("Err", motor.getError()));
+    }
 	
     /**
      * Sets the motor that the grid cell refers to.
@@ -278,20 +299,13 @@ public class MinimalMotorViewModel extends ModelObject {
         this.motor = motor;
         setMotorName(motor);
         setTooltip(motor.getDescription());
-        this.setpoint = formatForMotorDisplay("SP", motor.getSetpoint().getSetpoint());
-        this.value = formatForMotorDisplay("Val", motor.getSetpoint().getValue());
+        
+        refreshLabels();
+        
         this.moving = motor.getMoving();
         setEnabled(motor.getEnabled());
         setColor(chooseColor());
         this.font = chooseFont();
-        
-        
-        motor.addPropertyChangeListener("enableAdvanceMotorView", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                System.out.print("enabling advanced view: " + advancedMinimalMotorView);
-            }
-        });
         
         motor.addPropertyChangeListener("description", new PropertyChangeListener() {
 
@@ -312,19 +326,17 @@ public class MinimalMotorViewModel extends ModelObject {
             }
         });
 
-        motor.getSetpoint().addPropertyChangeListener("setpoint", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                setSetpoint(formatForMotorDisplay("SP", motor.getSetpoint().getSetpoint()));
-            }
-        });
-
-        motor.getSetpoint().addPropertyChangeListener("value", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                setValue(formatForMotorDisplay("Val", motor.getSetpoint().getValue()));
-            }
-        });
+        motor.getSetpoint().addPropertyChangeListener("setpoint", evt -> setSetpoint(formatForMotorDisplay("SP", motor.getSetpoint().getSetpoint())));
+        motor.getSetpoint().addPropertyChangeListener("value", evt -> setValue(formatForMotorDisplay("Val", motor.getSetpoint().getValue())));
+        
+        motor.addPropertyChangeListener("lowLimit", evt -> setLowLimit(formatForMotorDisplay("Lo", motor.getLowerLimit())));
+        motor.addPropertyChangeListener("highLimit", evt -> setHighLimit(formatForMotorDisplay("Hi", motor.getUpperLimit())));
+        
+        motor.addPropertyChangeListener("offset", evt -> setOffset(formatForMotorDisplay("Off", motor.getOffset())));
+        motor.addPropertyChangeListener("error", evt -> setError(formatForMotorDisplay("Err", motor.getError())));
+        
+        motor.addPropertyChangeListener("usingEncoder", evt -> setUsingEncoder(motor.isUsingEncoder()));
+        motor.addPropertyChangeListener("energised", evt -> setEnergised(motor.isEnergised()));
 
         motor.addPropertyChangeListener("enabled", new PropertyChangeListener() {
             @Override
@@ -388,5 +400,102 @@ public class MinimalMotorViewModel extends ModelObject {
      */
     public void setAdvancedMinimalMotorView(boolean newSetting) {
     	firePropertyChange("advancedMinimalMotorView", this.advancedMinimalMotorView, this.advancedMinimalMotorView = newSetting);
+    	refreshLabels();
+    }
+    
+    /**
+     * Get this motors' soft low limit.
+     * @return the limit
+     */
+    public String getLowLimit() {
+    	return lowLimit;
+    }
+    
+    /**
+     * Set this motors' soft low limit.
+     * @param lowLimit the limit
+     */
+    public void setLowLimit(final String lowLimit) {
+    	firePropertyChange("lowLimit", this.lowLimit, this.lowLimit = lowLimit);
+    }
+    
+    /**
+     * Get this motors' soft high limit.
+     * @return the limit
+     */
+    public String getHighLimit() {
+    	return highLimit;
+    }
+    
+    /**
+     * Set this motors' soft high limit.
+     * @param highLimit the limit
+     */
+    public void setHighLimit(final String highLimit) {
+    	firePropertyChange("highLimit", this.highLimit, this.highLimit = highLimit);
+    }
+    
+    /**
+     * Get this motors' offset.
+     * @return the offset
+     */
+    public String getOffset() {
+    	return offset;
+    }
+    
+    /**
+     * Set this motors' offset.
+     * @param offset the offset
+     */
+    public void setOffset(final String offset) {
+    	firePropertyChange("offset", this.offset, this.offset = offset);
+    }
+    
+    /**
+     * Get this motors' positioning error.
+     * @return the error
+     */
+    public String getError() {
+    	return error;
+    }
+    
+    /**
+     * Set this motors' positioning error.
+     * @param error the error
+     */
+    public void setError(final String error) {
+    	firePropertyChange("error", this.error, this.error = error);
+    }
+    
+    /**
+     * Get whether this motor is using an encoder.
+     * @return whether this motor is using an encoder
+     */
+    public Boolean isUsingEncoder() {
+    	return usingEncoder;
+    }
+    
+    /**
+     * Set whether this motor is using an encoder.
+     * @param usingEncoder whether this motor is using an encoder
+     */
+    public void setUsingEncoder(final Boolean usingEncoder) {
+    	firePropertyChange("usingEncoder", this.usingEncoder, this.usingEncoder = usingEncoder);
+    }
+
+    /**
+     * Get whether this motor is energised.
+     * @return whether this motor is energised
+     */
+    public Boolean isEnergised() {
+    	return energised;
+    }
+    
+    /**
+     * Set whether this motor is energised.
+     * @param usingEncoder whether this motor is energised
+     */
+    public void setEnergised(final Boolean energised) {
+    	firePropertyChange("energised", this.energised, this.energised = energised);
     }
 }

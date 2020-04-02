@@ -481,7 +481,7 @@
         </children>
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_o7cJoKqKEeetw99O4nTY3g" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.24" containerData="70" horizontal="true">
-        <children xsi:type="basic:PartStack" xmi:id="_8CS7IKjcEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.22" containerData="50">
+        <children xsi:type="basic:PartStack" xmi:id="_8CS7IKjcEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.22" containerData="55">
           <children xsi:type="basic:Part" xmi:id="_9ljEUKjhEeeTy9uFbhxQyw" elementId="uk.ac.stfc.isis.ibex.ui.motor.views.tableofmotors" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.motor/uk.ac.stfc.isis.ibex.ui.motor.views.TableOfMotorsView" label="Main Motors (Controllers 1 - 8)">
             <persistedState key="id" value="0"/>
             <variables>Title</variables>
@@ -496,7 +496,7 @@
             <persistedState key="id" value="4"/>
           </children>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="_urA7kKqKEeetw99O4nTY3g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.29" toBeRendered="false" containerData="50">
+        <children xsi:type="basic:PartStack" xmi:id="_urA7kKqKEeetw99O4nTY3g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.29" toBeRendered="false" containerData="45">
           <children xsi:type="advanced:Placeholder" xmi:id="_vs8SoKqKEeetw99O4nTY3g" elementId="uk.ac.stfc.isis.ibex.ui.motor.views.MotorOPIView" toBeRendered="false"/>
         </children>
       </children>

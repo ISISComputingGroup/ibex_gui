@@ -1,11 +1,14 @@
 package uk.ac.stfc.isis.ibex.ui.motor.views;
 
+import java.util.Set;
+
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 /**
@@ -16,15 +19,16 @@ public class MotorInfoStdView extends MotorInfoView {
 	public MotorInfoStdView(Composite parent, int style, MinimalMotorViewModel minimalMotorViewModel) {
 		super(parent, style, minimalMotorViewModel);
 		
-        GridLayout glMotorComposite = new GridLayout(2, false);
+        GridLayout glMotorComposite = new GridLayout(1, false);
 		glMotorComposite.verticalSpacing = MOTOR_COMPOSITE_VERTIAL_SPACING;
 		glMotorComposite.marginWidth = MOTOR_COMPOSITE_MARGIN_WIDTH;
 		glMotorComposite.marginHeight = MOTOR_COMPOSITE_MARGIN_HEIGHT;
         setLayout(glMotorComposite);
+        setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         
         motorName = new Label(this, SWT.NONE);
 		motorName.setAlignment(SWT.CENTER);
-		GridData gdMotorName = new GridData(SWT.TOP, SWT.TOP, false, false, 2, 1);
+		GridData gdMotorName = new GridData(SWT.FILL, SWT.TOP, true, false);
 		gdMotorName.minimumWidth = MOTOR_NAME_MINIMUM_WIDTH;
 		gdMotorName.widthHint = MOTOR_NAME_WIDTHHINT;
 		motorName.setLayoutData(gdMotorName);
@@ -32,17 +36,17 @@ public class MotorInfoStdView extends MotorInfoView {
 		
         value = new Label(this, SWT.NONE);
 		value.setAlignment(SWT.CENTER);
-		value.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 2, 1));
+		value.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
         value.setText("");
 		
         setpoint = new Label(this, SWT.NONE);
 		setpoint.setAlignment(SWT.CENTER);
-		setpoint.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 2, 1));
+		setpoint.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
         setpoint.setText("");
 		
-        indicator = new MinimalMotionIndicator(this, SWT.NONE);
-		indicator.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 2, 1));
-        indicator.setMotor(this.getViewModel().getMotor());
+        minimalMotionIndicator = new MinimalMotionIndicator(this, SWT.NONE);
+		minimalMotionIndicator.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, false));
+        minimalMotionIndicator.setMotor(this.getViewModel().getMotor());
 		
         setMouseListeners();
         
@@ -69,7 +73,7 @@ public class MotorInfoStdView extends MotorInfoView {
         bindingContext.bindValue(WidgetProperties.background().observe(motorName),
                 BeanProperties.value("color").observe(this.getViewModel()));
 
-        bindingContext.bindValue(WidgetProperties.background().observe(indicator),
+        bindingContext.bindValue(WidgetProperties.background().observe(minimalMotionIndicator),
                 BeanProperties.value("color").observe(this.getViewModel()));
 
         bindingContext.bindValue(WidgetProperties.background().observe(value),
@@ -86,11 +90,10 @@ public class MotorInfoStdView extends MotorInfoView {
 	}
     
 	private void setMouseListeners() {
-
-		motorName.addMouseListener(forwardDoubleClick);
-		value.addMouseListener(forwardDoubleClick);
-		setpoint.addMouseListener(forwardDoubleClick);
-		indicator.addMouseListener(forwardDoubleClick);
+		final Set<Control> controls = Set.of(motorName, value, setpoint, minimalMotionIndicator);
 		
+		for (var control : controls) {
+			control.addMouseListener(forwardDoubleClick);
+		}
 	}	
 }
