@@ -35,11 +35,20 @@ import uk.ac.stfc.isis.ibex.ui.ImageUtils;
 @SuppressWarnings("checkstyle:magicnumber")
 public class MinimalMotionIndicator extends Composite {
 
-    private static final String LOW_LIMIT_TOOLTIP = "Low (reverse) limit";
-    private static final String LOW_MOVE_TOOLTIP = "Low (reverse) movement";
-    private static final String HIGH_LIMIT_TOOLTIP = "High (forward) limit";
-    private static final String HIGH_MOVE_TOOLTIP = "High (forward) movement";
-    private static final String HOME_TOOLTIP = "Axis homed";
+    private static final String LOW_LIMIT_ENABLED_TOOLTIP = "Low (reverse) limit hit";
+    private static final String LOW_LIMIT_DISABLED_TOOLTIP = "Low (reverse) limit not hit";
+    
+    private static final String LOW_MOVE_ENABLED_TOOLTIP = "Axis moving in negative (reverse) direction";
+    private static final String LOW_MOVE_DISABLED_TOOLTIP = "Axis not moving in negative (reverse) direction";
+    
+    private static final String HIGH_LIMIT_ENABLED_TOOLTIP = "High (forward) limit hit";
+    private static final String HIGH_LIMIT_DISABLED_TOOLTIP = "High (forward) limit not hit";
+    
+    private static final String HIGH_MOVE_ENABLED_TOOLTIP = "Axis moving in positive (forward) direction";
+    private static final String HIGH_MOVE_DISABLED_TOOLTIP = "Axis not moving in positive (forward) direction";
+    
+    private static final String HOME_ENABLED_TOOLTIP = "Axis at home";
+    private static final String HOME_DISABLED_TOOLTIP = "Axis not at home";
 
     private final BooleanImageLabel lowerDirectionLimit;
     private final BooleanImageLabel leftDirection;
@@ -84,15 +93,20 @@ public class MinimalMotionIndicator extends Composite {
 		container.horizontalSpacing = 0;
 		setLayout(container);
 		
-        lowerDirectionLimit = new BooleanImageLabel(this, LOW_LIMIT_IMAGE_ENABLED, LOW_LIMIT_IMAGE_DISABLED, LOW_LIMIT_TOOLTIP);
+        lowerDirectionLimit = new BooleanImageLabel(this, 
+        		LOW_LIMIT_IMAGE_ENABLED, LOW_LIMIT_IMAGE_DISABLED, LOW_LIMIT_ENABLED_TOOLTIP, LOW_LIMIT_DISABLED_TOOLTIP);
 
-        leftDirection = new BooleanImageLabel(this, LEFT_MOVE_IMAGE_ENABLED, LEFT_MOVE_IMAGE_DISABLED, LOW_MOVE_TOOLTIP);
+        leftDirection = new BooleanImageLabel(this, 
+        		LEFT_MOVE_IMAGE_ENABLED, LEFT_MOVE_IMAGE_DISABLED, LOW_MOVE_ENABLED_TOOLTIP, LOW_MOVE_DISABLED_TOOLTIP);
 		
-        home = new BooleanImageLabel(this, HOME_IMAGE_ENABLED, HOME_IMAGE_DISABLED, HOME_TOOLTIP);
+        home = new BooleanImageLabel(this, 
+        		HOME_IMAGE_ENABLED, HOME_IMAGE_DISABLED, HOME_ENABLED_TOOLTIP, HOME_DISABLED_TOOLTIP);
 		
-        rightDirection = new BooleanImageLabel(this, RIGHT_MOVE_IMAGE_ENABLED, RIGHT_MOVE_IMAGE_DISABLED, HIGH_MOVE_TOOLTIP);
+        rightDirection = new BooleanImageLabel(this, 
+        		RIGHT_MOVE_IMAGE_ENABLED, RIGHT_MOVE_IMAGE_DISABLED, HIGH_MOVE_ENABLED_TOOLTIP, HIGH_MOVE_DISABLED_TOOLTIP);
 		
-        upperDirectionLimit = new BooleanImageLabel(this, UPPER_LIMIT_IMAGE_ENABLED, UPPER_LIMIT_IMAGE_DISABLED, HIGH_LIMIT_TOOLTIP);
+        upperDirectionLimit = new BooleanImageLabel(this, 
+        		UPPER_LIMIT_IMAGE_ENABLED, UPPER_LIMIT_IMAGE_DISABLED, HIGH_LIMIT_ENABLED_TOOLTIP, HIGH_LIMIT_DISABLED_TOOLTIP);
         
 		setInitialState();
 	}

@@ -82,12 +82,12 @@ public class MotorInfoAdvView extends MotorInfoView {
 		minimalMotionIndicator.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false));
         minimalMotionIndicator.setMotor(this.getViewModel().getMotor());
         
-        encoderStatus = new BooleanImageLabel(iconContainer, ENCODER_ENABLED, ENCODER_DISABLED, "Encoder present");
+        encoderStatus = new BooleanImageLabel(iconContainer, ENCODER_ENABLED, ENCODER_DISABLED, "Encoder present", "Encoder not present");
         encoderStatus.enable(minimalMotorViewModel.getUsingEncoder());
         minimalMotorViewModel.addUiThreadPropertyChangeListener("usingEncoder", 
         		evt -> encoderStatus.enable(minimalMotorViewModel.getUsingEncoder()));
         
-        energisedStatus = new BooleanImageLabel(iconContainer, ENERGISED_ENABLED, ENERGISED_DISABLED, "Motor energised");
+        energisedStatus = new BooleanImageLabel(iconContainer, ENERGISED_ENABLED, ENERGISED_DISABLED, "Motor energised", "Motor not energised");
         energisedStatus.enable(minimalMotorViewModel.getEnergised());
         minimalMotorViewModel.addUiThreadPropertyChangeListener("energised", 
         		evt -> energisedStatus.enable(minimalMotorViewModel.getEnergised()));

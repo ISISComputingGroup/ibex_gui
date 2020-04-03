@@ -53,18 +53,15 @@ public class MotorVariables extends Closer {
 		}
 	};
 	
-	private static <T extends Number> Converter<T, Boolean> toBoolean() {
-		return new Converter<T, Boolean>() {
-			@Override
-			public Boolean convert(T value) throws ConversionException {
-				if (value == null) {
-					return null;
-				}
-				
-				return value.doubleValue() > 0.0 ? true : false;
+	private static Converter<Short, Boolean> TO_BOOLEAN = new Converter<Short, Boolean>() {
+		@Override
+		public Boolean convert(Short value) throws ConversionException {
+			if (value == null) {
+				return null;
 			}
-		};
-	}
+			return value > 0;
+		}
+	};
 	
 	private static enum EnergisedStatus {
 		ON,
@@ -162,13 +159,13 @@ public class MotorVariables extends Closer {
                 TO_MOTOR_DIRECTION);
 		
         moving = InstrumentUtils.convert(
-                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("MOVN")), toBoolean());
+                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("MOVN")), TO_BOOLEAN);
         atHome = InstrumentUtils.convert(
-                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("ATHM")), toBoolean());
+                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("ATHM")), TO_BOOLEAN);
         atUpperLimitSwitch = InstrumentUtils.convert(
-                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("HLS")), toBoolean());
+                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("HLS")), TO_BOOLEAN);
         atLowerLimitSwitch = InstrumentUtils.convert(
-                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("LLS")), toBoolean());
+                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("LLS")), TO_BOOLEAN);
         setpoint = new MotorSetPointVariables(fullAddress, obsFactory, writeFactory);
 	}
 	

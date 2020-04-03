@@ -37,24 +37,32 @@ public class BooleanImageLabel {
 	private final Image enabledImage;
 	private final Image disabledImage;
 	
+	private final String enabledTooltip;
+	private final String disabledTooltip;
+	
     /**
      * Creates a label that holds an image that can be greyed out.
      * 
      * @param parent
      *            The parent composite for the label.
-     * @param enabled
+     * @param enabledImage
      *            The image to show when enabled
-     * @param disabled
+     * @param disabledImage
      *            The image to show when disabled
-     * @param tooltip
-     *            The tooltip that will show when hovering over this image
+     * @param enabledTooltip
+     *            The tooltip to display when enabled
+     * @param disabledTooltip
+     * 			  The tooptip to display when disabled
      */
-    public BooleanImageLabel(final Composite parent, Image enabled, Image disabled, String tooltip) {
+    public BooleanImageLabel(final Composite parent, Image enabledImage, Image disabledImage, String enabledTooltip, String disabledTooltip) {
         label = new Label(parent, SWT.NONE);
         label.setAlignment(SWT.CENTER);
-        label.setImage(enabled);
-		this.enabledImage = enabled;
-		this.disabledImage = disabled;
+        label.setImage(enabledImage);
+		this.enabledImage = enabledImage;
+		this.disabledImage = disabledImage;
+		
+		this.enabledTooltip = enabledTooltip;
+		this.disabledTooltip = disabledTooltip;
 
         // Add a listener so that clicking on this image does the same thing as
         // clicking on the parent container.
@@ -67,8 +75,6 @@ public class BooleanImageLabel {
                 parent.notifyListeners(SWT.MouseDoubleClick, event);
             }
         });
-
-        label.setToolTipText(tooltip);
 	}
 	
     /**
@@ -76,6 +82,7 @@ public class BooleanImageLabel {
      */
     public void enable() {
         label.setImage(enabledImage);
+        label.setToolTipText(enabledTooltip);
 	}
 	
     /**
@@ -83,6 +90,7 @@ public class BooleanImageLabel {
      */
     public void disable() {
         label.setImage(disabledImage);
+        label.setToolTipText(disabledTooltip);
 	}
 	
     /**
