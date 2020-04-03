@@ -13,6 +13,7 @@ import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+
 import uk.ac.stfc.isis.ibex.motor.Motors;
 import uk.ac.stfc.isis.ibex.motor.internal.MotorsTable;
 
@@ -57,8 +58,8 @@ public class TableOfMotorsView {
      */
 	@PostConstruct
 	public void createPartControl(Composite parent) {
-
         setMotorsTable();
+        
 		GridLayout glParent = new GridLayout(2, false);
 		glParent.verticalSpacing = 0;
 		glParent.marginWidth = 0;
@@ -76,15 +77,14 @@ public class TableOfMotorsView {
 		int numMotors = motorsTable.getNumMotors();
 		scrolledComposite.setMinWidth(numMotors * MOTOR_WIDTH + TABLE_MARGIN);
 		scrolledComposite.setExpandVertical(true);
-
+		
         motorsOverview =
                 new MotorsOverview(scrolledComposite, SWT.NONE);
 
 		GridData gdOverview = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 		motorsOverview.setLayoutData(gdOverview);
-
-		scrolledComposite.setContent(motorsOverview);
-		
+        
+        scrolledComposite.setContent(motorsOverview);
         motorsOverview.setMotors(motorsTable);
         
 	}

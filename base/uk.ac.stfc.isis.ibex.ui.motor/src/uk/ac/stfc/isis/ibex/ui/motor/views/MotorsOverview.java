@@ -75,6 +75,7 @@ public class MotorsOverview extends Composite {
      *            numbers (e.g. tab starting at controller 9 has offset of 8).
      */
     public void setMotors(MotorsTable motorsTable) {
+    	
     	GridLayout motorsGrid = new GridLayout(motorsTable.getNumMotors(), true);
     	motorsGrid.verticalSpacing = MARGIN;
     	motorsGrid.horizontalSpacing = MARGIN;

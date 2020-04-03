@@ -82,7 +82,7 @@ public class MinimalMotorView extends Composite {
 		} else {
 			newTopControl = standardView.orElseGet(MinimalMotorView.this::createNewStandardView);
 		}
-		
+
 		if (!Objects.equal(newTopControl, stackLayout.topControl)) {
 			stackLayout.topControl = newTopControl;
 			requestLayout();

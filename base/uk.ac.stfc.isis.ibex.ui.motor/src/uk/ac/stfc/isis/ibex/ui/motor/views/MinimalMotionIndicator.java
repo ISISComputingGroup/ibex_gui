@@ -56,10 +56,6 @@ public class MinimalMotionIndicator extends Composite {
     private final BooleanImageLabel rightDirection;
     private final BooleanImageLabel upperDirectionLimit;
     
-    /**
-     * Storing these images as static fields means that they can be re-used by each motor view that needs them,
-     * rather than being re-created each time a new instance of this class is constructed.
-     */
     private static final Image LOW_LIMIT_IMAGE_ENABLED = getImage("lower_limit_minimal.png");
     private static final Image LOW_LIMIT_IMAGE_DISABLED = ImageUtils.disabled(LOW_LIMIT_IMAGE_ENABLED);
     
@@ -95,17 +91,13 @@ public class MinimalMotionIndicator extends Composite {
 		
         lowerDirectionLimit = new BooleanImageLabel(this, 
         		LOW_LIMIT_IMAGE_ENABLED, LOW_LIMIT_IMAGE_DISABLED, LOW_LIMIT_ENABLED_TOOLTIP, LOW_LIMIT_DISABLED_TOOLTIP);
-
         leftDirection = new BooleanImageLabel(this, 
         		LEFT_MOVE_IMAGE_ENABLED, LEFT_MOVE_IMAGE_DISABLED, LOW_MOVE_ENABLED_TOOLTIP, LOW_MOVE_DISABLED_TOOLTIP);
-		
         home = new BooleanImageLabel(this, 
         		HOME_IMAGE_ENABLED, HOME_IMAGE_DISABLED, HOME_ENABLED_TOOLTIP, HOME_DISABLED_TOOLTIP);
-		
         rightDirection = new BooleanImageLabel(this, 
         		RIGHT_MOVE_IMAGE_ENABLED, RIGHT_MOVE_IMAGE_DISABLED, HIGH_MOVE_ENABLED_TOOLTIP, HIGH_MOVE_DISABLED_TOOLTIP);
-		
-        upperDirectionLimit = new BooleanImageLabel(this, 
+		upperDirectionLimit = new BooleanImageLabel(this, 
         		UPPER_LIMIT_IMAGE_ENABLED, UPPER_LIMIT_IMAGE_DISABLED, HIGH_LIMIT_ENABLED_TOOLTIP, HIGH_LIMIT_DISABLED_TOOLTIP);
         
 		setInitialState();
@@ -118,7 +110,6 @@ public class MinimalMotionIndicator extends Composite {
      *            The motor that the indicator is displaying information about.
      */
 	public void setMotor(final Motor motor) {
-	
 		setArrows(motor);
 		motor.addUiThreadPropertyChangeListener("direction", evt -> setArrows(motor));
 		motor.addUiThreadPropertyChangeListener("moving", evt -> setArrows(motor));
@@ -152,7 +143,6 @@ public class MinimalMotionIndicator extends Composite {
 	
 	private void setUpperLimit(final Boolean enable) {
         setLimit(upperDirectionLimit, enable);
-
 	}
 	
 	private void setLowerLimit(final Boolean enable) {
