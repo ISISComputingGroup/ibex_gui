@@ -307,6 +307,9 @@ public class MinimalMotorViewModel extends ModelObject {
         setColor(chooseColor());
         this.font = chooseFont();
         
+        setUsingEncoder(motor.getUsingEncoder());
+        setEnergised(motor.getEnergised());
+        
         motor.addPropertyChangeListener("description", new PropertyChangeListener() {
 
             @Override
@@ -335,13 +338,13 @@ public class MinimalMotorViewModel extends ModelObject {
         motor.addPropertyChangeListener("offset", evt -> setOffset(formatForMotorDisplay("Off", motor.getOffset())));
         motor.addPropertyChangeListener("error", evt -> setError(formatForMotorDisplay("Err", motor.getError())));
         
-        motor.addPropertyChangeListener("usingEncoder", evt -> setUsingEncoder(motor.isUsingEncoder()));
-        motor.addPropertyChangeListener("energised", evt -> setEnergised(motor.isEnergised()));
+        motor.addPropertyChangeListener("usingEncoder", evt -> setUsingEncoder(motor.getUsingEncoder()));
+        motor.addPropertyChangeListener("energised", evt -> setEnergised(motor.getEnergised()));
 
         motor.addPropertyChangeListener("enabled", new PropertyChangeListener() {
             @Override
-            public void propertyChange(PropertyChangeEvent arg0) {
-                setEnabled((MotorEnable) arg0.getNewValue());
+            public void propertyChange(PropertyChangeEvent event) {
+                setEnabled((MotorEnable) event.getNewValue());
                 setColor(chooseColor());
                 setFont(chooseFont());
             }
@@ -471,7 +474,7 @@ public class MinimalMotorViewModel extends ModelObject {
      * Get whether this motor is using an encoder.
      * @return whether this motor is using an encoder
      */
-    public Boolean isUsingEncoder() {
+    public Boolean getUsingEncoder() {
     	return usingEncoder;
     }
     
@@ -487,7 +490,7 @@ public class MinimalMotorViewModel extends ModelObject {
      * Get whether this motor is energised.
      * @return whether this motor is energised
      */
-    public Boolean isEnergised() {
+    public Boolean getEnergised() {
     	return energised;
     }
     

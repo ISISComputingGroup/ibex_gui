@@ -7,12 +7,14 @@ import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.wb.swt.ResourceManager;
 
 /**
  * The viewer for an individual motors advanced information.
@@ -29,8 +31,18 @@ public class MotorInfoAdvView extends MotorInfoView {
 	private Label lowLimit;
 	private Label offset;
 	private Label error;
+
+	private BooleanImageLabel encoderStatus;
+
+	private BooleanImageLabel energisedStatus;
 	
 	private static final Font ARIAL_7PT = new Font(Display.getCurrent(), new FontData("Arial", 7, SWT.NONE));
+	
+	private static final Image ENCODER_ENABLED = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.motor", "icons/encoder_enabled.png");
+	private static final Image ENCODER_DISABLED = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.motor", "icons/encoder_disabled.png");
+	
+	private static final Image ENERGISED_ENABLED = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.motor", "icons/power_on.png");
+	private static final Image ENERGISED_DISABLED = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.motor", "icons/power_off.png");
 
 	public MotorInfoAdvView(Composite parent, int style, MinimalMotorViewModel minimalMotorViewModel) {
 		super(parent, style, minimalMotorViewModel); 
@@ -62,12 +74,24 @@ public class MotorInfoAdvView extends MotorInfoView {
         GridLayout iconContainerLayout = new GridLayout(3, false);
         iconContainerLayout.marginHeight = 0;
         iconContainerLayout.marginWidth = 0;
+        iconContainerLayout.horizontalSpacing = 2;
+        iconContainerLayout.verticalSpacing = 0;
         iconContainer.setLayout(iconContainerLayout);
 		
         minimalMotionIndicator = new MinimalMotionIndicator(iconContainer, SWT.NONE);
 		minimalMotionIndicator.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false));
         minimalMotionIndicator.setMotor(this.getViewModel().getMotor());
-
+        
+        encoderStatus = new BooleanImageLabel(iconContainer, ENCODER_ENABLED, ENCODER_DISABLED, "Encoder present");
+        encoderStatus.enable(minimalMotorViewModel.getUsingEncoder());
+        minimalMotorViewModel.addUiThreadPropertyChangeListener("usingEncoder", 
+        		evt -> encoderStatus.enable(minimalMotorViewModel.getUsingEncoder()));
+        
+        energisedStatus = new BooleanImageLabel(iconContainer, ENERGISED_ENABLED, ENERGISED_DISABLED, "Motor energised");
+        energisedStatus.enable(minimalMotorViewModel.getEnergised());
+        minimalMotorViewModel.addUiThreadPropertyChangeListener("energised", 
+        		evt -> energisedStatus.enable(minimalMotorViewModel.getEnergised()));
+        
         setMouseListeners();
         
         bind();
@@ -82,7 +106,7 @@ public class MotorInfoAdvView extends MotorInfoView {
 	}
 	
 	private Composite createTwoColumnContainer() {
-        var container = new Composite(this, SWT.NONE);
+        final var container = new Composite(this, SWT.NONE);
 		
 		GridLayout containerLayout = new GridLayout(2, true);
 		containerLayout.marginHeight = 0;
@@ -164,6 +188,9 @@ public class MotorInfoAdvView extends MotorInfoView {
                 BeanProperties.value("color").observe(this.getViewModel()));
         
         bindingContext.bindValue(WidgetProperties.background().observe(errorAndOffsetContainer),
+                BeanProperties.value("color").observe(this.getViewModel()));
+        
+        bindingContext.bindValue(WidgetProperties.background().observe(iconContainer),
                 BeanProperties.value("color").observe(this.getViewModel()));
         
         bindingContext.bindValue(WidgetProperties.background().observe(lowLimit),

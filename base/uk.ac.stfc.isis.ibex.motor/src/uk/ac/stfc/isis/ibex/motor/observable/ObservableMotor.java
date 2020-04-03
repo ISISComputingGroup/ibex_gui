@@ -47,7 +47,6 @@ public class ObservableMotor extends Motor {
 	private final UpdatedObservableAdapter<Boolean> atUpperLimitSwitch;
 	private final UpdatedObservableAdapter<Boolean> usingEncoder;
 	private final UpdatedObservableAdapter<Boolean> energised;
-	private final TextUpdatedObservableAdapter status;
 	
     /**
      * Creates a motor that is pointing to a backend device.
@@ -75,8 +74,6 @@ public class ObservableMotor extends Motor {
 		
 		usingEncoder = adapt(variables.usingEncoder, "usingEncoder");
 		energised = adapt(variables.energised, "energised");
-		
-		status = textAdapt(variables.status, "status");
 	}
 
 	/**
@@ -195,7 +192,7 @@ public class ObservableMotor extends Motor {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean isUsingEncoder() {
+	public Boolean getUsingEncoder() {
 		return usingEncoder.getValue();
 	}
 
@@ -203,16 +200,8 @@ public class ObservableMotor extends Motor {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Boolean isEnergised() {
+	public Boolean getEnergised() {
 		return energised.getValue();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getStatus() {
-		return status.getValue();
 	}
 	
 	private <T> UpdatedObservableAdapter<T> adapt(ForwardingObservable<T> variable, String field) {

@@ -71,7 +71,8 @@ public class MinimalMotorView extends Composite {
         
         setActiveView(minimalMotorViewModel.isAdvancedMinimalMotorView());
 
-        minimalMotorViewModel.addPropertyChangeListener("advancedMinimalMotorView", event -> setActiveView(minimalMotorViewModel.isAdvancedMinimalMotorView()));
+        minimalMotorViewModel.addUiThreadPropertyChangeListener("advancedMinimalMotorView", 
+        		event -> setActiveView(minimalMotorViewModel.isAdvancedMinimalMotorView()));
 	}
     
     private void setActiveView(boolean advanced) {

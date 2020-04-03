@@ -131,19 +131,12 @@ public abstract class Motor extends ModelObject {
      * 
      * @return whether it is using an encoder
      */
-	public abstract Boolean isUsingEncoder();
+	public abstract Boolean getUsingEncoder();
 
     /**
      * Gets whether the motor is energised.
      * 
      * @return whether it is energised
      */
-	public abstract Boolean isEnergised();
-	
-    /**
-     * Gets the status of the motor.
-     * 
-     * @return the status
-     */
-	public abstract String getStatus();
+	public abstract Boolean getEnergised();
 }

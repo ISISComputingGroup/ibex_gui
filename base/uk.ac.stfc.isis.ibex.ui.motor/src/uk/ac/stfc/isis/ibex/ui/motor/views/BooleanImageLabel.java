@@ -91,8 +91,10 @@ public class BooleanImageLabel {
      * @param enable
      *            True to enable the image. False to disable.
      */
-    public void enable(boolean enable) {
-        if (enable) {
+    public void enable(Boolean enable) {
+    	if (enable == null) {
+    		disable();
+    	} else if (enable) {
             enable();
         } else {
             disable();

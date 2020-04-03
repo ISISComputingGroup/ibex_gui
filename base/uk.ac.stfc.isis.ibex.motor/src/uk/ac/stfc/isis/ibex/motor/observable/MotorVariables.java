@@ -29,6 +29,7 @@ import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
+import uk.ac.stfc.isis.ibex.instrument.channels.BooleanChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.ShortChannel;
@@ -51,26 +52,33 @@ public class MotorVariables extends Closer {
 			return value > 0 ? MotorDirection.POSITIVE : MotorDirection.NEGATIVE;
 		}
 	};
-
-	private static final Converter<Short, Boolean> TO_BOOLEAN = new Converter<Short, Boolean>() {
+	
+	private static <T extends Number> Converter<T, Boolean> toBoolean() {
+		return new Converter<T, Boolean>() {
+			@Override
+			public Boolean convert(T value) throws ConversionException {
+				if (value == null) {
+					return null;
+				}
+				
+				return value.doubleValue() > 0.0 ? true : false;
+			}
+		};
+	}
+	
+	private static enum EnergisedStatus {
+		ON,
+		OFF;
+	}
+	
+	private static final Converter<EnergisedStatus, Boolean> ENERGISED_CONVERTER = new Converter<EnergisedStatus, Boolean>() {
 		@Override
-		public Boolean convert(Short value) throws ConversionException {
+		public Boolean convert(EnergisedStatus value) {
 			if (value == null) {
 				return null;
+			} else {
+				return value == EnergisedStatus.ON;
 			}
-			
-			return value > 0 ? true : false;
-		}
-	};
-
-	private static final Converter<String, String> CAPITALISE_FIRST_LETTER_ONLY = new Converter<String, String>() {
-		@Override
-		public String convert(String value) throws ConversionException {
-			if (value == null || value.length() == 0) {
-				return value;
-			}
-			
-			return Character.toUpperCase(value.charAt(0)) + value.substring(1);
 		}
 	};
 	
@@ -120,9 +128,6 @@ public class MotorVariables extends Closer {
 
     /** The "at lower limit" observable. */
 	public final ForwardingObservable<Boolean> atLowerLimitSwitch;
-	
-    /** The status observable. */
-	public final ForwardingObservable<String> status;
 
     /**
      * Constructor.
@@ -148,30 +153,23 @@ public class MotorVariables extends Closer {
         offset = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWithField("OFF"));
         error = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWithField("DIFF"));
         
-        usingEncoder = InstrumentUtils.convert(
-        		obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("UEIP")), TO_BOOLEAN);
+        usingEncoder = obsFactory.getSwitchableObservable(new BooleanChannel(), fullAddress.endWithField("UEIP"));
         energised = InstrumentUtils.convert(
-        		obsFactory.getSwitchableObservable(new ShortChannel(), motorAddress.toString() + "_ON_STATUS"), TO_BOOLEAN);
-		
+        		obsFactory.getSwitchableObservable(new EnumChannel<EnergisedStatus>(EnergisedStatus.class), fullAddress.toString() + "_ON_STATUS"), ENERGISED_CONVERTER);
+        
         direction = InstrumentUtils.convert(
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("TDIR")),
                 TO_MOTOR_DIRECTION);
 		
         moving = InstrumentUtils.convert(
-                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("MOVN")),
-                TO_BOOLEAN);
+                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("MOVN")), toBoolean());
         atHome = InstrumentUtils.convert(
-                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("ATHM")),
-                TO_BOOLEAN);
+                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("ATHM")), toBoolean());
         atUpperLimitSwitch = InstrumentUtils.convert(
-                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("HLS")), TO_BOOLEAN);
+                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("HLS")), toBoolean());
         atLowerLimitSwitch = InstrumentUtils.convert(
-                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("LLS")), TO_BOOLEAN);
+                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("LLS")), toBoolean());
         setpoint = new MotorSetPointVariables(fullAddress, obsFactory, writeFactory);
-		
-        status = InstrumentUtils.convert(
-                obsFactory.getSwitchableObservable(new StringChannel(), motorAddress.toString() + "_STATUS"),
-                CAPITALISE_FIRST_LETTER_ONLY);
 	}
 	
     /**

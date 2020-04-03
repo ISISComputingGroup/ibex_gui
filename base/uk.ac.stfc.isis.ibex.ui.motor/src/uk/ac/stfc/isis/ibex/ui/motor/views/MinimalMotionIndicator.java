@@ -19,16 +19,15 @@
 
 package uk.ac.stfc.isis.ibex.ui.motor.views;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.MotorDirection;
+import uk.ac.stfc.isis.ibex.ui.ImageUtils;
 
 /**
  * A bar of icons that give information about an axis at a glance.
@@ -42,30 +41,30 @@ public class MinimalMotionIndicator extends Composite {
     private static final String HIGH_MOVE_TOOLTIP = "High (forward) movement";
     private static final String HOME_TOOLTIP = "Axis homed";
 
-    private BooleanImageLabel lowerDirectionLimit;
-    private BooleanImageLabel leftDirection;
-    private BooleanImageLabel home;
-    private BooleanImageLabel rightDirection;
-    private BooleanImageLabel upperDirectionLimit;
+    private final BooleanImageLabel lowerDirectionLimit;
+    private final BooleanImageLabel leftDirection;
+    private final BooleanImageLabel home;
+    private final BooleanImageLabel rightDirection;
+    private final BooleanImageLabel upperDirectionLimit;
     
     /**
      * Storing these images as static fields means that they can be re-used by each motor view that needs them,
      * rather than being re-created each time a new instance of this class is constructed.
      */
     private static final Image LOW_LIMIT_IMAGE_ENABLED = getImage("lower_limit_minimal.png");
-    private static final Image LOW_LIMIT_IMAGE_DISABLED = new Image(Display.getDefault(), LOW_LIMIT_IMAGE_ENABLED, SWT.IMAGE_DISABLE);
+    private static final Image LOW_LIMIT_IMAGE_DISABLED = ImageUtils.disabled(LOW_LIMIT_IMAGE_ENABLED);
     
     private static final Image LEFT_MOVE_IMAGE_ENABLED = getImage("arrow_left_minimal.png");
-    private static final Image LEFT_MOVE_IMAGE_DISABLED = new Image(Display.getDefault(), LEFT_MOVE_IMAGE_ENABLED, SWT.IMAGE_DISABLE);
+    private static final Image LEFT_MOVE_IMAGE_DISABLED = ImageUtils.disabled(LEFT_MOVE_IMAGE_ENABLED);
     
     private static final Image HOME_IMAGE_ENABLED = getImage("home_minimal.png");
-    private static final Image HOME_IMAGE_DISABLED = new Image(Display.getDefault(), HOME_IMAGE_ENABLED, SWT.IMAGE_DISABLE);
+    private static final Image HOME_IMAGE_DISABLED = ImageUtils.disabled(HOME_IMAGE_ENABLED);
     
     private static final Image RIGHT_MOVE_IMAGE_ENABLED = getImage("arrow_right_minimal.png");
-    private static final Image RIGHT_MOVE_IMAGE_DISABLED = new Image(Display.getDefault(), RIGHT_MOVE_IMAGE_ENABLED, SWT.IMAGE_DISABLE);
+    private static final Image RIGHT_MOVE_IMAGE_DISABLED = ImageUtils.disabled(RIGHT_MOVE_IMAGE_ENABLED);
     
     private static final Image UPPER_LIMIT_IMAGE_ENABLED = getImage("upper_limit_minimal.png");
-    private static final Image UPPER_LIMIT_IMAGE_DISABLED = new Image(Display.getDefault(), UPPER_LIMIT_IMAGE_ENABLED, SWT.IMAGE_DISABLE);
+    private static final Image UPPER_LIMIT_IMAGE_DISABLED = ImageUtils.disabled(UPPER_LIMIT_IMAGE_ENABLED);
     
     /**
      * Creates an indicator bar that gives information about an axis at a
@@ -107,17 +106,17 @@ public class MinimalMotionIndicator extends Composite {
 	public void setMotor(final Motor motor) {
 	
 		setArrows(motor);
-		motor.addPropertyChangeListener("direction", evt -> setArrows(motor));
-		motor.addPropertyChangeListener("moving", evt -> setArrows(motor));
+		motor.addUiThreadPropertyChangeListener("direction", evt -> setArrows(motor));
+		motor.addUiThreadPropertyChangeListener("moving", evt -> setArrows(motor));
 		
 		enableHome(motor.getAtHome());
-		motor.addPropertyChangeListener("atHome", evt -> enableHome(motor.getAtHome()));
+		motor.addUiThreadPropertyChangeListener("atHome", evt -> enableHome(motor.getAtHome()));
 
 		setLowerLimit(motor.getAtLowerLimitSwtich());
-		motor.addPropertyChangeListener("atLowerLimitSwitch", evt -> setLowerLimit(motor.getAtLowerLimitSwtich()));
+		motor.addUiThreadPropertyChangeListener("atLowerLimitSwitch", evt -> setLowerLimit(motor.getAtLowerLimitSwtich()));
 		
 		setUpperLimit(motor.getAtUpperLimitSwitch());
-		motor.addPropertyChangeListener("atUpperLimitSwitch", evt -> setUpperLimit(motor.getAtUpperLimitSwitch()));
+		motor.addUiThreadPropertyChangeListener("atUpperLimitSwitch", evt -> setUpperLimit(motor.getAtUpperLimitSwitch()));
 	}
 
 	@Override

@@ -40,7 +40,10 @@ public class TestMotor extends Motor {
     public boolean atHome = false;
     public boolean atLowerLimit = false;
     public boolean atUpperLimit = false;
-    public String status = "Motor status";
+	private Double offset = 0.0;
+	private Double error = 0.0;
+	private boolean usingEncoder = true;
+	private boolean energised = true;
 
     @Override
     public String name() {
@@ -102,9 +105,24 @@ public class TestMotor extends Motor {
         return atUpperLimit;
     }
 
-    @Override
-    public String getStatus() {
-        return status;
-    }
+	@Override
+	public Double getOffset() {
+		return offset;
+	}
+
+	@Override
+	public Double getError() {
+		return error;
+	}
+
+	@Override
+	public Boolean getUsingEncoder() {
+		return usingEncoder;
+	}
+
+	@Override
+	public Boolean getEnergised() {
+		return energised;
+	}
 
 }
