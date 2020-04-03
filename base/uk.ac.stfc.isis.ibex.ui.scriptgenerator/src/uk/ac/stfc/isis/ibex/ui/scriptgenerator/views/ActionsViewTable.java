@@ -22,10 +22,22 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
+import org.eclipse.core.databinding.observable.list.WritableList;
+import org.eclipse.jface.viewers.CellNavigationStrategy;
+import org.eclipse.jface.viewers.ColumnViewerEditor;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
+import org.eclipse.jface.viewers.FocusCellOwnerDrawHighlighter;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.TableViewerEditor;
+import org.eclipse.jface.viewers.TableViewerFocusCellManager;
+import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
@@ -36,11 +48,9 @@ import uk.ac.stfc.isis.ibex.ui.tables.SortableObservableMapCellLabelProvider;
 /**
  * A table that holds the properties for a target.
  */
-@SuppressWarnings("checkstyle:magicnumber")
 public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
-	
 	private final ScriptGeneratorViewModel scriptGeneratorViewModel;
-    
+	private boolean shiftCellFocusToNewlyAddedRow = false;
 	/**
      * Default constructor for the table. Creates all the correct columns.
      * 
@@ -57,16 +67,55 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
         super(parent, style, tableStyle | SWT.BORDER);
         this.scriptGeneratorViewModel = scriptGeneratorViewModel;
         initialise();
-        
         scriptGeneratorViewModel.addActionParamPropertyListener(this);
+		TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(viewer, new FocusCellOwnerDrawHighlighter(viewer), new CellNavigationStrategy());
+		ColumnViewerEditorActivationStrategy activationStrategy = createEditorActivationStrategy(viewer);
+		TableViewerEditor.create(viewer, focusCellManager, activationStrategy, 
+				ColumnViewerEditor.TABBING_HORIZONTAL 
+				| ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR
+				| ColumnViewerEditor.TABBING_CYCLE_IN_VIEWER
+				| ColumnViewerEditor.TABBING_VERTICAL);
     }
+    
+    /**
+     * Strategy for editing cell.
+     * @param tableViewer our table viewer.
+     * @return Editor Activation strategy.
+     */
+	private ColumnViewerEditorActivationStrategy createEditorActivationStrategy(TableViewer tableViewer) {
+		return new ColumnViewerEditorActivationStrategy(tableViewer) {
+			protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
+				boolean retVal = true;
+				if (event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL) { 
+ 					ColumnViewerEditor editor = this.getViewer().getColumnViewerEditor();
+ 					ViewerCell nextCell = editor.getFocusCell().getNeighbor(ViewerCell.RIGHT, false);
+					int currentlyFocusedColumn = editor.getFocusCell().getColumnIndex() + 1;
+					// Add new action if tab is pressed by user in the last cell of the table
+					if (nextCell.getNeighbor(ViewerCell.BELOW, false) == null &&
+                    		(viewer.getTable().getColumnCount() - 1 == 
+							currentlyFocusedColumn)) {
+                    	scriptGeneratorViewModel.addEmptyAction();
+                    	shiftCellFocusToNewlyAddedRow = true;
+                    	// return false as we will handle this specific case of traversal
+                    	retVal = false;
+                    } 
+					return retVal;
+				} else {
+					return event.eventType == ColumnViewerEditorActivationEvent.MOUSE_CLICK_SELECTION
+					||  event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC;
+				}
+			}
+
+		};
+		
+	}
 	
     /**
      * Using a null comparator here stops the columns getting reordered in the UI.
      */
 	@Override
 	protected ColumnComparator<ScriptGeneratorAction> comparator() {
-		return new NullComparator<>();
+ 		return new NullComparator<>();
 	}
 	
 	/**
@@ -99,4 +148,40 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 			SortableObservableMapCellLabelProvider<ScriptGeneratorAction> labelProvider) {
 		return super.createColumn(columnName, widthWeighting, labelProvider);
 	}
+	
+	/**
+	 * Sets Rows. Save where the focus was before re writing the table and set the focus back to the cell after
+	 * re writing the table.
+	 */
+	@Override
+	public void setRows(Collection<ScriptGeneratorAction> rows) {
+		if ((!viewer.getTable().isDisposed())) {
+			int row = viewer.getTable().getSelectionIndex();
+			int col = 0;
+
+			if (shiftCellFocusToNewlyAddedRow) {
+				row = viewer.getTable().getSelectionIndex() + 1;
+				shiftCellFocusToNewlyAddedRow = false;
+				
+			// if row is not empty
+			} else if (row != -1) {
+				col = viewer.getColumnViewerEditor().getFocusCell().getColumnIndex();
+			}
+			
+			viewer.setInput(new WritableList<ScriptGeneratorAction>(rows, null));
+			setCellFocus(row, col);
+		}
+	} 
+	
+	/**
+	 * Sets focus of cell
+	 * @param row row number of table
+	 * @param col column number of table
+	 */
+	private void setCellFocus(int row, int col) {
+		if (row >= 0) {
+			viewer.editElement(viewer.getElementAt(row), col);
+		}
+	}
+
 }
