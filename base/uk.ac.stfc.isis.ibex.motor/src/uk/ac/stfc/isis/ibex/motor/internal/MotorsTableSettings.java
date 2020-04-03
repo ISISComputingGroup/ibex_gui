@@ -13,10 +13,18 @@ public class MotorsTableSettings extends ModelObject {
 	 */
 	private boolean advancedMinimalMotorView;
 
+	/**
+	 * Gets whether the advanced table of motors view is enabled or disabled.
+	 * @return true if advanced mode is enabled; false otherwise
+	 */
 	public boolean isAdvancedMinimalMotorView() {
 		return advancedMinimalMotorView;
 	}
 
+	/**
+	 * Sets whether the advanced table of motors view is enabled or disabled.
+	 * @param newSetting true if advanced mode is enabled; false otherwise
+	 */
 	public void setAdvancedMinimalMotorView(boolean newSetting) {
 		firePropertyChange("advancedMinimalMotorView", this.advancedMinimalMotorView, this.advancedMinimalMotorView = newSetting);
 	}
