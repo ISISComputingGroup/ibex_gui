@@ -82,7 +82,7 @@ public class PreferenceSupplier {
     /**
      * The path to the developer's genie python.
      */
-	private static final String DEFAULT_PYTHON_3_INTERPRETER_PATH = "C:/Instrument/Apps/Python3/python.exe";
+	private static final String DEFAULT_PYTHON_3_INTERPRETER_PATH = "C:\\Instrument\\Apps\\Python3\\python.exe";
 	
 	/**
      * The default for the location of Python.
@@ -240,7 +240,7 @@ public class PreferenceSupplier {
      * @return the setting (uses default if not set)
      */
 	public String pythonInterpreterPath() {
-		return getString(PYTHON_INTERPRETER_PATH, DEFAULT_PYTHON_2_INTERPRETER_PATH);
+		return getString(PYTHON_INTERPRETER_PATH, DEFAULT_PYTHON_3_INTERPRETER_PATH);
 	}
 	
     /**

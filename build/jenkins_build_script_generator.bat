@@ -70,7 +70,7 @@ if "%RELEASE%" == "YES" (
     )
 )
 
-robocopy %CD%\..\%TARGET_DIR% %INSTALLDIR%\script_generator /MIR /R:1 /NFL /NDL /NP
+robocopy %CD%\..\%TARGET_DIR% %INSTALLDIR%\script_generator /MIR /R:1 /NFL /NDL /NP /MT /NC /NS /LOG:NUL
 if %errorlevel% geq 4 (
     if not "%INSTALLDIR%" == "" (
         @echo Removing invalid script generator directory %INSTALLDIR%\script_generator
@@ -81,7 +81,7 @@ if %errorlevel% geq 4 (
 )
 
 REM Copy the JRE across 
-robocopy %JRELOCATION% %INSTALLDIR%\script_generator\jre /MIR /R:1 /NFL /NDL /NP
+robocopy %JRELOCATION% %INSTALLDIR%\script_generator\jre /MIR /R:1 /MT /NFL /NDL /NP /NC /NS /LOG:NUL
 if %errorlevel% geq 4 (
     @echo Failed to copy JRE across
     exit /b 1
