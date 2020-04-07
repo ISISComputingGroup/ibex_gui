@@ -19,3 +19,7 @@ build/jdk.zip
 built_script_gen/
 built_client/
 build/Output
+.vscode
+__pycache__
+build/maven
+build/ICP_Binaries_maven.log

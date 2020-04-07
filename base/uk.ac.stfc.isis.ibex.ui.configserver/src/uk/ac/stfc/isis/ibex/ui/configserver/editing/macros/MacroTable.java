@@ -48,6 +48,7 @@ public class MacroTable extends DataboundTable<MacroViewModel> {
     private MacroValueValidator valueValidator;
     private StringEditingSupport<MacroViewModel> editingSupport;
     private boolean canEdit;
+    
     private static final Color READONLY_COLOR = ResourceManager.getColor(SWT.COLOR_DARK_GRAY);
     
     /**
@@ -62,13 +63,13 @@ public class MacroTable extends DataboundTable<MacroViewModel> {
      */
 	public MacroTable(Composite parent, int style, int tableStyle) {
 		super(parent, style, tableStyle | SWT.BORDER);
-
 		initialise();
 	}
 	
 	@Override
 	public void setRows(Collection<MacroViewModel> rows) {
 		super.setRows(rows);
+		super.refresh();
 	}
 
 	@Override
@@ -126,23 +127,27 @@ public class MacroTable extends DataboundTable<MacroViewModel> {
 	}
 	
 	private void useDefault() {
-	    createColumn("Use Default?", 3, false, new CheckboxLabelProvider<MacroViewModel>(observeProperty("useDefault")) {
+	    CheckboxLabelProvider<MacroViewModel> defaultUseLabelProvider = new CheckboxLabelProvider<MacroViewModel>(observeProperty("useDefault")) {
 
-	        @Override
-	        protected boolean checked(MacroViewModel macro) {
-	            return macro.getUseDefault();
-	        }
-	        
-	        @Override
-	        protected void setChecked(MacroViewModel macro, boolean checked) {
-	            macro.setUseDefault(checked);
-	        }
-	        
+            @Override
+            protected boolean checked(MacroViewModel macro) {
+                return macro.getUseDefault();
+            }
+            
+            @Override
+            protected void setChecked(MacroViewModel macro, boolean checked) {
+                macro.setUseDefault(checked);
+            }
+            
             @Override
             protected boolean isEditable(MacroViewModel model) {
                 return canEdit;
             }
-	    });
+        };
+	    
+        setSortAction(() -> defaultUseLabelProvider.resetCheckBoxListenerUpdateFlags());
+        
+	    createColumn("Use Default?", 3, false, defaultUseLabelProvider);
 	}
 	
 	private void defaultValue() {

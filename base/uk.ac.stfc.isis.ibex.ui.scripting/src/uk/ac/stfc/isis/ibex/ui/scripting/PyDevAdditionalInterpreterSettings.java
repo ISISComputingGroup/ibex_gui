@@ -103,7 +103,7 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 	}
 	
 	/**
-	 *  Get the channel access environment variables from EPICS preferences
+	 *  Get the channel access environment variables from EPICS preferences.
 	 *  
 	 * @return list of environment variables and their settings
 	 */

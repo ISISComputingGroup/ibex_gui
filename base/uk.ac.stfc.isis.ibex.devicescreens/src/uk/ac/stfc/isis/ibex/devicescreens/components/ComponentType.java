@@ -172,11 +172,10 @@ public enum ComponentType {
 	FILM_FABRICATION,
 	/** Coherent OBIS Laser Remote. */
 	OBIS_LASER_REMOTE,
-	/** Zero field */
+	/** Zero field. */
 	ZERO_FIELD,
-	/** LSI correlator */
-	LSI_CORR;
-	
+	/** LSI correlator. */
+	LSICORR;
 	
 	private Target target;
 

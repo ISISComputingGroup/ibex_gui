@@ -37,6 +37,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
 import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * This class forms the basis of any "commands" used in relation to the ConfigServer.
@@ -141,7 +142,7 @@ public abstract class ConfigHandler<T> {
      *            the exception that was thrown from the handler
      */
     public void onError(Exception ex) {
-        IsisLog.getLogger(getClass()).error("Exception while executing configserver command", ex);
+        LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), "Exception while executing configserver command", ex);
 
         MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
                 "Error",

@@ -323,16 +323,6 @@ public class Channels {
 		}
 		
         /**
-         * Creates a closable observable for a number plus units.
-         * 
-         * @param pvAddress the PV
-         * @return the observable
-         */
-		public static ClosableObservable<String> readerWithUnits(String pvAddress) {
-			return convertObservablePV(pvAddress, VNumber.class, VTypeFormat.quantityWithUnits());
-		}
-		
-        /**
          * Creates a closable observable for a number with precision.
          * 
          * @param pvAddress the PV

@@ -11,6 +11,26 @@ pipeline {
     pollSCM('H/2 * * * *')
   }
   
+  // The options directive is for configuration that applies to the whole job.
+  options {
+    buildDiscarder(logRotator(numToKeepStr:'10'))
+    timeout(time: 60, unit: 'MINUTES')
+    disableConcurrentBuilds()
+    office365ConnectorWebhooks([[
+                    name: "Office 365",
+                    notifyBackToNormal: true,
+                    startNotification: false,
+                    notifyFailure: true,
+                    notifySuccess: false,
+                    notifyNotBuilt: false,
+                    notifyAborted: false,
+                    notifyRepeatedFailure: true,
+                    notifyUnstable: true,
+                    url: "${env.MSTEAMS_URL}"
+            ]]
+    )
+  }
+
   stages {  
     stage("Checkout") {
       steps {
@@ -25,7 +45,7 @@ pipeline {
             // env.BRANCH_NAME is only supplied to multi-branch pipeline jobs
             if (env.BRANCH_NAME == null) {
                 env.BRANCH_NAME = ""
-			      }
+                  }
             env.GIT_COMMIT = bat(returnStdout: true, script: '@git rev-parse HEAD').trim()
             env.GIT_BRANCH = bat(returnStdout: true, script: '@git rev-parse --abbrev-ref HEAD').trim()
             echo "git commit: ${env.GIT_COMMIT}"
@@ -33,22 +53,22 @@ pipeline {
             if (env.BRANCH_NAME.startsWith("Release")) {
                 env.IS_RELEASE = "YES"
                 env.IS_DEPLOY = "NO"
-                env.IS_E4_DEPLOY = "YES"
+                env.IS_E4 = "YES"
             }
             else if (env.GIT_BRANCH == "origin/master_E3_maint") {
                 env.IS_RELEASE = "NO"
                 env.IS_DEPLOY = "YES"
-                env.IS_E4_DEPLOY = "NO"
+                env.IS_E4 = "NO"
             }
             else if (env.GIT_BRANCH == "origin/master") {
                 env.IS_RELEASE = "NO"
-                env.IS_DEPLOY = "NO"
-                env.IS_E4_DEPLOY = "YES"
+                env.IS_DEPLOY = "YES"
+                env.IS_E4 = "YES"
             }
             else {
                 env.IS_RELEASE = "NO"
                 env.IS_DEPLOY = "NO"
-                env.IS_E4_DEPLOY = "NO"
+                env.IS_E4 = "YES"
             }
         }
         
@@ -63,9 +83,18 @@ pipeline {
       }
     }
     
-    stage("Unit Tests") {
+    stage("OPI Checker") {
       steps {
-        junit '**/surefire-reports/TEST-*.xml'
+        bat """
+            set PYTHON3=C:\\Instrument\\Apps\\Python3\\python.exe
+            %PYTHON3% .\\base\\uk.ac.stfc.isis.ibex.opis\\check_opi_format.py -strict 
+        """
+      }
+    }
+    
+    stage("Collate Unit Tests") {
+      steps {
+        junit '**/surefire-reports/TEST-*.xml,**/test-reports/TEST-*.xml'
       }
     }
     
@@ -82,19 +111,6 @@ pipeline {
             '''
       }
     }
-  }
-  
-  post {
-    failure {
-      step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'icp-buildserver@lists.isis.rl.ac.uk', sendToIndividuals: true])
-    }
-  }
-  
-  // The options directive is for configuration that applies to the whole job.
-  options {
-    buildDiscarder(logRotator(numToKeepStr:'10'))
-    timeout(time: 60, unit: 'MINUTES')
-    disableConcurrentBuilds()
   }
 }
 

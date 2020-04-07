@@ -23,7 +23,7 @@
 package uk.ac.stfc.isis.ibex.ui.graphing;
 
 import org.apache.logging.log4j.Logger;
-import org.eclipse.swt.widgets.Display;
+
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;
@@ -33,6 +33,7 @@ import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
  * The WebLinksOpiTargetView shows a stand-alone OPI for weblinks.
  */
 public class MatplotlibOpiTargetView extends OpiTargetView {
+	
     /**
      * Class ID.
      */
@@ -44,7 +45,7 @@ public class MatplotlibOpiTargetView extends OpiTargetView {
     private static final String NAME = "Matplotlib";
 
     /**
-     * File name of the web links OPI.
+     * File name of the matplotlib OPI.
      */
     private static final String OPI = "matplotlib.opi";
     
@@ -64,29 +65,23 @@ public class MatplotlibOpiTargetView extends OpiTargetView {
     private static final String URL_MACRO_NAME = "URL";
 
     /**
-     * Display the OPI for a given target.
-     * 
-     * @param url the url for the graph.
-     *
-     * @throws OPIViewCreationException when opi can not be created
-     */
-    public static synchronized void displayOpi(final String url) {
-    	
-    	if (TARGET.properties().containsKey(URL_MACRO_NAME)) {
-    		TARGET.properties().remove(URL_MACRO_NAME);
-    	}
-    	
-    	TARGET.addProperty(URL_MACRO_NAME, url);
-    	
-        Display.getDefault().syncExec(new Runnable() {
-			@Override
-            public void run() {
-		        try {
-					displayOpi(TARGET, ID);
-				} catch (OPIViewCreationException e) {
-					LOG.error(e.getMessage(), e);
-				}
-            }
-        });
-    }
+	 * Display the OPI for the matplotlib graph.
+	 * 
+	 * @param url the url for the graph.
+	 *
+	 * @throws OPIViewCreationException when opi can not be created
+	 */
+	public static synchronized void displayOpi(final String url) {
+		if (TARGET.properties().containsKey(URL_MACRO_NAME)) {
+			TARGET.properties().remove(URL_MACRO_NAME);
+		}
+		TARGET.addProperty(URL_MACRO_NAME, url);
+		
+		try {
+			displayOpi(TARGET, ID);
+		} catch (OPIViewCreationException e) {
+			LOG.error(e.getMessage(), e);
+		}
+
+	}
 }

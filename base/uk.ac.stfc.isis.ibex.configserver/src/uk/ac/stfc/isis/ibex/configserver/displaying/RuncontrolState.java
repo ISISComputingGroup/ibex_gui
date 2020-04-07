@@ -43,7 +43,7 @@ public enum RuncontrolState {
 	
 	private final String name;
 	
-	private RuncontrolState(String name) {
+	RuncontrolState(String name) {
 		this.name = name;
 	}
 	

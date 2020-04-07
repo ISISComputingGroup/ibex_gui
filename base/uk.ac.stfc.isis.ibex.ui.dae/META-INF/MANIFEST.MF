@@ -27,7 +27,8 @@ Require-Bundle: uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.epics.switching,
  uk.ac.stfc.isis.ibex.instrument,
  com.google.guava,
- uk.ac.stfc.isis.ibex.ui.widgets.epics
+ uk.ac.stfc.isis.ibex.ui.widgets.epics,
+ javax.inject;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: uk.ac.stfc.isis.ibex.ui.dae,
