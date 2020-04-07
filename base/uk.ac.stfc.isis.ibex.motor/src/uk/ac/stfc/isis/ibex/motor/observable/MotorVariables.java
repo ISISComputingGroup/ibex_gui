@@ -79,6 +79,17 @@ public class MotorVariables extends Closer {
 		}
 	};
 	
+	private static final Converter<Double, Boolean> DOUBLE_TO_BOOLEAN = new Converter<Double, Boolean>() {
+		@Override
+		public Boolean convert(Double value) throws ConversionException {
+			System.out.println("Converting " + value);
+			if (value == null) {
+			    return null;
+			}
+			return value > 0;
+		}
+	};
+	
 	private final PVAddress motorAddress;
 
     /** The name of the motor. */
@@ -172,16 +183,7 @@ public class MotorVariables extends Closer {
         setpoint = new MotorSetPointVariables(fullAddress, obsFactory, writeFactory);
         
         withinTolerance = InstrumentUtils.convert(
-		        obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWith("IN_POSITION")), new Converter<Double, Boolean>() {
-					@Override
-					public Boolean convert(Double value) throws ConversionException {
-						System.out.println("Converting " + value);
-						if (value == null) {
-						    return null;
-						}
-						return value > 0;
-					}
-				});
+		        obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWith("IN_POSITION")), DOUBLE_TO_BOOLEAN);
 	}
 	
     /**

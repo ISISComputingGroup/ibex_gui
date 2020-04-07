@@ -373,7 +373,7 @@ public class MinimalMotorViewModel extends ModelObject {
     }
     
     private Color chooseBorderColor() {
-    	if (motor == null) {
+    	if (motor == null || palette == null) {
     		return NOPALETTECOLOR;
     	}
     	

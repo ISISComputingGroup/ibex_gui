@@ -44,6 +44,7 @@ public class TestMotor extends Motor {
 	private Double error = 0.0;
 	private boolean usingEncoder = true;
 	private boolean energised = true;
+	private boolean withinTolerance = true;
 
     @Override
     public String name() {
@@ -123,6 +124,11 @@ public class TestMotor extends Motor {
 	@Override
 	public Boolean getEnergised() {
 		return energised;
+	}
+
+	@Override
+	public Boolean getWithinTolerance() {
+		return withinTolerance;
 	}
 
 }
