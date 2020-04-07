@@ -47,6 +47,7 @@ public class ObservableMotor extends Motor {
 	private final UpdatedObservableAdapter<Boolean> atUpperLimitSwitch;
 	private final UpdatedObservableAdapter<Boolean> usingEncoder;
 	private final UpdatedObservableAdapter<Boolean> energised;
+	private final UpdatedObservableAdapter<Boolean> withinTolerance;
 	
     /**
      * Creates a motor that is pointing to a backend device.
@@ -74,6 +75,8 @@ public class ObservableMotor extends Motor {
 		
 		usingEncoder = adapt(variables.usingEncoder, "usingEncoder");
 		energised = adapt(variables.energised, "energised");
+		
+		withinTolerance = adapt(variables.withinTolerance, "withinTolerance");
 	}
 
 	/**
@@ -216,5 +219,13 @@ public class ObservableMotor extends Motor {
 		adapted.addPropertyChangeListener(raiseEventsFor(field));
 		
 		return adapted;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean getWithinTolerance() {
+		return withinTolerance.getValue();
 	}
 }

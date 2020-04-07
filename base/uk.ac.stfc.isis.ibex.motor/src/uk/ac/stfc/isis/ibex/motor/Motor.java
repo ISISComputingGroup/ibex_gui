@@ -139,4 +139,11 @@ public abstract class Motor extends ModelObject {
      * @return whether it is energised
      */
 	public abstract Boolean getEnergised();
+	
+	/**
+	 * Gets whether the motor is within tolerance.
+	 * 
+	 * @return whether the motor is within tolerance
+	 */
+	public abstract Boolean getWithinTolerance();
 }

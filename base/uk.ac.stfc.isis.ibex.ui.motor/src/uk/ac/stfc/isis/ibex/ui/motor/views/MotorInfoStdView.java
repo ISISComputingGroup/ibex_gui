@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Label;
  */
 public class MotorInfoStdView extends MotorInfoView {
 
+
 	public MotorInfoStdView(Composite parent, int style, MinimalMotorViewModel minimalMotorViewModel) {
 		super(parent, style, minimalMotorViewModel);
 		
@@ -25,6 +26,7 @@ public class MotorInfoStdView extends MotorInfoView {
 		glMotorComposite.marginHeight = MOTOR_COMPOSITE_MARGIN_HEIGHT;
         setLayout(glMotorComposite);
         setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        
         
         motorName = new Label(this, SWT.NONE);
 		motorName.setAlignment(SWT.CENTER);
@@ -95,5 +97,5 @@ public class MotorInfoStdView extends MotorInfoView {
 		for (var control : controls) {
 			control.addMouseListener(forwardDoubleClick);
 		}
-	}	
+	}
 }

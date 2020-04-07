@@ -49,9 +49,9 @@ public class MotorsOverview extends Composite {
 
     private static final Color GREY_COLOUR = SWTResourceManager.getColor(192, 192, 192);
 
-    public static final int HEIGHT_DIMENSION = 72;
-    public static final int WIDTH_DIMENSION = 107;
-    public static final int MARGIN = 3;
+    public static final int HEIGHT_DIMENSION = 78;
+    public static final int WIDTH_DIMENSION = 113;
+    public static final int MARGIN = 1;
 
     /**
      * Constructor for the motors overview.

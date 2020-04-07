@@ -21,6 +21,9 @@ package uk.ac.stfc.isis.ibex.ui.motor.views;
 
 import java.util.Optional;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.MouseAdapter;
@@ -50,6 +53,8 @@ public class MinimalMotorView extends Composite {
 	private MinimalMotorViewModel minimalMotorViewModel;
 	
 	private final StackLayout stackLayout;
+	
+	private DataBindingContext bindingContext = new DataBindingContext();
 
 	/**
      * Constructor. Creates a new instance of the MinimalMotorView object.
@@ -62,17 +67,26 @@ public class MinimalMotorView extends Composite {
      *            the view model to be used by this view.
      */
     public MinimalMotorView(Composite parent, int style, MinimalMotorViewModel minimalMotorViewModel) {
-        super(parent, SWT.BORDER);
+        super(parent, SWT.NONE);
        
         this.minimalMotorViewModel = minimalMotorViewModel;
 
         stackLayout = new StackLayout();
+        stackLayout.marginHeight = 2;
+        stackLayout.marginWidth = 2;
         setLayout(stackLayout);
         
         setActiveView(minimalMotorViewModel.isAdvancedMinimalMotorView());
 
         minimalMotorViewModel.addUiThreadPropertyChangeListener("advancedMinimalMotorView", 
         		event -> setActiveView(minimalMotorViewModel.isAdvancedMinimalMotorView()));
+        bind();
+	}
+    
+    private void bind() {
+      	
+        bindingContext.bindValue(WidgetProperties.background().observe(this),
+                BeanProperties.value("borderColor").observe(this.getViewModel()));
 	}
     
     private void setActiveView(boolean advanced) {

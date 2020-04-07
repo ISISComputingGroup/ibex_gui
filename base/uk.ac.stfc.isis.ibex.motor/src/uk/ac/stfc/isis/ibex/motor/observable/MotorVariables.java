@@ -126,6 +126,9 @@ public class MotorVariables extends Closer {
     /** The "at lower limit" observable. */
 	public final ForwardingObservable<Boolean> atLowerLimitSwitch;
 
+    /** The "at lower limit" observable. */
+	public final ForwardingObservable<Boolean> withinTolerance;
+
     /**
      * Constructor.
      * 
@@ -167,6 +170,18 @@ public class MotorVariables extends Closer {
         atLowerLimitSwitch = InstrumentUtils.convert(
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("LLS")), TO_BOOLEAN);
         setpoint = new MotorSetPointVariables(fullAddress, obsFactory, writeFactory);
+        
+        withinTolerance = InstrumentUtils.convert(
+		        obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWith("IN_POSITION")), new Converter<Double, Boolean>() {
+					@Override
+					public Boolean convert(Double value) throws ConversionException {
+						System.out.println("Converting " + value);
+						if (value == null) {
+						    return null;
+						}
+						return value > 0;
+					}
+				});
 	}
 	
     /**

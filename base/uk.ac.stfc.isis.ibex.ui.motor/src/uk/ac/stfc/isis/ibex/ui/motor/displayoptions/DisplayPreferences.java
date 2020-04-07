@@ -38,11 +38,15 @@ public final class DisplayPreferences extends ModelObject {
     private static final Color NORMAL_VISION_STOPPED_COLOR = SWTResourceManager.getColor(255, 200, 200);
     private static final Color NORMAL_VISION_DISABLED_COLOR = SWTResourceManager.getColor(200, 200, 200);
     private static final Color NORMAL_VISION_UNNAMED_COLOR = SWTResourceManager.getColor(220, 220, 220);
+    private static final Color NORMAL_VISION_OUTSIDE_TOLERANCE_BORDER_COLOR = SWTResourceManager.getColor(255, 0, 0);
+    private static final Color NORMAL_VISION_IN_TOLERANCE_BORDER_COLOR = SWTResourceManager.getColor(127, 127, 127);
 
     private static final Color ACCESSIBLE_MOVING_COLOR = SWTResourceManager.getColor(0, 255, 0);
     private static final Color ACCESSIBLE_STOPPED_COLOR = SWTResourceManager.getColor(120, 120, 255);
     private static final Color ACCESSIBLE_DISABLED_COLOR = SWTResourceManager.getColor(200, 200, 200);
     private static final Color ACCESSIBLE_UNNAMED_COLOR = SWTResourceManager.getColor(220, 220, 220);
+    private static final Color ACCESSIBLE_OUTSIDE_TOLERANCE_BORDER_COLOR = SWTResourceManager.getColor(255, 0, 0);
+    private static final Color ACCESSIBLE_IN_TOLERANCE_BORDER_COLOR = SWTResourceManager.getColor(255, 255, 255);
 
     /**
      * Private constructor for this utility singleton class.
@@ -61,17 +65,22 @@ public final class DisplayPreferences extends ModelObject {
     	return instance;
     }
 
-    private static final Map<ColourOption, MotorBackgroundPalette> PALETTE_OPTIONS;
+    private static final Map<ColourOption, MotorPalette> PALETTE_OPTIONS;
     static {
         PALETTE_OPTIONS = new HashMap<>();
-        PALETTE_OPTIONS.put(ColourOption.NORMAL_VISION,
-                new MotorBackgroundPalette(NORMAL_VISION_MOVING_COLOR, NORMAL_VISION_STOPPED_COLOR,
-                NORMAL_VISION_DISABLED_COLOR, NORMAL_VISION_UNNAMED_COLOR));
-        PALETTE_OPTIONS.put(ColourOption.ACCESSIBLE, new MotorBackgroundPalette(ACCESSIBLE_MOVING_COLOR,
-                ACCESSIBLE_STOPPED_COLOR, ACCESSIBLE_DISABLED_COLOR, ACCESSIBLE_UNNAMED_COLOR));
+        
+        PALETTE_OPTIONS.put(ColourOption.NORMAL_VISION, new MotorPalette(
+                NORMAL_VISION_MOVING_COLOR, NORMAL_VISION_STOPPED_COLOR,
+                NORMAL_VISION_DISABLED_COLOR, NORMAL_VISION_UNNAMED_COLOR, 
+                NORMAL_VISION_IN_TOLERANCE_BORDER_COLOR, NORMAL_VISION_OUTSIDE_TOLERANCE_BORDER_COLOR));
+        
+        PALETTE_OPTIONS.put(ColourOption.ACCESSIBLE, new MotorPalette(
+        		ACCESSIBLE_MOVING_COLOR, ACCESSIBLE_STOPPED_COLOR, 
+        		ACCESSIBLE_DISABLED_COLOR, ACCESSIBLE_UNNAMED_COLOR, 
+        		ACCESSIBLE_IN_TOLERANCE_BORDER_COLOR, ACCESSIBLE_OUTSIDE_TOLERANCE_BORDER_COLOR));
     }
 
-    private MotorBackgroundPalette currentMotorBackgroundPalette =
+    private MotorPalette currentMotorBackgroundPalette =
             PALETTE_OPTIONS.get(ColourOption.NORMAL_VISION);
 
     /**
@@ -79,7 +88,7 @@ public final class DisplayPreferences extends ModelObject {
      * 
      * @return the current motor background palette.
      */
-    public MotorBackgroundPalette getMotorBackgroundPalette() {
+    public MotorPalette getMotorBackgroundPalette() {
         return currentMotorBackgroundPalette;
     }
 
@@ -89,7 +98,7 @@ public final class DisplayPreferences extends ModelObject {
      * @param paletteKey the new motor background palette
      */
     public void setMotorBackgroundPalette(ColourOption paletteKey) {
-        MotorBackgroundPalette newMotorBackgroundPalette = PALETTE_OPTIONS.get(paletteKey);
+        MotorPalette newMotorBackgroundPalette = PALETTE_OPTIONS.get(paletteKey);
         firePropertyChange("motorBackgroundPalette", currentMotorBackgroundPalette, currentMotorBackgroundPalette = newMotorBackgroundPalette);
     }
 }

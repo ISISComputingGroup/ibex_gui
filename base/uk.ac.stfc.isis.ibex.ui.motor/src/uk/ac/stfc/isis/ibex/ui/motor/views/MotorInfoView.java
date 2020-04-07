@@ -17,7 +17,7 @@ public abstract class MotorInfoView extends Composite {
 	protected static final int MOTOR_COMPOSITE_VERTIAL_SPACING = 1; 
 	protected static final int MOTOR_COMPOSITE_MARGIN_WIDTH = 1;
 	protected static final int MOTOR_COMPOSITE_MARGIN_HEIGHT = 1;
-	protected static final int MOTOR_NAME_MINIMUM_WIDTH = MotorsOverview.WIDTH_DIMENSION;
+	protected static final int MOTOR_NAME_MINIMUM_WIDTH = MotorsOverview.WIDTH_DIMENSION - 2 * MOTOR_COMPOSITE_MARGIN_WIDTH;
 	protected static final int MOTOR_NAME_WIDTHHINT = MOTOR_NAME_MINIMUM_WIDTH;
 	
 	private MinimalMotorViewModel minimalMotorViewModel;

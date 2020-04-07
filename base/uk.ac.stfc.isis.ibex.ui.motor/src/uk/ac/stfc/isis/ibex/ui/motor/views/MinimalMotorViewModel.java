@@ -46,7 +46,7 @@ import uk.ac.stfc.isis.ibex.motor.MotorEnable;
 import uk.ac.stfc.isis.ibex.motor.Motors;
 import uk.ac.stfc.isis.ibex.motor.internal.MotorsTableSettings;
 import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.DisplayPreferences;
-import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorBackgroundPalette;
+import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorPalette;
 
 /**
  * The view model for an individual motor.
@@ -71,9 +71,10 @@ public class MinimalMotorViewModel extends ModelObject {
     private Boolean usingEncoder;
     private Boolean energised;
     private boolean advancedMinimalMotorView;
-    private MotorBackgroundPalette palette;
+    private MotorPalette palette;
     private Font font;
     private Color color;
+    private Color borderColor;
 
     /**
      * Constructor.
@@ -84,7 +85,7 @@ public class MinimalMotorViewModel extends ModelObject {
 
 	public MinimalMotorViewModel(DisplayPreferences displayPrefsModel, MotorsTableSettings motorsTableSettingsModel) {
 		displayPrefsModel.addPropertyChangeListener("motorBackgroundPalette", 
-				evt -> setPalette((MotorBackgroundPalette) evt.getNewValue()));
+				evt -> setPalette((MotorPalette) evt.getNewValue()));
 		
         setPalette(displayPrefsModel.getMotorBackgroundPalette());
 
@@ -107,7 +108,7 @@ public class MinimalMotorViewModel extends ModelObject {
         }
     }
 
-    private Color chooseColor() {
+    private Color chooseBackgroundColor() {
 
         if (palette == null) {
             // If no palette has been set yet, return a default colour
@@ -217,6 +218,22 @@ public class MinimalMotorViewModel extends ModelObject {
     public Color getColor() {
         return color;
     }
+    
+    /**
+     * Get whether this motor is energised.
+     * @return whether this motor is energised
+     */
+    public Color getBorderColor() {
+    	return borderColor;
+    }
+    
+    /**
+     * Set whether this motor is energised.
+     * @param usingEncoder whether this motor is energised
+     */
+    public void setBorderColor(final Color borderColor) {
+    	firePropertyChange("borderColor", this.borderColor, this.borderColor = borderColor);
+    }
 
     /**
      * Gets the font used by the motor.
@@ -304,7 +321,9 @@ public class MinimalMotorViewModel extends ModelObject {
         
         this.moving = motor.getMoving();
         setEnabled(motor.getEnabled());
-        setColor(chooseColor());
+        setColor(chooseBackgroundColor());
+        
+        setBorderColor(chooseBorderColor());
         this.font = chooseFont();
         
         setUsingEncoder(motor.getUsingEncoder());
@@ -324,7 +343,7 @@ public class MinimalMotorViewModel extends ModelObject {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 moving = (Boolean) evt.getNewValue();
-                setColor(chooseColor());
+                setColor(chooseBackgroundColor());
                 setFont(chooseFont());
             }
         });
@@ -345,10 +364,27 @@ public class MinimalMotorViewModel extends ModelObject {
             @Override
             public void propertyChange(PropertyChangeEvent event) {
                 setEnabled((MotorEnable) event.getNewValue());
-                setColor(chooseColor());
+                setColor(chooseBackgroundColor());
                 setFont(chooseFont());
             }
         });
+        
+        motor.addPropertyChangeListener("withinTolerance", event -> setBorderColor(chooseBorderColor()));
+    }
+    
+    private Color chooseBorderColor() {
+    	if (motor == null) {
+    		return NOPALETTECOLOR;
+    	}
+    	
+    	Color borderColor;
+        final Boolean isWithinTolerance = motor.getWithinTolerance();
+        if (isWithinTolerance == null || isWithinTolerance) {
+        	borderColor = palette.getInPositionBorderColor();
+        } else {
+        	borderColor = palette.getOutsideToleranceBorderColor();
+        }
+        return borderColor;
     }
     
     /**
@@ -357,9 +393,10 @@ public class MinimalMotorViewModel extends ModelObject {
      * @param newPalette
      *            the new palette that this motor should use
      */
-    public void setPalette(MotorBackgroundPalette newPalette) {
+    public void setPalette(MotorPalette newPalette) {
         this.palette = newPalette;
-        setColor(chooseColor());
+        setColor(chooseBackgroundColor());
+        setBorderColor(chooseBorderColor());
     }
 
     /**
