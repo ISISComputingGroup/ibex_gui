@@ -38,7 +38,6 @@ import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
-
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
@@ -49,8 +48,10 @@ import uk.ac.stfc.isis.ibex.ui.tables.SortableObservableMapCellLabelProvider;
  * A table that holds the properties for a target.
  */
 public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
+    
 	private final ScriptGeneratorViewModel scriptGeneratorViewModel;
 	private boolean shiftCellFocusToNewlyAddedRow = false;
+	
 	/**
      * Default constructor for the table. Creates all the correct columns.
      * 
@@ -67,9 +68,12 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
         super(parent, style, tableStyle | SWT.BORDER);
         this.scriptGeneratorViewModel = scriptGeneratorViewModel;
         initialise();
+        
         scriptGeneratorViewModel.addActionParamPropertyListener(this);
-		TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(viewer, new FocusCellOwnerDrawHighlighter(viewer), new CellNavigationStrategy());
+		TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(viewer,
+		        new FocusCellOwnerDrawHighlighter(viewer), new CellNavigationStrategy());
 		ColumnViewerEditorActivationStrategy activationStrategy = createEditorActivationStrategy(viewer);
+		
 		TableViewerEditor.create(viewer, focusCellManager, activationStrategy, 
 				ColumnViewerEditor.TABBING_HORIZONTAL 
 				| ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR
@@ -84,25 +88,29 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
      */
 	private ColumnViewerEditorActivationStrategy createEditorActivationStrategy(TableViewer tableViewer) {
 		return new ColumnViewerEditorActivationStrategy(tableViewer) {
-			protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
-				boolean retVal = true;
+			@Override
+            protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
+				boolean isEditorActivationEvent = true;
+				
 				if (event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL) { 
  					ColumnViewerEditor editor = this.getViewer().getColumnViewerEditor();
  					ViewerCell nextCell = editor.getFocusCell().getNeighbor(ViewerCell.RIGHT, false);
 					int currentlyFocusedColumn = editor.getFocusCell().getColumnIndex() + 1;
+					
 					// Add new action if tab is pressed by user in the last cell of the table
-					if (nextCell.getNeighbor(ViewerCell.BELOW, false) == null &&
-                    		(viewer.getTable().getColumnCount() - 1 == 
-							currentlyFocusedColumn)) {
+					if (nextCell.getNeighbor(ViewerCell.BELOW, false) == null 
+					        && (viewer.getTable().getColumnCount() - 1 == currentlyFocusedColumn)) {
+					    
                     	scriptGeneratorViewModel.addEmptyAction();
                     	shiftCellFocusToNewlyAddedRow = true;
                     	// return false as we will handle this specific case of traversal
-                    	retVal = false;
-                    } 
-					return retVal;
+                    	isEditorActivationEvent = false;
+                    }
+					
+					return isEditorActivationEvent;
 				} else {
-					return event.eventType == ColumnViewerEditorActivationEvent.MOUSE_CLICK_SELECTION
-					||  event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC;
+					return event.eventType == ColumnViewerEditorActivationEvent.MOUSE_CLICK_SELECTION 
+					        ||  event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC;
 				}
 			}
 
@@ -156,20 +164,19 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	@Override
 	public void setRows(Collection<ScriptGeneratorAction> rows) {
 		if ((!viewer.getTable().isDisposed())) {
-			int row = viewer.getTable().getSelectionIndex();
-			int col = 0;
+			int focusRow = viewer.getTable().getSelectionIndex();
+			int focusColumn = 0;
 
 			if (shiftCellFocusToNewlyAddedRow) {
-				row = viewer.getTable().getSelectionIndex() + 1;
+				focusRow = viewer.getTable().getSelectionIndex() + 1;
 				shiftCellFocusToNewlyAddedRow = false;
-				
 			// if row is not empty
-			} else if (row != -1) {
-				col = viewer.getColumnViewerEditor().getFocusCell().getColumnIndex();
+			} else if (focusRow != -1) {
+				focusColumn = viewer.getColumnViewerEditor().getFocusCell().getColumnIndex();
 			}
 			
 			viewer.setInput(new WritableList<ScriptGeneratorAction>(rows, null));
-			setCellFocus(row, col);
+			setCellFocus(focusRow, focusColumn);
 		}
 	} 
 	
