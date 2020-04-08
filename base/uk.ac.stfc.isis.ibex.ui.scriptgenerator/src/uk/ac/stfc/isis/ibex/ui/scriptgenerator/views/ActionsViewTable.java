@@ -113,9 +113,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 					        ||  event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC;
 				}
 			}
-
 		};
-		
 	}
 	
     /**
@@ -183,11 +181,11 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	/**
 	 * Sets focus of cell
 	 * @param row row number of table
-	 * @param col column number of table
+	 * @param column column number of table
 	 */
-	private void setCellFocus(int row, int col) {
+	private void setCellFocus(int row, int column) {
 		if (row >= 0) {
-			viewer.editElement(viewer.getElementAt(row), col);
+			viewer.editElement(viewer.getElementAt(row), column);
 		}
 	}
 
