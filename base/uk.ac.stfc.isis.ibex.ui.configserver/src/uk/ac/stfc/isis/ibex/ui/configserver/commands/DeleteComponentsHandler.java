@@ -57,7 +57,7 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
 	@Override
 	public void safeExecute(Shell shell) {
         viewModel = new DeleteComponentsViewModel(SERVER.getDependenciesModel().getDependencies());
-        Map <String, Boolean> compNamesWithFlags = SERVER.compNamesWithFlags();
+        Map<String, Boolean> compNamesWithFlags = SERVER.compNamesWithFlags();
         
         MultipleConfigsSelectionDialog dialog = new DeleteComponentsDialog(shell, 
                 SERVER.componentsInfo().getValue(), viewModel.getDependencies().keySet(), compNamesWithFlags);
@@ -79,9 +79,9 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
                         }
                     }
                 }
-            } catch (ManagerModePvNotConnectedException|IOException e) {
+            } catch (ManagerModePvNotConnectedException | IOException e) {
                 MessageDialog error = new MessageDialog(shell, "Error", null, e.getMessage(),
-                    MessageDialog.ERROR, new String[] {"OK"},0);
+                    MessageDialog.ERROR, new String[] {"OK"}, 0);
                 error.open();
             }
             

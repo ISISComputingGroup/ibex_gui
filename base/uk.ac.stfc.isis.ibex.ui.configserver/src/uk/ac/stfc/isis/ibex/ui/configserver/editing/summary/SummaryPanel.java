@@ -177,9 +177,9 @@ public class SummaryPanel extends Composite {
 	bindingContext.bindValue(WidgetProperties.comboSelection().observe(cmboSynoptic.getCombo()),
                 BeanProperties.value("synoptic").observe(config));
         bindingContext.bindValue(WidgetProperties.visible().observe(lblDateCreated),
-		BeanProperties.value("isNew", Boolean.class).observe(config), null, UIUtils.TYPED_NOT_CONVERTER);
+		BeanProperties.value("isNew", Boolean.class).observe(config), null, UIUtils.NOT_CONVERTER);
         bindingContext.bindValue(WidgetProperties.visible().observe(lblDateModified),
-		BeanProperties.value("isNew", Boolean.class).observe(config), null, UIUtils.TYPED_NOT_CONVERTER);
+		BeanProperties.value("isNew", Boolean.class).observe(config), null, UIUtils.NOT_CONVERTER);
         bindingContext.bindValue(WidgetProperties.text().observe(lblDateCreatedField),
                 BeanProperties.value("dateCreated").observe(config));
         bindingContext.bindValue(WidgetProperties.text().observe(lblDateModifiedField),
@@ -188,9 +188,9 @@ public class SummaryPanel extends Composite {
                 BeanProperties.value("isProtected").observe(config));
 
         bindingContext.bindValue(WidgetProperties.visible().observe(lblSynoptic),
-		BeanProperties.value("isComponent", Boolean.class).observe(config), null, UIUtils.TYPED_NOT_CONVERTER);
+		BeanProperties.value("isComponent", Boolean.class).observe(config), null, UIUtils.NOT_CONVERTER);
         bindingContext.bindValue(WidgetProperties.visible().observe(cmboSynoptic.getCombo()),
-		BeanProperties.value("isComponent", Boolean.class).observe(config), null, UIUtils.TYPED_NOT_CONVERTER);
+		BeanProperties.value("isComponent", Boolean.class).observe(config), null, UIUtils.NOT_CONVERTER);
         bindingContext.bindValue(WidgetProperties.text().observe(warning),
                 BeanProperties.value("errorMessage").observe(config));
 

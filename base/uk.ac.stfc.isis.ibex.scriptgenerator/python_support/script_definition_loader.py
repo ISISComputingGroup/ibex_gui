@@ -9,8 +9,42 @@ import argparse
 import os
 import sys
 from jinja2 import Environment, FileSystemLoader, Markup, TemplateNotFound
+from genie_python import utilities
 import importlib.machinery
 import importlib.util
+
+
+class PythonActionParameter(object):
+    """
+    Class containing a parameter name and value.
+    """
+    class Java:
+        implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter']
+    
+    def __init__(self, name, default_value):
+        """
+        Initialise the name and default value of the action parameter.
+        """
+        self.name = name
+        self.default_value = default_value
+
+    def getName(self) -> str:
+        """
+        Returns the name of this action parameter.
+
+        Returns:
+              name: String, the name of this action parameter
+        """
+        return self.name
+
+    def getDefaultValue(self) -> str:
+        """
+        Returns the default value of this action parameter.
+
+        Returns:
+              name: String, default value of this action parameter.
+        """
+        return self.default_value
 
 
 class ScriptDefinitionWrapper(object):
@@ -33,16 +67,25 @@ class ScriptDefinitionWrapper(object):
         """
         return self.name
 
-    def getParameters(self) -> list:
+    def getParameters(self) -> List[PythonActionParameter]:
         """
-        Gets the parameters from the script_definition defined in this script_definition
+        Gets the parameters and default values from the script_definition defined in this script_definition
 
         Returns:
             arguments: List of the parameter names (strings)
         """
         arguments = signature(self.script_definition.run).parameters
 
-        return ListConverter().convert(arguments, gateway._gateway_client)
+        kwargs_with_defaults = []
+
+        for arg in arguments:
+            if arguments[arg].default == arguments[arg].empty:
+                action_parameter = PythonActionParameter(arg, arg)
+            else:
+                action_parameter = PythonActionParameter(arg, str(arguments[arg].default))
+            kwargs_with_defaults.append(action_parameter)
+            
+        return ListConverter().convert(kwargs_with_defaults, gateway._gateway_client)
 
     def getHelp(self) -> str:
         """
@@ -134,7 +177,7 @@ class Generator(object):
             current_action_index += 1
         return validityCheck
 
-    def generate(self, list_of_actions, script_definition: ScriptDefinitionWrapper) -> Union[None, AnyStr]:
+    def generate(self, list_of_actions, jsonString, script_definition: ScriptDefinitionWrapper) -> Union[None, AnyStr]:
         """
         Generates a script from a list of parameters and script_definition
 
@@ -145,8 +188,9 @@ class Generator(object):
             script_definition_file_path = "{}.py".format(script_definition.getName())
             script_definition_template = self.env.get_template(script_definition_file_path)
             try:
+                val = str(utilities.compress_and_hex(jsonString))
                 rendered_template = self.template.render(inserted_script_definition=script_definition_template,
-                    script_generator_actions=list_of_actions)
+                    script_generator_actions=list_of_actions, hexed_value=val)
             except Exception:
                 rendered_template = None
             return rendered_template
@@ -222,14 +266,14 @@ class ScriptDefinitionsWrapper(object):
                 self.convert_list_of_actions_to_python(list_of_actions), script_definition),
             gateway._gateway_client)
 
-    def generate(self, list_of_actions, script_definition: ScriptDefinitionWrapper) -> Union[None, AnyStr]:
+    def generate(self, list_of_actions, jsonString, script_definition: ScriptDefinitionWrapper) -> Union[None, AnyStr]:
         """
-        Generates a script from a list of parameters and script_definitionuration
+        Generates a script from a list of parameters and script_definition
 
         Returns:
            None if parameters are invalid, otherwise a string of a generated script.
         """
-        return self.generator.generate(self.convert_list_of_actions_to_python(list_of_actions), script_definition)
+        return self.generator.generate(self.convert_list_of_actions_to_python(list_of_actions), jsonString, script_definition)
 
     def isPythonReady(self) -> bool:
         """
@@ -238,7 +282,19 @@ class ScriptDefinitionsWrapper(object):
         return True
 
 def get_script_definitions(search_folders: List[str] = None) -> Tuple[Dict[AnyStr, ScriptDefinition], Dict[AnyStr, AnyStr]]:
-    """ Dynamically import all the Python modules in the search folders"""
+    """
+    Dynamically import all the Python modules in the search folders
+    
+    Parameters:
+        search_folders: List[str]
+            The folders to search for actions in
+
+    Returns:
+        A tuple. 
+        The first element being a dictionary with keys as the module name and actions as the values.
+        The second element is also a dictionary with keys as the module name, 
+         but with values as the reason they could not be imported.
+    """
     if search_folders is None:
         this_file_path = os.path.split(__file__)[0]
         search_folder = [os.path.join(this_file_path, "instruments")]
@@ -247,12 +303,14 @@ def get_script_definitions(search_folders: List[str] = None) -> Tuple[Dict[AnySt
     for search_folder in search_folders:
         try:
             for filename in os.listdir(search_folder):
+                # Check if we have found a python file or not
                 filenameparts = filename.split(".")
                 module_name = filenameparts[0]
                 if len(filenameparts) > 1:
                     file_extension = filenameparts[-1]
                 else:
                     file_extension = ""
+                # Found a script definition (python file) import the DoRun class
                 if file_extension == "py":
                     try:
                         loader = importlib.machinery.SourceFileLoader(module_name, os.path.join(search_folder, filename))
@@ -261,10 +319,12 @@ def get_script_definitions(search_folders: List[str] = None) -> Tuple[Dict[AnySt
                         loader.exec_module(sys.modules[module_name])
                         script_definitions[module_name] = sys.modules[module_name].DoRun
                     except Exception as e:
+                        # On failure to load ensure we return the reason
                         script_definition_load_errors[module_name] = str(e)
                         # Print any errors to stderr, Java will catch and throw to the user
                         print("Error loading {}: {}".format(module_name, e), file=sys.stderr)
         except FileNotFoundError as e:
+            # On failure to load ensure we return the reason
             script_definition_load_errors[search_folder] = str(e)
             print("Error loading from {}".format(search_folder), file=sys.stderr)
     return script_definitions, script_definition_load_errors
@@ -278,7 +338,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     search_folders = args.search_folders.split(",")
-
+    
     script_definitions: Dict[AnyStr, ScriptDefinition] = {}
     script_definition_load_errors: Dict[AnyStr, AnyStr] = {}
     script_definitions, script_definition_load_errors = get_script_definitions(search_folders=search_folders)

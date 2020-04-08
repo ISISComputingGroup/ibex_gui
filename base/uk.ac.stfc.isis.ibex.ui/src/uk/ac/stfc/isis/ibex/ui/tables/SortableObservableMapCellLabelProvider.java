@@ -12,7 +12,7 @@ public abstract class SortableObservableMapCellLabelProvider<TRow> extends Obser
 	 * Constructor for the observable label provider.
 	 * @param attributeMap A map of the attributes that this cell will observe.
 	 */
-	protected SortableObservableMapCellLabelProvider(IObservableMap attributeMap) {
+	protected SortableObservableMapCellLabelProvider(IObservableMap<TRow, ?> attributeMap) {
 		super(attributeMap);
 	}
 	

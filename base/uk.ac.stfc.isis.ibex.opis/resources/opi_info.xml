@@ -2299,5 +2299,21 @@
         <macros />
       </value>
     </entry>
+    <entry>
+      <key>LSI correlator</key>
+      <value>
+        <type>LSICORR</type>
+        <path>lsicorr.opi</path>
+        <description>OPI for the LSI correlator</description>
+        <categories/>
+        <macros>
+          <macro>
+            <name>LSICORR</name>
+            <description>The LSICORR PV prefix (e.g. LSICORR_01)</description>
+            <default>LSICORR_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
   </opis>
 </descriptions>

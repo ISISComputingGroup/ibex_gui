@@ -23,10 +23,10 @@ import java.util.Arrays;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.core.databinding.conversion.IConverter;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -130,8 +130,8 @@ public class IocButtonPanel extends Composite {
 		UpdateValueStrategy<Boolean, Boolean> startStrategy = new UpdateValueStrategy<Boolean, Boolean>();
 		startStrategy.setConverter(startConverter);
 		
-		bindingContext.bindValue(WidgetProperties.enabled().observe(start), BeanProperties.value("canSend").observe(control.startIoc()), null, startStrategy);
-		bindingContext.bindValue(WidgetProperties.enabled().observe(start), BeanProperties.value("isRunning").observe(ioc), null, startStrategy);
+		bindingContext.bindValue(WidgetProperties.enabled().observe(start), BeanProperties.value("canSend", Boolean.class).observe(control.startIoc()), null, startStrategy);
+		bindingContext.bindValue(WidgetProperties.enabled().observe(start), BeanProperties.value("isRunning", Boolean.class).observe(ioc), null, startStrategy);
 	}
 
     private void bindStop(final IocState ioc) {
@@ -146,8 +146,8 @@ public class IocButtonPanel extends Composite {
 		UpdateValueStrategy<Boolean, Boolean> stopStrategy = new UpdateValueStrategy<Boolean, Boolean>();
 		stopStrategy.setConverter(stopConverter);
 		
-		bindingContext.bindValue(WidgetProperties.enabled().observe(stop), BeanProperties.value("canSend").observe(control.stopIoc()), null, stopStrategy);
-		bindingContext.bindValue(WidgetProperties.enabled().observe(stop), BeanProperties.value("isRunning").observe(ioc), null, stopStrategy);
+		bindingContext.bindValue(WidgetProperties.enabled().observe(stop), BeanProperties.value("canSend", Boolean.class).observe(control.stopIoc()), null, stopStrategy);
+		bindingContext.bindValue(WidgetProperties.enabled().observe(stop), BeanProperties.value("isRunning", Boolean.class).observe(ioc), null, stopStrategy);
 	}
 	
     private void bindRestart(final IocState ioc) {
@@ -162,7 +162,7 @@ public class IocButtonPanel extends Composite {
 		UpdateValueStrategy<Boolean, Boolean> restartStrategy = new UpdateValueStrategy<Boolean, Boolean>();
 		restartStrategy.setConverter(restartConverter);
 		
-		bindingContext.bindValue(WidgetProperties.enabled().observe(restart), BeanProperties.value("canSend").observe(control.restartIoc()), null, restartStrategy);
-		bindingContext.bindValue(WidgetProperties.enabled().observe(restart), BeanProperties.value("isRunning").observe(ioc), null, restartStrategy);
+		bindingContext.bindValue(WidgetProperties.enabled().observe(restart), BeanProperties.value("canSend", Boolean.class).observe(control.restartIoc()), null, restartStrategy);
+		bindingContext.bindValue(WidgetProperties.enabled().observe(restart), BeanProperties.value("isRunning", Boolean.class).observe(ioc), null, restartStrategy);
 	}
 }

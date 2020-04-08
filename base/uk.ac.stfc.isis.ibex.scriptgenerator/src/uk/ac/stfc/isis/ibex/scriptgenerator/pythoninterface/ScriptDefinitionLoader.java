@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 import py4j.Py4JException;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
+import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
 
 
 /**
@@ -34,7 +34,7 @@ public class ScriptDefinitionLoader extends ModelObject {
 	/**
 	 * The action parameters of the currently loaded script definition.
 	 */
-	private ArrayList<ActionParameter> parameters = new ArrayList<ActionParameter>();
+	private ArrayList<JavaActionParameter> parameters = new ArrayList<JavaActionParameter>();
 	
 	/**
 	 * The currently selected script definition.
@@ -139,8 +139,9 @@ public class ScriptDefinitionLoader extends ModelObject {
 	 */
 	public void setScriptDefinition(ScriptDefinitionWrapper scriptDefinition) {
 		try {
-			ArrayList<ActionParameter> parameters = scriptDefinition.getParameters().stream()
-					.map(name -> new ActionParameter(name)).collect(Collectors.toCollection(ArrayList::new));
+			ArrayList<JavaActionParameter> parameters = scriptDefinition.getParameters().stream()
+					.map(param_details -> new JavaActionParameter(param_details.getName(), param_details.getDefaultValue()))
+					.collect(Collectors.toCollection(ArrayList::new));
 			firePropertyChange("parameters", this.parameters, this.parameters = parameters);
 			selectedScriptDefinition = Optional.ofNullable(scriptDefinition);
 			selectedScriptDefinition.ifPresentOrElse(presentSelectedScriptDefinition -> {
@@ -170,7 +171,7 @@ public class ScriptDefinitionLoader extends ModelObject {
 	/**
 	 * @return the parameters for the current script definition.
 	 */
-	public ArrayList<ActionParameter> getParameters() {
+	public ArrayList<JavaActionParameter> getParameters() {
 		return parameters;
 	}
 	

@@ -86,7 +86,7 @@ public class TitlePanel extends Composite {
 
 	private void bind(TitlePanelModel model) {
         UpdateValueStrategy<String, String> literalAmpersands =
-                new UpdateValueStrategy<String,String>().setConverter(new Converter<String,String>(String.class, String.class) {
+                new UpdateValueStrategy<String, String>().setConverter(new Converter<String, String>(String.class, String.class) {
             @Override
             public String convert(String fromObject) {
                 return fromObject.replaceAll("&", "&&");

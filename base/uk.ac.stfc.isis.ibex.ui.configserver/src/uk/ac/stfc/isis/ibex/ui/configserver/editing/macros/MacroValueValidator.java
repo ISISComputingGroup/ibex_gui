@@ -60,11 +60,11 @@ public class MacroValueValidator extends ModelObject implements IValidator<Strin
      */
 	public static final String PATTERN_INVALID = "Macro regex pattern invalid";
 	/**
-	 * The message that is displayed when the value is longer than 255 character
+	 * The message that is displayed when the value is longer than 255 character.
 	 */
 	public static final String MAXIMUM_CHARACTER_LENGTH_LIMIT_MESSAGE = "Value cannot be longer than 255 characters";
 	
-	private final int MAXIMUM_CHARACTER_LIMIT = 256;
+	private static final int MAXIMUM_CHARACTER_LIMIT = 256;
 
 	private final Label messageDisplayer;
 	private MacroViewModel macro;

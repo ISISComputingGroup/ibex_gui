@@ -136,9 +136,9 @@ public class SaveConfigDialog extends TitleAreaDialog {
     
     private boolean asComponentSelected;
     
-    private Map<String, Boolean>configWithFlag;
+    private Map<String, Boolean> configWithFlag;
     
-    private Map<String, Boolean>compWithFlags;
+    private Map<String, Boolean> compWithFlags;
     
     private final ManagerModeModel model;
 
@@ -520,7 +520,7 @@ public class SaveConfigDialog extends TitleAreaDialog {
 	        }
 		} catch (ManagerModePvNotConnectedException e) {
 		    MessageDialog error = new MessageDialog(this.getShell(), "Error", null, e.getMessage(),
-                    MessageDialog.ERROR, new String[] {"OK"},0);
+                    MessageDialog.ERROR, new String[] {"OK"}, 0);
             error.open();
 		}
 

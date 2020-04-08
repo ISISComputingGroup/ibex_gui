@@ -1395,14 +1395,21 @@
          unpack="false"/>
 
    <plugin
-         id="com.sun.xml.bind.jaxb-osgi"
+         id="uk.ac.stfc.isis.ibex.ui.reflectometry"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="jakarta.xml.bind-api"
+         id="uk.ac.stfc.isis.ibex.jaxb"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="javax.xml.stream"
          download-size="0"
          install-size="0"
          version="0.0.0"

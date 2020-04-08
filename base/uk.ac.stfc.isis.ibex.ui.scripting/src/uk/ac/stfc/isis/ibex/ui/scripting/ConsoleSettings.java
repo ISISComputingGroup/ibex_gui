@@ -63,8 +63,8 @@ public class ConsoleSettings extends InstrumentInfoReceiverAdapter {
 					id = null;
 				}
 
-				if (Objects.equals(id, Consoles.PERSPECTIVE_ID)) {
-					Consoles.getDefault().createConsole();
+				if (Objects.equals(id, Consoles.SCRIPTING_PERSPECTIVE_ID) || Objects.equals(id, Consoles.REFL_PERSPECTIVE_ID)) {
+					Consoles.getDefault().createConsole(id);
 				}
 			}
 		});

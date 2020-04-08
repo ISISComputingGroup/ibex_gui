@@ -10,12 +10,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
+import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 
 /**
@@ -26,15 +27,15 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 public class ActionsTableTest {
 
 	private ActionsTable table;
-	private List<ActionParameter> actionParameters;
+	private List<JavaActionParameter> actionParameters;
 	
 	@Before
 	public void setUp() {
-		table = new ActionsTable(new ArrayList<ActionParameter>());
+		table = new ActionsTable(new ArrayList<JavaActionParameter>());
 		
-		var testParameter = new ActionParameter("Test Parameter");
+		var testParameter = new JavaActionParameter("Test Parameter", "test value");
 		
-		actionParameters = new ArrayList<ActionParameter>();
+		actionParameters = new ArrayList<JavaActionParameter>();
 		actionParameters.add(testParameter);
 	}
 	
@@ -53,6 +54,7 @@ public class ActionsTableTest {
 	
 	@Test
 	public void test_GIVEN_action_duplicated_WHEN_action_selected_THEN_action_is_duplicated() {
+		Map<JavaActionParameter, String> multipleActions = new HashMap<JavaActionParameter, String>();
 		table.addEmptyAction();
 		
 		table.duplicateAction(0);
@@ -61,7 +63,7 @@ public class ActionsTableTest {
 		
 		assertEquals(table.getActions().size(), 2);
 		
-		assertEquals(allActions.get(0).getAllActionParameters(), allActions.get(1).getAllActionParameters());
+		assertEquals(allActions.get(0).getActionParameterValueMap(), allActions.get(1).getActionParameterValueMap());
 	}
 	
 	@Test
@@ -165,6 +167,22 @@ public class ActionsTableTest {
 				table.getActions().get(3).isValid(), is(false));
 		assertThat("We set 3 to invalid so should give same invalidity error string",
 				table.getActions().get(3).getInvalidityReason().get(), equalTo("invalid 2"));
+	}
+	
+	@Test
+	public void test_GIVEN_multiple_actions_THEN_multiple_actions_are_added() {
+		List<Map<JavaActionParameter, String>> list = new ArrayList<Map<JavaActionParameter, String>>();
+		// create multiple actions
+		Map<JavaActionParameter, String> exampleOne = new HashMap<JavaActionParameter, String>();
+		Map<JavaActionParameter, String> exampleTwo = new HashMap<JavaActionParameter, String>();
+		
+		list.add(exampleOne);
+		list.add(exampleTwo);
+		
+		table.addMultipleActions(list);
+		
+		assertEquals(table.getActions().size(), 2);
+		
 	}
 
 }

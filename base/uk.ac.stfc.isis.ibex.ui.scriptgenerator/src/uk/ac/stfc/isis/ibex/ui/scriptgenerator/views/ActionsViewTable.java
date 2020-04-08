@@ -50,7 +50,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
      *            The SWT style of the composite that this creates.
      * @param tableStyle
      *            The SWT style of the table.
-     * @param actionsTable 
+     * @param scriptGeneratorViewModel 
      * 			  The table of actions (rows) to display/write data to.
      */
     public ActionsViewTable(Composite parent, int style, int tableStyle, ScriptGeneratorViewModel scriptGeneratorViewModel) {

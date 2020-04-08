@@ -12,10 +12,7 @@ Bundle-ClassPath: .,
  lib/commons-codec-1.14.jar,
  .,
  resources/
-Require-Bundle: org.eclipse.persistence.moxy;bundle-version="2.7.3";visibility:=reexport,
- org.eclipse.persistence.antlr;bundle-version="3.5.2";visibility:=reexport,
- org.eclipse.persistence.asm;bundle-version="6.2.0";visibility:=reexport,
- org.eclipse.persistence.core;bundle-version="2.7.3";visibility:=reexport,
+Require-Bundle: uk.ac.stfc.isis.ibex.jaxb;bundle-version="1.0.0",
  javax.activation;bundle-version="1.1.0";visibility:=reexport,
  javax.annotation;bundle-version="1.2.0";visibility:=reexport,
  uk.ac.stfc.isis.ibex.logger,
@@ -28,9 +25,7 @@ Require-Bundle: org.eclipse.persistence.moxy;bundle-version="2.7.3";visibility:=
  org.diirt.datasource,
  org.csstudio.platform.libs.jdbc,
  uk.ac.stfc.isis.ibex.e4.ui,
- org.eclipse.equinox.registry,
- jakarta.xml.bind-api;bundle-version="2.3.2",
- com.sun.xml.bind.jaxb-osgi;bundle-version="2.3.2"
+ org.eclipse.equinox.registry
 Export-Package: uk.ac.stfc.isis.ibex.epics.adapters,
  uk.ac.stfc.isis.ibex.epics.conversion,
  uk.ac.stfc.isis.ibex.epics.conversion.json,

@@ -188,6 +188,8 @@ public final class ComponentIcons {
             	return "coherent_obis_laser_remote";
             case ZERO_FIELD:
             	return "zerofield";
+            case LSICORR:
+            	return "lsicorr";
             default:
                 return "cog";
         }

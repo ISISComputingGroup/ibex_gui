@@ -173,7 +173,7 @@ public class ScriptGeneratorView {
 			FontData[] fD = loadingMessage.getFont().getFontData();
 			fD[0].setHeight(16);
 			loadingMessage.setFont(new Font(Display.getDefault(), fD[0]));
-			if(scriptDefinitionsLoadedOnce) {
+			if (scriptDefinitionsLoadedOnce) {
 				loadingMessage.setText(RELOADING_MESSAGE);
 			} else {
 				loadingMessage.setText(LOADING_MESSAGE);
@@ -295,7 +295,7 @@ public class ScriptGeneratorView {
 		        // Composite for laying out new/delete/duplicate action buttons
 		        Composite actionsControlsGrp = new Composite(mainParent, SWT.NONE);
 		        actionsControlsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		        GridLayout ssgLayout = new GridLayout(3, false);
+		        GridLayout ssgLayout = new GridLayout(4, true);
 		        ssgLayout.marginHeight = 10;
 		        ssgLayout.marginWidth = 10;
 		        actionsControlsGrp.setLayout(ssgLayout);
@@ -316,10 +316,15 @@ public class ScriptGeneratorView {
 		        btnDuplicateAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		        btnDuplicateAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.duplicateAction(table.getSelectionIndex()));
 		        
+                final Button btnClearAction = new Button(actionsControlsGrp, SWT.NONE);
+                btnClearAction.setText("Clear All Actions");
+                btnClearAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+                btnClearAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.clearAction());
+                
 		        // Composite for generate buttons
 		        Composite generateButtonsGrp = new Composite(mainParent, SWT.NONE);
 		        generateButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		        GridLayout gbgLayout = new GridLayout(1, false);
+		        GridLayout gbgLayout = new GridLayout(3, true);
 		        gbgLayout.marginHeight = 10;
 		        gbgLayout.marginWidth = 10;
 		        generateButtonsGrp.setLayout(gbgLayout);
@@ -330,9 +335,18 @@ public class ScriptGeneratorView {
 		        generateScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		        generateScriptButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.generate());
 		        
-		        		
+		       	
+		       	final Button saveExperimentalParametersButton = new Button(generateButtonsGrp, SWT.NONE);
+		       	saveExperimentalParametersButton.setText("Save Parameters");
+		       	saveExperimentalParametersButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		       	saveExperimentalParametersButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.saveParameterValues());
+		       	
+		       	final Button loadExperimentalParametersButton = new Button(generateButtonsGrp, SWT.NONE);
+		       	loadExperimentalParametersButton.setText("Load Parameters");
+		       	loadExperimentalParametersButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		       	loadExperimentalParametersButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.loadParameterValues());
 		        // Bind the context and the validity checking listeners
-		        bind(scriptDefinitionSelector, table, btnGetValidityErrors, generateScriptButton, helpText, manualButton);
+		        bind(scriptDefinitionSelector, table, btnGetValidityErrors, generateScriptButton, helpText, saveExperimentalParametersButton, manualButton);
 				
 			} else {
 				
@@ -411,13 +425,14 @@ public class ScriptGeneratorView {
 	/**
 	 * Binds the Script Generator Table, script definition selector and validity check models to their views.
 	 */
-	private void bind(ComboViewer scriptDefinitionSelector, ActionsViewTable table, Button btnGetValidityErrors, Button btnGenerateScript, Text helpText, Button manualButton) {
+
+	private void bind(ComboViewer scriptDefinitionSelector, ActionsViewTable table, Button btnGetValidityErrors, Button btnGenerateScript, Text helpText, Button btnSaveParameters, Button manualButton) {
 		scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText);
 
-		scriptGeneratorViewModel.bindValidityChecks(table, btnGetValidityErrors, btnGenerateScript);
+		scriptGeneratorViewModel.bindValidityChecks(table, btnGetValidityErrors, btnGenerateScript, btnSaveParameters);
 		
 		scriptGeneratorViewModel.bindManualButton(manualButton);
+
 	}
-	
 
 }

@@ -11,8 +11,7 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.logger,
  com.google.guava,
  org.diirt.datasource;bundle-version="3.1.5",
- com.sun.xml.bind.jaxb-osgi;bundle-version="2.3.2",
- jakarta.xml.bind-api;bundle-version="2.3.2"
+ uk.ac.stfc.isis.ibex.jaxb;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.instrument,
  uk.ac.stfc.isis.ibex.instrument.channels,

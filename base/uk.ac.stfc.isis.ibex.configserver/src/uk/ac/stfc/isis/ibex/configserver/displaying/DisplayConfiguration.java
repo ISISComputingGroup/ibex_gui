@@ -120,7 +120,7 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 	}
 	
 	/**
-	*Returns if the protected flag is set or not 
+	*Returns if the protected flag is set or not.
 	*@return the protected flag
 	*
 	*/

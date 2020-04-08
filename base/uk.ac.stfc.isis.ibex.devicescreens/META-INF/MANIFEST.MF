@@ -14,8 +14,7 @@ Require-Bundle: uk.ac.stfc.isis.ibex.epics;bundle-version="1.0.0",
  com.google.guava,
  uk.ac.stfc.isis.ibex.epics.switching;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.dae;bundle-version="1.0.0",
- jakarta.xml.bind-api;bundle-version="2.3.2",
- com.sun.xml.bind.jaxb-osgi;bundle-version="2.3.2"
+ uk.ac.stfc.isis.ibex.jaxb;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.devicescreens,

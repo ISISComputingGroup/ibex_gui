@@ -23,8 +23,8 @@ package uk.ac.stfc.isis.ibex.ui.dae.experimentsetup;
 import java.util.ArrayList;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
@@ -418,29 +418,29 @@ public class DataAcquisitionPanel extends Composite {
         bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(spectraTableSelector), 
         		BeanProperties.value("newSpectraTable").observe(viewModel));
 
-        bindingContext.bindValue(WidgetProperties.selection().observe(monitorSpectrum),
+        bindingContext.bindValue(WidgetProperties.spinnerSelection().observe(monitorSpectrum),
                 BeanProperties.value("monitorSpectrum").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(from),
                 BeanProperties.value("from").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(to),
                 BeanProperties.value("to").observe(viewModel));
         
-        bindingContext.bindValue(WidgetProperties.selection().observe(btnVeto0),
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(btnVeto0),
                 BeanProperties.value("veto0").observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.selection().observe(btnVeto1),
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(btnVeto1),
                 BeanProperties.value("veto1").observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.selection().observe(btnVeto2),
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(btnVeto2),
                 BeanProperties.value("veto2").observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.selection().observe(btnVeto3),
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(btnVeto3),
                 BeanProperties.value("veto3").observe(viewModel));
         
-        bindingContext.bindValue(WidgetProperties.selection().observe(btnSMP),
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(btnSMP),
                 BeanProperties.value("smpVeto").observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.selection().observe(btnFermiChopper),
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(btnFermiChopper),
                 BeanProperties.value("fermiChopperVeto").observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.selection().observe(btnTs2Pulse),
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(btnTs2Pulse),
                 BeanProperties.value("ts2PulseVeto").observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.selection().observe(btnIsisHz),
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(btnIsisHz),
                 BeanProperties.value("isis50HzVeto").observe(viewModel));
         
         bindingContext.bindValue(WidgetProperties.text().observe(fcDelay),
@@ -448,12 +448,12 @@ public class DataAcquisitionPanel extends Composite {
         bindingContext.bindValue(WidgetProperties.text().observe(fcWidth),
                 BeanProperties.value("fcWidth").observe(viewModel));
 
-        bindingContext.bindValue(WidgetProperties.selection().observe(btnMuonMsMode),
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(btnMuonMsMode),
                 BeanProperties.value("muonMsMode").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(daeTimingSource),
                 BeanProperties.value("timingSource").observe(viewModel));
         
-        bindingContext.bindValue(WidgetProperties.selection().observe(btnMuonPulseFirst),
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(btnMuonPulseFirst),
                 BeanProperties.value("muonCerenkovPulse").observe(viewModel));
 
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(autosaveFrequency),
