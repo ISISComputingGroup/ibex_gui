@@ -1,8 +1,7 @@
-REM We bundle our own JRE with the client, this is where it is
-set "JRELOCATION=\\isis\inst$\Kits$\CompGroup\ICP\ibex_client_jre"
-set "LOCAL_JRE_LOCATION=%~dp0jdk"
-robocopy "%JRELOCATION%" "%LOCAL_JRE_LOCATION%" /E /PURGE /R:2 /MT /XF "install.log" /NFL /NDL /NC /NS /NP /LOG:NUL
+robocopy "\\isis\inst$\Kits$\CompGroup\ICP\ibex_client_jre" "%~dp0\jdk" /E /PURGE /R:2 /MT /XF "install.log" /NFL /NDL /NC /NS /NP /LOG:NUL
+
 set errcode=%ERRORLEVEL%
+
 if %errcode% GEQ 4 (
     @echo *** Exit Code %errcode% ERROR see %INSTALLDIR%install.log ***
 	@echo ************** Exit Code %errcode% ERROR **************** >>%INSTALLDIR%install.log

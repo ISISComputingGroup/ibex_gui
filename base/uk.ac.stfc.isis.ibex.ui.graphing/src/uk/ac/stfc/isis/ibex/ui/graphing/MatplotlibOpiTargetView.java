@@ -23,6 +23,7 @@
 package uk.ac.stfc.isis.ibex.ui.graphing;
 
 import org.apache.logging.log4j.Logger;
+import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
@@ -37,7 +38,8 @@ public class MatplotlibOpiTargetView extends OpiTargetView {
     /**
      * Class ID.
      */
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.graphing.MatplotlibOpiTargetView";
+    public static final String ID_PRIMARY_PLOT = "uk.ac.stfc.isis.ibex.ui.graphing.MatplotlibOpiTargetView";
+    public static final String ID_SECONDARY_PLOT = "uk.ac.stfc.isis.ibex.ui.graphing.BackgroundScriptOpiTargetView";
     
     /**
      * Name of the OPI.
@@ -48,17 +50,17 @@ public class MatplotlibOpiTargetView extends OpiTargetView {
      * File name of the matplotlib OPI.
      */
     private static final String OPI = "matplotlib.opi";
-    
+
     /**
      * The OPI target for the matplotlib opi.
      */
     private static final OpiTarget TARGET = new OpiTarget(NAME, OPI);
-    
+
     /**
      * Logger for errors.
      */
     private static final Logger LOG = IsisLog.getLogger(MatplotlibOpiTargetView.class);
-    
+
     /**
      * Macro name for the URL.
      */
@@ -66,22 +68,31 @@ public class MatplotlibOpiTargetView extends OpiTargetView {
 
     /**
 	 * Display the OPI for the matplotlib graph.
-	 * 
-	 * @param url the url for the graph.
-	 *
-	 * @throws OPIViewCreationException when opi can not be created
-	 */
-	public static synchronized void displayOpi(final String url) {
+     * 
+     * @param url the url for the graph.
+     * @param isPrimary true for primary matplot lib window; otherwise use the secondary script window
+     *
+     * @throws OPIViewCreationException when opi can not be created
+     */
+    public static synchronized void displayOpi(final String url, boolean isPrimary) {
 		if (TARGET.properties().containsKey(URL_MACRO_NAME)) {
-			TARGET.properties().remove(URL_MACRO_NAME);
+		    TARGET.properties().remove(URL_MACRO_NAME);
 		}
 		TARGET.addProperty(URL_MACRO_NAME, url);
 		
-		try {
-			displayOpi(TARGET, ID);
-		} catch (OPIViewCreationException e) {
-			LOG.error(e.getMessage(), e);
+		String id;
+		if (isPrimary) {
+		    id = ID_PRIMARY_PLOT;
+		} else {
+		    id = ID_SECONDARY_PLOT;
 		}
-
-	}
+			
+		Display.getDefault().syncExec(() -> {
+			try {
+			    displayOpi(TARGET, id);
+			} catch (OPIViewCreationException e) {
+			    LOG.error(e.getMessage(), e);
+			}
+	    });
+    }
 }
