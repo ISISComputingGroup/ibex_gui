@@ -1,3 +1,7 @@
+set "JRELOCATION=\\isis\inst$\Kits$\CompGroup\ICP\ibex_client_jre"
+
+set "LOCAL_JRE_LOCATION=%~dp0jdk"
+
 robocopy "\\isis\inst$\Kits$\CompGroup\ICP\ibex_client_jre" "%~dp0\jdk" /E /PURGE /R:2 /MT /XF "install.log" /NFL /NDL /NC /NS /NP /LOG:NUL
 
 set errcode=%ERRORLEVEL%
