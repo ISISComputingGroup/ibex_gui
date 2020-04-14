@@ -9,7 +9,7 @@
 		
         <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
 
-        <MediaTemplate EmbedCab="yes" />
+        <MediaTemplate EmbedCab="no" />
 
         <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
         <UIRef Id="WixUI_InstallDir" />
