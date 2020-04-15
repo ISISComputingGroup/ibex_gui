@@ -1,4 +1,3 @@
-from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
 from org.csstudio.opibuilder.scriptUtil import PVUtil
 from org.csstudio.ui.util.thread import UIBundlingThread
 from org.eclipse.swt.widgets import Display
@@ -45,6 +44,16 @@ class UpdateJaws(Runnable):
 
         self.max_y = PVUtil.getDouble(pvs[4])
         self.max_x = PVUtil.getDouble(pvs[5])
+        
+    def calc_bound_values(self):
+        """
+        Calculate x and y positions for the limit of travel indicators (bounds)
+        """
+        north_bound_val = (background_height/2.0)*(1 - self.scaling_factor)
+        south_bound_val = background_height - ((background_height/2.0)*(1 - self.scaling_factor))                    
+        west_bound_val = (background_width/2.0)*(1 - self.scaling_factor)
+        east_bound_val = background_width - ((background_width/2.0)*(1 - self.scaling_factor))
+        return north_bound_val, south_bound_val, west_bound_val, east_bound_val
 
     def calc_pair_height(self, pv_vals, max_val, gui_max):
         """
@@ -59,7 +68,21 @@ class UpdateJaws(Runnable):
         second = nominal + nominal * (pv_vals[1] / max_val)
 
         return bound_value(first, gui_max), bound_value(second, gui_max)
-
+        
+    def calc_scaling_factor(self):
+        """
+        Calculate a scaling factor that will be used to shorten the GUI blade elements of
+        the shorter axis (i.e. the axis with the smaller limit of travel) such that when the
+        vertical and horizontal gap are set equal, the gap between blades will appear square
+        and not rectangular.
+        """
+        if self.max_x > self.max_y:
+            self.scaling_factor = self.max_y/self.max_x
+        elif self.max_y > self.max_x:
+            self.scaling_factor = self.max_x/self.max_y
+        else:
+            self.scaling_factor = 1.0
+            
     def run(self):
         while True:
             if not display.isActive():
@@ -67,25 +90,16 @@ class UpdateJaws(Runnable):
 
             self.get_pvs()
             
-            #Without the following code, if the horizontal and vertical limits of travel differ
-            #but the vertical and horizontal gaps are set equal, the gap on the GUI will not appear
-            #square as expected. The following applies a scaling factor to the jaw heights/widths to correct this
-            #and calculates x and y positions for the limit of travel indicators.
+            self.calc_scaling_factor()
             if self.max_x > self.max_y:
-                scaling_factor = self.max_y/self.max_x
-                self.north *= scaling_factor
-                self.south *= scaling_factor
-                north_bound_val = background_height*scaling_factor/2.0
-                south_bound_val = background_height - background_height*scaling_factor/2.0
+                self.north *= self.scaling_factor
+                self.south *= self.scaling_factor
             elif self.max_y > self.max_x:
-                scaling_factor = self.max_x/self.max_y
-                self.east *= scaling_factor
-                self.west *= scaling_factor
-                west_bound_val = background_width*scaling_factor/2.0
-                east_bound_val = background_width - background_width*scaling_factor/2.0
-            else:
-                scaling_factor = 1.0             
-                        
+                self.east *= self.scaling_factor
+                self.west *= self.scaling_factor
+
+            north_bound_val, south_bound_val, west_bound_val, east_bound_val = self.calc_bound_values()
+                
             north_height, south_height = self.calc_pair_height((self.north, self.south), self.max_y, background_height)
             east_width, west_width = self.calc_pair_height((self.east, self.west), self.max_x, background_width)
             
@@ -97,31 +111,20 @@ class UpdateJaws(Runnable):
             max_y = self.max_y
             class UITask(Runnable):
                 def run(self):
-                    #Set limit of travel indicators
-                    if max_x > max_y:
-                        north_bound.setPropertyValue("visible", True)
-                        south_bound.setPropertyValue("visible", True) 
-                        east_bound.setPropertyValue("visible", False)
-                        west_bound.setPropertyValue("visible", False)                       
-                        north_bound.setPropertyValue("y", north_bound_val)
-                        south_bound.setPropertyValue("y", south_bound_val)
-                    elif max_y > max_x:
-                        east_bound.setPropertyValue("visible", True)
-                        west_bound.setPropertyValue("visible", True)
-                        north_bound.setPropertyValue("visible", False)
-                        south_bound.setPropertyValue("visible", False)
-                        east_bound.setPropertyValue("x", east_bound_val)
-                        west_bound.setPropertyValue("x", west_bound_val)
-                    else:
-                        north_bound.setPropertyValue("visible", False)
-                        south_bound.setPropertyValue("visible", False)
-                        east_bound.setPropertyValue("visible", False)
-                        west_bound.setPropertyValue("visible", False)   
-                
+                    #Set limit of travel indicators to be visible only for the shorter axis
+                    north_bound.setPropertyValue("visible", max_x > max_y)
+                    south_bound.setPropertyValue("visible", max_x > max_y) 
+                    east_bound.setPropertyValue("visible", max_y > max_x)
+                    west_bound.setPropertyValue("visible", max_y > max_x)                       
+                    north_bound.setPropertyValue("y", north_bound_val)
+                    south_bound.setPropertyValue("y", south_bound_val)
+                    east_bound.setPropertyValue("x", east_bound_val)
+                    west_bound.setPropertyValue("x", west_bound_val)
+                                    
                     north_blade.setPropertyValue("height", north_height)
                     south_blade.setPropertyValue("height", south_height)
                     south_blade.setPropertyValue("y", south_y)
-
+                    
                     west_blade.setPropertyValue("width", west_width)
                     east_blade.setPropertyValue("width", east_width)
                     east_blade.setPropertyValue("x", east_x)
