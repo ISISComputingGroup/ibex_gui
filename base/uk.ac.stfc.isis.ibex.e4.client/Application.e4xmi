@@ -424,6 +424,7 @@
         <children xsi:type="advanced:Placeholder" xmi:id="_234KUBH9Eeq6Ie-xR-8O0g" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.17" containerData="50" ref="_yrd0QBH9Eeq6Ie-xR-8O0g"/>
         <children xsi:type="basic:PartStack" xmi:id="_WuLscIXrEeib1Ij4B5lomQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.32" toBeRendered="false" containerData="50">
           <children xsi:type="basic:Part" xmi:id="_7Zl3sIXbEeiCJ_qZ_3IIBQ" elementId="uk.ac.stfc.isis.ibex.ui.graphing.MatplotlibOpiTargetView" toBeRendered="false" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Plot" closeable="true"/>
+          <children xsi:type="basic:Part" xmi:id="_fafW0FieEeqLYa1n_yUxzw" elementId="uk.ac.stfc.isis.ibex.ui.graphing.BackgroundScriptOpiTargetView" toBeRendered="false" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Background Plot"/>
         </children>
       </children>
     </children>
