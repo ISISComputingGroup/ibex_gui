@@ -142,7 +142,7 @@ public class MinimalMotorViewModel extends ModelObject {
     	if (advancedMinimalMotorView) {
             return String.format("%s %.3f", prefix, value);
     	} else {
-    		return String.format("%s: %.2f", prefix, value);
+    		return String.format("%s: %.3f", prefix, value);
     	}
     }
 
