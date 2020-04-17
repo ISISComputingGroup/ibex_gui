@@ -11,14 +11,12 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.motor.Motors;
-
 /** Configurable settings for the table of motors. */
 public class TableOfMotorsSettingsView {
 	Text advancedMinimalMotorView;
 	Button btnAdvancedMinimalMotorView ;
 	
-    private TableOfMotorsSettingsViewModel tableOfMotorsSettingsViewModel = new TableOfMotorsSettingsViewModel(Motors.getInstance().getMotorSettingsModel());
+    private TableOfMotorsSettingsViewModel tableOfMotorsSettingsViewModel = TableOfMotorsSettingsViewModel.getInstance();
 
 	private DataBindingContext bindingContext = new DataBindingContext();
 	

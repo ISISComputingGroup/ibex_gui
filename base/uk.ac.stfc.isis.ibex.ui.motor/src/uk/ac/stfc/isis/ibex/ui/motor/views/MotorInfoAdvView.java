@@ -6,15 +6,14 @@ import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 /**
  * The viewer for an individual motors advanced information.
@@ -36,7 +35,7 @@ public class MotorInfoAdvView extends MotorInfoView {
 
 	private BooleanImageLabel energisedStatus;
 	
-	private static final Font ARIAL_7PT = new Font(Display.getCurrent(), new FontData("Arial", 7, SWT.NONE));
+	private static final Font ARIAL_7PT = SWTResourceManager.getFont("Arial", 7, SWT.NONE);
 	
 	private static final Image ENCODER_ENABLED = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.motor", "icons/encoder_enabled.png");
 	private static final Image ENCODER_DISABLED = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.motor", "icons/encoder_disabled.png");
@@ -83,25 +82,26 @@ public class MotorInfoAdvView extends MotorInfoView {
         minimalMotionIndicator.setMotor(this.getViewModel().getMotor());
         
         encoderStatus = new BooleanImageLabel(iconContainer, ENCODER_ENABLED, ENCODER_DISABLED, "Encoder present", "Encoder not present");
-        encoderStatus.enable(minimalMotorViewModel.getUsingEncoder());
+        encoderStatus.setIsEnabled(minimalMotorViewModel.getUsingEncoder());
         minimalMotorViewModel.addUiThreadPropertyChangeListener("usingEncoder", 
-        		evt -> encoderStatus.enable(minimalMotorViewModel.getUsingEncoder()));
+        		evt -> encoderStatus.setIsEnabled(minimalMotorViewModel.getUsingEncoder()));
         
         energisedStatus = new BooleanImageLabel(iconContainer, ENERGISED_ENABLED, ENERGISED_DISABLED, "Motor energised", "Motor not energised");
-        energisedStatus.enable(minimalMotorViewModel.getEnergised());
+        energisedStatus.setIsEnabled(minimalMotorViewModel.getEnergised());
         minimalMotorViewModel.addUiThreadPropertyChangeListener("energised", 
-        		evt -> energisedStatus.enable(minimalMotorViewModel.getEnergised()));
+        		evt -> energisedStatus.setIsEnabled(minimalMotorViewModel.getEnergised()));
         
         setMouseListeners();
         
         bind();
 	}
 	
-	private Label createMotorValueLabel(final Composite container) {
+	private Label createMotorValueLabel(final Composite container, String tooltip) {
 		final var label = new Label(container, SWT.NONE);
 		label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		label.setText("");
 		label.setFont(ARIAL_7PT);
+		label.setToolTipText(tooltip);
 		return label;
 	}
 	
@@ -121,20 +121,20 @@ public class MotorInfoAdvView extends MotorInfoView {
 
 	private void createErrorAndOffset() {
 		errorAndOffsetContainer = createTwoColumnContainer();
-        offset = createMotorValueLabel(errorAndOffsetContainer);
-        error = createMotorValueLabel(errorAndOffsetContainer);
+        offset = createMotorValueLabel(errorAndOffsetContainer, "The offset of this motor");
+        error = createMotorValueLabel(errorAndOffsetContainer, "Difference between setpoint and readback");
 	}
 
 	private void createLimits() {
 		limitsContainer = createTwoColumnContainer();
-		lowLimit = createMotorValueLabel(limitsContainer);
-		highLimit = createMotorValueLabel(limitsContainer);
+		lowLimit = createMotorValueLabel(limitsContainer, "The software-defined low limit for this motor");
+		highLimit = createMotorValueLabel(limitsContainer, "The software-defined high limit for this motor");
 	}
 
 	private void createSetpointAndReadback() {
 		setpointAndReadbackContainer = createTwoColumnContainer();
-        value = createMotorValueLabel(setpointAndReadbackContainer);
-        setpoint = createMotorValueLabel(setpointAndReadbackContainer);
+        value = createMotorValueLabel(setpointAndReadbackContainer, "The actual position of this motor");
+        setpoint = createMotorValueLabel(setpointAndReadbackContainer, "The requested position of this motor");
 	}
 
     /**

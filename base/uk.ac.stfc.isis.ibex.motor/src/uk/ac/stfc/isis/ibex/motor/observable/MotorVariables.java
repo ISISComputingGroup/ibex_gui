@@ -79,10 +79,9 @@ public class MotorVariables extends Closer {
 		}
 	};
 	
-	private static final Converter<Double, Boolean> DOUBLE_TO_BOOLEAN = new Converter<Double, Boolean>() {
+	private static final Converter<Double, Boolean> GREATER_THAN_ZERO_CONVERTER = new Converter<Double, Boolean>() {
 		@Override
 		public Boolean convert(Double value) throws ConversionException {
-			System.out.println("Converting " + value);
 			if (value == null) {
 			    return null;
 			}
@@ -137,7 +136,7 @@ public class MotorVariables extends Closer {
     /** The "at lower limit" observable. */
 	public final ForwardingObservable<Boolean> atLowerLimitSwitch;
 
-    /** The "at lower limit" observable. */
+    /** The "within tolerance" observable. */
 	public final ForwardingObservable<Boolean> withinTolerance;
 
     /**
@@ -183,7 +182,7 @@ public class MotorVariables extends Closer {
         setpoint = new MotorSetPointVariables(fullAddress, obsFactory, writeFactory);
         
         withinTolerance = InstrumentUtils.convert(
-		        obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWith("IN_POSITION")), DOUBLE_TO_BOOLEAN);
+		        obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWith("IN_POSITION")), GREATER_THAN_ZERO_CONVERTER);
 	}
 	
     /**

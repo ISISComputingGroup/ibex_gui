@@ -97,9 +97,13 @@ public abstract class ModelObject implements IModelObject {
      *            the property name
      * @param listener
      *            the listener
+     * 
+     * @return the added listener
      */
-    public void addUiThreadPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-		addPropertyChangeListener(propertyName, propertyChangeOnUiThread(listener));
+    public PropertyChangeListener addUiThreadPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+    	final PropertyChangeListener uiThreadListener = propertyChangeOnUiThread(listener);
+		addPropertyChangeListener(propertyName, uiThreadListener);
+		return uiThreadListener;
 	}
 
     /**

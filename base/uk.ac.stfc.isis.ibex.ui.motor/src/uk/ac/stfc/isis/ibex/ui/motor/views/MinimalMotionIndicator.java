@@ -150,7 +150,7 @@ public class MinimalMotionIndicator extends Composite {
 	}
 
     private void setLimit(final BooleanImageLabel limit, final Boolean enable) {
-        limit.enable(disableIfNull(enable));
+        limit.setIsEnabled(enable);
 	}
 	
 	private void setArrows(final Motor motor) {
@@ -184,7 +184,7 @@ public class MinimalMotionIndicator extends Composite {
 	}
 	
 	private void enableHome(final Boolean enable) {
-		home.enable(disableIfNull(enable));				
+		home.setIsEnabled(disableIfNull(enable));				
 	}
 	
 	private static Image getImage(String image) {

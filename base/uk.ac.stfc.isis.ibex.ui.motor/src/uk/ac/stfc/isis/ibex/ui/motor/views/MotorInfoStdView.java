@@ -40,11 +40,13 @@ public class MotorInfoStdView extends MotorInfoView {
 		value.setAlignment(SWT.CENTER);
 		value.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
         value.setText("");
+        value.setToolTipText("The actual position of this motor");
 		
         setpoint = new Label(this, SWT.NONE);
 		setpoint.setAlignment(SWT.CENTER);
 		setpoint.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
         setpoint.setText("");
+        setpoint.setToolTipText("The requested position of this motor");
 		
         minimalMotionIndicator = new MinimalMotionIndicator(this, SWT.NONE);
 		minimalMotionIndicator.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, false));
