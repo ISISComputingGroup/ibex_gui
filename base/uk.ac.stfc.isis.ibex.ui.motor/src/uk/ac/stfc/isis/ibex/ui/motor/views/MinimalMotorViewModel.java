@@ -351,8 +351,8 @@ public class MinimalMotorViewModel extends ModelObject {
         motor.getSetpoint().addPropertyChangeListener("setpoint", evt -> setSetpoint(formatForMotorDisplay("SP", motor.getSetpoint().getSetpoint())));
         motor.getSetpoint().addPropertyChangeListener("value", evt -> setValue(formatForMotorDisplay("Val", motor.getSetpoint().getValue())));
         
-        motor.addPropertyChangeListener("lowLimit", evt -> setLowLimit(formatForMotorDisplay("Lo", motor.getLowerLimit())));
-        motor.addPropertyChangeListener("highLimit", evt -> setHighLimit(formatForMotorDisplay("Hi", motor.getUpperLimit())));
+        motor.addPropertyChangeListener("lowerLimit", evt -> setLowLimit(formatForMotorDisplay("Lo", motor.getLowerLimit())));
+        motor.addPropertyChangeListener("upperLimit", evt -> setHighLimit(formatForMotorDisplay("Hi", motor.getUpperLimit())));
         
         motor.addPropertyChangeListener("offset", evt -> setOffset(formatForMotorDisplay("Off", motor.getOffset())));
         motor.addPropertyChangeListener("error", evt -> setError(formatForMotorDisplay("Err", motor.getError())));
