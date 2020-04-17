@@ -172,7 +172,7 @@ public class MinimalMotorViewModelTest {
     }
 
     @Test
-    public void GIVEN_motor_is_set_up_THEN_value_is_printed_as_val_colon_space_value_to_two_decimal_places() {
+    public void GIVEN_motor_is_set_up_THEN_value_is_printed_as_val_colon_space_value_to_three_decimal_places() {
         // Arrange
         testMotor.testMotorSetpoint.value = -1.2345;
 
@@ -183,7 +183,7 @@ public class MinimalMotorViewModelTest {
         String output = viewModel.getValue();
 
         // Assert
-        Assert.assertEquals("Val: -1.23", output);
+        Assert.assertEquals("Val: -1.235", output);
     }
 
     @Test
@@ -202,9 +202,9 @@ public class MinimalMotorViewModelTest {
     }
 
     @Test
-    public void GIVEN_motor_is_set_up_THEN_setpoint_is_printed_as_sp_colon_space_value_to_two_decimal_places() {
+    public void GIVEN_motor_is_set_up_THEN_setpoint_is_printed_as_sp_colon_space_value_to_three_decimal_places() {
         // Arrange
-        testMotor.testMotorSetpoint.setpoint = 4.495;
+        testMotor.testMotorSetpoint.setpoint = 4.4951;
 
         viewModel.setMotor(testMotor);
         viewModel.setAdvancedMinimalMotorView(false);
@@ -213,7 +213,7 @@ public class MinimalMotorViewModelTest {
         String output = viewModel.getSetpoint();
 
         // Assert
-        Assert.assertEquals("SP: 4.50", output);
+        Assert.assertEquals("SP: 4.495", output);
     }
 
     @Test
