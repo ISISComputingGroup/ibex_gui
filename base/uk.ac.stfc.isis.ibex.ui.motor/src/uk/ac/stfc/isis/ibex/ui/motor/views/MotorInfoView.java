@@ -46,11 +46,11 @@ public abstract class MotorInfoView extends Composite {
 	
 	protected MouseListener forwardDoubleClick = new MouseAdapter() {
 		@Override
-		public void mouseDoubleClick(MouseEvent e) {
+		public void mouseDown(MouseEvent e) {
 			Event event = new Event();
 			event.widget = MotorInfoView.this;
 	
-			MotorInfoView.this.notifyListeners(SWT.MouseDoubleClick, event);
+			MotorInfoView.this.notifyListeners(SWT.MouseDown, event);
 		}
 	};
 }

@@ -118,7 +118,7 @@ public class MinimalMotorView extends Composite {
 	/** Listens for clicks on a motor in the table, and makes a call to open the OPI for that motor. */
 	public MouseListener motorSelection = new MouseAdapter() {
 		@Override
-		public void mouseDoubleClick(MouseEvent e) {
+		public void mouseDown(MouseEvent e) {
 			if (e.widget instanceof MotorInfoView) {
 				MotorInfoView minimal = (MotorInfoView) e.widget;
                 openMotorView(minimal.getViewModel().getMotor());

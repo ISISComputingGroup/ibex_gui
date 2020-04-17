@@ -68,11 +68,11 @@ public class BooleanImageLabel {
         // clicking on the parent container.
         label.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseDoubleClick(MouseEvent e) {
+            public void mouseDown(MouseEvent e) {
                 Event event = new Event();
                 event.widget = parent;
 
-                parent.notifyListeners(SWT.MouseDoubleClick, event);
+                parent.notifyListeners(SWT.MouseDown, event);
             }
         });
 	}
