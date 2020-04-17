@@ -67,7 +67,7 @@ public class EditableIocsConverter extends Converter<Map<String, IocParameters>,
 	 * @param value - The value to set.
 	 */
 	private static <T> void setIfNotNull(Consumer<T> toBeSet, T value) {
-		if (value != null ) {
+		if (value != null) {
 			toBeSet.accept(value);
 		}
 	}

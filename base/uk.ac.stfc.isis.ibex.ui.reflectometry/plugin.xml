@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="true"
+            class="uk.ac.stfc.isis.ibex.ui.reflectometry.ReflectometryOpiTargetView"
+            id="uk.ac.stfc.isis.ibex.ui.reflectometry.ReflectometryOpiTargetView"
+            name="Reflectometry OPI View"
+            restorable="true">
+      </view>
+      <view
+            allowMultiple="true"
+            class="uk.ac.stfc.isis.ibex.ui.graphing.FixedMatplotlibOpiTargetView"
+            id="uk.ac.stfc.isis.ibex.ui.graphing.FixedMatplotlibOpiTargetView"
+            name="Matplotlib"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="uk.ac.stfc.isis.ibex.ui.scripting.InterruptScript"
+            commandId="uk.ac.stfc.isis.ibex.ui.scripting.KillScript">
+      </handler>
+   </extension>
+
+</plugin>

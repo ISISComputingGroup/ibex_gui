@@ -72,7 +72,7 @@ public class DisplayGroup {
 
     private DisplayBlock block(final String name) {
         return allBlocks.stream()
-        		.filter(block ->block.getName().equals(name))
+        		.filter(block -> block.getName().equals(name))
         		.findFirst()
         		.orElse(null);
     }

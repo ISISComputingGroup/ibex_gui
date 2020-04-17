@@ -117,7 +117,7 @@ public class VTypeFormatFromConversionsTest {
 	// Arrange
 	Converter<VDouble, Double> converter = VTypeFormat.fromDouble();
 
-	Double number = new Double(123.456);
+	Double number = Double.valueOf(123.456);
 
 	VDouble value = ValueFactory.newVDouble(number);
 
@@ -133,7 +133,7 @@ public class VTypeFormatFromConversionsTest {
 	// Arrange
 	Converter<VInt, Integer> converter = VTypeFormat.fromVInt();
 
-	Integer number = new Integer(123);
+	Integer number = Integer.valueOf(123);
 
 	VInt value = ValueFactory.newVInt(number, null, null, null);
 
@@ -149,7 +149,7 @@ public class VTypeFormatFromConversionsTest {
 	// Arrange
 	Converter<VShort, Short> converter = VTypeFormat.fromShort();
 
-	Short number = new Short((short) 123);
+	Short number = Short.valueOf((short) 123);
 
 	VShort value = ValueFactory.newVShort(number, null, null, null);
 
@@ -165,7 +165,7 @@ public class VTypeFormatFromConversionsTest {
 	// Arrange
 	Converter<VLong, Long> converter = VTypeFormat.fromLong();
 
-	Long number = new Long(123);
+	Long number = Long.valueOf(123);
 
 	VLong value = ValueFactory.newVLong(number, null, null, null);
 

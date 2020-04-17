@@ -24,7 +24,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
@@ -76,15 +76,14 @@ public class ComponentEditorPanel extends Composite {
     public void setConfig(final EditableConfiguration config) {
 
 		components = config.getEditableComponents();
-		IObservableList<Configuration> selected = BeanProperties.list("selected").observe(components);
-		IObservableList<Configuration> unselected = BeanProperties.list("unselected").observe(components);
+		IObservableList<Configuration> selected = BeanProperties.list("selected", Configuration.class).observe(components);
+		IObservableList<Configuration> unselected = BeanProperties.list("unselected", Configuration.class).observe(components);
 		editor.bind(unselected, selected);
 
         DuplicateChecker<Block> blockDuplicateChecker = new BlockDuplicateChecker();
         DuplicateChecker<Ioc> iocDuplicateChecker = new IocDuplicateChecker();
 
 		editor.addSelectionListenerForSelecting(new SelectionAdapter() {
-			@SuppressWarnings("unchecked")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 			    blockDuplicateChecker.setBase(config.asConfiguration());
@@ -105,7 +104,6 @@ public class ComponentEditorPanel extends Composite {
 		});
 		
 		editor.addSelectionListenerForUnselecting(new SelectionAdapter() {
-			@SuppressWarnings("unchecked")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				components.toggleSelection(editor.selectedItems());

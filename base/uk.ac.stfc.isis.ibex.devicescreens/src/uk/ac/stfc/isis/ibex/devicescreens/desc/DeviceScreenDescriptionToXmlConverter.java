@@ -22,7 +22,7 @@
  */
 package uk.ac.stfc.isis.ibex.devicescreens.desc;
 
-import javax.xml.bind.JAXBException;
+import java.io.IOException;
 
 import com.google.common.base.Strings;
 
@@ -65,7 +65,7 @@ public class DeviceScreenDescriptionToXmlConverter extends Converter<DeviceScree
         }
         try {
             return XMLUtil.toXml(value, DeviceScreensDescription.class, schema.getValue());
-        } catch (JAXBException e) {
+        } catch (IOException e) {
             throw new ConversionException("Error converting device screens to XML", e);
         }
     }

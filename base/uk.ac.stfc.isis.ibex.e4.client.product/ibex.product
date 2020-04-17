@@ -27,6 +27,7 @@
 
    <windowImages i16="platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web16.gif" i32="platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web32.gif" i48="platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web48.gif" i64="platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web64.gif"/>
 
+
    <launcher name="ibex-client">
       <win useIco="true">
          <ico path="../uk.ac.stfc.isis.ibex.e4.client.product/icons/ibex.ico"/>

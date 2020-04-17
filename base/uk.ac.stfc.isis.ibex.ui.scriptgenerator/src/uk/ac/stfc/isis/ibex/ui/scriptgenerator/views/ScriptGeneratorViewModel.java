@@ -21,6 +21,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PartInitException;
@@ -28,16 +29,17 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
 import org.apache.logging.log4j.Logger;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
+import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
 import uk.ac.stfc.isis.ibex.scriptgenerator.NoScriptDefinitionSelectedException;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptDefinitionNotMatched;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
+import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.SaveScriptGeneratorFileMessageDialog;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
-import uk.ac.stfc.isis.ibex.ui.widgets.FileMessageDialog;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
@@ -113,7 +115,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	/**
 	 * The property to listen for changes in a Generator containing the generated script (String).
 	 */
-	private static final String GENERATED_SCRIPT_FILEPATH_PROPERTY = "generated script filepath";
+	private static final String GENERATED_SCRIPT_FILENAME_PROPERTY = "generated script filename";
 	
 	/**
 	 * A property to listen to for when actions change in the model.
@@ -128,7 +130,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	/**
 	 * A property that is changed when script definitions are switched.
 	 */
-	private static final String SCRIPT_DEFINITION_SWITCH_PROPERTY = "script definition";
+	private static final String SCRIPT_DEFINITION_SWITCH_PROPERTY = "scriptDefinition";
 	
 	/**
 	 * A property to notify listeners when python becomes ready or not ready.
@@ -157,6 +159,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * The current generate script button in the view.
 	 */
 	private Button btnGenerateScript;
+	
+	/**
+	 * The current Save Parameters button in the view
+	 */
+	private Button btnSaveParam;
 	
 	/**
 	 * A constructor that sets up the script generator model and 
@@ -191,6 +198,23 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		scriptGeneratorModel.addPropertyChangeListener(SCRIPT_GENERATION_ERROR_PROPERTY, evt -> {
 			LOG.info("Generation error");
 			displayGenerationError();
+		});
+		// Listen for generated script refreshes
+		scriptGeneratorModel.addPropertyChangeListener(GENERATED_SCRIPT_FILENAME_PROPERTY, evt -> {
+			String scriptFilename = (String) evt.getNewValue();
+			DISPLAY.asyncExec(() -> {
+				scriptGeneratorModel.getLastGeneratedScript().ifPresentOrElse(
+						generatedScript -> {
+							SaveScriptGeneratorFileMessageDialog.openInformation(Display.getDefault().getActiveShell(),
+									"Script Generated", "",
+									scriptGeneratorModel.getScriptFilepathPrefix(),
+									scriptFilename, generatedScript, scriptGeneratorModel);
+						},
+						() -> {
+							MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
+						}
+				);
+			});
 		});
 	}
 	
@@ -261,6 +285,20 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		scriptGeneratorModel.duplicateAction(index);
 	}
 	
+    /**
+     * Clears all actions from the ActionsTable.
+     */
+    protected void clearAction() {
+        DISPLAY.asyncExec(() -> {
+            boolean userConfirmation = MessageDialog.openConfirm(DISPLAY.getActiveShell(),
+                    "Warning",
+                    "This will delete all actions, are you sure you want to continue?");
+            if (userConfirmation) {
+                scriptGeneratorModel.clearAction();
+            }
+        });
+    }
+    
 	/**
 	 * Moves action one row up in table.
 	 * 
@@ -287,7 +325,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	protected void cleanUp() {
 		scriptGeneratorModel.cleanUp();
 	}
-	
+
 	/**
 	 * Get a list of available script definitions.
 	 * 
@@ -330,30 +368,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		    }
 		};
 	}
-	
+
 	/**
 	 * Listen for changes in actions and activate the handler.
 	 */
 	private PropertyChangeListener actionChangeListener = evt -> {
-			actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript);
-		};
-	
-	/**
-	 * Listen for generated scripts and display the correct dialog (error or success and open file).
-	 */
-	private PropertyChangeListener generatedScriptListener = evt -> {
-			@SuppressWarnings("unchecked")
-			Optional<String> optionalScriptFilePath = Optional.class.cast(evt.getNewValue());
-			DISPLAY.asyncExec(() -> {
-				optionalScriptFilePath.ifPresentOrElse(
-						scriptFilePath -> {
-							openFileDialog(scriptFilePath);
-						},
-						() -> {
-							MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
-						}
-				);
-			});
+			actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam);
 		};
 
 	/**
@@ -364,23 +384,16 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * @param btnGetValidityErrors The validity check button to style change.
 	 * @param btnGenerateScript The generate script button to style change.
 	 */
-	protected void bindValidityChecks(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript) {
+	protected void bindValidityChecks(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript, Button btnSaveParam) {
 		this.viewTable = viewTable;
 		this.btnGetValidityErrors = btnGetValidityErrors;
 		this.btnGenerateScript = btnGenerateScript;
+		this.btnSaveParam = btnSaveParam;
 		// Remove listeners so as not to bind them twice
 		this.scriptGeneratorModel.getScriptGeneratorTable().removePropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
 		this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
 		this.scriptGeneratorModel.removePropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
 		this.scriptGeneratorModel.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
-		// Listen for generated script refreshes
-		this.scriptGeneratorModel.removePropertyChangeListener(GENERATED_SCRIPT_FILEPATH_PROPERTY, generatedScriptListener);
-		this.scriptGeneratorModel.addPropertyChangeListener(GENERATED_SCRIPT_FILEPATH_PROPERTY, generatedScriptListener);
-	}
-	
-	private void openFileDialog(String filePath) {
-		FileMessageDialog.openInformation(Display.getDefault().getActiveShell(),
-				"Script Generated", "Script generated at: ", filePath);
 	}
 	
 	/**
@@ -389,8 +402,10 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * 
 	 * @param viewTable The view table to update.
 	 * @param btnGetValidityErrors The button to manipulate.
+	 * @param btnGenerateScript Generate Script button's visibility to manipulate
+	 * @param btnSaveParam Save Parameter button's visibility to manipulate
 	 */
-	private void actionChangeHandler(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript) {
+	private void actionChangeHandler(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript, Button btnSaveParam) {
 		DISPLAY.asyncExec(() -> {
 			if (!viewTable.isDisposed()) {
 	            viewTable.setRows(scriptGeneratorModel.getActions());
@@ -401,6 +416,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			}
 			if (!btnGenerateScript.isDisposed()) {
 				setButtonGenerateStyle(btnGenerateScript);
+				setButtonGenerateStyle(btnSaveParam);
 			}
 		});
 	}
@@ -591,7 +607,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     protected void addColumns(ActionsViewTable viewTable) {    	
     	// Add action parameter columns
-        for (ActionParameter actionParameter: scriptGeneratorModel.getActionParameters()) {
+        for (JavaActionParameter actionParameter: scriptGeneratorModel.getActionParameters()) {
 			String columnName = actionParameter.getName();
 			TableViewerColumn column = viewTable.createColumn(
 					columnName, 
@@ -664,7 +680,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
     
     /**
-     * Attach a property listener on aciton parameters to update the table columns when changed.
+     * Attach a property listener on action parameters to update the table columns when changed.
      * 
      * @param viewTable The table to update the columns of.
      */
@@ -698,6 +714,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 
     /**
      * Generate a script and display the file it was generated to. If fail display warnings.
+     * @throws UnsupportedLanguageException 
      */
     public void generate() {
     	try {
@@ -740,11 +757,70 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	}
 	
 	/**
-	 * Get the user manual URL for the script generator from the model.
+	 * Save Parameter Values to a file. Checks if file already exists and asks if user wants to overwrite it.
+	 */
+	public void saveParameterValues() {		
+		Optional<String> fileName  = openFileDialog(SWT.SAVE);
+		// filename will be null if user has clicked cancel button
+		if (fileName.isPresent()) {
+			try {
+				scriptGeneratorModel.saveParameters(fileName.get());
+				MessageDialog.openInformation(DISPLAY.getActiveShell(), "Saved", "File saved!");
+	
+			} catch (NoScriptDefinitionSelectedException e) {
+				LOG.error(e);
+				MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
+						"Cannot generate script. No script definition has been selected");
+			} 
+		}
+	}
+	
+	/**
+	 * Open file dialog which opens file browser for saving and loading parameter values.
+	 * @param action save or load
+	 * @return filename to save or load
+	 */
+	private Optional<String> openFileDialog(int action) {
+		FileDialog dialog = new FileDialog(Display.getDefault().getActiveShell(), action);
+		dialog.setFilterPath("C:/scripts");
+		dialog.setFilterExtensions(new String[] {"*.json"});
+		dialog.setOverwrite(true);
+		if (action == SWT.SAVE) {
+			dialog.setText("Save as");
+
+		} else {
+			dialog.setText("Load");
+		}
+		return Optional.ofNullable(dialog.open());
+	}
+	
+	/**
+	 * Load parameter values.
+	 */
+	public void loadParameterValues() {
+		Optional<String> selectedFile = openFileDialog(SWT.OPEN);
+		// filename will be null if user has clicked cancel button
+		if (selectedFile.isPresent()) {
+			try {
+				scriptGeneratorModel.loadParameterValues(selectedFile.get());
+			} catch (NoScriptDefinitionSelectedException e) {
+				LOG.error(e);
+				MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
+						"Cannot generate script. No script definition has been selected");
+			} catch (ScriptDefinitionNotMatched | UnsupportedOperationException e) {
+				LOG.error(e);
+				MessageDialog.openError(DISPLAY.getActiveShell(), "Error", e.getMessage());
+			}
+		}
+	};
+		
+
+	/** Get the user manual URL for the script generator from the model.
 	 * 
 	 * @return An optional with a value containing the URL if there is a user manual to load.
 	 */
 	public Optional<URL> getUserManualUrl() {
 	    return scriptGeneratorModel.getUserManualUrl();
 	}
+
 }

@@ -39,7 +39,6 @@ import org.eclipse.swt.widgets.Display;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.ui.dialogs.WaitForDialog;
-import uk.ac.stfc.isis.ibex.ui.UI;
 
 /**
  * The Class WaitFor which is a handler which will show and hide the wait for the server dialogue.

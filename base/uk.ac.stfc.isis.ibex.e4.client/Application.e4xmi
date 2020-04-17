@@ -82,6 +82,9 @@
     <sharedElements xsi:type="basic:PartStack" xmi:id="_yrd0QBH9Eeq6Ie-xR-8O0g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.35" selectedElement="_SDyz8BH8Eeq6Ie-xR-8O0g">
       <children xsi:type="basic:Part" xmi:id="_SDyz8BH8Eeq6Ie-xR-8O0g" elementId="org.eclipse.ui.console.ConsoleView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="scripting console"/>
     </sharedElements>
+    <sharedElements xsi:type="basic:PartStack" xmi:id="_-0AlUFPmEeqH3pE5MQqo5A" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.36" containerData="50">
+      <children xsi:type="basic:Part" xmi:id="_-0AlUVPmEeqH3pE5MQqo5A" elementId="uk.ac.stfc.isis.ibex.ui.graphing.FixedMatplotlibOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Plot"/>
+    </sharedElements>
     <trimBars xmi:id="_-fkTUGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.trimbar.0" side="Left">
       <children xsi:type="menu:ToolControl" xmi:id="__XZ6QGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.toolcontrol.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views.PerspectiveSwitcherView"/>
     </trimBars>
@@ -421,6 +424,7 @@
         <children xsi:type="advanced:Placeholder" xmi:id="_234KUBH9Eeq6Ie-xR-8O0g" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.17" containerData="50" ref="_yrd0QBH9Eeq6Ie-xR-8O0g"/>
         <children xsi:type="basic:PartStack" xmi:id="_WuLscIXrEeib1Ij4B5lomQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.32" toBeRendered="false" containerData="50">
           <children xsi:type="basic:Part" xmi:id="_7Zl3sIXbEeiCJ_qZ_3IIBQ" elementId="uk.ac.stfc.isis.ibex.ui.graphing.MatplotlibOpiTargetView" toBeRendered="false" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Plot" closeable="true"/>
+          <children xsi:type="basic:Part" xmi:id="_fafW0FieEeqLYa1n_yUxzw" elementId="uk.ac.stfc.isis.ibex.ui.graphing.BackgroundScriptOpiTargetView" toBeRendered="false" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Background Plot"/>
         </children>
       </children>
     </children>
@@ -552,6 +556,31 @@
       </children>
       <children xsi:type="basic:PartStack" xmi:id="_SW36YAEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.21" containerData="70">
         <children xsi:type="basic:Part" xmi:id="_V00A4AEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.part.journalviewer" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.journalviewer/uk.ac.stfc.isis.ibex.ui.journalviewer.JournalViewerView" label="Journal Viewer"/>
+      </children>
+    </children>
+  </snippets>
+  <snippets xsi:type="advanced:Perspective" xmi:id="_xohCoBgVEeqNCfSxpw4Lrg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.reflectometry" accessibilityPhrase="Reflectometry" selectedElement="_QZEw8AEXEeig2LifGCNPPQ" label="Reflectometry" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.reflectometry/icons/reflectometry_24x24.png" tooltip="The front panel for reflectometry experiments">
+    <children xsi:type="basic:PartSashContainer" xmi:id="_QZEw8AEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.27" selectedElement="_NvInsBgZEeqNCfSxpw4Lrg">
+      <children xsi:type="basic:PartSashContainer" xmi:id="_Rqjm8AEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.28" containerData="30" horizontal="true">
+        <children xsi:type="basic:PartStack" xmi:id="_eQS_cAEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.30" containerData="35">
+          <children xsi:type="advanced:Placeholder" xmi:id="_glcR4AEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.6" ref="_RgW1RIjKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
+        </children>
+        <children xsi:type="basic:PartStack" xmi:id="_ekSScAEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.31" containerData="65">
+          <children xsi:type="advanced:Placeholder" xmi:id="_g7MfcAEXEeig2LifGCNPPQ" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.12" ref="_RgW1RojKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
+        </children>
+      </children>
+      <children xsi:type="basic:PartSashContainer" xmi:id="_NvInsBgZEeqNCfSxpw4Lrg" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.29" containerData="70" selectedElement="_L1HAoBg9EeqNCfSxpw4Lrg" horizontal="true">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_L1HAoBg9EeqNCfSxpw4Lrg" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.30" containerData="38">
+          <children xsi:type="advanced:Placeholder" xmi:id="_234KUBH9Eeq6Ie-xR-8O0g" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.18" containerData="50" ref="_yrd0QBH9Eeq6Ie-xR-8O0g"/>
+          <children xsi:type="advanced:Placeholder" xmi:id="_CcERIFPnEeqH3pE5MQqo5A" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.16" containerData="50" ref="_-0AlUFPmEeqH3pE5MQqo5A"/>
+        </children>
+        <children xsi:type="basic:PartStack" xmi:id="_4oBKYBqREeqyO7x5cUnuHg" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.37" containerData="62">
+          <children xsi:type="basic:Part" xmi:id="_5pZu4BqREeqyO7x5cUnuHg" elementId="uk.ac.stfc.isis.ibex.ui.reflectometry.ReflectometryOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" iconURI=""/>
+        </children>
       </children>
     </children>
   </snippets>

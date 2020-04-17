@@ -30,12 +30,12 @@
 package uk.ac.stfc.isis.ibex.logger.config;
 
 import java.io.Serializable;
-import java.net.URI;
-
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.Appender;
 import org.apache.logging.log4j.core.Layout;
+import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.appender.ConsoleAppender;
+import org.apache.logging.log4j.core.appender.ConsoleAppender.Target;
 import org.apache.logging.log4j.core.appender.RollingFileAppender;
 import org.apache.logging.log4j.core.appender.rolling.CompositeTriggeringPolicy;
 import org.apache.logging.log4j.core.appender.rolling.DefaultRolloverStrategy;
@@ -56,25 +56,19 @@ public final class LoggingConfiguration {
 	private LoggingConfiguration() { }
 	
 	public static void configure() {
-		Log4j2ConfigurationFactory factory = new Log4j2ConfigurationFactory();
-		ConfigurationFactory.setConfigurationFactory(factory);
+		System.setProperty("log4j.configurationFactory", Log4j2ConfigurationFactory.class.getName());
 	}
 
 	public static class Log4j2ConfigurationFactory extends ConfigurationFactory {
 
 		@Override
+		public Configuration getConfiguration(LoggerContext ignored, ConfigurationSource source) {
+			return new Log4j2Configuration();
+		}
+
+		@Override
 		protected String[] getSupportedTypes() {
 			return null;
-		}
-
-		@Override
-		public Configuration getConfiguration(ConfigurationSource source) {
-			return new Log4j2Configuration();
-		}
-
-		@Override
-		public Configuration getConfiguration(String name, URI configLocation) {
-			return new Log4j2Configuration();
 		}
 	}
 
@@ -118,35 +112,58 @@ public final class LoggingConfiguration {
 			patternLayout = "*" + patternLayout;
 			filename = directory + "/" + filename;
 			String pattern = directory + "/" + archivePattern;
-			String fileSizeInBytes = fileSizeMB * BYTES_PER_KB + "";
-			String numLogFiles = maxFiles + "";
-
-			// Make pattern layout
-			Layout<? extends Serializable> layout = PatternLayout.createLayout(
-					patternLayout, this, null, null, false, false, null, null);
-
-			// Make Console Appender
-			Appender console = ConsoleAppender.createAppender(layout, null,
-					"SYSTEM_OUT", "Console", "true", null);
+			int fileSizeInBytes = fileSizeMB * BYTES_PER_KB;
+			
+			Layout<? extends Serializable> layout = PatternLayout.newBuilder()
+					.withPattern(patternLayout)
+					.withConfiguration(this)
+					.withAlwaysWriteExceptions(false)
+					.withNoConsoleNoAnsi(false)
+					.build();
+			
+			Appender console = ConsoleAppender.newBuilder()
+			    .setLayout(layout)
+			    .setTarget(Target.SYSTEM_OUT)
+			    .setName("Console")
+			    .setFollow(true)
+			    .setConfiguration(this)
+			    .build();
+			
 			addAppender(console);
 			getRootLogger().addAppender(console, loggingLevel, null);
 
-			// Make File Appender
-			final TimeBasedTriggeringPolicy timeBasedTriggeringPolicy = TimeBasedTriggeringPolicy
-					.createPolicy("1", "false");
+		
+			final TimeBasedTriggeringPolicy timeBasedTriggeringPolicy = TimeBasedTriggeringPolicy.newBuilder()
+				.withInterval(1)
+				.withModulate(false)
+				.build();
+			
 			final SizeBasedTriggeringPolicy sizeBasedTriggeringPolicy = SizeBasedTriggeringPolicy
-					.createPolicy(fileSizeInBytes);
+					.createPolicy(Integer.toString(fileSizeInBytes));
 			final CompositeTriggeringPolicy policy = CompositeTriggeringPolicy
 					.createPolicy(timeBasedTriggeringPolicy,
 							sizeBasedTriggeringPolicy);
-
-			final DefaultRolloverStrategy strategy = DefaultRolloverStrategy
-					.createStrategy(numLogFiles, "1", null, null, this);
-
-			Appender fileAppender = RollingFileAppender.createAppender(
-					filename, pattern, "true", "isis-log-file-appender",
-					"true", fileSizeInBytes, "true", policy, strategy, layout,
-					null, "true", null, null, this);
+			
+			final DefaultRolloverStrategy strategy = DefaultRolloverStrategy.newBuilder()
+			    .withMax(Integer.toString(maxFiles))
+			    .withMin(Integer.toString(1))
+			    .withConfig(this)
+			    .build();
+			    
+			
+			final Appender fileAppender = RollingFileAppender.newBuilder()
+				.withFileName(filename)
+				.withFilePattern(pattern)
+				.withAppend(true)
+				.setName("isis-log-file-appender")
+				.withBufferedIo(true)
+				.withBufferSize(fileSizeInBytes)
+				.withImmediateFlush(true)
+				.withPolicy(policy)
+				.withStrategy(strategy)
+				.setLayout(layout)
+				.setConfiguration(this)
+				.build();
 
 			addAppender(fileAppender);
 			getRootLogger().addAppender(fileAppender, loggingLevel, null);
