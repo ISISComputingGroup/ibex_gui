@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.motor.observable;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
@@ -30,7 +29,6 @@ import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
-import uk.ac.stfc.isis.ibex.instrument.channels.BooleanChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.ShortChannel;
@@ -164,7 +162,8 @@ public class MotorVariables extends Closer {
         offset = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWithField("OFF"));
         error = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWithField("DIFF"));
         
-        usingEncoder = obsFactory.getSwitchableObservable(new BooleanChannel(), fullAddress.endWithField("UEIP"));
+        usingEncoder =  InstrumentUtils.convert(
+        		obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWith("USING_ENCODER")), GREATER_THAN_ZERO_CONVERTER);
         energised = InstrumentUtils.convert(
         		obsFactory.getSwitchableObservable(new EnumChannel<EnergisedStatus>(EnergisedStatus.class), fullAddress.toString() + "_ON_STATUS"), ENERGISED_CONVERTER);
         
