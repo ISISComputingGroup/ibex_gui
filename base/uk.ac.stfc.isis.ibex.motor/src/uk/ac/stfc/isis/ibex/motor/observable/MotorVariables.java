@@ -51,26 +51,40 @@ public class MotorVariables extends Closer {
 			return value > 0 ? MotorDirection.POSITIVE : MotorDirection.NEGATIVE;
 		}
 	};
-
+	
 	private static final Converter<Short, Boolean> TO_BOOLEAN = new Converter<Short, Boolean>() {
 		@Override
 		public Boolean convert(Short value) throws ConversionException {
 			if (value == null) {
 				return null;
 			}
-			
-			return value > 0 ? true : false;
+			return value > 0;
 		}
 	};
-
-	private static final Converter<String, String> CAPITALISE_FIRST_LETTER_ONLY = new Converter<String, String>() {
+	
+	private enum EnergisedStatus {
+		ON,
+		OFF;
+	}
+	
+	private static final Converter<EnergisedStatus, Boolean> ENERGISED_CONVERTER = new Converter<EnergisedStatus, Boolean>() {
 		@Override
-		public String convert(String value) throws ConversionException {
-			if (value == null || value.length() == 0) {
-				return value;
+		public Boolean convert(EnergisedStatus value) {
+			if (value == null) {
+				return null;
+			} else {
+				return value == EnergisedStatus.ON;
 			}
-			
-			return Character.toUpperCase(value.charAt(0)) + value.substring(1);
+		}
+	};
+	
+	private static final Converter<Double, Boolean> GREATER_THAN_ZERO_CONVERTER = new Converter<Double, Boolean>() {
+		@Override
+		public Boolean convert(Double value) throws ConversionException {
+			if (value == null) {
+			    return null;
+			}
+			return value > 0;
 		}
 	};
 	
@@ -94,6 +108,12 @@ public class MotorVariables extends Closer {
     /** The upper limit observable. */
 	public final ForwardingObservable<Double> upperLimit;
 	
+    /** The offset observable. */
+	public final ForwardingObservable<Double> offset;
+
+    /** The error observable. */
+	public final ForwardingObservable<Double> error;
+	
     /** The direction observable. */
 	public final ForwardingObservable<MotorDirection> direction;
 
@@ -102,15 +122,21 @@ public class MotorVariables extends Closer {
 
     /** The "at home" observable. */
 	public final ForwardingObservable<Boolean> atHome;
+	
+	/** The "using encoder" observable. */
+	public final ForwardingObservable<Boolean> usingEncoder;
+	
+	/** The "energised" observable. */
+	public final ForwardingObservable<Boolean> energised;
 
     /** The "at upper limit" observable. */
 	public final ForwardingObservable<Boolean> atUpperLimitSwitch;
 
     /** The "at lower limit" observable. */
 	public final ForwardingObservable<Boolean> atLowerLimitSwitch;
-	
-    /** The status observable. */
-	public final ForwardingObservable<String> status;
+
+    /** The "within tolerance" observable. */
+	public final ForwardingObservable<Boolean> withinTolerance;
 
     /**
      * Constructor.
@@ -130,28 +156,33 @@ public class MotorVariables extends Closer {
         enable = obsFactory.getSwitchableObservable(new EnumChannel<>(MotorEnable.class),
                 fullAddress.toString() + "_able");
 		
-        lowerLimit = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWithField("DLLM"));
-        upperLimit = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWithField("DHLM"));
-		
+        lowerLimit = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWithField("LLM"));
+        upperLimit = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWithField("HLM"));
+        
+        offset = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWithField("OFF"));
+        error = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWithField("DIFF"));
+        
+        usingEncoder =  InstrumentUtils.convert(
+        		obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWith("USING_ENCODER")), GREATER_THAN_ZERO_CONVERTER);
+        energised = InstrumentUtils.convert(
+        		obsFactory.getSwitchableObservable(new EnumChannel<EnergisedStatus>(EnergisedStatus.class), fullAddress.toString() + "_ON_STATUS"), ENERGISED_CONVERTER);
+        
         direction = InstrumentUtils.convert(
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("TDIR")),
                 TO_MOTOR_DIRECTION);
 		
         moving = InstrumentUtils.convert(
-                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("MOVN")),
-                TO_BOOLEAN);
+                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("MOVN")), TO_BOOLEAN);
         atHome = InstrumentUtils.convert(
-                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("ATHM")),
-                TO_BOOLEAN);
+                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("ATHM")), TO_BOOLEAN);
         atUpperLimitSwitch = InstrumentUtils.convert(
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("HLS")), TO_BOOLEAN);
         atLowerLimitSwitch = InstrumentUtils.convert(
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("LLS")), TO_BOOLEAN);
         setpoint = new MotorSetPointVariables(fullAddress, obsFactory, writeFactory);
-		
-        status = InstrumentUtils.convert(
-                obsFactory.getSwitchableObservable(new StringChannel(), motorAddress.toString() + "_STATUS"),
-                CAPITALISE_FIRST_LETTER_ONLY);
+        
+        withinTolerance = InstrumentUtils.convert(
+		        obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWith("IN_POSITION")), GREATER_THAN_ZERO_CONVERTER);
 	}
 	
     /**

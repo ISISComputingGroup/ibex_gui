@@ -29,7 +29,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import uk.ac.stfc.isis.ibex.motor.MotorEnable;
-import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorBackgroundPalette;
+import uk.ac.stfc.isis.ibex.motor.internal.MotorsTableSettings;
+import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.DisplayPreferences;
+import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorPalette;
 import uk.ac.stfc.isis.ibex.ui.motor.views.MinimalMotorViewModel;
 
 /**
@@ -38,15 +40,22 @@ import uk.ac.stfc.isis.ibex.ui.motor.views.MinimalMotorViewModel;
 public class MinimalMotorViewModelTest {
 
     @Mock
-    private MotorBackgroundPalette palette;
+    private MotorPalette palette;
+    @Mock
+    private MotorsTableSettings mockMotorTableSettings;
+
     private MinimalMotorViewModel viewModel;
     private TestMotor testMotor;
-
     @Before
     public void setUp() {
-        viewModel = new MinimalMotorViewModel();
 
-        palette = Mockito.mock(MotorBackgroundPalette.class);
+        mockMotorTableSettings = Mockito.mock(MotorsTableSettings.class);
+        
+        viewModel = new MinimalMotorViewModel(DisplayPreferences.getInstance(), mockMotorTableSettings);
+
+        Mockito.when(mockMotorTableSettings.isAdvancedMinimalMotorView()).thenReturn(false);
+        
+        palette = Mockito.mock(MotorPalette.class);
         Mockito.when(palette.getDisabledColor()).thenReturn(new Color(null, 0, 0, 0));
         Mockito.when(palette.getUnnamedColor()).thenReturn(new Color(null, 1, 1, 1));
         Mockito.when(palette.getMovingColor()).thenReturn(new Color(null, 2, 2, 2));
@@ -163,31 +172,63 @@ public class MinimalMotorViewModelTest {
     }
 
     @Test
-    public void GIVEN_motor_is_set_up_THEN_value_is_printed_as_val_colon_space_value_to_two_decimal_places() {
+    public void GIVEN_motor_is_set_up_THEN_value_is_printed_as_val_colon_space_value_to_three_decimal_places() {
         // Arrange
         testMotor.testMotorSetpoint.value = -1.2345;
 
         viewModel.setMotor(testMotor);
+        viewModel.setAdvancedMinimalMotorView(false);
 
         // Act
         String output = viewModel.getValue();
 
         // Assert
-        Assert.assertEquals("Val: -1.23", output);
+        Assert.assertEquals("Val: -1.235", output);
     }
 
     @Test
-    public void GIVEN_motor_is_set_up_THEN_setpoint_is_printed_as_sp_colon_space_value_to_two_decimal_places() {
+    public void GIVEN_motor_is_set_up_in_advanced_mode_THEN_value_is_printed_as_val_space_value_to_three_decimal_places() {
         // Arrange
-        testMotor.testMotorSetpoint.setpoint = 4.495;
+        testMotor.testMotorSetpoint.value = -1.2345;
 
         viewModel.setMotor(testMotor);
+        viewModel.setAdvancedMinimalMotorView(true);
+
+        // Act
+        String output = viewModel.getValue();
+
+        // Assert
+        Assert.assertEquals("Val -1.235", output);
+    }
+
+    @Test
+    public void GIVEN_motor_is_set_up_THEN_setpoint_is_printed_as_sp_colon_space_value_to_three_decimal_places() {
+        // Arrange
+        testMotor.testMotorSetpoint.setpoint = 4.4951;
+
+        viewModel.setMotor(testMotor);
+        viewModel.setAdvancedMinimalMotorView(false);
 
         // Act
         String output = viewModel.getSetpoint();
 
         // Assert
-        Assert.assertEquals("SP: 4.50", output);
+        Assert.assertEquals("SP: 4.495", output);
+    }
+
+    @Test
+    public void GIVEN_motor_is_set_up_in_adv_mode_THEN_setpoint_is_printed_as_sp_space_value_to_three_decimal_places() {
+        // Arrange
+        testMotor.testMotorSetpoint.setpoint = 3.456789;
+
+        viewModel.setMotor(testMotor);
+        viewModel.setAdvancedMinimalMotorView(true);
+
+        // Act
+        String output = viewModel.getSetpoint();
+
+        // Assert
+        Assert.assertEquals("SP 3.457", output);
     }
 
 }

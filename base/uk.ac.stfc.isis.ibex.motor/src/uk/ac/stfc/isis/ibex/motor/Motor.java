@@ -74,6 +74,22 @@ public abstract class Motor extends ModelObject {
      * @return the upper limit
      */
 	public abstract Double getUpperLimit();
+	
+
+	
+    /**
+     * Gets the offset.
+     * 
+     * @return the offset
+     */
+	public abstract Double getOffset();
+		
+    /**
+     * Gets the positioning error (i.e. difference between VAL and SP).
+     * 
+     * @return the positioning error
+     */
+	public abstract Double getError();
 
     /**
      * Gets the motor direction.
@@ -110,10 +126,24 @@ public abstract class Motor extends ModelObject {
      */
 	public abstract Boolean getAtUpperLimitSwitch();
 	
-    /**
-     * Gets the status of the motor.
+	/**
+     * Gets whether the motor is using an encoder.
      * 
-     * @return the status
+     * @return whether it is using an encoder
      */
-	public abstract String getStatus();
+	public abstract Boolean getUsingEncoder();
+
+    /**
+     * Gets whether the motor is energised.
+     * 
+     * @return whether it is energised
+     */
+	public abstract Boolean getEnergised();
+	
+	/**
+	 * Gets whether the motor is within tolerance.
+	 * 
+	 * @return whether the motor is within tolerance
+	 */
+	public abstract Boolean getWithinTolerance();
 }

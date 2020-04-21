@@ -72,7 +72,10 @@ public class Instrument implements BundleActivator {
      * @return The instrument instance
      */
     public static Instrument getInstance() {
-        return instance;
+    	if (instance == null) {
+    		instance = new Instrument();
+    	}
+    	return instance;
     }
 
     /**
