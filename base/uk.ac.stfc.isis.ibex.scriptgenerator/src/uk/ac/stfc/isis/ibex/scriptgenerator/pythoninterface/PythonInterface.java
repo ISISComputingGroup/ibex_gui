@@ -410,7 +410,7 @@ public class PythonInterface extends ModelObject {
 	 * Generate a script in python and refresh the generated script property.
 	 * 
 	 * @param scriptGenContent The contents to generate the script with. An optional that is empty if parameters are invalid.
-	 * @oaram jsonContent json content that will be hexed and compressed
+	 * @param jsonContent json content that will be hexed and compressed
 	 * @param scriptDefinition           The script definition to generate the script with.
 	 * @throws ExecutionException     A failure to execute the py4j call
 	 * @throws InterruptedException   The Py4J call was interrupted

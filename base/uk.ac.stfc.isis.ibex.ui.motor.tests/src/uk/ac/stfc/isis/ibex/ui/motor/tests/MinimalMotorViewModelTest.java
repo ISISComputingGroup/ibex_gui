@@ -174,7 +174,7 @@ public class MinimalMotorViewModelTest {
     @Test
     public void GIVEN_motor_is_set_up_THEN_value_is_printed_as_val_colon_space_value_to_three_decimal_places() {
         // Arrange
-        testMotor.testMotorSetpoint.value = -1.2345;
+        testMotor.value = -1.2345;
 
         viewModel.setMotor(testMotor);
         viewModel.setAdvancedMinimalMotorView(false);
@@ -189,7 +189,7 @@ public class MinimalMotorViewModelTest {
     @Test
     public void GIVEN_motor_is_set_up_in_advanced_mode_THEN_value_is_printed_as_val_space_value_to_three_decimal_places() {
         // Arrange
-        testMotor.testMotorSetpoint.value = -1.2345;
+        testMotor.value = -1.2345;
 
         viewModel.setMotor(testMotor);
         viewModel.setAdvancedMinimalMotorView(true);
@@ -204,7 +204,7 @@ public class MinimalMotorViewModelTest {
     @Test
     public void GIVEN_motor_is_set_up_THEN_setpoint_is_printed_as_sp_colon_space_value_to_three_decimal_places() {
         // Arrange
-        testMotor.testMotorSetpoint.setpoint = 4.4951;
+        testMotor.setpoint = 4.4951;
 
         viewModel.setMotor(testMotor);
         viewModel.setAdvancedMinimalMotorView(false);
@@ -219,7 +219,7 @@ public class MinimalMotorViewModelTest {
     @Test
     public void GIVEN_motor_is_set_up_in_adv_mode_THEN_setpoint_is_printed_as_sp_space_value_to_three_decimal_places() {
         // Arrange
-        testMotor.testMotorSetpoint.setpoint = 3.456789;
+        testMotor.setpoint = 3.456789;
 
         viewModel.setMotor(testMotor);
         viewModel.setAdvancedMinimalMotorView(true);

@@ -8,7 +8,7 @@ import uk.ac.stfc.isis.ibex.motor.Motors;
 /**
  * The view model for the table of motor settings.
  */
-public class TableOfMotorsSettingsViewModel extends ModelObject {
+public final class TableOfMotorsSettingsViewModel extends ModelObject {
     private boolean advancedMinimalMotorView = false;
 	private DataBindingContext bindingContext = new DataBindingContext();
 	

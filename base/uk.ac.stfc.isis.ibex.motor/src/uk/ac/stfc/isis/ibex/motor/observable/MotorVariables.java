@@ -26,7 +26,6 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
-import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
@@ -93,9 +92,12 @@ public class MotorVariables extends Closer {
     /** The name of the motor. */
 	public final String motorName;
 
-    /** The setpoint. */
-	public final MotorSetPointVariables setpoint; 
+    /** The setpoint observable. */
+	public final ForwardingObservable<Double> setpoint; 
 
+    /** The value of position (readback) observable. */
+	public final ForwardingObservable<Double> value;
+		
     /** The description observable. */
 	public final ForwardingObservable<String> description;
 
@@ -150,7 +152,6 @@ public class MotorVariables extends Closer {
         PVAddress fullAddress = PVAddress.startWith(instrument.getPvPrefix() + motorAddress);
 
         ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
-        WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
 		
         description = obsFactory.getSwitchableObservable(new StringChannel(), fullAddress.endWithField("DESC"));
         enable = obsFactory.getSwitchableObservable(new EnumChannel<>(MotorEnable.class),
@@ -179,7 +180,10 @@ public class MotorVariables extends Closer {
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("HLS")), TO_BOOLEAN);
         atLowerLimitSwitch = InstrumentUtils.convert(
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("LLS")), TO_BOOLEAN);
-        setpoint = new MotorSetPointVariables(fullAddress, obsFactory, writeFactory);
+        
+        setpoint = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWith("SP"));
+ 
+        value = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWithField("RBV"));
         
         withinTolerance = InstrumentUtils.convert(
 		        obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWith("IN_POSITION")), GREATER_THAN_ZERO_CONVERTER);

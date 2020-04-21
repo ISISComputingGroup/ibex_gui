@@ -52,7 +52,13 @@ public abstract class Motor extends ModelObject {
      * 
      * @return the setpoint
      */
-	public abstract MotorSetpoint getSetpoint();
+	public abstract Double getSetpoint();
+	
+    /**
+     * 
+     * @return the current value of position for the motor
+     */
+    public abstract Double getValue();
 	
     /**
      * Gets whether the motor is enabled.
