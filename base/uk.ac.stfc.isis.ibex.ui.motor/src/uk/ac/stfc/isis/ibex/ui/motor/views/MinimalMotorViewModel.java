@@ -83,7 +83,12 @@ public class MinimalMotorViewModel extends ModelObject {
     	this(DisplayPreferences.getInstance(), Motors.getInstance().getMotorSettingsModel());
     }
 
-	public MinimalMotorViewModel(DisplayPreferences displayPrefsModel, MotorsTableSettings motorsTableSettingsModel) {
+    /**
+     * Constructor.
+     * @param displayPrefsModel Model for display preferences, e.g. colours 
+     * @param motorsTableSettingsModel Model for table settings, e.g. advance or simple
+     */
+    public MinimalMotorViewModel(DisplayPreferences displayPrefsModel, MotorsTableSettings motorsTableSettingsModel) {
 		displayPrefsModel.addPropertyChangeListener("motorBackgroundPalette", 
 				evt -> setPalette((MotorPalette) evt.getNewValue()));
 		
@@ -220,16 +225,15 @@ public class MinimalMotorViewModel extends ModelObject {
     }
     
     /**
-     * Get whether this motor is energised.
-     * @return whether this motor is energised
+     * @return The colour for the border, i.e. for within tolerance.
      */
     public Color getBorderColor() {
     	return borderColor;
     }
     
     /**
-     * Set whether this motor is energised.
-     * @param usingEncoder whether this motor is energised
+     * Set the colour for the border, i.e. for within tolerance. 
+     * @param borderColor border colour to use
      */
     public void setBorderColor(final Color borderColor) {
     	firePropertyChange("borderColor", this.borderColor, this.borderColor = borderColor);
@@ -433,7 +437,7 @@ public class MinimalMotorViewModel extends ModelObject {
     }
     
     /**
-     * Sets if the advanced minimal motor view is enabled
+     * Sets if the advanced minimal motor view is enabled.
      * 
      * @param newSetting
      *              whether the advanced minimal view for the table of motors is enabled
@@ -533,7 +537,7 @@ public class MinimalMotorViewModel extends ModelObject {
     
     /**
      * Set whether this motor is energised.
-     * @param usingEncoder whether this motor is energised
+     * @param energised whether this motor is energised
      */
     public void setEnergised(final Boolean energised) {
     	firePropertyChange("energised", this.energised, this.energised = energised);

@@ -49,8 +49,13 @@ public class MotorsOverview extends Composite {
 
     private static final Color GREY_COLOUR = SWTResourceManager.getColor(192, 192, 192);
 
+    /** Height of table of motors. */
     public static final int HEIGHT_DIMENSION = 78;
+    
+    /** Width of table of motors. */
     public static final int WIDTH_DIMENSION = 113;
+    
+    /** Margin around the table of motors. */
     public static final int MARGIN = 1;
 
     /**
@@ -69,10 +74,9 @@ public class MotorsOverview extends Composite {
 	}
 	
     /**
-     * 
+     * Set the motor table on the overview.
+     *  
      * @param motorsTable - The table of motors to be displayed in the view
-     * @param controllerIndexOffset - The offset from 1 of the controller
-     *            numbers (e.g. tab starting at controller 9 has offset of 8).
      */
     public void setMotors(MotorsTable motorsTable) {
     	

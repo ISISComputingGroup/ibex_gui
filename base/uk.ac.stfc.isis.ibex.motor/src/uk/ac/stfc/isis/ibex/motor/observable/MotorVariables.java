@@ -52,7 +52,7 @@ public class MotorVariables extends Closer {
 		}
 	};
 	
-	private static Converter<Short, Boolean> TO_BOOLEAN = new Converter<Short, Boolean>() {
+	private static final Converter<Short, Boolean> TO_BOOLEAN = new Converter<Short, Boolean>() {
 		@Override
 		public Boolean convert(Short value) throws ConversionException {
 			if (value == null) {
@@ -62,7 +62,7 @@ public class MotorVariables extends Closer {
 		}
 	};
 	
-	private static enum EnergisedStatus {
+	private enum EnergisedStatus {
 		ON,
 		OFF;
 	}

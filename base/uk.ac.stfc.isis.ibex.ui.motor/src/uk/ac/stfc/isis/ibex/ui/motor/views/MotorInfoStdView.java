@@ -16,8 +16,13 @@ import org.eclipse.swt.widgets.Label;
  */
 public class MotorInfoStdView extends MotorInfoView {
 
-
-	public MotorInfoStdView(Composite parent, int style, MinimalMotorViewModel minimalMotorViewModel) {
+    /**
+     * Constructor.
+     * @param parent parent of this view
+     * @param style SWT style for the view
+     * @param minimalMotorViewModel model for the view information
+     */
+    public MotorInfoStdView(Composite parent, int style, MinimalMotorViewModel minimalMotorViewModel) {
 		super(parent, style, minimalMotorViewModel);
 		
         GridLayout glMotorComposite = new GridLayout(1, false);
@@ -97,7 +102,7 @@ public class MotorInfoStdView extends MotorInfoView {
 		final Set<Control> controls = Set.of(motorName, value, setpoint, minimalMotionIndicator);
 		
 		for (var control : controls) {
-			control.addMouseListener(forwardDoubleClick);
+			control.addMouseListener(forwardClickOnMotorView);
 		}
 	}
 }

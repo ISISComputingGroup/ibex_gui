@@ -41,7 +41,7 @@ public class TableOfMotorsSettingsViewModel extends ModelObject {
 
 	/**
 	 * Sets whether the table of motors is in "advanced" mode.
-	 * param newSetting true if the table is in advanced mode, false otherwise
+	 * @param newSetting true if the table is in advanced mode, false otherwise
 	 */
 	public void setAdvancedMinimalMotorView(boolean newSetting) {
 		firePropertyChange("advancedMinimalMotorView", this.advancedMinimalMotorView, this.advancedMinimalMotorView = newSetting);

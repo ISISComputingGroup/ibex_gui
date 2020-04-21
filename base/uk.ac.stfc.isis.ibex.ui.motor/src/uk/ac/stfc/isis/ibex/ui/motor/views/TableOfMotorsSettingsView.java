@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Text;
 /** Configurable settings for the table of motors. */
 public class TableOfMotorsSettingsView {
 	Text advancedMinimalMotorView;
-	Button btnAdvancedMinimalMotorView ;
+	Button btnAdvancedMinimalMotorView;
 	
     private TableOfMotorsSettingsViewModel tableOfMotorsSettingsViewModel = TableOfMotorsSettingsViewModel.getInstance();
 
@@ -25,8 +25,6 @@ public class TableOfMotorsSettingsView {
      * 
      * @param parent
      *            the parent of this element
-     * @param tableOfMotorsSettingsViewModel
-     *            the view model to be used by this view.
      */
 	@PostConstruct
 	public void createPartControl(Composite parent) {

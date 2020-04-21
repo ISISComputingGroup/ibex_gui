@@ -20,6 +20,8 @@ import org.eclipse.wb.swt.SWTResourceManager;
  */
 public class MotorInfoAdvView extends MotorInfoView {
 	
+	private static final int ICON_CONTAINER_COLUMN_COUNT = 3;
+
 	private Composite iconContainer;
 	
 	private Composite setpointAndReadbackContainer;
@@ -43,6 +45,12 @@ public class MotorInfoAdvView extends MotorInfoView {
 	private static final Image ENERGISED_ENABLED = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.motor", "icons/power_on.png");
 	private static final Image ENERGISED_DISABLED = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.motor", "icons/power_off.png");
 
+	/**
+	 * Constructor.
+	 * @param parent parent of this view
+	 * @param style SWT style of the view
+	 * @param minimalMotorViewModel view model for data 
+	 */
 	public MotorInfoAdvView(Composite parent, int style, MinimalMotorViewModel minimalMotorViewModel) {
 		super(parent, style, minimalMotorViewModel); 
 		
@@ -70,7 +78,7 @@ public class MotorInfoAdvView extends MotorInfoView {
         
         iconContainer.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false));
         
-        GridLayout iconContainerLayout = new GridLayout(3, false);
+        GridLayout iconContainerLayout = new GridLayout(ICON_CONTAINER_COLUMN_COUNT, false);
         iconContainerLayout.marginHeight = 0;
         iconContainerLayout.marginWidth = 0;
         iconContainerLayout.horizontalSpacing = 2;
@@ -81,7 +89,7 @@ public class MotorInfoAdvView extends MotorInfoView {
 		minimalMotionIndicator.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false));
         minimalMotionIndicator.setMotor(this.getViewModel().getMotor());
         
-        encoderStatus = new BooleanImageLabel(iconContainer, ENCODER_ENABLED, ENCODER_DISABLED, "Encoder present", "Encoder not present");
+        encoderStatus = new BooleanImageLabel(iconContainer, ENCODER_ENABLED, ENCODER_DISABLED, "Using the encoder", "Not using an encoder");
         encoderStatus.setIsEnabled(minimalMotorViewModel.getUsingEncoder());
         minimalMotorViewModel.addUiThreadPropertyChangeListener("usingEncoder", 
         		evt -> encoderStatus.setIsEnabled(minimalMotorViewModel.getUsingEncoder()));
@@ -213,7 +221,7 @@ public class MotorInfoAdvView extends MotorInfoView {
 		final Set<Control> controls = Set.of(motorName, value, setpoint, lowLimit, highLimit, offset, error, iconContainer, minimalMotionIndicator);
 		
 		for (var control : controls) {
-			control.addMouseListener(forwardDoubleClick);
+			control.addMouseListener(forwardClickOnMotorView);
 		}
 	}
     
