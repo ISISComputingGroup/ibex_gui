@@ -25,7 +25,6 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.MotorDirection;
 import uk.ac.stfc.isis.ibex.motor.MotorEnable;
-import uk.ac.stfc.isis.ibex.motor.MotorSetpoint;
 
 /**
  * A motor that is pointing to an actual device.
@@ -34,7 +33,8 @@ public class ObservableMotor extends Motor {
 
 	private final MotorVariables variables;
 	private final TextUpdatedObservableAdapter description;
-	private final MotorSetpoint setpoint;
+	private final UpdatedObservableAdapter<Double> setpoint;
+	private final UpdatedObservableAdapter<Double> value;
 	private final UpdatedObservableAdapter<MotorEnable> enabled;
 	private final UpdatedObservableAdapter<Double> lowerLimit;
 	private final UpdatedObservableAdapter<Double> upperLimit;
@@ -58,7 +58,8 @@ public class ObservableMotor extends Motor {
 	public ObservableMotor(MotorVariables variables) {
 		this.variables = variables;
 		description = textAdapt(variables.description, "description");
-		setpoint = new ObservableMotorSetpoint(variables.motorName, variables.setpoint);
+		setpoint = adapt(variables.setpoint, "setpoint");
+		value = adapt(variables.value, "value");
 		
 		enabled = adapt(variables.enable, "enabled");		
 		lowerLimit = adapt(variables.lowerLimit, "lowerLimit");
@@ -107,8 +108,16 @@ public class ObservableMotor extends Motor {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public MotorSetpoint getSetpoint() {
-		return setpoint;
+	public Double getSetpoint() {
+		return setpoint.getValue();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Double getValue() {
+		return value.getValue();
 	}
 
 	/**

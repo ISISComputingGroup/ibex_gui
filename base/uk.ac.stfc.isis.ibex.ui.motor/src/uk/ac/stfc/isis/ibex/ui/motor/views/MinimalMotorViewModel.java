@@ -299,8 +299,8 @@ public class MinimalMotorViewModel extends ModelObject {
     }
     
     private void refreshLabels() {
-    	setSetpoint(formatForMotorDisplay("SP", motor.getSetpoint().getSetpoint()));
-        setValue(formatForMotorDisplay("Val", motor.getSetpoint().getValue()));
+    	setSetpoint(formatForMotorDisplay("SP", motor.getSetpoint()));
+        setValue(formatForMotorDisplay("Val", motor.getValue()));
         
         setLowLimit(formatForMotorDisplay("Lo", motor.getLowerLimit()));
         setHighLimit(formatForMotorDisplay("Hi", motor.getUpperLimit()));
@@ -352,8 +352,8 @@ public class MinimalMotorViewModel extends ModelObject {
             }
         });
 
-        motor.getSetpoint().addPropertyChangeListener("setpoint", evt -> setSetpoint(formatForMotorDisplay("SP", motor.getSetpoint().getSetpoint())));
-        motor.getSetpoint().addPropertyChangeListener("value", evt -> setValue(formatForMotorDisplay("Val", motor.getSetpoint().getValue())));
+        motor.addPropertyChangeListener("setpoint", evt -> setSetpoint(formatForMotorDisplay("SP", motor.getSetpoint())));
+        motor.addPropertyChangeListener("value", evt -> setValue(formatForMotorDisplay("Val", motor.getValue())));
         
         motor.addPropertyChangeListener("lowerLimit", evt -> setLowLimit(formatForMotorDisplay("Lo", motor.getLowerLimit())));
         motor.addPropertyChangeListener("upperLimit", evt -> setHighLimit(formatForMotorDisplay("Hi", motor.getUpperLimit())));

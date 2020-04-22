@@ -10,6 +10,10 @@ package uk.ac.stfc.isis.ibex.scriptgenerator;
 @SuppressWarnings("serial")
 public class NoScriptDefinitionSelectedException extends Exception {
 	
+    /**
+     * Constructor.
+     * @param message message for log
+     */
 	public NoScriptDefinitionSelectedException(String message) {
 		super(message);
 	}
