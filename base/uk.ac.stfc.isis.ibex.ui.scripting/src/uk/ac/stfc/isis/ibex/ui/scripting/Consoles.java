@@ -34,10 +34,14 @@ import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.console.ConsolePlugin;
+import org.eclipse.ui.console.IConsole;
+import org.eclipse.ui.console.IConsoleListener;
+import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.internal.console.ConsoleView;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -126,6 +130,35 @@ public class Consoles extends AbstractUIPlugin {
 				}
 			}
 		};
+		ConsolePlugin.getDefault().getConsoleManager().addConsoleListener( new IConsoleListener() {
+
+			public void consolesAdded(IConsole[] consoles) {
+				IConsoleManager manager = ConsolePlugin.getDefault().getConsoleManager();
+				int numberOfConsoles = manager.getConsoles().length;
+
+				if (numberOfConsoles > 1) {
+					Display.getDefault().syncExec(new Runnable() {
+				    public void run() {
+				    	boolean continueWithNewConsole = MessageDialog.openQuestion(Display.getDefault().getActiveShell(), "Duplicate console",
+				    			"Scripting console already Exists\nDo you still want to create a new One?");
+				    	if (!continueWithNewConsole) {
+				    		manager.removeConsoles(consoles);
+				    	}
+				    }
+				});
+					
+				}
+
+			}
+
+			@Override
+			public void consolesRemoved(IConsole[] consoles) {
+				// Do Nothing
+
+			}
+			
+//			org.eclipse.ui.console.ConsoleView;
+		});
 
 		broker.subscribe(UIEvents.ElementContainer.TOPIC_ALL, handler);
 
@@ -197,7 +230,7 @@ public class Consoles extends AbstractUIPlugin {
 					// which, in E4, returns null and so throws a NullPointerException. We can't catch this
 					// exception as it is in a worker thread. Nevertheless, this is better than the confusion 
 					// that follows the scripting console getting accidentally opened in the wrong perspective.
-					new ConsoleView();
+  					new ConsoleView();
 					GENIE_CONSOLE_FACTORY.configureAndCreateConsole(Commands.getSetInstrumentCommand(), compactPlot);
 				}
 			}
