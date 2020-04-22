@@ -367,6 +367,8 @@ $(pv_value)</tooltip>
         <pv trig="false">$(P)$(J):JW</pv>
         <pv trig="false">$(P)$(J):MAXN</pv>
         <pv trig="false">$(P)$(J):MAXE</pv>
+        <pv trig="false">$(P)$(J):MINS</pv>
+        <pv trig="false">$(P)$(J):MINW</pv>
         <pv trig="true">=1</pv>
       </path>
     </scripts>
