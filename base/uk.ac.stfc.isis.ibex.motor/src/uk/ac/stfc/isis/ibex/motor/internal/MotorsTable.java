@@ -64,8 +64,8 @@ public class MotorsTable extends Closer {
 	}
 	
 	/**
-	 * 
-	 * @return motors in this table
+	 * Gets the motors in this table.
+	 * @return the motors in this table
 	 */
 	public Collection<Motor> motors() {
 		return new ArrayList<>(motors);

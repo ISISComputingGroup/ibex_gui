@@ -16,14 +16,13 @@ public enum GeneratedLanguage {
 	
 	private final String name;
 	
-	/**
-	 * Constructor
-	 * @param name name of the language
-	 */
-	GeneratedLanguage(String name) {
+	private GeneratedLanguage(String name) {
 		this.name = name;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		return name;

@@ -68,7 +68,6 @@ public class Motors extends Plugin {
      * Constructor.
      */
     public Motors() {
-	super();
 	instance = this;
 
 	for (int i = 0; i < NUMBER_MOTOR_TABLES; i++) {
@@ -86,6 +85,7 @@ public class Motors extends Plugin {
     }
 
     /**
+     * Gets the context for the bundle.
      * @return context for the bundle.
      */
     static BundleContext getContext() {
@@ -95,6 +95,7 @@ public class Motors extends Plugin {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void start(BundleContext bundleContext) throws Exception {
 	Motors.context = bundleContext;
     }
@@ -102,6 +103,7 @@ public class Motors extends Plugin {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void stop(BundleContext bundleContext) throws Exception {
 	Motors.context = null;
 	for (MotorsTable motorsTable : motorsTableList) {

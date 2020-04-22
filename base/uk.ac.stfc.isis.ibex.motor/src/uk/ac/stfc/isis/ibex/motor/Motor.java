@@ -55,6 +55,7 @@ public abstract class Motor extends ModelObject {
 	public abstract Double getSetpoint();
 	
     /**
+     * Gets the current value of position for the motor.
      * 
      * @return the current value of position for the motor
      */

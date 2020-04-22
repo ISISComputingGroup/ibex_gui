@@ -25,7 +25,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * The IO mode of a PV in the synoptic view.
- *
  */
 @XmlRootElement(name = "recordtype")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -34,7 +33,7 @@ public class RecordType {
 	private IO io;
 	
 	/**
-	 * 
+	 * Gets the IO mode, read or write, of a PV in a synoptic.
 	 * @return the IO mode, read or write, of a PV in a synoptic
 	 */
 	public IO io() {
