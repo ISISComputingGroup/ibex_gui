@@ -24,22 +24,34 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.logging.log4j.Logger;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.e4.core.contexts.EclipseContextFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
+import org.eclipse.jface.action.ActionContributionItem;
+import org.eclipse.jface.action.IContributionItem;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
+import org.eclipse.ui.console.IConsoleConstants;
 import org.eclipse.ui.console.IConsoleListener;
 import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.internal.console.ConsoleView;
@@ -84,7 +96,9 @@ public class Consoles extends AbstractUIPlugin {
 	 * This is the file which we will log old console output to if it is trimmed automatically.
 	 */
 	private static final String TRIMMED_CONSOLE_LOG_PATH = Paths.get(System.getProperty("user.dir"), "console-output-trimmed.txt").toString();
-
+	
+	public static boolean showDialog = true;
+	
 	private IEclipseContext eclipseContext;
 
 	/**
@@ -139,27 +153,48 @@ public class Consoles extends AbstractUIPlugin {
 				if (numberOfConsoles > 1) {
 					Display.getDefault().syncExec(new Runnable() {
 				    public void run() {
-				    	boolean continueWithNewConsole = MessageDialog.openQuestion(Display.getDefault().getActiveShell(), "Duplicate console",
-				    			"Scripting console already Exists\nDo you still want to create a new One?");
-				    	if (!continueWithNewConsole) {
-				    		manager.removeConsoles(consoles);
+				    	if (showDialog) {
+					    	boolean continueWithNewConsole = MessageDialog.openQuestion(Display.getDefault().getActiveShell(), "Duplicate console",
+					    			"Scripting console already Exists\nDo you still want to create a new One?");
+					    	if (!continueWithNewConsole) {
+					    		manager.removeConsoles(consoles);
+					    	}
 				    	}
 				    }
 				});
 					
 				}
-
-			}
-
+			}	
+			
 			@Override
 			public void consolesRemoved(IConsole[] consoles) {
 				// Do Nothing
 
 			}
 			
-//			org.eclipse.ui.console.ConsoleView;
 		});
-
+		
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+				IWorkbenchPage page = window.getActivePage();
+				IViewPart part = page.findView(IConsoleConstants.ID_CONSOLE_VIEW);
+				ConsoleView view = (ConsoleView)part;
+				
+				IToolBarManager tbm = view.getViewSite().getActionBars().getToolBarManager();
+				IContributionItem [] items= tbm.getItems();
+				
+				List<ActionContributionItem> itemsToDisable = Arrays.stream(items).filter(item->(item instanceof ActionContributionItem))
+				.map(item->(ActionContributionItem)item)
+				.filter(item-> item.getAction().toString().contains("PinConsole"))
+				.collect(Collectors.toList());
+				
+				itemsToDisable.forEach(action -> action.setVisible(false));
+				view.getViewSite().getActionBars().updateActionBars();
+			}
+		});
+		
 		broker.subscribe(UIEvents.ElementContainer.TOPIC_ALL, handler);
 
 		GraphingConnector.startListening();
@@ -230,8 +265,10 @@ public class Consoles extends AbstractUIPlugin {
 					// which, in E4, returns null and so throws a NullPointerException. We can't catch this
 					// exception as it is in a worker thread. Nevertheless, this is better than the confusion 
 					// that follows the scripting console getting accidentally opened in the wrong perspective.
-  					new ConsoleView();
-					GENIE_CONSOLE_FACTORY.configureAndCreateConsole(Commands.getSetInstrumentCommand(), compactPlot);
+					new ConsoleView();
+					
+  					GENIE_CONSOLE_FACTORY.configureAndCreateConsole(Commands.getSetInstrumentCommand(), compactPlot);
+  					ConsolePlugin.getDefault().getConsoleManager().getConsoles();
 				}
 			}
 		});
@@ -246,7 +283,7 @@ public class Consoles extends AbstractUIPlugin {
 		LOG.info("Installing output length limits on all consoles");
 		getPythonScriptingConsoles().forEach(this::installOutputLengthLimit);
 	}
-
+	
 	private void installOutputLengthLimit(final ScriptConsole console) {
 		try {
 			console.getDocument().addDocumentListener(new IDocumentListener() {
