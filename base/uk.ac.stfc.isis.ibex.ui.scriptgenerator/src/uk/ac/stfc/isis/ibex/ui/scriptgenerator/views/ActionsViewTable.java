@@ -95,9 +95,14 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 				if (event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL) { 
  					ColumnViewerEditor editor = this.getViewer().getColumnViewerEditor();
  					ViewerCell nextCell = editor.getFocusCell().getNeighbor(ViewerCell.RIGHT, false);
+ 					
+ 					/* The reason this variable is a 1 based index and not a 0 base index 
+ 					 * is because we want to go to a new row when we are on the penultimate
+ 					 * column rather than when we are on the last column. This is because the 
+ 					 * last column is a non editable validity column.*/
 					int currentlyFocusedColumn = editor.getFocusCell().getColumnIndex() + 1;
 					
-					// Add new action if tab is pressed by user in the last cell of the table
+					// Add new action if tab is pressed by user in the last cell of the table.
 					if (nextCell.getNeighbor(ViewerCell.BELOW, false) == null 
 					        && (viewer.getTable().getColumnCount() - 1 == currentlyFocusedColumn)) {
 					    
