@@ -67,7 +67,7 @@ public class GenieOpenConsoleAction extends OpenConsoleAction {
 			if (!WorkbenchActivityHelper.filterItem(extension) && extension.isEnabled()) {
 				ImageDescriptor image = extension.getImageDescriptor();
 				String label = extension.getLabel();
-				// Do not add PyDev console to pop sup menu
+				// Do not add PyDev console to pop up menu
 				if (label.contains("PyDev Console")) {
 					pyDevExt = extension;
 					continue;
