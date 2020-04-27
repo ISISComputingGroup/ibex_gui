@@ -128,6 +128,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * all script generator contents are valid or not (bool).
 	 */
 	private static final String PARAM_VALIDITY_PROPERTY = "parameter validity";
+	
+	private static final String TIME_ESTIMATE_PROPERTY = "time estimate";
 
 	/**
 	 * The property to listen for changes in a Generator containing the generated
@@ -235,9 +237,15 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		// If the validity error message property of the generator is changed update the
 		// validity errors in the scriptGeneratorTable
 		generator.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
-			scriptGeneratorTable.setValidityErrors(convertValidityMessagesToMap(evt.getNewValue()));
+			scriptGeneratorTable.setValidityErrors(convertToMap(evt.getNewValue(), Integer.class, String.class));
 			firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
+        // If the time estimation message property of the generator is changed update the
+        // time estimation in the scriptGeneratorTable
+        generator.addPropertyChangeListener(TIME_ESTIMATE_PROPERTY, evt -> {
+            scriptGeneratorTable.setEstimatedTime(convertToMap(evt.getNewValue(), Integer.class, Double.class));
+            firePropertyChange(TIME_ESTIMATE_PROPERTY, evt.getOldValue(), evt.getNewValue());
+        });
 		// If the parameter validity property is changed update the models field that
 		// denotes
 		// whether the parameters are valid and notify any listeners
@@ -269,9 +277,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			setActionParameters(scriptDefinitionLoader.getParameters());
 		});
 		this.scriptGeneratorTable.addPropertyChangeListener(ACTIONS_PROPERTY, evt -> {
-			// The table has changed so update the validity checks
+			// The table has changed so update the validity checks and time estimate
 			try {
 				refreshParameterValidityChecking();
+				refreshTimeEstimation();
 			} catch (NoScriptDefinitionSelectedException e) {
 				LOG.error(e);
 			}
@@ -371,19 +380,19 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @return The converted messages property.
 	 */
 	@SuppressWarnings("rawtypes")
-	private static Map<Integer, String> convertValidityMessagesToMap(Object validityMessages) {
+	private static <T, S> Map<T, S> convertToMap(Object validityMessages, Class<T> keyClass, Class<S> valueClass) {
 		try {
 			Map mapCastValidityMessages = Map.class.cast(validityMessages);
-			Map<Integer, String> castValidityMessages = new HashMap<>();
+			Map<T, S> castValidityMessages = new HashMap<>();
 			for (Object nonCastEntry : mapCastValidityMessages.entrySet()) {
 				Map.Entry castEntry = Map.Entry.class.cast(nonCastEntry);
-				castValidityMessages.put(Integer.class.cast(castEntry.getKey()),
-						String.class.cast(castEntry.getValue()));
+				castValidityMessages.put(keyClass.cast(castEntry.getKey()),
+						valueClass.cast(castEntry.getValue()));
 			}
 			return castValidityMessages;
 		} catch (ClassCastException e) {
 			LOG.error(e);
-			return new HashMap<Integer, String>();
+			return new HashMap<T, S>();
 		}
 	}
 
@@ -576,6 +585,33 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			threadError = true;
 		}
 	}
+	
+    /**
+     * Refresh the time estimate of the parameters, or if it fails refresh the
+     * error state of the model to be listened to by the ViewModel.
+     * 
+     * @throws NoScriptDefinitionSelectedException If there is no script definition
+     *                                             selected to refresh checking
+     *                                             against.
+     */
+    public void refreshTimeEstimation() throws NoScriptDefinitionSelectedException {
+        ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
+                .orElseThrow(() -> new NoScriptDefinitionSelectedException(
+                        "Tried to refresh time estimation with no script definition selected"));
+        try {
+            generator.refreshTimeEstimation(scriptGeneratorTable, scriptDefinition);
+            languageSupported = true;
+            threadError = false;
+        } catch (UnsupportedLanguageException e) {
+            firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, languageSupported, false);
+            LOG.error(e);
+            languageSupported = false;
+        } catch (InterruptedException | ExecutionException e) {
+            firePropertyChange(THREAD_ERROR_PROPERTY, threadError, true);
+            LOG.error(e);
+            threadError = true;
+        }
+    }
 
 	/**
 	 * Generate a script and save it to file.

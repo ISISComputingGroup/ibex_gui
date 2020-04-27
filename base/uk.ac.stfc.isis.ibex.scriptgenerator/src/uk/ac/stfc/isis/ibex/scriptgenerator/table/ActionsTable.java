@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
@@ -217,6 +218,22 @@ public class ActionsTable extends ModelObject {
 			}
 		}
 	}
+	
+    /**
+     * Set the estimated time for each action based on the hashmap.
+     * 
+     * @param validityErrors The hashmap to set estimated time based on.
+     */
+    public void setEstimatedTime(Map<Integer, Double> estimatedTimes) {
+        for (int i = 0; i < actions.size(); i++) {
+            if (estimatedTimes.containsKey(i)) {
+                Optional<Double> estimate = Optional.of(estimatedTimes.get(i));
+                actions.get(i).setEstimatedTime(estimate);
+            } else {
+                actions.get(i).setEstimatedTime(Optional.empty());
+            }
+        }
+    }
 	
 	/**
 	 * Get strings of validity errors.

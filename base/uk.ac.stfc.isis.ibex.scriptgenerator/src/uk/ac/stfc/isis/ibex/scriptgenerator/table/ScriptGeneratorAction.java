@@ -23,10 +23,20 @@ public class ScriptGeneratorAction extends ModelObject {
 	 */
 	private Optional<String> invalidityReason = Optional.empty();
 	
+    /**
+     * Contains the estimated time to complete the action. Empty optional if the action is invalid
+     */
+    private Optional<Double> estimatedTime = Optional.empty();
+	
 	/**
 	 * The property to fire a change of if the action becomes valid or invalid.
 	 */
 	private static final String VALIDITY_PROPERTY = "validity";
+	
+    /**
+     * The property to fire a change when the time taken to complete the action is estimated
+     */
+    private static final String ESTIMATED_TIME_PROPERTY = "time estimate";
 	
 	/**
 	 * The property to fire if the actions values change.
@@ -139,5 +149,14 @@ public class ScriptGeneratorAction extends ModelObject {
 	public Optional<String> getInvalidityReason() {
 		return invalidityReason;
 	}
+	
+    public void setEstimatedTime(Optional<Double> newEstimatedTime) {
+        firePropertyChange(ESTIMATED_TIME_PROPERTY, estimatedTime, newEstimatedTime);
+        estimatedTime = newEstimatedTime;
+    }
+    
+    public Optional<Double> getEstimatedTime() {
+        return estimatedTime;
+    }
 	
 }

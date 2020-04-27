@@ -121,6 +121,23 @@ class ScriptDefinitionWrapper(object):
         except Exception as e:
             return str(e) # If there is an error validating return to the user
 
+    def estimateTime(self, action) -> Union[None, float]:
+        """
+        Returns an estimate (in seconds) of the time necessary to complete the action
+
+        Args:
+            The action to estimate
+
+        Returns:
+            A float representing the estimated time in seconds
+            or None if the parameters are invalid or the estimate could not be calculated
+        """
+        estimate = self.script_definition.estimate_time(**action)
+        try:
+          return float(estimate)
+        except (ValueError, TypeError) as ex:
+          return None
+
     def equals(self, other_script_definition) -> bool:
         """ Implement equals needed for py4j
 
@@ -176,6 +193,24 @@ class Generator(object):
                 validityCheck[current_action_index] = singleActionValidityCheck
             current_action_index += 1
         return validityCheck
+
+    def estimateTime(self, list_of_actions, script_definition: ScriptDefinitionWrapper) -> Dict[int, float]:
+        """
+        Estimates the time necessary to complete each action.
+        Actions are only estimated if their parameters are valid.
+
+        Returns:
+            Dictionary containing line numbers as keys and estimates as values
+        """
+        current_action_index = 0
+        timeEstimates: Dict[int, float] = {}
+        for action in list_of_actions:
+            if script_definition.parametersValid(action) is None:
+              timeEstimate = script_definition.estimateTime(action)
+              if timeEstimate != None:
+                timeEstimates[current_action_index] = timeEstimate
+            current_action_index += 1
+        return timeEstimates
 
     def generate(self, list_of_actions, jsonString, script_definition: ScriptDefinitionWrapper) -> Union[None, AnyStr]:
         """
@@ -263,6 +298,17 @@ class ScriptDefinitionsWrapper(object):
             Dictionary containing keys of the line numbers where errors are and values of the error messages.
         """
         return MapConverter().convert(self.generator.getValidityErrors(
+                self.convert_list_of_actions_to_python(list_of_actions), script_definition),
+            gateway._gateway_client)
+
+    def estimateTime(self, list_of_actions, script_definition: ScriptDefinitionWrapper) -> Dict[int, float]:
+        """
+        Get the estimated time to complete the current actions
+
+        Returns:
+            Dictionary containing line numbers as keys and estimates as values
+        """
+        return MapConverter().convert(self.generator.estimateTime(
                 self.convert_list_of_actions_to_python(list_of_actions), script_definition),
             gateway._gateway_client)
 

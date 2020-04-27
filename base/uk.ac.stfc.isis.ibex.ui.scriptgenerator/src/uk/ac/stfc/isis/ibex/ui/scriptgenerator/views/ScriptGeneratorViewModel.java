@@ -112,6 +112,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 */
 	private static final String VALIDITY_ERROR_MESSAGE_PROPERTY = "validity error messages";
 	
+    /**
+     * A property that carries the time estimation to listen for in order to update table rows.
+     */
+    private static final String TIME_ESTIMATE_PROPERTY = "time estimate";
+	
 	/**
 	 * The property to listen for changes in a Generator containing the generated script (String).
 	 */
@@ -394,6 +399,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
 		this.scriptGeneratorModel.removePropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
 		this.scriptGeneratorModel.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
+        this.scriptGeneratorModel.removePropertyChangeListener(TIME_ESTIMATE_PROPERTY, actionChangeListener);
+        this.scriptGeneratorModel.addPropertyChangeListener(TIME_ESTIMATE_PROPERTY, actionChangeListener);
 	}
 	
 	/**
@@ -581,7 +588,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	protected void updateValidityChecks(ActionsViewTable viewTable) {
 		List<ScriptGeneratorAction> actions = scriptGeneratorModel.getActions();
 		TableItem[] items = viewTable.table().getItems();
-		int validityColumnIndex = viewTable.table().getColumnCount() - 1;
+		int validityColumnIndex = viewTable.table().getColumnCount() - 2;
 		for (int i = 0; i < actions.size(); i++) {
 			if (i < items.length) {
 				if (!scriptGeneratorModel.languageSupported) {
@@ -659,6 +666,27 @@ public class ScriptGeneratorViewModel extends ModelObject {
         	
         });
         validityColumn.getColumn().setAlignment(SWT.CENTER);
+        
+        // Add estimated time column
+        TableViewerColumn timeEstimateColumn = viewTable.createColumn("Estimated time", 
+                1, 
+                new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty("time estimate")) {
+            @Override
+            protected String stringFromRow(ScriptGeneratorAction row) {
+                if (!scriptGeneratorModel.languageSupported) {
+                    return "\u003F"; // A question mark to say we cannot be certain
+                }
+                Optional<Double> estimatedTime = row.getEstimatedTime();
+                return estimatedTime.isEmpty() ? "" : estimatedTime.get().toString();
+            }
+            
+            @Override
+            public String getToolTipText(Object element) {
+                return getScriptGenActionToolTipText((ScriptGeneratorAction) element);
+            }
+            
+        });
+        timeEstimateColumn.getColumn().setAlignment(SWT.CENTER);
         
         ColumnViewerToolTipSupport.enableFor(viewTable.viewer());
 	}
