@@ -26,7 +26,11 @@ import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.console.ConsolePlugin;
+import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import org.python.pydev.ast.interpreter_managers.InterpreterManagersAPI;
 import org.python.pydev.core.IInterpreterInfo;
@@ -97,16 +101,36 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 	 */
 	@Override
 	public void createConsole(String additionalInitialComands) {
-		try {
-			super.createConsole(createGeniePydevInterpreter(), additionalInitialComands);
-		} catch (Exception e) {
-			LOG.error(e);
-		}
+		
+		Display.getDefault().syncExec(new Runnable() {
+		    public void run() {
+		    	IConsoleManager manager = ConsolePlugin.getDefault().getConsoleManager();
+		    	boolean continueWithNewConsole = true;
+		    	if (manager.getConsoles().length >= 1 && Consoles.showDialog) {
+		    		continueWithNewConsole = MessageDialog.openQuestion(Display.getDefault().getActiveShell(), "Duplicate console",
+			    			"Scripting console already Exists\nDo you still want to proceed with a new one?");
+
+		    	}
+		    	if (continueWithNewConsole) {
+		    		try {
+						createConsole(createGeniePydevInterpreter(), additionalInitialComands);
+					} catch (Exception e) {
+						LOG.error(e);
+					}
+		    	}
+		    	
+		    }
+		    	
+		});
+	
 
 		// Add a listener so that after a console is created, we install output length limits.
 		// This is the only way I found to do this, without relying on some arbitrary timeout.
 		Job.getJobManager().addJobChangeListener(JOB_CHANGE_LISTENER);
+		
 	}
+	
+	
 
 	private void setInitialInterpreterCommands(boolean compactPlot) {
 		IPreferenceStore pydevDebugPreferenceStore = new ScopedPreferenceStore(InstanceScope.INSTANCE,
@@ -135,5 +159,5 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 
 		return createPydevInterpreter(launchAndProcess, null, null);
 	}
-
+	
 }

@@ -30,8 +30,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.logging.log4j.Logger;
-import org.eclipse.core.runtime.IExtensionRegistry;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.e4.core.contexts.EclipseContextFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.services.events.IEventBroker;
@@ -41,7 +39,6 @@ import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.swt.widgets.Display;
@@ -50,11 +47,9 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.console.ConsolePlugin;
-import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleConstants;
-import org.eclipse.ui.console.IConsoleListener;
-import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.internal.console.ConsoleView;
+import org.eclipse.ui.internal.console.OpenConsoleAction;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.event.Event;
@@ -100,6 +95,7 @@ public class Consoles extends AbstractUIPlugin {
 	public static boolean showDialog = true;
 	
 	private IEclipseContext eclipseContext;
+	private final String WARNING_CHECKBOX_ID = "uk.ac.stfc.isis.ibex.ui.scripting.warningDialog";
 
 	/**
 	 * Limit on the total number of lines (input and output) per console.
@@ -112,7 +108,6 @@ public class Consoles extends AbstractUIPlugin {
 	public static final int MAXIMUM_CHARACTERS_TO_KEEP_PER_CONSOLE = 1000000;
 
 	private static final Logger LOG = IsisLog.getLogger(Consoles.class);
-
 	private Set<Runnable> consoleLengthListeners = new HashSet<Runnable>();
 
 	/**
@@ -123,9 +118,9 @@ public class Consoles extends AbstractUIPlugin {
 		super.start(context);
 		plugin = this;
 		PyDevConfiguration.configure();
-
+		
 		eclipseContext = EclipseContextFactory.getServiceContext(context);
-
+		
 		// Can't get this via injection. The following works though.
 		IEventBroker broker = eclipseContext.get(IEventBroker.class);
 
@@ -141,39 +136,18 @@ public class Consoles extends AbstractUIPlugin {
 				String id = ((MPerspective) newValue).getElementId();
 				if (id.equals(SCRIPTING_PERSPECTIVE_ID) || id.equals(REFL_PERSPECTIVE_ID)) {
 					createConsole(id);
+					editToolbarItems();
 				}
 			}
 		};
-		ConsolePlugin.getDefault().getConsoleManager().addConsoleListener( new IConsoleListener() {
+		editToolbarItems();
+		broker.subscribe(UIEvents.ElementContainer.TOPIC_ALL, handler);
 
-			public void consolesAdded(IConsole[] consoles) {
-				IConsoleManager manager = ConsolePlugin.getDefault().getConsoleManager();
-				int numberOfConsoles = manager.getConsoles().length;
-
-				if (numberOfConsoles > 1) {
-					Display.getDefault().syncExec(new Runnable() {
-				    public void run() {
-				    	if (showDialog) {
-					    	boolean continueWithNewConsole = MessageDialog.openQuestion(Display.getDefault().getActiveShell(), "Duplicate console",
-					    			"Scripting console already Exists\nDo you still want to create a new One?");
-					    	if (!continueWithNewConsole) {
-					    		manager.removeConsoles(consoles);
-					    	}
-				    	}
-				    }
-				});
-					
-				}
-			}	
-			
-			@Override
-			public void consolesRemoved(IConsole[] consoles) {
-				// Do Nothing
-
-			}
-			
-		});
+		GraphingConnector.startListening();
 		
+	}
+	
+	private void editToolbarItems() {
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
@@ -181,23 +155,26 @@ public class Consoles extends AbstractUIPlugin {
 				IWorkbenchPage page = window.getActivePage();
 				IViewPart part = page.findView(IConsoleConstants.ID_CONSOLE_VIEW);
 				ConsoleView view = (ConsoleView)part;
-				
-				IToolBarManager tbm = view.getViewSite().getActionBars().getToolBarManager();
-				IContributionItem [] items= tbm.getItems();
-				
-				List<ActionContributionItem> itemsToDisable = Arrays.stream(items).filter(item->(item instanceof ActionContributionItem))
-				.map(item->(ActionContributionItem)item)
-				.filter(item-> item.getAction().toString().contains("PinConsole"))
-				.collect(Collectors.toList());
-				
-				itemsToDisable.forEach(action -> action.setVisible(false));
-				view.getViewSite().getActionBars().updateActionBars();
+				if (view != null) {
+					IToolBarManager tbm = view.getViewSite().getActionBars().getToolBarManager();
+					IContributionItem [] items= tbm.getItems();
+					// Add our "Open Console" action
+					GenieOpenConsoleAction openConsoleAction = new GenieOpenConsoleAction();
+					tbm.insertBefore(WARNING_CHECKBOX_ID, openConsoleAction);
+					
+					// Console view icons not required
+					List<ActionContributionItem> itemsToRemove = Arrays.stream(items).filter(item->(item instanceof ActionContributionItem))
+ 					.map(item->(ActionContributionItem)item)
+					.filter(item-> item.getAction().toString().contains("PinConsole")||
+							item.getAction() instanceof OpenConsoleAction)
+					.collect(Collectors.toList());
+					
+					itemsToRemove.forEach(action -> tbm.remove(action));
+					view.getViewSite().getActionBars().updateActionBars();
+				}
 			}
 		});
 		
-		broker.subscribe(UIEvents.ElementContainer.TOPIC_ALL, handler);
-
-		GraphingConnector.startListening();
 	}
 
 	/**
@@ -268,7 +245,6 @@ public class Consoles extends AbstractUIPlugin {
 					new ConsoleView();
 					
   					GENIE_CONSOLE_FACTORY.configureAndCreateConsole(Commands.getSetInstrumentCommand(), compactPlot);
-  					ConsolePlugin.getDefault().getConsoleManager().getConsoles();
 				}
 			}
 		});
