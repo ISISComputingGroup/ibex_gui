@@ -190,6 +190,8 @@ public final class ComponentIcons {
             	return "zerofield";
             case LSICORR:
             	return "lsicorr";
+            case DENSITY_METER:
+                return "density_meter";
             default:
                 return "cog";
         }
