@@ -548,6 +548,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		}
 		return message;
 	}
+	
+	public Optional<Double> getTotalEstimatedTime() {
+	    return scriptGeneratorTable.getTotalEstimatedTime();
+	}
 
 	/**
 	 * Get whether the contents of the script generator are valid or not.

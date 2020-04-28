@@ -252,6 +252,26 @@ public class ActionsTable extends ModelObject {
 		}
 		return errors;
 	}
+	
+    /**
+     * Get the total estimated time of all actions in the table
+     * 
+     * @return An Optional containing the total if at least one action has been estimated,
+     *         empty optional otherwise
+     */
+    public Optional<Double> getTotalEstimatedTime() {
+        boolean isAnyActionEstimated = false;
+        Double total = 0.0;
+        
+        for (ScriptGeneratorAction action : actions) {
+            if (action.getEstimatedTime().isPresent()) {
+                isAnyActionEstimated = true;
+                total += action.getEstimatedTime().get();
+            }
+        }
+        
+        return isAnyActionEstimated ? Optional.of(total) : Optional.empty();
+    }
 
 	/**
 	 * Reload the actions by firing a property change.

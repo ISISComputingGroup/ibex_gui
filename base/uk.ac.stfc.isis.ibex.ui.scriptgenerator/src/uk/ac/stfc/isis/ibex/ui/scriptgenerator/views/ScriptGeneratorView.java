@@ -246,7 +246,19 @@ public class ScriptGeneratorView {
 	            manualButton.setEnabled(false);
 	            manualButton.setText("Open Manual");
 	            manualButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-				
+
+                // The composite to contain the button to estimate total time
+                Composite timeEstimateComposite = new Composite(topBarComposite, SWT.NONE);
+                timeEstimateComposite.setLayout(new GridLayout(1, false));
+                timeEstimateComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+                
+                // Button to get total estimated time
+                final Button btnGetTotalEstimatedTime= new Button(timeEstimateComposite, SWT.NONE);
+                btnGetTotalEstimatedTime.setText("Get Total Estimated Time");
+                btnGetTotalEstimatedTime.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+                btnGetTotalEstimatedTime.addListener(SWT.Selection, e -> {
+                    scriptGeneratorViewModel.displayTotalEstimatedTime();
+                });
 				// The composite to contain the button to check validity
 				Composite validityComposite = new Composite(topBarComposite, SWT.NONE);
 				validityComposite.setLayout(new GridLayout(1, false));
@@ -259,7 +271,6 @@ public class ScriptGeneratorView {
 		        btnGetValidityErrors.addListener(SWT.Selection, e -> {
 		        	scriptGeneratorViewModel.displayValidityErrors();
 		        });
-		        
 		        
 		        Map<String, String> scriptDefinitionLoadErrors = scriptGeneratorViewModel.getScriptDefinitionLoadErrors();
 		        

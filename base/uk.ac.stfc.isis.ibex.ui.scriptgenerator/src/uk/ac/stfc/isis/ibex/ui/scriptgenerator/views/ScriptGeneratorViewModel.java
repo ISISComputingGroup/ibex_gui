@@ -741,6 +741,23 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	}
 
     /**
+     * Display total estimated time is a popup box
+     */
+    public void displayTotalEstimatedTime() {
+        if (scriptGeneratorModel.languageSupported) {
+            Optional<Double> total = scriptGeneratorModel.getTotalEstimatedTime();
+            if (total.isPresent()) {
+                String message = "This script is estimated to take " + total.get() + " seconds to run";
+                MessageDialog.openInformation(DISPLAY.getActiveShell(), "Total Estimated Time", message);
+            } else {
+                MessageDialog.openWarning(DISPLAY.getActiveShell(), "Total Estimated Time", "This script has no valid actions");
+            }
+        } else {
+            displayLanguageSupportError();
+        }
+    }
+    
+    /**
      * Generate a script and display the file it was generated to. If fail display warnings.
      * @throws UnsupportedLanguageException 
      */
