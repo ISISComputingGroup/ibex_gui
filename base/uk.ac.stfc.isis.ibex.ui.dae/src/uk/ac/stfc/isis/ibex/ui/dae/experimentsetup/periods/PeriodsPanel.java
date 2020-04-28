@@ -295,7 +295,7 @@ public class PeriodsPanel extends Composite {
         updateTypeStack(matchType(PeriodControlType.values()[model.getPeriodType()]));
         updateSourceStack(matchSource(model.getSetupSource()));
         
-	}
+    }
 	
 	
 	private void setPeriods(final List<Period> newPeriods) {
