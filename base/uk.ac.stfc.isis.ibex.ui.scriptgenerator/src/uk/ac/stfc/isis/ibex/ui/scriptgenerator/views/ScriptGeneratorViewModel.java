@@ -414,10 +414,10 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private void updateTotalEstimatedTime(Label totalEstimatedTimeLabel) {
         CompletableFuture.supplyAsync(() -> scriptGeneratorModel.getTotalEstimatedTime())
         .thenAccept(optionalTotal -> {
-            int total = optionalTotal.isPresent() ? optionalTotal.get() : 0;
-            int hours = total / 3600;
-            int minutes = (total % 3600) / 60;
-            int seconds =  total % 60;
+            long total = optionalTotal.isPresent() ? optionalTotal.get() : 0;
+            long hours = total / 3600;
+            long minutes = (total % 3600) / 60;
+            long seconds =  total % 60;
             String displayTotal = String.format("Total estimated run time: %02d:%02d:%02d", hours, minutes, seconds);
             
             DISPLAY.asyncExec(() -> {
@@ -704,7 +704,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
                     return "\u003F"; // A question mark to say we cannot be certain
                 }
                 
-                Optional<Integer> estimatedTime = row.getEstimatedTime();
+                Optional<Number> estimatedTime = row.getEstimatedTime();
                 if (estimatedTime.isEmpty()) {
                     return "";
                 }

@@ -224,10 +224,10 @@ public class ActionsTable extends ModelObject {
      * 
      * @param validityErrors The hashmap to set estimated time based on.
      */
-    public void setEstimatedTime(Map<Integer, Integer> estimatedTimes) {
+    public void setEstimatedTimes(Map<Integer, Number> estimatedTimes) {
         for (int i = 0; i < actions.size(); i++) {
             if (estimatedTimes.containsKey(i)) {
-                Optional<Integer> estimate = Optional.of(estimatedTimes.get(i));
+                Optional<Number> estimate = Optional.of(estimatedTimes.get(i));
                 actions.get(i).setEstimatedTime(estimate);
             } else {
                 actions.get(i).setEstimatedTime(Optional.empty());
@@ -259,14 +259,14 @@ public class ActionsTable extends ModelObject {
      * @return An Optional containing the total if at least one action has been estimated,
      *         empty optional otherwise
      */
-    public Optional<Integer> getTotalEstimatedTime() {
+    public Optional<Long> getTotalEstimatedTime() {
         boolean isAnyActionEstimated = false;
-        Integer total = 0;
+        Long total = 0L;
         
         for (ScriptGeneratorAction action : actions) {
             if (action.getEstimatedTime().isPresent()) {
                 isAnyActionEstimated = true;
-                total += action.getEstimatedTime().get();
+                total += action.getEstimatedTime().get().longValue();
             }
         }
         
