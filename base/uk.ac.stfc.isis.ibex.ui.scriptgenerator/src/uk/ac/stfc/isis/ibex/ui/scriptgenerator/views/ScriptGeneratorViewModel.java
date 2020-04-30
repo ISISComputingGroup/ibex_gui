@@ -698,8 +698,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
                 if (!scriptGeneratorModel.languageSupported) {
                     return "\u003F"; // A question mark to say we cannot be certain
                 }
+                
                 Optional<Double> estimatedTime = row.getEstimatedTime();
-                return estimatedTime.isEmpty() ? "" : estimatedTime.get().toString();
+                if (estimatedTime.isEmpty()) {
+                    return "";
+                }
+                return estimatedTime.get().toString() + " seconds";
             }
             
             @Override
