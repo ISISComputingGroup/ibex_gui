@@ -243,7 +243,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
         // If the time estimation message property of the generator is changed update the
         // time estimation in the scriptGeneratorTable
         generator.addPropertyChangeListener(TIME_ESTIMATE_PROPERTY, evt -> {
-            scriptGeneratorTable.setEstimatedTime(convertToMap(evt.getNewValue(), Integer.class, Double.class));
+            scriptGeneratorTable.setEstimatedTime(convertToMap(evt.getNewValue(), Integer.class, Integer.class));
             firePropertyChange(TIME_ESTIMATE_PROPERTY, evt.getOldValue(), evt.getNewValue());
         });
 		// If the parameter validity property is changed update the models field that
@@ -549,7 +549,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		return message;
 	}
 	
-	public Optional<Double> getTotalEstimatedTime() {
+	public Optional<Integer> getTotalEstimatedTime() {
 	    return scriptGeneratorTable.getTotalEstimatedTime();
 	}
 

@@ -121,7 +121,7 @@ class ScriptDefinitionWrapper(object):
         except Exception as e:
             return str(e) # If there is an error validating return to the user
 
-    def estimateTime(self, action) -> Union[None, float]:
+    def estimateTime(self, action) -> Union[None, int]:
         """
         Returns an estimate (in seconds) of the time necessary to complete the action
 
@@ -129,12 +129,12 @@ class ScriptDefinitionWrapper(object):
             The action to estimate
 
         Returns:
-            A float representing the estimated time in seconds
+            An int representing the estimated time in seconds
             or None if the parameters are invalid or the estimate could not be calculated
         """
         estimate = self.script_definition.estimate_time(**action)
         try:
-          return float(estimate)
+          return round(estimate)
         except (ValueError, TypeError) as ex:
           return None
 
@@ -194,7 +194,7 @@ class Generator(object):
             current_action_index += 1
         return validityCheck
 
-    def estimateTime(self, list_of_actions, script_definition: ScriptDefinitionWrapper) -> Dict[int, float]:
+    def estimateTime(self, list_of_actions, script_definition: ScriptDefinitionWrapper) -> Dict[int, int]:
         """
         Estimates the time necessary to complete each action.
         Actions are only estimated if their parameters are valid.
@@ -203,7 +203,7 @@ class Generator(object):
             Dictionary containing line numbers as keys and estimates as values
         """
         current_action_index = 0
-        timeEstimates: Dict[int, float] = {}
+        timeEstimates: Dict[int, int] = {}
         for action in list_of_actions:
             if script_definition.parametersValid(action) is None:
               timeEstimate = script_definition.estimateTime(action)
@@ -301,7 +301,7 @@ class ScriptDefinitionsWrapper(object):
                 self.convert_list_of_actions_to_python(list_of_actions), script_definition),
             gateway._gateway_client)
 
-    def estimateTime(self, list_of_actions, script_definition: ScriptDefinitionWrapper) -> Dict[int, float]:
+    def estimateTime(self, list_of_actions, script_definition: ScriptDefinitionWrapper) -> Dict[int, int]:
         """
         Get the estimated time to complete the current actions
 

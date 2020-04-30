@@ -690,7 +690,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
         validityColumn.getColumn().setAlignment(SWT.CENTER);
         
         // Add estimated time column
-        TableViewerColumn timeEstimateColumn = viewTable.createColumn("Estimated time", 
+        TableViewerColumn timeEstimateColumn = viewTable.createColumn("Estimated run time", 
                 1, 
                 new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty("time estimate")) {
             @Override
@@ -699,7 +699,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
                     return "\u003F"; // A question mark to say we cannot be certain
                 }
                 
-                Optional<Double> estimatedTime = row.getEstimatedTime();
+                Optional<Integer> estimatedTime = row.getEstimatedTime();
                 if (estimatedTime.isEmpty()) {
                     return "";
                 }

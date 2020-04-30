@@ -11,7 +11,7 @@ class TestGenerator(unittest.TestCase):
 
     def _get_estimates_for_single_action(self, scriptDefinition):
         wrapper = ScriptDefinitionWrapper("test", scriptDefinition)
-        estimates: Dict[int, float] = self.generator.estimateTime([
+        estimates: Dict[int, int] = self.generator.estimateTime([
             {"param1": "param1Val", "param2": "param2Val"}
         ], wrapper)
         return estimates
@@ -59,17 +59,7 @@ class TestGenerator(unittest.TestCase):
         # Act and Assert
         assert_that(validityCheck, equal_to({1: "invalid"}), "2 actions, one invalid with reason")
 
-    def test_GIVEN_valid_parameters_and_float_estimate_WHEN_estimate_time_THEN_return_estimate(self):
-        # Arrange
-        mock_script_definition: ScriptDefinition = MagicMock()
-        mock_script_definition.parameters_valid.return_value = None
-        mock_script_definition.estimate_time.return_value = 2.0
-        estimates = self._get_estimates_for_single_action(mock_script_definition)
-
-        # Act and Assert
-        assert_that(estimates, equal_to({0: 2.0}))
-
-    def test_GIVEN_valid_parameters_and_integer_estimate_WHEN_estimate_time_THEN_convert_estimate_to_float_and_return_it(self):
+    def test_GIVEN_valid_parameters_and_int_estimate_WHEN_estimate_time_THEN_return_estimate(self):
         # Arrange
         mock_script_definition: ScriptDefinition = MagicMock()
         mock_script_definition.parameters_valid.return_value = None
@@ -77,7 +67,17 @@ class TestGenerator(unittest.TestCase):
         estimates = self._get_estimates_for_single_action(mock_script_definition)
 
         # Act and Assert
-        assert_that(estimates, equal_to({0: 2.0}))
+        assert_that(estimates, equal_to({0: 2}))
+
+    def test_GIVEN_valid_parameters_and_float_estimate_WHEN_estimate_time_THEN_round_estimate_and_return_it(self):
+        # Arrange
+        mock_script_definition: ScriptDefinition = MagicMock()
+        mock_script_definition.parameters_valid.return_value = None
+        mock_script_definition.estimate_time.return_value = 2.0
+        estimates = self._get_estimates_for_single_action(mock_script_definition)
+
+        # Act and Assert
+        assert_that(estimates, equal_to({0: 2}))
 
     def test_GIVEN_valid_parameters_and_string_estimate_WHEN_estimate_time_THEN_return_empty_dict(self):
         # Arrange
@@ -99,11 +99,11 @@ class TestGenerator(unittest.TestCase):
         # Act and Assert
         assert_that(estimates, equal_to({}))
 
-    def test_GIVEN_invalid_parameters_and_float_estimate_WHEN_estimate_time_THEN_return_empty_dict(self):
+    def test_GIVEN_invalid_parameters_and_int_estimate_WHEN_estimate_time_THEN_return_empty_dict(self):
         # Arrange
         mock_script_definition: ScriptDefinition = MagicMock()
         mock_script_definition.parameters_valid.return_value = "some error"
-        mock_script_definition.estimate_time.return_value = 2.0
+        mock_script_definition.estimate_time.return_value = 2
         estimates = self._get_estimates_for_single_action(mock_script_definition)
 
         # Act and Assert

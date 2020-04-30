@@ -32,7 +32,7 @@ public interface ScriptDefinitionWrapper {
      * @param action The action to estimate
      * @return An estimate in seconds
      */
-    Double estimateTime(Map<String, String> action);
+    Integer estimateTime(Map<String, String> action);
 	
 	/**
 	 * @return The name of this script definition.
