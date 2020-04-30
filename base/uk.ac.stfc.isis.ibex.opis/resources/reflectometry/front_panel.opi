@@ -147,14 +147,14 @@
         <color red="150" green="150" blue="150" />
       </bulb_border_color>
       <data_type>0</data_type>
-      <effect_3d>true</effect_3d>
+      <effect_3d>false</effect_3d>
       <enabled>true</enabled>
       <font>
         <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
       </font>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </foreground_color>
       <height>31</height>
       <name>Autotune_LED</name>
@@ -168,7 +168,16 @@
       <on_label>In Motion</on_label>
       <pv_name>$(P)CS:MOT:MOVING</pv_name>
       <pv_value />
-      <rules />
+      <rules>
+        <rule name="TextColour" prop_id="foreground_color" out_exp="false">
+          <exp bool_exp="pv0==1">
+            <value>
+              <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+            </value>
+          </exp>
+          <pv trig="true">$(P)CS:MOT:MOVING</pv>
+        </rule>
+      </rules>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
