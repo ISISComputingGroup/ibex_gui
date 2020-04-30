@@ -22,6 +22,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PartInitException;
@@ -171,6 +172,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	private Button btnSaveParam;
 	
 	/**
+	 * The label displaying the total estimated run time for the script
+	 */
+	private Label totalEstimatedTimeLabel;
+	
+	/**
 	 * A constructor that sets up the script generator model and 
 	 *   begins listening to property changes in the model.
 	 */
@@ -221,6 +227,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 				);
 			});
 		});
+		
 	}
 	
 	/**
@@ -378,22 +385,23 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * Listen for changes in actions and activate the handler.
 	 */
 	private PropertyChangeListener actionChangeListener = evt -> {
-			actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam);
+			actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam, totalEstimatedTimeLabel);
 		};
 
 	/**
-	 * Listen to changes on the actions and action validity property of the scriptGenerator table and
+	 * Listen to changes on the actions and action properties of the scriptGenerator table and
 	 *  update the view table.
 	 * 
 	 * @param viewTable The view table to update.
 	 * @param btnGetValidityErrors The validity check button to style change.
 	 * @param btnGenerateScript The generate script button to style change.
 	 */
-	protected void bindValidityChecks(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript, Button btnSaveParam) {
+	protected void bindActionProperties(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript, Button btnSaveParam, Label totalEstimatedTimeLabel) {
 		this.viewTable = viewTable;
 		this.btnGetValidityErrors = btnGetValidityErrors;
 		this.btnGenerateScript = btnGenerateScript;
 		this.btnSaveParam = btnSaveParam;
+		this.totalEstimatedTimeLabel = totalEstimatedTimeLabel;
 		// Remove listeners so as not to bind them twice
 		this.scriptGeneratorModel.getScriptGeneratorTable().removePropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
 		this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
@@ -402,9 +410,21 @@ public class ScriptGeneratorViewModel extends ModelObject {
         this.scriptGeneratorModel.removePropertyChangeListener(TIME_ESTIMATE_PROPERTY, actionChangeListener);
         this.scriptGeneratorModel.addPropertyChangeListener(TIME_ESTIMATE_PROPERTY, actionChangeListener);
 	}
+    
+    private void updateTotalEstimatedTime(Label totalEstimatedTimeLabel) {
+        CompletableFuture.supplyAsync(() -> scriptGeneratorModel.getTotalEstimatedTime())
+        .thenAccept(total -> {
+            DISPLAY.asyncExec(() -> {
+                if (!totalEstimatedTimeLabel.isDisposed()) {
+                    String displayedTotal = total.isPresent() ? total.get().toString() : "0";
+                    totalEstimatedTimeLabel.setText("Total estimated run time: " + displayedTotal + " seconds");
+                }
+            });
+        });
+    }
 	
 	/**
-	 * Handle a change in the actions or their validity.
+	 * Handle a change in the actions or their properties.
 	 * Set the UI table's actions from the model and update validity checking.
 	 * 
 	 * @param viewTable The view table to update.
@@ -412,8 +432,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * @param btnGenerateScript Generate Script button's visibility to manipulate
 	 * @param btnSaveParam Save Parameter button's visibility to manipulate
 	 */
-	private void actionChangeHandler(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript, Button btnSaveParam) {
-		DISPLAY.asyncExec(() -> {
+	private void actionChangeHandler(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript, Button btnSaveParam, Label totalEstimatedTimeLabel) {
+	    DISPLAY.asyncExec(() -> {
 			if (!viewTable.isDisposed()) {
 	            viewTable.setRows(scriptGeneratorModel.getActions());
 	            updateValidityChecks(viewTable);
@@ -426,6 +446,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
 				setButtonGenerateStyle(btnSaveParam);
 			}
 		});
+	    
+	    updateTotalEstimatedTime(totalEstimatedTimeLabel);
 	}
 	
 	private void setButtonGenerateStyle(Button btnGenerateScript) {
@@ -739,23 +761,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			displayLanguageSupportError();
 		}
 	}
-
-    /**
-     * Display total estimated time is a popup box
-     */
-    public void displayTotalEstimatedTime() {
-        if (scriptGeneratorModel.languageSupported) {
-            Optional<Double> total = scriptGeneratorModel.getTotalEstimatedTime();
-            if (total.isPresent()) {
-                String message = "This script is estimated to take " + total.get() + " seconds to run";
-                MessageDialog.openInformation(DISPLAY.getActiveShell(), "Total Estimated Time", message);
-            } else {
-                MessageDialog.openWarning(DISPLAY.getActiveShell(), "Total Estimated Time", "This script has no valid actions");
-            }
-        } else {
-            displayLanguageSupportError();
-        }
-    }
     
     /**
      * Generate a script and display the file it was generated to. If fail display warnings.

@@ -246,19 +246,7 @@ public class ScriptGeneratorView {
 	            manualButton.setEnabled(false);
 	            manualButton.setText("Open Manual");
 	            manualButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-                // The composite to contain the button to estimate total time
-                Composite timeEstimateComposite = new Composite(topBarComposite, SWT.NONE);
-                timeEstimateComposite.setLayout(new GridLayout(1, false));
-                timeEstimateComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-                
-                // Button to get total estimated time
-                final Button btnGetTotalEstimatedTime= new Button(timeEstimateComposite, SWT.NONE);
-                btnGetTotalEstimatedTime.setText("Get Total Estimated Time");
-                btnGetTotalEstimatedTime.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-                btnGetTotalEstimatedTime.addListener(SWT.Selection, e -> {
-                    scriptGeneratorViewModel.displayTotalEstimatedTime();
-                });
+	            
 				// The composite to contain the button to check validity
 				Composite validityComposite = new Composite(topBarComposite, SWT.NONE);
 				validityComposite.setLayout(new GridLayout(1, false));
@@ -302,6 +290,21 @@ public class ScriptGeneratorView {
 		        
 		        Button btnMoveActionDown = createMoveRowButton(moveComposite, "move_down.png", "down");
 		        btnMoveActionDown.addListener(SWT.Selection, e -> scriptGeneratorViewModel.moveActionDown(table.getSelectionIndex()));
+		        
+                // Composite for the row containing the total estimated run time
+                Composite estimateGrp = new Composite(mainParent, SWT.NONE);
+                estimateGrp.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1));
+                GridLayout estimateLayout = new GridLayout(1, true);
+                estimateLayout.marginRight = 40;
+                estimateGrp.setLayout(estimateLayout);
+                
+                // Label for the total estimated run time
+                Label estimateText = new Label(estimateGrp, SWT.RIGHT);
+                estimateText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+                String currentFont = estimateText.getFont().getFontData()[0].getName();
+                Font font = new Font(estimateText.getDisplay(), new FontData(currentFont, 11, SWT.BOLD));
+                estimateText.setFont(font);
+                estimateText.setText("Total estimated run time: 0 seconds");
 		        
 		        // Composite for laying out new/delete/duplicate action buttons
 		        Composite actionsControlsGrp = new Composite(mainParent, SWT.NONE);
@@ -357,7 +360,14 @@ public class ScriptGeneratorView {
 		       	loadExperimentalParametersButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		       	loadExperimentalParametersButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.loadParameterValues());
 		        // Bind the context and the validity checking listeners
-		        bind(scriptDefinitionSelector, table, btnGetValidityErrors, generateScriptButton, helpText, saveExperimentalParametersButton, manualButton);
+		        bind(scriptDefinitionSelector,
+		                table,
+		                btnGetValidityErrors,
+		                generateScriptButton,
+		                estimateText,
+		                helpText,
+		                saveExperimentalParametersButton,
+		                manualButton);
 				
 			} else {
 				
@@ -437,10 +447,17 @@ public class ScriptGeneratorView {
 	 * Binds the Script Generator Table, script definition selector and validity check models to their views.
 	 */
 
-	private void bind(ComboViewer scriptDefinitionSelector, ActionsViewTable table, Button btnGetValidityErrors, Button btnGenerateScript, Text helpText, Button btnSaveParameters, Button manualButton) {
+	private void bind(ComboViewer scriptDefinitionSelector,
+	        ActionsViewTable table,
+	        Button btnGetValidityErrors,
+	        Button btnGenerateScript,
+	        Label totalEstimatedTimeLabel,
+	        Text helpText,
+	        Button btnSaveParameters,
+	        Button manualButton) {
 		scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText);
 
-		scriptGeneratorViewModel.bindValidityChecks(table, btnGetValidityErrors, btnGenerateScript, btnSaveParameters);
+		scriptGeneratorViewModel.bindActionProperties(table, btnGetValidityErrors, btnGenerateScript, btnSaveParameters, totalEstimatedTimeLabel);
 		
 		scriptGeneratorViewModel.bindManualButton(manualButton);
 
