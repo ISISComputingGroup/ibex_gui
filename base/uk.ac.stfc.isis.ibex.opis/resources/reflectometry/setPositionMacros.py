@@ -54,9 +54,9 @@ def sort_out_list(pv, widget_name_prefix, macro_prefix, has_type, max):
         else:
             widget.setPropertyValue("visible", False)
 
-sort_out_list(pvs[2], "align_", "PARAM", True, 32)
+sort_out_list(pvs[2], "align_", "PARAM", True, 30)
 sort_out_list(pvs[1], "Correction_", "COR", False, 14)            
-sort_out_list(pvs[0], "pos_", "PARAM", True, 22)
+sort_out_list(pvs[0], "pos_", "PARAM", True, 30)
 sort_out_list(pvs[3], "Value_", "VALUE", True, 16)
 
 
