@@ -1,8 +1,6 @@
 package uk.ac.stfc.isis.ibex.ui.scripting;
 
-import java.util.Arrays;
-import java.util.Comparator;
-
+import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ActionContributionItem;
@@ -27,31 +25,24 @@ import org.eclipse.ui.internal.console.OpenConsoleAction;
 public class GenieOpenConsoleAction extends OpenConsoleAction {
 	private ConsoleFactoryExtension[] fFactoryExtensions;
 	private Menu fMenu;
+	private ImageDescriptor pyDevImageDescriptor;
 	
 	public GenieOpenConsoleAction( ) {
 		super();
-		fFactoryExtensions = getSortedFactories();
+		fFactoryExtensions = getFactories();
 		
 	}
 	
-	private ConsoleFactoryExtension[] getSortedFactories() {
+	private ConsoleFactoryExtension[] getFactories() {	
 		ConsoleFactoryExtension[] factoryExtensions = ((ConsoleManager) ConsolePlugin.getDefault().getConsoleManager()).getConsoleFactoryExtensions();
-		Arrays.sort(factoryExtensions, new Comparator<ConsoleFactoryExtension>() {
-
-			@Override
-			public int compare(ConsoleFactoryExtension e1, ConsoleFactoryExtension e2) {
-				if (e1.isNewConsoleExtenson()) {
-					return -1;
-				}
-				if (e2.isNewConsoleExtenson()) {
-					return 1;
-				}
-				String first = e1.getLabel();
-				String second = e2.getLabel();
-				return first.compareTo(second);
-			}
-		});
-		return factoryExtensions;
+		return removePyDevConsoleFactory(factoryExtensions);
+	}
+	
+	
+	private ConsoleFactoryExtension[] removePyDevConsoleFactory(ConsoleFactoryExtension[] factoryExtensions) {
+		final int idxOfPyDevConsoleFactoryExtension = 1;
+		pyDevImageDescriptor = factoryExtensions[idxOfPyDevConsoleFactoryExtension].getImageDescriptor();
+		return (ConsoleFactoryExtension[]) ArrayUtils.remove(factoryExtensions, idxOfPyDevConsoleFactoryExtension);
 	}
 	
 	@Override
@@ -62,20 +53,14 @@ public class GenieOpenConsoleAction extends OpenConsoleAction {
 
 		fMenu= new Menu(parent);
 		int accel = 1;
-		ConsoleFactoryExtension pyDevExt = null;
 		for (ConsoleFactoryExtension extension : fFactoryExtensions) {
 			if (!WorkbenchActivityHelper.filterItem(extension) && extension.isEnabled()) {
 				ImageDescriptor image = extension.getImageDescriptor();
 				String label = extension.getLabel();
-				// Do not add PyDev console to pop up menu
-				if (label.contains("PyDev Console")) {
-					pyDevExt = extension;
-					continue;
-				}
-				// Add our PyDev console extension to pop up menu
+				// rename the label here
 				if (label.contains("PyDevConsoleNoDialog")) {
 					label = "PyDev Console";
-					image = pyDevExt.getImageDescriptor();
+					image = this.pyDevImageDescriptor;
 				}
 				addActionToMenu(fMenu, new ConsoleFactoryAction(label, image, extension), accel);
 				accel++;

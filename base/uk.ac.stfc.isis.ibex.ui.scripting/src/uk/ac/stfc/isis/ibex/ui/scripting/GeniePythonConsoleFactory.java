@@ -108,9 +108,13 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 		    	boolean continueWithNewConsole = true;
 		    	if (manager.getConsoles().length >= 1 && Consoles.showDialog) {
 		    		continueWithNewConsole = MessageDialog.openQuestion(Display.getDefault().getActiveShell(), "Duplicate console",
-			    			"Scripting console already Exists\nDo you still want to proceed with a new one?");
-
+			    			 "Scripting Console already exists. New Console will open on top of the current one. "
+		    				+ "Scripts running on current console will still run in the background.\n\n"
+			    			+ "You can switch between consoles using \"Display Selected Console\""
+			    			+ " button. To terminate a console please click on the red icon from the menu bar.\n\n"
+			    			+  "Do you still want to proceed with a new Console?");
 		    	}
+    
 		    	if (continueWithNewConsole) {
 		    		try {
 						createConsole(createGeniePydevInterpreter(), additionalInitialComands);
@@ -127,7 +131,6 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 		// Add a listener so that after a console is created, we install output length limits.
 		// This is the only way I found to do this, without relying on some arbitrary timeout.
 		Job.getJobManager().addJobChangeListener(JOB_CHANGE_LISTENER);
-		
 	}
 	
 	

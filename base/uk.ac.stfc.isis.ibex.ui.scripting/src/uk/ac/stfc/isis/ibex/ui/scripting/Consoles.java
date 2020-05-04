@@ -151,10 +151,7 @@ public class Consoles extends AbstractUIPlugin {
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-				IWorkbenchPage page = window.getActivePage();
-				IViewPart part = page.findView(IConsoleConstants.ID_CONSOLE_VIEW);
-				ConsoleView view = (ConsoleView)part;
+				ConsoleView view = getConsoleView();	
 				if (view != null) {
 					IToolBarManager tbm = view.getViewSite().getActionBars().getToolBarManager();
 					IContributionItem [] items= tbm.getItems();
@@ -162,7 +159,9 @@ public class Consoles extends AbstractUIPlugin {
 					GenieOpenConsoleAction openConsoleAction = new GenieOpenConsoleAction();
 					tbm.insertBefore(WARNING_CHECKBOX_ID, openConsoleAction);
 					
-					// Console view icons not required
+					// Console view icons not required. We are removing OpenConsoleAction so that we can add our Action
+					// and make it behave the way we want. In this case we do not want "selected python" dialog when user 
+					// chooses to open a new Console.
 					List<ActionContributionItem> itemsToRemove = Arrays.stream(items).filter(item->(item instanceof ActionContributionItem))
  					.map(item->(ActionContributionItem)item)
 					.filter(item-> item.getAction().toString().contains("PinConsole")||
@@ -175,6 +174,17 @@ public class Consoles extends AbstractUIPlugin {
 			}
 		});
 		
+	}
+	
+	/**
+	 * Gets Console view
+	 * @return current console view
+	 */
+	private ConsoleView getConsoleView() {
+		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		IWorkbenchPage page = window.getActivePage();
+		IViewPart part = page.findView(IConsoleConstants.ID_CONSOLE_VIEW);
+		return (ConsoleView)part;
 	}
 
 	/**
