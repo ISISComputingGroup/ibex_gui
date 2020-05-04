@@ -159,9 +159,8 @@ public class Consoles extends AbstractUIPlugin {
 					GenieOpenConsoleAction openConsoleAction = new GenieOpenConsoleAction();
 					tbm.insertBefore(WARNING_CHECKBOX_ID, openConsoleAction);
 					
-					// Console view icons not required. We are removing OpenConsoleAction so that we can add our Action
-					// and make it behave the way we want. In this case we do not want "selected python" dialog when user 
-					// chooses to open a new Console.
+					// Console view icons that are not required. We are removing OpenConsoleAction so that we can add our Action
+					// and make it behave the way we want. In this case we remove Pin Console and Open Console icons.
 					List<ActionContributionItem> itemsToRemove = Arrays.stream(items).filter(item->(item instanceof ActionContributionItem))
  					.map(item->(ActionContributionItem)item)
 					.filter(item-> item.getAction().toString().contains("PinConsole")||
