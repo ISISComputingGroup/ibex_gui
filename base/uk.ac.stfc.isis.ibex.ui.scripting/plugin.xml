@@ -58,10 +58,6 @@
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.console.ConsoleView">
       <dynamic
-            class="uk.ac.stfc.isis.ibex.ui.scripting.MultipleConsolesWarningDialogController"
-            id="uk.ac.stfc.isis.ibex.ui.scripting.warningDialog">
-      </dynamic> 
-      <dynamic
             class="uk.ac.stfc.isis.ibex.ui.scripting.ConsoleLengthMonitor"
             id="uk.ac.stfc.isis.ibex.ui.scripting.clearConsole">
       </dynamic>

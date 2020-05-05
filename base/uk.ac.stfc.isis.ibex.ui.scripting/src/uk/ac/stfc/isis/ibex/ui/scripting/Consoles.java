@@ -92,10 +92,11 @@ public class Consoles extends AbstractUIPlugin {
 	 */
 	private static final String TRIMMED_CONSOLE_LOG_PATH = Paths.get(System.getProperty("user.dir"), "console-output-trimmed.txt").toString();
 	
-	public static boolean showDialog = true;
-	
 	private IEclipseContext eclipseContext;
-	private final String WARNING_CHECKBOX_ID = "uk.ac.stfc.isis.ibex.ui.scripting.warningDialog";
+	/**
+	 * Clear console menu item ID.
+	 */
+	private final String CLEAR_CONSOLE_ID = "uk.ac.stfc.isis.ibex.ui.scripting.clearConsole";
 
 	/**
 	 * Limit on the total number of lines (input and output) per console.
@@ -157,7 +158,7 @@ public class Consoles extends AbstractUIPlugin {
 					IContributionItem [] items= tbm.getItems();
 					// Add our "Open Console" action
 					GenieOpenConsoleAction openConsoleAction = new GenieOpenConsoleAction();
-					tbm.insertBefore(WARNING_CHECKBOX_ID, openConsoleAction);
+					tbm.insertBefore(CLEAR_CONSOLE_ID, openConsoleAction);
 					
 					// Console view icons that are not required. We are removing OpenConsoleAction so that we can add our Action
 					// and make it behave the way we want. In this case we remove Pin Console and Open Console icons.

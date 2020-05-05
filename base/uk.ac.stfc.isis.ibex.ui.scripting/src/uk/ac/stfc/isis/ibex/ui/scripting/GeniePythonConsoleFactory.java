@@ -106,7 +106,7 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 		    public void run() {
 		    	IConsoleManager manager = ConsolePlugin.getDefault().getConsoleManager();
 		    	boolean continueWithNewConsole = true;
-		    	if (manager.getConsoles().length >= 1 && Consoles.showDialog) {
+		    	if (manager.getConsoles().length >= 1) {
 		    		continueWithNewConsole = MessageDialog.openQuestion(Display.getDefault().getActiveShell(), "Duplicate console",
 			    			 "Scripting Console already exists. New Console will open on top of the current one. "
 		    				+ "Scripts running on current console will still run in the background.\n\n"
