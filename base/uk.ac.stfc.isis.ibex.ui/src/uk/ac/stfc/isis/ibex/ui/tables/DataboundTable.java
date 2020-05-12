@@ -68,7 +68,7 @@ public abstract class DataboundTable<TRow> extends Composite {
 
     private int tableStyle;
 	private Table table;
-	private TableViewer viewer;
+	protected TableViewer viewer;
 	private TableColumnLayout tableColumnLayout = new TableColumnLayout();
 	private Composite tableComposite;
 	private ObservableListContentProvider<TRow> contentProvider = new ObservableListContentProvider<TRow>();
