@@ -1202,7 +1202,7 @@
     <entry>
       <key>LARMOR Spin Flipper</key>
       <value>
-        <type>UNCONFIRMED</type>
+        <type>SPIN_FLIPPER</type>
         <path>SpinFlipper306015.opi</path>
         <description>The OPI for the LARMOR Spin Flipper.</description>
         <macros/>
@@ -1992,7 +1992,7 @@
     <entry>
       <key>Mezei spin flipper</key>
       <value>
-        <type>UNKNOWN</type>
+        <type>SPIN_FLIPPER</type>
         <path>mezflipper.opi</path>
         <description>The OPI for the Mezei flipper.</description>
         <macros>
@@ -2316,16 +2316,19 @@
       </value>
     </entry>
     <entry>
-      <key>FLIPPRPS</key>
+      <key>CRISP Flipper system</key>
       <value>
-        <categories/>
-        <type>UNKNOWN</type>
+        <categories>
+          <category>Polarisers and Analysers</category>
+        </categories>
+        <type>SPIN_FLIPPER</type>
         <path>flipprps.opi</path>
-        <description>The OPI for the FLIPPRPS</description>
+        <description>The OPI for the CRISP Flipper system</description>
         <macros>
           <macro>
             <name>FLIPPRPS</name>
             <description>The FLIPPRPS PV prefix (e.g. FLIPPRPS_01)</description>
+            <default>FLIPPRPS_01</default>
           </macro>
         </macros>
       </value>

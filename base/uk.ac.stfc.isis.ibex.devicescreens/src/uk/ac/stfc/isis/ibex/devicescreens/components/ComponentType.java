@@ -175,7 +175,9 @@ public enum ComponentType {
 	/** Zero field. */
 	ZERO_FIELD,
 	/** LSI correlator. */
-	LSICORR;
+	LSICORR,
+	/**Spin flipper.*/
+	SPIN_FLIPPER;
 	
 	private Target target;
 

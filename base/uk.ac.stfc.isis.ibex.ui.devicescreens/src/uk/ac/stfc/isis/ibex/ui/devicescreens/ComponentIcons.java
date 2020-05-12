@@ -190,6 +190,8 @@ public final class ComponentIcons {
             	return "zerofield";
             case LSICORR:
             	return "lsicorr";
+            case SPIN_FLIPPER:
+            	return "flipper";
             default:
                 return "cog";
         }
