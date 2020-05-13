@@ -2333,5 +2333,15 @@
         </macros>
       </value>
     </entry>
+        <entry>
+      <key>Waveguide</key>
+      <value>
+        <type>WAVEGUIDE</type>
+        <path>waveguide/waveguide.opi</path>
+        <description>The OPI for SANS2D Waveguide.</description>
+        <macros/>
+        <categories/>
+      </value>
+    </entry>
   </opis>
 </descriptions>
