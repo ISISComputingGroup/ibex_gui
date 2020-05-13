@@ -287,10 +287,17 @@ public class ScriptGeneratorView {
 		        
 			    // Make buttons to move an action up and down the list
 		        Button btnMoveActionUp = createMoveRowButton(moveComposite, "move_up.png", "up");
-		        btnMoveActionUp.addListener(SWT.Selection, e -> scriptGeneratorViewModel.moveActionUp(table.getSelectionIndex()));
+		        btnMoveActionUp.addListener(SWT.Selection, e -> {
+		        	scriptGeneratorViewModel.moveActionUp(table.getSelectionIndex());
+		        	table.setSelectionIndex(Math.max(0, table.getSelectionIndex() - 1));
+		        });
 		        
 		        Button btnMoveActionDown = createMoveRowButton(moveComposite, "move_down.png", "down");
-		        btnMoveActionDown.addListener(SWT.Selection, e -> scriptGeneratorViewModel.moveActionDown(table.getSelectionIndex()));
+		        btnMoveActionDown.addListener(SWT.Selection, e -> {
+		        	scriptGeneratorViewModel.moveActionDown(table.getSelectionIndex());
+		            table.setSelectionIndex(Math.min(
+		            		table.getSelectionIndex() + 1, scriptGeneratorViewModel.getActions().size()));
+		        });
 		        
 		        // Composite for laying out new/delete/duplicate action buttons
 		        Composite actionsControlsGrp = new Composite(mainParent, SWT.NONE);
