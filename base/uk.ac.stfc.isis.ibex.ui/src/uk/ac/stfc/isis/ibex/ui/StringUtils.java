@@ -3,9 +3,16 @@ package uk.ac.stfc.isis.ibex.ui;
 /**
  * Utilities for formatting strings.
  */
-public class StringUtils {
+public final class StringUtils {
 	
 	private static final String ELIPSES = "…";
+	
+	/**
+	 * Private constructor for utility class.
+	 */
+	private StringUtils() {
+	    
+	}
 	
 	/**
 	 * If a string is too long, truncate it and add an ellipsis to the end.

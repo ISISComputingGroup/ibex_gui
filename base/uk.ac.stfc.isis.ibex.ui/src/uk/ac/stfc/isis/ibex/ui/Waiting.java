@@ -21,7 +21,14 @@ package uk.ac.stfc.isis.ibex.ui;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * Model capturing a waiting state, usually based on an external resource, e.g. for the blockserver to no longer be busy. 
+ *
+ */
 public abstract class Waiting extends ModelObject {
-	
+	/**
+	 * Is it is a waiting state.
+	 * @return True if is a waiting state; False otherwise.
+	 */
 	public abstract boolean isWaiting();
 }
