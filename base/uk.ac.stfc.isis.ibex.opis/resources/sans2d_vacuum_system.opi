@@ -2024,7 +2024,7 @@ $(pv_value)</tooltip>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
-    <height>163</height>
+    <height>205</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -2045,7 +2045,7 @@ $(pv_value)</tooltip>
     <width>181</width>
     <wuid>22a4f0db:171bb8f9c6d:-7c8d</wuid>
     <x>402</x>
-    <y>352</y>
+    <y>372</y>
     <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <alarm_pulsing>false</alarm_pulsing>
@@ -2102,7 +2102,7 @@ $(pv_value)</tooltip>
       <width>25</width>
       <wuid>22a4f0db:171bb8f9c6d:-7c8a</wuid>
       <x>66</x>
-      <y>0</y>
+      <y>6</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -2143,7 +2143,7 @@ $(pv_value)</tooltip>
       <wrap_words>true</wrap_words>
       <wuid>22a4f0db:171bb8f9c6d:-7c88</wuid>
       <x>12</x>
-      <y>71</y>
+      <y>83</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -2201,7 +2201,7 @@ $(pv_value)</tooltip>
       <width>25</width>
       <wuid>22a4f0db:171bb8f9c6d:-7c87</wuid>
       <x>66</x>
-      <y>68</y>
+      <y>80</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -2242,7 +2242,7 @@ $(pv_value)</tooltip>
       <wrap_words>true</wrap_words>
       <wuid>22a4f0db:171bb8f9c6d:-7c86</wuid>
       <x>12</x>
-      <y>101</y>
+      <y>113</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false" />
@@ -2282,8 +2282,8 @@ $(pv_value)</tooltip>
       <widget_type>Action Button</widget_type>
       <width>60</width>
       <wuid>22a4f0db:171bb8f9c6d:-7c65</wuid>
-      <x>4</x>
-      <y>33</y>
+      <x>7</x>
+      <y>42</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -2324,7 +2324,7 @@ $(pv_value)</tooltip>
       <wrap_words>true</wrap_words>
       <wuid>22a4f0db:171bb8f9c6d:-7c5d</wuid>
       <x>7</x>
-      <y>3</y>
+      <y>9</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false" />
@@ -2364,8 +2364,8 @@ $(pv_value)</tooltip>
       <widget_type>Action Button</widget_type>
       <width>60</width>
       <wuid>22a4f0db:171bb8f9c6d:-7c4f</wuid>
-      <x>77</x>
-      <y>33</y>
+      <x>85</x>
+      <y>42</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -2417,7 +2417,7 @@ $(pv_value)</tooltip>
       <wrap_words>false</wrap_words>
       <wuid>22a4f0db:171bb8f9c6d:-7c41</wuid>
       <x>66</x>
-      <y>101</y>
+      <y>113</y>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -2438,7 +2438,7 @@ $(pv_value)</tooltip>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
-    <height>163</height>
+    <height>205</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -2459,7 +2459,7 @@ $(pv_value)</tooltip>
     <width>181</width>
     <wuid>22a4f0db:171bb8f9c6d:-7c00</wuid>
     <x>582</x>
-    <y>352</y>
+    <y>372</y>
     <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <alarm_pulsing>false</alarm_pulsing>
@@ -2516,7 +2516,7 @@ $(pv_value)</tooltip>
       <width>25</width>
       <wuid>22a4f0db:171bb8f9c6d:-7bff</wuid>
       <x>44</x>
-      <y>0</y>
+      <y>6</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -2556,8 +2556,8 @@ $(pv_value)</tooltip>
       <width>43</width>
       <wrap_words>true</wrap_words>
       <wuid>22a4f0db:171bb8f9c6d:-7bfe</wuid>
-      <x>-3</x>
-      <y>72</y>
+      <x>7</x>
+      <y>84</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -2614,8 +2614,8 @@ $(pv_value)</tooltip>
       <widget_type>LED</widget_type>
       <width>25</width>
       <wuid>22a4f0db:171bb8f9c6d:-7bfd</wuid>
-      <x>51</x>
-      <y>69</y>
+      <x>61</x>
+      <y>81</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -2655,8 +2655,8 @@ $(pv_value)</tooltip>
       <width>43</width>
       <wrap_words>true</wrap_words>
       <wuid>22a4f0db:171bb8f9c6d:-7bfc</wuid>
-      <x>-3</x>
-      <y>102</y>
+      <x>7</x>
+      <y>114</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false" />
@@ -2697,7 +2697,7 @@ $(pv_value)</tooltip>
       <width>60</width>
       <wuid>22a4f0db:171bb8f9c6d:-7bfb</wuid>
       <x>7</x>
-      <y>30</y>
+      <y>42</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -2738,7 +2738,7 @@ $(pv_value)</tooltip>
       <wrap_words>true</wrap_words>
       <wuid>22a4f0db:171bb8f9c6d:-7bfa</wuid>
       <x>7</x>
-      <y>3</y>
+      <y>9</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false" />
@@ -2779,7 +2779,7 @@ $(pv_value)</tooltip>
       <width>60</width>
       <wuid>22a4f0db:171bb8f9c6d:-7bf9</wuid>
       <x>85</x>
-      <y>30</y>
+      <y>42</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -2830,8 +2830,8 @@ $(pv_value)</tooltip>
       <width>70</width>
       <wrap_words>false</wrap_words>
       <wuid>22a4f0db:171bb8f9c6d:-7bf8</wuid>
-      <x>51</x>
-      <y>102</y>
+      <x>61</x>
+      <y>114</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -2889,7 +2889,7 @@ $(pv_value)</tooltip>
       <width>25</width>
       <wuid>22a4f0db:171bb8f9c6d:-7b4e</wuid>
       <x>120</x>
-      <y>0</y>
+      <y>6</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -2930,7 +2930,7 @@ $(pv_value)</tooltip>
       <wrap_words>true</wrap_words>
       <wuid>22a4f0db:171bb8f9c6d:-7b4d</wuid>
       <x>91</x>
-      <y>3</y>
+      <y>9</y>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -3975,12 +3975,12 @@ $(pv_value)</tooltip>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
-    <height>91</height>
+    <height>109</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
-    <name>Seal Pressures</name>
+    <name>Seal Pressure</name>
     <rules />
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -4032,11 +4032,11 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>55</width>
+      <width>76</width>
       <wrap_words>true</wrap_words>
       <wuid>22a4f0db:171bb8f9c6d:-7973</wuid>
-      <x>18</x>
-      <y>6</y>
+      <x>-3</x>
+      <y>30</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -4084,11 +4084,11 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
-      <width>70</width>
+      <width>82</width>
       <wrap_words>false</wrap_words>
       <wuid>22a4f0db:171bb8f9c6d:-796f</wuid>
       <x>84</x>
-      <y>6</y>
+      <y>30</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -4125,11 +4125,11 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>55</width>
+      <width>76</width>
       <wrap_words>true</wrap_words>
       <wuid>22a4f0db:171bb8f9c6d:-7946</wuid>
-      <x>18</x>
-      <y>30</y>
+      <x>-3</x>
+      <y>55</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -4177,11 +4177,104 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
-      <width>70</width>
+      <width>79</width>
       <wrap_words>false</wrap_words>
       <wuid>22a4f0db:171bb8f9c6d:-7945</wuid>
       <x>84</x>
-      <y>30</y>
+      <y>55</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <auto_size>false</auto_size>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <height>20</height>
+      <horizontal_alignment>2</horizontal_alignment>
+      <name>Label_4</name>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_scrollbar>false</show_scrollbar>
+      <text>Status:</text>
+      <tooltip></tooltip>
+      <transparent>false</transparent>
+      <vertical_alignment>1</vertical_alignment>
+      <visible>true</visible>
+      <widget_type>Label</widget_type>
+      <width>55</width>
+      <wrap_words>true</wrap_words>
+      <wuid>3ad95a9d:1721334f918:-7f91</wuid>
+      <x>18</x>
+      <y>5</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <alarm_pulsing>false</alarm_pulsing>
+      <auto_size>false</auto_size>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
+      </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <format_type>0</format_type>
+      <height>20</height>
+      <horizontal_alignment>0</horizontal_alignment>
+      <name>Text Update_1</name>
+      <precision>0</precision>
+      <precision_from_pv>true</precision_from_pv>
+      <pv_name>$(PV_ROOT)SEAL:STATUS</pv_name>
+      <pv_value />
+      <rotation_angle>0.0</rotation_angle>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_units>true</show_units>
+      <text>######</text>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <transparent>true</transparent>
+      <vertical_alignment>1</vertical_alignment>
+      <visible>true</visible>
+      <widget_type>Text Update</widget_type>
+      <width>82</width>
+      <wrap_words>false</wrap_words>
+      <wuid>3ad95a9d:1721334f918:-7f73</wuid>
+      <x>83</x>
+      <y>5</y>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -4202,7 +4295,7 @@ $(pv_value)</tooltip>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
-    <height>91</height>
+    <height>111</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -4263,7 +4356,7 @@ $(pv_value)</tooltip>
       <wrap_words>true</wrap_words>
       <wuid>22a4f0db:171bb8f9c6d:-7919</wuid>
       <x>0</x>
-      <y>6</y>
+      <y>12</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -4304,7 +4397,7 @@ $(pv_value)</tooltip>
       <wrap_words>true</wrap_words>
       <wuid>22a4f0db:171bb8f9c6d:-7917</wuid>
       <x>0</x>
-      <y>30</y>
+      <y>45</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -4362,7 +4455,7 @@ $(pv_value)</tooltip>
       <width>25</width>
       <wuid>22a4f0db:171bb8f9c6d:-7902</wuid>
       <x>60</x>
-      <y>3</y>
+      <y>9</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -4420,7 +4513,7 @@ $(pv_value)</tooltip>
       <width>25</width>
       <wuid>22a4f0db:171bb8f9c6d:-78f8</wuid>
       <x>60</x>
-      <y>30</y>
+      <y>45</y>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -4441,7 +4534,7 @@ $(pv_value)</tooltip>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
-    <height>91</height>
+    <height>109</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -4502,7 +4595,7 @@ $(pv_value)</tooltip>
       <wrap_words>true</wrap_words>
       <wuid>22a4f0db:171bb8f9c6d:-78bc</wuid>
       <x>18</x>
-      <y>6</y>
+      <y>12</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -4554,7 +4647,7 @@ $(pv_value)</tooltip>
       <wrap_words>false</wrap_words>
       <wuid>22a4f0db:171bb8f9c6d:-78bb</wuid>
       <x>72</x>
-      <y>6</y>
+      <y>12</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false" />
@@ -4595,7 +4688,7 @@ $(pv_value)</tooltip>
       <width>60</width>
       <wuid>22a4f0db:171bb8f9c6d:-78a5</wuid>
       <x>18</x>
-      <y>30</y>
+      <y>36</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false" />
@@ -4636,7 +4729,7 @@ $(pv_value)</tooltip>
       <width>60</width>
       <wuid>22a4f0db:171bb8f9c6d:-78a4</wuid>
       <x>91</x>
-      <y>30</y>
+      <y>36</y>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -4657,7 +4750,7 @@ $(pv_value)</tooltip>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
-    <height>91</height>
+    <height>111</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -4718,7 +4811,7 @@ $(pv_value)</tooltip>
       <wrap_words>true</wrap_words>
       <wuid>22a4f0db:171bb8f9c6d:-787d</wuid>
       <x>0</x>
-      <y>6</y>
+      <y>12</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -4759,7 +4852,7 @@ $(pv_value)</tooltip>
       <wrap_words>true</wrap_words>
       <wuid>22a4f0db:171bb8f9c6d:-787c</wuid>
       <x>54</x>
-      <y>30</y>
+      <y>45</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -4817,7 +4910,7 @@ $(pv_value)</tooltip>
       <width>25</width>
       <wuid>22a4f0db:171bb8f9c6d:-787b</wuid>
       <x>156</x>
-      <y>3</y>
+      <y>9</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -4875,7 +4968,7 @@ $(pv_value)</tooltip>
       <width>25</width>
       <wuid>22a4f0db:171bb8f9c6d:-787a</wuid>
       <x>156</x>
-      <y>27</y>
+      <y>42</y>
     </widget>
   </widget>
 </display>
