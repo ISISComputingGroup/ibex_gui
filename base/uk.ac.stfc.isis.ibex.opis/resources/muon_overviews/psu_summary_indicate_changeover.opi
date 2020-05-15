@@ -176,7 +176,7 @@ new_macros = DataUtil.createMacrosInput(True)
 new_macros.put("NAME", widget.getMacroValue("PSNAME"))
 
 if "DFKPS" in root_macro:
-	ScriptUtil.openOPI(widget, "../danfysik.opi", 1, new_macros)
+	ScriptUtil.openOPI(widget, "../danfysik_riken_changeover.opi", 1, new_macros)
 elif "GENESYS" in root_macro:
 	ScriptUtil.openOPI(widget, "../genesys.opi", 1, new_macros)
 elif "NGPSPSU" in root_macro: 
