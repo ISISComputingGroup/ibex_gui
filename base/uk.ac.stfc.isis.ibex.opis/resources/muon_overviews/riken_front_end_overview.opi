@@ -2417,11 +2417,7 @@ $(pv_value)</tooltip>
       <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
     </font>
     <foreground_color>
-<<<<<<< HEAD
-      <color red="255" green="0" blue="0"/>
-=======
       <color name="ISIS_Red" red="255" green="0" blue="0" />
->>>>>>> 75bb76f3e9073ce55c2a044ea45679754b361798
     </foreground_color>
     <height>109</height>
     <horizontal_alignment>1</horizontal_alignment>
@@ -2442,15 +2438,9 @@ $(pv_value)</tooltip>
     </scale_options>
     <scripts/>
     <show_scrollbar>false</show_scrollbar>
-<<<<<<< HEAD
-    <text>WARNING: Problem with DAQmx connection. Changing PSU settings disabled.</text>
-    <tooltip/>
-    <transparent>true</transparent>
-=======
     <text>WARNING: Problem with DAQmx connection. Changing PSU settings for RB2, RB2-2, RQ18, RQ19, RQ 20, RQ21, RQ22, RQ23 disabled.</text>
     <tooltip></tooltip>
     <transparent>false</transparent>
->>>>>>> 75bb76f3e9073ce55c2a044ea45679754b361798
     <vertical_alignment>1</vertical_alignment>
     <visible>false</visible>
     <widget_type>Label</widget_type>
@@ -2461,17 +2451,10 @@ $(pv_value)</tooltip>
     <y>324</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-<<<<<<< HEAD
-    <actions hook="false" hook_all="false"/>
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <border_color>
-      <color name="ISIS_Border" red="0" green="0" blue="0"/>
-=======
     <actions hook="false" hook_all="false" />
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <border_color>
       <color name="ISIS_Border" red="0" green="0" blue="0" />
->>>>>>> 75bb76f3e9073ce55c2a044ea45679754b361798
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
@@ -2481,17 +2464,6 @@ $(pv_value)</tooltip>
     </font>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <foreground_color>
-<<<<<<< HEAD
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
-    </foreground_color>
-    <height>1</height>
-    <image/>
-    <name>Dummy</name>
-    <push_action_index>0</push_action_index>
-    <pv_name/>
-    <pv_value/>
-    <rules/>
-=======
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
     <height>1</height>
@@ -2501,25 +2473,16 @@ $(pv_value)</tooltip>
     <pv_name></pv_name>
     <pv_value />
     <rules />
->>>>>>> 75bb76f3e9073ce55c2a044ea45679754b361798
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-<<<<<<< HEAD
-    <scripts/>
-    <style>1</style>
-    <text/>
-    <toggle_button>false</toggle_button>
-    <tooltip/>
-=======
     <scripts />
     <style>1</style>
     <text></text>
     <toggle_button>false</toggle_button>
     <tooltip></tooltip>
->>>>>>> 75bb76f3e9073ce55c2a044ea45679754b361798
     <visible>true</visible>
     <widget_type>Action Button</widget_type>
     <width>1</width>
@@ -2527,8 +2490,4 @@ $(pv_value)</tooltip>
     <x>120</x>
     <y>102</y>
   </widget>
-<<<<<<< HEAD
 </display>
-=======
-</display>
->>>>>>> 75bb76f3e9073ce55c2a044ea45679754b361798
