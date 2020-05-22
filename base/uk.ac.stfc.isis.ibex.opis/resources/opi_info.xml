@@ -2331,6 +2331,18 @@
             <default>DMA4500M_01</default>
           </macro>
         </macros>
+	  </value>
+    </entry>
+	<entry>
+      <key>SANS2D Vacuum System</key>
+      <value>
+      	<type>PRESSURE_GAUGE</type>
+      	<path>sans2d_vacuum_system.opi</path>
+      	<description>OPI for the SANS2D vacuum</description>
+        <categories>
+          <category>Pressure sensors</category>
+        </categories>
+		<macros/>
       </value>
     </entry>
   </opis>
