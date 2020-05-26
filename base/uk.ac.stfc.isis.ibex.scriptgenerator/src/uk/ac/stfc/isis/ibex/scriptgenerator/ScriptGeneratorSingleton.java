@@ -655,18 +655,26 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		scriptDefinitionLoader.reloadScriptDefinitions();
 	}
 	
+	public void loadParameterValues(String fileName) throws NoScriptDefinitionSelectedException, ScriptDefinitionNotMatched, UnsupportedOperationException {
+		loadParameterValues(fileName, false);
+	}
+	
 	/**
 	 * Loads parameter values from a file.
 	 * 
 	 * @param fileName name of data file user wants to load
+	 * @param replace if true replace current list of actions, if false just append loaded actions
 	 * @throws NoScriptDefinitionSelectedException when script definition has not been selected
 	 * @throws ScriptDefinitionNotMatched when the script definition used to generate data file does not match with the one used to load it
 	 */
-	public void loadParameterValues(String fileName) throws NoScriptDefinitionSelectedException, ScriptDefinitionNotMatched, UnsupportedOperationException {
+	public void loadParameterValues(String fileName, boolean replace) throws NoScriptDefinitionSelectedException, ScriptDefinitionNotMatched, UnsupportedOperationException {
 		ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException("No Configuration Selected"));
 		String currentDefinitionPath = preferenceSupplier.scriptGeneratorScriptDefinitionFolders() + scriptDefinition.getName() + PYTHON_EXT;
 		List<Map<JavaActionParameter, String>> list = scriptGenFileHandler.getParameterValues(fileName, currentDefinitionPath, getActionParameters());
+		if (replace) {
+			scriptGeneratorTable.clearAction();
+		}
 		scriptGeneratorTable.addMultipleActions(list);
 	}
 	

@@ -38,6 +38,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
+import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.LoadParameterReplaceAppendDialog;
 import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.SaveScriptGeneratorFileMessageDialog;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
@@ -801,8 +802,17 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		Optional<String> selectedFile = openFileDialog(SWT.OPEN);
 		// filename will be null if user has clicked cancel button
 		if (selectedFile.isPresent()) {
+			boolean replace;
+			if (scriptGeneratorModel.getActions().isEmpty()) {
+				replace = false;
+			}
+			else {
+				// ask user whether to append or replace parameters
+				replace = LoadParameterReplaceAppendDialog.openDialog(Display.getDefault().getActiveShell());
+			}
+			
 			try {
-				scriptGeneratorModel.loadParameterValues(selectedFile.get());
+				scriptGeneratorModel.loadParameterValues(selectedFile.get(), replace);
 			} catch (NoScriptDefinitionSelectedException e) {
 				LOG.error(e);
 				MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
