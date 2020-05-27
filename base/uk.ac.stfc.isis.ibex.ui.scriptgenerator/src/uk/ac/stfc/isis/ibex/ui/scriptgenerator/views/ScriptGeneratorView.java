@@ -275,7 +275,7 @@ public class ScriptGeneratorView {
 		        // The UI table
 				ActionsViewTable table = 
 						new ActionsViewTable(tableContainerComposite,
-								SWT.NONE, SWT.SINGLE | SWT.V_SCROLL | SWT.FULL_SELECTION,
+								SWT.NONE, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION,
 								scriptGeneratorViewModel);
 				table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 				scriptGeneratorViewModel.reloadActions();
