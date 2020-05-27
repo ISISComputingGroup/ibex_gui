@@ -429,8 +429,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * 
 	 * @param index the index to delete.
 	 */
-	public void deleteAction(int index) {
-		scriptGeneratorTable.deleteAction(index);
+	public void deleteAction(int[] indices) {
+		scriptGeneratorTable.deleteAction(indices);
 	}
 
 	/**

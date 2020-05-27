@@ -271,8 +271,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * @param index
 	 * 			the index to delete.
 	 */
-	protected void deleteAction(int index) {
-		scriptGeneratorModel.deleteAction(index);
+	protected void deleteAction(int[] indices) {
+		scriptGeneratorModel.deleteAction(indices);
 	}
 	
 	/**

@@ -70,7 +70,19 @@ public class ActionsTableTest {
 	public void test_GIVEN_action_in_table_WHEN_action_deleted_THEN_action_is_removed() {
 		table.addEmptyAction();
 
-		table.deleteAction(0);
+		table.deleteAction(new int[] {0});
+		
+		assertEquals(table.getActions().size(), 0);
+		
+	}
+	
+	@Test
+	public void test_GIVEN_actions_in_table_WHEN_all_actions_deleted_THEN_actions_are_removed() {
+		table.addEmptyAction();
+		table.addEmptyAction();
+		table.addEmptyAction();
+
+		table.deleteAction(new int[] {0, 1, 2});
 		
 		assertEquals(table.getActions().size(), 0);
 		

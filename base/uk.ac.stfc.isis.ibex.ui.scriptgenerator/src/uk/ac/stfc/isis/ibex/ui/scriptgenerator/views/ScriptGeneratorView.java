@@ -316,7 +316,7 @@ public class ScriptGeneratorView {
 		        final Button btnDeleteAction = new Button(actionsControlsGrp, SWT.NONE);
 		        btnDeleteAction.setText("Delete Action");
 		        btnDeleteAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		        btnDeleteAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.deleteAction(table.getSelectionIndex()));
+		        btnDeleteAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.deleteAction(table.getSelectionIndices()));
 		
 		        final Button btnDuplicateAction = new Button(actionsControlsGrp, SWT.NONE);
 		        btnDuplicateAction.setText("Duplicate Action");

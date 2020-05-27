@@ -123,15 +123,19 @@ public class ActionsTable extends ModelObject {
 
 	/**
 	 * Removes an action from the list in specified location.
-	 * @param index
-	 * 		  	The index to remove from the actions list.
+	 * @param indices
+	 * 		  	The indices to remove from the actions list.
 	 */
-	public void deleteAction(int index) {
-		if (isValidIndex(index)) {
-			final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
-			newList.remove(index);
-			firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
+	public void deleteAction(int[] indices) {
+		Arrays.sort(indices);
+		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
+		// remove selected indices from highest to lowest
+		for (int i = indices.length - 1; i >= 0; i--) {
+			if (isValidIndex(indices[i])) {
+				newList.remove(indices[i]);
+			}
 		}
+		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
 	}
 
 	/**
