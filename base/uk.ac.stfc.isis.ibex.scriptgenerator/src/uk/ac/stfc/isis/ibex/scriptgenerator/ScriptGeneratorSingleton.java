@@ -434,12 +434,12 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 
 	/**
-	 * Duplicates action at position index in ActionsTable.
+	 * Duplicates actions at position indices in ActionsTable.
 	 * 
-	 * @param index the index to duplicate.
+	 * @param indices the indices to duplicate.
 	 */
-	public void duplicateAction(int index) {
-		scriptGeneratorTable.duplicateAction(index);
+	public void duplicateAction(int[] indices) {
+		scriptGeneratorTable.duplicateAction(indices);
 	}
 
     /**

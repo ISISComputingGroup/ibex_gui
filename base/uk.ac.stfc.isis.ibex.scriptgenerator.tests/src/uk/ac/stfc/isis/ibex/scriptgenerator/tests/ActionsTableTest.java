@@ -54,16 +54,29 @@ public class ActionsTableTest {
 	
 	@Test
 	public void test_GIVEN_action_duplicated_WHEN_action_selected_THEN_action_is_duplicated() {
-		Map<JavaActionParameter, String> multipleActions = new HashMap<JavaActionParameter, String>();
 		table.addEmptyAction();
 		
-		table.duplicateAction(0);
+		table.duplicateAction(new int[] {0});
 		
 		var allActions = table.getActions();
 		
 		assertEquals(table.getActions().size(), 2);
 		
 		assertEquals(allActions.get(0).getActionParameterValueMap(), allActions.get(1).getActionParameterValueMap());
+	}
+	
+	@Test
+	public void test_GIVEN_actions_duplicated_WHEN_multiple_actions_selected_THEN_actions_are_duplicated() {
+		table.addEmptyAction();
+		table.addEmptyAction();
+		
+		table.duplicateAction(new int[] {0, 1});
+		
+		var allActions = table.getActions();
+		
+		assertEquals(table.getActions().size(), 4);
+		
+		assertEquals(allActions.get(0).getActionParameterValueMap(), allActions.get(2).getActionParameterValueMap());
 	}
 	
 	@Test

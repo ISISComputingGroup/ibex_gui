@@ -139,22 +139,29 @@ public class ActionsTable extends ModelObject {
 	}
 
 	/**
-	 * Duplicates an action in the list at specified location.
-	 * @param index
-	 * 			The index of the action to duplicate.
+	 * Duplicates a set of selected actions in the table and places them after the lowest selected action in the table
+	 * @param indices
+	 * 			The indices of the actions to duplicate.
 	 */
-	public void duplicateAction(int index) {
-		if (isValidIndex(index)) {
-			var actionToDuplicate = actions.get(index);
-			var newAction = createAction(actionToDuplicate.getActionParameterValueMap());
-			final var newActions = new ArrayList<ScriptGeneratorAction>();
-			
-			newActions.addAll(actions);
-			
-			newActions.add(index + 1, newAction);
-			
-			firePropertyChange(ACTIONS_PROPERTY, actions, this.actions = newActions);
+	public void duplicateAction(int[] indices) {
+		Arrays.sort(indices);
+		
+		final var newActionsList = new ArrayList<ScriptGeneratorAction>();
+		newActionsList.addAll(actions);
+		
+		final var actionsToAdd = new ArrayList<ScriptGeneratorAction>();
+		
+		for (int i = 0; i < indices.length; i++) {
+			if (isValidIndex(indices[i])) {
+				var actionToDuplicate = actions.get(indices[i]);
+				var newAction = createAction(actionToDuplicate.getActionParameterValueMap());			
+				actionsToAdd.add(newAction);
+			}
 		}
+		
+		// add new actions after the last selected action
+		newActionsList.addAll(indices[indices.length - 1] + 1, actionsToAdd);
+		firePropertyChange(ACTIONS_PROPERTY, actions, this.actions = newActionsList);
 	}
     
     /**

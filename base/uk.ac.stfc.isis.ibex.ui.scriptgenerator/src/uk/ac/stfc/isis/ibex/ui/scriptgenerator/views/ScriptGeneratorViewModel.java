@@ -276,13 +276,13 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	}
 	
 	/**
-	 * Duplicates action at position index in ActionsTable.
+	 * Duplicates action at position indices in ActionsTable.
 	 * 
-	 * @param index
-	 * 			the index to duplicate.
+	 * @param indices
+	 * 			the indices to duplicate.
 	 */
-	protected void duplicateAction(int index) {
-		scriptGeneratorModel.duplicateAction(index);
+	protected void duplicateAction(int[] indices) {
+		scriptGeneratorModel.duplicateAction(indices);
 	}
 	
     /**
