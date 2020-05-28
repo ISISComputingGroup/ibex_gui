@@ -171,30 +171,47 @@ public class ActionsTable extends ModelObject {
         final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>();
         firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
     }
-
+	
 	/**
-	 * Moves action to a new position in the table.
-	 * @param oldIndex
-	 * 			The current index of the action to be moved.
-	 * @param newIndex
-	 * 			The index to move the action to, if valid.
+	 * Moves a selection of actions down one row
+	 * @param indices
+	 * 			The indices of actions to be moved
 	 */
-	public void moveAction(int oldIndex, int newIndex) {
-		if (isValidIndex(oldIndex)) {
-			final var newActions = new ArrayList<ScriptGeneratorAction>();
-			
-			newActions.addAll(actions);
-			
-			if (newIndex < 0) {
-				newIndex = 0;
-			} else if (newIndex >= this.actions.size()) {
-				newIndex = this.actions.size() - 1;
-			}
-			
-			Collections.swap(newActions, oldIndex, newIndex);
+	public void moveActionDown(int[] indices) {
+		final var newActions = new ArrayList<ScriptGeneratorAction>();
+		newActions.addAll(actions);
 		
-			firePropertyChange(ACTIONS_PROPERTY, actions, actions = newActions);
+		for (int i = indices.length - 1; i >= 0; i--) {
+			if (isValidIndex(indices[i])) {
+				if (indices[i] + 1 >= this.actions.size()) {
+					break;
+				}
+				Collections.swap(newActions, indices[i], indices[i] + 1);
+			}
 		}
+		
+		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newActions);
+	}
+	
+	/**
+	 * Moves a selection of actions down up row
+	 * @param indices
+	 * 			The indices of actions to be moved
+	 */
+	public void moveActionUp(int[] indices) {
+		final var newActions = new ArrayList<ScriptGeneratorAction>();
+		newActions.addAll(actions);
+		
+		for (int i = 0; i < indices.length; i++) {
+			if (isValidIndex(indices[i])) {
+				if (indices[i] - 1 < 0) {
+					break;
+				}
+				Collections.swap(newActions, indices[i], indices[i] - 1);
+			}
+		}
+		
+		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newActions);
 	}
 	
 	/**

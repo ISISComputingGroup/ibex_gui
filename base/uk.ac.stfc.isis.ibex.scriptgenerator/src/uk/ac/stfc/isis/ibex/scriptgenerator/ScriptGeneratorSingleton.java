@@ -450,21 +450,21 @@ public class ScriptGeneratorSingleton extends ModelObject {
     }
     
 	/**
-	 * Moves action one row up in table.
+	 * Moves actions one row up in table.
 	 * 
-	 * @param index the index to move.
+	 * @param indices the indices to move.
 	 */
-	public void moveActionUp(int index) {
-		scriptGeneratorTable.moveAction(index, index - 1);
+	public void moveActionUp(int[] indices) {
+		scriptGeneratorTable.moveActionUp(indices);
 	}
 
 	/**
-	 * Moves action one row down in table.
+	 * Moves actions one row down in table.
 	 * 
-	 * @param index the index to move.
+	 * @param indices the indices to move.
 	 */
-	public void moveActionDown(int index) {
-		scriptGeneratorTable.moveAction(index, index + 1);
+	public void moveActionDown(int[] indices) {
+		scriptGeneratorTable.moveActionDown(indices);
 	}
 
 	/**

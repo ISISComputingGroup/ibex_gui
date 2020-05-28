@@ -300,23 +300,23 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
     
 	/**
-	 * Moves action one row up in table.
+	 * Moves actions one row up in table.
 	 * 
-	 * @param index
-	 * 			the index to move.
+	 * @param indices
+	 * 			the indices to move.
 	 */
-	protected void moveActionUp(int index) {
-		scriptGeneratorModel.moveActionUp(index);
+	protected void moveActionUp(int[] indices) {
+		scriptGeneratorModel.moveActionUp(indices);
 	}
 
 	/**
-	 * Moves action one row down in table.
+	 * Moves actions one row down in table.
 	 * 
-	 * @param index
-	 * 			the index to move.
+	 * @param indices
+	 * 			the indices to move.
 	 */
-	protected void moveActionDown(int index) {
-		scriptGeneratorModel.moveActionDown(index);
+	protected void moveActionDown(int[] indices) {
+		scriptGeneratorModel.moveActionDown(indices);
 	}
 
 	/**

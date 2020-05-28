@@ -288,13 +288,13 @@ public class ScriptGeneratorView {
 			    // Make buttons to move an action up and down the list
 		        Button btnMoveActionUp = createMoveRowButton(moveComposite, "move_up.png", "up");
 		        btnMoveActionUp.addListener(SWT.Selection, e -> {
-		        	scriptGeneratorViewModel.moveActionUp(table.getSelectionIndex());
+		        	scriptGeneratorViewModel.moveActionUp(table.getSelectionIndices());
 		        	table.setSelectionIndex(Math.max(0, table.getSelectionIndex() - 1));
 		        });
 		        
 		        Button btnMoveActionDown = createMoveRowButton(moveComposite, "move_down.png", "down");
 		        btnMoveActionDown.addListener(SWT.Selection, e -> {
-		        	scriptGeneratorViewModel.moveActionDown(table.getSelectionIndex());
+		        	scriptGeneratorViewModel.moveActionDown(table.getSelectionIndices());
 		            table.setSelectionIndex(Math.min(
 		            		table.getSelectionIndex() + 1, scriptGeneratorViewModel.getActions().size()));
 		        });

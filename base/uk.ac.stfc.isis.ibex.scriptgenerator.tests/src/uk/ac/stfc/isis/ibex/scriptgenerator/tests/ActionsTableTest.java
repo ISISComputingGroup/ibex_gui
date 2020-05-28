@@ -109,9 +109,36 @@ public class ActionsTableTest {
 		
 		var secondAction = table.getActions().get(1);
 		
-		table.moveAction(1, 0);
+		table.moveActionUp(new int[] {1});
 		
 		assertEquals(table.getActions().indexOf(secondAction), 0);
+	}
+	
+	@Test
+	public void test_GIVEN_actions_in_table_WHEN_multiple_action_moved_THEN_actions_move_in_table() {
+		// Add six actions
+		table.addEmptyAction();
+		table.addEmptyAction();
+		table.addEmptyAction();
+		table.addEmptyAction();
+		table.addEmptyAction();
+		table.addEmptyAction();
+		
+		var secondAction = table.getActions().get(1);
+		var thirdAction = table.getActions().get(2);
+		var fourthAction = table.getActions().get(3);
+		
+		table.moveActionUp(new int[] {1, 2, 3});
+		
+		assertEquals(table.getActions().indexOf(secondAction), 0);
+		assertEquals(table.getActions().indexOf(thirdAction), 1);
+		assertEquals(table.getActions().indexOf(fourthAction), 2);
+		
+		table.moveActionDown(new int[] {0, 1, 2});
+		
+		assertEquals(table.getActions().indexOf(secondAction), 1);
+		assertEquals(table.getActions().indexOf(thirdAction), 2);
+		assertEquals(table.getActions().indexOf(fourthAction), 3);
 	}
 	
 	@Test
@@ -122,7 +149,7 @@ public class ActionsTableTest {
 		
 		var firstAction = table.getActions().get(0);
 		
-		table.moveAction(0, -1);
+		table.moveActionUp(new int[] {0});
 		
 		assertEquals(table.getActions().indexOf(firstAction), 0);
 	}
@@ -135,7 +162,7 @@ public class ActionsTableTest {
 		
 		var secondAction = table.getActions().get(1);
 		
-		table.moveAction(1, 2);
+		table.moveActionDown(new int[] {1});
 		
 		assertEquals(table.getActions().indexOf(secondAction), 1);
 	}
