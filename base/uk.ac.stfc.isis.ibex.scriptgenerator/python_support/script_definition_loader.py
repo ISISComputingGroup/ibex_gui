@@ -309,9 +309,9 @@ def get_script_definitions(search_folders: List[str] = None) -> Tuple[Dict[AnySt
                 try:
                     loader = importlib.machinery.SourceFileLoader(module_name, os.path.join(search_folder, filename))
                     spec = importlib.util.spec_from_loader(module_name, loader)
-                    sys.modules[module_name] = importlib.util.module_from_spec(spec)
-                    loader.exec_module(sys.modules[module_name])
-                    script_definitions[module_name] = sys.modules[module_name].DoRun
+                    loaded_module = importlib.util.module_from_spec(spec)
+                    loader.exec_module(loaded_module)
+                    script_definitions[module_name] = loaded_module.DoRun
                 except Exception as e:
                     # On failure to load ensure we return the reason
                     script_definition_load_errors[module_name] = str(e)
