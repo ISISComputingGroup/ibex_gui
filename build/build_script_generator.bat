@@ -20,6 +20,10 @@ if "%PYTHON3%" == "" (
 %PYTHON3% .\check_build.py ..\base\
 if %errorlevel% neq 0 exit /b %errorlevel%
 
+REM Pull the latest version of the script defintions repo
+git submodule update --remote ..\base\uk.ac.stfc.isis.ibex.scriptgenerator\python_support\ScriptDefitions
+if %errorlevel% neq 0 exit /b %errorlevel%
+
 if "%BUILD_NUMBER%" == "" (
     set BUILD_NUMBER=SNAPSHOT
 )
@@ -50,6 +54,6 @@ set /p PythonWriteDir=<Output
 call copy_python.bat %PythonWriteDir%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-@echo Client built in %sensible_build_dir%
+@echo Script generator built in %sensible_build_dir%
 
 pause
