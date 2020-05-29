@@ -71,7 +71,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
         
         scriptGeneratorViewModel.addActionParamPropertyListener(this);
 		TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(viewer,
-		        new FocusCellOwnerDrawHighlighter(viewer), new CellNavigationStrategy());
+		        new FocusCellOwnerDrawHighlighter(viewer, false), new CellNavigationStrategy());
 		ColumnViewerEditorActivationStrategy activationStrategy = createEditorActivationStrategy(viewer);
 		
 		TableViewerEditor.create(viewer, focusCellManager, activationStrategy, 
@@ -92,7 +92,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
             protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
 				boolean isEditorActivationEvent = true;
 				
-				if (event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL) { 
+				if (event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL) {
  					ColumnViewerEditor editor = this.getViewer().getColumnViewerEditor();
  					ViewerCell nextCell = editor.getFocusCell().getNeighbor(ViewerCell.RIGHT, false);
  					
@@ -169,7 +169,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 		if ((!viewer.getTable().isDisposed())) {
 			int focusRow = viewer.getTable().getSelectionIndex();
 			int focusColumn = 0;
-
+			
 			if (shiftCellFocusToNewlyAddedRow) {
 				focusRow = viewer.getTable().getSelectionIndex() + 1;
 				shiftCellFocusToNewlyAddedRow = false;
