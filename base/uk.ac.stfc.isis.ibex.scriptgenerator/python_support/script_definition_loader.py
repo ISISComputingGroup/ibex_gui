@@ -8,6 +8,7 @@ import inspect
 import argparse
 import os
 import sys
+from glob import iglob
 from jinja2 import Environment, FileSystemLoader, Markup, TemplateNotFound
 from genie_python import utilities
 import importlib.machinery
@@ -302,27 +303,20 @@ def get_script_definitions(search_folders: List[str] = None) -> Tuple[Dict[AnySt
     script_definition_load_errors: Dict[AnyStr, AnyStr] = {}
     for search_folder in search_folders:
         try:
-            for filename in os.listdir(search_folder):
-                # Check if we have found a python file or not
-                filenameparts = filename.split(".")
-                module_name = filenameparts[0]
-                if len(filenameparts) > 1:
-                    file_extension = filenameparts[-1]
-                else:
-                    file_extension = ""
-                # Found a script definition (python file) import the DoRun class
-                if file_extension == "py":
-                    try:
-                        loader = importlib.machinery.SourceFileLoader(module_name, os.path.join(search_folder, filename))
-                        spec = importlib.util.spec_from_loader(module_name, loader)
-                        sys.modules[module_name] = importlib.util.module_from_spec(spec)
-                        loader.exec_module(sys.modules[module_name])
-                        script_definitions[module_name] = sys.modules[module_name].DoRun
-                    except Exception as e:
-                        # On failure to load ensure we return the reason
-                        script_definition_load_errors[module_name] = str(e)
-                        # Print any errors to stderr, Java will catch and throw to the user
-                        print("Error loading {}: {}".format(module_name, e), file=sys.stderr)
+            for filename in iglob("{folder}/*.py".format(folder=search_folder)):
+                module_name = os.path.splitext(os.path.basename(filename))[0]
+                # Attempt to import the DoRun class
+                try:
+                    loader = importlib.machinery.SourceFileLoader(module_name, os.path.join(search_folder, filename))
+                    spec = importlib.util.spec_from_loader(module_name, loader)
+                    sys.modules[module_name] = importlib.util.module_from_spec(spec)
+                    loader.exec_module(sys.modules[module_name])
+                    script_definitions[module_name] = sys.modules[module_name].DoRun
+                except Exception as e:
+                    # On failure to load ensure we return the reason
+                    script_definition_load_errors[module_name] = str(e)
+                    # Print any errors to stderr, Java will catch and throw to the user
+                    print("Error loading {}: {}".format(module_name, e), file=sys.stderr)
         except FileNotFoundError as e:
             # On failure to load ensure we return the reason
             script_definition_load_errors[search_folder] = str(e)
