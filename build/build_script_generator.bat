@@ -21,7 +21,7 @@ if "%PYTHON3%" == "" (
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM Pull the latest version of the script defintions repo
-git submodule update --remote ..\base\uk.ac.stfc.isis.ibex.scriptgenerator\python_support\ScriptDefitions
+git submodule update --remote ..\base\uk.ac.stfc.isis.ibex.scriptgenerator\python_support\ScriptDefinitions
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 if "%BUILD_NUMBER%" == "" (
