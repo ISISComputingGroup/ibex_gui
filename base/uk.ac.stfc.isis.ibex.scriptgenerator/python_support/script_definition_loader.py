@@ -302,25 +302,20 @@ def get_script_definitions(search_folders: List[str] = None) -> Tuple[Dict[AnySt
     script_definitions: Dict[AnyStr, ScriptDefinition] = {}
     script_definition_load_errors: Dict[AnyStr, AnyStr] = {}
     for search_folder in search_folders:
-        try:
-            for filename in iglob("{folder}/*.py".format(folder=search_folder)):
-                module_name = os.path.splitext(os.path.basename(filename))[0]
-                # Attempt to import the DoRun class
-                try:
-                    loader = importlib.machinery.SourceFileLoader(module_name, os.path.join(search_folder, filename))
-                    spec = importlib.util.spec_from_loader(module_name, loader)
-                    loaded_module = importlib.util.module_from_spec(spec)
-                    loader.exec_module(loaded_module)
-                    script_definitions[module_name] = loaded_module.DoRun
-                except Exception as e:
-                    # On failure to load ensure we return the reason
-                    script_definition_load_errors[module_name] = str(e)
-                    # Print any errors to stderr, Java will catch and throw to the user
-                    print("Error loading {}: {}".format(module_name, e), file=sys.stderr)
-        except FileNotFoundError as e:
-            # On failure to load ensure we return the reason
-            script_definition_load_errors[search_folder] = str(e)
-            print("Error loading from {}".format(search_folder), file=sys.stderr)
+        for filename in iglob("{folder}/*.py".format(folder=search_folder)):
+            module_name = os.path.splitext(os.path.basename(filename))[0]
+            # Attempt to import the DoRun class
+            try:
+                loader = importlib.machinery.SourceFileLoader(module_name, os.path.join(search_folder, filename))
+                spec = importlib.util.spec_from_loader(module_name, loader)
+                loaded_module = importlib.util.module_from_spec(spec)
+                loader.exec_module(loaded_module)
+                script_definitions[module_name] = loaded_module.DoRun
+            except Exception as e:
+                # On failure to load ensure we return the reason
+                script_definition_load_errors[module_name] = str(e)
+                # Print any errors to stderr, Java will catch and throw to the user
+                print("Error loading {}: {}".format(module_name, e), file=sys.stderr)
     return script_definitions, script_definition_load_errors
 
 
