@@ -27,10 +27,12 @@ public class GenieOpenConsoleAction extends OpenConsoleAction {
 	private Menu fMenu;
 	private ImageDescriptor pyDevImageDescriptor;
 	
-	public GenieOpenConsoleAction( ) {
+	/**
+	 * Initialise factory extensions.
+	 */
+	public GenieOpenConsoleAction() {
 		super();
 		fFactoryExtensions = getFactories();
-		
 	}
 	
 	private ConsoleFactoryExtension[] getFactories() {	
@@ -51,7 +53,7 @@ public class GenieOpenConsoleAction extends OpenConsoleAction {
 			fMenu.dispose();
 		}
 
-		fMenu= new Menu(parent);
+		fMenu = new Menu(parent);
 		int accel = 1;
 		for (ConsoleFactoryExtension extension : fFactoryExtensions) {
 			if (!WorkbenchActivityHelper.filterItem(extension) && extension.isEnabled()) {
@@ -72,9 +74,10 @@ public class GenieOpenConsoleAction extends OpenConsoleAction {
 		return fMenu;
 	}
 	
+	@SuppressWarnings("checkstyle:magicnumber")
 	private void addActionToMenu(Menu parent, Action action, int accelerator) {
 		if (accelerator < 10) {
-			StringBuilder label= new StringBuilder();
+			StringBuilder label = new StringBuilder();
 			//add the numerical accelerator
 			label.append('&');
 			label.append(accelerator);
@@ -83,7 +86,7 @@ public class GenieOpenConsoleAction extends OpenConsoleAction {
 			action.setText(label.toString());
 		}
 
-		ActionContributionItem item= new ActionContributionItem(action);
+		ActionContributionItem item = new ActionContributionItem(action);
 		item.fill(parent, -1);
 	}
 	
@@ -92,7 +95,7 @@ public class GenieOpenConsoleAction extends OpenConsoleAction {
 		private ConsoleFactoryExtension fConfig;
 		private IConsoleFactory fFactory;
 
-		public ConsoleFactoryAction(String label, ImageDescriptor image, ConsoleFactoryExtension extension) {
+		ConsoleFactoryAction(String label, ImageDescriptor image, ConsoleFactoryExtension extension) {
 			setText(label);
 			if (image != null) {
 				setImageDescriptor(image);
