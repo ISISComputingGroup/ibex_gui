@@ -1,6 +1,6 @@
 set "JRELOCATION=\\isis\inst$\Kits$\CompGroup\ICP\ibex_client_jre"
 
-set "TARGET_DIR=%1"
+set "TARGET_DIR=%2"
 if "%TARGET_DIR%" == "" (
     set TARGET_DIR=built_script_gen
 )

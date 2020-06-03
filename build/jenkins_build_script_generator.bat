@@ -11,10 +11,10 @@ set PATH=%M2%;%PATH%
 
 set TARGET_DIR=script_generator
 
-call build_script_generator.bat %TARGETDIR%
+call build_script_generator.bat "" %TARGET_DIR%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-call build_msi.bat %BASEDIR%.. %TARGETDIR% ibex_script_generator
+call build_msi.bat %BASEDIR%.. %TARGET_DIR% ibex_script_generator
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 @echo on

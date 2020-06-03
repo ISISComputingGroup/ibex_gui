@@ -30,7 +30,7 @@ del %MSINAME%.msi
 
 @echo %TIME% Running HEAT
 REM -sw5150 supresses warning about self registering DLLs
-"%WIXBIN%\heat.exe" dir .\%CLIENTDIR% -gg -scom -sreg -svb6 -sfrag -sw5150 -template feature -var var.MySource -dr INSTALLDIR -cg MyCG -t %MYDIR%wxs2wxi.xsl -out %MSINAME%.wxi
+"%WIXBIN%\heat.exe" dir \\?\%CD%\%CLIENTDIR% -gg -scom -sreg -svb6 -sfrag -sw5150 -template feature -var var.MySource -dr INSTALLDIR -cg MyCG -t %MYDIR%wxs2wxi.xsl -out %MSINAME%.wxi
 if %errorlevel% neq 0 goto ERROR
 if not exist "%MSINAME%.wxi" (
     @echo %TIME% Unable to create %MSINAME%.wxi
@@ -55,6 +55,8 @@ if exist "%MSINAME%.msi" (
 ) else (
     goto ERROR
 )
+
+copy /y %MSINAME%.msi %MYDIR%
 
 del %MSINAME%.wxs
 del %MSINAME%.wxi
