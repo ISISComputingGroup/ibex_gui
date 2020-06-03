@@ -9,10 +9,12 @@ set PYTHON_HOME=C:\Instrument\Apps\Python3
 
 set PATH=%M2%;%PATH%
 
-call build_script_generator.bat
+set TARGET_DIR=script_generator
+
+call build_script_generator.bat %TARGETDIR%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-call build_msi.bat %BASEDIR%.. built_script_gen ibex_script_generator
+call build_msi.bat %BASEDIR%.. %TARGETDIR% ibex_script_generator
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 @echo on
@@ -32,7 +34,6 @@ REM the password for isis\IBEXbuilder is contained in the BUILDERPW system envir
 net use p: /d /yes
 net use p: \\isis\inst$
 
-set TARGET_DIR=built_script_gen
 
 REM Don't group these. Bat expands whole if at once, not sequentially
 if "%RELEASE%" == "YES" (

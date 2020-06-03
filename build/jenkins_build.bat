@@ -15,10 +15,12 @@ if "%IS_E4%" == "YES" (
     set BUILT_CLIENT_DIR=base\uk.ac.stfc.isis.ibex.client.product\target\products\ibex.product\win32\win32\x86_64
 )
 
-call build.bat "LOG" %BUILT_CLIENT_DIR%
+set TARGET_DIR=Client_E4
+
+call build.bat "LOG" %BUILT_CLIENT_DIR% %TARGET_DIR%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-call build_msi.bat %BASEDIR%.. built_client ibex_client
+call build_msi.bat %BASEDIR%.. %TARGET_DIR% ibex_client
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM set EXIT=YES will change error code to 1 if not set previously so store the current
@@ -37,8 +39,6 @@ REM Delete older versions?
 REM the password for isis\IBEXbuilder is contained in the BUILDERPW system environment variable on the build server
 net use p: /d /yes
 net use p: \\isis\inst$
-
-set TARGET_DIR=built_client
 
 REM Don't group these. Bat expands whole if at once, not sequentially
 if "%RELEASE%" == "YES" (

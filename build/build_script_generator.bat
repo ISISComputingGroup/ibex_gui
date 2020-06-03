@@ -1,5 +1,10 @@
 set "JRELOCATION=\\isis\inst$\Kits$\CompGroup\ICP\ibex_client_jre"
 
+set "TARGET_DIR=%1"
+if "%TARGET_DIR%" == "" (
+    set TARGET_DIR=built_script_gen
+)
+
 robocopy "%JRELOCATION%" "%~dp0\jdk" /E /PURGE /R:2 /MT /XF "install.log" /NFL /NDL /NP /NC /NS /LOG:NUL
 set errcode=%ERRORLEVEL%
 if %errcode% GEQ 4 (
@@ -32,7 +37,7 @@ if defined mvnErr exit /b 1
 
 REM Copy built client into a sensible clean directory to run it
 set built_client="%~dp0..\base\uk.ac.stfc.isis.scriptgenerator.client.product\target\products\scriptgenerator.product\win32\win32\x86_64"
-set sensible_build_dir="%~dp0..\built_script_gen"
+set sensible_build_dir="%~dp0..\%TARGET_DIR%"
 RMDIR /S /Q %sensible_build_dir%
 robocopy "%built_client%" "%sensible_build_dir%" /E /PURGE /R:2 /XF "install.log" /MT /NFL /NDL /NP /NS /NC /LOG:NUL
 set errcode=%ERRORLEVEL%

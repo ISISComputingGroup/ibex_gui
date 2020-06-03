@@ -2,6 +2,11 @@ REM We bundle our own JRE with the client, this is where it is
 set "JRELOCATION=\\isis\inst$\Kits$\CompGroup\ICP\ibex_client_jre"
 set "LOCAL_JRE_LOCATION=%~dp0jdk"
 
+set "TARGET_DIR=%3"
+if "%TARGET_DIR%" == "" (
+    set TARGET_DIR=built_client
+)
+
 robocopy "%JRELOCATION%" "%LOCAL_JRE_LOCATION%" /E /PURGE /R:2 /MT /XF "install.log" /NFL /NDL /NC /NS /NP /LOG:NUL
 
 set errcode=%ERRORLEVEL%
@@ -38,7 +43,7 @@ if "%~2" == "" (
 ) else (
 	set built_client="%~dp0..\%~2"
 )
-set sensible_build_dir="%~dp0..\built_client"
+set sensible_build_dir="%~dp0..\%TARGET_DIR%"
 RMDIR /S /Q %sensible_build_dir%
 robocopy "%built_client%" "%sensible_build_dir%" /MT /E /PURGE /R:2 /XF "install.log" /NFL /NDL /NP /NS /NC /LOG:NUL
 set errcode=%ERRORLEVEL%
