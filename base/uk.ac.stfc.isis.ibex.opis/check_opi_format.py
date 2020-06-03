@@ -18,7 +18,7 @@ from check_OPI_format_utils.xy_graph import get_traces_with_different_buffer_siz
 from check_opi_format_tests import TestCheckOpiFormatMethods
 
 # Directory to iterate through
-DEFAULT_ROOT_DIR = r"./resources/"
+DEFAULT_ROOT_DIR = r"."
 
 # Specify a logs directory
 DEFAULT_LOGS_DIR = r"./check_OPI_format_logs/"
