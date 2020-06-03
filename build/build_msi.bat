@@ -23,9 +23,7 @@ set IBEXVERSIONLONG=%IBEXMAJOR%.%IBEXMINOR%.%IBEXPATCH%.%IBEXBUILD%
 set IBEXVERSIONSHORT=%IBEXMAJOR%.%IBEXMINOR%
 
 REM change directory to avoid too long path errors
-subst q: %FILESROOT%
-set "OLDDIR=%CD%"
-cd /d q:\
+pushd %FILESROOT%
 
 del %MSINAME%.wxi
 del %MSINAME%.msi
@@ -63,8 +61,7 @@ del %MSINAME%.wxi
 del %MSINAME%.wixobj
 del %MSINAME%.wixpdb
 
-cd /d %OLDDIR%
-subst /d q:
+popd
 
 goto :EOF
 
@@ -74,7 +71,6 @@ goto :EOF
 
 del %MSINAME%.*
 
-cd /d %OLDDIR%
-subst /d q:
+popd
 
 exit /b 1

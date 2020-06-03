@@ -7,9 +7,6 @@ set M2=%MAVEN%bin
 set PYTHON3=C:\Instrument\Apps\Python3\python.exe
 set PYTHON_HOME=C:\Instrument\Apps\Python3
 
-REM We bundle our own JRE with the script generator, this is where it is
-set JRELOCATION=p:\Kits$\CompGroup\ICP\ibex_client_jre
-
 set PATH=%M2%;%PATH%
 
 call build_script_generator.bat

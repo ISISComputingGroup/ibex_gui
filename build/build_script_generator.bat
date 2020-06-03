@@ -1,4 +1,6 @@
-robocopy "\\isis\inst$\Kits$\CompGroup\ICP\ibex_client_jre" "%~dp0\jdk" /E /PURGE /R:2 /MT /XF "install.log" /NFL /NDL /NP /NC /NS /LOG:NUL
+set "JRELOCATION=\\isis\inst$\Kits$\CompGroup\ICP\ibex_client_jre"
+
+robocopy "%JRELOCATION%" "%~dp0\jdk" /E /PURGE /R:2 /MT /XF "install.log" /NFL /NDL /NP /NC /NS /LOG:NUL
 set errcode=%ERRORLEVEL%
 if %errcode% GEQ 4 (
     @echo *** Exit Code %errcode% ERROR see %INSTALLDIR%install.log ***
@@ -45,7 +47,7 @@ if %errcode% GEQ 4 (
 )
 
 REM Copy the JRE across 
-robocopy "%LOCAL_JRE_LOCATION%" "%sensible_build_dir%\jre" /MT /MIR /R:1 /XF "install.log" /NFL /NDL /NP /NS /NC /LOG:NUL
+robocopy "%JRELOCATION%" "%sensible_build_dir%\jre" /MT /MIR /R:1 /XF "install.log" /NFL /NDL /NP /NS /NC /LOG:NUL
 if %errorlevel% geq 4 (
     @echo Failed to copy JRE across
     exit /b 1
