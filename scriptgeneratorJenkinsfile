@@ -16,6 +16,7 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr:'10'))
     timeout(time: 60, unit: 'MINUTES')
     disableConcurrentBuilds()
+    timestamps()
     office365ConnectorWebhooks([[
                     name: "Office 365",
                     notifyBackToNormal: true,
