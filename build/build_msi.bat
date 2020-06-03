@@ -4,10 +4,10 @@ set "MYDIR=%~dp0"
 
 @echo %TIME% Building MSI Kit
 
-set "CLIENTDIR=built_client"
-
 REM FILESROOT is the directory above the CLIENTDIR directory
 set "FILESROOT=%1"
+set "CLIENTDIR=%2"
+set "MSINAME=%3"
 
 for /D %%I in ( "c:\Program Files (x86)\WiX Toolset v3.*" ) do SET "WIXBIN=%%I\bin"
 
@@ -27,41 +27,41 @@ subst q: %FILESROOT%
 set "OLDDIR=%CD%"
 cd /d q:\
 
-del ibex_client.wxi
-del ibex_client.msi
+del %MSINAME%.wxi
+del %MSINAME%.msi
 
 @echo %TIME% Running HEAT
 REM -sw5150 supresses warning about self registering DLLs
-"%WIXBIN%\heat.exe" dir .\%CLIENTDIR% -gg -scom -sreg -svb6 -sfrag -sw5150 -template feature -var var.MySource -dr INSTALLDIR -cg MyCG -t %MYDIR%wxs2wxi.xsl -out ibex_client.wxi
+"%WIXBIN%\heat.exe" dir .\%CLIENTDIR% -gg -scom -sreg -svb6 -sfrag -sw5150 -template feature -var var.MySource -dr INSTALLDIR -cg MyCG -t %MYDIR%wxs2wxi.xsl -out %MSINAME%.wxi
 if %errorlevel% neq 0 goto ERROR
-if not exist "ibex_client.wxi" (
-    @echo %TIME% Unable to create ibex_client.wxi
+if not exist "%MSINAME%.wxi" (
+    @echo %TIME% Unable to create %MSINAME%.wxi
 	goto ERROR
 )
 
-copy /y %MYDIR%ibex_client_master.wxs ibex_client.wxs
+copy /y %MYDIR%%MSINAME%_master.wxs %MSINAME%.wxs
 @echo %TIME% Running CANDLE
-"%WIXBIN%\candle.exe" -dMySource=.\%CLIENTDIR% -dVersionLong=%IBEXVERSIONLONG% -dVersionShort=%IBEXVERSIONSHORT% ibex_client.wxs
+"%WIXBIN%\candle.exe" -dMySource=.\%CLIENTDIR% -dVersionLong=%IBEXVERSIONLONG% -dVersionShort=%IBEXVERSIONSHORT% %MSINAME%.wxs
 if %errorlevel% neq 0 goto ERROR
-if not exist "ibex_client.wixobj" (
-    @echo %TIME% Unable to create ibex_client.wixobj
+if not exist "%MSINAME%.wixobj" (
+    @echo %TIME% Unable to create %MSINAME%.wixobj
 	goto ERROR
 )
 
 @echo %TIME% Running LIGHT
 REM -sice:ICE60 is to stop font install warnings (from JRE)
-"%WIXBIN%\light.exe" -sice:ICE60 -ext WixUIExtension ibex_client.wixobj
+"%WIXBIN%\light.exe" -sice:ICE60 -ext WixUIExtension %MSINAME%.wixobj
 if %errorlevel% neq 0 goto ERROR
-if exist "ibex_client.msi" (
-    @echo %TIME% Successfully created ibex_client.msi
+if exist "%MSINAME%.msi" (
+    @echo %TIME% Successfully created %MSINAME%.msi
 ) else (
     goto ERROR
 )
 
-del ibex_client.wxs
-del ibex_client.wxi
-del ibex_client.wixobj
-del ibex_client.wixpdb
+del %MSINAME%.wxs
+del %MSINAME%.wxi
+del %MSINAME%.wixobj
+del %MSINAME%.wixpdb
 
 cd /d %OLDDIR%
 subst /d q:
@@ -70,9 +70,9 @@ goto :EOF
 
 :ERROR
 
-@echo ERROR creating ibex_client.msi
+@echo ERROR creating %MSINAME%.msi
 
-del ibex_client.*
+del %MSINAME%.*
 
 cd /d %OLDDIR%
 subst /d q:

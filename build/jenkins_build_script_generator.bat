@@ -15,6 +15,9 @@ set PATH=%M2%;%PATH%
 call build_script_generator.bat
 if %errorlevel% neq 0 exit /b %errorlevel%
 
+call build_msi.bat %BASEDIR%.. built_script_gen ibex_script_generator
+if %errorlevel% neq 0 exit /b %errorlevel%
+
 @echo on
 
 REM set EXIT=YES will change error code to 1 if not set previously so store the current
@@ -31,8 +34,6 @@ REM Delete older versions?
 REM the password for isis\IBEXbuilder is contained in the BUILDERPW system environment variable on the build server
 net use p: /d /yes
 net use p: \\isis\inst$
-
-%PYTHON3% purge_archive_client.py
 
 set TARGET_DIR=built_script_gen
 
@@ -80,13 +81,6 @@ if %errorlevel% geq 4 (
     exit /b 1
 )
 
-REM Copy the JRE across 
-robocopy %JRELOCATION% %INSTALLDIR%\script_generator\jre /MIR /R:1 /MT /NFL /NDL /NP /NC /NS /LOG:NUL
-if %errorlevel% geq 4 (
-    @echo Failed to copy JRE across
-    exit /b 1
-)
-
 if not "%RELEASE%"=="YES" (
     if exist "%INSTALLLINKDIR%" (
         rmdir "%INSTALLLINKDIR%"
@@ -110,6 +104,3 @@ if %errorlevel% neq 0 (
 if not "%RELEASE%" == "YES" (
     @echo %BUILD_NUMBER%>%INSTALLDIR%\..\LATEST_BUILD.txt 
 )
-
-REM build MSI kit
-REM call build_msi.bat %INSTALLDIR%

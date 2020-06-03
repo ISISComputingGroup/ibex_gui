@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Product Id="*" UpgradeCode="{CEA95FBE-9A75-40BD-A2A0-874C0B9D7D68}" Version="$(var.VersionLong)" Language="1033" Name="IBEX Scriptgenerator $(var.VersionShort)" Manufacturer="STFC ISIS Facility" >
+        <Package InstallerVersion="200" Compressed="yes" Keywords='Installer' Description="IBEX Scriptgenerator Installer" Manufacturer="STFC ISIS Facility" InstallScope="perMachine" />
+
+        <Feature Id="ProductComponents" Level="1" Title="Product Components" ConfigurableDirectory='INSTALLDIR'>
+            <ComponentGroupRef Id="MyCG" />
+        </Feature>
+		
+        <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+
+        <MediaTemplate EmbedCab="yes" />
+
+        <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
+        <UIRef Id="WixUI_InstallDir" />
+		
+    </Product>
+
+    <Fragment>
+            <Directory Id="TARGETDIR" Name="SourceDir">
+                <Directory Id="INSTRUMENT" Name="Instrument">
+                    <Directory Id="INSTALLDIR" Name="Apps" />
+                </Directory>
+            </Directory>
+    </Fragment>
+
+    <?include ibex_script_generator.wxi ?>
+
+</Wix>

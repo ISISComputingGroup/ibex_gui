@@ -41,20 +41,6 @@ if "%~2" == "" (
 set sensible_build_dir="%~dp0..\built_client"
 RMDIR /S /Q %sensible_build_dir%
 robocopy "%built_client%" "%sensible_build_dir%" /MT /E /PURGE /R:2 /XF "install.log" /NFL /NDL /NP /NS /NC /LOG:NUL
-
-REM Copy the JRE across 
-robocopy "%LOCAL_JRE_LOCATION%" "%sensible_build_dir%\jre" /MT /MIR /R:1 /XF "install.log" /NFL /NDL /NP /NS /NC /LOG:NUL
-if %errorlevel% geq 4 (
-    @echo Failed to copy JRE across
-    exit /b 1
-)
-
-REM Copy python into the client
-%PYTHON3% get_python_write_dir.py %sensible_build_dir% > Output
-set /p PythonWriteDir=<Output
-call copy_python.bat %PythonWriteDir%
-if %errorlevel% neq 0 exit /b %errorlevel%
-
 set errcode=%ERRORLEVEL%
 if %errcode% GEQ 4 (
 	@echo robocopy error
@@ -66,8 +52,15 @@ if %errcode% GEQ 4 (
 	set ERRORLEVEL=0
 )
 
+REM Copy the JRE across 
+robocopy "%LOCAL_JRE_LOCATION%" "%sensible_build_dir%\jre" /MT /MIR /R:1 /XF "install.log" /NFL /NDL /NP /NS /NC /LOG:NUL
+if %errorlevel% geq 4 (
+    @echo Failed to copy JRE across
+    exit /b 1
+)
+
 REM Copy python into the client
-python get_python_write_dir.py %sensible_build_dir% > Output
+%PYTHON3% get_python_write_dir.py %sensible_build_dir% > Output
 set /p PythonWriteDir=<Output
 call copy_python.bat %PythonWriteDir%
 if %errorlevel% neq 0 exit /b %errorlevel%
