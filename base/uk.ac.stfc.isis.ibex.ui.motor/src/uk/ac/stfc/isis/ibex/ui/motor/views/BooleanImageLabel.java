@@ -29,59 +29,68 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 
 /**
- * A label that holds an image that can be greyed out.
+ * A label that toggles it's image between two possible states.
  */
-public class EnableableImageLabel {
+public class BooleanImageLabel {
 
     private final Label label;
-	private final Image enabled;
-	private final Image disabled;
+	private final Image enabledImage;
+	private final Image disabledImage;
+	
+	private final String enabledTooltip;
+	private final String disabledTooltip;
 	
     /**
      * Creates a label that holds an image that can be greyed out.
      * 
      * @param parent
      *            The parent composite for the label.
-     * @param enabled
-     *            The image to show when enabled (the disabled image will be
-     *            constructed from this)
-     * @param tooltip
-     *            The tooltip that will show when hovering over this image
+     * @param enabledImage
+     *            The image to show when enabled
+     * @param disabledImage
+     *            The image to show when disabled
+     * @param enabledTooltip
+     *            The tooltip to display when enabled
+     * @param disabledTooltip
+     * 			  The tooptip to display when disabled
      */
-    public EnableableImageLabel(final Composite parent, Image enabled, String tooltip) {
+    public BooleanImageLabel(final Composite parent, Image enabledImage, Image disabledImage, String enabledTooltip, String disabledTooltip) {
         label = new Label(parent, SWT.NONE);
         label.setAlignment(SWT.CENTER);
-        label.setImage(enabled);
-		this.enabled = enabled;
-        disabled = new Image(parent.getDisplay(), enabled, SWT.IMAGE_DISABLE);
+        label.setImage(enabledImage);
+		this.enabledImage = enabledImage;
+		this.disabledImage = disabledImage;
+		
+		this.enabledTooltip = enabledTooltip;
+		this.disabledTooltip = disabledTooltip;
 
         // Add a listener so that clicking on this image does the same thing as
         // clicking on the parent container.
         label.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseDoubleClick(MouseEvent e) {
+            public void mouseDown(MouseEvent e) {
                 Event event = new Event();
                 event.widget = parent;
 
-                parent.notifyListeners(SWT.MouseDoubleClick, event);
+                parent.notifyListeners(SWT.MouseDown, event);
             }
         });
-
-        label.setToolTipText(tooltip);
 	}
 	
     /**
      * Enable the image.
      */
     public void enable() {
-        label.setImage(enabled);
+        label.setImage(enabledImage);
+        label.setToolTipText(enabledTooltip);
 	}
 	
     /**
      * Disable the image.
      */
     public void disable() {
-        label.setImage(disabled);
+        label.setImage(disabledImage);
+        label.setToolTipText(disabledTooltip);
 	}
 	
     /**
@@ -90,8 +99,10 @@ public class EnableableImageLabel {
      * @param enable
      *            True to enable the image. False to disable.
      */
-    public void enable(boolean enable) {
-        if (enable) {
+    public void setIsEnabled(Boolean enable) {
+    	if (enable == null) {
+    		disable();
+    	} else if (enable) {
             enable();
         } else {
             disable();

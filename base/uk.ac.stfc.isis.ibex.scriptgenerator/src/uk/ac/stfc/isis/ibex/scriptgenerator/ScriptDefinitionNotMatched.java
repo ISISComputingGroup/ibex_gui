@@ -8,6 +8,10 @@ package uk.ac.stfc.isis.ibex.scriptgenerator;
 @SuppressWarnings("serial")
 public class ScriptDefinitionNotMatched extends Exception {
 	
+    /**
+     * Constructor.
+     * @param message message for log
+     */
 	public ScriptDefinitionNotMatched(String message) {
 		super(message);
 	}

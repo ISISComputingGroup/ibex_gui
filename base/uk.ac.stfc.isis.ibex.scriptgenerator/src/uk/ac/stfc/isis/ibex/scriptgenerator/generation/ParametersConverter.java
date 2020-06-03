@@ -91,8 +91,9 @@ public class ParametersConverter {
 	}
 
 	/**
-	 * Gets parameter values i.e. user data.
+	 * Gets parameter values for an action i.e. user data.
 	 * 
+	 * @param actionName name of the action to get values for
 	 * @return list of mapped parameter to values
 	 */
 	public List<Map<String, String>> getParameterValues(String actionName) {

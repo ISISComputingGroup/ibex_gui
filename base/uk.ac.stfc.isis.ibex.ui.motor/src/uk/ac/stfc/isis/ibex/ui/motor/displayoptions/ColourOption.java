@@ -23,8 +23,8 @@ package uk.ac.stfc.isis.ibex.ui.motor.displayoptions;
  * Enum listing colour palette options.
  */
 public enum ColourOption {
-    /** Colour option for normal vision. */
+    /** Colour option for normal colour scheme. */
     NORMAL_VISION,
-    /** Colour option for colour blind users. */
-    COLOURBLIND
+    /** Colour option for accessibility mode. */
+    ACCESSIBLE
 }

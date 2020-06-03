@@ -1,4 +1,4 @@
-package uk.ac.stfc.isis.ibex.e4.product;
+package uk.ac.stfc.isis.ibex.ui;
 
 import java.lang.management.ManagementFactory;
 
@@ -14,8 +14,16 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
  * This starts a JMX server so we can remotely monitor the GUI.
  * We do it here rather than with the JMX command line arguments so that we can dynamically allocate ports
  */
-public class JMXServer {
+public final class JMXServer {
 	private static final Logger LOG = IsisLog.getLogger(JMXServer.class);
+	
+	/**
+	 * Private constructor for JMX Server utility class.
+	 */
+	private JMXServer() {
+	    
+	}
+	
 	/**
 	 * Starts the server.
 	 */
