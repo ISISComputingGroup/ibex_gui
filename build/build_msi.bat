@@ -66,10 +66,7 @@ if exist "%MSINAME%.msi" (
 
 copy /y %MSINAME%.msi %MYDIR%
 
-del %MSINAME%.wxs
-del %MSINAME%.wxi
-del %MSINAME%.wixobj
-del %MSINAME%.wixpdb
+del %MSINAME%.*
 
 popd
 subst /d %FreeDriveLetter%:
