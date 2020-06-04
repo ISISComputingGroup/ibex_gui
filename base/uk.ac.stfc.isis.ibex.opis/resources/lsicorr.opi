@@ -172,7 +172,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Tabbed Container</widget_type>
-    <width>445</width>
+    <width>487</width>
     <wuid>47114686:16fe750af01:-7bc2</wuid>
     <x>6</x>
     <y>84</y>
@@ -194,7 +194,7 @@
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>478</height>
+      <height>488</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -210,9 +210,9 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>443</width>
+      <width>485</width>
       <wuid>47114686:16fe750af01:-7bc1</wuid>
       <x>1</x>
       <y>1</y>
@@ -252,7 +252,7 @@
         <transparent>false</transparent>
         <visible>true</visible>
         <widget_type>Grouping Container</widget_type>
-        <width>432</width>
+        <width>391</width>
         <wuid>47114686:16fe750af01:-70b3</wuid>
         <x>6</x>
         <y>6</y>
@@ -743,7 +743,7 @@ $(pv_value)</tooltip>
           <widget_type>Action Button</widget_type>
           <width>90</width>
           <wuid>-74265d6e:16ff7967e7c:-7dc2</wuid>
-          <x>264</x>
+          <x>252</x>
           <y>75</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
@@ -792,8 +792,8 @@ $(pv_value)</tooltip>
           <widget_type>Action Button</widget_type>
           <width>90</width>
           <wuid>-74265d6e:16ff7967e7c:-7db6</wuid>
-          <x>264</x>
-          <y>113</y>
+          <x>252</x>
+          <y>108</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -982,7 +982,7 @@ $(pv_value)</tooltip>
         <transparent>false</transparent>
         <visible>true</visible>
         <widget_type>Grouping Container</widget_type>
-        <width>432</width>
+        <width>474</width>
         <wuid>47114686:16fe750af01:-7042</wuid>
         <x>6</x>
         <y>384</y>
@@ -1060,7 +1060,7 @@ $(pv_value)</tooltip>
           <name>Text Input</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PV_ROOT)FILENAME</pv_name>
+          <pv_name>$(PV_ROOT)EXPERIMENTNAME</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -1079,7 +1079,7 @@ $(pv_value)</tooltip>
           <transparent>false</transparent>
           <visible>true</visible>
           <widget_type>Text Input</widget_type>
-          <width>271</width>
+          <width>313</width>
           <wuid>47114686:16fe750af01:-7036</wuid>
           <x>126</x>
           <y>12</y>
@@ -1113,7 +1113,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Filepath:</text>
+          <text>Last saved file:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -1153,7 +1153,7 @@ $(pv_value)</tooltip>
           <name>Text Update_4</name>
           <precision>2</precision>
           <precision_from_pv>false</precision_from_pv>
-          <pv_name>$(PV_ROOT)FILEPATH</pv_name>
+          <pv_name>$(PV_ROOT)OUTPUTFILE</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -1171,7 +1171,7 @@ $(pv_value)</tooltip>
           <vertical_alignment>1</vertical_alignment>
           <visible>true</visible>
           <widget_type>Text Update</widget_type>
-          <width>271</width>
+          <width>313</width>
           <wrap_words>false</wrap_words>
           <wuid>6c35ceef:1701f7c20c0:-7f85</wuid>
           <x>126</x>
@@ -1214,7 +1214,7 @@ $(pv_value)</tooltip>
         <transparent>false</transparent>
         <visible>true</visible>
         <widget_type>Grouping Container</widget_type>
-        <width>432</width>
+        <width>391</width>
         <wuid>47114686:16fe750af01:-6fee</wuid>
         <x>6</x>
         <y>186</y>
@@ -1988,7 +1988,7 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>478</height>
+      <height>488</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -2004,9 +2004,9 @@ $(pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>443</width>
+      <width>485</width>
       <wuid>47114686:16fe750af01:-7bbd</wuid>
       <x>1</x>
       <y>1</y>
@@ -2046,7 +2046,7 @@ $(pv_value)</tooltip>
         <transparent>false</transparent>
         <visible>true</visible>
         <widget_type>Grouping Container</widget_type>
-        <width>433</width>
+        <width>427</width>
         <wuid>47114686:16fe750af01:-6e8e</wuid>
         <x>6</x>
         <y>12</y>
@@ -2112,7 +2112,7 @@ $(pv_value)</tooltip>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
-          <height>33</height>
+          <height>23</height>
           <items_from_pv>true</items_from_pv>
           <name>Combo</name>
           <pv_name>$(PV_ROOT)CORRELATIONTYPE:SP</pv_name>
@@ -2195,7 +2195,7 @@ $(pv_value)</tooltip>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
-          <height>33</height>
+          <height>23</height>
           <items_from_pv>true</items_from_pv>
           <name>Combo_1</name>
           <pv_name>$(PV_ROOT)SAMPLINGTIMEMULTIT:SP</pv_name>
@@ -2278,7 +2278,7 @@ $(pv_value)</tooltip>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
-          <height>33</height>
+          <height>23</height>
           <items_from_pv>true</items_from_pv>
           <name>Combo_2</name>
           <pv_name>$(PV_ROOT)SWAPCHANNELS:SP</pv_name>
@@ -2361,7 +2361,7 @@ $(pv_value)</tooltip>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
-          <height>33</height>
+          <height>23</height>
           <items_from_pv>true</items_from_pv>
           <name>Combo_3</name>
           <pv_name>$(PV_ROOT)NORMALIZATION:SP</pv_name>
@@ -2444,7 +2444,7 @@ $(pv_value)</tooltip>
           <foreground_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
-          <height>33</height>
+          <height>23</height>
           <items_from_pv>true</items_from_pv>
           <name>Combo_4</name>
           <pv_name>$(PV_ROOT)TRANSFERRATE:SP</pv_name>
@@ -2762,7 +2762,7 @@ $(pv_value)</tooltip>
         <transparent>false</transparent>
         <visible>true</visible>
         <widget_type>Grouping Container</widget_type>
-        <width>433</width>
+        <width>427</width>
         <wuid>47114686:16fe750af01:-6c2a</wuid>
         <x>6</x>
         <y>192</y>
@@ -3103,7 +3103,7 @@ $(pv_value)</tooltip>
         <transparent>false</transparent>
         <visible>true</visible>
         <widget_type>Grouping Container</widget_type>
-        <width>433</width>
+        <width>469</width>
         <wuid>47114686:16fe750af01:-6b7a</wuid>
         <x>6</x>
         <y>276</y>
@@ -3194,7 +3194,7 @@ $(pv_value)</tooltip>
           <vertical_alignment>0</vertical_alignment>
           <visible>true</visible>
           <widget_type>Text Update</widget_type>
-          <width>307</width>
+          <width>331</width>
           <wrap_words>true</wrap_words>
           <wuid>47114686:16fe750af01:-6b78</wuid>
           <x>96</x>

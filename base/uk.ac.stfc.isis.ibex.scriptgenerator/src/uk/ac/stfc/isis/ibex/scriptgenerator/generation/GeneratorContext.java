@@ -78,7 +78,7 @@ public class GeneratorContext extends ModelObject {
 	/**
 	 * Add each language's generator to the strategies.
 	 * @param language The language of that generator
-	 * @generator generator Generator for generating script
+	 * @param generator Generator for generating script
 	 */
 	public GeneratorContext(GeneratedLanguage language, AbstractGenerator generator) {
 		putGenerator(language, generator);

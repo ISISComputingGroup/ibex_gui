@@ -10,13 +10,5 @@
             restorable="true">
       </view>
    </extension>
-   <extension
-         point="org.eclipse.ui.perspectives">
-      <perspective
-            class="uk.ac.stfc.isis.ibex.ui.alarm.AlarmPerspective"
-            id="uk.ac.stfc.isis.ibex.client.e4.product.perspective.alarms"
-            name="Log">
-      </perspective>
-   </extension>
 
 </plugin>

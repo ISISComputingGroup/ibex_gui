@@ -176,6 +176,8 @@ public enum ComponentType {
 	ZERO_FIELD,
 	/** LSI correlator. */
 	LSICORR,
+    /** Density meter (e.g. DMA4500M) */
+    DENSITY_METER,
 	/**Spin flipper.*/
 	SPIN_FLIPPER;
 	

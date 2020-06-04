@@ -24,12 +24,15 @@ import org.eclipse.swt.graphics.Color;
 /**
  * Class to hold the motor background palette.
  */
-public class MotorBackgroundPalette {
+public class MotorPalette {
 
-    private Color unnamedColor;
-    private Color disabledColor;
-    private Color stoppedColor;
-    private Color movingColor;
+    private final Color unnamedColor;
+    private final Color disabledColor;
+    private final Color stoppedColor;
+    private final Color movingColor;
+    
+    private final Color inPositionBorderColor;
+    private final Color outsideToleranceBorderColor;
 
     /**
      * Instantiates the motor background palette.
@@ -38,12 +41,19 @@ public class MotorBackgroundPalette {
      * @param stoppedColor colour to be used when the motor is stopped.
      * @param disabledColor colour to be used when the motor is disabled.
      * @param unnamedColor colour to be used when the motor is unnamed.
+     * @param inPositonBorderColor border colour to be used when the motor is in position (within tolerance)
+     * @param outsideToleranceBorderColor border colour to be used when the motor is outside tolerance of SP
      */
-    public MotorBackgroundPalette(Color movingColor, Color stoppedColor, Color disabledColor, Color unnamedColor) {
+    public MotorPalette(Color movingColor, Color stoppedColor, 
+    		Color disabledColor, Color unnamedColor,
+    		Color inPositonBorderColor, Color outsideToleranceBorderColor) {
         this.movingColor = movingColor;
         this.stoppedColor = stoppedColor;
         this.disabledColor = disabledColor;
         this.unnamedColor = unnamedColor;
+        
+        this.inPositionBorderColor = inPositonBorderColor;
+        this.outsideToleranceBorderColor = outsideToleranceBorderColor;
     }
 
     /**
@@ -80,6 +90,22 @@ public class MotorBackgroundPalette {
      */
     public Color getUnnamedColor() {
         return unnamedColor;
+    }
+    
+    /**
+     * Returns the border colour used when the motor in in position.
+     * @return the border colour used when the motor in in position.
+     */
+    public Color getInPositionBorderColor() {
+    	return inPositionBorderColor;
+    }
+    
+    /**
+     * Returns the border colour used when the motor in out of position.
+     * @return the border colour used when the motor in out of position.
+     */
+    public Color getOutsideToleranceBorderColor() {
+    	return outsideToleranceBorderColor;
     }
 
 }
