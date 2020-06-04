@@ -23,7 +23,7 @@ set IBEXVERSIONLONG=%IBEXMAJOR%.%IBEXMINOR%.%IBEXPATCH%.%IBEXBUILD%
 set IBEXVERSIONSHORT=%IBEXMAJOR%.%IBEXMINOR%
 
 for %%a in (Z Y X W V U T S R Q) do (
-   IF NOT EXIST "%%a:\" (set FreeDriveLetter=%%a && GOTO break)
+   IF NOT EXIST "%%a:\" (set FreeDriveLetter=%%a&&GOTO break)
 )
 @echo No free drive letter
 exit/b 1
