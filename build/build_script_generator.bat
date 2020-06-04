@@ -20,13 +20,24 @@ if "%PYTHON3%" == "" (
 %PYTHON3% .\check_build.py ..\base\
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-REM Pull the latest version of the script defintions repo
-git submodule update --remote ..\base\uk.ac.stfc.isis.ibex.scriptgenerator\python_support\ScriptDefinitions
-if %errorlevel% neq 0 exit /b %errorlevel%
 
 if "%BUILD_NUMBER%" == "" (
     set BUILD_NUMBER=SNAPSHOT
 )
+
+REM Create a bundle of the latest script defninitions repo, then delete temporary files
+pushd %~dp0
+set definitions_temp_directory=%~dp0..\base\uk.ac.stfc.isis.ibex.scriptgenerator\python_support\ScriptDefinitions
+
+git clone https://github.com/ISISComputingGroup/ScriptGeneratorConfigs.git %definitions_temp_directory%
+cd %definitions_temp_directory%
+
+git bundle create ScriptDefinitions_%BUILD_NUMBER%.bundle --all
+if %errorlevel% neq 0 exit /b %errorlevel%
+cd ..
+robocopy "ScriptDefinitions" "." "ScriptDefinitions_%BUILD_NUMBER%.bundle"
+popd
+RMDIR /S /Q %definitions_temp_directory%
 
 set mvnErr=
 call mvn --settings=%~dp0..\mvn_user_settings.xml -f %~dp0..\base\uk.ac.stfc.isis.scriptgenerator.tycho.parent\pom.xml -DforceContextQualifier=%BUILD_NUMBER% clean verify || set mvnErr=1
