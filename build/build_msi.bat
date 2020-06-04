@@ -22,15 +22,23 @@ if not "%BUILD_NUMBER%" == "" (
 set IBEXVERSIONLONG=%IBEXMAJOR%.%IBEXMINOR%.%IBEXPATCH%.%IBEXBUILD%
 set IBEXVERSIONSHORT=%IBEXMAJOR%.%IBEXMINOR%
 
+for %%a in (Z Y X W V U T S R Q) do (
+   IF NOT EXIST "%%a:\" (set FreeDriveLetter=%%a && GOTO break)
+)
+@echo No free drive letter
+exit/b 1
+:break
+
 REM change directory to avoid too long path errors
-pushd %FILESROOT%
+subst %FreeDriveLetter%: %FILESROOT%
+pushd %FreeDriveLetter%:\
 
 del %MSINAME%.wxi
 del %MSINAME%.msi
 
 @echo %TIME% Running HEAT
 REM -sw5150 supresses warning about self registering DLLs
-"%WIXBIN%\heat.exe" dir \\?\%CD%\%CLIENTDIR% -gg -scom -sreg -svb6 -sfrag -sw5150 -template feature -var var.MySource -dr INSTALLDIR -cg MyCG -t %MYDIR%wxs2wxi.xsl -out %MSINAME%.wxi
+"%WIXBIN%\heat.exe" dir .\%CLIENTDIR% -gg -scom -sreg -svb6 -sfrag -sw5150 -template feature -var var.MySource -dr INSTALLDIR -cg MyCG -t %MYDIR%wxs2wxi.xsl -out %MSINAME%.wxi
 if %errorlevel% neq 0 goto ERROR
 if not exist "%MSINAME%.wxi" (
     @echo %TIME% Unable to create %MSINAME%.wxi
@@ -64,6 +72,7 @@ del %MSINAME%.wixobj
 del %MSINAME%.wixpdb
 
 popd
+subst /d %FreeDriveLetter%:
 
 goto :EOF
 
@@ -74,5 +83,6 @@ goto :EOF
 del %MSINAME%.*
 
 popd
+subst /d %FreeDriveLetter%:
 
 exit /b 1
