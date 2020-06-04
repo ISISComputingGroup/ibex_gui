@@ -580,13 +580,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			languageSupported = true;
 			threadError = false;
 		} catch (UnsupportedLanguageException e) {
-			firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, languageSupported, false);
+			firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, languageSupported, languageSupported=false);
 			LOG.error(e);
-			languageSupported = false;
 		} catch (InterruptedException | ExecutionException e) {
-			firePropertyChange(THREAD_ERROR_PROPERTY, threadError, true);
-			LOG.error(e);
-			threadError = true;
+			registerThreadError(e);
 		}
 	}
 	
@@ -607,13 +604,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
             languageSupported = true;
             threadError = false;
         } catch (UnsupportedLanguageException e) {
-            firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, languageSupported, false);
+            firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, languageSupported, languageSupported=false);
             LOG.error(e);
-            languageSupported = false;
         } catch (InterruptedException | ExecutionException e) {
-            firePropertyChange(THREAD_ERROR_PROPERTY, threadError, true);
-            LOG.error(e);
-            threadError = true;
+        	registerThreadError(e);
         }
     }
 
@@ -646,14 +640,17 @@ public class ScriptGeneratorSingleton extends ModelObject {
 				throw new InvalidParamsException("Parameters are invalid, cannot generate script");
 			}
 		} catch (InterruptedException | ExecutionException e) {
-			firePropertyChange(THREAD_ERROR_PROPERTY, threadError, true);
-			LOG.error(e);
-			threadError = true;
+			registerThreadError(e);
 		} catch (IOException e) {
 			LOG.error(e);
 		}
 	}
 
+	private void registerThreadError(Exception e) {
+		firePropertyChange(THREAD_ERROR_PROPERTY, threadError, true);
+		LOG.error(e);
+		threadError = true;
+	}
 	/**
 	 * Generate a filename to write the script to.
 	 * 
@@ -729,11 +726,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			scriptGenFileHandler.saveParameters(this.scriptGeneratorTable.getActions(), preferenceSupplier.scriptGeneratorScriptDefinitionFolders() + scriptDefinition.getName() + PYTHON_EXT,
 					fileName);
 		} catch (InterruptedException | ExecutionException e) {
-			firePropertyChange(THREAD_ERROR_PROPERTY, threadError, true);
-			LOG.error(e);
-			threadError = true;
+			registerThreadError(e);
 		}
 	}
+	
 	
 	/**
 	 * Get the file writer to use to write scripts to file.

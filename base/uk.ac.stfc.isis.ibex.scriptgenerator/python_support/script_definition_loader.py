@@ -202,15 +202,14 @@ class Generator(object):
         Returns:
             Dictionary containing line numbers as keys and estimates as values
         """
-        current_action_index = 0
-        timeEstimates: Dict[int, int] = {}
-        for action in list_of_actions:
+        time_estimates: Dict[int, int] = {}
+        for current_action_index, action in enumerate(list_of_actions, 0):
             if script_definition.parametersValid(action) is None:
-              timeEstimate = script_definition.estimateTime(action)
-              if timeEstimate != None:
-                timeEstimates[current_action_index] = timeEstimate
+              time_estimate = script_definition.estimateTime(action)
+              if time_estimate != None:
+                  time_estimates[current_action_index] = time_estimate
             current_action_index += 1
-        return timeEstimates
+        return time_estimates
 
     def generate(self, list_of_actions, jsonString, script_definition: ScriptDefinitionWrapper) -> Union[None, AnyStr]:
         """

@@ -32,7 +32,7 @@ public class GeneratorContext extends ModelObject {
 	
     /**
      * The property to listen for changes in a Generator containing how long each action is
-     *  expected to take
+     *  expected to take.
      */
     private static final String TIME_ESTIMATE_PROPERTY = "time estimate";
 	
@@ -160,7 +160,7 @@ public class GeneratorContext extends ModelObject {
 	}
 	
     /**
-     * Estimate the time necessary to complete the contents of the script generator (actionsTable)
+     * Estimate the time necessary to complete the contents of the script generator (actionsTable).
      * 
      * @param actionsTable The contents of the script generator
      * @param scriptDefinition The script definition
@@ -177,7 +177,7 @@ public class GeneratorContext extends ModelObject {
     
     /**
      * Estimate the time necessary to complete the contents of the script generator (actionsTable)
-     * using the default language generator (Python)
+     * using the default language generator (Python).
      * 
      * @param actionsTable The contents of the script generator
      * @param scriptDefinition The script definition

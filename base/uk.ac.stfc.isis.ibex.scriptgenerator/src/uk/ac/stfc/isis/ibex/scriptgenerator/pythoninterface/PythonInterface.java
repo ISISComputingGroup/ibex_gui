@@ -375,9 +375,6 @@ public class PythonInterface extends ModelObject {
 			handlePythonReadinessChange(false);
 			throw new PythonNotReadyException("When getting validity errors");
 		}
-		if (!pythonReady) {
-			throw new PythonNotReadyException("When getting validity errors");
-		}
 	}
 
 	/**
@@ -405,9 +402,6 @@ public class PythonInterface extends ModelObject {
 				.thenAccept(paramValidity -> firePropertyChange(PARAM_VALIDITY_PROPERTY, null, paramValidity));
 		} else {
 			handlePythonReadinessChange(false);
-			throw new PythonNotReadyException("When getting parameter validity");
-		}
-		if (!pythonReady) {
 			throw new PythonNotReadyException("When getting parameter validity");
 		}
 	}
@@ -440,9 +434,6 @@ public class PythonInterface extends ModelObject {
             handlePythonReadinessChange(false);
             throw new PythonNotReadyException("When getting time estimation");
         }
-        if (!pythonReady) {
-            throw new PythonNotReadyException("When getting time estimation");
-        }
     }
 
 	/**
@@ -473,9 +464,6 @@ public class PythonInterface extends ModelObject {
 				});
 		} else {
 			handlePythonReadinessChange(false);
-			throw new PythonNotReadyException("When getting generated script");
-		}
-		if (!pythonReady) {
 			throw new PythonNotReadyException("When getting generated script");
 		}
 	}

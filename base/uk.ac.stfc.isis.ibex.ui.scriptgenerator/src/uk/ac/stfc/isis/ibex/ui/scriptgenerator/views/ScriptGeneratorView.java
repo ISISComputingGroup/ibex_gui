@@ -25,6 +25,9 @@ import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -457,9 +460,12 @@ public class ScriptGeneratorView {
 	        Button manualButton) {
 		scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText);
 
-		scriptGeneratorViewModel.bindActionProperties(table, btnGetValidityErrors, btnGenerateScript, btnSaveParameters, totalEstimatedTimeLabel);
+		scriptGeneratorViewModel.bindActionProperties(table, btnGetValidityErrors, btnGenerateScript, btnSaveParameters);
 		
 		scriptGeneratorViewModel.bindManualButton(manualButton);
+		DataBindingContext bindingContext = new DataBindingContext();
+		bindingContext.bindValue(WidgetProperties.text().observe(totalEstimatedTimeLabel),
+                BeanProperties.value("timeEstimate").observe(scriptGeneratorViewModel));
 
 	}
 

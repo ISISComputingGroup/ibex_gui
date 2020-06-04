@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
@@ -222,16 +223,11 @@ public class ActionsTable extends ModelObject {
     /**
      * Set the estimated time for each action based on the hashmap.
      * 
-     * @param validityErrors The hashmap to set estimated time based on.
+     * @param estimatedTimes The hashmap to set estimated time based on.
      */
     public void setEstimatedTimes(Map<Integer, Number> estimatedTimes) {
         for (int i = 0; i < actions.size(); i++) {
-            if (estimatedTimes.containsKey(i)) {
-                Optional<Number> estimate = Optional.of(estimatedTimes.get(i));
-                actions.get(i).setEstimatedTime(estimate);
-            } else {
-                actions.get(i).setEstimatedTime(Optional.empty());
-            }
+        	actions.get(i).setEstimatedTime(Optional.ofNullable(estimatedTimes.get(i)));
         }
     }
 	
@@ -254,23 +250,16 @@ public class ActionsTable extends ModelObject {
 	}
 	
     /**
-     * Get the total estimated time of all actions in the table
+     * Get the total estimated time of all actions in the table.
      * 
      * @return An Optional containing the total if at least one action has been estimated,
      *         empty optional otherwise
      */
     public Optional<Long> getTotalEstimatedTime() {
-        boolean isAnyActionEstimated = false;
-        Long total = 0L;
-        
-        for (ScriptGeneratorAction action : actions) {
-            if (action.getEstimatedTime().isPresent()) {
-                isAnyActionEstimated = true;
-                total += action.getEstimatedTime().get().longValue();
-            }
-        }
-        
-        return isAnyActionEstimated ? Optional.of(total) : Optional.empty();
+    	
+        List<Number> actualEstimates = actions.stream().map(action -> action.getEstimatedTime()).flatMap(Optional::stream).collect(Collectors.toList());    	  
+        Long total = actualEstimates.stream().map(x -> x.longValue()).reduce(0L, Long::sum);
+        return actualEstimates.size() == 0? Optional.empty() : Optional.of(total);
     }
 
 	/**

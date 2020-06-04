@@ -1,6 +1,7 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import java.net.URL;
+import java.time.Duration;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -22,7 +23,6 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PartInitException;
@@ -146,6 +146,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
 	
 	/**
+	 * Default string to display for time estimation
+	 */
+	private String displayString = "Total estimated run time: 00:00:00";
+	
+	/**
 	 * The reference to the singleton model that the ViewModel is to use.
 	 */
 	private ScriptGeneratorSingleton scriptGeneratorModel;
@@ -170,12 +175,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * The current Save Parameters button in the view
 	 */
 	private Button btnSaveParam;
-	
-	/**
-	 * The label displaying the total estimated run time for the script
-	 */
-	private Label totalEstimatedTimeLabel;
-	
+		
 	/**
 	 * A constructor that sets up the script generator model and 
 	 *   begins listening to property changes in the model.
@@ -385,7 +385,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * Listen for changes in actions and activate the handler.
 	 */
 	private PropertyChangeListener actionChangeListener = evt -> {
-			actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam, totalEstimatedTimeLabel);
+			actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam);
 		};
 
 	/**
@@ -396,12 +396,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * @param btnGetValidityErrors The validity check button to style change.
 	 * @param btnGenerateScript The generate script button to style change.
 	 */
-	protected void bindActionProperties(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript, Button btnSaveParam, Label totalEstimatedTimeLabel) {
+	protected void bindActionProperties(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript, Button btnSaveParam) {
 		this.viewTable = viewTable;
 		this.btnGetValidityErrors = btnGetValidityErrors;
 		this.btnGenerateScript = btnGenerateScript;
 		this.btnSaveParam = btnSaveParam;
-		this.totalEstimatedTimeLabel = totalEstimatedTimeLabel;
 		// Remove listeners so as not to bind them twice
 		this.scriptGeneratorModel.getScriptGeneratorTable().removePropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
 		this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
@@ -410,23 +409,24 @@ public class ScriptGeneratorViewModel extends ModelObject {
         this.scriptGeneratorModel.removePropertyChangeListener(TIME_ESTIMATE_PROPERTY, actionChangeListener);
         this.scriptGeneratorModel.addPropertyChangeListener(TIME_ESTIMATE_PROPERTY, actionChangeListener);
 	}
+     
+    private void updateTotalEstimatedTime() {
     
-    private void updateTotalEstimatedTime(Label totalEstimatedTimeLabel) {
-        CompletableFuture.supplyAsync(() -> scriptGeneratorModel.getTotalEstimatedTime())
-        .thenAccept(optionalTotal -> {
-            long total = optionalTotal.isPresent() ? optionalTotal.get() : 0;
-            long hours = total / 3600;
-            long minutes = (total % 3600) / 60;
-            long seconds =  total % 60;
-            String displayTotal = String.format("Total estimated run time: %02d:%02d:%02d", hours, minutes, seconds);
-            
-            DISPLAY.asyncExec(() -> {
-                if (!totalEstimatedTimeLabel.isDisposed()) {
-                    totalEstimatedTimeLabel.setText(displayTotal);
-                }
-            });
-        });
+        long totalSeconds = scriptGeneratorModel.getTotalEstimatedTime().isPresent() ? scriptGeneratorModel.getTotalEstimatedTime().get() : 0;
+        String displayTotal = "Total estimated run time: " + changeSecondsToTimeFormat(totalSeconds);
+        
+        firePropertyChange("timeEstimate", displayString, displayString=displayTotal);
     }
+    
+    
+    private String changeSecondsToTimeFormat(long totalSeconds) {
+    	Duration duration = Duration.ofSeconds(totalSeconds);
+    	return String.format("%02d:%02d:%02d", duration.toHours(), duration.toMinutesPart(), duration.toSecondsPart());
+    }
+    
+    public String getTimeEstimate() {
+		return displayString;
+	}
 	
 	/**
 	 * Handle a change in the actions or their properties.
@@ -437,7 +437,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * @param btnGenerateScript Generate Script button's visibility to manipulate
 	 * @param btnSaveParam Save Parameter button's visibility to manipulate
 	 */
-	private void actionChangeHandler(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript, Button btnSaveParam, Label totalEstimatedTimeLabel) {
+	private void actionChangeHandler(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript, Button btnSaveParam) {
 	    DISPLAY.asyncExec(() -> {
 			if (!viewTable.isDisposed()) {
 	            viewTable.setRows(scriptGeneratorModel.getActions());
@@ -450,11 +450,10 @@ public class ScriptGeneratorViewModel extends ModelObject {
 				setButtonGenerateStyle(btnGenerateScript);
 				setButtonGenerateStyle(btnSaveParam);
 			}
+			updateTotalEstimatedTime();
 		});
-	    
-	    updateTotalEstimatedTime(totalEstimatedTimeLabel);
 	}
-	
+		
 	private void setButtonGenerateStyle(Button btnGenerateScript) {
 		if (scriptGeneratorModel.languageSupported) {
 			// Grey the button out if parameters are valid
@@ -697,7 +696,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
         // Add estimated time column
         TableViewerColumn timeEstimateColumn = viewTable.createColumn("Estimated run time", 
                 1, 
-                new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty("time estimate")) {
+                new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty(TIME_ESTIMATE_PROPERTY)) {
             @Override
             protected String stringFromRow(ScriptGeneratorAction row) {
                 if (!scriptGeneratorModel.languageSupported) {
@@ -706,9 +705,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
                 
                 Optional<Number> estimatedTime = row.getEstimatedTime();
                 if (estimatedTime.isEmpty()) {
-                    return "";
+                    return "Unknown";
                 }
-                return estimatedTime.get().toString() + " seconds";
+                return changeSecondsToTimeFormat(estimatedTime.get().longValue());
             }
             
             @Override
