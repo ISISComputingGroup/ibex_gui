@@ -1,3 +1,0 @@
-[submodule "base/uk.ac.stfc.isis.ibex.scriptgenerator/python_support/ScriptDefinitions"]
-	path = base/uk.ac.stfc.isis.ibex.scriptgenerator/python_support/ScriptDefinitions
-	url = git://github.com/ISISComputingGroup/ScriptGeneratorConfigs.git
