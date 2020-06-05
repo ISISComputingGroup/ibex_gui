@@ -26,6 +26,10 @@ public class GenieOpenConsoleAction extends OpenConsoleAction {
 	private ConsoleFactoryExtension[] fFactoryExtensions;
 	private Menu fMenu;
 	private ImageDescriptor pyDevImageDescriptor;
+	/**
+	 * Maximum number of actions we can have in open console drop down menu for keyboard shortcuts.
+	 */
+	private final int maxNumberOfItemsForKeyBoardShortcuts = 9;
 	
 	/**
 	 * Initialise factory extensions.
@@ -74,9 +78,8 @@ public class GenieOpenConsoleAction extends OpenConsoleAction {
 		return fMenu;
 	}
 	
-	@SuppressWarnings("checkstyle:magicnumber")
 	private void addActionToMenu(Menu parent, Action action, int accelerator) {
-		if (accelerator < 10) {
+		if (accelerator <= maxNumberOfItemsForKeyBoardShortcuts) {
 			StringBuilder label = new StringBuilder();
 			//add the numerical accelerator
 			label.append('&');
