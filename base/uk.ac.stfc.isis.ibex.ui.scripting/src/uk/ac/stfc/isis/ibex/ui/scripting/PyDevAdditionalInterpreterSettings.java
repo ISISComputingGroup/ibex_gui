@@ -69,7 +69,7 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 		
 		entriesToAdd.add(pvPrefix());
 		entriesToAdd.add(epicsBasePath());
-		entriesToAdd.add("IPYTHONENABLE=True");
+		entriesToAdd.add("IPYTHONENABLE=True"); //Required so that we can hook into autocomplete for load_script
 		addEpicsEnvironment(entriesToAdd);
 
 		return entriesToAdd;
