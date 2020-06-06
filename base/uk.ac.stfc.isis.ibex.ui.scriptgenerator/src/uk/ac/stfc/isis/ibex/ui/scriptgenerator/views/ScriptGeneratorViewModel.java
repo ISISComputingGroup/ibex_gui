@@ -38,7 +38,6 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
-import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.LoadParameterReplaceAppendDialog;
 import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.SaveScriptGeneratorFileMessageDialog;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
@@ -57,7 +56,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	
 	private static final Display DISPLAY = Display.getDefault();
 	
-
 	/**
 	 * A dark red for use in the validity column when a row is invalid.
 	 */
@@ -802,13 +800,15 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		Optional<String> selectedFile = openFileDialog(SWT.OPEN);
 		// filename will be null if user has clicked cancel button
 		if (selectedFile.isPresent()) {
-			boolean replace;
+			Boolean replace;
 			if (scriptGeneratorModel.getActions().isEmpty()) {
 				replace = false;
-			}
-			else {
-				// ask user whether to append or replace parameters
-				replace = LoadParameterReplaceAppendDialog.openDialog(Display.getDefault().getActiveShell());
+			} else {
+				String[] replaceOrAppend = new String[] {"Append", "Replace"};
+				MessageDialog dialog = new MessageDialog(DISPLAY.getActiveShell(), "Replace or Append", null,
+					    "Would you like to replace the current parameters or append the new parameters?", 
+					    MessageDialog.QUESTION, replaceOrAppend, 0);
+				replace = dialog.open() == 1;
 			}
 			
 			try {

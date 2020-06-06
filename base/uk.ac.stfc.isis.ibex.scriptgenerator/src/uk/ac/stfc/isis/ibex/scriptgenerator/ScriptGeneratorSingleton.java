@@ -655,10 +655,6 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		scriptDefinitionLoader.reloadScriptDefinitions();
 	}
 	
-	public void loadParameterValues(String fileName) throws NoScriptDefinitionSelectedException, ScriptDefinitionNotMatched, UnsupportedOperationException {
-		loadParameterValues(fileName, false);
-	}
-	
 	/**
 	 * Loads parameter values from a file.
 	 * 
