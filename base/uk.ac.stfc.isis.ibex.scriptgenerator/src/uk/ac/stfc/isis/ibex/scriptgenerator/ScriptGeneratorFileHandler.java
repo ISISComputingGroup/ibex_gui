@@ -39,7 +39,6 @@ public class ScriptGeneratorFileHandler {
 	 * @throws IOException When there is an error writing the script to file.
 	 */
 	public void generate(String filepath, String toWrite) throws IOException {
-		// Don't generate if filename contains extension or file path.
 		File scriptFile = new File(filepath);
 		try {
 			writeToFile(toWrite, scriptFile);
