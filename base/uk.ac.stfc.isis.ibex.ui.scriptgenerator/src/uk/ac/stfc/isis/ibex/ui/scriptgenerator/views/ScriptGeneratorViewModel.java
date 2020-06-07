@@ -800,20 +800,19 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		Optional<String> selectedFile = openFileDialog(SWT.OPEN);
 		// filename will be null if user has clicked cancel button
 		if (selectedFile.isPresent()) {
-			Boolean replace;
-			Integer dialogResponse = -1;
+			Integer dialogResponse; //-1 for cancel, 0 for append, 1 for replace
 			if (scriptGeneratorModel.getActions().isEmpty()) {
-				replace = false;
+				dialogResponse = 0;
 			} else {
 				String[] replaceOrAppend = new String[] {"Append", "Replace"};
 				MessageDialog dialog = new MessageDialog(DISPLAY.getActiveShell(), "Replace or Append", null,
 					    "Would you like to replace the current parameters or append the new parameters?", 
 					    MessageDialog.QUESTION, replaceOrAppend, -1);
 				dialogResponse = dialog.open();
-				replace = dialogResponse == 1;
 			}
 			
 			if (dialogResponse != -1) {
+				Boolean replace = dialogResponse == 1;
 				try {
 					scriptGeneratorModel.loadParameterValues(selectedFile.get(), replace);
 				} catch (NoScriptDefinitionSelectedException e) {
