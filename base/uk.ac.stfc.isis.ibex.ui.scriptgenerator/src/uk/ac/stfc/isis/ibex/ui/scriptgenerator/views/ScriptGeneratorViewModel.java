@@ -801,25 +801,29 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		// filename will be null if user has clicked cancel button
 		if (selectedFile.isPresent()) {
 			Boolean replace;
+			Integer dialogResponse = -1;
 			if (scriptGeneratorModel.getActions().isEmpty()) {
 				replace = false;
 			} else {
 				String[] replaceOrAppend = new String[] {"Append", "Replace"};
 				MessageDialog dialog = new MessageDialog(DISPLAY.getActiveShell(), "Replace or Append", null,
 					    "Would you like to replace the current parameters or append the new parameters?", 
-					    MessageDialog.QUESTION, replaceOrAppend, 0);
-				replace = dialog.open() == 1;
+					    MessageDialog.QUESTION, replaceOrAppend, -1);
+				dialogResponse = dialog.open();
+				replace = dialogResponse == 1;
 			}
 			
-			try {
-				scriptGeneratorModel.loadParameterValues(selectedFile.get(), replace);
-			} catch (NoScriptDefinitionSelectedException e) {
-				LOG.error(e);
-				MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
-						"Cannot generate script. No script definition has been selected");
-			} catch (ScriptDefinitionNotMatched | UnsupportedOperationException e) {
-				LOG.error(e);
-				MessageDialog.openError(DISPLAY.getActiveShell(), "Error", e.getMessage());
+			if (dialogResponse != -1) {
+				try {
+					scriptGeneratorModel.loadParameterValues(selectedFile.get(), replace);
+				} catch (NoScriptDefinitionSelectedException e) {
+					LOG.error(e);
+					MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
+							"Cannot generate script. No script definition has been selected");
+				} catch (ScriptDefinitionNotMatched | UnsupportedOperationException e) {
+					LOG.error(e);
+					MessageDialog.openError(DISPLAY.getActiveShell(), "Error", e.getMessage());
+				}
 			}
 		}
 	};
