@@ -8,12 +8,14 @@ import inspect
 import argparse
 import os
 import sys
+from git import Repo, Git
 from glob import iglob
 from jinja2 import Environment, FileSystemLoader, Markup, TemplateNotFound
 from genie_python import utilities
 import importlib.machinery
 import importlib.util
 
+from git.exc import InvalidGitRepositoryError
 
 class PythonActionParameter(object):
     """
@@ -282,6 +284,64 @@ class ScriptDefinitionsWrapper(object):
         """
         return True
 
+
+def directory_initialised_to_correct_repository(repo: Repo, origin_url: str):
+    """
+    Tests that the supplied directory has been initialised to the correct repository
+    
+    Parameters:
+        repo: The repository to test
+        origin_url: The URL for the upstream repo
+    """
+    try:
+        origin = repo.remotes['origin']
+
+        if origin.url == origin_url:
+            correct_repo = True
+        else:
+            correct_repo = False
+    except InvalidGitRepositoryError as err:
+        # Directory not initialised. Maybe this test shouldn't be in this function, and we should only call this function if we already know if it's initialised
+        correct_repo = False
+    
+    return correct_repo
+
+
+def unbundle_script_definitions_repository(bundle_path: str, new_repo_path: str, origin_url: str) -> Repo:
+    """
+    Unbundles the repository supplied with the release, sets remote URL to upstream
+
+    Parameters:
+        bundle_path: Location of the git bundle containing the script defs repo
+        new_repo_path: Where to initialise the script definitions repository
+        origin_url: The URL pointing to the upstream repository
+
+    Returns:
+        script_definitions_repo: The newly cloned repository
+    """
+
+    Git().clone(bundle_path, new_repo_path)
+    script_definitions_repo = Repo(new_repo_path)
+    script_definitions_repo.delete_remote('origin')
+    script_definitions_repo.create_remote('origin', origin_url)
+
+    return script_definitions_repo
+
+# try:
+#     repo = Repo('...')
+# except (git.exc.NoSuchPathError, git.exc.InvalidGitRepositoryError):
+#     print("Path does not exist or is not initialised, cloning new repo")
+#     repo = unbundle_script_definitions_repository
+
+# if repo.remotes['origin'].url != url: # repository_initialised_correctly(repo, url):
+#     try:
+#         repo.remotes['origin'].pull()
+#     except Exception as err:
+#         script_definition_load_errors.append(err)
+# else:
+#     script_definition_load_errors.append("Script generator definitions not initialised correctly")
+
+
 def get_script_definitions(search_folders: List[str] = None) -> Tuple[Dict[AnyStr, ScriptDefinition], Dict[AnyStr, AnyStr]]:
     """
     Dynamically import all the Python modules in the search folders
@@ -296,6 +356,7 @@ def get_script_definitions(search_folders: List[str] = None) -> Tuple[Dict[AnySt
         The second element is also a dictionary with keys as the module name, 
          but with values as the reason they could not be imported.
     """
+    # Need to check that the supplied folder is the correct git repo and pull somehow. Unbundle if they don't have the internet
     if search_folders is None:
         this_file_path = os.path.split(__file__)[0]
         search_folder = [os.path.join(this_file_path, "instruments")]
