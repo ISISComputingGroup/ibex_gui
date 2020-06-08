@@ -4,8 +4,6 @@ import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.CheckForOverwriteException;
-import uk.ac.stfc.isis.ibex.scriptgenerator.FileGeneratorException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorFileHandler;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -80,74 +78,16 @@ public class ScriptGeneratorFileHandlerTest {
 	}
 	
 	@Test
-	public void test_GIVEN_there_is_a_file_with_same_name_WHEN_I_attempt_to_overwrite_with_check_THEN_exception_thrown_AND_not_overwritten() {
+	public void test_WHEN_I_attempt_to_generate_script_THEN_no_exception_thrown_AND_written() {
 		try {
-			// GIVEN there is a file with the same name
-			fileHandler.generateWithoutOverwriteCheck(filepathPrefix, filename, scriptLines, fileExtension);
-			try {
-				// WHEN I attempt to overwrite with check
-				fileHandler.generateWithOverwriteCheck(filepathPrefix, filename, script2Lines, fileExtension);
-				// THEN exception thrown
-				fail("Should have thrown overwrite exception");
-			} catch (CheckForOverwriteException e) {
-				// THEN file not overwritten
-				assertFileCorrespondsToExpectedContents(filepathPrefix+filename+fileExtension, scriptLines);
-			}
-		} catch (FileGeneratorException | IOException e) {
-			fail("Should manage to write file");
-		}
-	}
-	
-	@Test
-	public void test_GIVEN_there_is_no_file_with_same_name_WHEN_I_attempt_to_overwrite_with_check_THEN_no_exception_thrown_AND_overwritten() {
-		try {
-			// GIVEN there is no file with the same name
+			String filepath = filepathPrefix + filename + fileExtension;
 			// WHEN I attempt to overwrite with check
-			fileHandler.generateWithOverwriteCheck(filepathPrefix, filename, script2Lines, fileExtension);
+			fileHandler.generate(filepath, script2Lines);
 			// THEN file overwritten
-			assertFileCorrespondsToExpectedContents(filepathPrefix+filename+fileExtension, script2Lines);
-		} catch (FileGeneratorException | IOException | CheckForOverwriteException e) {
+			assertFileCorrespondsToExpectedContents(filepath, script2Lines);
+		} catch (IOException e) {
 			// THEN no exception thrown
 			fail("Should manage to write file");
 		}
-	}
-	
-	@Test
-	public void test_GIVEN_there_is_a_file_with_same_name_WHEN_I_attempt_to_overwrite_without_check_THEN_no_exception_thrown_AND_overwritten() {
-		try {
-			// GIVEN there is a file with the same name
-			fileHandler.generateWithoutOverwriteCheck(filepathPrefix, filename, scriptLines, fileExtension);
-			// WHEN I attempt to overwrite with check
-			fileHandler.generateWithoutOverwriteCheck(filepathPrefix, filename, script2Lines, fileExtension);
-			// THEN file is overwritten
-			assertFileCorrespondsToExpectedContents(filepathPrefix+filename+fileExtension, script2Lines);
-			// THEN no exception thrown
-		} catch (FileGeneratorException | IOException e) {
-			fail("Should manage to write file");
-		}
-	}
-	
-	@Test
-	public void test_GIVEN_filename_contains_invalid_substring_WHEN_I_attempt_to_generate_THEN_exception_thrown_AND_file_not_written() {
-		String[] invalidSubstrings = {".", ":", "\\\\", "/"};
-		for(String invalidSubstring : invalidSubstrings) {
-			// GIVEN filename contains invalid substring
-			var invalid_filename = String.format("my%sfile", invalidSubstring);
-			try {
-				// WHEN I attempt to generate
-				fileHandler.generateWithoutOverwriteCheck(filepathPrefix, invalid_filename, script2Lines, fileExtension);
-				// THEN exception thrown
-				fail("Should have had a FileGenerator Exception");
-			} catch (FileGeneratorException e) {
-				// THEN file not written
-				if (new File(filepathPrefix+invalid_filename+fileExtension).exists()) {
-					fail("Should not have managed to create file");
-				}
-			} catch (IOException e) {
-				fail("Should have had a FileGenerator Exception");
-			}
-		}
-		
-	}
-		
+	}	
 }

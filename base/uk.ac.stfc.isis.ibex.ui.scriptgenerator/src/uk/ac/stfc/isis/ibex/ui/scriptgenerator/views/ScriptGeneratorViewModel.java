@@ -205,10 +205,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			DISPLAY.asyncExec(() -> {
 				scriptGeneratorModel.getLastGeneratedScript().ifPresentOrElse(
 						generatedScript -> {
-							SaveScriptGeneratorFileMessageDialog.openInformation(Display.getDefault().getActiveShell(),
-									"Script Generated", "",
-									scriptGeneratorModel.getScriptFilepathPrefix(),
-									scriptFilename, generatedScript, scriptGeneratorModel);
+							(new SaveScriptGeneratorFileMessageDialog(Display.getDefault().getActiveShell(), "Script Generated", scriptFilename, 
+									scriptGeneratorModel.getDefaultScriptDirectory(), generatedScript, scriptGeneratorModel)).open();
 						},
 						() -> {
 							MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
