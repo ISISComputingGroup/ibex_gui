@@ -29,7 +29,7 @@ public class GenieOpenConsoleAction extends OpenConsoleAction {
 	/**
 	 * Maximum number of actions we can have in open console drop down menu for keyboard shortcuts.
 	 */
-	private final int maxNumberOfItemsForKeyBoardShortcuts = 9;
+	private static final int MAX_NUMBER_OF_ITEMS_FOR_KEYBOARD_SHORTCUTS = 9;
 	
 	/**
 	 * Initialise factory extensions.
@@ -79,7 +79,7 @@ public class GenieOpenConsoleAction extends OpenConsoleAction {
 	}
 	
 	private void addActionToMenu(Menu parent, Action action, int accelerator) {
-		if (accelerator <= maxNumberOfItemsForKeyBoardShortcuts) {
+		if (accelerator <= MAX_NUMBER_OF_ITEMS_FOR_KEYBOARD_SHORTCUTS) {
 			StringBuilder label = new StringBuilder();
 			//add the numerical accelerator
 			label.append('&');
