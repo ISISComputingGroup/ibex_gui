@@ -9,6 +9,7 @@ import argparse
 import os
 import sys
 from git import Repo, Git
+from git.exc import NoSuchPathError
 from glob import iglob
 from jinja2 import Environment, FileSystemLoader, Markup, TemplateNotFound
 from genie_python import utilities
@@ -307,7 +308,7 @@ def directory_initialised_to_correct_repository(repo: Repo, origin_url: str):
     return correct_repo
 
 
-def unbundle_script_definitions_repository(bundle_path: str, new_repo_path: str, origin_url: str) -> Repo:
+def clone_repo_from_bundle(bundle_path: str, new_repo_path: str, origin_url: str) -> Repo:
     """
     Unbundles the repository supplied with the release, sets remote URL to upstream
 
@@ -327,6 +328,64 @@ def unbundle_script_definitions_repository(bundle_path: str, new_repo_path: str,
 
     return script_definitions_repo
 
+def clone_definitions_repo(path: str):
+    """
+    Attempt to clone new repository if the supplied path is not initialised to the script definitions URL
+
+    Paramters:
+        path: Location of directory to initialise
+
+    Raises:
+        OSError If the supplied directory is not empty
+    """
+    ## I should check if the directory exists first.
+    # If it doesn't: make, then try to clone
+    # If it does: Check if it's empty like I do here
+    # If it is not empty: Raise error
+    # If it is empty: try to clone
+    path_exists = os.path.isdir(path)
+
+    if path_exists and len(os.listdir(path)) == 0:
+        repo = Repo(path, bare=True)
+    elif path_exists and len(os.listdir(path)) > 0:
+        raise OSError("Supplied directory is not empty, cannot make repository")
+    elif not path_exists:
+        # Make the path...
+        repo = repo(path, bare=True)
+
+    #try:
+    #    repo.clone(...)
+
+    pass
+
+def update_script_definitions(path: str):
+    """
+    Attempts to pull the script definitions repo in the supplied directory.
+    If the directory is not the correct repository, attempt to clone into the supplied directory
+
+    Raises:
+        IOError: If the supplied directory is not a repo and could not be initialised
+    """
+    definitions_repo = None
+    try:
+        definitions_repo = Repo(path)
+    except (NoSuchPathError, InvalidGitRepositoryError):
+        print("Supplied path does not exist, cloning new repo")
+        definitions_repo = clone_definitions_repo(path)
+
+    if definitions_repo is None:
+        raise IOError("Repository could not be found or initialised")
+
+    repo_origin = definitions_repo.remotes['origin']
+
+    if repo_origin.url == "https://github.com/ISISComputingGroup/ScriptGeneratorConfigs":
+        repo_origin.pull()
+    else:
+        print("Repository in {} is not pointing to script definitions repository, not pulling".format(path))
+
+    return definitions_repo
+
+
 # try:
 #     repo = Repo('...')
 # except (git.exc.NoSuchPathError, git.exc.InvalidGitRepositoryError):
@@ -345,7 +404,7 @@ def unbundle_script_definitions_repository(bundle_path: str, new_repo_path: str,
 def get_script_definitions(search_folders: List[str] = None) -> Tuple[Dict[AnyStr, ScriptDefinition], Dict[AnyStr, AnyStr]]:
     """
     Dynamically import all the Python modules in the search folders
-    
+
     Parameters:
         search_folders: List[str]
             The folders to search for actions in
