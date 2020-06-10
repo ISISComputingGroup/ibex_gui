@@ -21,6 +21,8 @@ package uk.ac.stfc.isis.ibex.scriptgenerator;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -202,8 +204,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * The constructor, will create without a script definition loader and without loading
 	 * an initial script definition.
 	 */
-	public ScriptGeneratorSingleton() {
-	    
+	public ScriptGeneratorSingleton() {   
 	}
 
 	/**
@@ -223,6 +224,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		setUp();
 	}
 
+	private Path getScriptDefinitionPath(ScriptDefinitionWrapper scriptDefinition) {
+		return Paths.get(preferenceSupplier.scriptGeneratorScriptDefinitionFolders(), scriptDefinition.getName() + PYTHON_EXT);
+	}
+	
 	/**
 	 * Called by the constructor with three arguments during tests or in the View
 	 * Model constructor to set up the class. Set up listeners for the generator.
@@ -597,8 +602,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 						"Tried to generate a script with no script definition selected to generate it with"));
 		try {
 			if (areParamsValid()) {
-				String filePath =  preferenceSupplier.scriptGeneratorScriptDefinitionFolders()
-						+ scriptDefinition.getName() + PYTHON_EXT;
+				Path filePath = getScriptDefinitionPath(scriptDefinition);
 				String jsonContent = scriptGenFileHandler.createJsonString(scriptGeneratorTable.getActions(), scriptGenFileHandler.readFileContent(filePath), filePath);
 				generator.refreshGeneratedScript(scriptGeneratorTable, scriptDefinition, jsonContent);
 			} else {
@@ -640,11 +644,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @throws NoScriptDefinitionSelectedException when script definition has not been selected
 	 * @throws ScriptDefinitionNotMatched when the script definition used to generate data file does not match with the one used to load it
 	 */
-	public void loadParameterValues(String fileName) throws NoScriptDefinitionSelectedException, ScriptDefinitionNotMatched, UnsupportedOperationException {
+	public void loadParameterValues(Path fileName) throws NoScriptDefinitionSelectedException, ScriptDefinitionNotMatched, UnsupportedOperationException {
 		ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException("No Configuration Selected"));
-		String currentDefinitionPath = preferenceSupplier.scriptGeneratorScriptDefinitionFolders() + scriptDefinition.getName() + PYTHON_EXT;
-		List<Map<JavaActionParameter, String>> list = scriptGenFileHandler.getParameterValues(fileName, currentDefinitionPath, getActionParameters());
+		List<Map<JavaActionParameter, String>> list = scriptGenFileHandler.getParameterValues(fileName, getScriptDefinitionPath(scriptDefinition), getActionParameters());
 		scriptGeneratorTable.addMultipleActions(list);
 	}
 	
@@ -660,12 +663,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException("No Configuration Selected"));
 		
 		try {
-			if (!filePath.contains(JSON_EXT)) {
+			if (!filePath.endsWith(JSON_EXT)) {
 				//Strip out other any pre-existing file extension and add JSON extension
 				filePath = filePath.substring(0, filePath.lastIndexOf('.')) + JSON_EXT;
 			}
-			scriptGenFileHandler.saveParameters(this.scriptGeneratorTable.getActions(), 
-					preferenceSupplier.scriptGeneratorScriptDefinitionFolders() + scriptDefinition.getName() + PYTHON_EXT, filePath);
+			scriptGenFileHandler.saveParameters(scriptGeneratorTable.getActions(), getScriptDefinitionPath(scriptDefinition), filePath);
 		} catch (InterruptedException | ExecutionException e) {
 			firePropertyChange(THREAD_ERROR_PROPERTY, threadError, true);
 			LOG.error(e);

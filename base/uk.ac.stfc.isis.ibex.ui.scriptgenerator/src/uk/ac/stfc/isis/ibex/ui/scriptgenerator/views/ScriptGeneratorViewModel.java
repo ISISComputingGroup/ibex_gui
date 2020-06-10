@@ -1,6 +1,7 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import java.net.URL;
+import java.nio.file.Paths;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -800,7 +801,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		// filename will be null if user has clicked cancel button
 		if (selectedFile.isPresent()) {
 			try {
-				scriptGeneratorModel.loadParameterValues(selectedFile.get());
+				scriptGeneratorModel.loadParameterValues(Paths.get(selectedFile.get()));
 			} catch (NoScriptDefinitionSelectedException e) {
 				LOG.error(e);
 				MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
