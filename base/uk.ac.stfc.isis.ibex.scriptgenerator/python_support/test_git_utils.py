@@ -38,11 +38,11 @@ class DefinitionsRepositoryTests(unittest.TestCase):
         self.definitions_repo._attempt_repo_init()
         self.mock_git.clone.assert_called_with(git_utils.REMOTE_URL, TEST_REPO_PATH)
 
-    @patch("git_utils.DefinitionsRepository.clone_repo_from_bundle")
-    def test_GIVEN_remote_repository_unreachable_WHEN_cloning_the_repository_THEN_clone_from_bundle(self, mock_clone):
+    def test_GIVEN_remote_repository_unreachable_WHEN_cloning_the_repository_THEN_clone_from_bundle(self):
         self.mock_git.clone.side_effect = GitCommandError(command='command', status='status')
-        
-        with patch.object(self.definitions_repo, "_attempt_repo_init") as mock_clone:
+        # self.mock_git.clone = GitCommandError
+
+        with patch.object(self.definitions_repo, "clone_repo_from_bundle") as mock_clone:
             self.definitions_repo._attempt_repo_init()
 
         # with patch.object(self.definitions_repo.git, "clone") as mock:
@@ -51,6 +51,9 @@ class DefinitionsRepositoryTests(unittest.TestCase):
         #     mock.assert_called()
         
             mock_clone.assert_called()
+
+    def tearDown(self):
+        self.mock_git.clone.reset_mock(return_value=True, side_effect=True)
 
     # @patch("script_definition_loader.Repo")
     # @patch("script_definition_loader.clone_repo_from_bundle")
