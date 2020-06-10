@@ -1,5 +1,6 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.generation;
 
+import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -78,14 +79,14 @@ public class ParametersConverter {
 	 * @param geniePythonVersion Current version of genie python
 	 */
 	public ParametersConverter(String version, List<ScriptGeneratorActionConverter> actions, String content,
-			String scriptGeneratorVersion, String dateAndTime, String scriptDefinitionFilePath,
+			String scriptGeneratorVersion, String dateAndTime, Path scriptDefinitionFilePath,
 			String scriptDefinitionFileGitHash, String geniePythonVersion) {
 		this.versionJSONFormat = version;
 		this.actions = actions;
 		this.scriptDefinitionContent = content;
 		this.scriptGeneratorVersion = scriptGeneratorVersion;
 		this.dateAndTime = dateAndTime;
-		this.scriptDefinitionFilePath = scriptDefinitionFilePath;
+		this.scriptDefinitionFilePath = scriptDefinitionFilePath.toString();
 		this.scriptDefinitionFileGitHash = scriptDefinitionFileGitHash;
 		this.geniePythonVersion = geniePythonVersion;
 	}

@@ -602,7 +602,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 						"Tried to generate a script with no script definition selected to generate it with"));
 		try {
 			if (areParamsValid()) {
-				String filePath = getScriptDefinitionPath(scriptDefinition).toString();
+				Path filePath = getScriptDefinitionPath(scriptDefinition);
 				String jsonContent = scriptGenFileHandler.createJsonString(scriptGeneratorTable.getActions(), scriptGenFileHandler.readFileContent(filePath), filePath);
 				generator.refreshGeneratedScript(scriptGeneratorTable, scriptDefinition, jsonContent);
 			} else {
@@ -644,10 +644,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @throws NoScriptDefinitionSelectedException when script definition has not been selected
 	 * @throws ScriptDefinitionNotMatched when the script definition used to generate data file does not match with the one used to load it
 	 */
-	public void loadParameterValues(String fileName) throws NoScriptDefinitionSelectedException, ScriptDefinitionNotMatched, UnsupportedOperationException {
+	public void loadParameterValues(Path fileName) throws NoScriptDefinitionSelectedException, ScriptDefinitionNotMatched, UnsupportedOperationException {
 		ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException("No Configuration Selected"));
-		List<Map<JavaActionParameter, String>> list = scriptGenFileHandler.getParameterValues(fileName, getScriptDefinitionPath(scriptDefinition).toString(), getActionParameters());
+		List<Map<JavaActionParameter, String>> list = scriptGenFileHandler.getParameterValues(fileName, getScriptDefinitionPath(scriptDefinition), getActionParameters());
 		scriptGeneratorTable.addMultipleActions(list);
 	}
 	
@@ -663,11 +663,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException("No Configuration Selected"));
 		
 		try {
-			if (!filePath.contains(JSON_EXT)) {
+			if (!filePath.endsWith(JSON_EXT)) {
 				//Strip out other any pre-existing file extension and add JSON extension
 				filePath = filePath.substring(0, filePath.lastIndexOf('.')) + JSON_EXT;
 			}
-			scriptGenFileHandler.saveParameters(this.scriptGeneratorTable.getActions(), getScriptDefinitionPath(scriptDefinition).toString(), filePath);
+			scriptGenFileHandler.saveParameters(scriptGeneratorTable.getActions(), getScriptDefinitionPath(scriptDefinition), filePath);
 		} catch (InterruptedException | ExecutionException e) {
 			firePropertyChange(THREAD_ERROR_PROPERTY, threadError, true);
 			LOG.error(e);
