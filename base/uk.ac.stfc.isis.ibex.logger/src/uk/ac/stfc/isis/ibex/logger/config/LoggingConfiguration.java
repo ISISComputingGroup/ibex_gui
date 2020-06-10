@@ -30,6 +30,8 @@
 package uk.ac.stfc.isis.ibex.logger.config;
 
 import java.io.Serializable;
+import java.net.URI;
+
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.Appender;
 import org.apache.logging.log4j.core.Layout;
@@ -45,6 +47,8 @@ import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.ConfigurationFactory;
 import org.apache.logging.log4j.core.config.ConfigurationSource;
 import org.apache.logging.log4j.core.config.DefaultConfiguration;
+import org.apache.logging.log4j.core.config.Order;
+import org.apache.logging.log4j.core.config.plugins.Plugin;
 import org.apache.logging.log4j.core.layout.PatternLayout;
 import org.eclipse.jface.preference.IPreferenceStore;
 
@@ -56,19 +60,41 @@ public final class LoggingConfiguration {
 	private LoggingConfiguration() { }
 	
 	public static void configure() {
-		System.setProperty("log4j.configurationFactory", Log4j2ConfigurationFactory.class.getName());
+		Log4j2ConfigurationFactory factory = new Log4j2ConfigurationFactory();
+		ConfigurationFactory.setConfigurationFactory(factory);
 	}
 
+	/**
+	 * Configuration factory for Log4j2.
+	 * see https://logging.apache.org/log4j/2.x/manual/customconfig.html for details of how to configure this.
+	 *
+	 */
+	@Plugin(name = "Log4j2ConfigurationFactory", category = ConfigurationFactory.CATEGORY)
+	@Order(50)
 	public static class Log4j2ConfigurationFactory extends ConfigurationFactory {
 
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
-		public Configuration getConfiguration(LoggerContext ignored, ConfigurationSource source) {
+		public Configuration getConfiguration(final LoggerContext ignored, final ConfigurationSource source) {
 			return new Log4j2Configuration();
 		}
 
+		/**
+		 * {@inheritDoc}
+		 */
+	    @Override
+	    public Configuration getConfiguration(final LoggerContext ignored, final String name, final URI configLocation) {
+	        return new Log4j2Configuration();
+	    }
+
+	    /**
+		 * {@inheritDoc}
+		 */
 		@Override
 		protected String[] getSupportedTypes() {
-			return null;
+			return new String[] {"*"};
 		}
 	}
 
