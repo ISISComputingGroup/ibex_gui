@@ -82,11 +82,8 @@ class DefinitionsRepository:
             raise OSError("Supplied directory is not empty, cannot make repository")
 
         try:
-            print('aaaa')
             self.git.clone(self.remote_url, self.path)
-            print('bbbb')
         except GitCommandError as err:
-            print('cccc')
             print(err)
             self.clone_repo_from_bundle()
 

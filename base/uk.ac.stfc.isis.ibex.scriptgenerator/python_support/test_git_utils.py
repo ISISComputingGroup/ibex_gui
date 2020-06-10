@@ -38,27 +38,19 @@ class DefinitionsRepositoryTests(unittest.TestCase):
         self.definitions_repo._attempt_repo_init()
         self.mock_git.clone.assert_called_with(git_utils.REMOTE_URL, TEST_REPO_PATH)
 
-    def raise_hell(self, x, y):
-        print('I have been called')
-        raise RuntimeError
-
-    # @patch("git_utils.Git")
-    # @patch("git_utils.DefinitionsRepository.clone_repo_from_bundle")
-    # def test_GIVEN_remote_repository_unreachable_WHEN_cloning_the_repository_THEN_clone_from_bundle(self, mock_clone, mock_git):
-    #     repo_instance = Mock()
-    #     self.mock_git.clone.side_effect = GitCommandError(command='command', status='status')
-    #     mock_git.return_value = repo_instance
+    @patch("git_utils.DefinitionsRepository.clone_repo_from_bundle")
+    def test_GIVEN_remote_repository_unreachable_WHEN_cloning_the_repository_THEN_clone_from_bundle(self, mock_clone):
+        self.mock_git.clone.side_effect = GitCommandError(command='command', status='status')
         
-    #     self.definitions_repo._attempt_repo_init()
+        with patch.object(self.definitions_repo, "_attempt_repo_init") as mock_clone:
+            self.definitions_repo._attempt_repo_init()
 
-    #     # with patch.object(self.definitions_repo.git, "clone") as mock:
-    #     #     mock.return_value = GitCommandError
-    #     #     self.definitions_repo._attempt_repo_init()
-    #     #     mock.assert_called()
+        # with patch.object(self.definitions_repo.git, "clone") as mock:
+        #     mock.return_value = GitCommandError
+        #     self.definitions_repo._attempt_repo_init()
+        #     mock.assert_called()
         
-    #     mock_clone.assert_called()
-
-    #     del self.mock_git.clone.side_effect
+            mock_clone.assert_called()
 
     # @patch("script_definition_loader.Repo")
     # @patch("script_definition_loader.clone_repo_from_bundle")
