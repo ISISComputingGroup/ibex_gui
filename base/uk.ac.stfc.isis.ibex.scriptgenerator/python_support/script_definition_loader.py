@@ -9,7 +9,7 @@ import argparse
 import os
 import sys
 from git import Repo, Git
-from git.exc import NoSuchPathError
+from git.exc import NoSuchPathError, GitCommandError
 from glob import iglob
 from jinja2 import Environment, FileSystemLoader, Markup, TemplateNotFound
 from genie_python import utilities
@@ -286,29 +286,7 @@ class ScriptDefinitionsWrapper(object):
         return True
 
 
-def directory_initialised_to_correct_repository(repo: Repo, origin_url: str):
-    """
-    Tests that the supplied directory has been initialised to the correct repository
-    
-    Parameters:
-        repo: The repository to test
-        origin_url: The URL for the upstream repo
-    """
-    try:
-        origin = repo.remotes['origin']
-
-        if origin.url == origin_url:
-            correct_repo = True
-        else:
-            correct_repo = False
-    except InvalidGitRepositoryError as err:
-        # Directory not initialised. Maybe this test shouldn't be in this function, and we should only call this function if we already know if it's initialised
-        correct_repo = False
-    
-    return correct_repo
-
-
-def clone_repo_from_bundle(bundle_path: str, new_repo_path: str, origin_url: str) -> Repo:
+def clone_repo_from_bundle(new_repo_path: str, origin_url: str, bundle_path: str='/path/to/bundle') -> Repo:
     """
     Unbundles the repository supplied with the release, sets remote URL to upstream
 
@@ -320,7 +298,6 @@ def clone_repo_from_bundle(bundle_path: str, new_repo_path: str, origin_url: str
     Returns:
         script_definitions_repo: The newly cloned repository
     """
-
     Git().clone(bundle_path, new_repo_path)
     script_definitions_repo = Repo(new_repo_path)
     script_definitions_repo.delete_remote('origin')
@@ -328,7 +305,8 @@ def clone_repo_from_bundle(bundle_path: str, new_repo_path: str, origin_url: str
 
     return script_definitions_repo
 
-def clone_definitions_repo(path: str):
+
+def clone_definitions_repo(path: str, origin_url: str = 'www.example.com'):
     """
     Attempt to clone new repository if the supplied path is not initialised to the script definitions URL
 
@@ -345,16 +323,17 @@ def clone_definitions_repo(path: str):
     # If it is empty: try to clone
     path_exists = os.path.isdir(path)
 
-    if path_exists and len(os.listdir(path)) == 0:
-        repo = Repo(path, bare=True)
-    elif path_exists and len(os.listdir(path)) > 0:
-        raise OSError("Supplied directory is not empty, cannot make repository")
-    elif not path_exists:
-        # Make the path...
-        repo = repo(path, bare=True)
+    if not path_exists:
+        os.makedirs(path, exist_ok=True)
 
-    #try:
-    #    repo.clone(...)
+    if len(os.listdir(path)) > 0:
+        raise OSError("Supplied directory is not empty, cannot make repository")
+
+    try:
+        Git().clone(origin_url, path)
+    except GitCommandError as err:
+        print(err)
+        clone_repo_from_bundle(path, origin_url)
 
     pass
 
