@@ -38,6 +38,9 @@ public class GeneratorPython extends AbstractGenerator {
 		this.pythonInterface.addPropertyChangeListener(PARAM_VALIDITY_PROPERTY, evt -> {
 			firePropertyChange(PARAM_VALIDITY_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
+        this.pythonInterface.addPropertyChangeListener(TIME_ESTIMATE_PROPERTY, evt -> {
+            firePropertyChange(TIME_ESTIMATE_PROPERTY, evt.getOldValue(), evt.getNewValue());
+        });
 		this.pythonInterface.addPropertyChangeListener(GENERATED_SCRIPT_PROPERTY, evt -> {
 			firePropertyChange(GENERATED_SCRIPT_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
@@ -79,6 +82,15 @@ public class GeneratorPython extends AbstractGenerator {
 		}
 	}
 
+	@Override
+	public void refreshTimeEstimation(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition) throws InterruptedException, ExecutionException {
+        try {
+            pythonInterface.refreshTimeEstimation(scriptGenContent, scriptDefinition);
+        } catch (PythonNotReadyException e) {
+            // ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
+            LOG.error(e);
+        }
+	}
 
 	@Override
 	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent,
