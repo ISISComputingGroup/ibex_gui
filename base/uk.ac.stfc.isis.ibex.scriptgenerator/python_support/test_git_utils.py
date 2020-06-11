@@ -18,6 +18,10 @@ class DefinitionsRepositoryTests(unittest.TestCase):
         self.mock_git = mock_git.return_value
         self.definitions_repo = DefinitionsRepository(directory_path=TEST_REPO_PATH, bundle_path=TEST_BUNDLE_PATH)
 
+    def tearDown(self):
+        # Ensure git clone is not mocked out between tests
+        self.mock_git.clone.reset_mock(return_value=True, side_effect=True)
+
     @patch("git_utils.Repo")
     def test_GIVEN_uninitialised_directory_WHEN_repo_cloned_from_bundle_THEN_git_called_with_correct_arguments(self, _):
         bundle_path = "path/to/bundle"
@@ -40,30 +44,8 @@ class DefinitionsRepositoryTests(unittest.TestCase):
 
     def test_GIVEN_remote_repository_unreachable_WHEN_cloning_the_repository_THEN_clone_from_bundle(self):
         self.mock_git.clone.side_effect = GitCommandError(command='command', status='status')
-        # self.mock_git.clone = GitCommandError
 
         with patch.object(self.definitions_repo, "clone_repo_from_bundle") as mock_clone:
             self.definitions_repo._attempt_repo_init()
 
-        # with patch.object(self.definitions_repo.git, "clone") as mock:
-        #     mock.return_value = GitCommandError
-        #     self.definitions_repo._attempt_repo_init()
-        #     mock.assert_called()
-        
             mock_clone.assert_called()
-
-    def tearDown(self):
-        self.mock_git.clone.reset_mock(return_value=True, side_effect=True)
-
-    # @patch("script_definition_loader.Repo")
-    # @patch("script_definition_loader.clone_repo_from_bundle")
-    # def test_GIVEN_uninitialised_repository_WHEN_web_clone_fails_THEN_attempt_clone_from_bundle(self, mock_unbundle_clone, mock_repo):
-    #     # Make an instance of Repo which raises error when clone is attempted
-    #     repo_instance = Mock()
-    #     repo_instance.clone = GitCommandError
-    #     mock_repo.return_value = repo_instance
-
-    #     with tempfile.TemporaryDirectory() as tmpdirname:
-    #         clone_definitions_repo(tmpdirname)
-
-    #     mock_unbundle_clone.assert_called()
