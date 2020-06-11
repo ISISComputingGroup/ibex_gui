@@ -549,6 +549,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		return message;
 	}
 	
+	/**
+	 * Get the estimated time taken for the script.
+	 * @return The estimated time for the script.
+	 */
 	public Optional<Long> getTotalEstimatedTime() {
 	    return scriptGeneratorTable.getTotalEstimatedTime();
 	}
@@ -580,7 +584,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			languageSupported = true;
 			threadError = false;
 		} catch (UnsupportedLanguageException e) {
-			firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, languageSupported, languageSupported=false);
+			firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, languageSupported, languageSupported = false);
 			LOG.error(e);
 		} catch (InterruptedException | ExecutionException e) {
 			registerThreadError(e);
@@ -604,7 +608,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
             languageSupported = true;
             threadError = false;
         } catch (UnsupportedLanguageException e) {
-            firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, languageSupported, languageSupported=false);
+            firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, languageSupported, languageSupported = false);
             LOG.error(e);
         } catch (InterruptedException | ExecutionException e) {
         	registerThreadError(e);

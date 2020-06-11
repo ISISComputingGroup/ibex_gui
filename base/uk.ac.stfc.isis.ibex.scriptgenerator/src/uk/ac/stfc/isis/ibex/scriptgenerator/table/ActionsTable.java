@@ -259,7 +259,7 @@ public class ActionsTable extends ModelObject {
     	
         List<Number> actualEstimates = actions.stream().map(action -> action.getEstimatedTime()).flatMap(Optional::stream).collect(Collectors.toList());    	  
         Long total = actualEstimates.stream().map(x -> x.longValue()).reduce(0L, Long::sum);
-        return actualEstimates.size() == 0? Optional.empty() : Optional.of(total);
+        return actualEstimates.size() == 0 ? Optional.empty() : Optional.of(total);
     }
 
 	/**

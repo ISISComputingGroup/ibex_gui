@@ -415,7 +415,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
         long totalSeconds = scriptGeneratorModel.getTotalEstimatedTime().isPresent() ? scriptGeneratorModel.getTotalEstimatedTime().get() : 0;
         String displayTotal = "Total estimated run time: " + changeSecondsToTimeFormat(totalSeconds);
         
-        firePropertyChange("timeEstimate", displayString, displayString=displayTotal);
+        firePropertyChange("timeEstimate", displayString, displayString = displayTotal);
     }
     
     
@@ -424,6 +424,10 @@ public class ScriptGeneratorViewModel extends ModelObject {
     	return String.format("%02d:%02d:%02d", duration.toHours(), duration.toMinutesPart(), duration.toSecondsPart());
     }
     
+    /**
+     * Get the estimated time for the script, formatted into something human readable.
+     * @return The formatted script time estimate.
+     */
     public String getTimeEstimate() {
 		return displayString;
 	}
