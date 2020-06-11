@@ -167,19 +167,20 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	@Override
 	public void setRows(Collection<ScriptGeneratorAction> rows) {
 		if ((!viewer.getTable().isDisposed())) {
-			int focusRow = viewer.getTable().getSelectionIndex();
+			int[] focusRow = viewer.getTable().getSelectionIndices();
 			int focusColumn = 0;
 			
 			if (shiftCellFocusToNewlyAddedRow) {
-				focusRow = viewer.getTable().getSelectionIndex() + 1;
+				focusRow = new int[]{viewer.getTable().getSelectionIndex() + 1};
 				shiftCellFocusToNewlyAddedRow = false;
-			// if row is not empty
-			} else if (focusRow != -1) {
+			} else if (focusRow.length > 0) {
 				focusColumn = viewer.getColumnViewerEditor().getFocusCell().getColumnIndex();
 			}
 			
 			viewer.setInput(new WritableList<ScriptGeneratorAction>(rows, null));
-			setCellFocus(focusRow, focusColumn);
+			if (focusRow.length == 1) {
+				setCellFocus(focusRow[0], focusColumn);
+			}
 		}
 	} 
 	
@@ -193,5 +194,4 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 			viewer.editElement(viewer.getElementAt(row), column);
 		}
 	}
-
 }
