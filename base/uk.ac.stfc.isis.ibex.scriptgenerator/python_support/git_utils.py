@@ -20,6 +20,8 @@ class DefinitionsRepository:
         self.bundle_path = bundle_path
         self.git = Git()
 
+        #self.repo = None
+
         self.errors = []
 
     def _repo_already_exists(self) -> bool:
@@ -32,6 +34,8 @@ class DefinitionsRepository:
         except (NoSuchPathError, InvalidGitRepositoryError):
             pass
 
+        print(definitions_repo)
+
         if definitions_repo is not None and definitions_repo.remotes['origin'].url == self.remote_url:
             repo_exists = True
         else:
@@ -40,12 +44,24 @@ class DefinitionsRepository:
 
         return repo_exists
 
-    def pull_from_origin(self):
+    def initialise_and_pull(self):
+        """
+        Attempts to clone the repo if it doesn't already exist, then pull from origin
+        """
+
+        if not self._repo_already_exists():
+            self._attempt_repo_init()
+
+        self.repo = Repo(self.path)
+
+        self.pull_from_origin(Repo(self.path))
+
+    def pull_from_origin(self, repo: Repo):
         """
         If the supplied path is a valid script defintions repository, attempt to pull from origin
         """
         if self._repo_already_exists():
-            repo = Repo(self.path)
+            #repo = Repo(self.path)
 
             origin = repo.remotes['origin']
 

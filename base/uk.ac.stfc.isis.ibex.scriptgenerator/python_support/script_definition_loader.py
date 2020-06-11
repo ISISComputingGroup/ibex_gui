@@ -8,15 +8,13 @@ import inspect
 import argparse
 import os
 import sys
-from git import Repo, Git
-from git.exc import NoSuchPathError, GitCommandError
+from git_utils import DefinitionRepository
 from glob import iglob
 from jinja2 import Environment, FileSystemLoader, Markup, TemplateNotFound
 from genie_python import utilities
 import importlib.machinery
 import importlib.util
 
-from git.exc import InvalidGitRepositoryError
 
 class PythonActionParameter(object):
     """
@@ -285,101 +283,6 @@ class ScriptDefinitionsWrapper(object):
         """
         return True
 
-
-def clone_repo_from_bundle(new_repo_path: str, origin_url: str, bundle_path: str='/path/to/bundle') -> Repo:
-    """
-    Unbundles the repository supplied with the release, sets remote URL to upstream
-
-    Parameters:
-        bundle_path: Location of the git bundle containing the script defs repo
-        new_repo_path: Where to initialise the script definitions repository
-        origin_url: The URL pointing to the upstream repository
-
-    Returns:
-        script_definitions_repo: The newly cloned repository
-    """
-    Git().clone(bundle_path, new_repo_path)
-    script_definitions_repo = Repo(new_repo_path)
-    script_definitions_repo.delete_remote('origin')
-    script_definitions_repo.create_remote('origin', origin_url)
-
-    return script_definitions_repo
-
-
-def clone_definitions_repo(path: str, origin_url: str = 'www.example.com'):
-    """
-    Attempt to clone new repository if the supplied path is not initialised to the script definitions URL
-
-    Paramters:
-        path: Location of directory to initialise
-
-    Raises:
-        OSError If the supplied directory is not empty
-    """
-    ## I should check if the directory exists first.
-    # If it doesn't: make, then try to clone
-    # If it does: Check if it's empty like I do here
-    # If it is not empty: Raise error
-    # If it is empty: try to clone
-    path_exists = os.path.isdir(path)
-
-    if not path_exists:
-        os.makedirs(path, exist_ok=True)
-
-    if len(os.listdir(path)) > 0:
-        raise OSError("Supplied directory is not empty, cannot make repository")
-
-    try:
-        Git().clone(origin_url, path)
-    except GitCommandError as err:
-        print(err)
-        clone_repo_from_bundle(path, origin_url)
-
-    pass
-
-def update_script_definitions(path: str):
-    """
-    Attempts to pull the script definitions repo in the supplied directory.
-    If the directory is not the correct repository, attempt to clone into the supplied directory
-
-    Raises:
-        IOError: If the supplied directory is not a repo and could not be initialised
-    """
-    definitions_repo = None
-    try:
-        definitions_repo = Repo(path)
-    except (NoSuchPathError, InvalidGitRepositoryError):
-        print("Supplied path does not exist, cloning new repo")
-        definitions_repo = clone_definitions_repo(path)
-
-    if definitions_repo is None:
-        raise IOError("Repository could not be found or initialised")
-
-    repo_origin = definitions_repo.remotes['origin']
-
-    if repo_origin.url == "https://github.com/ISISComputingGroup/ScriptGeneratorConfigs":
-        repo_origin.pull()
-    else:
-        print("Repository in {} is not pointing to script definitions repository, not pulling".format(path))
-
-    return definitions_repo
-
-
-# try:
-#     repo = Repo('...')
-# except (git.exc.NoSuchPathError, git.exc.InvalidGitRepositoryError):
-#     print("Path does not exist or is not initialised, cloning new repo")
-#     repo = unbundle_script_definitions_repository
-
-# if repo.remotes['origin'].url != url: # repository_initialised_correctly(repo, url):
-#     try:
-#         repo.remotes['origin'].pull()
-#     except Exception as err:
-#         script_definition_load_errors.append(err)
-# else:
-#     script_definition_load_errors.append("Script generator definitions not initialised correctly")
-
-
 def get_script_definitions(search_folders: List[str] = None) -> Tuple[Dict[AnyStr, ScriptDefinition], Dict[AnyStr, AnyStr]]:
     """
     Dynamically import all the Python modules in the search folders
@@ -395,6 +298,10 @@ def get_script_definitions(search_folders: List[str] = None) -> Tuple[Dict[AnySt
          but with values as the reason they could not be imported.
     """
     # Need to check that the supplied folder is the correct git repo and pull somehow. Unbundle if they don't have the internet
+    definitions_repository = DefinitionRepository()
+
+    git_errors = definitions_repository.initialise_and_pull()
+
     if search_folders is None:
         this_file_path = os.path.split(__file__)[0]
         search_folder = [os.path.join(this_file_path, "instruments")]
