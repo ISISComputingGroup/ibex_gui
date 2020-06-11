@@ -38,6 +38,20 @@ class DefinitionsRepositoryTests(unittest.TestCase):
         repo_instance.delete_remote.assert_called_with("origin")
         repo_instance.create_remote.assert_called_with("origin", git_utils.REMOTE_URL)
 
+    def test_GIVEN_repository_with_incorrect_url_WHEN_checking_that_repo_exists_THEN_return_repo_does_not_exist(self):
+        with patch("git_utils.Repo") as mock_repo:
+            repo_instance = mock_repo.return_value
+            repo_instance.remotes['origin'].url = "example.com"
+
+            self.assertFalse(self.definitions_repo._repo_already_exists())
+
+    def test_GIVEN_repository_with_correct_url_WHEN_checking_that_repo_exists_THEN_return_repo_does_exist(self):
+        with patch("git_utils.Repo") as mock_repo:
+            repo_instance = mock_repo.return_value
+            repo_instance.remotes['origin'].url = self.definitions_repo.remote_url
+
+            self.assertTrue(self.definitions_repo._repo_already_exists())
+
     def test_GIVEN_remote_repository_reachable_WHEN_cloning_the_repository_THEN_clone_from_github_requested(self):
         self.definitions_repo._attempt_repo_init()
         self.mock_git.clone.assert_called_with(git_utils.REMOTE_URL, TEST_REPO_PATH)

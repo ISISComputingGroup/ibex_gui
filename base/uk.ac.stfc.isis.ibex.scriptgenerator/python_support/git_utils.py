@@ -35,7 +35,7 @@ class DefinitionsRepository:
         except (NoSuchPathError, InvalidGitRepositoryError):
             pass
 
-        if definitions_repo is not None and definitions_repo.remotes['origin'] == self.remote_url:
+        if definitions_repo is not None and definitions_repo.remotes['origin'].url == self.remote_url:
             repo_exists = True
         else:
             repo_exists = False
