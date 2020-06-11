@@ -3,6 +3,7 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 import java.net.URL;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -268,21 +269,23 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	/**
 	 * Removes action at position index from ActionsTable.
 	 * 
-	 * @param index
-	 * 			the index to delete.
+	 * @param actionsToDelete
+	 * 			the actions to delete.
 	 */
-	protected void deleteAction(int[] indices) {
-		scriptGeneratorModel.deleteAction(indices);
+	protected void deleteAction(List<ScriptGeneratorAction> actionsToDelete) {
+		scriptGeneratorModel.deleteAction(actionsToDelete);
 	}
 	
 	/**
 	 * Duplicates action at position indices in ActionsTable.
 	 * 
-	 * @param indices
-	 * 			the indices to duplicate.
+	 * @param actionsToDuplicate
+	 * 			The actions to duplicate.
+	 * @param insertionLocation
+	 *          The index in the list to do the insertion.
 	 */
-	protected void duplicateAction(int[] indices) {
-		scriptGeneratorModel.duplicateAction(indices);
+	protected void duplicateAction(List<ScriptGeneratorAction> actionsToDuplicate, Integer insertionLocation) {
+		scriptGeneratorModel.duplicateAction(actionsToDuplicate, insertionLocation);
 	}
 	
     /**
@@ -302,21 +305,21 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	/**
 	 * Moves actions one row up in table.
 	 * 
-	 * @param indices
-	 * 			the indices to move.
+	 * @param actionsToMove
+	 * 			the actions to move.
 	 */
-	protected void moveActionUp(int[] indices) {
-		scriptGeneratorModel.moveActionUp(indices);
+	protected void moveActionUp(List<ScriptGeneratorAction> actionsToMove) {
+		scriptGeneratorModel.moveActionUp(actionsToMove);
 	}
 
 	/**
 	 * Moves actions one row down in table.
 	 * 
-	 * @param indices
-	 * 			the indices to move.
+	 * @param actionsToMove
+	 * 			the actions to move.
 	 */
-	protected void moveActionDown(int[] indices) {
-		scriptGeneratorModel.moveActionDown(indices);
+	protected void moveActionDown(List<ScriptGeneratorAction> actionsToMove) {
+		scriptGeneratorModel.moveActionDown(actionsToMove);
 	}
 
 	/**

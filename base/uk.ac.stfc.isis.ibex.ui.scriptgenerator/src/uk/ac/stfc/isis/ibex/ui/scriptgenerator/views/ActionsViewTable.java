@@ -164,9 +164,10 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	 * Sets Rows. Save where the focus was before re writing the table and set the focus back to the cell after
 	 * re writing the table.
 	 */
+	
 	@Override
 	public void setRows(Collection<ScriptGeneratorAction> rows) {
-		if ((!viewer.getTable().isDisposed())) {
+		if (!viewer.getTable().isDisposed()) {
 			int[] focusRow = viewer.getTable().getSelectionIndices();
 			int focusColumn = 0;
 			
@@ -189,9 +190,11 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	 * @param row row number of table
 	 * @param column column number of table
 	 */
+	
 	private void setCellFocus(int row, int column) {
 		if (row >= 0) {
 			viewer.editElement(viewer.getElementAt(row), column);
 		}
 	}
+	
 }

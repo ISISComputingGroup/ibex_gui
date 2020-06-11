@@ -18,6 +18,7 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
+import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
  * 
@@ -56,7 +57,7 @@ public class ActionsTableTest {
 	public void test_GIVEN_action_duplicated_WHEN_action_selected_THEN_action_is_duplicated() {
 		table.addEmptyAction();
 		
-		table.duplicateAction(new int[] {0});
+		table.duplicateAction(table.getActions(), 1);
 		
 		var allActions = table.getActions();
 		
@@ -70,7 +71,7 @@ public class ActionsTableTest {
 		table.addEmptyAction();
 		table.addEmptyAction();
 		
-		table.duplicateAction(new int[] {0, 1});
+		table.duplicateAction(table.getActions(), 2);
 		
 		var allActions = table.getActions();
 		
@@ -83,7 +84,7 @@ public class ActionsTableTest {
 	public void test_GIVEN_action_in_table_WHEN_action_deleted_THEN_action_is_removed() {
 		table.addEmptyAction();
 
-		table.deleteAction(new int[] {0});
+		table.deleteAction(table.getActions());
 		
 		assertEquals(table.getActions().size(), 0);
 		
@@ -95,7 +96,7 @@ public class ActionsTableTest {
 		table.addEmptyAction();
 		table.addEmptyAction();
 
-		table.deleteAction(new int[] {0, 1, 2});
+		table.deleteAction(table.getActions());
 		
 		assertEquals(table.getActions().size(), 0);
 		
@@ -109,7 +110,7 @@ public class ActionsTableTest {
 		
 		var secondAction = table.getActions().get(1);
 		
-		table.moveActionUp(new int[] {1});
+		table.moveActionUp(Arrays.asList(secondAction));
 		
 		assertEquals(table.getActions().indexOf(secondAction), 0);
 	}
@@ -123,22 +124,23 @@ public class ActionsTableTest {
 		table.addEmptyAction();
 		table.addEmptyAction();
 		table.addEmptyAction();
-		
+
+		var firstAction = table.getActions().get(0);
 		var secondAction = table.getActions().get(1);
 		var thirdAction = table.getActions().get(2);
 		var fourthAction = table.getActions().get(3);
 		
-		table.moveActionUp(new int[] {1, 2, 3});
+		table.moveActionUp(Arrays.asList(secondAction, thirdAction, fourthAction));
 		
-		assertEquals(table.getActions().indexOf(secondAction), 0);
-		assertEquals(table.getActions().indexOf(thirdAction), 1);
-		assertEquals(table.getActions().indexOf(fourthAction), 2);
+		assertEquals(0, table.getActions().indexOf(secondAction));
+		assertEquals(1, table.getActions().indexOf(thirdAction));
+		assertEquals(2, table.getActions().indexOf(fourthAction));
 		
-		table.moveActionDown(new int[] {0, 1, 2});
+		table.moveActionDown(Arrays.asList(firstAction, secondAction, thirdAction));
 		
-		assertEquals(table.getActions().indexOf(secondAction), 1);
-		assertEquals(table.getActions().indexOf(thirdAction), 2);
-		assertEquals(table.getActions().indexOf(fourthAction), 3);
+		assertEquals(1, table.getActions().indexOf(secondAction));
+		assertEquals(2, table.getActions().indexOf(thirdAction));
+		assertEquals(0, table.getActions().indexOf(fourthAction));
 	}
 	
 	@Test
@@ -149,9 +151,25 @@ public class ActionsTableTest {
 		
 		var firstAction = table.getActions().get(0);
 		
-		table.moveActionUp(new int[] {0});
+		table.moveActionUp(Arrays.asList(firstAction));
 		
-		assertEquals(table.getActions().indexOf(firstAction), 0);
+		assertEquals(0, table.getActions().indexOf(firstAction));
+	}
+	
+	@Test
+	public void test_GIVEN_one_of_multiple_selected_actions_at_top_of_table_WHEN_action_moved_up_THEN_action_does_not_move() {
+		// Add two actions
+		table.addEmptyAction();
+		table.addEmptyAction();
+		table.addEmptyAction();
+		
+		var firstAction = table.getActions().get(0);
+		var secondAction = table.getActions().get(1);
+		
+		table.moveActionUp(Arrays.asList(firstAction, secondAction));
+		
+		assertEquals(0, table.getActions().indexOf(firstAction));
+		assertEquals(1, table.getActions().indexOf(secondAction));
 	}
 	
 	@Test
@@ -162,9 +180,25 @@ public class ActionsTableTest {
 		
 		var secondAction = table.getActions().get(1);
 		
-		table.moveActionDown(new int[] {1});
+		table.moveActionDown(Arrays.asList(secondAction));
 		
-		assertEquals(table.getActions().indexOf(secondAction), 1);
+		assertEquals(1, table.getActions().indexOf(secondAction));
+	}
+	
+	@Test
+	public void test_GIVEN_one_of_multiple_selected_actions_at_bottom_of_table_WHEN_action_moved_down_THEN_action_does_not_move() {
+		// Add two actions
+		table.addEmptyAction();
+		table.addEmptyAction();
+		table.addEmptyAction();
+		
+		var secondAction = table.getActions().get(1);
+		var thirdAction = table.getActions().get(2);
+		
+		table.moveActionDown(Arrays.asList(secondAction, thirdAction));
+		
+		assertEquals(1, table.getActions().indexOf(secondAction));
+		assertEquals(2, table.getActions().indexOf(thirdAction));
 	}
 	
 	@Test

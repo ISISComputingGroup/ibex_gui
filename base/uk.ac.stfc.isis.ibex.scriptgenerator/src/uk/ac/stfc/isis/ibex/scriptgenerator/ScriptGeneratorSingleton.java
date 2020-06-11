@@ -427,19 +427,22 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * Removes action at position index from ActionsTable.
 	 * 
-	 * @param index the index to delete.
+	 * @param actionsToDeletes the actions to delete.
 	 */
-	public void deleteAction(int[] indices) {
-		scriptGeneratorTable.deleteAction(indices);
+	public void deleteAction(List<ScriptGeneratorAction> actionsToDeletes) {
+		scriptGeneratorTable.deleteAction(actionsToDeletes);
 	}
 
 	/**
 	 * Duplicates actions at position indices in ActionsTable.
 	 * 
-	 * @param indices the indices to duplicate.
+	 * @param actionsToDuplicate
+	 * 			The actions to duplicate.
+	 * @param insertionLocation
+	 *          The index in the list to do the insertion.
 	 */
-	public void duplicateAction(int[] indices) {
-		scriptGeneratorTable.duplicateAction(indices);
+	public void duplicateAction(List<ScriptGeneratorAction> actionsToDuplicate, Integer insertionLocation) {
+		scriptGeneratorTable.duplicateAction(actionsToDuplicate, insertionLocation);
 	}
 
     /**
@@ -452,19 +455,19 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * Moves actions one row up in table.
 	 * 
-	 * @param indices the indices to move.
+	 * @param actionsToMove the actions to move.
 	 */
-	public void moveActionUp(int[] indices) {
-		scriptGeneratorTable.moveActionUp(indices);
+	public void moveActionUp(List<ScriptGeneratorAction> actionsToMove) {
+		scriptGeneratorTable.moveActionUp(actionsToMove);
 	}
 
 	/**
 	 * Moves actions one row down in table.
 	 * 
-	 * @param indices the indices to move.
+	 * @param actionsToMove the actions to move.
 	 */
-	public void moveActionDown(int[] indices) {
-		scriptGeneratorTable.moveActionDown(indices);
+	public void moveActionDown(List<ScriptGeneratorAction> actionsToMove) {
+		scriptGeneratorTable.moveActionDown(actionsToMove);
 	}
 
 	/**

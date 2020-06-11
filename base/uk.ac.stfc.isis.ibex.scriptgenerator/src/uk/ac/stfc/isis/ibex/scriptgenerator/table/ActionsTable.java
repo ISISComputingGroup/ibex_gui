@@ -5,7 +5,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
@@ -123,45 +125,31 @@ public class ActionsTable extends ModelObject {
 
 	/**
 	 * Removes an action from the list in specified location.
-	 * @param indices
-	 * 		  	The indices to remove from the actions list.
+	 * @param actionsToDeletes
+	 * 		  	The actions to remove from the actions list.
 	 */
-	public void deleteAction(int[] indices) {
-		Arrays.sort(indices);
+	public void deleteAction(List<ScriptGeneratorAction> actionsToDeletes) {
 		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
-		// remove selected indices from highest to lowest
-		for (int i = indices.length - 1; i >= 0; i--) {
-			if (isValidIndex(indices[i])) {
-				newList.remove(indices[i]);
-			}
-		}
+		newList.removeAll(actionsToDeletes);
 		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
 	}
 
 	/**
-	 * Duplicates a set of selected actions in the table and places them after the lowest selected action in the table
-	 * @param indices
-	 * 			The indices of the actions to duplicate.
+	 * Duplicates a set of selected actions in the table and places them in the specified position.
+	 * @param actionsToDuplicate
+	 * 			The actions to duplicate.
+	 * @param insertionLocation
+	 *          The index in the list to do the insertion.
 	 */
-	public void duplicateAction(int[] indices) {
-		Arrays.sort(indices);
+	public void duplicateAction(List<ScriptGeneratorAction> actionsToDuplicate, Integer insertionLocation) {	
+		final var newActionsList = new ArrayList<ScriptGeneratorAction>(actions);
 		
-		final var newActionsList = new ArrayList<ScriptGeneratorAction>();
-		newActionsList.addAll(actions);
+		List<ScriptGeneratorAction> actionsToAdd = actionsToDuplicate.stream()
+				.map(action -> createAction(action.getActionParameterValueMap()))
+				.collect(Collectors.toList());
 		
-		final var actionsToAdd = new ArrayList<ScriptGeneratorAction>();
-		
-		for (int i = 0; i < indices.length; i++) {
-			if (isValidIndex(indices[i])) {
-				var actionToDuplicate = actions.get(indices[i]);
-				var newAction = createAction(actionToDuplicate.getActionParameterValueMap());			
-				actionsToAdd.add(newAction);
-			}
-		}
-		
-		// add new actions after the last selected action
-		newActionsList.addAll(indices[indices.length - 1] + 1, actionsToAdd);
-		firePropertyChange(ACTIONS_PROPERTY, actions, this.actions = newActionsList);
+		newActionsList.addAll(insertionLocation, actionsToAdd);
+		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newActionsList);
 	}
     
     /**
@@ -173,42 +161,40 @@ public class ActionsTable extends ModelObject {
     }
 	
 	/**
-	 * Moves a selection of actions down one row
-	 * @param indices
-	 * 			The indices of actions to be moved
+	 * Moves a selection of actions down one row.
+	 * @param actionsToMove
+	 * 			The actions to be moved
 	 */
-	public void moveActionDown(int[] indices) {
-		final var newActions = new ArrayList<ScriptGeneratorAction>();
-		newActions.addAll(actions);
-		
-		for (int i = indices.length - 1; i >= 0; i--) {
-			if (isValidIndex(indices[i])) {
-				if (indices[i] + 1 >= this.actions.size()) {
-					break;
-				}
-				Collections.swap(newActions, indices[i], indices[i] + 1);
-			}
+	public void moveActionDown(List<ScriptGeneratorAction> actionsToMove) {
+		if (actionsToMove.contains(actions.get(actions.size() - 1))) {
+			return;
+		}
+		final var newActions = new ArrayList<ScriptGeneratorAction>(actions);
+		ListIterator<ScriptGeneratorAction> iterator = actionsToMove.listIterator(actionsToMove.size());
+
+		// Iterate in reverse.
+		while (iterator.hasPrevious()) {
+			Integer currentIndex = actions.indexOf(iterator.previous());
+			Collections.swap(newActions, currentIndex, currentIndex + 1);
 		}
 		
 		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newActions);
 	}
 	
 	/**
-	 * Moves a selection of actions down up row
-	 * @param indices
+	 * Moves a selection of actions up a row.
+	 * @param actionsToMove
 	 * 			The indices of actions to be moved
 	 */
-	public void moveActionUp(int[] indices) {
-		final var newActions = new ArrayList<ScriptGeneratorAction>();
-		newActions.addAll(actions);
+	public void moveActionUp(List<ScriptGeneratorAction> actionsToMove) {
+		if (actionsToMove.contains(actions.get(0))) {
+			return;
+		}
+		final var newActions = new ArrayList<ScriptGeneratorAction>(actions);
 		
-		for (int i = 0; i < indices.length; i++) {
-			if (isValidIndex(indices[i])) {
-				if (indices[i] - 1 < 0) {
-					break;
-				}
-				Collections.swap(newActions, indices[i], indices[i] - 1);
-			}
+		for (var action : actionsToMove) {
+			Integer currentIndex = actions.indexOf(action);
+			Collections.swap(newActions, currentIndex, currentIndex - 1);
 		}
 		
 		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newActions);
@@ -219,16 +205,6 @@ public class ActionsTable extends ModelObject {
 	 */
 	public void clearActions() {
 		firePropertyChange(ACTIONS_PROPERTY, actions, actions = new ArrayList<ScriptGeneratorAction>());
-	}
-	/**
-	 * Checks if the supplied index is a valid position in the table.
-	 * @param index
-	 * 			The index to test.
-	 * @return isValid
-	 * 			true if index is a valid position in the table.
-	 */
-	private Boolean isValidIndex(int index) {
-		return index >= 0 && index <= this.actions.size();
 	}
 
 	/**

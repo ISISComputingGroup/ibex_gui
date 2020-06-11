@@ -287,16 +287,19 @@ public class ScriptGeneratorView {
 		        
 			    // Make buttons to move an action up and down the list
 		        Button btnMoveActionUp = createMoveRowButton(moveComposite, "move_up.png", "up");
-		        btnMoveActionUp.addListener(SWT.Selection, e -> {
-		        	scriptGeneratorViewModel.moveActionUp(table.getSelectionIndices());
-		        	table.setSelectionIndex(Math.max(0, table.getSelectionIndex() - 1));
+		        btnMoveActionUp.addListener(SWT.Selection, e ->	{
+		        	scriptGeneratorViewModel.moveActionUp(table.selectedRows());
+		        	if (table.getSelectionIndices().length == 1) {
+		        		table.setSelectionIndex(Math.max(0, table.getSelectionIndex() - 1));
+		        	}
 		        });
 		        
 		        Button btnMoveActionDown = createMoveRowButton(moveComposite, "move_down.png", "down");
 		        btnMoveActionDown.addListener(SWT.Selection, e -> {
-		        	scriptGeneratorViewModel.moveActionDown(table.getSelectionIndices());
-		            table.setSelectionIndex(Math.min(
-		            		table.getSelectionIndex() + 1, scriptGeneratorViewModel.getActions().size()));
+		        	scriptGeneratorViewModel.moveActionDown(table.selectedRows());
+		        	if (table.getSelectionIndices().length == 1) {
+		        		table.setSelectionIndex(Math.min(table.getSelectionIndex() + 1, scriptGeneratorViewModel.getActions().size()));
+		        	}
 		        });
 		        
 		        // Composite for laying out new/delete/duplicate action buttons
@@ -316,12 +319,12 @@ public class ScriptGeneratorView {
 		        final Button btnDeleteAction = new Button(actionsControlsGrp, SWT.NONE);
 		        btnDeleteAction.setText("Delete Action");
 		        btnDeleteAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		        btnDeleteAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.deleteAction(table.getSelectionIndices()));
+		        btnDeleteAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.deleteAction(table.selectedRows()));
 		
 		        final Button btnDuplicateAction = new Button(actionsControlsGrp, SWT.NONE);
 		        btnDuplicateAction.setText("Duplicate Action");
 		        btnDuplicateAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		        btnDuplicateAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.duplicateAction(table.getSelectionIndices()));
+		        btnDuplicateAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.duplicateAction(table.selectedRows(), table.getSelectionIndex()));
 		        
                 final Button btnClearAction = new Button(actionsControlsGrp, SWT.NONE);
                 btnClearAction.setText("Clear All Actions");
