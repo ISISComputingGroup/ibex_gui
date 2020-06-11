@@ -43,6 +43,12 @@ class DefinitionsRepository:
         return repo_exists
 
     def pull_from_origin(self):
+        """
+        If the supplied path is a valid script defintions repository, attempt to pull from origin
+        """
+        if self._repo_already_exists():
+            self.repo = Repo(self.path)
+
         origin = self.repo.remotes['origin']
         origin.pull()
 

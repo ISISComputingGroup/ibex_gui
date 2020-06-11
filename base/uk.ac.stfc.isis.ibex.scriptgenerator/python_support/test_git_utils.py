@@ -5,6 +5,7 @@ from git_utils import DefinitionsRepository
 
 from mock import Mock
 from git.exc import GitCommandError
+import os
 import tempfile
 
 
@@ -19,7 +20,7 @@ class DefinitionsRepositoryTests(unittest.TestCase):
         self.definitions_repo = DefinitionsRepository(directory_path=TEST_REPO_PATH, bundle_path=TEST_BUNDLE_PATH)
 
     def tearDown(self):
-        # Ensure git clone is not mocked out between tests
+        # Ensure git clone mock is reset between tests
         self.mock_git.clone.reset_mock(return_value=True, side_effect=True)
 
     @patch("git_utils.Repo")
@@ -38,19 +39,19 @@ class DefinitionsRepositoryTests(unittest.TestCase):
         repo_instance.delete_remote.assert_called_with("origin")
         repo_instance.create_remote.assert_called_with("origin", git_utils.REMOTE_URL)
 
-    def test_GIVEN_repository_with_incorrect_url_WHEN_checking_that_repo_exists_THEN_return_repo_does_not_exist(self):
-        with patch("git_utils.Repo") as mock_repo:
-            repo_instance = mock_repo.return_value
-            repo_instance.remotes['origin'].url = "example.com"
+    @patch("git_utils.Repo")
+    def test_GIVEN_repository_with_incorrect_url_WHEN_checking_that_repo_exists_THEN_return_repo_does_not_exist(self, mock_repo):
+        repo_instance = mock_repo.return_value
+        repo_instance.remotes['origin'].url = "example.com"
 
-            self.assertFalse(self.definitions_repo._repo_already_exists())
+        self.assertFalse(self.definitions_repo._repo_already_exists())
 
-    def test_GIVEN_repository_with_correct_url_WHEN_checking_that_repo_exists_THEN_return_repo_does_exist(self):
-        with patch("git_utils.Repo") as mock_repo:
-            repo_instance = mock_repo.return_value
-            repo_instance.remotes['origin'].url = self.definitions_repo.remote_url
+    @patch("git_utils.Repo")
+    def test_GIVEN_repository_with_correct_url_WHEN_checking_that_repo_exists_THEN_return_repo_does_exist(self, mock_repo):
+        repo_instance = mock_repo.return_value
+        repo_instance.remotes['origin'].url = self.definitions_repo.remote_url
 
-            self.assertTrue(self.definitions_repo._repo_already_exists())
+        self.assertTrue(self.definitions_repo._repo_already_exists())
 
     def test_GIVEN_remote_repository_reachable_WHEN_cloning_the_repository_THEN_clone_from_github_requested(self):
         self.definitions_repo._attempt_repo_init()
@@ -63,3 +64,10 @@ class DefinitionsRepositoryTests(unittest.TestCase):
             self.definitions_repo._attempt_repo_init()
 
             mock_clone.assert_called()
+
+    @patch("os.makedirs")
+    @patch("os.path.isdir")
+    def test_GIVEN_directory_which_does_not_exist_WHEN_repository_initialise_called_THEN_makedirs_called_to_create_folders(self, mock_isdir, mock_makedirs):
+        mock_isdir.return_value = False
+        self.definitions_repo._attempt_repo_init()
+        mock_makedirs.assert_called_with(TEST_REPO_PATH, exist_ok=True)
