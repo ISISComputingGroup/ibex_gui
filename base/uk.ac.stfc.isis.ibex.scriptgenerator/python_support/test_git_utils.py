@@ -78,3 +78,13 @@ class DefinitionsRepositoryTests(unittest.TestCase):
 
             self.definitions_repo.pull_from_origin()
             origin_instance.pull.assert_called()
+
+    @patch("git_utils.Repo")
+    def test_GIVEN_repository_which_has_unpushed_changes_WHEN_pull_attempted_THEN_merge_is_aborted(self, mock_repo):
+        with patch.object(self.definitions_repo, "_repo_already_exists", return_value=True):
+            repo_instance = mock_repo.return_value
+            repo_instance.remotes['origin'].pull.side_effect = GitCommandError(command='command', status='status')
+
+            self.definitions_repo.pull_from_origin()
+
+            repo_instance.git.merge.assert_called_with(abort=True)

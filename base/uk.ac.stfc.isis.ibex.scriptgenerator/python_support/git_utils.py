@@ -20,6 +20,8 @@ class DefinitionsRepository:
         self.bundle_path = bundle_path
         self.git = Git()
 
+        self.errors = []
+
     def _repo_already_exists(self) -> bool:
         """
         Checks if there is a repository initialised at the supplied path with the correct url
@@ -34,6 +36,7 @@ class DefinitionsRepository:
             repo_exists = True
         else:
             repo_exists = False
+            self._append_error("Supplied path does not contain a ScriptDefinitions repository, cannot pull")
 
         return repo_exists
 
@@ -44,8 +47,15 @@ class DefinitionsRepository:
         if self._repo_already_exists():
             repo = Repo(self.path)
 
-        origin = repo.remotes['origin']
-        origin.pull()
+            origin = repo.remotes['origin']
+
+            try:
+                origin.pull()
+            except GitCommandError:
+                self._append_error("Local repo contains unpushed changes, cannot pull from remote")
+
+                # Run git merge --abort to undo changes
+                repo.git.merge(abort=True)
 
     def clone_repo_from_bundle(self) -> Repo:
         """
@@ -59,7 +69,11 @@ class DefinitionsRepository:
         Returns:
             script_definitions_repo: The newly cloned repository
         """
-        self.git.clone(self.bundle_path, self.path)
+        try:
+            self.git.clone(self.bundle_path, self.path)
+        except GitCommandError:
+            self._append_error("Error cloning repository from bundle")
+
         script_definitions_repo = Repo(self.path)
         script_definitions_repo.delete_remote('origin')
         script_definitions_repo.create_remote('origin', self.remote_url)
@@ -80,26 +94,16 @@ class DefinitionsRepository:
             os.makedirs(self.path, exist_ok=True)
 
         if len(os.listdir(self.path)) > 0:
-            raise OSError("Supplied directory is not empty, cannot make repository")
+            self._append_error("Supplied directory {} not empty, cannot clone".format(path))
+        else:
+            try:
+                self.git.clone(self.remote_url, self.path)
+            except GitCommandError as err:
+                self._append_error(err)
+                self.clone_repo_from_bundle()
 
-        try:
-            self.git.clone(self.remote_url, self.path)
-        except GitCommandError as err:
-            print(err)
-            self.clone_repo_from_bundle()
-
-
-# try:
-#     repo = Repo('...')
-# except (git.exc.NoSuchPathError, git.exc.InvalidGitRepositoryError):
-#     print("Path does not exist or is not initialised, cloning new repo")
-#     repo = unbundle_script_definitions_repository
-
-# if repo.remotes['origin'].url != url: # repository_initialised_correctly(repo, url):
-#     try:
-#         repo.remotes['origin'].pull()
-#     except Exception as err:
-#         script_definition_load_errors.append(err)
-# else:
-#     script_definition_load_errors.append("Script generator definitions not initialised correctly")
-
+    def _append_error(self, error: str):
+        """
+        Adds the supplied error to the list of errors raised from the git repository
+        """
+        self.errors.append(error)
