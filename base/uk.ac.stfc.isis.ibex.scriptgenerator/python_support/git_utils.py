@@ -20,11 +20,6 @@ class DefinitionsRepository:
         self.bundle_path = bundle_path
         self.git = Git()
 
-        # if not self._repo_already_exists():
-        #     self._attempt_repo_init()
-
-        # self.repo = Repo(self.path)
-
     def _repo_already_exists(self) -> bool:
         """
         Checks if there is a repository initialised at the supplied path with the correct url
@@ -47,9 +42,9 @@ class DefinitionsRepository:
         If the supplied path is a valid script defintions repository, attempt to pull from origin
         """
         if self._repo_already_exists():
-            self.repo = Repo(self.path)
+            repo = Repo(self.path)
 
-        origin = self.repo.remotes['origin']
+        origin = repo.remotes['origin']
         origin.pull()
 
     def clone_repo_from_bundle(self) -> Repo:

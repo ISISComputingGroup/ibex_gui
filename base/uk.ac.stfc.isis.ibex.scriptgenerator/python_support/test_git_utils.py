@@ -5,19 +5,18 @@ from git_utils import DefinitionsRepository
 
 from mock import Mock
 from git.exc import GitCommandError
-import os
-import tempfile
 
 
 TEST_REPO_PATH = "path/to/repo"
 TEST_BUNDLE_PATH = "path/to/bundle"
+TEST_URL = "example.com"
 
 
 class DefinitionsRepositoryTests(unittest.TestCase):
     @patch("git_utils.Git", return_value=Mock())
     def setUp(self, mock_git):
         self.mock_git = mock_git.return_value
-        self.definitions_repo = DefinitionsRepository(directory_path=TEST_REPO_PATH, bundle_path=TEST_BUNDLE_PATH)
+        self.definitions_repo = DefinitionsRepository(directory_path=TEST_REPO_PATH, bundle_path=TEST_BUNDLE_PATH, remote_url=TEST_URL)
 
     def tearDown(self):
         # Ensure git clone mock is reset between tests
@@ -37,12 +36,12 @@ class DefinitionsRepositoryTests(unittest.TestCase):
 
         self.definitions_repo.clone_repo_from_bundle()
         repo_instance.delete_remote.assert_called_with("origin")
-        repo_instance.create_remote.assert_called_with("origin", git_utils.REMOTE_URL)
+        repo_instance.create_remote.assert_called_with("origin", TEST_URL)
 
     @patch("git_utils.Repo")
     def test_GIVEN_repository_with_incorrect_url_WHEN_checking_that_repo_exists_THEN_return_repo_does_not_exist(self, mock_repo):
         repo_instance = mock_repo.return_value
-        repo_instance.remotes['origin'].url = "example.com"
+        repo_instance.remotes['origin'].url = "different_remote_address.com"
 
         self.assertFalse(self.definitions_repo._repo_already_exists())
 
@@ -55,7 +54,7 @@ class DefinitionsRepositoryTests(unittest.TestCase):
 
     def test_GIVEN_remote_repository_reachable_WHEN_cloning_the_repository_THEN_clone_from_github_requested(self):
         self.definitions_repo._attempt_repo_init()
-        self.mock_git.clone.assert_called_with(git_utils.REMOTE_URL, TEST_REPO_PATH)
+        self.mock_git.clone.assert_called_with(TEST_URL, TEST_REPO_PATH)
 
     def test_GIVEN_remote_repository_unreachable_WHEN_cloning_the_repository_THEN_clone_from_bundle(self):
         self.mock_git.clone.side_effect = GitCommandError(command='command', status='status')
@@ -71,3 +70,11 @@ class DefinitionsRepositoryTests(unittest.TestCase):
         mock_isdir.return_value = False
         self.definitions_repo._attempt_repo_init()
         mock_makedirs.assert_called_with(TEST_REPO_PATH, exist_ok=True)
+
+    @patch("git_utils.Repo")
+    def test_GIVEN_repository_exists_WHEN_pull_requested_THEN_repository_gets_pulled(self, mock_repo):
+        with patch.object(self.definitions_repo, "_repo_already_exists", return_value=True):
+            origin_instance = mock_repo.return_value.remotes['origin']
+
+            self.definitions_repo.pull_from_origin()
+            origin_instance.pull.assert_called()
