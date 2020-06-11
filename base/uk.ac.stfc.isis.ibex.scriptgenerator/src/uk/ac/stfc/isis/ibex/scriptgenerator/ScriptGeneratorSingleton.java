@@ -18,10 +18,11 @@
 
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -64,7 +65,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * Python file extension.
 	 */
-	private static final String PYTHON_EXT = ".py";
+	public static final String PYTHON_EXT = ".py";
 	
 	/**
 	 * The preferences supplier to get the area to generate scripts from.
@@ -205,8 +206,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * The constructor, will create without a script definition loader and without loading
 	 * an initial script definition.
 	 */
-	public ScriptGeneratorSingleton() {
-	    
+	public ScriptGeneratorSingleton() {   
 	}
 
 	/**
@@ -226,6 +226,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		setUp();
 	}
 
+	private Path getScriptDefinitionPath(ScriptDefinitionWrapper scriptDefinition) {
+		return Paths.get(preferenceSupplier.scriptGeneratorScriptDefinitionFolders(), scriptDefinition.getName() + PYTHON_EXT);
+	}
+	
 	/**
 	 * Called by the constructor with three arguments during tests or in the View
 	 * Model constructor to set up the class. Set up listeners for the generator.
@@ -262,7 +266,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			lastGeneratedScript = (Optional<String>) evt.getNewValue();
 			lastGeneratedScript.ifPresentOrElse(script -> {
 				try {
-					String generatedScriptFilename = generateScriptFileName(getScriptFilepathPrefix());
+					String generatedScriptFilename = generateScriptFileName();
 					firePropertyChange(GENERATED_SCRIPT_FILENAME_PROPERTY, null, generatedScriptFilename);
 				} catch (NoScriptDefinitionSelectedException e) {
 					LOG.error(e);
@@ -354,11 +358,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
     }
     
     /**
-     * Get the area to generate scripts to.
+     * Get the default area to generate scripts to.
      * 
-     * @return The directory path to generate scripts to.
+     * @return The default directory path to generate scripts to.
      */
-    public String getScriptFilepathPrefix() {
+    public String getDefaultScriptDirectory() {
     	return preferenceSupplier.scriptGenerationFolder();
     }
     
@@ -636,8 +640,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 						"Tried to generate a script with no script definition selected to generate it with"));
 		try {
 			if (areParamsValid()) {
-				String filePath =  preferenceSupplier.scriptGeneratorScriptDefinitionFolders()
-						+ scriptDefinition.getName() + PYTHON_EXT;
+				Path filePath = getScriptDefinitionPath(scriptDefinition);
 				String jsonContent = scriptGenFileHandler.createJsonString(scriptGeneratorTable.getActions(), scriptGenFileHandler.readFileContent(filePath), filePath);
 				generator.refreshGeneratedScript(scriptGeneratorTable, scriptDefinition, jsonContent);
 			} else {
@@ -656,37 +659,16 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		threadError = true;
 	}
 	/**
-	 * Generate a filename to write the script to.
-	 * 
-	 * @param filepathPrefix The prefix to the file path of the file that is to be created e.g. C:/Scripts/
+	 * Generate a suggested filename to write the script to.
+	 *
 	 * @return The filename to prepend a path to write the script to.
 	 * @throws NoScriptDefinitionSelectedException Thrown when we have no config selected to generate the script file with.
 	 */
-	public String generateScriptFileName(String filepathPrefix) throws NoScriptDefinitionSelectedException {
+	public String generateScriptFileName() throws NoScriptDefinitionSelectedException {
 		String configName = getScriptDefinition()
 			.orElseThrow(() -> new NoScriptDefinitionSelectedException("Tried to generate a script with no config selected to generate it with"))
 			.getName();
-		String timestamp = getTimestamp();
-		int version = 0;
-		String filename;
-		do {
-			if (version == 0) {
-				filename = String.format("%s-%s", configName, timestamp);
-			} else {
-				filename = String.format("%s-%s(%s)", configName, timestamp, version);
-			}
-			version += 1;
-		} while (new File(String.format("%s%s", filepathPrefix, filename)).exists());
-		return filename;
-	}
-
-	/**
-	 * Get the current timestamp to put in a filename. (Allows testing).
-	 * 
-	 * @return The timestamp as a string.
-	 */
-	public String getTimestamp() {
-		return DATE_FORMAT.format(new Date());
+		return String.format("%s-%s", configName, DATE_FORMAT.format(new Date()));
 	}
 
 	/**
@@ -703,32 +685,30 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @throws NoScriptDefinitionSelectedException when script definition has not been selected
 	 * @throws ScriptDefinitionNotMatched when the script definition used to generate data file does not match with the one used to load it
 	 */
-	public void loadParameterValues(String fileName) throws NoScriptDefinitionSelectedException, ScriptDefinitionNotMatched, UnsupportedOperationException {
+	public void loadParameterValues(Path fileName) throws NoScriptDefinitionSelectedException, ScriptDefinitionNotMatched, UnsupportedOperationException {
 		ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException("No Configuration Selected"));
-		String currentDefinitionPath = preferenceSupplier.scriptGeneratorScriptDefinitionFolders() + scriptDefinition.getName() + PYTHON_EXT;
-		List<Map<JavaActionParameter, String>> list = scriptGenFileHandler.getParameterValues(fileName, currentDefinitionPath, getActionParameters());
+		List<Map<JavaActionParameter, String>> list = scriptGenFileHandler.getParameterValues(fileName, getScriptDefinitionPath(scriptDefinition), getActionParameters());
 		scriptGeneratorTable.addMultipleActions(list);
 	}
 	
 	/**
 	 * Save parameter values to a file.
 	 * 
-	 * @param fileName file name to save data file as
+	 * @param filePath full path to save the file to
 	 * @throws ExecutionException 
 	 * @throws InterruptedException 
 	 */
-	public void saveParameters(String fileName) throws NoScriptDefinitionSelectedException {
+	public void saveParameters(String filePath) throws NoScriptDefinitionSelectedException {
 		ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException("No Configuration Selected"));
 		
 		try {
-			// append file path prefix and extension if not present
-			if (!fileName.contains(JSON_EXT)) {
-				fileName = preferenceSupplier.scriptGenerationFolder() + fileName + JSON_EXT;
+			if (!filePath.endsWith(JSON_EXT)) {
+				//Strip out other any pre-existing file extension and add JSON extension
+				filePath = filePath.substring(0, filePath.lastIndexOf('.')) + JSON_EXT;
 			}
-			scriptGenFileHandler.saveParameters(this.scriptGeneratorTable.getActions(), preferenceSupplier.scriptGeneratorScriptDefinitionFolders() + scriptDefinition.getName() + PYTHON_EXT,
-					fileName);
+			scriptGenFileHandler.saveParameters(scriptGeneratorTable.getActions(), getScriptDefinitionPath(scriptDefinition), filePath);
 		} catch (InterruptedException | ExecutionException e) {
 			registerThreadError(e);
 		}

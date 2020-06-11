@@ -27,6 +27,12 @@ import org.eclipse.wb.swt.SWTResourceManager;
  * Contains standard colours used to display the status of PVs and blocks.
  */
 public final class PvStateColour {
+    
+    /**
+     * Private constructor for utility class.
+     */
+    private PvStateColour() {
+    }
 
     /**
      * The colour white.

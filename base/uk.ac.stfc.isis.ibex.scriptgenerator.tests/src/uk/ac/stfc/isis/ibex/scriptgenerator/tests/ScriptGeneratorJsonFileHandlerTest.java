@@ -1,6 +1,8 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -27,15 +29,15 @@ public class ScriptGeneratorJsonFileHandlerTest {
 	String dateAndTime = "20/03/2010 00:00";
 	PreferenceSupplier prefSupplier = mock(PreferenceSupplier.class);
 	public ScriptGeneratorJsonFileHandler fileHandler = new ScriptGeneratorJsonFileHandler();
-	String scriptDefName = "scriptDefTest.py";
-	String JsonFileName =  "jsonFileTest.json";
+	Path scriptDefName = Path.of("scriptDefTest.py");
+	Path JsonFileName =  Path.of("jsonFileTest.json");
 	final String scriptDefContent = "from genie_python.genie_script_generator import ScriptDefinition";
 	
 	final String actualJsonContent = String.format("{\r\n" + 
 			"  \"version_JSON_format\": \"1\",\r\n" + 
 			"  \"script_generator_version\": \"\",\r\n" + 
 			"  \"date_and_time\": \"%s\",\r\n" + 
-			"  \"script_definition_file_path\": \"C:/ScriptDefinitions/imat.py\",\r\n" + 
+			"  \"script_definition_file_path\": \"C:\\\\ScriptDefinitions\\\\imat.py\",\r\n" + 
 			"  \"script_definition_file_git_hash\": \"\",\r\n" + 
 			"  \"genie_python_version\": \"%s\",\r\n" + 
 			"  \"script_definition_content\": \"%s\",\r\n" + 
@@ -85,10 +87,12 @@ public class ScriptGeneratorJsonFileHandlerTest {
 	
 		try {
 			String scriptDeftwo = "this is script definition";
+			Path jsonFile = Path.of("jsonfile");
+			Path pythonFile = Path.of("pythonFile");
 			ScriptGeneratorJsonFileHandler fileHandlerSpy = Mockito.spy(fileHandler);
-			Mockito.doReturn(actualJsonContent).when(fileHandlerSpy).readFileContent("jsonFile");
-			Mockito.doReturn(scriptDeftwo).when(fileHandlerSpy).readFileContent("pythonFile");
-			fileHandlerSpy.getParameterValues("jsonFile", "pythonFile", new ArrayList<JavaActionParameter>());
+			Mockito.doReturn(actualJsonContent).when(fileHandlerSpy).readFileContent(jsonFile);
+			Mockito.doReturn(scriptDeftwo).when(fileHandlerSpy).readFileContent(pythonFile);
+			fileHandlerSpy.getParameterValues(jsonFile, pythonFile, new ArrayList<JavaActionParameter>());
 		} catch (UnsupportedOperationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -148,7 +152,7 @@ public class ScriptGeneratorJsonFileHandlerTest {
 		List<ScriptGeneratorAction> actions = new ArrayList<ScriptGeneratorAction>();
 		actions.add(new ScriptGeneratorAction(actionOne));
 	
-		String actual = fileHandlerTemp.createJsonString(actions, scriptDefContent, "C:/ScriptDefinitions/imat.py");
+		String actual = fileHandlerTemp.createJsonString(actions, scriptDefContent, Paths.get("C:/ScriptDefinitions/imat.py"));
 		// remove carriage return and test
 		assertEquals(actualJsonContent.replace("\r", ""), actual);
 	}

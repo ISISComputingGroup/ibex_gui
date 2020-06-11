@@ -2,6 +2,7 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import java.net.URL;
 import java.time.Duration;
+import java.nio.file.Paths;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -216,10 +217,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			DISPLAY.asyncExec(() -> {
 				scriptGeneratorModel.getLastGeneratedScript().ifPresentOrElse(
 						generatedScript -> {
-							SaveScriptGeneratorFileMessageDialog.openInformation(Display.getDefault().getActiveShell(),
-									"Script Generated", "",
-									scriptGeneratorModel.getScriptFilepathPrefix(),
-									scriptFilename, generatedScript, scriptGeneratorModel);
+							(new SaveScriptGeneratorFileMessageDialog(Display.getDefault().getActiveShell(), "Script Generated", scriptFilename, 
+									scriptGeneratorModel.getDefaultScriptDirectory(), generatedScript, scriptGeneratorModel)).open();
 						},
 						() -> {
 							MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
@@ -864,7 +863,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		// filename will be null if user has clicked cancel button
 		if (selectedFile.isPresent()) {
 			try {
-				scriptGeneratorModel.loadParameterValues(selectedFile.get());
+				scriptGeneratorModel.loadParameterValues(Paths.get(selectedFile.get()));
 			} catch (NoScriptDefinitionSelectedException e) {
 				LOG.error(e);
 				MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 

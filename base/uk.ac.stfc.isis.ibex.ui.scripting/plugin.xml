@@ -53,12 +53,22 @@
       </command>
     </extension>
       
-    <extension point="org.eclipse.ui.menus">
-      <menuContribution locationURI="toolbar:org.eclipse.ui.console.ConsoleView">
+    <extension
+          point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.console.ConsoleView">
       <dynamic
             class="uk.ac.stfc.isis.ibex.ui.scripting.ConsoleLengthMonitor"
             id="uk.ac.stfc.isis.ibex.ui.scripting.clearConsole">
-      </dynamic> 
+      </dynamic>
+ 		
       </menuContribution>
+    </extension>
+    <extension
+          point="org.eclipse.ui.console.consoleFactories">
+       <consoleFactory
+             class="uk.ac.stfc.isis.ibex.ui.scripting.GeniePythonConsoleFactory"
+             label="PyDevConsoleNoDialog">
+       </consoleFactory>
     </extension>
 </plugin>
