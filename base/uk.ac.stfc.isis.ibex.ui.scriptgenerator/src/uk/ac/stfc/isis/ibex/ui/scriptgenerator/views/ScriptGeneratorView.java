@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -27,6 +28,7 @@ import javax.annotation.PostConstruct;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -46,6 +48,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
+import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
  * Provides the UI to control the script generator.
@@ -288,18 +291,16 @@ public class ScriptGeneratorView {
 			    // Make buttons to move an action up and down the list
 		        Button btnMoveActionUp = createMoveRowButton(moveComposite, "move_up.png", "up");
 		        btnMoveActionUp.addListener(SWT.Selection, e ->	{
-		        	scriptGeneratorViewModel.moveActionUp(table.selectedRows());
-		        	if (table.getSelectionIndices().length == 1) {
-		        		table.setSelectionIndex(Math.max(0, table.getSelectionIndex() - 1));
-		        	}
+		        	List<ScriptGeneratorAction> selection = table.selectedRows();
+		        	scriptGeneratorViewModel.moveActionUp(selection);
+			        table.viewer().setSelection((ISelection) selection);
 		        });
 		        
 		        Button btnMoveActionDown = createMoveRowButton(moveComposite, "move_down.png", "down");
 		        btnMoveActionDown.addListener(SWT.Selection, e -> {
-		        	scriptGeneratorViewModel.moveActionDown(table.selectedRows());
-		        	if (table.getSelectionIndices().length == 1) {
-		        		table.setSelectionIndex(Math.min(table.getSelectionIndex() + 1, scriptGeneratorViewModel.getActions().size()));
-		        	}
+		        	List<ScriptGeneratorAction> selection = table.selectedRows();
+		        	scriptGeneratorViewModel.moveActionDown(selection);
+		        	table.viewer().setSelection((ISelection) selection);
 		        });
 		        
 		        // Composite for laying out new/delete/duplicate action buttons

@@ -168,19 +168,24 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	@Override
 	public void setRows(Collection<ScriptGeneratorAction> rows) {
 		if (!viewer.getTable().isDisposed()) {
-			int[] focusRow = viewer.getTable().getSelectionIndices();
+			int focusRow = viewer.getTable().getSelectionIndex();
+			ScriptGeneratorAction previousSelection = firstSelectedRow();
 			int focusColumn = 0;
 			
 			if (shiftCellFocusToNewlyAddedRow) {
-				focusRow = new int[]{viewer.getTable().getSelectionIndex() + 1};
-				shiftCellFocusToNewlyAddedRow = false;
-			} else if (focusRow.length > 0) {
+				focusRow = viewer.getTable().getSelectionIndex() + 1;
+			} else if (focusRow != -1) {
 				focusColumn = viewer.getColumnViewerEditor().getFocusCell().getColumnIndex();
 			}
 			
 			viewer.setInput(new WritableList<ScriptGeneratorAction>(rows, null));
-			if (focusRow.length == 1) {
-				setCellFocus(focusRow[0], focusColumn);
+			
+			if (viewer.getTable().getSelectionIndices().length == 1) {
+				// If the action on the specified row has changed then don't return focus to it
+				if (previousSelection.equals((ScriptGeneratorAction) viewer.getElementAt(focusRow)) || shiftCellFocusToNewlyAddedRow) {
+					setCellFocus(focusRow, focusColumn);
+					shiftCellFocusToNewlyAddedRow = false;
+				}
 			}
 		}
 	} 
