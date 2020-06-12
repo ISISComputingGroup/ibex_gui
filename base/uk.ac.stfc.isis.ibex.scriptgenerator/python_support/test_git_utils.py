@@ -1,6 +1,5 @@
 import unittest
 from mock import patch
-import git_utils
 from git_utils import DefinitionsRepository
 
 from mock import Mock
@@ -76,7 +75,7 @@ class DefinitionsRepositoryTests(unittest.TestCase):
         with patch.object(self.definitions_repo, "_repo_already_exists", return_value=True):
             origin_instance = mock_repo.return_value.remotes['origin']
 
-            self.definitions_repo.pull_from_origin(mock_repo.return_value)
+            self.definitions_repo._pull_from_origin(mock_repo.return_value)
             origin_instance.pull.assert_called()
 
     @patch("git_utils.Repo")
@@ -85,6 +84,6 @@ class DefinitionsRepositoryTests(unittest.TestCase):
             repo_instance = mock_repo.return_value
             repo_instance.remotes['origin'].pull.side_effect = GitCommandError(command='command', status='status')
 
-            self.definitions_repo.pull_from_origin(repo_instance)
+            self.definitions_repo._pull_from_origin(repo_instance)
 
             repo_instance.git.merge.assert_called_with(abort=True)

@@ -34,8 +34,6 @@ class DefinitionsRepository:
         except (NoSuchPathError, InvalidGitRepositoryError):
             pass
 
-        print(definitions_repo)
-
         if definitions_repo is not None and definitions_repo.remotes['origin'].url == self.remote_url:
             repo_exists = True
         else:
@@ -54,24 +52,24 @@ class DefinitionsRepository:
 
         self.repo = Repo(self.path)
 
-        self.pull_from_origin(Repo(self.path))
+        self._pull_from_origin(Repo(self.path))
 
-    def pull_from_origin(self, repo: Repo):
+    def _pull_from_origin(self, repo: Repo):
         """
         If the supplied path is a valid script defintions repository, attempt to pull from origin
+
+        Parameters:
+            repo: git repo object representing the script definitions repository
         """
-        if self._repo_already_exists():
-            #repo = Repo(self.path)
+        origin = repo.remotes['origin']
 
-            origin = repo.remotes['origin']
+        try:
+            origin.pull()
+        except GitCommandError:
+            self._append_error("Local repo contains unpushed changes, cannot pull from remote")
 
-            try:
-                origin.pull()
-            except GitCommandError:
-                self._append_error("Local repo contains unpushed changes, cannot pull from remote")
-
-                # Run git merge --abort to undo changes
-                repo.git.merge(abort=True)
+            # Run git merge --abort to undo changes
+            repo.git.merge(abort=True)
 
     def clone_repo_from_bundle(self) -> Repo:
         """
@@ -110,7 +108,7 @@ class DefinitionsRepository:
             os.makedirs(self.path, exist_ok=True)
 
         if len(os.listdir(self.path)) > 0:
-            self._append_error("Supplied directory {} not empty, cannot clone".format(path))
+            self._append_error("Supplied directory {} not empty, cannot clone".format(self.path))
         else:
             try:
                 self.git.clone(self.remote_url, self.path)
