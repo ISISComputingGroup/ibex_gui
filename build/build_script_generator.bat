@@ -32,7 +32,7 @@ set definitions_temp_directory=%~dp0..\base\uk.ac.stfc.isis.ibex.scriptgenerator
 git clone https://github.com/ISISComputingGroup/ScriptGeneratorConfigs.git %definitions_temp_directory%
 cd %definitions_temp_directory%
 
-git bundle create ScriptDefinitions_%BUILD_NUMBER%.bundle --all
+git bundle create ScriptDefinitions_repo.bundle --all
 if %errorlevel% neq 0 exit /b %errorlevel%
 cd ..
 robocopy "ScriptDefinitions" "." "ScriptDefinitions_%BUILD_NUMBER%.bundle"
