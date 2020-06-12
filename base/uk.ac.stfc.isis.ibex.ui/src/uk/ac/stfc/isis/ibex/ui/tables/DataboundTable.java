@@ -75,7 +75,7 @@ public abstract class DataboundTable<TRow> extends Composite {
     private ObservableListContentProvider<TRow> contentProvider = new ObservableListContentProvider<TRow>();
 
     /*A listener for whenever the contents of the table are sorted.*/
-    private Optional<Runnable> sortAction;
+    private Optional<Runnable> sortAction = Optional.empty();
 
     /**
      * Instantiates a new databound table.

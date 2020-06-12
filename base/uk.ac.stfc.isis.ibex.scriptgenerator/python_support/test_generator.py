@@ -9,6 +9,13 @@ from pprint import pprint
 
 class TestGenerator(unittest.TestCase):
 
+    def _get_estimates_for_single_action(self, scriptDefinition):
+        wrapper = ScriptDefinitionWrapper("test", scriptDefinition)
+        estimates: Dict[int, int] = self.generator.estimateTime([
+            {"param1": "param1Val", "param2": "param2Val"}
+        ], wrapper)
+        return estimates
+
     def setUp(self):
         self.generator: Generator = Generator(search_folders=["test_script_definitions"])
 
@@ -51,6 +58,56 @@ class TestGenerator(unittest.TestCase):
         ], mock_script_definition)
         # Act and Assert
         assert_that(validityCheck, equal_to({1: "invalid"}), "2 actions, one invalid with reason")
+
+    def test_GIVEN_valid_parameters_and_int_estimate_WHEN_estimate_time_THEN_return_estimate(self):
+        # Arrange
+        mock_script_definition: ScriptDefinition = MagicMock()
+        mock_script_definition.parameters_valid.return_value = None
+        mock_script_definition.estimate_time.return_value = 2
+        estimates = self._get_estimates_for_single_action(mock_script_definition)
+
+        # Act and Assert
+        assert_that(estimates, equal_to({0: 2}))
+
+    def test_GIVEN_valid_parameters_and_float_estimate_WHEN_estimate_time_THEN_round_estimate_and_return_it(self):
+        # Arrange
+        mock_script_definition: ScriptDefinition = MagicMock()
+        mock_script_definition.parameters_valid.return_value = None
+        mock_script_definition.estimate_time.return_value = 2.0
+        estimates = self._get_estimates_for_single_action(mock_script_definition)
+
+        # Act and Assert
+        assert_that(estimates, equal_to({0: 2}))
+
+    def test_GIVEN_valid_parameters_and_string_estimate_WHEN_estimate_time_THEN_return_empty_dict(self):
+        # Arrange
+        mock_script_definition: ScriptDefinition = MagicMock()
+        mock_script_definition.parameters_valid.return_value = None
+        mock_script_definition.estimate_time.return_value = "wrong type"
+        estimates = self._get_estimates_for_single_action(mock_script_definition)
+
+        # Act and Assert
+        assert_that(estimates, equal_to({}))
+
+    def test_GIVEN_valid_parameters_and_no_estimate_WHEN_estimate_time_THEN_return_empty_dict(self):
+        # Arrange
+        mock_script_definition: ScriptDefinition = MagicMock()
+        mock_script_definition.parameters_valid.return_value = None
+        mock_script_definition.estimate_time.return_value = None
+        estimates = self._get_estimates_for_single_action(mock_script_definition)
+
+        # Act and Assert
+        assert_that(estimates, equal_to({}))
+
+    def test_GIVEN_invalid_parameters_and_int_estimate_WHEN_estimate_time_THEN_return_empty_dict(self):
+        # Arrange
+        mock_script_definition: ScriptDefinition = MagicMock()
+        mock_script_definition.parameters_valid.return_value = "some error"
+        mock_script_definition.estimate_time.return_value = 2
+        estimates = self._get_estimates_for_single_action(mock_script_definition)
+
+        # Act and Assert
+        assert_that(estimates, equal_to({}))
     
     def test_GIVEN_valid_script_definition_WHEN_generate_THEN_new_script_is_as_expected(self):
         # Arrange
@@ -79,6 +136,10 @@ class DoRun(ScriptDefinition):
         else:
             return None
 
+    @cast_parameters_to(param1=float, param2=float)
+    def estimate_time(self, param1=0.0, param2=0.0):
+        return param1 * param2
+
     def get_help(self):
         return "Help"
 
@@ -88,11 +149,14 @@ def runscript():
     script_definition = DoRun()
     script_definition.run(**{'param1': '1', 'param2': '2'})
     script_definition.run(**{'param1': '1', 'param2': '2'})
-    """.split("\n")
+    
+
+
+value = b'789c030000000001'""".split("\n")
         params = [{"param1": "1", "param2": "2"}, {"param1": "1", "param2": "2"}]
         script_definition: ScriptDefinitionWrapper = ScriptDefinitionWrapper(name="valid_script_definition", script_definition=ValidDoRun())
         # Act
-        generated_script: str = self.generator.generate(params, script_definition)
+        generated_script: str = self.generator.generate(params, "", script_definition)
         # Assert
         self.assertIsNotNone(generated_script, "ScriptDefinitionWrapper is valid, so should not return None")
 
@@ -109,7 +173,7 @@ def runscript():
         params = [{"param1": "invalid", "param2": "2"}, {"param1": "1", "param2": "2"}]
         script_definition: ScriptDefinitionWrapper = ScriptDefinitionWrapper(name="valid_script_definition", script_definition=ValidDoRun())
         # Act
-        generated_script: str = self.generator.generate(params, script_definition)
+        generated_script: str = self.generator.generate(params, "", script_definition)
         # Assert
         self.assertIsNone(generated_script, "ScriptDefinitionWrapper is invalid, so should return None")
 

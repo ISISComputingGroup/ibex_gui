@@ -18,10 +18,11 @@
 
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -64,7 +65,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * Python file extension.
 	 */
-	private static final String PYTHON_EXT = ".py";
+	public static final String PYTHON_EXT = ".py";
 	
 	/**
 	 * The preferences supplier to get the area to generate scripts from.
@@ -128,6 +129,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * all script generator contents are valid or not (bool).
 	 */
 	private static final String PARAM_VALIDITY_PROPERTY = "parameter validity";
+	
+	private static final String TIME_ESTIMATE_PROPERTY = "time estimate";
 
 	/**
 	 * The property to listen for changes in a Generator containing the generated
@@ -203,8 +206,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * The constructor, will create without a script definition loader and without loading
 	 * an initial script definition.
 	 */
-	public ScriptGeneratorSingleton() {
-	    
+	public ScriptGeneratorSingleton() {   
 	}
 
 	/**
@@ -224,6 +226,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		setUp();
 	}
 
+	private Path getScriptDefinitionPath(ScriptDefinitionWrapper scriptDefinition) {
+		return Paths.get(preferenceSupplier.scriptGeneratorScriptDefinitionFolders(), scriptDefinition.getName() + PYTHON_EXT);
+	}
+	
 	/**
 	 * Called by the constructor with three arguments during tests or in the View
 	 * Model constructor to set up the class. Set up listeners for the generator.
@@ -235,9 +241,15 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		// If the validity error message property of the generator is changed update the
 		// validity errors in the scriptGeneratorTable
 		generator.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
-			scriptGeneratorTable.setValidityErrors(convertValidityMessagesToMap(evt.getNewValue()));
+			scriptGeneratorTable.setValidityErrors(convertToMap(evt.getNewValue(), Integer.class, String.class));
 			firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
+        // If the time estimation message property of the generator is changed update the
+        // time estimation in the scriptGeneratorTable
+        generator.addPropertyChangeListener(TIME_ESTIMATE_PROPERTY, evt -> {
+            scriptGeneratorTable.setEstimatedTimes(convertToMap(evt.getNewValue(), Integer.class, Number.class));
+            firePropertyChange(TIME_ESTIMATE_PROPERTY, evt.getOldValue(), evt.getNewValue());
+        });
 		// If the parameter validity property is changed update the models field that
 		// denotes
 		// whether the parameters are valid and notify any listeners
@@ -254,7 +266,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			lastGeneratedScript = (Optional<String>) evt.getNewValue();
 			lastGeneratedScript.ifPresentOrElse(script -> {
 				try {
-					String generatedScriptFilename = generateScriptFileName(getScriptFilepathPrefix());
+					String generatedScriptFilename = generateScriptFileName();
 					firePropertyChange(GENERATED_SCRIPT_FILENAME_PROPERTY, null, generatedScriptFilename);
 				} catch (NoScriptDefinitionSelectedException e) {
 					LOG.error(e);
@@ -269,9 +281,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			setActionParameters(scriptDefinitionLoader.getParameters());
 		});
 		this.scriptGeneratorTable.addPropertyChangeListener(ACTIONS_PROPERTY, evt -> {
-			// The table has changed so update the validity checks
+			// The table has changed so update the validity checks and time estimate
 			try {
 				refreshParameterValidityChecking();
+				refreshTimeEstimation();
 			} catch (NoScriptDefinitionSelectedException e) {
 				LOG.error(e);
 			}
@@ -345,11 +358,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
     }
     
     /**
-     * Get the area to generate scripts to.
+     * Get the default area to generate scripts to.
      * 
-     * @return The directory path to generate scripts to.
+     * @return The default directory path to generate scripts to.
      */
-    public String getScriptFilepathPrefix() {
+    public String getDefaultScriptDirectory() {
     	return preferenceSupplier.scriptGenerationFolder();
     }
     
@@ -371,19 +384,19 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @return The converted messages property.
 	 */
 	@SuppressWarnings("rawtypes")
-	private static Map<Integer, String> convertValidityMessagesToMap(Object validityMessages) {
+	private static <T, S> Map<T, S> convertToMap(Object validityMessages, Class<T> keyClass, Class<S> valueClass) {
 		try {
 			Map mapCastValidityMessages = Map.class.cast(validityMessages);
-			Map<Integer, String> castValidityMessages = new HashMap<>();
+			Map<T, S> castValidityMessages = new HashMap<>();
 			for (Object nonCastEntry : mapCastValidityMessages.entrySet()) {
 				Map.Entry castEntry = Map.Entry.class.cast(nonCastEntry);
-				castValidityMessages.put(Integer.class.cast(castEntry.getKey()),
-						String.class.cast(castEntry.getValue()));
+				castValidityMessages.put(keyClass.cast(castEntry.getKey()),
+						valueClass.cast(castEntry.getValue()));
 			}
 			return castValidityMessages;
 		} catch (ClassCastException e) {
 			LOG.error(e);
-			return new HashMap<Integer, String>();
+			return new HashMap<T, S>();
 		}
 	}
 
@@ -542,6 +555,14 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		}
 		return message;
 	}
+	
+	/**
+	 * Get the estimated time taken for the script.
+	 * @return The estimated time for the script.
+	 */
+	public Optional<Long> getTotalEstimatedTime() {
+	    return scriptGeneratorTable.getTotalEstimatedTime();
+	}
 
 	/**
 	 * Get whether the contents of the script generator are valid or not.
@@ -570,15 +591,36 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			languageSupported = true;
 			threadError = false;
 		} catch (UnsupportedLanguageException e) {
-			firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, languageSupported, false);
+			firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, languageSupported, languageSupported = false);
 			LOG.error(e);
-			languageSupported = false;
 		} catch (InterruptedException | ExecutionException e) {
-			firePropertyChange(THREAD_ERROR_PROPERTY, threadError, true);
-			LOG.error(e);
-			threadError = true;
+			registerThreadError(e);
 		}
 	}
+	
+    /**
+     * Refresh the time estimate of the parameters, or if it fails refresh the
+     * error state of the model to be listened to by the ViewModel.
+     * 
+     * @throws NoScriptDefinitionSelectedException If there is no script definition
+     *                                             selected to refresh checking
+     *                                             against.
+     */
+    public void refreshTimeEstimation() throws NoScriptDefinitionSelectedException {
+        ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
+                .orElseThrow(() -> new NoScriptDefinitionSelectedException(
+                        "Tried to refresh time estimation with no script definition selected"));
+        try {
+            generator.refreshTimeEstimation(scriptGeneratorTable, scriptDefinition);
+            languageSupported = true;
+            threadError = false;
+        } catch (UnsupportedLanguageException e) {
+            firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, languageSupported, languageSupported = false);
+            LOG.error(e);
+        } catch (InterruptedException | ExecutionException e) {
+        	registerThreadError(e);
+        }
+    }
 
 	/**
 	 * Generate a script and save it to file.
@@ -601,54 +643,35 @@ public class ScriptGeneratorSingleton extends ModelObject {
 						"Tried to generate a script with no script definition selected to generate it with"));
 		try {
 			if (areParamsValid()) {
-				String filePath =  preferenceSupplier.scriptGeneratorScriptDefinitionFolders()
-						+ scriptDefinition.getName() + PYTHON_EXT;
+				Path filePath = getScriptDefinitionPath(scriptDefinition);
 				String jsonContent = scriptGenFileHandler.createJsonString(scriptGeneratorTable.getActions(), scriptGenFileHandler.readFileContent(filePath), filePath);
 				generator.refreshGeneratedScript(scriptGeneratorTable, scriptDefinition, jsonContent);
 			} else {
 				throw new InvalidParamsException("Parameters are invalid, cannot generate script");
 			}
 		} catch (InterruptedException | ExecutionException e) {
-			firePropertyChange(THREAD_ERROR_PROPERTY, threadError, true);
-			LOG.error(e);
-			threadError = true;
+			registerThreadError(e);
 		} catch (IOException e) {
 			LOG.error(e);
 		}
 	}
 
+	private void registerThreadError(Exception e) {
+		firePropertyChange(THREAD_ERROR_PROPERTY, threadError, true);
+		LOG.error(e);
+		threadError = true;
+	}
 	/**
-	 * Generate a filename to write the script to.
-	 * 
-	 * @param filepathPrefix The prefix to the file path of the file that is to be created e.g. C:/Scripts/
+	 * Generate a suggested filename to write the script to.
+	 *
 	 * @return The filename to prepend a path to write the script to.
 	 * @throws NoScriptDefinitionSelectedException Thrown when we have no config selected to generate the script file with.
 	 */
-	public String generateScriptFileName(String filepathPrefix) throws NoScriptDefinitionSelectedException {
+	public String generateScriptFileName() throws NoScriptDefinitionSelectedException {
 		String configName = getScriptDefinition()
 			.orElseThrow(() -> new NoScriptDefinitionSelectedException("Tried to generate a script with no config selected to generate it with"))
 			.getName();
-		String timestamp = getTimestamp();
-		int version = 0;
-		String filename;
-		do {
-			if (version == 0) {
-				filename = String.format("%s-%s", configName, timestamp);
-			} else {
-				filename = String.format("%s-%s(%s)", configName, timestamp, version);
-			}
-			version += 1;
-		} while (new File(String.format("%s%s", filepathPrefix, filename)).exists());
-		return filename;
-	}
-
-	/**
-	 * Get the current timestamp to put in a filename. (Allows testing).
-	 * 
-	 * @return The timestamp as a string.
-	 */
-	public String getTimestamp() {
-		return DATE_FORMAT.format(new Date());
+		return String.format("%s-%s", configName, DATE_FORMAT.format(new Date()));
 	}
 
 	/**
@@ -665,38 +688,35 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @throws NoScriptDefinitionSelectedException when script definition has not been selected
 	 * @throws ScriptDefinitionNotMatched when the script definition used to generate data file does not match with the one used to load it
 	 */
-	public void loadParameterValues(String fileName) throws NoScriptDefinitionSelectedException, ScriptDefinitionNotMatched, UnsupportedOperationException {
+	public void loadParameterValues(Path fileName) throws NoScriptDefinitionSelectedException, ScriptDefinitionNotMatched, UnsupportedOperationException {
 		ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException("No Configuration Selected"));
-		String currentDefinitionPath = preferenceSupplier.scriptGeneratorScriptDefinitionFolders() + scriptDefinition.getName() + PYTHON_EXT;
-		List<Map<JavaActionParameter, String>> list = scriptGenFileHandler.getParameterValues(fileName, currentDefinitionPath, getActionParameters());
+		List<Map<JavaActionParameter, String>> list = scriptGenFileHandler.getParameterValues(fileName, getScriptDefinitionPath(scriptDefinition), getActionParameters());
 		scriptGeneratorTable.addMultipleActions(list);
 	}
 	
 	/**
 	 * Save parameter values to a file.
 	 * 
-	 * @param fileName file name to save data file as
+	 * @param filePath full path to save the file to
 	 * @throws ExecutionException 
 	 * @throws InterruptedException 
 	 */
-	public void saveParameters(String fileName) throws NoScriptDefinitionSelectedException {
+	public void saveParameters(String filePath) throws NoScriptDefinitionSelectedException {
 		ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException("No Configuration Selected"));
 		
 		try {
-			// append file path prefix and extension if not present
-			if (!fileName.contains(JSON_EXT)) {
-				fileName = preferenceSupplier.scriptGenerationFolder() + fileName + JSON_EXT;
+			if (!filePath.endsWith(JSON_EXT)) {
+				//Strip out other any pre-existing file extension and add JSON extension
+				filePath = filePath.substring(0, filePath.lastIndexOf('.')) + JSON_EXT;
 			}
-			scriptGenFileHandler.saveParameters(this.scriptGeneratorTable.getActions(), preferenceSupplier.scriptGeneratorScriptDefinitionFolders() + scriptDefinition.getName() + PYTHON_EXT,
-					fileName);
+			scriptGenFileHandler.saveParameters(scriptGeneratorTable.getActions(), getScriptDefinitionPath(scriptDefinition), filePath);
 		} catch (InterruptedException | ExecutionException e) {
-			firePropertyChange(THREAD_ERROR_PROPERTY, threadError, true);
-			LOG.error(e);
-			threadError = true;
+			registerThreadError(e);
 		}
 	}
+	
 	
 	/**
 	 * Get the file writer to use to write scripts to file.

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -222,6 +223,17 @@ public class ActionsTable extends ModelObject {
 		}
 	}
 	
+    /**
+     * Set the estimated time for each action based on the hashmap.
+     * 
+     * @param estimatedTimes The hashmap to set estimated time based on.
+     */
+    public void setEstimatedTimes(Map<Integer, Number> estimatedTimes) {
+        for (int i = 0; i < actions.size(); i++) {
+        	actions.get(i).setEstimatedTime(Optional.ofNullable(estimatedTimes.get(i)));
+        }
+    }
+	
 	/**
 	 * Get strings of validity errors.
 	 * 
@@ -239,6 +251,19 @@ public class ActionsTable extends ModelObject {
 		}
 		return errors;
 	}
+	
+    /**
+     * Get the total estimated time of all actions in the table.
+     * 
+     * @return An Optional containing the total if at least one action has been estimated,
+     *         empty optional otherwise
+     */
+    public Optional<Long> getTotalEstimatedTime() {
+    	
+        List<Number> actualEstimates = actions.stream().map(action -> action.getEstimatedTime()).flatMap(Optional::stream).collect(Collectors.toList());    	  
+        Long total = actualEstimates.stream().map(x -> x.longValue()).reduce(0L, Long::sum);
+        return actualEstimates.size() == 0 ? Optional.empty() : Optional.of(total);
+    }
 
 	/**
 	 * Reload the actions by firing a property change.

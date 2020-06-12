@@ -35,6 +35,13 @@ public abstract class AbstractGenerator extends ModelObject {
 	 */
 	protected static final String PARAM_VALIDITY_PROPERTY = "parameter validity";
 	
+    /**
+     * The property to fire a change of when the time estimate of the script generator content is
+     *  retrieved (bool). This will get caught by the GeneratorContext and dealt with up the chain.
+     * Fire the change with the new value as the retrieved value.
+     */
+	protected static final String TIME_ESTIMATE_PROPERTY = "time estimate";
+	
 	/**
 	 * The property to fire a change of when the generated script is retrieved (String).
 	 * This will get caught by the GeneratorContext and dealt with up the chain.
@@ -72,5 +79,15 @@ public abstract class AbstractGenerator extends ModelObject {
 	 * @throws InterruptedException The call to generate a script was interrupted
 	 */
 	public abstract void refreshValidityErrors(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition) throws InterruptedException, ExecutionException;
+    
+    /**
+     * Refresh the time estimation of the specified actions (Map<Integer,Double>).
+     * 
+     * @param scriptGenContent The contents of the script generator
+     * @param scriptDefinition The instrument script definition
+     * @throws ExecutionException A failure to execute the call to generate a script
+     * @throws InterruptedException The call to generate a script was interrupted
+     */
+    public abstract void refreshTimeEstimation(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition) throws InterruptedException, ExecutionException;
 
 }
