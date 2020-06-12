@@ -20,8 +20,6 @@ class DefinitionsRepository:
         self.bundle_path = bundle_path
         self.git = Git()
 
-        #self.repo = None
-
         self.errors = []
 
     def _repo_already_exists(self) -> bool:
@@ -50,9 +48,11 @@ class DefinitionsRepository:
         if not self._repo_already_exists():
             self._attempt_repo_init()
 
-        self.repo = Repo(self.path)
-
-        self._pull_from_origin(Repo(self.path))
+        try:
+            repo = Repo(self.path)
+            self._pull_from_origin(repo)
+        except (NoSuchPathError, GitCommandError) as err:
+            self._append_error("Could not pull from origin, error was {}".format(err))
 
     def _pull_from_origin(self, repo: Repo):
         """
@@ -75,11 +75,6 @@ class DefinitionsRepository:
         """
         Unbundles the repository supplied with the release, sets remote URL to upstream
 
-        Parameters:
-            bundle_path: Location of the git bundle containing the script defs repo
-            new_repo_path: Where to initialise the script definitions repository
-            origin_url: The URL pointing to the upstream repository
-
         Returns:
             script_definitions_repo: The newly cloned repository
         """
@@ -88,9 +83,12 @@ class DefinitionsRepository:
         except GitCommandError:
             self._append_error("Error cloning repository from bundle")
 
-        script_definitions_repo = Repo(self.path)
-        script_definitions_repo.delete_remote('origin')
-        script_definitions_repo.create_remote('origin', self.remote_url)
+        try:
+            script_definitions_repo = Repo(self.path)
+            script_definitions_repo.delete_remote('origin')
+            script_definitions_repo.create_remote('origin', self.remote_url)
+        except (NoSuchPathError, GitCommandError) as err:
+            self._append_error("Cloning new repository seems to have failed with error: {}".format(err))
 
         return script_definitions_repo
 
