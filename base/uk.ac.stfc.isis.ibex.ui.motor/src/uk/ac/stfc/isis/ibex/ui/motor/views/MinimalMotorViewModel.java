@@ -56,8 +56,8 @@ public class MinimalMotorViewModel extends ModelObject {
     private static final Font ENABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.BOLD);
     private static final Font DISABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.ITALIC);
     private static final Color NOPALETTECOLOR = SWTResourceManager.getColor(200, 200, 200);
-    private Motor motor;
-
+    private Motor motor;    
+    private String drift;
     private String value;
     private String setpoint;
     private String lowLimit;
@@ -301,6 +301,7 @@ public class MinimalMotorViewModel extends ModelObject {
     private void refreshLabels() {
     	setSetpoint(formatForMotorDisplay("SP", motor.getSetpoint()));
         setValue(formatForMotorDisplay("Val", motor.getValue()));
+        setDrift(formatForMotorDisplay("Drift", motor.getValue()));
         
         setLowLimit(formatForMotorDisplay("Lo", motor.getLowerLimit()));
         setHighLimit(formatForMotorDisplay("Hi", motor.getUpperLimit()));
@@ -354,7 +355,8 @@ public class MinimalMotorViewModel extends ModelObject {
 
         motor.addPropertyChangeListener("setpoint", evt -> setSetpoint(formatForMotorDisplay("SP", motor.getSetpoint())));
         motor.addPropertyChangeListener("value", evt -> setValue(formatForMotorDisplay("Val", motor.getValue())));
-        
+        motor.addPropertyChangeListener("drift", evt->setDrift(formatForMotorDisplay("Drift", motor.getDrift())));
+       
         motor.addPropertyChangeListener("lowerLimit", evt -> setLowLimit(formatForMotorDisplay("Lo", motor.getLowerLimit())));
         motor.addPropertyChangeListener("upperLimit", evt -> setHighLimit(formatForMotorDisplay("Hi", motor.getUpperLimit())));
         
@@ -541,5 +543,13 @@ public class MinimalMotorViewModel extends ModelObject {
      */
     public void setEnergised(final Boolean energised) {
     	firePropertyChange("energised", this.energised, this.energised = energised);
+    }
+    
+    public String getDrift() {
+    	return drift;
+    }
+    
+    public void setDrift(final String drift) {
+    	firePropertyChange("drift", this.drift, this.drift = drift);
     }
 }

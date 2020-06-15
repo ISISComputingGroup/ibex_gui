@@ -27,11 +27,13 @@ public class MotorInfoAdvView extends MotorInfoView {
 	private Composite setpointAndReadbackContainer;
 	private Composite limitsContainer;
 	private Composite errorAndOffsetContainer;
+	private Composite driftContainer;
 	
 	private Label highLimit;
 	private Label lowLimit;
 	private Label offset;
 	private Label error;
+	private Label drift;
 
 	private BooleanImageLabel encoderStatus;
 
@@ -73,6 +75,11 @@ public class MotorInfoAdvView extends MotorInfoView {
         createLimits();
         
         createErrorAndOffset();
+        
+        driftContainer = createTwoColumnContainer();
+        drift =  createMotorValueLabel(driftContainer, "Motor and encoder drift");
+        
+        
         
         iconContainer = new Composite(this, SWT.NONE);
         
@@ -126,6 +133,7 @@ public class MotorInfoAdvView extends MotorInfoView {
 		container.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 		return container;
 	}
+	
 
 	private void createErrorAndOffset() {
 		errorAndOffsetContainer = createTwoColumnContainer();
@@ -141,7 +149,7 @@ public class MotorInfoAdvView extends MotorInfoView {
 
 	private void createSetpointAndReadback() {
 		setpointAndReadbackContainer = createTwoColumnContainer();
-        value = createMotorValueLabel(setpointAndReadbackContainer, "The actual position of this motor");
+		value = createMotorValueLabel(setpointAndReadbackContainer, "The actual position of this motor");
         setpoint = createMotorValueLabel(setpointAndReadbackContainer, "The requested position of this motor");
 	}
 
@@ -155,6 +163,9 @@ public class MotorInfoAdvView extends MotorInfoView {
 
         bindingContext.bindValue(WidgetProperties.text().observe(value),
                 BeanProperties.value("value").observe(this.getViewModel()));
+        
+        bindingContext.bindValue(WidgetProperties.text().observe(drift),
+                BeanProperties.value("drift").observe(this.getViewModel()));
         
         bindingContext.bindValue(WidgetProperties.text().observe(lowLimit),
                 BeanProperties.value("lowLimit").observe(this.getViewModel()));
@@ -186,6 +197,9 @@ public class MotorInfoAdvView extends MotorInfoView {
         bindingContext.bindValue(WidgetProperties.background().observe(setpoint),
                 BeanProperties.value("color").observe(this.getViewModel()));
 
+        bindingContext.bindValue(WidgetProperties.background().observe(drift),
+                BeanProperties.value("color").observe(this.getViewModel()));
+        
         bindingContext.bindValue(WidgetProperties.background().observe(this),
                 BeanProperties.value("color").observe(this.getViewModel()));
         
@@ -199,6 +213,9 @@ public class MotorInfoAdvView extends MotorInfoView {
                 BeanProperties.value("color").observe(this.getViewModel()));
         
         bindingContext.bindValue(WidgetProperties.background().observe(iconContainer),
+                BeanProperties.value("color").observe(this.getViewModel()));
+        
+        bindingContext.bindValue(WidgetProperties.background().observe(driftContainer),
                 BeanProperties.value("color").observe(this.getViewModel()));
         
         bindingContext.bindValue(WidgetProperties.background().observe(lowLimit),
