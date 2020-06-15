@@ -35,7 +35,7 @@ cd %definitions_temp_directory%
 git bundle create ScriptDefinitions_repo.bundle --all
 if %errorlevel% neq 0 exit /b %errorlevel%
 cd ..
-robocopy "ScriptDefinitions" "." "ScriptDefinitions_%BUILD_NUMBER%.bundle"
+robocopy "ScriptDefinitions" "." "ScriptDefinitions_repo.bundle"
 popd
 RMDIR /S /Q %definitions_temp_directory%
 
