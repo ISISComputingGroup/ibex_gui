@@ -1,12 +1,15 @@
 import os
+import pathlib
 from git import Repo, Git
 from git.exc import NoSuchPathError, GitCommandError
 
 from git.exc import InvalidGitRepositoryError
 
 DEFAULT_REPO_PATH = "C:\\ScriptDefinitions"
-DEFAULT_BUNDLE_PATH = os.path.join(os.path.abspath(os.getcwd()), "ScriptDefinitions_repo.bundle")
-REMOTE_URL = "https://github.com/ISISComputingGroup/ScriptDefinitions.git"
+REMOTE_URL = "https://github.com/ISISComputingGroup/ScriptGeneratorConfigs.git"
+
+# Repository bundle is placed in python support folder on static script gen build
+DEFAULT_BUNDLE_PATH = os.path.join(pathlib.Path(__file__).parent.absolute(), "ScriptDefinitions_repo.bundle")
 
 
 class DefinitionsRepository:
@@ -36,7 +39,6 @@ class DefinitionsRepository:
             repo_exists = True
         else:
             repo_exists = False
-            self._append_error("Supplied path does not contain a ScriptDefinitions repository, cannot pull")
 
         return repo_exists
 
@@ -50,9 +52,10 @@ class DefinitionsRepository:
 
         try:
             repo = Repo(self.path)
-            self._pull_from_origin(repo)
-        except (NoSuchPathError, GitCommandError) as err:
+        except (NoSuchPathError, GitCommandError, InvalidGitRepositoryError) as err:
             self._append_error("Could not pull from origin, error was {}".format(err))
+        else:
+            self._pull_from_origin(repo)
 
     def _pull_from_origin(self, repo: Repo):
         """
@@ -65,13 +68,13 @@ class DefinitionsRepository:
 
         try:
             origin.pull()
-        except GitCommandError:
+        except (GitCommandError, InvalidGitRepositoryError):
             self._append_error("Local repo contains unpushed changes, cannot pull from remote")
 
             # Run git merge --abort to undo changes
             repo.git.merge(abort=True)
 
-    def clone_repo_from_bundle(self) -> Repo:
+    def clone_repo_from_bundle(self):
         """
         Unbundles the repository supplied with the release, sets remote URL to upstream
 
@@ -80,17 +83,16 @@ class DefinitionsRepository:
         """
         try:
             self.git.clone(self.bundle_path, self.path)
-        except GitCommandError:
-            self._append_error("Error cloning repository from bundle")
+        except GitCommandError as err:
+            self._append_error("Error cloning repository from bundle: {}".format(err))
 
         try:
             script_definitions_repo = Repo(self.path)
             script_definitions_repo.delete_remote('origin')
             script_definitions_repo.create_remote('origin', self.remote_url)
-        except (NoSuchPathError, GitCommandError) as err:
-            self._append_error("Cloning new repository seems to have failed with error: {}".format(err))
-
-        return script_definitions_repo
+        except (NoSuchPathError, GitCommandError, InvalidGitRepositoryError) as err:
+            print(err)
+            self._append_error("Cloning new repository failed with error: {}".format(err))
 
     def _attempt_repo_init(self):
         """
@@ -111,7 +113,7 @@ class DefinitionsRepository:
             try:
                 self.git.clone(self.remote_url, self.path)
             except GitCommandError as err:
-                self._append_error(err)
+                self._append_error(str(err))
                 self.clone_repo_from_bundle()
 
     def _append_error(self, error: str):
