@@ -8,7 +8,7 @@ import inspect
 import argparse
 import os
 import sys
-from git_utils import DefinitionRepository
+from git_utils import DefinitionsRepository
 from glob import iglob
 from jinja2 import Environment, FileSystemLoader, Markup, TemplateNotFound
 from genie_python import utilities
@@ -212,7 +212,6 @@ class Generator(object):
         return os.path.basename(script_definition.script_definition.get_file())
 
 
-
 class ScriptDefinitionsWrapper(object):
     """
     Exposes all ScriptDefinitions which have been found supplied to the constructor.
@@ -283,6 +282,7 @@ class ScriptDefinitionsWrapper(object):
         """
         return True
 
+
 def get_script_definitions(search_folders: List[str] = None) -> Tuple[Dict[AnyStr, ScriptDefinition], Dict[AnyStr, AnyStr]]:
     """
     Dynamically import all the Python modules in the search folders
@@ -297,16 +297,19 @@ def get_script_definitions(search_folders: List[str] = None) -> Tuple[Dict[AnySt
         The second element is also a dictionary with keys as the module name, 
          but with values as the reason they could not be imported.
     """
-    # Need to check that the supplied folder is the correct git repo and pull somehow. Unbundle if they don't have the internet
-    definitions_repository = DefinitionRepository()
+    script_definitions: Dict[AnyStr, ScriptDefinition] = {}
+    script_definition_load_errors: Dict[AnyStr, AnyStr] = {}
 
-    git_errors = definitions_repository.initialise_and_pull()
+    # Attempt to clone/pull the latest version of the definitions repository
+    definitions_repository = DefinitionsRepository()
+    definitions_repository.initialise_and_pull()
+
+    for error_index, git_error in enumerate(definitions_repository.errors):
+        script_definition_load_errors.update({"git error {}".format(error_index): git_error})
 
     if search_folders is None:
         this_file_path = os.path.split(__file__)[0]
         search_folder = [os.path.join(this_file_path, "instruments")]
-    script_definitions: Dict[AnyStr, ScriptDefinition] = {}
-    script_definition_load_errors: Dict[AnyStr, AnyStr] = {}
     for search_folder in search_folders:
         for filename in iglob("{folder}/*.py".format(folder=search_folder)):
             module_name = os.path.splitext(os.path.basename(filename))[0]
