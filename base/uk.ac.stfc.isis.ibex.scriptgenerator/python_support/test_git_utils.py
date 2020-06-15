@@ -89,14 +89,14 @@ class DefinitionsRepositoryTests(unittest.TestCase):
             repo_instance.git.merge.assert_called_with(abort=True)
 
     @patch("git_utils.Repo")
-    def test_GIVEN_repository_cannot_be_pulled_WHEN_repo_initialised_THEN_error_gets_logged(self, _):
-        with patch.object(self.definitions_repo, "_pull_from_origin") as mock_pull:
-            mock_pull.side_effect = GitCommandError(command="command", status="status")
+    def test_GIVEN_repo_cannot_be_pulled_THEN_error_logged(self, mock_repo):
+        repo_instance = mock_repo.return_value
 
-            with patch.object(self.definitions_repo, "_append_error") as error_handler:
-                with patch.object(self.definitions_repo, "_repo_already_exists", return_value=True):
-                    self.definitions_repo.initialise_and_pull()
-                    error_handler.assert_called()
+        repo_instance.remotes['origin'].pull.side_effect = GitCommandError(command='command', status='status')
+
+        with patch.object(self.definitions_repo, "_append_error") as error_handler:
+            self.definitions_repo._pull_from_origin(repo_instance)
+            error_handler.assert_called()
 
     @patch("git_utils.Repo")
     def test_GIVEN_repository_can_be_pulled_WHEN_repo_initialised_THEN_no_error_gets_logged(self, _):
