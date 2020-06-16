@@ -29,7 +29,7 @@ REM Create a bundle of the latest script defninitions repo, then delete temporar
 pushd %~dp0
 set definitions_temp_directory=%~dp0..\base\uk.ac.stfc.isis.ibex.scriptgenerator\python_support\ScriptDefinitions
 
-git clone https://github.com/ISISComputingGroup/ScriptGeneratorConfigs.git %definitions_temp_directory%
+git clone https://github.com/ISISComputingGroup/ScriptDefinitions.git %definitions_temp_directory%
 cd %definitions_temp_directory%
 
 git bundle create ScriptDefinitions_repo.bundle --all
