@@ -36,7 +36,7 @@ def _add_macros(widget, name, value):
 
 def sort_out_list(pv, widget_name_prefix, macro_prefix, has_type, max):
     value = PVUtil.getStringArray(pv)
-    value = "".join(chr(int(i)) for i in value[:-1])
+    value = "".join(chr(int(i)) for i in value)
     value = zlib.decompress(value.decode("hex"))
     params = json.loads(value)
 
