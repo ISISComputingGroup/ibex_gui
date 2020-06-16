@@ -80,8 +80,9 @@ class DefinitionsRepository:
         except (GitCommandError, InvalidGitRepositoryError):
             self._append_error("Local repo contains unpushed changes, cannot pull from remote")
 
-            # Run git merge --abort to undo changes
-            repo.git.merge(abort=True)
+            if repo.is_dirty():
+                # Run git merge --abort to undo changes
+                repo.git.merge(abort=True)
 
     def clone_repo_from_bundle(self):
         """
