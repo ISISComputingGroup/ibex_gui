@@ -7,7 +7,7 @@ from git.exc import NoSuchPathError, GitCommandError
 from git.exc import InvalidGitRepositoryError
 
 DEFAULT_REPO_PATH = "C:\\ScriptDefinitions"
-REMOTE_URL = "https://github.com/ISISComputingGroup/ScriptGeneratorConfigs.git"
+REMOTE_URL = "https://github.com/ISISComputingGroup/ScriptDefinitions.git"
 OLD_REPOSITORY = "https://github.com/ISISComputingGroup/ScriptGeneratorConfigs.git"
 
 # Repository bundle is placed in python support folder on static script gen build
@@ -34,10 +34,9 @@ class DefinitionsRepository:
         definitions_repo = None
         try:
             definitions_repo = Repo(self.path)
+            origin_url = definitions_repo.remotes["origin"].url
         except (NoSuchPathError, InvalidGitRepositoryError):
             pass
-
-        origin_url = definitions_repo.remotes["origin"].url
 
         if definitions_repo is not None and urlparse(origin_url) == urlparse(self.remote_url):
             repo_exists = True
