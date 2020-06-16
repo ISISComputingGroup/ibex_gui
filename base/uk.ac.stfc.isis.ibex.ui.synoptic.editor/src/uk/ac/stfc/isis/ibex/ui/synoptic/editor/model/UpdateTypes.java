@@ -29,8 +29,14 @@
  */
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.model;
 
+/**
+ * Type of synopic model of the instrument update. 
+ */
 public enum UpdateTypes {
+    /** A component has been copied.*/
     COPY_COMPONENT,
+    /** A component has been moved.*/
     MOVE_COMPONENT,
+    /** A component has been edited.*/
     EDIT_TARGET
 }
