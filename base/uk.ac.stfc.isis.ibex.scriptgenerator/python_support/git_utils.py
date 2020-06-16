@@ -1,5 +1,6 @@
 import os
 import pathlib
+from urllib.parse import urlparse
 from git import Repo, Git
 from git.exc import NoSuchPathError, GitCommandError
 
@@ -38,9 +39,9 @@ class DefinitionsRepository:
 
         origin_url = definitions_repo.remotes["origin"].url
 
-        if definitions_repo is not None and origin_url == self.remote_url:
+        if definitions_repo is not None and urlparse(origin_url) == urlparse(self.remote_url):
             repo_exists = True
-        elif definitions_repo is not None and origin_url == OLD_REPOSITORY:
+        elif definitions_repo is not None and urlparse(origin_url) == urlparse(OLD_REPOSITORY):
             # Repo containing script definitions was renamed, so accept URLs from old repo and change later
             repo_exists = True
         else:
@@ -61,7 +62,7 @@ class DefinitionsRepository:
         except (NoSuchPathError, GitCommandError, InvalidGitRepositoryError) as err:
             self._append_error("Could not pull from origin, error was {}".format(err))
         else:
-            if repo.remotes["origin"].url == OLD_REPOSITORY:
+            if urlparse(repo.remotes["origin"].url) == urlparse(OLD_REPOSITORY):
                 self._change_origin_url(repo)
 
             self._pull_from_origin(repo)

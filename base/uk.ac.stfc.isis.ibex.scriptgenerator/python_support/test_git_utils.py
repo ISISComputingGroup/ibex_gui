@@ -48,7 +48,6 @@ class DefinitionsRepositoryTests(unittest.TestCase):
 
                 mock_origin_change.assert_called()
 
-
     @patch("git_utils.Repo")
     def test_GIVEN_uninitialised_directory_WHEN_repo_cloned_from_bundle_THEN_new_repo_has_correct_remote_URL(self, mock_repo):
         with patch.object(self.definitions_repo, "_change_origin_url") as mock_origin_change:
@@ -117,7 +116,8 @@ class DefinitionsRepositoryTests(unittest.TestCase):
             error_handler.assert_called()
 
     @patch("git_utils.Repo")
-    def test_GIVEN_repository_can_be_pulled_WHEN_repo_initialised_THEN_no_error_gets_logged(self, _):
+    def test_GIVEN_repository_can_be_pulled_WHEN_repo_initialised_THEN_no_error_gets_logged(self, mock_repo):
+        mock_repo.return_value.remotes["origin"].url = TEST_URL
         with patch.object(self.definitions_repo, "_pull_from_origin"):
             with patch.object(self.definitions_repo, "_append_error") as error_handler:
                 with patch.object(self.definitions_repo, "_repo_already_exists", return_value=True):
