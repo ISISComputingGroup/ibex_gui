@@ -32,6 +32,12 @@ public class NewSynopticHandler extends SynopticEditorHandler {
 
 	private static final String TITLE = "New Synoptic";
 	
+	/**
+	 * Run new synoptic from the menu. 
+	 * @param shell shell to open the dialogue in.
+	 * @return nothing
+	 * @throws ExecutionException if there is a error
+	 */
 	@Execute
 	public Object execute(Shell shell) throws ExecutionException {
 		openDialog(shell, new SynopticDescription(), TITLE, true);
