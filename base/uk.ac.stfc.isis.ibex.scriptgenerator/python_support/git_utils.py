@@ -7,6 +7,7 @@ from git.exc import InvalidGitRepositoryError
 
 DEFAULT_REPO_PATH = "C:\\ScriptDefinitions"
 REMOTE_URL = "https://github.com/ISISComputingGroup/ScriptGeneratorConfigs.git"
+OLD_REPOSITORY = "https://github.com/ISISComputingGroup/ScriptGeneratorConfigs.git"
 
 # Repository bundle is placed in python support folder on static script gen build
 DEFAULT_BUNDLE_PATH = os.path.join(pathlib.Path(__file__).parent.absolute(), "ScriptDefinitions_repo.bundle")
@@ -35,7 +36,12 @@ class DefinitionsRepository:
         except (NoSuchPathError, InvalidGitRepositoryError):
             pass
 
-        if definitions_repo is not None and definitions_repo.remotes['origin'].url == self.remote_url:
+        origin_url = definitions_repo.remotes["origin"].url
+
+        if definitions_repo is not None and origin_url == self.remote_url:
+            repo_exists = True
+        elif definitions_repo is not None and origin_url == OLD_REPOSITORY:
+            # Repo containing script definitions was renamed, so accept URLs from old repo and change later
             repo_exists = True
         else:
             repo_exists = False
@@ -55,6 +61,9 @@ class DefinitionsRepository:
         except (NoSuchPathError, GitCommandError, InvalidGitRepositoryError) as err:
             self._append_error("Could not pull from origin, error was {}".format(err))
         else:
+            if repo.remotes["origin"].url == OLD_REPOSITORY:
+                self._change_origin_url(repo)
+
             self._pull_from_origin(repo)
 
     def _pull_from_origin(self, repo: Repo):
@@ -64,7 +73,7 @@ class DefinitionsRepository:
         Parameters:
             repo: git repo object representing the script definitions repository
         """
-        origin = repo.remotes['origin']
+        origin = repo.remotes["origin"]
 
         try:
             origin.pull()
@@ -88,11 +97,22 @@ class DefinitionsRepository:
 
         try:
             script_definitions_repo = Repo(self.path)
-            script_definitions_repo.delete_remote('origin')
-            script_definitions_repo.create_remote('origin', self.remote_url)
+            script_definitions_repo.delete_remote("origin")
+            script_definitions_repo.create_remote("origin", self.remote_url)
         except (NoSuchPathError, GitCommandError, InvalidGitRepositoryError) as err:
-            print(err)
             self._append_error("Cloning new repository failed with error: {}".format(err))
+        else:
+            self._change_origin_url(script_definitions_repo)
+
+    def _change_origin_url(self, repo: Repo):
+        """
+        Changes the origin URL of the supplied repo
+        """
+        try:
+            repo.delete_remote("origin")
+            repo.create_remote("origin", self.remote_url)
+        except (GitCommandError, InvalidGitRepositoryError) as err:
+            self._append_error("Could not change remote origin of repo: {}".format(err))
 
     def _attempt_repo_init(self):
         """
