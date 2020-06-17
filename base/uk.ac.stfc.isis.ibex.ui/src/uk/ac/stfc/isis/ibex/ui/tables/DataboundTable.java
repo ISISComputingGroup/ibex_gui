@@ -150,15 +150,6 @@ public abstract class DataboundTable<TRow> extends Composite {
     public int getSelectionIndex() {
 	return table.getSelectionIndex();
     }
-
-    /**
-     * Gets the selection indices.
-     *
-     * @return the selection indices
-     */
-	public int[] getSelectionIndices() {
-		return table.getSelectionIndices();
-	}
 	
     /**
      * Sets the selection index.
