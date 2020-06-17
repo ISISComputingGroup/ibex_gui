@@ -192,6 +192,8 @@ public final class ComponentIcons {
             	return "lsicorr";
             case DENSITY_METER:
                 return "density_meter";
+            case SPIN_FLIPPER:
+            	return "flipper";
             default:
                 return "cog";
         }
