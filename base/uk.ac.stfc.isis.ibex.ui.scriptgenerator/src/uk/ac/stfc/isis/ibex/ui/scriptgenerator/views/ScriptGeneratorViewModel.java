@@ -860,7 +860,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 */
 	public void loadParameterValues() {
 		Optional<String> selectedFile = openFileDialog(SWT.OPEN);
-		// filename will be null if user has clicked cancel button
 		if (selectedFile.isPresent()) {
 			List<Map<JavaActionParameter, String>> newActions = new ArrayList<Map<JavaActionParameter, String>>();
 			try {
@@ -869,9 +868,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 				LOG.error(e);
 				MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
 						"Cannot generate script. No script definition has been selected");
+				return;
 			} catch (ScriptDefinitionNotMatched | UnsupportedOperationException e) {
 				LOG.error(e);
 				MessageDialog.openError(DISPLAY.getActiveShell(), "Error", e.getMessage());
+				return;
 			}
 			
 			Integer dialogResponse; //-1 for cancel, 0 for append, 1 for replace
