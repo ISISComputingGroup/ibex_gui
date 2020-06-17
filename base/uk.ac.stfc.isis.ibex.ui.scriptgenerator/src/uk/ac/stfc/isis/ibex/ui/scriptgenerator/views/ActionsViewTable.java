@@ -51,6 +51,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
     
 	private final ScriptGeneratorViewModel scriptGeneratorViewModel;
 	private boolean shiftCellFocusToNewlyAddedRow = false;
+	private static final  Integer NON_EDITABLE_COLUMNS = 2;
 	
 	/**
      * Default constructor for the table. Creates all the correct columns.
@@ -104,7 +105,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 					
 					// Add new action if tab is pressed by user in the last cell of the table.
 					if (nextCell.getNeighbor(ViewerCell.BELOW, false) == null 
-					        && (viewer.getTable().getColumnCount() - 1 == currentlyFocusedColumn)) {
+					        && (viewer.getTable().getColumnCount() - NON_EDITABLE_COLUMNS == currentlyFocusedColumn)) {
 					    
                     	scriptGeneratorViewModel.addEmptyAction();
                     	shiftCellFocusToNewlyAddedRow = true;

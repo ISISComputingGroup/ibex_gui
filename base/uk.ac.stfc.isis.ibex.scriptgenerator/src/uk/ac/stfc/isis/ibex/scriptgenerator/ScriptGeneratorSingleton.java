@@ -157,7 +157,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * The time to wait before timing out from trying to connect to the manual.
 	 */
-	private static final int URL_TIMEOUT = 3;
+	private static final int URL_TIMEOUT_MILLISECONDS = 3000;
 
 	/**
 	 * A property to fire a change of when there is an error generating a script.
@@ -311,9 +311,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	    for (String url : preferenceProperty.split(",")) {
 	        try {
 	            URL possibleUrl = new URL(url);
-	            
 	            HttpURLConnection connection = (HttpURLConnection) possibleUrl.openConnection();
-	            connection.setConnectTimeout(URL_TIMEOUT);
+	            connection.setConnectTimeout(URL_TIMEOUT_MILLISECONDS);
 	            connection.setRequestMethod("GET");
 	            connection.connect();
 	            int responseCode = connection.getResponseCode();
