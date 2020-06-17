@@ -678,21 +678,29 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
-	 * Loads parameter values from a file.
+	 * Loads parameter values from a file and return the contents.
 	 * 
 	 * @param fileName name of data file user wants to load
-	 * @param replace if true replace current list of actions, if false just append loaded actions
+	 * @return A list of the parameters that have been loaded
 	 * @throws NoScriptDefinitionSelectedException when script definition has not been selected
 	 * @throws ScriptDefinitionNotMatched when the script definition used to generate data file does not match with the one used to load it
 	 */
-	public void loadParameterValues(Path fileName, boolean replace) throws NoScriptDefinitionSelectedException, ScriptDefinitionNotMatched, UnsupportedOperationException {
+	public List<Map<JavaActionParameter, String>> loadParameterValues(Path fileName) throws NoScriptDefinitionSelectedException, ScriptDefinitionNotMatched, UnsupportedOperationException {
 		ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException("No Configuration Selected"));
-		List<Map<JavaActionParameter, String>> list = scriptGenFileHandler.getParameterValues(fileName, getScriptDefinitionPath(scriptDefinition), getActionParameters());
+		return scriptGenFileHandler.getParameterValues(fileName, getScriptDefinitionPath(scriptDefinition), getActionParameters());
+	}
+
+	/**
+	 * Adds a set of actions to the table.
+	 * @param actionsToAdd a list of actions and their parameters to add
+	 * @param replace if true replace current list of actions, if false just append loaded actions
+	 */
+	public void addActionsToTable(List<Map<JavaActionParameter, String>> actionsToAdd, Boolean replace) {
 		if (replace) {
 			scriptGeneratorTable.clearAction();
 		}
-		scriptGeneratorTable.addMultipleActions(list);
+		scriptGeneratorTable.addMultipleActions(actionsToAdd);
 	}
 	
 	/**

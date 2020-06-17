@@ -5,6 +5,7 @@ import java.time.Duration;
 import java.nio.file.Paths;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -861,6 +862,18 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		Optional<String> selectedFile = openFileDialog(SWT.OPEN);
 		// filename will be null if user has clicked cancel button
 		if (selectedFile.isPresent()) {
+			List<Map<JavaActionParameter, String>> newActions = new ArrayList<Map<JavaActionParameter, String>>();
+			try {
+				newActions = scriptGeneratorModel.loadParameterValues(Paths.get(selectedFile.get()));
+			} catch (NoScriptDefinitionSelectedException e) {
+				LOG.error(e);
+				MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
+						"Cannot generate script. No script definition has been selected");
+			} catch (ScriptDefinitionNotMatched | UnsupportedOperationException e) {
+				LOG.error(e);
+				MessageDialog.openError(DISPLAY.getActiveShell(), "Error", e.getMessage());
+			}
+			
 			Integer dialogResponse; //-1 for cancel, 0 for append, 1 for replace
 			if (scriptGeneratorModel.getActions().isEmpty()) {
 				dialogResponse = 0;
@@ -874,16 +887,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			
 			if (dialogResponse != -1) {
 				Boolean replace = dialogResponse == 1;
-				try {
-					scriptGeneratorModel.loadParameterValues(Paths.get(selectedFile.get()), replace);
-				} catch (NoScriptDefinitionSelectedException e) {
-					LOG.error(e);
-					MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
-							"Cannot generate script. No script definition has been selected");
-				} catch (ScriptDefinitionNotMatched | UnsupportedOperationException e) {
-					LOG.error(e);
-					MessageDialog.openError(DISPLAY.getActiveShell(), "Error", e.getMessage());
-				}
+				scriptGeneratorModel.addActionsToTable(newActions, replace);
 			}
 		}
 	};
