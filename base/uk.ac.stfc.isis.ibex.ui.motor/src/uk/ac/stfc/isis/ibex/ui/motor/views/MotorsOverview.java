@@ -50,7 +50,7 @@ public class MotorsOverview extends Composite {
     private static final Color GREY_COLOUR = SWTResourceManager.getColor(192, 192, 192);
 
     /** Height of table of motors. */
-    public static final int HEIGHT_DIMENSION = 88;
+    public static final int HEIGHT_DIMENSION = 78;
     
     /** Width of table of motors. */
     public static final int WIDTH_DIMENSION = 113;

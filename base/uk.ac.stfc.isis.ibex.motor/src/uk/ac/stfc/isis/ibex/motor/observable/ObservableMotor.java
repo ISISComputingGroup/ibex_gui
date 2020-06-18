@@ -34,7 +34,6 @@ public class ObservableMotor extends Motor {
 	private final MotorVariables variables;
 	private final TextUpdatedObservableAdapter description;
 	private final UpdatedObservableAdapter<Double> setpoint;
-	private final UpdatedObservableAdapter<Double> drift;
 	private final UpdatedObservableAdapter<Double> value;
 	private final UpdatedObservableAdapter<MotorEnable> enabled;
 	private final UpdatedObservableAdapter<Double> lowerLimit;
@@ -77,8 +76,6 @@ public class ObservableMotor extends Motor {
 		
 		usingEncoder = adapt(variables.usingEncoder, "usingEncoder");
 		energised = adapt(variables.energised, "energised");
-		
-		drift = adapt(variables.drift, "drift");
 		
 		withinTolerance = adapt(variables.withinTolerance, "withinTolerance");
 	}
@@ -162,14 +159,7 @@ public class ObservableMotor extends Motor {
 	public Double getError() {
 		return error.getValue();
 	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Double getDrift() {
-		return drift.getValue();
-	}
+
 	/**
 	 * {@inheritDoc}
 	 */

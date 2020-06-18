@@ -94,9 +94,7 @@ public class MotorVariables extends Closer {
 
     /** The setpoint observable. */
 	public final ForwardingObservable<Double> setpoint; 
-	
-	/** Motor and encoder steps drift **/
-	public final ForwardingObservable<Double> drift; 
+
     /** The value of position (readback) observable. */
 	public final ForwardingObservable<Double> value;
 		
@@ -155,7 +153,7 @@ public class MotorVariables extends Closer {
 
         ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
 		
-        description = obsFactory.getSwitchableObservable( new StringChannel(), fullAddress.endWithField("DESC"));
+        description = obsFactory.getSwitchableObservable(new StringChannel(), fullAddress.endWithField("DESC"));
         enable = obsFactory.getSwitchableObservable(new EnumChannel<>(MotorEnable.class),
                 fullAddress.toString() + "_able");
 		
@@ -173,6 +171,7 @@ public class MotorVariables extends Closer {
         direction = InstrumentUtils.convert(
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("TDIR")),
                 TO_MOTOR_DIRECTION);
+		
         moving = InstrumentUtils.convert(
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("MOVN")), TO_BOOLEAN);
         atHome = InstrumentUtils.convert(
@@ -183,7 +182,7 @@ public class MotorVariables extends Closer {
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("LLS")), TO_BOOLEAN);
         
         setpoint = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWith("SP"));
-        drift = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.toString()+"_MTRENC_DRIFT");
+ 
         value = obsFactory.getSwitchableObservable(new DoubleChannel(), fullAddress.endWithField("RBV"));
         
         withinTolerance = InstrumentUtils.convert(

@@ -153,11 +153,4 @@ public abstract class Motor extends ModelObject {
 	 * @return whether the motor is within tolerance
 	 */
 	public abstract Boolean getWithinTolerance();
-	
-	/**
-	 * Gets drift between motor and encoder
-	 * 
-	 * @return drift between motor and encoder
-	 */
-	public abstract Double getDrift();
 }

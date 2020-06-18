@@ -136,9 +136,4 @@ public class TestMotor extends Motor {
 		return withinTolerance;
 	}
 
-	@Override
-	public Double getDrift() {
-		return null;
-	}
-
 }
