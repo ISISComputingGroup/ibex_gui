@@ -5,6 +5,7 @@ import java.time.Duration;
 import java.nio.file.Paths;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -58,7 +59,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	
 	private static final Display DISPLAY = Display.getDefault();
 	
-
 	/**
 	 * A dark red for use in the validity column when a row is invalid.
 	 */
@@ -860,17 +860,35 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 */
 	public void loadParameterValues() {
 		Optional<String> selectedFile = openFileDialog(SWT.OPEN);
-		// filename will be null if user has clicked cancel button
 		if (selectedFile.isPresent()) {
+			List<Map<JavaActionParameter, String>> newActions = new ArrayList<Map<JavaActionParameter, String>>();
 			try {
-				scriptGeneratorModel.loadParameterValues(Paths.get(selectedFile.get()));
+				newActions = scriptGeneratorModel.loadParameterValues(Paths.get(selectedFile.get()));
 			} catch (NoScriptDefinitionSelectedException e) {
 				LOG.error(e);
 				MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
 						"Cannot generate script. No script definition has been selected");
+				return;
 			} catch (ScriptDefinitionNotMatched | UnsupportedOperationException e) {
 				LOG.error(e);
 				MessageDialog.openError(DISPLAY.getActiveShell(), "Error", e.getMessage());
+				return;
+			}
+			
+			Integer dialogResponse; //-1 for cancel, 0 for append, 1 for replace
+			if (scriptGeneratorModel.getActions().isEmpty()) {
+				dialogResponse = 0;
+			} else {
+				String[] replaceOrAppend = new String[] {"Append", "Replace"};
+				MessageDialog dialog = new MessageDialog(DISPLAY.getActiveShell(), "Replace or Append", null,
+					    "Would you like to replace the current parameters or append the new parameters?", 
+					    MessageDialog.QUESTION, replaceOrAppend, -1);
+				dialogResponse = dialog.open();
+			}
+			
+			if (dialogResponse != -1) {
+				Boolean replace = dialogResponse == 1;
+				scriptGeneratorModel.addActionsToTable(newActions, replace);
 			}
 		}
 	};

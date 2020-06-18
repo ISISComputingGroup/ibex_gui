@@ -120,7 +120,6 @@ public class ActionsTable extends ModelObject {
 			newList.add(newAction);
 		}
 		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
-
 	}
 
 	/**
