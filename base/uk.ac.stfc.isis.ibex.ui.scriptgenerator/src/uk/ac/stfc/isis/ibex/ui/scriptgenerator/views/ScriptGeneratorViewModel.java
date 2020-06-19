@@ -5,7 +5,6 @@ import java.time.Duration;
 import java.nio.file.Paths;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -177,6 +176,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * The current Save Parameters button in the view
 	 */
 	private Button btnSaveParam;
+	
+	/**
+	 * The currently selected rows
+	 */
+	private boolean hasSelection;
 		
 	/**
 	 * A constructor that sets up the script generator model and 
@@ -887,4 +891,23 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    return scriptGeneratorModel.getUserManualUrl();
 	}
 
+	/**
+	 * Set the selected actions.
+	 * @param selectedRows The selected actions.
+	 */
+	public void setSelected(List<ScriptGeneratorAction> selectedRows) {
+		setHasSelection(selectedRows.size() > 0);
+	}
+	
+	private void setHasSelection(boolean hasSelection) {
+		firePropertyChange("hasSelection", this.hasSelection, this.hasSelection = hasSelection);
+	}
+
+	/**
+	 * Get whether a selection has been made.
+	 * @return True if an action has been selected, false otherwise.
+	 */
+	public boolean getHasSelection() {
+		return hasSelection;
+	}
 }
