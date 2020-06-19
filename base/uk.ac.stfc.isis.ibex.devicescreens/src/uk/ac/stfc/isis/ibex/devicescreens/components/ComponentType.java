@@ -180,6 +180,8 @@ public enum ComponentType {
     DENSITY_METER,
     /** waveguide and aperture **/
     WAVEGUIDE_APERTURE;
+	/**Spin flipper.*/
+	SPIN_FLIPPER;
 	
 	private Target target;
 

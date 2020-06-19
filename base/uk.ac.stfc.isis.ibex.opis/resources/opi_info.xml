@@ -1202,7 +1202,7 @@
     <entry>
       <key>LARMOR Spin Flipper</key>
       <value>
-        <type>UNCONFIRMED</type>
+        <type>SPIN_FLIPPER</type>
         <path>SpinFlipper306015.opi</path>
         <description>The OPI for the LARMOR Spin Flipper.</description>
         <macros/>
@@ -1992,7 +1992,7 @@
     <entry>
       <key>Mezei spin flipper</key>
       <value>
-        <type>UNKNOWN</type>
+        <type>SPIN_FLIPPER</type>
         <path>mezflipper.opi</path>
         <description>The OPI for the Mezei flipper.</description>
         <macros>
@@ -2200,9 +2200,9 @@
     <entry>
       <key>Oerlikon Centre-One Pressure Gauge</key>
       <value>
-      	<type>PRESSURE_GAUGE</type>
-      	<path>oercone.opi</path>
-      	<description>The OPI for the Oerlikon Centre-One Pressure Gauge</description>
+        <type>PRESSURE_GAUGE</type>
+        <path>oercone.opi</path>
+        <description>The OPI for the Oerlikon Centre-One Pressure Gauge</description>
         <categories>
           <category>Pressure sensors</category>
         </categories>
@@ -2210,7 +2210,7 @@
           <macro>
             <name>OERCONE</name>
             <description>The OERCONE PV prefix (e.g. OERCONE_01)</description>
-          	<default>OERCONE_01</default>
+            <default>OERCONE_01</default>
           </macro>
         </macros>
       </value>
@@ -2218,9 +2218,9 @@
     <entry>
       <key>Edwards Turbo Instrument Controller</key>
       <value>
-      	<type>PUMP</type>
-      	<path>edwardstic.opi</path>
-      	<description>The OPI for the Edwards Turbo Instrument Controller</description>
+        <type>PUMP</type>
+        <path>edwardstic.opi</path>
+        <description>The OPI for the Edwards Turbo Instrument Controller</description>
         <categories>
           <category>Gas and liquid handling systems</category>
         </categories>
@@ -2228,7 +2228,7 @@
           <macro>
             <name>EDTIC</name>
             <description>The EDTIC PV prefix (e.g. EDTIC_01)</description>
-          	<default>EDTIC_01</default>
+            <default>EDTIC_01</default>
           </macro>
         </macros>
       </value>
@@ -2236,18 +2236,18 @@
     <entry>
       <key>Muon Jaws</key>
       <value>
-      	<type>JAWS</type>
-      	<path>MuonJaws.opi</path>
-      	<description>The OPI for the Muon Jaws</description>
+        <type>JAWS</type>
+        <path>MuonJaws.opi</path>
+        <description>The OPI for the Muon Jaws</description>
         <categories>
-            <category>Jaws and slits</category>
+          <category>Jaws and slits</category>
         </categories>
         <macros>
-            <macro>
-              <name>MUONJAWS</name>
-              <description>The Muon Jaws PV prefix (e.g. MUONJAWS_01)</description>
-              <default>MUONJAWS_01</default>
-            </macro>
+          <macro>
+            <name>MUONJAWS</name>
+            <description>The Muon Jaws PV prefix (e.g. MUONJAWS_01)</description>
+            <default>MUONJAWS_01</default>
+          </macro>
         </macros>
       </value>
     </entry>
@@ -2265,16 +2265,16 @@
             <name>ZFMAGFLD</name>
             <description>The ZFMAGFLD PV prefix (e.g. ZFMAGFLD_01)</description>
             <default>ZFMAGFLD_01</default>
-           </macro>
+          </macro>
         </macros>
       </value>
     </entry>
     <entry>
       <key>ICE Oxford dilution refrigerator</key>
       <value>
-      	<type>DILUTION_FRIDGE</type>
-      	<path>ICE_fridge/icefrdge.opi</path>
-      	<description>The OPI for the ICE Oxford dilution fridge IOC</description>
+        <type>DILUTION_FRIDGE</type>
+        <path>ICE_fridge/icefrdge.opi</path>
+        <description>The OPI for the ICE Oxford dilution fridge IOC</description>
         <categories>
           <category>Cryogenics</category>
         </categories>
@@ -2282,7 +2282,7 @@
           <macro>
             <name>ICEFRDGE</name>
             <description>The ICE diution fridge PV prefix (e.g. ICEFRDGE)</description>
-          	<default>ICEFRDGE_01</default>
+            <default>ICEFRDGE_01</default>
           </macro>
         </macros>
       </value>
@@ -2290,13 +2290,13 @@
     <entry>
       <key>Zero field controller</key>
       <value>
-      	<type>ZERO_FIELD</type>
-      	<path>zero_field_controller/zero_field_controller.opi</path>
-      	<description>OPI for the Muon Zero-field controller</description>
+        <type>ZERO_FIELD</type>
+        <path>zero_field_controller/zero_field_controller.opi</path>
+        <description>OPI for the Muon Zero-field controller</description>
         <categories>
           <category>Magnets</category>
         </categories>
-        <macros />
+        <macros/>
       </value>
     </entry>
     <entry>
@@ -2329,6 +2329,36 @@
             <name>DMA4500M</name>
             <description>The DMA4500M PV prefix (e.g. DMA4500M_01)</description>
             <default>DMA4500M_01</default>
+          </macro>
+        </macros>
+	  </value>
+    </entry>
+	<entry>
+      <key>SANS2D Vacuum System</key>
+      <value>
+      	<type>PRESSURE_GAUGE</type>
+      	<path>sans2d_vacuum_system.opi</path>
+      	<description>OPI for the SANS2D vacuum</description>
+        <categories>
+          <category>Pressure sensors</category>
+        </categories>
+		<macros/>
+      </value>
+    </entry>
+    <entry>
+      <key>CRISP Flipper system</key>
+      <value>
+        <categories>
+          <category>Polarisers and Analysers</category>
+        </categories>
+        <type>SPIN_FLIPPER</type>
+        <path>flipprps.opi</path>
+        <description>The OPI for the CRISP Flipper system</description>
+        <macros>
+          <macro>
+            <name>FLIPPRPS</name>
+            <description>The FLIPPRPS PV prefix (e.g. FLIPPRPS_01)</description>
+            <default>FLIPPRPS_01</default>
           </macro>
         </macros>
       </value>
