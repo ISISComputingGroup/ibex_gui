@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -31,7 +30,6 @@ import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -51,7 +49,6 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
-import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
  * Provides the UI to control the script generator.
@@ -292,18 +289,10 @@ public class ScriptGeneratorView {
 		        
 			    // Make buttons to move an action up and down the list
 		        Button btnMoveActionUp = createMoveRowButton(moveComposite, "move_up.png", "up");
-		        btnMoveActionUp.addListener(SWT.Selection, e ->	{
-		        	List<ScriptGeneratorAction> selection = table.selectedRows();
-		        	scriptGeneratorViewModel.moveActionUp(selection);
-			        table.viewer().setSelection((ISelection) selection);
-		        });
+		        btnMoveActionUp.addListener(SWT.Selection, e ->	scriptGeneratorViewModel.moveActionUp(table.selectedRows()));
 		        
 		        Button btnMoveActionDown = createMoveRowButton(moveComposite, "move_down.png", "down");
-		        btnMoveActionDown.addListener(SWT.Selection, e -> {
-		        	List<ScriptGeneratorAction> selection = table.selectedRows();
-		        	scriptGeneratorViewModel.moveActionDown(selection);
-		        	table.viewer().setSelection((ISelection) selection);
-		        });
+		        btnMoveActionDown.addListener(SWT.Selection, e -> scriptGeneratorViewModel.moveActionDown(table.selectedRows()));
 		        
                 // Composite for the row containing the total estimated run time
                 Composite estimateGrp = new Composite(mainParent, SWT.NONE);
