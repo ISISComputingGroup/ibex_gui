@@ -1,6 +1,7 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.table;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -45,11 +46,11 @@ public class ScriptGeneratorAction extends ModelObject {
 
 	/**
 	 * Default constructor sets each parameter/value pair using input argument.
-	 * @param paremetersMap
+	 * @param parametersMap
 	 * 			The user-set value (string) for the specified ActionParameter.
 	 */
-	public ScriptGeneratorAction(Map<JavaActionParameter, String> paremetersMap) {
-		this.actionParameterValues = paremetersMap;
+	public ScriptGeneratorAction(Map<JavaActionParameter, String> parametersMap) {
+		this.actionParameterValues = parametersMap;
 	}
 	
 	/**
@@ -58,7 +59,7 @@ public class ScriptGeneratorAction extends ModelObject {
 	 * 			The action to copy.
 	 */
 	public ScriptGeneratorAction(ScriptGeneratorAction actionToCopy) {
-		this.actionParameterValues = new HashMap<JavaActionParameter, String>();
+		this.actionParameterValues = new LinkedHashMap<JavaActionParameter, String>();
 		// Add all Parameter/value pairs to the hash map
 		for (Map.Entry<JavaActionParameter, String> entry: actionToCopy.getActionParameterValueMap().entrySet()) {
 			setActionParameterValue(entry.getKey(), entry.getValue());
@@ -105,7 +106,7 @@ public class ScriptGeneratorAction extends ModelObject {
 	 * 			Map of parameter, value pairs.
 	 */
 	public Map<String, String> getActionParameterValueMapAsStrings() {
-		Map<String, String> actionParametersAsString = new HashMap<>();
+		Map<String, String> actionParametersAsString = new LinkedHashMap<>();
 
 		for (Map.Entry<JavaActionParameter, String> actionParam : actionParameterValues.entrySet()) {
 
