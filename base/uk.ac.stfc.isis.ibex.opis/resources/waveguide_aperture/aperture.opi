@@ -55,7 +55,6 @@
     <macros>
       <include_parent_macros>true</include_parent_macros>
       <NAME>Aperture</NAME>
-      <CRATE>2</CRATE>
     </macros>
     <name>Aperture $(NUMBER)</name>
     <rules />
@@ -253,20 +252,7 @@ $(pv_value)</tooltip>
         <name>plate</name>
         <pv_name></pv_name>
         <pv_value />
-        <rules>
-          <rule name="apertureMovement" prop_id="y" out_exp="true">
-            <exp bool_exp="pv0 &gt; 200">
-              <value>0</value>
-            </exp>
-            <exp bool_exp="pv0 &lt; 0">
-              <value>92</value>
-            </exp>
-            <exp bool_exp="1 === 1">
-              <value>92 - (92 * pv0) / 200</value>
-            </exp>
-            <pv trig="true">$(P)MOT:MTR020$(NUMBER).RBV</pv>
-          </rule>
-        </rules>
+        <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
           <height_scalable>true</height_scalable>

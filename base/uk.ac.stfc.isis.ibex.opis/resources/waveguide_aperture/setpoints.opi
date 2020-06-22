@@ -224,7 +224,7 @@ $(pv_value)</tooltip>
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(P)MOT:MTR0$(CRATE)0$(NUMBER).RBV</pv_name>
+      <pv_name></pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -281,7 +281,7 @@ $(pv_value)</tooltip>
       <page_increment>10.0</page_increment>
       <precision>3</precision>
       <precision_from_pv>false</precision_from_pv>
-      <pv_name>$(P)MOT:MTR0$(CRATE)0$(NUMBER).VAL</pv_name>
+      <pv_name></pv_name>
       <pv_value />
       <rules />
       <scale_options>
