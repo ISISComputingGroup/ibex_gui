@@ -176,6 +176,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * The current Save Parameters button in the view
 	 */
 	private Button btnSaveParam;
+	
+	/**
+	 * The currently selected rows
+	 */
+	private boolean hasSelection;
 		
 	/**
 	 * A constructor that sets up the script generator model and 
@@ -284,18 +289,20 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	/**
 	 * Removes action at position index from ActionsTable.
 	 * 
-	 * @param index
-	 * 			the index to delete.
+	 * @param actionsToDelete
+	 * 			the actions to delete.
 	 */
-	protected void deleteAction(int index) {
-		scriptGeneratorModel.deleteAction(index);
+	protected void deleteAction(List<ScriptGeneratorAction> actionsToDelete) {
+		scriptGeneratorModel.deleteAction(actionsToDelete);
 	}
 	
 	/**
-	 * Duplicates action at position index in ActionsTable.
+	 * Duplicates action at position indices in ActionsTable.
 	 * 
-	 * @param index
-	 * 			the index to duplicate.
+	 * @param actionsToDuplicate
+	 * 			The actions to duplicate.
+	 * @param insertionLocation
+	 *          The index in the list to do the insertion.
 	 */
 	protected void duplicateAction(int index) {
 		scriptGeneratorModel.duplicateAction(index);
@@ -321,23 +328,23 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
     
 	/**
-	 * Moves action one row up in table.
+	 * Moves actions one row up in table.
 	 * 
-	 * @param index
-	 * 			the index to move.
+	 * @param actionsToMove
+	 * 			the actions to move.
 	 */
-	protected void moveActionUp(int index) {
-		scriptGeneratorModel.moveActionUp(index);
+	protected void moveActionUp(List<ScriptGeneratorAction> actionsToMove) {
+		scriptGeneratorModel.moveActionUp(actionsToMove);
 	}
 
 	/**
-	 * Moves action one row down in table.
+	 * Moves actions one row down in table.
 	 * 
-	 * @param index
-	 * 			the index to move.
+	 * @param actionsToMove
+	 * 			the actions to move.
 	 */
-	protected void moveActionDown(int index) {
-		scriptGeneratorModel.moveActionDown(index);
+	protected void moveActionDown(List<ScriptGeneratorAction> actionsToMove) {
+		scriptGeneratorModel.moveActionDown(actionsToMove);
 	}
 
 	/**
@@ -912,4 +919,23 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    return scriptGeneratorModel.getUserManualUrl();
 	}
 
+	/**
+	 * Set the selected actions.
+	 * @param selectedRows The selected actions.
+	 */
+	public void setSelected(List<ScriptGeneratorAction> selectedRows) {
+		setHasSelection(selectedRows.size() > 0);
+	}
+	
+	private void setHasSelection(boolean hasSelection) {
+		firePropertyChange("hasSelection", this.hasSelection, this.hasSelection = hasSelection);
+	}
+
+	/**
+	 * Get whether a selection has been made.
+	 * @return True if an action has been selected, false otherwise.
+	 */
+	public boolean getHasSelection() {
+		return hasSelection;
+	}
 }
