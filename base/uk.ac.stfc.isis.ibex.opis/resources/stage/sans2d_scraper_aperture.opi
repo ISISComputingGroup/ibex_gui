@@ -300,8 +300,8 @@
         <width>55</width>
         <wrap_words>true</wrap_words>
         <wuid>30156479:172c2752af5:-794d</wuid>
-        <x>91</x>
-        <y>12</y>
+        <x>108</x>
+        <y>21</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -352,8 +352,8 @@ $(pv_value)</tooltip>
         <width>64</width>
         <wrap_words>false</wrap_words>
         <wuid>30156479:172c2752af5:-794c</wuid>
-        <x>159</x>
-        <y>36</y>
+        <x>180</x>
+        <y>45</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -393,8 +393,8 @@ $(pv_value)</tooltip>
         <width>55</width>
         <wrap_words>true</wrap_words>
         <wuid>30156479:172c2752af5:-794b</wuid>
-        <x>163</x>
-        <y>12</y>
+        <x>180</x>
+        <y>21</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -451,8 +451,8 @@ $(pv_value)</tooltip>
         <widget_type>LED</widget_type>
         <width>25</width>
         <wuid>30156479:172c2752af5:-7949</wuid>
-        <x>237</x>
-        <y>33</y>
+        <x>267</x>
+        <y>45</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -492,8 +492,8 @@ $(pv_value)</tooltip>
         <width>55</width>
         <wrap_words>true</wrap_words>
         <wuid>30156479:172c2752af5:-7948</wuid>
-        <x>222</x>
-        <y>12</y>
+        <x>252</x>
+        <y>21</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -544,8 +544,8 @@ $(pv_value)</tooltip>
         <width>64</width>
         <wrap_words>false</wrap_words>
         <wuid>30156479:172c2752af5:-768c</wuid>
-        <x>91</x>
-        <y>36</y>
+        <x>103</x>
+        <y>45</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -596,8 +596,8 @@ $(pv_value)</tooltip>
         <width>64</width>
         <wrap_words>false</wrap_words>
         <wuid>30156479:172c2752af5:-768d</wuid>
-        <x>12</x>
-        <y>36</y>
+        <x>24</x>
+        <y>45</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">

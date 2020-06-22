@@ -22,7 +22,7 @@
       </value>
     </entry>
     <entry>
-      <key>SANS2D scraper aperture</key>
+      <key>SANS2D Scraper Aperture</key>
       <value>
         <type>MOTION_SET_POINTS</type>
         <path>stage/sans2d_scraper_aperture.opi</path>
