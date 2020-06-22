@@ -179,7 +179,7 @@ public enum ComponentType {
     /** Density meter (e.g. DMA4500M) */
     DENSITY_METER,
     /** waveguide and aperture **/
-    WAVEGUIDE_APERTURE;
+    WAVEGUIDE_APERTURE,
 	/**Spin flipper.*/
 	SPIN_FLIPPER;
 	

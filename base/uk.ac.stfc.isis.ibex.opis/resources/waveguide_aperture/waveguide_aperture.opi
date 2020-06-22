@@ -15,9 +15,10 @@
     <color red="192" green="192" blue="192" />
   </foreground_color>
   <grid_space>6</grid_space>
-  <height>950</height>
+  <height>100</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
+    <PV_ROOT>$(P)FINS_VAC:</PV_ROOT>
   </macros>
   <name>shape_1</name>
   <rules />
@@ -28,225 +29,10 @@
   <show_ruler>true</show_ruler>
   <snap_to_geometry>true</snap_to_geometry>
   <widget_type>Display</widget_type>
-  <width>1500</width>
+  <width>2100</width>
   <wuid>6d5edd67:171feae85f0:-794b</wuid>
   <x>0</x>
   <y>-1</y>
-  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-    <actions hook="false" hook_all="false" />
-    <background_color>
-      <color red="240" green="240" blue="240" />
-    </background_color>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <border_style>0</border_style>
-    <border_width>1</border_width>
-    <enabled>true</enabled>
-    <fc>false</fc>
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-    </font>
-    <foreground_color>
-      <color red="192" green="192" blue="192" />
-    </foreground_color>
-    <height>85</height>
-    <lock_children>true</lock_children>
-    <macros>
-      <include_parent_macros>true</include_parent_macros>
-    </macros>
-    <name>Grouping Container</name>
-    <rules />
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <scripts />
-    <show_scrollbar>false</show_scrollbar>
-    <tooltip></tooltip>
-    <transparent>false</transparent>
-    <visible>true</visible>
-    <widget_type>Grouping Container</widget_type>
-    <width>140</width>
-    <wuid>-3185ce32:17208cb8f6a:-1cf8</wuid>
-    <x>217</x>
-    <y>86</y>
-    <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
-      <actions hook="false" hook_all="false" />
-      <alarm_pulsing>false</alarm_pulsing>
-      <alpha>255</alpha>
-      <anti_alias>true</anti_alias>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <background_color>
-        <color name="ISIS_Gray_1" red="218" green="218" blue="218" />
-      </background_color>
-      <bg_gradient_color>
-        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-      </bg_gradient_color>
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <border_style>1</border_style>
-      <border_width>1</border_width>
-      <enabled>true</enabled>
-      <fg_gradient_color>
-        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-      </fg_gradient_color>
-      <fill_level>0.0</fill_level>
-      <font>
-        <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
-      </font>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <foreground_color>
-        <color name="ISIS_Red" red="255" green="0" blue="0" />
-      </foreground_color>
-      <gradient>false</gradient>
-      <height>85</height>
-      <horizontal_fill>true</horizontal_fill>
-      <line_color>
-        <color name="ISIS_Purple" red="128" green="0" blue="255" />
-      </line_color>
-      <line_style>0</line_style>
-      <line_width>0</line_width>
-      <name>shape_3</name>
-      <pv_name></pv_name>
-      <pv_value />
-      <rules />
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <transparent>false</transparent>
-      <visible>true</visible>
-      <widget_type>Rectangle</widget_type>
-      <width>140</width>
-      <wuid>-3185ce32:17208cb8f6a:-1cf7</wuid>
-      <x>0</x>
-      <y>0</y>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
-      <actions hook="false" hook_all="false" />
-      <alarm_pulsing>false</alarm_pulsing>
-      <alpha>255</alpha>
-      <anti_alias>true</anti_alias>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <background_color>
-        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
-      </background_color>
-      <bg_gradient_color>
-        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-      </bg_gradient_color>
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <border_style>1</border_style>
-      <border_width>1</border_width>
-      <enabled>true</enabled>
-      <fg_gradient_color>
-        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-      </fg_gradient_color>
-      <fill_level>0.0</fill_level>
-      <font>
-        <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
-      </font>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <foreground_color>
-        <color name="ISIS_Red" red="255" green="0" blue="0" />
-      </foreground_color>
-      <gradient>false</gradient>
-      <height>21</height>
-      <horizontal_fill>true</horizontal_fill>
-      <line_color>
-        <color name="ISIS_Purple" red="128" green="0" blue="255" />
-      </line_color>
-      <line_style>0</line_style>
-      <line_width>0</line_width>
-      <name>shape_2</name>
-      <pv_name></pv_name>
-      <pv_value />
-      <rules />
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <transparent>false</transparent>
-      <visible>true</visible>
-      <widget_type>Rectangle</widget_type>
-      <width>140</width>
-      <wuid>-3185ce32:17208cb8f6a:-1cf6</wuid>
-      <x>0</x>
-      <y>14</y>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
-      <actions hook="false" hook_all="false" />
-      <alarm_pulsing>false</alarm_pulsing>
-      <alpha>255</alpha>
-      <anti_alias>true</anti_alias>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <background_color>
-        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
-      </background_color>
-      <bg_gradient_color>
-        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-      </bg_gradient_color>
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <border_style>1</border_style>
-      <border_width>1</border_width>
-      <enabled>true</enabled>
-      <fg_gradient_color>
-        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-      </fg_gradient_color>
-      <fill_level>0.0</fill_level>
-      <font>
-        <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
-      </font>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <foreground_color>
-        <color name="ISIS_Red" red="255" green="0" blue="0" />
-      </foreground_color>
-      <gradient>false</gradient>
-      <height>21</height>
-      <horizontal_fill>true</horizontal_fill>
-      <line_color>
-        <color name="ISIS_Purple" red="128" green="0" blue="255" />
-      </line_color>
-      <line_style>0</line_style>
-      <line_width>0</line_width>
-      <name>shape_1</name>
-      <pv_name></pv_name>
-      <pv_value />
-      <rules />
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <transparent>false</transparent>
-      <visible>true</visible>
-      <widget_type>Rectangle</widget_type>
-      <width>140</width>
-      <wuid>-3185ce32:17208cb8f6a:-1cf5</wuid>
-      <x>0</x>
-      <y>49</y>
-    </widget>
-  </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.tab" version="1.0.0">
     <actions hook="false" hook_all="false" />
     <active_tab>0</active_tab>
@@ -262,7 +48,7 @@ $(pv_value)</tooltip>
     <foreground_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </foreground_color>
-    <height>649</height>
+    <height>650</height>
     <horizontal_tabs>true</horizontal_tabs>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -304,10 +90,10 @@ $(pv_value)</tooltip>
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Tabbed Container</widget_type>
-    <width>1675</width>
+    <width>2000</width>
     <wuid>-3185ce32:17208cb8f6a:-3a7c</wuid>
     <x>0</x>
-    <y>42</y>
+    <y>36</y>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
@@ -326,7 +112,7 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>620</height>
+      <height>621</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -342,9 +128,9 @@ $(pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>1673</width>
+      <width>1998</width>
       <wuid>-3185ce32:17208cb8f6a:-3a7b</wuid>
       <x>1</x>
       <y>1</y>
@@ -575,284 +361,6 @@ $(pv_value)</tooltip>
             <color red="240" green="240" blue="240" />
           </background_color>
           <border_color>
-            <color red="0" green="128" blue="255" />
-          </border_color>
-          <border_style>0</border_style>
-          <border_width>1</border_width>
-          <enabled>true</enabled>
-          <fc>false</fc>
-          <font>
-            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-          </font>
-          <foreground_color>
-            <color red="192" green="192" blue="192" />
-          </foreground_color>
-          <height>20</height>
-          <lock_children>true</lock_children>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-          </macros>
-          <name>Grouping Container_2</name>
-          <rules />
-          <scale_options>
-            <width_scalable>true</width_scalable>
-            <height_scalable>true</height_scalable>
-            <keep_wh_ratio>false</keep_wh_ratio>
-          </scale_options>
-          <scripts />
-          <show_scrollbar>false</show_scrollbar>
-          <tooltip></tooltip>
-          <transparent>false</transparent>
-          <visible>true</visible>
-          <widget_type>Grouping Container</widget_type>
-          <width>91</width>
-          <wuid>1f3b352c:172176c5c2d:-44e3</wuid>
-          <x>318</x>
-          <y>9</y>
-          <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
-            <actions hook="false" hook_all="false" />
-            <alarm_pulsing>false</alarm_pulsing>
-            <alpha>255</alpha>
-            <anti_alias>true</anti_alias>
-            <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-            <background_color>
-              <color name="ISIS_Red" red="255" green="0" blue="0" />
-            </background_color>
-            <bg_gradient_color>
-              <color red="255" green="255" blue="255" />
-            </bg_gradient_color>
-            <border_alarm_sensitive>false</border_alarm_sensitive>
-            <border_color>
-              <color red="0" green="128" blue="255" />
-            </border_color>
-            <border_style>0</border_style>
-            <border_width>1</border_width>
-            <enabled>true</enabled>
-            <fg_gradient_color>
-              <color red="255" green="255" blue="255" />
-            </fg_gradient_color>
-            <fill_level>0.0</fill_level>
-            <font>
-              <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-            </font>
-            <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-            <foreground_color>
-              <color red="255" green="0" blue="0" />
-            </foreground_color>
-            <gradient>false</gradient>
-            <height>20</height>
-            <horizontal_fill>true</horizontal_fill>
-            <line_color>
-              <color red="128" green="0" blue="255" />
-            </line_color>
-            <line_style>0</line_style>
-            <line_width>0</line_width>
-            <name>Rectangle</name>
-            <pv_name></pv_name>
-            <pv_value />
-            <rules />
-            <scale_options>
-              <width_scalable>true</width_scalable>
-              <height_scalable>true</height_scalable>
-              <keep_wh_ratio>false</keep_wh_ratio>
-            </scale_options>
-            <scripts />
-            <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-            <transparent>false</transparent>
-            <visible>true</visible>
-            <widget_type>Rectangle</widget_type>
-            <width>91</width>
-            <wuid>1f3b352c:172176c5c2d:-44e2</wuid>
-            <x>0</x>
-            <y>0</y>
-          </widget>
-          <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-            <actions hook="false" hook_all="false" />
-            <auto_size>false</auto_size>
-            <background_color>
-              <color red="255" green="255" blue="255" />
-            </background_color>
-            <border_color>
-              <color red="0" green="128" blue="255" />
-            </border_color>
-            <border_style>0</border_style>
-            <border_width>1</border_width>
-            <enabled>true</enabled>
-            <font>
-              <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-            </font>
-            <foreground_color>
-              <color red="0" green="0" blue="0" />
-            </foreground_color>
-            <height>20</height>
-            <horizontal_alignment>1</horizontal_alignment>
-            <name>Label</name>
-            <rules />
-            <scale_options>
-              <width_scalable>true</width_scalable>
-              <height_scalable>true</height_scalable>
-              <keep_wh_ratio>false</keep_wh_ratio>
-            </scale_options>
-            <scripts />
-            <text>ON/OFF</text>
-            <tooltip></tooltip>
-            <transparent>true</transparent>
-            <vertical_alignment>1</vertical_alignment>
-            <visible>true</visible>
-            <widget_type>Label</widget_type>
-            <width>80</width>
-            <wrap_words>false</wrap_words>
-            <wuid>1f3b352c:172176c5c2d:-44e1</wuid>
-            <x>6</x>
-            <y>0</y>
-          </widget>
-        </widget>
-        <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-          <actions hook="false" hook_all="false" />
-          <background_color>
-            <color red="240" green="240" blue="240" />
-          </background_color>
-          <border_color>
-            <color red="0" green="128" blue="255" />
-          </border_color>
-          <border_style>0</border_style>
-          <border_width>1</border_width>
-          <enabled>true</enabled>
-          <fc>false</fc>
-          <font>
-            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-          </font>
-          <foreground_color>
-            <color red="192" green="192" blue="192" />
-          </foreground_color>
-          <height>20</height>
-          <lock_children>true</lock_children>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-          </macros>
-          <name>Grouping Container_1</name>
-          <rules />
-          <scale_options>
-            <width_scalable>true</width_scalable>
-            <height_scalable>true</height_scalable>
-            <keep_wh_ratio>false</keep_wh_ratio>
-          </scale_options>
-          <scripts />
-          <show_scrollbar>false</show_scrollbar>
-          <tooltip></tooltip>
-          <transparent>false</transparent>
-          <visible>true</visible>
-          <widget_type>Grouping Container</widget_type>
-          <width>91</width>
-          <wuid>1f3b352c:172176c5c2d:-44b7</wuid>
-          <x>318</x>
-          <y>42</y>
-          <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
-            <actions hook="false" hook_all="false" />
-            <alarm_pulsing>false</alarm_pulsing>
-            <alpha>255</alpha>
-            <anti_alias>true</anti_alias>
-            <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-            <background_color>
-              <color name="ISIS_Green" red="0" green="255" blue="0" />
-            </background_color>
-            <bg_gradient_color>
-              <color red="255" green="255" blue="255" />
-            </bg_gradient_color>
-            <border_alarm_sensitive>false</border_alarm_sensitive>
-            <border_color>
-              <color red="0" green="128" blue="255" />
-            </border_color>
-            <border_style>0</border_style>
-            <border_width>1</border_width>
-            <enabled>true</enabled>
-            <fg_gradient_color>
-              <color red="255" green="255" blue="255" />
-            </fg_gradient_color>
-            <fill_level>0.0</fill_level>
-            <font>
-              <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-            </font>
-            <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-            <foreground_color>
-              <color red="255" green="0" blue="0" />
-            </foreground_color>
-            <gradient>false</gradient>
-            <height>20</height>
-            <horizontal_fill>true</horizontal_fill>
-            <line_color>
-              <color red="128" green="0" blue="255" />
-            </line_color>
-            <line_style>0</line_style>
-            <line_width>0</line_width>
-            <name>Rectangle</name>
-            <pv_name></pv_name>
-            <pv_value />
-            <rules />
-            <scale_options>
-              <width_scalable>true</width_scalable>
-              <height_scalable>true</height_scalable>
-              <keep_wh_ratio>false</keep_wh_ratio>
-            </scale_options>
-            <scripts />
-            <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-            <transparent>false</transparent>
-            <visible>true</visible>
-            <widget_type>Rectangle</widget_type>
-            <width>91</width>
-            <wuid>1f3b352c:172176c5c2d:-44b6</wuid>
-            <x>0</x>
-            <y>0</y>
-          </widget>
-          <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-            <actions hook="false" hook_all="false" />
-            <auto_size>false</auto_size>
-            <background_color>
-              <color red="255" green="255" blue="255" />
-            </background_color>
-            <border_color>
-              <color red="0" green="128" blue="255" />
-            </border_color>
-            <border_style>0</border_style>
-            <border_width>1</border_width>
-            <enabled>true</enabled>
-            <font>
-              <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-            </font>
-            <foreground_color>
-              <color red="0" green="0" blue="0" />
-            </foreground_color>
-            <height>20</height>
-            <horizontal_alignment>1</horizontal_alignment>
-            <name>Label</name>
-            <rules />
-            <scale_options>
-              <width_scalable>true</width_scalable>
-              <height_scalable>true</height_scalable>
-              <keep_wh_ratio>false</keep_wh_ratio>
-            </scale_options>
-            <scripts />
-            <text>ENABLED</text>
-            <tooltip></tooltip>
-            <transparent>true</transparent>
-            <vertical_alignment>1</vertical_alignment>
-            <visible>true</visible>
-            <widget_type>Label</widget_type>
-            <width>80</width>
-            <wrap_words>false</wrap_words>
-            <wuid>1f3b352c:172176c5c2d:-44b5</wuid>
-            <x>6</x>
-            <y>0</y>
-          </widget>
-        </widget>
-        <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-          <actions hook="false" hook_all="false" />
-          <background_color>
-            <color red="240" green="240" blue="240" />
-          </background_color>
-          <border_color>
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </border_color>
           <border_style>13</border_style>
@@ -926,8 +434,8 @@ $(pv_value)</tooltip>
             <widget_type>Combo</widget_type>
             <width>133</width>
             <wuid>1f3b352c:172176c5c2d:-418e</wuid>
-            <x>0</x>
-            <y>-6</y>
+            <x>6</x>
+            <y>6</y>
           </widget>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
@@ -976,6 +484,114 @@ $(pv_value)</tooltip>
           <x>18</x>
           <y>84</y>
         </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <auto_size>false</auto_size>
+          <background_color>
+            <color name="Major" red="255" green="0" blue="0" />
+          </background_color>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+          </font>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <height>25</height>
+          <horizontal_alignment>1</horizontal_alignment>
+          <name>Label_2</name>
+          <rules>
+            <rule name="Text" prop_id="text" out_exp="true">
+              <exp bool_exp="pv0 == &quot;AT VACUUM&quot;">
+                <value>"ON"</value>
+              </exp>
+              <pv trig="true">$(PV_ROOT)GUIDE:STATUS</pv>
+            </rule>
+            <rule name="Color" prop_id="background_color" out_exp="true">
+              <exp bool_exp="pv0 == &quot;AT VACUUM&quot;">
+                <value>ColorFontUtil.getColorFromRGB(0,255,128)</value>
+              </exp>
+              <pv trig="true">$(PV_ROOT)GUIDE:STATUS</pv>
+            </rule>
+          </rules>
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <show_scrollbar>false</show_scrollbar>
+          <text>OFF</text>
+          <tooltip></tooltip>
+          <transparent>false</transparent>
+          <vertical_alignment>1</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Label</widget_type>
+          <width>91</width>
+          <wrap_words>true</wrap_words>
+          <wuid>46c774db:172dc8ce854:-5c02</wuid>
+          <x>318</x>
+          <y>6</y>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <auto_size>false</auto_size>
+          <background_color>
+            <color red="0" green="255" blue="128" />
+          </background_color>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+          </font>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <height>25</height>
+          <horizontal_alignment>1</horizontal_alignment>
+          <name>Label_2</name>
+          <rules>
+            <rule name="Text" prop_id="text" out_exp="true">
+              <exp bool_exp="pv0 == 1">
+                <value>DISABLED</value>
+              </exp>
+              <pv trig="true">$(PV_ROOT)GALIL_INTERLOCK</pv>
+            </rule>
+            <rule name="Color" prop_id="background_color" out_exp="true">
+              <exp bool_exp="pv0 == 1">
+                <value>"Major"</value>
+              </exp>
+              <pv trig="true">(P)$(Q)GALIL_INTERLOCK</pv>
+            </rule>
+          </rules>
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <show_scrollbar>false</show_scrollbar>
+          <text>ENABLED</text>
+          <tooltip></tooltip>
+          <transparent>false</transparent>
+          <vertical_alignment>1</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Label</widget_type>
+          <width>91</width>
+          <wrap_words>true</wrap_words>
+          <wuid>46c774db:172dc8ce854:-5bee</wuid>
+          <x>318</x>
+          <y>39</y>
+        </widget>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -996,7 +612,7 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>620</height>
+      <height>621</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -1012,9 +628,9 @@ $(pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>1673</width>
+      <width>1998</width>
       <wuid>-3185ce32:17208cb8f6a:-3a79</wuid>
       <x>1</x>
       <y>1</y>
@@ -1054,469 +670,10 @@ $(pv_value)</tooltip>
 $(pv_value)</tooltip>
         <visible>true</visible>
         <widget_type>Action Button</widget_type>
-        <width>1657</width>
+        <width>2043</width>
         <wuid>-3185ce32:17208cb8f6a:-c04</wuid>
-        <x>0</x>
-        <y>570</y>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-        <actions hook="false" hook_all="false" />
-        <background_color>
-          <color red="240" green="240" blue="240" />
-        </background_color>
-        <border_color>
-          <color red="0" green="128" blue="255" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <fc>false</fc>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-        </font>
-        <foreground_color>
-          <color red="192" green="192" blue="192" />
-        </foreground_color>
-        <height>20</height>
-        <lock_children>true</lock_children>
-        <macros>
-          <include_parent_macros>true</include_parent_macros>
-        </macros>
-        <name>Grouping Container_1</name>
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <show_scrollbar>false</show_scrollbar>
-        <tooltip></tooltip>
-        <transparent>false</transparent>
-        <visible>true</visible>
-        <widget_type>Grouping Container</widget_type>
-        <width>91</width>
-        <wuid>1f3b352c:172176c5c2d:-539c</wuid>
-        <x>89</x>
-        <y>504</y>
-        <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
-          <actions hook="false" hook_all="false" />
-          <alarm_pulsing>false</alarm_pulsing>
-          <alpha>255</alpha>
-          <anti_alias>true</anti_alias>
-          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-          <background_color>
-            <color name="ISIS_Green" red="0" green="255" blue="0" />
-          </background_color>
-          <bg_gradient_color>
-            <color red="255" green="255" blue="255" />
-          </bg_gradient_color>
-          <border_alarm_sensitive>false</border_alarm_sensitive>
-          <border_color>
-            <color red="0" green="128" blue="255" />
-          </border_color>
-          <border_style>0</border_style>
-          <border_width>1</border_width>
-          <enabled>true</enabled>
-          <fg_gradient_color>
-            <color red="255" green="255" blue="255" />
-          </fg_gradient_color>
-          <fill_level>0.0</fill_level>
-          <font>
-            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-          </font>
-          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-          <foreground_color>
-            <color red="255" green="0" blue="0" />
-          </foreground_color>
-          <gradient>false</gradient>
-          <height>20</height>
-          <horizontal_fill>true</horizontal_fill>
-          <line_color>
-            <color red="128" green="0" blue="255" />
-          </line_color>
-          <line_style>0</line_style>
-          <line_width>0</line_width>
-          <name>Rectangle</name>
-          <pv_name></pv_name>
-          <pv_value />
-          <rules />
-          <scale_options>
-            <width_scalable>true</width_scalable>
-            <height_scalable>true</height_scalable>
-            <keep_wh_ratio>false</keep_wh_ratio>
-          </scale_options>
-          <scripts />
-          <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-          <transparent>false</transparent>
-          <visible>true</visible>
-          <widget_type>Rectangle</widget_type>
-          <width>91</width>
-          <wuid>1f3b352c:172176c5c2d:-539b</wuid>
-          <x>0</x>
-          <y>0</y>
-        </widget>
-        <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-          <actions hook="false" hook_all="false" />
-          <auto_size>false</auto_size>
-          <background_color>
-            <color red="255" green="255" blue="255" />
-          </background_color>
-          <border_color>
-            <color red="0" green="128" blue="255" />
-          </border_color>
-          <border_style>0</border_style>
-          <border_width>1</border_width>
-          <enabled>true</enabled>
-          <font>
-            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-          </font>
-          <foreground_color>
-            <color red="0" green="0" blue="0" />
-          </foreground_color>
-          <height>20</height>
-          <horizontal_alignment>1</horizontal_alignment>
-          <name>Label</name>
-          <rules />
-          <scale_options>
-            <width_scalable>true</width_scalable>
-            <height_scalable>true</height_scalable>
-            <keep_wh_ratio>false</keep_wh_ratio>
-          </scale_options>
-          <scripts />
-          <text>ENABLED</text>
-          <tooltip></tooltip>
-          <transparent>true</transparent>
-          <vertical_alignment>1</vertical_alignment>
-          <visible>true</visible>
-          <widget_type>Label</widget_type>
-          <width>80</width>
-          <wrap_words>false</wrap_words>
-          <wuid>1f3b352c:172176c5c2d:-539a</wuid>
-          <x>6</x>
-          <y>0</y>
-        </widget>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-        <actions hook="false" hook_all="false" />
-        <background_color>
-          <color red="240" green="240" blue="240" />
-        </background_color>
-        <border_color>
-          <color red="0" green="128" blue="255" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <fc>false</fc>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-        </font>
-        <foreground_color>
-          <color red="192" green="192" blue="192" />
-        </foreground_color>
-        <height>20</height>
-        <lock_children>true</lock_children>
-        <macros>
-          <include_parent_macros>true</include_parent_macros>
-        </macros>
-        <name>Grouping Container_2</name>
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <show_scrollbar>false</show_scrollbar>
-        <tooltip></tooltip>
-        <transparent>false</transparent>
-        <visible>true</visible>
-        <widget_type>Grouping Container</widget_type>
-        <width>91</width>
-        <wuid>1f3b352c:172176c5c2d:-5399</wuid>
-        <x>89</x>
-        <y>474</y>
-        <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
-          <actions hook="false" hook_all="false" />
-          <alarm_pulsing>false</alarm_pulsing>
-          <alpha>255</alpha>
-          <anti_alias>true</anti_alias>
-          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-          <background_color>
-            <color name="ISIS_Red" red="255" green="0" blue="0" />
-          </background_color>
-          <bg_gradient_color>
-            <color red="255" green="255" blue="255" />
-          </bg_gradient_color>
-          <border_alarm_sensitive>false</border_alarm_sensitive>
-          <border_color>
-            <color red="0" green="128" blue="255" />
-          </border_color>
-          <border_style>0</border_style>
-          <border_width>1</border_width>
-          <enabled>true</enabled>
-          <fg_gradient_color>
-            <color red="255" green="255" blue="255" />
-          </fg_gradient_color>
-          <fill_level>0.0</fill_level>
-          <font>
-            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-          </font>
-          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-          <foreground_color>
-            <color red="255" green="0" blue="0" />
-          </foreground_color>
-          <gradient>false</gradient>
-          <height>20</height>
-          <horizontal_fill>true</horizontal_fill>
-          <line_color>
-            <color red="128" green="0" blue="255" />
-          </line_color>
-          <line_style>0</line_style>
-          <line_width>0</line_width>
-          <name>Rectangle</name>
-          <pv_name></pv_name>
-          <pv_value />
-          <rules />
-          <scale_options>
-            <width_scalable>true</width_scalable>
-            <height_scalable>true</height_scalable>
-            <keep_wh_ratio>false</keep_wh_ratio>
-          </scale_options>
-          <scripts />
-          <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-          <transparent>false</transparent>
-          <visible>true</visible>
-          <widget_type>Rectangle</widget_type>
-          <width>91</width>
-          <wuid>1f3b352c:172176c5c2d:-5398</wuid>
-          <x>0</x>
-          <y>0</y>
-        </widget>
-        <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-          <actions hook="false" hook_all="false" />
-          <auto_size>false</auto_size>
-          <background_color>
-            <color red="255" green="255" blue="255" />
-          </background_color>
-          <border_color>
-            <color red="0" green="128" blue="255" />
-          </border_color>
-          <border_style>0</border_style>
-          <border_width>1</border_width>
-          <enabled>true</enabled>
-          <font>
-            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-          </font>
-          <foreground_color>
-            <color red="0" green="0" blue="0" />
-          </foreground_color>
-          <height>20</height>
-          <horizontal_alignment>1</horizontal_alignment>
-          <name>Label</name>
-          <rules />
-          <scale_options>
-            <width_scalable>true</width_scalable>
-            <height_scalable>true</height_scalable>
-            <keep_wh_ratio>false</keep_wh_ratio>
-          </scale_options>
-          <scripts />
-          <text>ON/OFF</text>
-          <tooltip></tooltip>
-          <transparent>true</transparent>
-          <vertical_alignment>1</vertical_alignment>
-          <visible>true</visible>
-          <widget_type>Label</widget_type>
-          <width>80</width>
-          <wrap_words>false</wrap_words>
-          <wuid>1f3b352c:172176c5c2d:-5397</wuid>
-          <x>6</x>
-          <y>0</y>
-        </widget>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-        <actions hook="false" hook_all="false" />
-        <auto_size>false</auto_size>
-        <background_color>
-          <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-        </background_color>
-        <border_color>
-          <color name="ISIS_Border" red="0" green="0" blue="0" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
-        </font>
-        <foreground_color>
-          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-        </foreground_color>
-        <height>20</height>
-        <horizontal_alignment>2</horizontal_alignment>
-        <name>Label_11</name>
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <show_scrollbar>false</show_scrollbar>
-        <text>Vaccum</text>
-        <tooltip></tooltip>
-        <transparent>false</transparent>
-        <vertical_alignment>1</vertical_alignment>
-        <visible>true</visible>
-        <widget_type>Label</widget_type>
-        <width>43</width>
-        <wrap_words>true</wrap_words>
-        <wuid>1f3b352c:172176c5c2d:-5394</wuid>
-        <x>18</x>
-        <y>474</y>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-        <actions hook="false" hook_all="false" />
-        <auto_size>false</auto_size>
-        <background_color>
-          <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-        </background_color>
-        <border_color>
-          <color name="ISIS_Border" red="0" green="0" blue="0" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
-        </font>
-        <foreground_color>
-          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-        </foreground_color>
-        <height>20</height>
-        <horizontal_alignment>2</horizontal_alignment>
-        <name>Label_12</name>
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <show_scrollbar>false</show_scrollbar>
-        <text>Motion</text>
-        <tooltip></tooltip>
-        <transparent>false</transparent>
-        <vertical_alignment>1</vertical_alignment>
-        <visible>true</visible>
-        <widget_type>Label</widget_type>
-        <width>55</width>
-        <wrap_words>true</wrap_words>
-        <wuid>1f3b352c:172176c5c2d:-5393</wuid>
-        <x>6</x>
-        <y>504</y>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-        <actions hook="false" hook_all="false" />
-        <auto_size>false</auto_size>
-        <background_color>
-          <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-        </background_color>
-        <border_color>
-          <color name="ISIS_Border" red="0" green="0" blue="0" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
-        </font>
-        <foreground_color>
-          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-        </foreground_color>
-        <height>20</height>
-        <horizontal_alignment>2</horizontal_alignment>
-        <name>Label_13</name>
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <show_scrollbar>false</show_scrollbar>
-        <text>Positional Error</text>
-        <tooltip></tooltip>
-        <transparent>false</transparent>
-        <vertical_alignment>1</vertical_alignment>
-        <visible>true</visible>
-        <widget_type>Label</widget_type>
-        <width>89</width>
-        <wrap_words>true</wrap_words>
-        <wuid>1f3b352c:172176c5c2d:-5392</wuid>
-        <x>260</x>
-        <y>474</y>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
-        <actions hook="false" hook_all="false" />
-        <alarm_pulsing>false</alarm_pulsing>
-        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-        <background_color>
-          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
-        </background_color>
-        <bit>-1</bit>
-        <border_alarm_sensitive>true</border_alarm_sensitive>
-        <border_color>
-          <color red="0" green="128" blue="255" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <bulb_border>3</bulb_border>
-        <bulb_border_color>
-          <color red="150" green="150" blue="150" />
-        </bulb_border_color>
-        <data_type>0</data_type>
-        <effect_3d>true</effect_3d>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-        </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <foreground_color>
-          <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
-        </foreground_color>
-        <height>25</height>
-        <name>LED</name>
-        <off_color>
-          <color name="ISIS_Red_LED_Off" red="102" green="0" blue="0" />
-        </off_color>
-        <off_label>OFF</off_label>
-        <on_color>
-          <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
-        </on_color>
-        <on_label>ON</on_label>
-        <pv_name></pv_name>
-        <pv_value />
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>true</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <show_boolean_label>false</show_boolean_label>
-        <square_led>false</square_led>
-        <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-        <visible>true</visible>
-        <widget_type>LED</widget_type>
-        <width>25</width>
-        <wuid>1f3b352c:172176c5c2d:-5391</wuid>
-        <x>348</x>
-        <y>471</y>
+        <x>-24</x>
+        <y>576</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -1587,7 +744,7 @@ $(pv_value)</tooltip>
         </scale_options>
         <scripts />
         <show_scrollbar>false</show_scrollbar>
-        <text>Front</text>
+        <text>FRONT</text>
         <tooltip></tooltip>
         <transparent>false</transparent>
         <vertical_alignment>1</vertical_alignment>
@@ -1596,8 +753,8 @@ $(pv_value)</tooltip>
         <width>95</width>
         <wrap_words>true</wrap_words>
         <wuid>1f3b352c:172176c5c2d:-4a02</wuid>
-        <x>108</x>
-        <y>22</y>
+        <x>48</x>
+        <y>5</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -1634,57 +791,11 @@ $(pv_value)</tooltip>
         <vertical_alignment>1</vertical_alignment>
         <visible>true</visible>
         <widget_type>Label</widget_type>
-        <width>103</width>
+        <width>89</width>
         <wrap_words>true</wrap_words>
         <wuid>1f3b352c:172176c5c2d:-49f0</wuid>
-        <x>1452</x>
-        <y>22</y>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-        <actions hook="false" hook_all="false" />
-        <alarm_pulsing>false</alarm_pulsing>
-        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-        <background_color>
-          <color name="ISIS_Red" red="255" green="0" blue="0" />
-        </background_color>
-        <border_alarm_sensitive>false</border_alarm_sensitive>
-        <border_color>
-          <color name="ISIS_Red" red="255" green="0" blue="0" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-        </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <foreground_color>
-          <color red="0" green="0" blue="0" />
-        </foreground_color>
-        <height>28</height>
-        <image></image>
-        <name>Action Button</name>
-        <push_action_index>0</push_action_index>
-        <pv_name></pv_name>
-        <pv_value />
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <style>0</style>
-        <text>STOP</text>
-        <toggle_button>false</toggle_button>
-        <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-        <visible>true</visible>
-        <widget_type>Action Button</widget_type>
-        <width>90</width>
-        <wuid>1f3b352c:172176c5c2d:-187</wuid>
-        <x>6</x>
-        <y>534</y>
+        <x>1699</x>
+        <y>5</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -1704,13 +815,13 @@ $(pv_value)</tooltip>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>162</height>
+        <height>362</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
-          <NUMBER>3</NUMBER>
+          <NUMBER>1</NUMBER>
         </macros>
         <name>A Linking Container That Looks Like a Group Box 1</name>
-        <opi_file>waveguide.opi</opi_file>
+        <opi_file>aperture.opi</opi_file>
         <resize_behaviour>1</resize_behaviour>
         <rules />
         <scale_options>
@@ -1722,51 +833,10 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>164</width>
-        <wuid>-24f40302:172c6fe5658:-676a</wuid>
-        <x>120</x>
-        <y>119</y>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-        <actions hook="false" hook_all="false" />
-        <background_color>
-          <color red="240" green="240" blue="240" />
-        </background_color>
-        <border_color>
-          <color red="0" green="128" blue="255" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-        </font>
-        <foreground_color>
-          <color red="192" green="192" blue="192" />
-        </foreground_color>
-        <group_name></group_name>
-        <height>162</height>
-        <macros>
-          <include_parent_macros>true</include_parent_macros>
-          <NUMBER>3</NUMBER>
-        </macros>
-        <name>A Linking Container That Looks Like a Group Box 1</name>
-        <opi_file>Aperture.opi</opi_file>
-        <resize_behaviour>1</resize_behaviour>
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <tooltip></tooltip>
-        <visible>true</visible>
-        <widget_type>Linking Container</widget_type>
-        <width>67</width>
+        <width>206</width>
         <wuid>-24f40302:172c6fe5658:-675a</wuid>
-        <x>46</x>
-        <y>120</y>
+        <x>-18</x>
+        <y>41</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -1786,7 +856,171 @@ $(pv_value)</tooltip>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>162</height>
+        <height>362</height>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <NUMBER>1</NUMBER>
+        </macros>
+        <name>A Linking Container That Looks Like a Group Box 1</name>
+        <opi_file>waveguide.opi</opi_file>
+        <resize_behaviour>1</resize_behaviour>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <tooltip></tooltip>
+        <visible>true</visible>
+        <widget_type>Linking Container</widget_type>
+        <width>206</width>
+        <wuid>46c774db:172dc8ce854:-7e6f</wuid>
+        <x>187</x>
+        <y>41</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <group_name></group_name>
+        <height>362</height>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <NUMBER>2</NUMBER>
+        </macros>
+        <name>A Linking Container That Looks Like a Group Box 1</name>
+        <opi_file>waveguide.opi</opi_file>
+        <resize_behaviour>1</resize_behaviour>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <tooltip></tooltip>
+        <visible>true</visible>
+        <widget_type>Linking Container</widget_type>
+        <width>206</width>
+        <wuid>46c774db:172dc8ce854:-7c0c</wuid>
+        <x>420</x>
+        <y>41</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <group_name></group_name>
+        <height>362</height>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <NUMBER>2</NUMBER>
+        </macros>
+        <name>A Linking Container That Looks Like a Group Box 1</name>
+        <opi_file>aperture.opi</opi_file>
+        <resize_behaviour>1</resize_behaviour>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <tooltip></tooltip>
+        <visible>true</visible>
+        <widget_type>Linking Container</widget_type>
+        <width>206</width>
+        <wuid>46c774db:172dc8ce854:-7bb0</wuid>
+        <x>625</x>
+        <y>41</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <group_name></group_name>
+        <height>362</height>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <NUMBER>3</NUMBER>
+        </macros>
+        <name>A Linking Container That Looks Like a Group Box 1</name>
+        <opi_file>aperture.opi</opi_file>
+        <resize_behaviour>1</resize_behaviour>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <tooltip></tooltip>
+        <visible>true</visible>
+        <widget_type>Linking Container</widget_type>
+        <width>206</width>
+        <wuid>46c774db:172dc8ce854:-7b85</wuid>
+        <x>1035</x>
+        <y>41</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <group_name></group_name>
+        <height>362</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NUMBER>3</NUMBER>
@@ -1804,10 +1038,10 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>164</width>
-        <wuid>-24f40302:172c6fe5658:-5a7c</wuid>
-        <x>360</x>
-        <y>120</y>
+        <width>206</width>
+        <wuid>46c774db:172dc8ce854:-7b57</wuid>
+        <x>830</x>
+        <y>41</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -1827,13 +1061,13 @@ $(pv_value)</tooltip>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>162</height>
+        <height>362</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
-          <NUMBER>3</NUMBER>
+          <NUMBER>4</NUMBER>
         </macros>
         <name>A Linking Container That Looks Like a Group Box 1</name>
-        <opi_file>Aperture.opi</opi_file>
+        <opi_file>waveguide.opi</opi_file>
         <resize_behaviour>1</resize_behaviour>
         <rules />
         <scale_options>
@@ -1845,10 +1079,10 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>67</width>
-        <wuid>-24f40302:172c6fe5658:-5a6a</wuid>
-        <x>523</x>
-        <y>120</y>
+        <width>206</width>
+        <wuid>46c774db:172dc8ce854:-7b29</wuid>
+        <x>1240</x>
+        <y>41</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -1868,13 +1102,13 @@ $(pv_value)</tooltip>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>152</height>
+        <height>362</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
-          <NAME>Aperture</NAME>
+          <NUMBER>4</NUMBER>
         </macros>
-        <name>Linking Container</name>
-        <opi_file>aperture_controls.opi</opi_file>
+        <name>A Linking Container That Looks Like a Group Box 1</name>
+        <opi_file>aperture.opi</opi_file>
         <resize_behaviour>1</resize_behaviour>
         <rules />
         <scale_options>
@@ -1886,10 +1120,10 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>133</width>
-        <wuid>-24f40302:172c6fe5658:-52dd</wuid>
-        <x>25</x>
-        <y>281</y>
+        <width>206</width>
+        <wuid>46c774db:172dc8ce854:-7afb</wuid>
+        <x>1445</x>
+        <y>41</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -1909,13 +1143,13 @@ $(pv_value)</tooltip>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>152</height>
+        <height>362</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
-          <NAME>Guide</NAME>
+          <NUMBER>5</NUMBER>
         </macros>
-        <name>Linking Container</name>
-        <opi_file>aperture_controls.opi</opi_file>
+        <name>A Linking Container That Looks Like a Group Box 1</name>
+        <opi_file>aperture.opi</opi_file>
         <resize_behaviour>1</resize_behaviour>
         <rules />
         <scale_options>
@@ -1927,10 +1161,10 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>133</width>
-        <wuid>-24f40302:172c6fe5658:-51d4</wuid>
-        <x>157</x>
-        <y>281</y>
+        <width>206</width>
+        <wuid>46c774db:172dc8ce854:-7acd</wuid>
+        <x>1843</x>
+        <y>41</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -1950,13 +1184,13 @@ $(pv_value)</tooltip>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>152</height>
+        <height>362</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
-          <NAME>Guide</NAME>
+          <NUMBER>5</NUMBER>
         </macros>
-        <name>Linking Container</name>
-        <opi_file>aperture_controls.opi</opi_file>
+        <name>A Linking Container That Looks Like a Group Box 1</name>
+        <opi_file>waveguide.opi</opi_file>
         <resize_behaviour>1</resize_behaviour>
         <rules />
         <scale_options>
@@ -1968,12 +1202,12 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>133</width>
-        <wuid>-24f40302:172c6fe5658:-5168</wuid>
-        <x>358</x>
-        <y>281</y>
+        <width>206</width>
+        <wuid>46c774db:172dc8ce854:-7a9d</wuid>
+        <x>1644</x>
+        <y>41</y>
       </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+      <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
         <background_color>
           <color red="240" green="240" blue="240" />
@@ -1984,21 +1218,19 @@ $(pv_value)</tooltip>
         <border_style>0</border_style>
         <border_width>1</border_width>
         <enabled>true</enabled>
+        <fc>false</fc>
         <font>
           <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
         </font>
         <foreground_color>
           <color red="192" green="192" blue="192" />
         </foreground_color>
-        <group_name></group_name>
-        <height>152</height>
+        <height>157</height>
+        <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
-          <NAME>Aperture</NAME>
         </macros>
-        <name>Linking Container</name>
-        <opi_file>aperture_controls.opi</opi_file>
-        <resize_behaviour>1</resize_behaviour>
+        <name>Grouping Container</name>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -2006,13 +1238,350 @@ $(pv_value)</tooltip>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
         <scripts />
+        <show_scrollbar>true</show_scrollbar>
         <tooltip></tooltip>
+        <transparent>false</transparent>
         <visible>true</visible>
-        <widget_type>Linking Container</widget_type>
-        <width>133</width>
-        <wuid>-24f40302:172c6fe5658:-5150</wuid>
-        <x>490</x>
-        <y>281</y>
+        <widget_type>Grouping Container</widget_type>
+        <width>481</width>
+        <wuid>46c774db:172dc8ce854:-6abe</wuid>
+        <x>-18</x>
+        <y>408</y>
+        <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+          <actions hook="false" hook_all="false" />
+          <alarm_pulsing>false</alarm_pulsing>
+          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+          <background_color>
+            <color name="ISIS_Red" red="255" green="0" blue="0" />
+          </background_color>
+          <border_alarm_sensitive>false</border_alarm_sensitive>
+          <border_color>
+            <color name="ISIS_Red" red="255" green="0" blue="0" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+          </font>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <foreground_color>
+            <color red="0" green="0" blue="0" />
+          </foreground_color>
+          <height>28</height>
+          <image></image>
+          <name>Action Button</name>
+          <push_action_index>0</push_action_index>
+          <pv_name></pv_name>
+          <pv_value />
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <style>0</style>
+          <text>STOP</text>
+          <toggle_button>false</toggle_button>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <visible>true</visible>
+          <widget_type>Action Button</widget_type>
+          <width>90</width>
+          <wuid>1f3b352c:172176c5c2d:-187</wuid>
+          <x>7</x>
+          <y>123</y>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <auto_size>false</auto_size>
+          <background_color>
+            <color red="0" green="255" blue="128" />
+          </background_color>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+          </font>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <height>25</height>
+          <horizontal_alignment>1</horizontal_alignment>
+          <name>Label_2</name>
+          <rules>
+            <rule name="Text" prop_id="text" out_exp="true">
+              <exp bool_exp="pv0 == 1">
+                <value>DISABLED</value>
+              </exp>
+              <pv trig="true">$(PV_ROOT)GALIL_INTERLOCK</pv>
+            </rule>
+            <rule name="Color" prop_id="background_color" out_exp="true">
+              <exp bool_exp="pv0 == 1">
+                <value>"Major"</value>
+              </exp>
+              <pv trig="true">(P)$(Q)GALIL_INTERLOCK</pv>
+            </rule>
+          </rules>
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <show_scrollbar>false</show_scrollbar>
+          <text>ENABLED</text>
+          <tooltip></tooltip>
+          <transparent>false</transparent>
+          <vertical_alignment>1</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Label</widget_type>
+          <width>91</width>
+          <wrap_words>true</wrap_words>
+          <wuid>-24f40302:172c6fe5658:-4220</wuid>
+          <x>78</x>
+          <y>69</y>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <auto_size>false</auto_size>
+          <background_color>
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+          </font>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <height>20</height>
+          <horizontal_alignment>0</horizontal_alignment>
+          <name>Label_12</name>
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <show_scrollbar>false</show_scrollbar>
+          <text>Motion</text>
+          <tooltip></tooltip>
+          <transparent>false</transparent>
+          <vertical_alignment>1</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Label</widget_type>
+          <width>42</width>
+          <wrap_words>true</wrap_words>
+          <wuid>1f3b352c:172176c5c2d:-5393</wuid>
+          <x>7</x>
+          <y>72</y>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <auto_size>false</auto_size>
+          <background_color>
+            <color name="Major" red="255" green="0" blue="0" />
+          </background_color>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+          </font>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <height>25</height>
+          <horizontal_alignment>1</horizontal_alignment>
+          <name>Label_2</name>
+          <rules>
+            <rule name="Text" prop_id="text" out_exp="true">
+              <exp bool_exp="pv0 == &quot;AT VACUUM&quot;">
+                <value>"ON"</value>
+              </exp>
+              <pv trig="true">$(PV_ROOT)GUIDE:STATUS</pv>
+            </rule>
+            <rule name="Color" prop_id="background_color" out_exp="true">
+              <exp bool_exp="pv0 == &quot;AT VACUUM&quot;">
+                <value>ColorFontUtil.getColorFromRGB(0,255,128)</value>
+              </exp>
+              <pv trig="true">$(PV_ROOT)GUIDE:STATUS</pv>
+            </rule>
+          </rules>
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <show_scrollbar>false</show_scrollbar>
+          <text>OFF</text>
+          <tooltip></tooltip>
+          <transparent>false</transparent>
+          <vertical_alignment>1</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Label</widget_type>
+          <width>91</width>
+          <wrap_words>true</wrap_words>
+          <wuid>-24f40302:172c6fe5658:-422c</wuid>
+          <x>78</x>
+          <y>39</y>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <auto_size>false</auto_size>
+          <background_color>
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+          </font>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <height>20</height>
+          <horizontal_alignment>0</horizontal_alignment>
+          <name>Label_11</name>
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <show_scrollbar>false</show_scrollbar>
+          <text>Vaccum</text>
+          <tooltip></tooltip>
+          <transparent>false</transparent>
+          <vertical_alignment>1</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Label</widget_type>
+          <width>43</width>
+          <wrap_words>true</wrap_words>
+          <wuid>1f3b352c:172176c5c2d:-5394</wuid>
+          <x>7</x>
+          <y>42</y>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <auto_size>false</auto_size>
+          <background_color>
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+          </font>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <height>20</height>
+          <horizontal_alignment>2</horizontal_alignment>
+          <name>Label_13</name>
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <show_scrollbar>false</show_scrollbar>
+          <text>Positional Error</text>
+          <tooltip></tooltip>
+          <transparent>false</transparent>
+          <vertical_alignment>1</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Label</widget_type>
+          <width>89</width>
+          <wrap_words>true</wrap_words>
+          <wuid>1f3b352c:172176c5c2d:-5392</wuid>
+          <x>240</x>
+          <y>42</y>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <alarm_pulsing>false</alarm_pulsing>
+          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+          <background_color>
+            <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <bit>-1</bit>
+          <border_alarm_sensitive>true</border_alarm_sensitive>
+          <border_color>
+            <color red="0" green="128" blue="255" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <bulb_border>3</bulb_border>
+          <bulb_border_color>
+            <color red="150" green="150" blue="150" />
+          </bulb_border_color>
+          <data_type>0</data_type>
+          <effect_3d>true</effect_3d>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+          </font>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <foreground_color>
+            <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+          </foreground_color>
+          <height>25</height>
+          <name>LED</name>
+          <off_color>
+            <color name="ISIS_Red_LED_Off" red="102" green="0" blue="0" />
+          </off_color>
+          <off_label>OFF</off_label>
+          <on_color>
+            <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
+          </on_color>
+          <on_label>ON</on_label>
+          <pv_name></pv_name>
+          <pv_value />
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>true</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <show_boolean_label>false</show_boolean_label>
+          <square_led>false</square_led>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <visible>true</visible>
+          <widget_type>LED</widget_type>
+          <width>25</width>
+          <wuid>1f3b352c:172176c5c2d:-5391</wuid>
+          <x>336</x>
+          <y>39</y>
+        </widget>
       </widget>
     </widget>
   </widget>
@@ -2034,7 +1603,7 @@ $(pv_value)</tooltip>
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
-    <height>37</height>
+    <height>31</height>
     <horizontal_alignment>0</horizontal_alignment>
     <name>Label</name>
     <rules />
@@ -2055,6 +1624,6 @@ $(pv_value)</tooltip>
     <wrap_words>true</wrap_words>
     <wuid>6d5edd67:171feae85f0:-32d0</wuid>
     <x>0</x>
-    <y>6</y>
+    <y>0</y>
   </widget>
 </display>
