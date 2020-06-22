@@ -25,6 +25,9 @@ import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -57,9 +60,10 @@ public class ScriptGeneratorView {
 	
 	private static PreferenceSupplier preferences = new PreferenceSupplier();
 	
-	
 	private static final Display DISPLAY = Display.getDefault();
 
+	private final DataBindingContext bindingContext = new DataBindingContext();
+	
 	/**
 	 * A clear colour for use in other script generator table columns when a row is valid.
 	 */
@@ -76,7 +80,7 @@ public class ScriptGeneratorView {
 	private Composite mainParent;
 	
 	/**
-	 * The string to display if there is no script defininitions to select.
+	 * The string to display if there are no script definitions to select.
 	 */
 	private static final String NO_SCRIPT_DEFINITIONS_MESSAGE = String.format("\u26A0 Warning: Could not load any script definitions from %s"
 			+ System.getProperty("line.separator")
@@ -97,6 +101,16 @@ public class ScriptGeneratorView {
 	 * Denotes whether script definitions have been loaded once.
 	 */
 	private boolean scriptDefinitionsLoadedOnce = false;
+
+	private ActionsViewTable table;
+	private Button btnDeleteAction;
+	private Button btnMoveActionUp;
+	private Button btnMoveActionDown;
+	private Button btnInsertAction;
+	private Label estimateText;
+	private Button generateScriptButton;
+	private Button saveExperimentalParametersButton;
+	private Button btnDuplicateAction;
 	
 	/**
 	 * A property to listen for when python becomes ready or not ready.
@@ -246,7 +260,7 @@ public class ScriptGeneratorView {
 	            manualButton.setEnabled(false);
 	            manualButton.setText("Open Manual");
 	            manualButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-				
+	            
 				// The composite to contain the button to check validity
 				Composite validityComposite = new Composite(topBarComposite, SWT.NONE);
 				validityComposite.setLayout(new GridLayout(1, false));
@@ -260,7 +274,6 @@ public class ScriptGeneratorView {
 		        	scriptGeneratorViewModel.displayValidityErrors();
 		        });
 		        
-		        
 		        Map<String, String> scriptDefinitionLoadErrors = scriptGeneratorViewModel.getScriptDefinitionLoadErrors();
 		        
 		        if (!scriptDefinitionLoadErrors.isEmpty()) {
@@ -273,9 +286,8 @@ public class ScriptGeneratorView {
 		        tableContainerComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 				
 		        // The UI table
-				ActionsViewTable table = 
-						new ActionsViewTable(tableContainerComposite,
-								SWT.NONE, SWT.SINGLE | SWT.V_SCROLL | SWT.FULL_SELECTION,
+				table = new ActionsViewTable(tableContainerComposite,
+								SWT.NONE, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION,
 								scriptGeneratorViewModel);
 				table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 				scriptGeneratorViewModel.reloadActions();
@@ -286,18 +298,26 @@ public class ScriptGeneratorView {
 			    moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		        
 			    // Make buttons to move an action up and down the list
-		        Button btnMoveActionUp = createMoveRowButton(moveComposite, "move_up.png", "up");
-		        btnMoveActionUp.addListener(SWT.Selection, e -> {
-		        	scriptGeneratorViewModel.moveActionUp(table.getSelectionIndex());
-		        	table.setSelectionIndex(Math.max(0, table.getSelectionIndex() - 1));
-		        });
+		        btnMoveActionUp = createMoveRowButton(moveComposite, "move_up.png", "up");
+		        btnMoveActionUp.addListener(SWT.Selection, e ->	scriptGeneratorViewModel.moveActionUp(table.selectedRows()));
 		        
-		        Button btnMoveActionDown = createMoveRowButton(moveComposite, "move_down.png", "down");
-		        btnMoveActionDown.addListener(SWT.Selection, e -> {
-		        	scriptGeneratorViewModel.moveActionDown(table.getSelectionIndex());
-		            table.setSelectionIndex(Math.min(
-		            		table.getSelectionIndex() + 1, scriptGeneratorViewModel.getActions().size()));
-		        });
+		        btnMoveActionDown = createMoveRowButton(moveComposite, "move_down.png", "down");
+		        btnMoveActionDown.addListener(SWT.Selection, e -> scriptGeneratorViewModel.moveActionDown(table.selectedRows()));
+		        
+                // Composite for the row containing the total estimated run time
+                Composite estimateGrp = new Composite(mainParent, SWT.NONE);
+                estimateGrp.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1));
+                GridLayout estimateLayout = new GridLayout(1, true);
+                estimateLayout.marginRight = 40;
+                estimateGrp.setLayout(estimateLayout);
+                
+                // Label for the total estimated run time
+                estimateText = new Label(estimateGrp, SWT.RIGHT);
+                estimateText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+                String currentFont = estimateText.getFont().getFontData()[0].getName();
+                Font font = new Font(estimateText.getDisplay(), new FontData(currentFont, 11, SWT.BOLD));
+                estimateText.setFont(font);
+                estimateText.setText("Total estimated run time: 0 seconds");
 		        
 		        // Composite for laying out new/delete/duplicate action buttons
 		        Composite actionsControlsGrp = new Composite(mainParent, SWT.NONE);
@@ -308,20 +328,20 @@ public class ScriptGeneratorView {
 		        actionsControlsGrp.setLayout(ssgLayout);
 				        
 		        // Make buttons for insert new/delete/duplicate actions
-		        final Button btnInsertAction = new Button(actionsControlsGrp, SWT.NONE);
+		        btnInsertAction = new Button(actionsControlsGrp, SWT.NONE);
 		        btnInsertAction.setText("Add Action");
 		        btnInsertAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		        btnInsertAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.addEmptyAction());
 		        
-		        final Button btnDeleteAction = new Button(actionsControlsGrp, SWT.NONE);
+		        btnDeleteAction = new Button(actionsControlsGrp, SWT.NONE);
 		        btnDeleteAction.setText("Delete Action");
 		        btnDeleteAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		        btnDeleteAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.deleteAction(table.getSelectionIndex()));
+		        btnDeleteAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.deleteAction(table.selectedRows()));
 		
-		        final Button btnDuplicateAction = new Button(actionsControlsGrp, SWT.NONE);
+		        btnDuplicateAction = new Button(actionsControlsGrp, SWT.NONE);
 		        btnDuplicateAction.setText("Duplicate Action");
 		        btnDuplicateAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		        btnDuplicateAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.duplicateAction(table.getSelectionIndex()));
+		        btnDuplicateAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.duplicateAction(table.selectedRows(), table.getSelectionIndex()));
 		        
                 final Button btnClearAction = new Button(actionsControlsGrp, SWT.NONE);
                 btnClearAction.setText("Clear All Actions");
@@ -337,13 +357,13 @@ public class ScriptGeneratorView {
 		        generateButtonsGrp.setLayout(gbgLayout);
 		        
 		        // Button to generate a script
-		        final Button generateScriptButton = new Button(generateButtonsGrp, SWT.NONE);
+		        generateScriptButton = new Button(generateButtonsGrp, SWT.NONE);
 		        generateScriptButton.setText("Generate Script");
 		        generateScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		        generateScriptButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.generate());
 		        
 		       	
-		       	final Button saveExperimentalParametersButton = new Button(generateButtonsGrp, SWT.NONE);
+		       	saveExperimentalParametersButton = new Button(generateButtonsGrp, SWT.NONE);
 		       	saveExperimentalParametersButton.setText("Save Parameters");
 		       	saveExperimentalParametersButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		       	saveExperimentalParametersButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.saveParameterValues());
@@ -353,7 +373,10 @@ public class ScriptGeneratorView {
 		       	loadExperimentalParametersButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		       	loadExperimentalParametersButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.loadParameterValues());
 		        // Bind the context and the validity checking listeners
-		        bind(scriptDefinitionSelector, table, btnGetValidityErrors, generateScriptButton, helpText, saveExperimentalParametersButton, manualButton);
+		        bind(scriptDefinitionSelector,
+		                btnGetValidityErrors,
+		                helpText,
+		                manualButton);
 				
 			} else {
 				
@@ -429,17 +452,33 @@ public class ScriptGeneratorView {
 		return scriptDefinitionSelector;
 	}
 	
+	private void bindToHasSelected(Control controlToDisable) {
+		bindingContext.bindValue(WidgetProperties.enabled().observe(controlToDisable),
+				BeanProperties.value("hasSelection").observe(scriptGeneratorViewModel));		
+	}
+	
 	/**
 	 * Binds the Script Generator Table, script definition selector and validity check models to their views.
 	 */
-
-	private void bind(ComboViewer scriptDefinitionSelector, ActionsViewTable table, Button btnGetValidityErrors, Button btnGenerateScript, Text helpText, Button btnSaveParameters, Button manualButton) {
+	private void bind(ComboViewer scriptDefinitionSelector,
+	        Button btnGetValidityErrors,
+	        Text helpText,
+	        Button manualButton) {
 		scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText);
 
-		scriptGeneratorViewModel.bindValidityChecks(table, btnGetValidityErrors, btnGenerateScript, btnSaveParameters);
+		scriptGeneratorViewModel.bindActionProperties(table, btnGetValidityErrors, generateScriptButton, saveExperimentalParametersButton);
 		
 		scriptGeneratorViewModel.bindManualButton(manualButton);
-
+		
+		table.addSelectionChangedListener(event -> scriptGeneratorViewModel.setSelected(table.selectedRows()));
+			
+		bindingContext.bindValue(WidgetProperties.text().observe(estimateText),
+                BeanProperties.value("timeEstimate").observe(scriptGeneratorViewModel));
+		
+		bindToHasSelected(btnDeleteAction);
+		bindToHasSelected(btnMoveActionUp);
+		bindToHasSelected(btnMoveActionDown);
+		bindToHasSelected(btnDuplicateAction);
 	}
 
 }

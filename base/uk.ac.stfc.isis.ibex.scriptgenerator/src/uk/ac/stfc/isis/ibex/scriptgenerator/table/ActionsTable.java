@@ -5,7 +5,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
@@ -118,39 +121,35 @@ public class ActionsTable extends ModelObject {
 			newList.add(newAction);
 		}
 		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
-
 	}
 
 	/**
 	 * Removes an action from the list in specified location.
-	 * @param index
-	 * 		  	The index to remove from the actions list.
+	 * @param actionsToDeletes
+	 * 		  	The actions to remove from the actions list.
 	 */
-	public void deleteAction(int index) {
-		if (isValidIndex(index)) {
-			final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
-			newList.remove(index);
-			firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
-		}
+	public void deleteAction(List<ScriptGeneratorAction> actionsToDeletes) {
+		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
+		newList.removeAll(actionsToDeletes);
+		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
 	}
 
 	/**
-	 * Duplicates an action in the list at specified location.
-	 * @param index
-	 * 			The index of the action to duplicate.
+	 * Duplicates a set of selected actions in the table and places them in the specified position.
+	 * @param actionsToDuplicate
+	 * 			The actions to duplicate.
+	 * @param insertionLocation
+	 *          The index in the list to do the insertion.
 	 */
-	public void duplicateAction(int index) {
-		if (isValidIndex(index)) {
-			var actionToDuplicate = actions.get(index);
-			var newAction = createAction(actionToDuplicate.getActionParameterValueMap());
-			final var newActions = new ArrayList<ScriptGeneratorAction>();
-			
-			newActions.addAll(actions);
-			
-			newActions.add(index + 1, newAction);
-			
-			firePropertyChange(ACTIONS_PROPERTY, actions, this.actions = newActions);
-		}
+	public void duplicateAction(List<ScriptGeneratorAction> actionsToDuplicate, Integer insertionLocation) {	
+		final var newActionsList = new ArrayList<ScriptGeneratorAction>(actions);
+		
+		List<ScriptGeneratorAction> actionsToAdd = actionsToDuplicate.stream()
+				.map(action -> createAction(action.getActionParameterValueMap()))
+				.collect(Collectors.toList());
+		
+		newActionsList.addAll(insertionLocation, actionsToAdd);
+		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newActionsList);
 	}
     
     /**
@@ -160,30 +159,45 @@ public class ActionsTable extends ModelObject {
         final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>();
         firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
     }
-
+	
 	/**
-	 * Moves action to a new position in the table.
-	 * @param oldIndex
-	 * 			The current index of the action to be moved.
-	 * @param newIndex
-	 * 			The index to move the action to, if valid.
+	 * Moves a selection of actions down one row.
+	 * @param actionsToMove
+	 * 			The actions to be moved
 	 */
-	public void moveAction(int oldIndex, int newIndex) {
-		if (isValidIndex(oldIndex)) {
-			final var newActions = new ArrayList<ScriptGeneratorAction>();
-			
-			newActions.addAll(actions);
-			
-			if (newIndex < 0) {
-				newIndex = 0;
-			} else if (newIndex >= this.actions.size()) {
-				newIndex = this.actions.size() - 1;
-			}
-			
-			Collections.swap(newActions, oldIndex, newIndex);
-		
-			firePropertyChange(ACTIONS_PROPERTY, actions, actions = newActions);
+	public void moveActionDown(List<ScriptGeneratorAction> actionsToMove) {
+		if (actionsToMove.contains(actions.get(actions.size() - 1))) {
+			return;
 		}
+		final var newActions = new ArrayList<ScriptGeneratorAction>(actions);
+		ListIterator<ScriptGeneratorAction> iterator = actionsToMove.listIterator(actionsToMove.size());
+
+		// Iterate in reverse.
+		while (iterator.hasPrevious()) {
+			Integer currentIndex = actions.indexOf(iterator.previous());
+			Collections.swap(newActions, currentIndex, currentIndex + 1);
+		}
+		
+		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newActions);
+	}
+	
+	/**
+	 * Moves a selection of actions up a row.
+	 * @param actionsToMove
+	 * 			The indices of actions to be moved
+	 */
+	public void moveActionUp(List<ScriptGeneratorAction> actionsToMove) {
+		if (actionsToMove.contains(actions.get(0))) {
+			return;
+		}
+		final var newActions = new ArrayList<ScriptGeneratorAction>(actions);
+		
+		for (var action : actionsToMove) {
+			Integer currentIndex = actions.indexOf(action);
+			Collections.swap(newActions, currentIndex, currentIndex - 1);
+		}
+		
+		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newActions);
 	}
 	
 	/**
@@ -191,16 +205,6 @@ public class ActionsTable extends ModelObject {
 	 */
 	public void clearActions() {
 		firePropertyChange(ACTIONS_PROPERTY, actions, actions = new ArrayList<ScriptGeneratorAction>());
-	}
-	/**
-	 * Checks if the supplied index is a valid position in the table.
-	 * @param index
-	 * 			The index to test.
-	 * @return isValid
-	 * 			true if index is a valid position in the table.
-	 */
-	private Boolean isValidIndex(int index) {
-		return index >= 0 && index <= this.actions.size();
 	}
 
 	/**
@@ -217,6 +221,17 @@ public class ActionsTable extends ModelObject {
 			}
 		}
 	}
+	
+    /**
+     * Set the estimated time for each action based on the hashmap.
+     * 
+     * @param estimatedTimes The hashmap to set estimated time based on.
+     */
+    public void setEstimatedTimes(Map<Integer, Number> estimatedTimes) {
+        for (int i = 0; i < actions.size(); i++) {
+        	actions.get(i).setEstimatedTime(Optional.ofNullable(estimatedTimes.get(i)));
+        }
+    }
 	
 	/**
 	 * Get strings of validity errors.
@@ -235,6 +250,19 @@ public class ActionsTable extends ModelObject {
 		}
 		return errors;
 	}
+	
+    /**
+     * Get the total estimated time of all actions in the table.
+     * 
+     * @return An Optional containing the total if at least one action has been estimated,
+     *         empty optional otherwise
+     */
+    public Optional<Long> getTotalEstimatedTime() {
+    	
+        List<Number> actualEstimates = actions.stream().map(action -> action.getEstimatedTime()).flatMap(Optional::stream).collect(Collectors.toList());    	  
+        Long total = actualEstimates.stream().map(x -> x.longValue()).reduce(0L, Long::sum);
+        return actualEstimates.size() == 0 ? Optional.empty() : Optional.of(total);
+    }
 
 	/**
 	 * Reload the actions by firing a property change.

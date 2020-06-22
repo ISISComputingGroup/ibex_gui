@@ -1,8 +1,11 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import java.net.URL;
+import java.time.Duration;
+import java.nio.file.Paths;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -56,7 +59,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	
 	private static final Display DISPLAY = Display.getDefault();
 	
-
 	/**
 	 * A dark red for use in the validity column when a row is invalid.
 	 */
@@ -112,6 +114,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 */
 	private static final String VALIDITY_ERROR_MESSAGE_PROPERTY = "validity error messages";
 	
+    /**
+     * A property that carries the time estimation to listen for in order to update table rows.
+     */
+    private static final String TIME_ESTIMATE_PROPERTY = "time estimate";
+	
 	/**
 	 * The property to listen for changes in a Generator containing the generated script (String).
 	 */
@@ -140,6 +147,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
 	
 	/**
+	 * Default string to display for time estimation
+	 */
+	private String displayString = "Total estimated run time: 00:00:00";
+	
+	/**
 	 * The reference to the singleton model that the ViewModel is to use.
 	 */
 	private ScriptGeneratorSingleton scriptGeneratorModel;
@@ -165,6 +177,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 */
 	private Button btnSaveParam;
 	
+	/**
+	 * The currently selected rows
+	 */
+	private boolean hasSelection;
+		
 	/**
 	 * A constructor that sets up the script generator model and 
 	 *   begins listening to property changes in the model.
@@ -214,6 +231,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 				);
 			});
 		});
+		
 	}
 	
 	/**
@@ -266,21 +284,23 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	/**
 	 * Removes action at position index from ActionsTable.
 	 * 
-	 * @param index
-	 * 			the index to delete.
+	 * @param actionsToDelete
+	 * 			the actions to delete.
 	 */
-	protected void deleteAction(int index) {
-		scriptGeneratorModel.deleteAction(index);
+	protected void deleteAction(List<ScriptGeneratorAction> actionsToDelete) {
+		scriptGeneratorModel.deleteAction(actionsToDelete);
 	}
 	
 	/**
-	 * Duplicates action at position index in ActionsTable.
+	 * Duplicates action at position indices in ActionsTable.
 	 * 
-	 * @param index
-	 * 			the index to duplicate.
+	 * @param actionsToDuplicate
+	 * 			The actions to duplicate.
+	 * @param insertionLocation
+	 *          The index in the list to do the insertion.
 	 */
-	protected void duplicateAction(int index) {
-		scriptGeneratorModel.duplicateAction(index);
+	protected void duplicateAction(List<ScriptGeneratorAction> actionsToDuplicate, Integer insertionLocation) {
+		scriptGeneratorModel.duplicateAction(actionsToDuplicate, insertionLocation);
 	}
 	
     /**
@@ -298,23 +318,23 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
     
 	/**
-	 * Moves action one row up in table.
+	 * Moves actions one row up in table.
 	 * 
-	 * @param index
-	 * 			the index to move.
+	 * @param actionsToMove
+	 * 			the actions to move.
 	 */
-	protected void moveActionUp(int index) {
-		scriptGeneratorModel.moveActionUp(index);
+	protected void moveActionUp(List<ScriptGeneratorAction> actionsToMove) {
+		scriptGeneratorModel.moveActionUp(actionsToMove);
 	}
 
 	/**
-	 * Moves action one row down in table.
+	 * Moves actions one row down in table.
 	 * 
-	 * @param index
-	 * 			the index to move.
+	 * @param actionsToMove
+	 * 			the actions to move.
 	 */
-	protected void moveActionDown(int index) {
-		scriptGeneratorModel.moveActionDown(index);
+	protected void moveActionDown(List<ScriptGeneratorAction> actionsToMove) {
+		scriptGeneratorModel.moveActionDown(actionsToMove);
 	}
 
 	/**
@@ -375,14 +395,14 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		};
 
 	/**
-	 * Listen to changes on the actions and action validity property of the scriptGenerator table and
+	 * Listen to changes on the actions and action properties of the scriptGenerator table and
 	 *  update the view table.
 	 * 
 	 * @param viewTable The view table to update.
 	 * @param btnGetValidityErrors The validity check button to style change.
 	 * @param btnGenerateScript The generate script button to style change.
 	 */
-	protected void bindValidityChecks(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript, Button btnSaveParam) {
+	protected void bindActionProperties(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript, Button btnSaveParam) {
 		this.viewTable = viewTable;
 		this.btnGetValidityErrors = btnGetValidityErrors;
 		this.btnGenerateScript = btnGenerateScript;
@@ -392,10 +412,34 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
 		this.scriptGeneratorModel.removePropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
 		this.scriptGeneratorModel.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
+        this.scriptGeneratorModel.removePropertyChangeListener(TIME_ESTIMATE_PROPERTY, actionChangeListener);
+        this.scriptGeneratorModel.addPropertyChangeListener(TIME_ESTIMATE_PROPERTY, actionChangeListener);
+	}
+     
+    private void updateTotalEstimatedTime() {
+    
+        long totalSeconds = scriptGeneratorModel.getTotalEstimatedTime().isPresent() ? scriptGeneratorModel.getTotalEstimatedTime().get() : 0;
+        String displayTotal = "Total estimated run time: " + changeSecondsToTimeFormat(totalSeconds);
+        
+        firePropertyChange("timeEstimate", displayString, displayString = displayTotal);
+    }
+    
+    
+    private String changeSecondsToTimeFormat(long totalSeconds) {
+    	Duration duration = Duration.ofSeconds(totalSeconds);
+    	return String.format("%02d:%02d:%02d", duration.toHours(), duration.toMinutesPart(), duration.toSecondsPart());
+    }
+    
+    /**
+     * Get the estimated time for the script, formatted into something human readable.
+     * @return The formatted script time estimate.
+     */
+    public String getTimeEstimate() {
+		return displayString;
 	}
 	
 	/**
-	 * Handle a change in the actions or their validity.
+	 * Handle a change in the actions or their properties.
 	 * Set the UI table's actions from the model and update validity checking.
 	 * 
 	 * @param viewTable The view table to update.
@@ -404,7 +448,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * @param btnSaveParam Save Parameter button's visibility to manipulate
 	 */
 	private void actionChangeHandler(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript, Button btnSaveParam) {
-		DISPLAY.asyncExec(() -> {
+	    DISPLAY.asyncExec(() -> {
 			if (!viewTable.isDisposed()) {
 	            viewTable.setRows(scriptGeneratorModel.getActions());
 	            updateValidityChecks(viewTable);
@@ -416,9 +460,10 @@ public class ScriptGeneratorViewModel extends ModelObject {
 				setButtonGenerateStyle(btnGenerateScript);
 				setButtonGenerateStyle(btnSaveParam);
 			}
+			updateTotalEstimatedTime();
 		});
 	}
-	
+		
 	private void setButtonGenerateStyle(Button btnGenerateScript) {
 		if (scriptGeneratorModel.languageSupported) {
 			// Grey the button out if parameters are valid
@@ -579,7 +624,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	protected void updateValidityChecks(ActionsViewTable viewTable) {
 		List<ScriptGeneratorAction> actions = scriptGeneratorModel.getActions();
 		TableItem[] items = viewTable.table().getItems();
-		int validityColumnIndex = viewTable.table().getColumnCount() - 1;
+		int validityColumnIndex = viewTable.table().getColumnCount() - 2;
 		for (int i = 0; i < actions.size(); i++) {
 			if (i < items.length) {
 				if (!scriptGeneratorModel.languageSupported) {
@@ -658,6 +703,31 @@ public class ScriptGeneratorViewModel extends ModelObject {
         });
         validityColumn.getColumn().setAlignment(SWT.CENTER);
         
+        // Add estimated time column
+        TableViewerColumn timeEstimateColumn = viewTable.createColumn("Estimated run time", 
+                1, 
+                new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty(TIME_ESTIMATE_PROPERTY)) {
+            @Override
+            protected String stringFromRow(ScriptGeneratorAction row) {
+                if (!scriptGeneratorModel.languageSupported) {
+                    return "\u003F"; // A question mark to say we cannot be certain
+                }
+                
+                Optional<Number> estimatedTime = row.getEstimatedTime();
+                if (estimatedTime.isEmpty()) {
+                    return "Unknown";
+                }
+                return changeSecondsToTimeFormat(estimatedTime.get().longValue());
+            }
+            
+            @Override
+            public String getToolTipText(Object element) {
+                return getScriptGenActionToolTipText((ScriptGeneratorAction) element);
+            }
+            
+        });
+        timeEstimateColumn.getColumn().setAlignment(SWT.CENTER);
+        
         ColumnViewerToolTipSupport.enableFor(viewTable.viewer());
 	}
     
@@ -709,7 +779,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			displayLanguageSupportError();
 		}
 	}
-
+    
     /**
      * Generate a script and display the file it was generated to. If fail display warnings.
      * @throws UnsupportedLanguageException 
@@ -797,17 +867,35 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 */
 	public void loadParameterValues() {
 		Optional<String> selectedFile = openFileDialog(SWT.OPEN);
-		// filename will be null if user has clicked cancel button
 		if (selectedFile.isPresent()) {
+			List<Map<JavaActionParameter, String>> newActions = new ArrayList<Map<JavaActionParameter, String>>();
 			try {
-				scriptGeneratorModel.loadParameterValues(selectedFile.get());
+				newActions = scriptGeneratorModel.loadParameterValues(Paths.get(selectedFile.get()));
 			} catch (NoScriptDefinitionSelectedException e) {
 				LOG.error(e);
 				MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
 						"Cannot generate script. No script definition has been selected");
+				return;
 			} catch (ScriptDefinitionNotMatched | UnsupportedOperationException e) {
 				LOG.error(e);
 				MessageDialog.openError(DISPLAY.getActiveShell(), "Error", e.getMessage());
+				return;
+			}
+			
+			Integer dialogResponse; //-1 for cancel, 0 for append, 1 for replace
+			if (scriptGeneratorModel.getActions().isEmpty()) {
+				dialogResponse = 0;
+			} else {
+				String[] replaceOrAppend = new String[] {"Append", "Replace"};
+				MessageDialog dialog = new MessageDialog(DISPLAY.getActiveShell(), "Replace or Append", null,
+					    "Would you like to replace the current parameters or append the new parameters?", 
+					    MessageDialog.QUESTION, replaceOrAppend, -1);
+				dialogResponse = dialog.open();
+			}
+			
+			if (dialogResponse != -1) {
+				Boolean replace = dialogResponse == 1;
+				scriptGeneratorModel.addActionsToTable(newActions, replace);
 			}
 		}
 	};
@@ -821,4 +909,23 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    return scriptGeneratorModel.getUserManualUrl();
 	}
 
+	/**
+	 * Set the selected actions.
+	 * @param selectedRows The selected actions.
+	 */
+	public void setSelected(List<ScriptGeneratorAction> selectedRows) {
+		setHasSelection(selectedRows.size() > 0);
+	}
+	
+	private void setHasSelection(boolean hasSelection) {
+		firePropertyChange("hasSelection", this.hasSelection, this.hasSelection = hasSelection);
+	}
+
+	/**
+	 * Get whether a selection has been made.
+	 * @return True if an action has been selected, false otherwise.
+	 */
+	public boolean getHasSelection() {
+		return hasSelection;
+	}
 }

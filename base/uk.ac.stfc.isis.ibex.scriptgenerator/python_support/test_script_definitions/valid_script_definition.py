@@ -20,6 +20,10 @@ class DoRun(ScriptDefinition):
         else:
             return None
 
+    @cast_parameters_to(param1=float, param2=float)
+    def estimate_time(self, param1=0.0, param2=0.0):
+        return param1 * param2
+
     def get_help(self):
         return "Help"
 
