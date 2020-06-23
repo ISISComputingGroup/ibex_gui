@@ -233,48 +233,6 @@
     <border_color>
       <color name="ISIS_Border" red="0" green="0" blue="0"/>
     </border_color>
-    <border_style>2</border_style>
-    <border_width>1</border_width>
-    <enabled>true</enabled>
-    <font>
-      <opifont.name fontName="Segoe UI" height="12" style="1" pixels="false">ISIS_Header3_NEW</opifont.name>
-    </font>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
-    </foreground_color>
-    <height>36</height>
-    <image/>
-    <name>Button_1</name>
-    <push_action_index>0</push_action_index>
-    <pv_name/>
-    <pv_value/>
-    <rules/>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <scripts/>
-    <style>1</style>
-    <text>Move All</text>
-    <toggle_button>false</toggle_button>
-    <tooltip>$(pv_name)
-              $(pv_value)
-          </tooltip>
-    <visible>true</visible>
-    <widget_type>Action Button</widget_type>
-    <width>1087</width>
-    <wuid>36308fa3:172e17ed13e:-7628</wuid>
-    <x>0</x>
-    <y>594</y>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-    <actions hook="false" hook_all="false"/>
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <border_color>
-      <color name="ISIS_Border" red="0" green="0" blue="0"/>
-    </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
     <enabled>true</enabled>
