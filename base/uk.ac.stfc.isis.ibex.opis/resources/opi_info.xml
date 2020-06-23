@@ -2375,5 +2375,14 @@
         </macros>
       </value>
     </entry>
+    <entry>
+      <key>SANS2D Vacuum Tank</key>
+      <value>
+      	<categories/>
+        <type>VACUUM_TANK</type>
+        <path>sans2d_vacuum_tank.opi</path>
+        <description>The OPI for the SANS2D vacuum tank</description>
+      </value>
+    </entry>
   </opis>
 </descriptions>
