@@ -219,8 +219,8 @@ class ScriptDefinitionsWrapper(object):
     class Java:
         implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionsWrapper']
 
-    def __init__(self, available_script_definitions: Dict[AnyStr, ScriptDefinition], generator: Generator, script_definition_load_errors: Dict[AnyStr, AnyStr] = {}):
-        self.script_definitions = [ScriptDefinitionWrapper(instrument, script_definition()) for instrument, script_definition in available_script_definitions.items()]
+    def __init__(self, available_script_definitions: List[ScriptDefinitionWrapper], generator: Generator, script_definition_load_errors: Dict[AnyStr, AnyStr] = {}):
+        self.script_definitions = script_definitions
         self.generator = generator
         self.script_definition_load_errors = script_definition_load_errors
 
@@ -297,7 +297,7 @@ def get_script_definitions(search_folders: List[str] = None) -> Tuple[Dict[AnySt
         The second element is also a dictionary with keys as the module name, 
          but with values as the reason they could not be imported.
     """
-    script_definitions: Dict[AnyStr, ScriptDefinition] = {}
+    script_definitions: List[ScriptDefinitionWrapper] = []
     script_definition_load_errors: Dict[AnyStr, AnyStr] = {}
 
     # Attempt to clone/pull the latest version of the definitions repository
@@ -319,7 +319,7 @@ def get_script_definitions(search_folders: List[str] = None) -> Tuple[Dict[AnySt
                 spec = importlib.util.spec_from_loader(module_name, loader)
                 loaded_module = importlib.util.module_from_spec(spec)
                 loader.exec_module(loaded_module)
-                script_definitions[module_name] = loaded_module.DoRun
+                script_definitions.append(ScriptDefinitionWrapper(module_name, loaded_module.DoRun()))
             except Exception as e:
                 # On failure to load ensure we return the reason
                 script_definition_load_errors[module_name] = str(e)
@@ -336,9 +336,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     search_folders = args.search_folders.split(",")
-    
-    script_definitions: Dict[AnyStr, ScriptDefinition] = {}
-    script_definition_load_errors: Dict[AnyStr, AnyStr] = {}
+
     script_definitions, script_definition_load_errors = get_script_definitions(search_folders=search_folders)
 
     script_definitions_wrapper = ScriptDefinitionsWrapper(script_definitions, Generator(search_folders=search_folders), script_definition_load_errors=script_definition_load_errors)
@@ -347,4 +345,3 @@ if __name__ == '__main__':
         java_parameters=JavaParameters(port=args.java_port),
         python_parameters=PythonParameters(port=args.python_port),
         python_server_entry_point=script_definitions_wrapper)
-    
