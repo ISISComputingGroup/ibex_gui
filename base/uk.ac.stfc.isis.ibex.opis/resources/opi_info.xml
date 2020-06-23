@@ -2378,7 +2378,7 @@
     <entry>
       <key>SANS2D Vacuum Tank</key>
       <value>
-      	<categories/>
+        <categories/>
         <type>VACUUM_TANK</type>
         <path>sans2d_vacuum_tank.opi</path>
         <description>The OPI for the SANS2D vacuum tank</description>
