@@ -279,6 +279,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 */
 	protected void addEmptyAction() {
 		scriptGeneratorModel.addEmptyAction();
+		// Make sure the table is updated with the new action before selecting it
+		actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam);
+		DISPLAY.asyncExec(() -> {
+			viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, 0);
+		});
 	}
 	
 	/**
@@ -301,6 +306,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 */
 	protected void duplicateAction(List<ScriptGeneratorAction> actionsToDuplicate, Integer insertionLocation) {
 		scriptGeneratorModel.duplicateAction(actionsToDuplicate, insertionLocation);
+		// Make sure the table is updated with the new action before selecting it
+		actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam);
+		DISPLAY.asyncExec(() -> {
+			viewTable.setCellFocus(insertionLocation, 0);
+		});
 	}
 	
     /**
