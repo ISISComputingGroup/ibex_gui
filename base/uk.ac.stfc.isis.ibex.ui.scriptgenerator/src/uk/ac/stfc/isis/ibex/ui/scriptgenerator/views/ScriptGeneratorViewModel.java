@@ -304,12 +304,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * @param insertionLocation
 	 *          The index in the list to do the insertion.
 	 */
-	protected void duplicateAction(int index) {
-		scriptGeneratorModel.duplicateAction(index);
+	protected void duplicateAction(List<ScriptGeneratorAction> actionsToDuplicate, Integer insertionLocation) {
+		scriptGeneratorModel.duplicateAction(actionsToDuplicate, insertionLocation);
 		// Make sure the table is updated with the new action before selecting it
 		actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam);
 		DISPLAY.asyncExec(() -> {
-			viewTable.setCellFocus(index + 1, 0);
+			viewTable.setCellFocus(insertionLocation, 0);
 		});
 	}
 	
