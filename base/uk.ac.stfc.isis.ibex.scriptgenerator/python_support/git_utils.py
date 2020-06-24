@@ -6,7 +6,7 @@ from git.exc import NoSuchPathError, GitCommandError
 
 from git.exc import InvalidGitRepositoryError
 
-DEFAULT_REPO_PATH = "C:\\ScriptDefinitions"
+DEFAULT_REPO_PATH = os.path.join(pathlib.Path(__file__).parent.absolute(), "ScriptDefinitions")
 REMOTE_URL = "https://github.com/ISISComputingGroup/ScriptDefinitions.git"
 OLD_REPOSITORY = "https://github.com/ISISComputingGroup/ScriptGeneratorConfigs.git"
 

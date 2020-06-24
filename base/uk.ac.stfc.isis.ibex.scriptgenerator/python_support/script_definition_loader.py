@@ -219,10 +219,19 @@ class ScriptDefinitionsWrapper(object):
     class Java:
         implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionsWrapper']
 
-    def __init__(self, available_script_definitions: List[ScriptDefinitionWrapper], generator: Generator, script_definition_load_errors: Dict[AnyStr, AnyStr] = {}):
-        self.script_definitions = script_definitions
-        self.generator = generator
-        self.script_definition_load_errors = script_definition_load_errors
+    def __init__(self):
+        self.repository = DefinitionsRepository()
+        self.repository.initialise_and_pull()
+
+        self.script_definitions, self.script_definition_load_errors = get_script_definitions(self.repository.path)
+
+        self.generator = Generator(search_folders=[self.repository.path, ])
+
+    def getGitErrors(self):
+        """
+        Return the errors raised during git init for the Java code
+        """
+        return self.repository.errors
 
     def getScriptDefinitionLoadErrors(self) -> Dict[AnyStr, AnyStr]:
         """
@@ -231,7 +240,11 @@ class ScriptDefinitionsWrapper(object):
         Returns:
            script_definition_load_errors: The Dictionary mapping script_definitions to load errors.
         """
-        return MapConverter().convert(self.script_definition_load_errors, gateway._gateway_client)
+        load_errors_with_git = {}
+        for error_index, git_error in enumerate(self.repository.errors):
+            load_errors_with_git.update({"git error {}".format(error_index): git_error})
+        load_errors_with_git.update(self.script_definition_load_errors)
+        return MapConverter().convert(load_errors_with_git, gateway._gateway_client)
 
     def getScriptDefinitions(self) -> list:
         """
@@ -283,7 +296,7 @@ class ScriptDefinitionsWrapper(object):
         return True
 
 
-def get_script_definitions(search_folders: List[str] = None) -> Tuple[Dict[AnyStr, ScriptDefinition], Dict[AnyStr, AnyStr]]:
+def get_script_definitions(path: str) -> Tuple[List[ScriptDefinitionWrapper], Dict[AnyStr, AnyStr]]:
     """
     Dynamically import all the Python modules in the search folders
 
@@ -299,13 +312,6 @@ def get_script_definitions(search_folders: List[str] = None) -> Tuple[Dict[AnySt
     """
     script_definitions: List[ScriptDefinitionWrapper] = []
     script_definition_load_errors: Dict[AnyStr, AnyStr] = {}
-
-    # Attempt to clone/pull the latest version of the definitions repository
-    definitions_repository = DefinitionsRepository()
-    definitions_repository.initialise_and_pull()
-
-    for error_index, git_error in enumerate(definitions_repository.errors):
-        script_definition_load_errors.update({"git error {}".format(error_index): git_error})
 
     if search_folders is None:
         this_file_path = os.path.split(__file__)[0]
@@ -337,9 +343,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     search_folders = args.search_folders.split(",")
 
-    script_definitions, script_definition_load_errors = get_script_definitions(search_folders=search_folders)
-
-    script_definitions_wrapper = ScriptDefinitionsWrapper(script_definitions, Generator(search_folders=search_folders), script_definition_load_errors=script_definition_load_errors)
+    script_definitions_wrapper = ScriptDefinitionsWrapper()
 
     gateway = ClientServer(
         java_parameters=JavaParameters(port=args.java_port),
