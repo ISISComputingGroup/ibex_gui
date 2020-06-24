@@ -15,7 +15,7 @@
     <color red="192" green="192" blue="192" />
   </foreground_color>
   <grid_space>6</grid_space>
-  <height>100</height>
+  <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
     <PV_ROOT>$(P)FINS_VAC:</PV_ROOT>
@@ -29,7 +29,7 @@
   <show_ruler>true</show_ruler>
   <snap_to_geometry>true</snap_to_geometry>
   <widget_type>Display</widget_type>
-  <width>2500</width>
+  <width>800</width>
   <wuid>6d5edd67:171feae85f0:-794b</wuid>
   <x>0</x>
   <y>-1</y>
@@ -48,7 +48,7 @@
     <foreground_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </foreground_color>
-    <height>650</height>
+    <height>600</height>
     <horizontal_tabs>true</horizontal_tabs>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -90,10 +90,10 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Tabbed Container</widget_type>
-    <width>2050</width>
+    <width>2100</width>
     <wuid>-3185ce32:17208cb8f6a:-3a7c</wuid>
     <x>0</x>
-    <y>36</y>
+    <y>30</y>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
@@ -112,7 +112,7 @@
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>621</height>
+      <height>571</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -130,7 +130,7 @@
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>2048</width>
+      <width>2098</width>
       <wuid>-3185ce32:17208cb8f6a:-3a7b</wuid>
       <x>1</x>
       <y>1</y>
@@ -612,7 +612,7 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>621</height>
+      <height>571</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -630,7 +630,7 @@ $(pv_value)</tooltip>
       <transparent>true</transparent>
       <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>2048</width>
+      <width>2098</width>
       <wuid>-3185ce32:17208cb8f6a:-3a79</wuid>
       <x>1</x>
       <y>1</y>
@@ -1184,7 +1184,7 @@ $(pv_value)</tooltip>
         <foreground_color>
           <color red="192" green="192" blue="192" />
         </foreground_color>
-        <height>157</height>
+        <height>139</height>
         <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -1197,14 +1197,14 @@ $(pv_value)</tooltip>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
         <scripts />
-        <show_scrollbar>true</show_scrollbar>
+        <show_scrollbar>false</show_scrollbar>
         <tooltip></tooltip>
         <transparent>false</transparent>
         <visible>true</visible>
         <widget_type>Grouping Container</widget_type>
         <width>481</width>
         <wuid>46c774db:172dc8ce854:-6abe</wuid>
-        <x>-18</x>
+        <x>-12</x>
         <y>408</y>
         <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
           <actions hook="false" hook_all="false" />
@@ -1250,7 +1250,7 @@ $(pv_value)</tooltip>
           <width>90</width>
           <wuid>1f3b352c:172176c5c2d:-187</wuid>
           <x>7</x>
-          <y>123</y>
+          <y>102</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
           <actions hook="false" hook_all="false" />
