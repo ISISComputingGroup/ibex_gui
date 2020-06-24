@@ -50,11 +50,11 @@
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
-    <height>361</height>
+    <height>295</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
-      <NAME>Aperture</NAME>
+      <NAME>APERTURE</NAME>
     </macros>
     <name>Aperture $(NUMBER)</name>
     <rules />
@@ -69,9 +69,9 @@
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
-    <width>205</width>
+    <width>181</width>
     <wuid>-1f3229a6:172dc7e2710:-5acd</wuid>
-    <x>78</x>
+    <x>72</x>
     <y>144</y>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -288,7 +288,7 @@ $(pv_value)</tooltip>
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <group_name></group_name>
-      <height>154</height>
+      <height>86</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
@@ -305,9 +305,9 @@ $(pv_value)</tooltip>
       <tooltip></tooltip>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
-      <width>172</width>
+      <width>158</width>
       <wuid>46c774db:172dc8ce854:-6d57</wuid>
-      <x>-4</x>
+      <x>0</x>
       <y>179</y>
     </widget>
   </widget>

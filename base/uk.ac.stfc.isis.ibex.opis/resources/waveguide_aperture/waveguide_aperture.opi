@@ -18,7 +18,7 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <PV_ROOT>$(P)FINS_VAC:</PV_ROOT>
+    <PLC_ROOT>$(P)FINS_VAC:</PLC_ROOT>
   </macros>
   <name>shape_1</name>
   <rules />
@@ -48,7 +48,7 @@
     <foreground_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </foreground_color>
-    <height>600</height>
+    <height>525</height>
     <horizontal_tabs>true</horizontal_tabs>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -90,10 +90,10 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Tabbed Container</widget_type>
-    <width>2100</width>
+    <width>800</width>
     <wuid>-3185ce32:17208cb8f6a:-3a7c</wuid>
     <x>0</x>
-    <y>30</y>
+    <y>36</y>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
@@ -112,7 +112,7 @@
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>571</height>
+      <height>496</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -130,7 +130,7 @@
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>2098</width>
+      <width>798</width>
       <wuid>-3185ce32:17208cb8f6a:-3a7b</wuid>
       <x>1</x>
       <y>1</y>
@@ -612,7 +612,7 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>571</height>
+      <height>496</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -630,7 +630,7 @@ $(pv_value)</tooltip>
       <transparent>true</transparent>
       <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>2098</width>
+      <width>798</width>
       <wuid>-3185ce32:17208cb8f6a:-3a79</wuid>
       <x>1</x>
       <y>1</y>
@@ -753,7 +753,7 @@ $(pv_value)</tooltip>
         <width>89</width>
         <wrap_words>true</wrap_words>
         <wuid>1f3b352c:172176c5c2d:-49f0</wuid>
-        <x>1699</x>
+        <x>1458</x>
         <y>5</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -774,48 +774,7 @@ $(pv_value)</tooltip>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>362</height>
-        <macros>
-          <include_parent_macros>true</include_parent_macros>
-          <NUMBER>1</NUMBER>
-        </macros>
-        <name>A Linking Container That Looks Like a Group Box 1</name>
-        <opi_file>aperture.opi</opi_file>
-        <resize_behaviour>1</resize_behaviour>
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <tooltip></tooltip>
-        <visible>true</visible>
-        <widget_type>Linking Container</widget_type>
-        <width>206</width>
-        <wuid>-24f40302:172c6fe5658:-675a</wuid>
-        <x>-18</x>
-        <y>41</y>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-        <actions hook="false" hook_all="false" />
-        <background_color>
-          <color red="240" green="240" blue="240" />
-        </background_color>
-        <border_color>
-          <color red="0" green="128" blue="255" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-        </font>
-        <foreground_color>
-          <color red="192" green="192" blue="192" />
-        </foreground_color>
-        <group_name></group_name>
-        <height>362</height>
+        <height>296</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NUMBER>1</NUMBER>
@@ -833,10 +792,10 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>206</width>
+        <width>182</width>
         <wuid>46c774db:172dc8ce854:-7e6f</wuid>
-        <x>187</x>
-        <y>41</y>
+        <x>181</x>
+        <y>40</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -856,7 +815,7 @@ $(pv_value)</tooltip>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>362</height>
+        <height>296</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NUMBER>2</NUMBER>
@@ -874,10 +833,10 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>206</width>
+        <width>182</width>
         <wuid>46c774db:172dc8ce854:-7c0c</wuid>
-        <x>437</x>
-        <y>41</y>
+        <x>362</x>
+        <y>40</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -897,7 +856,7 @@ $(pv_value)</tooltip>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>362</height>
+        <height>296</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NUMBER>2</NUMBER>
@@ -915,9 +874,9 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>206</width>
+        <width>182</width>
         <wuid>46c774db:172dc8ce854:-7bb0</wuid>
-        <x>642</x>
+        <x>543</x>
         <y>41</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -938,7 +897,7 @@ $(pv_value)</tooltip>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>362</height>
+        <height>296</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NUMBER>3</NUMBER>
@@ -956,9 +915,9 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>206</width>
+        <width>182</width>
         <wuid>46c774db:172dc8ce854:-7b85</wuid>
-        <x>1052</x>
+        <x>905</x>
         <y>41</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -979,7 +938,7 @@ $(pv_value)</tooltip>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>362</height>
+        <height>296</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NUMBER>3</NUMBER>
@@ -997,9 +956,9 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>206</width>
+        <width>182</width>
         <wuid>46c774db:172dc8ce854:-7b57</wuid>
-        <x>847</x>
+        <x>724</x>
         <y>41</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -1020,7 +979,7 @@ $(pv_value)</tooltip>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>362</height>
+        <height>296</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NUMBER>4</NUMBER>
@@ -1038,10 +997,10 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>206</width>
+        <width>182</width>
         <wuid>46c774db:172dc8ce854:-7b29</wuid>
-        <x>1257</x>
-        <y>41</y>
+        <x>1086</x>
+        <y>40</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -1061,7 +1020,7 @@ $(pv_value)</tooltip>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>362</height>
+        <height>296</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NUMBER>4</NUMBER>
@@ -1079,9 +1038,9 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>206</width>
+        <width>182</width>
         <wuid>46c774db:172dc8ce854:-7afb</wuid>
-        <x>1462</x>
+        <x>1267</x>
         <y>41</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -1102,7 +1061,7 @@ $(pv_value)</tooltip>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>362</height>
+        <height>296</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NUMBER>5</NUMBER>
@@ -1120,9 +1079,9 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>206</width>
+        <width>182</width>
         <wuid>46c774db:172dc8ce854:-7acd</wuid>
-        <x>1872</x>
+        <x>1629</x>
         <y>41</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -1143,7 +1102,7 @@ $(pv_value)</tooltip>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <group_name></group_name>
-        <height>362</height>
+        <height>296</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NUMBER>5</NUMBER>
@@ -1161,9 +1120,9 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>206</width>
+        <width>182</width>
         <wuid>46c774db:172dc8ce854:-7a9d</wuid>
-        <x>1667</x>
+        <x>1448</x>
         <y>41</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -1204,8 +1163,8 @@ $(pv_value)</tooltip>
         <widget_type>Grouping Container</widget_type>
         <width>481</width>
         <wuid>46c774db:172dc8ce854:-6abe</wuid>
-        <x>-12</x>
-        <y>408</y>
+        <x>0</x>
+        <y>348</y>
         <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
           <actions hook="false" hook_all="false" />
           <alarm_pulsing>false</alarm_pulsing>
@@ -1272,27 +1231,31 @@ $(pv_value)</tooltip>
           </foreground_color>
           <height>25</height>
           <horizontal_alignment>1</horizontal_alignment>
-          <name>Label_2</name>
-          <rules>
-            <rule name="Text" prop_id="text" out_exp="true">
-              <exp bool_exp="pv0 == 1">
-                <value>DISABLED</value>
-              </exp>
-              <pv trig="true">$(PV_ROOT)GALIL_INTERLOCK</pv>
-            </rule>
-            <rule name="Color" prop_id="background_color" out_exp="true">
-              <exp bool_exp="pv0 == 1">
-                <value>"Major"</value>
-              </exp>
-              <pv trig="true">(P)$(Q)GALIL_INTERLOCK</pv>
-            </rule>
-          </rules>
+          <name>Motion</name>
+          <rules />
           <scale_options>
             <width_scalable>true</width_scalable>
             <height_scalable>true</height_scalable>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
-          <scripts />
+          <scripts>
+            <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
+              <scriptName>EmbeddedScript</scriptName>
+              <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+from org.csstudio.opibuilder.scriptUtil import ColorFontUtil
+
+status = PVUtil.getString(pvs[0])
+
+if status == "CAN MOVE":
+    widget.setPropertyValue("text", "ENABLED")
+    display.getWidget("Motion").setPropertyValue("background_color",ColorFontUtil.getColorFromRGB(0,255,128))
+elif status == "CANNOT MOVE":
+  widget.setPropertyValue("text", "DISABLED")
+  display.getWidget("Motion").setPropertyValue("background_color","Major")
+]]></scriptText>
+              <pv trig="true">$(PLC_ROOT)GALIL_INTERLOCK</pv>
+            </path>
+          </scripts>
           <show_scrollbar>false</show_scrollbar>
           <text>ENABLED</text>
           <tooltip></tooltip>
@@ -1367,27 +1330,31 @@ $(pv_value)</tooltip>
           </foreground_color>
           <height>25</height>
           <horizontal_alignment>1</horizontal_alignment>
-          <name>Label_2</name>
-          <rules>
-            <rule name="Text" prop_id="text" out_exp="true">
-              <exp bool_exp="pv0 == &quot;AT VACUUM&quot;">
-                <value>"ON"</value>
-              </exp>
-              <pv trig="true">$(PV_ROOT)GUIDE:STATUS</pv>
-            </rule>
-            <rule name="Color" prop_id="background_color" out_exp="true">
-              <exp bool_exp="pv0 == &quot;AT VACUUM&quot;">
-                <value>ColorFontUtil.getColorFromRGB(0,255,128)</value>
-              </exp>
-              <pv trig="true">$(PV_ROOT)GUIDE:STATUS</pv>
-            </rule>
-          </rules>
+          <name>Vacuum</name>
+          <rules />
           <scale_options>
             <width_scalable>true</width_scalable>
             <height_scalable>true</height_scalable>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
-          <scripts />
+          <scripts>
+            <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
+              <scriptName>EmbeddedScript</scriptName>
+              <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+from org.csstudio.opibuilder.scriptUtil import ColorFontUtil
+
+status = PVUtil.getString(pvs[0])
+
+if status == "AT VACUUM":
+    widget.setPropertyValue("text", "ON")
+    display.getWidget("Vacuum").setPropertyValue("background_color",ColorFontUtil.getColorFromRGB(0,255,128))
+else:
+  widget.setPropertyValue("text", "OFF")
+  display.getWidget("Vacuum").setPropertyValue("background_color","Major")
+]]></scriptText>
+              <pv trig="true">$(PLC_ROOT)GUIDE:STATUS</pv>
+            </path>
+          </scripts>
           <show_scrollbar>false</show_scrollbar>
           <text>OFF</text>
           <tooltip></tooltip>
@@ -1541,6 +1508,47 @@ $(pv_value)</tooltip>
           <x>336</x>
           <y>39</y>
         </widget>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <group_name></group_name>
+        <height>296</height>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <NUMBER>1</NUMBER>
+        </macros>
+        <name>Linking Container</name>
+        <opi_file>aperture.opi</opi_file>
+        <resize_behaviour>1</resize_behaviour>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <tooltip></tooltip>
+        <visible>true</visible>
+        <widget_type>Linking Container</widget_type>
+        <width>182</width>
+        <wuid>46c774db:172dc8ce854:-4a6c</wuid>
+        <x>0</x>
+        <y>40</y>
       </widget>
     </widget>
   </widget>
