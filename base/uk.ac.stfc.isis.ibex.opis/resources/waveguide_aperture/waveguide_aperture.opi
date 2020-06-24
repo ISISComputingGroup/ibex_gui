@@ -29,7 +29,7 @@
   <show_ruler>true</show_ruler>
   <snap_to_geometry>true</snap_to_geometry>
   <widget_type>Display</widget_type>
-  <width>2100</width>
+  <width>2500</width>
   <wuid>6d5edd67:171feae85f0:-794b</wuid>
   <x>0</x>
   <y>-1</y>
@@ -90,7 +90,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Tabbed Container</widget_type>
-    <width>2000</width>
+    <width>2050</width>
     <wuid>-3185ce32:17208cb8f6a:-3a7c</wuid>
     <x>0</x>
     <y>36</y>
@@ -128,9 +128,9 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>1998</width>
+      <width>2048</width>
       <wuid>-3185ce32:17208cb8f6a:-3a7b</wuid>
       <x>1</x>
       <y>1</y>
@@ -628,53 +628,12 @@ $(pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>1998</width>
+      <width>2048</width>
       <wuid>-3185ce32:17208cb8f6a:-3a79</wuid>
       <x>1</x>
       <y>1</y>
-      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-        <actions hook="false" hook_all="false" />
-        <border_alarm_sensitive>false</border_alarm_sensitive>
-        <border_color>
-          <color name="ISIS_Border" red="0" green="0" blue="0" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
-        </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <foreground_color>
-          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-        </foreground_color>
-        <height>30</height>
-        <image></image>
-        <name>Button_1</name>
-        <push_action_index>0</push_action_index>
-        <pv_name></pv_name>
-        <pv_value />
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <style>1</style>
-        <text>Move All</text>
-        <toggle_button>false</toggle_button>
-        <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-        <visible>true</visible>
-        <widget_type>Action Button</widget_type>
-        <width>2043</width>
-        <wuid>-3185ce32:17208cb8f6a:-c04</wuid>
-        <x>-24</x>
-        <y>576</y>
-      </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
         <auto_size>false</auto_size>
@@ -917,7 +876,7 @@ $(pv_value)</tooltip>
         <widget_type>Linking Container</widget_type>
         <width>206</width>
         <wuid>46c774db:172dc8ce854:-7c0c</wuid>
-        <x>420</x>
+        <x>437</x>
         <y>41</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -958,7 +917,7 @@ $(pv_value)</tooltip>
         <widget_type>Linking Container</widget_type>
         <width>206</width>
         <wuid>46c774db:172dc8ce854:-7bb0</wuid>
-        <x>625</x>
+        <x>642</x>
         <y>41</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -999,7 +958,7 @@ $(pv_value)</tooltip>
         <widget_type>Linking Container</widget_type>
         <width>206</width>
         <wuid>46c774db:172dc8ce854:-7b85</wuid>
-        <x>1035</x>
+        <x>1052</x>
         <y>41</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -1040,7 +999,7 @@ $(pv_value)</tooltip>
         <widget_type>Linking Container</widget_type>
         <width>206</width>
         <wuid>46c774db:172dc8ce854:-7b57</wuid>
-        <x>830</x>
+        <x>847</x>
         <y>41</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -1081,7 +1040,7 @@ $(pv_value)</tooltip>
         <widget_type>Linking Container</widget_type>
         <width>206</width>
         <wuid>46c774db:172dc8ce854:-7b29</wuid>
-        <x>1240</x>
+        <x>1257</x>
         <y>41</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -1122,7 +1081,7 @@ $(pv_value)</tooltip>
         <widget_type>Linking Container</widget_type>
         <width>206</width>
         <wuid>46c774db:172dc8ce854:-7afb</wuid>
-        <x>1445</x>
+        <x>1462</x>
         <y>41</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -1163,7 +1122,7 @@ $(pv_value)</tooltip>
         <widget_type>Linking Container</widget_type>
         <width>206</width>
         <wuid>46c774db:172dc8ce854:-7acd</wuid>
-        <x>1843</x>
+        <x>1872</x>
         <y>41</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -1204,7 +1163,7 @@ $(pv_value)</tooltip>
         <widget_type>Linking Container</widget_type>
         <width>206</width>
         <wuid>46c774db:172dc8ce854:-7a9d</wuid>
-        <x>1644</x>
+        <x>1667</x>
         <y>41</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
