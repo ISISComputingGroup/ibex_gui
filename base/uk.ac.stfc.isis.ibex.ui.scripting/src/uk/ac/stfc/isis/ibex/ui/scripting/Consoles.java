@@ -118,7 +118,12 @@ public class Consoles extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
-		PyDevConfiguration.configure();
+		
+		try {
+		    PyDevConfiguration.configure();
+		} catch (Exception e) {
+		    LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
+		}
 		
 		eclipseContext = EclipseContextFactory.getServiceContext(context);
 		
