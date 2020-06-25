@@ -72,12 +72,12 @@ pipeline {
             }
         }
         
-        bat """
+        sh """
             cd build
-            set GIT_COMMIT=${env.GIT_COMMIT}
-            set GIT_BRANCH=${env.BRANCH_NAME}
-            set RELEASE=${env.IS_RELEASE}
-            set DEPLOY=${env.IS_DEPLOY}
+            export GIT_COMMIT=${env.GIT_COMMIT}
+            export GIT_BRANCH=${env.BRANCH_NAME}
+            export RELEASE=${env.IS_RELEASE}
+            export DEPLOY=${env.IS_DEPLOY}
             sh jenkins_build.sh
             """
       }
@@ -90,7 +90,7 @@ pipeline {
 //            %PYTHON3% .\\base\\uk.ac.stfc.isis.ibex.opis\\check_opi_format.py -strict 
 //        """
 //      }
-    }
+//    }
     
     stage("Collate Unit Tests") {
       steps {
