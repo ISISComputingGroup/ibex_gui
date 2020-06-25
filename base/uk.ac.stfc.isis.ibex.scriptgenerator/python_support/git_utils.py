@@ -19,8 +19,8 @@ class DefinitionsRepository:
     Contains methods to initialise and maintain the script definitions repository
     """
 
-    def __init__(self, directory_path: str = DEFAULT_REPO_PATH, remote_url: str = REMOTE_URL, bundle_path: str = DEFAULT_BUNDLE_PATH):
-        self.path = directory_path
+    def __init__(self, path: str = DEFAULT_REPO_PATH, remote_url: str = REMOTE_URL, bundle_path: str = DEFAULT_BUNDLE_PATH):
+        self.path = path
         self.remote_url = remote_url
         self.bundle_path = bundle_path
         self.git = Git()
@@ -65,6 +65,12 @@ class DefinitionsRepository:
                 self._change_origin_url(repo)
 
             self._pull_from_origin(repo)
+
+    def is_dirty(self) -> bool:
+        """
+        Returns True if this repository is dirty (cannot be pulled)
+        """
+        return self.repo.is_dirty()
 
     def _pull_from_origin(self, repo: Repo):
         """

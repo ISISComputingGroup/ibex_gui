@@ -219,13 +219,18 @@ class ScriptDefinitionsWrapper(object):
     class Java:
         implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionsWrapper']
 
-    def __init__(self):
-        self.repository = DefinitionsRepository()
+    def __init__(self, path: str):
+        self.repository = DefinitionsRepository(path=path)
         self.repository.initialise_and_pull()
-
         self.script_definitions, self.script_definition_load_errors = get_script_definitions(self.repository.path)
 
         self.generator = Generator(search_folders=[self.repository.path, ])
+
+    def isRepoDirty(self) -> bool:
+        """
+        Returns True if the repository path can be pulled, else False
+        """
+        return self.repository.is_dirty()
 
     def getGitErrors(self):
         """
@@ -296,7 +301,7 @@ class ScriptDefinitionsWrapper(object):
         return True
 
 
-def get_script_definitions(path: str) -> Tuple[List[ScriptDefinitionWrapper], Dict[AnyStr, AnyStr]]:
+def get_script_definitions(repo_path: str) -> Tuple[List[ScriptDefinitionWrapper], Dict[AnyStr, AnyStr]]:
     """
     Dynamically import all the Python modules in the search folders
 
@@ -313,24 +318,20 @@ def get_script_definitions(path: str) -> Tuple[List[ScriptDefinitionWrapper], Di
     script_definitions: List[ScriptDefinitionWrapper] = []
     script_definition_load_errors: Dict[AnyStr, AnyStr] = {}
 
-    if search_folders is None:
-        this_file_path = os.path.split(__file__)[0]
-        search_folder = [os.path.join(this_file_path, "instruments")]
-    for search_folder in search_folders:
-        for filename in iglob("{folder}/*.py".format(folder=search_folder)):
-            module_name = os.path.splitext(os.path.basename(filename))[0]
-            # Attempt to import the DoRun class
-            try:
-                loader = importlib.machinery.SourceFileLoader(module_name, os.path.join(search_folder, filename))
-                spec = importlib.util.spec_from_loader(module_name, loader)
-                loaded_module = importlib.util.module_from_spec(spec)
-                loader.exec_module(loaded_module)
-                script_definitions.append(ScriptDefinitionWrapper(module_name, loaded_module.DoRun()))
-            except Exception as e:
-                # On failure to load ensure we return the reason
-                script_definition_load_errors[module_name] = str(e)
-                # Print any errors to stderr, Java will catch and throw to the user
-                print("Error loading {}: {}".format(module_name, e), file=sys.stderr)
+    for filename in iglob("{folder}/*.py".format(folder=repo_path)):
+        module_name = os.path.splitext(os.path.basename(filename))[0]
+        # Attempt to import the DoRun class
+        try:
+            loader = importlib.machinery.SourceFileLoader(module_name, os.path.join(repo_path, filename))
+            spec = importlib.util.spec_from_loader(module_name, loader)
+            loaded_module = importlib.util.module_from_spec(spec)
+            loader.exec_module(loaded_module)
+            script_definitions.append(ScriptDefinitionWrapper(module_name, loaded_module.DoRun()))
+        except Exception as e:
+            # On failure to load ensure we return the reason
+            script_definition_load_errors[module_name] = str(e)
+            # Print any errors to stderr, Java will catch and throw to the user
+            print("Error loading {}: {}".format(module_name, e), file=sys.stderr)
     return script_definitions, script_definition_load_errors
 
 
@@ -338,12 +339,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('java_port', type=int, help='the java port to connect on')
     parser.add_argument('python_port', type=int, help='the python port to connect on')
-    parser.add_argument('search_folders', type=str, help='the folders containing the script generator script_definitions to search')
+    parser.add_argument('repo_path', type=str, help='Path to the script generator repository')
 
     args = parser.parse_args()
-    search_folders = args.search_folders.split(",")
 
-    script_definitions_wrapper = ScriptDefinitionsWrapper()
+    script_definitions_wrapper = ScriptDefinitionsWrapper(args.repo_path)
 
     gateway = ClientServer(
         java_parameters=JavaParameters(port=args.java_port),
