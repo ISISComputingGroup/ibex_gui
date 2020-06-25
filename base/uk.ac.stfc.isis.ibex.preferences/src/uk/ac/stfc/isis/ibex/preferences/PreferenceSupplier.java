@@ -185,7 +185,7 @@ public class PreferenceSupplier {
     /**
      * Defines where to find generator script definition files from.
      */
-    private static final String SCRIPT_DEFINITIONS_FOLDER = "script_definitions_folder";
+    private static final String SCRIPT_DEFINITIONS_FOLDER = "C:/ScriptDefinitions/";
     
     /**
      * The default URL for the Script Generator manual page
@@ -299,8 +299,8 @@ public class PreferenceSupplier {
      * 
      * @return a list of of folders paths that contain script generator script definitions.
      */
-	public String scriptGeneratorScriptDefinitionFolders() {
-		return getString(SCRIPT_DEFINITIONS_FOLDER, DEFAULT_SCRIPT_DEFINITIONS_FOLDER);
+	public String scriptGeneratorScriptDefinitionFolder() {
+		return SCRIPT_DEFINITIONS_FOLDER;
 	}
 	
     /**

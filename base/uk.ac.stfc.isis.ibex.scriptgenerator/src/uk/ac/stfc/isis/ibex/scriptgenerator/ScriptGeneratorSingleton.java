@@ -598,7 +598,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 						"Tried to generate a script with no script definition selected to generate it with"));
 		try {
 			if (areParamsValid()) {
-				String filePath =  preferenceSupplier.scriptGeneratorScriptDefinitionFolders()
+				String filePath =  preferenceSupplier.scriptGeneratorScriptDefinitionFolder()
 						+ scriptDefinition.getName() + PYTHON_EXT;
 				String jsonContent = scriptGenFileHandler.createJsonString(scriptGeneratorTable.getActions(), scriptGenFileHandler.readFileContent(filePath), filePath);
 				generator.refreshGeneratedScript(scriptGeneratorTable, scriptDefinition, jsonContent);
@@ -665,7 +665,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	public void loadParameterValues(String fileName) throws NoScriptDefinitionSelectedException, ScriptDefinitionNotMatched, UnsupportedOperationException {
 		ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException("No Configuration Selected"));
-		String currentDefinitionPath = preferenceSupplier.scriptGeneratorScriptDefinitionFolders() + scriptDefinition.getName() + PYTHON_EXT;
+		String currentDefinitionPath = preferenceSupplier.scriptGeneratorScriptDefinitionFolder() + scriptDefinition.getName() + PYTHON_EXT;
 		List<Map<JavaActionParameter, String>> list = scriptGenFileHandler.getParameterValues(fileName, currentDefinitionPath, getActionParameters());
 		scriptGeneratorTable.addMultipleActions(list);
 	}
@@ -686,7 +686,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			if (!fileName.contains(JSON_EXT)) {
 				fileName = preferenceSupplier.scriptGenerationFolder() + fileName + JSON_EXT;
 			}
-			scriptGenFileHandler.saveParameters(this.scriptGeneratorTable.getActions(), preferenceSupplier.scriptGeneratorScriptDefinitionFolders() + scriptDefinition.getName() + PYTHON_EXT,
+			scriptGenFileHandler.saveParameters(this.scriptGeneratorTable.getActions(), preferenceSupplier.scriptGeneratorScriptDefinitionFolder() + scriptDefinition.getName() + PYTHON_EXT,
 					fileName);
 		} catch (InterruptedException | ExecutionException e) {
 			firePropertyChange(THREAD_ERROR_PROPERTY, threadError, true);
