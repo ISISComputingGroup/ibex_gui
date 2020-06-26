@@ -1,0 +1,125 @@
+#!groovy
+
+pipeline {
+
+  // agent defines where the pipeline will run.
+  agent {  
+    label "sl7cloud"
+  }
+  
+  triggers {
+    pollSCM('H/2 * * * *')
+  }
+  
+  // The options directive is for configuration that applies to the whole job.
+  options {
+    buildDiscarder(logRotator(numToKeepStr:'10'))
+    timeout(time: 60, unit: 'MINUTES')
+    disableConcurrentBuilds()
+    office365ConnectorWebhooks([[
+                    name: "Office 365",
+                    notifyBackToNormal: true,
+                    startNotification: false,
+                    notifyFailure: true,
+                    notifySuccess: false,
+                    notifyNotBuilt: false,
+                    notifyAborted: false,
+                    notifyRepeatedFailure: true,
+                    notifyUnstable: true,
+                    url: "${env.MSTEAMS_URL}"
+            ]]
+    )
+  }
+
+  stages {  
+    stage("Checkout") {
+      steps {
+        echo "Branch: ${env.BRANCH_NAME}"
+        checkout scm
+      }
+    }
+    
+    stage("Build") {
+      steps {
+        script {
+            // env.BRANCH_NAME is only supplied to multi-branch pipeline jobs
+            if (env.BRANCH_NAME == null) {
+                env.BRANCH_NAME = ""
+                  }
+            env.GIT_COMMIT = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+            env.GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
+            echo "git commit: ${env.GIT_COMMIT}"
+            echo "git branch: ${env.BRANCH_NAME} ${env.GIT_BRANCH}"
+            if (env.BRANCH_NAME.startsWith("Release")) {
+                env.IS_RELEASE = "YES"
+                env.IS_DEPLOY = "NO"
+                env.IS_E4 = "YES"
+            }
+            else if (env.GIT_BRANCH == "origin/master_E3_maint") {
+                env.IS_RELEASE = "NO"
+                env.IS_DEPLOY = "YES"
+                env.IS_E4 = "NO"
+            }
+            else if (env.GIT_BRANCH == "origin/master") {
+                env.IS_RELEASE = "NO"
+                env.IS_DEPLOY = "YES"
+                env.IS_E4 = "YES"
+            }
+            else {
+                env.IS_RELEASE = "NO"
+                env.IS_DEPLOY = "NO"
+                env.IS_E4 = "YES"
+            }
+        }
+        
+        sh """
+            cd build
+            export GIT_COMMIT=${env.GIT_COMMIT}
+            export GIT_BRANCH=${env.BRANCH_NAME}
+            export RELEASE=${env.IS_RELEASE}
+            export DEPLOY=${env.IS_DEPLOY}
+            sh jenkins_build.sh
+            """
+      }
+    }
+    
+//    stage("OPI Checker") {
+//      steps {
+//        bat """
+//            set PYTHON3=C:\\Instrument\\Apps\\Python3\\python.exe
+//            %PYTHON3% .\\base\\uk.ac.stfc.isis.ibex.opis\\check_opi_format.py -strict 
+//        """
+//      }
+//    }
+    
+    stage("Collate Unit Tests") {
+      steps {
+        junit '**/surefire-reports/TEST-*.xml,**/test-reports/TEST-*.xml'
+      }
+    }
+    
+    stage("Checkstyle") {
+      steps {
+        archiveCheckstyleResults()
+      }
+    }
+    
+ //   stage("Doxygen") {
+ //     steps {
+//        bat '''
+//            "C:\\Program Files\\doxygen\\bin\\doxygen.exe" build\\ibex_gui_doxy.config
+//            '''
+ //     }
+//    }
+  }
+}
+
+def archiveCheckstyleResults() {
+    step([$class: "CheckStylePublisher",
+          canComputeNew: false,
+          defaultEncoding: "",
+          healthy: "",
+          pattern: "**/target/checkstyle-result.xml",
+          unHealthy: "",
+          usePreviousBuildAsReference: true])
+}
