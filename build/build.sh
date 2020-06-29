@@ -10,6 +10,8 @@ mvn --settings="$TOPPATH/mvn_user_settings.xml" \
     -DforceContextQualifier="$BUILD_NUMBER" \
     -DskipTests \
     clean verify
+    
+cp -r "//isis/inst$/Kits$/CompGroup/ICP/ibex_client_jre_linux" "$TOPPATH/base/uk.ac.stfc.isis.ibex.client.product/target/products/ibex.product/linux/gtk/x86_64/jre"
 
-echo "Client built in $TOPPATH/base/uk.ac.stfc.isis.ibex.client.product/target/products/ibex.product/"
+echo "Client built in $TOPPATH/base/uk.ac.stfc.isis.ibex.client.product/target/products/ibex.product/linux/gtk/x86_64"
 
