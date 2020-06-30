@@ -1,4 +1,5 @@
 #!/bin/sh
+set -o errexit
 sh build.sh
 mkdir -p /misc/babylon/Scratch/IBEX/
 rm -fr /misc/babylon/Scratch/IBEX/Client
