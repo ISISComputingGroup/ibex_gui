@@ -9,8 +9,8 @@ min_z = 0.0
 max_z = 12500.0
 diff_z = max_z - min_z
 sizing_value = diff_x / diff_z
-size_offset = 40.0 / 2.0
+size_offset = 40.0 / 2
 widget_new_x = (bafdet_location_z * sizing_value) + min_x - size_offset
 
-widget.setPropertyValue("x", widget_new_x)
+widget.setPropertyValue("x", round(widget_new_x, 1))
 widget.setPropertyValue("tooltip", str(bafdet_location_z_pv) + "\n" + str(widget_new_x))
