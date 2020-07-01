@@ -45,7 +45,7 @@ def main():
     count = populate_tabs(count, "level", 2, container)
     count = populate_tabs(count, "pressure", 2, container)
     if count > 0:
-    	container.setPropertyValue("tab_count", count)
+    	container.setPropertyValue("tab_count", count + 1)  # +1 is for System tab which is always present.
     else:
     	container.setPropertyValue("visible", False)
     	display.getWidget("Warning").setPropertyValue("visible", True)
