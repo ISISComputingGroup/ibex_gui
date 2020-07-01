@@ -8,3 +8,9 @@ interval = rear_component_z - forward_component_z
 
 widget.setPropertyValue("text", str(interval))
 widget.setPropertyValue("tooltip", str(forward_component_pv) + " - " + str(rear_component_pv) + "\n" + str(interval))
+if interval <= 50: # 5cm
+    widget.setPropertyValue("background_color", "Major")
+elif interval <= 100: # 10cm
+    widget.setPropertyValue("background_color", "Minor")
+else:
+    widget.setPropertyValue("background_color", "White")
