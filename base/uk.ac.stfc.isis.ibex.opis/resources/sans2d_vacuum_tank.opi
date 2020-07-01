@@ -352,7 +352,11 @@ $(pv_value)</tooltip>
           <height_scalable>true</height_scalable>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
-        <scripts />
+        <scripts>
+          <path pathString="sans2d_vacuum_bafdet_indicator.py" checkConnect="true" sfe="false" seoe="false">
+            <pv trig="true">$(P)MOT:REARDETZ:SP</pv>
+          </path>
+        </scripts>
         <show_scrollbar>false</show_scrollbar>
         <tooltip></tooltip>
         <transparent>true</transparent>
@@ -490,7 +494,11 @@ $(pv_value)</tooltip>
           <height_scalable>true</height_scalable>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
-        <scripts />
+        <scripts>
+          <path pathString="sans2d_vacuum_bafdet_indicator.py" checkConnect="true" sfe="false" seoe="false">
+            <pv trig="true">$(P)MOT:FRONTBAFFLEZ:SP</pv>
+          </path>
+        </scripts>
         <show_scrollbar>false</show_scrollbar>
         <tooltip></tooltip>
         <transparent>true</transparent>
@@ -3056,7 +3064,11 @@ $(pv_value)</tooltip>
           <height_scalable>true</height_scalable>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
-        <scripts />
+        <scripts>
+          <path pathString="sans2d_vacuum_bafdet_indicator.py" checkConnect="true" sfe="false" seoe="false">
+            <pv trig="true">$(P)MOT:REARBAFFLEZ:SP</pv>
+          </path>
+        </scripts>
         <show_scrollbar>false</show_scrollbar>
         <tooltip></tooltip>
         <transparent>true</transparent>
@@ -3194,7 +3206,11 @@ $(pv_value)</tooltip>
           <height_scalable>true</height_scalable>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
-        <scripts />
+        <scripts>
+          <path pathString="sans2d_vacuum_bafdet_indicator.py" checkConnect="true" sfe="false" seoe="false">
+            <pv trig="true">$(P)MOT:FRONTDETZ:SP</pv>
+          </path>
+        </scripts>
         <show_scrollbar>false</show_scrollbar>
         <tooltip></tooltip>
         <transparent>true</transparent>
