@@ -92,6 +92,8 @@
     <horizontal_tabs>true</horizontal_tabs>
     <macros>
       <include_parent_macros>true</include_parent_macros>
+      <MINOR_WARNING>50</MINOR_WARNING>
+      <MAJOR_WARNING>100</MAJOR_WARNING>
     </macros>
     <minimum_tab_height>10</minimum_tab_height>
     <name>Tabbed Container</name>
@@ -924,7 +926,7 @@ $(pv_value)</tooltip>
         <name>Text Update</name>
         <precision>0</precision>
         <precision_from_pv>true</precision_from_pv>
-        <pv_name></pv_name>
+        <pv_name>$(P)FINS_VAC:FDFB:INTERVAL</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -933,12 +935,7 @@ $(pv_value)</tooltip>
           <height_scalable>true</height_scalable>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
-        <scripts>
-          <path pathString="sans2d_vacuum_interval_calc.py" checkConnect="true" sfe="false" seoe="false">
-            <pv trig="true">$(P)MOT:FRONTDETZ:SP</pv>
-            <pv trig="true">$(P)MOT:FRONTBAFFLEZ:SP</pv>
-          </path>
-        </scripts>
+        <scripts />
         <show_units>true</show_units>
         <text>######</text>
         <tooltip>$(pv_name)
@@ -981,7 +978,7 @@ $(pv_value)</tooltip>
         <name>Text Update</name>
         <precision>0</precision>
         <precision_from_pv>true</precision_from_pv>
-        <pv_name></pv_name>
+        <pv_name>$(P)FINS_VAC:FBRB:INTERVAL</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -1038,7 +1035,7 @@ $(pv_value)</tooltip>
         <name>RB - RB Interval</name>
         <precision>0</precision>
         <precision_from_pv>true</precision_from_pv>
-        <pv_name></pv_name>
+        <pv_name>$(P)FINS_VAC:RBRD:INTERVAL</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -2328,7 +2325,7 @@ $(pv_value)</tooltip>
         <name>Text Update</name>
         <precision>0</precision>
         <precision_from_pv>true</precision_from_pv>
-        <pv_name></pv_name>
+        <pv_name>$(P)FINS_VAC:FDFBSP:INTERVAL</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -2337,12 +2334,7 @@ $(pv_value)</tooltip>
           <height_scalable>true</height_scalable>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
-        <scripts>
-          <path pathString="sans2d_vacuum_interval_calc.py" checkConnect="true" sfe="false" seoe="false">
-            <pv trig="true">$(P)MOT:FRONTDETZ</pv>
-            <pv trig="true">$(P)MOT:FRONTBAFFLEZ</pv>
-          </path>
-        </scripts>
+        <scripts />
         <show_units>true</show_units>
         <text>######</text>
         <tooltip>$(pv_name)
@@ -2443,7 +2435,7 @@ $(pv_value)</tooltip>
         <name>Text Update_1</name>
         <precision>0</precision>
         <precision_from_pv>true</precision_from_pv>
-        <pv_name></pv_name>
+        <pv_name>$(P)FINS_VAC:FBRBSP:INTERVAL</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -2500,7 +2492,7 @@ $(pv_value)</tooltip>
         <name>RB - RB Interval</name>
         <precision>0</precision>
         <precision_from_pv>true</precision_from_pv>
-        <pv_name></pv_name>
+        <pv_name>$(P)FINS_VAC:RBRDSP:INTERVAL</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
