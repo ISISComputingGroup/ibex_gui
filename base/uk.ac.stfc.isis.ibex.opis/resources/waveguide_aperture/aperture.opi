@@ -50,7 +50,7 @@
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
-    <height>313</height>
+    <height>265</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -131,7 +131,7 @@
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
-      <height>138</height>
+      <height>121</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -151,8 +151,8 @@
       <widget_type>Grouping Container</widget_type>
       <width>67</width>
       <wuid>-1f3229a6:172dc7e2710:-5aca</wuid>
-      <x>7</x>
-      <y>42</y>
+      <x>12</x>
+      <y>12</y>
       <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
         <actions hook="false" hook_all="false" />
         <alarm_pulsing>false</alarm_pulsing>
@@ -254,16 +254,18 @@ $(pv_value)</tooltip>
         <pv_value />
         <rules>
           <rule name="ApertureMovement" prop_id="y" out_exp="true">
-            <exp bool_exp="pv0 &gt;  widget.getMacroValue(&quot;AP&quot; + widget.getMacroValue(&quot;NUMBER&quot;)+&quot;_HIGH&quot;)">
+            <exp bool_exp="pv0 &gt;  pv1">
               <value>0</value>
             </exp>
-            <exp bool_exp="pv0 &lt; widget.getMacroValue(&quot;AP&quot; + widget.getMacroValue(&quot;NUMBER&quot;)+&quot;_LOW&quot;)">
+            <exp bool_exp="pv0 &lt; pv2">
               <value>92</value>
             </exp>
             <exp bool_exp="1 == 1">
-              <value>(92 - (92  * Math.abs(widget.getMacroValue("AP" + widget.getMacroValue("NUMBER")+"_LOW")))/ (Math.abs(widget.getMacroValue("AP" + widget.getMacroValue("NUMBER")+"_HIGH")) + Math.abs(widget.getMacroValue("AP" + widget.getMacroValue("NUMBER")+"_LOW")))) - (92 * pv0) / (Math.abs(widget.getMacroValue("AP" + widget.getMacroValue("NUMBER")+"_LOW")) + Math.abs(widget.getMacroValue("AP" + widget.getMacroValue("NUMBER")+"_HIGH")))</value>
+              <value>(92 - (92  * Math.abs(pv2))/ (Math.abs(pv1) + Math.abs(pv2))) - (92 * pv0) / (Math.abs(pv2) + Math.abs(pv1))</value>
             </exp>
             <pv trig="true">$(P)MOT:APERTURE_$(NUMBER)</pv>
+            <pv trig="false">$(P)MOT:APERTURE_$(NUMBER):MTR.HLM</pv>
+            <pv trig="false">$(P)MOT:APERTURE_$(NUMBER):MTR.LLM</pv>
           </rule>
         </rules>
         <scale_options>
@@ -321,89 +323,7 @@ $(pv_value)</tooltip>
       <width>98</width>
       <wuid>46c774db:172dc8ce854:-6d57</wuid>
       <x>0</x>
-      <y>192</y>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-      <actions hook="false" hook_all="false" />
-      <auto_size>false</auto_size>
-      <background_color>
-        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-      </background_color>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <border_style>0</border_style>
-      <border_width>1</border_width>
-      <enabled>true</enabled>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
-      </font>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <height>34</height>
-      <horizontal_alignment>0</horizontal_alignment>
-      <name>Label_1</name>
-      <rules />
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <show_scrollbar>false</show_scrollbar>
-      <text>High: $(AP$(NUMBER)_HIGH)</text>
-      <tooltip></tooltip>
-      <transparent>false</transparent>
-      <vertical_alignment>1</vertical_alignment>
-      <visible>true</visible>
-      <widget_type>Label</widget_type>
-      <width>127</width>
-      <wrap_words>true</wrap_words>
-      <wuid>-19b1913d:172ff9da489:-7b3e</wuid>
-      <x>0</x>
-      <y>1</y>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-      <actions hook="false" hook_all="false" />
-      <auto_size>false</auto_size>
-      <background_color>
-        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-      </background_color>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <border_style>0</border_style>
-      <border_width>1</border_width>
-      <enabled>true</enabled>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
-      </font>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <height>34</height>
-      <horizontal_alignment>0</horizontal_alignment>
-      <name>Label_1</name>
-      <rules />
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <show_scrollbar>false</show_scrollbar>
-      <text>Low: $(AP$(NUMBER)_LOW)</text>
-      <tooltip></tooltip>
-      <transparent>false</transparent>
-      <vertical_alignment>1</vertical_alignment>
-      <visible>true</visible>
-      <widget_type>Label</widget_type>
-      <width>127</width>
-      <wrap_words>true</wrap_words>
-      <wuid>-19b1913d:172ff9da489:-7b34</wuid>
-      <x>0</x>
-      <y>158</y>
+      <y>144</y>
     </widget>
   </widget>
 </display>
