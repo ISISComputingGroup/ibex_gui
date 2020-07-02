@@ -27,7 +27,7 @@
         <type>MOTION_SET_POINTS</type>
         <path>stage/sans2d_scraper_aperture.opi</path>
         <description>The OPI for motion setpoints</description>
-        <macros />>
+        <macros />
         <categories>
           <category>Miscellaneous motion control</category>
         </categories>
@@ -231,7 +231,7 @@
       <key>ILM200</key>
       <value>
         <type>CRYO_LEVEL_GAUGE</type>
-        <path>ilm200\ilm200.opi</path>
+        <path>ilm200/ilm200.opi</path>
         <description>The OPI for the ILM200</description>
         <macros>
           <macro>
@@ -279,7 +279,7 @@
       <key>Pinhole Selector</key>
       <value>
         <type>PINHOLESELECTOR</type>
-        <path>pinhole_selector\pinhole_selector.opi</path>
+        <path>pinhole_selector/pinhole_selector.opi</path>
         <description>The OPI for the pinhole selector.</description>
         <macros>
           <macro>
@@ -370,7 +370,7 @@
       <key>Lakeshore 460</key>
       <value>
         <type>LKSH460</type>
-        <path>Lakeshore460/lakeshore460.opi</path>
+        <path>Lakeshore460/Lakeshore460.opi</path>
         <description>The OPI for the Lakeshore 460 Gaussmeter.</description>
         <macros>
           <macro>
@@ -500,7 +500,7 @@
       <key>Mercury iTC</key>
       <value>
         <type>MERCURY</type>
-        <path>mercuryiTC\mercuryiTC.opi</path>
+        <path>mercuryiTC/mercuryiTC.opi</path>
         <description>The OPI for the Mercury temperature controller.</description>
         <macros>
           <macro>
@@ -677,7 +677,7 @@
       <key>PGC</key>
       <value>
         <type>PGC</type>
-        <path>pgc\pgc.opi</path>
+        <path>pgc/pgc.opi</path>
         <description>The OPI for the Polariser , Guide and Collimation ticket.</description>
         <macros>
           <macro>
@@ -1114,7 +1114,7 @@
       <key>Sample stack</key>
       <value>
         <type>SAMPLESTACK</type>
-        <path>sample_stack\sample_stack.opi</path>
+        <path>sample_stack/sample_stack.opi</path>
         <description>Generic sample stack OPI supporting up to 8 motors. PV prefixs are typically of the form MOT:STACK:Z </description>
         <macros>
           <macro>
@@ -1253,7 +1253,7 @@
       <key>Jaws</key>
       <value>
         <type>JAWS</type>
-        <path>jaws/jaws.opi</path>
+        <path>jaws/Jaws.opi</path>
         <description>The OPI for a Jaw set.</description>
         <macros>
           <macro>
@@ -1271,7 +1271,7 @@
       <key>ITC503</key>
       <value>
         <type>EUROTHERM</type>
-        <path>itc503\itc503.opi</path>
+        <path>itc503/itc503.opi</path>
         <description>The OPI for the OI ITC503 temperature controller</description>
         <macros>
           <macro>
@@ -1481,7 +1481,7 @@
       <key>Triton dilution fridge</key>
       <value>
         <type>DILUTION_FRIDGE</type>
-        <path>triton\triton.opi</path>
+        <path>triton/triton.opi</path>
         <description>The OPI for the Triton</description>
         <macros>
           <macro>

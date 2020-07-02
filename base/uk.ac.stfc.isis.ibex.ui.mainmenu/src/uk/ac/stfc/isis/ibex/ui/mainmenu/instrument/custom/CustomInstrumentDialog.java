@@ -80,7 +80,7 @@ public class CustomInstrumentDialog extends TitleAreaDialog {
 
     @Override
     protected Point getInitialSize() {
-        return new Point(400, 250);
+        return new Point(500, 300);
     }
 
     @Override

@@ -75,7 +75,7 @@ public class InstrumentDialog extends TitleAreaDialog {
 
 	@Override
 	protected Point getInitialSize() {
-        return new Point(300, 400);
+        return new Point(400, 600);
 	}
 	
 	@Override
