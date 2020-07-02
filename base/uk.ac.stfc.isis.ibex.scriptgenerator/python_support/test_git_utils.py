@@ -15,7 +15,7 @@ class DefinitionsRepositoryTests(unittest.TestCase):
     @patch("git_utils.Git", return_value=Mock())
     def setUp(self, mock_git):
         self.mock_git = mock_git.return_value
-        self.definitions_repo = DefinitionsRepository(directory_path=TEST_REPO_PATH, bundle_path=TEST_BUNDLE_PATH, remote_url=TEST_URL)
+        self.definitions_repo = DefinitionsRepository(path=TEST_REPO_PATH, bundle_path=TEST_BUNDLE_PATH, remote_url=TEST_URL)
 
     def tearDown(self):
         # Ensure git clone mock is reset between tests
@@ -68,7 +68,9 @@ class DefinitionsRepositoryTests(unittest.TestCase):
 
         self.assertTrue(self.definitions_repo._repo_already_exists())
 
-    def test_GIVEN_remote_repository_reachable_WHEN_cloning_the_repository_THEN_clone_from_github_requested(self):
+    @patch("os.path.isdir", return_value=True)
+    @patch("os.listdir")
+    def test_GIVEN_remote_repository_reachable_WHEN_cloning_the_repository_THEN_clone_from_github_requested(self, mock_list, mock_isdir):
         self.definitions_repo._attempt_repo_init()
         self.mock_git.clone.assert_called_with(TEST_URL, TEST_REPO_PATH)
 
@@ -82,7 +84,8 @@ class DefinitionsRepositoryTests(unittest.TestCase):
 
     @patch("os.makedirs")
     @patch("os.path.isdir")
-    def test_GIVEN_directory_which_does_not_exist_WHEN_repository_initialise_called_THEN_makedirs_called_to_create_folders(self, mock_isdir, mock_makedirs):
+    @patch("os.listdir")
+    def test_GIVEN_directory_which_does_not_exist_WHEN_repository_initialise_called_THEN_makedirs_called_to_create_folders(self, mock_listdir, mock_isdir, mock_makedirs):
         mock_isdir.return_value = False
         self.definitions_repo._attempt_repo_init()
         mock_makedirs.assert_called_with(TEST_REPO_PATH, exist_ok=True)
