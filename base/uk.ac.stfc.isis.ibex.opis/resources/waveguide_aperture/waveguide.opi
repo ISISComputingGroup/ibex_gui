@@ -71,8 +71,8 @@
     <widget_type>Grouping Container</widget_type>
     <width>127</width>
     <wuid>46c774db:172dc8ce854:-7ef9</wuid>
-    <x>114</x>
-    <y>156</y>
+    <x>0</x>
+    <y>0</y>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>

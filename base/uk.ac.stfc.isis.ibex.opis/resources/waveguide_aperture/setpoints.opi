@@ -70,8 +70,8 @@
     <widget_type>Grouping Container</widget_type>
     <width>97</width>
     <wuid>46c774db:172dc8ce854:-6682</wuid>
-    <x>66</x>
-    <y>180</y>
+    <x>0</x>
+    <y>0</y>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <auto_size>false</auto_size>
