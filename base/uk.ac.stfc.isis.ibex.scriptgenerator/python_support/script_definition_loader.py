@@ -230,7 +230,17 @@ class ScriptDefinitionsWrapper(object):
         """
         Returns True if the repository path can be pulled, else False
         """
-        return self.repository.is_dirty()
+        # if self.repository.is_dirty is None:
+        #     return True
+        # return self.repository.is_dirty
+        return True
+
+    # def resetToOriginMaster(self) -> None:
+    #     """
+    #     Resets the state of the repository to the latest origin/master
+    #     """
+    #     self.repository.reset_to_origin_master()
+    #     return None
 
     def getGitErrors(self):
         """

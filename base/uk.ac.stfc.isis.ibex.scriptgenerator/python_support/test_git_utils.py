@@ -126,3 +126,6 @@ class DefinitionsRepositoryTests(unittest.TestCase):
                 with patch.object(self.definitions_repo, "_repo_already_exists", return_value=True):
                     self.definitions_repo.initialise_and_pull()
                     error_handler.assert_not_called()
+
+    def test_GIVEN_system_git_not_available_WHEN_class_initialised_THEN_bundled_git_used(self):
+        

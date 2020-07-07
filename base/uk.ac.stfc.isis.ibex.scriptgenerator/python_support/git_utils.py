@@ -1,17 +1,24 @@
 import os
 import pathlib
 from urllib.parse import urlparse
-from git import Repo, Git
-from git.exc import NoSuchPathError, GitCommandError
+from git.exc import NoSuchPathError, GitCommandError, InvalidGitRepositoryError
 
-from git.exc import InvalidGitRepositoryError
+SCRIPT_GEN_FOLDER = pathlib.Path(__file__).parent.absolute()
 
-DEFAULT_REPO_PATH = os.path.join(pathlib.Path(__file__).parent.absolute(), "ScriptDefinitions")
+try:
+    from git import Repo, Git
+except ImportError:
+    # git not on system PATH, use portable git distribution
+    GIT_EXECUTABLE_PATH = os.path.join(SCRIPT_GEN_FOLDER, "git", "cmd", "git.exe")
+    os.environ["GIT_PYTHON_GIT_EXECUTABLE"] = GIT_EXECUTABLE_PATH
+    from git import Repo, Git
+
+DEFAULT_REPO_PATH = os.path.join(SCRIPT_GEN_FOLDER, "ScriptDefinitions")
 REMOTE_URL = "https://github.com/ISISComputingGroup/ScriptDefinitions.git"
 OLD_REPOSITORY = "https://github.com/ISISComputingGroup/ScriptGeneratorConfigs.git"
 
 # Repository bundle is placed in python support folder on static script gen build
-DEFAULT_BUNDLE_PATH = os.path.join(pathlib.Path(__file__).parent.absolute(), "ScriptDefinitions_repo.bundle")
+DEFAULT_BUNDLE_PATH = os.path.join(SCRIPT_GEN_FOLDER, "ScriptDefinitions_repo.bundle")
 
 
 class DefinitionsRepository:
@@ -23,7 +30,10 @@ class DefinitionsRepository:
         self.path = path
         self.remote_url = remote_url
         self.bundle_path = bundle_path
+
         self.git = Git()
+
+        self.is_dirty = False
 
         self.errors = []
 
@@ -66,11 +76,17 @@ class DefinitionsRepository:
 
             self._pull_from_origin(repo)
 
-    def is_dirty(self) -> bool:
+    def reset_to_origin_master(self) -> None:
         """
-        Returns True if this repository is dirty (cannot be pulled)
+        Performs a reset to the lastest origin/master
         """
-        return self.repo.is_dirty()
+        pass
+
+    # def is_dirty(self) -> bool:
+    #     """
+    #     Returns True if this repository is dirty (cannot be pulled)
+    #     """
+    #     return self.is_dirty()
 
     def _pull_from_origin(self, repo: Repo):
         """
@@ -89,6 +105,9 @@ class DefinitionsRepository:
             if repo.is_dirty():
                 # Run git merge --abort to undo changes
                 repo.git.merge(abort=True)
+                self.is_dirty = 1
+            else:
+                self.is_dirty = 0
 
     def clone_repo_from_bundle(self):
         """
