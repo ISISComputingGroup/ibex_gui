@@ -39,6 +39,16 @@ robocopy "ScriptDefinitions" "." "ScriptDefinitions_repo.bundle"
 popd
 RMDIR /S /Q %definitions_temp_directory%
 
+REM Copy a portable git distribution with the script generator
+set "git_distribution=\\isis\inst$\Kits$\CompGroup\ICP\client_dependencies\git"
+set git_directory=%~dp0..\base\uk.ac.stfc.isis.ibex.scriptgenerator\python_support\git
+robocopy "%git_distribution%" "%git_directory%" /MT /E /PURGE /R:2 /XF "install.log" /NFL /NDL /NP /NS /NC /LOG:NUL
+if %errorlevel% geq 4 (
+    @echo Failed to copy git distribution across
+    exit /b 1
+)
+
+
 set mvnErr=
 call mvn --settings=%~dp0..\mvn_user_settings.xml -f %~dp0..\base\uk.ac.stfc.isis.scriptgenerator.tycho.parent\pom.xml -DforceContextQualifier=%BUILD_NUMBER% clean verify || set mvnErr=1
 if defined mvnErr exit /b 1
