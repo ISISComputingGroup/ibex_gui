@@ -75,13 +75,13 @@
     </scale_options>
     <scripts />
     <style>0</style>
-    <text>STOP</text>
+    <text>STOP MOTION</text>
     <toggle_button>false</toggle_button>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <visible>true</visible>
     <widget_type>Action Button</widget_type>
-    <width>80</width>
+    <width>109</width>
     <wuid>4c2f8d63:17304598483:-7f61</wuid>
     <x>0</x>
     <y>0</y>
