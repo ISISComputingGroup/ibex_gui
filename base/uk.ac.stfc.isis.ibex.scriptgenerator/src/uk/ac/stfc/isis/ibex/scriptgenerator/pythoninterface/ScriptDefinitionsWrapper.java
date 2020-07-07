@@ -20,6 +20,18 @@ public interface ScriptDefinitionsWrapper {
 	Map<String, String> getScriptDefinitionLoadErrors();
 	
 	/**
+	 * true if the repository containing the script definitions is dirty and cannot be pulled
+	 * 
+	 * @return true if git reports the repository is dirty
+	 */
+	boolean isRepoDirty();
+	
+	/**
+	 * Resets the script definition repository to origin master, discarding any local changes
+	 */
+	void resetToOriginMaster();
+	
+	/**
 	 * Get all script definitions available for use in the script generator.
 	 * 
 	 * @return A list of script definitions for use.

@@ -704,4 +704,15 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		return fileHandler;
 
 	}
+
+	public boolean isRepoDirty() {
+		// TODO Auto-generated method stub
+		return pythonInterface.isRepoDirty();
+	}
+
+	public void resetToOriginMaster() {
+		// TODO Auto-generated method stub
+		pythonInterface.resetToOriginMaster();
+	}
+
 }

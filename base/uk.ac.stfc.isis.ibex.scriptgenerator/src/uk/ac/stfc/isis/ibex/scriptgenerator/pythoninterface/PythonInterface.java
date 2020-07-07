@@ -314,6 +314,18 @@ public class PythonInterface extends ModelObject {
 		}
 	}
 
+	public int isRepoDirty() {
+		return this.scriptDefinitionsWrapper.isRepoDirty();
+		//return this.scriptDefinitionsWrapper.isRepoDirty() == 0;
+		//return true;
+	}
+	
+	public void resetToOriginMaster() {
+		// Sets repository to origin master
+		scriptDefinitionsWrapper.resetToOriginMaster();
+	}
+
+	
 	/**
 	 * Cleans up all resources i.e. destroy the python process.
 	 */
@@ -440,5 +452,6 @@ public class PythonInterface extends ModelObject {
 			throw new PythonNotReadyException("When getting generated script");
 		}
 	}
+
 
 }
