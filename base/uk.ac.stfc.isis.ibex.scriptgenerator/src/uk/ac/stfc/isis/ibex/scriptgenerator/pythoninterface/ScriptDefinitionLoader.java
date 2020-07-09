@@ -65,12 +65,7 @@ public class ScriptDefinitionLoader extends ModelObject {
 	 */
 	public ScriptDefinitionLoader(PythonInterface pythonInterface) {
 		this.pythonInterface = pythonInterface;
-		doGitOperations();
 		reloadScriptDefinitions();
-	}
-	
-	public void doGitOperations() {
-		// Here we inject the decisions needed for the git repo? 
 	}
 	
 	/**

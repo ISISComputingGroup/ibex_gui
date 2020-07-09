@@ -142,6 +142,10 @@ public class ScriptGeneratorView {
 		scriptGeneratorViewModel.addPropertyChangeListener(PYTHON_READINESS_PROPERTY, evt -> {
 			boolean ready = (boolean) evt.getNewValue();
 			if (ready) {
+				// Display error if the git repo is dirty
+				if (scriptGeneratorViewModel.isRepoDirty()) {
+			        scriptGeneratorViewModel.promptCleanDefinitionsRepo();
+				}
 				scriptGeneratorViewModel.reloadScriptDefinitions();
 				displayLoaded();
 			} else {

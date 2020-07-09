@@ -706,7 +706,6 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 
 	public boolean isRepoDirty() {
-		// TODO Auto-generated method stub
 		return pythonInterface.isRepoDirty();
 	}
 

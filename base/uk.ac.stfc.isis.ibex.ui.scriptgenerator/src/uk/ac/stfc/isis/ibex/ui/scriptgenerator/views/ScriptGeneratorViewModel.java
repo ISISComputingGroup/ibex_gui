@@ -183,6 +183,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	public void setUpModel() {
 		scriptGeneratorModel.createScriptDefinitionLoader();
 		scriptGeneratorModel.setUp();
+
 		// Listen to whether the language support is changed
 		// notify the user if the language is not supported
 		scriptGeneratorModel.addPropertyChangeListener(LANGUAGE_SUPPORT_PROPERTY, evt -> {
@@ -823,4 +824,22 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    return scriptGeneratorModel.getUserManualUrl();
 	}
 
+	public void promptCleanDefinitionsRepo() {
+        DISPLAY.asyncExec(() -> {
+            int cleanRepo = MessageDialog.open(MessageDialog.CONFIRM,
+                            DISPLAY.getActiveShell(),
+                            "Error pulling repository",
+                            "Local changes exist in git repository, cannot merge from upstream. Discard changes to update script definitions?",
+                            0,
+                            "Discard local changes and update",
+                            "Keep local changes");
+            if (cleanRepo == 0) {
+                //scriptGeneratorModel.resetToOriginMaster();
+            }
+        });
+    }
+
+	public boolean isRepoDirty() {
+		return scriptGeneratorModel.isRepoDirty();
+	}
 }

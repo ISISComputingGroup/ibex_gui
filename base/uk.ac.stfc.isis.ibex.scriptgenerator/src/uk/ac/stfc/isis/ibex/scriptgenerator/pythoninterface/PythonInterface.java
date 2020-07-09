@@ -314,10 +314,9 @@ public class PythonInterface extends ModelObject {
 		}
 	}
 
-	public int isRepoDirty() {
+	public boolean isRepoDirty() {
 		return this.scriptDefinitionsWrapper.isRepoDirty();
-		//return this.scriptDefinitionsWrapper.isRepoDirty() == 0;
-		//return true;
+		
 	}
 	
 	public void resetToOriginMaster() {
