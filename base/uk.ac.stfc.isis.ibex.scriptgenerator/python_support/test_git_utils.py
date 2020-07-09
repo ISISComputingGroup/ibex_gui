@@ -24,8 +24,7 @@ class DefinitionsRepositoryTests(unittest.TestCase):
         self.mock_git.clone.reset_mock(return_value=True, side_effect=True)
         self.mock_repo.remotes["origin"].pull.reset_mock(return_value=True, side_effect=True)
 
-    @patch("git_utils.Repo")
-    def test_GIVEN_uninitialised_directory_WHEN_repo_cloned_from_bundle_THEN_git_called_with_correct_arguments(self, _):
+    def test_GIVEN_uninitialised_directory_WHEN_repo_cloned_from_bundle_THEN_git_called_with_correct_arguments(self):
         bundle_path = "path/to/bundle"
 
         self.definitions_repo.clone_repo_from_bundle()
