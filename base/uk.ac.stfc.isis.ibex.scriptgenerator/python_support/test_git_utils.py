@@ -38,17 +38,6 @@ class DefinitionsRepositoryTests(unittest.TestCase):
         repo_instance.create_remote.assert_called_with("origin", TEST_URL)
 
     @patch("git_utils.Repo")
-    def test_GIVEN_repo_has_old_url_WHEN_initialising_repo_THEN_origin_url_gets_changed(self, mock_repo):
-        repo_instance = mock_repo.return_value
-        repo_instance.remotes["origin"].url = OLD_REPOSITORY
-
-        with patch.object(self.definitions_repo, "_change_origin_url") as mock_origin_change:
-            with patch.object(self.definitions_repo, "_repo_already_exists", return_value=True):
-                self.definitions_repo.initialise_and_pull()
-
-                mock_origin_change.assert_called()
-
-    @patch("git_utils.Repo")
     def test_GIVEN_uninitialised_directory_WHEN_repo_cloned_from_bundle_THEN_new_repo_has_correct_remote_URL(self, mock_repo):
         with patch.object(self.definitions_repo, "_change_origin_url") as mock_origin_change:
             self.definitions_repo.clone_repo_from_bundle()
@@ -95,7 +84,7 @@ class DefinitionsRepositoryTests(unittest.TestCase):
         with patch.object(self.definitions_repo, "_repo_already_exists", return_value=True):
             origin_instance = mock_repo.return_value.remotes["origin"]
 
-            self.definitions_repo._pull_from_origin(mock_repo.return_value)
+            self.definitions_repo.pull_from_origin(mock_repo.return_value)
             origin_instance.pull.assert_called()
 
     @patch("git_utils.Repo")
@@ -104,7 +93,7 @@ class DefinitionsRepositoryTests(unittest.TestCase):
             repo_instance = mock_repo.return_value
             repo_instance.remotes["origin"].pull.side_effect = GitCommandError(command="command", status="status")
 
-            self.definitions_repo._pull_from_origin(repo_instance)
+            self.definitions_repo.pull_from_origin(repo_instance)
 
             repo_instance.git.merge.assert_called_with(abort=True)
 
@@ -115,17 +104,14 @@ class DefinitionsRepositoryTests(unittest.TestCase):
         repo_instance.remotes["origin"].pull.side_effect = GitCommandError(command="command", status="status")
 
         with patch.object(self.definitions_repo, "_append_error") as error_handler:
-            self.definitions_repo._pull_from_origin(repo_instance)
+            self.definitions_repo.pull_from_origin(repo_instance)
             error_handler.assert_called()
 
     @patch("git_utils.Repo")
     def test_GIVEN_repository_can_be_pulled_WHEN_repo_initialised_THEN_no_error_gets_logged(self, mock_repo):
         mock_repo.return_value.remotes["origin"].url = TEST_URL
-        with patch.object(self.definitions_repo, "_pull_from_origin"):
+        with patch.object(self.definitions_repo, "pull_from_origin"):
             with patch.object(self.definitions_repo, "_append_error") as error_handler:
                 with patch.object(self.definitions_repo, "_repo_already_exists", return_value=True):
-                    self.definitions_repo.initialise_and_pull()
+                    self.definitions_repo.initialise_repo()
                     error_handler.assert_not_called()
-
-    def test_GIVEN_system_git_not_available_WHEN_class_initialised_THEN_bundled_git_used(self):
-        

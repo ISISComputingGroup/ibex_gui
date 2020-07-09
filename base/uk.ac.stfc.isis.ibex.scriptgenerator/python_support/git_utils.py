@@ -55,9 +55,6 @@ class DefinitionsRepository:
 
         if definitions_repo is not None and urlparse(origin_url) == urlparse(self.remote_url):
             repo_exists = True
-        elif definitions_repo is not None and urlparse(origin_url) == urlparse(OLD_REPOSITORY):
-            # Repo containing script definitions was renamed, so accept URLs from old repo and change later
-            repo_exists = True
         else:
             repo_exists = False
 
@@ -92,6 +89,14 @@ class DefinitionsRepository:
     #     Returns True if this repository is dirty (cannot be pulled)
     #     """
     #     return self.is_dirty()
+
+    def fetch_from_origin(self):
+        """
+        Fetches latest changes from origin
+        """
+        origin = self.repo.remotes["origin"]
+
+        origin.fetch()
 
     def pull_from_origin(self, repo: Repo):
         """
