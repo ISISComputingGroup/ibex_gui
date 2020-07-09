@@ -32,9 +32,8 @@ class DefinitionsRepositoryTests(unittest.TestCase):
 
         self.mock_git.clone.assert_called_with(bundle_path, TEST_REPO_PATH)
 
-    #@patch("git_utils.Repo")
     def test_GIVEN_origin_change_requested_THEN_git_commands_to_change_origin_called(self):
-        #repo_instance = mock_repo.return_value
+        self.definitions_repo._change_origin_url()
         self.mock_repo.delete_remote.assert_called_with("origin")
         self.mock_repo.create_remote.assert_called_with("origin", TEST_URL)
 
