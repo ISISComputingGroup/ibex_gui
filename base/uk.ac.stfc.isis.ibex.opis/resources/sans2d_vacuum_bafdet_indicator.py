@@ -1,9 +1,9 @@
 from org.csstudio.opibuilder.scriptUtil import PVUtil
 
 bafdet_location_z_pv = pvs[0]
-bafdet_location_z = PVUtil.getDouble(pvs[0])
-min_x = 150.0
-max_x = 800.0 + 150.0
+bafdet_location_z = PVUtil.getDouble(bafdet_location_z_pv)
+min_x = 78.0
+max_x = 620.0 + 78.0
 diff_x = max_x - min_x
 min_z = 0.0
 max_z = 12500.0
