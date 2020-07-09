@@ -22,6 +22,7 @@ class DefinitionsRepositoryTests(unittest.TestCase):
     def tearDown(self):
         # Ensure git clone mock is reset between tests
         self.mock_git.clone.reset_mock(return_value=True, side_effect=True)
+        self.mock_repo.remotes["origin"].pull.reset_mock(return_value=True, side_effect=True)
 
     @patch("git_utils.Repo")
     def test_GIVEN_uninitialised_directory_WHEN_repo_cloned_from_bundle_THEN_git_called_with_correct_arguments(self, _):
@@ -79,23 +80,19 @@ class DefinitionsRepositoryTests(unittest.TestCase):
         self.definitions_repo._attempt_repo_init()
         mock_makedirs.assert_called_with(TEST_REPO_PATH, exist_ok=True)
 
-    @patch("git_utils.Repo")
-    def test_GIVEN_repository_exists_WHEN_pull_requested_THEN_repository_gets_pulled(self, mock_repo):
+    def test_GIVEN_repository_exists_WHEN_pull_requested_THEN_repository_gets_pulled(self):
         with patch.object(self.definitions_repo, "_repo_already_exists", return_value=True):
-            origin_instance = mock_repo.return_value.remotes["origin"]
 
-            self.definitions_repo.pull_from_origin(mock_repo.return_value)
-            origin_instance.pull.assert_called()
+            self.definitions_repo.pull_from_origin()
+            self.mock_repo.remotes["origin"].pull.assert_called()
 
-    @patch("git_utils.Repo")
-    def test_GIVEN_repository_which_has_unpushed_changes_WHEN_pull_attempted_THEN_merge_is_aborted(self, mock_repo):
+    def test_GIVEN_repository_which_has_unpushed_changes_WHEN_pull_attempted_THEN_merge_is_aborted(self):
         with patch.object(self.definitions_repo, "_repo_already_exists", return_value=True):
-            repo_instance = mock_repo.return_value
-            repo_instance.remotes["origin"].pull.side_effect = GitCommandError(command="command", status="status")
+            self.mock_repo.remotes["origin"].pull.side_effect = GitCommandError(command="command", status="status")
 
-            self.definitions_repo.pull_from_origin(repo_instance)
+            self.definitions_repo.pull_from_origin()
 
-            repo_instance.git.merge.assert_called_with(abort=True)
+            self.mock_repo.git.merge.assert_called_with(abort=True)
 
     def test_GIVEN_repo_cannot_be_pulled_THEN_error_logged(self):
         self.mock_repo.remotes["origin"].pull.side_effect = GitCommandError(command="command", status="status")
