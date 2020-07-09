@@ -1,6 +1,8 @@
 import os
 import pathlib
 from urllib.parse import urlparse
+from typing import Optional
+
 from git.exc import NoSuchPathError, GitCommandError, InvalidGitRepositoryError
 
 SCRIPT_GEN_FOLDER = pathlib.Path(__file__).parent.absolute()
@@ -32,10 +34,13 @@ class DefinitionsRepository:
         self.bundle_path = bundle_path
 
         self.git = Git()
+        self.errors = []
 
         self.is_dirty = False
+        self.repo = self.initialise_repo()
 
-        self.errors = []
+        if self.repo is not None:
+            self.pull_from_origin(self.repo)
 
     def _repo_already_exists(self) -> bool:
         """
@@ -58,23 +63,23 @@ class DefinitionsRepository:
 
         return repo_exists
 
-    def initialise_and_pull(self):
+    def initialise_repo(self) -> Optional[Repo]:
         """
-        Attempts to clone the repo if it doesn't already exist, then pull from origin
+        Creates a git python Repo object representing the definitions repo. The repo is cloned if it does not exist
         """
 
         if not self._repo_already_exists():
             self._attempt_repo_init()
 
+        repo = None
+
         try:
             repo = Repo(self.path)
         except (NoSuchPathError, GitCommandError, InvalidGitRepositoryError) as err:
-            self._append_error("Could not pull from origin, error was {}".format(err))
-        else:
-            if urlparse(repo.remotes["origin"].url) == urlparse(OLD_REPOSITORY):
-                self._change_origin_url(repo)
+            self._append_error("Error occured initialing repository: {}".format(err))
+            self.is_dirty = True
 
-            self._pull_from_origin(repo)
+        return repo
 
     def reset_to_origin_master(self) -> None:
         """
@@ -88,7 +93,7 @@ class DefinitionsRepository:
     #     """
     #     return self.is_dirty()
 
-    def _pull_from_origin(self, repo: Repo):
+    def pull_from_origin(self, repo: Repo):
         """
         If the supplied path is a valid script defintions repository, attempt to pull from origin
 
@@ -99,15 +104,16 @@ class DefinitionsRepository:
 
         try:
             origin.pull()
-        except (GitCommandError, InvalidGitRepositoryError):
+        # Capture this error and present it to the user in the dialogue box 
+        except (GitCommandError, InvalidGitRepositoryError) as err:
             self._append_error("Local repo contains unpushed changes, cannot pull from remote")
 
             if repo.is_dirty():
                 # Run git merge --abort to undo changes
                 repo.git.merge(abort=True)
-                self.is_dirty = 1
+                self.is_dirty = True
             else:
-                self.is_dirty = 0
+                self.is_dirty = False
 
     def clone_repo_from_bundle(self):
         """

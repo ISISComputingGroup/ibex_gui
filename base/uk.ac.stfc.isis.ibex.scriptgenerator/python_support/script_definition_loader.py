@@ -221,7 +221,7 @@ class ScriptDefinitionsWrapper(object):
 
     def __init__(self, path: str):
         self.repository = DefinitionsRepository(path=path)
-        self.repository.initialise_and_pull()
+        #self.repository.initialise_repo()
         self.script_definitions, self.script_definition_load_errors = get_script_definitions(self.repository.path)
 
         self.generator = Generator(search_folders=[self.repository.path, ])
