@@ -127,7 +127,7 @@
     <tab_1_background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </tab_1_background_color>
-    <tab_1_enabled>true</tab_1_enabled>
+    <tab_1_enabled>false</tab_1_enabled>
     <tab_1_font>
       <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_TabTitle_NEW</opifont.name>
     </tab_1_font>
