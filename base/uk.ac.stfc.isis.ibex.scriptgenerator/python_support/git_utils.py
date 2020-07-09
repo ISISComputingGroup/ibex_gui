@@ -40,7 +40,7 @@ class DefinitionsRepository:
         self.repo = self.initialise_repo()
 
         if self.repo is not None:
-            self.pull_from_origin(self.repo)
+            self.pull_from_origin()
 
     def _repo_already_exists(self) -> bool:
         """
@@ -98,14 +98,14 @@ class DefinitionsRepository:
 
         origin.fetch()
 
-    def pull_from_origin(self, repo: Repo):
+    def pull_from_origin(self):
         """
         If the supplied path is a valid script defintions repository, attempt to pull from origin
 
         Parameters:
             repo: git repo object representing the script definitions repository
         """
-        origin = repo.remotes["origin"]
+        origin = self.repo.remotes["origin"]
 
         try:
             origin.pull()
@@ -113,9 +113,9 @@ class DefinitionsRepository:
         except (GitCommandError, InvalidGitRepositoryError) as err:
             self._append_error("Local repo contains unpushed changes, cannot pull from remote")
 
-            if repo.is_dirty():
+            if self.repo.is_dirty():
                 # Run git merge --abort to undo changes
-                repo.git.merge(abort=True)
+                self.repo.git.merge(abort=True)
                 self.is_dirty = True
             else:
                 self.is_dirty = False
@@ -139,15 +139,15 @@ class DefinitionsRepository:
         except (NoSuchPathError, GitCommandError, InvalidGitRepositoryError) as err:
             self._append_error("Cloning new repository failed with error: {}".format(err))
         else:
-            self._change_origin_url(script_definitions_repo)
+            self._change_origin_url()
 
-    def _change_origin_url(self, repo: Repo):
+    def _change_origin_url(self):
         """
         Changes the origin URL of the supplied repo
         """
         try:
-            repo.delete_remote("origin")
-            repo.create_remote("origin", self.remote_url)
+            self.repo.delete_remote("origin")
+            self.repo.create_remote("origin", self.remote_url)
         except (GitCommandError, InvalidGitRepositoryError) as err:
             self._append_error("Could not change remote origin of repo: {}".format(err))
 
