@@ -987,12 +987,7 @@ $(pv_value)</tooltip>
           <height_scalable>true</height_scalable>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
-        <scripts>
-          <path pathString="sans2d_vacuum_interval_calc.py" checkConnect="true" sfe="false" seoe="false">
-            <pv trig="true">$(P)MOT:FRONTBAFFLEZ:SP</pv>
-            <pv trig="true">$(P)MOT:REARBAFFLEZ:SP</pv>
-          </path>
-        </scripts>
+        <scripts />
         <show_units>true</show_units>
         <text>######</text>
         <tooltip>$(pv_name)
@@ -1044,12 +1039,7 @@ $(pv_value)</tooltip>
           <height_scalable>true</height_scalable>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
-        <scripts>
-          <path pathString="sans2d_vacuum_interval_calc.py" checkConnect="true" sfe="false" seoe="false">
-            <pv trig="true">$(P)MOT:REARBAFFLEZ:SP</pv>
-            <pv trig="true">$(P)MOT:REARDETZ:SP</pv>
-          </path>
-        </scripts>
+        <scripts />
         <show_units>true</show_units>
         <text>######</text>
         <tooltip>$(pv_name)
@@ -2458,12 +2448,7 @@ $(pv_value)</tooltip>
           <height_scalable>true</height_scalable>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
-        <scripts>
-          <path pathString="sans2d_vacuum_interval_calc.py" checkConnect="true" sfe="false" seoe="false">
-            <pv trig="true">$(P)MOT:FRONTBAFFLEZ</pv>
-            <pv trig="true">$(P)MOT:REARBAFFLEZ</pv>
-          </path>
-        </scripts>
+        <scripts />
         <show_units>true</show_units>
         <text>######</text>
         <tooltip>$(pv_name)
@@ -2515,12 +2500,7 @@ $(pv_value)</tooltip>
           <height_scalable>true</height_scalable>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
-        <scripts>
-          <path pathString="sans2d_vacuum_interval_calc.py" checkConnect="true" sfe="false" seoe="false">
-            <pv trig="true">$(P)MOT:REARBAFFLEZ</pv>
-            <pv trig="true">$(P)MOT:REARDETZ</pv>
-          </path>
-        </scripts>
+        <scripts />
         <show_units>true</show_units>
         <text>######</text>
         <tooltip>$(pv_name)
@@ -2611,7 +2591,7 @@ $(pv_value)</tooltip>
           </path>
         </scripts>
         <show_scrollbar>false</show_scrollbar>
-        <tooltip></tooltip>
+        <tooltip>Front Baffle</tooltip>
         <transparent>true</transparent>
         <visible>true</visible>
         <widget_type>Grouping Container</widget_type>
@@ -2753,7 +2733,7 @@ $(pv_value)</tooltip>
           </path>
         </scripts>
         <show_scrollbar>false</show_scrollbar>
-        <tooltip></tooltip>
+        <tooltip>Front Detector</tooltip>
         <transparent>true</transparent>
         <visible>true</visible>
         <widget_type>Grouping Container</widget_type>
@@ -2895,7 +2875,7 @@ $(pv_value)</tooltip>
           </path>
         </scripts>
         <show_scrollbar>false</show_scrollbar>
-        <tooltip></tooltip>
+        <tooltip>Rear Baffle</tooltip>
         <transparent>true</transparent>
         <visible>true</visible>
         <widget_type>Grouping Container</widget_type>
@@ -3037,7 +3017,7 @@ $(pv_value)</tooltip>
           </path>
         </scripts>
         <show_scrollbar>false</show_scrollbar>
-        <tooltip></tooltip>
+        <tooltip>Rear Detector</tooltip>
         <transparent>true</transparent>
         <visible>true</visible>
         <widget_type>Grouping Container</widget_type>

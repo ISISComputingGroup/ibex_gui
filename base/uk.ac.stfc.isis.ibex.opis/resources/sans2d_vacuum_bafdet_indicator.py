@@ -13,4 +13,3 @@ size_offset = 40.0 / 2
 widget_new_x = (bafdet_location_z * sizing_value) + min_x - size_offset
 
 widget.setPropertyValue("x", round(widget_new_x, 1))
-widget.setPropertyValue("tooltip", str(bafdet_location_z_pv) + "\n" + str(widget_new_x))
