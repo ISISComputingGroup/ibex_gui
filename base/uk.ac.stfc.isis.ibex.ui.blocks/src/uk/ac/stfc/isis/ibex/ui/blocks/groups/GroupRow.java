@@ -53,9 +53,10 @@ public class GroupRow extends Composite {
     private static final int VALUE_HEIGHT_MARGIN = 2;
     private static final int NUM_ELEMENTS = 3;
     
-    private Label lblName;
-    private Label lblValue;
-    private Label lblStatus;
+    private final Label lblName;
+    private final Label lblValue;
+    private final Label lblStatus;
+    private final Composite valueContainer;
 
     /**
      * The constructor.
@@ -81,7 +82,7 @@ public class GroupRow extends Composite {
         
 
         // additional container to hold value label to draw a border around it
-        Composite valueContainer = new Composite(this, SWT.CENTER);
+        valueContainer = new Composite(this, SWT.NONE);
         GridLayout valueContainerLayout = new GridLayout(1, false);
         valueContainerLayout.marginWidth = 2;
         valueContainerLayout.marginHeight = 2;
@@ -98,10 +99,9 @@ public class GroupRow extends Composite {
         GridData gdValue = new GridData(SWT.CENTER, SWT.NONE, false, false, 1, 1);
         gdValue.widthHint = VALUE_WIDTH;
         lblValue.setLayoutData(gdValue);
-        lblValue.setVisible(true);
         valueContainer.pack();
 
-        lblStatus = statusLabelMaker(this, SWT.CENTER, "Run Control Status");
+        lblStatus = statusLabelMaker(this, SWT.NONE, "Run Control Status");
         FontDescriptor boldDescriptor = FontDescriptor.createFrom(lblStatus.getFont()).setStyle(SWT.BOLD);
         Font boldFont = boldDescriptor.createFont(lblStatus.getDisplay());
         lblStatus.setFont(boldFont);

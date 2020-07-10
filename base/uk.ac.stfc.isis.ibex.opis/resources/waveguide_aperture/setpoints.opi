@@ -245,7 +245,7 @@ $(pv_value)</tooltip>
       <rules>
         <rule name="ChangeTooltipOnInterlock" prop_id="tooltip" out_exp="false">
           <exp bool_exp="pv0 == 0">
-            <value>Cannot move while interlock active</value>
+            <value>Cannot move while motion interlock active</value>
           </exp>
           <exp bool_exp="pv0 == 1">
             <value>$(pv_name): $(pv_value)</value>
