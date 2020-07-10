@@ -178,6 +178,8 @@ public enum ComponentType {
 	LSICORR,
     /** Density meter (e.g. DMA4500M) */
     DENSITY_METER,
+    /** waveguide and aperture **/
+    WAVEGUIDE_APERTURE,
 	/**Spin flipper.*/
 	SPIN_FLIPPER;
 	
