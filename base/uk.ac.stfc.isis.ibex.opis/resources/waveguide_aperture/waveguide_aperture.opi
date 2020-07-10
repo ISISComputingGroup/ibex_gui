@@ -90,7 +90,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Tabbed Container</widget_type>
-    <width>800</width>
+    <width>847</width>
     <wuid>-3185ce32:17208cb8f6a:-3a7c</wuid>
     <x>0</x>
     <y>36</y>
@@ -128,9 +128,9 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>798</width>
+      <width>845</width>
       <wuid>-3185ce32:17208cb8f6a:-3a7b</wuid>
       <x>1</x>
       <y>1</y>
@@ -335,7 +335,7 @@
             <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
           </on_color>
           <on_label>ON</on_label>
-          <pv_name></pv_name>
+          <pv_name>NOT:YET:IMPLEMENTED</pv_name>
           <pv_value />
           <rules />
           <scale_options>
@@ -419,7 +419,7 @@ $(pv_value)</tooltip>
             <height>27</height>
             <items_from_pv>true</items_from_pv>
             <name>Combo</name>
-            <pv_name></pv_name>
+            <pv_name>NOT:YET:IMPLEMENTED</pv_name>
             <pv_value />
             <rules />
             <scale_options>
@@ -463,7 +463,7 @@ $(pv_value)</tooltip>
           <image></image>
           <name>Action Button</name>
           <push_action_index>0</push_action_index>
-          <pv_name></pv_name>
+          <pv_name>NOT:YET:IMPLEMENTED</pv_name>
           <pv_value />
           <rules />
           <scale_options>
@@ -694,9 +694,9 @@ $(pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>798</width>
+      <width>845</width>
       <wuid>-3185ce32:17208cb8f6a:-3a79</wuid>
       <x>1</x>
       <y>1</y>
@@ -901,7 +901,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
           </on_color>
           <on_label>ON</on_label>
-          <pv_name></pv_name>
+          <pv_name>NOT:YET:IMPLEMENTED</pv_name>
           <pv_value />
           <rules />
           <scale_options>
@@ -1062,7 +1062,7 @@ $(pv_value)</tooltip>
           <image></image>
           <name>Action Button</name>
           <push_action_index>0</push_action_index>
-          <pv_name></pv_name>
+          <pv_name>NOT:YET:IMPLEMENTED</pv_name>
           <pv_value />
           <rules />
           <scale_options>
@@ -1120,7 +1120,7 @@ $(pv_value)</tooltip>
         <transparent>false</transparent>
         <visible>true</visible>
         <widget_type>Grouping Container</widget_type>
-        <width>798</width>
+        <width>841</width>
         <wuid>-19b1913d:172ff9da489:-65f1</wuid>
         <x>0</x>
         <y>0</y>
@@ -1162,8 +1162,8 @@ $(pv_value)</tooltip>
           <widget_type>Linking Container</widget_type>
           <width>122</width>
           <wuid>-19b1913d:172ff9da489:-65f0</wuid>
-          <x>0</x>
-          <y>33</y>
+          <x>3</x>
+          <y>42</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -1203,8 +1203,8 @@ $(pv_value)</tooltip>
           <widget_type>Linking Container</widget_type>
           <width>128</width>
           <wuid>-19b1913d:172ff9da489:-65ef</wuid>
-          <x>121</x>
-          <y>33</y>
+          <x>124</x>
+          <y>42</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -1244,8 +1244,8 @@ $(pv_value)</tooltip>
           <widget_type>Linking Container</widget_type>
           <width>128</width>
           <wuid>-19b1913d:172ff9da489:-65ee</wuid>
-          <x>248</x>
-          <y>33</y>
+          <x>251</x>
+          <y>42</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -1285,8 +1285,8 @@ $(pv_value)</tooltip>
           <widget_type>Linking Container</widget_type>
           <width>122</width>
           <wuid>-19b1913d:172ff9da489:-65ed</wuid>
-          <x>375</x>
-          <y>33</y>
+          <x>378</x>
+          <y>42</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -1326,8 +1326,8 @@ $(pv_value)</tooltip>
           <widget_type>Linking Container</widget_type>
           <width>128</width>
           <wuid>-19b1913d:172ff9da489:-65ec</wuid>
-          <x>496</x>
-          <y>33</y>
+          <x>499</x>
+          <y>42</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -1367,8 +1367,8 @@ $(pv_value)</tooltip>
           <widget_type>Linking Container</widget_type>
           <width>122</width>
           <wuid>-19b1913d:172ff9da489:-65eb</wuid>
-          <x>623</x>
-          <y>33</y>
+          <x>621</x>
+          <y>42</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -1408,8 +1408,8 @@ $(pv_value)</tooltip>
           <widget_type>Linking Container</widget_type>
           <width>128</width>
           <wuid>-19b1913d:172ff9da489:-65ea</wuid>
-          <x>744</x>
-          <y>33</y>
+          <x>742</x>
+          <y>42</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -1449,8 +1449,8 @@ $(pv_value)</tooltip>
           <widget_type>Linking Container</widget_type>
           <width>122</width>
           <wuid>-19b1913d:172ff9da489:-65e9</wuid>
-          <x>871</x>
-          <y>33</y>
+          <x>869</x>
+          <y>42</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -1490,8 +1490,8 @@ $(pv_value)</tooltip>
           <widget_type>Linking Container</widget_type>
           <width>128</width>
           <wuid>-19b1913d:172ff9da489:-65e8</wuid>
-          <x>992</x>
-          <y>33</y>
+          <x>990</x>
+          <y>42</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -1531,8 +1531,8 @@ $(pv_value)</tooltip>
           <widget_type>Linking Container</widget_type>
           <width>122</width>
           <wuid>-19b1913d:172ff9da489:-65e7</wuid>
-          <x>1128</x>
-          <y>33</y>
+          <x>1117</x>
+          <y>42</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -1572,8 +1572,8 @@ $(pv_value)</tooltip>
           <width>95</width>
           <wrap_words>true</wrap_words>
           <wuid>1f3b352c:172176c5c2d:-4a02</wuid>
-          <x>6</x>
-          <y>-6</y>
+          <x>9</x>
+          <y>3</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -1613,8 +1613,8 @@ $(pv_value)</tooltip>
           <width>95</width>
           <wrap_words>true</wrap_words>
           <wuid>-19b1913d:172ff9da489:-63c1</wuid>
-          <x>1116</x>
-          <y>-6</y>
+          <x>1114</x>
+          <y>3</y>
         </widget>
       </widget>
     </widget>
