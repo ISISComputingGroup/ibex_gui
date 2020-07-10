@@ -152,7 +152,7 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 	 */
 	PydevConsoleInterpreter createGeniePydevInterpreter() throws Exception {
 		IInterpreterManager manager = InterpreterManagersAPI.getPythonInterpreterManager();
-		IInterpreterInfo interpreterInfo = manager.createInterpreterInfo(new PreferenceSupplier().pythonInterpreterPath(),
+		IInterpreterInfo interpreterInfo = manager.createInterpreterInfo(PreferenceSupplier.getPythonPath(),
 				monitor, false);
 
 		PydevIProcessFactory iprocessFactory = new PydevIProcessFactory();

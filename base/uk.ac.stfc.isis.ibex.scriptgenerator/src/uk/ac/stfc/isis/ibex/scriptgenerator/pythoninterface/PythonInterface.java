@@ -184,7 +184,7 @@ public class PythonInterface extends ModelObject {
 	 * @return The path to the bundled python 3 interpreter.
 	 */
 	private String python3InterpreterPath() {
-		return PreferenceSupplier.getBundledPythonPath();
+		return PreferenceSupplier.getPythonPath();
 	}
 
 	/**

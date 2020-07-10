@@ -25,6 +25,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
@@ -75,37 +77,37 @@ public class PreferenceSupplier {
     private static final String PYTHON_INTERPRETER_PATH = "python_interpreter_path";
     
     /**
-     * The relative path to python.
+     * The relative path to the bundled Python.
      */
     private static final String PYTHON_RELATIVE_PATH = "/resources/Python3/python.exe";
     
     /**
-     * The path to the developer's genie python.
+     * The path to the instrument/developer's genie python.
      */
 	private static final String DEFAULT_PYTHON_3_INTERPRETER_PATH = "C:\\Instrument\\Apps\\Python3\\python.exe";
-	
-	/**
-     * The default for the location of Python.
-     */
-    private static final String DEFAULT_PYTHON_2_INTERPRETER_PATH = "C:\\Instrument\\Apps\\Python\\python.exe";
+
 
 	
 	/**
-	 * Gets the python that's been bundled with the gui, unless it hasn't been bundled and then gets the dev python.
+	 * Gets the installed Python, unless it hasn't been bundled and then gets the Python bundled with the gui.
 	 * 
 	 * @return The string path to the python executable.
 	 * @throws IOException if python could not be found.
 	 */
-	public static String getBundledPythonPath() {
-		try {
-			String pythonPath = relativePathToFull(PYTHON_RELATIVE_PATH);
+	public static String getPythonPath() {
+		String pythonPath = Path.forWindows(DEFAULT_PYTHON_3_INTERPRETER_PATH).toOSString();
+		if (Files.exists(Paths.get(pythonPath))) {
 			LOG.info("getDefaultPythonPath found python at: " + pythonPath);
-			return relativePathToFull(PYTHON_RELATIVE_PATH);
-		} catch (IOException e) {
-			String pythonPath = Path.forWindows(DEFAULT_PYTHON_3_INTERPRETER_PATH).toOSString();
-			LOG.info("getDefaultPythonPath found python at: " + pythonPath);
-			return pythonPath;
+		} else {
+			try {
+				pythonPath = relativePathToFull(PYTHON_RELATIVE_PATH);
+				LOG.info("getDefaultPythonPath found python at: " + pythonPath);
+			} catch (IOException e) {
+				LOG.error("Bundled Python not found");
+			}
+			
 		}
+		return pythonPath;
 	}
 
 	
