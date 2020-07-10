@@ -77,23 +77,19 @@ public class PreferenceSupplier {
     private static final String PYTHON_INTERPRETER_PATH = "python_interpreter_path";
     
     /**
-     * The relative path to python.
+     * The relative path to the bundled Python.
      */
     private static final String PYTHON_RELATIVE_PATH = "/resources/Python3/python.exe";
     
     /**
-     * The path to the developer's genie python.
+     * The path to the instrument/developer's genie python.
      */
 	private static final String DEFAULT_PYTHON_3_INTERPRETER_PATH = "C:\\Instrument\\Apps\\Python3\\python.exe";
-	
-	/**
-     * The default for the location of Python.
-     */
-    private static final String DEFAULT_PYTHON_2_INTERPRETER_PATH = "C:\\Instrument\\Apps\\Python\\python.exe";
+
 
 	
 	/**
-	 * Gets the python that's been bundled with the gui, unless it hasn't been bundled and then gets the dev python.
+	 * Gets the installed Python, unless it hasn't been bundled and then gets the Python bundled with the gui.
 	 * 
 	 * @return The string path to the python executable.
 	 * @throws IOException if python could not be found.
