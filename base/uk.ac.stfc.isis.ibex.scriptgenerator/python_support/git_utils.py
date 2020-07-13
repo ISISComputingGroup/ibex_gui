@@ -8,7 +8,7 @@ from git.exc import NoSuchPathError, GitCommandError, InvalidGitRepositoryError
 SCRIPT_GEN_FOLDER = pathlib.Path(__file__).parent.absolute()
 
 try:
-    from git import Repo, Git
+    from git import Repo, Git, FetchInfo
 except ImportError:
     # git not on system PATH, use portable git distribution
     GIT_EXECUTABLE_PATH = os.path.join(SCRIPT_GEN_FOLDER, "git", "cmd", "git.exe")
@@ -36,11 +36,24 @@ class DefinitionsRepository:
         self.git = Git()
         self.errors = []
 
+        self.branch = "master"
+
         self.is_dirty = False
         self.repo = self.initialise_repo()
 
-        if self.repo is not None:
-            self.pull_from_origin()
+        try:
+            # Fetch and store information about state of origin
+            self.fetch_info = self.fetch_from_origin()
+            #self.repo.remotes['origin'].fetch()
+        except GitCommandError:
+            self._append_error("Remote URL could not be reached or is not a valid git repository")
+            self.remote_available = False
+        except ValueError as err:
+            self._append_error(err)
+            self.remote_available = False
+        else:
+            #self.fetch_info = self.fetch_from_origin()
+            self.remote_available = True
 
     def _repo_already_exists(self) -> bool:
         """
@@ -74,7 +87,6 @@ class DefinitionsRepository:
             repo = Repo(self.path)
         except (NoSuchPathError, GitCommandError, InvalidGitRepositoryError) as err:
             self._append_error("Error occured initialing repository: {}".format(err))
-            self.is_dirty = True
 
         return repo
 
@@ -84,19 +96,50 @@ class DefinitionsRepository:
         """
         pass
 
-    # def is_dirty(self) -> bool:
-    #     """
-    #     Returns True if this repository is dirty (cannot be pulled)
-    #     """
-    #     return self.is_dirty()
-
-    def fetch_from_origin(self):
+    def updates_available(self) -> bool:
         """
-        Fetches latest changes from origin
+        Returns True if the local repository has a different commit ID to origin
+        """
+
+        if self.remote_available:
+            origin_commit_id = self.fetch_info.commit
+            local_commit_id = self.repo.head.commit
+            updates_available = local_commit_id != origin_commit_id
+        else:
+            updates_available = False
+
+        return updates_available
+
+        return True
+        return local_commit_id != origin_commit_id
+
+    def fetch_from_origin(self) -> FetchInfo:
+        """
+        Fetches latest changes from origin. Returns FetchInfo object for current branch
+
+        Returns:
+        fetch_info: FetchInfo object containing the state of the corresponding branch on origin
+
+        Raises:
+        ValueError if origin does not contain a branch with the same name as the current branch
         """
         origin = self.repo.remotes["origin"]
 
-        origin.fetch()
+        all_origin_branches = origin.fetch()
+
+        # Pick out the origin branch with the same name as the local branch
+        fetch_info = [branch for branch in all_origin_branches if branch.name == "origin/{}".format(self.branch)]
+
+        if len(fetch_info) == 1:
+            branch_info = fetch_info[0]
+        elif len(fetch_info) == 0:
+            self._append_error("No branches were found in origin with name {branch}".format(branch=self.branch))
+            branch_info = None
+        elif len(fetch_info) > 1:
+            self._append_error("Multiple branches found in origin with name {branch}".format(branch=self.branch))
+            branch_info = None
+
+        return branch_info
 
     def pull_from_origin(self):
         """

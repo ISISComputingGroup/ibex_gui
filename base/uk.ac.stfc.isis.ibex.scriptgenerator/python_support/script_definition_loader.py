@@ -226,14 +226,15 @@ class ScriptDefinitionsWrapper(object):
 
         self.generator = Generator(search_folders=[self.repository.path, ])
 
-    def isRepoDirty(self) -> bool:
+    def updatesAvailable(self) -> bool:
         """
         Returns True if the repository path can be pulled, else False
         """
         # if self.repository.is_dirty is None:
         #     return True
         # return self.repository.is_dirty
-        return True
+        return self.repository.updates_available()
+        #return True
 
     # def resetToOriginMaster(self) -> None:
     #     """
