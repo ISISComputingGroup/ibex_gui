@@ -839,7 +839,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
         });
     }
 
-	public boolean isRepoDirty() {
-		return scriptGeneratorModel.isRepoDirty();
+	public boolean updatesAvailable() {
+		return scriptGeneratorModel.updatesAvailable();
 	}
 }
