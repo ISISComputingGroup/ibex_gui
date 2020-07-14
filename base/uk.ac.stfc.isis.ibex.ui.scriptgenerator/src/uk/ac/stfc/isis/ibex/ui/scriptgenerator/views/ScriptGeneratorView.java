@@ -146,6 +146,7 @@ public class ScriptGeneratorView {
 				if (scriptGeneratorViewModel.updatesAvailable()) {
 			        scriptGeneratorViewModel.promptCleanDefinitionsRepo();
 				}
+				scriptGeneratorViewModel.showGitErrors();
 				scriptGeneratorViewModel.reloadScriptDefinitions();
 				displayLoaded();
 			} else {
@@ -263,7 +264,6 @@ public class ScriptGeneratorView {
 		        btnGetValidityErrors.addListener(SWT.Selection, e -> {
 		        	scriptGeneratorViewModel.displayValidityErrors();
 		        });
-		        
 		        
 		        Map<String, String> scriptDefinitionLoadErrors = scriptGeneratorViewModel.getScriptDefinitionLoadErrors();
 		        

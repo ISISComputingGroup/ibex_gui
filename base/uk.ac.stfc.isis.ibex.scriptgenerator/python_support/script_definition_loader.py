@@ -247,7 +247,7 @@ class ScriptDefinitionsWrapper(object):
         """
         Return the errors raised during git init for the Java code
         """
-        return self.repository.errors
+        return ListConverter().convert(self.repository.errors, gateway._gateway_client)
 
     def getScriptDefinitionLoadErrors(self) -> Dict[AnyStr, AnyStr]:
         """

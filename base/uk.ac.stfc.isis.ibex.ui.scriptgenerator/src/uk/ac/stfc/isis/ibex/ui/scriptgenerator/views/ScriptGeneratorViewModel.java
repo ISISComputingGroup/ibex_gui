@@ -349,6 +349,14 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		return scriptGeneratorModel.getScriptDefinitionLoadErrors();
 	}
 	
+	protected String getGitLoadErrors() {
+		String loadErrors = "";
+		for (String error: scriptGeneratorModel.getGitLoadErrors()) {
+			loadErrors += error +";\n";
+		}
+		return loadErrors;
+	}
+	
 	/**
 	 * Create and get the label provider for the scriptDefinition selector.
 	 * 
@@ -829,7 +837,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
             int cleanRepo = MessageDialog.open(MessageDialog.CONFIRM,
                             DISPLAY.getActiveShell(),
                             "Error pulling repository",
-                            "Local changes exist in git repository, cannot merge from upstream. Discard changes to update script definitions?",
+                            "Local changes exist in git repository, cannot merge from upstream. Discard changes to update script definitions?\n" + getGitLoadErrors(),
                             0,
                             "Discard local changes and update",
                             "Keep local changes");
@@ -838,6 +846,15 @@ public class ScriptGeneratorViewModel extends ModelObject {
             }
         });
     }
+	
+	public void showGitErrors() {
+		String errors = getGitLoadErrors();
+		DISPLAY.asyncExec(() -> {
+            MessageDialog.openInformation(DISPLAY.getActiveShell(),
+                "Git errors occurred",
+                errors);
+        });
+	}
 
 	public boolean updatesAvailable() {
 		return scriptGeneratorModel.updatesAvailable();
