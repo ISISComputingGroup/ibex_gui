@@ -24,7 +24,7 @@ public interface ScriptDefinitionsWrapper {
 	 * 
 	 * @return true if git reports the repository is dirty
 	 */
-	boolean isRepoDirty();
+	boolean updatesAvailable();
 	
 	/**
 	 * Resets the script definition repository to origin master, discarding any local changes
@@ -73,5 +73,12 @@ public interface ScriptDefinitionsWrapper {
 	 * @return True if python is ready, False if not.
 	 */
 	boolean isPythonReady();
+
+	/**
+	 * Returns a list of git errors
+	 * 
+	 * @return
+	 */
+	List<String> getGitErrors();
 	
 }

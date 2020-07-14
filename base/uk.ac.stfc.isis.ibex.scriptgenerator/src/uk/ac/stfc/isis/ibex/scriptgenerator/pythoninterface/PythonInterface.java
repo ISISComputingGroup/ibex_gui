@@ -314,8 +314,8 @@ public class PythonInterface extends ModelObject {
 		}
 	}
 
-	public boolean isRepoDirty() {
-		return this.scriptDefinitionsWrapper.isRepoDirty();
+	public boolean updatesAvailable() {
+		return this.scriptDefinitionsWrapper.updatesAvailable();
 		
 	}
 	
@@ -450,6 +450,10 @@ public class PythonInterface extends ModelObject {
 		if (!pythonReady) {
 			throw new PythonNotReadyException("When getting generated script");
 		}
+	}
+
+	public List<String> getGitLoadErrors() {
+		return scriptDefinitionsWrapper.getGitErrors();
 	}
 
 

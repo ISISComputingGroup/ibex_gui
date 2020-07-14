@@ -705,13 +705,16 @@ public class ScriptGeneratorSingleton extends ModelObject {
 
 	}
 
-	public boolean isRepoDirty() {
-		return pythonInterface.isRepoDirty();
+	public boolean updatesAvailable() {
+		return pythonInterface.updatesAvailable();
 	}
 
 	public void resetToOriginMaster() {
-		// TODO Auto-generated method stub
 		pythonInterface.resetToOriginMaster();
+	}
+
+	public List<String> getGitLoadErrors() {
+		return pythonInterface.getGitLoadErrors();
 	}
 
 }
