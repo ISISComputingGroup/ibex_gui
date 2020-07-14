@@ -1356,7 +1356,7 @@ $(trace_0_y_pv_value)</tooltip>
     <axis_1_title_font>
       <opifont.name fontName="Arial" height="9" style="1" pixels="false">ISIS_Header4</opifont.name>
     </axis_1_title_font>
-    <axis_1_visible>true</axis_1_visible>
+    <axis_1_visible>false</axis_1_visible>
     <axis_count>2</axis_count>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
@@ -1381,7 +1381,7 @@ $(trace_0_y_pv_value)</tooltip>
     <pv_name>$(PV_ROOT):02:1:VALUE</pv_name>
     <pv_value />
     <rules>
-      <rule name="Rule" prop_id="trace_0_visible" out_exp="false">
+      <rule name="Rule" prop_id="visible" out_exp="false">
         <exp bool_exp="pvInt0">
           <value>true</value>
         </exp>
