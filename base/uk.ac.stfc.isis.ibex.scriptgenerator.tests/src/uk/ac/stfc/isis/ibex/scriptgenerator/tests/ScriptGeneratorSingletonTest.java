@@ -1,7 +1,6 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
@@ -12,6 +11,7 @@ import org.junit.After;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -36,7 +36,6 @@ public class ScriptGeneratorSingletonTest {
 	ScriptGeneratorSingleton mockModel;
 	String scriptLines;
 	String jsonLine;
-	String timestamp;
 	ScriptDefinitionWrapper mockConfig;
 	String configName;
 	String filepathPrefix;
@@ -52,7 +51,6 @@ public class ScriptGeneratorSingletonTest {
 		mockModel = mock(ScriptGeneratorSingleton.class);
 		scriptLines = "test\ntest2";
 		jsonLine = "{\"test:me\"}";
-		timestamp = "timestamp";
 		mockConfig = mock(ScriptDefinitionWrapper.class);
 		configName = "config";
 		
@@ -62,11 +60,10 @@ public class ScriptGeneratorSingletonTest {
 		}
 		
 		// Mock out some methods to test real calls to others
-		when(mockModel.getTimestamp()).thenReturn(timestamp);
 		when(mockModel.getScriptDefinition()).thenReturn(Optional.of(mockConfig));
 		when(mockConfig.getName()).thenReturn(configName);
 		try {
-			when(mockModel.generateScriptFileName(filepathPrefix)).thenCallRealMethod();
+			when(mockModel.generateScriptFileName()).thenCallRealMethod();
 		} catch (NoScriptDefinitionSelectedException e) {
 			fail("We have mocked out getConfig() so should always return a config");
 		}
@@ -146,30 +143,18 @@ public class ScriptGeneratorSingletonTest {
 	}
 	
 	@Test
-	public void test_GIVEN_new_and_old_file_WHEN_generate_THEN_filename_with_versioning() {
+	public void test_WHEN_generate_THEN_filename_with_timestamp() {
 		// Arrange
-		String expectedOldFilepath = String.format("%s-%s", configName, timestamp);
-		String expectedNewFilepath = String.format("%s-%s(1)", configName, timestamp);
-		String expectedNewNewFilepath = String.format("%s-%s(2)", configName, timestamp);
+		String expectedFilepathRegex = String.format("^%s-[0-9].*$", configName);
+
 		try {
 			// Act
-			String oldFilepath = mockModel.generateScriptFileName(filepathPrefix);
-			new File(filepathPrefix+oldFilepath).createNewFile();
-			String newFilepath = mockModel.generateScriptFileName(filepathPrefix);
-			new File(filepathPrefix+newFilepath).createNewFile();
-			String newNewFilepath = mockModel.generateScriptFileName(filepathPrefix);
+			String filepath = mockModel.generateScriptFileName();
+			
 			// Assert
-			assertThat("Should generate filepath with the config name and a timestamp",
-					oldFilepath, equalTo(expectedOldFilepath));
-			assertThat("Should generate filepath with the config name, a timestamp and 0 a version",
-					newFilepath, equalTo(expectedNewFilepath));
-			assertThat("Should generate filepath with the config name, a timestamp and 1 as a version",
-					newNewFilepath, equalTo(expectedNewNewFilepath));
+			assertTrue("Should generate filepath with the config name and a timestamp", filepath.matches(expectedFilepathRegex));
 		} catch(NoScriptDefinitionSelectedException e) {
 			fail("We have mocked out getConfig() so should always return a config");
-		} catch (IOException e) {
-			System.err.println(e.getMessage());
-			fail("We have failed when creating the file");
 		}
 
 	}

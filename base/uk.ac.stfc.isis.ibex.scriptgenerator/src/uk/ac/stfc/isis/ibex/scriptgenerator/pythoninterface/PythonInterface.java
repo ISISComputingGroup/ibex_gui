@@ -61,6 +61,12 @@ public class PythonInterface extends ModelObject {
 	 */
 	private static final String PARAM_VALIDITY_PROPERTY = "parameter validity";
 	
+    /**
+     * The property change to fire when the time estimate for the current parameters is
+     *  asynchronously received from Python.
+     */
+    private static final String TIME_ESTIMATE_PROPERTY = "time estimate";
+	
 	/**
 	 * The property change to fire when the generated script is received
 	 *  asynchronously from Python.
@@ -178,7 +184,7 @@ public class PythonInterface extends ModelObject {
 	 * @return The path to the bundled python 3 interpreter.
 	 */
 	private String python3InterpreterPath() {
-		return PreferenceSupplier.getBundledPythonPath();
+		return PreferenceSupplier.getPythonPath();
 	}
 
 	/**
@@ -369,9 +375,6 @@ public class PythonInterface extends ModelObject {
 			handlePythonReadinessChange(false);
 			throw new PythonNotReadyException("When getting validity errors");
 		}
-		if (!pythonReady) {
-			throw new PythonNotReadyException("When getting validity errors");
-		}
 	}
 
 	/**
@@ -401,10 +404,37 @@ public class PythonInterface extends ModelObject {
 			handlePythonReadinessChange(false);
 			throw new PythonNotReadyException("When getting parameter validity");
 		}
-		if (!pythonReady) {
-			throw new PythonNotReadyException("When getting parameter validity");
-		}
 	}
+	
+    /**
+     * Use python to estimate the time estimation for the current parameters and refresh the
+     * time estimation property.
+     * 
+     * @param scriptGenContent The script generator content
+     * @param scriptDefinition           The script definition
+     * @throws ExecutionException   A failure to execute the py4j call
+     * @throws InterruptedException The Py4J call was interrupted
+     * @throws PythonNotReadyException When python is not ready to accept calls.
+     */
+    public void refreshTimeEstimation(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition)
+            throws InterruptedException, ExecutionException, PythonNotReadyException {
+        if (pythonReady) {
+            CompletableFuture.supplyAsync(() -> {
+                try {
+                    return scriptDefinitionsWrapper.estimateTime(convertScriptGenContentToPython(scriptGenContent), scriptDefinition);
+                } catch (Py4JException e) {
+                    LOG.error(e);
+                    handlePythonReadinessChange(false);
+                    return false;
+                }
+            }, THREAD).thenAccept(timeEstimate -> 
+                firePropertyChange(TIME_ESTIMATE_PROPERTY, null, timeEstimate)
+            );
+        } else {
+            handlePythonReadinessChange(false);
+            throw new PythonNotReadyException("When getting time estimation");
+        }
+    }
 
 	/**
 	 * Generate a script in python and refresh the generated script property.
@@ -434,9 +464,6 @@ public class PythonInterface extends ModelObject {
 				});
 		} else {
 			handlePythonReadinessChange(false);
-			throw new PythonNotReadyException("When getting generated script");
-		}
-		if (!pythonReady) {
 			throw new PythonNotReadyException("When getting generated script");
 		}
 	}

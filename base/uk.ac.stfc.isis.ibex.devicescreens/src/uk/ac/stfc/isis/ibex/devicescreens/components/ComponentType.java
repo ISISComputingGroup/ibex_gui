@@ -177,7 +177,11 @@ public enum ComponentType {
 	/** LSI correlator. */
 	LSICORR,
     /** Density meter (e.g. DMA4500M) */
-    DENSITY_METER;
+    DENSITY_METER,
+    /** waveguide and aperture **/
+    WAVEGUIDE_APERTURE,
+	/**Spin flipper.*/
+	SPIN_FLIPPER;
 	
 	private Target target;
 

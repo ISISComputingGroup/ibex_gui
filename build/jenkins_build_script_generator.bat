@@ -38,7 +38,7 @@ set TARGET_DIR=built_script_gen
 
 REM Don't group these. Bat expands whole if at once, not sequentially
 if "%RELEASE%" == "YES" (
-    set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%GIT_BRANCH:~8%
+    set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\script_generator_release\%GIT_BRANCH:~8%
     set RELEASE_VERSION=%GIT_BRANCH:~8%    
 ) else (
     set RELEASE_VERSION=devel-%GIT_COMMIT:~0,7%

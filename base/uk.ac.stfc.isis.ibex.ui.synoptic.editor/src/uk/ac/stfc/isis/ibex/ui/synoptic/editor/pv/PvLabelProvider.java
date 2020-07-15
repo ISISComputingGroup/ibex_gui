@@ -22,6 +22,10 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv;
 import org.eclipse.jface.viewers.LabelProvider;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 
+/**
+ * Label provider for the PV type from synoptic. To display the value in PV details panel.
+ *
+ */
 public class PvLabelProvider extends LabelProvider {
 	
 	@Override

@@ -192,6 +192,10 @@ public final class ComponentIcons {
             	return "lsicorr";
             case DENSITY_METER:
                 return "density_meter";
+            case WAVEGUIDE_APERTURE:
+            	return "waveguide_aperture";
+            case SPIN_FLIPPER:
+            	return "flipper";
             default:
                 return "cog";
         }
