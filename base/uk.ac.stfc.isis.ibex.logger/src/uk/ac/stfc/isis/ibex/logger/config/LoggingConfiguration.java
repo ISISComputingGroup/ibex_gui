@@ -61,6 +61,7 @@ import uk.ac.stfc.isis.ibex.logger.preferences.PreferenceConstants;
  */
 public final class LoggingConfiguration {
 
+    /** order number for configs to express which one is most important in log4j. */
     private static final int ORDER_OF_CONFIG = 50;
 
     private LoggingConfiguration() { }
