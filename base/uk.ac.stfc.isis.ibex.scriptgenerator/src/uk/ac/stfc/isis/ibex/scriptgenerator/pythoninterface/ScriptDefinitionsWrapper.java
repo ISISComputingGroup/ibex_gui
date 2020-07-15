@@ -86,5 +86,11 @@ public interface ScriptDefinitionsWrapper {
 	 * @return
 	 */
 	boolean remoteAvailable();
+
+	/**
+	 * True if the git repository has uncommitted changes
+	 * @return
+	 */
+	boolean isDirty();
 	
 }

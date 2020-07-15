@@ -721,4 +721,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		return pythonInterface.remoteAvailable();
 	}
 
+	public boolean isDirty() {
+		return pythonInterface.isDirty();
+	}
+
 }

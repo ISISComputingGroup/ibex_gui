@@ -39,17 +39,7 @@ class DefinitionsRepository:
         self.branch = "master"
         self.repo = self.initialise_repo()
 
-        self.is_dirty = False
-
-        # self.fetch_from_origin()
-
-        # if self.remote_available():
-        #     self.fetch_info = self.fetch_from_origin()
-        # else:
-        #     self.fetch_info = None
-
         try:
-            # Fetch and store information about state of origin
             self.fetch_info = self.fetch_from_origin()
         except GitCommandError:
             self._append_error("Remote URL could not be reached or is not a valid git repository")
@@ -106,11 +96,12 @@ class DefinitionsRepository:
 
         return repo
 
-    def reset_to_origin_master(self) -> None:
+    def is_dirty(self) -> bool:
         """
-        Performs a reset to the lastest origin/master
+        Returns True if the git repository has uncommitted changes
         """
-        pass
+        # return True
+        return self.repo.is_dirty()
 
     def updates_available(self) -> bool:
         """
@@ -123,9 +114,10 @@ class DefinitionsRepository:
         else:
             updates_available = False
 
+        # return True
         return updates_available
 
-    def fetch_from_origin(self) -> FetchInfo:
+    def fetch_from_origin(self) -> Optional[FetchInfo]:
         """
         Fetches latest changes from origin. Returns FetchInfo object for current branch
 
@@ -153,30 +145,27 @@ class DefinitionsRepository:
             self._append_error("Multiple branches found in origin with name {branch}".format(branch=self.branch))
             branch_info = None
 
-        #self.fetch_info = branch_info
         return branch_info
 
-    def pull_from_origin(self):
+    def merge_with_upstream(self) -> bool:
         """
-        If the supplied path is a valid script defintions repository, attempt to pull from origin
+        If the supplied path is a valid script defintions repository, attempt to merge with remote
 
         Parameters:
             repo: git repo object representing the script definitions repository
         """
-        origin = self.repo.remotes["origin"]
-
+        if self.is_dirty():
+            # Revert all uncommitted changes on this branch before a merge
+            self.repo.git.reset(hard=True)
         try:
-            origin.pull()
-        # Capture this error and present it to the user in the dialogue box 
-        except (GitCommandError, InvalidGitRepositoryError) as err:
-            self._append_error("Local repo contains unpushed changes, cannot pull from remote")
+            self.repo.git.merge('origin/{branch}'.format(branch=self.branch))
+        except Exception as err:
+            self._append_error("Error occurred merging with remote: {}".format(err))
 
-            if self.repo.is_dirty():
-                # Run git merge --abort to undo changes
-                self.repo.git.merge(abort=True)
-                self.is_dirty = True
-            else:
-                self.is_dirty = False
+        if self.is_dirty():
+            # Run git merge --abort to undo changes
+            self._append_error("Script definition merge (update) was unsuccessful, aborting")
+            self.repo.git.merge(abort=True)
 
     def clone_repo_from_bundle(self):
         """

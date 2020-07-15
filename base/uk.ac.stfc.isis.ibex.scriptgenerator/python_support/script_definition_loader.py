@@ -249,12 +249,11 @@ class ScriptDefinitionsWrapper(object):
         return self.repository.updates_available()
         #return True
 
-    # def resetToOriginMaster(self) -> None:
-    #     """
-    #     Resets the state of the repository to the latest origin/master
-    #     """
-    #     self.repository.reset_to_origin_master()
-    #     return None
+    def isDirty(self) -> None:
+        """
+        Returns True if the repository has uncommitted changes
+        """
+        return self.repository.is_dirty()
 
     def getGitErrors(self):
         """

@@ -460,5 +460,9 @@ public class PythonInterface extends ModelObject {
 		return scriptDefinitionsWrapper.remoteAvailable();
 	}
 
+	public boolean isDirty() {
+		return scriptDefinitionsWrapper.isDirty();
+	}
+
 
 }
