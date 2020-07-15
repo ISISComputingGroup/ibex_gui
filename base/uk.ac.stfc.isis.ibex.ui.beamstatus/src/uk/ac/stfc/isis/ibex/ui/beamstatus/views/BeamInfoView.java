@@ -65,7 +65,7 @@ public class BeamInfoView {
         xpndtmTargetStation2.setText("Target Station 2");
         TargetStationTwoPanel ts2 = new TargetStationTwoPanel(expandBar, SWT.NONE);
         xpndtmTargetStation2.setControl(ts2);
-        xpndtmTargetStation2.setHeight(300);
+        xpndtmTargetStation2.setHeight(350);
         expandBar.layout();
     }
 }
