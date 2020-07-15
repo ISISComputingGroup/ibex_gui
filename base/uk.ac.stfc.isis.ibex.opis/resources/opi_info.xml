@@ -2056,7 +2056,9 @@
     <entry>
       <key>Keyence LK-G laser positioning sensor</key>
       <value>
-        <categories/>
+        <categories>
+          <category>Distance sensors</category>
+        </categories>
         <type>SENSOR</type>
         <path>keylkg.opi</path>
         <description>The OPI for the KEYLKG</description>
@@ -2065,6 +2067,25 @@
             <name>KEYLKG</name>
             <description>The KEYLKG PV prefix (e.g. KEYLKG_01)</description>
             <default>KEYLKG_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    
+    <entry>
+      <key>Micro-Epsilon Confocal Rangefinder</key>
+      <value>
+        <categories>
+          <category>Distance sensors</category>
+        </categories>
+        <type>SENSOR</type>
+        <path>mecfrf.opi</path>
+        <description>The OPI for the micro-epsilon confocal rangefinder</description>
+        <macros>
+          <macro>
+            <name>MECFRF</name>
+            <description>The MECFRF PV prefix (e.g. MECFRF_01)</description>
+            <default>MECFRF_01</default>
           </macro>
         </macros>
       </value>
