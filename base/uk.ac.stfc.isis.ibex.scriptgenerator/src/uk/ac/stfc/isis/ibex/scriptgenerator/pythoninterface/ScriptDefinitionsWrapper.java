@@ -80,5 +80,11 @@ public interface ScriptDefinitionsWrapper {
 	 * @return
 	 */
 	List<String> getGitErrors();
+
+	/**
+	 * True if the git remote is available
+	 * @return
+	 */
+	boolean remoteAvailable();
 	
 }

@@ -142,11 +142,17 @@ public class ScriptGeneratorView {
 		scriptGeneratorViewModel.addPropertyChangeListener(PYTHON_READINESS_PROPERTY, evt -> {
 			boolean ready = (boolean) evt.getNewValue();
 			if (ready) {
-				// Display prompt if new commits are available
+				//boolean x = scriptGeneratorViewModel.remoteAvailable();
+				
+				//scriptGeneratorViewModel.warnGitUnavailable();
+				if (!scriptGeneratorViewModel.remoteAvailable()) {
+					scriptGeneratorViewModel.warnGitUnavailable();
+				}
 				if (scriptGeneratorViewModel.updatesAvailable()) {
+				    // Display prompt if new commits are available
 			        scriptGeneratorViewModel.promptCleanDefinitionsRepo();
 				}
-				scriptGeneratorViewModel.showGitErrors();
+				//scriptGeneratorViewModel.showGitErrors();
 				scriptGeneratorViewModel.reloadScriptDefinitions();
 				displayLoaded();
 			} else {

@@ -37,23 +37,39 @@ class DefinitionsRepository:
         self.errors = []
 
         self.branch = "master"
+        self.repo = self.initialise_repo()
 
         self.is_dirty = False
-        self.repo = self.initialise_repo()
+
+        # self.fetch_from_origin()
+
+        # if self.remote_available():
+        #     self.fetch_info = self.fetch_from_origin()
+        # else:
+        #     self.fetch_info = None
 
         try:
             # Fetch and store information about state of origin
             self.fetch_info = self.fetch_from_origin()
-            #self.repo.remotes['origin'].fetch()
         except GitCommandError:
             self._append_error("Remote URL could not be reached or is not a valid git repository")
-            self.remote_available = False
+            self.fetch_info = None
         except ValueError as err:
             self._append_error(err)
-            self.remote_available = False
+            self.fetch_info = None
+
+    def remote_available(self):
+        """
+        Tries to perform a git fetch. Returns False if the fetch failed
+        """
+        try:
+            self.fetch_from_origin()
+        except Exception:
+            remote_available = False
         else:
-            #self.fetch_info = self.fetch_from_origin()
-            self.remote_available = True
+            remote_available = True
+
+        return remote_available
 
     def _repo_already_exists(self) -> bool:
         """
@@ -100,8 +116,7 @@ class DefinitionsRepository:
         """
         Returns True if the local repository has a different commit ID to origin
         """
-
-        if self.remote_available:
+        if self.fetch_info is not None:
             origin_commit_id = self.fetch_info.commit
             local_commit_id = self.repo.head.commit
             updates_available = local_commit_id != origin_commit_id
@@ -109,9 +124,6 @@ class DefinitionsRepository:
             updates_available = False
 
         return updates_available
-
-        return True
-        return local_commit_id != origin_commit_id
 
     def fetch_from_origin(self) -> FetchInfo:
         """
@@ -127,6 +139,8 @@ class DefinitionsRepository:
 
         all_origin_branches = origin.fetch()
 
+        self._append_error(all_origin_branches)
+
         # Pick out the origin branch with the same name as the local branch
         fetch_info = [branch for branch in all_origin_branches if branch.name == "origin/{}".format(self.branch)]
 
@@ -139,6 +153,7 @@ class DefinitionsRepository:
             self._append_error("Multiple branches found in origin with name {branch}".format(branch=self.branch))
             branch_info = None
 
+        #self.fetch_info = branch_info
         return branch_info
 
     def pull_from_origin(self):

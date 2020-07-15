@@ -22,6 +22,8 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PartInitException;
@@ -495,6 +497,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		}
 	};
 
+
 	/**
 	 * Bind the script definition loader to the context.
 	 * 
@@ -843,20 +846,40 @@ public class ScriptGeneratorViewModel extends ModelObject {
                             "Keep local changes");
             if (cleanRepo == 0) {
                 //scriptGeneratorModel.resetToOriginMaster();
+            } else {
+            	remoteAvailable();
             }
         });
     }
 	
 	public void showGitErrors() {
 		String errors = getGitLoadErrors();
-		DISPLAY.asyncExec(() -> {
-            MessageDialog.openInformation(DISPLAY.getActiveShell(),
-                "Git errors occurred",
-                errors);
-        });
+		MessageDialog.openInformation(DISPLAY.getActiveShell(), "Git errors occurred", errors);
+		//DISPLAY.asyncExec(() -> {
+        //    MessageDialog.openInformation(DISPLAY.getActiveShell(),
+        //        "Git errors occurred",
+        //        errors);
+        //});
 	}
 
+	public boolean remoteAvailable() {
+		return scriptGeneratorModel.remoteAvailable();
+	}
+	
 	public boolean updatesAvailable() {
 		return scriptGeneratorModel.updatesAvailable();
+	}
+
+	public void warnGitUnavailable() {
+		DISPLAY.asyncExec(() -> {
+			MessageDialog.openInformation(DISPLAY.getActiveShell(), "Git error", "Could not connect to remote git repository");
+		});
+		//MessageDialog messageDialog = new MessageDialog(DISPLAY.getActiveShell(), "Git error", "Could not connect to remote git repository");
+		//Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+		//MessageBox box = new MessageBox( DISPLAY.getActiveShell(), SWT.OK | SWT.ABORT);
+		//box.setMessage("Could not connect to remote git repository");
+		//box.open();
+		//MessageDialog.openInformation(shell, "Git error", "Could not connect to remote git repository");
+		
 	}
 }

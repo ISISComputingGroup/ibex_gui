@@ -717,4 +717,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		return pythonInterface.getGitLoadErrors();
 	}
 
+	public boolean remoteAvailable() {
+		return pythonInterface.remoteAvailable();
+	}
+
 }

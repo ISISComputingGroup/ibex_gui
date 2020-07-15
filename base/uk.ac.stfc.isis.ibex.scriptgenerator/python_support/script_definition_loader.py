@@ -226,6 +226,19 @@ class ScriptDefinitionsWrapper(object):
 
         self.generator = Generator(search_folders=[self.repository.path, ])
 
+    def remoteAvailable(self) -> bool:
+        """
+        Returns True if the remote git repository can be reached/pulled from
+        """
+        #return True
+        #return self.repository.remote_available()
+        try:
+            fetch_info = self.repository.fetch_from_origin()
+        except Exception:
+            fetch_info = None
+        
+        return fetch_info is not None
+
     def updatesAvailable(self) -> bool:
         """
         Returns True if the repository path can be pulled, else False

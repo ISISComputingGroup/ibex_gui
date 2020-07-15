@@ -456,5 +456,9 @@ public class PythonInterface extends ModelObject {
 		return scriptDefinitionsWrapper.getGitErrors();
 	}
 
+	public boolean remoteAvailable() {
+		return scriptDefinitionsWrapper.remoteAvailable();
+	}
+
 
 }
