@@ -45,6 +45,7 @@ public class DeleteComponentsDialog extends MultipleConfigsSelectionDialog {
      * @param parentShell The parent shell
      * @param compsAvailable The list of available components
      * @param compsInUse The list of components that are used in configurations
+     * @param compNamesWithFlags Component names as key and protection flag as value.
      */
     public DeleteComponentsDialog(Shell parentShell, Collection<ConfigInfo> compsAvailable,
             Collection<String> compsInUse, Map<String, Boolean> compNamesWithFlags) {

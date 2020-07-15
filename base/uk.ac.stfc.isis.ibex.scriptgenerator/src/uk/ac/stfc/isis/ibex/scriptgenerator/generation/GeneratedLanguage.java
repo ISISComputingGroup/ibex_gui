@@ -16,7 +16,11 @@ public enum GeneratedLanguage {
 	
 	private final String name;
 	
-	private GeneratedLanguage(String name) {
+	/**
+	 * Constructor.
+	 * @param name name of the language
+	 */
+	GeneratedLanguage(String name) {
 		this.name = name;
 	}
 	

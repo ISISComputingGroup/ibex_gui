@@ -50,6 +50,11 @@ public class Databases extends AbstractUIPlugin {
         instance = this;
     }
 
+    /**
+     * Gets the bundle context for this bundle activator.
+     * 
+     * @return the bundle context
+     */
     static BundleContext getContext() {
         return context;
     }

@@ -41,6 +41,10 @@ public enum DashboardPv {
 	
 	private static final String DASHBOARD_PVS = "CS:DASHBOARD";
 	
+	/**
+	 * Constructor.
+	 * @param pvSuffix PVs suffix which is where it is on the dashboard
+	 */
 	DashboardPv(String pvSuffix) {
 		this.pvSuffix = pvSuffix;
 	}

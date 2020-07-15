@@ -28,7 +28,7 @@ public interface ScriptDefinitionWrapper {
 	String parametersValid(Map<String, String> action);
 	
     /**
-     * Estimate how long the action is expected to take
+     * Estimate how long the action is expected to take.
      * @param action The action to estimate
      * @return An estimate in seconds
      */

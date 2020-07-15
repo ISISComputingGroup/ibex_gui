@@ -17,11 +17,15 @@ import org.eclipse.swt.widgets.Display;
  * *only* referred to by this class, then it's resources can be released. This prevents a potential
  * memory leak.
  */
-public class OpiViewModel {
+public final class OpiViewModel {
 	/**
 	 * (Weak) set of OpiViews that have been created.
 	 */
     private static final Set<OpiView> VIEWS = Collections.newSetFromMap(new WeakHashMap<OpiView, Boolean>());
+    
+    private OpiViewModel() {
+	//Private constructor for utility class
+    }
     
     /**
      * Attempts to refresh all the OPIs that were registered in this class.

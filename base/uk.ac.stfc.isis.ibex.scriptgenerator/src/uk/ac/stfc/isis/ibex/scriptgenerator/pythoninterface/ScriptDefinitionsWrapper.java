@@ -56,7 +56,7 @@ public interface ScriptDefinitionsWrapper {
 	boolean areParamsValid(List<Map<String, String>> scriptGenContent, ScriptDefinitionWrapper scriptDefinition);
 	
     /**
-     * Estimate how long (in seconds) the current actions will take
+     * Estimate how long (in seconds) the current actions will take.
      * 
      * @param scriptGenContent The list of actions to estimate
      * @param scriptDefinition The script definition
