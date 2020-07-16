@@ -837,23 +837,24 @@ public class ScriptGeneratorViewModel extends ModelObject {
 
 	public String getPromptMessage() {
         String message = "Updates to the script definitions are available. Updating your definitions may erase current scripts.";
-		if (scriptGeneratorModel.isDirty()) {
-			message += "\n WARNING: There are uncommitted changes to the script defintions. These will be lost if you update.";
-		}
+		//if (scriptGeneratorModel.isDirty()) {
+		//	message += "\n WARNING: There are uncommitted changes to the script defintions. These will be lost if you update.";
+		//}
 		return message;
 	}
 	
 	public void promptCleanDefinitionsRepo() {
 
         DISPLAY.asyncExec(() -> {
-            int cleanRepo = MessageDialog.open(MessageDialog.CONFIRM,
-                            DISPLAY.getActiveShell(),
-                            "Error pulling repository",
-                            getPromptMessage(),
-                            0,
-                            "Discard local changes and update",
-                            "Keep local changes");
-            if (cleanRepo == 0) {
+        	int cleanRepo = MessageDialog.open(MessageDialog.CONFIRM,
+                    DISPLAY.getActiveShell(),
+                    "Error pulling repository",
+                    getPromptMessage(),
+                    0,
+                    "Discard local changes and update",
+                    "Keep local changes");	
+
+        	if (cleanRepo == 0) {
                 scriptGeneratorModel.resetToOriginMaster();
             } else {
             	remoteAvailable();
@@ -889,6 +890,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		//box.setMessage("Could not connect to remote git repository");
 		//box.open();
 		//MessageDialog.openInformation(shell, "Git error", "Could not connect to remote git repository");
+		
+	}
+
+	public void mergeUpstream() {
+		// TODO Auto-generated method stub
 		
 	}
 }

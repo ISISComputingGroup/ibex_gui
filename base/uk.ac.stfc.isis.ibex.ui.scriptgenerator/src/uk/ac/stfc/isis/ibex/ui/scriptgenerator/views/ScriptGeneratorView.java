@@ -25,6 +25,7 @@ import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -43,6 +44,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
@@ -141,7 +143,7 @@ public class ScriptGeneratorView {
 		
 		scriptGeneratorViewModel.addPropertyChangeListener(PYTHON_READINESS_PROPERTY, evt -> {
 			boolean ready = (boolean) evt.getNewValue();
-			if (ready) {
+			if (ready) {/**
 				//boolean x = scriptGeneratorViewModel.remoteAvailable();
 				
 				//scriptGeneratorViewModel.warnGitUnavailable();
@@ -150,10 +152,21 @@ public class ScriptGeneratorView {
 				}
 				if (scriptGeneratorViewModel.updatesAvailable()) {
 				    // Display prompt if new commits are available
-			        scriptGeneratorViewModel.promptCleanDefinitionsRepo();
+					int cleanRepo = MessageDialog.open(MessageDialog.CONFIRM,
+							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+                            "Error pulling repository",
+                            "message",
+                            0,
+                            "Discard local changes and update",
+                            "Keep local changes");
+					scriptGeneratorViewModel.promptCleanDefinitionsRepo();
 				}
 				//scriptGeneratorViewModel.showGitErrors();
 				scriptGeneratorViewModel.reloadScriptDefinitions();
+				*/
+				DISPLAY.asyncExec(() -> {
+					doGitActions();
+				});
 				displayLoaded();
 			} else {
 				displayLoading();
@@ -170,6 +183,41 @@ public class ScriptGeneratorView {
 		for (Control child : mainParent.getChildren()) {
 			child.dispose();
 		}
+	}
+	
+	/**
+	 * Handle git repository
+	 */
+	private void doGitActions() {
+		//boolean x = scriptGeneratorViewModel.remoteAvailable();
+		DISPLAY.asyncExec(() -> {
+			//scriptGeneratorViewModel.warnGitUnavailable();
+			if (!scriptGeneratorViewModel.remoteAvailable()) {
+				MessageDialog.openInformation(DISPLAY.getActiveShell(), "Git error", "Could not connect to remote git repository");
+				//scriptGeneratorViewModel.warnGitUnavailable();
+			}
+			if (scriptGeneratorViewModel.updatesAvailable()) {
+				// Display prompt if new commits are available
+				int cleanRepo = MessageDialog.open(MessageDialog.CONFIRM,
+						DISPLAY.getActiveShell(),
+						"Error pulling repository",
+						scriptGeneratorViewModel.getPromptMessage(),
+						0,
+						"Keep local changes",
+						"Discard local changes and update");	
+				
+				if (cleanRepo == 1) {
+					scriptGeneratorViewModel.mergeUpstream();
+				}
+			}
+			String gitErrors = scriptGeneratorViewModel.getGitLoadErrors();
+			if (!(gitErrors == "")) {
+				MessageDialog.openInformation(DISPLAY.getActiveShell(), "Git errors occurred", gitErrors);
+			}
+			scriptGeneratorViewModel.showGitErrors();
+		});
+
+		scriptGeneratorViewModel.reloadScriptDefinitions();
 	}
 	
 	/**
