@@ -842,35 +842,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		//}
 		return message;
 	}
-	
-	public void promptCleanDefinitionsRepo() {
-
-        DISPLAY.asyncExec(() -> {
-        	int cleanRepo = MessageDialog.open(MessageDialog.CONFIRM,
-                    DISPLAY.getActiveShell(),
-                    "Error pulling repository",
-                    getPromptMessage(),
-                    0,
-                    "Discard local changes and update",
-                    "Keep local changes");	
-
-        	if (cleanRepo == 0) {
-                scriptGeneratorModel.resetToOriginMaster();
-            } else {
-            	remoteAvailable();
-            }
-        });
-    }
-	
-	public void showGitErrors() {
-		String errors = getGitLoadErrors();
-		MessageDialog.openInformation(DISPLAY.getActiveShell(), "Git errors occurred", errors);
-		//DISPLAY.asyncExec(() -> {
-        //    MessageDialog.openInformation(DISPLAY.getActiveShell(),
-        //        "Git errors occurred",
-        //        errors);
-        //});
-	}
 
 	public boolean remoteAvailable() {
 		return scriptGeneratorModel.remoteAvailable();
@@ -880,18 +851,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		return scriptGeneratorModel.updatesAvailable();
 	}
 
-	public void warnGitUnavailable() {
-		DISPLAY.asyncExec(() -> {
-			MessageDialog.openInformation(DISPLAY.getActiveShell(), "Git error", "Could not connect to remote git repository");
-		});
-		//MessageDialog messageDialog = new MessageDialog(DISPLAY.getActiveShell(), "Git error", "Could not connect to remote git repository");
-		//Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-		//MessageBox box = new MessageBox( DISPLAY.getActiveShell(), SWT.OK | SWT.ABORT);
-		//box.setMessage("Could not connect to remote git repository");
-		//box.open();
-		//MessageDialog.openInformation(shell, "Git error", "Could not connect to remote git repository");
-		
-	}
 
 	public void mergeUpstream() {
 		// TODO Auto-generated method stub

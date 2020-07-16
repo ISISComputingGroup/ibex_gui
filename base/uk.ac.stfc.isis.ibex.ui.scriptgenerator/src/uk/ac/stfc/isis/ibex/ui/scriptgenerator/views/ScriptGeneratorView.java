@@ -189,12 +189,12 @@ public class ScriptGeneratorView {
 	 * Handle git repository
 	 */
 	private void doGitActions() {
-		//boolean x = scriptGeneratorViewModel.remoteAvailable();
 		DISPLAY.asyncExec(() -> {
-			//scriptGeneratorViewModel.warnGitUnavailable();
 			if (!scriptGeneratorViewModel.remoteAvailable()) {
-				MessageDialog.openInformation(DISPLAY.getActiveShell(), "Git error", "Could not connect to remote git repository");
-				//scriptGeneratorViewModel.warnGitUnavailable();
+				// Warn user git could not be found
+				MessageDialog.openInformation(DISPLAY.getActiveShell(),
+						"Git error",
+						"Could not connect to remote git repository");
 			}
 			if (scriptGeneratorViewModel.updatesAvailable()) {
 				// Display prompt if new commits are available
@@ -214,7 +214,6 @@ public class ScriptGeneratorView {
 			if (!(gitErrors == "")) {
 				MessageDialog.openInformation(DISPLAY.getActiveShell(), "Git errors occurred", gitErrors);
 			}
-			scriptGeneratorViewModel.showGitErrors();
 		});
 
 		scriptGeneratorViewModel.reloadScriptDefinitions();
