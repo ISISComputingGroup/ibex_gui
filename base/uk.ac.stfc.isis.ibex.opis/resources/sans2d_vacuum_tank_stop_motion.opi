@@ -35,7 +35,7 @@
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
     <actions hook="false" hook_all="true">
       <action type="WRITE_PV">
-        <pv_name>$(P)FINS_VAC:STOP_MOTORS:ALL</pv_name>
+        <pv_name>$(P)MOT:SANS2DVAC:STOP_MOTORS:ALL</pv_name>
         <value>1</value>
         <timeout>10</timeout>
         <confirm_message></confirm_message>
