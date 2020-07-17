@@ -198,7 +198,7 @@ public class ScriptGeneratorView {
 			}
 			if (scriptGeneratorViewModel.updatesAvailable()) {
 				// Display prompt if new commits are available
-				int cleanRepo = MessageDialog.open(MessageDialog.CONFIRM,
+				int performMerge = MessageDialog.open(MessageDialog.CONFIRM,
 						DISPLAY.getActiveShell(),
 						"Error pulling repository",
 						scriptGeneratorViewModel.getPromptMessage(),
@@ -206,13 +206,13 @@ public class ScriptGeneratorView {
 						"Keep local changes",
 						"Discard local changes and update");	
 				
-				if (cleanRepo == 1) {
-					scriptGeneratorViewModel.mergeUpstream();
+				if (performMerge == 1) {
+					scriptGeneratorViewModel.mergeOrigin();
 				}
 			}
-			String gitErrors = scriptGeneratorViewModel.getGitLoadErrors();
-			if (!(gitErrors == "")) {
-				MessageDialog.openInformation(DISPLAY.getActiveShell(), "Git errors occurred", gitErrors);
+			Optional<String> gitErrors = scriptGeneratorViewModel.getGitLoadErrors();
+			if (gitErrors.isPresent()) {
+				MessageDialog.openInformation(DISPLAY.getActiveShell(), "Git errors occurred", gitErrors.get());
 			}
 		});
 

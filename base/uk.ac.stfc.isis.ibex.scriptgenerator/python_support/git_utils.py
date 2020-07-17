@@ -100,7 +100,6 @@ class DefinitionsRepository:
         """
         Returns True if the git repository has uncommitted changes
         """
-        # return True
         return self.repo.is_dirty()
 
     def updates_available(self) -> bool:
@@ -114,7 +113,6 @@ class DefinitionsRepository:
         else:
             updates_available = False
 
-        # return True
         return updates_available
 
     def fetch_from_origin(self) -> Optional[FetchInfo]:
@@ -147,9 +145,9 @@ class DefinitionsRepository:
 
         return branch_info
 
-    def merge_with_upstream(self) -> bool:
+    def merge_with_origin(self) -> bool:
         """
-        If the supplied path is a valid script defintions repository, attempt to merge with remote
+        If the supplied path is a valid script defintions repository, attempt to merge with origin
 
         Parameters:
             repo: git repo object representing the script definitions repository
@@ -161,10 +159,6 @@ class DefinitionsRepository:
             self.repo.git.merge('origin/{branch}'.format(branch=self.branch))
         except Exception as err:
             self._append_error("Error occurred merging with remote: {}".format(err))
-
-        if self.is_dirty():
-            # Run git merge --abort to undo changes
-            self._append_error("Script definition merge (update) was unsuccessful, aborting")
             self.repo.git.merge(abort=True)
 
     def clone_repo_from_bundle(self):

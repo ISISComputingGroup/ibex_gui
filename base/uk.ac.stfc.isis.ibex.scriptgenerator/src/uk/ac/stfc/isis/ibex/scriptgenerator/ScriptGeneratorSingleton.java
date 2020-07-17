@@ -725,4 +725,9 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		return pythonInterface.isDirty();
 	}
 
+	public void mergeOrigin() {
+		pythonInterface.mergeOrigin();
+		
+	}
+
 }

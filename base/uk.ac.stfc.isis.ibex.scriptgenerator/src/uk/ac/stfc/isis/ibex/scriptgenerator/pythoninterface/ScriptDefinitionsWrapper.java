@@ -92,5 +92,7 @@ public interface ScriptDefinitionsWrapper {
 	 * @return
 	 */
 	boolean isDirty();
+
+	void mergeOrigin();
 	
 }

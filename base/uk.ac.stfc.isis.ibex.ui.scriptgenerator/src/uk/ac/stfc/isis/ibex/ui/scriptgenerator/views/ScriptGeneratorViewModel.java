@@ -351,12 +351,18 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		return scriptGeneratorModel.getScriptDefinitionLoadErrors();
 	}
 	
-	protected String getGitLoadErrors() {
-		String loadErrors = "";
-		for (String error: scriptGeneratorModel.getGitLoadErrors()) {
-			loadErrors += error +";\n";
-		}
-		return loadErrors;
+	protected Optional<String> getGitLoadErrors() {
+		List<String> gitLoadErrors = scriptGeneratorModel.getGitLoadErrors();
+		String loadErrorMessage = null;
+
+		if (gitLoadErrors.size() > 0) {
+			loadErrorMessage = "The following error(s) occurred when trying to update script definitions: \n";
+			for (String error: scriptGeneratorModel.getGitLoadErrors()) {
+				loadErrorMessage += error +"\n";
+			}
+		};
+
+		return Optional.ofNullable(loadErrorMessage);
 	}
 	
 	/**
@@ -852,8 +858,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	}
 
 
-	public void mergeUpstream() {
-		// TODO Auto-generated method stub
+	public void mergeOrigin() {
+		scriptGeneratorModel.mergeOrigin();
 		
 	}
 }

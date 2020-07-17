@@ -221,7 +221,6 @@ class ScriptDefinitionsWrapper(object):
 
     def __init__(self, path: str):
         self.repository = DefinitionsRepository(path=path)
-        #self.repository.initialise_repo()
         self.script_definitions, self.script_definition_load_errors = get_script_definitions(self.repository.path)
 
         self.generator = Generator(search_folders=[self.repository.path, ])
@@ -230,8 +229,6 @@ class ScriptDefinitionsWrapper(object):
         """
         Returns True if the remote git repository can be reached/pulled from
         """
-        #return True
-        #return self.repository.remote_available()
         try:
             fetch_info = self.repository.fetch_from_origin()
         except Exception:
@@ -243,11 +240,7 @@ class ScriptDefinitionsWrapper(object):
         """
         Returns True if the repository path can be pulled, else False
         """
-        # if self.repository.is_dirty is None:
-        #     return True
-        # return self.repository.is_dirty
         return self.repository.updates_available()
-        #return True
 
     def isDirty(self) -> None:
         """
@@ -261,6 +254,12 @@ class ScriptDefinitionsWrapper(object):
         """
         return ListConverter().convert(self.repository.errors, gateway._gateway_client)
 
+    def mergeOrigin(self):
+        """
+        Attempts to merge from origin
+        """
+        self.repository.merge_with_origin()
+
     def getScriptDefinitionLoadErrors(self) -> Dict[AnyStr, AnyStr]:
         """
         Returns a dictionary mapping of a script_definition that has failed to load mapped to it's error when loading
@@ -268,11 +267,7 @@ class ScriptDefinitionsWrapper(object):
         Returns:
            script_definition_load_errors: The Dictionary mapping script_definitions to load errors.
         """
-        load_errors_with_git = {}
-        for error_index, git_error in enumerate(self.repository.errors):
-            load_errors_with_git.update({"git error {}".format(error_index): git_error})
-        load_errors_with_git.update(self.script_definition_load_errors)
-        return MapConverter().convert(load_errors_with_git, gateway._gateway_client)
+        return MapConverter().convert(self.script_definition_load_errors, gateway._gateway_client)
 
     def getScriptDefinitions(self) -> list:
         """

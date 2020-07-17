@@ -464,5 +464,10 @@ public class PythonInterface extends ModelObject {
 		return scriptDefinitionsWrapper.isDirty();
 	}
 
+	public void mergeOrigin() {
+		scriptDefinitionsWrapper.mergeOrigin();
+		
+	}
+
 
 }
