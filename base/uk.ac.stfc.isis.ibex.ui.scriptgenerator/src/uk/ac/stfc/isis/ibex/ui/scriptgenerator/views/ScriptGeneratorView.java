@@ -143,30 +143,8 @@ public class ScriptGeneratorView {
 		
 		scriptGeneratorViewModel.addPropertyChangeListener(PYTHON_READINESS_PROPERTY, evt -> {
 			boolean ready = (boolean) evt.getNewValue();
-			if (ready) {/**
-				//boolean x = scriptGeneratorViewModel.remoteAvailable();
-				
-				//scriptGeneratorViewModel.warnGitUnavailable();
-				if (!scriptGeneratorViewModel.remoteAvailable()) {
-					scriptGeneratorViewModel.warnGitUnavailable();
-				}
-				if (scriptGeneratorViewModel.updatesAvailable()) {
-				    // Display prompt if new commits are available
-					int cleanRepo = MessageDialog.open(MessageDialog.CONFIRM,
-							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-                            "Error pulling repository",
-                            "message",
-                            0,
-                            "Discard local changes and update",
-                            "Keep local changes");
-					scriptGeneratorViewModel.promptCleanDefinitionsRepo();
-				}
-				//scriptGeneratorViewModel.showGitErrors();
-				scriptGeneratorViewModel.reloadScriptDefinitions();
-				*/
-				DISPLAY.asyncExec(() -> {
-					doGitActions();
-				});
+			if (ready) {
+				doGitActions();
 				displayLoaded();
 			} else {
 				displayLoading();

@@ -8,7 +8,7 @@ import inspect
 import argparse
 import os
 import sys
-from git_utils import DefinitionsRepository
+from git_utils import DefinitionsRepository, DEFAULT_REPO_PATH
 from glob import iglob
 from jinja2 import Environment, FileSystemLoader, Markup, TemplateNotFound
 from genie_python import utilities
@@ -357,11 +357,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('java_port', type=int, help='the java port to connect on')
     parser.add_argument('python_port', type=int, help='the python port to connect on')
-    parser.add_argument('repo_path', type=str, help='Path to the script generator repository')
+    parser.add_argument('--repo_path', type=str, help='Path to the script generator repository', default=DEFAULT_REPO_PATH)
 
     args = parser.parse_args()
 
-    script_definitions_wrapper = ScriptDefinitionsWrapper(args.repo_path)
+    script_definitions_wrapper = ScriptDefinitionsWrapper(path=args.repo_path)
 
     gateway = ClientServer(
         java_parameters=JavaParameters(port=args.java_port),

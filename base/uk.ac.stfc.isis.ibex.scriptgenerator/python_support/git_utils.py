@@ -15,7 +15,7 @@ except ImportError:
     os.environ["GIT_PYTHON_GIT_EXECUTABLE"] = GIT_EXECUTABLE_PATH
     from git import Repo, Git
 
-DEFAULT_REPO_PATH = os.path.join(SCRIPT_GEN_FOLDER, "ScriptDefinitions")
+DEFAULT_REPO_PATH = os.path.join(SCRIPT_GEN_FOLDER, "script_definitions")
 REMOTE_URL = "https://github.com/ISISComputingGroup/ScriptDefinitions.git"
 OLD_REPOSITORY = "https://github.com/ISISComputingGroup/ScriptGeneratorConfigs.git"
 
@@ -28,7 +28,11 @@ class DefinitionsRepository:
     Contains methods to initialise and maintain the script definitions repository
     """
 
-    def __init__(self, path: str = DEFAULT_REPO_PATH, remote_url: str = REMOTE_URL, bundle_path: str = DEFAULT_BUNDLE_PATH):
+    def __init__(self, path, remote_url: str = REMOTE_URL, bundle_path: str = DEFAULT_BUNDLE_PATH):
+        if path is not None:
+            self.path = path
+        else:
+            self.path = DEFAULT_REPO_PATH
         self.path = path
         self.remote_url = remote_url
         self.bundle_path = bundle_path
@@ -128,8 +132,6 @@ class DefinitionsRepository:
         origin = self.repo.remotes["origin"]
 
         all_origin_branches = origin.fetch()
-
-        self._append_error(all_origin_branches)
 
         # Pick out the origin branch with the same name as the local branch
         fetch_info = [branch for branch in all_origin_branches if branch.name == "origin/{}".format(self.branch)]
