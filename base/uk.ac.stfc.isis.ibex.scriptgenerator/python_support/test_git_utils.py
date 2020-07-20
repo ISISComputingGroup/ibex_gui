@@ -1,6 +1,6 @@
 import unittest
 from mock import patch
-from git_utils import DefinitionsRepository, OLD_REPOSITORY
+from git_utils import DefinitionsRepository
 
 from mock import Mock, MagicMock
 from git.exc import GitCommandError
@@ -66,26 +66,18 @@ class DefinitionsRepositoryTests(unittest.TestCase):
         self.assertTrue(self.definitions_repo._repo_already_exists())
 
     @patch("os.path.isdir", return_value=True)
-    @patch("os.listdir")
+    @patch("os.listdir", return_value=[])
     def test_GIVEN_remote_repository_reachable_WHEN_cloning_the_repository_THEN_clone_from_github_requested(self, mock_list, mock_isdir):
         self.definitions_repo._attempt_repo_init()
         self.mock_git.clone.assert_called_with(TEST_URL, TEST_REPO_PATH)
 
     def test_GIVEN_remote_repository_unreachable_WHEN_cloning_the_repository_THEN_clone_from_bundle(self):
-        self.mock_git.clone.side_effect = GitCommandError(command="command", status="status")
+        self.mock_git.clone = MagicMock(side_effect=GitCommandError(command="command", status="status"))
 
         with patch.object(self.definitions_repo, "clone_repo_from_bundle") as mock_clone:
             self.definitions_repo._attempt_repo_init()
 
             mock_clone.assert_called()
-
-    @patch("os.makedirs")
-    @patch("os.path.isdir")
-    @patch("os.listdir")
-    def test_GIVEN_directory_which_does_not_exist_WHEN_repository_initialise_called_THEN_makedirs_called_to_create_folders(self, mock_listdir, mock_isdir, mock_makedirs):
-        mock_isdir.return_value = False
-        self.definitions_repo._attempt_repo_init()
-        mock_makedirs.assert_called_with(TEST_REPO_PATH, exist_ok=True)
 
     def test_GIVEN_repository_exists_WHEN_pull_requested_THEN_repository_gets_pulled(self):
         with patch.object(self.definitions_repo, "_repo_already_exists", return_value=True):

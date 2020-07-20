@@ -197,7 +197,7 @@ class DefinitionsRepository:
 
     def _attempt_repo_init(self):
         """
-        Attempt to clone new repository if the supplied path is not initialised to the script definitions URL
+        Attempt to clone new repository if the supplied path is empty
 
         Paramters:
             path: Location of directory to initialise
@@ -205,10 +205,7 @@ class DefinitionsRepository:
         Raises:
             OSError If the supplied directory is not empty
         """
-        if not os.path.isdir(self.path):
-            os.makedirs(self.path, exist_ok=True)
-
-        if len(os.listdir(self.path)) > 0:
+        if os.path.isdir(self.path) and len(os.listdir(self.path)) > 0:
             self._append_error("Supplied directory {} not empty, cannot clone".format(self.path))
         else:
             try:
