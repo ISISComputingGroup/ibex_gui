@@ -12,6 +12,15 @@ TEST_URL = "example.com"
 
 
 class DefinitionsRepositoryTests(unittest.TestCase):
+    def _raise_error_when_attempting_merge(_, abort=None):
+        """
+        Raises a git error if attempting a merge. Does nothing if abort is set to True.
+        """
+        if abort is True:
+            pass
+        else:
+            raise GitCommandError(command='command', status='status')
+
     @patch("git_utils.Git", return_value=Mock())
     @patch.object(DefinitionsRepository, "initialise_repo", return_value=MagicMock())
     def setUp(self, mock_repo, mock_git):
@@ -81,27 +90,25 @@ class DefinitionsRepositoryTests(unittest.TestCase):
     def test_GIVEN_repository_exists_WHEN_pull_requested_THEN_repository_gets_pulled(self):
         with patch.object(self.definitions_repo, "_repo_already_exists", return_value=True):
 
-            self.definitions_repo.pull_from_origin()
-            self.mock_repo.remotes["origin"].pull.assert_called()
+            self.definitions_repo.merge_with_origin()
+            self.mock_repo.git.merge.assert_called()
 
     def test_GIVEN_repository_which_has_unpushed_changes_WHEN_pull_attempted_THEN_merge_is_aborted(self):
-        with patch.object(self.definitions_repo, "_repo_already_exists", return_value=True):
-            self.mock_repo.remotes["origin"].pull.side_effect = GitCommandError(command="command", status="status")
+        self.mock_repo.git.merge = MagicMock(side_effect=self._raise_error_when_attempting_merge)
 
-            self.definitions_repo.pull_from_origin()
-
-            self.mock_repo.git.merge.assert_called_with(abort=True)
+        self.definitions_repo.merge_with_origin()
+        self.mock_repo.git.merge.assert_called_with(abort=True)
 
     def test_GIVEN_repo_cannot_be_pulled_THEN_error_logged(self):
-        self.mock_repo.remotes["origin"].pull.side_effect = GitCommandError(command="command", status="status")
+        self.mock_repo.git.merge = MagicMock(side_effect=self._raise_error_when_attempting_merge)
         with patch.object(self.definitions_repo, "_append_error") as error_handler:
-            self.definitions_repo.pull_from_origin()
+            self.definitions_repo.merge_with_origin()
             error_handler.assert_called()
 
     @patch("git_utils.Repo")
     def test_GIVEN_repository_can_be_pulled_WHEN_repo_initialised_THEN_no_error_gets_logged(self, mock_repo):
         mock_repo.return_value.remotes["origin"].url = TEST_URL
-        with patch.object(self.definitions_repo, "pull_from_origin"):
+        with patch.object(self.definitions_repo, "merge_with_origin"):
             with patch.object(self.definitions_repo, "_append_error") as error_handler:
                 with patch.object(self.definitions_repo, "_repo_already_exists", return_value=True):
                     self.definitions_repo.initialise_repo()

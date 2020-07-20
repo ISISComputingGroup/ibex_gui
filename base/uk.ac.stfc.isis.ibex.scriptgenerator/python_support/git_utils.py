@@ -3,7 +3,7 @@ import pathlib
 from urllib.parse import urlparse
 from typing import Optional
 
-from git.exc import NoSuchPathError, GitCommandError, InvalidGitRepositoryError
+from git.exc import NoSuchPathError, GitCommandError, InvalidGitRepositoryError, GitError
 
 SCRIPT_GEN_FOLDER = pathlib.Path(__file__).parent.absolute()
 
@@ -157,6 +157,7 @@ class DefinitionsRepository:
         if self.is_dirty():
             # Revert all uncommitted changes on this branch before a merge
             self.repo.git.reset(hard=True)
+
         try:
             self.repo.git.merge('origin/{branch}'.format(branch=self.branch))
         except Exception as err:
