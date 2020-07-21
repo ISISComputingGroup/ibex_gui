@@ -21,6 +21,9 @@
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 
 /**
@@ -29,6 +32,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
  */
 public class TempEditableIoc extends EditableIoc {
     private final EditableIoc editingIoc;
+    private Collection<Macro> macros;
 
     /**
      * Constructor for the temp IOC.
@@ -39,6 +43,24 @@ public class TempEditableIoc extends EditableIoc {
     public TempEditableIoc(EditableIoc ioc) {
         super(ioc);
         this.editingIoc = ioc;
+        
+        this.macros = deepCopyMacros(editingIoc.getMacros());
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Collection<Macro> getMacros() {
+        return macros;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setMacros(final Collection<Macro> macros) {
+        this.macros = deepCopyMacros(macros);
     }
 
     /**
@@ -52,6 +74,19 @@ public class TempEditableIoc extends EditableIoc {
         editingIoc.setPvs(getPvs());
         editingIoc.setPvSets(getPvSets());
         editingIoc.setRemotePvPrefix(getRemotePvPrefix());
+    }
+    
+    /**
+     * Create a deep, fully independent copy of a collection of macros.
+     * @param macros the macros to copy from
+     * @return a deep copy of the macros.
+     */
+    private static final Collection<Macro> deepCopyMacros(final Collection<Macro> macros) {
+        var result = new ArrayList<Macro>();
+        for (Macro macro : macros) {
+            result.add(new Macro(macro));
+        }
+        return result;
     }
 
 }
