@@ -23,9 +23,6 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.stream.Collectors;
-
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 
@@ -50,11 +47,17 @@ public class TempEditableIoc extends EditableIoc {
         this.macros = deepCopyMacros(editingIoc.getMacros());
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Collection<Macro> getMacros() {
         return macros;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setMacros(final Collection<Macro> macros) {
         this.macros = deepCopyMacros(macros);
