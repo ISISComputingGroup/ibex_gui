@@ -16,7 +16,7 @@ except ImportError:
     from git import Repo, Git
 
 # This initialises the script_definitions folder next to the built executables
-DEFAULT_REPO_PATH = SCRIPT_GEN_FOLDER.parent.parent / 'script_definitons'
+DEFAULT_REPO_PATH = SCRIPT_GEN_FOLDER.parent.parent.parent / 'script_definitons'
 REMOTE_URL = "https://github.com/ISISComputingGroup/ScriptDefinitions.git"
 OLD_REPOSITORY = "https://github.com/ISISComputingGroup/ScriptGeneratorConfigs.git"
 
