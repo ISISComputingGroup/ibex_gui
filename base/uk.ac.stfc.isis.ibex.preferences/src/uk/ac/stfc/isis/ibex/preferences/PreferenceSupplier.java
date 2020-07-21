@@ -23,8 +23,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.net.URL;
+import java.nio.file.FileSystems;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
@@ -88,8 +90,7 @@ public class PreferenceSupplier {
      * The default for the location of Python.
      */
     private static final String DEFAULT_PYTHON_2_INTERPRETER_PATH = "C:\\Instrument\\Apps\\Python\\python.exe";
-
-	
+    
 	/**
 	 * Gets the python that's been bundled with the gui, unless it hasn't been bundled and then gets the dev python.
 	 * 
@@ -179,13 +180,14 @@ public class PreferenceSupplier {
     
     /**
      * The default place to store script generator script definition files.
+     * This is a relative path to keep the script definitions within the script generator plugin.
      */
-    private static final String DEFAULT_SCRIPT_DEFINITIONS_FOLDER = "C:/ScriptDefinitions/";
-            
+    private static final String DEFAULT_SCRIPT_DEFINITIONS_FOLDER = "";//FileSystems.getDefault().getPath("").toAbsolutePath().toString();
+    
     /**
-     * Defines where to find generator script definition files from.
+     * Defines where the script definitions repository is kept.
      */
-    private static final String SCRIPT_DEFINITIONS_FOLDER = "C:/ScriptDefinitions/";
+    private static final String SCRIPT_DEFINITIONS_FOLDER = "script_definitions_folder";
     
     /**
      * The default URL for the Script Generator manual page
@@ -299,8 +301,17 @@ public class PreferenceSupplier {
      * 
      * @return a list of of folders paths that contain script generator script definitions.
      */
-	public String scriptGeneratorScriptDefinitionFolder() {
-		return SCRIPT_DEFINITIONS_FOLDER;
+	public Optional<String> scriptGeneratorScriptDefinitionFolder() {
+		Optional<String> scriptDefinitionsPath;
+		String scriptDefinitionsPathPreference = getString(SCRIPT_DEFINITIONS_FOLDER, DEFAULT_SCRIPT_DEFINITIONS_FOLDER);
+		if (scriptDefinitionsPathPreference.equals(DEFAULT_SCRIPT_DEFINITIONS_FOLDER)) {
+			// Default is blank, return empty optional
+			scriptDefinitionsPath = Optional.empty();
+		} else {
+			scriptDefinitionsPath = Optional.of(scriptDefinitionsPathPreference);
+		}
+		return scriptDefinitionsPath;
+		
 	}
 	
     /**
