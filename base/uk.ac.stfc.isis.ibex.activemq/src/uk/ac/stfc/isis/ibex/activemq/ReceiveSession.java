@@ -166,6 +166,7 @@ public class ReceiveSession extends ModelObject {
     protected void addConsumer(Destination dest, MessageParser parser) throws JMSException {
         MessageConsumer consumer = session.createConsumer(dest);
         parser.setActiveMQConsumer(consumer);
+        parser.setRunning(true);
     }
 
     /**
