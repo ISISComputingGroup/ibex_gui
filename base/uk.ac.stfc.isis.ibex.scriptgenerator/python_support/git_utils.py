@@ -15,7 +15,8 @@ except ImportError:
     os.environ["GIT_PYTHON_GIT_EXECUTABLE"] = GIT_EXECUTABLE_PATH
     from git import Repo, Git
 
-DEFAULT_REPO_PATH = os.path.join(SCRIPT_GEN_FOLDER, "script_definitions")
+# This initialises the script_definitions folder next to the built executables
+DEFAULT_REPO_PATH = SCRIPT_GEN_FOLDER.parent.parent / 'script_definitons'
 REMOTE_URL = "https://github.com/ISISComputingGroup/ScriptDefinitions.git"
 OLD_REPOSITORY = "https://github.com/ISISComputingGroup/ScriptGeneratorConfigs.git"
 
@@ -28,11 +29,11 @@ class DefinitionsRepository:
     Contains methods to initialise and maintain the script definitions repository
     """
 
-    def __init__(self, path, remote_url: str = REMOTE_URL, bundle_path: str = DEFAULT_BUNDLE_PATH):
+    def __init__(self, path, remote_url: str = REMOTE_URL, bundle_path: str = DEFAULT_BUNDLE_PATH, branch=None):
         if path is not None:
-            self.path = path
+            self.path = pathlib.Path(path)
         else:
-            self.path = DEFAULT_REPO_PATH
+            self.path = pathlib.Path(DEFAULT_REPO_PATH)
         self.path = path
         self.remote_url = remote_url
         self.bundle_path = bundle_path
@@ -40,8 +41,14 @@ class DefinitionsRepository:
         self.git = Git()
         self.errors = []
 
-        self.branch = "master"
         self.repo = self.initialise_repo()
+
+        self.branch = 'master'
+
+        # if branch is not None:
+        #     self._change_branch(branch)
+        # else:
+        #     self.branch = self.repo.active_branch.name
 
         try:
             self.fetch_info = self.fetch_from_origin()
@@ -51,6 +58,15 @@ class DefinitionsRepository:
         except ValueError as err:
             self._append_error(err)
             self.fetch_info = None
+
+    def _change_branch(self, branch: str):
+        """
+        Changes the branch of the git repository to the specified branch
+        
+        Args:
+            branch: The branch to change to
+        """
+        self.git.checkout(branch)
 
     def remote_available(self):
         """
