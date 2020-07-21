@@ -25,6 +25,7 @@ import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -43,6 +44,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
@@ -142,7 +144,7 @@ public class ScriptGeneratorView {
 		scriptGeneratorViewModel.addPropertyChangeListener(PYTHON_READINESS_PROPERTY, evt -> {
 			boolean ready = (boolean) evt.getNewValue();
 			if (ready) {
-				scriptGeneratorViewModel.reloadScriptDefinitions();
+				doGitActions();
 				displayLoaded();
 			} else {
 				displayLoading();
@@ -159,6 +161,40 @@ public class ScriptGeneratorView {
 		for (Control child : mainParent.getChildren()) {
 			child.dispose();
 		}
+	}
+	
+	/**
+	 * Handle git repository
+	 */
+	private void doGitActions() {
+		DISPLAY.asyncExec(() -> {
+			if (!scriptGeneratorViewModel.remoteAvailable()) {
+				// Warn user git could not be found
+				MessageDialog.openInformation(DISPLAY.getActiveShell(),
+						"Git error",
+						"Could not connect to remote git repository");
+			}
+			if (scriptGeneratorViewModel.updatesAvailable()) {
+				// Display prompt if new commits are available
+				int performMerge = MessageDialog.open(MessageDialog.CONFIRM,
+						DISPLAY.getActiveShell(),
+						"Error pulling repository",
+						scriptGeneratorViewModel.getPromptMessage(),
+						0,
+						"Keep local changes",
+						"Discard local changes and update");	
+				
+				if (performMerge == 1) {
+					scriptGeneratorViewModel.mergeOrigin();
+				}
+			}
+			Optional<String> gitErrors = scriptGeneratorViewModel.getGitLoadErrors();
+			if (gitErrors.isPresent()) {
+				MessageDialog.openInformation(DISPLAY.getActiveShell(), "Git errors occurred", gitErrors.get());
+			}
+		});
+
+		scriptGeneratorViewModel.reloadScriptDefinitions();
 	}
 	
 	/**
@@ -259,7 +295,6 @@ public class ScriptGeneratorView {
 		        btnGetValidityErrors.addListener(SWT.Selection, e -> {
 		        	scriptGeneratorViewModel.displayValidityErrors();
 		        });
-		        
 		        
 		        Map<String, String> scriptDefinitionLoadErrors = scriptGeneratorViewModel.getScriptDefinitionLoadErrors();
 		        

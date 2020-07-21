@@ -1,17 +1,27 @@
 import os
 import pathlib
 from urllib.parse import urlparse
-from git import Repo, Git
-from git.exc import NoSuchPathError, GitCommandError
+from typing import Optional
 
-from git.exc import InvalidGitRepositoryError
+from git.exc import NoSuchPathError, GitCommandError, InvalidGitRepositoryError, GitError
 
-DEFAULT_REPO_PATH = os.path.join(pathlib.Path(__file__).parent.absolute(), "ScriptDefinitions")
+SCRIPT_GEN_FOLDER = pathlib.Path(__file__).parent.absolute()
+
+try:
+    from git import Repo, Git, FetchInfo
+except ImportError:
+    # git not on system PATH, use portable git distribution
+    GIT_EXECUTABLE_PATH = os.path.join(SCRIPT_GEN_FOLDER, "git", "cmd", "git.exe")
+    os.environ["GIT_PYTHON_GIT_EXECUTABLE"] = GIT_EXECUTABLE_PATH
+    from git import Repo, Git
+
+# This initialises the script_definitions folder next to the built executables
+DEFAULT_REPO_PATH = SCRIPT_GEN_FOLDER.parent.parent / 'script_definitons'
 REMOTE_URL = "https://github.com/ISISComputingGroup/ScriptDefinitions.git"
 OLD_REPOSITORY = "https://github.com/ISISComputingGroup/ScriptGeneratorConfigs.git"
 
 # Repository bundle is placed in python support folder on static script gen build
-DEFAULT_BUNDLE_PATH = os.path.join(pathlib.Path(__file__).parent.absolute(), "ScriptDefinitions_repo.bundle")
+DEFAULT_BUNDLE_PATH = os.path.join(SCRIPT_GEN_FOLDER, "ScriptDefinitions_repo.bundle")
 
 
 class DefinitionsRepository:
@@ -19,13 +29,57 @@ class DefinitionsRepository:
     Contains methods to initialise and maintain the script definitions repository
     """
 
-    def __init__(self, path: str = DEFAULT_REPO_PATH, remote_url: str = REMOTE_URL, bundle_path: str = DEFAULT_BUNDLE_PATH):
+    def __init__(self, path, remote_url: str = REMOTE_URL, bundle_path: str = DEFAULT_BUNDLE_PATH, branch=None):
+        if path is not None:
+            self.path = pathlib.Path(path)
+        else:
+            self.path = pathlib.Path(DEFAULT_REPO_PATH)
         self.path = path
         self.remote_url = remote_url
         self.bundle_path = bundle_path
-        self.git = Git()
 
+        self.git = Git()
         self.errors = []
+
+        self.repo = self.initialise_repo()
+
+        self.branch = 'master'
+
+        # if branch is not None:
+        #     self._change_branch(branch)
+        # else:
+        #     self.branch = self.repo.active_branch.name
+
+        try:
+            self.fetch_info = self.fetch_from_origin()
+        except GitCommandError:
+            self._append_error("Remote URL could not be reached or is not a valid git repository")
+            self.fetch_info = None
+        except ValueError as err:
+            self._append_error(err)
+            self.fetch_info = None
+
+    def _change_branch(self, branch: str):
+        """
+        Changes the branch of the git repository to the specified branch
+        
+        Args:
+            branch: The branch to change to
+        """
+        self.git.checkout(branch)
+
+    def remote_available(self):
+        """
+        Tries to perform a git fetch. Returns False if the fetch failed
+        """
+        try:
+            self.fetch_from_origin()
+        except Exception:
+            remote_available = False
+        else:
+            remote_available = True
+
+        return remote_available
 
     def _repo_already_exists(self) -> bool:
         """
@@ -40,55 +94,91 @@ class DefinitionsRepository:
 
         if definitions_repo is not None and urlparse(origin_url) == urlparse(self.remote_url):
             repo_exists = True
-        elif definitions_repo is not None and urlparse(origin_url) == urlparse(OLD_REPOSITORY):
-            # Repo containing script definitions was renamed, so accept URLs from old repo and change later
-            repo_exists = True
         else:
             repo_exists = False
 
         return repo_exists
 
-    def initialise_and_pull(self):
+    def initialise_repo(self) -> Optional[Repo]:
         """
-        Attempts to clone the repo if it doesn't already exist, then pull from origin
+        Creates a git python Repo object representing the definitions repo. The repo is cloned if it does not exist
         """
 
         if not self._repo_already_exists():
             self._attempt_repo_init()
 
+        repo = None
+
         try:
             repo = Repo(self.path)
         except (NoSuchPathError, GitCommandError, InvalidGitRepositoryError) as err:
-            self._append_error("Could not pull from origin, error was {}".format(err))
-        else:
-            if urlparse(repo.remotes["origin"].url) == urlparse(OLD_REPOSITORY):
-                self._change_origin_url(repo)
+            self._append_error("Error occured initialing repository: {}".format(err))
 
-            self._pull_from_origin(repo)
+        return repo
 
     def is_dirty(self) -> bool:
         """
-        Returns True if this repository is dirty (cannot be pulled)
+        Returns True if the git repository has uncommitted changes
         """
         return self.repo.is_dirty()
 
-    def _pull_from_origin(self, repo: Repo):
+    def updates_available(self) -> bool:
         """
-        If the supplied path is a valid script defintions repository, attempt to pull from origin
+        Returns True if the local repository has a different commit ID to origin
+        """
+        if self.fetch_info is not None:
+            origin_commit_id = self.fetch_info.commit
+            local_commit_id = self.repo.head.commit
+            updates_available = local_commit_id != origin_commit_id
+        else:
+            updates_available = False
+
+        return updates_available
+
+    def fetch_from_origin(self) -> Optional[FetchInfo]:
+        """
+        Fetches latest changes from origin. Returns FetchInfo object for current branch
+
+        Returns:
+        fetch_info: FetchInfo object containing the state of the corresponding branch on origin
+
+        Raises:
+        ValueError if origin does not contain a branch with the same name as the current branch
+        """
+        origin = self.repo.remotes["origin"]
+
+        all_origin_branches = origin.fetch()
+
+        # Pick out the origin branch with the same name as the local branch
+        fetch_info = [branch for branch in all_origin_branches if branch.name == "origin/{}".format(self.branch)]
+
+        if len(fetch_info) == 1:
+            branch_info = fetch_info[0]
+        elif len(fetch_info) == 0:
+            self._append_error("No branches were found in origin with name {branch}".format(branch=self.branch))
+            branch_info = None
+        elif len(fetch_info) > 1:
+            self._append_error("Multiple branches found in origin with name {branch}".format(branch=self.branch))
+            branch_info = None
+
+        return branch_info
+
+    def merge_with_origin(self) -> bool:
+        """
+        If the supplied path is a valid script defintions repository, attempt to merge with origin
 
         Parameters:
             repo: git repo object representing the script definitions repository
         """
-        origin = repo.remotes["origin"]
+        if self.is_dirty():
+            # Revert all uncommitted changes on this branch before a merge
+            self.repo.git.reset(hard=True)
 
         try:
-            origin.pull()
-        except (GitCommandError, InvalidGitRepositoryError):
-            self._append_error("Local repo contains unpushed changes, cannot pull from remote")
-
-            if repo.is_dirty():
-                # Run git merge --abort to undo changes
-                repo.git.merge(abort=True)
+            self.repo.git.merge('origin/{branch}'.format(branch=self.branch))
+        except Exception as err:
+            self._append_error("Error occurred merging with remote: {}".format(err))
+            self.repo.git.merge(abort=True)
 
     def clone_repo_from_bundle(self):
         """
@@ -109,21 +199,21 @@ class DefinitionsRepository:
         except (NoSuchPathError, GitCommandError, InvalidGitRepositoryError) as err:
             self._append_error("Cloning new repository failed with error: {}".format(err))
         else:
-            self._change_origin_url(script_definitions_repo)
+            self._change_origin_url()
 
-    def _change_origin_url(self, repo: Repo):
+    def _change_origin_url(self):
         """
         Changes the origin URL of the supplied repo
         """
         try:
-            repo.delete_remote("origin")
-            repo.create_remote("origin", self.remote_url)
+            self.repo.delete_remote("origin")
+            self.repo.create_remote("origin", self.remote_url)
         except (GitCommandError, InvalidGitRepositoryError) as err:
             self._append_error("Could not change remote origin of repo: {}".format(err))
 
     def _attempt_repo_init(self):
         """
-        Attempt to clone new repository if the supplied path is not initialised to the script definitions URL
+        Attempt to clone new repository if the supplied path is empty
 
         Paramters:
             path: Location of directory to initialise
@@ -131,10 +221,7 @@ class DefinitionsRepository:
         Raises:
             OSError If the supplied directory is not empty
         """
-        if not os.path.isdir(self.path):
-            os.makedirs(self.path, exist_ok=True)
-
-        if len(os.listdir(self.path)) > 0:
+        if os.path.isdir(self.path) and len(os.listdir(self.path)) > 0:
             self._append_error("Supplied directory {} not empty, cannot clone".format(self.path))
         else:
             try:

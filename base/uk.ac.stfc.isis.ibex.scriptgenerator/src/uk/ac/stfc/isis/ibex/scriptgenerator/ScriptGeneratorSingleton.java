@@ -704,4 +704,30 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		return fileHandler;
 
 	}
+
+	public boolean updatesAvailable() {
+		return pythonInterface.updatesAvailable();
+	}
+
+	public void resetToOriginMaster() {
+		pythonInterface.resetToOriginMaster();
+	}
+
+	public List<String> getGitLoadErrors() {
+		return pythonInterface.getGitLoadErrors();
+	}
+
+	public boolean remoteAvailable() {
+		return pythonInterface.remoteAvailable();
+	}
+
+	public boolean isDirty() {
+		return pythonInterface.isDirty();
+	}
+
+	public void mergeOrigin() {
+		pythonInterface.mergeOrigin();
+		
+	}
+
 }

@@ -22,6 +22,8 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PartInitException;
@@ -183,6 +185,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	public void setUpModel() {
 		scriptGeneratorModel.createScriptDefinitionLoader();
 		scriptGeneratorModel.setUp();
+
 		// Listen to whether the language support is changed
 		// notify the user if the language is not supported
 		scriptGeneratorModel.addPropertyChangeListener(LANGUAGE_SUPPORT_PROPERTY, evt -> {
@@ -348,6 +351,20 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		return scriptGeneratorModel.getScriptDefinitionLoadErrors();
 	}
 	
+	protected Optional<String> getGitLoadErrors() {
+		List<String> gitLoadErrors = scriptGeneratorModel.getGitLoadErrors();
+		String loadErrorMessage = null;
+
+		if (gitLoadErrors.size() > 0) {
+			loadErrorMessage = "The following error(s) occurred when trying to update script definitions: \n";
+			for (String error: scriptGeneratorModel.getGitLoadErrors()) {
+				loadErrorMessage += error +"\n";
+			}
+		};
+
+		return Optional.ofNullable(loadErrorMessage);
+	}
+	
 	/**
 	 * Create and get the label provider for the scriptDefinition selector.
 	 * 
@@ -485,6 +502,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			}
 		}
 	};
+
 
 	/**
 	 * Bind the script definition loader to the context.
@@ -823,4 +841,25 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    return scriptGeneratorModel.getUserManualUrl();
 	}
 
+	public String getPromptMessage() {
+        String message = "Updates to the script definitions are available. Updating your definitions may erase current scripts.";
+		//if (scriptGeneratorModel.isDirty()) {
+		//	message += "\n WARNING: There are uncommitted changes to the script defintions. These will be lost if you update.";
+		//}
+		return message;
+	}
+
+	public boolean remoteAvailable() {
+		return scriptGeneratorModel.remoteAvailable();
+	}
+	
+	public boolean updatesAvailable() {
+		return scriptGeneratorModel.updatesAvailable();
+	}
+
+
+	public void mergeOrigin() {
+		scriptGeneratorModel.mergeOrigin();
+		
+	}
 }

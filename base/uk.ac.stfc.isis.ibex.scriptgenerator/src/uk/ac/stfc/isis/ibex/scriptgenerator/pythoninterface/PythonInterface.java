@@ -82,11 +82,16 @@ public class PythonInterface extends ModelObject {
 	 */
 	private static final String DEFAULT_SCRIPT_DEFINITION_LOADER_SCRIPT = "/python_support/script_definition_loader.py";
 	
+	
 	/**
 	 * The script definition loader script to use.
 	 */
 	private String scriptDefinitionLoaderScript = DEFAULT_SCRIPT_DEFINITION_LOADER_SCRIPT;
 
+	/**
+	 * The path to the script generator actually used.
+	 */
+	
 	private static final Logger LOG = IsisLog.getLogger(PythonInterface.class);
 	
 	/**
@@ -205,10 +210,18 @@ public class PythonInterface extends ModelObject {
 			throws IOException {
 		Integer javaPort = clientServer.getJavaServer().getPort();
 		Integer pythonPort = clientServer.getPythonClient().getPort();
-		String scriptDefinitionSearchFolders = new PreferenceSupplier().scriptGeneratorScriptDefinitionFolder();
-		String absoluteFilePath = relativePathToFull(filePath);
-		ProcessBuilder builder = new ProcessBuilder().command(pythonPath, absoluteFilePath, javaPort.toString(),
-				pythonPort.toString(), scriptDefinitionSearchFolders);
+		Optional<String> scriptDefinitionsRepo = new PreferenceSupplier().scriptGeneratorScriptDefinitionFolder();
+
+		String absoluteScriptPath = relativePathToFull(filePath);
+		ProcessBuilder builder;
+		
+		if (scriptDefinitionsRepo.isEmpty()) {
+			builder = new ProcessBuilder().command(pythonPath, absoluteScriptPath, javaPort.toString(),
+					pythonPort.toString());
+		} else { 
+			builder = new ProcessBuilder().command(pythonPath, absoluteScriptPath, javaPort.toString(),
+					pythonPort.toString(), String.format("--repo_path=%s", scriptDefinitionsRepo.get()));
+		}
 		pythonProcess = builder.start();
 		try {
 			if (!pythonProcess.isAlive() || pythonProcess.exitValue() != 0) {
@@ -314,6 +327,17 @@ public class PythonInterface extends ModelObject {
 		}
 	}
 
+	public boolean updatesAvailable() {
+		return this.scriptDefinitionsWrapper.updatesAvailable();
+		
+	}
+	
+	public void resetToOriginMaster() {
+		// Sets repository to origin master
+		scriptDefinitionsWrapper.resetToOriginMaster();
+	}
+
+	
 	/**
 	 * Cleans up all resources i.e. destroy the python process.
 	 */
@@ -440,5 +464,23 @@ public class PythonInterface extends ModelObject {
 			throw new PythonNotReadyException("When getting generated script");
 		}
 	}
+
+	public List<String> getGitLoadErrors() {
+		return scriptDefinitionsWrapper.getGitErrors();
+	}
+
+	public boolean remoteAvailable() {
+		return scriptDefinitionsWrapper.remoteAvailable();
+	}
+
+	public boolean isDirty() {
+		return scriptDefinitionsWrapper.isDirty();
+	}
+
+	public void mergeOrigin() {
+		scriptDefinitionsWrapper.mergeOrigin();
+		
+	}
+
 
 }
