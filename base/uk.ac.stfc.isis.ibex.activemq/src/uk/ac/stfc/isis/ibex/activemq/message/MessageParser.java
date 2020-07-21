@@ -39,21 +39,12 @@ public abstract class MessageParser<T extends IMessage> implements Runnable {
 
     private static final int TIMEOUT_50_MS = 50;
     private boolean running = true;
-    private Thread thread;
+    private Thread thread = null;
     
     private List<IMessageConsumer<T>> convertedConsumers = new ArrayList<>();
 
     /** Receives messages from the JMS server */
     private MessageConsumer jmsConsumer;
-    
-    /**
-     * Default constructor, will start a thread listening for active MQ
-     * messages.
-     */
-    public MessageParser() {
-        thread = new Thread(this);
-        thread.start();
-    }
 
     /**
      * Start and stop the thread.
@@ -66,6 +57,10 @@ public abstract class MessageParser<T extends IMessage> implements Runnable {
     		throw new IllegalStateException("Cannot start running without a consumer");
     	}
         running = run;
+        if(running && (thread == null || !thread.isAlive())) {
+        	thread = new Thread(this);
+            thread.start();
+        }
     }
     
     /**
@@ -85,6 +80,7 @@ public abstract class MessageParser<T extends IMessage> implements Runnable {
      *             Thrown if close fails.
      */
     public void closeJMSConsumer() throws JMSException {
+        setRunning(false);
         jmsConsumer.close();
         
         /**
@@ -100,7 +96,6 @@ public abstract class MessageParser<T extends IMessage> implements Runnable {
          * 
          */
         jmsConsumer = null;
-        setRunning(false);
     }
 
     /**
