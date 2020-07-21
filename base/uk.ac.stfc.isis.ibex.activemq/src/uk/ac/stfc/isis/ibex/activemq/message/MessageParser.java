@@ -80,6 +80,7 @@ public abstract class MessageParser<T extends IMessage> implements Runnable {
      *             Thrown if close fails.
      */
     public void closeJMSConsumer() throws JMSException {
+        setRunning(false);
         jmsConsumer.close();
         
         /**
@@ -95,7 +96,6 @@ public abstract class MessageParser<T extends IMessage> implements Runnable {
          * 
          */
         jmsConsumer = null;
-        setRunning(false);
     }
 
     /**
