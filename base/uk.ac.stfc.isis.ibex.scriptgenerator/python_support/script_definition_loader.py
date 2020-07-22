@@ -10,7 +10,7 @@ import os
 import sys
 from git_utils import DefinitionsRepository, DEFAULT_REPO_PATH
 from glob import iglob
-from jinja2 import Environment, FileSystemLoader, Markup, TemplateNotFound
+from jinja2 import Environment, FileSystemLoader
 from genie_python import utilities
 import importlib.machinery
 import importlib.util
@@ -141,13 +141,12 @@ class ScriptDefinitionWrapper(object):
 
 class Generator(object):
 
-    def __init__(self, search_folders: List[str] = ["instruments"]):
+    def __init__(self, repo_path: str):
         """
         Set up the template to generate with
         """
         cwd = os.path.dirname(os.path.abspath(__file__))
-        search_folders.append('{}/templates'.format(cwd)) # Add a search to find the template for jinja2
-        self.loader = FileSystemLoader(search_folders)
+        self.loader = FileSystemLoader("{}/templates".format(cwd))
         self.env = Environment(loader=self.loader, keep_trailing_newline=True)
         self.template = self.env.get_template('generator_template.py')
 
@@ -223,7 +222,7 @@ class ScriptDefinitionsWrapper(object):
         self.repository = DefinitionsRepository(path=path)
         self.script_definitions, self.script_definition_load_errors = get_script_definitions(self.repository.path)
 
-        self.generator = Generator(search_folders=[self.repository.path, ])
+        self.generator = Generator(self.repository.path)
 
     def remoteAvailable(self) -> bool:
         """
@@ -324,8 +323,7 @@ def get_script_definitions(repo_path: str) -> Tuple[List[ScriptDefinitionWrapper
     Dynamically import all the Python modules in the search folders
 
     Parameters:
-        search_folders: List[str]
-            The folders to search for actions in
+        repo_path: The path to the script definitions repository
 
     Returns:
         A tuple. 
