@@ -81,7 +81,7 @@ public class TempEditableIoc extends EditableIoc {
      * @param macros the macros to copy from
      * @return a deep copy of the macros.
      */
-    private static final Collection<Macro> deepCopyMacros(final Collection<Macro> macros) {
+    private static Collection<Macro> deepCopyMacros(final Collection<Macro> macros) {
         var result = new ArrayList<Macro>();
         for (Macro macro : macros) {
             result.add(new Macro(macro));
