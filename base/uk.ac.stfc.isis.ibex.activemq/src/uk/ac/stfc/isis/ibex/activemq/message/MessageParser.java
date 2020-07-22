@@ -57,7 +57,7 @@ public abstract class MessageParser<T extends IMessage> implements Runnable {
     		throw new IllegalStateException("Cannot start running without a consumer");
     	}
         running = run;
-        if(running && (thread == null || !thread.isAlive())) {
+        if (running && (thread == null || !thread.isAlive())) {
         	thread = new Thread(this);
             thread.start();
         }
