@@ -13,7 +13,7 @@ public final class GraphingConnector {
     private static final Logger LOG = IsisLog.getLogger(GraphingConnector.class);
 
     private GraphingConnector() {
-	//Private constructor for utility class
+	    // Private constructor for utility class
     }
     
     /**

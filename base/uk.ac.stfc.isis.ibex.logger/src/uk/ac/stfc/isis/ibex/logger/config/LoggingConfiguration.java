@@ -57,11 +57,10 @@ import uk.ac.stfc.isis.ibex.logger.preferences.PreferenceConstants;
 
 /**
  * Logging configuration.
- *
  */
 public final class LoggingConfiguration {
 
-    /** order number for configs to express which one is most important in log4j. */
+    /** Order number for configs to express which one is most important in log4j. */
     private static final int ORDER_OF_CONFIG = 50;
 
     private LoggingConfiguration() { }
@@ -77,13 +76,10 @@ public final class LoggingConfiguration {
     /**
      * Configuration factory for Log4j2.
      * see https://logging.apache.org/log4j/2.x/manual/customconfig.html for details of how to configure this.
-     *
      */
     @Plugin(name = "Log4j2ConfigurationFactory", category = ConfigurationFactory.CATEGORY)
     @Order(ORDER_OF_CONFIG)
     public static class Log4j2ConfigurationFactory extends ConfigurationFactory {
-
-
 
 	/**
 	 * {@inheritDoc}

@@ -82,7 +82,7 @@ public class Configuration extends ModelObject {
      * @param history
      *            A collection of dates when the configuration was updated
      * @param isProtected
-     *            Config is protected and can only be modified or delted in manager mode
+     *            Config is protected and can only be modified or deleted in manager mode
      */
 	public Configuration(
 			String name, 

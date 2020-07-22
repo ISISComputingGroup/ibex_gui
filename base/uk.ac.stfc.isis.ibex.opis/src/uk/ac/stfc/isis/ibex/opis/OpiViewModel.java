@@ -24,7 +24,7 @@ public final class OpiViewModel {
     private static final Set<OpiView> VIEWS = Collections.newSetFromMap(new WeakHashMap<OpiView, Boolean>());
     
     private OpiViewModel() {
-	//Private constructor for utility class
+	    // Private constructor for utility class
     }
     
     /**
