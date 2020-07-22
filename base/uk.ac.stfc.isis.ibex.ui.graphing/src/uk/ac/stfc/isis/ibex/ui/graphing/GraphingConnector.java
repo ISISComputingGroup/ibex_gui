@@ -8,10 +8,14 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 /**
  * Class to handle calls from python.
  */
-public class GraphingConnector {
+public final class GraphingConnector {
 
     private static final Logger LOG = IsisLog.getLogger(GraphingConnector.class);
 
+    private GraphingConnector() {
+	    // Private constructor for utility class
+    }
+    
     /**
      * Starts listening for incoming py4j calls.
      */

@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.views;
 
-import javax.inject.Inject;
+import javax.annotation.PostConstruct;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -29,15 +29,23 @@ import org.eclipse.swt.widgets.Composite;
 import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.SynopticSelection;
 import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.SynopticSelectionViewModel;
 
+/**
+ * View which allows the user to interact with the currently viewed synoptic.
+ *
+ */
 public class SelectorView {
-		
-	public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.views.SelectorView"; //$NON-NLS-1$
-	
-	//TODO: Why couldn't we do this with postConstruct?
-	@Inject
-	public SelectorView(Composite parent) {
-		parent.setLayout(new GridLayout(2, false));
-		SynopticSelection synopticSelection = new SynopticSelection(parent, SWT.NONE, new SynopticSelectionViewModel());
-		synopticSelection.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-	}
+
+    /** ID for synoptic selector view. */
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.views.SelectorView"; //$NON-NLS-1$
+
+    /**
+     * Create controls in view.
+     * @param parent composite in which the view will sit.
+     */
+    @PostConstruct
+    public void createPartControl(Composite parent) {
+	parent.setLayout(new GridLayout(2, false));
+	SynopticSelection synopticSelection = new SynopticSelection(parent, SWT.NONE, new SynopticSelectionViewModel());
+	synopticSelection.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+    }
 }

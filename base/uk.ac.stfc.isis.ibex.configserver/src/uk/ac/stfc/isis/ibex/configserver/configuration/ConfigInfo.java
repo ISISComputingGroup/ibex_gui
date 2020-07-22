@@ -49,6 +49,8 @@ public class ConfigInfo {
      * 
      * @param name
      *            The config name
+     * @param isProtected
+     *            Config is protected and can only be modified or deleted in manager mode
      * @param description
      *            The config description
      * @param pv
