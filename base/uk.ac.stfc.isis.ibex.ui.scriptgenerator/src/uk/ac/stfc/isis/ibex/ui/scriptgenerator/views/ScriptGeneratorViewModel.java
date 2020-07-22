@@ -356,7 +356,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		String loadErrorMessage = null;
 
 		if (gitLoadErrors.size() > 0) {
-			loadErrorMessage = "The following error(s) occurred when trying to update script definitions: \n";
+			loadErrorMessage = "The following error(s) occurred when updating the script definitions. It should be OK to continue, but the definitions may be out of date:\n";
 			for (String error: scriptGeneratorModel.getGitLoadErrors()) {
 				loadErrorMessage += error +"\n";
 			}
