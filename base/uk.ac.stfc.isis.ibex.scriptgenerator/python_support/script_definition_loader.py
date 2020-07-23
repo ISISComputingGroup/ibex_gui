@@ -293,6 +293,12 @@ class ScriptDefinitionsWrapper(object):
         """
         self.repository.merge_with_origin()
 
+    def getRepoPath(self) -> str:
+        """
+        Returns the path to the script definitions repository
+        """
+        return self.repository.repo_path
+
     def getScriptDefinitionLoadErrors(self) -> Dict[AnyStr, AnyStr]:
         """
         Returns a dictionary mapping of a script_definition that has failed to load mapped to it's error when loading

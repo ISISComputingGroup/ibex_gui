@@ -976,4 +976,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
     public boolean getHasSelection() {
     return hasSelection;
     }
+
+	public void setRepoPath() {
+		scriptGeneratorModel.setRepoPath();
+	}
 }

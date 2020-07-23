@@ -509,5 +509,9 @@ public class PythonInterface extends ModelObject {
 		
 	}
 
+	public String getRepoPath() {
+		return scriptDefinitionsWrapper.getRepoPath();
+	}
+
 
 }

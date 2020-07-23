@@ -209,6 +209,7 @@ public class ScriptGeneratorView {
 		});
 
 		scriptGeneratorViewModel.reloadScriptDefinitions();
+		scriptGeneratorViewModel.setRepoPath();
 	}
 
     /**

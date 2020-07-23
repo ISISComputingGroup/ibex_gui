@@ -104,5 +104,7 @@ public interface ScriptDefinitionsWrapper {
 	boolean isDirty();
 
 	void mergeOrigin();
+
+	String getRepoPath();
 	
 }

@@ -1,5 +1,6 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -198,5 +199,9 @@ public class ScriptDefinitionLoader extends ModelObject {
 	 */
 	public boolean scriptDefinitionAvailable() {
 		return !getAvailableScriptDefinitions().isEmpty();
+	}
+
+	public String getRepoPath() {
+		return pythonInterface.getRepoPath();
 	}
 }
