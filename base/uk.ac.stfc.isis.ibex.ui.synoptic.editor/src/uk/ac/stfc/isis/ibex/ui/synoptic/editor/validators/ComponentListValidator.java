@@ -43,7 +43,9 @@ public class ComponentListValidator extends ErrorMessageProvider {
     private PropertyChangeListener componentNameListener = new PropertyChangeListener() {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            if (evt.getPropertyName().equals("componentName") || evt.getPropertyName().equals("componentRemoved")) {
+            if (evt.getPropertyName().equals("componentName") 
+        	    || evt.getPropertyName().equals("componentRemoved") 
+        	    || evt.getPropertyName().equals("componentAdded")) {
                 updateErrors();
             }
         }

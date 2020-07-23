@@ -68,6 +68,12 @@ class DefinitionsRepository:
         """
         self.git.checkout(branch)
 
+    def get_repo_path(self):
+        """
+        Returns the
+        """
+        pass
+
     def remote_available(self):
         """
         Tries to perform a git fetch. Returns False if the fetch failed

@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class ScriptGeneratorJsonFileHandler {
 	 * @param scriptDefPath path of script definition used to create data file
 	 * @param absoluteFilePath absolute file path to save data file
 	 */
-	public void saveParameters(List<ScriptGeneratorAction> scriptGenContent, String scriptDefPath, String absoluteFilePath) throws InterruptedException, ExecutionException {
+	public void saveParameters(List<ScriptGeneratorAction> scriptGenContent, Path scriptDefPath, String absoluteFilePath) throws InterruptedException, ExecutionException {
 		try {
 			
 			String content = createJsonString(scriptGenContent, readFileContent(scriptDefPath), scriptDefPath);
@@ -68,7 +68,7 @@ public class ScriptGeneratorJsonFileHandler {
 	 * @return JSON string 
 	 * @throws IOException
 	 */
-	public String createJsonString(List<ScriptGeneratorAction> scriptGenContent, String scriptDefContent, String scriptDefPath) {
+	public String createJsonString(List<ScriptGeneratorAction> scriptGenContent, String scriptDefContent, Path scriptDefPath) {
 		
 		List<ScriptGeneratorActionConverter> actions = new ArrayList<ScriptGeneratorActionConverter>();
 		actions.add(new ScriptGeneratorActionConverter("default", convertScriptGenContent(scriptGenContent)));
@@ -85,7 +85,7 @@ public class ScriptGeneratorJsonFileHandler {
 	 * @return mapped values and parameter
 	 * @throws ScriptDefinitionNotMatched script definition used to load and save the data file does not match
 	 */
-	public List<Map<JavaActionParameter, String>> getParameterValues(String filePath, String scriptDefinitionPath, List<JavaActionParameter> currentActionsParams) throws ScriptDefinitionNotMatched,
+	public List<Map<JavaActionParameter, String>> getParameterValues(Path filePath, Path scriptDefinitionPath, List<JavaActionParameter> currentActionsParams) throws ScriptDefinitionNotMatched,
 	UnsupportedOperationException {
 		List<Map<JavaActionParameter, String>> newMappedParameterToValues = Collections.emptyList();
 		try {
@@ -174,8 +174,8 @@ public class ScriptGeneratorJsonFileHandler {
 	 * @param filePath file path
 	 * @return string of JSON content
 	 */
-	 public String readFileContent(String filePath) throws IOException {
-		String content = new String(Files.readAllBytes(Paths.get(filePath)));
+	 public String readFileContent(Path filePath) throws IOException {
+		String content = new String(Files.readAllBytes(filePath));
 		return content;
 	}
 	

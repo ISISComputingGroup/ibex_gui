@@ -96,7 +96,7 @@ public class Consoles extends AbstractUIPlugin {
 	/**
 	 * Clear console menu item ID.
 	 */
-	private final String CLEAR_CONSOLE_ID = "uk.ac.stfc.isis.ibex.ui.scripting.clearConsole";
+	private static final String CLEAR_CONSOLE_ID = "uk.ac.stfc.isis.ibex.ui.scripting.clearConsole";
 
 	/**
 	 * Limit on the total number of lines (input and output) per console.
@@ -118,7 +118,12 @@ public class Consoles extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
-		PyDevConfiguration.configure();
+		
+		try {
+		    PyDevConfiguration.configure();
+		} catch (Exception e) {
+		    LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
+		}
 		
 		eclipseContext = EclipseContextFactory.getServiceContext(context);
 		
@@ -155,17 +160,17 @@ public class Consoles extends AbstractUIPlugin {
 				ConsoleView view = getConsoleView();	
 				if (view != null) {
 					IToolBarManager tbm = view.getViewSite().getActionBars().getToolBarManager();
-					IContributionItem [] items= tbm.getItems();
+					IContributionItem[] items = tbm.getItems();
 					// Add our "Open Console" action
 					GenieOpenConsoleAction openConsoleAction = new GenieOpenConsoleAction();
 					tbm.insertBefore(CLEAR_CONSOLE_ID, openConsoleAction);
 					
 					// Console view icons that are not required. We are removing OpenConsoleAction so that we can add our Action
 					// and make it behave the way we want. In this case we remove Pin Console and Open Console icons.
-					List<ActionContributionItem> itemsToRemove = Arrays.stream(items).filter(item->(item instanceof ActionContributionItem))
- 					.map(item->(ActionContributionItem)item)
-					.filter(item-> item.getAction().toString().contains("PinConsole")||
-							item.getAction() instanceof OpenConsoleAction)
+					List<ActionContributionItem> itemsToRemove = Arrays.stream(items).filter(item -> (item instanceof ActionContributionItem))
+ 					.map(item -> (ActionContributionItem) item)
+					.filter(item -> item.getAction().toString().contains("PinConsole")
+							|| item.getAction() instanceof OpenConsoleAction)
 					.collect(Collectors.toList());
 					
 					itemsToRemove.forEach(action -> tbm.remove(action));
@@ -184,7 +189,7 @@ public class Consoles extends AbstractUIPlugin {
 		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		IWorkbenchPage page = window.getActivePage();
 		IViewPart part = page.findView(IConsoleConstants.ID_CONSOLE_VIEW);
-		return (ConsoleView)part;
+		return (ConsoleView) part;
 	}
 
 	/**

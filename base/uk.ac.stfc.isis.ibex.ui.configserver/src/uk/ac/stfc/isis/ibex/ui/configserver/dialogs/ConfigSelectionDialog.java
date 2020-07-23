@@ -37,6 +37,7 @@ public class ConfigSelectionDialog extends MultipleConfigsSelectionDialog {
 	 * @param available A collection of the available configurations/components for the user to select from.
 	 * @param isComponent Whether the user is selecting from a list of components.
 	 * @param includeCurrent Whether the current configuration should be included in the list presented to the user.
+	 * @param configNamesWithFlags Config names as key and protection flag as value.
 	 */
 	public ConfigSelectionDialog(
 			Shell parentShell, 

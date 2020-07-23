@@ -120,7 +120,7 @@ public class GroupsEditorPanel extends Composite {
                 .observe(configurationViewModels.getConfigModel().getValue()));
 
 		groupList = groupsViewer.getList();
-		GridData gd_viewer = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 6);
+		GridData gd_viewer = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 4);
 		gd_viewer.widthHint = 125;
 		groupList.setLayoutData(gd_viewer);
         groupList.addKeyListener(new KeyAdapter() {
@@ -131,9 +131,6 @@ public class GroupsEditorPanel extends Composite {
                 }
             }
         });
-		new Label(grpGroups, SWT.NONE);
-		new Label(grpGroups, SWT.NONE);
-		new Label(grpGroups, SWT.NONE);
 
 		Group grpSelectedGroup = new Group(this, SWT.NONE);
 		grpSelectedGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -165,7 +162,7 @@ public class GroupsEditorPanel extends Composite {
 		blocksEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		blocksEditor.addSelectionListenerForSelecting(new SelectionAdapter() {
-			@SuppressWarnings("unchecked")
+
 			@Override
 			public void widgetSelected(SelectionEvent e) {
                 groupEditorViewModel.getSelectedGroup(groupList.getSelectionIndex()).ifPresent(
@@ -174,7 +171,6 @@ public class GroupsEditorPanel extends Composite {
 		});
 
 		blocksEditor.addSelectionListenerForUnselecting(new SelectionAdapter() {
-			@SuppressWarnings("unchecked")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
                 groupEditorViewModel.getSelectedGroup(groupList.getSelectionIndex()).ifPresent(
@@ -221,8 +217,8 @@ public class GroupsEditorPanel extends Composite {
 		IObservableList<EditableBlock> unselectedBlocks = ViewerProperties.singleSelection().list(BeanProperties.list("unselectedBlocks", EditableBlock.class)).observe(groupsViewer);
 
 		Button spacerButton = new Button(grpGroups, SWT.NONE);
-		GridData gd_spacerButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_spacerButton.heightHint = 201;
+		GridData gd_spacerButton = new GridData(SWT.LEFT, SWT.CENTER, false, true, 1, 1);
+		gd_spacerButton.heightHint = 50;
 		spacerButton.setLayoutData(gd_spacerButton);
 		spacerButton.setVisible(false);
 
@@ -240,6 +236,10 @@ public class GroupsEditorPanel extends Composite {
 		btnDown.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png"));
 		btnDown.addListener(SWT.Selection, event -> groupEditorViewModel.moveGroupDown(groupList.getSelectionIndex()));
 
+		Button spacerButton2 = new Button(grpGroups, SWT.NONE);
+		spacerButton2.setLayoutData(gd_spacerButton);
+		spacerButton2.setVisible(false);
+		
 		Button btnAdd = new Button(grpGroups, SWT.NONE);
 		GridData gd_btnAdd = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_btnAdd.widthHint = 70;

@@ -124,6 +124,13 @@
 	</location>
 </locations>
 <environment>
+<os>linux</os>
+<ws>gtk</ws>
+<arch>x86_64</arch>
+<nl>en_GB</nl>
+</environment>
+<!-- Note: eclipse target platform editor will default to the last specified environment, so specify linux first and then windows. Maven is happy building both. -->
+<environment>
 <os>win32</os>
 <ws>win32</ws>
 <arch>x86_64</arch>

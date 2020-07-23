@@ -67,6 +67,16 @@ public interface ScriptDefinitionsWrapper {
 	 */
 	boolean areParamsValid(List<Map<String, String>> scriptGenContent, ScriptDefinitionWrapper scriptDefinition);
 	
+    /**
+     * Estimate how long (in seconds) the current actions will take.
+     * 
+     * @param scriptGenContent The list of actions to estimate
+     * @param scriptDefinition The script definition
+     * @return A map where the key is the index of the action in the list and 
+     *      the value is the estimated time in seconds
+     */
+	Map<Integer, Number> estimateTime(List<Map<String, String>> scriptGenContent, ScriptDefinitionWrapper scriptDefinition);
+	
 	/**
 	 * Check if Python is ready.
 	 * 

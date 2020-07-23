@@ -163,6 +163,10 @@ public class SaveConfigDialog extends TitleAreaDialog {
      *            true if this configuration has components; false otherwise
      * @param currentConfigName
      *            The name of the current configuration
+     * @param configWithFlag
+     *            Config names as key and protection flag as value.
+     * @param compWithFlag
+     *            Component names as key and protection flag as value.
      */
     public SaveConfigDialog(Shell parent, String currentName, String currentDesc, Collection<String> existingConfigs,
             Collection<String> existingComponents, boolean isConfig, boolean hasComponents, String currentConfigName,
