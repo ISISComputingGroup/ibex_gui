@@ -103,8 +103,15 @@ public interface ScriptDefinitionsWrapper {
 	 */
 	boolean isDirty();
 
+	/**
+	 * Merges origin/master into script definitions repository
+	 */
 	void mergeOrigin();
 
+	/**
+	 * Returns the path to the script definitions repository
+	 * @return
+	 */
 	String getRepoPath();
 	
 }

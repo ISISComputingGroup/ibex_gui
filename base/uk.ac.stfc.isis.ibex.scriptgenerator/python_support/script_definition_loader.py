@@ -297,7 +297,7 @@ class ScriptDefinitionsWrapper(object):
         """
         Returns the path to the script definitions repository
         """
-        return self.repository.repo_path
+        return str(self.repository.path)
 
     def getScriptDefinitionLoadErrors(self) -> Dict[AnyStr, AnyStr]:
         """

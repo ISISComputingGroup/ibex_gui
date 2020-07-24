@@ -229,8 +229,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	public Path scriptDefinitionsRepoPath;
 	
 	private Path getScriptDefinitionPath(ScriptDefinitionWrapper scriptDefinition) {
-		// Replace this with the script defintions path. This should be passed from the python
-		return Paths.get(preferenceSupplier.scriptGeneratorScriptDefinitionFolder().get(), scriptDefinition.getName() + PYTHON_EXT);
+		return Paths.get(scriptDefinitionsRepoPath.toString(), scriptDefinition.getName() + PYTHON_EXT);
 	}
 	
 	/**
@@ -681,7 +680,6 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	public void reloadScriptDefinitions() {
 		scriptDefinitionLoader.reloadScriptDefinitions();
-		this.scriptDefinitionsRepoPath = Paths.get(scriptDefinitionLoader.getRepoPath());
 	}
 	
 	/**
