@@ -27,11 +27,6 @@ public interface ScriptDefinitionsWrapper {
 	boolean updatesAvailable();
 	
 	/**
-	 * Resets the script definition repository to origin master, discarding any local changes
-	 */
-	void resetToOriginMaster();
-	
-	/**
 	 * Get all script definitions available for use in the script generator.
 	 * 
 	 * @return A list of script definitions for use.

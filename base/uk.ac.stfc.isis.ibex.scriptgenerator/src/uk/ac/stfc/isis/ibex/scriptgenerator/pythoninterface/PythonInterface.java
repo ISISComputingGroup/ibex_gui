@@ -333,16 +333,14 @@ public class PythonInterface extends ModelObject {
 		}
 	}
 
+	/**
+	 * Get whether there are updates available for the git repository.
+	 * @return true if there are updates available.
+	 */
 	public boolean updatesAvailable() {
 		return this.scriptDefinitionsWrapper.updatesAvailable();
 		
 	}
-	
-	public void resetToOriginMaster() {
-		// Sets repository to origin master
-		scriptDefinitionsWrapper.resetToOriginMaster();
-	}
-
 	
 	/**
 	 * Cleans up all resources i.e. destroy the python process.
@@ -492,23 +490,43 @@ public class PythonInterface extends ModelObject {
 		}
 	}
 
+	/**
+	 * Get the list of git errors raised while loading.
+	 * @return List of error messages from git loading.
+	 */
 	public List<String> getGitLoadErrors() {
 		return scriptDefinitionsWrapper.getGitErrors();
 	}
 
+	/**
+	 * Gets whether the remote git repo URL is accessible.
+	 * @return true if the remote repo URL can be accessed.
+	 */
 	public boolean remoteAvailable() {
 		return scriptDefinitionsWrapper.remoteAvailable();
 	}
 
+	/**
+	 * Determine from the python whether the git repository is dirty.
+	 * 
+	 * @return true if the git repository is dirty.
+	 */
 	public boolean isDirty() {
 		return scriptDefinitionsWrapper.isDirty();
 	}
 
+	/**
+	 * Merges git repository from upstream.
+	 */
 	public void mergeOrigin() {
 		scriptDefinitionsWrapper.mergeOrigin();
 		
 	}
 
+	/**
+	 * Gets the path to the script definitions repository
+	 * @return The path to the script definitions repository.
+	 */
 	public String getRepoPath() {
 		return scriptDefinitionsWrapper.getRepoPath();
 	}
