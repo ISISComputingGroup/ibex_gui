@@ -178,7 +178,7 @@ public class ScriptGeneratorView {
     }
 
     /**
-	 * Handle git repository
+	 * Create dialog boxes asking informing the user if there are changes to the git repository.
 	 */
 	private void doGitActions() {
 		DISPLAY.asyncExec(() -> {

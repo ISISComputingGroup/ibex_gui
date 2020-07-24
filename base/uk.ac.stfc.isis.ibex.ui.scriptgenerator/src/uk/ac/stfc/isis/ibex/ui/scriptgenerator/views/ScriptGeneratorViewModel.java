@@ -371,13 +371,17 @@ public class ScriptGeneratorViewModel extends ModelObject {
     /**
      * Gets all script definitions that could not be loaded and the reason.
      * 
-     * @return A map of script definition load errors with keys as the name of the scriptDefinition
-     *  and the value as the reason it could not be loaded
+     * @return A map of script definition load errors with keys as the name of the scriptDefinition.
+     *  and the value as the reason it could not be loaded.
      */
     protected Map<String, String> getScriptDefinitionLoadErrors() {
     return scriptGeneratorModel.getScriptDefinitionLoadErrors();
     }
 
+    /**
+     * If git errors have been raised, concatenate them to a string to be displayed in a dialog box.
+     * @return Optional containing error messages raised.
+     */
     protected Optional<String> getGitLoadErrors() {
     	List<String> gitLoadErrors = scriptGeneratorModel.getGitLoadErrors();
     	String loadErrorMessage = null;
@@ -846,21 +850,32 @@ public class ScriptGeneratorViewModel extends ModelObject {
 
 	public String getPromptMessage() {
         String message = "Updates to the script definitions are available. Updating your definitions may erase current scripts.";
-		//if (scriptGeneratorModel.isDirty()) {
-		//	message += "\n WARNING: There are uncommitted changes to the script defintions. These will be lost if you update.";
-		//}
+		if (scriptGeneratorModel.isDirty()) {
+			message += "\n WARNING: There are uncommitted changes to the script defintions. These will be lost if you update.";
+		}
 		return message;
 	}
 
+	/**
+	 * Gets whether the remote git repo URL is accessible.
+	 * @return true if the remote repo URL can be accessed.
+	 */
 	public boolean remoteAvailable() {
 		return scriptGeneratorModel.remoteAvailable();
 	}
 	
+	/**
+	 * Get whether there are updates available for the git repository.
+	 * @return true if there are updates available.
+	 */
 	public boolean updatesAvailable() {
 		return scriptGeneratorModel.updatesAvailable();
 	}
 
 
+	/**
+	 * Merges git repository from upstream.
+	 */
 	public void mergeOrigin() {
 		scriptGeneratorModel.mergeOrigin();
 		
@@ -977,6 +992,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
     return hasSelection;
     }
 
+	/**
+	 * Gets the singleton to update its path to the repo from the python.
+	 */
 	public void setRepoPath() {
 		scriptGeneratorModel.setRepoPath();
 	}

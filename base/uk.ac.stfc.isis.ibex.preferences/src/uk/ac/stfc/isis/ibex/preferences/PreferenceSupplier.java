@@ -188,7 +188,7 @@ public class PreferenceSupplier {
      * The default place to store script generator script definition files.
      * This is a relative path to keep the script definitions within the script generator plugin.
      */
-    private static final String DEFAULT_SCRIPT_DEFINITIONS_FOLDER = "";//FileSystems.getDefault().getPath("").toAbsolutePath().toString();
+    private static final String DEFAULT_SCRIPT_DEFINITIONS_FOLDER = "";
     
     /**
      * Defines where the script definitions repository is kept.
