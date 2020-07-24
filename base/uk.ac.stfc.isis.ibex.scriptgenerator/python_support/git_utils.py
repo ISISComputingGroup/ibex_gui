@@ -45,11 +45,6 @@ class DefinitionsRepository:
 
         self.branch = 'master'
 
-        # if branch is not None:
-        #     self._change_branch(branch)
-        # else:
-        #     self.branch = self.repo.active_branch.name
-
         try:
             self.fetch_info = self.fetch_from_origin()
         except GitCommandError:
@@ -58,28 +53,6 @@ class DefinitionsRepository:
         except ValueError as err:
             self._append_error(err)
             self.fetch_info = None
-
-    def _change_branch(self, branch: str):
-        """
-        Changes the branch of the git repository to the specified branch
-        
-        Args:
-            branch: The branch to change to
-        """
-        self.git.checkout(branch)
-
-    def remote_available(self):
-        """
-        Tries to perform a git fetch. Returns False if the fetch failed
-        """
-        try:
-            self.fetch_from_origin()
-        except Exception:
-            remote_available = False
-        else:
-            remote_available = True
-
-        return remote_available
 
     def _repo_already_exists(self) -> bool:
         """
@@ -159,16 +132,13 @@ class DefinitionsRepository:
             branch_info = None
         elif len(fetch_info) > 1:
             self._append_error("Multiple branches found in origin with name {branch}".format(branch=self.branch))
-            branch_info = None
+            branch_info = fetch_info[0]
 
         return branch_info
 
-    def merge_with_origin(self) -> bool:
+    def merge_with_origin(self):
         """
-        If the supplied path is a valid script defintions repository, attempt to merge with origin
-
-        Parameters:
-            repo: git repo object representing the script definitions repository
+        If the supplied path is a valid script definitions repository, attempt to merge with origin
         """
         if self.is_dirty():
             # Revert all uncommitted changes on this branch before a merge

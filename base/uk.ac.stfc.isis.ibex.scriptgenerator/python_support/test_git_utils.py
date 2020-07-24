@@ -11,6 +11,10 @@ TEST_BUNDLE_PATH = "path/to/bundle"
 TEST_URL = "example.com"
 
 
+class Branch:
+    def __init__(self, name):
+        self.name = name
+
 class DefinitionsRepositoryTests(unittest.TestCase):
     def _raise_error_when_attempting_merge(_, abort=None):
         """
@@ -79,19 +83,25 @@ class DefinitionsRepositoryTests(unittest.TestCase):
 
             mock_clone.assert_called()
 
-    def test_GIVEN_repository_exists_WHEN_pull_requested_THEN_repository_gets_pulled(self):
-        with patch.object(self.definitions_repo, "_repo_already_exists", return_value=True):
+    def test_GIVEN_repository_clean_WHEN_pull_requested_THEN_repository_gets_merged(self):
+        with patch.object(self.definitions_repo, "is_dirty", return_value=False):
 
             self.definitions_repo.merge_with_origin()
             self.mock_repo.git.merge.assert_called()
 
-    def test_GIVEN_repository_which_has_unpushed_changes_WHEN_pull_attempted_THEN_merge_is_aborted(self):
+    def test_GIVEN_repository_dirty_WHEN_pull_requested_THEN_repository_gets_merged(self):
+        with patch.object(self.definitions_repo, "is_dirty", return_value=True):
+
+            self.definitions_repo.merge_with_origin()
+            self.mock_repo.git.reset.assert_called()
+
+    def test_GIVEN_repository_which_has_unpushed_changes_WHEN_merge_attempted_THEN_merge_is_aborted(self):
         self.mock_repo.git.merge = MagicMock(side_effect=self._raise_error_when_attempting_merge)
 
         self.definitions_repo.merge_with_origin()
         self.mock_repo.git.merge.assert_called_with(abort=True)
 
-    def test_GIVEN_repo_cannot_be_pulled_THEN_error_logged(self):
+    def test_GIVEN_error_raised_while_merging_THEN_error_logged(self):
         self.mock_repo.git.merge = MagicMock(side_effect=self._raise_error_when_attempting_merge)
         with patch.object(self.definitions_repo, "_append_error") as error_handler:
             self.definitions_repo.merge_with_origin()
@@ -99,9 +109,47 @@ class DefinitionsRepositoryTests(unittest.TestCase):
 
     @patch("git_utils.Repo")
     def test_GIVEN_repository_can_be_pulled_WHEN_repo_initialised_THEN_no_error_gets_logged(self, mock_repo):
-        mock_repo.return_value.remotes["origin"].url = TEST_URL
-        with patch.object(self.definitions_repo, "merge_with_origin"):
-            with patch.object(self.definitions_repo, "_append_error") as error_handler:
-                with patch.object(self.definitions_repo, "_repo_already_exists", return_value=True):
-                    self.definitions_repo.initialise_repo()
-                    error_handler.assert_not_called()
+        with patch.object(self.definitions_repo, "_append_error") as error_handler:
+            with patch.object(self.definitions_repo, "_repo_already_exists", return_value=True):
+                self.definitions_repo.initialise_repo()
+                error_handler.assert_not_called()
+
+    @patch("git_utils.Repo", side_effect=GitCommandError(command="Command", status="Status"))
+    def test_GIVEN_repository_cannot_be_initialised_WHEN_repo_initialised_THEN_error_gets_logged(self, mock_repo):
+        with patch.object(self.definitions_repo, "_append_error") as error_handler:
+            with patch.object(self.definitions_repo, "_repo_already_exists", return_value=True):
+                self.definitions_repo.initialise_repo()
+                error_handler.assert_called()
+
+    def test_GIVEN_origin_fetch_information_available_WHEN_local_and_origin_commits_different_THEN_updates_available_is_true(self):
+        self.definitions_repo.fetch_info = Mock()
+        self.definitions_repo.fetch_info.commit = 10
+        self.mock_repo.head.commit = 11
+
+        self.assertTrue(self.definitions_repo.updates_available())
+
+    def test_GIVEN_origin_fetch_information_available_WHEN_local_and_origin_commits_equal_THEN_updates_available_is_false(self):
+        self.definitions_repo.fetch_info = Mock()
+        self.definitions_repo.fetch_info.commit = 10
+        self.mock_repo.head.commit = 10
+
+        self.assertFalse(self.definitions_repo.updates_available())
+
+    def test_GIVEN_origin_fetch_info_not_available_WHEN_updates_available_requested_THEN_false(self):
+        self.definitions_repo.fetch_info = None
+
+        self.assertFalse(self.definitions_repo.updates_available())
+
+    def test_GIVEN_correct_branch_in_fetch_info_WHEN_fetch_from_origin_requested_THEN_branch_info_returned(self):
+        expected_branch = Branch("origin/master")
+        self.mock_repo.remotes["origin"].fetch.return_value = [expected_branch, Branch("master")]
+        self.assertIs(self.definitions_repo.fetch_from_origin(), expected_branch)
+
+    def test_GIVEN_correct_branch_in_fetch_info_WHEN_fetch_from_origin_requested_THEN_None_returned(self):
+        self.mock_repo.remotes["origin"].fetch.return_value = []
+        self.assertIs(self.definitions_repo.fetch_from_origin(), None)
+
+    def test_GIVEN_multiple_branches_with_correct_name_in_fetch_info_WHEN_fetch_from_origin_requested_THEN_first_branch_returned(self):
+        branch = Branch("origin/master")
+        self.mock_repo.remotes["origin"].fetch.return_value = [branch, Branch("origin/master")]
+        self.assertIs(self.definitions_repo.fetch_from_origin(), branch)
