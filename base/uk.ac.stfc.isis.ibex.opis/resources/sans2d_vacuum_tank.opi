@@ -164,7 +164,7 @@
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>528</height>
+      <height>529</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -3967,13 +3967,13 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <scripts />
-          <text>No-1 Y:</text>
+          <text>No 1 Beam Stop:</text>
           <tooltip></tooltip>
           <transparent>true</transparent>
           <vertical_alignment>1</vertical_alignment>
           <visible>true</visible>
           <widget_type>Label</widget_type>
-          <width>67</width>
+          <width>94</width>
           <wrap_words>false</wrap_words>
           <wuid>-5fe675ed:17390c365dd:-7f23</wuid>
           <x>0</x>
@@ -4007,13 +4007,13 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <scripts />
-          <text>No-2 Y:</text>
+          <text>No 2 Beam Stop:</text>
           <tooltip></tooltip>
           <transparent>true</transparent>
           <vertical_alignment>1</vertical_alignment>
           <visible>true</visible>
           <widget_type>Label</widget_type>
-          <width>67</width>
+          <width>94</width>
           <wrap_words>false</wrap_words>
           <wuid>-5fe675ed:17390c365dd:-7f22</wuid>
           <x>0</x>
@@ -4047,13 +4047,13 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <scripts />
-          <text>No-3 Y:</text>
+          <text>No 3 Beam Stop:</text>
           <tooltip></tooltip>
           <transparent>true</transparent>
           <vertical_alignment>1</vertical_alignment>
           <visible>true</visible>
           <widget_type>Label</widget_type>
-          <width>67</width>
+          <width>94</width>
           <wrap_words>false</wrap_words>
           <wuid>-5fe675ed:17390c365dd:-7f21</wuid>
           <x>0</x>
@@ -4526,13 +4526,13 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <scripts />
-          <text>No-3 Y:</text>
+          <text>Beam Stop Pillar:</text>
           <tooltip></tooltip>
           <transparent>true</transparent>
           <vertical_alignment>1</vertical_alignment>
           <visible>true</visible>
           <widget_type>Label</widget_type>
-          <width>67</width>
+          <width>97</width>
           <wrap_words>false</wrap_words>
           <wuid>-5fe675ed:17390c365dd:-7ec2</wuid>
           <x>0</x>
@@ -4566,7 +4566,7 @@ $(pv_value)</tooltip>
           <name>Text Update_8</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(P)MOT:BEAMSTOP3Y</pv_name>
+          <pv_name>$(P)MOT:BEAMSTOPX</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -4623,7 +4623,7 @@ $(pv_value)</tooltip>
           <name>Text Input_2</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(P)MOT:BEAMSTOP3Y:SP</pv_name>
+          <pv_name>$(P)MOT:BEAMSTOPX:SP</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -4723,7 +4723,7 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>528</height>
+      <height>529</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
