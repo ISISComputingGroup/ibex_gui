@@ -33,6 +33,53 @@
           </execution>
         </executions>
       </plugin>
+      
+      
+			
+		<plugin>
+	         <groupId>org.codehaus.mojo</groupId>
+	         <artifactId>rpm-maven-plugin</artifactId>
+	         <version>2.2.0</version>
+	         <executions>
+		    <execution>
+		      <id>attach-rpm</id>
+		      <goals>
+		        <goal>attached-rpm</goal>
+		      </goals>
+		    </execution>
+		  </executions>
+		  
+		  <configuration>
+	          <license>Eclipse Public License v1.0</license>
+	          <distribution>IBEX client</distribution>
+	          
+	          <!-- group is required to be defined for mvn plugin, choices are 
+	          https://fedoraproject.org/wiki/RPMGroups
+	          "engineering" seems closest for us -->
+	          <group>Applications/Engineering</group>
+	                  
+	          <icon>../uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web64.gif</icon>
+	          <packager>UKRI STFC</packager>
+	          <prefix>/usr/local</prefix>
+	          
+	          <mappings>
+            <mapping>
+              <directory>/usr/local/bin/ibex-client</directory>
+              
+              <!--  need permissive permissions as the client needs to be able to write to it's workspace -->
+              <filemode>666</filemode>
+              <dirmode>777</dirmode>
+              
+              <sources>
+                <source>
+                  <location>target/products/ibex.product-linux.gtk.x86_64.zip</location>
+                </source>
+              </sources>
+            </mapping>
+          </mappings>
+	      </configuration>
+	    </plugin>
+      
     </plugins>
   </build>
 </project>
