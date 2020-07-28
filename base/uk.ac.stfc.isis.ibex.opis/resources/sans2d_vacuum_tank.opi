@@ -4776,12 +4776,12 @@ $(pv_value)</tooltip>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
         <scripts />
-        <show_scrollbar>true</show_scrollbar>
+        <show_scrollbar>false</show_scrollbar>
         <tooltip></tooltip>
         <transparent>false</transparent>
         <visible>true</visible>
         <widget_type>Grouping Container</widget_type>
-        <width>433</width>
+        <width>223</width>
         <wuid>5c8f144d:17394c7ead4:-6127</wuid>
         <x>0</x>
         <y>0</y>
