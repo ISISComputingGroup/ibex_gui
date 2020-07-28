@@ -129,7 +129,7 @@
     <tab_1_background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </tab_1_background_color>
-    <tab_1_enabled>true</tab_1_enabled>
+    <tab_1_enabled>false</tab_1_enabled>
     <tab_1_font>
       <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_TabTitle_NEW</opifont.name>
     </tab_1_font>
@@ -180,7 +180,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>785</width>
       <wuid>-3f9dce3a:172e14cf1af:-7224</wuid>
@@ -4715,7 +4715,7 @@ $(pv_value)</tooltip>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
-      <enabled>true</enabled>
+      <enabled>false</enabled>
       <fc>false</fc>
       <font>
         <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
@@ -4739,7 +4739,7 @@ $(pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>785</width>
       <wuid>-3f9dce3a:172e14cf1af:-7220</wuid>
@@ -4755,7 +4755,7 @@ $(pv_value)</tooltip>
         </border_color>
         <border_style>0</border_style>
         <border_width>1</border_width>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
         <fc>false</fc>
         <font>
           <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
@@ -4795,7 +4795,7 @@ $(pv_value)</tooltip>
           </border_color>
           <border_style>13</border_style>
           <border_width>1</border_width>
-          <enabled>true</enabled>
+          <enabled>false</enabled>
           <fc>false</fc>
           <font>
             <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
@@ -4839,7 +4839,7 @@ $(pv_value)</tooltip>
             </border_color>
             <border_style>0</border_style>
             <border_width>1</border_width>
-            <enabled>true</enabled>
+            <enabled>false</enabled>
             <font>
               <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
             </font>
@@ -4892,7 +4892,7 @@ $(pv_value)</tooltip>
             <border_style>3</border_style>
             <border_width>1</border_width>
             <confirm_message></confirm_message>
-            <enabled>true</enabled>
+            <enabled>false</enabled>
             <font>
               <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
             </font>
@@ -4945,7 +4945,7 @@ $(pv_value)</tooltip>
             </border_color>
             <border_style>0</border_style>
             <border_width>1</border_width>
-            <enabled>true</enabled>
+            <enabled>false</enabled>
             <font>
               <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
             </font>
@@ -4994,7 +4994,7 @@ $(pv_value)</tooltip>
             </bulb_border_color>
             <data_type>0</data_type>
             <effect_3d>true</effect_3d>
-            <enabled>true</enabled>
+            <enabled>false</enabled>
             <font>
               <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
             </font>
@@ -5043,7 +5043,7 @@ $(pv_value)</tooltip>
           </border_color>
           <border_style>0</border_style>
           <border_width>1</border_width>
-          <enabled>true</enabled>
+          <enabled>false</enabled>
           <font>
             <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
           </font>
