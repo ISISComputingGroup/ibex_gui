@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.scripting;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.io.File;
 
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
@@ -89,8 +90,8 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 	}
 	
 	private String epicsBasePath() {
-        return "PATH=" + toOSPath(preferenceSupplier.epicsBase()) + ";" + toOSPath(preferenceSupplier.epicsUtilsPath())
-                + ";" + System.getenv("PATH");
+        return "PATH=" + toOSPath(preferenceSupplier.epicsBase()) + File.pathSeparator + toOSPath(preferenceSupplier.epicsUtilsPath())
+                + File.pathSeparator + System.getenv("PATH");
 	}
 
 	private String geniePythonPath() {
