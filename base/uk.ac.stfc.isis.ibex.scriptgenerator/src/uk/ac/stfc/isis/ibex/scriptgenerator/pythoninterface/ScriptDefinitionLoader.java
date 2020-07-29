@@ -1,6 +1,5 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
