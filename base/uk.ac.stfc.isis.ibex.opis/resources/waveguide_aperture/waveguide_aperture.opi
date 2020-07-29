@@ -135,7 +135,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>845</width>
       <wuid>-3185ce32:17208cb8f6a:-3a7b</wuid>
@@ -446,7 +446,15 @@ $(pv_value)</tooltip>
           </widget>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-          <actions hook="false" hook_all="false" />
+          <actions hook="false" hook_all="false">
+            <action type="WRITE_PV">
+              <pv_name>$(P)MOT:SANS2DAPWV:STOP_MOTORS:ALL</pv_name>
+              <value>1</value>
+              <timeout>10</timeout>
+              <confirm_message></confirm_message>
+              <description></description>
+            </action>
+          </actions>
           <alarm_pulsing>false</alarm_pulsing>
           <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
           <background_color>
@@ -470,7 +478,7 @@ $(pv_value)</tooltip>
           <image></image>
           <name>Action Button</name>
           <push_action_index>0</push_action_index>
-          <pv_name>NOT:YET:IMPLEMENTED</pv_name>
+          <pv_name></pv_name>
           <pv_value />
           <rules />
           <scale_options>
@@ -482,8 +490,7 @@ $(pv_value)</tooltip>
           <style>0</style>
           <text>STOP</text>
           <toggle_button>false</toggle_button>
-          <tooltip>$(pv_name)
-$(pv_value)</tooltip>
+          <tooltip>Stop all Apertures and Waveguides motion</tooltip>
           <visible>true</visible>
           <widget_type>Action Button</widget_type>
           <width>90</width>
@@ -701,7 +708,7 @@ $(pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>845</width>
       <wuid>-3185ce32:17208cb8f6a:-3a79</wuid>
@@ -1045,7 +1052,15 @@ $(pv_value)</tooltip>
           <y>33</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-          <actions hook="false" hook_all="false" />
+          <actions hook="false" hook_all="false">
+            <action type="WRITE_PV">
+              <pv_name>$(P)MOT:SANS2DAPWV:STOP_MOTORS:ALL</pv_name>
+              <value>1</value>
+              <timeout>10</timeout>
+              <confirm_message></confirm_message>
+              <description></description>
+            </action>
+          </actions>
           <alarm_pulsing>false</alarm_pulsing>
           <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
           <background_color>
@@ -1069,7 +1084,7 @@ $(pv_value)</tooltip>
           <image></image>
           <name>Action Button</name>
           <push_action_index>0</push_action_index>
-          <pv_name>NOT:YET:IMPLEMENTED</pv_name>
+          <pv_name></pv_name>
           <pv_value />
           <rules />
           <scale_options>
@@ -1081,8 +1096,7 @@ $(pv_value)</tooltip>
           <style>0</style>
           <text>STOP</text>
           <toggle_button>false</toggle_button>
-          <tooltip>$(pv_name)
-$(pv_value)</tooltip>
+          <tooltip>Stop all Apertures and Waveguides motion</tooltip>
           <visible>true</visible>
           <widget_type>Action Button</widget_type>
           <width>90</width>
