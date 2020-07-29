@@ -1,7 +1,7 @@
 Name:       ibex-client
 Version:    %{ibexversion}
 Release:    %{ibexbuild}%{?dist}
-Summary:    Ibex Client
+Summary:    STFC ISIS Facility IBEX Instrument Control Client
 
 #Group:        
 License:    EPL-1.0
@@ -11,6 +11,7 @@ Prefix:     /usr/local
 ## Turn off the brp-python-bytecompile script
 ## which doesn't like jython
 %global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
+
 ## Turn off brp-java-repack-jars as it takes forever
 %global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-java-repack-jars[[:space:]].*$!!g')
 
@@ -18,7 +19,9 @@ Prefix:     /usr/local
 #Requires:    
 
 %description
-ibex client
+IBEX is the EPICS based control system used at the ISIS Pulsed Neutron and
+Muon source. The IBEX client is used to connect to the IBEX server running
+on an ISIS instrument and control/monitor data acquisition.
 
 %prep
 
@@ -40,3 +43,5 @@ rm -fr "$RPM_BUILD_ROOT"
 %doc
 
 %changelog
+* Wed Jul 29 2020 ISISExperimentControls  7.1-1.el7
+- Initial RPM
