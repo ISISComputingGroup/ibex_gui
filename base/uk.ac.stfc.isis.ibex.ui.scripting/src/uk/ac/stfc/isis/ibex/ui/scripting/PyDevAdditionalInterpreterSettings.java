@@ -101,7 +101,7 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 	}
 
 	private String geniePythonDir() {
-		return toOSPath(File(preferenceSupplier.geniePythonPath()).getParent());
+		return toOSPath(new File(preferenceSupplier.geniePythonPath()).getParent());
 	}
 	
 	private void addEpicsEnvironment(List<String> entries) {
