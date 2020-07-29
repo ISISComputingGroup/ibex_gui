@@ -3,7 +3,7 @@ Version:    %{ibexversion}
 Release:    %{ibexbuild}%{?dist}
 Summary:    STFC ISIS Facility IBEX Instrument Control Client
 
-#Group:        
+Group:      Applications/Engineering        
 License:    EPL-1.0
 URL:        https://github.com/ISISComputingGroup/
 Prefix:     /usr/local
