@@ -106,12 +106,12 @@ public class PreferenceSupplier {
 	public static String getPythonPath() {
 	    String pythonPath, relPath;
 	    
-	    if (SystemUtils.IS_OS_WINDOWS)
-		    pythonPath = Path.forWindows(DEFAULT_PYTHON_3_INTERPRETER_PATH_WINDOWS).toOSString();
-                    relPath = PYTHON_RELATIVE_PATH_WINDOWS;
-	    else {
+	    if (SystemUtils.IS_OS_WINDOWS) {
+	        pythonPath = Path.forWindows(DEFAULT_PYTHON_3_INTERPRETER_PATH_WINDOWS).toOSString();
+	        relPath = PYTHON_RELATIVE_PATH_WINDOWS;
+	    } else {
 	        pythonPath = Path.forPosix(DEFAULT_PYTHON_3_INTERPRETER_PATH_LINUX).toOSString();
-                relPath = PYTHON_RELATIVE_PATH_LINUX;
+	        relPath = PYTHON_RELATIVE_PATH_LINUX;
 	    }
 	    
 		if (Files.exists(Paths.get(pythonPath))) {
