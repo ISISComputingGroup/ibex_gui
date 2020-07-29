@@ -8,12 +8,19 @@ License:    EPL-1.0
 URL:        https://github.com/ISISComputingGroup/
 Prefix:     /usr/local
 
+## stops all post install ops
+#%global __os_install_post %{nil}
+
 ## Turn off the brp-python-bytecompile script
 ## which doesn't like jython
 %global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-python-bytecompile[[:space:]].*$!!g')
 
 ## Turn off brp-java-repack-jars as it takes forever
 %global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-java-repack-jars[[:space:]].*$!!g')
+
+## stripping symbols breaks some numpy libraries
+%define debug_package %{nil}
+%define __strip /bin/true
 
 #BuildRequires:    
 #Requires:    
