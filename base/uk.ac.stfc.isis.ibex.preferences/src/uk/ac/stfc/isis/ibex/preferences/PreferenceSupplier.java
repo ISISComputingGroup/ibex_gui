@@ -79,7 +79,12 @@ public class PreferenceSupplier {
     /**
      * The relative path to the bundled Python.
      */
-    private static final String PYTHON_RELATIVE_PATH = "/resources/Python3/python.exe";
+    private static final String PYTHON_RELATIVE_PATH_WINDOWS = "/resources/Python3/python.exe";
+    
+    /**
+     * The relative path to the bundled Python.
+     */
+    private static final String PYTHON_RELATIVE_PATH_LINUX = "/resources/Python3/bin/python";
     
     /**
      * The path to the instrument/developer's genie python on windows.
@@ -90,7 +95,7 @@ public class PreferenceSupplier {
     /**
      * The path to the instrument/developer's genie python on linux.
      */
-    private static final String DEFAULT_PYTHON_3_INTERPRETER_PATH_LINUX = "/usr/local/ibex/python";
+    private static final String DEFAULT_PYTHON_3_INTERPRETER_PATH_LINUX = "/usr/local/ibex/genie_python/bin";
 	
 	/**
 	 * Gets the installed Python, unless it hasn't been bundled and then gets the Python bundled with the gui.
@@ -99,19 +104,21 @@ public class PreferenceSupplier {
 	 * @throws IOException if python could not be found.
 	 */
 	public static String getPythonPath() {
-	    String pythonPath;
+	    String pythonPath, relPath;
 	    
 	    if (SystemUtils.IS_OS_WINDOWS)
 		    pythonPath = Path.forWindows(DEFAULT_PYTHON_3_INTERPRETER_PATH_WINDOWS).toOSString();
+                    relPath = PYTHON_RELATIVE_PATH_WINDOWS;
 	    else {
 	        pythonPath = Path.forPosix(DEFAULT_PYTHON_3_INTERPRETER_PATH_LINUX).toOSString();
+                relPath = PYTHON_RELATIVE_PATH_LINUX;
 	    }
 	    
 		if (Files.exists(Paths.get(pythonPath))) {
 			LOG.info("getDefaultPythonPath found python at: " + pythonPath);
 		} else {
 			try {
-				pythonPath = relativePathToFull(PYTHON_RELATIVE_PATH);
+				pythonPath = relativePathToFull(relPath);
 				LOG.info("getDefaultPythonPath found python at: " + pythonPath);
 			} catch (IOException e) {
 				LOG.error("Bundled Python not found");
