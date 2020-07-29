@@ -32,7 +32,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
-
+import org.apache.commons.lang.SystemUtils;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
@@ -82,11 +82,15 @@ public class PreferenceSupplier {
     private static final String PYTHON_RELATIVE_PATH = "/resources/Python3/python.exe";
     
     /**
-     * The path to the instrument/developer's genie python.
+     * The path to the instrument/developer's genie python on windows.
      */
-	private static final String DEFAULT_PYTHON_3_INTERPRETER_PATH = "C:\\Instrument\\Apps\\Python3\\python.exe";
+	private static final String DEFAULT_PYTHON_3_INTERPRETER_PATH_WINDOWS = "C:\\Instrument\\Apps\\Python3\\python.exe";
+	
 
-
+    /**
+     * The path to the instrument/developer's genie python on linux.
+     */
+    private static final String DEFAULT_PYTHON_3_INTERPRETER_PATH_LINUX = "/usr/local/ibex/python";
 	
 	/**
 	 * Gets the installed Python, unless it hasn't been bundled and then gets the Python bundled with the gui.
@@ -95,7 +99,14 @@ public class PreferenceSupplier {
 	 * @throws IOException if python could not be found.
 	 */
 	public static String getPythonPath() {
-		String pythonPath = Path.forWindows(DEFAULT_PYTHON_3_INTERPRETER_PATH).toOSString();
+	    String pythonPath;
+	    
+	    if (SystemUtils.IS_OS_WINDOWS)
+		    pythonPath = Path.forWindows(DEFAULT_PYTHON_3_INTERPRETER_PATH_WINDOWS).toOSString();
+	    else {
+	        pythonPath = Path.forPosix(DEFAULT_PYTHON_3_INTERPRETER_PATH_LINUX).toOSString();
+	    }
+	    
 		if (Files.exists(Paths.get(pythonPath))) {
 			LOG.info("getDefaultPythonPath found python at: " + pythonPath);
 		} else {
@@ -242,7 +253,7 @@ public class PreferenceSupplier {
      * @return the setting (uses default if not set)
      */
 	public String pythonInterpreterPath() {
-		return getString(PYTHON_INTERPRETER_PATH, DEFAULT_PYTHON_3_INTERPRETER_PATH);
+		return getString(PYTHON_INTERPRETER_PATH, DEFAULT_PYTHON_3_INTERPRETER_PATH_WINDOWS);
 	}
 	
     /**
