@@ -186,7 +186,8 @@ public class ScriptGeneratorView {
 				// Warn user git could not be found
 				MessageDialog.openInformation(DISPLAY.getActiveShell(),
 						"Git error",
-						"Could not connect to remote git repository");
+						"Could not update script definitions, because the remote git repository could not be reached. "
+						+ "You can still continue to use the existing script definitions, but they may be out of date.");
 			}
 			if (scriptGeneratorViewModel.updatesAvailable()) {
 				// Display prompt if new commits are available

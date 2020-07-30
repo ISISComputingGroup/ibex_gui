@@ -263,11 +263,10 @@ class ScriptDefinitionsWrapper(object):
         Returns True if the remote git repository can be reached/pulled from
         """
         try:
-            fetch_info = self.repository.fetch_from_origin()
+            self.repository.fetch_from_origin()
+            return True
         except Exception:
-            fetch_info = None
-        
-        return fetch_info is not None
+            return False
 
     def updatesAvailable(self) -> bool:
         """

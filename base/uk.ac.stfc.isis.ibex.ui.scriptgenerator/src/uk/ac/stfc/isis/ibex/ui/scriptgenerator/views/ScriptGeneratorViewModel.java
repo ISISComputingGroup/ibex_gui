@@ -851,7 +851,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	public String getPromptMessage() {
         String message = "Updates to the script definitions are available. Updating your definitions may erase current scripts.";
 		if (scriptGeneratorModel.isDirty()) {
-			message += "\n WARNING: There are uncommitted changes to the script defintions. These will be lost if you update.";
+			message += "\n WARNING: There are uncommitted changes to the script definitions. These will be lost if you update.";
 		}
 		return message;
 	}
