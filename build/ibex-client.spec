@@ -1,6 +1,6 @@
 Name:       ibex-client
 Version:    %{ibexversion}
-Release:    %{ibexbuild}%{?dist}
+Release:    %{ibexrelease}%{?dist}
 Summary:    STFC ISIS Facility IBEX Instrument Control Client
 
 Group:      Applications/Engineering        
