@@ -12,7 +12,7 @@ mvn --settings="$TOPPATH/mvn_user_settings.xml" \
     clean verify
     
 #cp -r '/misc/inst/Kits$/CompGroup/ICP/ibex_client_jre_linux' "$TOPPATH/base/uk.ac.stfc.isis.ibex.e4.client.product/target/products/ibex.product/linux/gtk/x86_64/jre"
-cp -r /etc/alternatives/jre_11_openjdk "$TOPPATH/base/uk.ac.stfc.isis.ibex.e4.client.product/target/products/ibex.product/linux/gtk/x86_64/jre"
+cp --dereference -r /etc/alternatives/jre_11_openjdk "$TOPPATH/base/uk.ac.stfc.isis.ibex.e4.client.product/target/products/ibex.product/linux/gtk/x86_64/jre"
 
 clientbuild="$TOPPATH/base/uk.ac.stfc.isis.ibex.e4.client.product/target/products/ibex.product/linux/gtk/x86_64"
 echo "Client built in $clientbuild"
