@@ -18,6 +18,9 @@ Prefix:     /usr/local
 ## Turn off brp-java-repack-jars as it takes forever
 %global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-java-repack-jars[[:space:]].*$!!g')
 
+## Turn off brp-strip as it takes forever
+%global __os_install_post %(echo '%{__os_install_post}' | sed -e 's!/usr/lib[^[:space:]]*/brp-strip[[:space:]].*$!!g')
+
 ## stripping symbols breaks some numpy libraries
 %define debug_package %{nil}
 %define __strip /bin/true
