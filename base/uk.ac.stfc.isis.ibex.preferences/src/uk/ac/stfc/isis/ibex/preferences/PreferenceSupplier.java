@@ -33,7 +33,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
-
+import org.apache.commons.lang.SystemUtils;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
@@ -80,12 +80,23 @@ public class PreferenceSupplier {
     /**
      * The relative path to the bundled Python.
      */
-    private static final String PYTHON_RELATIVE_PATH = "/resources/Python3/python.exe";
+    private static final String PYTHON_RELATIVE_PATH_WINDOWS = "/resources/Python3/python.exe";
     
     /**
-     * The path to the instrument/developer's genie python.
+     * The relative path to the bundled Python.
      */
-	private static final String DEFAULT_PYTHON_3_INTERPRETER_PATH = "C:\\Instrument\\Apps\\Python3\\python.exe";
+    private static final String PYTHON_RELATIVE_PATH_LINUX = "/resources/Python3/bin/python";
+    
+    /**
+     * The path to the instrument/developer's genie python on windows.
+     */
+	private static final String DEFAULT_PYTHON_3_INTERPRETER_PATH_WINDOWS = "C:\\Instrument\\Apps\\Python3\\python.exe";
+	
+
+    /**
+     * The path to the instrument/developer's genie python on linux.
+     */
+    private static final String DEFAULT_PYTHON_3_INTERPRETER_PATH_LINUX = "/usr/local/ibex/genie_python/bin";
 	
 	/**
      * The default for the location of Python.
@@ -99,12 +110,21 @@ public class PreferenceSupplier {
 	 * @throws IOException if python could not be found.
 	 */
 	public static String getPythonPath() {
-		String pythonPath = Path.forWindows(DEFAULT_PYTHON_3_INTERPRETER_PATH).toOSString();
+	    String pythonPath, relPath;
+	    
+	    if (SystemUtils.IS_OS_WINDOWS) {
+	        pythonPath = Path.forWindows(DEFAULT_PYTHON_3_INTERPRETER_PATH_WINDOWS).toOSString();
+	        relPath = PYTHON_RELATIVE_PATH_WINDOWS;
+	    } else {
+	        pythonPath = Path.forPosix(DEFAULT_PYTHON_3_INTERPRETER_PATH_LINUX).toOSString();
+	        relPath = PYTHON_RELATIVE_PATH_LINUX;
+	    }
+	    
 		if (Files.exists(Paths.get(pythonPath))) {
 			LOG.info("getDefaultPythonPath found python at: " + pythonPath);
 		} else {
 			try {
-				pythonPath = relativePathToFull(PYTHON_RELATIVE_PATH);
+				pythonPath = relativePathToFull(relPath);
 				LOG.info("getDefaultPythonPath found python at: " + pythonPath);
 			} catch (IOException e) {
 				LOG.error("Bundled Python not found");
@@ -247,7 +267,7 @@ public class PreferenceSupplier {
      * @return the setting (uses default if not set)
      */
 	public String pythonInterpreterPath() {
-		return getString(PYTHON_INTERPRETER_PATH, DEFAULT_PYTHON_3_INTERPRETER_PATH);
+		return getString(PYTHON_INTERPRETER_PATH, DEFAULT_PYTHON_3_INTERPRETER_PATH_WINDOWS);
 	}
 	
     /**
