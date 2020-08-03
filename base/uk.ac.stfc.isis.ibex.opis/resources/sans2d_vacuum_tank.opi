@@ -4781,7 +4781,7 @@ $(pv_value)</tooltip>
         <transparent>false</transparent>
         <visible>true</visible>
         <widget_type>Grouping Container</widget_type>
-        <width>223</width>
+        <width>187</width>
         <wuid>5c8f144d:17394c7ead4:-7a56</wuid>
         <x>0</x>
         <y>12</y>
@@ -4989,7 +4989,7 @@ $(pv_value)</tooltip>
           <widget_type>LED</widget_type>
           <width>25</width>
           <wuid>5c8f144d:17394c7ead4:-5e78</wuid>
-          <x>168</x>
+          <x>119</x>
           <y>90</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -5020,7 +5020,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <scripts />
-          <text>Motor Energised</text>
+          <text>PS Energised:</text>
           <tooltip></tooltip>
           <transparent>true</transparent>
           <vertical_alignment>1</vertical_alignment>
