@@ -8,7 +8,9 @@ import inspect
 import argparse
 import os
 import sys
-from jinja2 import Environment, FileSystemLoader, Markup, TemplateNotFound
+from git_utils import DefinitionsRepository, DEFAULT_REPO_PATH
+from glob import iglob
+from jinja2 import Environment, FileSystemLoader
 from genie_python import utilities
 import importlib.machinery
 import importlib.util
@@ -156,13 +158,12 @@ class ScriptDefinitionWrapper(object):
 
 class Generator(object):
 
-    def __init__(self, search_folders: List[str] = ["instruments"]):
+    def __init__(self, repo_path: str):
         """
         Set up the template to generate with
         """
         cwd = os.path.dirname(os.path.abspath(__file__))
-        search_folders.append('{}/templates'.format(cwd)) # Add a search to find the template for jinja2
-        self.loader = FileSystemLoader(search_folders)
+        self.loader = FileSystemLoader("{}/templates".format(cwd))
         self.env = Environment(loader=self.loader, keep_trailing_newline=True)
         self.template = self.env.get_template('generator_template.py')
 
@@ -244,7 +245,6 @@ class Generator(object):
         return os.path.basename(script_definition.script_definition.get_file())
 
 
-
 class ScriptDefinitionsWrapper(object):
     """
     Exposes all ScriptDefinitions which have been found supplied to the constructor.
@@ -252,10 +252,51 @@ class ScriptDefinitionsWrapper(object):
     class Java:
         implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionsWrapper']
 
-    def __init__(self, available_script_definitions: Dict[AnyStr, ScriptDefinition], generator: Generator, script_definition_load_errors: Dict[AnyStr, AnyStr] = {}):
-        self.script_definitions = [ScriptDefinitionWrapper(instrument, script_definition()) for instrument, script_definition in available_script_definitions.items()]
-        self.generator = generator
-        self.script_definition_load_errors = script_definition_load_errors
+    def __init__(self, path: str):
+        self.repository = DefinitionsRepository(path=path)
+        self.script_definitions, self.script_definition_load_errors = get_script_definitions(self.repository.path)
+
+        self.generator = Generator(self.repository.path)
+
+    def remoteAvailable(self) -> bool:
+        """
+        Returns True if the remote git repository can be reached/pulled from
+        """
+        try:
+            self.repository.fetch_from_origin()
+            return True
+        except Exception:
+            return False
+
+    def updatesAvailable(self) -> bool:
+        """
+        Returns True if the repository path can be pulled, else False
+        """
+        return self.repository.updates_available()
+
+    def isDirty(self) -> None:
+        """
+        Returns True if the repository has uncommitted changes
+        """
+        return self.repository.is_dirty()
+
+    def getGitErrors(self):
+        """
+        Return the errors raised during git init for the Java code
+        """
+        return ListConverter().convert(self.repository.errors, gateway._gateway_client)
+
+    def mergeOrigin(self):
+        """
+        Attempts to merge from origin
+        """
+        self.repository.merge_with_origin()
+
+    def getRepoPath(self) -> str:
+        """
+        Returns the path to the script definitions repository
+        """
+        return str(self.repository.path)
 
     def getScriptDefinitionLoadErrors(self) -> Dict[AnyStr, AnyStr]:
         """
@@ -326,13 +367,13 @@ class ScriptDefinitionsWrapper(object):
         """
         return True
 
-def get_script_definitions(search_folders: List[str] = None) -> Tuple[Dict[AnyStr, ScriptDefinition], Dict[AnyStr, AnyStr]]:
+
+def get_script_definitions(repo_path: str) -> Tuple[List[ScriptDefinitionWrapper], Dict[AnyStr, AnyStr]]:
     """
     Dynamically import all the Python modules in the search folders
-    
+
     Parameters:
-        search_folders: List[str]
-            The folders to search for actions in
+        repo_path: The path to the script definitions repository
 
     Returns:
         A tuple. 
@@ -340,38 +381,23 @@ def get_script_definitions(search_folders: List[str] = None) -> Tuple[Dict[AnySt
         The second element is also a dictionary with keys as the module name, 
          but with values as the reason they could not be imported.
     """
-    if search_folders is None:
-        this_file_path = os.path.split(__file__)[0]
-        search_folder = [os.path.join(this_file_path, "instruments")]
-    script_definitions: Dict[AnyStr, ScriptDefinition] = {}
+    script_definitions: List[ScriptDefinitionWrapper] = []
     script_definition_load_errors: Dict[AnyStr, AnyStr] = {}
-    for search_folder in search_folders:
+
+    for filename in iglob("{folder}/*.py".format(folder=repo_path)):
+        module_name = os.path.splitext(os.path.basename(filename))[0]
+        # Attempt to import the DoRun class
         try:
-            for filename in os.listdir(search_folder):
-                # Check if we have found a python file or not
-                filenameparts = filename.split(".")
-                module_name = filenameparts[0]
-                if len(filenameparts) > 1:
-                    file_extension = filenameparts[-1]
-                else:
-                    file_extension = ""
-                # Found a script definition (python file) import the DoRun class
-                if file_extension == "py":
-                    try:
-                        loader = importlib.machinery.SourceFileLoader(module_name, os.path.join(search_folder, filename))
-                        spec = importlib.util.spec_from_loader(module_name, loader)
-                        sys.modules[module_name] = importlib.util.module_from_spec(spec)
-                        loader.exec_module(sys.modules[module_name])
-                        script_definitions[module_name] = sys.modules[module_name].DoRun
-                    except Exception as e:
-                        # On failure to load ensure we return the reason
-                        script_definition_load_errors[module_name] = str(e)
-                        # Print any errors to stderr, Java will catch and throw to the user
-                        print("Error loading {}: {}".format(module_name, e), file=sys.stderr)
-        except FileNotFoundError as e:
+            loader = importlib.machinery.SourceFileLoader(module_name, os.path.join(repo_path, filename))
+            spec = importlib.util.spec_from_loader(module_name, loader)
+            loaded_module = importlib.util.module_from_spec(spec)
+            loader.exec_module(loaded_module)
+            script_definitions.append(ScriptDefinitionWrapper(module_name, loaded_module.DoRun()))
+        except Exception as e:
             # On failure to load ensure we return the reason
-            script_definition_load_errors[search_folder] = str(e)
-            print("Error loading from {}".format(search_folder), file=sys.stderr)
+            script_definition_load_errors[module_name] = str(e)
+            # Print any errors to stderr, Java will catch and throw to the user
+            print("Error loading {}: {}".format(module_name, e), file=sys.stderr)
     return script_definitions, script_definition_load_errors
 
 
@@ -379,19 +405,13 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('java_port', type=int, help='the java port to connect on')
     parser.add_argument('python_port', type=int, help='the python port to connect on')
-    parser.add_argument('search_folders', type=str, help='the folders containing the script generator script_definitions to search')
+    parser.add_argument('--repo_path', type=str, help='Path to the script generator repository', default=DEFAULT_REPO_PATH)
 
     args = parser.parse_args()
-    search_folders = args.search_folders.split(",")
-    
-    script_definitions: Dict[AnyStr, ScriptDefinition] = {}
-    script_definition_load_errors: Dict[AnyStr, AnyStr] = {}
-    script_definitions, script_definition_load_errors = get_script_definitions(search_folders=search_folders)
 
-    script_definitions_wrapper = ScriptDefinitionsWrapper(script_definitions, Generator(search_folders=search_folders), script_definition_load_errors=script_definition_load_errors)
+    script_definitions_wrapper = ScriptDefinitionsWrapper(path=args.repo_path)
 
     gateway = ClientServer(
         java_parameters=JavaParameters(port=args.java_port),
         python_parameters=PythonParameters(port=args.python_port),
         python_server_entry_point=script_definitions_wrapper)
-    
