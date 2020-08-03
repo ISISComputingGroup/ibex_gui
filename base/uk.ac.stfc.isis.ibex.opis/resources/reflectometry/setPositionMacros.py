@@ -2,6 +2,25 @@ from org.csstudio.opibuilder.scriptUtil import PVUtil
 import json
 import zlib
 
+def _set_panels():
+    """
+    Set the panels to be the same as the opi constant
+    """
+
+    value = PVUtil.getStringArray(pvs[4])
+    value = "".join(chr(int(i)) for i in value)
+    value = value.strip("\0")
+
+    for widget_name, opi_name in [("Vertical Gaps", "vgaps.opi"),
+                                  ("Horizontal Gaps", "hgaps.opi"),
+                                  ("Sample Stack", "sample_stack.opi"),
+                                  ("Important Params", "important_params.opi")]:
+                                      
+
+        widget = display.getWidget(widget_name)
+        widget.setPropertyValue("opi_file", "null.opi")
+        widget.setPropertyValue("opi_file", value + "\\" + opi_name)
+
 
 def _set_opi(widget, param_type):
     """
@@ -18,6 +37,8 @@ def _set_opi(widget, param_type):
         widget.setPropertyValue("opi_file", "param_inout.opi")
     elif param_type == "float_value":
         widget.setPropertyValue("opi_file", "value.opi")
+    elif param_type == "enum":
+        widget.setPropertyValue("opi_file", "param_enum.opi")        
     else:
         widget.setPropertyValue("opi_file", "param_move.opi")
 
@@ -54,9 +75,9 @@ def sort_out_list(pv, widget_name_prefix, macro_prefix, has_type, max):
         else:
             widget.setPropertyValue("visible", False)
 
+_set_panels()
+
 sort_out_list(pvs[2], "align_", "PARAM", True, 30)
 sort_out_list(pvs[1], "Correction_", "COR", False, 14)            
 sort_out_list(pvs[0], "pos_", "PARAM", True, 30)
-sort_out_list(pvs[3], "Value_", "VALUE", True, 16)
-
-
+sort_out_list(pvs[3], "Value_", "VALUE", True, 32)
