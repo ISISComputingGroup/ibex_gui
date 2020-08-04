@@ -354,7 +354,39 @@ $(pv_value)</tooltip>
           <pv_name>$(P)MOT:FRONTBEAMSTOP:SP</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
-          <rules />
+          <rules>
+            <rule name="GreyOutOnInhibited" prop_id="background_color" out_exp="false">
+              <exp bool_exp="pv0 == 1">
+                <value>
+                  <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
+                </value>
+              </exp>
+              <exp bool_exp="pv0 == 0">
+                <value>
+                  <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
+                </value>
+              </exp>
+              <pv trig="true">$(P)MOT:SANS2DVAC:INHIBIT_FRONTBEAMSTOP</pv>
+            </rule>
+            <rule name="DisableOnInhibited" prop_id="enabled" out_exp="false">
+              <exp bool_exp="pv0 == 1">
+                <value>false</value>
+              </exp>
+              <exp bool_exp="pv0 == 0">
+                <value>true</value>
+              </exp>
+              <pv trig="true">$(P)MOT:SANS2DVAC:INHIBIT_FRONTBEAMSTOP</pv>
+            </rule>
+            <rule name="ChangeTooltipOnInhibited" prop_id="tooltip" out_exp="false">
+              <exp bool_exp="pv0 == 1">
+                <value>Rotation currently inhibited based on front detector rotation</value>
+              </exp>
+              <exp bool_exp="pv0 == 0">
+                <value>$(pv_name): $(pv_value)</value>
+              </exp>
+              <pv trig="true">$(P)MOT:SANS2DVAC:INHIBIT_FRONTBEAMSTOP</pv>
+            </rule>
+          </rules>
           <scale_options>
             <width_scalable>true</width_scalable>
             <height_scalable>true</height_scalable>
@@ -365,8 +397,7 @@ $(pv_value)</tooltip>
           <show_units>true</show_units>
           <style>0</style>
           <text>######</text>
-          <tooltip>$(pv_name)
-$(pv_value)</tooltip>
+          <tooltip></tooltip>
           <transparent>false</transparent>
           <visible>true</visible>
           <widget_type>Text Input</widget_type>
