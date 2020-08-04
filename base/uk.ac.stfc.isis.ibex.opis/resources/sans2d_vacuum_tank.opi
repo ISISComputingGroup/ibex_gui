@@ -443,7 +443,7 @@ $(pv_value)</tooltip>
           <foreground_color>
             <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
           </foreground_color>
-          <height>20</height>
+          <height>25</height>
           <name>LED</name>
           <off_color>
             <color name="ISIS_Red_LED_Off" red="102" green="0" blue="0" />
@@ -467,10 +467,10 @@ $(pv_value)</tooltip>
           <tooltip>If lit up rotation of the front beam stop is inhibited by the rotation of the front detector</tooltip>
           <visible>true</visible>
           <widget_type>LED</widget_type>
-          <width>20</width>
+          <width>25</width>
           <wuid>-7d88a114:17356c6791f:-740b</wuid>
           <x>60</x>
-          <y>84</y>
+          <y>81</y>
         </widget>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
