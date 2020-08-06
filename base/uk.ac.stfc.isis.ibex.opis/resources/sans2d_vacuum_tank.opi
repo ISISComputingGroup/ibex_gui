@@ -4972,7 +4972,7 @@ $(pv_value)</tooltip>
             <color red="0" green="255" blue="0" />
           </on_color>
           <on_label>ON</on_label>
-          <pv_name>$(P)MOT:MTR0504_ON_STATUS</pv_name>
+          <pv_name>$(P)FRONTDET:ON</pv_name>
           <pv_value />
           <rules />
           <scale_options>
