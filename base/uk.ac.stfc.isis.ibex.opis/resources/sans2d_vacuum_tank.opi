@@ -4794,7 +4794,7 @@ $(pv_value)</tooltip>
         </scale_options>
         <scripts />
         <show_scrollbar>false</show_scrollbar>
-        <text>Front detector Z motion inhibited as front detector power supplies are on.</text>
+        <text>Front detector motion inhibited as front detector power supplies are on.</text>
         <tooltip></tooltip>
         <transparent>false</transparent>
         <vertical_alignment>1</vertical_alignment>
@@ -4842,7 +4842,7 @@ $(pv_value)</tooltip>
         </scale_options>
         <scripts />
         <show_scrollbar>false</show_scrollbar>
-        <text>Rear detector Z motion inhibited as rear detector power supplies are on.</text>
+        <text>Rear detector motion inhibited as rear detector power supplies are on.</text>
         <tooltip></tooltip>
         <transparent>false</transparent>
         <vertical_alignment>1</vertical_alignment>
