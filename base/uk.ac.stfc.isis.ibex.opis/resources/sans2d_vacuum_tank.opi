@@ -180,7 +180,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>785</width>
       <wuid>-3f9dce3a:172e14cf1af:-7224</wuid>
@@ -224,7 +224,7 @@
         <widget_type>Grouping Container</widget_type>
         <width>122</width>
         <wuid>291deafa:1732a07cfa0:-7f11</wuid>
-        <x>6</x>
+        <x>13</x>
         <y>192</y>
         <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -1353,7 +1353,7 @@ $(pv_value)</tooltip>
         <widget_type>Grouping Container</widget_type>
         <width>128</width>
         <wuid>4c2f8d63:17304598483:-6df8</wuid>
-        <x>66</x>
+        <x>134</x>
         <y>192</y>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -1984,7 +1984,7 @@ $(pv_value)</tooltip>
         <widget_type>Grouping Container</widget_type>
         <width>128</width>
         <wuid>4c2f8d63:17304598483:-69c0</wuid>
-        <x>445</x>
+        <x>515</x>
         <y>192</y>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -2379,7 +2379,7 @@ $(pv_value)</tooltip>
         <widget_type>Grouping Container</widget_type>
         <width>128</width>
         <wuid>4c2f8d63:17304598483:-6975</wuid>
-        <x>193</x>
+        <x>261</x>
         <y>192</y>
         <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -2569,7 +2569,7 @@ $(pv_value)</tooltip>
         <widget_type>Grouping Container</widget_type>
         <width>128</width>
         <wuid>4c2f8d63:17304598483:-6948</wuid>
-        <x>320</x>
+        <x>387</x>
         <y>192</y>
         <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -4148,8 +4148,8 @@ $(pv_value)</tooltip>
         <widget_type>Linking Container</widget_type>
         <width>251</width>
         <wuid>22afd3db:17375bd3049:-7f33</wuid>
-        <x>193</x>
-        <y>293</y>
+        <x>265</x>
+        <y>304</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -4189,7 +4189,7 @@ $(pv_value)</tooltip>
         <widget_type>Grouping Container</widget_type>
         <width>128</width>
         <wuid>-5fe675ed:17390c365dd:-7f24</wuid>
-        <x>572</x>
+        <x>642</x>
         <y>192</y>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -5007,8 +5007,8 @@ $(pv_value)</tooltip>
         <widget_type>Action Button</widget_type>
         <width>109</width>
         <wuid>-4c80a147:173b4c097c7:-7e50</wuid>
-        <x>264</x>
-        <y>332</y>
+        <x>336</x>
+        <y>340</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -5045,7 +5045,7 @@ $(pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>785</width>
       <wuid>-3f9dce3a:172e14cf1af:-7220</wuid>
