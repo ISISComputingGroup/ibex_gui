@@ -163,7 +163,7 @@ class Generator(object):
         Set up the template to generate with
         """
         cwd = os.path.dirname(os.path.abspath(__file__))
-        self.loader = FileSystemLoader("{}/templates".format(cwd))
+        self.loader = FileSystemLoader(["{}/templates".format(cwd), repo_path])
         self.env = Environment(loader=self.loader, keep_trailing_newline=True)
         self.template = self.env.get_template('generator_template.py')
 
