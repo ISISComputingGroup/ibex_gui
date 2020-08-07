@@ -226,8 +226,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		setUp();
 	}
 
+	private Path scriptDefinitionsRepoPath;
+	
 	private Path getScriptDefinitionPath(ScriptDefinitionWrapper scriptDefinition) {
-		return Paths.get(preferenceSupplier.scriptGeneratorScriptDefinitionFolders(), scriptDefinition.getName() + PYTHON_EXT);
+		return Paths.get(scriptDefinitionsRepoPath.toString(), scriptDefinition.getName() + PYTHON_EXT);
 	}
 	
 	/**
@@ -681,6 +683,13 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
+	 * Set the location of the repository containing script definitions
+	 */
+	public void setRepoPath() {
+		this.scriptDefinitionsRepoPath = Paths.get(pythonInterface.getRepoPath());
+	}
+	
+	/**
 	 * Loads parameter values from a file and return the contents.
 	 * 
 	 * @param fileName name of data file user wants to load
@@ -736,6 +745,47 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	public ScriptGeneratorFileHandler getFileHandler() {
 		return fileHandler;
-
 	}
+
+	/**
+	 * Get whether there are updates available for the git repository.
+	 * @return true if there are updates available.
+	 */
+	public boolean updatesAvailable() {
+		return pythonInterface.updatesAvailable();
+	}
+
+	/**
+	 * Get the list of git errors raised while loading.
+	 * @return List of error messages from git loading.
+	 */
+	public List<String> getGitLoadErrors() {
+		return pythonInterface.getGitLoadErrors();
+	}
+
+	/**
+	 * Gets whether the remote git repo URL is accessible.
+	 * @return true if the remote repo URL can be accessed.
+	 */
+	public boolean remoteAvailable() {
+		return pythonInterface.remoteAvailable();
+	}
+
+	/**
+	 * Determine from the python whether the git repository is dirty.
+	 * 
+	 * @return true if the git repository is dirty.
+	 */
+	public boolean isDirty() {
+		return pythonInterface.isDirty();
+	}
+
+	/**
+	 * Merges git repository from upstream.
+	 */
+	public void mergeOrigin() {
+		pythonInterface.mergeOrigin();
+		
+	}
+
 }
