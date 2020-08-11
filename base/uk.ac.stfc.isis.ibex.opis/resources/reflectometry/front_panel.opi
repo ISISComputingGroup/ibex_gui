@@ -285,7 +285,7 @@
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </tab_3_foreground_color>
       <tab_3_icon_path></tab_3_icon_path>
-      <tab_3_title>Misc Parameters</tab_3_title>
+      <tab_3_title>Other Parameters</tab_3_title>
       <tab_4_background_color>
         <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </tab_4_background_color>
@@ -1370,7 +1370,7 @@
         <show_scrollbar>true</show_scrollbar>
         <tooltip></tooltip>
         <transparent>true</transparent>
-        <visible>true</visible>
+        <visible>false</visible>
         <widget_type>Grouping Container</widget_type>
         <width>965</width>
         <wuid>75389cf2:173bea04a99:-460d</wuid>
@@ -1523,7 +1523,7 @@
         <macros>
           <include_parent_macros>true</include_parent_macros>
         </macros>
-        <name>Misc Parameters</name>
+        <name>Other Parameters</name>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -1534,7 +1534,7 @@
         <show_scrollbar>true</show_scrollbar>
         <tooltip></tooltip>
         <transparent>true</transparent>
-        <visible>false</visible>
+        <visible>true</visible>
         <widget_type>Grouping Container</widget_type>
         <width>965</width>
         <wuid>75389cf2:173bea04a99:-3f0c</wuid>
