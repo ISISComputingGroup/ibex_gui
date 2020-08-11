@@ -163,7 +163,7 @@ class Generator(object):
         Set up the template to generate with
         """
         cwd = os.path.dirname(os.path.abspath(__file__))
-        self.loader = FileSystemLoader("{}/templates".format(cwd))
+        self.loader = FileSystemLoader(["{}/templates".format(cwd), repo_path])
         self.env = Environment(loader=self.loader, keep_trailing_newline=True)
         self.template = self.env.get_template('generator_template.py')
 
@@ -220,9 +220,9 @@ class Generator(object):
            None if there is an error or parameters are invalid, otherwise a string of a generated script.
         """
         if self.areParamsValid(list_of_actions, script_definition):
-            script_definition_file_path = "{}.py".format(script_definition.getName())
-            script_definition_template = self.env.get_template(script_definition_file_path)
             try:
+                script_definition_file_path = "{}.py".format(script_definition.getName())
+                script_definition_template = self.env.get_template(script_definition_file_path)
                 val = str(utilities.compress_and_hex(jsonString))
                 rendered_template = self.template.render(inserted_script_definition=script_definition_template,
                     script_generator_actions=list_of_actions, hexed_value=val)
