@@ -61,7 +61,7 @@ def sort_out_list(pv, widget_name_prefix, macro_prefix, has_type, max):
 # Widget names need to be set before trying to set properties
 time.sleep(0.2)
 
-# sort_out_list(pvs[0], "params_all_", "PARAM", True, 28)
+sort_out_list(pvs[0], "params_slit_", "PARAM", True, 28)
 sort_out_list(pvs[1], "params_collim_", "PARAM", True, 28)
 sort_out_list(pvs[2], "params_toggle_", "PARAM", True, 28)
 sort_out_list(pvs[3], "params_misc_", "PARAM", True, 28)
