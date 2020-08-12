@@ -160,7 +160,8 @@ public class PreferenceSupplier {
     /**
      * The default for the location of genie_python.
      */
-    private static final String DEFAULT_GENIE_PYTHON_DIRECTORY = "C:\\Instrument\\Apps\\Python\\Lib\\site-packages\\genie_python";
+    private static final String DEFAULT_GENIE_PYTHON_DIRECTORY_WINDOWS = "C:\\Instrument\\Apps\\Python\\Lib\\site-packages\\genie_python";
+    private static final String DEFAULT_GENIE_PYTHON_DIRECTORY_LINUX = "/usr/local/ibex/genie_python/lib/python3.6/site-packages";
     
     /**
      * The preference setting for the location of EPICS utils.
@@ -267,7 +268,11 @@ public class PreferenceSupplier {
      * @return the setting (uses default if not set)
      */
 	public String pythonInterpreterPath() {
+	    if (SystemUtils.IS_OS_WINDOWS) {
 		return getString(PYTHON_INTERPRETER_PATH, DEFAULT_PYTHON_3_INTERPRETER_PATH_WINDOWS);
+            } else { 
+		return getString(PYTHON_INTERPRETER_PATH, DEFAULT_PYTHON_3_INTERPRETER_PATH_LINUX);
+           }
 	}
 	
     /**
@@ -289,7 +294,11 @@ public class PreferenceSupplier {
      * @return the setting (uses default if not set)
      */
 	public String geniePythonPath() {
-		return getString(GENIE_PYTHON_DIRECTORY, DEFAULT_GENIE_PYTHON_DIRECTORY);
+	    if (SystemUtils.IS_OS_WINDOWS) {
+		return getString(GENIE_PYTHON_DIRECTORY, DEFAULT_GENIE_PYTHON_DIRECTORY_WINDOWS);
+            } else {
+		return getString(GENIE_PYTHON_DIRECTORY, DEFAULT_GENIE_PYTHON_DIRECTORY_LINUX);
+            }
 	}
 	
 	/**
