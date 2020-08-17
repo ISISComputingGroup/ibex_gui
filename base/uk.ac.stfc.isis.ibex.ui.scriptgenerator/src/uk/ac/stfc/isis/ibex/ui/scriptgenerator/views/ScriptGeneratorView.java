@@ -24,6 +24,7 @@ import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
@@ -45,6 +46,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
@@ -84,7 +86,7 @@ public class ScriptGeneratorView {
     private static final String NO_SCRIPT_DEFINITIONS_MESSAGE = String.format("\u26A0 Warning: Could not load any script definitions from %s"
         + System.getProperty("line.separator")
         + "Have they been located in the correct place or is this not your preferred location?", 
-        preferences.scriptGeneratorScriptDefinitionFolders());
+        preferences.scriptGeneratorScriptDefinitionFolder());
 
     /**
      * The string to display if python is loading.
@@ -155,6 +157,7 @@ public class ScriptGeneratorView {
     scriptGeneratorViewModel.addPropertyChangeListener(PYTHON_READINESS_PROPERTY, evt -> {
         boolean ready = (boolean) evt.getNewValue();
         if (ready) {
+        doGitActions();
         scriptGeneratorViewModel.reloadScriptDefinitions();
         displayLoaded();
         } else {
@@ -173,6 +176,42 @@ public class ScriptGeneratorView {
         child.dispose();
     }
     }
+
+    /**
+	 * Create dialog boxes asking informing the user if there are changes to the git repository.
+	 */
+	private void doGitActions() {
+		DISPLAY.asyncExec(() -> {
+			if (!scriptGeneratorViewModel.remoteAvailable()) {
+				// Warn user git could not be found
+				MessageDialog.openInformation(DISPLAY.getActiveShell(),
+						"Git error",
+						"Could not update script definitions, because the remote git repository could not be reached. "
+						+ "You can still continue to use the existing script definitions, but they may be out of date.");
+			}
+			if (scriptGeneratorViewModel.updatesAvailable()) {
+				// Display prompt if new commits are available
+				int performMerge = MessageDialog.open(MessageDialog.CONFIRM,
+						DISPLAY.getActiveShell(),
+						"Error pulling repository",
+						scriptGeneratorViewModel.getPromptMessage(),
+						0,
+						"Keep local changes",
+						"Discard local changes and update");	
+				
+				if (performMerge == 1) {
+					scriptGeneratorViewModel.mergeOrigin();
+				}
+			}
+			Optional<String> gitErrors = scriptGeneratorViewModel.getGitLoadErrors();
+			if (gitErrors.isPresent()) {
+				MessageDialog.openInformation(DISPLAY.getActiveShell(), "Git errors occurred", gitErrors.get());
+			}
+		});
+
+		scriptGeneratorViewModel.reloadScriptDefinitions();
+		scriptGeneratorViewModel.setRepoPath();
+	}
 
     /**
      * Display loading.
