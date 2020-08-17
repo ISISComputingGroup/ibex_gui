@@ -199,4 +199,12 @@ public class ScriptDefinitionLoader extends ModelObject {
 	public boolean scriptDefinitionAvailable() {
 		return !getAvailableScriptDefinitions().isEmpty();
 	}
+
+	/**
+	 * Gets the path to the script definitions repository
+	 * @return The path to the script definitions repository.
+	 */
+	public String getRepoPath() {
+		return pythonInterface.getRepoPath();
+	}
 }

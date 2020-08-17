@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmi:id="_2jV5MGGNEeeR5ozUwT3tEw" elementId="uk.ac.stfc.isis.ibex.client.scriptgenerator.product.application">
+<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmi:id="_2jV5MGGNEeeR5ozUwT3tEw" elementId="uk.ac.stfc.isis.ibex.client.scriptgenerator.product.application">
   <children xsi:type="basic:TrimmedWindow" xmi:id="_X1-d4GGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.trimmedwindow." label="" iconURI="">
     <tags>shellMaximized</tags>
     <children xsi:type="advanced:PerspectiveStack" xmi:id="_uMW6EJGoEemDrc7_A6qM8g" elementId="uk.ac.stfc.isis.ibex.scriptgenerator.client.perspectivestack.0">
@@ -9,9 +9,7 @@
         </children>
       </children>
     </children>
-    <mainMenu xmi:id="_zGFwsJHKEemDrc7_A6qM8g" elementId="uk.ac.stfc.isis.ibex.scriptgenerator.client.menu.0">
-      <children xsi:type="menu:DirectMenuItem" xmi:id="_1YWHMJHKEemDrc7_A6qM8g" elementId="uk.ac.stfc.isis.ibex.scriptgenerator.client.directmenuitem.hello" label="hello"/>
-    </mainMenu>
+    <mainMenu xmi:id="_zGFwsJHKEemDrc7_A6qM8g" elementId="uk.ac.stfc.isis.ibex.scriptgenerator.client.menu.0"/>
   </children>
   <rootContext xmi:id="_no3QoIOVEeizju06Crxm-g" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="dialog and window" description="default binding context">
     <children xmi:id="_FCSpgIQqEeizju06Crxm-g" elementId="org.eclipse.ui.contexts.dialog" name="dialog"/>

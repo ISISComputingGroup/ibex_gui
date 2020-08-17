@@ -68,6 +68,9 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
      */
     protected int extraListOptions;
     
+    /**
+     * Component or config names as key and protection flag as value.
+     */
     protected Map<String, Boolean> compOrConfigNamesWithFlags;
 
 	/**
@@ -79,6 +82,7 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
      *            components.
      * @param includeCurrent Whether the current config/component should be
      *            included in the list of available items
+     * @param compOrConfigNamesWithFlags Component or config names as key and protection flag as value.
      */
 	public MultipleConfigsSelectionDialog(
 			Shell parentShell, 

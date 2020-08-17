@@ -31,33 +31,33 @@ import uk.ac.stfc.isis.ibex.targets.Target;
 public enum ComponentType {
 
     /** Unknown component type. */
-	UNKNOWN,
+    UNKNOWN,
     /** Jaws component type. */
-	JAWS,
-	/** CP2800 Helum compressor component type. */
-	CP2800,
+    JAWS,
+    /** CP2800 Helum compressor component type. */
+    CP2800,
     /** Chopper component type. */
-	CHOPPER,
+    CHOPPER,
     /** Fermi Chopper component type. */
-	FERMI_CHOPPER,
+    FERMI_CHOPPER,
     /** T0 Chopper component type. */
-	T0_CHOPPER,
+    T0_CHOPPER,
     /** Monitor component type. */
-	MONITOR,
+    MONITOR,
     /** Sample stack component type. */
-	SAMPLESTACK,
+    SAMPLESTACK,
     /** DAE component type. */
     DAE,
     /** Danfysik component type. */
     DANFYSIK,
     /** CAEN component type. */
-	CAEN,
+    CAEN,
     /** IPS component type. */
-	IPS,
+    IPS,
     /** CCD100 component type. */
     CCD100,
     /** Kepco component type. */
-	KEPCO,
+    KEPCO,
     /** Lambda Genesys component type. */
     TDK_LAMBDA_GENESYS,
     /** Beamstop component type. */
@@ -65,25 +65,25 @@ public enum ComponentType {
     /** Motion set points for one to three set points. */
     MOTION_SET_POINTS_FEW,
     /** Moving monitor component type. */
-	MOVINGMONITOR,
+    MOVINGMONITOR,
     /** Rotating bench component type. */
-	ROTATINGBENCH,
+    ROTATINGBENCH,
     /** Sample changer component type. */
-	SAMPLECHANGER,
+    SAMPLECHANGER,
     /** Linear sample changer component type. */
     LINEARSAMPLECHANGER,
     /** Moving beam stop component type. */
-	MOVINGBEAMSTOP,
+    MOVINGBEAMSTOP,
     /** Analyser component type. */
-	ANALYSER,
+    ANALYSER,
     /** Polariser component type. */
-	POLARISER,
+    POLARISER,
     /** Julabo component type. */
-	JULABO,	
+    JULABO,	
     /** Eurotherm component type. */
-	EUROTHERM,
+    EUROTHERM,
     /** Pinhole selector component type. */
-	PINHOLESELECTOR,
+    PINHOLESELECTOR,
     /** Goniometer component type. */
     GONIOMETER,
     /** Single stage component type. */
@@ -154,87 +154,87 @@ public enum ComponentType {
     MOXA_12XX,
     /** Furnace temperature controller. */
     FURNACE,
-	/** Generic Multimeter. */
+    /** Generic Multimeter. */
     MULTIMETER,
-	/** Generic Keithley Multimeter. **/
+    /** Generic Keithley Multimeter. **/
     KEITHLEY,
     /** Ocean Optics DH2000 shutter control. */
     DH2000,
     /** Generic Pump. */
     PUMP,
-	/** Water bath position valve. */
-	WATER_BATH_VALVE,
-	/** Reflectometry Front Panel. */
-	REFLECTOMETRY,
-	/** Generic sensor. **/
-	SENSOR,
-	/** Thin film fabrication device. **/
-	FILM_FABRICATION,
-	/** Coherent OBIS Laser Remote. */
-	OBIS_LASER_REMOTE,
-	/** Zero field. */
-	ZERO_FIELD,
-	/** LSI correlator. */
-	LSICORR,
+    /** Water bath position valve. */
+    WATER_BATH_VALVE,
+    /** Reflectometry Front Panel. */
+    REFLECTOMETRY,
+    /** Generic sensor. **/
+    SENSOR,
+    /** Thin film fabrication device. **/
+    FILM_FABRICATION,
+    /** Coherent OBIS Laser Remote. */
+    OBIS_LASER_REMOTE,
+    /** Zero field. */
+    ZERO_FIELD,
+    /** LSI correlator. */
+    LSICORR,
     /** Density meter (e.g. DMA4500M) */
     DENSITY_METER,
-    /** waveguide and aperture **/
+    /** Waveguide and aperture. **/
     WAVEGUIDE_APERTURE,
-	/**Spin flipper.*/
-	SPIN_FLIPPER;
-	
-	private Target target;
+    /**Spin flipper.*/
+    SPIN_FLIPPER;
+
+    private Target target;
 
     /**
      * Instantiates a new component type.
      */
-	ComponentType() {
-	}
-	
+    ComponentType() {
+    }
+
     /**
      * Instantiates a new component type based on a target.
      *
      * @param target the target
      */
-	ComponentType(Target target) {
-		this.target = target;
-	}
-	
+    ComponentType(Target target) {
+	this.target = target;
+    }
+
     /**
      * Gets the target of this component type .
      *
      * @return the target
      */
-	public Target target() {
-		return target;
-	}
+    public Target target() {
+	return target;
+    }
 
     /**
      * @return a string list of the enum entries
      */
     public static List<String> componentTypeList() {
-        ComponentType[] types = values();
-        List<String> list = new ArrayList<>();
+	ComponentType[] types = values();
+	List<String> list = new ArrayList<>();
 
-        for (int i = 0; i < types.length; i++) {
-            list.add(types[i].name());
-        }
+	for (int i = 0; i < types.length; i++) {
+	    list.add(types[i].name());
+	}
 
-        return list;
+	return list;
     }
 
     /**
      * @return an alphabetised list of the enum entries
      */
     public static List<String> componentTypeAlphaList() {
-        List<String> list = componentTypeList();
-        
-        // remove unknown
-        list.remove(ComponentType.UNKNOWN.toString());
-        Collections.sort(list);
-        
-        // add unknown back at the beginning
-        list.add(0, ComponentType.UNKNOWN.toString());
-        return list;
+	List<String> list = componentTypeList();
+
+	// remove unknown
+	list.remove(ComponentType.UNKNOWN.toString());
+	Collections.sort(list);
+
+	// add unknown back at the beginning
+	list.add(0, ComponentType.UNKNOWN.toString());
+	return list;
     }
 }
