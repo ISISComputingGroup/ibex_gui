@@ -233,7 +233,7 @@ if __name__ == "__main__":
     # for the opi_info.xml check
     print("Testing '{}'".format(os.path.join(root_dir, "opi_info.xml")))
     suite = unittest.TestSuite()
-    suite.addTests([TestOpiInfo(test) for test in loader.getTestCaseNames(TestOpiInfo)])
+    suite.addTests(loader.loadTestsFromTestCase(TestOpiInfo))
     runner = XMLTestRunner(output=os.path.join(logs_dir, "TestOpiInfo"), stream=sys.stdout)
     return_values.append(runner.run(suite).wasSuccessful())
 
