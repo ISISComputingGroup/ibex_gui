@@ -112,7 +112,7 @@
       <width>201</width>
       <wuid>-610e831b:171971644fa:-62fd</wuid>
       <x>180</x>
-      <y>-2</y>
+      <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -154,7 +154,7 @@
       <width>441</width>
       <wuid>2150758c:16990a9ebac:-7450</wuid>
       <x>0</x>
-      <y>15</y>
+      <y>17</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -196,7 +196,7 @@
       <width>441</width>
       <wuid>2150758c:16990a9ebac:-7441</wuid>
       <x>0</x>
-      <y>40</y>
+      <y>42</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -220,7 +220,7 @@
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <PARAM_NAME>Height</PARAM_NAME>
-        <PARAM_PV>SAMPHEIGHT</PARAM_PV>
+        <PARAM_PV>SAMPOFFSET</PARAM_PV>
       </macros>
       <name>Linking Container</name>
       <opi_file>../param_move.opi</opi_file>
@@ -238,7 +238,7 @@
       <width>441</width>
       <wuid>2150758c:16990a9ebac:-742b</wuid>
       <x>0</x>
-      <y>65</y>
+      <y>67</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -261,8 +261,8 @@
       <height>25</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <PARAM_NAME>Height2</PARAM_NAME>
-        <PARAM_PV>SAMPOFFSET</PARAM_PV>
+        <PARAM_NAME>HEIGHT2_OF</PARAM_NAME>
+        <PARAM_PV>HEIGHT2_OF</PARAM_PV>
       </macros>
       <name>Linking Container</name>
       <opi_file>../param_move.opi</opi_file>
@@ -280,7 +280,7 @@
       <width>441</width>
       <wuid>2150758c:16990a9ebac:-73e7</wuid>
       <x>0</x>
-      <y>90</y>
+      <y>92</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
