@@ -7,6 +7,8 @@ Group:      Applications/Engineering
 License:    EPL-1.0
 URL:        https://github.com/ISISComputingGroup/
 Prefix:     /usr/local
+# Turn off automatic rpm dependency generation
+Autoreq:    0
 
 ## stops all post install ops
 #%global __os_install_post %{nil}
