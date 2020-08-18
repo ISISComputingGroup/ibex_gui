@@ -7,7 +7,7 @@ DEFAULT_ROOT_DIR = os.path.join(os.path.dirname(__file__), "resources")
 
 
 class TestOpiInfo(unittest.TestCase):
-    def check_path_valid(self, path_str):
+    def _check_path_valid(self, path_str):
         full_path = os.path.join(DEFAULT_ROOT_DIR, path_str)
         # check path exists
         if not os.path.exists(full_path):
