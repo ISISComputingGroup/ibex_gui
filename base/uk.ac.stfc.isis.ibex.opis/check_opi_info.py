@@ -34,9 +34,9 @@ class TestOpiInfo(unittest.TestCase):
 
         tree = ET.parse(file_path)
         root = tree.getroot()
-        errors = ['\r']  # start list with carriage return so multiple errors are listed nicely in the console
+        errors = []
         for entry in root.iter('path'):
             errors.extend(self.check_path_valid(entry.text))
 
-        if len(errors) and errors != ['\r']:
-            self.fail("\n".join(errors))
+        if errors:
+            self.fail("\n" + "\n".join(errors))
