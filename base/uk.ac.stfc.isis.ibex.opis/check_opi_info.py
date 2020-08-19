@@ -42,8 +42,9 @@ class TestOpiInfo(unittest.TestCase):
         root = tree.getroot()
         errors = []
         for entry in root.iter('path'):
-            if self._check_path_valid(entry.text):  # if an error message is returned
-                errors.extend([self._check_path_valid(entry.text)])
+            err_msg = self._check_path_valid(entry.text)
+            if err_msg:  # if an error message is returned
+                errors.extend([err_msg])
 
         if errors:
             self.fail("\n" + "\n".join(errors))
