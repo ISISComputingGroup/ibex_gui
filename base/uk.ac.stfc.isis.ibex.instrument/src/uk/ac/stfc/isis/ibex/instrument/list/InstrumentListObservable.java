@@ -23,6 +23,9 @@
 package uk.ac.stfc.isis.ibex.instrument.list;
 
 import java.util.Collection;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 import org.apache.logging.log4j.Logger;
 
@@ -47,8 +50,7 @@ public class InstrumentListObservable extends ForwardingObservable<Collection<In
      * it gets GCed, potentially before the list has been read and we'll never
      * get the values.
      */
-    private static final ClosableObservable<String> PV_READER =
-            new CompressedCharWaveformChannel().reader("CS:INSTLIST");
+    private static ClosableObservable<String> PV_READER = null;
 
     /**
      * Logs messages regarding the instrument list.
@@ -79,7 +81,19 @@ public class InstrumentListObservable extends ForwardingObservable<Collection<In
     /**
      * @return A forwarding observable of the instrument list PV reader.
      */
-    private static ForwardingObservable<String> readCompressed() {
+    private static synchronized ForwardingObservable<String> readCompressed() {
+        if (PV_READER == null) {
+            String instPV;
+            // on IDAaaS linux look for local definition of correct INSTLIST to use
+            try(BufferedReader instReader = new BufferedReader(new FileReader("/usr/local/ibex/etc/instpv.txt"))) {
+                instPV = instReader.readLine();
+            }
+            catch(IOException e)
+            {
+                instPV = "CS:INSTLIST";
+            }
+            PV_READER = new CompressedCharWaveformChannel().reader(instPV);
+        }
         return new ForwardingObservable<String>(PV_READER);
     }
 
