@@ -53,7 +53,7 @@ echo CS:INSTLIST:NONE>%{buildroot}/usr/local/ibex/etc/instpv.txt
 rm -fr "$RPM_BUILD_ROOT"
 
 %files
-/usr/local/ibex/
+/usr/local/ibex/client/
 /usr/local/bin/
 %config(noreplace) /usr/local/ibex/etc/instpv.txt
 
