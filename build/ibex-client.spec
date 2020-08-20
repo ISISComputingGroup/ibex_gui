@@ -47,7 +47,7 @@ mkdir -p %{buildroot}/usr/local/bin/
 ( cd /isis/data/jenkins/workspace/ibex_gui_linux_pipeline/base/uk.ac.stfc.isis.ibex.e4.client.product/target/products/ibex.product/linux/gtk/x86_64; cp -r . %{buildroot}/usr/local/ibex/client/ )
 ( cd %{buildroot}/usr/local/bin; ln -s ../ibex/client/ibex-client . )
 
-echo CS:INSTLIST>%{buildroot}/usr/local/ibex/etc/instpv.txt
+echo CS:INSTLIST:NONE>%{buildroot}/usr/local/ibex/etc/instpv.txt
 
 %clean
 rm -fr "$RPM_BUILD_ROOT"
