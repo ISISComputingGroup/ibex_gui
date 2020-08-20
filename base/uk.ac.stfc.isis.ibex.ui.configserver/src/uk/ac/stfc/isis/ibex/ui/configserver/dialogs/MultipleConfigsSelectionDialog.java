@@ -124,20 +124,27 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
         } else {
             names = ConfigInfo.namesWithoutCurrent(available).toArray(new String[0]);
         }
+         
 		Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
 		
 		setItems(names, compOrConfigNamesWithFlags);
 		
-		Group group = new Group(container, SWT.SHADOW_IN);
-		group.setLayout(new RowLayout(SWT.HORIZONTAL));
-		        
-	    Label messageImageLabel = new Label(group, SWT.NONE);
-            messageImageLabel.setImage(JFaceResources.
-                getImage(DLG_IMG_MESSAGE_WARNING)); 
-
-        Label messageLabel = new Label(group, SWT.NONE);
-        messageLabel.setFont(JFaceResources.getDialogFont());
-        messageLabel.setText("Represents Protected " + getTypeString());
+		// show protected configuration message only if relevant (the list has protected configurations)
+		Boolean hasProtectedConfigs = ConfigInfo.hasProtectedConfigs(available);
+		if (hasProtectedConfigs)
+		{
+			Group group = new Group(container, SWT.SHADOW_IN);
+			group.setLayout(new RowLayout(SWT.HORIZONTAL));
+			        
+			
+		    Label messageImageLabel = new Label(group, SWT.NONE);
+	            messageImageLabel.setImage(JFaceResources.
+	                getImage(DLG_IMG_MESSAGE_WARNING)); 
+	
+	        Label messageLabel = new Label(group, SWT.NONE);
+	        messageLabel.setFont(JFaceResources.getDialogFont());
+	        messageLabel.setText("Represents Protected " + getTypeString());
+		}
 			
 	}
 	

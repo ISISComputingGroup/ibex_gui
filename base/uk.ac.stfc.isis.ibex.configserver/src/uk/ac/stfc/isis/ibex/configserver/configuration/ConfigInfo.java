@@ -135,7 +135,7 @@ public class ConfigInfo {
     /**
      * returns config/Component names and its protection status.
      * @param infos
-     * @return collection of Pair i.e config/comp name and its proteciton flag
+     * @return collection of Pair i.e config/comp name and its protection flag
      */
     public static Map<String, Boolean> mapNamesWithTheirProtectionFlag(Collection<ConfigInfo> infos) {
         if (infos == null) {
@@ -147,6 +147,36 @@ public class ConfigInfo {
         }
         
         return namesWithProtectionFlag;
+    }
+    
+    /**
+     * Returns Configuration/Component names and their protection status, excluding the current configuration
+     * @param infos
+     * @return collection of pair config/comp Name and Protection Flag (e.g. {<name>=<prot. status>, ...}), excluding the current configuration
+     */
+    public static Map<String, Boolean> mapNamesWithTheirProtectionFlagWithoutCurrent(Collection<ConfigInfo> infos) {
+    	Map<String, Boolean> filteredResults = mapNamesWithTheirProtectionFlag(infos);
+    	filteredResults.remove(Configurations.getInstance().display().displayCurrentConfig().getValue().name());
+    	return filteredResults;
+    }
+    
+    /**
+     * Checks if there is a protected configuration/comp within the given ConfigInfos objects
+     * @param infos
+     * @return boolean: True if a protected configuration exists within given infos, False if not
+     */
+    public static Boolean hasProtectedConfigs(Collection<ConfigInfo> infos) {
+        if (infos == null) {
+            return false;
+        }
+        
+        for (ConfigInfo config: infos) {
+        	if (config.isProtected == true) {
+        		return true;
+        	}
+        }
+    	
+    	return false;
     }
 
     /**
