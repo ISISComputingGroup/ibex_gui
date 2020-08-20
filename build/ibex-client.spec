@@ -42,9 +42,12 @@ on an ISIS instrument and control/monitor data acquisition.
 %install
 rm -fr "$RPM_BUILD_ROOT"
 mkdir -p %{buildroot}/usr/local/ibex/client/
+mkdir -p %{buildroot}/usr/local/ibex/etc/
 mkdir -p %{buildroot}/usr/local/bin/
 ( cd /isis/data/jenkins/workspace/ibex_gui_linux_pipeline/base/uk.ac.stfc.isis.ibex.e4.client.product/target/products/ibex.product/linux/gtk/x86_64; cp -r . %{buildroot}/usr/local/ibex/client/ )
 ( cd %{buildroot}/usr/local/bin; ln -s ../ibex/client/ibex-client . )
+
+echo CS:INSTLIST>%{buildroot}/usr/local/ibex/etc/instpv.txt
 
 %clean
 rm -fr "$RPM_BUILD_ROOT"
@@ -52,7 +55,7 @@ rm -fr "$RPM_BUILD_ROOT"
 %files
 /usr/local/ibex/
 /usr/local/bin/
-%doc
+%config(noreplace) /usr/local/ibex/etc/instpv.txt
 
 %changelog
 * Wed Jul 29 2020 ISISExperimentControls  7.1-1.el7
