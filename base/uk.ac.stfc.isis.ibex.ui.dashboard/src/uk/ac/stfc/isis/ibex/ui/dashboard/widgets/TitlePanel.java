@@ -103,14 +103,14 @@ public class TitlePanel extends Composite {
         		BeanProperties.<Object, String>value("value").observe(model.title()), 
         		null, literalAmpersands);
 		
-        UsersConverter deJsoner = new UsersConverter();
-		bindingContext.bindValue(
-				WidgetProperties.text().observe(users), 
-				BeanProperties.<Object, String>value("value").observe(model.users()), 
-				null, new UpdateValueStrategy<String, String>().setConverter(deJsoner));	
-		bindingContext.bindValue(
-				WidgetProperties.tooltipText().observe(users), 
-				BeanProperties.<Object, String>value("value").observe(model.users()), 
-				null, new UpdateValueStrategy<String, String>().setConverter(deJsoner));
+//        UsersConverter deJsoner = new UsersConverter();
+//		bindingContext.bindValue(
+//				WidgetProperties.text().observe(users), 
+//				BeanProperties.<Object, String>value("value").observe(model.users()), 
+//				null, new UpdateValueStrategy<String, String>().setConverter(deJsoner));	
+//		bindingContext.bindValue(
+//				WidgetProperties.tooltipText().observe(users), 
+//				BeanProperties.<Object, String>value("value").observe(model.users()), 
+//				null, new UpdateValueStrategy<String, String>().setConverter(deJsoner));
 	}
 }
