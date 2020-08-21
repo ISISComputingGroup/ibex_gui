@@ -95,108 +95,108 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
      * @param parent The root composite of the panel.
      */
     private void makeExperimentDetailsPanel(Composite parent) {
-        lblRbNumber = new Label(parent, SWT.NONE);
-		lblRbNumber.setText("RB Number:");
+        //lblRbNumber = new Label(parent, SWT.NONE);
+		//lblRbNumber.setText("RB Number:");
 		
-        rbNumberTextBox = new WritableObservingTextBox(parent, SWT.NONE, viewModel.rbNumber);
-        rbNumberTextBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-        rbNumberTextBox.setToolTip(RB_NUM_INPUT_TIP_MESSAGE);
+        //rbNumberTextBox = new WritableObservingTextBox(parent, SWT.NONE, viewModel.rbNumber);
+        //rbNumberTextBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+        //rbNumberTextBox.setToolTip(RB_NUM_INPUT_TIP_MESSAGE);
         
-        btnRBLookup = new Button(parent, SWT.NONE);
-		btnRBLookup.setText("Search");
+        //btnRBLookup = new Button(parent, SWT.NONE);
+		//btnRBLookup.setText("Search");
         
-		btnRBLookup.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				RBLookupViewModel lookupViewModel = new RBLookupViewModel();
-				RBLookupDialog lookupDialog = new RBLookupDialog(shell, lookupViewModel);
-				if (lookupDialog.open() == Window.OK) {
-                    viewModel.rbNumber.uncheckedSetText(lookupViewModel.getSelectedUser().getAssociatedExperimentID());
-				}
-			}
-		});
+		//btnRBLookup.addSelectionListener(new SelectionAdapter() {
+		//	@Override
+		//	public void widgetSelected(SelectionEvent e) {
+		//		RBLookupViewModel lookupViewModel = new RBLookupViewModel();
+		//		RBLookupDialog lookupDialog = new RBLookupDialog(shell, lookupViewModel);
+		//		if (lookupDialog.open() == Window.OK) {
+         //           viewModel.rbNumber.uncheckedSetText(lookupViewModel.getSelectedUser().getAssociatedExperimentID());
+		//		}
+		//	}
+		//});
 		
-        lblExperimentTeam = new Label(parent, SWT.NONE);
-		lblExperimentTeam.setText("Experiment Team:");
+        //lblExperimentTeam = new Label(parent, SWT.NONE);
+		//lblExperimentTeam.setText("Experiment Team:");
 		
-		manualUserEntryWarning = new Label(parent, SWT.NONE);
-        manualUserEntryWarning.setText(MANUAL_USER_ENTRY_MESSAGE);
-        manualUserEntryWarning.setForeground(getDisplay().getSystemColor(SWT.COLOR_RED));
-        manualUserEntryWarning.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1));
-        manualUserEntryWarning.setVisible(false);
+		//manualUserEntryWarning = new Label(parent, SWT.NONE);
+        //manualUserEntryWarning.setText(MANUAL_USER_ENTRY_MESSAGE);
+        //manualUserEntryWarning.setForeground(getDisplay().getSystemColor(SWT.COLOR_RED));
+        //manualUserEntryWarning.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1));
+        //manualUserEntryWarning.setVisible(false);
 		
-        userDetails = new EditableUserDetailsTable(parent, SWT.NONE, SWT.MULTI | SWT.FULL_SELECTION | SWT.BORDER);
-        userDetails.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+        //userDetails = new EditableUserDetailsTable(parent, SWT.NONE, SWT.MULTI | SWT.FULL_SELECTION | SWT.BORDER);
+        //userDetails.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		
-		updateUserDetails();
-		viewModel.model.addPropertyChangeListener(propertyChangeEvent -> {
-		    updateUserDetails();					
-		});
+		//updateUserDetails();
+		//viewModel.model.addPropertyChangeListener(propertyChangeEvent -> {
+		//    updateUserDetails();					
+		//});
 		
-        experimentTeamButtons = new Composite(parent, SWT.NONE);
-		experimentTeamButtons.setLayout(new GridLayout(1, false));
+        //experimentTeamButtons = new Composite(parent, SWT.NONE);
+		//experimentTeamButtons.setLayout(new GridLayout(1, false));
 		
-		GridData gdDetailsButtons = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
-		gdDetailsButtons.widthHint = 50;
+		//GridData gdDetailsButtons = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
+		//gdDetailsButtons.widthHint = 50;
 		
-		btnAddUserDetails = new Button(experimentTeamButtons, SWT.NONE);
-		btnAddUserDetails.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				viewModel.model.addDefaultUser();
-				viewModel.model.sendUserDetails();
-			}
-		});
-		btnAddUserDetails.setText("Add");
-		btnAddUserDetails.setLayoutData(gdDetailsButtons);
+		//btnAddUserDetails = new Button(experimentTeamButtons, SWT.NONE);
+		//btnAddUserDetails.addSelectionListener(new SelectionAdapter() {
+		//	@Override
+		//	public void widgetSelected(SelectionEvent e) {
+		//		viewModel.model.addDefaultUser();
+		//		viewModel.model.sendUserDetails();
+		//	}
+		//});
+		//btnAddUserDetails.setText("Add");
+		//btnAddUserDetails.setLayoutData(gdDetailsButtons);
 
-		btnRemoveUserDetails = new Button(experimentTeamButtons, SWT.NONE);
-		btnRemoveUserDetails.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				viewModel.model.removeUsers(userDetails.selectedRows());
-                viewModel.model.sendUserDetails();
-			}
-		});		
+		//btnRemoveUserDetails = new Button(experimentTeamButtons, SWT.NONE);
+		//btnRemoveUserDetails.addSelectionListener(new SelectionAdapter() {
+		//	@Override
+		//	public void widgetSelected(SelectionEvent e) {
+		//		viewModel.model.removeUsers(userDetails.selectedRows());
+         //       viewModel.model.sendUserDetails();
+		//	}
+		//});		
+		//
+		//btnRemoveUserDetails.setText("Remove");
+		//btnRemoveUserDetails.setLayoutData(gdDetailsButtons);		
+		//
+		//btnClearUserDetails = new Button(experimentTeamButtons, SWT.NONE);
+		//btnClearUserDetails.addSelectionListener(new SelectionAdapter() {
+		//	@Override
+		//	public void widgetSelected(SelectionEvent e) {
+		//		viewModel.model.clearUserDetails();
+       //         viewModel.model.sendUserDetails();
+		//	}
+		//});
+		//btnClearUserDetails.setText("Clear");
+		//btnClearUserDetails.setLayoutData(gdDetailsButtons);		
+		//
+		//btnSetRBNumber = new Button(experimentTeamButtons, SWT.NONE);
+		//btnSetRBNumber.addSelectionListener(new SelectionAdapter() {
+		//	@Override
+		//	public void widgetSelected(SelectionEvent e) {
+        //        viewModel.model.sendUserDetails();
+		//	}
+		////});
 		
-		btnRemoveUserDetails.setText("Remove");
-		btnRemoveUserDetails.setLayoutData(gdDetailsButtons);		
-		
-		btnClearUserDetails = new Button(experimentTeamButtons, SWT.NONE);
-		btnClearUserDetails.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				viewModel.model.clearUserDetails();
-                viewModel.model.sendUserDetails();
-			}
-		});
-		btnClearUserDetails.setText("Clear");
-		btnClearUserDetails.setLayoutData(gdDetailsButtons);		
-		
-		btnSetRBNumber = new Button(experimentTeamButtons, SWT.NONE);
-		btnSetRBNumber.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-                viewModel.model.sendUserDetails();
-			}
-		});
-		
-        btnSetRBNumber.setText("Set");
-		btnSetRBNumber.setLayoutData(gdDetailsButtons);
+       // btnSetRBNumber.setText("Set");
+		//btnSetRBNumber.setLayoutData(gdDetailsButtons);
     }
 	
 	private void bind() {
-		DataBindingContext bindingContext = new DataBindingContext();
-		bindingContext.bindValue(WidgetProperties.enabled().observe(btnRBLookup), 
-		        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
-		bindingContext.bindValue(WidgetProperties.enabled().observe(btnAddUserDetails), 
-		        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
-		bindingContext.bindValue(WidgetProperties.enabled().observe(btnClearUserDetails), 
-		        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
-		bindingContext.bindValue(WidgetProperties.enabled().observe(btnSetRBNumber), 
-		        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
-	    bindingContext.bindValue(WidgetProperties.visible().observe(manualUserEntryWarning), 
-	            BeanProperties.value("userDetailsWarningVisible").observe(viewModel));
+		//DataBindingContext bindingContext = new DataBindingContext();
+		//bindingContext.bindValue(WidgetProperties.enabled().observe(btnRBLookup), 
+		//        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
+		//bindingContext.bindValue(WidgetProperties.enabled().observe(btnAddUserDetails), 
+		//        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
+		//bindingContext.bindValue(WidgetProperties.enabled().observe(btnClearUserDetails), 
+		//        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
+		//bindingContext.bindValue(WidgetProperties.enabled().observe(btnSetRBNumber), 
+		//        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
+	    //bindingContext.bindValue(WidgetProperties.visible().observe(manualUserEntryWarning), 
+	    //        BeanProperties.value("userDetailsWarningVisible").observe(viewModel));
 	}
 	
 	/**Gets information from model and updates the user details GUI table. Also
