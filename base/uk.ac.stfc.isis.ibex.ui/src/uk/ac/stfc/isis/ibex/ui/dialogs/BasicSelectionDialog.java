@@ -191,4 +191,38 @@ public abstract class BasicSelectionDialog extends Dialog {
             item.setText(name);
         }
     }
+    
+    /**
+    * Sets a list of configuration names and their description as items in a
+    * selection table with two columns.
+    * 
+    * @param names
+    *            The names of the recent configurations.
+    * @param descriptions
+    *            The descriptions for the recent configurations.            
+    * @param configNamesWithFlags
+    *             Names of the configuration and its protection flag
+    */
+   protected void setMultipleColumnItems(String[] names, String[] descriptions, Map<String, Boolean> configNamesWithFlags) {
+       this.items.clearAll();
+       int i = 0;
+       String[] columns = new String[2];
+       if (descriptions.length == 0) {
+           setItems(names, configNamesWithFlags);
+       } else {
+           for (String name : names) {
+               TableItem item = new TableItem(this.items, SWT.NONE);
+               columns[0] = name;
+               columns[1] = descriptions[i];
+               item.setText(columns);
+               if (configNamesWithFlags.get(name)) {
+                   item.setImage(JFaceResources.
+                           getImage(DLG_IMG_MESSAGE_WARNING));   
+               }
+               
+               i++;
+           }
+       }
+       i = 0;
+   }
 }

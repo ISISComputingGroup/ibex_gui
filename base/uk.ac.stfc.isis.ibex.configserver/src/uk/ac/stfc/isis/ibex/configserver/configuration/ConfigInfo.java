@@ -133,6 +133,40 @@ public class ConfigInfo {
     }
     
     /**
+     * Returns just the descriptions of all config info objects passed in excluding
+     * that of the current config.
+     * 
+     * @param infos
+     *            The list of ConfigInfos
+     * @return The list of config descriptions without that of the current config
+     */
+    public static Collection<String> descriptionsWithoutCurrent(Collection<ConfigInfo> infos) {
+        Collection<String> filteredDescriptions = descriptions(infos);
+        filteredDescriptions.remove(Configurations.getInstance().display().displayCurrentConfig().getValue().description());
+        return filteredDescriptions;
+    }
+    
+    /**
+     * Reduces a list of ConfigInfo objects to a list of their descriptions only.
+     * 
+     * @param infos
+     *            The list of ConfigInfos
+     * @return The list of config descriptions
+     */
+    public static Collection<String> descriptions(Collection<ConfigInfo> infos) {
+        if (infos == null) {
+            return Collections.emptyList();
+        }
+
+        return Lists.newArrayList(Iterables.transform(infos, new Function<ConfigInfo, String>() {
+            @Override
+            public String apply(ConfigInfo info) {
+                return info.description();
+            }
+        }));
+    }
+    
+    /**
      * returns config/Component names and its protection status.
      * @param infos
      * @return collection of Pair i.e config/comp name and its proteciton flag

@@ -117,16 +117,20 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
 		Label lblSelect = new Label(container, SWT.NONE);
         lblSelect.setText("Select " + getTypeString() + ":");
         items = createTable(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions);
+        
 
         String[] names;
+        String[] descriptions;
         if (includeCurrent) {
             names = ConfigInfo.names(available).toArray(new String[0]);
+            descriptions = ConfigInfo.descriptions(available).toArray(new String[0]);
         } else {
             names = ConfigInfo.namesWithoutCurrent(available).toArray(new String[0]);
+            descriptions = ConfigInfo.descriptionsWithoutCurrent(available).toArray(new String[0]);
         }
 		Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
 		
-		setItems(names, compOrConfigNamesWithFlags);
+		setMultipleColumnItems(names, descriptions, compOrConfigNamesWithFlags);
 		
 		Group group = new Group(container, SWT.SHADOW_IN);
 		group.setLayout(new RowLayout(SWT.HORIZONTAL));

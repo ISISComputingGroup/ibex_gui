@@ -22,11 +22,15 @@ package uk.ac.stfc.isis.ibex.ui.dialogs;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 
 /**
  * Generic selection dialog class.
@@ -42,9 +46,9 @@ public abstract class SelectionDialog extends BasicSelectionDialog {
     protected SelectionDialog(Shell parentShell, String title) {
         super(parentShell, title);
     }
-
+    
     /**
-     * Creates and returns a table pre-configured with single column layout.
+     * Creates and returns a table pre-configured with a two columned layout.
      * 
      * @param parent
      *            The parent composite
@@ -54,17 +58,39 @@ public abstract class SelectionDialog extends BasicSelectionDialog {
      */
     @Override
     protected Table createTable(Composite parent, int style) {
-        Composite tableComposite = new Composite(parent, SWT.NONE);
-        tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        Table table = new Table(tableComposite, style);
-        table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+	    Composite tableComposite = new Composite(parent, SWT.NONE);
+	    tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+	    Table table = new Table(tableComposite, style);
+	    table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-        TableColumn singleColumn = new TableColumn(table, SWT.NONE);
-        TableColumnLayout tableColumnLayout = new TableColumnLayout();
-        tableColumnLayout.setColumnData(singleColumn, new ColumnWeightData(1));
+	    TableColumnLayout tableColumnLayout = new TableColumnLayout();
+
+	    TableColumn firstColumn = new TableColumn(table, SWT.NONE);
+        tableColumnLayout.setColumnData(firstColumn, new ColumnWeightData(1));
+        firstColumn.setText("Name");
+        firstColumn.setResizable(true);
+        firstColumn.setMoveable(true);
+        firstColumn.setToolTipText("Name of the configuration");
+
+        TableColumn secondColumn = new TableColumn(table, SWT.NONE);
+        tableColumnLayout.setColumnData(secondColumn, new ColumnWeightData(1));
+        secondColumn.setText("Description");
+        secondColumn.setResizable(true);
+        secondColumn.setMoveable(true);
+        secondColumn.setToolTipText("Description of the configuration");
+       
         tableComposite.setLayout(tableColumnLayout);
 
-        return table;
-    }
+        table.setHeaderVisible(true);
+        Display display = table.getDisplay();
+        table.setHeaderBackground(display.getSystemColor(SWT.COLOR_TITLE_BACKGROUND_GRADIENT));
 
+        return table;
+
+    }
+    
+    @Override
+   protected boolean isResizable() {
+    	return true;
+   }
 }
