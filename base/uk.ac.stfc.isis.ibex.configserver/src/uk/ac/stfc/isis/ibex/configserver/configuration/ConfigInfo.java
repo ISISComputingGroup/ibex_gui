@@ -160,13 +160,15 @@ public class ConfigInfo {
             return false;
         }
         
+        Boolean returnVal = false;
         for (ConfigInfo config: infos) {
         	if (config.isProtected == true) {
-        		return true;
+        		returnVal = true;
+        		break;
         	}
         }
     	
-    	return false;
+    	return returnVal;
     }
 
     /**
