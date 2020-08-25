@@ -81,6 +81,8 @@ public class JournalViewerView {
 
     private Button btnRefresh;
     private Spinner spinnerPageNumber;
+    private Button btnPrevPage;
+    private Button btnNextPage;
     private SearchInput searchInput;
     private Button btnSearch;
     private ProgressBar progressBar;
@@ -129,11 +131,20 @@ public class JournalViewerView {
         basicControls.setLayout(rlBasicControls);
 
         Label lblPage = new Label(basicControls, SWT.NONE);
-        lblPage.setText("Page number: ");
-
+        lblPage.setText("Page: ");
+        
+        btnPrevPage = new Button(basicControls, SWT.NONE);
+        btnPrevPage.setText("< Prev");
+        btnPrevPage.setToolTipText("Previous page");
+        
         spinnerPageNumber = new Spinner(basicControls, SWT.BORDER);
         spinnerPageNumber.setMinimum(1);
+        spinnerPageNumber.setToolTipText("Page number");
 
+        btnNextPage = new Button(basicControls, SWT.NONE);
+        btnNextPage.setText("Next >");
+        btnNextPage.setToolTipText("Next page");
+        
         btnRefresh = new Button(basicControls, SWT.NONE);
         btnRefresh.setText("Refresh data");
         
@@ -286,7 +297,7 @@ public class JournalViewerView {
                 BeanProperties.value("pageNumberMax").observe(model));
         bindingContext.bindValue(WidgetProperties.text().observe(error),
                 BeanProperties.value("errorMessage").observe(model));
-        
+
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnSearch),
                 BeanProperties.value("enableOrDisableButton").observe(model));
 
@@ -294,15 +305,31 @@ public class JournalViewerView {
             setProgressIndicatorsVisible(true);
             model.setPageNumber(spinnerPageNumber.getSelection()).thenAccept(ignored -> setProgressIndicatorsVisible(false));
         });
-        
+
+        btnPrevPage.addListener(SWT.Selection, e -> {
+        	int prevPageNumber = spinnerPageNumber.getSelection() - 1;
+        	if(prevPageNumber >= spinnerPageNumber.getMinimum()) {
+	        	spinnerPageNumber.setSelection(prevPageNumber);
+	        	spinnerPageNumber.notifyListeners(SWT.Selection, e); 	
+        	}
+        });
+
+        btnNextPage.addListener(SWT.Selection, e -> {
+        	int nextPageNumber = spinnerPageNumber.getSelection() + 1;
+        	if(nextPageNumber <= spinnerPageNumber.getMaximum()) {
+	        	spinnerPageNumber.setSelection(nextPageNumber);
+	        	spinnerPageNumber.notifyListeners(SWT.Selection, e); 	
+        	}
+        });
+
         btnRefresh.addListener(SWT.Selection, e -> {
             resetPageNumber();
             setProgressIndicatorsVisible(true);
             model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
         });
-        
+
         btnSearch.addListener(SWT.Selection, e -> search());
-        
+
         btnClear.addListener(SWT.Selection, e -> {
             resetPageNumber();
             searchInput.clearInput();
