@@ -236,6 +236,20 @@ public class JournalViewModel extends ModelObject {
 	public int getPageNumberMax() {
 		return model.getPageMax();
 	}
+	
+	/**
+	 * @return The current number of result entries.
+	 */
+	public int getResultsNumber() {
+		return model.getResultsNumber();
+	}
+	
+	/**
+	 * @return The number of total results and currently displayed entries.
+	 */
+	public String getResultsInfo() {
+		return model.getResultsInfo();
+	}
 
 	/**
 	 * @return the searchableFields

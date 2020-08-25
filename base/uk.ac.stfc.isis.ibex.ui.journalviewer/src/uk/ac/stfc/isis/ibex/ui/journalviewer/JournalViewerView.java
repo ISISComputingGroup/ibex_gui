@@ -86,6 +86,8 @@ public class JournalViewerView {
     private SearchInput searchInput;
     private Button btnSearch;
     private ProgressBar progressBar;
+    
+    private Label lblResults;
 
     private DataboundTable<JournalRow> table;
 
@@ -130,20 +132,21 @@ public class JournalViewerView {
         rlBasicControls.center = true;
         basicControls.setLayout(rlBasicControls);
 
-        Label lblPage = new Label(basicControls, SWT.NONE);
-        lblPage.setText("Page: ");
+        lblResults = new Label(basicControls, SWT.WRAP | SWT.LEFT);
+        lblResults.setText(model.getResultsInfo());
         
         btnPrevPage = new Button(basicControls, SWT.NONE);
-        btnPrevPage.setText("< Prev");
-        btnPrevPage.setToolTipText("Previous page");
+        btnPrevPage.setText(" < Newer ");
+        btnPrevPage.setToolTipText("Go to newer entries.");
         
         spinnerPageNumber = new Spinner(basicControls, SWT.BORDER);
         spinnerPageNumber.setMinimum(1);
-        spinnerPageNumber.setToolTipText("Page number");
+        spinnerPageNumber.setMaximum(1);
+        spinnerPageNumber.setToolTipText("Page number (1 is newest).");
 
         btnNextPage = new Button(basicControls, SWT.NONE);
-        btnNextPage.setText("Next >");
-        btnNextPage.setToolTipText("Next page");
+        btnNextPage.setText(" Older > ");
+        btnNextPage.setToolTipText("Go to older entries.");
         
         btnRefresh = new Button(basicControls, SWT.NONE);
         btnRefresh.setText("Refresh data");
@@ -304,6 +307,9 @@ public class JournalViewerView {
         spinnerPageNumber.addListener(SWT.Selection, e -> {
             setProgressIndicatorsVisible(true);
             model.setPageNumber(spinnerPageNumber.getSelection()).thenAccept(ignored -> setProgressIndicatorsVisible(false));
+            
+            lblResults.setText(model.getResultsInfo());
+            lblResults.requestLayout();  // update layout to resize label upon text change
         });
 
         btnPrevPage.addListener(SWT.Selection, e -> {

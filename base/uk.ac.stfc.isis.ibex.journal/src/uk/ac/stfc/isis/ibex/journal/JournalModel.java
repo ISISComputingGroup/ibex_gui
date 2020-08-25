@@ -72,6 +72,8 @@ public class JournalModel extends ModelObject {
     private int pageNumber = 1;
     private int pageMax = 1;
     
+    private int resultsNumber = 0;
+    
     // The most recent or active search
     // Used so the search is remembered when changing the page number or refreshing
     private JournalSearch activeSearch = new EmptySearch();
@@ -328,8 +330,36 @@ public class JournalModel extends ModelObject {
     }
     
     private void setTotalResults(int totalResults) {
+    	this.resultsNumber = totalResults;
     	setPageMax((int) Math.ceil(totalResults / (double) PAGE_SIZE));
 	}
+    
+    /**
+     * Returns the number of entry results.
+     * @return Number of entry results.
+     */
+    public int getResultsNumber() {
+    	return resultsNumber;
+    }
+    
+    /**
+     * Returns the number of all results and the currently displayed results depending on page and page size.
+     * E.g. "26-50 of 140"
+     * @return The number of total results and currently displayed entries.
+     */
+    public String getResultsInfo() {
+    	int startEntry;
+    	int endEntry;
+    	if (resultsNumber != 0) {
+	    	startEntry = (pageNumber - 1) * PAGE_SIZE + 1;
+	    	endEntry = startEntry + PAGE_SIZE - 1;
+	    	if (endEntry > resultsNumber) { endEntry = resultsNumber; }
+    	} else {
+    		startEntry = endEntry = 0;
+    	}
+    	
+    	return String.format("Entries %d-%d of %d", startEntry, endEntry, resultsNumber);
+    }
     
     /**
      * The maximum page number that can be selected.
