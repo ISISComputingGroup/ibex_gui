@@ -120,9 +120,10 @@ public class ConfigInfo {
      * @return The list of config names
      */
     public static Collection<String> names(Collection<ConfigInfo> infos) {
-        if (infos == null) {
+        if (infos.isEmpty()) {
             return Collections.emptyList();
         }
+
 
         return Lists.newArrayList(Iterables.transform(infos, new Function<ConfigInfo, String>() {
             @Override
@@ -138,7 +139,7 @@ public class ConfigInfo {
      * @return collection of Pair i.e config/comp name and its protection flag
      */
     public static Map<String, Boolean> mapNamesWithTheirProtectionFlag(Collection<ConfigInfo> infos) {
-        if (infos == null) {
+        if (infos.isEmpty()) {
             return Collections.emptyMap();
         }
         Map<String, Boolean> namesWithProtectionFlag = new HashMap<String, Boolean>();
@@ -150,23 +151,12 @@ public class ConfigInfo {
     }
     
     /**
-     * Returns Configuration/Component names and their protection status, excluding the current configuration
-     * @param infos
-     * @return collection of pair config/comp Name and Protection Flag (e.g. {<name>=<prot. status>, ...}), excluding the current configuration
-     */
-    public static Map<String, Boolean> mapNamesWithTheirProtectionFlagWithoutCurrent(Collection<ConfigInfo> infos) {
-    	Map<String, Boolean> filteredResults = mapNamesWithTheirProtectionFlag(infos);
-    	filteredResults.remove(Configurations.getInstance().display().displayCurrentConfig().getValue().name());
-    	return filteredResults;
-    }
-    
-    /**
-     * Checks if there is a protected configuration/comp within the given ConfigInfos objects
+     * Checks if there is a protected configuration/comp within the given ConfigInfos objects.
      * @param infos
      * @return boolean: True if a protected configuration exists within given infos, False if not
      */
     public static Boolean hasProtectedConfigs(Collection<ConfigInfo> infos) {
-        if (infos == null) {
+        if (infos.isEmpty()) {
             return false;
         }
         
