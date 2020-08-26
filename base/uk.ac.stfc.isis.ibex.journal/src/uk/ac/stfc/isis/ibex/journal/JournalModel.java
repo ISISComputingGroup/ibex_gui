@@ -70,6 +70,7 @@ public class JournalModel extends ModelObject {
     private int pageNumber = 1;
     private int pageMax = 1;
     private int resultsNumber = 0;
+    private String resultsInfo = "";
     
     // The most recent or active search
     // Used so the search is remembered when changing the page number or refreshing
@@ -112,8 +113,8 @@ public class JournalModel extends ModelObject {
                 connection = Rdb.connectToDatabase(schema, user, password).getConnection();
                 
                 setMessage("");
-                searchUpdateRuns(connection, search);
                 setLastUpdate(new Date());
+                searchUpdateRuns(connection, search);
 
                 activeSearch = search;
             } catch (Exception ex) {
@@ -196,9 +197,10 @@ public class JournalModel extends ModelObject {
     	if (!rs.next()) {
     		throw new RuntimeException("No results returned from SQL query to count rows.");
     	}
-    	System.out.println("200:" + rs.getInt(1));
+
 	    setTotalResults(rs.getInt(1));
 	    setResultsNumber(rs.getInt(1));
+	    setResultsInfo(this.getResultsInfo());
 	    rs.close();
     }
     
@@ -337,6 +339,10 @@ public class JournalModel extends ModelObject {
     	this.resultsNumber = resultsNumber;
     }
     
+    private void setResultsInfo(String info) {
+    	firePropertyChange("resultsInfo", this.resultsInfo, this.resultsInfo = info);
+    }
+    
     /**
      * Returns the number of total current results and the currently displayed results depending on page and page size.
      * @return The number of total results and currently displayed entries.
@@ -344,7 +350,7 @@ public class JournalModel extends ModelObject {
     public String getResultsInfo() {
     	int entryFrom;
     	int entryTo;
-    	System.out.println("361:" + resultsNumber);
+
     	if (resultsNumber != 0) {
 	    	entryFrom = (pageNumber - 1) * PAGE_SIZE + 1;
 	    	entryTo = entryFrom + PAGE_SIZE - 1;
@@ -352,7 +358,7 @@ public class JournalModel extends ModelObject {
     	} else {
     		entryFrom = entryTo = 0;
     	}
-    	
+
     	return String.format("Entries %d-%d of %d", entryFrom, entryTo, resultsNumber);
     }
     

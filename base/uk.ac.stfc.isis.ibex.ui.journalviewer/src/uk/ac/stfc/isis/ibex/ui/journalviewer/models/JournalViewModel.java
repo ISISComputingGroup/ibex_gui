@@ -108,6 +108,13 @@ public class JournalViewModel extends ModelObject {
 		firePropertyChange("lastUpdate", this.lastUpdate, this.lastUpdate = lastUpdate);
 	}
 	
+	/**
+	 * @return String containing the number of total results and currently displayed entries.
+	 */
+	public String getResultsInfo() {
+		return model.getResultsInfo();
+	}
+	
 	private void setResultsInfo(String resultsInfo) {
 		firePropertyChange("resultsInfo", this.resultsInfo, this.resultsInfo = resultsInfo);
 	}
@@ -248,13 +255,6 @@ public class JournalViewModel extends ModelObject {
 	 */
 	public int getResultsNumber() {
 		return model.getResultsNumber();
-	}
-	
-	/**
-	 * @return String containing the number of total results and currently displayed entries.
-	 */
-	public String getResultsInfo() {
-		return model.getResultsInfo();
 	}
 
 	/**
