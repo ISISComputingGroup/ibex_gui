@@ -49,6 +49,7 @@ public class JournalViewModel extends ModelObject {
 	private List<JournalRow> runs;
 	private String lastUpdate;
 	private String resultsInfo;
+	private int pageNumberMax;
 	private int toNumber = 0;
 	private int fromNumber = 0;
 	private static final String NO_ERROR = "";
@@ -240,7 +241,7 @@ public class JournalViewModel extends ModelObject {
 	 * @param max The maximum number of pages supported by the journal view.
 	 */
 	public void setPageNumberMax(int max) {
-		firePropertyChange("pageNumberMax", 0, model.getPageMax());
+		firePropertyChange("pageNumberMax", this.pageNumberMax, this.pageNumberMax = max);
 	}
 
 	/**

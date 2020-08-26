@@ -198,7 +198,7 @@ public class JournalModel extends ModelObject {
     		throw new RuntimeException("No results returned from SQL query to count rows.");
     	}
 
-	    setTotalResults(rs.getInt(1));
+    	setPageMax(calcTotalPages(rs.getInt(1)));
 	    setResultsNumber(rs.getInt(1));
 	    setResultsInfo(this.getResultsInfo());
 	    rs.close();
@@ -317,8 +317,10 @@ public class JournalModel extends ModelObject {
         return pageNumber;
     }
     
-    private void setTotalResults(int totalResults) {
-    	setPageMax((int) Math.ceil(totalResults / (double) PAGE_SIZE));
+    private int calcTotalPages(int totalResults) {
+    	int returnVal = (int) Math.ceil(totalResults / (double) PAGE_SIZE);
+    	if (returnVal == 0) { returnVal = 1; }
+    	return returnVal;
 	}
     
     /**

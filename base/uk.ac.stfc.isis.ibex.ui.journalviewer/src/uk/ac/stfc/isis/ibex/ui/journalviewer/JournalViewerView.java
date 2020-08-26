@@ -355,7 +355,7 @@ public class JournalViewerView {
                 table.updateTableColumns();
                 updateSortIndicator();
                 table.setRows(model.getRuns());
-                
+
                 setProgressIndicatorsVisible(false);
         }));
         
