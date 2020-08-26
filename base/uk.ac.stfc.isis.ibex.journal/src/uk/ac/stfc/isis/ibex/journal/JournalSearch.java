@@ -77,14 +77,12 @@ public abstract class JournalSearch {
     }
 
     /**
-     * Constructs a prepared statement for counting the number of returned journal entries
-     * from the database.
+     * Constructs an SQL prepared statement which gets the number of runs available.
      * 
      * @param connection
      *            the SQL connection to use
-     * @return An SQL PreparedStatement
-     * @throws SQLException
-     *             - If there was an error while querying the database
+     * @return An SQL prepared statement ready to be executed.
+     * @throws SQLException if a SQL exception occurred while preparing the statement
      */
     public PreparedStatement constructCountQuery(Connection connection) throws SQLException {
         StringBuilder query = new StringBuilder(COUNT);

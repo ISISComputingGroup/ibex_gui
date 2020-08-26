@@ -34,8 +34,6 @@ import java.util.concurrent.Executors;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jface.preference.IPreferenceStore;
 
-import java.sql.PreparedStatement;
-
 import uk.ac.stfc.isis.ibex.databases.Rdb;
 import uk.ac.stfc.isis.ibex.journal.preferences.PreferenceConstants;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -193,7 +191,7 @@ public class JournalModel extends ModelObject {
     }
     
     private void updateRunsCount(Connection connection, JournalSearch search) throws SQLException {
-    	ResultSet rs = constructCountFieldsSQLQuery(connection, search).executeQuery();
+    	ResultSet rs = search.constructCountQuery(connection).executeQuery();
     	if (!rs.next()) {
     		throw new RuntimeException("No results returned from SQL query to count rows.");
     	}
@@ -201,19 +199,6 @@ public class JournalModel extends ModelObject {
 	    setTotalResults(rs.getInt(1));
 	    setResultsNumber(rs.getInt(1));
 	    rs.close();
-    }
-    
-    /**
-     * Constructs a SQL query which gets the number of runs available.
-     * 
-     * NOTE: Ensure that arbitrary strings cannot be inserted into this query, maliciously or 
-     * accidentally as that could lead to a SQL injection vulnerability.
-     * 
-     * @return a SQL prepared statement ready to be executed.
-     * @throws SQLException if a SQL exception occurred while preparing the statement
-     */
-    private PreparedStatement constructCountFieldsSQLQuery(Connection connection, JournalSearch search) throws SQLException {
-    	return search.constructCountQuery(connection);
     }
     
     /**

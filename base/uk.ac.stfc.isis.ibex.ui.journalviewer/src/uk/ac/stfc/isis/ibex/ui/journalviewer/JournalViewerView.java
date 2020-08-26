@@ -74,6 +74,7 @@ public class JournalViewerView {
     private Label lblError;
     private Label lblLastUpdate;
     private Label error;
+    private Label lblResults;
 
     private final DataBindingContext bindingContext = new DataBindingContext();
     private final JournalViewModel model = JournalViewerUI.getDefault().getModel();
@@ -86,8 +87,6 @@ public class JournalViewerView {
     private SearchInput searchInput;
     private Button btnSearch;
     private ProgressBar progressBar;
-    
-    private Label lblResults;
 
     private DataboundTable<JournalRow> table;
 
@@ -123,22 +122,27 @@ public class JournalViewerView {
         Composite controls = new Composite(parent, SWT.FILL);
         RowLayout rlControls = new RowLayout(SWT.HORIZONTAL);
         rlControls.center = true;
+        RowData data = new RowData();
         controls.setLayout(rlControls);
         controls.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        
+
         basicControls = new Composite(controls, SWT.NONE);
         RowLayout rlBasicControls = new RowLayout(SWT.HORIZONTAL);
         rlBasicControls.marginTop = 7;
         rlBasicControls.center = true;
         basicControls.setLayout(rlBasicControls);
 
-        lblResults = new Label(basicControls, SWT.WRAP | SWT.LEFT);
+        lblResults = new Label(basicControls, SWT.LEFT | SWT.HORIZONTAL | SWT.BORDER);
         lblResults.setText("placeholder");
-        
+        lblResults.setToolTipText("Currently displayed entries out of total.");
+    	data = new RowData();
+    	data.width = 200;
+    	lblResults.setLayoutData(data);
+
         btnPrevPage = new Button(basicControls, SWT.NONE);
         btnPrevPage.setText(" < Newer ");
         btnPrevPage.setToolTipText("Go to newer entries.");
-        
+
         spinnerPageNumber = new Spinner(basicControls, SWT.BORDER);
         spinnerPageNumber.setMinimum(1);
         spinnerPageNumber.setMaximum(1);
@@ -147,10 +151,10 @@ public class JournalViewerView {
         btnNextPage = new Button(basicControls, SWT.NONE);
         btnNextPage.setText(" Older > ");
         btnNextPage.setToolTipText("Go to older entries.");
-        
+
         btnRefresh = new Button(basicControls, SWT.NONE);
         btnRefresh.setText("Refresh data");
-        
+
         searchControls = new Composite(controls, SWT.NONE);
         RowLayout rlSearchControls = new RowLayout(SWT.HORIZONTAL);
         rlSearchControls.center = true;
@@ -163,14 +167,14 @@ public class JournalViewerView {
         btnSearch = new Button(searchControls, SWT.NONE);
         btnSearch.setLayoutData(new RowData(80, SWT.DEFAULT));
         btnSearch.setText("Search");
-        
+
         btnClear = new Button(searchControls, SWT.NONE);
         btnClear.setText("Clear");
-        
+
         progressBar = new ProgressBar(searchControls, SWT.INDETERMINATE);
         progressBar.setMaximum(80);
         progressBar.setLayoutData(new RowData(100, SWT.DEFAULT));
-        
+
         error = new Label(searchControls, SWT.NONE);
         error.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_RED));
         error.setLayoutData(new RowData(200, SWT.DEFAULT));
@@ -206,12 +210,12 @@ public class JournalViewerView {
 		            }
 		        }
 			}
-			
+
 			@Override
 			protected ColumnComparator<JournalRow> comparator() {
 				return new NullComparator<>();
 			}
-			
+
 			// Sort table by selected column when a column header is clicked
 			@Override
 			protected SelectionAdapter getColumnSelectionAdapter(final TableColumn column, final int index) {
@@ -226,7 +230,7 @@ public class JournalViewerView {
 		    }
 		};
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
+
 		table.initialise();
 
         lblError = new Label(parent, SWT.NONE);
@@ -352,6 +356,7 @@ public class JournalViewerView {
                 
                 lblResults.requestLayout();  // update layout to resize label upon text change
                 lblResults.setText(model.getResultsInfo());
+                lblResults.setToolTipText(model.getResultsInfo());
                 setProgressIndicatorsVisible(false);
         }));
         
