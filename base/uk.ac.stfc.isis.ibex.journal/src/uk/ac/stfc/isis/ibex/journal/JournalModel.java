@@ -110,10 +110,11 @@ public class JournalModel extends ModelObject {
                 String password = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_PASSWORD);
 
                 connection = Rdb.connectToDatabase(schema, user, password).getConnection();
-
+                
                 setMessage("");
-                setLastUpdate(new Date());
                 searchUpdateRuns(connection, search);
+                setLastUpdate(new Date());
+
                 activeSearch = search;
             } catch (Exception ex) {
                 setMessage(Rdb.getError(ex).toString());
@@ -341,18 +342,18 @@ public class JournalModel extends ModelObject {
      * @return The number of total results and currently displayed entries.
      */
     public String getResultsInfo() {
-    	int startEntry;
-    	int endEntry;
+    	int entryFrom;
+    	int entryTo;
     	System.out.println("361:" + resultsNumber);
     	if (resultsNumber != 0) {
-	    	startEntry = (pageNumber - 1) * PAGE_SIZE + 1;
-	    	endEntry = startEntry + PAGE_SIZE - 1;
-	    	if (endEntry > resultsNumber) { endEntry = resultsNumber; }
+	    	entryFrom = (pageNumber - 1) * PAGE_SIZE + 1;
+	    	entryTo = entryFrom + PAGE_SIZE - 1;
+	    	if (entryTo > resultsNumber) { entryTo = resultsNumber; }
     	} else {
-    		startEntry = endEntry = 0;
+    		entryFrom = entryTo = 0;
     	}
     	
-    	return String.format("Entries %d-%d of %d", startEntry, endEntry, resultsNumber);
+    	return String.format("Entries %d-%d of %d", entryFrom, entryTo, resultsNumber);
     }
     
     /**

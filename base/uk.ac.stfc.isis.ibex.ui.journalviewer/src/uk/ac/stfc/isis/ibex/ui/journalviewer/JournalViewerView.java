@@ -306,6 +306,8 @@ public class JournalViewerView {
                 BeanProperties.value("errorMessage").observe(model));
         bindingContext.bindValue(WidgetProperties.text().observe(lblResults),
         		BeanProperties.value("resultsInfo").observe(model));
+        bindingContext.bindValue(WidgetProperties.tooltipText().observe(lblResults),
+        		BeanProperties.value("resultsInfo").observe(model));
 
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnSearch),
                 BeanProperties.value("enableOrDisableButton").observe(model));
@@ -354,9 +356,6 @@ public class JournalViewerView {
                 updateSortIndicator();
                 table.setRows(model.getRuns());
                 
-                lblResults.requestLayout();  // update layout to resize label upon text change
-                lblResults.setText(model.getResultsInfo());
-                lblResults.setToolTipText(model.getResultsInfo());
                 setProgressIndicatorsVisible(false);
         }));
         
