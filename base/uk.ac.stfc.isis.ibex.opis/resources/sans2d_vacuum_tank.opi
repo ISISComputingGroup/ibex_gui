@@ -5010,6 +5010,102 @@ $(pv_value)</tooltip>
         <x>336</x>
         <y>340</y>
       </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <auto_size>false</auto_size>
+        <background_color>
+          <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color name="ISIS_Border" red="0" green="0" blue="0" />
+        </border_color>
+        <border_style>1</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+        </font>
+        <foreground_color>
+          <color name="ISIS_Red" red="255" green="0" blue="0" />
+        </foreground_color>
+        <height>73</height>
+        <horizontal_alignment>0</horizontal_alignment>
+        <name>Label_15</name>
+        <rules>
+          <rule name="Rule" prop_id="visible" out_exp="false">
+            <exp bool_exp="pvInt0 == 1">
+              <value>true</value>
+            </exp>
+            <pv trig="true">$(P)FRONTDET:ON</pv>
+          </rule>
+        </rules>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <show_scrollbar>false</show_scrollbar>
+        <text>Front detector motion inhibited as front detector power supplies are on.</text>
+        <tooltip></tooltip>
+        <transparent>false</transparent>
+        <vertical_alignment>1</vertical_alignment>
+        <visible>false</visible>
+        <widget_type>Label</widget_type>
+        <width>127</width>
+        <wrap_words>true</wrap_words>
+        <wuid>7dddd7c8:173c3d2b809:-7eb0</wuid>
+        <x>66</x>
+        <y>449</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <auto_size>false</auto_size>
+        <background_color>
+          <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color name="ISIS_Border" red="0" green="0" blue="0" />
+        </border_color>
+        <border_style>1</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+        </font>
+        <foreground_color>
+          <color name="ISIS_Red" red="255" green="0" blue="0" />
+        </foreground_color>
+        <height>73</height>
+        <horizontal_alignment>0</horizontal_alignment>
+        <name>Label_15</name>
+        <rules>
+          <rule name="Rule" prop_id="visible" out_exp="false">
+            <exp bool_exp="pvInt0 == 1">
+              <value>true</value>
+            </exp>
+            <pv trig="true">$(P)REARDET:ON</pv>
+          </rule>
+        </rules>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <show_scrollbar>false</show_scrollbar>
+        <text>Rear detector motion inhibited as rear detector power supplies are on.</text>
+        <tooltip></tooltip>
+        <transparent>false</transparent>
+        <vertical_alignment>1</vertical_alignment>
+        <visible>false</visible>
+        <widget_type>Label</widget_type>
+        <width>127</width>
+        <wrap_words>true</wrap_words>
+        <wuid>7dddd7c8:173c3d2b809:-7ea6</wuid>
+        <x>443</x>
+        <y>377</y>
+      </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />

@@ -446,7 +446,15 @@ $(pv_value)</tooltip>
           </widget>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-          <actions hook="false" hook_all="false" />
+          <actions hook="false" hook_all="false">
+            <action type="WRITE_PV">
+              <pv_name>$(P)MOT:SANS2DAPWV:STOP_MOTORS:ALL</pv_name>
+              <value>1</value>
+              <timeout>10</timeout>
+              <confirm_message></confirm_message>
+              <description></description>
+            </action>
+          </actions>
           <alarm_pulsing>false</alarm_pulsing>
           <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
           <background_color>
@@ -458,7 +466,7 @@ $(pv_value)</tooltip>
           </border_color>
           <border_style>0</border_style>
           <border_width>1</border_width>
-          <enabled>true</enabled>
+          <enabled>false</enabled>
           <font>
             <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
           </font>
@@ -470,9 +478,41 @@ $(pv_value)</tooltip>
           <image></image>
           <name>Action Button</name>
           <push_action_index>0</push_action_index>
-          <pv_name>NOT:YET:IMPLEMENTED</pv_name>
+          <pv_name></pv_name>
           <pv_value />
-          <rules />
+          <rules>
+            <rule name="DisableOnInterlock" prop_id="enabled" out_exp="false">
+              <exp bool_exp="pv0 == 0">
+                <value>false</value>
+              </exp>
+              <exp bool_exp="pv0 == 1">
+                <value>true</value>
+              </exp>
+              <pv trig="true">$(P)FINS_VAC:GALIL_INTERLOCK</pv>
+            </rule>
+            <rule name="TooltipOnInterlock" prop_id="tooltip" out_exp="false">
+              <exp bool_exp="pv0 == 0">
+                <value>Cannot stop motion when galils interlocked</value>
+              </exp>
+              <exp bool_exp="pv0 == 1">
+                <value>Stop all Apertures and Waveguides motion</value>
+              </exp>
+              <pv trig="true">$(P)FINS_VAC:GALIL_INTERLOCK</pv>
+            </rule>
+            <rule name="GreyOutOnInterlock" prop_id="background_color" out_exp="false">
+              <exp bool_exp="pv0 == 0">
+                <value>
+                  <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
+                </value>
+              </exp>
+              <exp bool_exp="pv0 == 1">
+                <value>
+                  <color name="ISIS_Red" red="255" green="0" blue="0" />
+                </value>
+              </exp>
+              <pv trig="true">$(P)FINS_VAC:GALIL_INTERLOCK</pv>
+            </rule>
+          </rules>
           <scale_options>
             <width_scalable>true</width_scalable>
             <height_scalable>true</height_scalable>
@@ -482,8 +522,7 @@ $(pv_value)</tooltip>
           <style>0</style>
           <text>STOP</text>
           <toggle_button>false</toggle_button>
-          <tooltip>$(pv_name)
-$(pv_value)</tooltip>
+          <tooltip>Stop all Apertures and Waveguides motion</tooltip>
           <visible>true</visible>
           <widget_type>Action Button</widget_type>
           <width>90</width>
@@ -1045,7 +1084,15 @@ $(pv_value)</tooltip>
           <y>33</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-          <actions hook="false" hook_all="false" />
+          <actions hook="false" hook_all="false">
+            <action type="WRITE_PV">
+              <pv_name>$(P)MOT:SANS2DAPWV:STOP_MOTORS:ALL</pv_name>
+              <value>1</value>
+              <timeout>10</timeout>
+              <confirm_message></confirm_message>
+              <description></description>
+            </action>
+          </actions>
           <alarm_pulsing>false</alarm_pulsing>
           <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
           <background_color>
@@ -1069,9 +1116,41 @@ $(pv_value)</tooltip>
           <image></image>
           <name>Action Button</name>
           <push_action_index>0</push_action_index>
-          <pv_name>NOT:YET:IMPLEMENTED</pv_name>
+          <pv_name></pv_name>
           <pv_value />
-          <rules />
+          <rules>
+            <rule name="DisableOnInterlock" prop_id="enabled" out_exp="false">
+              <exp bool_exp="pv0 == 0">
+                <value>false</value>
+              </exp>
+              <exp bool_exp="pv0 == 1">
+                <value>true</value>
+              </exp>
+              <pv trig="true">$(P)FINS_VAC:GALIL_INTERLOCK</pv>
+            </rule>
+            <rule name="GreyOutOnInterlock" prop_id="background_color" out_exp="false">
+              <exp bool_exp="pv0 == 0">
+                <value>
+                  <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
+                </value>
+              </exp>
+              <exp bool_exp="pv0 == 1">
+                <value>
+                  <color name="ISIS_Red" red="255" green="0" blue="0" />
+                </value>
+              </exp>
+              <pv trig="true">$(P)FINS_VAC:GALIL_INTERLOCK</pv>
+            </rule>
+            <rule name="TooltipOnInterlock" prop_id="tooltip" out_exp="false">
+              <exp bool_exp="pv0 == 0">
+                <value>Cannot stop motion when galils interlocked</value>
+              </exp>
+              <exp bool_exp="pv0 == 1">
+                <value>Stop all Apertures and Waveguides motion</value>
+              </exp>
+              <pv trig="true">$(P)FINS_VAC:GALIL_INTERLOCK</pv>
+            </rule>
+          </rules>
           <scale_options>
             <width_scalable>false</width_scalable>
             <height_scalable>false</height_scalable>
@@ -1081,8 +1160,7 @@ $(pv_value)</tooltip>
           <style>0</style>
           <text>STOP</text>
           <toggle_button>false</toggle_button>
-          <tooltip>$(pv_name)
-$(pv_value)</tooltip>
+          <tooltip>Stop all Apertures and Waveguides motion</tooltip>
           <visible>true</visible>
           <widget_type>Action Button</widget_type>
           <width>90</width>
