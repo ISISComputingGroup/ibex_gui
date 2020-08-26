@@ -48,6 +48,7 @@ public class JournalViewModel extends ModelObject {
 	private String message;
 	private List<JournalRow> runs;
 	private String lastUpdate;
+	private String resultsInfo;
 	private int toNumber = 0;
 	private int fromNumber = 0;
 	private static final String NO_ERROR = "";
@@ -82,6 +83,7 @@ public class JournalViewModel extends ModelObject {
 		setMessage(model.getMessage());
 		setRuns(model.getRuns());
 		setPageNumberMax(model.getPageMax());
+		setResultsInfo(model.getResultsInfo());
 	}
 
 	/**
@@ -104,6 +106,10 @@ public class JournalViewModel extends ModelObject {
 
 	private void setLastUpdate(String lastUpdate) {
 		firePropertyChange("lastUpdate", this.lastUpdate, this.lastUpdate = lastUpdate);
+	}
+	
+	private void setResultsInfo(String resultsInfo) {
+		firePropertyChange("resultsInfo", this.resultsInfo, this.resultsInfo = resultsInfo);
 	}
 
 	/**
@@ -245,7 +251,7 @@ public class JournalViewModel extends ModelObject {
 	}
 	
 	/**
-	 * @return The number of total results and currently displayed entries.
+	 * @return String containing the number of total results and currently displayed entries.
 	 */
 	public String getResultsInfo() {
 		return model.getResultsInfo();

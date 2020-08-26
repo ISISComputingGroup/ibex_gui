@@ -133,7 +133,7 @@ public class JournalViewerView {
         basicControls.setLayout(rlBasicControls);
 
         lblResults = new Label(basicControls, SWT.WRAP | SWT.LEFT);
-        lblResults.setText(model.getResultsInfo());
+        lblResults.setText("placeholder");
         
         btnPrevPage = new Button(basicControls, SWT.NONE);
         btnPrevPage.setText(" < Newer ");
@@ -300,6 +300,8 @@ public class JournalViewerView {
                 BeanProperties.value("pageNumberMax").observe(model));
         bindingContext.bindValue(WidgetProperties.text().observe(error),
                 BeanProperties.value("errorMessage").observe(model));
+        bindingContext.bindValue(WidgetProperties.text().observe(lblResults),
+        		BeanProperties.value("resultsInfo").observe(model));
 
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnSearch),
                 BeanProperties.value("enableOrDisableButton").observe(model));
@@ -307,9 +309,6 @@ public class JournalViewerView {
         spinnerPageNumber.addListener(SWT.Selection, e -> {
             setProgressIndicatorsVisible(true);
             model.setPageNumber(spinnerPageNumber.getSelection()).thenAccept(ignored -> setProgressIndicatorsVisible(false));
-            
-            lblResults.setText(model.getResultsInfo());
-            lblResults.requestLayout();  // update layout to resize label upon text change
         });
 
         btnPrevPage.addListener(SWT.Selection, e -> {
@@ -350,6 +349,9 @@ public class JournalViewerView {
                 table.updateTableColumns();
                 updateSortIndicator();
                 table.setRows(model.getRuns());
+                
+                lblResults.requestLayout();  // update layout to resize label upon text change
+                lblResults.setText(model.getResultsInfo());
                 setProgressIndicatorsVisible(false);
         }));
         

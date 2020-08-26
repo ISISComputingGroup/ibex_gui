@@ -71,7 +71,6 @@ public class JournalModel extends ModelObject {
     
     private int pageNumber = 1;
     private int pageMax = 1;
-    
     private int resultsNumber = 0;
     
     // The most recent or active search
@@ -158,8 +157,7 @@ public class JournalModel extends ModelObject {
             setMessage(NO_RESULTS_FOUND);
         }
         setRuns(Collections.unmodifiableList(runs));
-        updateRunsCount(connection);
-        
+        updateRunsCount(connection, search);
         long totalTime = System.currentTimeMillis() - startTime;
         if (totalTime > QUERY_DURATION_WARNING_LEVEL) {
             LOG.warn(String.format(
@@ -194,12 +192,14 @@ public class JournalModel extends ModelObject {
         return runs;
     }
     
-    private void updateRunsCount(Connection connection) throws SQLException {
-    	ResultSet rs = constructCountFieldsSQLQuery(connection).executeQuery();
+    private void updateRunsCount(Connection connection, JournalSearch search) throws SQLException {
+    	ResultSet rs = constructCountFieldsSQLQuery(connection, search).executeQuery();
     	if (!rs.next()) {
     		throw new RuntimeException("No results returned from SQL query to count rows.");
     	}
+    	System.out.println("200:" + rs.getInt(1));
 	    setTotalResults(rs.getInt(1));
+	    setResultsNumber(rs.getInt(1));
 	    rs.close();
     }
     
@@ -212,8 +212,8 @@ public class JournalModel extends ModelObject {
      * @return a SQL prepared statement ready to be executed.
      * @throws SQLException if a SQL exception occurred while preparing the statement
      */
-    private PreparedStatement constructCountFieldsSQLQuery(Connection connection) throws SQLException {
-    	return connection.prepareStatement("SELECT COUNT(*) FROM journal_entries");
+    private PreparedStatement constructCountFieldsSQLQuery(Connection connection, JournalSearch search) throws SQLException {
+    	return search.constructCountQuery(connection);
     }
     
     /**
@@ -330,12 +330,11 @@ public class JournalModel extends ModelObject {
     }
     
     private void setTotalResults(int totalResults) {
-    	this.resultsNumber = totalResults;
     	setPageMax((int) Math.ceil(totalResults / (double) PAGE_SIZE));
 	}
     
     /**
-     * Returns the number of entry results.
+     * Returns the number of entry results from last run.
      * @return Number of entry results.
      */
     public int getResultsNumber() {
@@ -343,13 +342,23 @@ public class JournalModel extends ModelObject {
     }
     
     /**
-     * Returns the number of all results and the currently displayed results depending on page and page size.
-     * E.g. "26-50 of 140"
+     * Sets the total results number.
+     * 
+     * @param totalResults The number of results.
+     * @return a CompleteableFuture
+     */
+    private void setResultsNumber(int resultsNumber) {
+    	this.resultsNumber = resultsNumber;
+    }
+    
+    /**
+     * Returns the number of total current results and the currently displayed results depending on page and page size.
      * @return The number of total results and currently displayed entries.
      */
     public String getResultsInfo() {
     	int startEntry;
     	int endEntry;
+    	System.out.println("361:" + resultsNumber);
     	if (resultsNumber != 0) {
 	    	startEntry = (pageNumber - 1) * PAGE_SIZE + 1;
 	    	endEntry = startEntry + PAGE_SIZE - 1;

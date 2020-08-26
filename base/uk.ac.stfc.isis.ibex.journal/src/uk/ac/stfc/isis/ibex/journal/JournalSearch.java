@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
  */
 public abstract class JournalSearch {
     private static final String SELECT = "SELECT * FROM journal_entries";
+    private static final String COUNT = "SELECT COUNT(*) FROM journal_entries";
     protected final JournalField field;
     private ArrayList<JournalSort> sorts = new ArrayList<JournalSort>();
     {
@@ -75,6 +76,26 @@ public abstract class JournalSearch {
         return st;
     }
 
+    /**
+     * Constructs a prepared statement for counting the number of returned journal entries
+     * from the database.
+     * 
+     * @param connection
+     *            the SQL connection to use
+     * @return An SQL PreparedStatement
+     * @throws SQLException
+     *             - If there was an error while querying the database
+     */
+    public PreparedStatement constructCountQuery(Connection connection) throws SQLException {
+        StringBuilder query = new StringBuilder(COUNT);
+
+        query.append(createWhereTemplate());
+        PreparedStatement st = connection.prepareStatement(query.toString());
+        fillTemplate(st);
+        
+        return st;
+    }
+    
     /**
      * @return A string containing the WHERE section of the query.
      */
