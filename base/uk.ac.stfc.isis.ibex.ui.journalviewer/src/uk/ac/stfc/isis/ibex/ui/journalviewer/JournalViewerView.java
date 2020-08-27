@@ -45,6 +45,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.journal.JournalField;
@@ -82,8 +83,8 @@ public class JournalViewerView {
 
     private Button btnRefresh;
     private Spinner spinnerPageNumber;
-    private Button btnPrevPage;
-    private Button btnNextPage;
+    private Button btnNewerPage;
+    private Button btnOlderPage;
     private SearchInput searchInput;
     private Button btnSearch;
     private ProgressBar progressBar;
@@ -139,18 +140,18 @@ public class JournalViewerView {
     	data.width = 200;
     	lblResults.setLayoutData(data);
 
-        btnPrevPage = new Button(basicControls, SWT.NONE);
-        btnPrevPage.setText(" < Newer ");
-        btnPrevPage.setToolTipText("Go to newer entries.");
-
+        btnNewerPage = new Button(basicControls, SWT.NONE);
+        btnNewerPage.setText(" < Newer ");
+        btnNewerPage.setToolTipText("Go to newer entries.");
+        
         spinnerPageNumber = new Spinner(basicControls, SWT.BORDER);
         spinnerPageNumber.setMinimum(1);
         spinnerPageNumber.setMaximum(1);
         spinnerPageNumber.setToolTipText("Page number (1 is newest).");
 
-        btnNextPage = new Button(basicControls, SWT.NONE);
-        btnNextPage.setText(" Older > ");
-        btnNextPage.setToolTipText("Go to older entries.");
+        btnOlderPage = new Button(basicControls, SWT.NONE);
+        btnOlderPage.setText(" Older > ");
+        btnOlderPage.setToolTipText("Go to older entries.");
 
         btnRefresh = new Button(basicControls, SWT.NONE);
         btnRefresh.setText("Refresh data");
@@ -302,6 +303,8 @@ public class JournalViewerView {
                 BeanProperties.value("lastUpdate").observe(model));
         bindingContext.bindValue(WidgetProperties.maximum().observe(spinnerPageNumber),
                 BeanProperties.value("pageMax").observe(model));
+        bindingContext.bindValue(WidgetProperties.spinnerSelection().observe(spinnerPageNumber), 
+        		BeanProperties.value("pageNumber").observe(model));
         bindingContext.bindValue(WidgetProperties.text().observe(error),
                 BeanProperties.value("errorMessage").observe(model));
         bindingContext.bindValue(WidgetProperties.text().observe(lblResults),
@@ -317,20 +320,12 @@ public class JournalViewerView {
             model.setPageNumber(spinnerPageNumber.getSelection()).thenAccept(ignored -> setProgressIndicatorsVisible(false));
         });
 
-        btnPrevPage.addListener(SWT.Selection, e -> {
-        	int prevPageNumber = spinnerPageNumber.getSelection() - 1;
-        	if(prevPageNumber >= spinnerPageNumber.getMinimum()) {
-	        	spinnerPageNumber.setSelection(prevPageNumber);
-	        	spinnerPageNumber.notifyListeners(SWT.Selection, e); 	
-        	}
+        btnNewerPage.addListener(SWT.Selection, e -> {
+        	model.newerPage();
         });
 
-        btnNextPage.addListener(SWT.Selection, e -> {
-        	int nextPageNumber = spinnerPageNumber.getSelection() + 1;
-        	if(nextPageNumber <= spinnerPageNumber.getMaximum()) {
-	        	spinnerPageNumber.setSelection(nextPageNumber);
-	        	spinnerPageNumber.notifyListeners(SWT.Selection, e);
-        	}
+        btnOlderPage.addListener(SWT.Selection, e -> {
+        	model.olderPage();
         });
 
         btnRefresh.addListener(SWT.Selection, e -> {

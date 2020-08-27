@@ -50,6 +50,7 @@ public class JournalViewModel extends ModelObject {
 	private String lastUpdate;
 	private String resultsInfo;
 	private int pageMax;
+	private int pageNumber;
 	private int toNumber = 0;
 	private int fromNumber = 0;
 	private static final String NO_ERROR = "";
@@ -84,6 +85,7 @@ public class JournalViewModel extends ModelObject {
 		setMessage(model.getMessage());
 		setRuns(model.getRuns());
 		setPageMax(model.getPageMax());
+		updatePageNumber(model.getPage());
 		setResultsInfo(getResultsInfo());
 	}
 
@@ -241,6 +243,10 @@ public class JournalViewModel extends ModelObject {
 		return date.after(today);
 	}
 
+	public void updatePageNumber(int pageNumber) {
+		firePropertyChange("pageNumber", this.pageNumber, this.pageNumber = pageNumber);
+	}
+	
 	/**
 	 * @param pageNumber The number of the results page.
 	 * @return a CompletableFuture
@@ -255,7 +261,21 @@ public class JournalViewModel extends ModelObject {
 	public int getPageNumber() {
 		return model.getPage();
 	}
-
+	
+	public void newerPage() {
+    	int newerPageNumber = model.getPage() - 1;
+    	if(newerPageNumber >= 1) {
+        	setPageNumber(newerPageNumber);
+    	}
+	}
+	
+	public void olderPage() {
+    	int olderPageNumber = model.getPage() + 1;
+    	if(olderPageNumber <= model.getPageMax()) {
+        	setPageNumber(olderPageNumber);
+    	}
+	}
+	
 	/**
 	 * @param max The maximum number of pages supported by the journal view.
 	 */
