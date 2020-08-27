@@ -323,8 +323,8 @@ public class JournalModel extends ModelObject {
     	return PAGE_SIZE;
     }
     
-    private int calcTotalPages(int totalResults) {
-    	int returnVal = (int) Math.ceil(totalResults / (double) PAGE_SIZE);
+    public int calcTotalPages(int totalResults) {
+    	int returnVal = (int) Math.ceil(totalResults / (double) this.getPageSize());
     	if (returnVal == 0) { returnVal = 1; }
     	return returnVal;
 	}
