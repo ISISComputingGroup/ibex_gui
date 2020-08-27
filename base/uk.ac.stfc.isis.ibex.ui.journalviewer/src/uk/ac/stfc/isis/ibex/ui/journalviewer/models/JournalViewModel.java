@@ -49,7 +49,7 @@ public class JournalViewModel extends ModelObject {
 	private List<JournalRow> runs;
 	private String lastUpdate;
 	private String resultsInfo;
-	private int pageNumberMax;
+	private int pageMax;
 	private int toNumber = 0;
 	private int fromNumber = 0;
 	private static final String NO_ERROR = "";
@@ -83,8 +83,8 @@ public class JournalViewModel extends ModelObject {
 		setLastUpdate("Last successful update: " + dateToString(model.getLastUpdate()));
 		setMessage(model.getMessage());
 		setRuns(model.getRuns());
-		setPageNumberMax(model.getPageMax());
-		setResultsInfo(model.getResultsInfo());
+		setPageMax(model.getPageMax());
+		setResultsInfo(getResultsInfo());
 	}
 
 	/**
@@ -110,11 +110,30 @@ public class JournalViewModel extends ModelObject {
 	}
 	
 	/**
-	 * @return String containing the number of total results and currently displayed entries.
+	 * @return The current number of result entries.
 	 */
-	public String getResultsInfo() {
-		return model.getResultsInfo();
+	public int getResultsNumber() {
+		return model.getResultsNumber();
 	}
+	
+    /**
+     * Returns the number of total current results and the currently displayed results depending on page and page size.
+     * @return The number of total results and currently displayed entries.
+     */
+    public String getResultsInfo() {
+    	int entryFrom;
+    	int entryTo;
+
+    	if (model.getResultsNumber() != 0 && model.getPageSize() != 0) {
+	    	entryFrom = (model.getPage() - 1) * model.getPageSize() + 1;
+	    	entryTo = entryFrom + model.getPageSize() - 1;
+	    	if (entryTo > model.getResultsNumber()) { entryTo = model.getResultsNumber(); }
+    	} else {
+    		entryFrom = entryTo = 0;
+    	}
+
+    	return String.format("Entries %d-%d of %d", entryFrom, entryTo, model.getResultsNumber());
+    }
 	
 	private void setResultsInfo(String resultsInfo) {
 		firePropertyChange("resultsInfo", this.resultsInfo, this.resultsInfo = resultsInfo);
@@ -240,22 +259,15 @@ public class JournalViewModel extends ModelObject {
 	/**
 	 * @param max The maximum number of pages supported by the journal view.
 	 */
-	public void setPageNumberMax(int max) {
-		firePropertyChange("pageNumberMax", this.pageNumberMax, this.pageNumberMax = max);
+	public void setPageMax(int max) {
+		firePropertyChange("pageMax", this.pageMax, this.pageMax = max);
 	}
 
 	/**
 	 * @return The maximum number of pages supported by the journal view.
 	 */
-	public int getPageNumberMax() {
+	public int getPageMax() {
 		return model.getPageMax();
-	}
-	
-	/**
-	 * @return The current number of result entries.
-	 */
-	public int getResultsNumber() {
-		return model.getResultsNumber();
 	}
 
 	/**

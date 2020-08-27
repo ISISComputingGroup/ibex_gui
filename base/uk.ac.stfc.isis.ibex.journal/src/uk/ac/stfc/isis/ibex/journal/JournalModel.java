@@ -70,7 +70,6 @@ public class JournalModel extends ModelObject {
     private int pageNumber = 1;
     private int pageMax = 1;
     private int resultsNumber = 0;
-    private String resultsInfo = "";
     
     // The most recent or active search
     // Used so the search is remembered when changing the page number or refreshing
@@ -200,7 +199,6 @@ public class JournalModel extends ModelObject {
 
     	setPageMax(calcTotalPages(rs.getInt(1)));
 	    setResultsNumber(rs.getInt(1));
-	    setResultsInfo(this.getResultsInfo());
 	    rs.close();
     }
     
@@ -317,6 +315,14 @@ public class JournalModel extends ModelObject {
         return pageNumber;
     }
     
+    /**
+     * Returns the PAGE_SIZE constant
+     * @return PAGE_SIZE constant
+     */
+    public int getPageSize() {
+    	return PAGE_SIZE;
+    }
+    
     private int calcTotalPages(int totalResults) {
     	int returnVal = (int) Math.ceil(totalResults / (double) PAGE_SIZE);
     	if (returnVal == 0) { returnVal = 1; }
@@ -338,30 +344,7 @@ public class JournalModel extends ModelObject {
      * @return a CompleteableFuture
      */
     private void setResultsNumber(int resultsNumber) {
-    	this.resultsNumber = resultsNumber;
-    }
-    
-    private void setResultsInfo(String info) {
-    	firePropertyChange("resultsInfo", this.resultsInfo, this.resultsInfo = info);
-    }
-    
-    /**
-     * Returns the number of total current results and the currently displayed results depending on page and page size.
-     * @return The number of total results and currently displayed entries.
-     */
-    public String getResultsInfo() {
-    	int entryFrom;
-    	int entryTo;
-
-    	if (resultsNumber != 0) {
-	    	entryFrom = (pageNumber - 1) * PAGE_SIZE + 1;
-	    	entryTo = entryFrom + PAGE_SIZE - 1;
-	    	if (entryTo > resultsNumber) { entryTo = resultsNumber; }
-    	} else {
-    		entryFrom = entryTo = 0;
-    	}
-
-    	return String.format("Entries %d-%d of %d", entryFrom, entryTo, resultsNumber);
+    	firePropertyChange("resultsNumber", this.resultsNumber, this.resultsNumber = resultsNumber);	
     }
     
     /**
@@ -369,7 +352,7 @@ public class JournalModel extends ModelObject {
      * @param max the new maximum selectable page number
      */
     public void setPageMax(int max) {
-    	firePropertyChange("pageNumberMax", this.pageMax, this.pageMax = max);
+    	firePropertyChange("pageMax", this.pageMax, this.pageMax = max);
     }
 
     /**

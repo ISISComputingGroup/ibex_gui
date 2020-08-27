@@ -301,7 +301,7 @@ public class JournalViewerView {
         bindingContext.bindValue(WidgetProperties.text().observe(lblLastUpdate),
                 BeanProperties.value("lastUpdate").observe(model));
         bindingContext.bindValue(WidgetProperties.maximum().observe(spinnerPageNumber),
-                BeanProperties.value("pageNumberMax").observe(model));
+                BeanProperties.value("pageMax").observe(model));
         bindingContext.bindValue(WidgetProperties.text().observe(error),
                 BeanProperties.value("errorMessage").observe(model));
         bindingContext.bindValue(WidgetProperties.text().observe(lblResults),
@@ -329,7 +329,7 @@ public class JournalViewerView {
         	int nextPageNumber = spinnerPageNumber.getSelection() + 1;
         	if(nextPageNumber <= spinnerPageNumber.getMaximum()) {
 	        	spinnerPageNumber.setSelection(nextPageNumber);
-	        	spinnerPageNumber.notifyListeners(SWT.Selection, e); 	
+	        	spinnerPageNumber.notifyListeners(SWT.Selection, e);
         	}
         });
 
