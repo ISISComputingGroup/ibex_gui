@@ -178,4 +178,200 @@ public class JournalViewModelTest {
         assertEquals(expected, actual);
      
     }
+    
+    @Test
+    public void GIVEN_on_page_0_page_size_0_results_0_THEN_correct_string_returned() {
+    	// Arrange
+    	when(model.getResultsNumber()).thenReturn(0);
+    	when(model.getPageSize()).thenReturn(0);
+    	when(model.getPage()).thenReturn(0);
+    	
+    	// Act
+    	viewModel = new JournalViewModel(model);
+    	String resultInfo = viewModel.getResultsInfo();
+    	
+    	// Assert
+    	assertEquals("Entries 0-0 of 0", resultInfo);
+    }
+    
+    @Test
+    public void GIVEN_on_page_1_page_size_1_results_1_THEN_correct_string_returned() {
+    	// Arrange
+    	when(model.getResultsNumber()).thenReturn(1);
+    	when(model.getPageSize()).thenReturn(1);
+    	when(model.getPage()).thenReturn(1);
+    	
+    	// Act
+    	viewModel = new JournalViewModel(model);
+    	String resultInfo = viewModel.getResultsInfo();
+    	
+    	// Assert
+    	assertEquals("Entries 1-1 of 1", resultInfo);
+    }
+    
+    @Test
+    public void GIVEN_on_page_1_page_size_0_results_1_THEN_correct_string_returned() {
+    	// Arrange
+    	when(model.getResultsNumber()).thenReturn(1);
+    	when(model.getPageSize()).thenReturn(0);
+    	when(model.getPage()).thenReturn(1);
+    	
+    	// Act
+    	viewModel = new JournalViewModel(model);
+    	String resultInfo = viewModel.getResultsInfo();
+    	
+    	// Assert
+    	assertEquals("Entries 0-0 of 1", resultInfo);
+    }
+    
+    @Test
+    public void GIVEN_on_page_0_page_size_1_results_1_THEN_correct_string_returned() {
+    	// Arrange
+    	when(model.getResultsNumber()).thenReturn(1);
+    	when(model.getPageSize()).thenReturn(1);
+    	when(model.getPage()).thenReturn(0);
+    	
+    	// Act
+    	viewModel = new JournalViewModel(model);
+    	String resultInfo = viewModel.getResultsInfo();
+    	
+    	// Assert
+    	assertEquals("Entries 0-0 of 1", resultInfo);
+    }
+    
+    @Test
+    public void GIVEN_on_page_1_page_size_1_results_0_THEN_correct_string_returned() {
+    	// Arrange
+    	when(model.getResultsNumber()).thenReturn(0);
+    	when(model.getPageSize()).thenReturn(1);
+    	when(model.getPage()).thenReturn(1);
+    	
+    	// Act
+    	viewModel = new JournalViewModel(model);
+    	String resultInfo = viewModel.getResultsInfo();
+    	
+    	// Assert
+    	assertEquals("Entries 0-0 of 0", resultInfo);
+    }
+    
+    @Test
+    public void GIVEN_on_page_1_page_size_1_results_2_THEN_correct_string_returned() {
+    	// Arrange
+    	when(model.getResultsNumber()).thenReturn(2);
+    	when(model.getPageSize()).thenReturn(1);
+    	when(model.getPage()).thenReturn(1);
+    	
+    	// Act
+    	viewModel = new JournalViewModel(model);
+    	String resultInfo = viewModel.getResultsInfo();
+    	
+    	// Assert
+    	assertEquals("Entries 1-1 of 2", resultInfo);
+    }
+    
+    @Test
+    public void GIVEN_on_page_1_page_size_2_results_1_THEN_correct_string_returned() {
+    	// Arrange
+    	when(model.getResultsNumber()).thenReturn(1);
+    	when(model.getPageSize()).thenReturn(2);
+    	when(model.getPage()).thenReturn(1);
+    	
+    	// Act
+    	viewModel = new JournalViewModel(model);
+    	String resultInfo = viewModel.getResultsInfo();
+    	
+    	// Assert
+    	assertEquals("Entries 1-1 of 1", resultInfo);
+    }
+    
+    @Test
+    public void GIVEN_on_page_1_page_size_2_results_2_THEN_correct_string_returned() {
+    	// Arrange
+    	when(model.getResultsNumber()).thenReturn(2);
+    	when(model.getPageSize()).thenReturn(2);
+    	when(model.getPage()).thenReturn(1);
+    	
+    	// Act
+    	viewModel = new JournalViewModel(model);
+    	String resultInfo = viewModel.getResultsInfo();
+    	
+    	// Assert
+    	assertEquals("Entries 1-2 of 2", resultInfo);
+    }
+    
+    @Test
+    public void GIVEN_on_page_1_page_size_2_results_3_THEN_correct_string_returned() {
+    	// Arrange
+    	when(model.getResultsNumber()).thenReturn(3);
+    	when(model.getPageSize()).thenReturn(2);
+    	when(model.getPage()).thenReturn(1);
+    	
+    	// Act
+    	viewModel = new JournalViewModel(model);
+    	String resultInfo = viewModel.getResultsInfo();
+    	
+    	// Assert
+    	assertEquals("Entries 1-2 of 3", resultInfo);
+    }
+    
+    @Test
+    public void GIVEN_on_page_2_page_size_2_results_3_THEN_correct_string_returned() {
+    	// Arrange
+    	when(model.getResultsNumber()).thenReturn(3);
+    	when(model.getPageSize()).thenReturn(2);
+    	when(model.getPage()).thenReturn(2);
+    	
+    	// Act
+    	viewModel = new JournalViewModel(model);
+    	String resultInfo = viewModel.getResultsInfo();
+    	
+    	// Assert
+    	assertEquals("Entries 3-3 of 3", resultInfo);
+    }
+    
+    @Test
+    public void GIVEN_on_page_2_page_size_15_results_45_THEN_correct_string_returned() {
+    	// Arrange
+    	when(model.getResultsNumber()).thenReturn(45);
+    	when(model.getPageSize()).thenReturn(15);
+    	when(model.getPage()).thenReturn(2);
+    	
+    	// Act
+    	viewModel = new JournalViewModel(model);
+    	String resultInfo = viewModel.getResultsInfo();
+    	
+    	// Assert
+    	assertEquals("Entries 16-30 of 45", resultInfo);
+    }
+    
+    @Test
+    public void GIVEN_on_page_3_page_size_15_results_46_THEN_correct_string_returned() {
+    	// Arrange
+    	when(model.getResultsNumber()).thenReturn(46);
+    	when(model.getPageSize()).thenReturn(15);
+    	when(model.getPage()).thenReturn(3);
+    	
+    	// Act
+    	viewModel = new JournalViewModel(model);
+    	String resultInfo = viewModel.getResultsInfo();
+    	
+    	// Assert
+    	assertEquals("Entries 31-45 of 46", resultInfo);
+    }
+    
+    @Test
+    public void GIVEN_on_page_4_page_size_15_results_46_THEN_correct_string_returned() {
+    	// Arrange
+    	when(model.getResultsNumber()).thenReturn(46);
+    	when(model.getPageSize()).thenReturn(15);
+    	when(model.getPage()).thenReturn(4);
+    	
+    	// Act
+    	viewModel = new JournalViewModel(model);
+    	String resultInfo = viewModel.getResultsInfo();
+    	
+    	// Assert
+    	assertEquals("Entries 46-46 of 46", resultInfo);
+    }
+    
 }
