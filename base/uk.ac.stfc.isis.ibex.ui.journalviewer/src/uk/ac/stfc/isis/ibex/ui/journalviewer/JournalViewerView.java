@@ -82,7 +82,7 @@ public class JournalViewerView {
     private static final Display DISPLAY = Display.getCurrent();
 
     private Button btnRefresh;
-    private Spinner spinnerPageNumber;
+    private Text textPageNumber;
     private Button btnNewerPage;
     private Button btnOlderPage;
     private SearchInput searchInput;
@@ -123,7 +123,6 @@ public class JournalViewerView {
         Composite controls = new Composite(parent, SWT.FILL);
         RowLayout rlControls = new RowLayout(SWT.HORIZONTAL);
         rlControls.center = true;
-        RowData data = new RowData();
         controls.setLayout(rlControls);
         controls.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
@@ -136,18 +135,18 @@ public class JournalViewerView {
         lblResults = new Label(basicControls, SWT.LEFT | SWT.HORIZONTAL | SWT.BORDER);
         lblResults.setText("placeholder");
         lblResults.setToolTipText("Currently displayed entries out of total.");
-    	data = new RowData();
-    	data.width = 200;
-    	lblResults.setLayoutData(data);
+        RowData lblResultsData = new RowData();
+        lblResultsData.width = 200;
+    	lblResults.setLayoutData(lblResultsData);
 
         btnNewerPage = new Button(basicControls, SWT.NONE);
         btnNewerPage.setText(" < Newer ");
         btnNewerPage.setToolTipText("Go to newer entries.");
-        
-        spinnerPageNumber = new Spinner(basicControls, SWT.BORDER);
-        spinnerPageNumber.setMinimum(1);
-        spinnerPageNumber.setMaximum(1);
-        spinnerPageNumber.setToolTipText("Page number (1 is newest).");
+
+        textPageNumber = new Text(basicControls, SWT.BORDER);
+        RowData textPageNumberData = new RowData();
+        textPageNumberData.width = 25;
+        textPageNumber.setLayoutData(textPageNumberData);
 
         btnOlderPage = new Button(basicControls, SWT.NONE);
         btnOlderPage.setText(" Older > ");
@@ -270,7 +269,7 @@ public class JournalViewerView {
         setProgressIndicatorsVisible(true);
         model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
     }
-    
+
     /**
      * Updates the sort indicator arrow to the currently sorted column
      */
@@ -293,7 +292,7 @@ public class JournalViewerView {
     }
     
     private void resetPageNumber() {
-        DISPLAY.asyncExec(() -> spinnerPageNumber.setSelection(1));
+        DISPLAY.asyncExec(() -> textPageNumber.setText("1"));
     }
 
     private void bind() {
@@ -301,9 +300,9 @@ public class JournalViewerView {
                 BeanProperties.value("message").observe(model));
         bindingContext.bindValue(WidgetProperties.text().observe(lblLastUpdate),
                 BeanProperties.value("lastUpdate").observe(model));
-        bindingContext.bindValue(WidgetProperties.maximum().observe(spinnerPageNumber),
-                BeanProperties.value("pageMax").observe(model));
-        bindingContext.bindValue(WidgetProperties.spinnerSelection().observe(spinnerPageNumber), 
+        bindingContext.bindValue(WidgetProperties.text().observe(textPageNumber), 
+        		BeanProperties.value("pageNumber").observe(model));
+        bindingContext.bindValue(WidgetProperties.tooltipText().observe(textPageNumber), 
         		BeanProperties.value("pageNumber").observe(model));
         bindingContext.bindValue(WidgetProperties.text().observe(error),
                 BeanProperties.value("errorMessage").observe(model));
@@ -315,17 +314,19 @@ public class JournalViewerView {
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnSearch),
                 BeanProperties.value("enableOrDisableButton").observe(model));
 
-        spinnerPageNumber.addListener(SWT.Selection, e -> {
-            setProgressIndicatorsVisible(true);
-            model.setPageNumber(spinnerPageNumber.getSelection()).thenAccept(ignored -> setProgressIndicatorsVisible(false));
-        });
+//        textPageNumber.addListener(SWT.Selection, e -> {
+//            setProgressIndicatorsVisible(true);
+//            model.setPageNumber(Integer.parseInt(textPageNumber.getText())).thenAccept(ignored -> setProgressIndicatorsVisible(false));
+//        });
 
         btnNewerPage.addListener(SWT.Selection, e -> {
-        	model.newerPage();
+        	setProgressIndicatorsVisible(true);
+        	model.setPageNumber(model.newerPageNumber()).thenAccept(ignored -> setProgressIndicatorsVisible(false));
         });
 
         btnOlderPage.addListener(SWT.Selection, e -> {
-        	model.olderPage();
+        	setProgressIndicatorsVisible(true);
+        	model.setPageNumber(model.olderPageNumber()).thenAccept(ignored -> setProgressIndicatorsVisible(false));
         });
 
         btnRefresh.addListener(SWT.Selection, e -> {

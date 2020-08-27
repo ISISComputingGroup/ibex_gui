@@ -110,14 +110,14 @@ public class JournalViewModel extends ModelObject {
 	private void setLastUpdate(String lastUpdate) {
 		firePropertyChange("lastUpdate", this.lastUpdate, this.lastUpdate = lastUpdate);
 	}
-	
+
 	/**
 	 * @return The current number of result entries.
 	 */
 	public int getResultsNumber() {
 		return model.getResultsNumber();
 	}
-	
+
     /**
      * Returns the number of total current results and the currently displayed results depending on page and page size.
      * @return The number of total results and currently displayed entries.
@@ -262,18 +262,22 @@ public class JournalViewModel extends ModelObject {
 		return model.getPage();
 	}
 	
-	public void newerPage() {
+	public int newerPageNumber() {
     	int newerPageNumber = model.getPage() - 1;
+    	int returnVal = model.getPage();
     	if(newerPageNumber >= 1) {
-        	setPageNumber(newerPageNumber);
+    		returnVal = newerPageNumber;
     	}
+    	return returnVal;
 	}
 	
-	public void olderPage() {
+	public int olderPageNumber() {
     	int olderPageNumber = model.getPage() + 1;
+    	int returnVal = model.getPage();
     	if(olderPageNumber <= model.getPageMax()) {
-        	setPageNumber(olderPageNumber);
+        	returnVal = olderPageNumber;
     	}
+    	return returnVal;
 	}
 	
 	/**
