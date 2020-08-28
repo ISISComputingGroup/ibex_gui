@@ -60,6 +60,7 @@ import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.tables.NullComparator;
+import uk.ac.stfc.isis.ibex.validators.NumbersOnlyListener;
 
 /**
  * Journal viewer main view.
@@ -313,6 +314,8 @@ public class JournalViewerView {
 
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnSearch),
                 BeanProperties.value("enableOrDisableButton").observe(model));
+
+        textPageNumber.addVerifyListener(new NumbersOnlyListener());
 
 //        textPageNumber.addListener(SWT.Selection, e -> {
 //            setProgressIndicatorsVisible(true);
