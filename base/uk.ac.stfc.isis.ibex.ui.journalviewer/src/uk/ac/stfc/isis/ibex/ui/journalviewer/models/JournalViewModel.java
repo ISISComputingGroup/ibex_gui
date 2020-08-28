@@ -50,7 +50,7 @@ public class JournalViewModel extends ModelObject {
 	private String lastUpdate;
 	private String resultsInfo;
 	private int pageMax;
-	private int pageNumber;
+	private int pageNumber = 1;
 	private int toNumber = 0;
 	private int fromNumber = 0;
 	private static final String NO_ERROR = "";
@@ -252,7 +252,7 @@ public class JournalViewModel extends ModelObject {
 	 * @return a CompletableFuture
 	 */
 	public CompletableFuture<Void> setPageNumber(int pageNumber) {
-		return model.setPage(pageNumber);
+		return model.setPageNumber(pageNumber);
 	}
 
 	/**
@@ -262,22 +262,30 @@ public class JournalViewModel extends ModelObject {
 		return model.getPage();
 	}
 	
-	public int newerPageNumber() {
+	public CompletableFuture<Void> newerPage() {
     	int newerPageNumber = model.getPage() - 1;
-    	int returnVal = model.getPage();
+    	CompletableFuture<Void> future = new CompletableFuture<>();
+    	
     	if(newerPageNumber >= 1) {
-    		returnVal = newerPageNumber;
+    		future = setPageNumber(newerPageNumber);
+    	} else {
+    		future.complete(null);
     	}
-    	return returnVal;
+    	
+    	return future;
 	}
 	
-	public int olderPageNumber() {
+	public CompletableFuture<Void> olderPage() {
     	int olderPageNumber = model.getPage() + 1;
-    	int returnVal = model.getPage();
+    	CompletableFuture<Void> future = new CompletableFuture<>();
+    	
     	if(olderPageNumber <= model.getPageMax()) {
-        	returnVal = olderPageNumber;
+    		future = setPageNumber(olderPageNumber);
+    	} else {
+    		future.complete(null);
     	}
-    	return returnVal;
+    	
+    	return future;
 	}
 	
 	/**

@@ -110,7 +110,7 @@ public class JournalModel extends ModelObject {
                 String password = preferenceStore.getString(PreferenceConstants.P_JOURNAL_SQL_PASSWORD);
 
                 connection = Rdb.connectToDatabase(schema, user, password).getConnection();
-                
+
                 setMessage("");
                 setLastUpdate(new Date());
                 searchUpdateRuns(connection, search);
@@ -137,6 +137,7 @@ public class JournalModel extends ModelObject {
      */
     public void clearModel() {
     	setRuns(Collections.<JournalRow>emptyList());
+    	this.updatePageNumber(1);
         lastUpdate = null;
     }
     
@@ -302,7 +303,11 @@ public class JournalModel extends ModelObject {
      * @param pageNumber The new page number.
      * @return a CompleteableFuture
      */
-    public CompletableFuture<Void> setPage(int pageNumber) {
+    public void updatePageNumber(int pageNumber) {
+		firePropertyChange("pageNumber", this.pageNumber, this.pageNumber = pageNumber);
+    }
+    
+    public CompletableFuture<Void> setPageNumber(int pageNumber) {
         this.pageNumber = pageNumber;
         return refresh();
     }
