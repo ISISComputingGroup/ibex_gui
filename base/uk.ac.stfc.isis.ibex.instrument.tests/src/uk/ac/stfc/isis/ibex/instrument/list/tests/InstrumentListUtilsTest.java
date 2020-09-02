@@ -30,6 +30,8 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.common.base.Optional;
+
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.list.InstrumentListUtils;
@@ -243,8 +245,42 @@ public class InstrumentListUtilsTest {
 
     }
 
+    @Test
+    public void GIVEN_local_instrument_list_WHEN_instrument_list_has_more_instruments_THEN_only_local_instruments_shown() {
+    	// Arrange
+        Collection<InstrumentInfo> instList = new ArrayList<>();
+        instList.add(instrument1);
+        instList.add(instrument2);
+        
+    	ArrayList<String> localInstList = new ArrayList<String>();
+    	
+    	localInstList.add(instrument1.name());
+    	
+    	Collection<InstrumentInfo> expected = new ArrayList<>();
+    	expected.add(instrument1);
+    	
+    	// Assert
+    	assertEquals(expected, doFiltering(instList, Optional.of(localInstList)));
+    	
+    }
+    
+    @Test
+    public void GIVEN_absent_local_instrument_list_THEN_all_instruments_shown() {
+    	// Arrange
+        Collection<InstrumentInfo> instList = new ArrayList<>();
+        instList.add(instrument1);
+        instList.add(instrument2);
+            	
+    	// Assert
+    	assertEquals(instList, doFiltering(instList, Optional.absent()));
+    }
+    
     private Collection<InstrumentInfo> doFiltering(Collection<InstrumentInfo> input) {
         return InstrumentListUtils.filterValidInstruments(input, mockLogger);
+    }
+    
+    private Collection<InstrumentInfo> doFiltering(Collection<InstrumentInfo> input, Optional<ArrayList<String>> localInstList){
+    	return InstrumentListUtils.filterValidInstruments(input, mockLogger, localInstList);
     }
 }
 

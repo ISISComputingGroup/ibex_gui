@@ -23,9 +23,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.Logger;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -56,7 +58,8 @@ public final class InstrumentListUtils {
      * @return the valid instruments extracted from the input observable
      */
     public static Collection<InstrumentInfo> filterValidInstruments(
-            Collection<InstrumentInfo> instruments, Logger logger) {
+            Collection<InstrumentInfo> instruments, Logger logger,
+            Optional<ArrayList<String>> localInstList) {
         if (instruments == null) {
             logger.warn("Error while parsing instrument list PV - no instrument could be read");
             return new ArrayList<>();
@@ -65,9 +68,20 @@ public final class InstrumentListUtils {
         Iterable<InstrumentInfo> validInstruments = Iterables.filter(instruments, new Predicate<InstrumentInfo>() {
             @Override
             public boolean apply(InstrumentInfo item) {
-                return item.name() != null;
+                boolean inWhiteList;
+                boolean nameNotNull = item.name() != null;
+                
+                if ( localInstList.isPresent() ) {
+                	inWhiteList = localInstList.get().contains(item.name());
+                } else {
+                	// No white list supplied, so always true
+                	inWhiteList = true;
+                }
+                
+            	return nameNotNull & inWhiteList;
             }
         });
+        
 
         Collection<InstrumentInfo> returnValue = Lists.newArrayList(validInstruments);
         if (returnValue.size() < instruments.size()) {
@@ -108,5 +122,9 @@ public final class InstrumentListUtils {
         instrumentsAlphabetical.add(0, topInstrument);
         return instrumentsAlphabetical;
     }
+
+	public static Collection<InstrumentInfo> filterValidInstruments(Collection<InstrumentInfo> input, Logger logger) {
+		return filterValidInstruments(input, logger, Optional.absent());
+	}
 }
 
