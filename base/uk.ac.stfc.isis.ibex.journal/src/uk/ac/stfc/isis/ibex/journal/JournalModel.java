@@ -197,10 +197,10 @@ public class JournalModel extends ModelObject {
     	if (!rs.next()) {
     		throw new RuntimeException("No results returned from SQL query to count rows.");
     	}
-
+    	
     	setPageMax(calcTotalPages(rs.getInt(1)));
-	    setResultsNumber(rs.getInt(1));
-	    rs.close();
+    	setResultsNumber(rs.getInt(1));
+    	rs.close();
     }
     
     /**
@@ -303,96 +303,96 @@ public class JournalModel extends ModelObject {
      * @param pageNumber The new page number.
      * @return a CompleteableFuture
      */
-    public void updatePageNumber(int pageNumber) {
+	public void updatePageNumber(int pageNumber) {
 		firePropertyChange("pageNumber", this.pageNumber, this.pageNumber = pageNumber);
-    }
-    
-    public CompletableFuture<Void> setPageNumber(int pageNumber) {
-    	updatePageNumber(pageNumber);
-        return refresh();
-    }
-
-    /**
-     * Returns the current page number.
-     * @return The page number.
-     */
-    public int getPage() {
-        return pageNumber;
-    }
-    
-    /**
-     * Returns the PAGE_SIZE constant
-     * @return PAGE_SIZE constant
-     */
-    public int getPageSize() {
-    	return PAGE_SIZE;
-    }
-    
-    public int calcTotalPages(int totalResults) {
-    	int returnVal = (int) Math.ceil(totalResults / (double) this.getPageSize());
-    	if (returnVal == 0) { returnVal = 1; }
-    	return returnVal;
 	}
-    
-    /**
-     * Returns the number of entry results from last run.
-     * @return Number of entry results.
-     */
-    public int getResultsNumber() {
-    	return resultsNumber;
-    }
-    
-    /**
-     * Sets the total results number.
-     * 
-     * @param totalResults The number of results.
-     * @return a CompleteableFuture
-     */
-    private void setResultsNumber(int resultsNumber) {
-    	firePropertyChange("resultsNumber", this.resultsNumber, this.resultsNumber = resultsNumber);	
-    }
-    
-    /**
-     * The maximum page number that can be selected.
-     * @param max the new maximum selectable page number
-     */
-    public void setPageMax(int max) {
-    	firePropertyChange("pageMax", this.pageMax, this.pageMax = max);
-    }
-
-    /**
-     * Gets the maximum page number with data in it.
-     * @return the maximum page number
-     */
+	
+	public CompletableFuture<Void> setPageNumber(int pageNumber) {
+		updatePageNumber(pageNumber);
+		return refresh();
+	}
+	
+	/**
+	 * Returns the current page number.
+	 * @return The page number.
+	 */
+	public int getPage() {
+	    return pageNumber;
+	}
+	
+	/**
+	 * Returns the PAGE_SIZE constant
+	 * @return PAGE_SIZE constant
+	 */
+	public int getPageSize() {
+		return PAGE_SIZE;
+	}
+	
+	public int calcTotalPages(int totalResults) {
+		int returnVal = (int) Math.ceil(totalResults / (double) this.getPageSize());
+		if (returnVal == 0) { returnVal = 1; }
+		return returnVal;
+	}
+	
+	/**
+	 * Returns the number of entry results from last run.
+	 * @return Number of entry results.
+	 */
+	public int getResultsNumber() {
+		return resultsNumber;
+	}
+	
+	/**
+	 * Sets the total results number.
+	 * 
+	 * @param totalResults The number of results.
+	 * @return a CompleteableFuture
+	 */
+	private void setResultsNumber(int resultsNumber) {
+		firePropertyChange("resultsNumber", this.resultsNumber, this.resultsNumber = resultsNumber);	
+	}
+	
+	/**
+	 * The maximum page number that can be selected.
+	 * @param max the new maximum selectable page number
+	 */
+	public void setPageMax(int max) {
+		firePropertyChange("pageMax", this.pageMax, this.pageMax = max);
+	}
+	
+	/**
+	 * Gets the maximum page number with data in it.
+	 * @return the maximum page number
+	 */
 	public int getPageMax() {
 		return pageMax;
 	}
+	
+	/**
+	 * @return the searchableFields
+	 */
+	public List<JournalField> getSearchableFields() {
+	    return SEARCHABLE_FIELDS;
+	}
+	
+	/**
+	 * Sorts by the specified field, and swaps the direction if already active.
+	 * @param field The field to sort by
+	 * @return a CompleteableFuture
+	 */
+	public CompletableFuture<Void> sortBy(JournalField field) {
+	    JournalSort primarySort = activeSearch.getPrimarySort();
+	    
+	    if (primarySort.sortField == field) {
+	        primarySort.swapDirection();
+	    } else {
+	        activeSearch.clearSorts();
+	        if (field != JournalField.RUN_NUMBER) {
+	            activeSearch.addSort(field);
+	        }
+	        activeSearch.addSort(JournalField.RUN_NUMBER);
+	    }
 
-    /**
-     * @return the searchableFields
-     */
-    public List<JournalField> getSearchableFields() {
-        return SEARCHABLE_FIELDS;
-    }
-
-    /**
-     * Sorts by the specified field, and swaps the direction if already active.
-     * @param field The field to sort by
-     * @return a CompleteableFuture
-     */
-    public CompletableFuture<Void> sortBy(JournalField field) {
-        JournalSort primarySort = activeSearch.getPrimarySort();
-        
-        if (primarySort.sortField == field) {
-            primarySort.swapDirection();
-        } else {
-            activeSearch.clearSorts();
-            if (field != JournalField.RUN_NUMBER) {
-                activeSearch.addSort(field);
-            }
-            activeSearch.addSort(JournalField.RUN_NUMBER);
-        }
-
-        return refresh();
-    }
+    return refresh();
+}
 }

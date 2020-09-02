@@ -117,25 +117,25 @@ public class JournalViewModel extends ModelObject {
 	public int getResultsNumber() {
 		return model.getResultsNumber();
 	}
-
-    /**
-     * Returns the number of total current results and the currently displayed results depending on page and page size.
-     * @return The number of total results and currently displayed entries.
-     */
-    public String getResultsInfo() {
-    	int entryFrom;
-    	int entryTo;
-
-    	if (model.getResultsNumber() != 0 && model.getPageSize() != 0) {
+	
+	/**
+	 * Returns the number of total current results and the currently displayed results depending on page and page size.
+	 * @return The number of total results and currently displayed entries.
+	 */
+	public String getResultsInfo() {
+		int entryFrom;
+		int entryTo;
+	
+		if (model.getResultsNumber() != 0 && model.getPageSize() != 0) {
 	    	entryFrom = (model.getPage() - 1) * model.getPageSize() + 1;
 	    	entryTo = entryFrom + model.getPageSize() - 1;
 	    	if (entryTo > model.getResultsNumber()) { entryTo = model.getResultsNumber(); }
-    	} else {
-    		entryFrom = entryTo = 0;
-    	}
-
-    	return String.format("Entries %d-%d of %d", entryFrom, entryTo, model.getResultsNumber());
-    }
+		} else {
+			entryFrom = entryTo = 0;
+		}
+	
+		return String.format("Entries %d-%d of %d", entryFrom, entryTo, model.getResultsNumber());
+	}
 	
 	private void setResultsInfo(String resultsInfo) {
 		firePropertyChange("resultsInfo", this.resultsInfo, this.resultsInfo = resultsInfo);

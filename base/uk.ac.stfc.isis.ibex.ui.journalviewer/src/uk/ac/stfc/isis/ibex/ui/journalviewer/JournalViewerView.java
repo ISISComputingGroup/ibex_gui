@@ -128,66 +128,66 @@ public class JournalViewerView {
         controls.setLayout(rlControls);
         controls.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-        basicControls = new Composite(controls, SWT.NONE);
-        RowLayout rlBasicControls = new RowLayout(SWT.HORIZONTAL);
-        rlBasicControls.marginTop = 7;
-        rlBasicControls.center = true;
-        basicControls.setLayout(rlBasicControls);
-
-        lblResults = new Label(basicControls, SWT.LEFT | SWT.HORIZONTAL | SWT.BORDER);
-        lblResults.setText("placeholder");
-        lblResults.setToolTipText("Currently displayed entries out of total.");
-        RowData lblResultsData = new RowData();
-        lblResultsData.width = 150;
-    	lblResults.setLayoutData(lblResultsData);
-
-    	btnNewestPage = new Button(basicControls, SWT.NONE);
-    	btnNewestPage.setText("<<");
-        btnNewestPage.setToolTipText("Most recent entries.");
-        
-        btnNewerPage = new Button(basicControls, SWT.NONE);
-        btnNewerPage.setText(" < Newer ");
-        btnNewerPage.setToolTipText("Go to newer entries.");
-
-        textPageNumber = new Text(basicControls, SWT.BORDER);
-        RowData textPageNumberData = new RowData();
-        textPageNumberData.width = 25;
-        textPageNumber.setLayoutData(textPageNumberData);
-
-        btnOlderPage = new Button(basicControls, SWT.NONE);
-        btnOlderPage.setText(" Older > ");
-        btnOlderPage.setToolTipText("Go to older entries.");
-        
-        btnOldestPage = new Button(basicControls, SWT.NONE);
-        btnOldestPage.setText(">>");
-        btnOldestPage.setToolTipText("Least recent entries.");
-
-        btnRefresh = new Button(basicControls, SWT.NONE);
-        btnRefresh.setText("Refresh data");
-
-        searchControls = new Composite(controls, SWT.NONE);
-        RowLayout rlSearchControls = new RowLayout(SWT.HORIZONTAL);
-        rlSearchControls.center = true;
-        searchControls.setLayout(rlSearchControls);
-
-        searchInput = new SearchInput(searchControls, model);
-        RowLayout rlFilterControl = new RowLayout(SWT.HORIZONTAL);
-        searchInput.setLayout(rlFilterControl);
-
-        btnSearch = new Button(searchControls, SWT.NONE);
-        btnSearch.setLayoutData(new RowData(80, SWT.DEFAULT));
-        btnSearch.setText("Search");
-
-        btnClear = new Button(searchControls, SWT.NONE);
-        btnClear.setText("Clear");
-
-        progressBar = new ProgressBar(searchControls, SWT.INDETERMINATE);
-        progressBar.setMaximum(80);
-        progressBar.setLayoutData(new RowData(100, SWT.DEFAULT));
-
-        error = new Label(searchControls, SWT.NONE);
-        error.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_RED));
-        error.setLayoutData(new RowData(200, SWT.DEFAULT));
+	    basicControls = new Composite(controls, SWT.NONE);
+	    RowLayout rlBasicControls = new RowLayout(SWT.HORIZONTAL);
+	    rlBasicControls.marginTop = 7;
+	    rlBasicControls.center = true;
+	    basicControls.setLayout(rlBasicControls);
+	
+	    lblResults = new Label(basicControls, SWT.LEFT | SWT.HORIZONTAL | SWT.BORDER);
+	    lblResults.setText("placeholder");
+	    lblResults.setToolTipText("Currently displayed entries out of total.");
+	    RowData lblResultsData = new RowData();
+	    lblResultsData.width = 150;
+		lblResults.setLayoutData(lblResultsData);
+	
+		btnNewestPage = new Button(basicControls, SWT.NONE);
+		btnNewestPage.setText("<<");
+	    btnNewestPage.setToolTipText("Most recent entries.");
+	    
+	    btnNewerPage = new Button(basicControls, SWT.NONE);
+	    btnNewerPage.setText(" < Newer ");
+	    btnNewerPage.setToolTipText("Go to newer entries.");
+	
+	    textPageNumber = new Text(basicControls, SWT.BORDER);
+	    RowData textPageNumberData = new RowData();
+	    textPageNumberData.width = 25;
+	    textPageNumber.setLayoutData(textPageNumberData);
+	
+	    btnOlderPage = new Button(basicControls, SWT.NONE);
+	    btnOlderPage.setText(" Older > ");
+	    btnOlderPage.setToolTipText("Go to older entries.");
+	    
+	    btnOldestPage = new Button(basicControls, SWT.NONE);
+	    btnOldestPage.setText(">>");
+	    btnOldestPage.setToolTipText("Least recent entries.");
+	
+	    btnRefresh = new Button(basicControls, SWT.NONE);
+	    btnRefresh.setText("Refresh data");
+	
+	    searchControls = new Composite(controls, SWT.NONE);
+	    RowLayout rlSearchControls = new RowLayout(SWT.HORIZONTAL);
+	    rlSearchControls.center = true;
+	    searchControls.setLayout(rlSearchControls);
+	
+	    searchInput = new SearchInput(searchControls, model);
+	    RowLayout rlFilterControl = new RowLayout(SWT.HORIZONTAL);
+	    searchInput.setLayout(rlFilterControl);
+	
+	    btnSearch = new Button(searchControls, SWT.NONE);
+	    btnSearch.setLayoutData(new RowData(80, SWT.DEFAULT));
+	    btnSearch.setText("Search");
+	
+	    btnClear = new Button(searchControls, SWT.NONE);
+	    btnClear.setText("Clear");
+	
+	    progressBar = new ProgressBar(searchControls, SWT.INDETERMINATE);
+	    progressBar.setMaximum(80);
+	    progressBar.setLayoutData(new RowData(100, SWT.DEFAULT));
+	
+	    error = new Label(searchControls, SWT.NONE);
+	    error.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_RED));
+	    error.setLayoutData(new RowData(200, SWT.DEFAULT));
 
         for (final JournalField property : JournalField.values()) {
             final Button checkbox = new Button(selectedContainer, SWT.CHECK);
@@ -306,23 +306,23 @@ public class JournalViewerView {
     }
 
     private void bind() {
-        bindingContext.bindValue(WidgetProperties.text().observe(lblError),
-                BeanProperties.value("message").observe(model));
-        bindingContext.bindValue(WidgetProperties.text().observe(lblLastUpdate),
-                BeanProperties.value("lastUpdate").observe(model));
-        bindingContext.bindValue(WidgetProperties.text().observe(textPageNumber), 
-        		BeanProperties.value("pageNumber").observe(model));
-        bindingContext.bindValue(WidgetProperties.tooltipText().observe(textPageNumber), 
-        		BeanProperties.value("pageNumber").observe(model));
-        bindingContext.bindValue(WidgetProperties.text().observe(error),
-                BeanProperties.value("errorMessage").observe(model));
-        bindingContext.bindValue(WidgetProperties.text().observe(lblResults),
-        		BeanProperties.value("resultsInfo").observe(model));
-        bindingContext.bindValue(WidgetProperties.tooltipText().observe(lblResults),
-        		BeanProperties.value("resultsInfo").observe(model));
-
-        bindingContext.bindValue(WidgetProperties.enabled().observe(btnSearch),
-                BeanProperties.value("enableOrDisableButton").observe(model));
+	    bindingContext.bindValue(WidgetProperties.text().observe(lblError),
+	            BeanProperties.value("message").observe(model));
+	    bindingContext.bindValue(WidgetProperties.text().observe(lblLastUpdate),
+	            BeanProperties.value("lastUpdate").observe(model));
+	    bindingContext.bindValue(WidgetProperties.text().observe(textPageNumber), 
+	    		BeanProperties.value("pageNumber").observe(model));
+	    bindingContext.bindValue(WidgetProperties.tooltipText().observe(textPageNumber), 
+	    		BeanProperties.value("pageNumber").observe(model));
+	    bindingContext.bindValue(WidgetProperties.text().observe(error),
+	            BeanProperties.value("errorMessage").observe(model));
+	    bindingContext.bindValue(WidgetProperties.text().observe(lblResults),
+	    		BeanProperties.value("resultsInfo").observe(model));
+	    bindingContext.bindValue(WidgetProperties.tooltipText().observe(lblResults),
+	    		BeanProperties.value("resultsInfo").observe(model));
+	
+	    bindingContext.bindValue(WidgetProperties.enabled().observe(btnSearch),
+	            BeanProperties.value("enableOrDisableButton").observe(model));
 
         textPageNumber.addVerifyListener(new NumbersOnlyListener());
         
