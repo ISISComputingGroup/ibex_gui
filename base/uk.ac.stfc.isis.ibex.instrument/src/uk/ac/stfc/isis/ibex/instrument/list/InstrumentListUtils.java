@@ -59,7 +59,7 @@ public final class InstrumentListUtils {
      */
     public static Collection<InstrumentInfo> filterValidInstruments(
             Collection<InstrumentInfo> instruments, Logger logger,
-            Optional<ArrayList<String>> localInstList) {
+            Optional<ArrayList<String>> instrumentWhitelist) {
         if (instruments == null) {
             logger.warn("Error while parsing instrument list PV - no instrument could be read");
             return new ArrayList<>();
@@ -68,17 +68,18 @@ public final class InstrumentListUtils {
         Iterable<InstrumentInfo> validInstruments = Iterables.filter(instruments, new Predicate<InstrumentInfo>() {
             @Override
             public boolean apply(InstrumentInfo item) {
-                boolean inWhiteList;
+                boolean instrumentWhitelisted;
                 boolean nameNotNull = item.name() != null;
                 
-                if ( localInstList.isPresent() ) {
-                	inWhiteList = localInstList.get().contains(item.name());
+                if (!instrumentWhitelist.isPresent()) {
+                	instrumentWhitelisted = true;
+                } else if (instrumentWhitelist.get().size() == 0) {
+                	instrumentWhitelisted = true;
                 } else {
-                	// No white list supplied, so always true
-                	inWhiteList = true;
+                	instrumentWhitelisted = instrumentWhitelist.get().contains(item.name());
                 }
                 
-            	return nameNotNull & inWhiteList;
+            	return nameNotNull & instrumentWhitelisted;
             }
         });
         

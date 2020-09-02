@@ -265,12 +265,25 @@ public class InstrumentListUtilsTest {
     }
     
     @Test
-    public void GIVEN_absent_local_instrument_list_THEN_all_instruments_shown() {
+    public void GIVEN_empty_local_instrument_list_THEN_all_instruments_shown() {
     	// Arrange
         Collection<InstrumentInfo> instList = new ArrayList<>();
         instList.add(instrument1);
         instList.add(instrument2);
-            	
+        
+    	ArrayList<String> localInstList = new ArrayList<String>();
+    	
+    	// Assert
+    	assertEquals(instList, doFiltering(instList, Optional.of(localInstList)));
+    }
+    
+    @Test
+    public void GIVEN_absent_instrument_whitelist_THEN_all_instruments_shown( ) {
+    	// Arrange
+        Collection<InstrumentInfo> instList = new ArrayList<>();
+        instList.add(instrument1);
+        instList.add(instrument2);
+    	
     	// Assert
     	assertEquals(instList, doFiltering(instList, Optional.absent()));
     }
