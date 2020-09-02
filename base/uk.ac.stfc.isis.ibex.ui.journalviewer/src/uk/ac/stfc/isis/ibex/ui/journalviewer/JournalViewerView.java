@@ -30,10 +30,15 @@ import org.eclipse.core.databinding.observable.map.ObservableMap;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowData;
@@ -41,9 +46,9 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ProgressBar;
-import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -316,20 +321,34 @@ public class JournalViewerView {
                 BeanProperties.value("enableOrDisableButton").observe(model));
 
         textPageNumber.addVerifyListener(new NumbersOnlyListener());
-
-//        textPageNumber.addListener(SWT.Selection, e -> {
-//            setProgressIndicatorsVisible(true);
-//            model.setPageNumber(Integer.parseInt(textPageNumber.getText())).thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        
+        textPageNumber.addListener(SWT.Traverse, e -> {
+        	if (e.detail == SWT.TRAVERSE_RETURN) {
+        		setProgressIndicatorsVisible(true);
+        		model.setPageNumber(Integer.parseInt(textPageNumber.getText()))
+        							.thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        	}
+        	
+        });
+        
+//        textPageNumber.addListener(SWT.MouseDown, e -> {
+//        	System.out.println("Mouse down");
+//        	//textPageNumber.selectAll();
 //        });
-
+//        
+//        textPageNumber.addListener(SWT.FocusIn, e -> {
+//        	System.out.println("FOCUSED");
+//        	textPageNumber.selectAll();
+//        });
+        
         btnNewerPage.addListener(SWT.Selection, e -> {
         	setProgressIndicatorsVisible(true);
-        	model.setPageNumber(model.newerPageNumber()).thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        	model.newerPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
         });
 
         btnOlderPage.addListener(SWT.Selection, e -> {
         	setProgressIndicatorsVisible(true);
-        	model.setPageNumber(model.olderPageNumber()).thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        	model.olderPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
         });
 
         btnRefresh.addListener(SWT.Selection, e -> {

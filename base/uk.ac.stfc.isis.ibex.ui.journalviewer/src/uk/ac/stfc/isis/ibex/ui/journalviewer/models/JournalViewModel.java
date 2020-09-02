@@ -252,7 +252,15 @@ public class JournalViewModel extends ModelObject {
 	 * @return a CompletableFuture
 	 */
 	public CompletableFuture<Void> setPageNumber(int pageNumber) {
-		return model.setPageNumber(pageNumber);
+		CompletableFuture<Void> future = new CompletableFuture<>();
+		if (pageNumber >= 1 && pageNumber <= model.getPageMax()) {
+			future = model.setPageNumber(pageNumber);
+		} else {
+			future.complete(null);
+		}
+		setMessage(String.format("Page [%d] is out of bounds", pageNumber));
+		
+		return future;
 	}
 
 	/**
@@ -262,30 +270,22 @@ public class JournalViewModel extends ModelObject {
 		return model.getPage();
 	}
 	
+	/**
+	 * Calls {@link JournalViewModel#setPageNumber(int)} to lower the current page number by 1.
+	 * @return a CompletableFuture.
+	 */
 	public CompletableFuture<Void> newerPage() {
     	int newerPageNumber = model.getPage() - 1;
-    	CompletableFuture<Void> future = new CompletableFuture<>();
-    	
-    	if(newerPageNumber >= 1) {
-    		future = setPageNumber(newerPageNumber);
-    	} else {
-    		future.complete(null);
-    	}
-    	
-    	return future;
+    	return setPageNumber(newerPageNumber);
 	}
 	
+	/**
+	 * Calls {@link JournalViewModel#setPageNumber(int)} to increase the current page number by 1.
+	 * @return a CompletableFuture.
+	 */
 	public CompletableFuture<Void> olderPage() {
     	int olderPageNumber = model.getPage() + 1;
-    	CompletableFuture<Void> future = new CompletableFuture<>();
-    	
-    	if(olderPageNumber <= model.getPageMax()) {
-    		future = setPageNumber(olderPageNumber);
-    	} else {
-    		future.complete(null);
-    	}
-    	
-    	return future;
+    	return setPageNumber(olderPageNumber);
 	}
 	
 	/**
