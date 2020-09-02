@@ -30,15 +30,10 @@ import org.eclipse.core.databinding.observable.map.ObservableMap;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowData;
@@ -46,7 +41,6 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.TableColumn;
@@ -338,18 +332,12 @@ public class JournalViewerView {
         		model.setPageNumber(Integer.parseInt(textPageNumber.getText()))
         							.thenAccept(ignored -> setProgressIndicatorsVisible(false));
         	}
-        	
+        	textPageNumber.selectAll();
         });
         
-//        textPageNumber.addListener(SWT.MouseDown, e -> {
-//        	System.out.println("Mouse down");
-//        	//textPageNumber.selectAll();
-//        });
-//        
-//        textPageNumber.addListener(SWT.FocusIn, e -> {
-//        	System.out.println("FOCUSED");
-//        	textPageNumber.selectAll();
-//        });
+        textPageNumber.addListener(SWT.FocusIn, e -> {
+        	textPageNumber.selectAll();
+        });
         
         btnNewerPage.addListener(SWT.Selection, e -> {
         	setProgressIndicatorsVisible(true);

@@ -308,7 +308,7 @@ public class JournalModel extends ModelObject {
     }
     
     public CompletableFuture<Void> setPageNumber(int pageNumber) {
-        this.pageNumber = pageNumber;
+    	updatePageNumber(pageNumber);
         return refresh();
     }
 
