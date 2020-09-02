@@ -289,6 +289,24 @@ public class JournalViewModel extends ModelObject {
 	}
 	
 	/**
+	 * Calls {@link JournalViewModel#setPageNumber(int)} to set the current page number to minimum.
+	 * @return a CompletableFuture.
+	 */
+	public CompletableFuture<Void> newestPage() {
+    	int newestPageNumber = 1;
+    	return setPageNumber(newestPageNumber);
+	}
+	
+	/**
+	 * Calls {@link JournalViewModel#setPageNumber(int)} to set the current page number to maximum.
+	 * @return a CompletableFuture.
+	 */
+	public CompletableFuture<Void> oldestPage() {
+    	int oldestPageNumber = model.getPageMax();
+    	return setPageNumber(oldestPageNumber);
+	}
+	
+	/**
 	 * @param max The maximum number of pages supported by the journal view.
 	 */
 	public void setPageMax(int max) {

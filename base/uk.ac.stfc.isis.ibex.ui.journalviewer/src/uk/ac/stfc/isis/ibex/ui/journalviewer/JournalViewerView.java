@@ -91,6 +91,8 @@ public class JournalViewerView {
     private Text textPageNumber;
     private Button btnNewerPage;
     private Button btnOlderPage;
+    private Button btnNewestPage;
+    private Button btnOldestPage;
     private SearchInput searchInput;
     private Button btnSearch;
     private ProgressBar progressBar;
@@ -142,9 +144,13 @@ public class JournalViewerView {
         lblResults.setText("placeholder");
         lblResults.setToolTipText("Currently displayed entries out of total.");
         RowData lblResultsData = new RowData();
-        lblResultsData.width = 200;
+        lblResultsData.width = 150;
     	lblResults.setLayoutData(lblResultsData);
 
+    	btnNewestPage = new Button(basicControls, SWT.NONE);
+    	btnNewestPage.setText("<<");
+        btnNewestPage.setToolTipText("Most recent entries.");
+        
         btnNewerPage = new Button(basicControls, SWT.NONE);
         btnNewerPage.setText(" < Newer ");
         btnNewerPage.setToolTipText("Go to newer entries.");
@@ -157,6 +163,10 @@ public class JournalViewerView {
         btnOlderPage = new Button(basicControls, SWT.NONE);
         btnOlderPage.setText(" Older > ");
         btnOlderPage.setToolTipText("Go to older entries.");
+        
+        btnOldestPage = new Button(basicControls, SWT.NONE);
+        btnOldestPage.setText(">>");
+        btnOldestPage.setToolTipText("Least recent entries.");
 
         btnRefresh = new Button(basicControls, SWT.NONE);
         btnRefresh.setText("Refresh data");
@@ -349,6 +359,16 @@ public class JournalViewerView {
         btnOlderPage.addListener(SWT.Selection, e -> {
         	setProgressIndicatorsVisible(true);
         	model.olderPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        });
+        
+        btnNewestPage.addListener(SWT.Selection, e -> {
+        	setProgressIndicatorsVisible(true);
+        	model.newestPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        });
+
+        btnOldestPage.addListener(SWT.Selection, e -> {
+        	setProgressIndicatorsVisible(true);
+        	model.oldestPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
         });
 
         btnRefresh.addListener(SWT.Selection, e -> {
