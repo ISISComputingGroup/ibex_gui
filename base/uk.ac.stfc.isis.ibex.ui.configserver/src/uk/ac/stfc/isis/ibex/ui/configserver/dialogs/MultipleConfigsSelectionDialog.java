@@ -130,20 +130,17 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
 		setItems(names, compOrConfigNamesWithFlags);
 		
 		// show protected configuration message only if relevant (the list has protected configurations)
-		Boolean hasProtectedConfigs = ConfigInfo.hasProtectedConfigs(available);
-		if (hasProtectedConfigs)
-		{
+		Boolean hasProtectedConfigs = ConfigInfo.hasProtectedElement(available);
+		if (hasProtectedConfigs) {
 			Group group = new Group(container, SWT.SHADOW_IN);
 			group.setLayout(new RowLayout(SWT.HORIZONTAL));
-			        
 			
-		    Label messageImageLabel = new Label(group, SWT.NONE);
-	            messageImageLabel.setImage(JFaceResources.
-	                getImage(DLG_IMG_MESSAGE_WARNING)); 
-	
-	        Label messageLabel = new Label(group, SWT.NONE);
-	        messageLabel.setFont(JFaceResources.getDialogFont());
-	        messageLabel.setText("Represents Protected " + getTypeString());
+			Label messageImageLabel = new Label(group, SWT.NONE);
+			messageImageLabel.setImage(JFaceResources.getImage(DLG_IMG_MESSAGE_WARNING)); 
+			
+			Label messageLabel = new Label(group, SWT.NONE);
+			messageLabel.setFont(JFaceResources.getDialogFont());
+			messageLabel.setText("Represents Protected " + getTypeString());
 		}
 			
 	}

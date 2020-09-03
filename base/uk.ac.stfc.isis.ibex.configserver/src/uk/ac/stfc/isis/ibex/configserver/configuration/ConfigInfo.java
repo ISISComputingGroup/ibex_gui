@@ -120,7 +120,7 @@ public class ConfigInfo {
      * @return The list of config names
      */
     public static Collection<String> names(Collection<ConfigInfo> infos) {
-        if (infos.isEmpty()) {
+    	if (infos == null || infos.isEmpty()) {
             return Collections.emptyList();
         }
 
@@ -136,10 +136,11 @@ public class ConfigInfo {
     /**
      * returns config/Component names and its protection status.
      * @param infos
+     *            The list of ConfigInfos
      * @return collection of Pair i.e config/comp name and its protection flag
      */
     public static Map<String, Boolean> mapNamesWithTheirProtectionFlag(Collection<ConfigInfo> infos) {
-        if (infos.isEmpty()) {
+    	if (infos == null || infos.isEmpty()) {
             return Collections.emptyMap();
         }
         Map<String, Boolean> namesWithProtectionFlag = new HashMap<String, Boolean>();
@@ -151,23 +152,18 @@ public class ConfigInfo {
     }
     
     /**
-     * Checks if there is a protected configuration/comp within the given ConfigInfos objects.
+     * Checks if there is a protected configuration/component element within the given ConfigInfo collection.
      * @param infos
-     * @return boolean: True if a protected configuration exists within given infos, False if not
+     *            The list of ConfigInfos
+     * @return boolean: True if a protected configuration exists within given infos list, False if not
      */
-    public static Boolean hasProtectedConfigs(Collection<ConfigInfo> infos) {
-        if (infos.isEmpty()) {
+    public static boolean hasProtectedElement(Collection<ConfigInfo> infos) {
+    	if (infos == null) {
             return false;
         }
-        
-        Boolean returnVal = false;
-        for (ConfigInfo config: infos) {
-        	if (config.isProtected == true) {
-        		returnVal = true;
-        		break;
-        	}
-        }
-    	
+
+        boolean returnVal = infos.stream().anyMatch(config -> config.isProtected == true);
+
     	return returnVal;
     }
 
