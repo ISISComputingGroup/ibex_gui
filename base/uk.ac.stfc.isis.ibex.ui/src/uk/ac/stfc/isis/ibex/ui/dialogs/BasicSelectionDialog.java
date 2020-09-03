@@ -207,7 +207,8 @@ public abstract class BasicSelectionDialog extends Dialog {
        this.items.clearAll();
        int i = 0;
        String[] columns = new String[2];
-       if (descriptions.length == 0) {
+       if (descriptions.length != names.length) {
+           LOG.error("Got mismatched descriptions and names");
            setItems(names, configNamesWithFlags);
        } else {
            for (String name : names) {
