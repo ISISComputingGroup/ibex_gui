@@ -20,8 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.dialogs;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jface.resource.JFaceResources;
@@ -119,16 +119,16 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
         items = createTable(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions);
         
 
-        String[] names;
-        String[] descriptions;
+        List<String> names;
+        List<String> descriptions;
         if (includeCurrent) {
-            names = ConfigInfo.names(available).toArray(new String[0]);
-            descriptions = ConfigInfo.descriptions(available).toArray(new String[0]);
+            names = (List<String>) ConfigInfo.names(available);
+            descriptions = (List<String>) ConfigInfo.descriptions(available);
         } else {
-            names = ConfigInfo.namesWithoutCurrent(available).toArray(new String[0]);
-            descriptions = ConfigInfo.descriptionsWithoutCurrent(available).toArray(new String[0]);
+            names = (List<String>) ConfigInfo.namesWithoutCurrent(available);
+            descriptions = (List<String>) ConfigInfo.descriptionsWithoutCurrent(available);
         }
-		Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
+		names.sort(String.CASE_INSENSITIVE_ORDER);
 		
 		setMultipleColumnItems(names, descriptions, compOrConfigNamesWithFlags);
 		

@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.dialogs;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jface.dialogs.Dialog;
@@ -40,6 +41,9 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 
+import org.apache.logging.log4j.Logger;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+
 /**
  * Generic selection dialog class.
  */
@@ -48,6 +52,8 @@ public abstract class BasicSelectionDialog extends Dialog {
 
     private String title;
 
+	private static final Logger LOG = IsisLog.getLogger(BasicSelectionDialog.class);
+    
     /**
      * The single column table for displaying the list of items to select from.
      */
@@ -166,7 +172,7 @@ public abstract class BasicSelectionDialog extends Dialog {
      * @param configNamesWithFlags
      *            Names of the configuration and its protection flag
      */
-    protected void setItems(String[] names, Map<String, Boolean> configNamesWithFlags) {
+    protected void setItems(List<String> names, Map<String, Boolean> configNamesWithFlags) {
         this.items.clearAll();
         for (String name : names) {
             TableItem item = new TableItem(this.items, SWT.NONE);
@@ -184,7 +190,7 @@ public abstract class BasicSelectionDialog extends Dialog {
      * @param names
      *            The names
      */
-    protected void setItems(String[] names) {
+    protected void setItems(List<String> names) {
         this.items.clearAll();
         for (String name : names) {
             TableItem item = new TableItem(this.items, SWT.NONE);
@@ -203,18 +209,18 @@ public abstract class BasicSelectionDialog extends Dialog {
     * @param configNamesWithFlags
     *             Names of the configuration and its protection flag
     */
-   protected void setMultipleColumnItems(String[] names, String[] descriptions, Map<String, Boolean> configNamesWithFlags) {
+   protected void setMultipleColumnItems(List<String> names, List<String> descriptions, Map<String, Boolean> configNamesWithFlags) {
        this.items.clearAll();
        int i = 0;
        String[] columns = new String[2];
-       if (descriptions.length != names.length) {
+       if (descriptions.size() != names.size()) {
            LOG.error("Got mismatched descriptions and names");
            setItems(names, configNamesWithFlags);
        } else {
            for (String name : names) {
                TableItem item = new TableItem(this.items, SWT.NONE);
                columns[0] = name;
-               columns[1] = descriptions[i];
+               columns[1] = descriptions.get(i);
                item.setText(columns);
                if (configNamesWithFlags.get(name)) {
                    item.setImage(JFaceResources.
@@ -224,6 +230,5 @@ public abstract class BasicSelectionDialog extends Dialog {
                i++;
            }
        }
-       i = 0;
    }
 }

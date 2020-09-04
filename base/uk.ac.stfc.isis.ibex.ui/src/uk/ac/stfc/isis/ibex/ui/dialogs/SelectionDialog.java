@@ -22,15 +22,11 @@ package uk.ac.stfc.isis.ibex.ui.dialogs;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 
 /**
  * Generic selection dialog class.
@@ -65,35 +61,31 @@ public abstract class SelectionDialog extends BasicSelectionDialog {
 
 	    TableColumnLayout tableColumnLayout = new TableColumnLayout();
 
-	    TableColumn firstColumn = new TableColumn(table, SWT.NONE);
-        tableColumnLayout.setColumnData(firstColumn, new ColumnWeightData(1));
-        firstColumn.setText("Name");
-        firstColumn.setResizable(true);
-        firstColumn.setMoveable(true);
-        firstColumn.setToolTipText("Name of the configuration");
+		TableColumn namesColumn = new TableColumn(table, SWT.NONE);
+		tableColumnLayout.setColumnData(namesColumn, new ColumnWeightData(1));
+		namesColumn.setText("Name");
+		namesColumn.setResizable(true);
+		namesColumn.setMoveable(true);
 
-        TableColumn secondColumn = new TableColumn(table, SWT.NONE);
-        tableColumnLayout.setColumnData(secondColumn, new ColumnWeightData(1));
-        secondColumn.setText("Description");
-        secondColumn.setResizable(true);
-        secondColumn.setMoveable(true);
-        secondColumn.setToolTipText("Description of the configuration");
+        TableColumn descriptionsColumn = new TableColumn(table, SWT.NONE);
+        tableColumnLayout.setColumnData(descriptionsColumn, new ColumnWeightData(1));
+        descriptionsColumn.setText("Description");
+        descriptionsColumn.setResizable(true);
+        descriptionsColumn.setMoveable(true);
        
         tableComposite.setLayout(tableColumnLayout);
 
         table.setHeaderVisible(true);
-        Display display = table.getDisplay();
-        table.setHeaderBackground(display.getSystemColor(SWT.COLOR_TITLE_BACKGROUND_GRADIENT));
 
         return table;
 
     }
     
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-   protected boolean isResizable() {
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+    protected boolean isResizable() {
     	return true;
-   }
+    }
 }

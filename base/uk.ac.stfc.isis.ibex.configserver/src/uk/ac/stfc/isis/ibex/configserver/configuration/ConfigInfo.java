@@ -25,6 +25,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
@@ -158,12 +159,9 @@ public class ConfigInfo {
             return Collections.emptyList();
         }
 
-        return Lists.newArrayList(Iterables.transform(infos, new Function<ConfigInfo, String>() {
-            @Override
-            public String apply(ConfigInfo info) {
-                return info.description();
-            }
-        }));
+        return infos.stream()
+                .map(ConfigInfo::description)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
     
     /**

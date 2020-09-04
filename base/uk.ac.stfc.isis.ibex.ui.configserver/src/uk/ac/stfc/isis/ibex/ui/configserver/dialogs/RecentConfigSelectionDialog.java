@@ -109,13 +109,7 @@ public class RecentConfigSelectionDialog extends BasicSelectionDialog {
     	 Label lblSelect = new Label(container, SWT.NONE);
          lblSelect.setText("Select configuration:");
          items = createTable(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions);
-         setMultipleColumnItems(configNamesToArray(), timestampsToArray());
-     }
-      private String[] configNamesToArray() {
-         return recentConfigs.toArray(new String[0]);
-     }
-      private String[] timestampsToArray() {
-         return recentTimestamps.toArray(new String[0]);
+         setMultipleColumnItems(recentConfigs, recentTimestamps);
      }
       /**
       * Get the name of the configuration/component that the user has chosen.
@@ -175,26 +169,29 @@ public class RecentConfigSelectionDialog extends BasicSelectionDialog {
       * @param timestamps
       *            The time stamps for the recent configurations.
       */
-     protected void setMultipleColumnItems(String[] names, String[] timestamps) {
+     protected void setMultipleColumnItems(List<String> names, List<String> timestamps) {
          this.items.clearAll();
          int i = 0;
          String[] columns = new String[2];
-         if (timestamps.length == 0) {
+         if (timestamps.size() == 0) {
              setItems(names);
          } else {
              for (String name : names) {
                  TableItem item = new TableItem(this.items, SWT.NONE);
                  columns[0] = name;
-                 columns[1] = timestamps[i];
+                 columns[1] = timestamps.get(i);
                  item.setText(columns);
                  
                  i++;
              }
          }
-         i = 0;
      }
-      @Override
-     protected boolean isResizable() {
-         return true;
-     }
+     
+	 /**
+	  * {@inheritDoc}
+	  */
+	 @Override
+	 protected boolean isResizable() {
+	     return true;
+	 }
 }
