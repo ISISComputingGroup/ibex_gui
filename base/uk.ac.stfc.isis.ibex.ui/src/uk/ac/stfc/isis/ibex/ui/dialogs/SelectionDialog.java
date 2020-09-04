@@ -89,6 +89,9 @@ public abstract class SelectionDialog extends BasicSelectionDialog {
 
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
    protected boolean isResizable() {
     	return true;
