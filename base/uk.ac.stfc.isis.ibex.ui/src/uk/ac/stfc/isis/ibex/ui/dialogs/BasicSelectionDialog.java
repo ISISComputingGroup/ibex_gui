@@ -55,7 +55,7 @@ public abstract class BasicSelectionDialog extends Dialog {
 	private static final Logger LOG = IsisLog.getLogger(BasicSelectionDialog.class);
     
     /**
-     * The single column table for displaying the list of items to select from.
+     * A single or multiple-column table for displaying the list of items to select from.
      */
     public Table items;
 
@@ -153,7 +153,7 @@ public abstract class BasicSelectionDialog extends Dialog {
 
     /**
      * Abstract method that creates and returns a table pre-configured with
-     * single column layout.
+     * a single or multiple column layout.
      * 
      * @param parent
      *            The parent composite
@@ -161,7 +161,7 @@ public abstract class BasicSelectionDialog extends Dialog {
      *            The style settings
      * @return The table object
      */
-    protected abstract Table createTable(Composite parent, int style);
+    protected abstract Table createTable(Composite parent, int style, List<String> columnNames);
 
     /**
      * Sets a list of names as items in the selection table specifically for deleting config dialog.

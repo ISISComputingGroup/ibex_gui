@@ -27,10 +27,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 
 /**
@@ -118,10 +114,10 @@ public class ConfigInfo {
      * 
      * @param infos
      *            The list of ConfigInfos
-     * @return The list of config names
+     * @return The list of configuration/component names
      */
     public static Collection<String> names(Collection<ConfigInfo> infos) {
-        if (infos == null) {
+        if (infos == null || infos.isEmpty()) {
             return Collections.emptyList();
         }
 
@@ -131,12 +127,12 @@ public class ConfigInfo {
     }
     
     /**
-     * Returns just the descriptions of all config info objects passed in excluding
-     * that of the current config.
+     * Returns just the descriptions of all ConfigInfo objects passed in excluding
+     * that of the current configuration/component.
      * 
      * @param infos
      *            The list of ConfigInfos
-     * @return The list of config descriptions without that of the current config
+     * @return The list of configuration/component descriptions without the current one
      */
     public static Collection<String> descriptionsWithoutCurrent(Collection<ConfigInfo> infos) {
         Collection<String> filteredDescriptions = descriptions(infos);
@@ -149,7 +145,7 @@ public class ConfigInfo {
      * 
      * @param infos
      *            The list of ConfigInfos
-     * @return The list of config descriptions
+     * @return The list of configuration/component descriptions
      */
     public static Collection<String> descriptions(Collection<ConfigInfo> infos) {
         if (infos == null) {
@@ -162,9 +158,9 @@ public class ConfigInfo {
     }
     
     /**
-     * returns config/Component names and its protection status.
+     * returns configuration/component names and its protection status.
      * @param infos
-     * @return collection of Pair i.e config/comp name and its proteciton flag
+     * @return collection of pair i.e configuration/component name and its protection flag
      */
     public static Map<String, Boolean> mapNamesWithTheirProtectionFlag(Collection<ConfigInfo> infos) {
         if (infos == null) {

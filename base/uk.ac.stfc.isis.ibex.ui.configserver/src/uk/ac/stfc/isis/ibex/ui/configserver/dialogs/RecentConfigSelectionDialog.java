@@ -19,29 +19,22 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.dialogs;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 
-import org.eclipse.jface.layout.TableColumnLayout;
-import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
-import uk.ac.stfc.isis.ibex.ui.dialogs.BasicSelectionDialog;
+import uk.ac.stfc.isis.ibex.ui.dialogs.SelectionDialog;
 
 	/**
  * Dialog for asking the user to select a multiple configurations or components.
  */
-public class RecentConfigSelectionDialog extends BasicSelectionDialog {
+public class RecentConfigSelectionDialog extends SelectionDialog {
      /**
      * The collection of the available configurations/components for the user to
      * select from.
@@ -96,7 +89,7 @@ public class RecentConfigSelectionDialog extends BasicSelectionDialog {
         /* The following ensures that double clicking on a time stamp/white space doesn't
          * launch the load process using a time stamp/null as a configuration name.
          */
-        boolean anyMatch = selectedItems.stream().anyMatch(new HashSet<>(recentConfigs)::contains);
+        boolean anyMatch = selectedItems.stream().anyMatch(recentConfigs::contains);
         if (anyMatch) {
         	selectedConfigs = asString(items.getSelection());
         	super.okPressed();
@@ -107,7 +100,8 @@ public class RecentConfigSelectionDialog extends BasicSelectionDialog {
     protected void createSelection(Composite container) {
     	 Label lblSelect = new Label(container, SWT.NONE);
          lblSelect.setText("Select configuration:");
-         items = createTable(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions);
+         List<String> columnNames = Arrays.asList("Configuration", "Last updated");
+         items = createTable(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions, columnNames);
          setMultipleColumnItems(recentConfigs, recentTimestamps);
      }
       /**
@@ -119,46 +113,7 @@ public class RecentConfigSelectionDialog extends BasicSelectionDialog {
      public String selectedConfig() {
          return selectedConfigs.toArray(new String[1])[0];
      }
-      /**
-      * Creates and returns a table pre-configured with a two columned layout.
-      * 
-      * @param parent
-      *            The parent composite
-      * @param style
-      *            The style settings
-      * @return The table object
-      */
-     @Override
-     protected Table createTable(Composite parent, int style) {
-		Composite tableComposite = new Composite(parent, SWT.NONE);
-		tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		Table table = new Table(tableComposite, style | SWT.FULL_SELECTION);
-		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		TableColumnLayout tableColumnLayout = new TableColumnLayout();
-		TableColumn firstColumn = new TableColumn(table, SWT.NONE);
-		tableColumnLayout.setColumnData(firstColumn, new ColumnWeightData(1));
-		firstColumn.setText("Configuration");
-		firstColumn.setResizable(true);
-		 
-		TableColumn secondColumn = new TableColumn(table, SWT.NONE);
-		tableColumnLayout.setColumnData(secondColumn, new ColumnWeightData(1));
-		secondColumn.setText("Last modified");
-		secondColumn.setResizable(true);
-		tableComposite.setLayout(tableColumnLayout);
-		table.setHeaderVisible(true);
-		         
-		         
-		table.addSelectionListener(new SelectionAdapter() {
-              @Override
-             public void widgetSelected(SelectionEvent e) {
-                 int index = table.getSelectionIndex();
-                 TableItem item = table.getSelection()[0];
-             }
-             
-         });
-         
-          return table;
-     }
+     
       /**
       * Sets a list of configurations and their time stamps as items in a
       * selection table with two columns.

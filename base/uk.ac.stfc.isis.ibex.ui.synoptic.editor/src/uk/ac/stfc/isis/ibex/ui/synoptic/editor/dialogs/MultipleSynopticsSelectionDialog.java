@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -79,7 +80,8 @@ public class MultipleSynopticsSelectionDialog extends SelectionDialog {
 		Label lblSelect = new Label(container, SWT.NONE);
         lblSelect.setText("Select synoptics:");
 
-        items = createTable(container, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
+        List<String> columnNames = Arrays.asList("Name");
+        items = createTable(container, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI, columnNames);
         List<String> names = (List<String>) SynopticInfo.names(available);
         setItems(names);
 	}

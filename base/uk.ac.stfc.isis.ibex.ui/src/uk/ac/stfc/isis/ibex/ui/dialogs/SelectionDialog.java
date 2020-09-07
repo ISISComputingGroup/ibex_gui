@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.dialogs;
 
+import java.util.List;
+
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.swt.SWT;
@@ -44,16 +46,18 @@ public abstract class SelectionDialog extends BasicSelectionDialog {
     }
     
     /**
-     * Creates and returns a table pre-configured with a two columned layout.
+     * Creates and returns a table pre-configured with either a single or multiple-column layout.
      * 
      * @param parent
      *            The parent composite
      * @param style
      *            The style settings
+     * @param columnNames
+     * 			  The column name(s). If only one column, header will be hidden.
      * @return The table object
      */
     @Override
-    protected Table createTable(Composite parent, int style) {
+    protected Table createTable(Composite parent, int style, List<String> columnNames) {
 	    Composite tableComposite = new Composite(parent, SWT.NONE);
 	    tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 	    Table table = new Table(tableComposite, style | SWT.FULL_SELECTION);
@@ -61,22 +65,20 @@ public abstract class SelectionDialog extends BasicSelectionDialog {
 
 	    TableColumnLayout tableColumnLayout = new TableColumnLayout();
 
-		TableColumn namesColumn = new TableColumn(table, SWT.NONE);
-		tableColumnLayout.setColumnData(namesColumn, new ColumnWeightData(1));
-		namesColumn.setText("Name");
-		namesColumn.setResizable(true);
-
-        TableColumn descriptionsColumn = new TableColumn(table, SWT.NONE);
-        tableColumnLayout.setColumnData(descriptionsColumn, new ColumnWeightData(1));
-        descriptionsColumn.setText("Description");
-        descriptionsColumn.setResizable(true);
-       
+	    for (String name : columnNames) {
+	    	TableColumn column = new TableColumn(table, SWT.NONE);
+	    	tableColumnLayout.setColumnData(column, new ColumnWeightData(1));
+	    	column.setText(name);
+	    	column.setResizable(true);
+	    }
+	    
         tableComposite.setLayout(tableColumnLayout);
-
-        table.setHeaderVisible(true);
+        
+        if (columnNames.size() > 1) {
+        	table.setHeaderVisible(true);
+        }
 
         return table;
-
     }
     
 	/**

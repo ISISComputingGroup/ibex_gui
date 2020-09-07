@@ -20,6 +20,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -74,7 +75,8 @@ public class SynopticSelectionDialog extends SelectionDialog {
 		Label lblSelect = new Label(container, SWT.NONE);
         lblSelect.setText("Select synoptic:");
 		
-        items = createTable(container, SWT.BORDER | SWT.V_SCROLL);
+        List<String> columnNames = Arrays.asList("Name");
+        items = createTable(container, SWT.BORDER | SWT.V_SCROLL, columnNames);
 
 		List<String> names = (List<String>) SynopticInfo.names(available);
 		names.sort(String.CASE_INSENSITIVE_ORDER);
