@@ -18,8 +18,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.dialogs;
 
- import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 import org.eclipse.jface.layout.TableColumnLayout;
@@ -92,17 +93,15 @@ public class RecentConfigSelectionDialog extends BasicSelectionDialog {
     protected void okPressed() {
         Collection<String> selectedItems = asString(items.getSelection());
         
-        /* The following ensures that double clicking on a time stamp doesn't
-         * launch the load process using a time stamp as a config name.
+        /* The following ensures that double clicking on a time stamp/white space doesn't
+         * launch the load process using a time stamp/null as a configuration name.
          */
-        for (String item : selectedItems) {
-            for (String configName : recentConfigs) {
-                if (item.equals(configName)) {
-                    selectedConfigs = asString(items.getSelection());
-                    super.okPressed();
-                }
-            }
+        boolean anyMatch = selectedItems.stream().anyMatch(new HashSet<>(recentConfigs)::contains);
+        if (anyMatch) {
+        	selectedConfigs = asString(items.getSelection());
+        	super.okPressed();
         }
+        
     }
      @Override
     protected void createSelection(Composite container) {
@@ -131,25 +130,25 @@ public class RecentConfigSelectionDialog extends BasicSelectionDialog {
       */
      @Override
      protected Table createTable(Composite parent, int style) {
-         Composite tableComposite = new Composite(parent, SWT.NONE);
-         tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-         Table table = new Table(tableComposite, style | SWT.FULL_SELECTION);
-         table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-          TableColumnLayout tableColumnLayout = new TableColumnLayout();
-          TableColumn firstColumn = new TableColumn(table, SWT.NONE);
-         tableColumnLayout.setColumnData(firstColumn, new ColumnWeightData(1));
-         firstColumn.setText("Configuration");
-         firstColumn.setResizable(true);
-         
-         TableColumn secondColumn = new TableColumn(table, SWT.NONE);
-         tableColumnLayout.setColumnData(secondColumn, new ColumnWeightData(1));
-         secondColumn.setText("Last modified");
-         secondColumn.setResizable(true);
-          tableComposite.setLayout(tableColumnLayout);
-         table.setHeaderVisible(true);
-         
-         
-         table.addSelectionListener(new SelectionAdapter() {
+		Composite tableComposite = new Composite(parent, SWT.NONE);
+		tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		Table table = new Table(tableComposite, style | SWT.FULL_SELECTION);
+		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		TableColumnLayout tableColumnLayout = new TableColumnLayout();
+		TableColumn firstColumn = new TableColumn(table, SWT.NONE);
+		tableColumnLayout.setColumnData(firstColumn, new ColumnWeightData(1));
+		firstColumn.setText("Configuration");
+		firstColumn.setResizable(true);
+		 
+		TableColumn secondColumn = new TableColumn(table, SWT.NONE);
+		tableColumnLayout.setColumnData(secondColumn, new ColumnWeightData(1));
+		secondColumn.setText("Last modified");
+		secondColumn.setResizable(true);
+		tableComposite.setLayout(tableColumnLayout);
+		table.setHeaderVisible(true);
+		         
+		         
+		table.addSelectionListener(new SelectionAdapter() {
               @Override
              public void widgetSelected(SelectionEvent e) {
                  int index = table.getSelectionIndex();

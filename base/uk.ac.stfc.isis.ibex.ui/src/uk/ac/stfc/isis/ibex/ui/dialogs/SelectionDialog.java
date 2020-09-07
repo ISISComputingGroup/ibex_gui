@@ -56,7 +56,7 @@ public abstract class SelectionDialog extends BasicSelectionDialog {
     protected Table createTable(Composite parent, int style) {
 	    Composite tableComposite = new Composite(parent, SWT.NONE);
 	    tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-	    Table table = new Table(tableComposite, style);
+	    Table table = new Table(tableComposite, style | SWT.FULL_SELECTION);
 	    table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 	    TableColumnLayout tableColumnLayout = new TableColumnLayout();
@@ -65,13 +65,11 @@ public abstract class SelectionDialog extends BasicSelectionDialog {
 		tableColumnLayout.setColumnData(namesColumn, new ColumnWeightData(1));
 		namesColumn.setText("Name");
 		namesColumn.setResizable(true);
-		namesColumn.setMoveable(true);
 
         TableColumn descriptionsColumn = new TableColumn(table, SWT.NONE);
         tableColumnLayout.setColumnData(descriptionsColumn, new ColumnWeightData(1));
         descriptionsColumn.setText("Description");
         descriptionsColumn.setResizable(true);
-        descriptionsColumn.setMoveable(true);
        
         tableComposite.setLayout(tableColumnLayout);
 

@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.configserver.dialogs;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -105,11 +106,20 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
 		return selected;
 	}
 
-	@Override
-	protected void okPressed() {
-        selected = asString(items.getSelection());
-		super.okPressed();
-	}
+    @Override
+   protected void okPressed() {
+       Collection<String> selectedItems = asString(items.getSelection());
+       
+       /* The following ensures that double clicking on the description/white space doesn't
+        * launch the process using a description/null as the name.
+        */    
+       List<String> names = (List<String>) ConfigInfo.names(available);
+       boolean anyMatch = selectedItems.stream().anyMatch(new HashSet<>(names)::contains);
+       if (anyMatch) {
+    	   selected = asString(items.getSelection());
+    	   super.okPressed();
+       }
+   }
 
 	@Override
     protected void createSelection(Composite container) {
@@ -117,7 +127,6 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
 		Label lblSelect = new Label(container, SWT.NONE);
         lblSelect.setText("Select " + getTypeString() + ":");
         items = createTable(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions);
-        
 
         List<String> names;
         List<String> descriptions;
