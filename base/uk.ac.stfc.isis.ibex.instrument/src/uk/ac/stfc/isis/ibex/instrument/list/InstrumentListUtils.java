@@ -26,6 +26,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.Logger;
+import org.eclipse.core.runtime.preferences.ConfigurationScope;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.osgi.service.prefs.BackingStoreException;
+import org.osgi.service.prefs.Preferences;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
@@ -33,20 +37,27 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * Given an observable containing a list of instruments, filters out invalid
  * instruments, e.g. due to parsing error.
  * 
  */
-public final class InstrumentListUtils {
-
+public final class InstrumentListUtils {	
     /**
      * An empty constructor required for check style.
      */
     private InstrumentListUtils() {
     }
 
+    /**
+     * Location of instrument whitelist in preferences file
+     */
+    private static final String LOCAL_INSTRUMENT_LIST_PREFS = "inst-whitelist";
+    private static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.instrument";
+    
     /**
      * Given an observable for a list of instruments, filter out invalid
      * instruments.
@@ -94,6 +105,27 @@ public final class InstrumentListUtils {
         return returnValue;
     }
 
+
+
+
+    private static Optional<ArrayList<String>> loadWhitelist() {
+        ArrayList<String> instrumentWhitelist = new ArrayList<String>();
+        IEclipsePreferences prefs = ConfigurationScope.INSTANCE.getNode(PLUGIN_ID);
+        Preferences whitelistPrefs = prefs.node(LOCAL_INSTRUMENT_LIST_PREFS);
+        for (String inst:whitelistPrefs.get("whitelist", "").split(",")) {
+			if (!inst.trim().isBlank()) {
+				instrumentWhitelist.add(inst);
+			}
+		}
+        
+        if (instrumentWhitelist.size() > 0) {
+        	return Optional.of(instrumentWhitelist);
+        } else {
+        	return Optional.absent();
+        }
+    }
+    
+    
     /**
      * Combine the localhost and instruments list to create one list to show the
      * user. Localhost should be at the top. If there is an instrument with the
@@ -124,8 +156,14 @@ public final class InstrumentListUtils {
         return instrumentsAlphabetical;
     }
 
+    /**
+     * Return list of instruments filtered by the whitelist, if present.
+     * @param input The current list of instruments.
+     * @param logger The ibex logger.
+     * @return list of instruments filtered by whitelist and invalid values removed.
+     */
 	public static Collection<InstrumentInfo> filterValidInstruments(Collection<InstrumentInfo> input, Logger logger) {
-		return filterValidInstruments(input, logger, Optional.absent());
+		return filterValidInstruments(input, logger, loadWhitelist());
 	}
 }
 

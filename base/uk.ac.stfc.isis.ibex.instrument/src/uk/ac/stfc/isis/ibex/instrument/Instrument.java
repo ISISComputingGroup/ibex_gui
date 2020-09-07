@@ -190,7 +190,7 @@ public class Instrument implements BundleActivator {
      *         observable so can vary with time.
      */
     public Collection<InstrumentInfo> getInstruments() {
-        return instruments;
+    	return InstrumentListUtils.filterValidInstruments(instruments, LOG);
     }
 
     /**
