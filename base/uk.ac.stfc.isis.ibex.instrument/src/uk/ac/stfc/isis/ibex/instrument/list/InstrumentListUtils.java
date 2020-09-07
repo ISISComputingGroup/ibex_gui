@@ -165,5 +165,9 @@ public final class InstrumentListUtils {
 	public static Collection<InstrumentInfo> filterValidInstruments(Collection<InstrumentInfo> input, Logger logger) {
 		return filterValidInstruments(input, logger, loadWhitelist());
 	}
+
+	public static boolean whitelistExists() {
+		return loadWhitelist().isPresent();
+	}
 }
 

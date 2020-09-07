@@ -41,6 +41,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
 /**
@@ -93,6 +94,7 @@ public class InstrumentSelectionPanel extends Composite {
                 instrumentTable.setSearch(txtSelectedName.getText());
             }
         });
+        txtSelectedName.setEnabled(!Instrument.whitelistExists());
     }
 
     private void createClearButton(Composite parent) {
@@ -106,7 +108,6 @@ public class InstrumentSelectionPanel extends Composite {
                 }
             }
         };
-
         btnClear.addListener(SWT.Selection, clearListener);
     }
 

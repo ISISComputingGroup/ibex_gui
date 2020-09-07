@@ -21,6 +21,8 @@ package uk.ac.stfc.isis.ibex.validators;
 
 import java.util.Collection;
 
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
+
 /**
  * Provides validation for custom instrument names.
  * 
@@ -37,6 +39,8 @@ public class InstrumentNameValidator {
      */
     public static final String NAME_EMPTY_MSG = "Instrument Name invalid, must not be empty";
 
+    private static final String WHITELIST_ENABLED_MSG = "Instrument switching resticted to whitelist";
+    
     private static final String NO_ERROR_MSG = "";
 
     private String errorMessage;
@@ -70,6 +74,8 @@ public class InstrumentNameValidator {
             setErrorMessage(NO_ERROR_MSG);
         } else if (!(instrumentName.matches("[a-zA-Z0-9_\\-]*$"))) {
             setErrorMessage(NAME_FORMAT_MSG);
+        } else if (Instrument.whitelistExists()) {
+        	setErrorMessage(WHITELIST_ENABLED_MSG);
         } else {
             isValid = true;
             setErrorMessage(NO_ERROR_MSG);
