@@ -162,7 +162,7 @@ public class ConfigInfo {
             return false;
         }
 
-        boolean returnVal = infos.stream().anyMatch(config -> config.isProtected == true);
+        boolean returnVal = infos.stream().anyMatch(config -> config.isProtected);
 
     	return returnVal;
     }
