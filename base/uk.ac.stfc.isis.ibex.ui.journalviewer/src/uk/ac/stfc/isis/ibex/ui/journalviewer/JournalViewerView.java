@@ -25,7 +25,9 @@ import java.util.Collections;
 import javax.annotation.PostConstruct;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.core.databinding.conversion.IConverter;
 import org.eclipse.core.databinding.observable.map.ObservableMap;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -138,7 +140,7 @@ public class JournalViewerView {
 	    lblResults.setText("placeholder");
 	    lblResults.setToolTipText("Currently displayed entries out of total.");
 	    RowData lblResultsData = new RowData();
-	    lblResultsData.width = 150;
+	    lblResultsData.width = 180;
 		lblResults.setLayoutData(lblResultsData);
 	
 		btnFirstPage = new Button(basicControls, SWT.NONE);
@@ -151,8 +153,9 @@ public class JournalViewerView {
 	
 	    textPageNumber = new Text(basicControls, SWT.BORDER);
 	    RowData textPageNumberData = new RowData();
-	    textPageNumberData.width = 25;
+	    textPageNumberData.width = 40;
 	    textPageNumber.setLayoutData(textPageNumberData);
+	    textPageNumber.setTextLimit(9);
 	
 	    btnNextPage = new Button(basicControls, SWT.NONE);
 	    btnNextPage.setText(" Next > ");
@@ -163,7 +166,7 @@ public class JournalViewerView {
 	    btnLastPage.setToolTipText("Go to the last page.");
 	
 	    btnRefresh = new Button(basicControls, SWT.NONE);
-	    btnRefresh.setText("Refresh data");
+	    btnRefresh.setText("Refresh");
 	
 	    searchControls = new Composite(controls, SWT.NONE);
 	    RowLayout rlSearchControls = new RowLayout(SWT.HORIZONTAL);
@@ -304,14 +307,21 @@ public class JournalViewerView {
     private void resetPageNumber() {
         DISPLAY.asyncExec(() -> textPageNumber.setText("1"));
     }
-
+    
     private void bind() {
 	    bindingContext.bindValue(WidgetProperties.text().observe(lblError),
 	            BeanProperties.value("message").observe(model));
 	    bindingContext.bindValue(WidgetProperties.text().observe(lblLastUpdate),
 	            BeanProperties.value("lastUpdate").observe(model));
+	    
+	    IConverter<Integer, String> convertToString = IConverter.<Integer, String>create(Integer.class, String.class,
+	            (arg) -> Integer.toString(arg));
+	    
+	    UpdateValueStrategy<Integer, String> updateStrategy = UpdateValueStrategy.create(convertToString);
+	    
 	    bindingContext.bindValue(WidgetProperties.text().observe(textPageNumber), 
-	    		BeanProperties.value("pageNumber").observe(model));
+	    		BeanProperties.<JournalViewModel, Integer>value("pageNumber").observe(model),
+	    		null, updateStrategy);
 	    bindingContext.bindValue(WidgetProperties.tooltipText().observe(textPageNumber), 
 	    		BeanProperties.value("pageNumber").observe(model));
 	    bindingContext.bindValue(WidgetProperties.text().observe(error),
@@ -340,7 +350,7 @@ public class JournalViewerView {
         textPageNumber.addListener(SWT.Traverse, e -> {
         	if (e.detail == SWT.TRAVERSE_RETURN) {
         		setProgressIndicatorsVisible(true);
-        		model.setPageNumber(Integer.parseInt(textPageNumber.getText()))
+        		model.goToPage(Integer.parseInt(textPageNumber.getText()))
         							.thenAccept(ignored -> setProgressIndicatorsVisible(false));
         	}
         	textPageNumber.selectAll();

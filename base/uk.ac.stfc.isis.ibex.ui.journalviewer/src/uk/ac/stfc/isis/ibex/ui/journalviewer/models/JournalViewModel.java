@@ -139,7 +139,7 @@ public class JournalViewModel extends ModelObject {
 			entryFrom = entryTo = 0;
 		}
 	
-		return String.format("Entries %d-%d of %d", entryFrom, entryTo, model.getResultsNumber());
+		return String.format("%d-%d of %d", entryFrom, entryTo, model.getResultsNumber());
 	}
 	
 	private void setResultsInfo(String resultsInfo) {
@@ -254,7 +254,7 @@ public class JournalViewModel extends ModelObject {
 	public void updatePageNumber(int pageNumber) {
 		firePropertyChange("pageNumber", this.pageNumber, this.pageNumber = pageNumber);
 	}
-	
+
 	/**
 	 * @param pageNumber The number of the results page.
 	 * @return a CompletableFuture
@@ -276,6 +276,19 @@ public class JournalViewModel extends ModelObject {
 	 */
 	public int getPageNumber() {
 		return model.getPage();
+	}
+	
+	/**
+	 * Calls {@link JournalViewModel#setPageNumber(int)} to change the current page to pageNumber.
+	 * If the desired page is not available due to it being higher than the maximum page number,
+	 * change the current page to the last (max page number) instead.
+	 * @param pageNumber The number of the desired results page.
+	 * @return a CompletableFuture.
+	 */
+	public CompletableFuture<Void> goToPage(int pageNumber) {
+		CompletableFuture<Void> future = new CompletableFuture<>();
+		future = (pageNumber > getPageMax()) ? setPageNumber(getPageMax()) : setPageNumber(pageNumber);
+		return future;
 	}
 	
 	/**
