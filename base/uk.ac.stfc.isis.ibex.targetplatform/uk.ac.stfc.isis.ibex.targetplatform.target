@@ -120,7 +120,7 @@
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="http://eclipse.py4j.org/"/>
-		<unit id="org.py4j.feature.feature.group" version="0.10.9.bnd-SP8nOw"/>
+		<unit id="org.py4j.feature.feature.group" version="0.10.9.1-bnd-BlkoVQ"/>
 	</location>
 </locations>
 <environment>
