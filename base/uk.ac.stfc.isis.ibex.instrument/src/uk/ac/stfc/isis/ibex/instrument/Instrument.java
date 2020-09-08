@@ -196,6 +196,11 @@ public class Instrument implements BundleActivator {
     public static boolean whitelistExists() {
     	return InstrumentListUtils.whitelistExists();
     }
+    
+    public static Collection<InstrumentInfo> getWhitelistedInstruments(Collection<InstrumentInfo> instruments) {
+    	return InstrumentListUtils.applyInstWhitelist(instruments);
+    }
+    
 
     /**
      * @return The bundle context.
