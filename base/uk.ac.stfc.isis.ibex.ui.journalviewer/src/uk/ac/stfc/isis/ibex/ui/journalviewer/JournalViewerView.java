@@ -83,10 +83,10 @@ public class JournalViewerView {
 
     private Button btnRefresh;
     private Text textPageNumber;
-    private Button btnNewerPage;
-    private Button btnOlderPage;
-    private Button btnNewestPage;
-    private Button btnOldestPage;
+    private Button btnPrevPage;
+    private Button btnNextPage;
+    private Button btnFirstPage;
+    private Button btnLastPage;
     private SearchInput searchInput;
     private Button btnSearch;
     private ProgressBar progressBar;
@@ -141,26 +141,26 @@ public class JournalViewerView {
 	    lblResultsData.width = 150;
 		lblResults.setLayoutData(lblResultsData);
 	
-		btnNewestPage = new Button(basicControls, SWT.NONE);
-		btnNewestPage.setText("<<");
-	    btnNewestPage.setToolTipText("Most recent entries.");
+		btnFirstPage = new Button(basicControls, SWT.NONE);
+		btnFirstPage.setText("<<");
+	    btnFirstPage.setToolTipText("Go to the first page.");
 	    
-	    btnNewerPage = new Button(basicControls, SWT.NONE);
-	    btnNewerPage.setText(" < Newer ");
-	    btnNewerPage.setToolTipText("Go to newer entries.");
+	    btnPrevPage = new Button(basicControls, SWT.NONE);
+	    btnPrevPage.setText(" < Prev ");
+	    btnPrevPage.setToolTipText("Go to the previous page.");
 	
 	    textPageNumber = new Text(basicControls, SWT.BORDER);
 	    RowData textPageNumberData = new RowData();
 	    textPageNumberData.width = 25;
 	    textPageNumber.setLayoutData(textPageNumberData);
 	
-	    btnOlderPage = new Button(basicControls, SWT.NONE);
-	    btnOlderPage.setText(" Older > ");
-	    btnOlderPage.setToolTipText("Go to older entries.");
+	    btnNextPage = new Button(basicControls, SWT.NONE);
+	    btnNextPage.setText(" Next > ");
+	    btnNextPage.setToolTipText("Go to the next page.");
 	    
-	    btnOldestPage = new Button(basicControls, SWT.NONE);
-	    btnOldestPage.setText(">>");
-	    btnOldestPage.setToolTipText("Least recent entries.");
+	    btnLastPage = new Button(basicControls, SWT.NONE);
+	    btnLastPage.setText(">>");
+	    btnLastPage.setToolTipText("Go to the last page.");
 	
 	    btnRefresh = new Button(basicControls, SWT.NONE);
 	    btnRefresh.setText("Refresh data");
@@ -321,8 +321,19 @@ public class JournalViewerView {
 	    bindingContext.bindValue(WidgetProperties.tooltipText().observe(lblResults),
 	    		BeanProperties.value("resultsInfo").observe(model));
 	
+	    
+	    bindingContext.bindValue(WidgetProperties.enabled().observe(btnPrevPage),
+	            BeanProperties.value("btnPrevPageEnabled").observe(model));
+	    bindingContext.bindValue(WidgetProperties.enabled().observe(btnFirstPage),
+	            BeanProperties.value("btnPrevPageEnabled").observe(model));
+	    
+	    bindingContext.bindValue(WidgetProperties.enabled().observe(btnNextPage),
+	            BeanProperties.value("btnNextPageEnabled").observe(model));   
+	    bindingContext.bindValue(WidgetProperties.enabled().observe(btnLastPage),
+	            BeanProperties.value("btnNextPageEnabled").observe(model));
+	    
 	    bindingContext.bindValue(WidgetProperties.enabled().observe(btnSearch),
-	            BeanProperties.value("enableOrDisableButton").observe(model));
+	            BeanProperties.value("searchButtonEnabled").observe(model));
 
         textPageNumber.addVerifyListener(new NumbersOnlyListener());
         
@@ -339,24 +350,24 @@ public class JournalViewerView {
         	textPageNumber.selectAll();
         });
         
-        btnNewerPage.addListener(SWT.Selection, e -> {
+        btnPrevPage.addListener(SWT.Selection, e -> {
         	setProgressIndicatorsVisible(true);
-        	model.newerPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        	model.prevPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
         });
 
-        btnOlderPage.addListener(SWT.Selection, e -> {
+        btnNextPage.addListener(SWT.Selection, e -> {
         	setProgressIndicatorsVisible(true);
-        	model.olderPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        	model.nextPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
         });
         
-        btnNewestPage.addListener(SWT.Selection, e -> {
+        btnFirstPage.addListener(SWT.Selection, e -> {
         	setProgressIndicatorsVisible(true);
-        	model.newestPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        	model.firstPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
         });
 
-        btnOldestPage.addListener(SWT.Selection, e -> {
+        btnLastPage.addListener(SWT.Selection, e -> {
         	setProgressIndicatorsVisible(true);
-        	model.oldestPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        	model.lastPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
         });
 
         btnRefresh.addListener(SWT.Selection, e -> {

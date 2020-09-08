@@ -328,10 +328,14 @@ public class JournalModel extends ModelObject {
 		return PAGE_SIZE;
 	}
 	
+	/**
+	 * Calculates the maximum number of pages.
+	 * @param totalResults The number of results.
+	 * @return The max page number, lowest is 1.
+	 */
 	public int calcTotalPages(int totalResults) {
 		int returnVal = (int) Math.ceil(totalResults / (double) this.getPageSize());
-		if (returnVal == 0) { returnVal = 1; }
-		return returnVal;
+		return Math.max(returnVal, 1);
 	}
 	
 	/**
