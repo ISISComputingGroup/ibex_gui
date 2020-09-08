@@ -260,21 +260,20 @@ public class InstrumentListUtilsTest {
     	expected.add(instrument1);
     	
     	// Assert
-    	assertEquals(expected, doFiltering(instList, Optional.of(localInstList)));
-    	
+    	assertEquals(expected, InstrumentListUtils.applyInstWhitelist(instList, Optional.of(localInstList)));
     }
     
     @Test
-    public void GIVEN_empty_local_instrument_list_THEN_all_instruments_shown() {
+    public void GIVEN_empty_local_instrument_list_WHEN_whitelist_applied_THEN_all_instruments_shown() {
     	// Arrange
-        Collection<InstrumentInfo> instList = new ArrayList<>();
+        ArrayList<InstrumentInfo> instList = new ArrayList<>();
         instList.add(instrument1);
         instList.add(instrument2);
         
     	ArrayList<String> localInstList = new ArrayList<String>();
     	
     	// Assert
-    	assertEquals(instList, doFiltering(instList, Optional.of(localInstList)));
+    	assertEquals(instList, InstrumentListUtils.applyInstWhitelist(instList, Optional.of(localInstList)));
     }
     
     @Test
@@ -288,12 +287,13 @@ public class InstrumentListUtilsTest {
     	assertEquals(instList, doFiltering(instList, Optional.absent()));
     }
     
+    
     private Collection<InstrumentInfo> doFiltering(Collection<InstrumentInfo> input) {
         return InstrumentListUtils.filterValidInstruments(input, mockLogger);
     }
     
     private Collection<InstrumentInfo> doFiltering(Collection<InstrumentInfo> input, Optional<ArrayList<String>> localInstList){
-    	return InstrumentListUtils.filterValidInstruments(input, mockLogger, localInstList);
+    	return InstrumentListUtils.filterValidInstruments(input, mockLogger);
     }
 }
 

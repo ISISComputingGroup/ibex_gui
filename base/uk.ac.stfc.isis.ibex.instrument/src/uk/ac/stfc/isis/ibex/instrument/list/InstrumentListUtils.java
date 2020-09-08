@@ -37,6 +37,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
@@ -51,7 +52,7 @@ public final class InstrumentListUtils {
      */
     private InstrumentListUtils() {
     }
-
+    
     /**
      * Location of instrument whitelist in preferences file
      */
@@ -69,8 +70,7 @@ public final class InstrumentListUtils {
      * @return the valid instruments extracted from the input observable
      */
     public static Collection<InstrumentInfo> filterValidInstruments(
-            Collection<InstrumentInfo> instruments, Logger logger,
-            Optional<ArrayList<String>> instrumentWhitelist) {
+            Collection<InstrumentInfo> instruments, Logger logger) {
         if (instruments == null) {
             logger.warn("Error while parsing instrument list PV - no instrument could be read");
             return new ArrayList<>();
@@ -79,18 +79,7 @@ public final class InstrumentListUtils {
         Iterable<InstrumentInfo> validInstruments = Iterables.filter(instruments, new Predicate<InstrumentInfo>() {
             @Override
             public boolean apply(InstrumentInfo item) {
-                boolean instrumentWhitelisted;
-                boolean nameNotNull = item.name() != null;
-                
-                if (!instrumentWhitelist.isPresent()) {
-                	instrumentWhitelisted = true;
-                } else if (instrumentWhitelist.get().size() == 0) {
-                	instrumentWhitelisted = true;
-                } else {
-                	instrumentWhitelisted = instrumentWhitelist.get().contains(item.name());
-                }
-                
-            	return nameNotNull & instrumentWhitelisted;
+            	return item.name() != null;
             }
         });
         
@@ -105,6 +94,45 @@ public final class InstrumentListUtils {
         return returnValue;
     }
 
+
+    /**
+     * Given an observable for a list of instruments, filter out invalid
+     * instruments.
+     * 
+     * @param instruments instruments to filter
+     * @param logger a logger to log information and warnings about invalid
+     *            instruments
+     * 
+     * @return the valid instruments extracted from the input observable
+     */
+    public static Collection<InstrumentInfo> applyInstWhitelist(
+            Collection<InstrumentInfo> instruments,
+            Optional<ArrayList<String>> whitelist) {
+    	
+        Iterable<InstrumentInfo> filteredInstruments = Iterables.filter(instruments, new Predicate<InstrumentInfo>() {
+            @Override
+            public boolean apply(InstrumentInfo item) {
+                boolean instrumentWhitelisted;
+                
+                if (!whitelist.isPresent()) {
+                	instrumentWhitelisted = true;
+                } else if (whitelist.get().size() == 0) {
+                	instrumentWhitelisted = true;
+                } else if (item.equals(new LocalHostInstrumentInfo())) {
+                	instrumentWhitelisted = true;
+                } else {
+                	instrumentWhitelisted = whitelist.get().contains(item.name());
+                }
+                
+            	return instrumentWhitelisted;
+            }
+        });
+        
+
+        Collection<InstrumentInfo> returnValue = Lists.newArrayList(filteredInstruments);
+
+        return returnValue;
+    }
 
 
 
@@ -162,8 +190,8 @@ public final class InstrumentListUtils {
      * @param logger The ibex logger.
      * @return list of instruments filtered by whitelist and invalid values removed.
      */
-	public static Collection<InstrumentInfo> filterValidInstruments(Collection<InstrumentInfo> input, Logger logger) {
-		return filterValidInstruments(input, logger, loadWhitelist());
+	public static Collection<InstrumentInfo> applyInstWhitelist(Collection<InstrumentInfo> input) {
+		return applyInstWhitelist(input, loadWhitelist());
 	}
 
 	public static boolean whitelistExists() {

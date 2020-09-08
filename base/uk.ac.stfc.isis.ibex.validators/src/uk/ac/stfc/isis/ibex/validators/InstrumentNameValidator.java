@@ -67,15 +67,15 @@ public class InstrumentNameValidator {
     public Boolean validateInstrumentName(String instrumentName) {
         boolean isValid = false;
         
-        if (instrumentName.isEmpty()) {
-            setErrorMessage(NAME_EMPTY_MSG);
-        } else if (nameIsKnown(instrumentName)) {
-            isValid = true;
-            setErrorMessage(NO_ERROR_MSG);
-        } else if (!(instrumentName.matches("[a-zA-Z0-9_\\-]*$"))) {
-            setErrorMessage(NAME_FORMAT_MSG);
+        if (nameIsKnown(instrumentName)) {
+        	isValid = true;
+        	setErrorMessage(NO_ERROR_MSG);
         } else if (Instrument.whitelistExists()) {
         	setErrorMessage(WHITELIST_ENABLED_MSG);
+        } else if (instrumentName.isEmpty()) {
+            setErrorMessage(NAME_EMPTY_MSG);
+        } else if (!(instrumentName.matches("[a-zA-Z0-9_\\-]*$"))) {
+            setErrorMessage(NAME_FORMAT_MSG);
         } else {
             isValid = true;
             setErrorMessage(NO_ERROR_MSG);
