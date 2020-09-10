@@ -42,6 +42,16 @@ public final class ComponentIcons {
     public static Image iconForType(ComponentType componentType) {
         return icon(getIconNameForType(componentType) + ".png");
     }
+    
+    /**
+     * Gets the appropriate icon name for a given component type.
+     * 
+     * @param componentType the component type
+     * @return the icon name corresponding to the component type
+     */
+    public static String iconNameForType(ComponentType componentType) {
+        return getIconNameForType(componentType) + ".png";
+    }
 
     /**
      * Gets the appropriate thumbnail icon for a given component type.
@@ -52,6 +62,17 @@ public final class ComponentIcons {
     public static Image thumbnailForType(ComponentType componentType) {
         String iconName = getIconNameForType(componentType);
         return icon("thumbs/" + iconName + "_tb.png");
+    }
+    
+    /**
+     * Gets the appropriate thumbnail name for a given component type.
+     * 
+     * @param componentType the input component type
+     * @return the thumbnail name corresponding to the component type
+     */
+    public static String thumbnailNameForType(ComponentType componentType) {
+    	String thumbName = getIconNameForType(componentType) + "_tb.png";
+    	return thumbName;
     }
 
     private static Image icon(String fileName) {
