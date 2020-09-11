@@ -2,7 +2,7 @@
 
 /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2016 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2020 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -28,8 +28,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
@@ -80,9 +82,10 @@ public class IconConventionsTest {
 		}
 		List<File> listOfFiles = new ArrayList<>();
 		
-		// Convert type names found in opi_info.xml to the file names these types correspond to.
-		HashSet<String> infoTypes = getInfoOPITypes();
+		// Get only the types from opi_info and remove duplicates
+		HashSet<String> infoTypes = new HashSet<String>(getOPIKeysAndTypes().values());
 		HashSet<String> infoFiles = new HashSet<String>();
+		// Convert type names found in opi_info.xml to the file names these types correspond to.
 		for (String type : infoTypes) {
 			infoFiles.add(typeNameToFileName(type));
 		}
@@ -109,12 +112,12 @@ public class IconConventionsTest {
 	}
 	
 	/**
-	 * Returns a list of types of the current OPIs from opi_info.xml.
-	 * @return The list of currently used OPI types, empty if an exception occurred while parsing the info file.
+	 * Returns a map of keys and types from current OPIs in opi_info.xml.
+	 * @return The key and type of current OPIs, empty if an exception occurred while parsing the info file, null if invalid tag name.
 	 */
-	private HashSet<String> getInfoOPITypes() {
+	private Map<String, String> getOPIKeysAndTypes() {
 		
-		HashSet<String> typesList = new HashSet<String>();
+		Map<String, String> keysAndTypes= new HashMap<String, String>();
 		
 		try {
 			File inputFile = new File(OPI_INFO_PATH);
@@ -128,13 +131,15 @@ public class IconConventionsTest {
 				Node nNode = nList.item(temp);
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 					Element eElement = (Element) nNode;
-					typesList.add(eElement.getElementsByTagName("type").item(0).getTextContent());
+					String OPIKey = eElement.getElementsByTagName("key").item(0).getTextContent();
+					String OPIType = eElement.getElementsByTagName("type").item(0).getTextContent();
+					keysAndTypes.put(OPIKey, OPIType);
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
-		return typesList;	
+		return keysAndTypes;	
 	}
 	
 	/**
@@ -142,7 +147,7 @@ public class IconConventionsTest {
 	 * @return A set of types that are found in opi_info.xml but are not declared in ComponentType, empty list if all are declared.
 	 */
 	private HashSet<String> getUndeclaredTypes() {
-		HashSet<String> infosTypes = getInfoOPITypes();
+		HashSet<String> infosTypes = new HashSet<String>(getOPIKeysAndTypes().values());
 		HashSet<String> componentTypes = new HashSet<String>(ComponentType.componentTypeList());
 		
 		infosTypes.removeAll(componentTypes);
@@ -259,7 +264,48 @@ public class IconConventionsTest {
 		String errMessage = "One or more types is not declared as a ComponentType, please check the console log for details.";
 		assertEquals(errMessage, true, pass);
 	}
+	
+	@Test
+	public void GIVEN_existing_opi_THEN_use_relevant_icon() throws IOException {
+		boolean allPass = true;
+		
+		Map<String, String> keysAndTypes = getOPIKeysAndTypes();
+		for (String OPIKey : keysAndTypes.keySet()) {
+			String OPIType = keysAndTypes.get(OPIKey);
+			String defaultIcon = typeNameToFileName("UNKNOWN");
+			
+			if (typeNameToFileName(OPIType).equals(defaultIcon)) {
+				allPass = false;
+				System.err.println(String.format("[%s] of type [%s] is using the default icon (%s).",
+												OPIKey, OPIType, defaultIcon));
+			}
+		}
 
+		String errMessage = "One or more OPIs are using the default icon, please check the console log for details.";
+		assertEquals(errMessage, true, allPass);
+	}
+	
+	@Test
+	public void GIVEN_declared_type_THEN_has_corresponding_icon() throws IOException {
+		boolean allPass = true;
+			
+		HashSet<String> componentTypes = new HashSet<String>(ComponentType.componentTypeList());
+		componentTypes.remove("UNKNOWN");
+		
+		for (String type : componentTypes) {
+			String defaultIcon = typeNameToFileName("UNKNOWN");
+			
+			if (typeNameToFileName(type).equals(defaultIcon)) {
+				allPass = false;
+				System.err.println(String.format("Declared type [%s] does not have a corresponding icon.",
+												type, defaultIcon));
+			}
+		}
+		
+		String errMessage = "One or more declared types does not have a corresponding icon, please check the console log for details.";
+		assertEquals(errMessage, true, allPass);
+	}
+	
 }
 
 //CHECKSTYLE:ON
