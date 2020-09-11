@@ -191,7 +191,7 @@ public class JournalViewModelTest {
     	String resultInfo = viewModel.getResultsInfo();
     	
     	// Assert
-    	assertEquals("Entries 0-0 of 0", resultInfo);
+    	assertEquals("0-0 of 0", resultInfo);
     }
     
     @Test
@@ -206,7 +206,7 @@ public class JournalViewModelTest {
     	String resultInfo = viewModel.getResultsInfo();
     	
     	// Assert
-    	assertEquals("Entries 1-1 of 1", resultInfo);
+    	assertEquals("1-1 of 1", resultInfo);
     }
     
     @Test
@@ -221,7 +221,7 @@ public class JournalViewModelTest {
     	String resultInfo = viewModel.getResultsInfo();
     	
     	// Assert
-    	assertEquals("Entries 0-0 of 1", resultInfo);
+    	assertEquals("0-0 of 1", resultInfo);
     }
     
     @Test
@@ -236,7 +236,7 @@ public class JournalViewModelTest {
     	String resultInfo = viewModel.getResultsInfo();
     	
     	// Assert
-    	assertEquals("Entries 0-0 of 1", resultInfo);
+    	assertEquals("0-0 of 1", resultInfo);
     }
     
     @Test
@@ -251,7 +251,7 @@ public class JournalViewModelTest {
     	String resultInfo = viewModel.getResultsInfo();
     	
     	// Assert
-    	assertEquals("Entries 0-0 of 0", resultInfo);
+    	assertEquals("0-0 of 0", resultInfo);
     }
     
     @Test
@@ -266,7 +266,7 @@ public class JournalViewModelTest {
     	String resultInfo = viewModel.getResultsInfo();
     	
     	// Assert
-    	assertEquals("Entries 1-1 of 2", resultInfo);
+    	assertEquals("1-1 of 2", resultInfo);
     }
     
     @Test
@@ -281,7 +281,7 @@ public class JournalViewModelTest {
     	String resultInfo = viewModel.getResultsInfo();
     	
     	// Assert
-    	assertEquals("Entries 1-1 of 1", resultInfo);
+    	assertEquals("1-1 of 1", resultInfo);
     }
     
     @Test
@@ -296,7 +296,7 @@ public class JournalViewModelTest {
     	String resultInfo = viewModel.getResultsInfo();
     	
     	// Assert
-    	assertEquals("Entries 1-2 of 2", resultInfo);
+    	assertEquals("1-2 of 2", resultInfo);
     }
     
     @Test
@@ -311,7 +311,7 @@ public class JournalViewModelTest {
     	String resultInfo = viewModel.getResultsInfo();
     	
     	// Assert
-    	assertEquals("Entries 1-2 of 3", resultInfo);
+    	assertEquals("1-2 of 3", resultInfo);
     }
     
     @Test
@@ -326,7 +326,7 @@ public class JournalViewModelTest {
     	String resultInfo = viewModel.getResultsInfo();
     	
     	// Assert
-    	assertEquals("Entries 3-3 of 3", resultInfo);
+    	assertEquals("3-3 of 3", resultInfo);
     }
     
     @Test
@@ -341,7 +341,7 @@ public class JournalViewModelTest {
     	String resultInfo = viewModel.getResultsInfo();
     	
     	// Assert
-    	assertEquals("Entries 16-30 of 45", resultInfo);
+    	assertEquals("16-30 of 45", resultInfo);
     }
     
     @Test
@@ -356,7 +356,7 @@ public class JournalViewModelTest {
     	String resultInfo = viewModel.getResultsInfo();
     	
     	// Assert
-    	assertEquals("Entries 31-45 of 46", resultInfo);
+    	assertEquals("31-45 of 46", resultInfo);
     }
     
     @Test
@@ -371,7 +371,7 @@ public class JournalViewModelTest {
     	String resultInfo = viewModel.getResultsInfo();
     	
     	// Assert
-    	assertEquals("Entries 46-46 of 46", resultInfo);
+    	assertEquals("46-46 of 46", resultInfo);
     }
     
 }
