@@ -5295,6 +5295,7 @@ $(pv_value)</tooltip>
             <pv trig="true">$(P)REARDET:ON.SEVR</pv>
           </rule>
         </rules>
+
         <scale_options>
           <width_scalable>true</width_scalable>
           <height_scalable>true</height_scalable>
@@ -5313,6 +5314,98 @@ $(pv_value)</tooltip>
         <wuid>7dddd7c8:173c3d2b809:-7ea6</wuid>
         <x>511</x>
         <y>414</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <auto_size>false</auto_size>
+        <background_color>
+          <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+        </font>
+        <foreground_color>
+          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+        </foreground_color>
+        <height>20</height>
+        <horizontal_alignment>0</horizontal_alignment>
+        <name>Label_1</name>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <text>Last collision avoidance stop:</text>
+        <tooltip></tooltip>
+        <transparent>true</transparent>
+        <vertical_alignment>1</vertical_alignment>
+        <visible>true</visible>
+        <widget_type>Label</widget_type>
+        <width>165</width>
+        <wrap_words>false</wrap_words>
+        <wuid>281c0c19:174737972c1:-7f7d</wuid>
+        <x>265</x>
+        <y>396</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <alarm_pulsing>false</alarm_pulsing>
+        <auto_size>false</auto_size>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <background_color>
+          <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+        </background_color>
+        <border_alarm_sensitive>true</border_alarm_sensitive>
+        <border_color>
+          <color name="ISIS_Border" red="0" green="0" blue="0" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
+        </font>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <foreground_color>
+          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+        </foreground_color>
+        <format_type>0</format_type>
+        <height>20</height>
+        <horizontal_alignment>0</horizontal_alignment>
+        <name>Text Update_6</name>
+        <precision>0</precision>
+        <precision_from_pv>true</precision_from_pv>
+        <pv_name>$(P)MOT:SANS2DVAC:_LAST_STOP_TIME</pv_name>
+        <pv_value />
+        <rotation_angle>0.0</rotation_angle>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <show_units>true</show_units>
+        <text>######</text>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <transparent>true</transparent>
+        <vertical_alignment>1</vertical_alignment>
+        <visible>true</visible>
+        <widget_type>Text Update</widget_type>
+        <width>134</width>
+        <wrap_words>false</wrap_words>
+        <wuid>281c0c19:174737972c1:-7f73</wuid>
+        <x>429</x>
+        <y>396</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
