@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.SortedMap;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -41,9 +43,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 
-import org.apache.logging.log4j.Logger;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
-
 /**
  * Generic selection dialog class.
  */
@@ -51,8 +50,6 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 public abstract class BasicSelectionDialog extends Dialog {
 
     private String title;
-
-	private static final Logger LOG = IsisLog.getLogger(BasicSelectionDialog.class);
     
     /**
      * A single or multiple-column table for displaying the list of items to select from.
@@ -159,6 +156,8 @@ public abstract class BasicSelectionDialog extends Dialog {
      *            The parent composite
      * @param style
      *            The style settings
+     * @param columnNames
+     * 			  The names (and number) of table columns
      * @return The table object
      */
     protected abstract Table createTable(Composite parent, int style, List<String> columnNames);
@@ -202,32 +201,24 @@ public abstract class BasicSelectionDialog extends Dialog {
     * Sets a list of configuration names and their description as items in a
     * selection table with two columns.
     * 
-    * @param names
-    *            The names of the recent configurations.
-    * @param descriptions
-    *            The descriptions for the recent configurations.            
+    * @param namesAndDescriptions
+    *             A map containing the names and descriptions of the recent configurations in key/value pairs.      
     * @param configNamesWithFlags
     *             Names of the configuration and its protection flag
     */
-   protected void setMultipleColumnItems(List<String> names, List<String> descriptions, Map<String, Boolean> configNamesWithFlags) {
+   protected void setMultipleColumnItems(SortedMap<String, String> namesAndDescriptions, Map<String, Boolean> configNamesWithFlags) {
        this.items.clearAll();
-       int i = 0;
        String[] columns = new String[2];
-       if (descriptions.size() != names.size()) {
-           LOG.error("Got mismatched descriptions and names");
-           setItems(names, configNamesWithFlags);
-       } else {
-           for (String name : names) {
-               TableItem item = new TableItem(this.items, SWT.NONE);
-               columns[0] = name;
-               columns[1] = descriptions.get(i);
-               item.setText(columns);
-               if (configNamesWithFlags.get(name)) {
-                   item.setImage(JFaceResources.
-                           getImage(DLG_IMG_MESSAGE_WARNING));   
-               }
-               
-               i++;
+
+       for (Entry<String, String> entry : namesAndDescriptions.entrySet()) {
+           TableItem item = new TableItem(this.items, SWT.NONE);
+           columns[0] = entry.getKey();
+           columns[1] = entry.getValue();
+           
+           item.setText(columns);
+           if (configNamesWithFlags.get(entry.getKey())) {
+               item.setImage(JFaceResources.
+                       getImage(DLG_IMG_MESSAGE_WARNING));   
            }
        }
    }

@@ -23,18 +23,23 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TableItem;
 
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.ui.dialogs.SelectionDialog;
 
 	/**
  * Dialog for asking the user to select a multiple configurations or components.
  */
 public class RecentConfigSelectionDialog extends SelectionDialog {
+	
+	private static final Logger LOG = IsisLog.getLogger(RecentConfigSelectionDialog.class);
+	
      /**
      * The collection of the available configurations/components for the user to
      * select from.
@@ -127,7 +132,8 @@ public class RecentConfigSelectionDialog extends SelectionDialog {
          this.items.clearAll();
          int i = 0;
          String[] columns = new String[2];
-         if (timestamps.size() == 0) {
+         if (timestamps.size() != names.size()) {
+             LOG.error("Got mismatched timestamps and names");
              setItems(names);
          } else {
              for (String name : names) {

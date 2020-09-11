@@ -24,6 +24,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
@@ -113,7 +115,7 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
        /* The following ensures that double clicking on the description/white space doesn't
         * launch the process using a description/null as the name.
         */    
-       List<String> names = (List<String>) ConfigInfo.names(available);
+       List<String> names = ConfigInfo.names(available);
        boolean anyMatch = selectedItems.stream().anyMatch(names::contains);
        if (anyMatch) {
     	   selected = asString(items.getSelection());
@@ -129,18 +131,14 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
         List<String> columnNames = Arrays.asList("Name", "Description");
         items = createTable(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions, columnNames);
 
-        List<String> names;
-        List<String> descriptions;
+        SortedMap<String, String> namesAndDescriptions = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER);
         if (includeCurrent) {
-            names = (List<String>) ConfigInfo.names(available);
-            descriptions = (List<String>) ConfigInfo.descriptions(available);
+            namesAndDescriptions = ConfigInfo.namesAndDescriptions(available);
         } else {
-            names = (List<String>) ConfigInfo.namesWithoutCurrent(available);
-            descriptions = (List<String>) ConfigInfo.descriptionsWithoutCurrent(available);
+        	namesAndDescriptions = ConfigInfo.namesAndDescriptionsWithoutCurrent(available);
         }
-		names.sort(String.CASE_INSENSITIVE_ORDER);
-		
-		setMultipleColumnItems(names, descriptions, compOrConfigNamesWithFlags);
+        
+		setMultipleColumnItems(namesAndDescriptions, compOrConfigNamesWithFlags);
 		
 		Group group = new Group(container, SWT.SHADOW_IN);
 		group.setLayout(new RowLayout(SWT.HORIZONTAL));

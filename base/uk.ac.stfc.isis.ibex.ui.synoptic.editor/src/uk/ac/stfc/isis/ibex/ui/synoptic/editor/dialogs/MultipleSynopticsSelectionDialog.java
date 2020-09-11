@@ -82,7 +82,7 @@ public class MultipleSynopticsSelectionDialog extends SelectionDialog {
 
         List<String> columnNames = Arrays.asList("Name");
         items = createTable(container, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI, columnNames);
-        List<String> names = (List<String>) SynopticInfo.names(available);
+        List<String> names = SynopticInfo.names(available);
         setItems(names);
 	}
 	

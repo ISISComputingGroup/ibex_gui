@@ -23,6 +23,7 @@ package uk.ac.stfc.isis.ibex.ui.synoptic;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -78,9 +79,9 @@ public class SynopticSelectionDialog extends SelectionDialog {
         List<String> columnNames = Arrays.asList("Name");
         items = createTable(container, SWT.BORDER | SWT.V_SCROLL, columnNames);
 
-		List<String> names = (List<String>) SynopticInfo.names(available);
-		names.sort(String.CASE_INSENSITIVE_ORDER);
-
+        List<String> names = SynopticInfo.names(available).stream()
+						    	.sorted(String.CASE_INSENSITIVE_ORDER)
+						    	.collect(Collectors.toList());
         setItems(names);
 	}
 
