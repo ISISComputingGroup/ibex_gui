@@ -260,10 +260,11 @@ public class JournalViewModel extends ModelObject {
 	 * @return a CompletableFuture
 	 */
 	public CompletableFuture<Void> setPageNumber(int pageNumber) {
-		CompletableFuture<Void> future = new CompletableFuture<>();
+		CompletableFuture<Void> future;
 		if (pageNumber >= 1 && pageNumber <= model.getPageMax()) {
 			future = model.setPageNumber(pageNumber);
 		} else {
+		    future = new CompletableFuture<Void>();
 			future.complete(null);
 			setMessage(String.format("Page [%d] is out of bounds", pageNumber));
 		}
@@ -286,9 +287,7 @@ public class JournalViewModel extends ModelObject {
 	 * @return a CompletableFuture.
 	 */
 	public CompletableFuture<Void> goToPage(int pageNumber) {
-		CompletableFuture<Void> future = new CompletableFuture<>();
-		future = (pageNumber > getPageMax()) ? setPageNumber(getPageMax()) : setPageNumber(pageNumber);
-		return future;
+		return (pageNumber > getPageMax()) ? setPageNumber(getPageMax()) : setPageNumber(pageNumber);
 	}
 	
 	/**
