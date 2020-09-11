@@ -1,4 +1,7 @@
-robocopy "\\isis\inst$\Kits$\CompGroup\ICP\ibex_client_jre" "%~dp0\jdk" /E /PURGE /R:2 /MT /XF "install.log" /NFL /NDL /NP /NC /NS /LOG:NUL
+REM We bundle our own JRE with the client, this is where it is
+set "JRELOCATION=\\isis\inst$\Kits$\CompGroup\ICP\ibex_client_jre"
+set "LOCAL_JRE_LOCATION=%~dp0\jdk"
+robocopy "%JRELOCATION%" "%LOCAL_JRE_LOCATION%" /E /PURGE /R:2 /MT /XF "install.log" /NFL /NDL /NC /NS /NP /LOG:NUL
 set errcode=%ERRORLEVEL%
 if %errcode% GEQ 4 (
     @echo *** Exit Code %errcode% ERROR see %INSTALLDIR%install.log ***
@@ -67,6 +70,13 @@ if %errcode% GEQ 4 (
 	exit /b %errcode%
 ) else (
 	set ERRORLEVEL=0
+)
+
+REM Copy the JRE across 
+robocopy "%LOCAL_JRE_LOCATION%" "%sensible_build_dir%\jre" /MT /MIR /R:1 /XF "install.log" /NFL /NDL /NP /NS /NC /LOG:NUL
+if %errorlevel% geq 4 (
+    @echo Failed to copy JRE across
+    exit /b 1
 )
 
 REM Copy python into the client
