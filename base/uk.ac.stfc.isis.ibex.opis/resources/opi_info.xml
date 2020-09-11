@@ -2002,6 +2002,24 @@
       </value>
     </entry>
     <entry>
+      <key>Mezei spin flipper (v1)</key>
+      <value>
+        <type>SPIN_FLIPPER</type>
+        <path>mezflipper_v1.opi</path>
+        <description>The OPI for the Mezei flipper.</description>
+        <macros>
+          <macro>
+            <name>MEZFLIPR</name>
+            <description>The mezei flipper PV prefix (e.g. MEZFLIPR_01).</description>
+            <default>MEZFLIPR_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Polarisers and Analysers</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>JASCO PU-4180 Pump</key>
       <value>
         <categories>
