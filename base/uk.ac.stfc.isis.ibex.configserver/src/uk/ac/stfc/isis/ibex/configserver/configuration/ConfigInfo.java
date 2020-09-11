@@ -150,7 +150,7 @@ public class ConfigInfo {
      * @return The list of configuration/component descriptions
      */
     public static List<String> descriptions(Collection<ConfigInfo> infos) {
-        if (infos == null) {
+        if (infos == null || infos.isEmpty()) {
             return Collections.emptyList();
         }
 
@@ -200,7 +200,7 @@ public class ConfigInfo {
      * @return collection of pair i.e configuration/component name and its protection flag
      */
     public static Map<String, Boolean> mapNamesWithTheirProtectionFlag(Collection<ConfigInfo> infos) {
-        if (infos == null) {
+        if (infos == null || infos.isEmpty()) {
             return Collections.emptyMap();
         }
         Map<String, Boolean> namesWithProtectionFlag = new HashMap<String, Boolean>();
