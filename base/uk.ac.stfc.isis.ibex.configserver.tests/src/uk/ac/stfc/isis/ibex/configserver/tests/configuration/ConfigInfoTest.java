@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import org.junit.Test;
 
@@ -132,6 +134,53 @@ public class ConfigInfoTest {
 
          // Act
      	Collection<String> result = ConfigInfo.descriptions(infos);
+
+         // Assert
+     	assertEquals(expected, result);
+    }
+    
+    @Test
+    public void GIVEN_no_items_WHEN_get_namesAndDescriptions_THEN_return_empty_list() {
+        // Arrange
+    	Collection<ConfigInfo> infos = new ArrayList<ConfigInfo>();
+
+         // Act
+     	SortedMap<String, String> result = ConfigInfo.namesAndDescriptions(infos);
+
+         // Assert
+     	assertEquals(true, result.isEmpty());
+    }
+	
+    @Test
+    public void GIVEN_one_item_WHEN_get_namesAndDescriptions_THEN_return_name() {
+        // Arrange
+    	Collection<ConfigInfo> infos = new ArrayList<ConfigInfo>();
+		ConfigInfo elem = new ConfigInfo(NAME, false, DESCRIPTION, "", "", Collections.emptyList());
+		infos.add(elem);
+		
+		SortedMap<String, String> expected = new TreeMap<String, String>();
+		expected.put(NAME, DESCRIPTION);
+
+         // Act
+     	SortedMap<String, String> result = ConfigInfo.namesAndDescriptions(infos);
+
+         // Assert
+     	assertEquals(expected, result);
+    }
+    
+    @Test
+    public void GIVEN_multiple_items_WHEN_get_namesAndDescriptions_THEN_return_descriptions() {
+        // Arrange
+    	SortedMap<String, String> expected = new TreeMap<String, String>();
+    	Collection<ConfigInfo> infos = new ArrayList<ConfigInfo>();
+        for (int i = 0; i < 10 ; i++) {
+    		ConfigInfo elem = new ConfigInfo(NAME + i, false, DESCRIPTION + i, "", "", Collections.emptyList());
+    		infos.add(elem);
+    		expected.put(NAME + i, DESCRIPTION + i);
+        }
+        
+         // Act
+        SortedMap<String, String> result = ConfigInfo.namesAndDescriptions(infos);
 
          // Assert
      	assertEquals(expected, result);
