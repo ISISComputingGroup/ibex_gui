@@ -1,25 +1,8 @@
 from org.csstudio.opibuilder.scriptUtil import PVUtil
+from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
 import json
+import time
 import zlib
-
-def _set_panels():
-    """
-    Set the panels to be the same as the opi constant
-    """
-
-    value = PVUtil.getStringArray(pvs[4])
-    value = "".join(chr(int(i)) for i in value)
-    value = value.strip("\0")
-
-    for widget_name, opi_name in [("Vertical Gaps", "vgaps.opi"),
-                                  ("Horizontal Gaps", "hgaps.opi"),
-                                  ("Sample Stack", "sample_stack.opi"),
-                                  ("Important Params", "important_params.opi")]:
-                                      
-
-        widget = display.getWidget(widget_name)
-        widget.setPropertyValue("opi_file", "null.opi")
-        widget.setPropertyValue("opi_file", value + "\\" + opi_name)
 
 
 def _set_opi(widget, param_type):
@@ -61,23 +44,27 @@ def sort_out_list(pv, widget_name_prefix, macro_prefix, has_type, max):
     value = zlib.decompress(value.decode("hex"))
     params = json.loads(value)
 
-
     for widget_index in range(1, max+1):
-        widget = display.getWidget(widget_name_prefix + str(widget_index))
+        target_widget = display.getWidget(widget_name_prefix + str(widget_index))
+        
         if widget_index <= len(params):
-            _add_macros(widget, macro_prefix + "_PV", params[widget_index - 1]["prepended_alias"])
-            _add_macros(widget, macro_prefix + "_NAME", params[widget_index - 1]["name"])
+            _add_macros(target_widget, macro_prefix + "_PV", params[widget_index - 1]["prepended_alias"])
+            _add_macros(target_widget, macro_prefix + "_NAME", params[widget_index - 1]["name"])
             if has_type:
-                _set_opi(widget, params[widget_index - 1]["type"])
+                _set_opi(target_widget, params[widget_index - 1]["type"])
             else:
-                _set_opi(widget, "correction")
-            widget.setPropertyValue("visible", True)
+                _set_opi(target_widget, "correction")
+            target_widget.setPropertyValue("visible", True)
         else:
-            widget.setPropertyValue("visible", False)
+            target_widget.setPropertyValue("visible", False)
 
-_set_panels()
+# Widget names need to be set before trying to set properties
+time.sleep(0.2)
 
-sort_out_list(pvs[2], "align_", "PARAM", True, 30)
-sort_out_list(pvs[1], "Correction_", "COR", False, 14)            
-sort_out_list(pvs[0], "pos_", "PARAM", True, 30)
-sort_out_list(pvs[3], "Value_", "VALUE", True, 32)
+sort_out_list(pvs[0], "params_slit_", "PARAM", True, 28)
+sort_out_list(pvs[1], "params_collim_", "PARAM", True, 28)
+sort_out_list(pvs[2], "params_toggle_", "PARAM", True, 28)
+sort_out_list(pvs[3], "params_misc_", "PARAM", True, 28)
+sort_out_list(pvs[4], "Correction_", "COR", False, 14)     
+sort_out_list(pvs[5], "align_", "PARAM", True, 64)    
+sort_out_list(pvs[6], "Value_", "VALUE", True, 32) 

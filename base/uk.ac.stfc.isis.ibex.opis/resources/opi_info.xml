@@ -302,7 +302,7 @@
       <key>Slit motors</key>
       <value>
         <type>JAWS</type>
-        <path>slit_motors.opi</path>
+        <path>jaws/slit_motors_4.opi</path>
         <description>The OPI displaying the motors of a slit.</description>
         <macros>
           <macro>
@@ -1594,24 +1594,6 @@
         </macros>
         <categories>
           <category>Power supplies</category>
-        </categories>
-      </value>
-    </entry>
-    <entry>
-      <key>XY Shutter Arm Beam-stop</key>
-      <value>
-        <type>BEAMSTOP</type>
-        <path>xyShutterArmBeamstop.opi</path>
-        <description>The OPI for the XY Arm Beam-stop with a shutter.</description>
-        <macros>
-          <macro>
-            <name>XYSHUTTERARMBEAMSTOP</name>
-            <description>The XY Arm Shutter Beamstop PV prefix (e.g. MOT).</description>
-            <default/>
-          </macro>
-        </macros>
-        <categories>
-          <category>Miscellaneous motion control</category>
         </categories>
       </value>
     </entry>
