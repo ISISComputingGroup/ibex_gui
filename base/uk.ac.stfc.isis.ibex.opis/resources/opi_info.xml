@@ -967,7 +967,7 @@
     <entry>
       <key>SD Test</key>
       <value>
-        <type>UNCONFIRMED</type>
+        <type>DEBUG</type>
         <path>SDTEST.opi</path>
         <description>Software development test OPI.</description>
         <macros>
@@ -983,7 +983,7 @@
     <entry>
       <key>Galil Engineering View</key>
       <value>
-        <type>GALIL_ENGINEERING</type>
+        <type>DEBUG</type>
         <path>galil/galil.opi</path>
         <description>The OPI giving a detailed engineering view of a galil.</description>
         <macros>
