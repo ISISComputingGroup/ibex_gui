@@ -120,9 +120,10 @@ public class ConfigInfo {
      * @return The list of config names
      */
     public static Collection<String> names(Collection<ConfigInfo> infos) {
-        if (infos == null) {
+    	if (infos == null || infos.isEmpty()) {
             return Collections.emptyList();
         }
+
 
         return Lists.newArrayList(Iterables.transform(infos, new Function<ConfigInfo, String>() {
             @Override
@@ -135,10 +136,11 @@ public class ConfigInfo {
     /**
      * returns config/Component names and its protection status.
      * @param infos
-     * @return collection of Pair i.e config/comp name and its proteciton flag
+     *            The list of ConfigInfos
+     * @return collection of Pair i.e config/comp name and its protection flag
      */
     public static Map<String, Boolean> mapNamesWithTheirProtectionFlag(Collection<ConfigInfo> infos) {
-        if (infos == null) {
+    	if (infos == null || infos.isEmpty()) {
             return Collections.emptyMap();
         }
         Map<String, Boolean> namesWithProtectionFlag = new HashMap<String, Boolean>();
@@ -147,6 +149,22 @@ public class ConfigInfo {
         }
         
         return namesWithProtectionFlag;
+    }
+    
+    /**
+     * Checks if there is a protected configuration/component element within the given ConfigInfo collection.
+     * @param infos
+     *            The list of ConfigInfos
+     * @return boolean: True if a protected configuration exists within given infos list, False if not
+     */
+    public static boolean hasProtectedElement(Collection<ConfigInfo> infos) {
+    	if (infos == null) {
+            return false;
+        }
+
+        boolean returnVal = infos.stream().anyMatch(config -> config.isProtected);
+
+    	return returnVal;
     }
 
     /**

@@ -160,7 +160,7 @@ public class PreferenceSupplier {
     /**
      * The default for the location of genie_python.
      */
-    private static final String DEFAULT_GENIE_PYTHON_DIRECTORY_WINDOWS = "C:\\Instrument\\Apps\\Python\\Lib\\site-packages\\genie_python";
+    private static final String DEFAULT_GENIE_PYTHON_DIRECTORY_WINDOWS = "C:\\Instrument\\Apps\\Python3\\Lib\\site-packages\\genie_python";
     private static final String DEFAULT_GENIE_PYTHON_DIRECTORY_LINUX = "/usr/local/ibex/genie_python/lib/python3.6/site-packages";
     
     /**
