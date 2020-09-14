@@ -298,15 +298,20 @@ public class JournalModel extends ModelObject {
     }
     
     /**
-     * Sets the page number that is being looked at.
+     * Updates the number of the page that is currently being looked at.
      * 
      * @param pageNumber The new page number.
-     * @return a CompleteableFuture
      */
 	public void updatePageNumber(int pageNumber) {
 		firePropertyChange("pageNumber", this.pageNumber, this.pageNumber = pageNumber);
 	}
 	
+    /**
+     * Sets the page number that is being looked at.
+     * 
+     * @param pageNumber The new page number.
+     * @return a CompleteableFuture
+     */
 	public CompletableFuture<Void> setPageNumber(int pageNumber) {
 		updatePageNumber(pageNumber);
 		return refresh();
@@ -321,7 +326,7 @@ public class JournalModel extends ModelObject {
 	}
 	
 	/**
-	 * Returns the PAGE_SIZE constant
+	 * Returns the PAGE_SIZE constant.
 	 * @return PAGE_SIZE constant
 	 */
 	public int getPageSize() {

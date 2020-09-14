@@ -31,7 +31,12 @@ import java.util.stream.Collectors;
 public abstract class JournalSearch {
     private static final String SELECT = "SELECT * FROM journal_entries";
     private static final String COUNT = "SELECT COUNT(*) FROM journal_entries";
+    
+    /**
+     * the Journal Field containing enum constants representing the column names in the SQL schema.
+     */
     protected final JournalField field;
+    
     private ArrayList<JournalSort> sorts = new ArrayList<JournalSort>();
     {
         // This is the default sort
