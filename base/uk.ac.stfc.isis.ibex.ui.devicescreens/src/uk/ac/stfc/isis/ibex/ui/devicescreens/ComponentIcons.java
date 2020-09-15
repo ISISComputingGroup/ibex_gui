@@ -217,6 +217,14 @@ public final class ComponentIcons {
             	return "waveguide_aperture";
             case SPIN_FLIPPER:
             	return "flipper";
+            case PLC:
+            	return "plc";
+            case DEBUG:
+            	return "debug";
+            case HE_LEVEL_GAUGE:
+            	return "he_level_gauge";
+            case VACUUM_TANK:
+            	return "sans2d_vacuum_tank";
             default:
                 return "cog";
         }

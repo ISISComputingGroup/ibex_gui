@@ -77,12 +77,12 @@ public class IconConventionsCheck {
 	/**
 	 * Returns a list of files found at the specified path and used by the OPIs in opi_info.
 	 * @param path The path of the directory.
-	 * @return The list of files.
+	 * @return The list of files, empty if none are found or path is invalid.
 	 */
-	private List<File> getFilesList(String path) {
+	private List<File> getOPIFilesList(String path) {
 		File folder = new File(path);
 		if (!folder.exists()) {
-			System.err.println(String.format("Specified path [%s] was not found.", path));
+			return Collections.emptyList();
 		}
 		
 		// Check whether the current path is for icons or thumbs
@@ -178,7 +178,7 @@ public class IconConventionsCheck {
 	public void GIVEN_icons_THEN_correct_height() throws IOException {
 		List<String> errMessageList = new ArrayList<>();
 		
-		for (File file : getFilesList(ICONS_PATH)) {
+		for (File file : getOPIFilesList(ICONS_PATH)) {
 			BufferedImage image = ImageIO.read(file);
 			int height = image.getHeight();
 			
@@ -195,7 +195,7 @@ public class IconConventionsCheck {
 	public void GIVEN_thumbs_THEN_correct_height_and_width() throws IOException {
 		List<String> errMessageList = new ArrayList<>();
 		
-		for (File file : getFilesList(THUMBS_PATH)) {
+		for (File file : getOPIFilesList(THUMBS_PATH)) {
 			BufferedImage image = ImageIO.read(file);
 			int height = image.getHeight();
 			int width = image.getWidth();
@@ -216,14 +216,14 @@ public class IconConventionsCheck {
 	public void GIVEN_file_THEN_correct_type() throws IOException {
 		List<String> errMessageList = new ArrayList<>();
 		
-		for (File file : getFilesList(THUMBS_PATH)) {
+		for (File file : getOPIFilesList(THUMBS_PATH)) {
 			String type = Files.probeContentType(file.toPath());
 			
 			if (!type.equals(FILE_TYPE)) {
 				errMessageList.add(String.format("\nType of %s (%s) should be %s", file.getName(), type, FILE_TYPE));
 			}
 		}
-		for (File file : getFilesList(ICONS_PATH)) {
+		for (File file : getOPIFilesList(ICONS_PATH)) {
 			String type = Files.probeContentType(file.toPath());
 			
 			if (!type.equals(FILE_TYPE)) {
@@ -310,7 +310,27 @@ public class IconConventionsCheck {
 			}
 		}
 		
-		String failMessage = "One or more icons for declared types were not found.";
+		String failMessage = "One or more icons for declared types was not found.";
+		assertEquals(failMessage, Collections.emptyList(), errMessageList);
+	}
+	
+	@Test
+	public void GIVEN_declared_type_with_corresponding_thumbnail_THEN_thumbnail_exists() throws IOException {
+		List<String> errMessageList = new ArrayList<>();	
+		
+		HashSet<String> componentTypes = new HashSet<String>(ComponentType.componentTypeList());
+		componentTypes.remove("UNKNOWN");
+		
+		for (String type : componentTypes) {
+			String thumbnailName = typeNameToFileName(type, "thumbnail");
+			String thumbnailPath = Paths.get(THUMBS_PATH, thumbnailName).toString();
+			File thumbnail = new File(thumbnailPath);
+			if (!thumbnail.exists()) {
+				errMessageList.add(String.format("\nExpected thumbnail [%s] for type [%s] was not found", thumbnailName, type));
+			}
+		}
+		
+		String failMessage = "One or more thumbnails for declared types was not found.";
 		assertEquals(failMessage, Collections.emptyList(), errMessageList);
 	}
 	
@@ -318,7 +338,7 @@ public class IconConventionsCheck {
 	public void GIVEN_icon_THEN_has_thumbnail() throws IOException {
 		List<String> errMessageList = new ArrayList<>();	
 		
-		List<File> icons = getFilesList(ICONS_PATH);
+		List<File> icons = getOPIFilesList(ICONS_PATH);
 		List<String> iconNames = new ArrayList<>();
 		for (File icon : icons) {
 			iconNames.add(icon.getName().split(".png")[0]);
@@ -328,7 +348,7 @@ public class IconConventionsCheck {
 			String thumbnailPath = Paths.get(THUMBS_PATH, name + "_tb.png").toString();
 			File thumbnail = new File(thumbnailPath);
 			if (!thumbnail.exists()) {
-				errMessageList.add(String.format("\nIcon [%s] does not have a corresponding thumbnail", name));
+				errMessageList.add(String.format("\nIcon [%s.png] does not have a corresponding thumbnail", name));
 			}
 		}
 		
@@ -341,7 +361,7 @@ public class IconConventionsCheck {
 	public void GIVEN_thumbnail_THEN_has_icon() throws IOException {
 		List<String> errMessageList = new ArrayList<>();
 		
-		List<File> thumbnails = getFilesList(THUMBS_PATH);
+		List<File> thumbnails = getOPIFilesList(THUMBS_PATH);
 		List<String> thumbnailNames = new ArrayList<>();
 		for (File icon : thumbnails) {
 			thumbnailNames.add(icon.getName().split("_tb")[0]);
@@ -351,7 +371,7 @@ public class IconConventionsCheck {
 			String iconPath = Paths.get(ICONS_PATH, name + ".png").toString();
 			File icon = new File(iconPath);
 			if (!icon.exists()) {
-				errMessageList.add(String.format("\nThumbnail [%s] does not have a corresponding icon", name));
+				errMessageList.add(String.format("\nThumbnail [%s.png] does not have a corresponding icon", name));
 			}
 		}
 		
