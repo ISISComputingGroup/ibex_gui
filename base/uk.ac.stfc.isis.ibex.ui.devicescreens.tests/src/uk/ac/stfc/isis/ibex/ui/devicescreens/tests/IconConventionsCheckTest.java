@@ -36,12 +36,6 @@ public class IconConventionsCheckTest {
 	private static final String DEFAULT_ICON = "cog.png";
 	private static final String DEFAULT_THUMB = "cog_tb.png";
 	
-	
-	@Test
-	public void GIVEN_no_files_WHEN_getFilesList_THEN_return_empty_list() {
-		
-	}
-	
 	@Test
 	public void GIVEN_unknown_type_WHEN_thumbnailNameForType_THEN_return_default_thumbnail() {
 		// Arrange
