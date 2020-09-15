@@ -151,7 +151,7 @@ public class IconConventionsCheck {
 	 * @param iconOrThumbnail Whether to get the "icon" or the "thumb" file name.
 	 * @return The name of the file.
 	 */
-	private String typeNameToFileName (String typeName, String iconOrThumbnail) {
+	public static String typeNameToFileName (String typeName, String iconOrThumbnail) {
 		ComponentType type;
 		
 		// If type is not found as a constant within ComponentType, leave it to UNKNOWN instead.

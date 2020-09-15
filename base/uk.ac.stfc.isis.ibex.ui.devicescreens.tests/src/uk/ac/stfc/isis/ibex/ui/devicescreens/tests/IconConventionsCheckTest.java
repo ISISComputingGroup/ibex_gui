@@ -20,29 +20,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.devicescreens.tests;
 
-import static org.junit.Assert.*;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-
-import javax.imageio.ImageIO;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.ComponentIcons;
@@ -53,6 +33,117 @@ import uk.ac.stfc.isis.ibex.ui.devicescreens.tests.IconConventionsCheck;
  */
 public class IconConventionsCheckTest {
 	
+	private static final String DEFAULT_ICON = "cog.png";
+	private static final String DEFAULT_THUMB = "cog_tb.png";
+	
+	
+	@Test
+	public void GIVEN_no_files_WHEN_getFilesList_THEN_return_empty_list() {
+		
+	}
+	
+	@Test
+	public void GIVEN_unknown_type_WHEN_thumbnailNameForType_THEN_return_default_thumbnail() {
+		// Arrange
+		ComponentType type = Enum.valueOf(ComponentType.class, "UNKNOWN");
+		
+		// Act
+		String result = ComponentIcons.thumbnailNameForType(type);
+		
+		// Assert
+		assertEquals(DEFAULT_THUMB, result);
+	}
+	
+	@Test
+	public void GIVEN_type_WHEN_thumbnailNameForType_THEN_return_correct_thumbnail_name() {
+		// Arrange
+		ComponentType type = Enum.valueOf(ComponentType.class, "LAKESHORE");
+		String expected = "lakeshore_tb.png";
+		
+		// Act
+		String result = ComponentIcons.thumbnailNameForType(type);
+		
+		// Assert
+		assertEquals(expected, result);
+	}
+	
+	@Test
+	public void GIVEN_unknown_type_WHEN_iconNameForType_THEN_return_default_icon() {
+		// Arrange
+		ComponentType type = Enum.valueOf(ComponentType.class, "UNKNOWN");
+		
+		// Act
+		String result = ComponentIcons.iconNameForType(type);
+		
+		// Assert
+		assertEquals(DEFAULT_ICON, result);
+	}
+	
+	
+	@Test
+	public void GIVEN_type_WHEN_iconNameForType_THEN_return_correct_icon_name() {
+		// Arrange
+		ComponentType type = Enum.valueOf(ComponentType.class, "LAKESHORE");
+		String expected = "lakeshore.png";
+		
+		// Act
+		String result = ComponentIcons.iconNameForType(type);
+		
+		// Assert
+		assertEquals(expected, result);
+	}
+	
+	@Test
+	public void GIVEN_type_for_icon_WHEN_typeNameToFileName_THEN_return_correct_icon_name() {
+		// Arrange
+		String type = "LAKESHORE";
+		String expected = "lakeshore.png";
+		
+		// Act
+		String result = IconConventionsCheck.typeNameToFileName(type, "icon");
+		
+		// Assert
+		assertEquals(expected, result);
+	}
+	
+	@Test
+	public void GIVEN_invalid_type_for_icon_WHEN_typeNameToFileName_THEN_return_default_icon() {
+		// Arrange
+		String type = "";
+		String expected = "cog.png";
+		
+		// Act
+		String result = IconConventionsCheck.typeNameToFileName(type, "icon");
+		
+		// Assert
+		assertEquals(expected, result);
+	}
+	
+	@Test
+	public void GIVEN_type_for_thumbnail_WHEN_typeNameToFileName_THEN_return_correct_thumbnail() {
+		// Arrange
+		String type = "LAKESHORE";
+		String expected = "lakeshore_tb.png";
+		
+		// Act
+		String result = IconConventionsCheck.typeNameToFileName(type, "thumbnail");
+		
+		// Assert
+		assertEquals(expected, result);
+	}
+	
+	@Test
+	public void GIVEN_invalid_type_for_thumbnail_WHEN_typeNameToFileName_THEN_return_default_thumbnail() {
+		// Arrange
+		String type = "";
+		String expected = "cog_tb.png";
+		
+		// Act
+		String result = IconConventionsCheck.typeNameToFileName(type, "thumbnail");
+		
+		// Assert
+		assertEquals(expected, result);
+	}
 	
 }
 
