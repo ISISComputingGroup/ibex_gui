@@ -59,6 +59,9 @@ public class IconConventionsCheck {
 	private static final String THUMBS_PATH = Paths.get(ICONS_PATH, "thumbs").toString();
 	private static final String OPI_INFO_PATH = Paths.get(System.getProperty("user.dir"), "..", "uk.ac.stfc.isis.ibex.opis", "resources", "opi_info.xml").toString();
 	
+	private static final String GET_ICON = "icon";
+	private static final String GET_THUMBNAIL = "thumbnail";
+	
 	// Icon thumbs image files have height of 28px and a width of 28px including margins.
 	private static final int THUMB_FIXED_HEIGHT = 28;
 	private static final int THUMB_FIXED_WIDTH = 28;
@@ -88,9 +91,9 @@ public class IconConventionsCheck {
 		// Check whether the current path is for icons or thumbs
 		String iconOrThumbnail = null;
 		if (path.equals(ICONS_PATH)) {
-			iconOrThumbnail = "icon";
+			iconOrThumbnail = GET_ICON;
 		} else if (path.equals(THUMBS_PATH)) {
-			iconOrThumbnail = "thumbnail";
+			iconOrThumbnail = GET_THUMBNAIL;
 		}
 		
 		// Get the OPI types from opi_info, remove duplicates via HashSet
@@ -148,7 +151,7 @@ public class IconConventionsCheck {
 	/**
 	 * Convert a type name to the name of the file it corresponds to.
 	 * @param typeName The name of the type.
-	 * @param iconOrThumbnail Whether to get the "icon" or the "thumb" file name.
+	 * @param iconOrThumbnail Whether to get the file name of the icon or thumbnail.
 	 * @return The name of the file.
 	 */
 	public static String typeNameToFileName (String typeName, String iconOrThumbnail) {
@@ -162,9 +165,9 @@ public class IconConventionsCheck {
 		}
 		
 		String filename;
-		if (iconOrThumbnail == "icon") {
+		if (iconOrThumbnail == GET_ICON) {
 			filename = ComponentIcons.iconNameForType(type);
-		} else if (iconOrThumbnail == "thumb" || iconOrThumbnail == "thumbnail"){
+		} else if (iconOrThumbnail == GET_THUMBNAIL){
 			filename = ComponentIcons.thumbnailNameForType(type);
 		} else {
 			filename = "";
@@ -253,18 +256,18 @@ public class IconConventionsCheck {
 	@Test
 	public void GIVEN_existing_opi_THEN_use_relevant_icon() throws IOException {
 		List<String> errMessageList = new ArrayList<>();
-		String defaultIcon = typeNameToFileName("UNKNOWN", "icon");
+		String defaultIcon = typeNameToFileName("UNKNOWN", GET_ICON);
 		
 		Map<String, String> keysAndTypes = getOPIKeysAndTypes();
 		for (String OPIKey : keysAndTypes.keySet()) {
 			String OPIType = keysAndTypes.get(OPIKey);
 			
-			// if type is DEBUG, skip test
-			if (OPIType.equals("DEBUG") || OPIType.contentEquals("UNKNOWN")) {
+			// if type is UNKNOWN it will use the default icon, so skip test
+			if (OPIType.contentEquals("UNKNOWN")) {
 				continue;
 			}
 			
-			if (typeNameToFileName(OPIType, "icon").equals(defaultIcon)) {
+			if (typeNameToFileName(OPIType, GET_ICON).equals(defaultIcon)) {
 				errMessageList.add(String.format("\n[%s] of type [%s] is using the default icon", OPIKey, OPIType));
 			}
 		}
@@ -281,9 +284,9 @@ public class IconConventionsCheck {
 		componentTypes.remove("UNKNOWN");
 		
 		for (String type : componentTypes) {
-			String defaultIcon = typeNameToFileName("UNKNOWN", "icon");
+			String defaultIcon = typeNameToFileName("UNKNOWN", GET_ICON);
 			
-			if (typeNameToFileName(type, "icon").equals(defaultIcon)) {
+			if (typeNameToFileName(type, GET_ICON).equals(defaultIcon)) {
 				errMessageList.add(String.format("\nDeclared type [%s] does not have a corresponding icon",
 												type, defaultIcon));
 			}
@@ -301,7 +304,7 @@ public class IconConventionsCheck {
 		componentTypes.remove("UNKNOWN");
 		
 		for (String type : componentTypes) {
-			String iconName = typeNameToFileName(type, "icon");
+			String iconName = typeNameToFileName(type, GET_ICON);
 			String iconPath = Paths.get(ICONS_PATH, iconName).toString();
 			File icon = new File(iconPath);
 			
@@ -322,7 +325,7 @@ public class IconConventionsCheck {
 		componentTypes.remove("UNKNOWN");
 		
 		for (String type : componentTypes) {
-			String thumbnailName = typeNameToFileName(type, "thumbnail");
+			String thumbnailName = typeNameToFileName(type, GET_THUMBNAIL);
 			String thumbnailPath = Paths.get(THUMBS_PATH, thumbnailName).toString();
 			File thumbnail = new File(thumbnailPath);
 			if (!thumbnail.exists()) {
