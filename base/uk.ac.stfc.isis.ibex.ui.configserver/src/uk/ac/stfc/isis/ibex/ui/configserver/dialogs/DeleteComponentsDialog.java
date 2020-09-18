@@ -22,6 +22,7 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.dialogs;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.swt.graphics.Image;
@@ -61,7 +62,7 @@ public class DeleteComponentsDialog extends MultipleConfigsSelectionDialog {
      * @param names The component names
      */
     @Override
-    protected void setItems(String[] names) {
+    protected void setItems(List<String> names) {
         super.setItems(names);
         for (TableItem item : items.getItems()) {
             if (compsInUse.contains(item.getText())) {
