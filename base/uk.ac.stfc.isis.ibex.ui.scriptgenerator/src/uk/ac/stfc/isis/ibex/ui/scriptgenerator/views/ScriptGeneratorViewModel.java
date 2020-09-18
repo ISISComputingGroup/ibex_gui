@@ -698,18 +698,20 @@ public class ScriptGeneratorViewModel extends ModelObject {
             }
             });
 
-        column.setEditingSupport(new StringEditingSupport<ScriptGeneratorAction>(viewTable.viewer(), ScriptGeneratorAction.class) {
-
-        @Override
-        protected String valueFromRow(ScriptGeneratorAction row) {
-            return row.getActionParameterValue(actionParameter);
-        }
-
-        @Override
-        protected void setValueForRow(ScriptGeneratorAction row, String value) {
-            row.setActionParameterValue(actionParameter, value);
-        }
-        });    
+        var editingSupport = new StringEditingSupport<ScriptGeneratorAction>(viewTable.viewer(), ScriptGeneratorAction.class) {          
+            @Override
+            protected String valueFromRow(ScriptGeneratorAction row) {
+                return row.getActionParameterValue(actionParameter);
+            }
+    
+            @Override
+            protected void setValueForRow(ScriptGeneratorAction row, String value) {
+                row.setActionParameterValue(actionParameter, value);
+            }
+        };
+        viewTable.addEditingSupport(editingSupport);
+        column.setEditingSupport(editingSupport);
+        
     }
     // Add validity notifier column
     TableViewerColumn validityColumn = viewTable.createColumn("Validity", 

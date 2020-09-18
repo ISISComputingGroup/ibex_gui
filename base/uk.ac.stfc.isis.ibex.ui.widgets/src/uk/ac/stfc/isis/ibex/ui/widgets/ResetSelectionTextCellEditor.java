@@ -19,39 +19,49 @@
 
 package uk.ac.stfc.isis.ibex.ui.widgets;
 
-import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jface.viewers.ColumnViewer;
+import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 
-public abstract class StringEditingSupport<TRow> extends GenericEditingSupport<TRow, String> {
+/**
+ * A TextCellEditor that remembers it's selection when focus is removed 
+ * and provides the ability to go back to that selection. Required to 
+ * fix https://github.com/ISISComputingGroup/IBEX/issues/5708.
+ */
+public abstract class ResetSelectionTextCellEditor extends TextCellEditor {
 
-	private final ResetSelectionTextCellEditor editor;
-	private boolean canEdit = true;
+	private Point selectionWhenFocusLost;
 
-	public StringEditingSupport(ColumnViewer viewer, Class<TRow> rowType) {
-		super(viewer, rowType, String.class);
-		editor = createTextCellEditor(viewer);
+	/**
+	 * Creates the TextCellEditor.
+	 * @param composite The composite to create the editor in.
+	 */
+	public ResetSelectionTextCellEditor(Composite composite) {
+		super(composite);
 	}
 	
-	public void setEnabled(boolean enabled) {
-		canEdit = enabled;
-	}
-	
-    private ResetSelectionTextCellEditor createTextCellEditor(ColumnViewer viewer) {
-        return new ResetSelectionTextCellEditor((Composite) viewer.getControl()) {
-            @Override
-            protected void onModifyEvent(ModifyEvent e, String newValue) { 
-                onModify(e, newValue);
-            }
-        };
+    @Override
+    protected void editOccured(ModifyEvent e) {
+        super.editOccured(e);
+        onModifyEvent(e, text.getText());
     }
-
+    
+    @Override
+    protected void focusLost() {
+        if (text != null) {
+            selectionWhenFocusLost = text.getSelection();
+            super.focusLost();
+        }
+    }
+    
     /**
      * Return to the selection the editor was at when it lost focus.
      */
     public void resetSelectionAfterFocus() {
-        editor.resetSelectionAfterFocus();
+        if (selectionWhenFocusLost != null) {
+            text.setSelection(selectionWhenFocusLost);
+        }
     }
     
     /**
@@ -59,20 +69,6 @@ public abstract class StringEditingSupport<TRow> extends GenericEditingSupport<T
      * @param e The modification event
      * @param newValue The new text of the editor
      */
-    protected void onModify(ModifyEvent e, String newValue) { }
+    abstract void onModifyEvent(ModifyEvent e, String newValue);
     
-	@Override
-	protected boolean canEdit(Object element) {
-		return canEdit;
-	}
-	
-	@Override
-	protected String valueFromString(String value) {
-		return value;
-	}
-
-	@Override
-	protected CellEditor getCellEditor(Object arg0) {
-		return editor;
-	}
 }
