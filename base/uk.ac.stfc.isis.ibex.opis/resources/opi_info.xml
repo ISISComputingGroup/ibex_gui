@@ -1598,6 +1598,24 @@
       </value>
     </entry>
     <entry>
+      <key>HTS Magnet</key>
+      <value>
+        <type>HTS_MAGNET</type>
+        <path>hts_magnet.opi</path>
+        <description>The OPI for the HTS Magnet.</description>
+        <macros>
+          <macro>
+            <name>KEPCO</name>
+            <description>The Kepco PV name (e.g. KEPCO_01).</description>
+            <default>KEPCO_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+      </value>
+    </entry>    
+    <entry>
       <key>Zoom FINS PLC</key>
       <value>
         <type>PLC</type>
