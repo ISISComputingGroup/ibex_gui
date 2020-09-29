@@ -72,10 +72,6 @@
 		<unit id="org.eclipse.rcp.source.feature.group" version="4.14.0.v20191210-0610"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="https://download.eclipse.org/nebula/releases/2.3.0/"/>
-		<unit id="org.eclipse.nebula.visualization.feature.feature.group" version="2.1.0.201912241810"/>
-	</location>
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="https://download.eclipse.org/releases/2019-12/"/>
 		<unit id="org.eclipse.emf.sdk.feature.group" version="2.20.0.v20191028-0905"/>
 		<unit id="org.eclipse.gef.cloudio.sdk.feature.group" version="5.0.2.201912040303"/>
@@ -121,6 +117,10 @@
 		<repository location="https://www.pydev.org/update_sites/8.0.0/"/>
 		<unit id="org.python.pydev.feature.feature.group" version="8.0.0.202009061309"/>
 		<unit id="org.python.pydev.feature.source.feature.group" version="8.0.0.202009061309"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="https://download.eclipse.org/nebula/releases/2.4.2/"/>
+		<unit id="org.eclipse.nebula.visualization.feature.feature.group" version="2.1.0.202007241204"/>
 	</location>
 </locations>
 <environment>
