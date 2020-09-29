@@ -66,12 +66,6 @@
         <unit id="org.eclipse.e4.tools.spies.feature.feature.group" version="0.0.0"/>
     </location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="https://download.eclipse.org/eclipse/updates/4.14/"/>
-		<unit id="org.eclipse.platform.ide" version="4.14.0.I20191210-0610"/>
-		<unit id="org.eclipse.rcp.feature.group" version="4.14.0.v20191210-0610"/>
-		<unit id="org.eclipse.rcp.source.feature.group" version="4.14.0.v20191210-0610"/>
-	</location>
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
          <unit id="org.eclipse.sapphire.ui.swt.gef.feature.group" version="9.1.0.201609301330"/>
          <repository location="http://download.eclipse.org/releases/2018-09"/>
      </location>
@@ -121,6 +115,12 @@
 		<unit id="org.eclipse.gef.layout.sdk.feature.group" version="5.0.0.202009090201"/>
 		<unit id="org.eclipse.gef.mvc.sdk.feature.group" version="5.2.2.202009090201"/>
 		<unit id="org.eclipse.gef.zest.sdk.feature.group" version="5.1.2.202009090201"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="https://download.eclipse.org/eclipse/updates/4.17/"/>
+		<unit id="org.eclipse.platform.ide" version="4.17.0.I20200902-1800"/>
+		<unit id="org.eclipse.rcp.feature.group" version="4.17.0.v20200902-1800"/>
+		<unit id="org.eclipse.rcp.source.feature.group" version="4.17.0.v20200902-1800"/>
 	</location>
 </locations>
 <environment>
