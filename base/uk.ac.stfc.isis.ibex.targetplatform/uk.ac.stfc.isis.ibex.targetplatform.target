@@ -55,7 +55,7 @@
 </location>
     <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
         <repository location="http://download.eclipse.org/rt/eclipselink/updates/"/>
-	    <unit id="org.eclipse.persistence.sdk.feature.group" version="2.7.6.v20200131-b7c997804f"/>
+	    <unit id="org.eclipse.persistence.sdk.feature.group" version="2.7.7.v20200504-69f2c2b80d"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
         <repository location="http://shadow.nd.rl.ac.uk/ICP_P2/jacorb/target/repository/"/>
