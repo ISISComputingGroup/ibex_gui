@@ -302,7 +302,7 @@
       <key>Slit motors</key>
       <value>
         <type>JAWS</type>
-        <path>slit_motors.opi</path>
+        <path>jaws/slit_motors_4.opi</path>
         <description>The OPI displaying the motors of a slit.</description>
         <macros>
           <macro>
@@ -967,7 +967,7 @@
     <entry>
       <key>SD Test</key>
       <value>
-        <type>UNCONFIRMED</type>
+        <type>DEBUG</type>
         <path>SDTEST.opi</path>
         <description>Software development test OPI.</description>
         <macros>
@@ -983,7 +983,7 @@
     <entry>
       <key>Galil Engineering View</key>
       <value>
-        <type>GALIL_ENGINEERING</type>
+        <type>DEBUG</type>
         <path>galil/galil.opi</path>
         <description>The OPI giving a detailed engineering view of a galil.</description>
         <macros>
@@ -1598,23 +1598,23 @@
       </value>
     </entry>
     <entry>
-      <key>XY Shutter Arm Beam-stop</key>
+      <key>HTS Magnet</key>
       <value>
-        <type>BEAMSTOP</type>
-        <path>xyShutterArmBeamstop.opi</path>
-        <description>The OPI for the XY Arm Beam-stop with a shutter.</description>
+        <type>HTS_MAGNET</type>
+        <path>hts_magnet.opi</path>
+        <description>The OPI for the HTS Magnet.</description>
         <macros>
           <macro>
-            <name>XYSHUTTERARMBEAMSTOP</name>
-            <description>The XY Arm Shutter Beamstop PV prefix (e.g. MOT).</description>
-            <default/>
+            <name>KEPCO</name>
+            <description>The Kepco PV name (e.g. KEPCO_01).</description>
+            <default>KEPCO_01</default>
           </macro>
         </macros>
         <categories>
-          <category>Miscellaneous motion control</category>
+          <category>Power supplies</category>
         </categories>
       </value>
-    </entry>
+    </entry>    
     <entry>
       <key>Zoom FINS PLC</key>
       <value>
@@ -2006,6 +2006,24 @@
       <value>
         <type>SPIN_FLIPPER</type>
         <path>mezflipper.opi</path>
+        <description>The OPI for the Mezei flipper.</description>
+        <macros>
+          <macro>
+            <name>MEZFLIPR</name>
+            <description>The mezei flipper PV prefix (e.g. MEZFLIPR_01).</description>
+            <default>MEZFLIPR_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Polarisers and Analysers</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Mezei spin flipper (v1)</key>
+      <value>
+        <type>SPIN_FLIPPER</type>
+        <path>mezflipper_v1.opi</path>
         <description>The OPI for the Mezei flipper.</description>
         <macros>
           <macro>

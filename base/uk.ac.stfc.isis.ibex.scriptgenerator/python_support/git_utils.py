@@ -3,17 +3,17 @@ import pathlib
 from urllib.parse import urlparse
 from typing import Optional
 
-from git.exc import NoSuchPathError, GitCommandError, InvalidGitRepositoryError, GitError
-
 SCRIPT_GEN_FOLDER = pathlib.Path(__file__).parent.absolute()
 
 try:
-    from git import Repo, Git, FetchInfo
+    import git
 except ImportError:
     # git not on system PATH, use portable git distribution
     GIT_EXECUTABLE_PATH = os.path.join(SCRIPT_GEN_FOLDER, "git", "cmd", "git.exe")
     os.environ["GIT_PYTHON_GIT_EXECUTABLE"] = GIT_EXECUTABLE_PATH
-    from git import Repo, Git
+
+from git.exc import NoSuchPathError, GitCommandError, InvalidGitRepositoryError, GitError
+from git import Repo, Git, FetchInfo
 
 # This initialises the script_definitions folder next to the built executables
 DEFAULT_REPO_PATH = SCRIPT_GEN_FOLDER.parent.parent.parent / 'script_definitons'

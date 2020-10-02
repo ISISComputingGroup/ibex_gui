@@ -160,7 +160,7 @@ public class PreferenceSupplier {
     /**
      * The default for the location of genie_python.
      */
-    private static final String DEFAULT_GENIE_PYTHON_DIRECTORY = "C:\\Instrument\\Apps\\Python\\Lib\\site-packages\\genie_python";
+    private static final String DEFAULT_GENIE_PYTHON_DIRECTORY = "C:\\Instrument\\Apps\\Python3\\Lib\\site-packages\\genie_python";
     
     /**
      * The preference setting for the location of EPICS utils.
