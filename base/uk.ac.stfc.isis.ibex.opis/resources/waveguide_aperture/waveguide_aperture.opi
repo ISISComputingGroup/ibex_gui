@@ -585,6 +585,7 @@ $(pv_value)</tooltip>
           <macros>
             <include_parent_macros>true</include_parent_macros>
             <MOTION_SET_POINT>LKUP:AG</MOTION_SET_POINT>
+            <ENABLE_PV>$(PLC_ROOT)GALIL_INTERLOCK</ENABLE_PV>
           </macros>
           <name>A Linking Container That Looks Like a Group Box</name>
           <opi_file>../stage/motion_setpoint_position.opi</opi_file>
