@@ -98,6 +98,18 @@
       </value>
     </entry>
     <entry>
+      <key>SANS Sample changer</key>
+      <value>
+        <type>SAMPLECHANGER</type>
+        <path>stage/sans_sample_changer.opi</path>
+        <description>The OPI for the sample changer. No properties required.</description>
+        <macros/>
+        <categories>
+          <category>Sample changers</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>OscillatingCollimator</key>
       <value>
         <type>OSCILLATING_COLLIMATOR</type>
