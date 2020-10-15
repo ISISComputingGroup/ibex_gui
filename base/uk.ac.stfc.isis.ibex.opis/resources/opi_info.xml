@@ -2436,12 +2436,13 @@
       <key>CAENV895</key>
       <value>
         <type>MONITOR</type>
-        <path>CAENV895.opi</path>
+        <path>CAENv895.opi</path>
         <description>CAEN V895 Discriminators</description>
         <macros>
           <macro>
             <name>CAEN</name>
             <description>The CAEN PV prefix (e.g. CAENV895_01)</description>
+            <default>CAENV895_01</default>
           </macro>
         </macros>
         <categories>
