@@ -412,7 +412,7 @@ $(pv_value)</tooltip>
           <name>Text Input_1</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(P)$(L)COORD1</pv_name>
+          <pv_name>$(P)$(L)COORD1:MTR.VAL</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -469,7 +469,7 @@ $(pv_value)</tooltip>
           <name>Text Input_1</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(P)$(L)COORD2</pv_name>
+          <pv_name>$(P)$(L)COORD2:MTR.VAL</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -501,7 +501,7 @@ $(pv_value)</tooltip>
           <background_color>
             <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
           </background_color>
-          <border_alarm_sensitive>false</border_alarm_sensitive>
+          <border_alarm_sensitive>true</border_alarm_sensitive>
           <border_color>
             <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
@@ -646,13 +646,13 @@ $(pv_value)</tooltip>
             <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
           </foreground_color>
           <height>25</height>
-          <name>chopper_on_rbv</name>
+          <name>moving</name>
           <off_color>
-            <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
+            <color red="0" green="255" blue="0" />
           </off_color>
           <off_label>OFF</off_label>
           <on_color>
-            <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+            <color red="0" green="102" blue="0" />
           </on_color>
           <on_label>ON</on_label>
           <pv_name>$(P)$(L)STATIONARY</pv_name>
@@ -704,13 +704,13 @@ $(pv_value)</tooltip>
             <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
           </foreground_color>
           <height>25</height>
-          <name>chopper_on_rbv_1</name>
+          <name>moving1</name>
           <off_color>
-            <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
+            <color red="0" green="255" blue="0" />
           </off_color>
           <off_label>OFF</off_label>
           <on_color>
-            <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+            <color red="0" green="102" blue="0" />
           </on_color>
           <on_label>ON</on_label>
           <pv_name>$(P)$(L)STATIONARY2</pv_name>
@@ -784,8 +784,8 @@ $(pv_value)</tooltip>
           <widget_type>Action Button</widget_type>
           <width>42</width>
           <wuid>281c0c19:174737972c1:-7891</wuid>
-          <x>79</x>
-          <y>80</y>
+          <x>120</x>
+          <y>8</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -852,6 +852,47 @@ $(pv_value)</tooltip>
           <wuid>281c0c19:174737972c1:-782a</wuid>
           <x>288</x>
           <y>59</y>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <auto_size>false</auto_size>
+          <background_color>
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+          </font>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <height>20</height>
+          <horizontal_alignment>0</horizontal_alignment>
+          <name>Label_15</name>
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <show_scrollbar>false</show_scrollbar>
+          <text>Moving:</text>
+          <tooltip></tooltip>
+          <transparent>false</transparent>
+          <vertical_alignment>1</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Label</widget_type>
+          <width>55</width>
+          <wrap_words>true</wrap_words>
+          <wuid>281c0c19:174737972c1:-7757</wuid>
+          <x>66</x>
+          <y>81</y>
         </widget>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -1243,6 +1284,56 @@ $(pv_value)</tooltip>
           <x>105</x>
           <y>3</y>
         </widget>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <auto_size>false</auto_size>
+        <background_color>
+          <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color name="ISIS_Border" red="0" green="0" blue="0" />
+        </border_color>
+        <border_style>1</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+        </font>
+        <foreground_color>
+          <color name="ISIS_Red" red="255" green="0" blue="0" />
+        </foreground_color>
+        <height>85</height>
+        <horizontal_alignment>0</horizontal_alignment>
+        <name>Label_15</name>
+        <rules>
+          <rule name="Rule" prop_id="visible" out_exp="false">
+            <exp bool_exp="pvStr0 == &quot;&quot;">
+              <value>true</value>
+            </exp>
+            <pv trig="true">$(P)SAMPCHNG:SLOT</pv>
+          </rule>
+        </rules>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <show_scrollbar>false</show_scrollbar>
+        <text>Sample changer not yet selected - you will be unable to select any positions until the sample changer is set.&#xD;
+&#xD;
+Use sample changer "_ALL" to enable the use of positions from all sample changers.</text>
+        <tooltip></tooltip>
+        <transparent>false</transparent>
+        <vertical_alignment>1</vertical_alignment>
+        <visible>false</visible>
+        <widget_type>Label</widget_type>
+        <width>397</width>
+        <wrap_words>true</wrap_words>
+        <wuid>281c0c19:174737972c1:-76e9</wuid>
+        <x>12</x>
+        <y>252</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
