@@ -1240,8 +1240,6 @@ $(pv_value)</tooltip>
               <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
 from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
 
-#ConsoleUtil.writeInfo('list positions')
-
 targetPV = display.getWidget('SetPointTextChanger').getPV()
 sourceBtn = display.getWidget('sourceBtnChanger') 
 
@@ -1252,8 +1250,6 @@ if value is None:
     values = "no_changers END"
 else:
     values = "".join(chr(value.getData().getByte(i)) for i in range(value.getData().size()))
-
-ConsoleUtil.writeInfo('list positions ' + values)
 
 actionList = menu.getPropertyValue('actions').getActionsList()
 actionClass = sourceBtn.getPropertyValue('actions').getActionsList()[0].__class__
