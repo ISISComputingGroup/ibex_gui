@@ -2414,7 +2414,7 @@
         </macros>
       </value>
     </entry>
-        <entry>
+    <entry>
       <key>SANS2D Waveguide and Aperture</key>
       <value>
         <type>WAVEGUIDE_APERTURE</type>
@@ -2430,6 +2430,15 @@
         <type>VACUUM_TANK</type>
         <path>sans2d_vacuum_tank.opi</path>
         <description>The OPI for the SANS2D vacuum tank</description>
+      </value>
+    </entry>
+    <entry>
+      <key>User Buttons</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>instetc/user_buttons.opi</path>
+        <description>The OPI for user buttons which run some action</description>
       </value>
     </entry>
   </opis>
