@@ -388,7 +388,7 @@
         <show_scrollbar>true</show_scrollbar>
         <tooltip></tooltip>
         <transparent>true</transparent>
-        <visible>false</visible>
+        <visible>true</visible>
         <widget_type>Grouping Container</widget_type>
         <width>965</width>
         <wuid>4fbad31a:1436c3e166f:-6faf</wuid>
@@ -1305,7 +1305,7 @@
           <width>475</width>
           <wuid>28840e26:169d9726b77:-7d57</wuid>
           <x>486</x>
-          <y>10</y>
+          <y>194</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -1345,7 +1345,7 @@
           <width>475</width>
           <wuid>-76f649f7:171a7364276:-7aac</wuid>
           <x>486</x>
-          <y>194</y>
+          <y>10</y>
         </widget>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -2437,7 +2437,7 @@
         <show_scrollbar>true</show_scrollbar>
         <tooltip></tooltip>
         <transparent>true</transparent>
-        <visible>true</visible>
+        <visible>false</visible>
         <widget_type>Grouping Container</widget_type>
         <width>965</width>
         <wuid>1749b20a:16e12d5448a:-7b90</wuid>
