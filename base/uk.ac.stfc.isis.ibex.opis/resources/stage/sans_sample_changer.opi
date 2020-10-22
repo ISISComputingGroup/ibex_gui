@@ -128,7 +128,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>695</width>
       <wuid>281c0c19:174737972c1:-7b1c</wuid>
@@ -1366,7 +1366,7 @@ Use sample changer "_ALL" to enable the use of positions from all sample changer
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>695</width>
       <wuid>281c0c19:174737972c1:-7b08</wuid>
@@ -1797,7 +1797,7 @@ $(pv_value)</tooltip>
         <transparent>false</transparent>
         <visible>true</visible>
         <widget_type>Grouping Container</widget_type>
-        <width>331</width>
+        <width>547</width>
         <wuid>281c0c19:174737972c1:-77ed</wuid>
         <x>6</x>
         <y>102</y>
@@ -1840,118 +1840,70 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_units>true</show_units>
-          <text>X motor details:</text>
+          <text>######</text>
           <tooltip>$(pv_name)
 $(pv_value)</tooltip>
           <transparent>true</transparent>
-          <vertical_alignment>1</vertical_alignment>
+          <vertical_alignment>2</vertical_alignment>
           <visible>true</visible>
           <widget_type>Text Update</widget_type>
-          <width>114</width>
+          <width>225</width>
           <wrap_words>false</wrap_words>
           <wuid>281c0c19:174737972c1:-77ec</wuid>
-          <x>12</x>
+          <x>-3</x>
           <y>6</y>
         </widget>
-        <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
+        <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
           <actions hook="false" hook_all="false" />
+          <alarm_pulsing>false</alarm_pulsing>
+          <auto_size>false</auto_size>
+          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
           <background_color>
-            <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
           </background_color>
+          <border_alarm_sensitive>true</border_alarm_sensitive>
           <border_color>
-            <color red="0" green="128" blue="255" />
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
           </border_color>
           <border_style>0</border_style>
           <border_width>1</border_width>
           <enabled>true</enabled>
-          <fc>false</fc>
           <font>
-            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+            <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
           </font>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
           <foreground_color>
-            <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
-          <height>31</height>
-          <lock_children>false</lock_children>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-          </macros>
-          <name>Grouping Container</name>
-          <rules>
-            <rule name="Visible" prop_id="visible" out_exp="false">
-              <exp bool_exp="pv0&lt;2">
-                <value>false</value>
-              </exp>
-              <pv trig="true">$(P)$(L)NUMAXES</pv>
-            </rule>
-          </rules>
+          <format_type>0</format_type>
+          <height>20</height>
+          <horizontal_alignment>2</horizontal_alignment>
+          <name>Text Update_5</name>
+          <precision>0</precision>
+          <precision_from_pv>true</precision_from_pv>
+          <pv_name>$(P)$(L)COORD2:NAME</pv_name>
+          <pv_value />
+          <rotation_angle>0.0</rotation_angle>
+          <rules />
           <scale_options>
             <width_scalable>true</width_scalable>
             <height_scalable>true</height_scalable>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <scripts />
-          <show_scrollbar>true</show_scrollbar>
-          <tooltip></tooltip>
-          <transparent>false</transparent>
-          <visible>true</visible>
-          <widget_type>Grouping Container</widget_type>
-          <width>140</width>
-          <wuid>281c0c19:174737972c1:-77eb</wuid>
-          <x>-7</x>
-          <y>30</y>
-          <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
-            <actions hook="false" hook_all="false" />
-            <alarm_pulsing>false</alarm_pulsing>
-            <auto_size>false</auto_size>
-            <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-            <background_color>
-              <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-            </background_color>
-            <border_alarm_sensitive>true</border_alarm_sensitive>
-            <border_color>
-              <color name="ISIS_Border" red="0" green="0" blue="0" />
-            </border_color>
-            <border_style>0</border_style>
-            <border_width>1</border_width>
-            <enabled>true</enabled>
-            <font>
-              <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
-            </font>
-            <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-            <foreground_color>
-              <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-            </foreground_color>
-            <format_type>0</format_type>
-            <height>20</height>
-            <horizontal_alignment>2</horizontal_alignment>
-            <name>Text Update_5</name>
-            <precision>0</precision>
-            <precision_from_pv>true</precision_from_pv>
-            <pv_name>$(P)$(L)COORD2:NAME</pv_name>
-            <pv_value />
-            <rotation_angle>0.0</rotation_angle>
-            <rules />
-            <scale_options>
-              <width_scalable>true</width_scalable>
-              <height_scalable>true</height_scalable>
-              <keep_wh_ratio>false</keep_wh_ratio>
-            </scale_options>
-            <scripts />
-            <show_units>true</show_units>
-            <text>Y motor details:</text>
-            <tooltip>$(pv_name)
+          <show_units>true</show_units>
+          <text>######</text>
+          <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-            <transparent>true</transparent>
-            <vertical_alignment>1</vertical_alignment>
-            <visible>true</visible>
-            <widget_type>Text Update</widget_type>
-            <width>114</width>
-            <wrap_words>false</wrap_words>
-            <wuid>281c0c19:174737972c1:-77ea</wuid>
-            <x>18</x>
-            <y>6</y>
-          </widget>
+          <transparent>true</transparent>
+          <vertical_alignment>2</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Text Update</widget_type>
+          <width>225</width>
+          <wrap_words>false</wrap_words>
+          <wuid>-22ece291:175513ff093:-7f63</wuid>
+          <x>-3</x>
+          <y>36</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
           <actions hook="false" hook_all="false">
@@ -2001,7 +1953,7 @@ $(pv_value)</tooltip>
           <widget_type>Action Button</widget_type>
           <width>97</width>
           <wuid>281c0c19:174737972c1:-77b0</wuid>
-          <x>144</x>
+          <x>234</x>
           <y>2</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
@@ -2052,8 +2004,112 @@ $(pv_value)</tooltip>
           <widget_type>Action Button</widget_type>
           <width>97</width>
           <wuid>281c0c19:174737972c1:-77a8</wuid>
-          <x>144</x>
+          <x>234</x>
           <y>32</y>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <alarm_pulsing>false</alarm_pulsing>
+          <auto_size>false</auto_size>
+          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+          <background_color>
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <border_alarm_sensitive>true</border_alarm_sensitive>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+          </font>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <format_type>0</format_type>
+          <height>20</height>
+          <horizontal_alignment>2</horizontal_alignment>
+          <name>Text Update_4</name>
+          <precision>0</precision>
+          <precision_from_pv>true</precision_from_pv>
+          <pv_name></pv_name>
+          <pv_value />
+          <rotation_angle>0.0</rotation_angle>
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <show_units>true</show_units>
+          <text>:</text>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <transparent>true</transparent>
+          <vertical_alignment>1</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Text Update</widget_type>
+          <width>8</width>
+          <wrap_words>false</wrap_words>
+          <wuid>-22ece291:175513ff093:-7f68</wuid>
+          <x>221</x>
+          <y>6</y>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <alarm_pulsing>false</alarm_pulsing>
+          <auto_size>false</auto_size>
+          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+          <background_color>
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <border_alarm_sensitive>true</border_alarm_sensitive>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+          </font>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <format_type>0</format_type>
+          <height>20</height>
+          <horizontal_alignment>2</horizontal_alignment>
+          <name>Text Update_4</name>
+          <precision>0</precision>
+          <precision_from_pv>true</precision_from_pv>
+          <pv_name></pv_name>
+          <pv_value />
+          <rotation_angle>0.0</rotation_angle>
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <show_units>true</show_units>
+          <text>:</text>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <transparent>true</transparent>
+          <vertical_alignment>1</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Text Update</widget_type>
+          <width>8</width>
+          <wrap_words>false</wrap_words>
+          <wuid>-22ece291:175513ff093:-7f51</wuid>
+          <x>221</x>
+          <y>36</y>
         </widget>
       </widget>
     </widget>
