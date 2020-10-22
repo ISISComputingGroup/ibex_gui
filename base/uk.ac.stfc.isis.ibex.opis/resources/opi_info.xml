@@ -568,6 +568,25 @@
       </value>
     </entry>
     <entry>
+      <key>Mercury Flow Cryostat</key>
+      <value>
+        <type>MERCURY</type>
+        <path>mercuryiTC/mercuryiTC_flow.opi</path>
+        <description>The OPI for the Mercury temperature controller connected to the flow cryostat.</description>
+        <macros>
+          <macro>
+            <name>MERCURY</name>
+            <description>The Mercury PV prefix (e.g. MERCURY_01).</description>
+            <default>MERCURY_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Temperature controllers</category>
+          <category>Cryogenics</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Keithley 2400</key>
       <value>
         <type>KHLY2400</type>
@@ -2426,7 +2445,7 @@
         </macros>
       </value>
     </entry>
-        <entry>
+    <entry>
       <key>SANS2D Waveguide and Aperture</key>
       <value>
         <type>WAVEGUIDE_APERTURE</type>
@@ -2442,6 +2461,15 @@
         <type>VACUUM_TANK</type>
         <path>sans2d_vacuum_tank.opi</path>
         <description>The OPI for the SANS2D vacuum tank</description>
+      </value>
+    </entry>
+    <entry>
+      <key>User Buttons</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>instetc/user_buttons.opi</path>
+        <description>The OPI for user buttons which run some action</description>
       </value>
     </entry>
   </opis>
