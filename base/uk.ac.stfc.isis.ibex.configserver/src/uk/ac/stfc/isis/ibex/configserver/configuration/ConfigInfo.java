@@ -165,11 +165,11 @@ public class ConfigInfo {
      * 
      * @param infos
      *            The list of ConfigInfos
-     * @return The sorted map of configuration/component descriptions without the current one
+     * @return The sorted map of configuration/component name to descriptions without the current one
      */
     public static SortedMap<String, String> namesAndDescriptionsWithoutCurrent(Collection<ConfigInfo> infos) {
         SortedMap<String, String> filteredNamesAndDescriptions = namesAndDescriptions(infos);
-        filteredNamesAndDescriptions.remove(Configurations.getInstance().display().displayCurrentConfig().getValue().description());
+        filteredNamesAndDescriptions.remove(Configurations.getInstance().display().displayCurrentConfig().getValue().name());
         return filteredNamesAndDescriptions;
     }
     
@@ -178,7 +178,7 @@ public class ConfigInfo {
      * 
      * @param infos
      *            The list of ConfigInfos
-     * @return The sorted map of configuration/component descriptions without the current one
+     * @return The sorted map of configuration/component name to description
      */
     public static SortedMap<String, String> namesAndDescriptions(Collection<ConfigInfo> infos) {
     	if (infos == null || infos.isEmpty()) {
