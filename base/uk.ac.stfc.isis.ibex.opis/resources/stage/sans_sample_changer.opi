@@ -128,7 +128,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>695</width>
       <wuid>281c0c19:174737972c1:-7b1c</wuid>
@@ -412,7 +412,7 @@ $(pv_value)</tooltip>
           <name>Text Input_1</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(P)$(L)COORD0:NO_OFF</pv_name>
+          <pv_name>$(P)$(L)COORD0</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -469,7 +469,7 @@ $(pv_value)</tooltip>
           <name>Text Input_1</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(P)$(L)COORD1:NO_OFF</pv_name>
+          <pv_name>$(P)$(L)COORD1</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -1366,7 +1366,7 @@ Use sample changer "_ALL" to enable the use of positions from all sample changer
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>695</width>
       <wuid>281c0c19:174737972c1:-7b08</wuid>
