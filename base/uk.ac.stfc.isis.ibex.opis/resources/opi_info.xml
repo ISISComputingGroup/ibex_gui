@@ -1672,7 +1672,7 @@
           <macro>
             <name>URL</name>
             <description>The URL from which to retrieve the plot.</description>
-            <default>localhost:8988</default>
+            <default>http://localhost:8988</default>
           </macro>
         </macros>
         <categories/>
