@@ -128,7 +128,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>695</width>
       <wuid>281c0c19:174737972c1:-7b1c</wuid>
@@ -341,7 +341,7 @@ $(pv_value)</tooltip>
           <name>Text Update_1</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(P)$(L)COORD1:RBV</pv_name>
+          <pv_name>$(P)$(L)COORD0:RBV</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules>
@@ -356,7 +356,7 @@ $(pv_value)</tooltip>
                   <color red="255" green="0" blue="0" />
                 </value>
               </exp>
-              <pv trig="true">$(P)$(L)COORD1:IN_POSITION</pv>
+              <pv trig="true">$(P)$(L)COORD0:IN_POSITION</pv>
             </rule>
           </rules>
           <scale_options>
@@ -412,7 +412,7 @@ $(pv_value)</tooltip>
           <name>Text Input_1</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(P)$(L)COORD1:MTR.VAL</pv_name>
+          <pv_name>$(P)$(L)COORD0</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -469,7 +469,7 @@ $(pv_value)</tooltip>
           <name>Text Input_1</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(P)$(L)COORD2:MTR.VAL</pv_name>
+          <pv_name>$(P)$(L)COORD1</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -593,8 +593,8 @@ $(pv_value)</tooltip>
                   <color red="0" green="128" blue="0" />
                 </value>
               </exp>
+              <pv trig="true">$(P)$(L)COORD0:IN_POSITION</pv>
               <pv trig="true">$(P)$(L)COORD1:IN_POSITION</pv>
-              <pv trig="true">$(P)$(L)COORD2:IN_POSITION</pv>
             </rule>
           </rules>
           <scale_options>
@@ -655,7 +655,7 @@ $(pv_value)</tooltip>
             <color red="0" green="102" blue="0" />
           </on_color>
           <on_label>ON</on_label>
-          <pv_name>$(P)$(L)STATIONARY</pv_name>
+          <pv_name>$(P)$(L)STATIONARY0</pv_name>
           <pv_value />
           <rules />
           <scale_options>
@@ -713,7 +713,7 @@ $(pv_value)</tooltip>
             <color red="0" green="102" blue="0" />
           </on_color>
           <on_label>ON</on_label>
-          <pv_name>$(P)$(L)STATIONARY2</pv_name>
+          <pv_name>$(P)$(L)STATIONARY1</pv_name>
           <pv_value />
           <rules />
           <scale_options>
@@ -815,7 +815,7 @@ $(pv_value)</tooltip>
           <name>Text Update_1</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(P)$(L)COORD2:RBV</pv_name>
+          <pv_name>$(P)$(L)COORD1:RBV</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules>
@@ -830,7 +830,7 @@ $(pv_value)</tooltip>
                   <color red="255" green="0" blue="0" />
                 </value>
               </exp>
-              <pv trig="true">$(P)$(L)COORD2:IN_POSITION</pv>
+              <pv trig="true">$(P)$(L)COORD0:IN_POSITION</pv>
             </rule>
           </rules>
           <scale_options>
@@ -1366,7 +1366,7 @@ Use sample changer "_ALL" to enable the use of positions from all sample changer
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>695</width>
       <wuid>281c0c19:174737972c1:-7b08</wuid>
@@ -1488,7 +1488,7 @@ Use sample changer "_ALL" to enable the use of positions from all sample changer
           <name>Text Update</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(P)$(L)COORD2:OFFSET</pv_name>
+          <pv_name>$(P)$(L)COORD1:OFFSET</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -1622,7 +1622,7 @@ $(pv_value)</tooltip>
           <name>Text Update</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(P)$(L)COORD1:OFFSET</pv_name>
+          <pv_name>$(P)$(L)COORD0:OFFSET</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -1679,7 +1679,7 @@ $(pv_value)</tooltip>
           <name>Text Input</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(P)$(L)COORD1:OFFSET:SP</pv_name>
+          <pv_name>$(P)$(L)COORD0:OFFSET:SP</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -1736,7 +1736,7 @@ $(pv_value)</tooltip>
           <name>Text Input_1</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(P)$(L)COORD2:OFFSET:SP</pv_name>
+          <pv_name>$(P)$(L)COORD1:OFFSET:SP</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -1829,7 +1829,7 @@ $(pv_value)</tooltip>
           <name>Text Update_4</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(P)$(L)COORD1:NAME</pv_name>
+          <pv_name>$(P)$(L)COORD0:NAME</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -1881,7 +1881,7 @@ $(pv_value)</tooltip>
           <name>Text Update_5</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(P)$(L)COORD2:NAME</pv_name>
+          <pv_name>$(P)$(L)COORD1:NAME</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -1907,13 +1907,11 @@ $(pv_value)</tooltip>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
           <actions hook="false" hook_all="false">
-            <action type="OPEN_DISPLAY">
-              <path>../Motor/mymotor.opi</path>
-              <macros>
-                <include_parent_macros>true</include_parent_macros>
-                <MM>$(L)COORD1:MTR</MM>
-              </macros>
-              <mode>0</mode>
+            <action type="EXECUTE_PYTHONSCRIPT">
+              <path>openOPI.py</path>
+              <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+]]></scriptText>
+              <embedded>false</embedded>
               <description></description>
             </action>
           </actions>
@@ -1935,7 +1933,7 @@ $(pv_value)</tooltip>
           <image></image>
           <name>Button_1</name>
           <push_action_index>0</push_action_index>
-          <pv_name></pv_name>
+          <pv_name>$(P)$(L)COORD0:MTRNAME</pv_name>
           <pv_value />
           <rules />
           <scale_options>
@@ -1958,13 +1956,11 @@ $(pv_value)</tooltip>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
           <actions hook="false" hook_all="false">
-            <action type="OPEN_DISPLAY">
-              <path>../Motor/mymotor.opi</path>
-              <macros>
-                <include_parent_macros>true</include_parent_macros>
-                <MM>$(L)COORD2:MTR</MM>
-              </macros>
-              <mode>0</mode>
+            <action type="EXECUTE_PYTHONSCRIPT">
+              <path>openOPI.py</path>
+              <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+]]></scriptText>
+              <embedded>false</embedded>
               <description></description>
             </action>
           </actions>
@@ -1986,7 +1982,7 @@ $(pv_value)</tooltip>
           <image></image>
           <name>Button_1</name>
           <push_action_index>0</push_action_index>
-          <pv_name></pv_name>
+          <pv_name>$(P)$(L)COORD1:MTRNAME</pv_name>
           <pv_value />
           <rules />
           <scale_options>
