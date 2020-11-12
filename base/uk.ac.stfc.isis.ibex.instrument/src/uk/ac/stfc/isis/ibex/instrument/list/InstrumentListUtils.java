@@ -20,8 +20,9 @@
 package uk.ac.stfc.isis.ibex.instrument.list;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ import org.apache.logging.log4j.Logger;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.common.io.Resources;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
@@ -50,18 +52,13 @@ public final class InstrumentListUtils {
 	
 	private static final Logger LOG = IsisLog.getLogger(InstrumentListUtils.class);
 	
-	private static final Path ALLOWED_GROUPS_PATH = FileSystems.getDefault().getPath("allowed_groups.conf");
+	private static final URL ALLOWED_GROUPS_PATH = new InstrumentListUtils().getClass().getResource("/resources/allowed_groups.conf");
 	
     /**
      * An empty constructor required for check style.
      */
     private InstrumentListUtils() {
     }
-    
-    /**
-     * Location of instrument allowlist in preferences file
-     */
-    private static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.instrument";
     
     /**
      * Given an observable for a list of instruments, filter out invalid
@@ -151,7 +148,11 @@ public final class InstrumentListUtils {
      */
     private static Optional<List<String>> loadAllowedGroups() {
         try {
-			String content = Files.readString(ALLOWED_GROUPS_PATH, StandardCharsets.UTF_8).strip();
+			String content = Resources.toString(ALLOWED_GROUPS_PATH, StandardCharsets.UTF_8).strip();
+			
+			if (content.isEmpty()) {
+				return Optional.empty();
+			}
 			
 			List<String> instrumentAllowList = content.contains(",") ? Arrays.asList(content.split(",")) : Arrays.asList(content);
 			
@@ -161,8 +162,8 @@ public final class InstrumentListUtils {
 	        	return Optional.empty();
 	        }
 			
-		} catch (IOException e) {
-			LOG.warn("Cannot read allowed groups from " + ALLOWED_GROUPS_PATH.toAbsolutePath().toString());
+		} catch (IOException  e) {
+			LOG.warn("Cannot read allowed groups - assuming all groups are allowed");
 			return Optional.empty();
 		}
     }
