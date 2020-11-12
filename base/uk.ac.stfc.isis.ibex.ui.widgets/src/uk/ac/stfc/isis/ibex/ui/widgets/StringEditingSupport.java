@@ -21,13 +21,12 @@ package uk.ac.stfc.isis.ibex.ui.widgets;
 
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnViewer;
-import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.widgets.Composite;
 
 public abstract class StringEditingSupport<TRow> extends GenericEditingSupport<TRow, String> {
 
-	private final TextCellEditor editor;
+	private final ResetSelectionTextCellEditor editor;
 	private boolean canEdit = true;
 
 	public StringEditingSupport(ColumnViewer viewer, Class<TRow> rowType) {
@@ -39,16 +38,27 @@ public abstract class StringEditingSupport<TRow> extends GenericEditingSupport<T
 		canEdit = enabled;
 	}
 	
-    private TextCellEditor createTextCellEditor(ColumnViewer viewer) {
-        return new TextCellEditor((Composite) viewer.getControl()) {
+    private ResetSelectionTextCellEditor createTextCellEditor(ColumnViewer viewer) {
+        return new ResetSelectionTextCellEditor((Composite) viewer.getControl()) {
             @Override
-            protected void editOccured(ModifyEvent e) {
-                super.editOccured(e);
-                onModify(e, text.getText());
+            protected void onModifyEvent(ModifyEvent e, String newValue) { 
+                onModify(e, newValue);
             }
         };
     }
 
+    /**
+     * Return to the selection the editor was at when it lost focus.
+     */
+    public void resetSelectionAfterFocus() {
+        editor.resetSelectionAfterFocus();
+    }
+    
+    /**
+     * Called when the editor is modified.
+     * @param e The modification event
+     * @param newValue The new text of the editor
+     */
     protected void onModify(ModifyEvent e, String newValue) { }
     
 	@Override
