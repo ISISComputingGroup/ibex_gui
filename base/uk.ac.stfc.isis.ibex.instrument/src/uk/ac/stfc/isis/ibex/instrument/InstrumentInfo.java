@@ -19,6 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.instrument;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import uk.ac.stfc.isis.ibex.instrument.internal.PVPrefixFactory;
 
 /**
@@ -30,6 +36,7 @@ public class InstrumentInfo {
 	private final String name;
     private String pvPrefix;
     private final String hostName;
+    private final String[] groups;
 
 	/**
      * Constructor for creating any general instrument. CONSTRUCTORS NOT CALLED
@@ -40,11 +47,13 @@ public class InstrumentInfo {
      * @param pvPrefix The PV prefix used to connect to the instrument
      * @param hostName The host name of the machine that the instrument is
      *            running on
+     * @param groups the science group(s) that this instrument belongs to (e.g. MUONS, SANS)
      */
-	public InstrumentInfo(String name, String pvPrefix, String hostName) {
+	public InstrumentInfo(String name, String pvPrefix, String hostName, Collection<String> groups) {
 		this.name = name;
 		this.hostName = hostName;
 		this.pvPrefix = pvPrefix;
+		this.groups = groups.toArray(new String[groups.size()]);
         assert (hasValidHostName());
 	}
 
@@ -76,6 +85,16 @@ public class InstrumentInfo {
     public String hostName() {
     	return hostName == null ? PVPrefixFactory.DEFAULT_HOSTNAME_PREFIX + name : hostName;
 	}
+    
+    /**
+     * 
+     * @return the list of science groups which this instrument belongs to. 
+     * e.g. "MUONS", "SANS", "REFLECTOMETRY"
+     * Each instrument is allowed to be in any number of science groups.
+     */
+    public Collection<String> groups() {
+    	return groups != null ? Arrays.asList(groups) : Collections.emptyList();
+    }
 
     /**
      * @return Regex describing a valid default instrument hostname.

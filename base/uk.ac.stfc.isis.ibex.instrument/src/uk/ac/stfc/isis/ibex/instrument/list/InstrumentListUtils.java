@@ -19,19 +19,20 @@
 
 package uk.ac.stfc.isis.ibex.instrument.list;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.Logger;
-import org.eclipse.core.runtime.preferences.ConfigurationScope;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.osgi.service.prefs.BackingStoreException;
-import org.osgi.service.prefs.Preferences;
-
-import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -39,7 +40,6 @@ import com.google.common.collect.Lists;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.internal.LocalHostInstrumentInfo;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * Given an observable containing a list of instruments, filters out invalid
@@ -47,6 +47,11 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
  * 
  */
 public final class InstrumentListUtils {	
+	
+	private static final Logger LOG = IsisLog.getLogger(InstrumentListUtils.class);
+	
+	private static final Path ALLOWED_GROUPS_PATH = FileSystems.getDefault().getPath("allowed_groups.conf");
+	
     /**
      * An empty constructor required for check style.
      */
@@ -54,9 +59,8 @@ public final class InstrumentListUtils {
     }
     
     /**
-     * Location of instrument whitelist in preferences file
+     * Location of instrument allowlist in preferences file
      */
-    private static final String LOCAL_INSTRUMENT_LIST_PREFS = "inst-whitelist";
     private static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.instrument";
     
     /**
@@ -105,52 +109,62 @@ public final class InstrumentListUtils {
      * 
      * @return the valid instruments extracted from the input observable
      */
-    public static Collection<InstrumentInfo> applyInstWhitelist(
+    public static Collection<InstrumentInfo> filterByAllowedGroup(
             Collection<InstrumentInfo> instruments,
-            Optional<ArrayList<String>> whitelist) {
+            Optional<List<String>> allowedGroups) {
     	
-        Iterable<InstrumentInfo> filteredInstruments = Iterables.filter(instruments, new Predicate<InstrumentInfo>() {
+        Predicate<InstrumentInfo> isInstAllowed = new Predicate<>() {
             @Override
-            public boolean apply(InstrumentInfo item) {
-                boolean instrumentWhitelisted;
-                
-                if (!whitelist.isPresent()) {
-                	instrumentWhitelisted = true;
-                } else if (whitelist.get().size() == 0) {
-                	instrumentWhitelisted = true;
-                } else if (item.equals(new LocalHostInstrumentInfo())) {
-                	instrumentWhitelisted = true;
+            public boolean apply(InstrumentInfo instrumentInfo) {
+                if (allowedGroups.isEmpty()) {
+                	// No allowed groups file defined - so allowed to see all instruments.
+                	return true;
+                } else if (instrumentInfo.equals(new LocalHostInstrumentInfo())) {
+                	// Always allowed to see localhost
+                	return true;
                 } else {
-                	instrumentWhitelisted = whitelist.get().contains(item.name());
+                	// Check if any of the groups that this instrument is in is in the list of groups
+                	// which we're allowed to observe.
+                	final Collection<String> unwrappedGroups = allowedGroups.get();
+                	return unwrappedGroups.stream()
+                			.anyMatch(group -> instrumentInfo.groups().contains(group));
                 }
-                
-            	return instrumentWhitelisted;
             }
-        });
+        };
         
 
-        Collection<InstrumentInfo> returnValue = Lists.newArrayList(filteredInstruments);
-
-        return returnValue;
+        return instruments.stream()
+        		.filter(isInstAllowed)
+        		.collect(Collectors.toList());
     }
 
 
-
-    private static Optional<ArrayList<String>> loadWhitelist() {
-        ArrayList<String> instrumentWhitelist = new ArrayList<String>();
-        IEclipsePreferences prefs = ConfigurationScope.INSTANCE.getNode(PLUGIN_ID);
-        Preferences whitelistPrefs = prefs.node(LOCAL_INSTRUMENT_LIST_PREFS);
-        for (String inst:whitelistPrefs.get("whitelist", "").split(",")) {
-			if (!inst.trim().isBlank()) {
-				instrumentWhitelist.add(inst);
-			}
+    /**
+     * Gets a list of allowed groups that this client is permitted to observe.
+     * 
+     * Examples:
+     *     Optional<ArrayList<String>> = ["MUON", "SANS"]  - this client is allowed to look at MUON and SANS instruments
+     *     Optional<ArrayList<String>> = Optional.empty()  - this client is allowed to look at any instrument
+     *     
+     * If present, the list will always contain at least one value.
+     * @return
+     */
+    private static Optional<List<String>> loadAllowedGroups() {
+        try {
+			String content = Files.readString(ALLOWED_GROUPS_PATH, StandardCharsets.UTF_8).strip();
+			
+			List<String> instrumentAllowList = content.contains(",") ? Arrays.asList(content.split(",")) : Arrays.asList(content);
+			
+			if (instrumentAllowList.size() > 0) {
+	        	return Optional.of(instrumentAllowList);
+	        } else {
+	        	return Optional.empty();
+	        }
+			
+		} catch (IOException e) {
+			LOG.warn("Cannot read allowed groups from " + ALLOWED_GROUPS_PATH.toAbsolutePath().toString());
+			return Optional.empty();
 		}
-        
-        if (instrumentWhitelist.size() > 0) {
-        	return Optional.of(instrumentWhitelist);
-        } else {
-        	return Optional.absent();
-        }
     }
     
     
@@ -173,7 +187,7 @@ public final class InstrumentListUtils {
         InstrumentInfo topInstrument = localhost;
         for (InstrumentInfo instrument : instruments) {
             if (instrument.hostName().equals(localhost.name())) {
-                topInstrument = new InstrumentInfo(instrument.name(), instrument.pvPrefix(), localhost.hostName());
+                topInstrument = new InstrumentInfo(instrument.name(), instrument.pvPrefix(), localhost.hostName(), new ArrayList<>());
             } else {
                 instrumentsAlphabetical.add(instrument);
             }
@@ -185,17 +199,17 @@ public final class InstrumentListUtils {
     }
 
     /**
-     * Return list of instruments filtered by the whitelist, if present.
+     * Return list of instruments filtered by the allowlist, if present.
      * @param input The current list of instruments.
      * @param logger The ibex logger.
-     * @return list of instruments filtered by whitelist and invalid values removed.
+     * @return list of instruments filtered by allowlist and invalid values removed.
      */
-	public static Collection<InstrumentInfo> applyInstWhitelist(Collection<InstrumentInfo> input) {
-		return applyInstWhitelist(input, loadWhitelist());
+	public static Collection<InstrumentInfo> applyInstAllowedGroup(Collection<InstrumentInfo> input) {
+		return filterByAllowedGroup(input, loadAllowedGroups());
 	}
 
-	public static boolean whitelistExists() {
-		return loadWhitelist().isPresent();
+	public static boolean allowListExists() {
+		return loadAllowedGroups().isPresent();
 	}
 }
 

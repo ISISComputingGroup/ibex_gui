@@ -39,7 +39,7 @@ public class InstrumentNameValidator {
      */
     public static final String NAME_EMPTY_MSG = "Instrument Name invalid, must not be empty";
 
-    private static final String WHITELIST_ENABLED_MSG = "Instrument switching resticted to whitelist";
+    private static final String ALLOWLIST_ENABLED_MSG = "Instrument switching resticted to allowlist";
     
     private static final String NO_ERROR_MSG = "";
 
@@ -70,8 +70,8 @@ public class InstrumentNameValidator {
         if (nameIsKnown(instrumentName)) {
         	isValid = true;
         	setErrorMessage(NO_ERROR_MSG);
-        } else if (Instrument.whitelistExists()) {
-        	setErrorMessage(WHITELIST_ENABLED_MSG);
+        } else if (Instrument.allowlistExists()) {
+        	setErrorMessage(ALLOWLIST_ENABLED_MSG);
         } else if (instrumentName.isEmpty()) {
             setErrorMessage(NAME_EMPTY_MSG);
         } else if (!(instrumentName.matches("[a-zA-Z0-9_\\-]*$"))) {

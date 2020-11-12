@@ -25,6 +25,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.logging.log4j.Logger;
 import org.junit.Before;
@@ -252,7 +253,7 @@ public class InstrumentListUtilsTest {
         instList.add(instrument1);
         instList.add(instrument2);
         
-    	ArrayList<String> localInstList = new ArrayList<String>();
+    	List<String> localInstList = new ArrayList<String>();
     	
     	localInstList.add(instrument1.name());
     	
@@ -260,24 +261,24 @@ public class InstrumentListUtilsTest {
     	expected.add(instrument1);
     	
     	// Assert
-    	assertEquals(expected, InstrumentListUtils.applyInstWhitelist(instList, Optional.of(localInstList)));
+    	assertEquals(expected, InstrumentListUtils.filterByAllowedGroup(instList, Optional.of(localInstList)));
     }
     
     @Test
-    public void GIVEN_empty_local_instrument_list_WHEN_whitelist_applied_THEN_all_instruments_shown() {
+    public void GIVEN_empty_local_instrument_list_WHEN_allowlist_applied_THEN_all_instruments_shown() {
     	// Arrange
-        ArrayList<InstrumentInfo> instList = new ArrayList<>();
+        List<InstrumentInfo> instList = new ArrayList<>();
         instList.add(instrument1);
         instList.add(instrument2);
         
-    	ArrayList<String> localInstList = new ArrayList<String>();
+    	List<String> localInstList = new ArrayList<String>();
     	
     	// Assert
-    	assertEquals(instList, InstrumentListUtils.applyInstWhitelist(instList, Optional.of(localInstList)));
+    	assertEquals(instList, InstrumentListUtils.filterByAllowedGroup(instList, Optional.of(localInstList)));
     }
     
     @Test
-    public void GIVEN_absent_instrument_whitelist_THEN_all_instruments_shown( ) {
+    public void GIVEN_absent_instrument_allowlist_THEN_all_instruments_shown( ) {
     	// Arrange
         Collection<InstrumentInfo> instList = new ArrayList<>();
         instList.add(instrument1);

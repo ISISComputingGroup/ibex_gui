@@ -73,7 +73,7 @@ public class InstrumentSelectionPanel extends Composite {
         createInstrumentTextBox(grpInstrument);
         createClearButton(grpInstrument);
         createHelpLabel(grpInstrument);
-        createTable(grpInstrument, viewModel.getWhitelistedInstruments());
+        createTable(grpInstrument, viewModel.getInstrumentAllowlist());
         bindModel(viewModel);
     }
 
@@ -93,7 +93,7 @@ public class InstrumentSelectionPanel extends Composite {
                 instrumentTable.setSearch(txtSelectedName.getText());
             }
         });
-        txtSelectedName.setEditable(!Instrument.whitelistExists());
+        txtSelectedName.setEditable(!Instrument.allowlistExists());
     }
 
     private void createClearButton(Composite parent) {

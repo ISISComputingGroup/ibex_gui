@@ -69,8 +69,8 @@ public class InstrumentSelectionViewModel extends ErrorMessageProvider {
         return instruments;
     }
     
-    public Collection<InstrumentInfo> getWhitelistedInstruments() {
-    	return Instrument.getWhitelistedInstruments(instruments);
+    public Collection<InstrumentInfo> getInstrumentAllowlist() {
+    	return Instrument.getInstrumentAllowlist(instruments);
     }
     
 
