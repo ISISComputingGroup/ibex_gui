@@ -110,8 +110,8 @@ public final class InstrumentListUtils {
      * @return the valid instruments extracted from the input observable
      */
     public static Collection<InstrumentInfo> filterByAllowedGroup(
-            Collection<InstrumentInfo> instruments,
-            Optional<List<String>> allowedGroups) {
+            Collection<? extends InstrumentInfo> instruments,
+            Optional<? extends List<String>> allowedGroups) {
     	
         Predicate<InstrumentInfo> isInstAllowed = new Predicate<>() {
             @Override

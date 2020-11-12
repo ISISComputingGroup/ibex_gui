@@ -19,12 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.instrument;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
-
 import uk.ac.stfc.isis.ibex.instrument.internal.PVPrefixFactory;
 
 /**
@@ -36,6 +33,8 @@ public class InstrumentInfo {
 	private final String name;
     private String pvPrefix;
     private final String hostName;
+    
+    // This wants to be a raw array as that helps GSON to deserialize it easily
     private final String[] groups;
 
 	/**
@@ -54,7 +53,20 @@ public class InstrumentInfo {
 		this.hostName = hostName;
 		this.pvPrefix = pvPrefix;
 		this.groups = groups.toArray(new String[groups.size()]);
-        assert (hasValidHostName());
+	}
+	
+	/**
+	 * Constructor for creating any general instrument, belonging to no groups.
+	 * 
+	 * See full constructor for details.
+	 * 
+	 * @param name The user friendly name of the instrument
+     * @param pvPrefix The PV prefix used to connect to the instrument
+     * @param hostName The host name of the machine that the instrument is
+     *            running on
+	 */
+	public InstrumentInfo(String name, String pvPrefix, String hostName) {
+		this(name, pvPrefix, hostName, Collections.emptyList());
 	}
 
 	/**
