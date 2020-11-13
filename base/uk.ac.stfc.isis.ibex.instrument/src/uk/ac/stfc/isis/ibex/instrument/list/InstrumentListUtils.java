@@ -116,7 +116,7 @@ public final class InstrumentListUtils {
                 if (allowedGroups.isEmpty()) {
                 	// No allowed groups file defined - so allowed to see all instruments.
                 	return true;
-                } else if (instrumentInfo.equals(new LocalHostInstrumentInfo())) {
+                } else if (instrumentInfo.name().equals(new LocalHostInstrumentInfo().name())) {
                 	// Always allowed to see localhost
                 	return true;
                 } else {
@@ -148,7 +148,13 @@ public final class InstrumentListUtils {
      */
     private static Optional<List<String>> loadAllowedGroups() {
         try {
-			String content = Resources.toString(ALLOWED_GROUPS_PATH, StandardCharsets.UTF_8).strip();
+        	String content;
+        	try {
+			    content = Resources.toString(ALLOWED_GROUPS_PATH, StandardCharsets.UTF_8).strip();
+        	} catch (NullPointerException e) {
+        		// Above will throw a null pointer exception in tests as they don't have access to resources,
+        		return Optional.empty();
+        	}
 			
 			if (content.isEmpty()) {
 				return Optional.empty();
@@ -162,7 +168,7 @@ public final class InstrumentListUtils {
 	        	return Optional.empty();
 	        }
 			
-		} catch (IOException  e) {
+		} catch (IOException e) {
 			LOG.warn("Cannot read allowed groups - assuming all groups are allowed");
 			return Optional.empty();
 		}

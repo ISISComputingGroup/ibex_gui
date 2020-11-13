@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.validators;
 
 import java.util.Collection;
+import java.util.function.Supplier;
 
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 
@@ -45,6 +46,7 @@ public class InstrumentNameValidator {
 
     private String errorMessage;
     private Collection<String> knownValidNames;
+    private final Supplier<Boolean> allowlistExistsFunc;
 
     /**
      * Creates an instance of the instrument name validator, given a list of
@@ -53,8 +55,13 @@ public class InstrumentNameValidator {
      * @param knownValidNames the list of known instrument names.
      */
     public InstrumentNameValidator(Collection<String> knownValidNames) {
-        errorMessage = NO_ERROR_MSG;
+        this(knownValidNames, Instrument::allowlistExists);
+    }
+    
+    public InstrumentNameValidator(Collection<String> knownValidNames, Supplier<Boolean> allowlistExistsFunc) {
+    	errorMessage = NO_ERROR_MSG;
         this.knownValidNames = knownValidNames;
+        this.allowlistExistsFunc = allowlistExistsFunc;
     }
     
     /**
@@ -70,7 +77,7 @@ public class InstrumentNameValidator {
         if (nameIsKnown(instrumentName)) {
         	isValid = true;
         	setErrorMessage(NO_ERROR_MSG);
-        } else if (Instrument.allowlistExists()) {
+        } else if (allowlistExistsFunc.get()) {
         	setErrorMessage(ALLOWLIST_ENABLED_MSG);
         } else if (instrumentName.isEmpty()) {
             setErrorMessage(NAME_EMPTY_MSG);
