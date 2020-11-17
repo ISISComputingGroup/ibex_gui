@@ -1640,6 +1640,11 @@
             <description>The Kepco PV name (e.g. KEPCO_01).</description>
             <default>KEPCO_01</default>
           </macro>
+          <macro>
+            <name>SMRTMON</name>
+            <description>Smart Monitor PV (e.g. SMRTMON_01).</description>
+            <default>SMRTMON_01</default>
+          </macro>
         </macros>
         <categories>
           <category>Power supplies</category>
