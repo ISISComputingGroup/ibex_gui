@@ -34,8 +34,6 @@ import java.util.concurrent.Executors;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jface.preference.IPreferenceStore;
 
-import java.sql.PreparedStatement;
-
 import uk.ac.stfc.isis.ibex.databases.Rdb;
 import uk.ac.stfc.isis.ibex.journal.preferences.PreferenceConstants;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -71,6 +69,7 @@ public class JournalModel extends ModelObject {
     
     private int pageNumber = 1;
     private int pageMax = 1;
+    private int resultsNumber = 0;
     
     // The most recent or active search
     // Used so the search is remembered when changing the page number or refreshing
@@ -115,6 +114,7 @@ public class JournalModel extends ModelObject {
                 setMessage("");
                 setLastUpdate(new Date());
                 searchUpdateRuns(connection, search);
+
                 activeSearch = search;
             } catch (Exception ex) {
                 setMessage(Rdb.getError(ex).toString());
@@ -137,6 +137,7 @@ public class JournalModel extends ModelObject {
      */
     public void clearModel() {
     	setRuns(Collections.<JournalRow>emptyList());
+    	this.updatePageNumber(1);
         lastUpdate = null;
     }
     
@@ -156,8 +157,7 @@ public class JournalModel extends ModelObject {
             setMessage(NO_RESULTS_FOUND);
         }
         setRuns(Collections.unmodifiableList(runs));
-        updateRunsCount(connection);
-        
+        updateRunsCount(connection, search);
         long totalTime = System.currentTimeMillis() - startTime;
         if (totalTime > QUERY_DURATION_WARNING_LEVEL) {
             LOG.warn(String.format(
@@ -192,26 +192,15 @@ public class JournalModel extends ModelObject {
         return runs;
     }
     
-    private void updateRunsCount(Connection connection) throws SQLException {
-    	ResultSet rs = constructCountFieldsSQLQuery(connection).executeQuery();
+    private void updateRunsCount(Connection connection, JournalSearch search) throws SQLException {
+    	ResultSet rs = search.constructCountQuery(connection).executeQuery();
     	if (!rs.next()) {
     		throw new RuntimeException("No results returned from SQL query to count rows.");
     	}
-	    setTotalResults(rs.getInt(1));
-	    rs.close();
-    }
-    
-    /**
-     * Constructs a SQL query which gets the number of runs available.
-     * 
-     * NOTE: Ensure that arbitrary strings cannot be inserted into this query, maliciously or 
-     * accidentally as that could lead to a SQL injection vulnerability.
-     * 
-     * @return a SQL prepared statement ready to be executed.
-     * @throws SQLException if a SQL exception occurred while preparing the statement
-     */
-    private PreparedStatement constructCountFieldsSQLQuery(Connection connection) throws SQLException {
-    	return connection.prepareStatement("SELECT COUNT(*) FROM journal_entries");
+    	
+    	setPageMax(calcTotalPages(rs.getInt(1)));
+    	setResultsNumber(rs.getInt(1));
+    	rs.close();
     }
     
     /**
@@ -309,69 +298,110 @@ public class JournalModel extends ModelObject {
     }
     
     /**
+     * Updates the number of the page that is currently being looked at.
+     * 
+     * @param pageNumber The new page number.
+     */
+	public void updatePageNumber(int pageNumber) {
+		firePropertyChange("pageNumber", this.pageNumber, this.pageNumber = pageNumber);
+	}
+	
+    /**
      * Sets the page number that is being looked at.
      * 
      * @param pageNumber The new page number.
      * @return a CompleteableFuture
      */
-    public CompletableFuture<Void> setPage(int pageNumber) {
-        this.pageNumber = pageNumber;
-        return refresh();
-    }
-
-    /**
-     * Returns the current page number.
-     * @return The page number.
-     */
-    public int getPage() {
-        return pageNumber;
-    }
-    
-    private void setTotalResults(int totalResults) {
-    	setPageMax((int) Math.ceil(totalResults / (double) PAGE_SIZE));
+	public CompletableFuture<Void> setPageNumber(int pageNumber) {
+		updatePageNumber(pageNumber);
+		return refresh();
 	}
-    
-    /**
-     * The maximum page number that can be selected.
-     * @param max the new maximum selectable page number
-     */
-    public void setPageMax(int max) {
-    	firePropertyChange("pageNumberMax", this.pageMax, this.pageMax = max);
-    }
-
-    /**
-     * Gets the maximum page number with data in it.
-     * @return the maximum page number
-     */
+	
+	/**
+	 * Returns the current page number.
+	 * @return The page number.
+	 */
+	public int getPage() {
+	    return pageNumber;
+	}
+	
+	/**
+	 * Returns the PAGE_SIZE constant.
+	 * @return PAGE_SIZE constant
+	 */
+	public int getPageSize() {
+		return PAGE_SIZE;
+	}
+	
+	/**
+	 * Calculates the maximum number of pages.
+	 * @param totalResults The number of results.
+	 * @return The max page number, lowest is 1.
+	 */
+	public int calcTotalPages(int totalResults) {
+		int returnVal = (int) Math.ceil(totalResults / (double) this.getPageSize());
+		return Math.max(returnVal, 1);
+	}
+	
+	/**
+	 * Returns the number of entry results from last run.
+	 * @return Number of entry results.
+	 */
+	public int getResultsNumber() {
+		return resultsNumber;
+	}
+	
+	/**
+	 * Sets the total results number.
+	 * 
+	 * @param totalResults The number of results.
+	 * @return a CompleteableFuture
+	 */
+	private void setResultsNumber(int resultsNumber) {
+		firePropertyChange("resultsNumber", this.resultsNumber, this.resultsNumber = resultsNumber);	
+	}
+	
+	/**
+	 * The maximum page number that can be selected.
+	 * @param max the new maximum selectable page number
+	 */
+	public void setPageMax(int max) {
+		firePropertyChange("pageMax", this.pageMax, this.pageMax = max);
+	}
+	
+	/**
+	 * Gets the maximum page number with data in it.
+	 * @return the maximum page number
+	 */
 	public int getPageMax() {
 		return pageMax;
 	}
+	
+	/**
+	 * @return the searchableFields
+	 */
+	public List<JournalField> getSearchableFields() {
+	    return SEARCHABLE_FIELDS;
+	}
+	
+	/**
+	 * Sorts by the specified field, and swaps the direction if already active.
+	 * @param field The field to sort by
+	 * @return a CompleteableFuture
+	 */
+	public CompletableFuture<Void> sortBy(JournalField field) {
+	    JournalSort primarySort = activeSearch.getPrimarySort();
+	    
+	    if (primarySort.sortField == field) {
+	        primarySort.swapDirection();
+	    } else {
+	        activeSearch.clearSorts();
+	        if (field != JournalField.RUN_NUMBER) {
+	            activeSearch.addSort(field);
+	        }
+	        activeSearch.addSort(JournalField.RUN_NUMBER);
+	    }
 
-    /**
-     * @return the searchableFields
-     */
-    public List<JournalField> getSearchableFields() {
-        return SEARCHABLE_FIELDS;
-    }
-
-    /**
-     * Sorts by the specified field, and swaps the direction if already active.
-     * @param field The field to sort by
-     * @return a CompleteableFuture
-     */
-    public CompletableFuture<Void> sortBy(JournalField field) {
-        JournalSort primarySort = activeSearch.getPrimarySort();
-        
-        if (primarySort.sortField == field) {
-            primarySort.swapDirection();
-        } else {
-            activeSearch.clearSorts();
-            if (field != JournalField.RUN_NUMBER) {
-                activeSearch.addSort(field);
-            }
-            activeSearch.addSort(JournalField.RUN_NUMBER);
-        }
-
-        return refresh();
-    }
+    return refresh();
+}
 }

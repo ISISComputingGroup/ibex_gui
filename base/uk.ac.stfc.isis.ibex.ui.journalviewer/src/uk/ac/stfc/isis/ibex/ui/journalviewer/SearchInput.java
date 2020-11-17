@@ -87,6 +87,8 @@ public class SearchInput extends Composite {
      *
      * @param parent
      *            the parent in which this control resides
+     * @param viewModel
+     *            the viewmodel for this view
      */
     public SearchInput(Composite parent, JournalViewModel viewModel) {
         super(parent, SWT.NONE);

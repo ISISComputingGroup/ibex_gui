@@ -25,10 +25,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
+import java.util.SortedMap;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 
@@ -49,6 +48,8 @@ public class ConfigInfo {
      * 
      * @param name
      *            The config name
+     * @param isProtected
+     *            Config is protected and can only be modified or deleted in manager mode
      * @param description
      *            The config description
      * @param pv
@@ -104,8 +105,8 @@ public class ConfigInfo {
      *            The list of ConfigInfos
      * @return The list of config names without that of the current config
      */
-    public static Collection<String> namesWithoutCurrent(Collection<ConfigInfo> infos) {
-        Collection<String> filteredNames = names(infos);
+    public static List<String> namesWithoutCurrent(Collection<ConfigInfo> infos) {
+        List<String> filteredNames = names(infos);
         filteredNames.remove(Configurations.getInstance().display().displayCurrentConfig().getValue().name());
         return filteredNames;
     }
@@ -115,28 +116,91 @@ public class ConfigInfo {
      * 
      * @param infos
      *            The list of ConfigInfos
-     * @return The list of config names
+     * @return The list of configuration/component names
      */
-    public static Collection<String> names(Collection<ConfigInfo> infos) {
+    public static List<String> names(Collection<ConfigInfo> infos) {
+        if (infos == null || infos.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        return infos.stream()
+                .map(ConfigInfo::name)
+                .collect(Collectors.toList());
+    }
+    
+    /**
+     * Returns just the descriptions of all ConfigInfo objects passed in excluding
+     * that of the current configuration/component.
+     * 
+     * @param infos
+     *            The list of ConfigInfos
+     * @return The list of configuration/component descriptions without the current one
+     */
+    public static List<String> descriptionsWithoutCurrent(Collection<ConfigInfo> infos) {
+        List<String> filteredDescriptions = descriptions(infos);
+        filteredDescriptions.remove(Configurations.getInstance().display().displayCurrentConfig().getValue().description());
+        return filteredDescriptions;
+    }
+    
+    /**
+     * Reduces a list of ConfigInfo objects to a list of their descriptions only.
+     * 
+     * @param infos
+     *            The list of ConfigInfos
+     * @return The list of configuration/component descriptions
+     */
+    public static List<String> descriptions(Collection<ConfigInfo> infos) {
         if (infos == null) {
             return Collections.emptyList();
         }
 
-        return Lists.newArrayList(Iterables.transform(infos, new Function<ConfigInfo, String>() {
-            @Override
-            public String apply(ConfigInfo info) {
-                return info.name();
-            }
-        }));
+        return infos.stream()
+                .map(ConfigInfo::description)
+                .collect(Collectors.toList());
     }
     
     /**
-     * returns config/Component names and its protection status.
+     * Returns a sorted map with the names and descriptions of all ConfigInfo objects passed in
+     * excluding that of the current configuration or component.
+     * 
      * @param infos
-     * @return collection of Pair i.e config/comp name and its proteciton flag
+     *            The list of ConfigInfos
+     * @return The sorted map of configuration/component name to descriptions without the current one
+     */
+    public static SortedMap<String, String> namesAndDescriptionsWithoutCurrent(Collection<ConfigInfo> infos) {
+        SortedMap<String, String> filteredNamesAndDescriptions = namesAndDescriptions(infos);
+        filteredNamesAndDescriptions.remove(Configurations.getInstance().display().displayCurrentConfig().getValue().name());
+        return filteredNamesAndDescriptions;
+    }
+    
+    /**
+     * Returns a sorted map with the names and descriptions of all ConfigInfo objects passed in.
+     * 
+     * @param infos
+     *            The list of ConfigInfos
+     * @return The sorted map of configuration/component name to description
+     */
+    public static SortedMap<String, String> namesAndDescriptions(Collection<ConfigInfo> infos) {
+    	if (infos == null || infos.isEmpty()) {
+    		return Collections.emptySortedMap();
+    	}
+    	
+    	SortedMap<String, String> result = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER);
+    	
+    	for (ConfigInfo config : infos) {
+    		result.put(config.name, config.description);
+    	}
+    	
+    	return result;
+    }
+    
+    /**
+     * returns configuration/component names and its protection status.
+     * @param infos
+     * @return collection of pair i.e configuration/component name and its protection flag
      */
     public static Map<String, Boolean> mapNamesWithTheirProtectionFlag(Collection<ConfigInfo> infos) {
-        if (infos == null) {
+    	if (infos == null || infos.isEmpty()) {
             return Collections.emptyMap();
         }
         Map<String, Boolean> namesWithProtectionFlag = new HashMap<String, Boolean>();
@@ -145,6 +209,22 @@ public class ConfigInfo {
         }
         
         return namesWithProtectionFlag;
+    }
+    
+    /**
+     * Checks if there is a protected configuration/component element within the given ConfigInfo collection.
+     * @param infos
+     *            The list of ConfigInfos
+     * @return boolean: True if a protected configuration exists within given infos list, False if not
+     */
+    public static boolean hasProtectedElement(Collection<ConfigInfo> infos) {
+    	if (infos == null) {
+            return false;
+        }
+
+        boolean returnVal = infos.stream().anyMatch(config -> config.isProtected);
+
+    	return returnVal;
     }
 
     /**

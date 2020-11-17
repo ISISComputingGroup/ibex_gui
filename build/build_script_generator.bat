@@ -1,11 +1,11 @@
+REM We bundle our own JRE with the client, this is where it is
 set "JRELOCATION=\\isis\inst$\Kits$\CompGroup\ICP\ibex_client_jre"
-
+set "LOCAL_JRE_LOCATION=%~dp0\jdk"
 set "TARGET_DIR=%2"
 if "%TARGET_DIR%" == "" (
     set TARGET_DIR=built_script_gen
 )
-
-robocopy "%JRELOCATION%" "%~dp0\jdk" /E /PURGE /R:2 /MT /XF "install.log" /NFL /NDL /NP /NC /NS /LOG:NUL
+robocopy "%JRELOCATION%" "%LOCAL_JRE_LOCATION%" /E /PURGE /R:2 /MT /XF "install.log" /NFL /NDL /NC /NS /NP /LOG:NUL
 set errcode=%ERRORLEVEL%
 if %errcode% GEQ 4 (
     @echo *** Exit Code %errcode% ERROR see %INSTALLDIR%install.log ***
@@ -18,7 +18,7 @@ call copy_in_maven.bat
 if %errorlevel% neq 0 exit /b %errorlevel%
 set "PATH=%PATH%;%~dp0maven\bin"
 
-SET "JAVA_HOME=%~dp0\jdk"
+SET "JAVA_HOME=%LOCAL_JRE_LOCATION%"
 
 if "%PYTHON3%" == "" (
 	set "PYTHON3=C:\Instrument\Apps\Python3\python.exe"
@@ -27,9 +27,34 @@ if "%PYTHON3%" == "" (
 %PYTHON3% .\check_build.py ..\base\
 if %errorlevel% neq 0 exit /b %errorlevel%
 
+
 if "%BUILD_NUMBER%" == "" (
     set BUILD_NUMBER=SNAPSHOT
 )
+
+REM Create a bundle of the latest script defninitions repo, then delete temporary files
+pushd %~dp0
+set definitions_temp_directory=%~dp0..\base\uk.ac.stfc.isis.ibex.scriptgenerator\python_support\ScriptDefinitions
+
+git clone https://github.com/ISISComputingGroup/ScriptDefinitions.git %definitions_temp_directory%
+cd %definitions_temp_directory%
+
+git bundle create ScriptDefinitions_repo.bundle --all
+if %errorlevel% neq 0 exit /b %errorlevel%
+cd ..
+robocopy "ScriptDefinitions" "." "ScriptDefinitions_repo.bundle"
+popd
+RMDIR /S /Q %definitions_temp_directory%
+
+REM Copy a portable git distribution with the script generator
+set "git_distribution=\\isis\inst$\Kits$\CompGroup\ICP\client_dependencies\git"
+set git_directory=%~dp0..\base\uk.ac.stfc.isis.ibex.scriptgenerator\python_support\git
+robocopy "%git_distribution%" "%git_directory%" /MT /E /PURGE /R:2 /XF "install.log" /NFL /NDL /NP /NS /NC /LOG:NUL
+if %errorlevel% geq 4 (
+    @echo Failed to copy git distribution across
+    exit /b 1
+)
+
 
 set mvnErr=
 call mvn --settings=%~dp0..\mvn_user_settings.xml -f %~dp0..\base\uk.ac.stfc.isis.scriptgenerator.tycho.parent\pom.xml -DforceContextQualifier=%BUILD_NUMBER% clean verify || set mvnErr=1
@@ -52,7 +77,7 @@ if %errcode% GEQ 4 (
 )
 
 REM Copy the JRE across 
-robocopy "%JRELOCATION%" "%sensible_build_dir%\jre" /MT /MIR /R:1 /XF "install.log" /NFL /NDL /NP /NS /NC /LOG:NUL
+robocopy "%LOCAL_JRE_LOCATION%" "%sensible_build_dir%\jre" /MT /MIR /R:1 /XF "install.log" /NFL /NDL /NP /NS /NC /LOG:NUL
 if %errorlevel% geq 4 (
     @echo Failed to copy JRE across
     exit /b 1
@@ -64,6 +89,6 @@ set /p PythonWriteDir=<Output
 call copy_python.bat %PythonWriteDir%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-@echo Client built in %sensible_build_dir%
+@echo Script generator built in %sensible_build_dir%
 
 pause

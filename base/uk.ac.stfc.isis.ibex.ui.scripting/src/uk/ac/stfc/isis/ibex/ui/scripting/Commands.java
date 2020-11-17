@@ -43,9 +43,9 @@ public final class Commands {
 	public static final String GENIE_INITIALISATION_CMDS = 
 			"import matplotlib \n"
 			+ "matplotlib.use('module://genie_python.matplotlib_backend.ibex_web_backend') \n"
-			+ "from genie_python.genie_startup import * \n" 
-			+ "load_script(None, globals()) \n";
-	
+			+ "from genie_python.genie_startup import * \n"
+			+ "g.from_ibex = True \n";
+
 	
     private Commands() {
     }

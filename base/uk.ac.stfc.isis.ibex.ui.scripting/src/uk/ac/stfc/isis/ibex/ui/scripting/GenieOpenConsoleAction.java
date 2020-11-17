@@ -26,11 +26,17 @@ public class GenieOpenConsoleAction extends OpenConsoleAction {
 	private ConsoleFactoryExtension[] fFactoryExtensions;
 	private Menu fMenu;
 	private ImageDescriptor pyDevImageDescriptor;
+	/**
+	 * Maximum number of actions we can have in open console drop down menu for keyboard shortcuts.
+	 */
+	private static final int MAX_NUMBER_OF_ITEMS_FOR_KEYBOARD_SHORTCUTS = 9;
 	
-	public GenieOpenConsoleAction( ) {
+	/**
+	 * Initialise factory extensions.
+	 */
+	public GenieOpenConsoleAction() {
 		super();
 		fFactoryExtensions = getFactories();
-		
 	}
 	
 	private ConsoleFactoryExtension[] getFactories() {	
@@ -51,7 +57,7 @@ public class GenieOpenConsoleAction extends OpenConsoleAction {
 			fMenu.dispose();
 		}
 
-		fMenu= new Menu(parent);
+		fMenu = new Menu(parent);
 		int accel = 1;
 		for (ConsoleFactoryExtension extension : fFactoryExtensions) {
 			if (!WorkbenchActivityHelper.filterItem(extension) && extension.isEnabled()) {
@@ -73,8 +79,8 @@ public class GenieOpenConsoleAction extends OpenConsoleAction {
 	}
 	
 	private void addActionToMenu(Menu parent, Action action, int accelerator) {
-		if (accelerator < 10) {
-			StringBuilder label= new StringBuilder();
+		if (accelerator <= MAX_NUMBER_OF_ITEMS_FOR_KEYBOARD_SHORTCUTS) {
+			StringBuilder label = new StringBuilder();
 			//add the numerical accelerator
 			label.append('&');
 			label.append(accelerator);
@@ -83,7 +89,7 @@ public class GenieOpenConsoleAction extends OpenConsoleAction {
 			action.setText(label.toString());
 		}
 
-		ActionContributionItem item= new ActionContributionItem(action);
+		ActionContributionItem item = new ActionContributionItem(action);
 		item.fill(parent, -1);
 	}
 	
@@ -92,7 +98,7 @@ public class GenieOpenConsoleAction extends OpenConsoleAction {
 		private ConsoleFactoryExtension fConfig;
 		private IConsoleFactory fFactory;
 
-		public ConsoleFactoryAction(String label, ImageDescriptor image, ConsoleFactoryExtension extension) {
+		ConsoleFactoryAction(String label, ImageDescriptor image, ConsoleFactoryExtension extension) {
 			setText(label);
 			if (image != null) {
 				setImageDescriptor(image);

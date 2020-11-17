@@ -1,5 +1,7 @@
 from org.csstudio.opibuilder.scriptUtil import PVUtil
+from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
 import json
+import time
 import zlib
 
 
@@ -18,6 +20,8 @@ def _set_opi(widget, param_type):
         widget.setPropertyValue("opi_file", "param_inout.opi")
     elif param_type == "float_value":
         widget.setPropertyValue("opi_file", "value.opi")
+    elif param_type == "enum":
+        widget.setPropertyValue("opi_file", "param_enum.opi")        
     else:
         widget.setPropertyValue("opi_file", "param_move.opi")
 
@@ -36,27 +40,31 @@ def _add_macros(widget, name, value):
 
 def sort_out_list(pv, widget_name_prefix, macro_prefix, has_type, max):
     value = PVUtil.getStringArray(pv)
-    value = "".join(chr(int(i)) for i in value[:-1])
+    value = "".join(chr(int(i)) for i in value)
     value = zlib.decompress(value.decode("hex"))
     params = json.loads(value)
 
-
     for widget_index in range(1, max+1):
-        widget = display.getWidget(widget_name_prefix + str(widget_index))
+        target_widget = display.getWidget(widget_name_prefix + str(widget_index))
+        
         if widget_index <= len(params):
-            _add_macros(widget, macro_prefix + "_PV", params[widget_index - 1]["prepended_alias"])
-            _add_macros(widget, macro_prefix + "_NAME", params[widget_index - 1]["name"])
+            _add_macros(target_widget, macro_prefix + "_PV", params[widget_index - 1]["prepended_alias"])
+            _add_macros(target_widget, macro_prefix + "_NAME", params[widget_index - 1]["name"])
             if has_type:
-                _set_opi(widget, params[widget_index - 1]["type"])
+                _set_opi(target_widget, params[widget_index - 1]["type"])
             else:
-                _set_opi(widget, "correction")
-            widget.setPropertyValue("visible", True)
+                _set_opi(target_widget, "correction")
+            target_widget.setPropertyValue("visible", True)
         else:
-            widget.setPropertyValue("visible", False)
+            target_widget.setPropertyValue("visible", False)
 
-sort_out_list(pvs[2], "align_", "PARAM", True, 30)
-sort_out_list(pvs[1], "Correction_", "COR", False, 14)            
-sort_out_list(pvs[0], "pos_", "PARAM", True, 30)
-sort_out_list(pvs[3], "Value_", "VALUE", True, 16)
+# Widget names need to be set before trying to set properties
+time.sleep(0.2)
 
-
+sort_out_list(pvs[0], "params_slit_", "PARAM", True, 28)
+sort_out_list(pvs[1], "params_collim_", "PARAM", True, 28)
+sort_out_list(pvs[2], "params_toggle_", "PARAM", True, 28)
+sort_out_list(pvs[3], "params_misc_", "PARAM", True, 28)
+sort_out_list(pvs[4], "Correction_", "COR", False, 14)     
+sort_out_list(pvs[5], "align_", "PARAM", True, 64)    
+sort_out_list(pvs[6], "Value_", "VALUE", True, 32) 

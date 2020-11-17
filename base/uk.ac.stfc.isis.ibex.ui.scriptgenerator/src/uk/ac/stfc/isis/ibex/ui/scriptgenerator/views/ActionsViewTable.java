@@ -23,6 +23,7 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.jface.viewers.CellNavigationStrategy;
@@ -43,6 +44,7 @@ import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.tables.NullComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.SortableObservableMapCellLabelProvider;
+import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 
 /**
  * A table that holds the properties for a target.
@@ -51,6 +53,8 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
     
 	private final ScriptGeneratorViewModel scriptGeneratorViewModel;
 	private boolean shiftCellFocusToNewlyAddedRow = false;
+	private static final  Integer NON_EDITABLE_COLUMNS = 2;
+	private List<StringEditingSupport<ScriptGeneratorAction>> editingSupports = new ArrayList<StringEditingSupport<ScriptGeneratorAction>>();
 	
 	/**
      * Default constructor for the table. Creates all the correct columns.
@@ -71,7 +75,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
         
         scriptGeneratorViewModel.addActionParamPropertyListener(this);
 		TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(viewer,
-		        new FocusCellOwnerDrawHighlighter(viewer), new CellNavigationStrategy());
+		        new FocusCellOwnerDrawHighlighter(viewer, false), new CellNavigationStrategy());
 		ColumnViewerEditorActivationStrategy activationStrategy = createEditorActivationStrategy(viewer);
 		
 		TableViewerEditor.create(viewer, focusCellManager, activationStrategy, 
@@ -79,6 +83,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 				| ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR
 				| ColumnViewerEditor.TABBING_CYCLE_IN_VIEWER
 				| ColumnViewerEditor.TABBING_VERTICAL);
+		
     }
     
     /**
@@ -92,7 +97,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
             protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
 				boolean isEditorActivationEvent = true;
 				
-				if (event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL) { 
+				if (event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL) {
  					ColumnViewerEditor editor = this.getViewer().getColumnViewerEditor();
  					ViewerCell nextCell = editor.getFocusCell().getNeighbor(ViewerCell.RIGHT, false);
  					
@@ -104,7 +109,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 					
 					// Add new action if tab is pressed by user in the last cell of the table.
 					if (nextCell.getNeighbor(ViewerCell.BELOW, false) == null 
-					        && (viewer.getTable().getColumnCount() - 1 == currentlyFocusedColumn)) {
+					        && (viewer.getTable().getColumnCount() - NON_EDITABLE_COLUMNS == currentlyFocusedColumn)) {
 					    
                     	scriptGeneratorViewModel.addEmptyAction();
                     	shiftCellFocusToNewlyAddedRow = true;
@@ -135,6 +140,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	@Override
 	public void updateTableColumns() {
 		super.updateTableColumns();
+		
 		setRows(new ArrayList<ScriptGeneratorAction>());
 	}
 
@@ -143,6 +149,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	 */
 	@Override
 	protected void addColumns() {
+	    editingSupports.clear();
 		scriptGeneratorViewModel.addColumns(this);
 	}
 	
@@ -159,39 +166,58 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 			SortableObservableMapCellLabelProvider<ScriptGeneratorAction> labelProvider) {
 		return super.createColumn(columnName, widthWeighting, labelProvider);
 	}
+
+	/**
+	 * Create a list of the editingSupport for each column. Required for resetting the selection after focus change.
+	 * @param editingSupport The editing support for the column
+	 */
+	public void addEditingSupport(StringEditingSupport<ScriptGeneratorAction> editingSupport) {
+	    editingSupports.add(editingSupport);
+	}
 	
 	/**
 	 * Sets Rows. Save where the focus was before re writing the table and set the focus back to the cell after
 	 * re writing the table.
 	 */
+	
 	@Override
 	public void setRows(Collection<ScriptGeneratorAction> rows) {
-		if ((!viewer.getTable().isDisposed())) {
-			int focusRow = viewer.getTable().getSelectionIndex();
+		if (!viewer.getTable().isDisposed()) {
+			int focusRow = getSelectionIndex();
+			ScriptGeneratorAction previousSelection = firstSelectedRow();
 			int focusColumn = 0;
-
+			
 			if (shiftCellFocusToNewlyAddedRow) {
 				focusRow = viewer.getTable().getSelectionIndex() + 1;
-				shiftCellFocusToNewlyAddedRow = false;
-			// if row is not empty
 			} else if (focusRow != -1) {
 				focusColumn = viewer.getColumnViewerEditor().getFocusCell().getColumnIndex();
 			}
 			
 			viewer.setInput(new WritableList<ScriptGeneratorAction>(rows, null));
-			setCellFocus(focusRow, focusColumn);
+			
+			if (selectedRows().size() == 1) {
+				// If the action on the specified row has changed then don't return focus to it
+				if (previousSelection.equals((ScriptGeneratorAction) viewer.getElementAt(focusRow)) || shiftCellFocusToNewlyAddedRow) {
+					setCellFocus(focusRow, focusColumn);
+					if (!shiftCellFocusToNewlyAddedRow) {
+					    // Fixes issue see in https://github.com/ISISComputingGroup/IBEX/issues/5708 (hopefully temporary)
+					    editingSupports.get(focusColumn).resetSelectionAfterFocus();
+					}
+					shiftCellFocusToNewlyAddedRow = false;
+				}
+			}
 		}
 	} 
 	
 	/**
-	 * Sets focus of cell
+	 * Sets focus of cell.
 	 * @param row row number of table
 	 * @param column column number of table
 	 */
-	private void setCellFocus(int row, int column) {
+	public void setCellFocus(int row, int column) {
 		if (row >= 0) {
 			viewer.editElement(viewer.getElementAt(row), column);
 		}
 	}
-
+	
 }

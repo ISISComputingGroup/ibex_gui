@@ -61,6 +61,12 @@ public class PythonInterface extends ModelObject {
 	 */
 	private static final String PARAM_VALIDITY_PROPERTY = "parameter validity";
 	
+    /**
+     * The property change to fire when the time estimate for the current parameters is
+     *  asynchronously received from Python.
+     */
+    private static final String TIME_ESTIMATE_PROPERTY = "time estimate";
+	
 	/**
 	 * The property change to fire when the generated script is received
 	 *  asynchronously from Python.
@@ -82,11 +88,16 @@ public class PythonInterface extends ModelObject {
 	 */
 	private static final String DEFAULT_SCRIPT_DEFINITION_LOADER_SCRIPT = "/python_support/script_definition_loader.py";
 	
+	
 	/**
 	 * The script definition loader script to use.
 	 */
 	private String scriptDefinitionLoaderScript = DEFAULT_SCRIPT_DEFINITION_LOADER_SCRIPT;
 
+	/**
+	 * The path to the script generator actually used.
+	 */
+	
 	private static final Logger LOG = IsisLog.getLogger(PythonInterface.class);
 	
 	/**
@@ -178,7 +189,7 @@ public class PythonInterface extends ModelObject {
 	 * @return The path to the bundled python 3 interpreter.
 	 */
 	private String python3InterpreterPath() {
-		return PreferenceSupplier.getBundledPythonPath();
+		return PreferenceSupplier.getPythonPath();
 	}
 
 	/**
@@ -205,10 +216,18 @@ public class PythonInterface extends ModelObject {
 			throws IOException {
 		Integer javaPort = clientServer.getJavaServer().getPort();
 		Integer pythonPort = clientServer.getPythonClient().getPort();
-		String scriptDefinitionSearchFolders = new PreferenceSupplier().scriptGeneratorScriptDefinitionFolders();
-		String absoluteFilePath = relativePathToFull(filePath);
-		ProcessBuilder builder = new ProcessBuilder().command(pythonPath, absoluteFilePath, javaPort.toString(),
-				pythonPort.toString(), scriptDefinitionSearchFolders);
+		Optional<String> scriptDefinitionsRepo = new PreferenceSupplier().scriptGeneratorScriptDefinitionFolder();
+
+		String absoluteScriptPath = relativePathToFull(filePath);
+		ProcessBuilder builder;
+		
+		if (scriptDefinitionsRepo.isEmpty()) {
+			builder = new ProcessBuilder().command(pythonPath, absoluteScriptPath, javaPort.toString(),
+					pythonPort.toString());
+		} else { 
+			builder = new ProcessBuilder().command(pythonPath, absoluteScriptPath, javaPort.toString(),
+					pythonPort.toString(), String.format("--repo_path=%s", scriptDefinitionsRepo.get()));
+		}
 		pythonProcess = builder.start();
 		try {
 			if (!pythonProcess.isAlive() || pythonProcess.exitValue() != 0) {
@@ -315,6 +334,15 @@ public class PythonInterface extends ModelObject {
 	}
 
 	/**
+	 * Get whether there are updates available for the git repository.
+	 * @return true if there are updates available.
+	 */
+	public boolean updatesAvailable() {
+		return this.scriptDefinitionsWrapper.updatesAvailable();
+		
+	}
+	
+	/**
 	 * Cleans up all resources i.e. destroy the python process.
 	 */
 	public void cleanUp() {
@@ -369,9 +397,6 @@ public class PythonInterface extends ModelObject {
 			handlePythonReadinessChange(false);
 			throw new PythonNotReadyException("When getting validity errors");
 		}
-		if (!pythonReady) {
-			throw new PythonNotReadyException("When getting validity errors");
-		}
 	}
 
 	/**
@@ -401,10 +426,37 @@ public class PythonInterface extends ModelObject {
 			handlePythonReadinessChange(false);
 			throw new PythonNotReadyException("When getting parameter validity");
 		}
-		if (!pythonReady) {
-			throw new PythonNotReadyException("When getting parameter validity");
-		}
 	}
+	
+    /**
+     * Use python to estimate the time estimation for the current parameters and refresh the
+     * time estimation property.
+     * 
+     * @param scriptGenContent The script generator content
+     * @param scriptDefinition           The script definition
+     * @throws ExecutionException   A failure to execute the py4j call
+     * @throws InterruptedException The Py4J call was interrupted
+     * @throws PythonNotReadyException When python is not ready to accept calls.
+     */
+    public void refreshTimeEstimation(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition)
+            throws InterruptedException, ExecutionException, PythonNotReadyException {
+        if (pythonReady) {
+            CompletableFuture.supplyAsync(() -> {
+                try {
+                    return scriptDefinitionsWrapper.estimateTime(convertScriptGenContentToPython(scriptGenContent), scriptDefinition);
+                } catch (Py4JException e) {
+                    LOG.error(e);
+                    handlePythonReadinessChange(false);
+                    return false;
+                }
+            }, THREAD).thenAccept(timeEstimate -> 
+                firePropertyChange(TIME_ESTIMATE_PROPERTY, null, timeEstimate)
+            );
+        } else {
+            handlePythonReadinessChange(false);
+            throw new PythonNotReadyException("When getting time estimation");
+        }
+    }
 
 	/**
 	 * Generate a script in python and refresh the generated script property.
@@ -436,9 +488,48 @@ public class PythonInterface extends ModelObject {
 			handlePythonReadinessChange(false);
 			throw new PythonNotReadyException("When getting generated script");
 		}
-		if (!pythonReady) {
-			throw new PythonNotReadyException("When getting generated script");
-		}
 	}
+
+	/**
+	 * Get the list of git errors raised while loading.
+	 * @return List of error messages from git loading.
+	 */
+	public List<String> getGitLoadErrors() {
+		return scriptDefinitionsWrapper.getGitErrors();
+	}
+
+	/**
+	 * Gets whether the remote git repo URL is accessible.
+	 * @return true if the remote repo URL can be accessed.
+	 */
+	public boolean remoteAvailable() {
+		return scriptDefinitionsWrapper.remoteAvailable();
+	}
+
+	/**
+	 * Determine from the python whether the git repository is dirty.
+	 * 
+	 * @return true if the git repository is dirty.
+	 */
+	public boolean isDirty() {
+		return scriptDefinitionsWrapper.isDirty();
+	}
+
+	/**
+	 * Merges git repository from upstream.
+	 */
+	public void mergeOrigin() {
+		scriptDefinitionsWrapper.mergeOrigin();
+		
+	}
+
+	/**
+	 * Gets the path to the script definitions repository
+	 * @return The path to the script definitions repository.
+	 */
+	public String getRepoPath() {
+		return scriptDefinitionsWrapper.getRepoPath();
+	}
+
 
 }

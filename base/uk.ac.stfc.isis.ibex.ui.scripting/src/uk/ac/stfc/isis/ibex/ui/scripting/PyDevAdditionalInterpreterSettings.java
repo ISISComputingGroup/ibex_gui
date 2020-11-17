@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.scripting;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.io.File;
 
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
@@ -68,7 +69,8 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 		List<String> entriesToAdd = new ArrayList<String>();
 		
 		entriesToAdd.add(pvPrefix());
-		entriesToAdd.add(epicsBasePath());
+		entriesToAdd.add(extraPaths());
+		entriesToAdd.add("IPYTHONENABLE=True"); //Required so that we can hook into autocomplete for load_script
 		addEpicsEnvironment(entriesToAdd);
 
 		return entriesToAdd;
@@ -87,13 +89,19 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 		return "MYPVPREFIX=" + instrumentBundle.currentInstrument().pvPrefix();
 	}
 	
-	private String epicsBasePath() {
-        return "PATH=" + toOSPath(preferenceSupplier.epicsBase()) + ";" + toOSPath(preferenceSupplier.epicsUtilsPath())
-                + ";" + System.getenv("PATH");
+	private String extraPaths() {
+        return "PATH=" + toOSPath(preferenceSupplier.epicsBase()) 
+           + File.pathSeparator + toOSPath(preferenceSupplier.epicsUtilsPath())
+           + File.pathSeparator + geniePythonDir()
+           + File.pathSeparator + System.getenv("PATH");
 	}
 
 	private String geniePythonPath() {
 		return toOSPath(preferenceSupplier.geniePythonPath());
+	}
+
+	private String geniePythonDir() {
+		return toOSPath(new File(preferenceSupplier.getPythonPath()).getParent());
 	}
 	
 	private void addEpicsEnvironment(List<String> entries) {

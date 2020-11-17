@@ -20,6 +20,13 @@ public interface ScriptDefinitionsWrapper {
 	Map<String, String> getScriptDefinitionLoadErrors();
 	
 	/**
+	 * true if the repository containing the script definitions is dirty and cannot be pulled
+	 * 
+	 * @return true if git reports the repository is dirty
+	 */
+	boolean updatesAvailable();
+	
+	/**
 	 * Get all script definitions available for use in the script generator.
 	 * 
 	 * @return A list of script definitions for use.
@@ -55,11 +62,51 @@ public interface ScriptDefinitionsWrapper {
 	 */
 	boolean areParamsValid(List<Map<String, String>> scriptGenContent, ScriptDefinitionWrapper scriptDefinition);
 	
+    /**
+     * Estimate how long (in seconds) the current actions will take.
+     * 
+     * @param scriptGenContent The list of actions to estimate
+     * @param scriptDefinition The script definition
+     * @return A map where the key is the index of the action in the list and 
+     *      the value is the estimated time in seconds
+     */
+	Map<Integer, Number> estimateTime(List<Map<String, String>> scriptGenContent, ScriptDefinitionWrapper scriptDefinition);
+	
 	/**
 	 * Check if Python is ready.
 	 * 
 	 * @return True if python is ready, False if not.
 	 */
 	boolean isPythonReady();
+
+	/**
+	 * Returns a list of git errors
+	 * 
+	 * @return
+	 */
+	List<String> getGitErrors();
+
+	/**
+	 * True if the git remote is available
+	 * @return
+	 */
+	boolean remoteAvailable();
+
+	/**
+	 * True if the git repository has uncommitted changes
+	 * @return
+	 */
+	boolean isDirty();
+
+	/**
+	 * Merges origin/master into script definitions repository
+	 */
+	void mergeOrigin();
+
+	/**
+	 * Returns the path to the script definitions repository
+	 * @return
+	 */
+	String getRepoPath();
 	
 }

@@ -23,10 +23,14 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.tests;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Macro.HasDefault;
 import uk.ac.stfc.isis.ibex.configserver.configuration.SimLevel;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog.TempEditableIoc;
@@ -157,5 +161,33 @@ public class TempIocTest {
 
         // Assert
         assertEquals(expected, actual);
+    }
+    
+    @Test
+    public void GIVEN_ioc_set_WHEN_changing_macros_THEN_macros_do_not_write_through_to_underlying_ioc_until_saved() {
+        var testMacros = List.of(
+            new Macro("name_ignored", "inital_value", "", "", "", HasDefault.NO)
+        );
+        
+        var underlyingIoc = new EditableIoc(new Ioc(""), "");
+        underlyingIoc.setMacros(testMacros);
+        
+        var tempEditableIoc = new TempEditableIoc(underlyingIoc);
+        
+        // Set value in the Temp IOC
+        for (Macro macro : tempEditableIoc.getMacros()) {
+            macro.setValue("some_new_value");
+        }
+        
+        // Before saving the temp IOC, the value should not have propagated down to the underlying IOC.
+        for (Macro macro : underlyingIoc.getMacros()) {
+            assertEquals("inital_value", macro.getValue());
+        }
+        
+        // After saving, the new value should be seen in the underlying IOC.
+        tempEditableIoc.saveIoc();  
+        for (Macro macro : underlyingIoc.getMacros()) {
+            assertEquals("some_new_value", macro.getValue());
+        }
     }
 }

@@ -17,6 +17,8 @@ from xmlrunner import XMLTestRunner
 from check_OPI_format_utils.xy_graph import get_traces_with_different_buffer_sizes, get_trigger_pv
 from check_opi_format_tests import TestCheckOpiFormatMethods
 
+from check_opi_info import TestOpiInfo
+
 # Directory to iterate through
 DEFAULT_ROOT_DIR = r"./resources/"
 
@@ -227,5 +229,12 @@ if __name__ == "__main__":
             suite.addTests([CheckOpiFormat(test, root) for test in loader.getTestCaseNames(CheckOpiFormat)])
         runner = XMLTestRunner(output=os.path.join(logs_dir, filename), stream=sys.stdout)
         return_values.append(runner.run(suite).wasSuccessful())
+
+    # for the opi_info.xml check
+    print("Testing '{}'".format(os.path.join(root_dir, "opi_info.xml")))
+    suite = unittest.TestSuite()
+    suite.addTests(loader.loadTestsFromTestCase(TestOpiInfo))
+    runner = XMLTestRunner(output=os.path.join(logs_dir, "TestOpiInfo"), stream=sys.stdout)
+    return_values.append(runner.run(suite).wasSuccessful())
 
     sys.exit(False in return_values)
