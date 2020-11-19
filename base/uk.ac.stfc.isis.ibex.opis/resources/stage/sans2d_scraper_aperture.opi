@@ -330,7 +330,7 @@
         <name>Text Update_3</name>
         <precision>0</precision>
         <precision_from_pv>true</precision_from_pv>
-        <pv_name>$(P)$(MOTION_SET_POINT):COORD1:RBV</pv_name>
+        <pv_name>$(P)$(MOTION_SET_POINT):COORD0:RBV</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -522,7 +522,7 @@ $(pv_value)</tooltip>
         <name>Text Update</name>
         <precision>0</precision>
         <precision_from_pv>true</precision_from_pv>
-        <pv_name>$(P)$(MOTION_SET_POINT):COORD1</pv_name>
+        <pv_name>$(P)$(MOTION_SET_POINT):COORD0</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -574,7 +574,7 @@ $(pv_value)</tooltip>
         <name>Text Update_4</name>
         <precision>0</precision>
         <precision_from_pv>true</precision_from_pv>
-        <pv_name>$(P)$(MOTION_SET_POINT):COORD1:NAME</pv_name>
+        <pv_name>$(P)$(MOTION_SET_POINT):COORD0:NAME</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -667,7 +667,7 @@ $(pv_value)</tooltip>
         <name>Text Update_3</name>
         <precision>0</precision>
         <precision_from_pv>true</precision_from_pv>
-        <pv_name>$(P)$(MOTION_SET_POINT):COORD1:RBV</pv_name>
+        <pv_name>$(P)$(MOTION_SET_POINT):COORD0:RBV</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -864,7 +864,7 @@ $(pv_value)</tooltip>
         <name>Text Input</name>
         <precision>0</precision>
         <precision_from_pv>true</precision_from_pv>
-        <pv_name>$(P)$(MOTION_SET_POINT):COORD1:MTR</pv_name>
+        <pv_name>$(P)$(MOTION_SET_POINT):COORD0</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -970,57 +970,6 @@ $(pv_value)</tooltip>
         <x>108</x>
         <y>21</y>
       </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-        <actions hook="false" hook_all="false">
-          <action type="OPEN_DISPLAY">
-            <path>../Motor/mymotor.opi</path>
-            <macros>
-              <include_parent_macros>true</include_parent_macros>
-              <MM>MOT:MTR0507</MM>
-            </macros>
-            <mode>0</mode>
-            <description></description>
-          </action>
-        </actions>
-        <border_alarm_sensitive>false</border_alarm_sensitive>
-        <border_color>
-          <color name="ISIS_Border" red="0" green="0" blue="0" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
-        </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <foreground_color>
-          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-        </foreground_color>
-        <height>28</height>
-        <image></image>
-        <name>Button_1</name>
-        <push_action_index>0</push_action_index>
-        <pv_name></pv_name>
-        <pv_value />
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <style>1</style>
-        <text>Motor details...</text>
-        <toggle_button>false</toggle_button>
-        <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-        <visible>true</visible>
-        <widget_type>Action Button</widget_type>
-        <width>97</width>
-        <wuid>30156479:172c2752af5:-7645</wuid>
-        <x>426</x>
-        <y>41</y>
-      </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
         <actions hook="false" hook_all="false" />
         <alarm_pulsing>false</alarm_pulsing>
@@ -1049,7 +998,7 @@ $(pv_value)</tooltip>
         <name>Text Update</name>
         <precision>0</precision>
         <precision_from_pv>true</precision_from_pv>
-        <pv_name>$(P)$(MOTION_SET_POINT):COORD1</pv_name>
+        <pv_name>$(P)$(MOTION_SET_POINT):COORD0</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -1101,7 +1050,7 @@ $(pv_value)</tooltip>
         <name>Text Update_4</name>
         <precision>0</precision>
         <precision_from_pv>true</precision_from_pv>
-        <pv_name>$(P)$(MOTION_SET_POINT):COORD1:NAME</pv_name>
+        <pv_name>$(P)$(MOTION_SET_POINT):COORD0:NAME</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -1124,6 +1073,55 @@ $(pv_value)</tooltip>
         <wuid>30156479:172c2752af5:-7637</wuid>
         <x>24</x>
         <y>45</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+        <actions hook="false" hook_all="false">
+          <action type="EXECUTE_PYTHONSCRIPT">
+            <path>openOPI.py</path>
+            <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+]]></scriptText>
+            <embedded>false</embedded>
+            <description></description>
+          </action>
+        </actions>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <border_color>
+          <color name="ISIS_Border" red="0" green="0" blue="0" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+        </font>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <foreground_color>
+          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+        </foreground_color>
+        <height>28</height>
+        <image></image>
+        <name>Button_1</name>
+        <push_action_index>0</push_action_index>
+        <pv_name>$(P)$(MOTION_SET_POINT):COORD0:MTRNAME</pv_name>
+        <pv_value />
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <style>1</style>
+        <text>Motor details...</text>
+        <toggle_button>false</toggle_button>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <visible>true</visible>
+        <widget_type>Action Button</widget_type>
+        <width>97</width>
+        <wuid>f702325:174ea07cce0:-7d2f</wuid>
+        <x>420</x>
+        <y>41</y>
       </widget>
     </widget>
   </widget>
@@ -1169,12 +1167,12 @@ $(pv_value)</tooltip>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
     <actions hook="false" hook_all="false">
-      <action type="WRITE_PV">
-        <pv_name>$(P)$(MOTION_SET_POINT):COORD1:MTR.STOP</pv_name>
-        <value>1</value>
-        <timeout>10</timeout>
-        <confirm_message></confirm_message>
-        <description></description>
+      <action type="EXECUTE_PYTHONSCRIPT">
+        <path>stopMtrFromMtrName.py</path>
+        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+]]></scriptText>
+        <embedded>false</embedded>
+        <description>Stop the motor from the given motor name</description>
       </action>
     </actions>
     <alarm_pulsing>false</alarm_pulsing>
@@ -1200,8 +1198,9 @@ $(pv_value)</tooltip>
     <image></image>
     <name>StopButton</name>
     <push_action_index>0</push_action_index>
-    <pv_name>$(P)$(MOTION_SET_POINT):COORD1:MTR.STOP</pv_name>
+    <pv_name>$(P)$(MOTION_SET_POINT):COORD0:MTRNAME</pv_name>
     <pv_value />
+    <release_action_index>0</release_action_index>
     <rules />
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -1211,7 +1210,7 @@ $(pv_value)</tooltip>
     <scripts />
     <style>0</style>
     <text>STOP Motion</text>
-    <toggle_button>false</toggle_button>
+    <toggle_button>true</toggle_button>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <visible>true</visible>

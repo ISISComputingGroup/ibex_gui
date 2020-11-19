@@ -93,7 +93,7 @@
     <width>793</width>
     <wuid>-317b279c:17468cc5157:-7c35</wuid>
     <x>0</x>
-    <y>78</y>
+    <y>72</y>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
@@ -128,7 +128,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>791</width>
       <wuid>-317b279c:17468cc5157:-7c34</wuid>
@@ -1493,58 +1493,6 @@ $(pv_value)</tooltip>
             <x>3</x>
             <y>60</y>
           </widget>
-          <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
-            <actions hook="false" hook_all="false" />
-            <alarm_pulsing>false</alarm_pulsing>
-            <auto_size>false</auto_size>
-            <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-            <background_color>
-              <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-            </background_color>
-            <border_alarm_sensitive>true</border_alarm_sensitive>
-            <border_color>
-              <color name="ISIS_Border" red="0" green="0" blue="0" />
-            </border_color>
-            <border_style>0</border_style>
-            <border_width>1</border_width>
-            <enabled>true</enabled>
-            <font>
-              <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
-            </font>
-            <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-            <foreground_color>
-              <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-            </foreground_color>
-            <format_type>0</format_type>
-            <height>20</height>
-            <horizontal_alignment>0</horizontal_alignment>
-            <name>Text Update</name>
-            <precision>0</precision>
-            <precision_from_pv>true</precision_from_pv>
-            <pv_name>$(PV_ROOT)RAMP:RATE</pv_name>
-            <pv_value />
-            <rotation_angle>0.0</rotation_angle>
-            <rules />
-            <scale_options>
-              <width_scalable>true</width_scalable>
-              <height_scalable>true</height_scalable>
-              <keep_wh_ratio>false</keep_wh_ratio>
-            </scale_options>
-            <scripts />
-            <show_units>true</show_units>
-            <text>######</text>
-            <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-            <transparent>true</transparent>
-            <vertical_alignment>1</vertical_alignment>
-            <visible>true</visible>
-            <widget_type>Text Update</widget_type>
-            <width>61</width>
-            <wrap_words>false</wrap_words>
-            <wuid>40468d3d:1746e0c53dc:-7e79</wuid>
-            <x>120</x>
-            <y>60</y>
-          </widget>
           <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
             <actions hook="false" hook_all="false" />
             <alarm_pulsing>false</alarm_pulsing>
@@ -1787,6 +1735,58 @@ $(pv_value)</tooltip>
             <wuid>-22ece291:175513ff093:-7eb7</wuid>
             <x>170</x>
             <y>2</y>
+          </widget>
+          <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+            <actions hook="false" hook_all="false" />
+            <alarm_pulsing>false</alarm_pulsing>
+            <auto_size>false</auto_size>
+            <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+            <background_color>
+              <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+            </background_color>
+            <border_alarm_sensitive>true</border_alarm_sensitive>
+            <border_color>
+              <color name="ISIS_Border" red="0" green="0" blue="0" />
+            </border_color>
+            <border_style>0</border_style>
+            <border_width>1</border_width>
+            <enabled>true</enabled>
+            <font>
+              <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
+            </font>
+            <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+            <foreground_color>
+              <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+            </foreground_color>
+            <format_type>0</format_type>
+            <height>20</height>
+            <horizontal_alignment>0</horizontal_alignment>
+            <name>Text Update</name>
+            <precision>0</precision>
+            <precision_from_pv>true</precision_from_pv>
+            <pv_name>$(PV_ROOT)RAMP:RATE</pv_name>
+            <pv_value />
+            <rotation_angle>0.0</rotation_angle>
+            <rules />
+            <scale_options>
+              <width_scalable>true</width_scalable>
+              <height_scalable>true</height_scalable>
+              <keep_wh_ratio>false</keep_wh_ratio>
+            </scale_options>
+            <scripts />
+            <show_units>true</show_units>
+            <text>######</text>
+            <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+            <transparent>true</transparent>
+            <vertical_alignment>1</vertical_alignment>
+            <visible>true</visible>
+            <widget_type>Text Update</widget_type>
+            <width>61</width>
+            <wrap_words>false</wrap_words>
+            <wuid>-603e5361:175dfe93b3e:-7eb8</wuid>
+            <x>120</x>
+            <y>60</y>
           </widget>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -2393,7 +2393,7 @@ $(pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>791</width>
       <wuid>-317b279c:17468cc5157:-7c30</wuid>
