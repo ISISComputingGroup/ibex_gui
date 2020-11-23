@@ -61,14 +61,12 @@ public class InstrumentSelectionViewModel extends ErrorMessageProvider {
         validate(name);
         firePropertyChange("selectedName", this.selectedName, this.selectedName = name);
     }
-
-    /**
-     * @return a collection containing all of the InstrumentInfo
-     */
-    public Collection<InstrumentInfo> getInstruments() {
-        return instruments;
-    }
     
+    /**
+     * Returns a list of Instruments that is allowed to be seen.
+     * 
+     * @return List of allowed instruments.
+     */
     public Collection<InstrumentInfo> getInstrumentAllowlist() {
     	return Instrument.getInstrumentAllowlist(instruments);
     }
