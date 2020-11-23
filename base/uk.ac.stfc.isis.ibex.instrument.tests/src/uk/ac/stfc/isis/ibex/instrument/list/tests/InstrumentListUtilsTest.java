@@ -25,6 +25,9 @@ import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 import org.apache.logging.log4j.Logger;
 import org.junit.Before;
@@ -150,7 +153,7 @@ public class InstrumentListUtilsTest {
     public void GIVEN_no_instruments_WHEN_combine_with_localhost_THEN_list_contains_only_localhost() {
         // Arrange
         Collection<InstrumentInfo> value = new ArrayList<>();
-        InstrumentInfo localhost = new InstrumentInfo("", "", "");
+        InstrumentInfo localhost = new InstrumentInfo("", "", "", Collections.emptyList());
         Collection<InstrumentInfo> expetedList = new ArrayList<>();
         expetedList.add(localhost);
 
@@ -167,8 +170,8 @@ public class InstrumentListUtilsTest {
     public void
             GIVEN_instruments_no_host_match_WHEN_combine_with_localhost_THEN_list_contains_localhost_and_all_instruments() {
         // Arrange
-        InstrumentInfo instA = new InstrumentInfo("a", "", "no match");
-        InstrumentInfo instB = new InstrumentInfo("b", "", "no match");
+        InstrumentInfo instA = new InstrumentInfo("a", "", "no match", Collections.emptyList());
+        InstrumentInfo instB = new InstrumentInfo("b", "", "no match", Collections.emptyList());
         Collection<InstrumentInfo> value = new ArrayList<>();
         value.add(instA);
         value.add(instB);
@@ -194,8 +197,8 @@ public class InstrumentListUtilsTest {
             GIVEN_instruments_host_match_WHEN_combine_with_localhost_THEN_list_contains_localhost_wih_new_name_and_all_instruments_except_match() {
         // Arrange
         String machineName = "machineName";
-        InstrumentInfo instA = new InstrumentInfo("a", "", machineName);
-        InstrumentInfo instB = new InstrumentInfo("b", "", "no match");
+        InstrumentInfo instA = new InstrumentInfo("a", "", machineName, Collections.emptyList());
+        InstrumentInfo instB = new InstrumentInfo("b", "", "no match", Collections.emptyList());
         Collection<InstrumentInfo> value = new ArrayList<>();
         value.add(instA);
         value.add(instB);
@@ -217,9 +220,9 @@ public class InstrumentListUtilsTest {
     public void
             GIVEN_instruments_WHEN_combine_with_localhost_THEN_list_is_alphebetic() {
         // Arrange
-        InstrumentInfo instA = new InstrumentInfo("a", "", "no match");
-        InstrumentInfo instB = new InstrumentInfo("b", "", "no match");
-        InstrumentInfo instC = new InstrumentInfo("c", "", "no match");
+        InstrumentInfo instA = new InstrumentInfo("a", "", "no match", Collections.emptyList());
+        InstrumentInfo instB = new InstrumentInfo("b", "", "no match", Collections.emptyList());
+        InstrumentInfo instC = new InstrumentInfo("c", "", "no match", Collections.emptyList());
 
         Collection<InstrumentInfo> value = new ArrayList<>();
         value.add(instC);
@@ -243,8 +246,84 @@ public class InstrumentListUtilsTest {
 
     }
 
+    @Test
+    public void GIVEN_allowed_group_specified_THEN_instruments_in_other_groups_not_available() {
+    	// Arrange
+        Collection<InstrumentInfo> instList = new ArrayList<>();
+        
+        var instrument1 = new InstrumentInfo("one", "one", "one", List.of("GROUP1"));
+        var instrument2 = new InstrumentInfo("two", "two", "two", List.of("GROUP2"));
+        
+        instList.add(instrument1);
+        instList.add(instrument2);
+    	
+    	Collection<InstrumentInfo> expected = new ArrayList<>();
+    	expected.add(instrument1);
+    	
+    	// Assert
+    	assertEquals(expected, InstrumentListUtils.filterByAllowedGroup(instList, Optional.of(List.of("GROUP1"))));
+    }
+    
+    @Test
+    public void GIVEN_multiple_allowed_groups_specified_THEN_instruments_in_other_groups_not_available() {
+    	// Arrange
+        Collection<InstrumentInfo> instList = new ArrayList<>();
+        
+        var instrument1 = new InstrumentInfo("one", "one", "one", List.of("GROUP1"));
+        var instrument2 = new InstrumentInfo("two", "two", "two", List.of("GROUP2"));
+        var instrument3 = new InstrumentInfo("three", "three", "three", List.of("GROUP3"));
+        
+        instList.add(instrument1);
+        instList.add(instrument2);
+        instList.add(instrument3);
+    	
+    	Collection<InstrumentInfo> expected = new ArrayList<>();
+    	expected.add(instrument1);
+    	expected.add(instrument2);
+    	
+    	// Assert
+    	assertEquals(expected, InstrumentListUtils.filterByAllowedGroup(instList, Optional.of(List.of("GROUP1", "GROUP2"))));
+    }
+    
+    @Test
+    public void GIVEN_allowed_groups_specified_and_instruments_in_multiple_groups_THEN_instruments_in_other_groups_not_available() {
+    	// Arrange
+        Collection<InstrumentInfo> instList = new ArrayList<>();
+        
+        var instrument1 = new InstrumentInfo("one", "one", "one", List.of("GROUP1", "GROUP2"));
+        var instrument2 = new InstrumentInfo("two", "two", "two", List.of("GROUP2", "GROUP1"));
+        var instrument3 = new InstrumentInfo("three", "three", "three", List.of("GROUP3"));
+        
+        instList.add(instrument1);
+        instList.add(instrument2);
+        instList.add(instrument3);
+    	
+    	Collection<InstrumentInfo> expected = new ArrayList<>();
+    	expected.add(instrument1);
+    	expected.add(instrument2);
+    	
+    	// Assert
+    	assertEquals(expected, InstrumentListUtils.filterByAllowedGroup(instList, Optional.of(List.of("GROUP1"))));
+    }
+    
+    @Test
+    public void GIVEN_absent_instrument_allowlist_THEN_all_instruments_shown( ) {
+    	// Arrange
+        Collection<InstrumentInfo> instList = new ArrayList<>();
+        instList.add(instrument1);
+        instList.add(instrument2);
+    	
+    	// Assert
+    	assertEquals(instList, doFiltering(instList, Optional.empty()));
+    }
+    
+    
     private Collection<InstrumentInfo> doFiltering(Collection<InstrumentInfo> input) {
         return InstrumentListUtils.filterValidInstruments(input, mockLogger);
+    }
+    
+    private Collection<InstrumentInfo> doFiltering(Collection<InstrumentInfo> input, Optional<ArrayList<String>> localInstList){
+    	return InstrumentListUtils.filterValidInstruments(input, mockLogger);
     }
 }
 

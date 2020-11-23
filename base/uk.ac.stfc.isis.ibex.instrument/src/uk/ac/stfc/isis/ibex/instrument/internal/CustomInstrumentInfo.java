@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.instrument.internal;
 
+import java.util.ArrayList;
+
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
 /**
@@ -43,7 +45,7 @@ public class CustomInstrumentInfo extends InstrumentInfo {
 	 * @param hostName The hostname of the instrument PC
 	 */
     public CustomInstrumentInfo(String name, String pvPrefix, String hostName) {
-        super(name, pvPrefix, hostName);
+        super(name, pvPrefix, hostName, new ArrayList<>());
         
         checkPreconditions(pvPrefix);
     }
