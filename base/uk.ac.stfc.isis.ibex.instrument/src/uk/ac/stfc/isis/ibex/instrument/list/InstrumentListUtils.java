@@ -20,11 +20,8 @@
 package uk.ac.stfc.isis.ibex.instrument.list;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -101,8 +98,7 @@ public final class InstrumentListUtils {
      * instruments.
      * 
      * @param instruments instruments to filter
-     * @param logger a logger to log information and warnings about invalid
-     *            instruments
+     * @param allowedGroups list of allowed groups
      * 
      * @return the valid instruments extracted from the input observable
      */
@@ -208,13 +204,16 @@ public final class InstrumentListUtils {
     /**
      * Return list of instruments filtered by the allowlist, if present.
      * @param input The current list of instruments.
-     * @param logger The ibex logger.
      * @return list of instruments filtered by allowlist and invalid values removed.
      */
 	public static Collection<InstrumentInfo> applyInstAllowedGroup(Collection<InstrumentInfo> input) {
 		return filterByAllowedGroup(input, loadAllowedGroups());
 	}
 
+	/**
+	 * Check if allow list exists.
+	 * @return True if allow list exists.
+	 */
 	public static boolean allowListExists() {
 		return loadAllowedGroups().isPresent();
 	}

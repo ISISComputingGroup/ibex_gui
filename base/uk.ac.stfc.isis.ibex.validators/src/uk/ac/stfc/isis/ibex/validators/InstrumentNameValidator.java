@@ -58,6 +58,11 @@ public class InstrumentNameValidator {
         this(knownValidNames, Instrument::allowlistExists);
     }
     
+    /**
+     * Called from the main constructor above but with allowlistExistsFunc object.
+     * @param knownValidNames list of known instrument names
+     * @param allowlistExistsFunc supplier object to check if allowed list exists
+     */
     public InstrumentNameValidator(Collection<String> knownValidNames, Supplier<Boolean> allowlistExistsFunc) {
     	errorMessage = NO_ERROR_MSG;
         this.knownValidNames = knownValidNames;
