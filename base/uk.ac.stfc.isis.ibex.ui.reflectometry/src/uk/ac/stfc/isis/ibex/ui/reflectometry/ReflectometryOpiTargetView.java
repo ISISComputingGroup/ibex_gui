@@ -35,23 +35,28 @@ import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 /**
  * The ReflectometryOpiTargetView shows a stand-alone OPI for the reflectometry front panel.
  */
-public class ReflectometryOpiTargetView extends OpiTargetView {
+public abstract class ReflectometryOpiTargetView extends OpiTargetView {
     /**
      * Class ID.
      */
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.weblinks.ReflectometryOpiTargetView";
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.ReflectometryOpiTargetView";
 
     /**
      * File name of the reflectometry OPI.
      */
-    private static final String REFLECTOMETRY_OPI = "reflectometry/front_panel.opi";
+    protected abstract String getOpiName();
+
+    /**
+     * File name of the reflectometry OPI.
+     */
+    protected abstract String getOpiTitle();
 
     /**
      * {@inheritDoc}
      */
 	@Override
 	protected Path opi() throws OPIViewCreationException {
-		return Opi.getDefault().opiProvider().pathFromName(REFLECTOMETRY_OPI);
+		return Opi.getDefault().opiProvider().pathFromName(getOpiName());
 	}
 	
 	/**
@@ -73,7 +78,7 @@ public class ReflectometryOpiTargetView extends OpiTargetView {
 	@Override
     public MacrosInput macros() {
     	MacrosInput macros = emptyMacrosInput();
-    	macros.put("NAME", "Reflectometry Front Panel");
+    	macros.put("NAME", this.getOpiTitle());
     	macros.put("P", Instrument.getInstance().currentInstrument().pvPrefix());
     	return macros;
     }

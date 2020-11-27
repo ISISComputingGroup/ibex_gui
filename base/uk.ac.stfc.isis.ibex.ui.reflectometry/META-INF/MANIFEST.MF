@@ -17,5 +17,8 @@ Require-Bundle: uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
  org.eclipse.e4.ui.model.workbench;bundle-version="2.1.400",
  uk.ac.stfc.isis.ibex.epics;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.graphing;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.ui.scripting;bundle-version="1.0.0"
+ uk.ac.stfc.isis.ibex.ui.scripting;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.managermode,
+ uk.ac.stfc.isis.ibex.logger
 Bundle-ActivationPolicy: lazy
+Bundle-Activator: uk.ac.stfc.isis.ibex.ui.reflectometry.Activator

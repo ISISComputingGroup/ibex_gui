@@ -459,7 +459,7 @@
       <widget_type>Linking Container</widget_type>
       <width>201</width>
       <wuid>-166f7f1c:16bdb17a9a5:-73c6</wuid>
-      <x>180</x>
+      <x>170</x>
       <y>-3</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
