@@ -547,6 +547,58 @@ $(pv_value)</tooltip>
         <x>210</x>
         <y>72</y>
       </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+        <actions hook="false" hook_all="false">
+          <action type="OPEN_DISPLAY">
+            <path>Eurotherm.opi</path>
+            <macros>
+              <include_parent_macros>true</include_parent_macros>
+              <PV_ROOT>$(P)$(EURO)</PV_ROOT>
+              <IOC_NUM>03</IOC_NUM>
+            </macros>
+            <mode>0</mode>
+            <description></description>
+          </action>
+        </actions>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <border_color>
+          <color name="ISIS_Border" red="0" green="0" blue="0" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+        </font>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <foreground_color>
+          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+        </foreground_color>
+        <height>28</height>
+        <image></image>
+        <name>Open Eurotherm OPI</name>
+        <push_action_index>0</push_action_index>
+        <pv_name></pv_name>
+        <pv_value />
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <style>1</style>
+        <text>Open Eurotherm</text>
+        <toggle_button>false</toggle_button>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <visible>true</visible>
+        <widget_type>Action Button</widget_type>
+        <width>115</width>
+        <wuid>780888d8:17619a4c2c0:-7cf9</wuid>
+        <x>126</x>
+        <y>102</y>
+      </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.combo" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -588,7 +640,7 @@ $(pv_value)</tooltip>
       <widget_type>Combo</widget_type>
       <width>90</width>
       <wuid>38bf3012:1760a11a0ee:-7de3</wuid>
-      <x>168</x>
+      <x>198</x>
       <y>176</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -629,7 +681,7 @@ $(pv_value)</tooltip>
       <width>90</width>
       <wrap_words>true</wrap_words>
       <wuid>38bf3012:1760a11a0ee:-7ddb</wuid>
-      <x>79</x>
+      <x>109</x>
       <y>178</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.xyGraph" version="1.0.0">
