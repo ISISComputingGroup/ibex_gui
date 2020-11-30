@@ -553,7 +553,7 @@ $(pv_value)</tooltip>
             <path>Eurotherm.opi</path>
             <macros>
               <include_parent_macros>true</include_parent_macros>
-              <EURO>EUROTHRM_03</EURO>
+              <PV_ROOT>$(P)$(EURO)</PV_ROOT>
               <IOC_NUM>03</IOC_NUM>
             </macros>
             <mode>0</mode>
@@ -622,10 +622,9 @@ $(pv_value)</tooltip>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <height>23</height>
-      <items />
-      <items_from_pv>false</items_from_pv>
+      <items_from_pv>true</items_from_pv>
       <name>Combo</name>
-      <pv_name></pv_name>
+      <pv_name>$(DSC_ROOT)GRAPH_SOURCE</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -638,7 +637,7 @@ $(pv_value)</tooltip>
 $(pv_value)</tooltip>
       <visible>true</visible>
       <widget_type>Combo</widget_type>
-      <width>90</width>
+      <width>103</width>
       <wuid>38bf3012:1760a11a0ee:-7de3</wuid>
       <x>198</x>
       <y>176</y>
@@ -692,20 +691,20 @@ $(pv_value)</tooltip>
       <axis_0_axis_color>
         <color red="0" green="0" blue="0" />
       </axis_0_axis_color>
-      <axis_0_axis_title>Primary X Axis (0)</axis_0_axis_title>
+      <axis_0_axis_title>Time</axis_0_axis_title>
       <axis_0_dash_grid_line>true</axis_0_dash_grid_line>
       <axis_0_grid_color>
         <color red="200" green="200" blue="200" />
       </axis_0_grid_color>
       <axis_0_log_scale>false</axis_0_log_scale>
-      <axis_0_maximum>100.0</axis_0_maximum>
+      <axis_0_maximum>120.0</axis_0_maximum>
       <axis_0_minimum>0.0</axis_0_minimum>
       <axis_0_scale_font>
         <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
       </axis_0_scale_font>
       <axis_0_scale_format></axis_0_scale_format>
       <axis_0_show_grid>true</axis_0_show_grid>
-      <axis_0_time_format>0</axis_0_time_format>
+      <axis_0_time_format>5</axis_0_time_format>
       <axis_0_title_font>
         <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">Default Bold</opifont.name>
       </axis_0_title_font>
@@ -762,7 +761,11 @@ $(pv_value)</tooltip>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts>
+        <path pathString="hrpd_graph.py" checkConnect="true" sfe="false" seoe="false">
+          <pv trig="true">$(DSC_ROOT)GRAPH_SOURCE</pv>
+        </path>
+      </scripts>
       <show_legend>true</show_legend>
       <show_plot_area_border>false</show_plot_area_border>
       <show_toolbar>true</show_toolbar>
@@ -770,13 +773,12 @@ $(pv_value)</tooltip>
       <title_font>
         <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">Default Bold</opifont.name>
       </title_font>
-      <tooltip>$(trace_0_y_pv)
-$(trace_0_y_pv_value)</tooltip>
+      <tooltip></tooltip>
       <trace_0_anti_alias>true</trace_0_anti_alias>
-      <trace_0_buffer_size>100</trace_0_buffer_size>
+      <trace_0_buffer_size>1000</trace_0_buffer_size>
       <trace_0_concatenate_data>true</trace_0_concatenate_data>
       <trace_0_line_width>1</trace_0_line_width>
-      <trace_0_name>$(trace_0_y_pv)</trace_0_name>
+      <trace_0_name></trace_0_name>
       <trace_0_plot_mode>0</trace_0_plot_mode>
       <trace_0_point_size>4</trace_0_point_size>
       <trace_0_point_style>0</trace_0_point_style>
@@ -785,17 +787,17 @@ $(trace_0_y_pv_value)</tooltip>
       </trace_0_trace_color>
       <trace_0_trace_type>0</trace_0_trace_type>
       <trace_0_update_delay>100</trace_0_update_delay>
-      <trace_0_update_mode>0</trace_0_update_mode>
+      <trace_0_update_mode>4</trace_0_update_mode>
       <trace_0_visible>true</trace_0_visible>
       <trace_0_x_axis_index>0</trace_0_x_axis_index>
       <trace_0_x_pv></trace_0_x_pv>
       <trace_0_x_pv_value />
       <trace_0_y_axis_index>1</trace_0_y_axis_index>
-      <trace_0_y_pv>$(pv_name)</trace_0_y_pv>
+      <trace_0_y_pv></trace_0_y_pv>
       <trace_0_y_pv_value />
       <trace_count>1</trace_count>
       <transparent>false</transparent>
-      <trigger_pv></trigger_pv>
+      <trigger_pv>$(P)CS:IOC:EUROTHRM_03:DEVIOS:HEARTBEAT</trigger_pv>
       <trigger_pv_value />
       <visible>true</visible>
       <widget_type>XY Graph</widget_type>
