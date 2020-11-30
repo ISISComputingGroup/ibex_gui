@@ -553,7 +553,7 @@ $(pv_value)</tooltip>
             <path>Eurotherm.opi</path>
             <macros>
               <include_parent_macros>true</include_parent_macros>
-              <PV_ROOT>$(P)$(EURO)</PV_ROOT>
+              <EURO>EUROTHRM_03</EURO>
               <IOC_NUM>03</IOC_NUM>
             </macros>
             <mode>0</mode>
