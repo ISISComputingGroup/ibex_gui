@@ -78,7 +78,7 @@
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
     <actions hook="false" hook_all="false" />
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
     <border_color>
       <color red="0" green="128" blue="255" />
@@ -184,7 +184,7 @@
         </scale_options>
         <scripts />
         <show_scrollbar>false</show_scrollbar>
-        <text>Set Points</text>
+        <text>Setpoints:</text>
         <tooltip></tooltip>
         <transparent>false</transparent>
         <vertical_alignment>1</vertical_alignment>
@@ -225,7 +225,7 @@
         </scale_options>
         <scripts />
         <show_scrollbar>false</show_scrollbar>
-        <text>Ramp Rate</text>
+        <text>Ramp rate:</text>
         <tooltip></tooltip>
         <transparent>false</transparent>
         <vertical_alignment>1</vertical_alignment>
@@ -671,7 +671,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
-      <text>Graph Source</text>
+      <text>Graph source:</text>
       <tooltip></tooltip>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -735,7 +735,7 @@ $(pv_value)</tooltip>
       <axis_count>2</axis_count>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="240" green="240" blue="240" />
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </background_color>
       <border_alarm_sensitive>true</border_alarm_sensitive>
       <border_color>
@@ -751,7 +751,7 @@ $(pv_value)</tooltip>
       <height>343</height>
       <name>XY Graph</name>
       <plot_area_background_color>
-        <color red="255" green="255" blue="255" />
+        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
       </plot_area_background_color>
       <pv_name></pv_name>
       <pv_value />
@@ -875,7 +875,7 @@ $(pv_value)</tooltip>
         </scale_options>
         <scripts />
         <show_scrollbar>false</show_scrollbar>
-        <text>Sensor 1</text>
+        <text>Sensor 1:</text>
         <tooltip></tooltip>
         <transparent>false</transparent>
         <vertical_alignment>1</vertical_alignment>
@@ -916,7 +916,7 @@ $(pv_value)</tooltip>
         </scale_options>
         <scripts />
         <show_scrollbar>false</show_scrollbar>
-        <text>Sensor 3</text>
+        <text>Sensor 3:</text>
         <tooltip></tooltip>
         <transparent>false</transparent>
         <vertical_alignment>1</vertical_alignment>
@@ -957,7 +957,7 @@ $(pv_value)</tooltip>
         </scale_options>
         <scripts />
         <show_scrollbar>false</show_scrollbar>
-        <text>Sensor 2</text>
+        <text>Sensor 2:</text>
         <tooltip></tooltip>
         <transparent>false</transparent>
         <vertical_alignment>1</vertical_alignment>
@@ -998,7 +998,7 @@ $(pv_value)</tooltip>
         </scale_options>
         <scripts />
         <show_scrollbar>false</show_scrollbar>
-        <text>Sensor 4</text>
+        <text>Sensor 4:</text>
         <tooltip></tooltip>
         <transparent>false</transparent>
         <vertical_alignment>1</vertical_alignment>
@@ -1039,7 +1039,7 @@ $(pv_value)</tooltip>
         </scale_options>
         <scripts />
         <show_scrollbar>false</show_scrollbar>
-        <text>Differential 1</text>
+        <text>Differential 1:</text>
         <tooltip></tooltip>
         <transparent>false</transparent>
         <vertical_alignment>1</vertical_alignment>
@@ -1080,7 +1080,7 @@ $(pv_value)</tooltip>
         </scale_options>
         <scripts />
         <show_scrollbar>false</show_scrollbar>
-        <text>Differential 4</text>
+        <text>Differential 4:</text>
         <tooltip></tooltip>
         <transparent>false</transparent>
         <vertical_alignment>1</vertical_alignment>
@@ -1121,7 +1121,7 @@ $(pv_value)</tooltip>
         </scale_options>
         <scripts />
         <show_scrollbar>false</show_scrollbar>
-        <text>Differential 3</text>
+        <text>Differential 3:</text>
         <tooltip></tooltip>
         <transparent>false</transparent>
         <vertical_alignment>1</vertical_alignment>
@@ -1162,7 +1162,7 @@ $(pv_value)</tooltip>
         </scale_options>
         <scripts />
         <show_scrollbar>false</show_scrollbar>
-        <text>Differential 2</text>
+        <text>Differential 2:</text>
         <tooltip></tooltip>
         <transparent>false</transparent>
         <vertical_alignment>1</vertical_alignment>
