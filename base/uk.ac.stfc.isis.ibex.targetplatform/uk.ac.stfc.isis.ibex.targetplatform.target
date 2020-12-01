@@ -76,7 +76,7 @@
 		<unit id="org.hamcrest.text" version="1.1.0.v20090501071000"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/latest_css_gui_dep/cs-studio/p2repo/"/>
+		<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/css_gui_dependencies/cs-studio/p2repo/"/>
 		<unit id="org.epics.jca" version="2.4.3"/>
 		<unit id="com.fasterxml.jackson.core.jackson-annotations" version="2.9.0"/>
 		<unit id="com.fasterxml.jackson.core.jackson-core" version="2.9.7"/>
