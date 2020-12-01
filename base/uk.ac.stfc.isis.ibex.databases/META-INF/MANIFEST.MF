@@ -13,7 +13,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: uk.ac.stfc.isis.ibex.databases,
  uk.ac.stfc.isis.ibex.databases.preferences
 Bundle-ClassPath: .,
- lib/mysql-connector-java-8.0.19.jar
+ lib/mysql-connector-java-8.0.21.jar
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.logging.log4j,
  uk.ac.stfc.isis.ibex.logger
