@@ -764,6 +764,22 @@ $(pv_value)</tooltip>
       <scripts>
         <path pathString="hrpd_graph.py" checkConnect="true" sfe="false" seoe="false">
           <pv trig="true">$(DSC_ROOT)GRAPH_SOURCE</pv>
+          <pv trig="false">$(BLOCK_ROOT)DSC_CERNOX_1</pv>
+          <pv trig="false">$(BLOCK_ROOT)DSC_CERNOX_1.EGU</pv>
+          <pv trig="false">$(BLOCK_ROOT)DSC_CERNOX_2</pv>
+          <pv trig="false">$(BLOCK_ROOT)DSC_CERNOX_2.EGU</pv>
+          <pv trig="false">$(BLOCK_ROOT)DSC_CERNOX_3</pv>
+          <pv trig="false">$(BLOCK_ROOT)DSC_CERNOX_3.EGU</pv>
+          <pv trig="false">$(BLOCK_ROOT)DSC_CERNOX_4</pv>
+          <pv trig="false">$(BLOCK_ROOT)DSC_CERNOX_4.EGU</pv>
+          <pv trig="false">$(DSC_ROOT)DIFFERENTIAL_1</pv>
+          <pv trig="false">$(DSC_ROOT)DIFFERENTIAL_1.EGU</pv>
+          <pv trig="false">$(DSC_ROOT)DIFFERENTIAL_2</pv>
+          <pv trig="false">$(DSC_ROOT)DIFFERENTIAL_2.EGU</pv>
+          <pv trig="false">$(DSC_ROOT)DIFFERENTIAL_3</pv>
+          <pv trig="false">$(DSC_ROOT)DIFFERENTIAL_3.EGU</pv>
+          <pv trig="false">$(DSC_ROOT)DIFFERENTIAL_4</pv>
+          <pv trig="false">$(DSC_ROOT)DIFFERENTIAL_4.EGU</pv>
         </path>
       </scripts>
       <show_legend>true</show_legend>
@@ -792,7 +808,7 @@ $(pv_value)</tooltip>
       <trace_0_x_axis_index>0</trace_0_x_axis_index>
       <trace_0_x_pv></trace_0_x_pv>
       <trace_0_x_pv_value />
-      <trace_0_y_axis_index>2</trace_0_y_axis_index>
+      <trace_0_y_axis_index>1</trace_0_y_axis_index>
       <trace_0_y_pv></trace_0_y_pv>
       <trace_0_y_pv_value />
       <trace_count>1</trace_count>
