@@ -190,8 +190,26 @@ public class Instrument implements BundleActivator {
      *         observable so can vary with time.
      */
     public Collection<InstrumentInfo> getInstruments() {
-        return instruments;
+    	return InstrumentListUtils.filterValidInstruments(instruments, LOG);
     }
+    
+    /**
+     * Check if list of allowed groups exists.
+     * @return True if list of allowed groups exists 
+     */
+    public static boolean allowlistExists() {
+    	return InstrumentListUtils.allowListExists();
+    }
+    
+    /**
+     * Get collection of allowed instruments from all instrument lists.
+     * @param instruments All instruments.
+     * @return collection of allowed instruments only
+     */
+    public static Collection<InstrumentInfo> getInstrumentAllowlist(Collection<InstrumentInfo> instruments) {
+    	return InstrumentListUtils.applyInstAllowedGroup(instruments);
+    }
+    
 
     /**
      * @return The bundle context.
