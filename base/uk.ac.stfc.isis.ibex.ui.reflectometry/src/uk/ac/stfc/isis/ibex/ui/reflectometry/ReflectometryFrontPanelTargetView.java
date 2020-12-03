@@ -23,7 +23,7 @@
 package uk.ac.stfc.isis.ibex.ui.reflectometry;
 
 /**
- * The ReflectometryOpiTargetView shows a stand-alone OPI for the reflectometry front panel.
+ * A standalone view for the Reflectometry Front Panel OPI
  */
 public class ReflectometryFrontPanelTargetView extends ReflectometryOpiTargetView {
     /**

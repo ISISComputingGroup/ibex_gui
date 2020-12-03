@@ -78,7 +78,7 @@ public abstract class ReflectometryOpiTargetView extends OpiTargetView {
 	@Override
     public MacrosInput macros() {
     	MacrosInput macros = emptyMacrosInput();
-    	macros.put("NAME", this.getOpiTitle());
+    	macros.put("NAME", getOpiTitle());
     	macros.put("P", Instrument.getInstance().currentInstrument().pvPrefix());
     	return macros;
     }
