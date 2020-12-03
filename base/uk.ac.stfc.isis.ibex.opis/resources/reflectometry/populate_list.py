@@ -1,5 +1,4 @@
 from org.csstudio.opibuilder.scriptUtil import PVUtil
-from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
 import json
 import time
 import zlib
@@ -38,14 +37,14 @@ def _add_macros(widget, name, value):
     macros.put(name, value)
     widget.setPropertyValue("macros", macros)
 
-def sort_out_list(pv, widget_name_prefix, macro_prefix, has_type, max):
+def populate_list(pv, widget_name_prefix, macro_prefix, has_type, max):
     value = PVUtil.getStringArray(pv)
     value = "".join(chr(int(i)) for i in value)
     value = zlib.decompress(value.decode("hex"))
     params = json.loads(value)
 
     for widget_index in range(1, max+1):
-        target_widget = display.getWidget(widget_name_prefix + str(widget_index))
+        target_widget = display.getWidget("{}_{}".format(widget_name_prefix, str(widget_index)))
         
         if widget_index <= len(params):
             _add_macros(target_widget, macro_prefix + "_PV", params[widget_index - 1]["prepended_alias"])
@@ -61,10 +60,5 @@ def sort_out_list(pv, widget_name_prefix, macro_prefix, has_type, max):
 # Widget names need to be set before trying to set properties
 time.sleep(0.2)
 
-sort_out_list(pvs[0], "params_slit_", "PARAM", True, 28)
-sort_out_list(pvs[1], "params_collim_", "PARAM", True, 28)
-sort_out_list(pvs[2], "params_toggle_", "PARAM", True, 28)
-sort_out_list(pvs[3], "params_misc_", "PARAM", True, 28)
-sort_out_list(pvs[4], "Correction_", "COR", False, 14)     
-sort_out_list(pvs[5], "align_", "PARAM", True, 64)    
-sort_out_list(pvs[6], "Value_", "VALUE", True, 32) 
+macros = widget.getPropertyValue("macros").getMacrosMap()
+populate_list(pvs[0], macros["GROUP_KEY"], macros["MACRO_PREFIX"], bool(int(macros["HAS_TYPE"])), int(macros["MAX_NUMBER"]))
