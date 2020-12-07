@@ -23,7 +23,7 @@
 package uk.ac.stfc.isis.ibex.ui.reflectometry;
 
 /**
- * A standalone view for the Reflectometry Other Parameters OPI
+ * A standalone view for the Reflectometry Other Parameters OPI.
  */
 public class ReflectometryOtherParametersTargetView extends ReflectometryOpiTargetView {
     /**
@@ -33,13 +33,17 @@ public class ReflectometryOtherParametersTargetView extends ReflectometryOpiTarg
 
     /**
      * File name of the reflectometry OPI.
+     * 
+     * @return the OPI file name
      */
     protected String getOpiName() {
     	return "reflectometry/tab_other_params.opi";
     }
 
     /**
-     * File name of the reflectometry OPI.
+     * The title of the OPI view.
+     * 
+     * @return the OPI title
      */
     protected String getOpiTitle() {
     	return "Other Parameters";

@@ -23,25 +23,29 @@
 package uk.ac.stfc.isis.ibex.ui.reflectometry;
 
 /**
- * A standalone view for the Reflectometry Front Panel OPI
+ * A standalone view for the Reflectometry Front Panel OPI.
  */
 public class ReflectometryFrontPanelTargetView extends ReflectometryOpiTargetView {
-    /**
-     * Class ID.
-     */
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.ReflectometryFrontPanelTargetView";
+	/**
+	 * Class ID.
+	 */
+	public static final String ID = "uk.ac.stfc.isis.ibex.ui.ReflectometryFrontPanelTargetView";
 
-    /**
-     * File name of the reflectometry OPI.
-     */
-    protected String getOpiName() {
-    	return "reflectometry/tab_front_panel.opi";
-    }
+	/**
+	 * File name of the reflectometry OPI.
+	 * 
+	 * @return the OPI file name
+	 */
+	protected String getOpiName() {
+		return "reflectometry/tab_front_panel.opi";
+	}
 
-    /**
-     * File name of the reflectometry OPI.
-     */
-    protected String getOpiTitle() {
-    	return "Front Panel";
-    }
+	/**
+	 * The title of the OPI view.
+	 * 
+	 * @return the OPI title
+	 */
+	protected String getOpiTitle() {
+		return "Front Panel";
+	}
 }
