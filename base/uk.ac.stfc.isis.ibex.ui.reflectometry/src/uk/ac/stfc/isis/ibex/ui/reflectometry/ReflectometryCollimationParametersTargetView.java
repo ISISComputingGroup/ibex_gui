@@ -23,25 +23,29 @@
 package uk.ac.stfc.isis.ibex.ui.reflectometry;
 
 /**
- * A standalone view for the Reflectometry Collimation Plane Parameters OPI
+ * A standalone view for the Reflectometry Collimation Plane Parameters OPI.
  */
 public class ReflectometryCollimationParametersTargetView extends ReflectometryOpiTargetView {
-    /**
-     * Class ID.
-     */
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.ReflectometryCollimationParametersTargetView";
+	/**
+	 * Class ID.
+	 */
+	public static final String ID = "uk.ac.stfc.isis.ibex.ui.ReflectometryCollimationParametersTargetView";
 
-    /**
-     * File name of the reflectometry OPI.
-     */
-    protected String getOpiName() {
-    	return "reflectometry/tab_collimation_params.opi";
-    }
+	/**
+	 * File name of the reflectometry OPI.
+	 * 
+	 * @return the OPI file name
+	 */
+	protected String getOpiName() {
+		return "reflectometry/tab_collimation_params.opi";
+	}
 
-    /**
-     * File name of the reflectometry OPI.
-     */
-    protected String getOpiTitle() {
-    	return "Collimation Plane Parameters";
-    }
+	/**
+	 * The title of the OPI view.
+	 * 
+	 * @return the OPI title
+	 */
+	protected String getOpiTitle() {
+		return "Collimation Plane Parameters";
+	}
 }

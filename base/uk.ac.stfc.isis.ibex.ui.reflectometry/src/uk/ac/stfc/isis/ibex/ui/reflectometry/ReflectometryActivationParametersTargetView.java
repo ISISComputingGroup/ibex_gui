@@ -24,25 +24,29 @@ package uk.ac.stfc.isis.ibex.ui.reflectometry;
 
 
 /**
- * A standalone view for the Reflectometry Activation Parameters OPI
+ * A standalone view for the Reflectometry Activation Parameters OPI.
  */
 public class ReflectometryActivationParametersTargetView extends ReflectometryOpiTargetView {
-    /**
-     * Class ID.
-     */
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.ReflectometryFrontPanelTargetView";
+	/**
+	 * Class ID.
+	 */
+	public static final String ID = "uk.ac.stfc.isis.ibex.ui.ReflectometryFrontPanelTargetView";
 
-    /**
-     * File name of the reflectometry OPI.
-     */
-    protected String getOpiName() {
-    	return "reflectometry/tab_activation_params.opi";
-    }
+	/**
+	 * File name of the reflectometry OPI.
+	 * 
+	 * @return the OPI file name
+	 */
+	protected String getOpiName() {
+		return "reflectometry/tab_activation_params.opi";
+	}
 
-    /**
-     * File name of the reflectometry OPI.
-     */
-    protected String getOpiTitle() {
-    	return "Activation Parameters";
-    }
+	/**
+	 * The title of the OPI view.
+	 * 
+	 * @return the OPI title
+	 */
+	protected String getOpiTitle() {
+		return "Activation Parameters";
+	}
 }

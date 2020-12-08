@@ -23,25 +23,29 @@
 package uk.ac.stfc.isis.ibex.ui.reflectometry;
 
 /**
- * A standalone view for the Reflectometry Error Log OPI
+ * A standalone view for the Reflectometry Error Log OPI.
  */
 public class ReflectometryErrorLogTargetView extends ReflectometryOpiTargetView {
-    /**
-     * Class ID.
-     */
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.ReflectometryErrorLogTargetView";
+	/**
+	 * Class ID.
+	 */
+	public static final String ID = "uk.ac.stfc.isis.ibex.ui.ReflectometryErrorLogTargetView";
 
-    /**
-     * File name of the reflectometry OPI.
-     */
-    protected String getOpiName() {
-    	return "reflectometry/tab_error_log.opi";
-    }
+	/**
+	 * File name of the reflectometry OPI.
+	 * 
+	 * @return the OPI file name
+	 */
+	protected String getOpiName() {
+		return "reflectometry/tab_error_log.opi";
+	}
 
-    /**
-     * File name of the reflectometry OPI.
-     */
-    protected String getOpiTitle() {
-    	return "Error Log";
-    }
+	/**
+	 * The title of the OPI view.
+	 * 
+	 * @return the OPI title
+	 */
+	protected String getOpiTitle() {
+		return "Error Log";
+	}
 }
