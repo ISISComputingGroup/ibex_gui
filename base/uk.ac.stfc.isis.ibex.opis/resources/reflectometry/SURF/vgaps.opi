@@ -279,8 +279,8 @@
       <widget_type>Linking Container</widget_type>
       <width>201</width>
       <wuid>-166f7f1c:16bdb17a9a5:-73c6</wuid>
-      <x>180</x>
-      <y>-1</y>
+      <x>170</x>
+      <y>0</y>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
