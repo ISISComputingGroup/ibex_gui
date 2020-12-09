@@ -10,7 +10,7 @@
   <background_color>
     <color red="240" green="240" blue="240" />
   </background_color>
-  <boy_version>5.1.0.201707071649</boy_version>
+  <boy_version>5.1.0</boy_version>
   <foreground_color>
     <color red="192" green="192" blue="192" />
   </foreground_color>
@@ -18,8 +18,9 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <BLOCK_ROOT>$(P)CS:SB:</BLOCK_ROOT>
+    <EURO>EUROTHRM_03</EURO>
     <DSC_ROOT>$(P)DSC:</DSC_ROOT>
+    <LKSH>LKSH336_02</LKSH>
   </macros>
   <name></name>
   <rules />
@@ -352,7 +353,7 @@
         <name>Setpoint_setpoint</name>
         <precision>3</precision>
         <precision_from_pv>false</precision_from_pv>
-        <pv_name>$(BLOCK_ROOT)DSC_HEATERSP1</pv_name>
+        <pv_name>$(P)$(EURO):A01:TEMP:SP</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -409,7 +410,7 @@ $(pv_value)</tooltip>
         <name>Setpoint_setpoint</name>
         <precision>3</precision>
         <precision_from_pv>false</precision_from_pv>
-        <pv_name>$(BLOCK_ROOT)DSC_HEATERSP2</pv_name>
+        <pv_name>$(P)$(EURO):A02:TEMP:SP</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -466,7 +467,7 @@ $(pv_value)</tooltip>
         <name>Setpoint_setpoint</name>
         <precision>3</precision>
         <precision_from_pv>false</precision_from_pv>
-        <pv_name>$(BLOCK_ROOT)DSC_RAMP1</pv_name>
+        <pv_name>$(P)$(EURO):A01:RATE</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -523,7 +524,7 @@ $(pv_value)</tooltip>
         <name>Setpoint_setpoint</name>
         <precision>3</precision>
         <precision_from_pv>false</precision_from_pv>
-        <pv_name>$(BLOCK_ROOT)DSC_RAMP2</pv_name>
+        <pv_name>$(P)$(EURO):A02:RATE</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -1218,7 +1219,7 @@ $(pv_value)</tooltip>
         <name>Temperature_text</name>
         <precision>3</precision>
         <precision_from_pv>false</precision_from_pv>
-        <pv_name>$(BLOCK_ROOT)DSC_CERNOX_1</pv_name>
+        <pv_name>$(P)$(LKSH):TEMP_A</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -1322,7 +1323,7 @@ $(pv_value)</tooltip>
         <name>Temperature_text</name>
         <precision>3</precision>
         <precision_from_pv>false</precision_from_pv>
-        <pv_name>$(BLOCK_ROOT)DSC_CERNOX_3</pv_name>
+        <pv_name>$(P)$(LKSH):TEMP_C</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -1478,7 +1479,7 @@ $(pv_value)</tooltip>
         <name>Temperature_text</name>
         <precision>3</precision>
         <precision_from_pv>false</precision_from_pv>
-        <pv_name>$(BLOCK_ROOT)DSC_CERNOX_2</pv_name>
+        <pv_name>$(P)$(LKSH):TEMP_B</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -1582,7 +1583,7 @@ $(pv_value)</tooltip>
         <name>Temperature_text</name>
         <precision>3</precision>
         <precision_from_pv>false</precision_from_pv>
-        <pv_name>$(BLOCK_ROOT)DSC_CERNOX_4</pv_name>
+        <pv_name>$(P)$(LKSH):TEMP_D</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
