@@ -18,9 +18,9 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <EURO>EUROTHRM_03</EURO>
+    <EURO>EUROTHRM_$(DSC_EUROTHRM)</EURO>
     <DSC_ROOT>$(P)DSC:</DSC_ROOT>
-    <LKSH>LKSH336_02</LKSH>
+    <LKSH>LKSH336_$(DSC_LKSH)</LKSH>
   </macros>
   <name></name>
   <rules />
@@ -765,14 +765,14 @@ $(pv_value)</tooltip>
       <scripts>
         <path pathString="hrpd_graph.py" checkConnect="true" sfe="false" seoe="false">
           <pv trig="true">$(DSC_ROOT)GRAPH_SOURCE</pv>
-          <pv trig="false">$(BLOCK_ROOT)DSC_CERNOX_1</pv>
-          <pv trig="false">$(BLOCK_ROOT)DSC_CERNOX_1.EGU</pv>
-          <pv trig="false">$(BLOCK_ROOT)DSC_CERNOX_2</pv>
-          <pv trig="false">$(BLOCK_ROOT)DSC_CERNOX_2.EGU</pv>
-          <pv trig="false">$(BLOCK_ROOT)DSC_CERNOX_3</pv>
-          <pv trig="false">$(BLOCK_ROOT)DSC_CERNOX_3.EGU</pv>
-          <pv trig="false">$(BLOCK_ROOT)DSC_CERNOX_4</pv>
-          <pv trig="false">$(BLOCK_ROOT)DSC_CERNOX_4.EGU</pv>
+          <pv trig="false">$(P)$(LKSH):TEMP_A</pv>
+          <pv trig="false">$(P)$(LKSH):TEMP_A.EGU</pv>
+          <pv trig="false">$(P)$(LKSH):TEMP_B</pv>
+          <pv trig="false">$(P)$(LKSH):TEMP_B.EGU</pv>
+          <pv trig="false">$(P)$(LKSH):TEMP_C</pv>
+          <pv trig="false">$(P)$(LKSH):TEMP_C.EGU</pv>
+          <pv trig="false">$(P)$(LKSH):TEMP_D</pv>
+          <pv trig="false">$(P)$(LKSH):TEMP_D.EGU</pv>
           <pv trig="false">$(DSC_ROOT)DIFFERENTIAL_1</pv>
           <pv trig="false">$(DSC_ROOT)DIFFERENTIAL_1.EGU</pv>
           <pv trig="false">$(DSC_ROOT)DIFFERENTIAL_2</pv>

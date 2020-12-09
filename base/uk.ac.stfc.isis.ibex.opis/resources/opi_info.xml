@@ -2483,5 +2483,28 @@
         <description>The OPI for user buttons which run some action</description>
       </value>
     </entry>
+    <entry>
+      <key>HRPD In Situ DSC</key>
+      <value>
+        <type>DSC</type>
+        <path>hrpd_in_situ_dsc.opi</path>
+        <description>The OPI for the HRPD in situ dsc experiment</description>
+        <macros>
+          <macro>
+            <name>DSC_EUROTHRM</name>
+            <description>The eurotherm ioc number (e.g. 03).</description>
+            <default>03</default>
+          </macro>
+          <macro>
+            <name>DSC_LKSH</name>
+            <description>The lakeshore 336 ioc number (e.g. 02).</description>
+            <default>02</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+      </value>
+    </entry>
   </opis>
 </descriptions>
