@@ -1640,6 +1640,11 @@
             <description>The Kepco PV name (e.g. KEPCO_01).</description>
             <default>KEPCO_01</default>
           </macro>
+          <macro>
+            <name>SMRTMON</name>
+            <description>Smart Monitor PV (e.g. SMRTMON_01).</description>
+            <default>SMRTMON_01</default>
+          </macro>
         </macros>
         <categories>
           <category>Power supplies</category>
@@ -1844,13 +1849,13 @@
       </value>
     </entry>
     <entry>
-      <key>Reflectometry Front Panel</key>
+      <key>Reflectometry OPI</key>
       <value>
         <categories>
           <category>Miscellaneous motion control</category>
         </categories>
         <type>REFLECTOMETRY</type>
-        <path>reflectometry/front_panel.opi</path>
+        <path>reflectometry/full_opi.opi</path>
         <description>The OPI for the reflectometry information panel.</description>
         <macros/>
       </value>
