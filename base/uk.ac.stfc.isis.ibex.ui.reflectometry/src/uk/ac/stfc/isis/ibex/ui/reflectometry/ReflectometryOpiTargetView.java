@@ -33,32 +33,36 @@ import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 
 /**
- * The ReflectometryOpiTargetView shows a stand-alone OPI for the reflectometry front panel.
+ * Shows a stand-alone view for a reflectometry OPI.
  */
 public abstract class ReflectometryOpiTargetView extends OpiTargetView {
-    /**
-     * Class ID.
-     */
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.ReflectometryOpiTargetView";
+	/**
+	 * Class ID.
+	 */
+	public static final String ID = "uk.ac.stfc.isis.ibex.ui.ReflectometryOpiTargetView";
 
     /**
      * File name of the reflectometry OPI.
+     * 
+     * @return the OPI file name
      */
-    protected abstract String getOpiName();
+	protected abstract String getOpiName();
 
     /**
-     * File name of the reflectometry OPI.
+     * The title of the OPI view.
+     * 
+     * @return the OPI title
      */
-    protected abstract String getOpiTitle();
+	protected abstract String getOpiTitle();
 
-    /**
-     * {@inheritDoc}
-     */
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected Path opi() throws OPIViewCreationException {
 		return Opi.getDefault().opiProvider().pathFromName(getOpiName());
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -76,11 +80,11 @@ public abstract class ReflectometryOpiTargetView extends OpiTargetView {
 	 * {@inheritDoc}
 	 */
 	@Override
-    public MacrosInput macros() {
-    	MacrosInput macros = emptyMacrosInput();
-    	macros.put("NAME", getOpiTitle());
-    	macros.put("P", Instrument.getInstance().currentInstrument().pvPrefix());
-    	return macros;
-    }
+	public MacrosInput macros() {
+		MacrosInput macros = emptyMacrosInput();
+		macros.put("NAME", getOpiTitle());
+		macros.put("P", Instrument.getInstance().currentInstrument().pvPrefix());
+		return macros;
+	}
 
 }

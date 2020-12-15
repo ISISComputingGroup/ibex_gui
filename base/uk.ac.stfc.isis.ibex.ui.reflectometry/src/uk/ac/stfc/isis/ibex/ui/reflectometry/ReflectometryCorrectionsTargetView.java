@@ -23,25 +23,30 @@
 package uk.ac.stfc.isis.ibex.ui.reflectometry;
 
 /**
- * A standalone view for the Reflectometry Corrections OPI
+ * A standalone view for the Reflectometry Corrections OPI.
  */
 public class ReflectometryCorrectionsTargetView extends ReflectometryOpiTargetView {
-    /**
-     * Class ID.
-     */
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.ReflectometryCorrectionsTargetView";
+	/**
+	 * Class ID.
+	 */
+	public static final String ID = "uk.ac.stfc.isis.ibex.ui.ReflectometryCorrectionsTargetView";
+
 
     /**
      * File name of the reflectometry OPI.
+     * 
+     * @return the OPI file name
      */
-    protected String getOpiName() {
-    	return "reflectometry/tab_corrections.opi";
-    }
+	protected String getOpiName() {
+		return "reflectometry/tab_corrections.opi";
+	}
 
-    /**
-     * File name of the reflectometry OPI.
-     */
-    protected String getOpiTitle() {
-    	return "Driver Corrections";
-    }
+	/**
+	 * The title of the OPI view.
+	 * 
+	 * @return the OPI title
+	 */
+	protected String getOpiTitle() {
+		return "Driver Corrections";
+	}
 }
