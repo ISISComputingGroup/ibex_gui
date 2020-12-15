@@ -25,30 +25,27 @@
   <name></name>
   <rules />
   <scripts>
-    <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
+    <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
       <scriptName>EmbeddedScript</scriptName>
       <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil, ConsoleUtil
 
-if pvs[0].getValue() is None:
-	ConsoleUtil.writeInfo("test")
-	pvs[0].setValue(True)
-	for i in range(1, 9):
-		pv_val = pvs[i].getValue()
-		if pv_val is None:
-			pvs[i].setValue(0)
-		else:
-			pvs[i].setValue(pv_val)
+for i in range(1, 9):
+	pv_val = pvs[i].getValue()
+	if pv_val is None:
+		pvs[i].setValue(0)
+	else:
+		pvs[i].setValue(pv_val)
 
 ]]></scriptText>
-      <pv trig="false">loc://INITIALISED</pv>
-      <pv trig="true">loc://GRAPH_SENSOR_1_PRESENT</pv>
-      <pv trig="true">loc://GRAPH_SENSOR_2_PRESENT</pv>
-      <pv trig="true">loc://GRAPH_SENSOR_3_PRESENT</pv>
-      <pv trig="true">loc://GRAPH_SENSOR_4_PRESENT</pv>
-      <pv trig="true">loc://GRAPH_DIFFERENTIAL_1_PRESENT</pv>
-      <pv trig="true">loc://GRAPH_DIFFERENTIAL_2_PRESENT</pv>
-      <pv trig="true">loc://GRAPH_DIFFERENTIAL_3_PRESENT</pv>
-      <pv trig="true">loc://GRAPH_DIFFERENTIAL_4_PRESENT</pv>
+      <pv trig="true">=1</pv>
+      <pv trig="false">loc://GRAPH_SENSOR_1_PRESENT</pv>
+      <pv trig="false">loc://GRAPH_SENSOR_2_PRESENT</pv>
+      <pv trig="false">loc://GRAPH_SENSOR_3_PRESENT</pv>
+      <pv trig="false">loc://GRAPH_SENSOR_4_PRESENT</pv>
+      <pv trig="false">loc://GRAPH_DIFFERENTIAL_1_PRESENT</pv>
+      <pv trig="false">loc://GRAPH_DIFFERENTIAL_2_PRESENT</pv>
+      <pv trig="false">loc://GRAPH_DIFFERENTIAL_3_PRESENT</pv>
+      <pv trig="false">loc://GRAPH_DIFFERENTIAL_4_PRESENT</pv>
     </path>
   </scripts>
   <show_close_button>true</show_close_button>
