@@ -15,7 +15,7 @@
     <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
   </foreground_color>
   <grid_space>6</grid_space>
-  <height>695</height>
+  <height>660</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
     <PV_ROOT>$(P)REFL_01:</PV_ROOT>
@@ -51,7 +51,7 @@
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
-    <height>695</height>
+    <height>670</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -88,7 +88,7 @@
       <foreground_color>
         <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </foreground_color>
-      <height>685</height>
+      <height>660</height>
       <horizontal_tabs>true</horizontal_tabs>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -243,7 +243,7 @@
         <foreground_color>
           <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
         </foreground_color>
-        <height>656</height>
+        <height>631</height>
         <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -283,7 +283,7 @@
             <color red="192" green="192" blue="192" />
           </foreground_color>
           <group_name></group_name>
-          <height>656</height>
+          <height>631</height>
           <macros>
             <include_parent_macros>true</include_parent_macros>
           </macros>
@@ -324,7 +324,7 @@
         <foreground_color>
           <color red="192" green="192" blue="192" />
         </foreground_color>
-        <height>656</height>
+        <height>631</height>
         <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -405,7 +405,7 @@
         <foreground_color>
           <color red="192" green="192" blue="192" />
         </foreground_color>
-        <height>656</height>
+        <height>631</height>
         <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -486,7 +486,7 @@
         <foreground_color>
           <color red="192" green="192" blue="192" />
         </foreground_color>
-        <height>656</height>
+        <height>631</height>
         <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -567,7 +567,7 @@
         <foreground_color>
           <color red="192" green="192" blue="192" />
         </foreground_color>
-        <height>656</height>
+        <height>631</height>
         <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -648,7 +648,7 @@
         <foreground_color>
           <color red="192" green="192" blue="192" />
         </foreground_color>
-        <height>656</height>
+        <height>631</height>
         <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -729,7 +729,7 @@
         <foreground_color>
           <color red="192" green="192" blue="192" />
         </foreground_color>
-        <height>656</height>
+        <height>631</height>
         <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -810,7 +810,7 @@
         <foreground_color>
           <color red="192" green="192" blue="192" />
         </foreground_color>
-        <height>656</height>
+        <height>631</height>
         <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -891,7 +891,7 @@
         <foreground_color>
           <color red="192" green="192" blue="192" />
         </foreground_color>
-        <height>656</height>
+        <height>631</height>
         <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
