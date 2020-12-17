@@ -2484,6 +2484,22 @@
       </value>
     </entry>
     <entry>
+      <key>NMR Teslameter PT2025</key>
+      <value>
+        <categories/>
+        <type>TESLAMETER</type>
+        <path>Metrolab_PT2025.opi</path>
+        <description>The OPI teslameter pt2025</description>
+      <macros>
+          <macro>
+            <name>PT2025</name>
+            <description>NMR Teslameter PT2025 PV name(e.g. PT2025_01).</description>
+            <default>PT2025_01</default>
+          </macro>
+       </macros>
+      </value>
+    </entry>
+    <entry>
       <key>HRPD In Situ DSC</key>
       <value>
         <type>DSC</type>
