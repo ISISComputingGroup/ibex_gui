@@ -109,7 +109,6 @@ public class ActionsTable extends ModelObject {
 				} else {
 					value = actionParameter.getDefaultValue();
 				}
-				
 				parametersMap.put(actionParameter, value);
 			} else { 
 			 parametersMap.put(actionParameter, actionParameter.getDefaultValue());

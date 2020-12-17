@@ -1,7 +1,7 @@
 from py4j.clientserver import ClientServer, JavaParameters, PythonParameters
 from py4j.java_collections import ListConverter, JavaList, JavaMap, MapConverter
 from py4j.protocol import Py4JError
-from genie_python.genie_script_generator import ScriptDefinition
+from genie_python.genie_script_generator import ScriptDefinition, CopyPreviousRow
 from typing import Dict, AnyStr, Union, List, Tuple
 from inspect import signature
 import inspect
@@ -87,10 +87,9 @@ class ScriptDefinitionWrapper(object):
         for arg in arguments:
             if arguments[arg].default == arguments[arg].empty:
                 action_parameter = PythonActionParameter(arg, arg, False)
-            elif arguments[arg].default is None:
+            elif isinstance(arguments[arg].default, CopyPreviousRow):
                 # If none copy the previous row's value over
-                # TODO use isinstance here
-                action_parameter = PythonActionParameter(arg, arg, True)
+                action_parameter = PythonActionParameter(arg, arguments[arg].default, True)
             else:
                 action_parameter = PythonActionParameter(arg, str(arguments[arg].default), False)
             kwargs_with_defaults.append(action_parameter)
