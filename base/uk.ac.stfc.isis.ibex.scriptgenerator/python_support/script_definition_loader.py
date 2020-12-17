@@ -23,12 +23,13 @@ class PythonActionParameter(object):
     class Java:
         implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter']
     
-    def __init__(self, name, default_value):
+    def __init__(self, name, default_value, copyPreviousRow):
         """
         Initialise the name and default value of the action parameter.
         """
         self.name = name
         self.default_value = default_value
+        self.copyPreviousRow = copyPreviousRow
 
     def getName(self) -> str:
         """
@@ -47,6 +48,9 @@ class PythonActionParameter(object):
               name: String, default value of this action parameter.
         """
         return self.default_value
+
+    def getCopyPreviousRow(self) -> bool:
+        return self.copyPreviousRow
 
 
 class ScriptDefinitionWrapper(object):
@@ -82,9 +86,13 @@ class ScriptDefinitionWrapper(object):
 
         for arg in arguments:
             if arguments[arg].default == arguments[arg].empty:
-                action_parameter = PythonActionParameter(arg, arg)
+                action_parameter = PythonActionParameter(arg, arg, False)
+            elif arguments[arg].default is None:
+                # If none copy the previous row's value over
+                # TODO use isinstance here
+                action_parameter = PythonActionParameter(arg, arg, True)
             else:
-                action_parameter = PythonActionParameter(arg, str(arguments[arg].default))
+                action_parameter = PythonActionParameter(arg, str(arguments[arg].default), False)
             kwargs_with_defaults.append(action_parameter)
             
         return ListConverter().convert(kwargs_with_defaults, gateway._gateway_client)
