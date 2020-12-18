@@ -3,14 +3,15 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.table;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
+
+import static java.lang.Math.min;
+import static java.lang.Math.max;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
@@ -122,6 +123,7 @@ public class ActionsTable extends ModelObject {
 		for (Map<JavaActionParameter, String> map : list) {
 			var newAction = createAction(map, actions.size() + counter);
 			newList.add(newAction);
+			counter++;
 		}
 		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
 	}
@@ -147,12 +149,8 @@ public class ActionsTable extends ModelObject {
 	 */
 	private void insertActions(List<ScriptGeneratorAction> actionsToAdd, Integer insertionLocation) {
 		final var newActionsList = new ArrayList<ScriptGeneratorAction>(actions);
-		
-		// Add first list
-		newActionsList.addAll(insertionLocation, actionsToAdd);
-		
+		newActionsList.addAll(min(max(insertionLocation, 0), newActionsList.size()), actionsToAdd);
 		recalculateLineNumbers(newActionsList);
-		
 		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newActionsList);
 	}
 
@@ -164,11 +162,9 @@ public class ActionsTable extends ModelObject {
 	 *          The index in the list to do the insertion.
 	 */
 	public void duplicateAction(List<ScriptGeneratorAction> actionsToDuplicate, Integer insertionLocation) {	
-						
 		 List<ScriptGeneratorAction> actionsToAdd = actionsToDuplicate.stream()
 				.map(action -> createAction(action.getActionParameterValueMap(), 0))
 				.collect(Collectors.toList());
-		
 		insertActions(actionsToAdd, insertionLocation);
 	}
     

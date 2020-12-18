@@ -122,4 +122,10 @@ public class ScriptGeneratorActionTest {
 			);
 		}
 	}
+	
+	@Test
+	public void test_WHEN_set_line_number_THEN_line_number_correct() {
+		action.setLineNumber(12);
+		assertThat(action.getLineNumber().intValue(), equalTo(12));
+	}
 }

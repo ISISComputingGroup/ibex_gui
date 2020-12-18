@@ -282,6 +282,7 @@ public class ActionsTableTest {
 	}
 	
 	private void assertActionsInOrderWithLineNumbers(List<Integer> order) {
+		assertThat(order.size(), equalTo(table.getActions().size()));
 		for(int i = 0; i < order.size(); i++) {
 			ScriptGeneratorAction action = table.getActions().get(i);
 			assertThat(action.getLineNumber(), equalTo(i + 1));
@@ -355,7 +356,7 @@ public class ActionsTableTest {
 		addActions(6);
 		
 		// Assert actions are set up correctly
-		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5));
+		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5, 6));
 		
 		// Move action
 		table.moveActionDown(List.of(table.getActions().get(0), table.getActions().get(2), table.getActions().get(4)));
@@ -370,13 +371,13 @@ public class ActionsTableTest {
 		addActions(6);
 		
 		// Assert actions are set up correctly
-		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5));
+		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5, 6));
 		
 		// Move action
 		table.moveActionUp(List.of(table.getActions().get(0), table.getActions().get(2), table.getActions().get(4)));
 		
 		// Assert line numbers and values are swapped
-		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5));
+		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5, 6));
 	}
 	
 	@Test
@@ -385,7 +386,7 @@ public class ActionsTableTest {
 		addActions(6);
 		
 		// Assert actions are set up correctly
-		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5));
+		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5, 6));
 		
 		// Move action
 		table.moveActionUp(List.of(table.getActions().get(1), table.getActions().get(3), table.getActions().get(5)));
@@ -400,13 +401,80 @@ public class ActionsTableTest {
 		addActions(6);
 		
 		// Assert actions are set up correctly
-		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5));
+		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5, 6));
 		
 		// Move action
 		table.moveActionDown(List.of(table.getActions().get(1), table.getActions().get(3), table.getActions().get(5)));
 		
 		// Assert line numbers and values are swapped
-		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5));
+		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5, 6));
 	}
-
+	
+	@Test
+	public void test_GIVEN_table_empty_WHEN_add_multiple_actions_THEN_line_numbers_correct_WHEN_add_more_actions_THEN_line_numbers_correct() {
+		List<Map<JavaActionParameter, String>> list = new ArrayList<Map<JavaActionParameter, String>>();
+		// create multiple actions
+		for (int i = 0; i < 5; i++) {
+			Map<JavaActionParameter, String> example = new HashMap<JavaActionParameter, String>();
+			example.put(testParameter, String.format("action %s", i + 1));
+			list.add(example);
+		}
+		
+		table.addMultipleActions(list);
+		
+		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5));
+		
+		table.addMultipleActions(list);
+		
+		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5, 1, 2, 3, 4, 5));
+	}
+	
+	@Test
+	public void test_GIVEN_table_with_six_actions_WHEN_remove_one_action_THEN_line_numbers_correct() {
+		addActions(6);
+		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5, 6));
+		table.deleteAction(List.of(table.getActions().get(3)));
+		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 5, 6));
+	}
+	
+	@Test
+	public void test_GIVEN_table_with_six_actions_WHEN_remove_multiple_actions_THEN_line_numbers_correct() {
+		addActions(6);
+		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5, 6));
+		table.deleteAction(List.of(table.getActions().get(1), table.getActions().get(3), table.getActions().get(5)));
+		assertActionsInOrderWithLineNumbers(List.of(1, 3, 5));
+	}
+	
+	@Test
+	public void test_GIVEN_table_with_six_actions_WHEN_duplicate_one_action_THEN_line_numbers_correct() {
+		addActions(6);
+		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5, 6));
+		table.duplicateAction(List.of(table.getActions().get(1)), 2);
+		table.duplicateAction(List.of(table.getActions().get(1)), 2);
+		assertActionsInOrderWithLineNumbers(List.of(1, 2, 2, 2, 3, 4, 5, 6));
+	}
+	
+	@Test
+	public void test_GIVEN_table_with_six_actions_WHEN_duplicate_multiple_actions_THEN_line_numbers_correct() {
+		addActions(6);
+		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5, 6));
+		table.duplicateAction(List.of(table.getActions().get(1), table.getActions().get(3), table.getActions().get(5)), 2);
+		assertActionsInOrderWithLineNumbers(List.of(1, 2, 2, 4, 6, 3, 4, 5, 6));
+	}
+	
+	@Test
+	public void test_GIVEN_table_with_six_actions_WHEN_duplicate_multiple_actions_to_end_THEN_line_numbers_correct() {
+		addActions(6);
+		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5, 6));
+		table.duplicateAction(List.of(table.getActions().get(1), table.getActions().get(3), table.getActions().get(5)), 8);
+		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5, 6, 2, 4, 6));
+	}
+	
+	@Test
+	public void test_GIVEN_table_with_six_actions_WHEN_duplicate_multiple_actions_to_start_THEN_line_numbers_correct() {
+		addActions(6);
+		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5, 6));
+		table.duplicateAction(List.of(table.getActions().get(1), table.getActions().get(3), table.getActions().get(5)), -2);
+		assertActionsInOrderWithLineNumbers(List.of(2, 4, 6, 1, 2, 3, 4, 5, 6));
+	}
 }
