@@ -150,7 +150,7 @@ public class ScriptGeneratorJsonFileHandlerTest {
 		actionOne.put(actionParamTwo, "1");
 		
 		List<ScriptGeneratorAction> actions = new ArrayList<ScriptGeneratorAction>();
-		actions.add(new ScriptGeneratorAction(actionOne));
+		actions.add(new ScriptGeneratorAction(actionOne, 1));
 	
 		String actual = fileHandlerTemp.createJsonString(actions, scriptDefContent, Paths.get("C:/ScriptDefinitions/imat.py"));
 		// remove carriage return and test

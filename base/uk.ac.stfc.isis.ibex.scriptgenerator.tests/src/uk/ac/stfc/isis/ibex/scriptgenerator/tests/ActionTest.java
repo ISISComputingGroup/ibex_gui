@@ -24,7 +24,7 @@ public class ActionTest {
 		testValues.put(parameterOneName, "1");
 		testValues.put(parameterTwoName, "12.3");
 		
-		this.action = new ScriptGeneratorAction(testValues);
+		this.action = new ScriptGeneratorAction(testValues, 1);
 	}
 	
 	@Test
@@ -41,7 +41,7 @@ public class ActionTest {
 		
 		action.setActionParameterValue(parameterTwoName, valueToTest);
 				
-		var duplicatedAction = new ScriptGeneratorAction(action);
+		var duplicatedAction = new ScriptGeneratorAction(action, 2);
 		
 		assertEquals(duplicatedAction.getActionParameterValueMap(), action.getActionParameterValueMap());
 	}

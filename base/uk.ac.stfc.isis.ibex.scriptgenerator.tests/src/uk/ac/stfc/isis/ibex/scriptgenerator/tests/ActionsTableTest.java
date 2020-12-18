@@ -29,12 +29,13 @@ public class ActionsTableTest {
 
 	private ActionsTable table;
 	private List<JavaActionParameter> actionParameters;
+	private JavaActionParameter testParameter;
 	
 	@Before
 	public void setUp() {
 		table = new ActionsTable(new ArrayList<JavaActionParameter>());
 		
-		var testParameter = new JavaActionParameter("Test Parameter", "test value");
+		testParameter = new JavaActionParameter("Test Parameter", "test value");
 		
 		actionParameters = new ArrayList<JavaActionParameter>();
 		actionParameters.add(testParameter);
@@ -269,6 +270,143 @@ public class ActionsTableTest {
 		
 		assertEquals(table.getActions().size(), 2);
 		
+	}
+	
+	private void addActions(int numOfActions) {
+		for(int i = 0; i < numOfActions; i++) {
+			table.addEmptyAction();
+			var action = table.getActions().get(i);
+			var actionVal = String.format("action %s", i + 1);
+			action.setActionParameterValue(testParameter, actionVal);
+		}
+	}
+	
+	private void assertActionsInOrderWithLineNumbers(List<Integer> order) {
+		for(int i = 0; i < order.size(); i++) {
+			ScriptGeneratorAction action = table.getActions().get(i);
+			assertThat(action.getLineNumber(), equalTo(i + 1));
+			assertThat(action.getActionParameterValue(testParameter), equalTo(String.format("action %s", order.get(i))));
+		}
+	}
+	
+	@Test
+	public void test_GIVEN_two_actions_WHEN_move_second_action_up_THEN_line_numbers_swapped() {
+		// Set up actions
+		addActions(2);
+		
+		// Assert actions are set up correctly
+		assertActionsInOrderWithLineNumbers(List.of(1, 2));
+		
+		// Move action
+		table.moveActionUp(List.of(table.getActions().get(1)));
+		
+		// Assert line numbers and values are swapped
+		assertActionsInOrderWithLineNumbers(List.of(2, 1));
+	}
+	
+	@Test
+	public void test_GIVEN_two_actions_WHEN_move_first_action_down_THEN_line_numbers_swapped() {
+		// Set up actions
+		addActions(2);
+		
+		// Assert actions are set up correctly
+		assertActionsInOrderWithLineNumbers(List.of(1, 2));
+		
+		// Move action
+		table.moveActionDown(List.of(table.getActions().get(0)));
+		
+		// Assert line numbers and values are swapped
+		assertActionsInOrderWithLineNumbers(List.of(2, 1));
+	}
+	
+	@Test
+	public void test_GIVEN_two_actions_WHEN_move_first_action_up_THEN_no_change() {
+		// Set up actions
+		addActions(2);
+		
+		// Assert actions are set up correctly
+		assertActionsInOrderWithLineNumbers(List.of(1, 2));
+		
+		// Move action
+		table.moveActionUp(List.of(table.getActions().get(0)));
+		
+		// Assert line numbers and values are swapped
+		assertActionsInOrderWithLineNumbers(List.of(1, 2));
+	}
+	
+	@Test
+	public void test_GIVEN_two_actions_WHEN_move_last_action_down_THEN_no_change() {
+		// Set up actions
+		addActions(2);
+		
+		// Assert actions are set up correctly
+		assertActionsInOrderWithLineNumbers(List.of(1, 2));
+		
+		// Move action
+		table.moveActionDown(List.of(table.getActions().get(1)));
+		
+		// Assert line numbers and values are swapped
+		assertActionsInOrderWithLineNumbers(List.of(1, 2));
+	}
+	
+	@Test
+	public void test_GIVEN_six_actions_WHEN_move_three_actions_down_THEN_line_numbers_swapped() {
+		// Set up actions
+		addActions(6);
+		
+		// Assert actions are set up correctly
+		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5));
+		
+		// Move action
+		table.moveActionDown(List.of(table.getActions().get(0), table.getActions().get(2), table.getActions().get(4)));
+		
+		// Assert line numbers and values are swapped
+		assertActionsInOrderWithLineNumbers(List.of(2, 1, 4, 3, 6, 5));
+	}
+	
+	@Test
+	public void test_GIVEN_six_actions_WHEN_move_three_actions_up_AND_one_is_top_THEN_no_change() {
+		// Set up actions
+		addActions(6);
+		
+		// Assert actions are set up correctly
+		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5));
+		
+		// Move action
+		table.moveActionUp(List.of(table.getActions().get(0), table.getActions().get(2), table.getActions().get(4)));
+		
+		// Assert line numbers and values are swapped
+		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5));
+	}
+	
+	@Test
+	public void test_GIVEN_six_actions_WHEN_move_three_actions_up_THEN_line_numbers_swapped() {
+		// Set up actions
+		addActions(6);
+		
+		// Assert actions are set up correctly
+		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5));
+		
+		// Move action
+		table.moveActionUp(List.of(table.getActions().get(1), table.getActions().get(3), table.getActions().get(5)));
+		
+		// Assert line numbers and values are swapped
+		assertActionsInOrderWithLineNumbers(List.of(2, 1, 4, 3, 6, 5));
+	}
+	
+	@Test
+	public void test_GIVEN_six_actions_WHEN_move_three_actions_down_AND_one_is_last_THEN_no_change() {
+		// Set up actions
+		addActions(6);
+		
+		// Assert actions are set up correctly
+		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5));
+		
+		// Move action
+		table.moveActionDown(List.of(table.getActions().get(1), table.getActions().get(3), table.getActions().get(5)));
+		
+		// Assert line numbers and values are swapped
+		assertActionsInOrderWithLineNumbers(List.of(1, 2, 3, 4, 5));
 	}
 
 }

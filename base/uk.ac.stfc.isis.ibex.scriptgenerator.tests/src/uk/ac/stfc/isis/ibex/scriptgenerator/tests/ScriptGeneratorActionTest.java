@@ -32,13 +32,13 @@ public class ScriptGeneratorActionTest {
 		values.put(actionParam2, actionParam2.getDefaultValue());
 		values.put(actionParam3, actionParam3.getDefaultValue());
 		
-		action = new ScriptGeneratorAction(values);
+		action = new ScriptGeneratorAction(values, 1);
 	}
 	
 	@Test
 	public void test_WHEN_create_new_action_with_old_action_THEN_action_param_values_the_same() {
 		// Act
-		ScriptGeneratorAction newAction = new ScriptGeneratorAction(action);
+		ScriptGeneratorAction newAction = new ScriptGeneratorAction(action, 2);
 		
 		// Assert
 		for(Entry<JavaActionParameter, String> entry : values.entrySet()) {
