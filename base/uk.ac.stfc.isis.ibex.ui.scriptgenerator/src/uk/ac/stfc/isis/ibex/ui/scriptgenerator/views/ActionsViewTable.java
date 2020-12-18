@@ -24,6 +24,7 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.jface.viewers.CellNavigationStrategy;
@@ -185,12 +186,16 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 		if (!viewer.getTable().isDisposed()) {
 			int focusRow = getSelectionIndex();
 			ScriptGeneratorAction previousSelection = firstSelectedRow();
-			int focusColumn = 0;
+			int focusColumn = 1;
 			
 			if (shiftCellFocusToNewlyAddedRow) {
 				focusRow = viewer.getTable().getSelectionIndex() + 1;
 			} else if (focusRow != -1) {
-				focusColumn = viewer.getColumnViewerEditor().getFocusCell().getColumnIndex();
+				// When no focus is selected getFocusCell returns null
+				var focusCell = Optional.ofNullable(viewer.getColumnViewerEditor().getFocusCell());
+				if(focusCell.isPresent()) {
+					focusColumn = focusCell.get().getColumnIndex();
+				}
 			}
 			
 			viewer.setInput(new WritableList<ScriptGeneratorAction>(rows, null));

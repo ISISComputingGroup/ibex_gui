@@ -679,7 +679,17 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * 
      * @param viewTable The table view to add columns to.
      */
-    protected void addColumns(ActionsViewTable viewTable) {        
+    protected void addColumns(ActionsViewTable viewTable) {
+    // Add line number
+	TableViewerColumn lineNumberColumn = viewTable.createColumn("Line", 
+	        0, 
+	        new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty("move")) {
+	        @Override
+	        protected String stringFromRow(ScriptGeneratorAction row) {
+	        	return row.getLineNumber().toString();
+	        }
+	    });
+	lineNumberColumn.getColumn().setAlignment(SWT.CENTER);
     // Add action parameter columns
     for (JavaActionParameter actionParameter: scriptGeneratorModel.getActionParameters()) {
         String columnName = actionParameter.getName();

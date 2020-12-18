@@ -3,11 +3,13 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.table;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -79,14 +81,14 @@ public class ActionsTable extends ModelObject {
 	 * @param parametersMap The user-set value (string) for the specified ActionParameter.
 	 * @return the action.
 	 */
-	private ScriptGeneratorAction createAction(Map<JavaActionParameter, String> parametersMap) {
+	private ScriptGeneratorAction createAction(Map<JavaActionParameter, String> parametersMap, int lineNumber) {
 		// Ensure is not shallow copy
 		Map<JavaActionParameter, String> newParamsMap = new HashMap<JavaActionParameter, String>();
 		for (Map.Entry<JavaActionParameter, String> entry: parametersMap.entrySet()) {
 			newParamsMap.put(entry.getKey(), entry.getValue());
 		}
 		// Create action and attach listeners
-		ScriptGeneratorAction newAction = new ScriptGeneratorAction(newParamsMap);
+		ScriptGeneratorAction newAction = new ScriptGeneratorAction(newParamsMap, lineNumber);
 		newAction.addPropertyChangeListener(VALUE_PROPERTY, evt -> {
 			firePropertyChange(ACTIONS_PROPERTY, null, actions);
 		});
@@ -103,7 +105,7 @@ public class ActionsTable extends ModelObject {
 			parametersMap.put(actionParameter, actionParameter.getDefaultValue());
 		}
 		
-		var newAction = createAction(parametersMap);
+		var newAction = createAction(parametersMap, actions.size() + 1);
 		
 		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
 		newList.add(newAction);
@@ -116,8 +118,9 @@ public class ActionsTable extends ModelObject {
 	 */
 	public void addMultipleActions(List<Map<JavaActionParameter, String>> list) {
 		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
+		int counter = 1;
 		for (Map<JavaActionParameter, String> map : list) {
-			var newAction = createAction(map);
+			var newAction = createAction(map, actions.size() + counter);
 			newList.add(newAction);
 		}
 		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
@@ -128,10 +131,48 @@ public class ActionsTable extends ModelObject {
 	 * @param actionsToDeletes
 	 * 		  	The actions to remove from the actions list.
 	 */
-	public void deleteAction(List<ScriptGeneratorAction> actionsToDeletes) {
+	public void deleteAction(List<ScriptGeneratorAction> actionsToDelete) {
 		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
-		newList.removeAll(actionsToDeletes);
+		newList.removeAll(actionsToDelete);
+		// Correct line numbers
+		for(int lineNumber = 1; lineNumber <= newList.size(); lineNumber++) {
+			newList.get(lineNumber - 1).setLineNumber(lineNumber);
+		}
 		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
+	}
+	
+	/**
+	 * Insert a list of actions at the given location
+	 * @param actionsToAdd
+	 * 			The actions to add.
+	 * @param insertionLocation
+	 *          The index in the list to do the insertion.
+	 */
+	public void insertActions(List<ScriptGeneratorAction> actionsToAdd, Integer insertionLocation) {
+		final var newActionsList = new ArrayList<ScriptGeneratorAction>();
+		
+		// Split list and add into middle
+		final var firstList = actions.subList(0, insertionLocation);
+		final var lastList = actions.subList(insertionLocation, actions.size());
+		
+		// Add first list
+		newActionsList.addAll(firstList);
+		
+		int numberOfActionsToAdd = actionsToAdd.size();
+		
+		// Set line numbers correctly and add last two lists
+		for(int i = 0; i < numberOfActionsToAdd; i++) {
+			var action = actionsToAdd.get(i);
+			action.setLineNumber(insertionLocation + i + 1);
+			newActionsList.add(action);
+		}
+		for(int i = 0; i < lastList.size(); i++) {
+			var action = lastList.get(i);
+			action.setLineNumber(insertionLocation + numberOfActionsToAdd + i + 1);
+			newActionsList.add(action);
+		}
+		
+		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newActionsList);
 	}
 
 	/**
@@ -142,14 +183,12 @@ public class ActionsTable extends ModelObject {
 	 *          The index in the list to do the insertion.
 	 */
 	public void duplicateAction(List<ScriptGeneratorAction> actionsToDuplicate, Integer insertionLocation) {	
-		final var newActionsList = new ArrayList<ScriptGeneratorAction>(actions);
-		
-		List<ScriptGeneratorAction> actionsToAdd = actionsToDuplicate.stream()
-				.map(action -> createAction(action.getActionParameterValueMap()))
+						
+		 List<ScriptGeneratorAction> actionsToAdd = actionsToDuplicate.stream()
+				.map(action -> createAction(action.getActionParameterValueMap(), 0))
 				.collect(Collectors.toList());
 		
-		newActionsList.addAll(insertionLocation, actionsToAdd);
-		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newActionsList);
+		insertActions(actionsToAdd, insertionLocation);
 	}
     
     /**

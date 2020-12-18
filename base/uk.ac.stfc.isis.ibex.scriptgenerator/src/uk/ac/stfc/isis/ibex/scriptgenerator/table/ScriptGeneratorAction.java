@@ -27,6 +27,11 @@ public class ScriptGeneratorAction extends ModelObject {
      * Contains the estimated time to complete the action. Empty optional if the action is invalid
      */
     private Optional<Number> estimatedTime = Optional.empty();
+    
+    /**
+     * The line number the action is on.
+     */
+    private Integer lineNumber = 1;
 
     /**
      * The property to fire a change of if the action becomes valid or invalid.
@@ -42,14 +47,20 @@ public class ScriptGeneratorAction extends ModelObject {
      * The property to fire if the actions values change.
      */
     private static final String VALUE_PROPERTY = "value";
+    
+    /**
+     * The property to fire if the action moves in the table.
+     */
+    private static final String MOVE_PROPERTY = "move";
 
     /**
      * Default constructor sets each parameter/value pair using input argument.
      * @param paremetersMap
      * 			The user-set value (string) for the specified ActionParameter.
      */
-    public ScriptGeneratorAction(Map<JavaActionParameter, String> paremetersMap) {
-	this.actionParameterValues = paremetersMap;
+    public ScriptGeneratorAction(Map<JavaActionParameter, String> paremetersMap, int lineNumber) {
+    	setLineNumber(lineNumber);
+    	this.actionParameterValues = paremetersMap;
     }
 
     /**
@@ -57,12 +68,13 @@ public class ScriptGeneratorAction extends ModelObject {
      * @param actionToCopy
      * 			The action to copy.
      */
-    public ScriptGeneratorAction(ScriptGeneratorAction actionToCopy) {
-	this.actionParameterValues = new HashMap<JavaActionParameter, String>();
-	// Add all Parameter/value pairs to the hash map
-	for (Map.Entry<JavaActionParameter, String> entry: actionToCopy.getActionParameterValueMap().entrySet()) {
-	    setActionParameterValue(entry.getKey(), entry.getValue());
-	}
+    public ScriptGeneratorAction(ScriptGeneratorAction actionToCopy, int lineNumber) {
+    	setLineNumber(lineNumber);
+		this.actionParameterValues = new HashMap<JavaActionParameter, String>();
+		// Add all Parameter/value pairs to the hash map
+		for (Map.Entry<JavaActionParameter, String> entry: actionToCopy.getActionParameterValueMap().entrySet()) {
+		    setActionParameterValue(entry.getKey(), entry.getValue());
+		}
     }
 
     /**
@@ -165,6 +177,23 @@ public class ScriptGeneratorAction extends ModelObject {
      */
     public Optional<Number> getEstimatedTime() {
 	return estimatedTime;
+    }
+    
+    /**
+     * Set the line number this row is on.
+     * 
+     * @param newLineNumber An integer denoting the line number this is 
+     */
+    public void setLineNumber(Integer newLineNumber) {
+    	firePropertyChange(MOVE_PROPERTY, lineNumber, newLineNumber);
+    	lineNumber = newLineNumber;
+    }
+    
+    /**
+     * @return The line number this row is on.
+     */
+    public Integer getLineNumber() {
+    	return lineNumber;
     }
 
 }
