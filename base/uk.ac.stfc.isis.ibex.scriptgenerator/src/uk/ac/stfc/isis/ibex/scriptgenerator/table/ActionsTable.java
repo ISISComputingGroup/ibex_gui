@@ -134,10 +134,7 @@ public class ActionsTable extends ModelObject {
 	public void deleteAction(List<ScriptGeneratorAction> actionsToDelete) {
 		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
 		newList.removeAll(actionsToDelete);
-		// Correct line numbers
-		for(int lineNumber = 1; lineNumber <= newList.size(); lineNumber++) {
-			newList.get(lineNumber - 1).setLineNumber(lineNumber);
-		}
+		recalculateLineNumbers(newList);
 		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
 	}
 	
@@ -148,29 +145,13 @@ public class ActionsTable extends ModelObject {
 	 * @param insertionLocation
 	 *          The index in the list to do the insertion.
 	 */
-	public void insertActions(List<ScriptGeneratorAction> actionsToAdd, Integer insertionLocation) {
-		final var newActionsList = new ArrayList<ScriptGeneratorAction>();
-		
-		// Split list and add into middle
-		final var firstList = actions.subList(0, insertionLocation);
-		final var lastList = actions.subList(insertionLocation, actions.size());
+	private void insertActions(List<ScriptGeneratorAction> actionsToAdd, Integer insertionLocation) {
+		final var newActionsList = new ArrayList<ScriptGeneratorAction>(actions);
 		
 		// Add first list
-		newActionsList.addAll(firstList);
+		newActionsList.addAll(insertionLocation, actionsToAdd);
 		
-		int numberOfActionsToAdd = actionsToAdd.size();
-		
-		// Set line numbers correctly and add last two lists
-		for(int i = 0; i < numberOfActionsToAdd; i++) {
-			var action = actionsToAdd.get(i);
-			action.setLineNumber(insertionLocation + i + 1);
-			newActionsList.add(action);
-		}
-		for(int i = 0; i < lastList.size(); i++) {
-			var action = lastList.get(i);
-			action.setLineNumber(insertionLocation + numberOfActionsToAdd + i + 1);
-			newActionsList.add(action);
-		}
+		recalculateLineNumbers(newActionsList);
 		
 		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newActionsList);
 	}
@@ -215,6 +196,10 @@ public class ActionsTable extends ModelObject {
 		while (iterator.hasPrevious()) {
 			Integer currentIndex = actions.indexOf(iterator.previous());
 			Collections.swap(newActions, currentIndex, currentIndex + 1);
+			var selectedAction = actions.get(currentIndex);
+			selectedAction.setLineNumber(selectedAction.getLineNumber() + 1);
+			var swappedAction = actions.get(currentIndex + 1);
+			swappedAction.setLineNumber(swappedAction.getLineNumber() - 1);
 		}
 		
 		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newActions);
@@ -234,6 +219,9 @@ public class ActionsTable extends ModelObject {
 		for (var action : actionsToMove) {
 			Integer currentIndex = actions.indexOf(action);
 			Collections.swap(newActions, currentIndex, currentIndex - 1);
+			action.setLineNumber(action.getLineNumber() - 1);
+			var swappedAction = actions.get(currentIndex - 1);
+			swappedAction.setLineNumber(swappedAction.getLineNumber() + 1);
 		}
 		
 		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newActions);
@@ -308,5 +296,16 @@ public class ActionsTable extends ModelObject {
 	 */
 	public void reloadActions() {
 		firePropertyChange(ACTIONS_PROPERTY, null, actions);
+	}
+	
+	/**
+	 * Loop through the action list and set the actions line numbers to be where they are in the list (1-indexed not 0-indexed).
+	 * 
+	 * @param actionList The list containing actions to correct line numbers of.
+	 */
+	private void recalculateLineNumbers(List<ScriptGeneratorAction> actionList) {
+		for(int lineNumber = 1; lineNumber <= actionList.size(); lineNumber++) {
+			actionList.get(lineNumber - 1).setLineNumber(lineNumber);
+		}
 	}
 }
