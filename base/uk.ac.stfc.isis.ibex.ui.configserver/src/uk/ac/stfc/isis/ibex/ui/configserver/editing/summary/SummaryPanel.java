@@ -105,7 +105,6 @@ public class SummaryPanel extends Composite {
 
         txtDescription = new Text(cmpSummary, SWT.BORDER);
         txtDescription.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        txtDescription.setTextLimit(39);
 
         lblSynoptic = new Label(cmpSummary, SWT.NONE);
         lblSynoptic.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
