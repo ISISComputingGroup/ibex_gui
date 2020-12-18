@@ -206,7 +206,8 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 					setCellFocus(focusRow, focusColumn);
 					if (!shiftCellFocusToNewlyAddedRow) {
 					    // Fixes issue see in https://github.com/ISISComputingGroup/IBEX/issues/5708 (hopefully temporary)
-					    editingSupports.get(focusColumn).resetSelectionAfterFocus();
+						// focusColumn-1 to account for line number column
+					    editingSupports.get(focusColumn-1).resetSelectionAfterFocus();
 					}
 					shiftCellFocusToNewlyAddedRow = false;
 				}
