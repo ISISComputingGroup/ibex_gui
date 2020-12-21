@@ -367,17 +367,17 @@ public class ScriptGeneratorView {
 
         // Make buttons for insert new/delete/duplicate actions
         btnInsertAction = new Button(actionsControlsGrp, SWT.NONE);
-        btnInsertAction.setText("Add Action");
+        btnInsertAction.setText("Add Action To End");
         btnInsertAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         btnInsertAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.addEmptyAction());
 
         btnDeleteAction = new Button(actionsControlsGrp, SWT.NONE);
-        btnDeleteAction.setText("Delete Action");
+        btnDeleteAction.setText("Delete Selected Actions");
         btnDeleteAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         btnDeleteAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.deleteAction(table.selectedRows()));
 
         btnDuplicateAction = new Button(actionsControlsGrp, SWT.NONE);
-        btnDuplicateAction.setText("Duplicate Action");
+        btnDuplicateAction.setText("Duplicate Selected Actions Below");
         btnDuplicateAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         btnDuplicateAction.addListener(SWT.Selection, e -> 
         scriptGeneratorViewModel.duplicateAction(table.selectedRows(), table.getSelectionIndex() + 1));
