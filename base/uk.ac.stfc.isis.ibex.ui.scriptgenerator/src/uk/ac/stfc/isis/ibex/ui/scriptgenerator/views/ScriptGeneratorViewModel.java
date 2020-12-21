@@ -284,7 +284,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     // Make sure the table is updated with the new action before selecting it
     actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam);
     DISPLAY.asyncExec(() -> {
-        viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, 0);
+        viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
     });
     }
 
@@ -311,7 +311,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     // Make sure the table is updated with the new action before selecting it
     actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam);
     DISPLAY.asyncExec(() -> {
-        viewTable.setCellFocus(insertionLocation, 0);
+        viewTable.setCellFocus(insertionLocation, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
     });
     }
 
