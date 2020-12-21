@@ -688,6 +688,10 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	        protected String stringFromRow(ScriptGeneratorAction row) {
 	        	return row.getLineNumber().toString();
 	        }
+	        @Override
+            public String getToolTipText(Object element) {
+                return getScriptGenActionToolTipText((ScriptGeneratorAction) element);
+            }
 	    });
 	lineNumberColumn.getColumn().setAlignment(SWT.CENTER);
     // Add action parameter columns
