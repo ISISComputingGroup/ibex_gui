@@ -89,7 +89,7 @@ class ScriptDefinitionWrapper(object):
                 action_parameter = PythonActionParameter(arg, arg, False)
             elif isinstance(arguments[arg].default, CopyPreviousRow):
                 # If none copy the previous row's value over
-                action_parameter = PythonActionParameter(arg, arguments[arg].default, True)
+                action_parameter = PythonActionParameter(arg, str(arguments[arg].default.value), True)
             else:
                 action_parameter = PythonActionParameter(arg, str(arguments[arg].default), False)
             kwargs_with_defaults.append(action_parameter)
