@@ -92,21 +92,38 @@ public class ActionsTable extends ModelObject {
 		});
 		return newAction;
 	}
-
-	/**
-	 * Adds a new action with default parameters to the list of actions.
-	 */
-	public void addEmptyAction() {
+	
+	private ScriptGeneratorAction createDefaultAction() {
 		var parametersMap = new HashMap<JavaActionParameter, String>();
 		// Make a parameter/string pair for each parameter in the action
 		for (JavaActionParameter actionParameter: this.actionParameters) {
 			parametersMap.put(actionParameter, actionParameter.getDefaultValue());
 		}
 		
-		var newAction = createAction(parametersMap);
+		return createAction(parametersMap);
+	}
+
+	/**
+	 * Adds a new action with default parameters to the list of actions.
+	 */
+	public void addEmptyAction() {		
+		var newAction = createDefaultAction();
 		
 		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
 		newList.add(newAction);
+		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
+	}
+	
+	/**
+	 * Adds a new action with default parameters to the list of actions to a specified location in the table.
+	 * 
+	 * @param insertionLocation The index to add the specified 
+	 */
+	public void insertEmptyAction(Integer insertionLocation) {
+		var newAction = createDefaultAction();
+		
+		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
+		newList.add(insertionLocation, newAction);
 		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
 	}
 	

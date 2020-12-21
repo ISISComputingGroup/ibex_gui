@@ -287,6 +287,20 @@ public class ScriptGeneratorViewModel extends ModelObject {
         viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, 0);
     });
     }
+    
+    /**
+	 * Adds a new action with default parameters to the list of actions to a specified location in the table.
+	 * 
+	 * @param insertionLocation The index to add the specified 
+	 */
+    protected void insertEmptyAction(Integer insertionLocation) {
+    scriptGeneratorModel.insertEmptyAction(insertionLocation);
+    // Make sure the table is updated with the new action before selecting it
+    actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam);
+    DISPLAY.asyncExec(() -> {
+        viewTable.setCellFocus(insertionLocation, 0);
+    });
+    }
 
     /**
      * Removes action at position index from ActionsTable.
