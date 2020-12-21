@@ -24,6 +24,10 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+
+import static java.lang.Math.min;
+import static java.lang.Math.max;
 
 import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.jface.viewers.CellNavigationStrategy;
@@ -53,7 +57,8 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
     
 	private final ScriptGeneratorViewModel scriptGeneratorViewModel;
 	private boolean shiftCellFocusToNewlyAddedRow = false;
-	private static final  Integer NON_EDITABLE_COLUMNS = 2;
+	private static final  Integer NON_EDITABLE_COLUMNS_ON_RIGHT = 2;
+	protected static final Integer NON_EDITABLE_COLUMNS_ON_LEFT = 1;
 	private List<StringEditingSupport<ScriptGeneratorAction>> editingSupports = new ArrayList<StringEditingSupport<ScriptGeneratorAction>>();
 	
 	/**
@@ -109,7 +114,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 					
 					// Add new action if tab is pressed by user in the last cell of the table.
 					if (nextCell.getNeighbor(ViewerCell.BELOW, false) == null 
-					        && (viewer.getTable().getColumnCount() - NON_EDITABLE_COLUMNS == currentlyFocusedColumn)) {
+					        && (viewer.getTable().getColumnCount() - NON_EDITABLE_COLUMNS_ON_RIGHT == currentlyFocusedColumn)) {
 					    
                     	scriptGeneratorViewModel.addEmptyAction();
                     	shiftCellFocusToNewlyAddedRow = true;
@@ -185,12 +190,18 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 		if (!viewer.getTable().isDisposed()) {
 			int focusRow = getSelectionIndex();
 			ScriptGeneratorAction previousSelection = firstSelectedRow();
-			int focusColumn = 0;
+			int focusColumn = NON_EDITABLE_COLUMNS_ON_LEFT;
+			int editingSupportFocusColumn = 0;
 			
 			if (shiftCellFocusToNewlyAddedRow) {
 				focusRow = viewer.getTable().getSelectionIndex() + 1;
 			} else if (focusRow != -1) {
-				focusColumn = viewer.getColumnViewerEditor().getFocusCell().getColumnIndex();
+				// When no focus is selected getFocusCell returns null
+				var focusCell = Optional.ofNullable(viewer.getColumnViewerEditor().getFocusCell());
+				if(focusCell.isPresent()) {
+					focusColumn = focusCell.get().getColumnIndex();
+					editingSupportFocusColumn = min(max(focusColumn, 0), editingSupports.size()-1);
+				}
 			}
 			
 			viewer.setInput(new WritableList<ScriptGeneratorAction>(rows, null));

@@ -14,12 +14,14 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Button;
@@ -45,6 +47,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrap
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.SaveScriptGeneratorFileMessageDialog;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
+import uk.ac.stfc.isis.ibex.ui.tables.SortableObservableMapCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
@@ -284,7 +287,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     // Make sure the table is updated with the new action before selecting it
     actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam);
     DISPLAY.asyncExec(() -> {
-        viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, 0);
+    	viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
     });
     }
 
@@ -311,7 +314,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     // Make sure the table is updated with the new action before selecting it
     actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam);
     DISPLAY.asyncExec(() -> {
-        viewTable.setCellFocus(insertionLocation, 0);
+    	viewTable.setCellFocus(insertionLocation, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
     });
     }
 
@@ -679,7 +682,35 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * 
      * @param viewTable The table view to add columns to.
      */
-    protected void addColumns(ActionsViewTable viewTable) {        
+    protected void addColumns(ActionsViewTable viewTable) {  
+    // Add line numbers
+	TableViewerColumn lineNumberColumn = viewTable.createColumn("Line", 
+	        0, 
+	        new SortableObservableMapCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty("Line")) {
+				
+				@Override
+				public void update(ViewerCell cell) {
+					for (int i = 0; i < viewTable.table().getItemCount(); i++) {
+                        if (cell.getElement().equals(viewTable.viewer().getElementAt(i))) {
+                            cell.setText(String.valueOf(i + 1));
+                            break;
+                        }
+                    }
+				}
+
+				@Override
+				protected String stringFromRow(ScriptGeneratorAction row) {
+					// Cell is filled from update method
+					return null;
+				}
+				
+				@Override
+				public String getToolTipText(Object element) {
+	                return getScriptGenActionToolTipText((ScriptGeneratorAction) element);
+	            }
+			}
+	);
+	lineNumberColumn.getColumn().setAlignment(SWT.CENTER);
     // Add action parameter columns
     for (JavaActionParameter actionParameter: scriptGeneratorModel.getActionParameters()) {
         String columnName = actionParameter.getName();
