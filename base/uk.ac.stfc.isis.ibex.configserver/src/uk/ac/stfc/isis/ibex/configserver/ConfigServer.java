@@ -307,7 +307,7 @@ public class ConfigServer extends Closer {
 	}
 
 	/**
-	 * Returns a hashmap of config names as key and protection flag as value
+	 * Returns a hashmap of config names as key and protection flag as value.
 	 * 
 	 * @return the {@code Map<String, Boolean>} of config names and protection flags
 	 */
@@ -325,7 +325,7 @@ public class ConfigServer extends Closer {
 	}
 
 	/**
-	 * Returns a hashmap of config names as key and protection flag as value
+	 * Returns a hashmap of config names as key and protection flag as value.
 	 * 
 	 * @return the {@code Map<String, Boolean>} of component names and protection
 	 *         flags

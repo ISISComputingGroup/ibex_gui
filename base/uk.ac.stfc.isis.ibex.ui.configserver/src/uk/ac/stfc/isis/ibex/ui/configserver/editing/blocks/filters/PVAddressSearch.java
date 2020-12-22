@@ -19,36 +19,37 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters;
 
+import java.util.function.Predicate;
+import java.util.regex.Pattern;
+
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
+
+import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 
 public class PVAddressSearch extends ViewerFilter {
-	private String searchString = ".*";
+	private Pattern searchPattern = Pattern.compile(".*", Pattern.CASE_INSENSITIVE);
+	private boolean searchIsEmpty = true;
 	
 	public void setSearchText(String s) {
-	    // ensure that the value can be used for matching 
-	    this.searchString = ".*" + s + ".*";
+	    // ensure that the value can be used for matching
+		this.searchIsEmpty = Strings.isNullOrEmpty(s);
+	    this.searchPattern = Pattern.compile(".*" + s + ".*", Pattern.CASE_INSENSITIVE);
 	}
 
 	@Override
 	public boolean select(Viewer viewer, Object parentElement, Object element) {
-		if (searchString == null || searchString.length() == 0) {
+		if (searchIsEmpty) {
 			return true;
 		}
+		
 		PV p = (PV) element;
-		if (p.getAddress().matches(searchString)) {
-			return true;
-		}
-		if (p.description().matches(searchString)) {
-			return true;
-		}
-		// Use uppercase checks to eliminate case sensitivity on the search - Story 600
-		String upSearch = searchString.toUpperCase();
-		String upadd = p.getAddress().toUpperCase();
-		String updesc = p.description().toUpperCase();
-		if (upadd.matches(upSearch) || updesc.matches(upSearch)) {
+		
+		Predicate<String> matcher = searchPattern.asMatchPredicate();
+		
+		if (matcher.test(p.getAddress()) || matcher.test(p.description())) {
 			return true;
 		}
 		return false;

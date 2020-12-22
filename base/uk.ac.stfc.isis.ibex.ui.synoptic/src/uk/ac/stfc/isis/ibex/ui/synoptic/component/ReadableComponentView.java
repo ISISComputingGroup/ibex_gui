@@ -21,8 +21,8 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.component;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Color;
@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import uk.ac.stfc.isis.ibex.epics.pv.PvState;
 import uk.ac.stfc.isis.ibex.synoptic.model.ReadableComponentProperty;
 
 /**
@@ -66,7 +67,7 @@ public class ReadableComponentView extends Composite {
 		propertyName.setFont(SWTResourceManager.getFont("Arial", 10, SWT.BOLD));
 		
 		// Additional container to hold the text to draw a border around it
-        valueContainer = new Composite(this, SWT.CENTER);
+        valueContainer = new Composite(this, SWT.NONE);
         GridLayout valueContainerLayout = new GridLayout(1, false);
         valueContainerLayout.marginWidth = BORDER_WIDTH;
         valueContainerLayout.marginHeight = BORDER_WIDTH;
@@ -94,10 +95,10 @@ public class ReadableComponentView extends Composite {
 		propertyName.setText(property.displayName());
 		bindingContext.bindValue(WidgetProperties.text().observe(value), BeanProperties.value("value").observe(property.getValue()));
 		
-		UpdateValueStrategy borderStrategy = new UpdateValueStrategy();
+		UpdateValueStrategy<PvState, Color> borderStrategy = new UpdateValueStrategy<PvState, Color>();
         borderStrategy.setConverter(new PvStatusBorderColourConverter());
 
         bindingContext.bindValue(WidgetProperties.background().observe(valueContainer),
-                BeanProperties.value("pvState").observe(property), null, borderStrategy);
+                BeanProperties.value("pvState", PvState.class).observe(property), null, borderStrategy);
 	}
 }

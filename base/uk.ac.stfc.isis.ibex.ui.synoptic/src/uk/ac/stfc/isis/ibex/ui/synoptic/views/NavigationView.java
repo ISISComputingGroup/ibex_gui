@@ -19,23 +19,33 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.views;
 
-import javax.inject.Inject;
+import javax.annotation.PostConstruct;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+
 import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.Navigator;
 
-public class NavigationView {
-		
-	public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.views.NavigationView"; //$NON-NLS-1$
-	
-	//TODO: Why couldn't we do this with postConstruct?
-	@Inject
-	public NavigationView(Composite parent) {
-		parent.setLayout(new GridLayout(2, false));
-		Navigator navigator = new Navigator(parent, SWT.NONE);
-		navigator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	}
+/**
+ * View to navigate through nested synoptics.
+ *
+ */
+public final class NavigationView {
+
+    /** ID for synoptic navigation view. */
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.views.NavigationView"; //$NON-NLS-1$
+
+
+    /**
+     * Create controls in view.
+     * @param parent composite in which the view will sit.
+     */
+    @PostConstruct
+    public void createPartControl(Composite parent) {
+	parent.setLayout(new GridLayout(2, false));
+	Navigator navigator = new Navigator(parent, SWT.NONE);
+	navigator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+    }
 }

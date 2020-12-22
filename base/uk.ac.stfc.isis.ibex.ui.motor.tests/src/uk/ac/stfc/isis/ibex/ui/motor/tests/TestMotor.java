@@ -24,14 +24,14 @@ package uk.ac.stfc.isis.ibex.ui.motor.tests;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.MotorDirection;
 import uk.ac.stfc.isis.ibex.motor.MotorEnable;
-import uk.ac.stfc.isis.ibex.motor.MotorSetpoint;
 
 public class TestMotor extends Motor {
 
     public String name = "Motor name";
     public String address = "Address";
     public String description = "Description";
-    public TestMotorSetpoint testMotorSetpoint = new TestMotorSetpoint();
+    public Double value = -1.23456;
+    public Double setpoint = 1.23456;
     public MotorEnable enabled = MotorEnable.ENABLE;
     public Double lowerLimit = -5.0;
     public Double upperLimit = 5.0;
@@ -40,7 +40,11 @@ public class TestMotor extends Motor {
     public boolean atHome = false;
     public boolean atLowerLimit = false;
     public boolean atUpperLimit = false;
-    public String status = "Motor status";
+	private Double offset = 0.0;
+	private Double error = 0.0;
+	private boolean usingEncoder = true;
+	private boolean energised = true;
+	private boolean withinTolerance = true;
 
     @Override
     public String name() {
@@ -58,8 +62,13 @@ public class TestMotor extends Motor {
     }
 
     @Override
-    public MotorSetpoint getSetpoint() {
-        return testMotorSetpoint;
+    public Double getValue() {
+        return value;
+    }
+
+    @Override
+    public Double getSetpoint() {
+        return setpoint;
     }
 
     @Override
@@ -102,9 +111,29 @@ public class TestMotor extends Motor {
         return atUpperLimit;
     }
 
-    @Override
-    public String getStatus() {
-        return status;
-    }
+	@Override
+	public Double getOffset() {
+		return offset;
+	}
+
+	@Override
+	public Double getError() {
+		return error;
+	}
+
+	@Override
+	public Boolean getUsingEncoder() {
+		return usingEncoder;
+	}
+
+	@Override
+	public Boolean getEnergised() {
+		return energised;
+	}
+
+	@Override
+	public Boolean getWithinTolerance() {
+		return withinTolerance;
+	}
 
 }

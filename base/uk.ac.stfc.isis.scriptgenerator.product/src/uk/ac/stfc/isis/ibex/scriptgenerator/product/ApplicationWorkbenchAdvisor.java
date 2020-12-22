@@ -23,6 +23,12 @@ import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchAdvisor;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
+/**
+ * Workbench advisor for Script generator application.
+ * 
+ * Contains hooks for application lifecycle.
+ *
+ */
 public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 
     org.eclipse.ui.application.IWorkbenchConfigurer configurer;

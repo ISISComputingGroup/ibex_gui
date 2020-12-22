@@ -20,8 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.dae.experimentsetup;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.dialogs.MessageDialog;
 
 import java.beans.PropertyChangeEvent;
@@ -138,7 +138,7 @@ public class ExperimentSetup {
 		
 		Composite timeChannelsComposite = new Composite(tabFolder, SWT.NONE);
 		tbtmTimeChannels.setControl(timeChannelsComposite);
-		timeChannelsComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
+		timeChannelsComposite.setLayout(new FillLayout(SWT.HORIZONTAL | SWT.VERTICAL));
 		timeChannels = new TimeChannelsPanel(timeChannelsComposite, SWT.NONE, panelViewModel);
 		
 		CTabItem tbtmDataAcquisition = new CTabItem(tabFolder, SWT.NONE);
@@ -146,7 +146,7 @@ public class ExperimentSetup {
 		
 		Composite dataAcquisitionComposite = new Composite(tabFolder, SWT.NONE);
 		tbtmDataAcquisition.setControl(dataAcquisitionComposite);
-		dataAcquisitionComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
+		dataAcquisitionComposite.setLayout(new FillLayout(SWT.HORIZONTAL | SWT.VERTICAL));
 		dataAcquisition = new DataAcquisitionPanel(dataAcquisitionComposite, SWT.NONE, panelViewModel);
 		
 		CTabItem tbtmPeriods = new CTabItem(tabFolder, SWT.NONE);
@@ -154,7 +154,7 @@ public class ExperimentSetup {
 		
 		Composite periodsComposite = new Composite(tabFolder, SWT.NONE);
 		tbtmPeriods.setControl(periodsComposite);
-		periodsComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
+		periodsComposite.setLayout(new FillLayout(SWT.HORIZONTAL | SWT.VERTICAL));
 		periods = new PeriodsPanel(periodsComposite, SWT.NONE, panelViewModel);
 		
 		tabFolder.setSelection(0);

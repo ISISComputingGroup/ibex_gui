@@ -8,5 +8,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: uk.ac.stfc.isis.ibex.preferences
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0"
+ uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0",
+ org.apache.commons.lang
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.preferences

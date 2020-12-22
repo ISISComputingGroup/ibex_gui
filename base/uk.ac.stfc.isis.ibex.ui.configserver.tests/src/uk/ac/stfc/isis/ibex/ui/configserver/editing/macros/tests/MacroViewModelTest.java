@@ -21,8 +21,6 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.tests;
 
 import static org.junit.Assert.*;
 
-import java.util.Optional;
-
 import org.junit.Test;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro.HasDefault;

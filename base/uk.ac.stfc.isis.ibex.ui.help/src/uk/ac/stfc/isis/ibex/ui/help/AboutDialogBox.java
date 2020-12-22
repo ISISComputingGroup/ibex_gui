@@ -38,7 +38,7 @@ public class AboutDialogBox extends TitleAreaDialog {
     /** Dialog width. */
     public static final int WIDTH = 400;
     /** Dialog height. */
-    private static final int HEIGHT = 275;
+    private static final int HEIGHT = 300;
 
     /**
      * Construct a new about Ibex dialog box.

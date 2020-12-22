@@ -48,6 +48,9 @@ public class JournalViewModel extends ModelObject {
 	private String message;
 	private List<JournalRow> runs;
 	private String lastUpdate;
+	private String resultsInfo;
+	private int pageMax;
+	private int pageNumber = 1;
 	private int toNumber = 0;
 	private int fromNumber = 0;
 	private static final String NO_ERROR = "";
@@ -56,7 +59,9 @@ public class JournalViewModel extends ModelObject {
 	private String errorMessage = NO_ERROR;
 	private Calendar fromDateTime;
 	private Calendar toDateTime;
-	private boolean setButtonEnable = true;
+	private boolean searchButtonEnabled = true;
+	private boolean btnPrevPageEnabled = true;
+	private boolean btnNextPageEnabled = true;
 
 	PropertyChangeListener listener = new PropertyChangeListener() {
 		@Override
@@ -80,8 +85,11 @@ public class JournalViewModel extends ModelObject {
 	private void update() {
 		setLastUpdate("Last successful update: " + dateToString(model.getLastUpdate()));
 		setMessage(model.getMessage());
-		setRuns(model.getRuns());
-		setPageNumberMax(model.getPageMax());
+		setRuns(getRuns());
+		setPageMax(getPageMax());
+		updatePageNumber(getPageNumber());
+		setResultsInfo(getResultsInfo());
+		enableOrDisablePageControlButtons();
 	}
 
 	/**
@@ -104,6 +112,38 @@ public class JournalViewModel extends ModelObject {
 
 	private void setLastUpdate(String lastUpdate) {
 		firePropertyChange("lastUpdate", this.lastUpdate, this.lastUpdate = lastUpdate);
+	}
+
+	/**
+	 * @return The current number of result entries.
+	 */
+	public int getResultsNumber() {
+		return model.getResultsNumber();
+	}
+	
+	/**
+	 * Returns the number of total current results and the currently displayed results depending on page and page size.
+	 * @return The number of total results and currently displayed entries.
+	 */
+	public String getResultsInfo() {
+		int entryFrom;
+		int entryTo;
+	
+		if (model.getResultsNumber() != 0 && model.getPageSize() != 0) {
+	    	entryFrom = (model.getPage() - 1) * model.getPageSize() + 1;
+	    	entryTo = entryFrom + model.getPageSize() - 1;
+	    	if (entryTo > model.getResultsNumber()) { 
+	    		entryTo = model.getResultsNumber(); 
+	    		}
+		} else {
+			entryFrom = entryTo = 0;
+		}
+	
+		return String.format("%d-%d of %d", entryFrom, entryTo, model.getResultsNumber());
+	}
+	
+	private void setResultsInfo(String resultsInfo) {
+		firePropertyChange("resultsInfo", this.resultsInfo, this.resultsInfo = resultsInfo);
 	}
 
 	/**
@@ -209,11 +249,27 @@ public class JournalViewModel extends ModelObject {
 	}
 
 	/**
+	 * @param pageNumber the current page number
+	 */
+	public void updatePageNumber(int pageNumber) {
+		firePropertyChange("pageNumber", this.pageNumber, this.pageNumber = pageNumber);
+	}
+
+	/**
 	 * @param pageNumber The number of the results page.
 	 * @return a CompletableFuture
 	 */
 	public CompletableFuture<Void> setPageNumber(int pageNumber) {
-		return model.setPage(pageNumber);
+		CompletableFuture<Void> future;
+		if (pageNumber >= 1 && pageNumber <= model.getPageMax()) {
+			future = model.setPageNumber(pageNumber);
+		} else {
+		    future = new CompletableFuture<Void>();
+			future.complete(null);
+			setMessage(String.format("Page [%d] is out of bounds", pageNumber));
+		}
+		
+		return future;
 	}
 
 	/**
@@ -222,18 +278,65 @@ public class JournalViewModel extends ModelObject {
 	public int getPageNumber() {
 		return model.getPage();
 	}
-
+	
+	/**
+	 * Calls {@link JournalViewModel#setPageNumber(int)} to change the current page to pageNumber.
+	 * If the desired page is not available due to it being higher than the maximum page number,
+	 * change the current page to the last (max page number) instead.
+	 * @param pageNumber The number of the desired results page.
+	 * @return a CompletableFuture.
+	 */
+	public CompletableFuture<Void> goToPage(int pageNumber) {
+		return (pageNumber > getPageMax()) ? setPageNumber(getPageMax()) : setPageNumber(pageNumber);
+	}
+	
+	/**
+	 * Calls {@link JournalViewModel#setPageNumber(int)} to lower the current page number by 1.
+	 * @return a CompletableFuture.
+	 */
+	public CompletableFuture<Void> prevPage() {
+    	int newerPageNumber = model.getPage() - 1;
+    	return setPageNumber(newerPageNumber);
+	}
+	
+	/**
+	 * Calls {@link JournalViewModel#setPageNumber(int)} to increase the current page number by 1.
+	 * @return a CompletableFuture.
+	 */
+	public CompletableFuture<Void> nextPage() {
+    	int olderPageNumber = model.getPage() + 1;
+    	return setPageNumber(olderPageNumber);
+	}
+	
+	/**
+	 * Calls {@link JournalViewModel#setPageNumber(int)} to set the current page number to minimum.
+	 * @return a CompletableFuture.
+	 */
+	public CompletableFuture<Void> firstPage() {
+    	int newestPageNumber = 1;
+    	return setPageNumber(newestPageNumber);
+	}
+	
+	/**
+	 * Calls {@link JournalViewModel#setPageNumber(int)} to set the current page number to maximum.
+	 * @return a CompletableFuture.
+	 */
+	public CompletableFuture<Void> lastPage() {
+    	int oldestPageNumber = model.getPageMax();
+    	return setPageNumber(oldestPageNumber);
+	}
+	
 	/**
 	 * @param max The maximum number of pages supported by the journal view.
 	 */
-	public void setPageNumberMax(int max) {
-		firePropertyChange("pageNumberMax", 0, model.getPageMax());
+	public void setPageMax(int max) {
+		firePropertyChange("pageMax", this.pageMax, this.pageMax = max);
 	}
 
 	/**
 	 * @return The maximum number of pages supported by the journal view.
 	 */
-	public int getPageNumberMax() {
+	public int getPageMax() {
 		return model.getPageMax();
 	}
 
@@ -257,7 +360,7 @@ public class JournalViewModel extends ModelObject {
 	/**
 	 * Set new end number.
 	 * 
-	 * @param ToNumber
+	 * @param toNumber the number to set to value to
 	 */
 	public void setToNumber(int toNumber) {
 		this.toNumber = toNumber;
@@ -302,7 +405,7 @@ public class JournalViewModel extends ModelObject {
 	 */
 	public void setErrorMessage(String message) {
 		firePropertyChange("errorMessage", this.errorMessage, this.errorMessage = message);
-		setEnableOrDisableButton();
+		setSearchButtonEnabled();
 	}
 
 	/**
@@ -399,20 +502,51 @@ public class JournalViewModel extends ModelObject {
 	}
 
 	/**
-	 * Checks if button needs to be enabled or disabled.
+	 * Checks if one or more of the page control buttons should be disabled or enabled,
+	 * depending on the current and maximum page number.
 	 */
-	private void setEnableOrDisableButton() {
+	private void enableOrDisablePageControlButtons() {
+		boolean enableOrDisableVal;
+		
+		// If on first page, disable Previous (and First) page buttons
+		enableOrDisableVal = (getPageNumber() == 1) ? false : true;
+		firePropertyChange("btnPrevPageEnabled", this.btnPrevPageEnabled, this.btnPrevPageEnabled = enableOrDisableVal);
 
-		boolean enableOrDisableVal = (this.errorMessage != NO_ERROR) ? false : true;
-
-		firePropertyChange("enableOrDisableButton", this.setButtonEnable, this.setButtonEnable = enableOrDisableVal);
+		// If on last page, disable Next (and Last) page buttons
+		enableOrDisableVal = (getPageNumber() == getPageMax()) ? false : true;
+		firePropertyChange("btnNextPageEnabled", this.btnNextPageEnabled, this.btnNextPageEnabled = enableOrDisableVal);
 	}
 
 	/**
 	 * Gets if the button is currently on enabled or disabled state.
 	 * @return if button needs to be enabled or disabled
 	 */
-	public Boolean getEnableOrDisableButton() {
-		return this.setButtonEnable;
+	public Boolean getBtnPrevPageEnabled() {
+		return this.btnPrevPageEnabled;
+	}
+	/**
+	 * Gets if the button is currently on enabled or disabled state.
+	 * @return if button needs to be enabled or disabled
+	 */
+	public Boolean getBtnNextPageEnabled() {
+		return this.btnNextPageEnabled;
+	}
+	
+	/**
+	 * Checks if button needs to be enabled or disabled.
+	 */
+	private void setSearchButtonEnabled() {
+
+		boolean enableOrDisableVal = (this.errorMessage != NO_ERROR) ? false : true;
+
+		firePropertyChange("searchButtonEnabled", this.searchButtonEnabled, this.searchButtonEnabled = enableOrDisableVal);
+	}
+
+	/**
+	 * Gets if the button is currently on enabled or disabled state.
+	 * @return if button needs to be enabled or disabled
+	 */
+	public Boolean getSearchButtonEnabled() {
+		return this.searchButtonEnabled;
 	}
 }

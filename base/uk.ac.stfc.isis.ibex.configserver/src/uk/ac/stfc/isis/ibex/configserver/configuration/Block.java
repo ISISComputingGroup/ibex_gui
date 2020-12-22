@@ -116,7 +116,8 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
      * 
      * @return the block name
      */
-	public String getName() {
+	@Override
+    public String getName() {
 		return name;
 	}
 
@@ -332,7 +333,8 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
      * 
      * @return whether the block belongs to a component
      */
-	public boolean inComponent() {
+	@Override
+    public boolean inComponent() {
 		return !Strings.isNullOrEmpty(component);
 	}
 	

@@ -17,7 +17,8 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.ui.blocks.presentation;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.epics;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.configserver;bundle-version="1.0.0",
- javax.annotation;bundle-version="1.2.0"
+ javax.annotation;bundle-version="1.2.0",
+ javax.inject;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: uk.ac.stfc.isis.ibex.ui.blocks,

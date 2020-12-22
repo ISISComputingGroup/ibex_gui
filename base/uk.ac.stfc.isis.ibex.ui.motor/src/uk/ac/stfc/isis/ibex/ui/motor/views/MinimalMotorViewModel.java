@@ -43,14 +43,16 @@ import com.google.common.base.Strings;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.MotorEnable;
+import uk.ac.stfc.isis.ibex.motor.Motors;
+import uk.ac.stfc.isis.ibex.motor.internal.MotorsTableSettings;
 import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.DisplayPreferences;
-import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorBackgroundPalette;
+import uk.ac.stfc.isis.ibex.ui.motor.displayoptions.MotorPalette;
 
 /**
  * The view model for an individual motor.
  */
 public class MinimalMotorViewModel extends ModelObject {
-    private static final Integer MAX_NAME_LENGTH = 12;
+    private static final Integer MAX_NAME_LENGTH = 16;
     private static final Font ENABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.BOLD);
     private static final Font DISABLEDFONT = SWTResourceManager.getFont("Arial", 9, SWT.ITALIC);
     private static final Color NOPALETTECOLOR = SWTResourceManager.getColor(200, 200, 200);
@@ -58,27 +60,48 @@ public class MinimalMotorViewModel extends ModelObject {
 
     private String value;
     private String setpoint;
+    private String lowLimit;
+    private String highLimit;
+    private String offset;
+    private String error;
     private String motorName;
     private String tooltip;
     private Boolean enabled;
     private Boolean moving;
-    private MotorBackgroundPalette palette;
+    private Boolean usingEncoder;
+    private Boolean energised;
+    private boolean advancedMinimalMotorView;
+    private MotorPalette palette;
     private Font font;
     private Color color;
-	
+    private Color borderColor;
+
     /**
      * Constructor.
      */
     public MinimalMotorViewModel() {
-    	DisplayPreferences displayPrefsModel = DisplayPreferences.getInstance();
-    	displayPrefsModel.addPropertyChangeListener("motorBackgroundPalette", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				setPalette((MotorBackgroundPalette) evt.getNewValue());
-			}
-		});
-        setPalette(displayPrefsModel.getMotorBackgroundPalette());
+    	this(DisplayPreferences.getInstance(), Motors.getInstance().getMotorSettingsModel());
     }
+
+    /**
+     * Constructor.
+     * @param displayPrefsModel Model for display preferences, e.g. colours 
+     * @param motorsTableSettingsModel Model for table settings, e.g. advance or simple
+     */
+    public MinimalMotorViewModel(DisplayPreferences displayPrefsModel, MotorsTableSettings motorsTableSettingsModel) {
+		displayPrefsModel.addPropertyChangeListener("motorBackgroundPalette", 
+				evt -> setPalette((MotorPalette) evt.getNewValue()));
+		
+        setPalette(displayPrefsModel.getMotorBackgroundPalette());
+
+        /**
+         *  Property change listener for the motor settings model to this minimal motor view model 
+         *  to determine if the advanced minimal view is enabled for the table of motors.
+         */
+        
+        motorsTableSettingsModel.addPropertyChangeListener("advancedMinimalMotorView",
+        		evt -> setAdvancedMinimalMotorView((boolean) evt.getNewValue()));
+	}
     
     private Font chooseFont() {
         if (enabled == null) {
@@ -90,7 +113,7 @@ public class MinimalMotorViewModel extends ModelObject {
         }
     }
 
-    private Color chooseColor() {
+    private Color chooseBackgroundColor() {
 
         if (palette == null) {
             // If no palette has been set yet, return a default colour
@@ -99,7 +122,7 @@ public class MinimalMotorViewModel extends ModelObject {
 
         boolean isMoving = (moving != null) && (moving);
         boolean isEnabled = (enabled != null) && (enabled);
-        boolean isNamed = (motorName != null) && !(motorName.isEmpty());
+        boolean isNamed = !Strings.isNullOrEmpty(motorName);
 
         Color backgroundColour;
 
@@ -117,11 +140,15 @@ public class MinimalMotorViewModel extends ModelObject {
     }
 
     private String formatForMotorDisplay(String prefix, Double value) {
-        if (value != null) {
-            return String.format("%s: %.2f", prefix, value);
-        } else {
-            return "";
+        if (value == null) {
+        	return "";
         }
+        
+    	if (advancedMinimalMotorView) {
+            return String.format("%s %.3f", prefix, value);
+    	} else {
+    		return String.format("%s: %.3f", prefix, value);
+    	}
     }
 
     /**
@@ -196,6 +223,21 @@ public class MinimalMotorViewModel extends ModelObject {
     public Color getColor() {
         return color;
     }
+    
+    /**
+     * @return The colour for the border, i.e. for within tolerance.
+     */
+    public Color getBorderColor() {
+    	return borderColor;
+    }
+    
+    /**
+     * Set the colour for the border, i.e. for within tolerance. 
+     * @param borderColor border colour to use
+     */
+    public void setBorderColor(final Color borderColor) {
+    	firePropertyChange("borderColor", this.borderColor, this.borderColor = borderColor);
+    }
 
     /**
      * Gets the font used by the motor.
@@ -255,6 +297,17 @@ public class MinimalMotorViewModel extends ModelObject {
             this.enabled = false;
         }
     }
+    
+    private void refreshLabels() {
+    	setSetpoint(formatForMotorDisplay("SP", motor.getSetpoint()));
+        setValue(formatForMotorDisplay("Val", motor.getValue()));
+        
+        setLowLimit(formatForMotorDisplay("Lo", motor.getLowerLimit()));
+        setHighLimit(formatForMotorDisplay("Hi", motor.getUpperLimit()));
+
+        setOffset(formatForMotorDisplay("Off", motor.getOffset()));
+        setError(formatForMotorDisplay("Err", motor.getError()));
+    }
 	
     /**
      * Sets the motor that the grid cell refers to.
@@ -267,13 +320,19 @@ public class MinimalMotorViewModel extends ModelObject {
         this.motor = motor;
         setMotorName(motor);
         setTooltip(motor.getDescription());
-        this.setpoint = formatForMotorDisplay("SP", motor.getSetpoint().getSetpoint());
-        this.value = formatForMotorDisplay("Val", motor.getSetpoint().getValue());
+        
+        refreshLabels();
+        
         this.moving = motor.getMoving();
         setEnabled(motor.getEnabled());
-        setColor(chooseColor());
+        setColor(chooseBackgroundColor());
+        
+        setBorderColor(chooseBorderColor());
         this.font = chooseFont();
-
+        
+        setUsingEncoder(motor.getUsingEncoder());
+        setEnergised(motor.getEnergised());
+        
         motor.addPropertyChangeListener("description", new PropertyChangeListener() {
 
             @Override
@@ -288,44 +347,60 @@ public class MinimalMotorViewModel extends ModelObject {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 moving = (Boolean) evt.getNewValue();
-                setColor(chooseColor());
+                setColor(chooseBackgroundColor());
                 setFont(chooseFont());
             }
         });
 
-        motor.getSetpoint().addPropertyChangeListener("setpoint", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                setSetpoint(formatForMotorDisplay("SP", motor.getSetpoint().getSetpoint()));
-            }
-        });
-
-        motor.getSetpoint().addPropertyChangeListener("value", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                setValue(formatForMotorDisplay("Val", motor.getSetpoint().getValue()));
-            }
-        });
+        motor.addPropertyChangeListener("setpoint", evt -> setSetpoint(formatForMotorDisplay("SP", motor.getSetpoint())));
+        motor.addPropertyChangeListener("value", evt -> setValue(formatForMotorDisplay("Val", motor.getValue())));
+        
+        motor.addPropertyChangeListener("lowerLimit", evt -> setLowLimit(formatForMotorDisplay("Lo", motor.getLowerLimit())));
+        motor.addPropertyChangeListener("upperLimit", evt -> setHighLimit(formatForMotorDisplay("Hi", motor.getUpperLimit())));
+        
+        motor.addPropertyChangeListener("offset", evt -> setOffset(formatForMotorDisplay("Off", motor.getOffset())));
+        motor.addPropertyChangeListener("error", evt -> setError(formatForMotorDisplay("Err", motor.getError())));
+        
+        motor.addPropertyChangeListener("usingEncoder", evt -> setUsingEncoder(motor.getUsingEncoder()));
+        motor.addPropertyChangeListener("energised", evt -> setEnergised(motor.getEnergised()));
 
         motor.addPropertyChangeListener("enabled", new PropertyChangeListener() {
             @Override
-            public void propertyChange(PropertyChangeEvent arg0) {
-                setEnabled((MotorEnable) arg0.getNewValue());
-                setColor(chooseColor());
+            public void propertyChange(PropertyChangeEvent event) {
+                setEnabled((MotorEnable) event.getNewValue());
+                setColor(chooseBackgroundColor());
                 setFont(chooseFont());
             }
         });
+        
+        motor.addPropertyChangeListener("withinTolerance", event -> setBorderColor(chooseBorderColor()));
     }
-
+    
+    private Color chooseBorderColor() {
+    	if (motor == null || palette == null) {
+    		return NOPALETTECOLOR;
+    	}
+    	
+    	Color borderColor;
+        final Boolean isWithinTolerance = motor.getWithinTolerance();
+        if (isWithinTolerance == null || isWithinTolerance) {
+        	borderColor = palette.getInPositionBorderColor();
+        } else {
+        	borderColor = palette.getOutsideToleranceBorderColor();
+        }
+        return borderColor;
+    }
+    
     /**
      * Sets the colour palette used by this motor.
      *
      * @param newPalette
      *            the new palette that this motor should use
      */
-    public void setPalette(MotorBackgroundPalette newPalette) {
+    public void setPalette(MotorPalette newPalette) {
         this.palette = newPalette;
-        setColor(chooseColor());
+        setColor(chooseBackgroundColor());
+        setBorderColor(chooseBorderColor());
     }
 
     /**
@@ -353,5 +428,118 @@ public class MinimalMotorViewModel extends ModelObject {
     public Motor getMotor() {
         return this.motor;
     }
+    
+    /**
+     * @return whether the advanced minimal view for the table of motors is enabled
+     */
+    public boolean isAdvancedMinimalMotorView() {
+    	return advancedMinimalMotorView;
+    }
+    
+    /**
+     * Sets if the advanced minimal motor view is enabled.
+     * 
+     * @param newSetting
+     *              whether the advanced minimal view for the table of motors is enabled
+     */
+    public void setAdvancedMinimalMotorView(boolean newSetting) {
+    	firePropertyChange("advancedMinimalMotorView", this.advancedMinimalMotorView, this.advancedMinimalMotorView = newSetting);
+    	refreshLabels();
+    }
+    
+    /**
+     * Get this motors' soft low limit.
+     * @return the limit
+     */
+    public String getLowLimit() {
+    	return lowLimit;
+    }
+    
+    /**
+     * Set this motors' soft low limit.
+     * @param lowLimit the limit
+     */
+    public void setLowLimit(final String lowLimit) {
+    	firePropertyChange("lowLimit", this.lowLimit, this.lowLimit = lowLimit);
+    }
+    
+    /**
+     * Get this motors' soft high limit.
+     * @return the limit
+     */
+    public String getHighLimit() {
+    	return highLimit;
+    }
+    
+    /**
+     * Set this motors' soft high limit.
+     * @param highLimit the limit
+     */
+    public void setHighLimit(final String highLimit) {
+    	firePropertyChange("highLimit", this.highLimit, this.highLimit = highLimit);
+    }
+    
+    /**
+     * Get this motors' offset.
+     * @return the offset
+     */
+    public String getOffset() {
+    	return offset;
+    }
+    
+    /**
+     * Set this motors' offset.
+     * @param offset the offset
+     */
+    public void setOffset(final String offset) {
+    	firePropertyChange("offset", this.offset, this.offset = offset);
+    }
+    
+    /**
+     * Get this motors' positioning error.
+     * @return the error
+     */
+    public String getError() {
+    	return error;
+    }
+    
+    /**
+     * Set this motors' positioning error.
+     * @param error the error
+     */
+    public void setError(final String error) {
+    	firePropertyChange("error", this.error, this.error = error);
+    }
+    
+    /**
+     * Get whether this motor is using an encoder.
+     * @return whether this motor is using an encoder
+     */
+    public Boolean getUsingEncoder() {
+    	return usingEncoder;
+    }
+    
+    /**
+     * Set whether this motor is using an encoder.
+     * @param usingEncoder whether this motor is using an encoder
+     */
+    public void setUsingEncoder(final Boolean usingEncoder) {
+    	firePropertyChange("usingEncoder", this.usingEncoder, this.usingEncoder = usingEncoder);
+    }
 
+    /**
+     * Get whether this motor is energised.
+     * @return whether this motor is energised
+     */
+    public Boolean getEnergised() {
+    	return energised;
+    }
+    
+    /**
+     * Set whether this motor is energised.
+     * @param energised whether this motor is energised
+     */
+    public void setEnergised(final Boolean energised) {
+    	firePropertyChange("energised", this.energised, this.energised = energised);
+    }
 }

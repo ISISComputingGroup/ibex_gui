@@ -86,13 +86,13 @@ extends TransformingObservable<Configuration, EditableConfiguration> {
     }
 
     /**
-     * Unsubscribe from config and close editable config 
+     * Unsubscribe from config and close editable config. 
      */
     public void cancelSubscriptionAndCloseEditableConfig() {
 	EditableConfiguration val = this.getValue();
 	if (val != null) {
 	    val.close();
-	};
+	}
 	cancelSubscription();
     }
 }

@@ -133,7 +133,7 @@ public class ObservableExperimentDetailsModel extends ModelObject {
 	
 	/**
      * Set the user details for the model.
-     * @param userDetails The new user details.
+     * @param values The new user details.
      */
 	public void setUserDetails(Collection<UserDetails> values) {
 		firePropertyChange("userDetails", this.userDetails, this.userDetails = new ArrayList<>(values));

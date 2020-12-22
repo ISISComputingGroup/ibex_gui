@@ -92,6 +92,7 @@ public class BannerModel extends Closer {
 	
 	/**
 	 * Gets the label of a specified dashboard field, as a string.
+	 * @param pv name of field
 	 * @return an updated value wrapping the label
 	 */
 	public UpdatedValue<String> dashboardLabel(DashboardPv pv) {
@@ -100,6 +101,7 @@ public class BannerModel extends Closer {
 	
 	/**
 	 * Gets the value of a specified dashboard field, as a string.
+	 * @param pv name of field
 	 * @return an updated value wrapping the value
 	 */
 	public UpdatedValue<String> dashboardValue(DashboardPv pv) {

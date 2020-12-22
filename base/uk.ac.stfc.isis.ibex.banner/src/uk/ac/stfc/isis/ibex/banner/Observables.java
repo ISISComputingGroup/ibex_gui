@@ -21,13 +21,7 @@ package uk.ac.stfc.isis.ibex.banner;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.CustomBannerData;
-import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
-import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
-import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
 
 /**
  * Holds the Observables and Writables for the Spangle Banner.

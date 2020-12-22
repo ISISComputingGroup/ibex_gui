@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.instrument.internal;
 
+import java.util.ArrayList;
+
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
 /**
@@ -35,7 +37,7 @@ public class LocalHostInstrumentInfo extends InstrumentInfo {
      * @param machineName the machine name
      */
     public LocalHostInstrumentInfo(String machineName) {
-        super(machineName, PV_PREFIX_FACTORY.fromMachineName(machineName), "localhost");
+        super(machineName, PV_PREFIX_FACTORY.fromMachineName(machineName), "localhost", new ArrayList<>());
     }
 
     /**

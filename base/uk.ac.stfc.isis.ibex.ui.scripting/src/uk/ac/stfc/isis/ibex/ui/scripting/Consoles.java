@@ -24,7 +24,9 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.logging.log4j.Logger;
@@ -34,11 +36,20 @@ import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
+import org.eclipse.jface.action.ActionContributionItem;
+import org.eclipse.jface.action.IContributionItem;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.console.ConsolePlugin;
+import org.eclipse.ui.console.IConsoleConstants;
 import org.eclipse.ui.internal.console.ConsoleView;
+import org.eclipse.ui.internal.console.OpenConsoleAction;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.event.Event;
@@ -62,9 +73,14 @@ public class Consoles extends AbstractUIPlugin {
 	public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.scripting"; // $NON-NLS-1$
 
 	/**
-	 * The perspective ID.
+	 * The ID for the scripting perspective.
 	 */
-	public static final String PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.ui.scripting.perspective";
+	public static final String SCRIPTING_PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.ui.scripting.perspective";
+	
+	/**
+	 * The ID for the reflectometry perspective.
+	 */
+	public static final String REFL_PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.reflectometry";
 
 	// The shared instance
 	private static Consoles plugin;
@@ -75,8 +91,12 @@ public class Consoles extends AbstractUIPlugin {
 	 * This is the file which we will log old console output to if it is trimmed automatically.
 	 */
 	private static final String TRIMMED_CONSOLE_LOG_PATH = Paths.get(System.getProperty("user.dir"), "console-output-trimmed.txt").toString();
-
+	
 	private IEclipseContext eclipseContext;
+	/**
+	 * Clear console menu item ID.
+	 */
+	private static final String CLEAR_CONSOLE_ID = "uk.ac.stfc.isis.ibex.ui.scripting.clearConsole";
 
 	/**
 	 * Limit on the total number of lines (input and output) per console.
@@ -89,7 +109,6 @@ public class Consoles extends AbstractUIPlugin {
 	public static final int MAXIMUM_CHARACTERS_TO_KEEP_PER_CONSOLE = 1000000;
 
 	private static final Logger LOG = IsisLog.getLogger(Consoles.class);
-
 	private Set<Runnable> consoleLengthListeners = new HashSet<Runnable>();
 
 	/**
@@ -99,10 +118,15 @@ public class Consoles extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
-		PyDevConfiguration.configure();
-
+		
+		try {
+		    PyDevConfiguration.configure();
+		} catch (Exception e) {
+		    LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
+		}
+		
 		eclipseContext = EclipseContextFactory.getServiceContext(context);
-
+		
 		// Can't get this via injection. The following works though.
 		IEventBroker broker = eclipseContext.get(IEventBroker.class);
 
@@ -115,16 +139,57 @@ public class Consoles extends AbstractUIPlugin {
 				if (!(newValue instanceof MPerspective)) {
 					return;
 				}
-
-				if (((MPerspective) newValue).getElementId().equals(PERSPECTIVE_ID)) {
-					createConsole();
+				String id = ((MPerspective) newValue).getElementId();
+				if (id.equals(SCRIPTING_PERSPECTIVE_ID) || id.equals(REFL_PERSPECTIVE_ID)) {
+					createConsole(id);
+					editToolbarItems();
 				}
 			}
 		};
-
+		editToolbarItems();
 		broker.subscribe(UIEvents.ElementContainer.TOPIC_ALL, handler);
 
 		GraphingConnector.startListening();
+		
+	}
+	
+	private void editToolbarItems() {
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				ConsoleView view = getConsoleView();	
+				if (view != null) {
+					IToolBarManager tbm = view.getViewSite().getActionBars().getToolBarManager();
+					IContributionItem[] items = tbm.getItems();
+					// Add our "Open Console" action
+					GenieOpenConsoleAction openConsoleAction = new GenieOpenConsoleAction();
+					tbm.insertBefore(CLEAR_CONSOLE_ID, openConsoleAction);
+					
+					// Console view icons that are not required. We are removing OpenConsoleAction so that we can add our Action
+					// and make it behave the way we want. In this case we remove Pin Console and Open Console icons.
+					List<ActionContributionItem> itemsToRemove = Arrays.stream(items).filter(item -> (item instanceof ActionContributionItem))
+ 					.map(item -> (ActionContributionItem) item)
+					.filter(item -> item.getAction().toString().contains("PinConsole")
+							|| item.getAction() instanceof OpenConsoleAction)
+					.collect(Collectors.toList());
+					
+					itemsToRemove.forEach(action -> tbm.remove(action));
+					view.getViewSite().getActionBars().updateActionBars();
+				}
+			}
+		});
+		
+	}
+	
+	/**
+	 * Gets Console view
+	 * @return current console view
+	 */
+	private ConsoleView getConsoleView() {
+		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		IWorkbenchPage page = window.getActivePage();
+		IViewPart part = page.findView(IConsoleConstants.ID_CONSOLE_VIEW);
+		return (ConsoleView) part;
 	}
 
 	/**
@@ -172,8 +237,11 @@ public class Consoles extends AbstractUIPlugin {
 
 	/**
 	 * Create a new pydev console based on the current instrument.
+	 * 
+	 * @param perspectiveId The id for the perspective to create the console on.
 	 */
-	public void createConsole() {
+	public void createConsole(String perspectiveId) {
+		boolean compactPlot = perspectiveId.equals(REFL_PERSPECTIVE_ID) ? true : false;
 		Display.getDefault().syncExec(new Runnable() {
 			@Override
 			public void run() {
@@ -190,7 +258,8 @@ public class Consoles extends AbstractUIPlugin {
 					// exception as it is in a worker thread. Nevertheless, this is better than the confusion 
 					// that follows the scripting console getting accidentally opened in the wrong perspective.
 					new ConsoleView();
-					GENIE_CONSOLE_FACTORY.createConsole(Commands.setInstrument());
+					
+  					GENIE_CONSOLE_FACTORY.configureAndCreateConsole(Commands.getSetInstrumentCommand(), compactPlot);
 				}
 			}
 		});
@@ -205,7 +274,7 @@ public class Consoles extends AbstractUIPlugin {
 		LOG.info("Installing output length limits on all consoles");
 		getPythonScriptingConsoles().forEach(this::installOutputLengthLimit);
 	}
-
+	
 	private void installOutputLengthLimit(final ScriptConsole console) {
 		try {
 			console.getDocument().addDocumentListener(new IDocumentListener() {

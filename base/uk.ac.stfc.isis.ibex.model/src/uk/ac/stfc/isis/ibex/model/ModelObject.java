@@ -23,6 +23,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+import org.eclipse.swt.widgets.Display;
+
 /**
  * Class that allows other objects to be bound to it.
  */
@@ -63,6 +65,45 @@ public abstract class ModelObject implements IModelObject {
 	@Override
     public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
 		changeSupport.addPropertyChangeListener(propertyName, listener);
+	}
+	
+	/**
+	 * Ensures that a property change listener runs on the UI thread. If the calling thread is already the
+	 * UI thread the event is run immediately, otherwise it is queued to be run at a later time.
+	 * 
+	 * @param job the task to be run
+	 */
+    private static PropertyChangeListener propertyChangeOnUiThread(final PropertyChangeListener job) {
+    	return new PropertyChangeListener() {
+			@Override
+			public void propertyChange(final PropertyChangeEvent event) {
+				final var display = Display.getDefault();
+				if (display.getThread() == Thread.currentThread()) {
+					job.propertyChange(event);
+				} else {
+					display.asyncExec(() -> job.propertyChange(event));
+				}
+			}
+		};
+    }
+	
+	/**
+     * Adds a property change listener which always executes on the UI thread.
+     * 
+     * This is useful in cases where the UI needs to react to events in ways which 
+     * are too complex for databinding.
+     *
+     * @param propertyName
+     *            the property name
+     * @param listener
+     *            the listener
+     * 
+     * @return the added listener
+     */
+    public PropertyChangeListener addUiThreadPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+    	final PropertyChangeListener uiThreadListener = propertyChangeOnUiThread(listener);
+		addPropertyChangeListener(propertyName, uiThreadListener);
+		return uiThreadListener;
 	}
 
     /**

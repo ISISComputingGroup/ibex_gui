@@ -19,3 +19,9 @@ build/jdk.zip
 built_script_gen/
 built_client/
 build/Output
+.vscode
+__pycache__
+build/maven
+build/ICP_Binaries_maven.log
+base/uk.ac.stfc.isis.ibex.scriptgenerator/python_support/ScriptDefinitions_repo.bundle
+base/uk.ac.stfc.isis.ibex.scriptgenerator/python_support/git

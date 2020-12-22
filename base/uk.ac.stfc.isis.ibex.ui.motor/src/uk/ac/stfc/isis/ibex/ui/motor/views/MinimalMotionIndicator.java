@@ -19,18 +19,15 @@
 
 package uk.ac.stfc.isis.ibex.ui.motor.views;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.MotorDirection;
+import uk.ac.stfc.isis.ibex.ui.ImageUtils;
 
 /**
  * A bar of icons that give information about an axis at a glance.
@@ -38,20 +35,42 @@ import uk.ac.stfc.isis.ibex.motor.MotorDirection;
 @SuppressWarnings("checkstyle:magicnumber")
 public class MinimalMotionIndicator extends Composite {
 
-    private static final String LOW_LIMIT_TOOLTIP = "Low (reverse) limit";
-    private static final String LOW_MOVE_TOOLTIP = "Low (reverse) movement";
-    private static final String HIGH_LIMIT_TOOLTIP = "High (forward) limit";
-    private static final String HIGH_MOVE_TOOLTIP = "High (forward) movement";
-    private static final String HOME_TOOLTIP = "Axis homed";
+    private static final String LOW_LIMIT_ENABLED_TOOLTIP = "Low (reverse) limit hit";
+    private static final String LOW_LIMIT_DISABLED_TOOLTIP = "Low (reverse) limit not hit";
+    
+    private static final String LOW_MOVE_ENABLED_TOOLTIP = "Axis moving in negative (reverse) direction";
+    private static final String LOW_MOVE_DISABLED_TOOLTIP = "Axis not moving in negative (reverse) direction";
+    
+    private static final String HIGH_LIMIT_ENABLED_TOOLTIP = "High (forward) limit hit";
+    private static final String HIGH_LIMIT_DISABLED_TOOLTIP = "High (forward) limit not hit";
+    
+    private static final String HIGH_MOVE_ENABLED_TOOLTIP = "Axis moving in positive (forward) direction";
+    private static final String HIGH_MOVE_DISABLED_TOOLTIP = "Axis not moving in positive (forward) direction";
+    
+    private static final String HOME_ENABLED_TOOLTIP = "Axis at home";
+    private static final String HOME_DISABLED_TOOLTIP = "Axis not at home";
 
-	private final Display display = Display.getDefault();
-
-    private EnableableImageLabel lowerDirectionLimit;
-    private EnableableImageLabel leftDirection;
-    private EnableableImageLabel home;
-    private EnableableImageLabel rightDirection;
-    private EnableableImageLabel upperDirectionLimit;
-
+    private final BooleanImageLabel lowerDirectionLimit;
+    private final BooleanImageLabel leftDirection;
+    private final BooleanImageLabel home;
+    private final BooleanImageLabel rightDirection;
+    private final BooleanImageLabel upperDirectionLimit;
+    
+    private static final Image LOW_LIMIT_IMAGE_ENABLED = getImage("lower_limit_minimal.png");
+    private static final Image LOW_LIMIT_IMAGE_DISABLED = ImageUtils.disabled(LOW_LIMIT_IMAGE_ENABLED);
+    
+    private static final Image LEFT_MOVE_IMAGE_ENABLED = getImage("arrow_left_minimal.png");
+    private static final Image LEFT_MOVE_IMAGE_DISABLED = ImageUtils.disabled(LEFT_MOVE_IMAGE_ENABLED);
+    
+    private static final Image HOME_IMAGE_ENABLED = getImage("home_minimal.png");
+    private static final Image HOME_IMAGE_DISABLED = ImageUtils.disabled(HOME_IMAGE_ENABLED);
+    
+    private static final Image RIGHT_MOVE_IMAGE_ENABLED = getImage("arrow_right_minimal.png");
+    private static final Image RIGHT_MOVE_IMAGE_DISABLED = ImageUtils.disabled(RIGHT_MOVE_IMAGE_ENABLED);
+    
+    private static final Image UPPER_LIMIT_IMAGE_ENABLED = getImage("upper_limit_minimal.png");
+    private static final Image UPPER_LIMIT_IMAGE_DISABLED = ImageUtils.disabled(UPPER_LIMIT_IMAGE_ENABLED);
+    
     /**
      * Creates an indicator bar that gives information about an axis at a
      * glance.
@@ -63,23 +82,24 @@ public class MinimalMotionIndicator extends Composite {
      */
 	public MinimalMotionIndicator(Composite parent, int style) {
 		super(parent, style);
-        GridLayout gridLayout1 = new GridLayout(5, false);
-		gridLayout1.verticalSpacing = 0;
-		gridLayout1.marginWidth = 0;
-		gridLayout1.marginHeight = 0;
-		gridLayout1.horizontalSpacing = 0;
-		setLayout(gridLayout1);
+        GridLayout container = new GridLayout(5, false);
+		container.verticalSpacing = 0;
+		container.marginWidth = 0;
+		container.marginHeight = 0;
+		container.horizontalSpacing = 0;
+		setLayout(container);
 		
-        lowerDirectionLimit = new EnableableImageLabel(this, getImage("lower_limit_minimal.png"), LOW_LIMIT_TOOLTIP);
-
-        leftDirection = new EnableableImageLabel(this, getImage("arrow_left_minimal.png"), LOW_MOVE_TOOLTIP);
-		
-        home = new EnableableImageLabel(this, getImage("home_minimal.png"), HOME_TOOLTIP);
-		
-        rightDirection = new EnableableImageLabel(this, getImage("arrow_right_minimal.png"), HIGH_MOVE_TOOLTIP);
-		
-        upperDirectionLimit = new EnableableImageLabel(this, getImage("upper_limit_minimal.png"), HIGH_LIMIT_TOOLTIP);
-		
+        lowerDirectionLimit = new BooleanImageLabel(this, 
+        		LOW_LIMIT_IMAGE_ENABLED, LOW_LIMIT_IMAGE_DISABLED, LOW_LIMIT_ENABLED_TOOLTIP, LOW_LIMIT_DISABLED_TOOLTIP);
+        leftDirection = new BooleanImageLabel(this, 
+        		LEFT_MOVE_IMAGE_ENABLED, LEFT_MOVE_IMAGE_DISABLED, LOW_MOVE_ENABLED_TOOLTIP, LOW_MOVE_DISABLED_TOOLTIP);
+        home = new BooleanImageLabel(this, 
+        		HOME_IMAGE_ENABLED, HOME_IMAGE_DISABLED, HOME_ENABLED_TOOLTIP, HOME_DISABLED_TOOLTIP);
+        rightDirection = new BooleanImageLabel(this, 
+        		RIGHT_MOVE_IMAGE_ENABLED, RIGHT_MOVE_IMAGE_DISABLED, HIGH_MOVE_ENABLED_TOOLTIP, HIGH_MOVE_DISABLED_TOOLTIP);
+		upperDirectionLimit = new BooleanImageLabel(this, 
+        		UPPER_LIMIT_IMAGE_ENABLED, UPPER_LIMIT_IMAGE_DISABLED, HIGH_LIMIT_ENABLED_TOOLTIP, HIGH_LIMIT_DISABLED_TOOLTIP);
+        
 		setInitialState();
 	}
 
@@ -90,42 +110,18 @@ public class MinimalMotionIndicator extends Composite {
      *            The motor that the indicator is displaying information about.
      */
 	public void setMotor(final Motor motor) {
-	
 		setArrows(motor);
-		motor.addPropertyChangeListener("direction", new PropertyChangeListener() {	
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				setArrows(motor);
-			}
-		});
-		motor.addPropertyChangeListener("moving", new PropertyChangeListener() {	
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				setArrows(motor);
-			}
-		});
+		motor.addUiThreadPropertyChangeListener("direction", evt -> setArrows(motor));
+		motor.addUiThreadPropertyChangeListener("moving", evt -> setArrows(motor));
 		
 		enableHome(motor.getAtHome());
-		motor.addPropertyChangeListener("atHome", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				enableHome(motor.getAtHome());
-			}
-		});
+		motor.addUiThreadPropertyChangeListener("atHome", evt -> enableHome(motor.getAtHome()));
 
 		setLowerLimit(motor.getAtLowerLimitSwtich());
-		motor.addPropertyChangeListener("atLowerLimitSwitch", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				setLowerLimit(motor.getAtLowerLimitSwtich());
-			} });
+		motor.addUiThreadPropertyChangeListener("atLowerLimitSwitch", evt -> setLowerLimit(motor.getAtLowerLimitSwtich()));
 		
 		setUpperLimit(motor.getAtUpperLimitSwitch());
-		motor.addPropertyChangeListener("atUpperLimitSwitch", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				setUpperLimit(motor.getAtUpperLimitSwitch());
-			} });
+		motor.addUiThreadPropertyChangeListener("atUpperLimitSwitch", evt -> setUpperLimit(motor.getAtUpperLimitSwitch()));
 	}
 
 	@Override
@@ -147,29 +143,18 @@ public class MinimalMotionIndicator extends Composite {
 	
 	private void setUpperLimit(final Boolean enable) {
         setLimit(upperDirectionLimit, enable);
-
 	}
 	
 	private void setLowerLimit(final Boolean enable) {
         setLimit(lowerDirectionLimit, enable);
 	}
 
-    private void setLimit(final EnableableImageLabel limit, final Boolean enable) {
-		display.asyncExec(new Runnable() {
-			@Override
-			public void run() {
-                limit.enable(disableIfNull(enable));
-			}
-		});
+    private void setLimit(final BooleanImageLabel limit, final Boolean enable) {
+        limit.setIsEnabled(enable);
 	}
 	
 	private void setArrows(final Motor motor) {
-		display.asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				setArrows(motor.getDirection(), motor.getMoving());
-			}
-		});
+		setArrows(motor.getDirection(), motor.getMoving());
 	}	
 	
 	private void setArrows(MotorDirection motorDirection, Boolean moving) {
@@ -199,15 +184,10 @@ public class MinimalMotionIndicator extends Composite {
 	}
 	
 	private void enableHome(final Boolean enable) {
-		display.asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				home.enable(disableIfNull(enable));				
-			}
-		});
+		home.setIsEnabled(disableIfNull(enable));				
 	}
 	
-	private Image getImage(String image) {
+	private static Image getImage(String image) {
 		return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.motor", "icons/" + image);
 	}
 

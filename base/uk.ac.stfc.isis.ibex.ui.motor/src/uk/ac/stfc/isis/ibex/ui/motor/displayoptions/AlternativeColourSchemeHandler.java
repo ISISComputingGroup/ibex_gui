@@ -23,7 +23,7 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.model.application.ui.menu.MHandledMenuItem;
 
 /**
- * Sets the current motor background palette to the alternative colourblind-friendly scheme.
+ * Sets the current motor background palette to the alternative colour scheme.
  */
 public class AlternativeColourSchemeHandler {
 
@@ -36,7 +36,7 @@ public class AlternativeColourSchemeHandler {
     public void execute(MHandledMenuItem menuItem) {
 
     	if (menuItem.isSelected()) {
-            DisplayPreferences.getInstance().setMotorBackgroundPalette(ColourOption.COLOURBLIND);
+            DisplayPreferences.getInstance().setMotorBackgroundPalette(ColourOption.ACCESSIBLE);
     	}
     }
 }

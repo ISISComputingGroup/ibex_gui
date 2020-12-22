@@ -76,7 +76,7 @@ public class DeleteConfigsHandler extends DisablingConfigHandler<Collection<Stri
 					}
 				}
 					
-		    } catch (ManagerModePvNotConnectedException|IOException e) {
+		    } catch (ManagerModePvNotConnectedException | IOException e) {
 				MessageDialog error = new MessageDialog(shell, "Error", null, e.getMessage(),
 						MessageDialog.ERROR, new String[] {"OK"}, 0);
 				error.open();

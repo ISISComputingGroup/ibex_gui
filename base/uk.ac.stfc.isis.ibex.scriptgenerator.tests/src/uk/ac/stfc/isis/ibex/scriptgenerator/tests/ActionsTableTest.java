@@ -10,13 +10,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.ActionParameter;
+import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
+import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
  * 
@@ -26,15 +28,15 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 public class ActionsTableTest {
 
 	private ActionsTable table;
-	private List<ActionParameter> actionParameters;
+	private List<JavaActionParameter> actionParameters;
 	
 	@Before
 	public void setUp() {
-		table = new ActionsTable(new ArrayList<ActionParameter>());
+		table = new ActionsTable(new ArrayList<JavaActionParameter>());
 		
-		var testParameter = new ActionParameter("Test Parameter");
+		var testParameter = new JavaActionParameter("Test Parameter", "test value");
 		
-		actionParameters = new ArrayList<ActionParameter>();
+		actionParameters = new ArrayList<JavaActionParameter>();
 		actionParameters.add(testParameter);
 	}
 	
@@ -55,20 +57,46 @@ public class ActionsTableTest {
 	public void test_GIVEN_action_duplicated_WHEN_action_selected_THEN_action_is_duplicated() {
 		table.addEmptyAction();
 		
-		table.duplicateAction(0);
+		table.duplicateAction(table.getActions(), 1);
 		
 		var allActions = table.getActions();
 		
 		assertEquals(table.getActions().size(), 2);
 		
-		assertEquals(allActions.get(0).getAllActionParameters(), allActions.get(1).getAllActionParameters());
+		assertEquals(allActions.get(0).getActionParameterValueMap(), allActions.get(1).getActionParameterValueMap());
+	}
+	
+	@Test
+	public void test_GIVEN_actions_duplicated_WHEN_multiple_actions_selected_THEN_actions_are_duplicated() {
+		table.addEmptyAction();
+		table.addEmptyAction();
+		
+		table.duplicateAction(table.getActions(), 2);
+		
+		var allActions = table.getActions();
+		
+		assertEquals(table.getActions().size(), 4);
+		
+		assertEquals(allActions.get(0).getActionParameterValueMap(), allActions.get(2).getActionParameterValueMap());
 	}
 	
 	@Test
 	public void test_GIVEN_action_in_table_WHEN_action_deleted_THEN_action_is_removed() {
 		table.addEmptyAction();
 
-		table.deleteAction(0);
+		table.deleteAction(table.getActions());
+		
+		assertEquals(table.getActions().size(), 0);
+		
+	}
+	
+	@Test
+	public void test_GIVEN_actions_in_table_WHEN_all_actions_deleted_THEN_actions_are_removed() {
+		table.addEmptyAction();
+		table.addEmptyAction();
+		table.addEmptyAction();
+
+		table.deleteAction(table.getActions());
 		
 		assertEquals(table.getActions().size(), 0);
 		
@@ -82,9 +110,37 @@ public class ActionsTableTest {
 		
 		var secondAction = table.getActions().get(1);
 		
-		table.moveAction(1, 0);
+		table.moveActionUp(Arrays.asList(secondAction));
 		
 		assertEquals(table.getActions().indexOf(secondAction), 0);
+	}
+	
+	@Test
+	public void test_GIVEN_actions_in_table_WHEN_multiple_action_moved_THEN_actions_move_in_table() {
+		// Add six actions
+		table.addEmptyAction();
+		table.addEmptyAction();
+		table.addEmptyAction();
+		table.addEmptyAction();
+		table.addEmptyAction();
+		table.addEmptyAction();
+
+		var firstAction = table.getActions().get(0);
+		var secondAction = table.getActions().get(1);
+		var thirdAction = table.getActions().get(2);
+		var fourthAction = table.getActions().get(3);
+		
+		table.moveActionUp(Arrays.asList(secondAction, thirdAction, fourthAction));
+		
+		assertEquals(0, table.getActions().indexOf(secondAction));
+		assertEquals(1, table.getActions().indexOf(thirdAction));
+		assertEquals(2, table.getActions().indexOf(fourthAction));
+		
+		table.moveActionDown(Arrays.asList(firstAction, secondAction, thirdAction));
+		
+		assertEquals(1, table.getActions().indexOf(secondAction));
+		assertEquals(2, table.getActions().indexOf(thirdAction));
+		assertEquals(0, table.getActions().indexOf(fourthAction));
 	}
 	
 	@Test
@@ -95,9 +151,25 @@ public class ActionsTableTest {
 		
 		var firstAction = table.getActions().get(0);
 		
-		table.moveAction(0, -1);
+		table.moveActionUp(Arrays.asList(firstAction));
 		
-		assertEquals(table.getActions().indexOf(firstAction), 0);
+		assertEquals(0, table.getActions().indexOf(firstAction));
+	}
+	
+	@Test
+	public void test_GIVEN_one_of_multiple_selected_actions_at_top_of_table_WHEN_action_moved_up_THEN_action_does_not_move() {
+		// Add two actions
+		table.addEmptyAction();
+		table.addEmptyAction();
+		table.addEmptyAction();
+		
+		var firstAction = table.getActions().get(0);
+		var secondAction = table.getActions().get(1);
+		
+		table.moveActionUp(Arrays.asList(firstAction, secondAction));
+		
+		assertEquals(0, table.getActions().indexOf(firstAction));
+		assertEquals(1, table.getActions().indexOf(secondAction));
 	}
 	
 	@Test
@@ -108,9 +180,25 @@ public class ActionsTableTest {
 		
 		var secondAction = table.getActions().get(1);
 		
-		table.moveAction(1, 2);
+		table.moveActionDown(Arrays.asList(secondAction));
 		
-		assertEquals(table.getActions().indexOf(secondAction), 1);
+		assertEquals(1, table.getActions().indexOf(secondAction));
+	}
+	
+	@Test
+	public void test_GIVEN_one_of_multiple_selected_actions_at_bottom_of_table_WHEN_action_moved_down_THEN_action_does_not_move() {
+		// Add two actions
+		table.addEmptyAction();
+		table.addEmptyAction();
+		table.addEmptyAction();
+		
+		var secondAction = table.getActions().get(1);
+		var thirdAction = table.getActions().get(2);
+		
+		table.moveActionDown(Arrays.asList(secondAction, thirdAction));
+		
+		assertEquals(1, table.getActions().indexOf(secondAction));
+		assertEquals(2, table.getActions().indexOf(thirdAction));
 	}
 	
 	@Test
@@ -165,6 +253,22 @@ public class ActionsTableTest {
 				table.getActions().get(3).isValid(), is(false));
 		assertThat("We set 3 to invalid so should give same invalidity error string",
 				table.getActions().get(3).getInvalidityReason().get(), equalTo("invalid 2"));
+	}
+	
+	@Test
+	public void test_GIVEN_multiple_actions_THEN_multiple_actions_are_added() {
+		List<Map<JavaActionParameter, String>> list = new ArrayList<Map<JavaActionParameter, String>>();
+		// create multiple actions
+		Map<JavaActionParameter, String> exampleOne = new HashMap<JavaActionParameter, String>();
+		Map<JavaActionParameter, String> exampleTwo = new HashMap<JavaActionParameter, String>();
+		
+		list.add(exampleOne);
+		list.add(exampleTwo);
+		
+		table.addMultipleActions(list);
+		
+		assertEquals(table.getActions().size(), 2);
+		
 	}
 
 }

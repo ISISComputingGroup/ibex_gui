@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.synoptic;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
@@ -85,10 +86,10 @@ public class SynopticInfo {
      * @param infos The synoptics to get the names from.
      * @return A list of synoptic names.
      */
-	public static Collection<String> names(Collection<SynopticInfo> infos) {
-		if (infos == null) {
-			return Collections.emptyList();
-		}
+	public static List<String> names(Collection<SynopticInfo> infos) {
+        if (infos == null || infos.isEmpty()) {
+            return Collections.emptyList();
+        }
 		
 		return infos.stream().map(s -> s.name()).collect(Collectors.toList());		
 	}

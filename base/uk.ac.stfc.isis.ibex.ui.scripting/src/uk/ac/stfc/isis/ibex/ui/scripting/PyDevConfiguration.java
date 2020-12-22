@@ -23,7 +23,7 @@ import java.util.Collections;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.python.pydev.core.IInterpreterInfo;
 import org.python.pydev.core.IInterpreterManager;
-import org.python.pydev.plugin.PydevPlugin;
+import org.python.pydev.ast.interpreter_managers.InterpreterManagersAPI;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
@@ -40,9 +40,9 @@ public final class PyDevConfiguration {
 	 * Configure PyDev.
 	 */
 	public static void configure() {
-		IInterpreterManager iMan = PydevPlugin.getPythonInterpreterManager(true);
+		IInterpreterManager iMan = InterpreterManagersAPI.getPythonInterpreterManager(true);
 		NullProgressMonitor monitor = new NullProgressMonitor();
-		IInterpreterInfo interpreterInfo = iMan.createInterpreterInfo(new PreferenceSupplier().pythonInterpreterPath(),
+		IInterpreterInfo interpreterInfo = iMan.createInterpreterInfo(PreferenceSupplier.getPythonPath(),
 				monitor, false);
 		iMan.setInfos(new IInterpreterInfo[] {interpreterInfo}, Collections.<String>emptySet(), monitor);
 	}

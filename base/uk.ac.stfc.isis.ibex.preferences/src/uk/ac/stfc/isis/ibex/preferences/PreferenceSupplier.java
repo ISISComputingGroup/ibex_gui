@@ -23,14 +23,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
-
+import org.apache.commons.lang.SystemUtils;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
@@ -75,37 +78,55 @@ public class PreferenceSupplier {
     private static final String PYTHON_INTERPRETER_PATH = "python_interpreter_path";
     
     /**
-     * The relative path to python.
+     * The relative path to the bundled Python.
      */
-    private static final String PYTHON_RELATIVE_PATH = "/resources/Python3/python.exe";
+    private static final String PYTHON_RELATIVE_PATH_WINDOWS = "/resources/Python3/python.exe";
     
     /**
-     * The path to the developer's genie python.
+     * The relative path to the bundled Python.
      */
-	private static final String DEFAULT_PYTHON_3_INTERPRETER_PATH = "C:/Instrument/Apps/Python3/python.exe";
+    private static final String PYTHON_RELATIVE_PATH_LINUX = "/resources/Python3/bin/python";
+    
+    /**
+     * The path to the instrument/developer's genie python on windows.
+     */
+	private static final String DEFAULT_PYTHON_3_INTERPRETER_PATH_WINDOWS = "C:\\Instrument\\Apps\\Python3\\python.exe";
 	
-	/**
-     * The default for the location of Python.
-     */
-    private static final String DEFAULT_PYTHON_2_INTERPRETER_PATH = "C:\\Instrument\\Apps\\Python\\python.exe";
 
-	
+    /**
+     * The path to the instrument/developer's genie python on linux.
+     */
+    private static final String DEFAULT_PYTHON_3_INTERPRETER_PATH_LINUX = "/usr/local/ibex/genie_python/bin";
+    
 	/**
-	 * Gets the python that's been bundled with the gui, unless it hasn't been bundled and then gets the dev python.
+	 * Gets the installed Python, unless it hasn't been bundled and then gets the Python bundled with the gui.
 	 * 
 	 * @return The string path to the python executable.
 	 * @throws IOException if python could not be found.
 	 */
-	public static String getBundledPythonPath() {
-		try {
-			String pythonPath = relativePathToFull(PYTHON_RELATIVE_PATH);
+	public static String getPythonPath() {
+	    String pythonPath, relPath;
+	    
+	    if (SystemUtils.IS_OS_WINDOWS) {
+	        pythonPath = Path.forWindows(DEFAULT_PYTHON_3_INTERPRETER_PATH_WINDOWS).toOSString();
+	        relPath = PYTHON_RELATIVE_PATH_WINDOWS;
+	    } else {
+	        pythonPath = Path.forPosix(DEFAULT_PYTHON_3_INTERPRETER_PATH_LINUX).toOSString();
+	        relPath = PYTHON_RELATIVE_PATH_LINUX;
+	    }
+	    
+		if (Files.exists(Paths.get(pythonPath))) {
 			LOG.info("getDefaultPythonPath found python at: " + pythonPath);
-			return relativePathToFull(PYTHON_RELATIVE_PATH);
-		} catch (IOException e) {
-			String pythonPath = Path.forWindows(DEFAULT_PYTHON_3_INTERPRETER_PATH).toOSString();
-			LOG.info("getDefaultPythonPath found python at: " + pythonPath);
-			return pythonPath;
+		} else {
+			try {
+				pythonPath = relativePathToFull(relPath);
+				LOG.info("getDefaultPythonPath found python at: " + pythonPath);
+			} catch (IOException e) {
+				LOG.error("Bundled Python not found");
+			}
+			
 		}
+		return pythonPath;
 	}
 
 	
@@ -134,7 +155,7 @@ public class PreferenceSupplier {
     /**
      * The default for the location of genie_python.
      */
-    private static final String DEFAULT_GENIE_PYTHON_DIRECTORY = "C:\\Instrument\\Apps\\Python\\Lib\\site-packages\\genie_python";
+    private static final String DEFAULT_GENIE_PYTHON_DIRECTORY = "C:\\Instrument\\Apps\\Python3\\Lib\\site-packages\\genie_python";
     
     /**
      * The preference setting for the location of EPICS utils.
@@ -178,14 +199,15 @@ public class PreferenceSupplier {
     private static final String SCRIPT_GENERATION_FOLDER = "script_generation_folder";
     
     /**
-     * The default place to store script generator configuration files.
+     * The default place to store script generator script definition files.
+     * This is a relative path to keep the script definitions within the script generator plugin.
      */
-    private static final String DEFAULT_SCRIPT_GENERATOR_CONFIG_FOLDER = "C:/ScriptGeneratorConfigs/";
+    private static final String DEFAULT_SCRIPT_DEFINITIONS_FOLDER = "";
     
     /**
-     * Defines where to generate scripts to.
+     * Defines where the script definitions repository is kept.
      */
-    private static final String SCRIPT_GENERATOR_CONFIG_FOLDER = "script_generator_config_folder";
+    private static final String SCRIPT_DEFINITIONS_FOLDER = "script_definitions_folder";
     
     /**
      * The default URL for the Script Generator manual page
@@ -198,14 +220,14 @@ public class PreferenceSupplier {
     private static final String SCRIPT_GENERATOR_MANUAL_URL = "script_generator_manual_url";
     
     /**
-     * The default of whether to hide the config error table or not.
+     * The default of whether to hide the script definition error table or not.
      */
-    private static final boolean DEFAULT_HIDE_CONFIG_ERRORS = false;
+    private static final boolean DEFAULT_HIDE_SCRIPT_DEFINITION_ERRORS = false;
     
     /**
-     * Defines whether to hide config error table.
+     * Defines whether to hide script definition error table.
      */
-    private static final String HIDE_CONFIG_ERRORS = "hide_config_error_table";
+    private static final String HIDE_SCRIPT_DEFINITION_ERRORS = "hide_script_definition_error_table";
 	
     /**
      * Gets a string from the IBEX preference store.
@@ -240,7 +262,7 @@ public class PreferenceSupplier {
      * @return the setting (uses default if not set)
      */
 	public String pythonInterpreterPath() {
-		return getString(PYTHON_INTERPRETER_PATH, DEFAULT_PYTHON_2_INTERPRETER_PATH);
+		return getString(PYTHON_INTERPRETER_PATH, DEFAULT_PYTHON_3_INTERPRETER_PATH_WINDOWS);
 	}
 	
     /**
@@ -294,13 +316,22 @@ public class PreferenceSupplier {
 	}
 	
 	 /**
-     * Gets a list of the folders containing script generator configs.
+     * Gets a list of the folders containing script generator script definitions.
      * To implement many separate with commas (this is handled in the Python side).
      * 
-     * @return a list of of folders paths that contain script generator configs.
+     * @return a list of of folders paths that contain script generator script definitions.
      */
-	public String scriptGeneratorConfigFolders() {
-		return getString(SCRIPT_GENERATOR_CONFIG_FOLDER, DEFAULT_SCRIPT_GENERATOR_CONFIG_FOLDER);
+	public Optional<String> scriptGeneratorScriptDefinitionFolder() {
+		Optional<String> scriptDefinitionsPath;
+		String scriptDefinitionsPathPreference = getString(SCRIPT_DEFINITIONS_FOLDER, DEFAULT_SCRIPT_DEFINITIONS_FOLDER);
+		if (scriptDefinitionsPathPreference.equals(DEFAULT_SCRIPT_DEFINITIONS_FOLDER)) {
+			// Default is blank, return empty optional
+			scriptDefinitionsPath = Optional.empty();
+		} else {
+			scriptDefinitionsPath = Optional.of(scriptDefinitionsPathPreference);
+		}
+		return scriptDefinitionsPath;
+		
 	}
 	
     /**
@@ -311,13 +342,13 @@ public class PreferenceSupplier {
     public String scriptGeneratorManualURL() {
         return getString(SCRIPT_GENERATOR_MANUAL_URL, DEFAULT_SCRIPT_GENERATOR_MANUAL_URL);
     }
-	
-	/**
-	 * Get whether to hide the script gen config error table.
+		
+	/** 
+	 * Get whether to hide the script gen script definition error table.
 	 * 
 	 * @return true if we should hide the table, false if not.
 	 */
-	public boolean hideScriptGenConfigErrorTable() {
-		return getBoolean(HIDE_CONFIG_ERRORS, DEFAULT_HIDE_CONFIG_ERRORS);
+	public boolean hideScriptGenScriptDefinitionErrorTable() {
+		return getBoolean(HIDE_SCRIPT_DEFINITION_ERRORS, DEFAULT_HIDE_SCRIPT_DEFINITION_ERRORS);
 	}
 }

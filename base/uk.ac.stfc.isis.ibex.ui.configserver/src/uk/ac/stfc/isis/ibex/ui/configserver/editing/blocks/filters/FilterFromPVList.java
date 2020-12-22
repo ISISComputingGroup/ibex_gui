@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
@@ -40,7 +41,7 @@ public class FilterFromPVList extends PVFilter {
 		public void onValue(Collection<PV> value) {
 			if (value != null) {
 				updatePVList(value);
-				firePropertyChange("refresh", false, true);
+				Display.getDefault().asyncExec(() -> firePropertyChange("refresh", false, true));
 			}
 		}
 	};	

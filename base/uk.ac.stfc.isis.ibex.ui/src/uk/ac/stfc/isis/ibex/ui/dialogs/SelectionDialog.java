@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.dialogs;
 
+import java.util.List;
+
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.swt.SWT;
@@ -42,29 +44,48 @@ public abstract class SelectionDialog extends BasicSelectionDialog {
     protected SelectionDialog(Shell parentShell, String title) {
         super(parentShell, title);
     }
-
+    
     /**
-     * Creates and returns a table pre-configured with single column layout.
+     * Creates and returns a table pre-configured with either a single or multiple-column layout.
      * 
      * @param parent
      *            The parent composite
      * @param style
      *            The style settings
+     * @param columnNames
+     * 			  The column name(s). If only one column, header will be hidden.
      * @return The table object
      */
     @Override
-    protected Table createTable(Composite parent, int style) {
-        Composite tableComposite = new Composite(parent, SWT.NONE);
-        tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        Table table = new Table(tableComposite, style);
-        table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+    protected Table createTable(Composite parent, int style, List<String> columnNames) {
+	    Composite tableComposite = new Composite(parent, SWT.NONE);
+	    tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+	    Table table = new Table(tableComposite, style | SWT.FULL_SELECTION);
+	    table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-        TableColumn singleColumn = new TableColumn(table, SWT.NONE);
-        TableColumnLayout tableColumnLayout = new TableColumnLayout();
-        tableColumnLayout.setColumnData(singleColumn, new ColumnWeightData(1));
+	    TableColumnLayout tableColumnLayout = new TableColumnLayout();
+
+	    for (String name : columnNames) {
+	    	TableColumn column = new TableColumn(table, SWT.NONE);
+	    	tableColumnLayout.setColumnData(column, new ColumnWeightData(1));
+	    	column.setText(name);
+	    	column.setResizable(true);
+	    }
+	    
         tableComposite.setLayout(tableColumnLayout);
+        
+        if (columnNames.size() > 1) {
+        	table.setHeaderVisible(true);
+        }
 
         return table;
     }
-
+    
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+    protected boolean isResizable() {
+    	return true;
+    }
 }

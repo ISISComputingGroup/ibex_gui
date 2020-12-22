@@ -19,6 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.instrument;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import uk.ac.stfc.isis.ibex.instrument.internal.PVPrefixFactory;
 
 /**
@@ -30,6 +33,9 @@ public class InstrumentInfo {
 	private final String name;
     private String pvPrefix;
     private final String hostName;
+    
+    // This wants to be a raw array as that helps GSON to deserialize it easily
+    private final String[] groups;
 
 	/**
      * Constructor for creating any general instrument. CONSTRUCTORS NOT CALLED
@@ -40,12 +46,27 @@ public class InstrumentInfo {
      * @param pvPrefix The PV prefix used to connect to the instrument
      * @param hostName The host name of the machine that the instrument is
      *            running on
+     * @param groups the science group(s) that this instrument belongs to (e.g. MUONS, SANS)
      */
-	public InstrumentInfo(String name, String pvPrefix, String hostName) {
+	public InstrumentInfo(String name, String pvPrefix, String hostName, Collection<String> groups) {
 		this.name = name;
 		this.hostName = hostName;
 		this.pvPrefix = pvPrefix;
-        assert (hasValidHostName());
+		this.groups = groups.toArray(new String[groups.size()]);
+	}
+	
+	/**
+	 * Constructor for creating any general instrument, belonging to no groups.
+	 * 
+	 * See full constructor for details.
+	 * 
+	 * @param name The user friendly name of the instrument
+     * @param pvPrefix The PV prefix used to connect to the instrument
+     * @param hostName The host name of the machine that the instrument is
+     *            running on
+	 */
+	public InstrumentInfo(String name, String pvPrefix, String hostName) {
+		this(name, pvPrefix, hostName, Collections.emptyList());
 	}
 
 	/**
@@ -76,6 +97,16 @@ public class InstrumentInfo {
     public String hostName() {
     	return hostName == null ? PVPrefixFactory.DEFAULT_HOSTNAME_PREFIX + name : hostName;
 	}
+    
+    /**
+     * 
+     * @return the list of science groups which this instrument belongs to. 
+     * e.g. "MUONS", "SANS", "REFLECTOMETRY"
+     * Each instrument is allowed to be in any number of science groups.
+     */
+    public Collection<String> groups() {
+    	return groups != null ? Arrays.asList(groups) : Collections.emptyList();
+    }
 
     /**
      * @return Regex describing a valid default instrument hostname.

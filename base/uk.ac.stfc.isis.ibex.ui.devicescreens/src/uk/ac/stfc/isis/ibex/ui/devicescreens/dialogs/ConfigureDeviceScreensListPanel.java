@@ -26,9 +26,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
-import org.eclipse.jface.databinding.viewers.ViewersObservables;
+import org.eclipse.jface.databinding.viewers.typed.ViewerProperties;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
@@ -141,7 +141,7 @@ public class ConfigureDeviceScreensListPanel extends Composite {
             }
         });
 
-        bindingContext.bindList(ViewersObservables.observeMultiSelection(screensViewer),
+        bindingContext.bindList(ViewerProperties.multipleSelection().observe(screensViewer),
                 BeanProperties.list("selectedScreens").observe(viewModel));
     }
 

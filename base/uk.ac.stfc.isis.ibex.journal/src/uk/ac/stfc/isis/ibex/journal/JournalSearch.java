@@ -30,7 +30,13 @@ import java.util.stream.Collectors;
  */
 public abstract class JournalSearch {
     private static final String SELECT = "SELECT * FROM journal_entries";
+    private static final String COUNT = "SELECT COUNT(*) FROM journal_entries";
+    
+    /**
+     * the Journal Field containing enum constants representing the column names in the SQL schema.
+     */
     protected final JournalField field;
+    
     private ArrayList<JournalSort> sorts = new ArrayList<JournalSort>();
     {
         // This is the default sort
@@ -75,6 +81,24 @@ public abstract class JournalSearch {
         return st;
     }
 
+    /**
+     * Constructs an SQL prepared statement which gets the number of runs available.
+     * 
+     * @param connection
+     *            the SQL connection to use
+     * @return An SQL prepared statement ready to be executed.
+     * @throws SQLException if a SQL exception occurred while preparing the statement
+     */
+    public PreparedStatement constructCountQuery(Connection connection) throws SQLException {
+        StringBuilder query = new StringBuilder(COUNT);
+
+        query.append(createWhereTemplate());
+        PreparedStatement st = connection.prepareStatement(query.toString());
+        fillTemplate(st);
+        
+        return st;
+    }
+    
     /**
      * @return A string containing the WHERE section of the query.
      */

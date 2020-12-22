@@ -26,8 +26,13 @@ import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.console.ConsolePlugin;
+import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
+import org.python.pydev.ast.interpreter_managers.InterpreterManagersAPI;
 import org.python.pydev.core.IInterpreterInfo;
 import org.python.pydev.core.IInterpreterManager;
 import org.python.pydev.debug.newconsole.PydevConsoleConstants;
@@ -35,7 +40,6 @@ import org.python.pydev.debug.newconsole.PydevConsoleFactory;
 import org.python.pydev.debug.newconsole.PydevConsoleInterpreter;
 import org.python.pydev.debug.newconsole.env.PydevIProcessFactory;
 import org.python.pydev.debug.newconsole.env.PydevIProcessFactory.PydevConsoleLaunchInfo;
-import org.python.pydev.plugin.PydevPlugin;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
@@ -80,28 +84,63 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 	};
 
 	/**
+	 * Creates the scripting console after configuring the set of default
+	 * interpreter commands.
+	 * 
+	 * @param additionalInitialCommands Additional commands to run on startup
+	 * @param compactPlot               Flag indicating whether matplotlib plots
+	 *                                  should be shrunk to a compact size.
+	 */
+	public void configureAndCreateConsole(String additionalInitialCommands, boolean compactPlot) {
+		setInitialInterpreterCommands(compactPlot);
+		createConsole(additionalInitialCommands);
+	}
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void createConsole(String additionalInitialComands) {
-		try {
-			setInitialInterpreterCommands();
-			super.createConsole(createGeniePydevInterpreter(), additionalInitialComands);
-		} catch (Exception e) {
-			LOG.error(e);
-		}
+		
+		Display.getDefault().syncExec(new Runnable() {
+		    public void run() {
+		    	IConsoleManager manager = ConsolePlugin.getDefault().getConsoleManager();
+		    	boolean continueWithNewConsole = true;
+		    	if (manager.getConsoles().length >= 1) {
+		    		continueWithNewConsole = MessageDialog.openQuestion(Display.getDefault().getActiveShell(), "Duplicate console",
+			    			 "Scripting Console already exists. New Console will open on top of the current one. "
+		    				+ "Scripts running on current console will still run in the background.\n\n"
+			    			+ "You can switch between consoles using \"Display Selected Console\""
+			    			+ " button. To terminate a console please click on the red icon from the menu bar.\n\n"
+			    			+  "Do you still want to proceed with a new Console?");
+		    	}
+    
+		    	if (continueWithNewConsole) {
+		    		try {
+						createConsole(createGeniePydevInterpreter(), additionalInitialComands);
+					} catch (Exception e) {
+						LOG.error(e);
+					}
+		    	}
+		    	
+		    }
+		    	
+		});
+	
 
 		// Add a listener so that after a console is created, we install output length limits.
 		// This is the only way I found to do this, without relying on some arbitrary timeout.
 		Job.getJobManager().addJobChangeListener(JOB_CHANGE_LISTENER);
 	}
+	
+	
 
-	private void setInitialInterpreterCommands() {
+	private void setInitialInterpreterCommands(boolean compactPlot) {
 		IPreferenceStore pydevDebugPreferenceStore = new ScopedPreferenceStore(InstanceScope.INSTANCE,
 				"org.python.pydev.debug");
 
 		pydevDebugPreferenceStore.setDefault(PydevConsoleConstants.INITIAL_INTERPRETER_CMDS,
-				Commands.GENIE_INITIALISATION);
+				Commands.getInitialisationCommands(compactPlot));
 	}
 
 	/**
@@ -112,8 +151,8 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 	 *             can throw several different exceptions
 	 */
 	PydevConsoleInterpreter createGeniePydevInterpreter() throws Exception {
-		IInterpreterManager manager = PydevPlugin.getPythonInterpreterManager(true);
-		IInterpreterInfo interpreterInfo = manager.createInterpreterInfo(new PreferenceSupplier().pythonInterpreterPath(),
+		IInterpreterManager manager = InterpreterManagersAPI.getPythonInterpreterManager();
+		IInterpreterInfo interpreterInfo = manager.createInterpreterInfo(PreferenceSupplier.getPythonPath(),
 				monitor, false);
 
 		PydevIProcessFactory iprocessFactory = new PydevIProcessFactory();
@@ -123,5 +162,5 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 
 		return createPydevInterpreter(launchAndProcess, null, null);
 	}
-
+	
 }
