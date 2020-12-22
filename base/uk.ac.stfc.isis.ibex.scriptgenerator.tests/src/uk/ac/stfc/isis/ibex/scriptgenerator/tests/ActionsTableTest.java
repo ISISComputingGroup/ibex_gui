@@ -34,7 +34,7 @@ public class ActionsTableTest {
 	public void setUp() {
 		table = new ActionsTable(new ArrayList<JavaActionParameter>());
 		
-		var testParameter = new JavaActionParameter("Test Parameter", "test value");
+		var testParameter = new JavaActionParameter("Test Parameter", "test value", false);
 		
 		actionParameters = new ArrayList<JavaActionParameter>();
 		actionParameters.add(testParameter);

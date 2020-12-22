@@ -57,8 +57,8 @@ public class ScriptGeneratorJsonFileHandlerTest {
 
 	@Test 
 	public void Test_GIVEN_user_parameters_THEN_read_correctly() {
-		JavaActionParameter actionParamOne = new JavaActionParameter("temperature", "");
-		JavaActionParameter actionParamTwo = new JavaActionParameter("field", "");
+		JavaActionParameter actionParamOne = new JavaActionParameter("temperature", "", false);
+		JavaActionParameter actionParamTwo = new JavaActionParameter("field", "", false);
 		ArrayList<JavaActionParameter> actionParams = new ArrayList<JavaActionParameter>(
 				Arrays.asList(actionParamOne, actionParamTwo));
 		
@@ -141,8 +141,8 @@ public class ScriptGeneratorJsonFileHandlerTest {
 		
 		ScriptGeneratorFileHandlerForTest fileHandlerTemp = new ScriptGeneratorFileHandlerForTest();
 		
-		JavaActionParameter actionParamOne = new JavaActionParameter("temperature", "10");
-		JavaActionParameter actionParamTwo = new JavaActionParameter("field", "10");
+		JavaActionParameter actionParamOne = new JavaActionParameter("temperature", "10", false);
+		JavaActionParameter actionParamTwo = new JavaActionParameter("field", "10", false);
 		
 		Map<JavaActionParameter, String> actionOne = new HashMap<JavaActionParameter, String>();
 		

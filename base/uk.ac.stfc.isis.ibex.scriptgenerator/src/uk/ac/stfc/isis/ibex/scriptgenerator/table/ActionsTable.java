@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
 
 /**
  * This class holds the script actions and their positions in the script.
@@ -97,7 +98,18 @@ public class ActionsTable extends ModelObject {
 		var parametersMap = new HashMap<JavaActionParameter, String>();
 		// Make a parameter/string pair for each parameter in the action
 		for (JavaActionParameter actionParameter: this.actionParameters) {
-			parametersMap.put(actionParameter, actionParameter.getDefaultValue());
+			if (actionParameter.getCopyPreviousRow() == true) {
+				String value;
+				if (this.actions.size() > 0) {
+				ScriptGeneratorAction lastRow = this.actions.get(this.actions.size() - 1);
+				value = lastRow.getActionParameterValue(actionParameter);
+				} else {
+					value = actionParameter.getDefaultValue();
+				}
+				parametersMap.put(actionParameter, value);
+			} else { 
+			 parametersMap.put(actionParameter, actionParameter.getDefaultValue());
+			}
 		}
 		
 		return createAction(parametersMap);
