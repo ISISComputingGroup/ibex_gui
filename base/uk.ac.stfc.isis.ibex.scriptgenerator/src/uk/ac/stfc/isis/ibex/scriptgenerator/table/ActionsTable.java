@@ -10,9 +10,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static java.lang.Math.min;
+import static java.lang.Math.max;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
-import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
 
 /**
  * This class holds the script actions and their positions in the script.
@@ -98,20 +100,13 @@ public class ActionsTable extends ModelObject {
 		var parametersMap = new HashMap<JavaActionParameter, String>();
 		// Make a parameter/string pair for each parameter in the action
 		for (JavaActionParameter actionParameter: this.actionParameters) {
-			if (actionParameter.getCopyPreviousRow() == true) {
-				String value;
-				if (this.actions.size() > 0) {
+			if (actionParameter.getCopyPreviousRow() && this.actions.size() > 0) {
 				ScriptGeneratorAction lastRow = this.actions.get(this.actions.size() - 1);
-				value = lastRow.getActionParameterValue(actionParameter);
-				} else {
-					value = actionParameter.getDefaultValue();
-				}
-				parametersMap.put(actionParameter, value);
+				parametersMap.put(actionParameter, lastRow.getActionParameterValue(actionParameter));
 			} else { 
-			 parametersMap.put(actionParameter, actionParameter.getDefaultValue());
+				parametersMap.put(actionParameter, actionParameter.getDefaultValue());
 			}
 		}
-		
 		return createAction(parametersMap);
 	}
 
@@ -127,15 +122,24 @@ public class ActionsTable extends ModelObject {
 	}
 	
 	/**
+	 * @param actionIndex The index to coerce
+	 * @return Coerce the given actionIndex into the range of available action indexes.
+	 */
+	private Integer coerceActionIndexIntoRange(Integer actionIndex) {
+		return min(max(actionIndex, 0), actions.size());
+	}
+	
+	/**
 	 * Adds a new action with default parameters to the list of actions to a specified location in the table.
+	 * If the index is out of bounds we coerce the value to be at the beginning or end.
 	 * 
 	 * @param insertionLocation The index to add the specified 
 	 */
 	public void insertEmptyAction(Integer insertionLocation) {
 		var newAction = createDefaultAction();
-		
+		var correctedInsertionLocation = coerceActionIndexIntoRange(insertionLocation);
 		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
-		newList.add(insertionLocation, newAction);
+		newList.add(correctedInsertionLocation, newAction);
 		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
 	}
 	
@@ -176,8 +180,8 @@ public class ActionsTable extends ModelObject {
 		List<ScriptGeneratorAction> actionsToAdd = actionsToDuplicate.stream()
 				.map(action -> createAction(action.getActionParameterValueMap()))
 				.collect(Collectors.toList());
-		
-		newActionsList.addAll(insertionLocation, actionsToAdd);
+		var correctedInsertionLocation = coerceActionIndexIntoRange(insertionLocation);
+		newActionsList.addAll(correctedInsertionLocation, actionsToAdd);
 		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newActionsList);
 	}
     
