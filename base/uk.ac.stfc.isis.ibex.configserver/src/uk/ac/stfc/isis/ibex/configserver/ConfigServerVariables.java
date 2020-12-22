@@ -41,6 +41,7 @@ import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
+import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannelWithoutUnits;
 import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -245,9 +246,22 @@ public class ConfigServerVariables extends Closer {
      * @return the corresponding observable
      */
 	public ForwardingObservable<String> blockValue(String blockName) {
-        return closingObsFactory.getSwitchableObservable(new DefaultChannel(),
+        return closingObsFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(),
                 InstrumentUtils.addPrefix(blockServerAlias(blockName)));
 	}
+	
+    /**
+     * Provides a monitor on a specified block's units.
+     * This must be a separate monitor as the units for a block may change.
+     *
+     * @param blockName
+     *            the block name
+     * @return the corresponding observable
+     */
+    public ForwardingObservable<String> blockUnits(String blockName) {
+        return closingObsFactory.getSwitchableObservable(new StringChannel(),
+                InstrumentUtils.addPrefix(blockServerAddresses.blockUnits(blockServerAlias(blockName))));
+    }
 
     /**
      * Provides a monitor on a specified block's description.

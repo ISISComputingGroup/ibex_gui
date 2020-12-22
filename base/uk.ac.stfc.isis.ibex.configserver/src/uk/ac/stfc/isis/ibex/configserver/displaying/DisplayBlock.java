@@ -51,6 +51,8 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     private final String blockServerAlias;
     private final Block block;
     private String value;
+    private String valueNoUnits;
+    private String units;
     private String description;
     
     private static boolean showInvalidBlockValues;
@@ -113,22 +115,41 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     private final BaseObserver<String> valueAdapter = new BaseObserver<String>() {
         @Override
         public void onValue(String value) {
-            setValue(value);
+            setValue(value, true);
         }
 
         @Override
         public void onError(Exception e) {
-            setValue("error");
+            setValue("error", false);
             setBlockState(PvState.DISCONNECTED);
         }
 
         @Override
         public void onConnectionStatus(boolean isConnected) {
             if (!isConnected) {
-                setValue("disconnected");
+                setValue("disconnected", false);
                 setBlockState(PvState.DISCONNECTED);
             } else {
                 setBlockState(lastBlockState);
+            }
+        }
+    };
+    
+    private final BaseObserver<String> unitsAdapter = new BaseObserver<String>() {
+        @Override
+        public void onValue(String value) {
+            setUnits(value);
+        }
+
+        @Override
+        public void onError(Exception e) {
+            setUnits("");
+        }
+
+        @Override
+        public void onConnectionStatus(boolean isConnected) {
+            if (!isConnected) {
+                setUnits("");
             }
         }
     };
@@ -278,6 +299,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
      *
      * @param block the block
      * @param valueSource the observable holding the block's value
+     * @param unitsSource the observable holding the block's units
      * @param descriptionSource the observable holding the block's description
      * @param alarmSource the observable holding the block's alarm state
      * @param inRangeSource the observable holding the block's inRange status
@@ -292,6 +314,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
      */
     public DisplayBlock(Block block, 
     		ForwardingObservable<String> valueSource,
+            ForwardingObservable<String> unitsSource,    		
             ForwardingObservable<String> descriptionSource,
             ForwardingObservable<AlarmState> alarmSource,
             ForwardingObservable<String> inRangeSource,
@@ -305,6 +328,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
 
         sources = Sets.newHashSet(
         	valueSource,
+        	unitsSource,
         	descriptionSource,
         	alarmSource,
         	inRangeSource,
@@ -316,6 +340,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
 
         subscriptions = Sets.newHashSet(
     		valueSource.subscribe(valueAdapter),
+    		unitsSource.subscribe(unitsAdapter),
 		    descriptionSource.subscribe(descriptionAdapter),
 		    alarmSource.subscribe(alarmAdapter),
 		    inRangeSource.subscribe(inRangeAdapter),
@@ -343,7 +368,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     public String getName() {
         return block.getName();
     }
-
+    
     /**
      * @return does the block belong to a component
      */
@@ -361,7 +386,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     		return "invalid";
     	}
     }
-
+    
     /**
      * @return the block's description
      */
@@ -457,7 +482,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     public PvState getBlockState() {
         return blockState;
     }
-
+    
     /**
      * @return The alias to the PV that the blockserver uses creates for this block.
      */
@@ -465,12 +490,22 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
         return Instrument.getInstance().currentInstrument().pvPrefix() + blockServerAlias;
     }
 
-    private synchronized void setValue(String value) {
-        firePropertyChange("value", this.value, this.value = Strings.nullToEmpty(value));
+    private synchronized void setValue(String value, Boolean appendUnits) {
+        valueNoUnits = Strings.nullToEmpty(value);
+        String newValue = valueNoUnits;
+        if (appendUnits && !Strings.isNullOrEmpty(units)) {
+            newValue += " " + units;
+        }
+        firePropertyChange("value", this.value, this.value = newValue);
         setValueTooltipText();
         setNameTooltipText();
     }
 
+    private synchronized void setUnits(String units) {
+        this.units = units;
+        setValue(valueNoUnits, true);
+    }
+    
     private synchronized void setDescription(String description) {
         firePropertyChange("description", this.description, this.description = Strings.nullToEmpty(description));
         setValueTooltipText();

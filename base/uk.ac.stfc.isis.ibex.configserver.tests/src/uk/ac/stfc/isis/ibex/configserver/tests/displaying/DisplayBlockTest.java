@@ -51,6 +51,7 @@ public class DisplayBlockTest {
 		displayBlock = new DisplayBlock(
                 mock(Block.class), // block
                 valueObservable, // value
+                mock(ForwardingObservable.class),  // lowLimit
                 descriptionObservable, // description
                 mock(ForwardingObservable.class), // alarm
                 inRangeObservable, // inRange

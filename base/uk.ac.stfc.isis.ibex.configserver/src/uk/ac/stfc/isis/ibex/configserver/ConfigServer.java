@@ -77,6 +77,16 @@ public class ConfigServer extends Closer {
 		return variables.blockValue(blockName);
 	}
 
+	 /**
+     * Returns an observable conveying the units of a given block.
+     * 
+     * @param blockName the name of the block.
+     * @return the String observable object
+     */
+    public ForwardingObservable<String> blockUnits(String blockName) {
+        return variables.blockUnits(blockName);
+    }
+	
 	/**
 	 * Returns an observable conveying the description of a given block.
 	 * 
