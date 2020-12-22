@@ -30,6 +30,7 @@ import static java.lang.Math.min;
 import static java.lang.Math.max;
 
 import org.eclipse.core.databinding.observable.list.WritableList;
+import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.CellNavigationStrategy;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
@@ -168,7 +169,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	 */
 	@Override
 	public TableViewerColumn createColumn(String columnName, int widthWeighting,
-			SortableObservableMapCellLabelProvider<ScriptGeneratorAction> labelProvider) {
+			CellLabelProvider labelProvider) {
 		return super.createColumn(columnName, widthWeighting, labelProvider);
 	}
 
@@ -191,16 +192,14 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 			int focusRow = getSelectionIndex();
 			ScriptGeneratorAction previousSelection = firstSelectedRow();
 			int focusColumn = NON_EDITABLE_COLUMNS_ON_LEFT;
-			int editingSupportFocusColumn = 0;
 			
 			if (shiftCellFocusToNewlyAddedRow) {
 				focusRow = viewer.getTable().getSelectionIndex() + 1;
 			} else if (focusRow != -1) {
 				// When no focus is selected getFocusCell returns null
 				var focusCell = Optional.ofNullable(viewer.getColumnViewerEditor().getFocusCell());
-				if(focusCell.isPresent()) {
+				if (focusCell.isPresent()) {
 					focusColumn = focusCell.get().getColumnIndex();
-					editingSupportFocusColumn = min(max(focusColumn, 0), editingSupports.size()-1);
 				}
 			}
 			
