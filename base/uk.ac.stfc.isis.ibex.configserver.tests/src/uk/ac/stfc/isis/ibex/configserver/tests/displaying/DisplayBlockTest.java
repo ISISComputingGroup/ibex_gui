@@ -38,7 +38,6 @@ public class DisplayBlockTest {
 	TestableIOSObservable<String> inRangeObservable;
     TestableIOSObservable<String> enabledObservable;
     TestableIOSObservable<String> valueObservable;
-    TestableIOSObservable<String> unitsObservable;
     TestableIOSObservable<String> descriptionObservable;
     TestableIOSObservable<AlarmState> alarmObservable;
     TestableIOSObservable<Double> lowLimitObservable;
@@ -51,14 +50,12 @@ public class DisplayBlockTest {
         inRangeObservable = new TestableIOSObservable<String>(mock(ClosableObservable.class));
         enabledObservable = new TestableIOSObservable<String>(mock(ClosableObservable.class));
         valueObservable = new TestableIOSObservable<String>(mock(ClosableObservable.class));
-        unitsObservable = new TestableIOSObservable<String>(mock(ClosableObservable.class));
         descriptionObservable = new TestableIOSObservable<String>(mock(ClosableObservable.class));
         alarmObservable= new TestableIOSObservable<AlarmState>(mock(ClosableObservable.class));
         lowLimitObservable = new TestableIOSObservable<Double>(mock(ClosableObservable.class));
 		displayBlock = new DisplayBlock(
                 mock(Block.class), // block
                 valueObservable, // value
-                unitsObservable, // units
                 descriptionObservable, // description
                 alarmObservable, // alarm
                 inRangeObservable, // inRange
@@ -277,34 +274,6 @@ public class DisplayBlockTest {
     }
     
     @Test
-    public void GIVEN_value_of_10_WHEN_units_change_THEN_return_10_with_units() {
-        String newValue = String.valueOf(10);
-        String newUnits = "mm";
-        valueObservable.setConnectionStatus(true);
-        valueObservable.setValue(newValue);
-        
-        // Act
-        unitsObservable.setValue(newUnits);
-
-        // Assert
-        assertEquals(newValue + " " + newUnits, displayBlock.getValue());
-    }
-
-    @Test
-    public void GIVEN_value_of_10_with_units_WHEN_value_changes_THEN_return_new_value_with_same_units() {
-        String newValue = String.valueOf(20);
-        String newUnits = "mm";
-        valueObservable.setValue(String.valueOf(10));
-        unitsObservable.setValue(newUnits);
-        
-        // Act
-        valueObservable.setValue(String.valueOf(20));
-
-        // Assert
-        assertEquals(newValue + " " + newUnits, displayBlock.getValue());
-    }
-    
-    @Test
     public void GIVEN_pv_disconnected_THEN_value_is_disconnected() {      
         // Act
         valueObservable.setConnectionStatus(false);
@@ -320,31 +289,6 @@ public class DisplayBlockTest {
 
         // Assert
         assertEquals("error", displayBlock.getValue());
-    }
-    
-    @Test
-    public void GIVEN_pv_disconnected_WHEN_units_change_THEN_value_is_disconnected() {      
-        // Act
-        valueObservable.setConnectionStatus(false);
-        unitsObservable.setValue("mm");
-
-        // Assert
-        assertEquals("disconnected", displayBlock.getValue());
-    }
-
-    @Test
-    public void GIVEN_pv_in_alarm_WHEN_units_change_THEN_value_still_contains_units() {      
-        String newValue = String.valueOf(10);
-        String newUnits = "mm";
-        valueObservable.setConnectionStatus(true);
-        valueObservable.setValue(newValue);
-        unitsObservable.setValue(newUnits);
-        
-        // Act
-        alarmObservable.setValue(AlarmState.MAJOR);
-
-        // Assert
-        assertEquals(newValue + " " + newUnits, displayBlock.getValue());
     }
     
     @Test

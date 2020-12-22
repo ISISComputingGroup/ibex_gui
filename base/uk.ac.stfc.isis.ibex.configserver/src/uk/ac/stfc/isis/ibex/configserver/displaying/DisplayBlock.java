@@ -52,8 +52,6 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     private final String blockServerAlias;
     private final Block block;
     private String value;
-    private String valueNoUnits;
-    private String units;
     private String description;
     
     private static boolean showInvalidBlockValues;
@@ -116,19 +114,19 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     private final BaseObserver<String> valueAdapter = new BaseObserver<String>() {
         @Override
         public void onValue(String value) {
-            setValue(value, true);
+            setValue(value);
         }
 
         @Override
         public void onError(Exception e) {
-            setValue("error", false);
+            setValue("error");
             setBlockState(PvState.DISCONNECTED);
         }
 
         @Override
         public void onConnectionStatus(boolean isConnected) {
             if (!isConnected) {
-                setValue("disconnected", false);
+                setValue("disconnected");
                 setBlockState(PvState.DISCONNECTED);
             } else {
                 setBlockState(lastBlockState);
@@ -136,7 +134,6 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
         }
     };
     
-    private final BaseObserver<String> unitsAdapter = new ObserverSetDefaultOnInvalid<String>(value -> setUnits(value), "");
     private final BaseObserver<String> descriptionAdapter = new ObserverSetDefaultOnInvalid<String>(value -> setDescription(value), "No description available");
     
     private final BaseObserver<AlarmState> alarmAdapter = new BaseObserver<AlarmState>() {
@@ -232,7 +229,6 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
      *
      * @param block the block
      * @param valueSource the observable holding the block's value
-     * @param unitsSource the observable holding the block's units
      * @param descriptionSource the observable holding the block's description
      * @param alarmSource the observable holding the block's alarm state
      * @param inRangeSource the observable holding the block's inRange status
@@ -246,8 +242,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
      * @param blockServerAlias the PVs alias on the block server
      */
     public DisplayBlock(Block block, 
-    		ForwardingObservable<String> valueSource,
-            ForwardingObservable<String> unitsSource,    		
+    		ForwardingObservable<String> valueSource,	
             ForwardingObservable<String> descriptionSource,
             ForwardingObservable<AlarmState> alarmSource,
             ForwardingObservable<String> inRangeSource,
@@ -261,7 +256,6 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
 
         sources = Sets.newHashSet(
         	valueSource,
-        	unitsSource,
         	descriptionSource,
         	alarmSource,
         	inRangeSource,
@@ -273,7 +267,6 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
 
         subscriptions = Sets.newHashSet(
     		valueSource.subscribe(valueAdapter),
-    		unitsSource.subscribe(unitsAdapter),
 		    descriptionSource.subscribe(descriptionAdapter),
 		    alarmSource.subscribe(alarmAdapter),
 		    inRangeSource.subscribe(inRangeAdapter),
@@ -423,20 +416,10 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
         return Instrument.getInstance().currentInstrument().pvPrefix() + blockServerAlias;
     }
 
-    private synchronized void setValue(String value, Boolean appendUnits) {
-        valueNoUnits = Strings.nullToEmpty(value);
-        String newValue = valueNoUnits;
-        if (appendUnits && !Strings.isNullOrEmpty(units)) {
-            newValue += " " + units;
-        }
-        firePropertyChange("value", this.value, this.value = newValue);
+    private synchronized void setValue(String value) {
+        firePropertyChange("value", this.value, this.value = value);
         setValueTooltipText();
         setNameTooltipText();
-    }
-
-    private synchronized void setUnits(String units) {
-        this.units = units;
-        setValue(valueNoUnits, getBlockState() != PvState.DISCONNECTED);
     }
     
     private synchronized void setDescription(String description) {

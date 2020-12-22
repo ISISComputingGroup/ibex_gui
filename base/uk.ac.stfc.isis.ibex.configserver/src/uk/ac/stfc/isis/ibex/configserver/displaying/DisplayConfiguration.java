@@ -174,7 +174,6 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
         		new DisplayBlock(
     				blk,
             		configServer.blockValue(name),                    
-            		configServer.blockUnits(name),
             		configServer.blockDescription(name),
                     configServer.alarm(name),
 					runControlServer.blockRunControlInRange(name),

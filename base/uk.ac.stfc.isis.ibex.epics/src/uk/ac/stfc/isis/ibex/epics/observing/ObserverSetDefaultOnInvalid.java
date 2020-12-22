@@ -1,6 +1,6 @@
 
 /*
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2020
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -22,7 +22,9 @@ package uk.ac.stfc.isis.ibex.epics.observing;
 import java.util.function.Consumer;
 
 /**
- * Base for an observer.
+ * Creates an observer that will call the provided lambda with it's new value if it gets a valid value.
+ * 
+ * Otherwise will call the lambda with the provided default value.
  * 
  * @param <T> the generic type that the observer is observing
  */
@@ -31,6 +33,11 @@ public class ObserverSetDefaultOnInvalid<T> extends BaseObserver<T> {
     Consumer<T> consumer;
     T defaultArg;
     
+    /**
+     * Create the observer.
+     * @param consumer A lambda to call when the observable changes.
+     * @param defaultArg The argument to send to the lambda when an invalid state occurs.
+     */
     public ObserverSetDefaultOnInvalid(Consumer<T> consumer, T defaultArg) {
         this.consumer = consumer;
         this.defaultArg = defaultArg;
