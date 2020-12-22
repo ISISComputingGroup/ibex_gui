@@ -30,6 +30,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.IRuncontrol;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ObserverSetDefaultOnInvalid;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.epics.pv.PvState;
@@ -135,45 +136,9 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
         }
     };
     
-    private final BaseObserver<String> unitsAdapter = new BaseObserver<String>() {
-        @Override
-        public void onValue(String value) {
-            setUnits(value);
-        }
-
-        @Override
-        public void onError(Exception e) {
-            setUnits("");
-        }
-
-        @Override
-        public void onConnectionStatus(boolean isConnected) {
-            if (!isConnected) {
-                setUnits("");
-            }
-        }
-    };
-
-    private final BaseObserver<String> descriptionAdapter = new BaseObserver<String>() {
-
-        @Override
-        public void onValue(String value) {
-            setDescription(value);
-        }
-
-        @Override
-        public void onError(Exception e) {
-            setDescription("No description available");
-        }
-
-        @Override
-        public void onConnectionStatus(boolean isConnected) {
-            if (!isConnected) {
-                setDescription("No description available");
-            }
-        }
-    };
-
+    private final BaseObserver<String> unitsAdapter = new ObserverSetDefaultOnInvalid<String>(value -> setUnits(value), "");
+    private final BaseObserver<String> descriptionAdapter = new ObserverSetDefaultOnInvalid<String>(value -> setDescription(value), "No description available");
+    
     private final BaseObserver<AlarmState> alarmAdapter = new BaseObserver<AlarmState>() {
 
         @Override
@@ -227,41 +192,9 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
         }
     };
 
-    private final BaseObserver<Double> lowLimitAdapter = new BaseObserver<Double>() {
-        @Override
-        public void onValue(Double value) {
-            setRunControlLowLimit(value);
-        }
-
-        @Override
-        public void onError(Exception e) {
-            setRunControlLowLimit(null);
-        }
-    };
-
-    private final BaseObserver<Double> highLimitAdapter = new BaseObserver<Double>() {
-        @Override
-        public void onValue(Double value) {
-            setRunControlHighLimit(value);
-        }
-
-        @Override
-        public void onError(Exception e) {
-            setRunControlHighLimit(null);
-        }
-    };
-
-    private final BaseObserver<Boolean> suspendIfInvalidAdapter = new BaseObserver<Boolean>() {
-        @Override
-        public void onValue(Boolean value) {
-            setSuspendIfInvalid(value);
-        }
-
-        @Override
-        public void onError(Exception e) {
-        	setSuspendIfInvalid(null);
-        }
-    };
+    private final BaseObserver<Double> lowLimitAdapter = new ObserverSetDefaultOnInvalid<Double>(value -> setRunControlLowLimit(value), null);
+    private final BaseObserver<Double> highLimitAdapter = new ObserverSetDefaultOnInvalid<Double>(value -> setRunControlHighLimit(value), null);
+    private final BaseObserver<Boolean> suspendIfInvalidAdapter = new ObserverSetDefaultOnInvalid<Boolean>(value -> setSuspendIfInvalid(value), null);
 
     private final BaseObserver<String> enabledAdapter = new BaseObserver<String>() {
         @Override
@@ -503,7 +436,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
 
     private synchronized void setUnits(String units) {
         this.units = units;
-        setValue(valueNoUnits, getBlockState() == PvState.DEFAULT);
+        setValue(valueNoUnits, getBlockState() != PvState.DISCONNECTED);
     }
     
     private synchronized void setDescription(String description) {
