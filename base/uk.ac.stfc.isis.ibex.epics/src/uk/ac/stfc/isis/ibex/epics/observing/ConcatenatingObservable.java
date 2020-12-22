@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.epics.observing;
 
+import com.google.common.base.Strings;
+
 /**
  * Concatenates two String observables into a single one. 
  * Only goes into error if the first source is in error.
@@ -75,18 +77,14 @@ public class ConcatenatingObservable extends ClosableObservable<String> {
 		secondSubscription.cancelSubscription();
 	}
 	
-	private Boolean isNullOrEmpty(String value) {
-	    return (value == null || value.isEmpty());
-	}
-	
 	private String concatenate(String firstValue, String secondValue) {
 	    this.firstValue = firstValue;
 	    this.secondValue = secondValue;
-	    if (isNullOrEmpty(firstValue) && isNullOrEmpty(secondValue)) {
+	    if (Strings.isNullOrEmpty(firstValue) && Strings.isNullOrEmpty(secondValue)) {
 	        return "";
-	    } else if (isNullOrEmpty(firstValue)) {
+	    } else if (Strings.isNullOrEmpty(firstValue)) {
 	        return secondValue;
-	    } else if (isNullOrEmpty(secondValue)) {
+	    } else if (Strings.isNullOrEmpty(secondValue)) {
             return firstValue;
         }
 	    return firstValue + " " + secondValue;

@@ -417,7 +417,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     }
 
     private synchronized void setValue(String value) {
-        firePropertyChange("value", this.value, this.value = value);
+        firePropertyChange("value", this.value, this.value = Strings.nullToEmpty(value));
         setValueTooltipText();
         setNameTooltipText();
     }
