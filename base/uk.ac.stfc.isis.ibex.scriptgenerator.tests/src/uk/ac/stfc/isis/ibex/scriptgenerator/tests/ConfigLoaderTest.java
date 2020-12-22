@@ -54,7 +54,7 @@ public class ConfigLoaderTest {
 		when(mockedConfig.getName()).thenReturn(configName);
 		
 		List<ActionParameter> configParams = new ArrayList<ActionParameter>();
-		configParams.add(new JavaActionParameter("param1", "val1"));
+		configParams.add(new JavaActionParameter("param1", "val1", false));
 		when(mockedConfig.getParameters()).thenReturn(configParams);
 		
 		return mockedConfig;
@@ -98,9 +98,9 @@ public class ConfigLoaderTest {
 		String param3name = "parameter three";
 		String param3val = "three";
 		
-		ActionParameter param1 = new JavaActionParameter(param1name, param1val);
-		ActionParameter param2 = new JavaActionParameter(param2name, param2val);
-		ActionParameter param3 = new JavaActionParameter(param3name, param3val);
+		ActionParameter param1 = new JavaActionParameter(param1name, param1val, false);
+		ActionParameter param2 = new JavaActionParameter(param2name, param2val, false);
+		ActionParameter param3 = new JavaActionParameter(param3name, param3val, false);
 		
 		configParams.add(param1);
 		configParams.add(param2);

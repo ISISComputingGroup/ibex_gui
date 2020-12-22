@@ -23,9 +23,9 @@ public class ScriptGeneratorActionTest {
 	
 	@Before
 	public void setUp() {
-		var actionParam1 = new JavaActionParameter("actionParam1", "actionParam1DefaultVal");
-		var actionParam2 = new JavaActionParameter("actionParam2", "actionParam2DefaultVal");
-		var actionParam3 = new JavaActionParameter("actionParam3", "actionParam3DefaultVal");
+		var actionParam1 = new JavaActionParameter("actionParam1", "actionParam1DefaultVal", false);
+		var actionParam2 = new JavaActionParameter("actionParam2", "actionParam2DefaultVal", false);
+		var actionParam3 = new JavaActionParameter("actionParam3", "actionParam3DefaultVal", false);
 		
 		values = new HashMap<>();
 		values.put(actionParam1, actionParam1.getDefaultValue());
@@ -56,9 +56,9 @@ public class ScriptGeneratorActionTest {
 		
 		// Assert
 		HashMap<JavaActionParameter, String> expectedParams = new HashMap<>();
-		expectedParams.put(new JavaActionParameter("actionParam1", "actionParam1DefaultVal"), "actionParam1DefaultVal");
-		expectedParams.put(new JavaActionParameter("actionParam2", "actionParam2DefaultVal"), "actionParam2DefaultVal");
-		expectedParams.put(new JavaActionParameter("actionParam3", "actionParam3DefaultVal"), "actionParam3DefaultVal");
+		expectedParams.put(new JavaActionParameter("actionParam1", "actionParam1DefaultVal", false), "actionParam1DefaultVal");
+		expectedParams.put(new JavaActionParameter("actionParam2", "actionParam2DefaultVal", false), "actionParam2DefaultVal");
+		expectedParams.put(new JavaActionParameter("actionParam3", "actionParam3DefaultVal", false), "actionParam3DefaultVal");
 		
 		assertThat("Should convert action params to their name",
 				actionParamsAsStrings, equalTo(expectedParams));
