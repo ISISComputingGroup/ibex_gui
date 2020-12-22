@@ -503,7 +503,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
 
     private synchronized void setUnits(String units) {
         this.units = units;
-        setValue(valueNoUnits, true);
+        setValue(valueNoUnits, getBlockState() == PvState.DEFAULT);
     }
     
     private synchronized void setDescription(String description) {

@@ -37,6 +37,7 @@ public class DisplayBlockTest {
 	TestableIOSObservable<String> inRangeObservable;
     TestableIOSObservable<String> enabledObservable;
     TestableIOSObservable<String> valueObservable;
+    TestableIOSObservable<String> unitsObservable;
     TestableIOSObservable<String> descriptionObservable;
 	
 	DisplayBlock displayBlock;
@@ -47,11 +48,12 @@ public class DisplayBlockTest {
         inRangeObservable = new TestableIOSObservable<String>(mock(ClosableObservable.class));
         enabledObservable = new TestableIOSObservable<String>(mock(ClosableObservable.class));
         valueObservable = new TestableIOSObservable<String>(mock(ClosableObservable.class));
+        unitsObservable = new TestableIOSObservable<String>(mock(ClosableObservable.class));
         descriptionObservable = new TestableIOSObservable<String>(mock(ClosableObservable.class));
 		displayBlock = new DisplayBlock(
                 mock(Block.class), // block
                 valueObservable, // value
-                mock(ForwardingObservable.class),  // lowLimit
+                unitsObservable, // units
                 descriptionObservable, // description
                 mock(ForwardingObservable.class), // alarm
                 inRangeObservable, // inRange
@@ -256,5 +258,72 @@ public class DisplayBlockTest {
 
         // Assert
         assertEquals(RuncontrolState.DISCONNECTED, displayBlock.getRuncontrolState());
+    }
+    
+    @Test
+    public void GIVEN_no_units_WHEN_value_of_10_THEN_return_10() {
+        String newValue = String.valueOf(10);
+        
+        // Act
+        valueObservable.setValue(newValue);
+
+        // Assert
+        assertEquals(newValue, displayBlock.getValue());
+    }
+    
+    @Test
+    public void GIVEN_value_of_10_WHEN_units_change_THEN_return_10_with_units() {
+        String newValue = String.valueOf(10);
+        String newUnits = "mm";
+        valueObservable.setConnectionStatus(true);
+        valueObservable.setValue(newValue);
+        
+        // Act
+        unitsObservable.setValue(newUnits);
+
+        // Assert
+        assertEquals(newValue + " " + newUnits, displayBlock.getValue());
+    }
+
+    @Test
+    public void GIVEN_value_of_10_with_units_WHEN_value_changes_THEN_return_new_value_with_same_units() {
+        String newValue = String.valueOf(20);
+        String newUnits = "mm";
+        valueObservable.setValue(String.valueOf(10));
+        unitsObservable.setValue(newUnits);
+        
+        // Act
+        valueObservable.setValue(String.valueOf(20));
+
+        // Assert
+        assertEquals(newValue + " " + newUnits, displayBlock.getValue());
+    }
+    
+    @Test
+    public void GIVEN_pv_disconnected_THEN_value_is_disconnected() {      
+        // Act
+        valueObservable.setConnectionStatus(false);
+
+        // Assert
+        assertEquals("disconnected", displayBlock.getValue());
+    }
+    
+    @Test
+    public void GIVEN_pv_in_error_THEN_value_is_error() {      
+        // Act
+        valueObservable.setError(new Exception());
+
+        // Assert
+        assertEquals("error", displayBlock.getValue());
+    }
+    
+    @Test
+    public void GIVEN_pv_disconnected_WHEN_units_change_THEN_value_is_disconnected() {      
+        // Act
+        valueObservable.setConnectionStatus(false);
+        unitsObservable.setValue("mm");
+
+        // Assert
+        assertEquals("disconnected", displayBlock.getValue());
     }
 }
