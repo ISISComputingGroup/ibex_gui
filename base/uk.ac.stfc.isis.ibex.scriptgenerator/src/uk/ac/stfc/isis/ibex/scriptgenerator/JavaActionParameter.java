@@ -32,14 +32,17 @@ public class JavaActionParameter implements ActionParameter {
 	
 	private final String defaultValue;
 	
+	private final boolean copyPreviousRow;
+	
 	/**
 	 * This class holds the name about an action parameter.
 	 * @param name The name of the action parameter (column header)
 	 * @param defaultValue The value this parameter should have as a default
 	 */
-	public JavaActionParameter(String name, String defaultValue) {
+	public JavaActionParameter(String name, String defaultValue, boolean copyPreviousRow) {
 		this.name = name;
 		this.defaultValue = defaultValue;
+		this.copyPreviousRow = copyPreviousRow;
 	}
 
 	/**
@@ -54,6 +57,10 @@ public class JavaActionParameter implements ActionParameter {
 	 */
 	public String getDefaultValue() {
 		return defaultValue;
+	}
+	
+	public boolean getCopyPreviousRow() { 
+		return copyPreviousRow;
 	}
 
 	
@@ -72,7 +79,8 @@ public class JavaActionParameter implements ActionParameter {
 		
 		JavaActionParameter actionParameter = (JavaActionParameter) other;
 		return Objects.equals(this.getName(), actionParameter.getName()) 
-			&& Objects.equals(this.getDefaultValue(), actionParameter.getDefaultValue());
+			&& Objects.equals(this.getDefaultValue(), actionParameter.getDefaultValue())
+			&& Objects.deepEquals(this.getCopyPreviousRow(), actionParameter.getCopyPreviousRow());
 	}
 	
 	/**
