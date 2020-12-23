@@ -46,7 +46,7 @@ import uk.ac.stfc.isis.ibex.ui.banner.models.CustomControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.InstrumentStatusViewModel;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Control;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Indicator;
-import uk.ac.stfc.isis.ibex.ui.banner.widgets.StatusIndicator;
+import uk.ac.stfc.isis.ibex.ui.banner.widgets.StatusIndicatorPanel;
 
 /**
  * View of the spangle banner containing various instrument status messages.
@@ -84,11 +84,14 @@ public class BannerView {
         
         Composite serverStatusPanel = new Composite(parent, SWT.NONE);
         serverStatusPanel.setLayout(new GridLayout());
-        GridData gdServerStatus = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        GridData gdServerStatus = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         serverStatusPanel.setLayoutData(gdServerStatus);
         
         InstrumentStatusViewModel model = new InstrumentStatusViewModel(new InstrumentStatusVariables());
-        
+
+        StatusIndicatorPanel statusIndicator = new StatusIndicatorPanel(serverStatusPanel, SWT.NONE, model);
+        statusIndicator.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, true));
+
         GridData gdBannerItems = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
         gdBannerItems.heightHint = 35;
         bannerItemPanel = new Composite(parent, SWT.RIGHT_TO_LEFT);
@@ -96,7 +99,7 @@ public class BannerView {
         bannerItemPanel.setLayoutData(gdBannerItems);
         glBannerItemPanel.marginHeight = 0;
         glBannerItemPanel.horizontalSpacing = 15;
-
+        
         banner.observables().bannerDescription.subscribe(modelAdapter);
 
     }
