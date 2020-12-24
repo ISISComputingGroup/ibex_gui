@@ -29,17 +29,24 @@ public class ActionsTableTest {
 
 	private ActionsTable table;
 	private List<JavaActionParameter> actionParameters;
+	private JavaActionParameter testParameter;
 	
 	@Before
-	public void setUp() {
-		table = new ActionsTable(new ArrayList<JavaActionParameter>());
-		
-		var testParameter = new JavaActionParameter("Test Parameter", "test value", false);
+	public void setUp() {		
+		testParameter = new JavaActionParameter("Test Parameter", "test value", false);
 		
 		actionParameters = new ArrayList<JavaActionParameter>();
 		actionParameters.add(testParameter);
+		
+		table = new ActionsTable(actionParameters);
 	}
 	
+	private void addEmptyActions(int numOfActions) {
+		for(int i = 0; i < numOfActions; i++) {
+			table.addEmptyAction();
+		}
+	}
+		
 	@Test
 	public void test_GIVEN_empty_table_WHEN_action_added_THEN_action_appears_in_table() {
 		var numberOfActionsBefore = table.getActions().size();
@@ -68,8 +75,7 @@ public class ActionsTableTest {
 	
 	@Test
 	public void test_GIVEN_actions_duplicated_WHEN_multiple_actions_selected_THEN_actions_are_duplicated() {
-		table.addEmptyAction();
-		table.addEmptyAction();
+		addEmptyActions(2);
 		
 		table.duplicateAction(table.getActions(), 2);
 		
@@ -92,9 +98,7 @@ public class ActionsTableTest {
 	
 	@Test
 	public void test_GIVEN_actions_in_table_WHEN_all_actions_deleted_THEN_actions_are_removed() {
-		table.addEmptyAction();
-		table.addEmptyAction();
-		table.addEmptyAction();
+		addEmptyActions(3);
 
 		table.deleteAction(table.getActions());
 		
@@ -105,8 +109,7 @@ public class ActionsTableTest {
 	@Test
 	public void test_GIVEN_action_in_table_WHEN_action_moved_THEN_action_moves_in_table() {
 		// Add two actions
-		table.addEmptyAction();
-		table.addEmptyAction();
+		addEmptyActions(2);
 		
 		var secondAction = table.getActions().get(1);
 		
@@ -118,12 +121,7 @@ public class ActionsTableTest {
 	@Test
 	public void test_GIVEN_actions_in_table_WHEN_multiple_action_moved_THEN_actions_move_in_table() {
 		// Add six actions
-		table.addEmptyAction();
-		table.addEmptyAction();
-		table.addEmptyAction();
-		table.addEmptyAction();
-		table.addEmptyAction();
-		table.addEmptyAction();
+		addEmptyActions(6);
 
 		var firstAction = table.getActions().get(0);
 		var secondAction = table.getActions().get(1);
@@ -146,8 +144,7 @@ public class ActionsTableTest {
 	@Test
 	public void test_GIVEN_action_at_top_of_table_WHEN_action_moved_up_THEN_action_does_not_move() {
 		// Add two actions
-		table.addEmptyAction();
-		table.addEmptyAction();
+		addEmptyActions(2);
 		
 		var firstAction = table.getActions().get(0);
 		
@@ -158,10 +155,8 @@ public class ActionsTableTest {
 	
 	@Test
 	public void test_GIVEN_one_of_multiple_selected_actions_at_top_of_table_WHEN_action_moved_up_THEN_action_does_not_move() {
-		// Add two actions
-		table.addEmptyAction();
-		table.addEmptyAction();
-		table.addEmptyAction();
+		// Add three actions
+		addEmptyActions(3);
 		
 		var firstAction = table.getActions().get(0);
 		var secondAction = table.getActions().get(1);
@@ -175,8 +170,7 @@ public class ActionsTableTest {
 	@Test
 	public void test_GIVEN_action_at_bottom_of_table_WHEN_action_moved_down_THEN_action_does_not_move() {
 		// Add two actions
-		table.addEmptyAction();
-		table.addEmptyAction();
+		addEmptyActions(2);
 		
 		var secondAction = table.getActions().get(1);
 		
@@ -187,10 +181,8 @@ public class ActionsTableTest {
 	
 	@Test
 	public void test_GIVEN_one_of_multiple_selected_actions_at_bottom_of_table_WHEN_action_moved_down_THEN_action_does_not_move() {
-		// Add two actions
-		table.addEmptyAction();
-		table.addEmptyAction();
-		table.addEmptyAction();
+		// Add three actions
+		addEmptyActions(3);
 		
 		var secondAction = table.getActions().get(1);
 		var thirdAction = table.getActions().get(2);
@@ -204,10 +196,7 @@ public class ActionsTableTest {
 	@Test
 	public void test_WHEN_actions_invalid_THEN_errors_returned_are_correct() {
 		// Arrange
-		table.addEmptyAction();
-		table.addEmptyAction();
-		table.addEmptyAction();
-		table.addEmptyAction();
+		addEmptyActions(4);
 		table.getActions().get(1).setInvalid("invalid 1");
 		table.getActions().get(3).setInvalid("invalid 2");
 		
@@ -224,10 +213,7 @@ public class ActionsTableTest {
 	@Test
 	public void test_WHEN_setting_actions_as_invalid_THEN_correct_actions_are_invalid() {
 		// Arrange
-		table.addEmptyAction();
-		table.addEmptyAction();
-		table.addEmptyAction();
-		table.addEmptyAction();
+		addEmptyActions(4);
 		HashMap<Integer, String> validityErrors = new HashMap<Integer, String>();
 		validityErrors.put(0, "invalid 1");
 		validityErrors.put(3, "invalid 2");
@@ -269,6 +255,79 @@ public class ActionsTableTest {
 		
 		assertEquals(table.getActions().size(), 2);
 		
+	}
+	
+	private void assertActionsHaveValue(Map<Integer, String> indexValueMap) {
+		for (Integer index : indexValueMap.keySet()) {
+			assertThat("Action should be inserted into the correct position",
+					table.getActions().get(index).getActionParameterValue(testParameter), is(indexValueMap.get(index)));
+		}
+	}
+	
+	@Test
+	public void test_GIVEN_multiple_actions_WHEN_insert_action_THEN_action_inserted_correctly() {
+		int numOfActions = 6;
+		addEmptyActions(6);
+		for(int i = 0; i < numOfActions; i++) {
+			table.getActions().get(i).setActionParameterValue(testParameter, "not default value");
+		}
+		table.insertEmptyAction(3);
+		
+		assertThat("We inserted an action so there should now be another in the table",
+				table.getActions().size(), is(numOfActions + 1));
+		assertActionsHaveValue(Map.of(3, testParameter.getDefaultValue()));
+	}
+	
+	@Test
+	public void test_GIVEN_multiple_actions_WHEN_insert_multiple_actions_THEN_action_inserted_correctly() {
+		int numOfActions = 6;
+		addEmptyActions(6);
+		for(int i = 0; i < numOfActions; i++) {
+			table.getActions().get(i).setActionParameterValue(testParameter, "not default value");
+		}
+		table.insertEmptyAction(3);
+		table.insertEmptyAction(3);
+		table.insertEmptyAction(6);
+		
+		assertThat("We inserted an action so there should now be another in the table",
+				table.getActions().size(), is(numOfActions + 3));
+		assertThat("Action should be inserted into the third position",
+				table.getActions().get(3).getActionParameterValue(testParameter), is(testParameter.getDefaultValue()));
+		assertActionsHaveValue(
+				Map.of(
+						3, testParameter.getDefaultValue(),
+						4, testParameter.getDefaultValue(),
+						6, testParameter.getDefaultValue()
+				)
+		);
+	}
+	
+	@Test
+	public void test_GIVEN_multiple_actions_WHEN_insert_action_at_beginning_THEN_action_inserted_correctly() {
+		int numOfActions = 6;
+		addEmptyActions(6);
+		for(int i = 0; i < numOfActions; i++) {
+			table.getActions().get(i).setActionParameterValue(testParameter, "not default value");
+		}
+		table.insertEmptyAction(-2);
+		
+		assertThat("We inserted an action so there should now be another in the table",
+				table.getActions().size(), is(numOfActions + 1));
+		assertActionsHaveValue(Map.of(0, testParameter.getDefaultValue()));
+	}
+	
+	@Test
+	public void test_GIVEN_multiple_actions_WHEN_insert_action_at_end_THEN_action_inserted_correctly() {
+		int numOfActions = 6;
+		addEmptyActions(6);
+		for(int i = 0; i < numOfActions; i++) {
+			table.getActions().get(i).setActionParameterValue(testParameter, "not default value");
+		}
+		table.insertEmptyAction(numOfActions + 2);
+		
+		assertThat("We inserted an action so there should now be another in the table",
+				table.getActions().size(), is(numOfActions + 1));
+		assertActionsHaveValue(Map.of(numOfActions, testParameter.getDefaultValue()));
 	}
 
 }
