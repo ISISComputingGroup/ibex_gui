@@ -27,6 +27,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
 import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
+import uk.ac.stfc.isis.ibex.epics.observing.ConcatenatingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
@@ -152,8 +153,9 @@ public class Variables {
      * @return an observable to the input PV
      */
     public ForwardingObservable<String> defaultReaderRemote(String address) {
-        // Synoptic variables are always remote
-        return closingObservableFactory.getSwitchableObservable(new DefaultChannel(), address);
+        var value = closingObservableFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(), address);
+        var units = closingObservableFactory.getSwitchableObservable(new StringChannel(), address + ".EGU");
+        return new ForwardingObservable<String>(new ConcatenatingObservable(value, units));
     }
 
     /**
