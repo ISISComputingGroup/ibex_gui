@@ -1,3 +1,4 @@
+setlocal
 REM We bundle our own JRE with the client, this is where it is
 set "JRELOCATION=\\isis\inst$\Kits$\CompGroup\ICP\ibex_client_jre"
 set "LOCAL_JRE_LOCATION=%~dp0jdk"
