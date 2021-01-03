@@ -99,7 +99,9 @@ public class BlockServerAddresses {
 	
     /** The field used to get the description from a PV. */
 	private static final String DESCRIPTION_FIELD = ".DESC";
-    /** The field used to get the alarm severity from a PV. */
+    /** The field used to get the units from a PV. */
+    private static final String UNITS_FIELD = ".EGU";
+	/** The field used to get the alarm severity from a PV. */
     private static final String ALARM_FIELD = ".SEVR";
 
     /** The field used to get the current banner description. */
@@ -271,9 +273,17 @@ public class BlockServerAddresses {
      * @return The address for the description field of the input PV
      */
 	public String blockDescription(String pvAddress) {
-		return pvAddress + DESCRIPTION_FIELD;
+	    return pvAddress + DESCRIPTION_FIELD;
 	}
 
+    /**
+     * @param pvAddress The PV address to append the units field to
+     * @return The address for the units field of the input PV
+     */
+    public String blockUnits(String pvAddress) {
+        return pvAddress + UNITS_FIELD;
+    }
+	
     /**
      * Get the address of the PV holding the banner description.
      * 

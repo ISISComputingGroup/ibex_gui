@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.mainmenu.instrument;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 import uk.ac.stfc.isis.ibex.validators.InstrumentNameValidator;
@@ -60,13 +61,16 @@ public class InstrumentSelectionViewModel extends ErrorMessageProvider {
         validate(name);
         firePropertyChange("selectedName", this.selectedName, this.selectedName = name);
     }
-
+    
     /**
-     * @return a collection containing all of the InstrumentInfo
+     * Returns a list of Instruments that is allowed to be seen.
+     * 
+     * @return List of allowed instruments.
      */
-    public Collection<InstrumentInfo> getInstruments() {
-        return instruments;
+    public Collection<InstrumentInfo> getInstrumentAllowlist() {
+    	return Instrument.getInstrumentAllowlist(instruments);
     }
+    
 
     /**
      * @return the InstrumentInfo for the selected instrument.
@@ -134,4 +138,5 @@ public class InstrumentSelectionViewModel extends ErrorMessageProvider {
             throw new IllegalArgumentException("Input instruments cannot be null");
         }
     }
+
 }
