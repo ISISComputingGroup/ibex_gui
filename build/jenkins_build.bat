@@ -16,11 +16,12 @@ if "%IS_E4%" == "YES" (
 )
 
 set TARGET_DIR=Client_E4
+set MSINAME=ibex_client
 
 call build.bat "LOG" %BUILT_CLIENT_DIR% %TARGET_DIR%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-call build_msi.bat %BASEDIR%.. %TARGET_DIR% ibex_client
+call build_msi.bat %BASEDIR%.. %TARGET_DIR% %MSINAME%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM set EXIT=YES will change error code to 1 if not set previously so store the current
@@ -93,6 +94,13 @@ if not "%RELEASE%"=="YES" (
         rmdir "%INSTALLLINKDIR%"
     )
     mklink /J "%INSTALLLINKDIR%" "%INSTALLDIR%"
+)
+
+REM copy MSI
+copy /Y %MSINAME%.msi %INSTALLDIR%
+if %errorlevel% neq 0 (
+    @echo MSI copy failed
+    exit /b %errorlevel%
 )
 
 REM Copy the install script across

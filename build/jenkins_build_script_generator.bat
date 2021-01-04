@@ -10,11 +10,12 @@ set PYTHON_HOME=C:\Instrument\Apps\Python3
 set PATH=%M2%;%PATH%
 
 set TARGET_DIR=script_generator
+set MSINAME=ibex_script_generator
 
 call build_script_generator.bat "" %TARGET_DIR%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-call build_msi.bat %BASEDIR%.. %TARGET_DIR% ibex_script_generator
+call build_msi.bat %BASEDIR%.. %TARGET_DIR% %MSINAME%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 @echo on
@@ -84,6 +85,13 @@ if not "%RELEASE%"=="YES" (
         rmdir "%INSTALLLINKDIR%"
     )
     mklink /J "%INSTALLLINKDIR%" "%INSTALLDIR%"
+)
+
+REM copy MSI
+copy /Y %MSINAME%.msi %INSTALLDIR%
+if %errorlevel% neq 0 (
+    @echo MSI copy failed
+    exit /b %errorlevel%
 )
 
 REM Copy the install script across
