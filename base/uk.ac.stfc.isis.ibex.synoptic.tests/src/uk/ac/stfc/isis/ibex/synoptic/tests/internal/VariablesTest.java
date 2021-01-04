@@ -219,18 +219,27 @@ public class VariablesTest {
 
     @Test
     public void
-            GIVEN_new_variables_WHEN_getting_defaultReaderRemote_THEN_returns_default_observable_from_specified_pv() {
+            GIVEN_new_variables_WHEN_getting_defaultReaderRemote_THEN_returns_subscriber_to_value_and_units() {
         // Arrange
         String address = "Test";
-        when(closingObservableFactory.getSwitchableObservable(any(DefaultChannel.class), eq(address)))
-                .thenReturn(mockSwitchableObservable);
+        var testableObservableValue = new TestableObservable<String>();
+        var mockValue = new SwitchableObservable<>(testableObservableValue);
+        when(closingObservableFactory.getSwitchableObservable(any(DefaultChannelWithoutUnits.class), eq(address)))
+                .thenReturn(mockValue);
+        var testableObservableUnit = new TestableObservable<String>();
+        var mockUnits = new SwitchableObservable<>(testableObservableUnit);
+        when(closingObservableFactory.getSwitchableObservable(any(StringChannel.class), eq(address + ".EGU")))
+        		.thenReturn(mockUnits);
         variables = createVariables();
 
         // Act
         ForwardingObservable<String> result = variables.defaultReaderRemote(address);
         
-        // Assert
-        assertSame(mockSwitchableObservable, result);
+        //Assert
+        assertNull(result.getValue());
+        testableObservableValue.setValue("Value");
+        testableObservableUnit.setValue("Units");
+        assertEquals(result.getValue(), "Value Units");
         assertNotEquals(defaultSwitchableObservable, result);
     }
 
