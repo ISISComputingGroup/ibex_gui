@@ -72,4 +72,3 @@ call copy_python.bat %PythonWriteDir%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 @echo Client built in %sensible_build_dir%
-pause

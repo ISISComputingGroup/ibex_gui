@@ -17,6 +17,7 @@ pipeline {
     timeout(time: 60, unit: 'MINUTES')
     disableConcurrentBuilds()
     timestamps()
+	skipDefaultCheckout(true)
     office365ConnectorWebhooks([[
                     name: "Office 365",
                     notifyBackToNormal: true,
@@ -76,12 +77,6 @@ pipeline {
       }
     }
     
-    stage("Unit Tests") {
-      steps {
-        junit '**/surefire-reports/TEST-*.xml'
-      }
-    }
-    
     stage("Checkstyle") {
       steps {
         archiveCheckstyleResults()
@@ -95,7 +90,14 @@ pipeline {
             '''
       }
     }
-  }    
+  }
+
+  post {
+    always {
+	    junit '**/surefire-reports/TEST-*.xml'
+    }
+  }
+  
 }
 
 def archiveCheckstyleResults() {
