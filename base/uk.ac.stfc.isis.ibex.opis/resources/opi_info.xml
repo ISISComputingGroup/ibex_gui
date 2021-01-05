@@ -98,6 +98,18 @@
       </value>
     </entry>
     <entry>
+      <key>SANS Sample changer</key>
+      <value>
+        <type>SAMPLECHANGER</type>
+        <path>stage/sans_sample_changer.opi</path>
+        <description>The OPI for the sample changer. No properties required.</description>
+        <macros/>
+        <categories>
+          <category>Sample changers</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>OscillatingCollimator</key>
       <value>
         <type>OSCILLATING_COLLIMATOR</type>
@@ -547,6 +559,25 @@
             <name>PRESSURE_NUM2</name>
             <description>The second pressure card number (e.g. 2, optional).</description>
             <default>2</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Temperature controllers</category>
+          <category>Cryogenics</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Mercury Flow Cryostat</key>
+      <value>
+        <type>MERCURY</type>
+        <path>mercuryiTC/mercuryiTC_flow.opi</path>
+        <description>The OPI for the Mercury temperature controller connected to the flow cryostat.</description>
+        <macros>
+          <macro>
+            <name>MERCURY</name>
+            <description>The Mercury PV prefix (e.g. MERCURY_01).</description>
+            <default>MERCURY_01</default>
           </macro>
         </macros>
         <categories>
@@ -1609,6 +1640,11 @@
             <description>The Kepco PV name (e.g. KEPCO_01).</description>
             <default>KEPCO_01</default>
           </macro>
+          <macro>
+            <name>SMRTMON</name>
+            <description>Smart Monitor PV (e.g. SMRTMON_01).</description>
+            <default>SMRTMON_01</default>
+          </macro>
         </macros>
         <categories>
           <category>Power supplies</category>
@@ -1637,7 +1673,13 @@
         <type>UNKNOWN</type>
         <path>matplotlib.opi</path>
         <description>The OPI for displaying plots created via matplotlib</description>
-        <macros/>
+        <macros>
+          <macro>
+            <name>URL</name>
+            <description>The URL from which to retrieve the plot.</description>
+            <default>http://localhost:8988</default>
+          </macro>
+        </macros>
         <categories/>
       </value>
     </entry>
@@ -1807,13 +1849,13 @@
       </value>
     </entry>
     <entry>
-      <key>Reflectometry Front Panel</key>
+      <key>Reflectometry OPI</key>
       <value>
         <categories>
           <category>Miscellaneous motion control</category>
         </categories>
         <type>REFLECTOMETRY</type>
-        <path>reflectometry/front_panel.opi</path>
+        <path>reflectometry/full_opi.opi</path>
         <description>The OPI for the reflectometry information panel.</description>
         <macros/>
       </value>
@@ -2414,7 +2456,7 @@
         </macros>
       </value>
     </entry>
-        <entry>
+    <entry>
       <key>SANS2D Waveguide and Aperture</key>
       <value>
         <type>WAVEGUIDE_APERTURE</type>
@@ -2447,6 +2489,38 @@
         </macros>
         <categories>
           <category>Monitors</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>User Buttons</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>instetc/user_buttons.opi</path>
+        <description>The OPI for user buttons which run some action</description>
+      </value>
+    </entry>
+    <entry>
+      <key>HRPD In Situ DSC</key>
+      <value>
+        <type>DSC</type>
+        <path>hrpd_in_situ_dsc.opi</path>
+        <description>The OPI for the HRPD in situ dsc experiment</description>
+        <macros>
+          <macro>
+            <name>DSC_EUROTHRM</name>
+            <description>The eurotherm ioc number (e.g. 03).</description>
+            <default>03</default>
+          </macro>
+          <macro>
+            <name>DSC_LKSH</name>
+            <description>The lakeshore 336 ioc number (e.g. 02).</description>
+            <default>02</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Temperature controllers</category>
         </categories>
       </value>
     </entry>
