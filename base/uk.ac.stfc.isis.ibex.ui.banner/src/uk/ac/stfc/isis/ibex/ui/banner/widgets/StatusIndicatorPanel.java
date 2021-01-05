@@ -15,7 +15,7 @@ import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import uk.ac.stfc.isis.ibex.ui.banner.models.InstrumentStatusViewModel;
+import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusViewModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatus;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusColourConverter;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusTextConverter;
@@ -29,7 +29,7 @@ public class StatusIndicatorPanel extends Composite {
 	private static final int STATUS_LABEL_H = 25;
 	
 	
-	public StatusIndicatorPanel(Composite parent, int style, InstrumentStatusViewModel model) {
+	public StatusIndicatorPanel(Composite parent, int style, ServerStatusViewModel model) {
 		super(parent, style);
 	    setLayout(new GridLayout(NUM_COLS, false));
 	    Label serverLabel = new Label(this, SWT.NONE);
@@ -62,10 +62,10 @@ public class StatusIndicatorPanel extends Composite {
         textStrategy.setConverter(new ServerStatusTextConverter());
 
 		bindingContext.bindValue(WidgetProperties.background().observe(overallStatusPanel),
-				BeanProperties.<InstrumentStatusViewModel, ServerStatus>value("overallStatus").observe(model), null,
+				BeanProperties.<ServerStatusViewModel, ServerStatus>value("overallStatus").observe(model), null,
 				colourStrategy);
 		bindingContext.bindValue(WidgetProperties.text().observe(overallStatusLabel),
-				BeanProperties.<InstrumentStatusViewModel, ServerStatus>value("overallStatus").observe(model), null,
+				BeanProperties.<ServerStatusViewModel, ServerStatus>value("overallStatus").observe(model), null,
 				textStrategy);
 	}
 	

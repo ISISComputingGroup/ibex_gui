@@ -40,10 +40,10 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.configserver.configuration.CustomBannerData;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
-import uk.ac.stfc.isis.ibex.instrument.status.InstrumentStatusVariables;
+import uk.ac.stfc.isis.ibex.instrument.status.ServerStatusVariables;
 import uk.ac.stfc.isis.ibex.ui.banner.models.BannerItemModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.CustomControlModel;
-import uk.ac.stfc.isis.ibex.ui.banner.models.InstrumentStatusViewModel;
+import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusViewModel;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Control;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Indicator;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.StatusIndicatorPanel;
@@ -87,7 +87,7 @@ public class BannerView {
         GridData gdServerStatus = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         serverStatusPanel.setLayoutData(gdServerStatus);
         
-        InstrumentStatusViewModel model = new InstrumentStatusViewModel(new InstrumentStatusVariables());
+        ServerStatusViewModel model = new ServerStatusViewModel(new ServerStatusVariables());
 
         StatusIndicatorPanel statusIndicator = new StatusIndicatorPanel(serverStatusPanel, SWT.NONE, model);
         statusIndicator.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, true));

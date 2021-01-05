@@ -15,28 +15,28 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.wb.swt.SWTResourceManager;
 
-import uk.ac.stfc.isis.ibex.ui.banner.models.InstrumentStatusViewModel;
-import uk.ac.stfc.isis.ibex.ui.banner.models.StatusColourConverter;
-import uk.ac.stfc.isis.ibex.ui.banner.models.StatusTextConverter;
+import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatus;
+import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusColourConverter;
+import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusTextConverter;
+import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusViewModel;
 
 
 public class StatusDetailsDialog extends TitleAreaDialog {
     
-    private InstrumentStatusViewModel viewModel;
+    private ServerStatusViewModel viewModel;
     private DataBindingContext bindingContext;
-    private final UpdateValueStrategy<Boolean, Color> colourStrategy = new UpdateValueStrategy<>();
-    private final UpdateValueStrategy<Boolean, String> textStrategy = new UpdateValueStrategy<>();
+    private final UpdateValueStrategy<ServerStatus, Color> colourStrategy = new UpdateValueStrategy<>();
+    private final UpdateValueStrategy<ServerStatus, String> textStrategy = new UpdateValueStrategy<>();
 
-	public StatusDetailsDialog(Shell parentShell, InstrumentStatusViewModel viewModel) {
+	public StatusDetailsDialog(Shell parentShell, ServerStatusViewModel viewModel) {
 		super(parentShell);	
 		setShellStyle(getShellStyle() | SWT.RESIZE | SWT.MAX);
 		this.viewModel = viewModel;
 		
 		bindingContext = new DataBindingContext();
-        colourStrategy.setConverter(new StatusColourConverter());
-        textStrategy.setConverter(new StatusTextConverter());
+        colourStrategy.setConverter(new ServerStatusColourConverter());
+        textStrategy.setConverter(new ServerStatusTextConverter());
 	}
 	
 	@Override
@@ -48,15 +48,15 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 		detailsPanel.setLayout(new GridLayout(2, true));
 		detailsPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		addIndicator(detailsPanel, "runControlRunning", "Run Control");
-		addIndicator(detailsPanel, "blockServerRunning", "Block Server");
-		addIndicator(detailsPanel, "blockGatewayRunning", "Block Gateway");
-		addIndicator(detailsPanel, "isisDaeRunning", "DAE");
-		addIndicator(detailsPanel, "instetcRunning", "INSTETC");
-		addIndicator(detailsPanel, "dbServerRunning", "Database Server");
-		addIndicator(detailsPanel, "psControlRunning", "Procserv Control IOC");
-		addIndicator(detailsPanel, "arAccessRunning", "Archiver Access");
-		addIndicator(detailsPanel, "alarmServerRunning", "Alarm Server");
+		addIndicator(detailsPanel, "runControlStatus", "Run Control");
+		addIndicator(detailsPanel, "blockServerStatus", "Block Server");
+		addIndicator(detailsPanel, "blockGatewayStatus", "Block Gateway");
+		addIndicator(detailsPanel, "isisDaeStatus", "DAE");
+		addIndicator(detailsPanel, "instetcStatus", "INSTETC");
+		addIndicator(detailsPanel, "dbServerStatus", "Database Server");
+		addIndicator(detailsPanel, "psControlStatus", "Procserv Control IOC");
+		addIndicator(detailsPanel, "arAccessStatus", "Archiver Access");
+		addIndicator(detailsPanel, "alarmServerStatus", "Alarm Server");
 		return container;
 	}	
 
@@ -70,10 +70,10 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 		lblStatus.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 
 		bindingContext.bindValue(WidgetProperties.background().observe(lblStatus),
-				BeanProperties.<InstrumentStatusViewModel, Boolean>value(propertyName).observe(this.viewModel),
+				BeanProperties.<ServerStatusViewModel, ServerStatus>value(propertyName).observe(this.viewModel),
 				null, colourStrategy);
 		bindingContext.bindValue(WidgetProperties.text().observe(lblStatus),
-				BeanProperties.<InstrumentStatusViewModel, Boolean>value(propertyName).observe(this.viewModel),
+				BeanProperties.<ServerStatusViewModel, ServerStatus>value(propertyName).observe(this.viewModel),
 				null, textStrategy);
 	}
 

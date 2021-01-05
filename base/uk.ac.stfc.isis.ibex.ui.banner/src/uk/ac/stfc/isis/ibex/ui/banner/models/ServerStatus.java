@@ -6,7 +6,7 @@ public enum ServerStatus {
 	OK("OK"),
 	/** Server is NOT RUNNING. */
 	OFF("NOT RUNNING"),
-	/** Server is running PARTIALLY. */
+	/** Server is running but UNSTABLE. */
 	UNSTABLE("UNSTABLE"),
 	/** Server status is UNKNOWN. */
 	UNKNOWN("UNKNOWN");

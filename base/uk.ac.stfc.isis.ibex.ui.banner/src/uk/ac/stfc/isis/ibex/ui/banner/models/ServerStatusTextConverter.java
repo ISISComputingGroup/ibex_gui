@@ -3,7 +3,7 @@ package uk.ac.stfc.isis.ibex.ui.banner.models;
 import org.eclipse.core.databinding.conversion.Converter;
 
 
-public class ServerStatusTextConverter extends Converter<ServerStatus, String>{
+public class ServerStatusTextConverter extends Converter<ServerStatus, String> {
 	
     private static final String RUNNING_TEXT = "RUNNING";
     private static final String NOT_RUNNING_TEXT = "NOT RUNNING";

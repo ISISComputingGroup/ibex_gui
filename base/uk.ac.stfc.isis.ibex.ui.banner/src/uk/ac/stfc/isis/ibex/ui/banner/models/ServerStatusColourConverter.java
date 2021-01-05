@@ -5,7 +5,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 
-public class ServerStatusColourConverter extends Converter<ServerStatus, Color>{
+public class ServerStatusColourConverter extends Converter<ServerStatus, Color> {
 	
     private static final Color RED = SWTResourceManager.getColor(255, 0, 0);
     private static final Color GREEN = SWTResourceManager.getColor(51, 255, 153);
