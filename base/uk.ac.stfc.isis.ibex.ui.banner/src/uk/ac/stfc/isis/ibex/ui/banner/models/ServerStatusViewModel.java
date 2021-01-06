@@ -19,7 +19,6 @@ public class ServerStatusViewModel extends ModelObject {
 	private ServerStatus instetcStatus = ServerStatus.UNKNOWN;
 	private ServerStatus dbServerStatus = ServerStatus.UNKNOWN;
 	private ServerStatus psControlStatus = ServerStatus.UNKNOWN;
-	private ServerStatus extGatewayStatus = ServerStatus.UNKNOWN;
 	private ServerStatus alarmServerStatus = ServerStatus.UNKNOWN;
 	private ServerStatus overallStatus = ServerStatus.UNKNOWN;
 	
@@ -38,7 +37,6 @@ public class ServerStatusViewModel extends ModelObject {
 		variables.getInstetcPV().subscribe(instetcStatusObserver);
 		variables.getDatabaseServerPV().subscribe(dbServerStatusObserver);
 		variables.getProcservControlPV().subscribe(psControlStatusObserver);
-		variables.getExtGatewayPV().subscribe(extGatewayStatusObserver);
 		variables.getAlarmServerPV().subscribe(alarmServerStatusObserver);
 		refreshOverallStatus();
 	}
@@ -72,23 +70,6 @@ public class ServerStatusViewModel extends ModelObject {
 		}
 	};
 	
-	private final BaseObserver<String> extGatewayStatusObserver = new BaseObserver<String>() {
-		@Override
-		public void onValue(String value) {
-			if (value.equals("Shutdown")) {
-				setExtGatewayStatus(ServerStatus.NOT_RUNNING);
-			} else {
-				setExtGatewayStatus(ServerStatus.RUNNING);
-			}
-		}
-		
-		@Override
-		public void onConnectionStatus(boolean isConnected) {
-			if (psControlStatus == ServerStatus.NOT_RUNNING) {
-				setExtGatewayStatus(ServerStatus.UNKNOWN);
-			}
-		}
-	};
 	
 	private final BaseObserver<Boolean> isisDaeStatusObserver = new BaseObserver<Boolean>() {
 		@Override
@@ -167,16 +148,6 @@ public class ServerStatusViewModel extends ModelObject {
 	}
 
 	/**
-	 * Set the external gateway status and alert listeners.
-	 * 
-	 * @param status The new status
-	 */
-	public void setExtGatewayStatus(ServerStatus status) {
-        firePropertyChange("extGatewayStatus", this.extGatewayStatus, this.extGatewayStatus = status);
-		refreshOverallStatus();
-	}
-
-	/**
 	 * Set the ISIS DAE status and alert listeners.
 	 * 
 	 * @param status The new status
@@ -248,13 +219,6 @@ public class ServerStatusViewModel extends ModelObject {
 	}
 
 	/**
-	 * @return The external gateway status
-	 */
-	public ServerStatus getExtGatewayStatus() {
-		return extGatewayStatus;
-	}
-
-	/**
 	 * @return The ISIS DAE status status
 	 */
 	public ServerStatus getIsisDaeStatus() {
@@ -303,7 +267,6 @@ public class ServerStatusViewModel extends ModelObject {
 		individualStatus.add(instetcStatus);
 		individualStatus.add(dbServerStatus);
 		individualStatus.add(psControlStatus);
-		individualStatus.add(extGatewayStatus);
 		individualStatus.add(alarmServerStatus);
 		if (individualStatus.stream().allMatch(t -> t.equals(ServerStatus.RUNNING))) {
 			statusToSet = ServerStatus.RUNNING;

@@ -18,8 +18,6 @@ public class ServerStatusVariables {
     private static final String BLOCKSVR_PV = "CS:BLOCKSERVER:SERVER_STATUS";
     /** PV for existence of Block Gateway */
     private static final String BLOCKGW_PV = "CS:GATEWAY:BLOCKSERVER:pvtotal";
-    /** PV for existence of External Gateway */
-    private static final String EXTGW_PV = "CS:PS:ARACCESS:STATUS";
     /** PV for existence of ISISDAE IOC */
     private static final String ISISDAE_PV = "DAE:INSTNAME";
     /** PV for existence of INSTETC IOC */
@@ -53,9 +51,6 @@ public class ServerStatusVariables {
     
     private final ForwardingObservable<Boolean> procservControlPV = 
             obsFactory.getSwitchableObservable(new BooleanChannel(), InstrumentUtils.addPrefix(PSCTRL_PV));
-
-    private final ForwardingObservable<String> externalGatewayPV = 
-            obsFactory.getSwitchableObservable(new DefaultChannel(), InstrumentUtils.addPrefix(EXTGW_PV));
 
     private final ForwardingObservable<String> alarmServerPV = 
             obsFactory.getSwitchableObservable(new DefaultChannel(), InstrumentUtils.addPrefix(ALARMSVR_PV));
@@ -110,13 +105,6 @@ public class ServerStatusVariables {
 		return procservControlPV;
 	}
 	
-    /**
-     * @return Observable for PV of External Gateway
-     */
-	public ForwardingObservable<String> getExtGatewayPV() {
-		return externalGatewayPV;
-	}
-
     /**
      * @return Observable for PV of Alarmserver
      */

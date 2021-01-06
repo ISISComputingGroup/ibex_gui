@@ -30,14 +30,12 @@ public class ServerStatusViewModelTest {
         when(pvs.getInstetcPV()).thenReturn(mock(ForwardingObservable.class));
         when(pvs.getDatabaseServerPV()).thenReturn(mock(ForwardingObservable.class));
         when(pvs.getProcservControlPV()).thenReturn(mock(ForwardingObservable.class));
-        when(pvs.getExtGatewayPV()).thenReturn(mock(ForwardingObservable.class));
         when(pvs.getAlarmServerPV()).thenReturn(mock(ForwardingObservable.class));
         viewModel = new ServerStatusViewModel(pvs);
     }
     
     private void setAll(ServerStatus statusToSet) {
     	viewModel.setAlarmServerStatus(statusToSet);
-    	viewModel.setExtGatewayStatus(statusToSet);
     	viewModel.setBlockGatewayStatus(statusToSet);
     	viewModel.setBlockServerStatus(statusToSet);
     	viewModel.setDbServerStatus(statusToSet);

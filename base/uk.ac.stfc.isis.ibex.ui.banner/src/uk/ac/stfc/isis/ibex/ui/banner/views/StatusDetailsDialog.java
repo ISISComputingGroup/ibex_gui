@@ -59,14 +59,13 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 		addIndicator(detailsPanel, "runControlStatus", "Run Control");
 		addIndicator(detailsPanel, "blockServerStatus", "Block Server");
 		addIndicator(detailsPanel, "blockGatewayStatus", "Block Gateway");
-		addIndicator(detailsPanel, "extGatewayStatus", "External Gateway");
 		addIndicator(detailsPanel, "isisDaeStatus", "DAE");
 		addIndicator(detailsPanel, "instetcStatus", "INSTETC");
 		addIndicator(detailsPanel, "dbServerStatus", "Database Server");
 		addIndicator(detailsPanel, "psControlStatus", "Procserv Control IOC");
 		addIndicator(detailsPanel, "alarmServerStatus", "Alarm Server");
 		return container;
-	}	
+	}
 
 	private void addIndicator(Composite parent, String propertyName, String displayName) {
 
