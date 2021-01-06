@@ -14,19 +14,19 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PartInitException;
@@ -284,7 +284,21 @@ public class ScriptGeneratorViewModel extends ModelObject {
     // Make sure the table is updated with the new action before selecting it
     actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam);
     DISPLAY.asyncExec(() -> {
-        viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, 0);
+    	viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
+    });
+    }
+    
+    /**
+	 * Adds a new action with default parameters to the list of actions to a specified location in the table.
+	 * 
+	 * @param insertionLocation The index to add the specified 
+	 */
+    protected void insertEmptyAction(Integer insertionLocation) {
+    scriptGeneratorModel.insertEmptyAction(insertionLocation);
+    // Make sure the table is updated with the new action before selecting it
+    actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam);
+    DISPLAY.asyncExec(() -> {
+        viewTable.setCellFocus(insertionLocation, 0);
     });
     }
 
@@ -311,7 +325,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     // Make sure the table is updated with the new action before selecting it
     actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam);
     DISPLAY.asyncExec(() -> {
-        viewTable.setCellFocus(insertionLocation, 0);
+    	viewTable.setCellFocus(insertionLocation, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
     });
     }
 
@@ -386,14 +400,14 @@ public class ScriptGeneratorViewModel extends ModelObject {
     	List<String> gitLoadErrors = scriptGeneratorModel.getGitLoadErrors();
     	String loadErrorMessage = null;
 
-		if (gitLoadErrors.size() > 0) {
-			loadErrorMessage = "The following error(s) occurred when updating the script definitions. It should be OK to continue, but the definitions may be out of date:\n";
-			for (String error : scriptGeneratorModel.getGitLoadErrors()) {
-				loadErrorMessage += error + "\n";
-			}
-		}
+    	if (gitLoadErrors.size() > 0) {
+    		loadErrorMessage = "The following error(s) occurred when updating the script definitions. It should be OK to continue, but the definitions may be out of date:\n";
+    		for (String error: scriptGeneratorModel.getGitLoadErrors()) {
+    			loadErrorMessage += error + "\n";
+    		}
+    	}
 
-		return Optional.ofNullable(loadErrorMessage);
+    	return Optional.ofNullable(loadErrorMessage);
     }
 
     
@@ -679,89 +693,108 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * 
      * @param viewTable The table view to add columns to.
      */
-    protected void addColumns(ActionsViewTable viewTable) {        
-    // Add action parameter columns
-    for (JavaActionParameter actionParameter: scriptGeneratorModel.getActionParameters()) {
-        String columnName = actionParameter.getName();
-        TableViewerColumn column = viewTable.createColumn(
-            columnName, 
-            2,
-            new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty(columnName)) {
+    protected void addColumns(ActionsViewTable viewTable) {  
+        // Add line numbers
+        TableViewerColumn lineNumberColumn = viewTable.createColumn("Line", 0, 
+                new CellLabelProvider() {
+                    @Override
+                    public void update(ViewerCell cell) {
+                        for (int i = 0; i < viewTable.table().getItemCount(); i++) {
+                            if (cell.getElement().equals(viewTable.viewer().getElementAt(i))) {
+                                cell.setText(String.valueOf(i + 1));
+                                break;
+                            }
+                        }
+                    }
+        
+                    @Override
+                    public String getToolTipText(Object element) {
+                        return getScriptGenActionToolTipText((ScriptGeneratorAction) element);
+                    }
+        });
+    	lineNumberColumn.getColumn().setAlignment(SWT.CENTER);
+        // Add action parameter columns
+        for (JavaActionParameter actionParameter: scriptGeneratorModel.getActionParameters()) {
+            String columnName = actionParameter.getName();
+            TableViewerColumn column = viewTable.createColumn(
+                columnName, 
+                2,
+                new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty(columnName)) {
+                @Override
+                protected String stringFromRow(ScriptGeneratorAction row) {
+                    return row.getActionParameterValue(actionParameter);
+                }
+    
+                @Override
+                public String getToolTipText(Object element) {
+                    return getScriptGenActionToolTipText((ScriptGeneratorAction) element);
+                }
+                });
+    
+            var editingSupport = new StringEditingSupport<ScriptGeneratorAction>(viewTable.viewer(), ScriptGeneratorAction.class) {          
+                @Override
+                protected String valueFromRow(ScriptGeneratorAction row) {
+                    return row.getActionParameterValue(actionParameter);
+                }
+        
+                @Override
+                protected void setValueForRow(ScriptGeneratorAction row, String value) {
+                    row.setActionParameterValue(actionParameter, value);
+                }
+            };
+            viewTable.addEditingSupport(editingSupport);
+            column.setEditingSupport(editingSupport);
+            
+        }
+        // Add validity notifier column
+        TableViewerColumn validityColumn = viewTable.createColumn("Validity", 
+            1, 
+            new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty("validity")) {
             @Override
             protected String stringFromRow(ScriptGeneratorAction row) {
-                return row.getActionParameterValue(actionParameter);
+            if (!scriptGeneratorModel.languageSupported) {
+                return "\u003F"; // A question mark to say we cannot be certain
             }
-
-            @Override
-            public String getToolTipText(Object element) {
-                return getScriptGenActionToolTipText((ScriptGeneratorAction) element);
+            if (row.isValid()) {
+                return "\u2714"; // A tick for valid
             }
-            });
-
-        var editingSupport = new StringEditingSupport<ScriptGeneratorAction>(viewTable.viewer(), ScriptGeneratorAction.class) {          
-            @Override
-            protected String valueFromRow(ScriptGeneratorAction row) {
-                return row.getActionParameterValue(actionParameter);
+            return "\u2718"; // Unicode cross for invalidity
             }
     
             @Override
-            protected void setValueForRow(ScriptGeneratorAction row, String value) {
-                row.setActionParameterValue(actionParameter, value);
+            public String getToolTipText(Object element) {
+            return getScriptGenActionToolTipText((ScriptGeneratorAction) element);
             }
-        };
-        viewTable.addEditingSupport(editingSupport);
-        column.setEditingSupport(editingSupport);
-        
-    }
-    // Add validity notifier column
-    TableViewerColumn validityColumn = viewTable.createColumn("Validity", 
-        1, 
-        new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty("validity")) {
-        @Override
-        protected String stringFromRow(ScriptGeneratorAction row) {
-        if (!scriptGeneratorModel.languageSupported) {
-            return "\u003F"; // A question mark to say we cannot be certain
-        }
-        if (row.isValid()) {
-            return "\u2714"; // A tick for valid
-        }
-        return "\u2718"; // Unicode cross for invalidity
-        }
-
-        @Override
-        public String getToolTipText(Object element) {
-        return getScriptGenActionToolTipText((ScriptGeneratorAction) element);
-        }
-
-    });
-    validityColumn.getColumn().setAlignment(SWT.CENTER);
-
-    // Add estimated time column
-    TableViewerColumn timeEstimateColumn = viewTable.createColumn("Estimated run time", 
-        1, 
-        new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty(TIME_ESTIMATE_PROPERTY)) {
-        @Override
-        protected String stringFromRow(ScriptGeneratorAction row) {
-        if (!scriptGeneratorModel.languageSupported) {
-            return "\u003F"; // A question mark to say we cannot be certain
-        }
-
-        Optional<Number> estimatedTime = row.getEstimatedTime();
-        if (estimatedTime.isEmpty()) {
-            return "Unknown";
-        }
-        return changeSecondsToTimeFormat(estimatedTime.get().longValue());
-        }
-
-        @Override
-        public String getToolTipText(Object element) {
-        return getScriptGenActionToolTipText((ScriptGeneratorAction) element);
-        }
-
-    });
-    timeEstimateColumn.getColumn().setAlignment(SWT.CENTER);
-
-    ColumnViewerToolTipSupport.enableFor(viewTable.viewer());
+    
+        });
+        validityColumn.getColumn().setAlignment(SWT.CENTER);
+    
+        // Add estimated time column
+        TableViewerColumn timeEstimateColumn = viewTable.createColumn("Estimated run time", 
+            1, 
+            new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty(TIME_ESTIMATE_PROPERTY)) {
+            @Override
+            protected String stringFromRow(ScriptGeneratorAction row) {
+            if (!scriptGeneratorModel.languageSupported) {
+                return "\u003F"; // A question mark to say we cannot be certain
+            }
+    
+            Optional<Number> estimatedTime = row.getEstimatedTime();
+            if (estimatedTime.isEmpty()) {
+                return "Unknown";
+            }
+            return changeSecondsToTimeFormat(estimatedTime.get().longValue());
+            }
+    
+            @Override
+            public String getToolTipText(Object element) {
+            return getScriptGenActionToolTipText((ScriptGeneratorAction) element);
+            }
+    
+        });
+        timeEstimateColumn.getColumn().setAlignment(SWT.CENTER);
+    
+        ColumnViewerToolTipSupport.enableFor(viewTable.viewer());
     }
 
     /**

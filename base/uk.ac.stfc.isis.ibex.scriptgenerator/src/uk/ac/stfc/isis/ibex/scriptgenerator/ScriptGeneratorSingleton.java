@@ -437,6 +437,15 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	public void addEmptyAction() {
 		scriptGeneratorTable.addEmptyAction();
 	}
+	
+	/**
+	 * Adds a new action with default parameters to the list of actions to a specified location in the table.
+	 * 
+	 * @param insertionLocation The index to add the specified 
+	 */
+	public void insertEmptyAction(Integer insertionLocation) {
+		scriptGeneratorTable.insertEmptyAction(insertionLocation);
+	}
 
 	/**
 	 * Removes action at position index from ActionsTable.

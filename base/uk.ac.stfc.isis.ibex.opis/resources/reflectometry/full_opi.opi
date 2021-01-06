@@ -10,12 +10,12 @@
   <background_color>
     <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
   </background_color>
-  <boy_version>5.1.0.201707071649</boy_version>
+  <boy_version>5.1.0</boy_version>
   <foreground_color>
     <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
   </foreground_color>
   <grid_space>6</grid_space>
-  <height>650</height>
+  <height>660</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
     <PV_ROOT>$(P)REFL_01:</PV_ROOT>
@@ -29,7 +29,7 @@
   <show_ruler>true</show_ruler>
   <snap_to_geometry>true</snap_to_geometry>
   <widget_type>Display</widget_type>
-  <width>800</width>
+  <width>985</width>
   <wuid>450885f3:157944e4d4b:-797d</wuid>
   <x>-1</x>
   <y>-1</y>
@@ -51,7 +51,7 @@
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
-    <height>680</height>
+    <height>670</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -88,7 +88,7 @@
       <foreground_color>
         <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
       </foreground_color>
-      <height>667</height>
+      <height>660</height>
       <horizontal_tabs>true</horizontal_tabs>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -243,7 +243,7 @@
         <foreground_color>
           <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
         </foreground_color>
-        <height>638</height>
+        <height>631</height>
         <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -259,7 +259,7 @@
         <show_scrollbar>true</show_scrollbar>
         <tooltip></tooltip>
         <transparent>true</transparent>
-        <visible>false</visible>
+        <visible>true</visible>
         <widget_type>Grouping Container</widget_type>
         <width>978</width>
         <wuid>4fbad31a:1436c3e166f:-6faf</wuid>
@@ -324,7 +324,7 @@
         <foreground_color>
           <color red="192" green="192" blue="192" />
         </foreground_color>
-        <height>638</height>
+        <height>631</height>
         <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -364,7 +364,7 @@
             <color red="192" green="192" blue="192" />
           </foreground_color>
           <group_name></group_name>
-          <height>631</height>
+          <height>656</height>
           <macros>
             <include_parent_macros>true</include_parent_macros>
           </macros>
@@ -405,7 +405,7 @@
         <foreground_color>
           <color red="192" green="192" blue="192" />
         </foreground_color>
-        <height>638</height>
+        <height>631</height>
         <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -445,7 +445,7 @@
             <color red="192" green="192" blue="192" />
           </foreground_color>
           <group_name></group_name>
-          <height>631</height>
+          <height>656</height>
           <macros>
             <include_parent_macros>true</include_parent_macros>
           </macros>
@@ -486,7 +486,7 @@
         <foreground_color>
           <color red="192" green="192" blue="192" />
         </foreground_color>
-        <height>638</height>
+        <height>631</height>
         <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -526,7 +526,7 @@
             <color red="192" green="192" blue="192" />
           </foreground_color>
           <group_name></group_name>
-          <height>631</height>
+          <height>656</height>
           <macros>
             <include_parent_macros>true</include_parent_macros>
           </macros>
@@ -567,7 +567,7 @@
         <foreground_color>
           <color red="192" green="192" blue="192" />
         </foreground_color>
-        <height>638</height>
+        <height>631</height>
         <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -607,7 +607,7 @@
             <color red="192" green="192" blue="192" />
           </foreground_color>
           <group_name></group_name>
-          <height>631</height>
+          <height>656</height>
           <macros>
             <include_parent_macros>true</include_parent_macros>
           </macros>
@@ -648,7 +648,7 @@
         <foreground_color>
           <color red="192" green="192" blue="192" />
         </foreground_color>
-        <height>638</height>
+        <height>631</height>
         <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -688,7 +688,7 @@
             <color red="192" green="192" blue="192" />
           </foreground_color>
           <group_name></group_name>
-          <height>631</height>
+          <height>656</height>
           <macros>
             <include_parent_macros>true</include_parent_macros>
           </macros>
@@ -729,7 +729,7 @@
         <foreground_color>
           <color red="192" green="192" blue="192" />
         </foreground_color>
-        <height>638</height>
+        <height>631</height>
         <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -769,7 +769,7 @@
             <color red="192" green="192" blue="192" />
           </foreground_color>
           <group_name></group_name>
-          <height>631</height>
+          <height>656</height>
           <macros>
             <include_parent_macros>true</include_parent_macros>
           </macros>
@@ -810,7 +810,7 @@
         <foreground_color>
           <color red="192" green="192" blue="192" />
         </foreground_color>
-        <height>638</height>
+        <height>631</height>
         <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -826,7 +826,7 @@
         <show_scrollbar>true</show_scrollbar>
         <tooltip></tooltip>
         <transparent>true</transparent>
-        <visible>true</visible>
+        <visible>false</visible>
         <widget_type>Grouping Container</widget_type>
         <width>978</width>
         <wuid>-4fa8d0d3:170e865f099:-7c70</wuid>
@@ -850,7 +850,7 @@
             <color red="192" green="192" blue="192" />
           </foreground_color>
           <group_name></group_name>
-          <height>631</height>
+          <height>656</height>
           <macros>
             <include_parent_macros>true</include_parent_macros>
           </macros>
@@ -891,7 +891,7 @@
         <foreground_color>
           <color red="192" green="192" blue="192" />
         </foreground_color>
-        <height>638</height>
+        <height>631</height>
         <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -931,7 +931,7 @@
             <color red="192" green="192" blue="192" />
           </foreground_color>
           <group_name></group_name>
-          <height>631</height>
+          <height>656</height>
           <macros>
             <include_parent_macros>true</include_parent_macros>
           </macros>

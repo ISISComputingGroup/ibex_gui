@@ -18,5 +18,12 @@ public interface ActionParameter {
 	 * @return The default value for the action parameter
 	 */
 	String getDefaultValue();
-
+	
+	/**
+	 *  Get whether the parameter should copy the previous row's value.
+	 * 
+	 * @return A boolean of whether the parameter value should be copied from the previous row
+	 */
+	boolean getCopyPreviousRow();
+	
 }

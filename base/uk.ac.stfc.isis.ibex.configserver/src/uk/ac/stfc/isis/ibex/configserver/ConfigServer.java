@@ -76,7 +76,7 @@ public class ConfigServer extends Closer {
 	public ForwardingObservable<String> blockValue(String blockName) {
 		return variables.blockValue(blockName);
 	}
-
+	
 	/**
 	 * Returns an observable conveying the description of a given block.
 	 * 

@@ -30,6 +30,7 @@ import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.TableColumnLayout;
+import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -421,7 +422,7 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @param cellProvider the label provider for the cell's text
      * @return the table viewer column
      */
-    protected TableViewerColumn createColumn(String title, int widthWeighting, SortableObservableMapCellLabelProvider<TRow> cellProvider) {
+    protected TableViewerColumn createColumn(String title, int widthWeighting, CellLabelProvider cellProvider) {
 	return createColumn(title, widthWeighting, true, cellProvider);
     }
 
@@ -435,7 +436,7 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @param cellProvider the label provider for the cell's text
      * @return the table viewer column
      */
-    public TableViewerColumn createColumn(String title, int widthWeighting, boolean resizable, SortableObservableMapCellLabelProvider<TRow> cellProvider) {
+    public TableViewerColumn createColumn(String title, int widthWeighting, boolean resizable, CellLabelProvider cellProvider) {
 	TableViewerColumn tableColumn = createColumn(title);
 	TableColumn col = tableColumn.getColumn();
 	tableColumnLayout.setColumnData(col,
