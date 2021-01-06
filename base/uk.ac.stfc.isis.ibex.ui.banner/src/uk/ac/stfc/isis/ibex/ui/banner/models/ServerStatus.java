@@ -6,7 +6,7 @@ package uk.ac.stfc.isis.ibex.ui.banner.models;
 public enum ServerStatus {
 
 	/** Server is RUNNING. */
-	RUNNING("OK"),
+	RUNNING("RUNNING"),
 	/** Server is NOT RUNNING. */
 	NOT_RUNNING("NOT RUNNING"),
 	/** Server is PARTIALLY running. */

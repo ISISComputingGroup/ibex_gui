@@ -55,6 +55,7 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 		Composite detailsPanel = new Composite(container, SWT.NONE);
 		detailsPanel.setLayout(new GridLayout(2, true));
 		detailsPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
 
 		addIndicator(detailsPanel, "runControlStatus", "Run Control");
 		addIndicator(detailsPanel, "blockServerStatus", "Block Server");
@@ -64,6 +65,15 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 		addIndicator(detailsPanel, "dbServerStatus", "Database Server");
 		addIndicator(detailsPanel, "psControlStatus", "Procserv Control IOC");
 		addIndicator(detailsPanel, "alarmServerStatus", "Alarm Server");
+
+		new Label(detailsPanel, SWT.NONE);  // spacer
+		
+		Label message = new Label(detailsPanel, SWT.NONE);
+		message.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		message.setText(
+				"Note: Services may have issues even if they are running (more info in IOC logs). \n"
+				+ "Contact experiment controls support if you are experiencing server issues.");
+		
 		return container;
 	}
 
