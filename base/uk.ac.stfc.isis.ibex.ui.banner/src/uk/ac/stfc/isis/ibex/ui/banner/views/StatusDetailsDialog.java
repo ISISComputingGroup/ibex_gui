@@ -21,7 +21,9 @@ import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusColourConverter;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusTextConverter;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusViewModel;
 
-
+/**
+ * A dialog box displaying the status of various services in the IBEX Server.
+ */
 public class StatusDetailsDialog extends TitleAreaDialog {
     
     private ServerStatusViewModel viewModel;
@@ -29,6 +31,12 @@ public class StatusDetailsDialog extends TitleAreaDialog {
     private final UpdateValueStrategy<ServerStatus, Color> colourStrategy = new UpdateValueStrategy<>();
     private final UpdateValueStrategy<ServerStatus, String> textStrategy = new UpdateValueStrategy<>();
 
+	/**
+	 * The constructor.
+	 * 
+	 * @param parentShell The shell to open the dialog from
+	 * @param viewModel   The viewmodel providing the status information
+	 */
 	public StatusDetailsDialog(Shell parentShell, ServerStatusViewModel viewModel) {
 		super(parentShell);	
 		setShellStyle(getShellStyle() | SWT.RESIZE | SWT.MAX);
@@ -51,11 +59,11 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 		addIndicator(detailsPanel, "runControlStatus", "Run Control");
 		addIndicator(detailsPanel, "blockServerStatus", "Block Server");
 		addIndicator(detailsPanel, "blockGatewayStatus", "Block Gateway");
+		addIndicator(detailsPanel, "extGatewayStatus", "External Gateway");
 		addIndicator(detailsPanel, "isisDaeStatus", "DAE");
 		addIndicator(detailsPanel, "instetcStatus", "INSTETC");
 		addIndicator(detailsPanel, "dbServerStatus", "Database Server");
 		addIndicator(detailsPanel, "psControlStatus", "Procserv Control IOC");
-		addIndicator(detailsPanel, "arAccessStatus", "Archiver Access");
 		addIndicator(detailsPanel, "alarmServerStatus", "Alarm Server");
 		return container;
 	}	

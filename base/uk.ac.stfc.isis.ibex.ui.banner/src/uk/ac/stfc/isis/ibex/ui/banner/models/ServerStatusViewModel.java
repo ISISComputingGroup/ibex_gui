@@ -8,7 +8,7 @@ import uk.ac.stfc.isis.ibex.instrument.status.ServerStatusVariables;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- * Viewmodel for status of the IBEX server.
+ * Viewmodel for status of the IBEX server and its individual components.
  */
 public class ServerStatusViewModel extends ModelObject {
 
@@ -19,12 +19,17 @@ public class ServerStatusViewModel extends ModelObject {
 	private ServerStatus instetcStatus = ServerStatus.UNKNOWN;
 	private ServerStatus dbServerStatus = ServerStatus.UNKNOWN;
 	private ServerStatus psControlStatus = ServerStatus.UNKNOWN;
-	private ServerStatus arAccessStatus = ServerStatus.UNKNOWN;
+	private ServerStatus extGatewayStatus = ServerStatus.UNKNOWN;
 	private ServerStatus alarmServerStatus = ServerStatus.UNKNOWN;
 	private ServerStatus overallStatus = ServerStatus.UNKNOWN;
 	
 	private List<ServerStatus> individualStatus = new ArrayList<ServerStatus>();
 	
+	/**
+	 * The constructor.
+	 * 
+	 * @param variables The class holding PVs for accessing the status
+	 */
 	public ServerStatusViewModel(ServerStatusVariables variables) {
 		variables.getRuncontrolPV().subscribe(runControlStatusObserver);
 		variables.getBlockServerPV().subscribe(blockServerStatusObserver);
@@ -33,16 +38,16 @@ public class ServerStatusViewModel extends ModelObject {
 		variables.getInstetcPV().subscribe(instetcStatusObserver);
 		variables.getDatabaseServerPV().subscribe(dbServerStatusObserver);
 		variables.getProcservControlPV().subscribe(psControlStatusObserver);
-		variables.getArchiverAccessPV().subscribe(arAccessStatusObserver);
+		variables.getExtGatewayPV().subscribe(extGatewayStatusObserver);
 		variables.getAlarmServerPV().subscribe(alarmServerStatusObserver);
 		refreshOverallStatus();
 	}
 	
 	private ServerStatus boolToStatus(boolean isConnected) {
 		if (isConnected) {
-			return ServerStatus.OK;
+			return ServerStatus.RUNNING;
 		} else {
-			return ServerStatus.OFF;
+			return ServerStatus.NOT_RUNNING;
 		}
 	}
 
@@ -50,7 +55,6 @@ public class ServerStatusViewModel extends ModelObject {
 		@Override
 		public void onConnectionStatus(boolean isConnected) {
 			setRunControlStatus(boolToStatus(isConnected));
-			refreshOverallStatus();
 		}
 	};
 
@@ -58,7 +62,6 @@ public class ServerStatusViewModel extends ModelObject {
 		@Override
 		public void onConnectionStatus(boolean isConnected) {
 			setBlockServerStatus(boolToStatus(isConnected));
-			refreshOverallStatus();
 		}
 	};
 
@@ -66,15 +69,31 @@ public class ServerStatusViewModel extends ModelObject {
 		@Override
 		public void onConnectionStatus(boolean isConnected) {
 			setBlockGatewayStatus(boolToStatus(isConnected));
-			refreshOverallStatus();
 		}
 	};
-
+	
+	private final BaseObserver<String> extGatewayStatusObserver = new BaseObserver<String>() {
+		@Override
+		public void onValue(String value) {
+			if (value.equals("Shutdown")) {
+				setExtGatewayStatus(ServerStatus.NOT_RUNNING);
+			} else {
+				setExtGatewayStatus(ServerStatus.RUNNING);
+			}
+		}
+		
+		@Override
+		public void onConnectionStatus(boolean isConnected) {
+			if (psControlStatus == ServerStatus.NOT_RUNNING) {
+				setExtGatewayStatus(ServerStatus.UNKNOWN);
+			}
+		}
+	};
+	
 	private final BaseObserver<Boolean> isisDaeStatusObserver = new BaseObserver<Boolean>() {
 		@Override
 		public void onConnectionStatus(boolean isConnected) {
 			setIsisDaeStatus(boolToStatus(isConnected));
-			refreshOverallStatus();
 		}
 	};
 
@@ -82,7 +101,6 @@ public class ServerStatusViewModel extends ModelObject {
 		@Override
 		public void onConnectionStatus(boolean isConnected) {
 			setInstetcStatus(boolToStatus(isConnected));
-			refreshOverallStatus();
 		}
 	};
 
@@ -90,7 +108,6 @@ public class ServerStatusViewModel extends ModelObject {
 		@Override
 		public void onConnectionStatus(boolean isConnected) {
 			setDbServerStatus(boolToStatus(isConnected));
-			refreshOverallStatus();
 		}
 	};
 
@@ -98,25 +115,6 @@ public class ServerStatusViewModel extends ModelObject {
 		@Override
 		public void onConnectionStatus(boolean isConnected) {
 			setPsControlStatus(boolToStatus(isConnected));
-			refreshOverallStatus();
-		}
-	};
-	
-	private final BaseObserver<String> arAccessStatusObserver = new BaseObserver<String>() {
-		@Override
-		public void onValue(String value) {
-			if (value.equals("Shutdown")) {
-				setArAccessStatus(ServerStatus.OFF);
-			} else {
-				setArAccessStatus(ServerStatus.OK);
-			}
-		}
-		
-		@Override
-		public void onConnectionStatus(boolean isConnected) {
-			if (psControlStatus == ServerStatus.OFF) {
-				setArAccessStatus(ServerStatus.UNKNOWN);
-			}
 		}
 	};
 	
@@ -124,103 +122,178 @@ public class ServerStatusViewModel extends ModelObject {
 		@Override
 		public void onValue(String value) {
 			if (value.equals("Shutdown")) {
-				setAlarmServerStatus(ServerStatus.OFF);
-			} else {
-				setAlarmServerStatus(ServerStatus.OK);
+				setAlarmServerStatus(ServerStatus.NOT_RUNNING);
+			} else if (value.equals("Running")) {
+				setAlarmServerStatus(ServerStatus.RUNNING);
 			}
 		}
 		
 		@Override
 		public void onConnectionStatus(boolean isConnected) {
-			if (psControlStatus == ServerStatus.OFF) {
+			if (psControlStatus == ServerStatus.NOT_RUNNING) {
 				setAlarmServerStatus(ServerStatus.UNKNOWN);
 			}
 		}
 	};
 	
-	public void setRunControlStatus(ServerStatus isRunning) {
-        firePropertyChange("runControlStatus", this.runControlStatus, this.runControlStatus = isRunning);
+	/**
+	 * Set the run control status and alert listeners.
+	 * 
+	 * @param status The new status
+	 */
+	public void setRunControlStatus(ServerStatus status) {
+        firePropertyChange("runControlStatus", this.runControlStatus, this.runControlStatus = status);
 		refreshOverallStatus();
 	}
 
-	public void setBlockServerStatus(ServerStatus isRunning) {
-        firePropertyChange("blockServerStatus", this.blockServerStatus, this.blockServerStatus = isRunning);
+	/**
+	 * Set the block server status and alert listeners.
+	 * 
+	 * @param status The new status
+	 */
+	public void setBlockServerStatus(ServerStatus status) {
+        firePropertyChange("blockServerStatus", this.blockServerStatus, this.blockServerStatus = status);
 		refreshOverallStatus();
 	}
 
-	public void setBlockGatewayStatus(ServerStatus isRunning) {
-        firePropertyChange("blockGatewayStatus", this.blockGatewayStatus, this.blockGatewayStatus = isRunning);
+	/**
+	 * Set the block gateway status and alert listeners.
+	 * 
+	 * @param status The new status
+	 */
+	public void setBlockGatewayStatus(ServerStatus status) {
+        firePropertyChange("blockGatewayStatus", this.blockGatewayStatus, this.blockGatewayStatus = status);
 		refreshOverallStatus();
 	}
 
-	public void setIsisDaeStatus(ServerStatus isRunning) {
-        firePropertyChange("isisDaeStatus", this.isisDaeRunning, this.isisDaeRunning = isRunning);
+	/**
+	 * Set the external gateway status and alert listeners.
+	 * 
+	 * @param status The new status
+	 */
+	public void setExtGatewayStatus(ServerStatus status) {
+        firePropertyChange("extGatewayStatus", this.extGatewayStatus, this.extGatewayStatus = status);
 		refreshOverallStatus();
 	}
 
-	public void setInstetcStatus(ServerStatus isRunning) {
-        firePropertyChange("instetcStatus", this.instetcStatus, this.instetcStatus = isRunning);
+	/**
+	 * Set the ISIS DAE status and alert listeners.
+	 * 
+	 * @param status The new status
+	 */
+	public void setIsisDaeStatus(ServerStatus status) {
+        firePropertyChange("isisDaeStatus", this.isisDaeRunning, this.isisDaeRunning = status);
 		refreshOverallStatus();
 	}
 
-	public void setDbServerStatus(ServerStatus isRunning) {
-        firePropertyChange("dbServerStatus", this.dbServerStatus, this.dbServerStatus = isRunning);
+	/**
+	 * Set the INSTETC status and alert listeners.
+	 * 
+	 * @param status The new status
+	 */
+	public void setInstetcStatus(ServerStatus status) {
+        firePropertyChange("instetcStatus", this.instetcStatus, this.instetcStatus = status);
 		refreshOverallStatus();
 	}
 
-	public void setPsControlStatus(ServerStatus isRunning) {
-        firePropertyChange("psControlStatus", this.psControlStatus, this.psControlStatus = isRunning);
+	/**
+	 * Set the database server status and alert listeners.
+	 * 
+	 * @param status The new status
+	 */
+	public void setDbServerStatus(ServerStatus status) {
+        firePropertyChange("dbServerStatus", this.dbServerStatus, this.dbServerStatus = status);
 		refreshOverallStatus();
 	}
 
-	public void setArAccessStatus(ServerStatus isRunning) {
-        firePropertyChange("arAccessStatus", this.arAccessStatus, this.arAccessStatus = isRunning);
+	/**
+	 * Set the procserv control status and alert listeners.
+	 * 
+	 * @param status The new status
+	 */
+	public void setPsControlStatus(ServerStatus status) {
+        firePropertyChange("psControlStatus", this.psControlStatus, this.psControlStatus = status);
 		refreshOverallStatus();
 	}
 
-	public void setAlarmServerStatus(ServerStatus isRunning) {
-        firePropertyChange("alarmServerStatus", this.alarmServerStatus, this.alarmServerStatus = isRunning);
+	/**
+	 * Set the alarm server status and alert listeners.
+	 * 
+	 * @param status The new status
+	 */
+	public void setAlarmServerStatus(ServerStatus status) {
+        firePropertyChange("alarmServerStatus", this.alarmServerStatus, this.alarmServerStatus = status);
 		refreshOverallStatus();
 	}
 	
+	/**
+	 * @return The run control status
+	 */
 	public ServerStatus getRunControlStatus() {
 		return runControlStatus;
 	}
 
+	/**
+	 * @return The block server status
+	 */
 	public ServerStatus getBlockServerStatus() {
 		return blockServerStatus;
 	}
 
+	/**
+	 * @return The block gateway status
+	 */
 	public ServerStatus getBlockGatewayStatus() {
 		return blockGatewayStatus;
 	}
 
+	/**
+	 * @return The external gateway status
+	 */
+	public ServerStatus getExtGatewayStatus() {
+		return extGatewayStatus;
+	}
+
+	/**
+	 * @return The ISIS DAE status status
+	 */
 	public ServerStatus getIsisDaeStatus() {
 		return runControlStatus;
 	}
 
+	/**
+	 * @return The INSTETC status
+	 */
 	public ServerStatus getInstetcStatus() {
 		return instetcStatus;
 	}
 
+	/**
+	 * @return The database server status
+	 */
 	public ServerStatus getDbServerStatus() {
 		return dbServerStatus;
 	}
 
+	/**
+	 * @return The procserv control status
+	 */
 	public ServerStatus getPsControlStatus() {
 		return psControlStatus;
 	}
 
-	public ServerStatus getArAccessStatus() {
-		return arAccessStatus;
-	}
-
+	/**
+	 * @return The alarm server status
+	 */
 	public ServerStatus getAlarmServerStatus() {
 		return alarmServerStatus;
 	}
 
+	/**
+	 * Update the overall status of the IBEX server and notify listeners.
+	 */
 	public void refreshOverallStatus() {
-		ServerStatus statusToSet = ServerStatus.UNSTABLE;
+		ServerStatus statusToSet = ServerStatus.PARTIAL;
 		
 		individualStatus.clear();
 		individualStatus.add(runControlStatus);
@@ -230,19 +303,22 @@ public class ServerStatusViewModel extends ModelObject {
 		individualStatus.add(instetcStatus);
 		individualStatus.add(dbServerStatus);
 		individualStatus.add(psControlStatus);
-		individualStatus.add(arAccessStatus);
+		individualStatus.add(extGatewayStatus);
 		individualStatus.add(alarmServerStatus);
-		if (individualStatus.stream().allMatch(t -> t.equals(ServerStatus.OK))) {
-			statusToSet = ServerStatus.OK;
-		} else if (individualStatus.stream().allMatch(t -> t.equals(ServerStatus.OFF) || t.equals(ServerStatus.UNKNOWN))) {
-			statusToSet = ServerStatus.OFF;
+		if (individualStatus.stream().allMatch(t -> t.equals(ServerStatus.RUNNING))) {
+			statusToSet = ServerStatus.RUNNING;
+		} else if (individualStatus.stream().allMatch(t -> t.equals(ServerStatus.NOT_RUNNING) || t.equals(ServerStatus.UNKNOWN))) {
+			statusToSet = ServerStatus.NOT_RUNNING;
 		} else {
-			statusToSet = ServerStatus.UNSTABLE;
+			statusToSet = ServerStatus.PARTIAL;
 		}
 			
         firePropertyChange("overallStatus", this.overallStatus, this.overallStatus = statusToSet);
 	}
-	
+
+	/**
+	 * @return The overall server status
+	 */
 	public ServerStatus getOverallStatus() {
 		return overallStatus;
 	}

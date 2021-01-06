@@ -6,7 +6,6 @@ import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.BooleanChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
-import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 
 /**
  * Collection of PVs related to the IBEX server status.
@@ -19,6 +18,8 @@ public class ServerStatusVariables {
     private static final String BLOCKSVR_PV = "CS:BLOCKSERVER:SERVER_STATUS";
     /** PV for existence of Block Gateway */
     private static final String BLOCKGW_PV = "CS:GATEWAY:BLOCKSERVER:pvtotal";
+    /** PV for existence of External Gateway */
+    private static final String EXTGW_PV = "CS:PS:ARACCESS:STATUS";
     /** PV for existence of ISISDAE IOC */
     private static final String ISISDAE_PV = "DAE:INSTNAME";
     /** PV for existence of INSTETC IOC */
@@ -27,8 +28,6 @@ public class ServerStatusVariables {
     private static final String DBSVR_PV = "CS:BLOCKSERVER:IOCS";
     /** PV for existence of Procserv Control IOC */
     private static final String PSCTRL_PV = "CS:PS:PSCTRL_01:IOCNAME";
-    /** PV for existence of Archiver Access */
-    private static final String ARACCESS_PV = "CS:PS:ARACCESS:STATUS";
     /** PV for existence of Alarm Server */
     private static final String ALARMSVR_PV = "CS:PS:ALARM:STATUS";
     
@@ -55,8 +54,8 @@ public class ServerStatusVariables {
     private final ForwardingObservable<Boolean> procservControlPV = 
             obsFactory.getSwitchableObservable(new BooleanChannel(), InstrumentUtils.addPrefix(PSCTRL_PV));
 
-    private final ForwardingObservable<String> archiverAccessPV = 
-            obsFactory.getSwitchableObservable(new DefaultChannel(), InstrumentUtils.addPrefix(ARACCESS_PV));
+    private final ForwardingObservable<String> externalGatewayPV = 
+            obsFactory.getSwitchableObservable(new DefaultChannel(), InstrumentUtils.addPrefix(EXTGW_PV));
 
     private final ForwardingObservable<String> alarmServerPV = 
             obsFactory.getSwitchableObservable(new DefaultChannel(), InstrumentUtils.addPrefix(ALARMSVR_PV));
@@ -112,10 +111,10 @@ public class ServerStatusVariables {
 	}
 	
     /**
-     * @return Observable for PV of Archiver Access
+     * @return Observable for PV of External Gateway
      */
-	public ForwardingObservable<String> getArchiverAccessPV() {
-		return archiverAccessPV;
+	public ForwardingObservable<String> getExtGatewayPV() {
+		return externalGatewayPV;
 	}
 
     /**

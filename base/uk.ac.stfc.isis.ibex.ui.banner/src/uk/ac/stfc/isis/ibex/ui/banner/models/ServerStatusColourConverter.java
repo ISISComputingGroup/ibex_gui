@@ -5,6 +5,9 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 
+/**
+ * Converts a ServerStatus enum into a display Colour.
+ */
 public class ServerStatusColourConverter extends Converter<ServerStatus, Color> {
 	
     private static final Color RED = SWTResourceManager.getColor(255, 0, 0);
@@ -12,6 +15,9 @@ public class ServerStatusColourConverter extends Converter<ServerStatus, Color> 
     private static final Color ORANGE = SWTResourceManager.getColor(255, 120, 50);
     private static final Color PURPLE = SWTResourceManager.getColor(255, 0, 255);
     
+    /**
+     * The constructor.
+     */
 	public ServerStatusColourConverter() {
 		super(ServerStatus.class, Color.class);
 	}
@@ -19,11 +25,11 @@ public class ServerStatusColourConverter extends Converter<ServerStatus, Color> 
     @Override
     public Color convert(ServerStatus status) {
     	switch (status) {
-    		case OK:
+    		case RUNNING:
     			return GREEN;
-    		case UNSTABLE:
+    		case PARTIAL:
     			return ORANGE;
-    		case OFF:
+    		case NOT_RUNNING:
     			return RED;
     		case UNKNOWN:
     		default:

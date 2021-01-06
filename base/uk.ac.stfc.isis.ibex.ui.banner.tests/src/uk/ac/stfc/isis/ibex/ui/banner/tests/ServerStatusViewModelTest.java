@@ -30,14 +30,14 @@ public class ServerStatusViewModelTest {
         when(pvs.getInstetcPV()).thenReturn(mock(ForwardingObservable.class));
         when(pvs.getDatabaseServerPV()).thenReturn(mock(ForwardingObservable.class));
         when(pvs.getProcservControlPV()).thenReturn(mock(ForwardingObservable.class));
-        when(pvs.getArchiverAccessPV()).thenReturn(mock(ForwardingObservable.class));
+        when(pvs.getExtGatewayPV()).thenReturn(mock(ForwardingObservable.class));
         when(pvs.getAlarmServerPV()).thenReturn(mock(ForwardingObservable.class));
         viewModel = new ServerStatusViewModel(pvs);
     }
     
     private void setAll(ServerStatus statusToSet) {
     	viewModel.setAlarmServerStatus(statusToSet);
-    	viewModel.setArAccessStatus(statusToSet);
+    	viewModel.setExtGatewayStatus(statusToSet);
     	viewModel.setBlockGatewayStatus(statusToSet);
     	viewModel.setBlockServerStatus(statusToSet);
     	viewModel.setDbServerStatus(statusToSet);
@@ -50,7 +50,7 @@ public class ServerStatusViewModelTest {
     @Test
     public void GIVEN_no_initial_value_WHEN_reading_overall_status_THEN_status_is_NOT_RUNNING() {
         // Arrange
-        ServerStatus expected = ServerStatus.OFF;
+        ServerStatus expected = ServerStatus.NOT_RUNNING;
 
         // Act
         ServerStatus actual = viewModel.getOverallStatus();
@@ -60,10 +60,24 @@ public class ServerStatusViewModelTest {
     }
 
     @Test
-    public void GIVEN_all_variables_running_WHEN_reading_overall_status_THEN_status_is_OK() {
+    public void GIVEN_some_variables_off_some_unknown_WHEN_reading_overall_status_THEN_status_is_NOT_RUNNING() {
         // Arrange
-    	setAll(ServerStatus.OK);
-        ServerStatus expected = ServerStatus.OK;
+        ServerStatus expected = ServerStatus.NOT_RUNNING;
+    	setAll(ServerStatus.NOT_RUNNING);
+    	viewModel.setAlarmServerStatus(ServerStatus.UNKNOWN);
+
+        // Act
+        ServerStatus actual = viewModel.getOverallStatus();
+
+        // Assert
+        assertEquals(expected, actual);
+    }
+    
+    @Test
+    public void GIVEN_all_variables_running_WHEN_reading_overall_status_THEN_status_is_RUNNING() {
+        // Arrange
+    	setAll(ServerStatus.RUNNING);
+        ServerStatus expected = ServerStatus.RUNNING;
 
         // Act
         ServerStatus actual = viewModel.getOverallStatus();
@@ -73,12 +87,12 @@ public class ServerStatusViewModelTest {
     }
 
     @Test
-    public void GIVEN_some_variables_running_WHEN_reading_overall_status_THEN_status_is_UNSTABLE() {
+    public void GIVEN_some_variables_running_WHEN_reading_overall_status_THEN_status_is_PARTIAL() {
         // Arrange
-    	viewModel.setBlockGatewayStatus(ServerStatus.OK);
-    	viewModel.setBlockServerStatus(ServerStatus.OK);
+    	viewModel.setBlockGatewayStatus(ServerStatus.RUNNING);
+    	viewModel.setBlockServerStatus(ServerStatus.RUNNING);
 
-        ServerStatus expected = ServerStatus.UNSTABLE;
+        ServerStatus expected = ServerStatus.PARTIAL;
 
         // Act
         ServerStatus actual = viewModel.getOverallStatus();

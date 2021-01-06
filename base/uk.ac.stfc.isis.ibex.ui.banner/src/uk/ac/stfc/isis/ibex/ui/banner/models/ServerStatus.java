@@ -1,13 +1,16 @@
 package uk.ac.stfc.isis.ibex.ui.banner.models;
 
+/**
+ * Represents the state of (a part of) the IBEX server.
+ */
 public enum ServerStatus {
 
-	/** Server is running OK. */
-	OK("OK"),
+	/** Server is RUNNING. */
+	RUNNING("OK"),
 	/** Server is NOT RUNNING. */
-	OFF("NOT RUNNING"),
-	/** Server is running but UNSTABLE. */
-	UNSTABLE("UNSTABLE"),
+	NOT_RUNNING("NOT RUNNING"),
+	/** Server is PARTIALLY running. */
+	PARTIAL("PARTIAL"),
 	/** Server status is UNKNOWN. */
 	UNKNOWN("UNKNOWN");
 

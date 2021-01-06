@@ -6,14 +6,11 @@ import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusViewModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatus;
@@ -21,6 +18,9 @@ import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusColourConverter;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusTextConverter;
 import uk.ac.stfc.isis.ibex.ui.banner.views.StatusDetailsDialog;
 
+/** 
+ * A panel displaying the overall status of the IBEX server.
+ */
 public class StatusIndicatorPanel extends Composite {
 	
 	private StatusDetailsDialog detailsDialog;
@@ -28,7 +28,13 @@ public class StatusIndicatorPanel extends Composite {
 	private static final int STATUS_LABEL_W = 100;
 	private static final int STATUS_LABEL_H = 25;
 	
-	
+	/**
+	 * The constructor. 
+	 * 
+	 * @param parent The parent composite
+	 * @param style  The SWT style
+	 * @param model  The view model providing the status information
+	 */
 	public StatusIndicatorPanel(Composite parent, int style, ServerStatusViewModel model) {
 		super(parent, style);
 	    setLayout(new GridLayout(NUM_COLS, false));
