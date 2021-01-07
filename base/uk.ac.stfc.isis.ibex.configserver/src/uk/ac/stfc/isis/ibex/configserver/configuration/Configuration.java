@@ -41,7 +41,8 @@ public class Configuration extends ModelObject {
 	private String description;
 	private String synoptic;
 	private String pv;
-	private boolean isProtected; 
+	private boolean isProtected;
+	private boolean isDynamic;
 	
 	private List<Ioc> iocs = new ArrayList<>();
 	private List<Block> blocks = new ArrayList<>();
@@ -93,12 +94,14 @@ public class Configuration extends ModelObject {
 			Collection<Group> groups, 
 			Collection<ComponentInfo> components, 
 			Collection<String> history,
-			boolean isProtected) {
+			boolean isProtected,
+			boolean isDynamic) {
 		this.name = name;
 		this.description = description;
 		this.synoptic = defaultSynoptic == null || defaultSynoptic.equals("") ? ConfigEditing.NONE_SYNOPTIC_NAME : defaultSynoptic;
 		this.pv = "";
 		this.isProtected = isProtected;
+		this.isDynamic = isDynamic;
 		
 		for (Ioc ioc : iocs) {
 			this.iocs.add(new Ioc(ioc));
@@ -128,7 +131,7 @@ public class Configuration extends ModelObject {
      *            The other configuration.
      */
 	public Configuration(Configuration other) {
-		this(other.name(), other.description(), other.synoptic(), other.getIocs(), other.getBlocks(), other.getGroups(), other.getComponents(), other.getHistory(), other.isProtected);
+		this(other.name(), other.description(), other.synoptic(), other.getIocs(), other.getBlocks(), other.getGroups(), other.getComponents(), other.getHistory(), other.isProtected, other.isDynamic);
 		this.pv = other.pv;
 	}
 	
@@ -137,6 +140,14 @@ public class Configuration extends ModelObject {
      */
 	public String name() {
 		return name;
+	}
+	
+    /**
+     * Get a user-friendly display name for this configuration/component
+     * @return The name of the configuration, which may be appended with other information about the component.
+     */
+	public String getDisplayName() {
+		return isDynamic ? String.format("%s (dynamic)", name) : name;
 	}
 	
     /**
@@ -167,12 +178,20 @@ public class Configuration extends ModelObject {
 		return isProtected;
 	}
 	
+	/**
+	 * @return The configuration's dynamic status
+	 */
+	public boolean isDynamic() {
+		return isDynamic;
+	}
+	
     /**
      * @param name
      *            The new configuration name
      */
 	public void setName(String name) {
 		firePropertyChange("name", this.name, this.name = name);
+		firePropertyChange("displayName", "", getDisplayName());
 	}
 	
     /**

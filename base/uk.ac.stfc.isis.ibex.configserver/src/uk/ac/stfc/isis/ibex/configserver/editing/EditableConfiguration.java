@@ -99,6 +99,8 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     private List<String> history = new ArrayList<>();
     /** if the config is protected or not */
     private boolean isProtected;
+    /** if the config is dynamic or not */
+    private boolean isDynamic;
 
     /** Available PVs. */
     private final List<PV> pvs;
@@ -312,6 +314,14 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     public boolean getIsProtected() {
 	return isProtected;
     }
+    
+    /**
+     * @return if this config is marked as being dynamic
+     */
+    public boolean getIsDynamic() {
+	return isDynamic;
+    }
+    
     /**
      * @param name
      *            The new configuration name
@@ -627,7 +637,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      */
     public Configuration asConfiguration() {
 	Configuration config = new Configuration(getName(), getDescription(), getSynoptic(), transformIocs(), transformBlocks(),
-		transformGroups(), transformComponents(), getHistory(), getIsProtected());
+		transformGroups(), transformComponents(), getHistory(), getIsProtected(), getIsDynamic());
 	return new ComponentFilteredConfiguration(config);
     }
 
@@ -640,7 +650,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     public Configuration asComponent() {
 	Configuration config = asConfiguration();
 	return new Configuration(config.name(), config.description(), config.synoptic(), config.getIocs(),
-		config.getBlocks(), config.getGroups(), Collections.<ComponentInfo>emptyList(), config.getHistory(), config.isProtected());
+		config.getBlocks(), config.getGroups(), Collections.<ComponentInfo>emptyList(), config.getHistory(), config.isProtected(), config.isDynamic());
     }
 
     /**
@@ -759,7 +769,6 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	    errorMessage = "Warning! If saved, the " + compOrConfName + " " + this.name + " "
 		    + "will be downgraded to an unprotected " + compOrConfName;
 	    firePropertyChange("enableOrDisableSaveButton", isSaveButtonEnabled, this.isSaveButtonEnabled = true);
-
 	} else if (this.originalProtectedFlag && !isProtected && !inManagerMode) {
 	    errorMessage = isComponent ? this.savingProtectedCompWarning : this.savingProtectedConfigWarning;
 	    firePropertyChange("enableOrDisableSaveButton", isSaveButtonEnabled, this.isSaveButtonEnabled = false);

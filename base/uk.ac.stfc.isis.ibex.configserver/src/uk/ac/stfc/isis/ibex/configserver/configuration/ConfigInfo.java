@@ -42,6 +42,7 @@ public class ConfigInfo {
     private String synoptic;
     private final List<String> history;
     private final Boolean isProtected;
+    private final Boolean isDynamic;
 
     /**
      * Constructor.
@@ -60,13 +61,14 @@ public class ConfigInfo {
      *            The history of the config.
      *  
      */
-    public ConfigInfo(String name, boolean isProtected, String description, String pv, String synoptic, Collection<String> history) {
+    public ConfigInfo(String name, boolean isProtected, boolean isDynamic, String description, String pv, String synoptic, Collection<String> history) {
         this.name = name;
         this.description = description;
         this.pv = pv;
         this.synoptic = synoptic;
         this.history = new ArrayList<>(history);
         this.isProtected = isProtected;
+        this.isDynamic = isDynamic;
     }
 
     /**
@@ -240,5 +242,13 @@ public class ConfigInfo {
      */
     public Boolean isProtected() {
         return this.isProtected;
+    }
+    
+    /**
+     * Returns if the config is dynamic or not.
+     * @return boolean value if a config is dynamic or not
+     */
+    public Boolean isDynamic() {
+        return this.isDynamic;
     }
 }
