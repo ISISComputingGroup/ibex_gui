@@ -16,7 +16,7 @@ from git.exc import NoSuchPathError, GitCommandError, InvalidGitRepositoryError,
 from git import Repo, Git, FetchInfo
 
 # This initialises the script_definitions folder next to the built executables
-DEFAULT_REPO_PATH = SCRIPT_GEN_FOLDER.parent.parent.parent / 'script_definitons'
+DEFAULT_REPO_PATH = SCRIPT_GEN_FOLDER.parent.parent.parent / 'script_definitions'
 REMOTE_URL = "https://github.com/ISISComputingGroup/ScriptDefinitions.git"
 OLD_REPOSITORY = "https://github.com/ISISComputingGroup/ScriptGeneratorConfigs.git"
 
@@ -85,7 +85,7 @@ class DefinitionsRepository:
         try:
             repo = Repo(self.path)
         except (NoSuchPathError, GitCommandError, InvalidGitRepositoryError) as err:
-            self._append_error("Error occured initialing repository: {}".format(err))
+            self._append_error("Error occurred initialising repository: {}".format(err))
 
         return repo
 

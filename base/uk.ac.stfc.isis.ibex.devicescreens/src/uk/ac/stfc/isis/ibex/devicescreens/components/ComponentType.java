@@ -32,6 +32,8 @@ public enum ComponentType {
 
     /** Unknown component type. */
     UNKNOWN,
+    /** Debug component type. */
+    DEBUG,
     /** Jaws component type. */
     JAWS,
     /** CP2800 Helum compressor component type. */
@@ -181,7 +183,11 @@ public enum ComponentType {
     /** Waveguide and aperture. **/
     WAVEGUIDE_APERTURE,
     /**Spin flipper.*/
-    SPIN_FLIPPER;
+    SPIN_FLIPPER,
+    /** SANS2D Vacuum Tank. */
+    VACUUM_TANK,
+    /** Helium Level Gauge. */
+    HE_LEVEL_GAUGE;
 
     private Target target;
 

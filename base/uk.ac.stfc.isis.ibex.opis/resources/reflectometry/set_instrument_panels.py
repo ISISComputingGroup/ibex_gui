@@ -1,4 +1,5 @@
 from org.csstudio.opibuilder.scriptUtil import PVUtil
+import os
 
 def _set_panels(pv):
     """
@@ -17,7 +18,7 @@ def _set_panels(pv):
 
         widget = display.getWidget(widget_name)
         widget.setPropertyValue("opi_file", "null.opi")
-        widget.setPropertyValue("opi_file", value + "\\" + opi_name)
+        widget.setPropertyValue("opi_file", value + os.sep + opi_name)
         
         
 _set_panels(pvs[0])

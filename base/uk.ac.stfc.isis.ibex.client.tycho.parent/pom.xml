@@ -9,8 +9,8 @@
 	<properties>
 		<tycho.version>1.6.0</tycho.version>
 		<tycho-repo.url>https://oss.sonatype.org/content/groups/public/</tycho-repo.url>
-		<photon-repo.url>http://download.eclipse.org/releases/2019-12</photon-repo.url>
-		<photon-updates-repo.url>http://download.eclipse.org/eclipse/updates/4.14</photon-updates-repo.url>
+		<photon-repo.url>http://download.eclipse.org/releases/2020-09</photon-repo.url>
+		<photon-updates-repo.url>http://download.eclipse.org/eclipse/updates/4.17</photon-updates-repo.url>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -223,7 +223,6 @@
 		<module>../uk.ac.stfc.isis.ibex.scriptgenerator</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.dae.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.tests</module>
-		<module>../uk.ac.stfc.isis.ibex.ui.devicescreens.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.synoptic.editor.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.motor.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.activemq</module>
@@ -243,15 +242,12 @@
 	    <module>../uk.ac.stfc.isis.ibex.ui.experimentdetails.tests</module>
         <module>../uk.ac.stfc.isis.ibex.scriptgenerator.tests</module>
 		
-        <!-- 
-			Tests disabled as they use JAXB which doesn't work correctly under surefire. 
-			See https://github.com/ISISComputingGroup/IBEX/issues/5239
-		
 		<module>../uk.ac.stfc.isis.ibex.opis.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.synoptic.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.scripting.tests</module>
-			<module>../uk.ac.stfc.isis.ibex.devicescreens.tests</module> 
-		-->
+		<module>../uk.ac.stfc.isis.ibex.devicescreens.tests</module> 
+		
+		<module>../uk.ac.stfc.isis.ibex.ui.devicescreens.tests</module>
 		
 	</modules>
 </project>

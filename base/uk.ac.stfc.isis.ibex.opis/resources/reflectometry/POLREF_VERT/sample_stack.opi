@@ -111,7 +111,7 @@
       <widget_type>Linking Container</widget_type>
       <width>201</width>
       <wuid>-610e831b:171971644fa:-62fd</wuid>
-      <x>180</x>
+      <x>170</x>
       <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -261,8 +261,8 @@
       <height>25</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <PARAM_NAME>HEIGHT2_OF</PARAM_NAME>
-        <PARAM_PV>HEIGHT2_OF</PARAM_PV>
+        <PARAM_NAME>Trans</PARAM_NAME>
+        <PARAM_PV>SAMPTRANS</PARAM_PV>
       </macros>
       <name>Linking Container</name>
       <opi_file>../param_move.opi</opi_file>
@@ -303,8 +303,8 @@
       <height>25</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <PARAM_NAME>Trans</PARAM_NAME>
-        <PARAM_PV>SAMPTRANS</PARAM_PV>
+        <PARAM_NAME>Trans2</PARAM_NAME>
+        <PARAM_PV>SAMPTRANS2</PARAM_PV>
       </macros>
       <name>Linking Container</name>
       <opi_file>../param_move.opi</opi_file>
@@ -320,7 +320,7 @@
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
       <width>441</width>
-      <wuid>26a128d5:1730f1e20ee:-69e3</wuid>
+      <wuid>-40676747:1756542cc3a:-76bc</wuid>
       <x>0</x>
       <y>117</y>
     </widget>

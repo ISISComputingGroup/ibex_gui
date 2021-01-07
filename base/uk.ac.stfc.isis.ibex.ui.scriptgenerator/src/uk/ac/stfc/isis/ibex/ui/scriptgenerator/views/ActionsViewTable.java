@@ -23,8 +23,14 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+
+import static java.lang.Math.min;
+import static java.lang.Math.max;
 
 import org.eclipse.core.databinding.observable.list.WritableList;
+import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.CellNavigationStrategy;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
@@ -43,6 +49,7 @@ import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.tables.NullComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.SortableObservableMapCellLabelProvider;
+import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 
 /**
  * A table that holds the properties for a target.
@@ -51,7 +58,9 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
     
 	private final ScriptGeneratorViewModel scriptGeneratorViewModel;
 	private boolean shiftCellFocusToNewlyAddedRow = false;
-	private static final  Integer NON_EDITABLE_COLUMNS = 2;
+	private static final  Integer NON_EDITABLE_COLUMNS_ON_RIGHT = 2;
+	protected static final Integer NON_EDITABLE_COLUMNS_ON_LEFT = 1;
+	private List<StringEditingSupport<ScriptGeneratorAction>> editingSupports = new ArrayList<StringEditingSupport<ScriptGeneratorAction>>();
 	
 	/**
      * Default constructor for the table. Creates all the correct columns.
@@ -80,6 +89,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 				| ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR
 				| ColumnViewerEditor.TABBING_CYCLE_IN_VIEWER
 				| ColumnViewerEditor.TABBING_VERTICAL);
+		
     }
     
     /**
@@ -105,7 +115,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 					
 					// Add new action if tab is pressed by user in the last cell of the table.
 					if (nextCell.getNeighbor(ViewerCell.BELOW, false) == null 
-					        && (viewer.getTable().getColumnCount() - NON_EDITABLE_COLUMNS == currentlyFocusedColumn)) {
+					        && (viewer.getTable().getColumnCount() - NON_EDITABLE_COLUMNS_ON_RIGHT == currentlyFocusedColumn)) {
 					    
                     	scriptGeneratorViewModel.addEmptyAction();
                     	shiftCellFocusToNewlyAddedRow = true;
@@ -136,6 +146,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	@Override
 	public void updateTableColumns() {
 		super.updateTableColumns();
+		
 		setRows(new ArrayList<ScriptGeneratorAction>());
 	}
 
@@ -144,6 +155,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	 */
 	@Override
 	protected void addColumns() {
+	    editingSupports.clear();
 		scriptGeneratorViewModel.addColumns(this);
 	}
 	
@@ -157,8 +169,16 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	 */
 	@Override
 	public TableViewerColumn createColumn(String columnName, int widthWeighting,
-			SortableObservableMapCellLabelProvider<ScriptGeneratorAction> labelProvider) {
+			CellLabelProvider labelProvider) {
 		return super.createColumn(columnName, widthWeighting, labelProvider);
+	}
+
+	/**
+	 * Create a list of the editingSupport for each column. Required for resetting the selection after focus change.
+	 * @param editingSupport The editing support for the column
+	 */
+	public void addEditingSupport(StringEditingSupport<ScriptGeneratorAction> editingSupport) {
+	    editingSupports.add(editingSupport);
 	}
 	
 	/**
@@ -171,12 +191,16 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 		if (!viewer.getTable().isDisposed()) {
 			int focusRow = getSelectionIndex();
 			ScriptGeneratorAction previousSelection = firstSelectedRow();
-			int focusColumn = 0;
+			int focusColumn = NON_EDITABLE_COLUMNS_ON_LEFT;
 			
 			if (shiftCellFocusToNewlyAddedRow) {
 				focusRow = viewer.getTable().getSelectionIndex() + 1;
 			} else if (focusRow != -1) {
-				focusColumn = viewer.getColumnViewerEditor().getFocusCell().getColumnIndex();
+				// When no focus is selected getFocusCell returns null
+				var focusCell = Optional.ofNullable(viewer.getColumnViewerEditor().getFocusCell());
+				if (focusCell.isPresent()) {
+					focusColumn = focusCell.get().getColumnIndex();
+				}
 			}
 			
 			viewer.setInput(new WritableList<ScriptGeneratorAction>(rows, null));
@@ -185,6 +209,10 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 				// If the action on the specified row has changed then don't return focus to it
 				if (previousSelection.equals((ScriptGeneratorAction) viewer.getElementAt(focusRow)) || shiftCellFocusToNewlyAddedRow) {
 					setCellFocus(focusRow, focusColumn);
+					if (!shiftCellFocusToNewlyAddedRow) {
+					    // Fixes issue see in https://github.com/ISISComputingGroup/IBEX/issues/5708 (hopefully temporary)
+					    editingSupports.get(focusColumn).resetSelectionAfterFocus();
+					}
 					shiftCellFocusToNewlyAddedRow = false;
 				}
 			}

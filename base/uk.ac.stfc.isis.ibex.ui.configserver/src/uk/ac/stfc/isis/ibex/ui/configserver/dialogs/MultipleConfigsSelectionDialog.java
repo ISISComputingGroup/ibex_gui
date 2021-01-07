@@ -22,7 +22,10 @@ package uk.ac.stfc.isis.ibex.ui.configserver.dialogs;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
@@ -105,29 +108,37 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
 		return selected;
 	}
 
-	@Override
-	protected void okPressed() {
-        selected = asString(items.getSelection());
-		super.okPressed();
-	}
+    @Override
+   protected void okPressed() {
+       Collection<String> selectedItems = asString(items.getSelection());
+       
+       /* The following ensures that double clicking on the description/white space doesn't
+        * launch the process using a description/null as the name.
+        */    
+       List<String> names = ConfigInfo.names(available);
+       boolean anyMatch = selectedItems.stream().anyMatch(names::contains);
+       if (anyMatch) {
+    	   selected = asString(items.getSelection());
+    	   super.okPressed();
+       }
+   }
 
 	@Override
     protected void createSelection(Composite container) {
 	    
 		Label lblSelect = new Label(container, SWT.NONE);
         lblSelect.setText("Select " + getTypeString() + ":");
-        items = createTable(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions);
+        List<String> columnNames = Arrays.asList("Name", "Description");
+        items = createTable(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions, columnNames);
 
-        String[] names;
+        SortedMap<String, String> namesAndDescriptions = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER);
         if (includeCurrent) {
-            names = ConfigInfo.names(available).toArray(new String[0]);
+            namesAndDescriptions = ConfigInfo.namesAndDescriptions(available);
         } else {
-            names = ConfigInfo.namesWithoutCurrent(available).toArray(new String[0]);
+        	namesAndDescriptions = ConfigInfo.namesAndDescriptionsWithoutCurrent(available);
         }
-         
-		Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
-		
-		setItems(names, compOrConfigNamesWithFlags);
+      
+		setMultipleColumnItems(namesAndDescriptions, compOrConfigNamesWithFlags);
 		
 		// show protected configuration message only if relevant (the list has protected configurations)
 		Boolean hasProtectedConfigs = ConfigInfo.hasProtectedElement(available);

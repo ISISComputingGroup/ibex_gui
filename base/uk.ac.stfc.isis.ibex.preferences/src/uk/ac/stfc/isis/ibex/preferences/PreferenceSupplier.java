@@ -97,11 +97,6 @@ public class PreferenceSupplier {
      * The path to the instrument/developer's genie python on linux.
      */
     private static final String DEFAULT_PYTHON_3_INTERPRETER_PATH_LINUX = "/usr/local/ibex/genie_python/bin";
-	
-	/**
-     * The default for the location of Python.
-     */
-    private static final String DEFAULT_PYTHON_2_INTERPRETER_PATH = "C:\\Instrument\\Apps\\Python\\python.exe";
     
 	/**
 	 * Gets the installed Python, unless it hasn't been bundled and then gets the Python bundled with the gui.
