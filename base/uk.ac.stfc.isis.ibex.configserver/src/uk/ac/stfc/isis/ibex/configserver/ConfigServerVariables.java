@@ -32,6 +32,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.internal.Converters;
 import uk.ac.stfc.isis.ibex.configserver.pv.BlockServerAddresses;
+import uk.ac.stfc.isis.ibex.epics.observing.ConcatenatingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
@@ -40,7 +41,7 @@ import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
-import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
+import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannelWithoutUnits;
 import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -245,8 +246,11 @@ public class ConfigServerVariables extends Closer {
      * @return the corresponding observable
      */
 	public ForwardingObservable<String> blockValue(String blockName) {
-        return closingObsFactory.getSwitchableObservable(new DefaultChannel(),
+	    var blockValue = closingObsFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(),
                 InstrumentUtils.addPrefix(blockServerAlias(blockName)));
+	    var blockUnits = closingObsFactory.getSwitchableObservable(new StringChannel(),
+                InstrumentUtils.addPrefix(blockServerAddresses.blockUnits(blockServerAlias(blockName))));
+        return new ForwardingObservable<String>(new ConcatenatingObservable(blockValue, blockUnits));
 	}
 
     /**

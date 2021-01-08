@@ -25,6 +25,7 @@ import static org.mockito.Mockito.mock;
 import org.junit.Before;
 import org.junit.Test;
 
+import uk.ac.stfc.isis.ibex.configserver.AlarmState;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.configserver.displaying.RuncontrolState;
@@ -38,7 +39,9 @@ public class DisplayBlockTest {
     TestableIOSObservable<String> enabledObservable;
     TestableIOSObservable<String> valueObservable;
     TestableIOSObservable<String> descriptionObservable;
-	
+    TestableIOSObservable<AlarmState> alarmObservable;
+    TestableIOSObservable<Double> lowLimitObservable;
+    
 	DisplayBlock displayBlock;
 	
 	@Before
@@ -48,13 +51,15 @@ public class DisplayBlockTest {
         enabledObservable = new TestableIOSObservable<String>(mock(ClosableObservable.class));
         valueObservable = new TestableIOSObservable<String>(mock(ClosableObservable.class));
         descriptionObservable = new TestableIOSObservable<String>(mock(ClosableObservable.class));
+        alarmObservable= new TestableIOSObservable<AlarmState>(mock(ClosableObservable.class));
+        lowLimitObservable = new TestableIOSObservable<Double>(mock(ClosableObservable.class));
 		displayBlock = new DisplayBlock(
                 mock(Block.class), // block
                 valueObservable, // value
                 descriptionObservable, // description
-                mock(ForwardingObservable.class), // alarm
+                alarmObservable, // alarm
                 inRangeObservable, // inRange
-				mock(ForwardingObservable.class),  // lowLimit
+                lowLimitObservable,  // lowLimit
 				mock(ForwardingObservable.class),  // highLimit
 				mock(ForwardingObservable.class),  // suspendOnInvalid
                 enabledObservable, // enabled
@@ -255,5 +260,44 @@ public class DisplayBlockTest {
 
         // Assert
         assertEquals(RuncontrolState.DISCONNECTED, displayBlock.getRuncontrolState());
+    }
+    
+    @Test
+    public void GIVEN_no_units_WHEN_value_of_10_THEN_return_10() {
+        String newValue = String.valueOf(10);
+        
+        // Act
+        valueObservable.setValue(newValue);
+
+        // Assert
+        assertEquals(newValue, displayBlock.getValue());
+    }
+    
+    @Test
+    public void GIVEN_pv_disconnected_THEN_value_is_disconnected() {      
+        // Act
+        valueObservable.setConnectionStatus(false);
+
+        // Assert
+        assertEquals("disconnected", displayBlock.getValue());
+    }
+    
+    @Test
+    public void GIVEN_pv_in_error_THEN_value_is_error() {      
+        // Act
+        valueObservable.setError(new Exception());
+
+        // Assert
+        assertEquals("error", displayBlock.getValue());
+    }
+    
+    @Test
+    public void WHEN_low_limit_set_tovalue_THEN_lowlimit_updates() {      
+        Double lowLimit = 10.0;
+        // Act
+        lowLimitObservable.setValue(lowLimit);
+
+        // Assert
+        assertEquals(lowLimit, displayBlock.getRunControlLowLimit());
     }
 }

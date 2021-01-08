@@ -67,6 +67,7 @@ public class DeviceScreensModel extends ModelObject {
             Writable<DeviceScreensDescription> writableDeviceScreenDescriptions) {
 
         localDevices = new DeviceScreensDescription();
+        setDeviceScreensDescription(localDevices);
 
         this.writableDeviceScreenDescriptions = new SameTypeWriter<DeviceScreensDescription>() {
             @Override
