@@ -359,6 +359,15 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     }
 
     /**
+     * 
+     * @param isDynamic
+     * 				Whether the configuration is dynamic
+     */
+    public void setIsDynamic(boolean isDynamic) {
+	firePropertyChange("isDynamic", this.isDynamic, this.isDynamic = isDynamic);
+    }
+
+    /**
      * @param dateCreated
      *            The date the configuration was created
      */
