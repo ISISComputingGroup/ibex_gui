@@ -182,6 +182,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	this.description = config.description();
 	this.synoptic = config.synoptic();
 	this.isProtected = config.isProtected();
+	this.isDynamic = config.isDynamic();
 	originalProtectedFlag = this.isProtected;
 	this.allIocs = new ArrayList<>();
 	this.managerMode = ManagerModeModel.getInstance();

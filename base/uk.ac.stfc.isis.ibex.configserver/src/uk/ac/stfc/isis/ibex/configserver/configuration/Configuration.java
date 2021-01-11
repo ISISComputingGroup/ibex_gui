@@ -190,8 +190,9 @@ public class Configuration extends ModelObject {
      *            The new configuration name
      */
 	public void setName(String name) {
+		final String oldDisplayName = getDisplayName();
 		firePropertyChange("name", this.name, this.name = name);
-		firePropertyChange("displayName", "", getDisplayName());
+		firePropertyChange("displayName", oldDisplayName, getDisplayName());
 	}
 	
     /**

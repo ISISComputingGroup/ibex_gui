@@ -36,6 +36,7 @@ public class JsonConvertersTest {
 	private String serverStatusBusy = "{\"status\": \"INITIALISING\"}";
 	private String serverStatusNotBusy = "{\"status\": \"\"}";
 	
+	
 	private String configPVName = "TEST_CONFIG";
 	private String configInfos = "[{\"name\": \"" + configName + "\", \"description\": \"" + configDescription + "\", \"pv\": \"" + configPVName + "\"}]";
 	
