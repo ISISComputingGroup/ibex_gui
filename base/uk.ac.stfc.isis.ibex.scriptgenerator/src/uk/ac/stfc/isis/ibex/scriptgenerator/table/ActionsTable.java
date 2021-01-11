@@ -105,20 +105,25 @@ public class ActionsTable extends ModelObject {
 		// Make a parameter/string pair for each parameter in the action
 		for (JavaActionParameter actionParameter: this.actionParameters) {
 			if (actionParameter.getCopyPreviousRow() && this.actions.size() > 0) {
-				int positionOfRowToCopy;
-				if (insertionLocation.isPresent()) {
-					positionOfRowToCopy = (insertionLocation.get() - 1);
-				} else {
-					// Copy the last row's value as we are adding to the end
-					positionOfRowToCopy = (this.actions.size() - 1);
-				}
-				ScriptGeneratorAction lastRow = this.actions.get(positionOfRowToCopy);
-				parametersMap.put(actionParameter, lastRow.getActionParameterValue(actionParameter));
+				ScriptGeneratorAction rowToCopy = getRowToCopy(insertionLocation);
+				parametersMap.put(actionParameter, rowToCopy.getActionParameterValue(actionParameter));
 			} else { 
 				parametersMap.put(actionParameter, actionParameter.getDefaultValue());
 			}
 		}
 		return createAction(parametersMap);
+	}
+
+	private ScriptGeneratorAction getRowToCopy(Optional<Integer> insertionLocation) {
+		int positionOfRowToCopy;
+		if (insertionLocation.isPresent()) {
+			positionOfRowToCopy = (insertionLocation.get() - 1);
+		} else {
+			// Copy the last row's value as we are adding to the end
+			positionOfRowToCopy = (this.actions.size() - 1);
+		}
+		ScriptGeneratorAction lastRow = this.actions.get(positionOfRowToCopy);
+		return lastRow;
 	}
 
 	/**
