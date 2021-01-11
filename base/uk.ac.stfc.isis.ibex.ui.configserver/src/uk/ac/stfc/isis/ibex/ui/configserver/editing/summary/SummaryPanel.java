@@ -69,9 +69,18 @@ public class SummaryPanel extends Composite {
     private final MessageDisplayer messageDisplayer;
     private Button protectedCheckBox;
     private Label protectLabel;
+
+    private Button dynamicCheckBox;
+    private Label dynamicLabel;
+    
     private Label warning;
     private Observer<Collection<SynopticInfo>> synopticInfoObserver;
     private Subscription synopticSubscription;
+    
+    private static final String PROTECT_TOOLTIP = "Mark this configuration as protected to disable editing when manager mode is not active.";
+    private static final String DYNAMIC_TOOLTIP = "Mark this configuration as dynamic, which allows it to be automatically edited in response to external events.\n\n"
+    		+ "NOTE: this is advanced functionality and also requires other IBEX components to be set up in order to work. If you think you need this functionality "
+    		+ "on your beamline, please contact the IBEX team for assistance.";
 
     /**
      * Constructor for the general information about the configuration.
@@ -114,13 +123,28 @@ public class SummaryPanel extends Composite {
         cmboSynoptic.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         cmboSynoptic.setContentProvider(new ArrayContentProvider());
         
+        Composite optionsContainer = new Composite(cmpSummary, SWT.NONE);
+        optionsContainer.setLayout(new GridLayout(4, false));
+        optionsContainer.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 2, 1));
         
-        protectLabel = new Label(cmpSummary,  SWT.NONE);
+        protectLabel = new Label(optionsContainer,  SWT.NONE);
         protectLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1));
         protectLabel.setText("Protected:");
+        protectLabel.setToolTipText(PROTECT_TOOLTIP);
         
-        protectedCheckBox = new Button(cmpSummary, SWT.CHECK);
-        protectedCheckBox.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));     
+        protectedCheckBox = new Button(optionsContainer, SWT.CHECK);
+        protectedCheckBox.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));   
+        protectLabel.setToolTipText(PROTECT_TOOLTIP);  
+        
+        
+        dynamicLabel = new Label(optionsContainer,  SWT.NONE);
+        dynamicLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1));
+        dynamicLabel.setText("Dynamic:");
+        dynamicLabel.setToolTipText(DYNAMIC_TOOLTIP);
+        
+        dynamicCheckBox = new Button(optionsContainer, SWT.CHECK);
+        dynamicCheckBox.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1)); 
+        dynamicCheckBox.setToolTipText(DYNAMIC_TOOLTIP);
 
         lblDateCreated = new Label(cmpSummary, SWT.NONE);
         lblDateCreated.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -185,6 +209,9 @@ public class SummaryPanel extends Composite {
                 BeanProperties.value("dateModified").observe(config));
 	bindingContext.bindValue(WidgetProperties.buttonSelection().observe(protectedCheckBox),
                 BeanProperties.value("isProtected").observe(config));
+
+	bindingContext.bindValue(WidgetProperties.buttonSelection().observe(dynamicCheckBox),
+                BeanProperties.value("isDynamic").observe(config));
 
         bindingContext.bindValue(WidgetProperties.visible().observe(lblSynoptic),
 		BeanProperties.value("isComponent", Boolean.class).observe(config), null, UIUtils.NOT_CONVERTER);
