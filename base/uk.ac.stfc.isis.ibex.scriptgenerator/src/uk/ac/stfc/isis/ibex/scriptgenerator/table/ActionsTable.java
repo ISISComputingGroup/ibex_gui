@@ -104,14 +104,19 @@ public class ActionsTable extends ModelObject {
 		var parametersMap = new HashMap<JavaActionParameter, String>();
 		// Make a parameter/string pair for each parameter in the action
 		for (JavaActionParameter actionParameter: this.actionParameters) {
-			if (actionParameter.getCopyPreviousRow() && this.actions.size() > 0) {
-				ScriptGeneratorAction rowToCopy = getRowToCopy(insertionLocation);
-				parametersMap.put(actionParameter, rowToCopy.getActionParameterValue(actionParameter));
-			} else { 
-				parametersMap.put(actionParameter, actionParameter.getDefaultValue());
-			}
+			createDefaultActionParameter(insertionLocation, parametersMap, actionParameter);
 		}
 		return createAction(parametersMap);
+	}
+
+	private void createDefaultActionParameter(Optional<Integer> insertionLocation,
+			HashMap<JavaActionParameter, String> parametersMap, JavaActionParameter actionParameter) {
+		if (actionParameter.getCopyPreviousRow() && this.actions.size() > 0) {
+			ScriptGeneratorAction rowToCopy = getRowToCopy(insertionLocation);
+			parametersMap.put(actionParameter, rowToCopy.getActionParameterValue(actionParameter));
+		} else { 
+			parametersMap.put(actionParameter, actionParameter.getDefaultValue());
+		}
 	}
 
 	private ScriptGeneratorAction getRowToCopy(Optional<Integer> insertionLocation) {
