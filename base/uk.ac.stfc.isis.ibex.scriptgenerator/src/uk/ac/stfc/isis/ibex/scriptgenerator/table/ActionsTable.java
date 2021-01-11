@@ -97,17 +97,17 @@ public class ActionsTable extends ModelObject {
 	}
 	
 	private ScriptGeneratorAction createDefaultAction() {
-		return createDefaultAction(null);
+		return createDefaultAction(Optional.empty());
 	}
 	
-	private ScriptGeneratorAction createDefaultAction(Integer insertionLocation) {
+	private ScriptGeneratorAction createDefaultAction(Optional<Integer> insertionLocation) {
 		var parametersMap = new HashMap<JavaActionParameter, String>();
 		// Make a parameter/string pair for each parameter in the action
 		for (JavaActionParameter actionParameter: this.actionParameters) {
 			if (actionParameter.getCopyPreviousRow() && this.actions.size() > 0) {
 				int positionOfRowToCopy;
-				if (insertionLocation != null ) {
-					positionOfRowToCopy = (insertionLocation - 1);
+				if (insertionLocation.isPresent()) {
+					positionOfRowToCopy = (insertionLocation.get() - 1);
 				} else {
 					// Copy the last row's value as we are adding to the end
 					positionOfRowToCopy = (this.actions.size() - 1);
@@ -147,7 +147,7 @@ public class ActionsTable extends ModelObject {
 	 * @param insertionLocation The index to add the specified 
 	 */
 	public void insertEmptyAction(Integer insertionLocation) {
-		var newAction = createDefaultAction(insertionLocation);
+		var newAction = createDefaultAction(Optional.of(insertionLocation));
 		var correctedInsertionLocation = coerceActionIndexIntoRange(insertionLocation);
 		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
 		newList.add(correctedInsertionLocation, newAction);
