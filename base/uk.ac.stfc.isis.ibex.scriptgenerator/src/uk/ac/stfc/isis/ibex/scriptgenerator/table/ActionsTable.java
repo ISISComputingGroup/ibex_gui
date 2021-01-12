@@ -96,10 +96,22 @@ public class ActionsTable extends ModelObject {
 		return newAction;
 	}
 	
+	/**
+	 * Create the default action for the last row in the table.
+	 * 
+	 * @return The default action for the bottom row of the table.
+	 */
 	private ScriptGeneratorAction createDefaultAction() {
 		return createDefaultAction(Optional.empty());
 	}
 	
+	/**
+	 * Create an action with default values for it's given location.
+	 * It may copy some values from the row directly above it.
+	 * 
+	 * @param insertionLocation The row we are creating the action for.
+	 * @return The default action for the given row.
+	 */
 	private ScriptGeneratorAction createDefaultAction(Optional<Integer> insertionLocation) {
 		var parametersMap = new HashMap<JavaActionParameter, String>();
 		// Make a parameter/string pair for each parameter in the action
@@ -109,6 +121,14 @@ public class ActionsTable extends ModelObject {
 		return createAction(parametersMap);
 	}
 
+	/**
+	 * Get the default value for the action parameter given the insertionLocation (may copy value from previous row).
+	 * Add that default value to the parametersMap.
+	 * 
+	 * @param insertionLocation The row in the table we are inserting the action containing the parametersMap in.
+	 * @param parametersMap A map of action parameter to string that is used to create an action.
+	 * @param actionParameter The key of the parametersMap we are setting the value for.
+	 */
 	private void createDefaultActionParameter(Optional<Integer> insertionLocation,
 			HashMap<JavaActionParameter, String> parametersMap, JavaActionParameter actionParameter) {
 		if (actionParameter.getCopyPreviousRow() && this.actions.size() > 0) {
@@ -119,6 +139,13 @@ public class ActionsTable extends ModelObject {
 		}
 	}
 
+	/**
+	 * If the insertionLocation is present get the row action directly 
+	 * above the insertionLocation, else get the last action in the table.
+	 * 
+	 * @param insertionLocation The location we are getting the row to copy for.
+	 * @return A script generator action.
+	 */
 	private ScriptGeneratorAction getRowToCopy(Optional<Integer> insertionLocation) {
 		int positionOfRowToCopy;
 		if (insertionLocation.isPresent()) {
