@@ -166,6 +166,11 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
                     }
                 });
         simLevel.setEditingSupport(new SimLevelEditingSupport(viewer()));
+        setColumnToolTipText(simLevel,
+        		"By default, the simulation level file is set to NONE, meaning that the IOC will not run in simulation mode.\n"
+        		+ "Under normal circumstances, you should not change the default setting.\n"
+        		+ "Simulation mode is used for running the IOC without the actual physical device."
+        );
     }
 
     /**
@@ -173,6 +178,14 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
      */
 	private void autostart() {
         autoStart = createColumn("Auto-start?", 1, false, autoStartLabelProvider);
+        setColumnToolTipText(autoStart, 
+        		"If set, the IOC will be started/restarted whenever the configuration is changed.\n"
+        		+ "If not set then if the IOC is not running it will remained stopped after config change,\n" 
+        		+ "and if it is running it will remain running throughout the config change.\n"
+        		+ "\n" 
+        		+ "Warning: if not set and the IOC is running, any changes you make (e.g. a macro change)\n" 
+        		+ "will not be set on the IOC until you restart it manually."
+        );
 	}
 
     /**
@@ -180,6 +193,10 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
      */
 	private void restart() {
         autoRestart = createColumn("Auto-restart?", 1, false, autoRestartLabelProvider);
+        setColumnToolTipText(autoRestart, 
+        		"If set, the IOC will be automatically restarted if it is terminated unexpectedly.\n"
+        		+ "If the IOC is stopped from the client or writing to the appropriate PV then it will not be restarted."
+        );
 	}
 	
 	/**

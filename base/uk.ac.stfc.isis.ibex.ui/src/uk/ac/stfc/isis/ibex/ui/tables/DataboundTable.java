@@ -445,6 +445,17 @@ public abstract class DataboundTable<TRow> extends Composite {
 	tableColumn.setLabelProvider(cellProvider);
 	return tableColumn;
     }
+    
+    /**
+     * Sets the tooltip text of an existing column.
+     *
+     * @param column the column
+     * @param tooltip the tooltip text
+     */
+    public void setColumnToolTipText(TableViewerColumn column, String tooltip) {
+    	TableColumn col = column.getColumn();
+    	col.setToolTipText(tooltip);
+    }
 
     /**
      * Observe property.
