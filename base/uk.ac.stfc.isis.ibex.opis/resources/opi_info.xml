@@ -2540,5 +2540,26 @@
         </categories>
       </value>
     </entry>
+    <entry>
+      <key>MuSR Steering</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>musr_steering.opi</path>
+        <description>OPI for steering the horizontal and vertical steering magnets</description>
+        <macros>
+          <macro>
+            <name>H_STEER</name>
+            <description>The KEPCO number (e.g. 01) for the horizontal steering magnet</description>
+            <default>01</default
+          </macro>
+          <macro>
+            <name>V_STEER</name>
+            <description>The KEPCO number (e.g. 02) for the vertical steering magnet</description>
+            <default>02</default
+          </macro>
+        </macros>
+        <categories />
+      </value>
+    </entry>
   </opis>
 </descriptions>
