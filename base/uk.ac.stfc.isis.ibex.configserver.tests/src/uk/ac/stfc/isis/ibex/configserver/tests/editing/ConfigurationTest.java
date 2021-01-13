@@ -49,7 +49,7 @@ public class ConfigurationTest extends EditableConfigurationTest {
 		String defaultSynoptic = "";
 		
 		// Act
-		Configuration config = new Configuration("name", "description", defaultSynoptic, iocs, blocks, groups, components, history, true);
+		Configuration config = new Configuration("name", "description", defaultSynoptic, iocs, blocks, groups, components, history, true, false);
 		
 		// Assert
 		assertEquals(ConfigEditing.NONE_SYNOPTIC_NAME, config.synoptic());
