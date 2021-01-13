@@ -18,7 +18,7 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <KEPCO_>$(P)KEPCO_0</KEPCO_>
+    <KEPCO>$(P)KEPCO_0</KEPCO>
     <H_STEER>$(KEPCO)1:</H_STEER>
     <V_STEER>$(KEPCO)2:</V_STEER>
   </macros>
