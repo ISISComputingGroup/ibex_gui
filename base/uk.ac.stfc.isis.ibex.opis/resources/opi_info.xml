@@ -2549,13 +2549,13 @@
         <macros>
           <macro>
             <name>H_STEER</name>
-            <description>The KEPCO number (e.g. 01) for the horizontal steering magnet</description>
-            <default>01</default>
+            <description>The KEPCO number (e.g. 1 for KEPCO_01) for the horizontal steering magnet</description>
+            <default>0</default>
           </macro>
           <macro>
             <name>V_STEER</name>
-            <description>The KEPCO number (e.g. 02) for the vertical steering magnet</description>
-            <default>02</default>
+            <description>The KEPCO number (e.g. 2 for KEPCO_02) for the vertical steering magnet</description>
+            <default>2</default>
           </macro>
         </macros>
         <categories />
