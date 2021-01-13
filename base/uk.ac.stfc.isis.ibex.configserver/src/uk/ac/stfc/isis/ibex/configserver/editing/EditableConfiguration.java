@@ -99,6 +99,8 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     private List<String> history = new ArrayList<>();
     /** if the config is protected or not */
     private boolean isProtected;
+    /** Whether the configuration configures the block gateway and archivers or not */
+    private boolean configuresBlockGWAndArchiver;
 
     /** Available PVs. */
     private final List<PV> pvs;
@@ -180,6 +182,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	this.description = config.description();
 	this.synoptic = config.synoptic();
 	this.isProtected = config.isProtected();
+	this.configuresBlockGWAndArchiver = config.configuresBlockGWAndArchiver();
 	originalProtectedFlag = this.isProtected;
 	this.allIocs = new ArrayList<>();
 	this.managerMode = ManagerModeModel.getInstance();
@@ -312,6 +315,13 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     public boolean getIsProtected() {
 	return isProtected;
     }
+    
+    /**
+	 * @return Whether the configuration configures the block gateway and archiver.
+	 */
+    public boolean getIfconfiguresBlockGWAndArchiver() {
+    	return configuresBlockGWAndArchiver;
+    }
     /**
      * @param name
      *            The new configuration name
@@ -346,7 +356,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	setEnableOrDisableSaveButton();
 	setEnableSaveAsButton();
     }
-
+    
     /**
      * @param dateCreated
      *            The date the configuration was created
@@ -627,7 +637,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      */
     public Configuration asConfiguration() {
 	Configuration config = new Configuration(getName(), getDescription(), getSynoptic(), transformIocs(), transformBlocks(),
-		transformGroups(), transformComponents(), getHistory(), getIsProtected());
+		transformGroups(), transformComponents(), getHistory(), getIsProtected(), getIfconfiguresBlockGWAndArchiver());
 	return new ComponentFilteredConfiguration(config);
     }
 
@@ -640,7 +650,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     public Configuration asComponent() {
 	Configuration config = asConfiguration();
 	return new Configuration(config.name(), config.description(), config.synoptic(), config.getIocs(),
-		config.getBlocks(), config.getGroups(), Collections.<ComponentInfo>emptyList(), config.getHistory(), config.isProtected());
+		config.getBlocks(), config.getGroups(), Collections.<ComponentInfo>emptyList(), config.getHistory(), config.isProtected(), config.configuresBlockGWAndArchiver());
     }
 
     /**
