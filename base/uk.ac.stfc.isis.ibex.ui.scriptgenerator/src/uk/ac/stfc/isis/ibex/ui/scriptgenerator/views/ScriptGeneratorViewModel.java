@@ -1033,4 +1033,13 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	public void setRepoPath() {
 		scriptGeneratorModel.setRepoPath();
 	}
+	
+	/**
+	 * Update script generator table.
+	 * @param data new data to be updated.
+	 */
+	public void updateTable(ArrayList<ScriptGeneratorAction> data) {
+		scriptGeneratorModel.getScriptGeneratorTable().updateTable(data);
+		
+	}
 }

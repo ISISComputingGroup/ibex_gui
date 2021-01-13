@@ -68,9 +68,9 @@ public abstract class DataboundTable<TRow> extends Composite {
     private static final int MIN_TABLE_COLUMN_WIDTH = 50;
 
     private int tableStyle;
-    private Table table;
+    protected Table table;
     /** View for the data held in this table. */
-    protected TableViewer viewer;
+    protected TableViewerEmptyRow viewer;
     private TableColumnLayout tableColumnLayout = new TableColumnLayout();
     private Composite tableComposite;
     private ObservableListContentProvider<TRow> contentProvider = new ObservableListContentProvider<TRow>();
@@ -85,7 +85,7 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @param style the style
      * @param tableStyle the table style
      */
-    public DataboundTable(Composite parent, int style, int tableStyle) {
+    public DataboundTable(Composite parent, int style, int tableStyle, boolean emptyRow) {
 	super(parent, style);
 	this.tableStyle = tableStyle | SWT.BORDER;
 
@@ -101,12 +101,10 @@ public abstract class DataboundTable<TRow> extends Composite {
 	tableComposite = new Composite(this, style);
 	tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 	tableComposite.setLayout(tableColumnLayout);
-
+	
 	viewer = createViewer();
-
 	table = viewer.getTable();
     }
-
 
     /**
      * Instantiates a new databound table with default table style.
@@ -119,7 +117,7 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @wbp.parser.constructor
      */
     public DataboundTable(Composite parent, int style) {
-	this(parent, style, SWT.FULL_SELECTION | SWT.BORDER | SWT.HIDE_SELECTION);
+	this(parent, style, SWT.FULL_SELECTION | SWT.BORDER | SWT.HIDE_SELECTION, false);
     }
 
     /**
@@ -327,8 +325,8 @@ public abstract class DataboundTable<TRow> extends Composite {
      * 
      * @return viewer
      */
-    protected TableViewer createViewer() {
-	return viewer = new TableViewer(tableComposite, tableStyle);
+    protected TableViewerEmptyRow createViewer() {
+	return viewer = new TableViewerEmptyRow(tableComposite, tableStyle, true);
     }
 
     /**

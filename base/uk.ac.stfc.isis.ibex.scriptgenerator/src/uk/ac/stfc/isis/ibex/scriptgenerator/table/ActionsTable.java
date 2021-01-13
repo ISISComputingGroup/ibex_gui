@@ -303,4 +303,13 @@ public class ActionsTable extends ModelObject {
 	public void reloadActions() {
 		firePropertyChange(ACTIONS_PROPERTY, null, actions);
 	}
+	
+	/**
+	 * Update the script generator table data
+	 * @param data data new data to be updated.
+	 */
+	public void updateTable(ArrayList<ScriptGeneratorAction> data) {
+		firePropertyChange(ACTIONS_PROPERTY, actions, actions = data);
+		
+	}
 }

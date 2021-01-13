@@ -42,7 +42,7 @@ public class IocAvailablePVsTable extends DataboundTable<AvailablePV> {
 	 * @param tableStyle The style of the table.
 	 */
 	public IocAvailablePVsTable(Composite parent, int style, int tableStyle) {
-		super(parent, style, tableStyle | SWT.BORDER);
+		super(parent, style, tableStyle | SWT.BORDER, false);
 
 		initialise();
 	

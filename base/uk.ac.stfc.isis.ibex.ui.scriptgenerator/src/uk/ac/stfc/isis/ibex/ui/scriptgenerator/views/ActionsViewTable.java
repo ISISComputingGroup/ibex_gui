@@ -26,9 +26,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import static java.lang.Math.min;
-import static java.lang.Math.max;
-
 import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.CellNavigationStrategy;
@@ -42,20 +39,30 @@ import org.eclipse.jface.viewers.TableViewerEditor;
 import org.eclipse.jface.viewers.TableViewerFocusCellManager;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.TableItem;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.tables.NullComparator;
-import uk.ac.stfc.isis.ibex.ui.tables.SortableObservableMapCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 
 /**
  * A table that holds the properties for a target.
  */
 public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
-    
+
+	/*
+	 * final character that results after all modifiers have been
+	 * applied.  For example, when the user types Ctrl+A, the character value
+	 * is 0x01.
+	*/
+	private static final int CTRL_C = 0x003; 
+	private static final int CTRL_V = 0x016;
+	private ArrayList<ScriptGeneratorAction> userCopiedActions = new ArrayList<ScriptGeneratorAction>();
 	private final ScriptGeneratorViewModel scriptGeneratorViewModel;
 	private boolean shiftCellFocusToNewlyAddedRow = false;
 	private static final  Integer NON_EDITABLE_COLUMNS_ON_RIGHT = 2;
@@ -75,7 +82,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
      * 			  The table of actions (rows) to display/write data to.
      */
     public ActionsViewTable(Composite parent, int style, int tableStyle, ScriptGeneratorViewModel scriptGeneratorViewModel) {
-        super(parent, style, tableStyle | SWT.BORDER);
+        super(parent, style, tableStyle | SWT.BORDER, true);
         this.scriptGeneratorViewModel = scriptGeneratorViewModel;
         initialise();
         
@@ -89,6 +96,28 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 				| ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR
 				| ColumnViewerEditor.TABBING_CYCLE_IN_VIEWER
 				| ColumnViewerEditor.TABBING_VERTICAL);
+		
+		table.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+				if (e.character == CTRL_C) {	
+					userCopiedActions.clear();
+					for (TableItem item : table.getSelection()) {
+						userCopiedActions.add(new ScriptGeneratorAction((ScriptGeneratorAction) item.getData()));
+					}
+				} else if (e.character == CTRL_V && !userCopiedActions.isEmpty()) {
+					@SuppressWarnings("unchecked")
+					ArrayList<ScriptGeneratorAction> data =  new ArrayList<ScriptGeneratorAction>((WritableList<ScriptGeneratorAction>) viewer.getInput());
+					for (int idx = 0; idx < userCopiedActions.size(); idx++) {
+						data.add(idx + table.getSelectionIndex(), userCopiedActions.get(idx));
+					}
+					scriptGeneratorViewModel.updateTable(data);
+					viewer.setInput(new WritableList<ScriptGeneratorAction>(data, null));
+					
+				}
+			}
+		});
 		
     }
     

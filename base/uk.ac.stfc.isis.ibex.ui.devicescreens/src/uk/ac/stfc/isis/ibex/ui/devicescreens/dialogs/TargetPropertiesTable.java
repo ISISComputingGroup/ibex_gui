@@ -47,7 +47,7 @@ public class TargetPropertiesTable extends DataboundTable<PropertyDescription> {
      *            The SWT style of the table.
      */
     public TargetPropertiesTable(Composite parent, int style, int tableStyle) {
-        super(parent, style, tableStyle | SWT.BORDER);
+        super(parent, style, tableStyle | SWT.BORDER, false);
         initialise();
     }
 
