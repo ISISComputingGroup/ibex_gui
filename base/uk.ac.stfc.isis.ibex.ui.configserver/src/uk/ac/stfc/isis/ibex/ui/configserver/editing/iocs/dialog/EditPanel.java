@@ -137,7 +137,7 @@ public class EditPanel extends Composite {
         autoRestart.setText("Auto-Restart");
         autoRestart.setToolTipText(
         		"If set, the IOC will be automatically restarted if it is terminated unexpectedly.\n"
-        		+ "If the IOC is stopped from the client or writing to the appropriate PV then it will not be restarted."
+        		+ "If the IOC is stopped from the client then it will not be restarted."
         );
 
         
