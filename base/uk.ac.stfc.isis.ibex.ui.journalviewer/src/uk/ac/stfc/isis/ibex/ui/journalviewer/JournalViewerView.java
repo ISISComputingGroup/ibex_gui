@@ -212,7 +212,7 @@ public class JournalViewerView {
 			protected void addColumns() {
 		        for (final JournalField field : JournalField.values()) {
 		            if (model.getFieldSelected(field)) {
-		                TableViewerColumn col = table.createColumn(field.getFriendlyName(), 1, true,
+		                TableViewerColumn col = JournalViewerView.this.table.createColumn(field.getFriendlyName(), 1, true,
 		                        new DataboundCellLabelProvider<JournalRow>(new ObservableMap(Collections.emptyMap())) {
 		                            @Override
 		                            protected String stringFromRow(JournalRow row) {

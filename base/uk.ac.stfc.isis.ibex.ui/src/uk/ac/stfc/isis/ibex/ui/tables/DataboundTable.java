@@ -84,6 +84,7 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @param parent the parent
      * @param style the style
      * @param tableStyle the table style
+     * @param emptyRow to add empty row or not
      */
     public DataboundTable(Composite parent, int style, int tableStyle, boolean emptyRow) {
 	super(parent, style);
@@ -102,7 +103,7 @@ public abstract class DataboundTable<TRow> extends Composite {
 	tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 	tableComposite.setLayout(tableColumnLayout);
 	
-	viewer = createViewer();
+	viewer = createViewer(emptyRow);
 	table = viewer.getTable();
     }
 
@@ -322,11 +323,11 @@ public abstract class DataboundTable<TRow> extends Composite {
 
     /**
      * Viewer should be created with tableComposite() as it's parent.
-     * 
+     * @param addEmptyRow to create table with one "permanent" empty row 
      * @return viewer
      */
-    protected TableViewerEmptyRow createViewer() {
-	return viewer = new TableViewerEmptyRow(tableComposite, tableStyle, true);
+    protected TableViewerEmptyRow createViewer(boolean addEmptyRow) {
+	return viewer = new TableViewerEmptyRow(tableComposite, tableStyle, addEmptyRow);
     }
 
     /**
