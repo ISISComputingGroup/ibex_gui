@@ -2261,6 +2261,23 @@
       </value>
     </entry>
     <entry>
+      <key>TTIEX355P</key>
+      <value>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+        <type>POWER_SUPPLY</type>
+        <path>ttiex355p.opi</path>
+        <description>The OPI for the TTIEX355P</description>
+        <macros>
+          <macro>
+            <name>TTIEX355P</name>
+            <description>The TTIEX355P PV prefix (e.g. TTIEX355P_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
       <key>Watson-Marlow 323</key>
       <value>
         <type>PUMP</type>
