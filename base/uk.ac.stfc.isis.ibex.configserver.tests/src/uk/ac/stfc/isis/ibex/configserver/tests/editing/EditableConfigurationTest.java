@@ -130,7 +130,8 @@ public class EditableConfigurationTest {
 				Collections.<Group>emptyList(),
 				Collections.<ComponentInfo>emptyList(),
 				Collections.<String>emptyList(),
-				true);
+				true,
+				false);
 	}
 	
 	protected void populateConfig() {
@@ -144,7 +145,7 @@ public class EditableConfigurationTest {
 	}
 	
 	protected Configuration config() {
-		return new Configuration(NAME, DESCRIPTION, SYNOPTIC, iocs, blocks, groups, components, history, true);
+		return new Configuration(NAME, DESCRIPTION, SYNOPTIC, iocs, blocks, groups, components, history, true, false);
 	}
 	
 	protected EditableConfiguration edit(Configuration config) {

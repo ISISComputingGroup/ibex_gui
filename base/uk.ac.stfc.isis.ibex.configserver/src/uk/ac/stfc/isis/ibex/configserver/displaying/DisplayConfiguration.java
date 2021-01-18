@@ -48,6 +48,7 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 	private String description;
 	private String defaultSynoptic;
 	private boolean isProtected;
+	private boolean isDynamic;
 	private final List<DisplayGroup> groups = new ArrayList<>();
 	private Collection<DisplayBlock> displayBlocks;
 
@@ -77,6 +78,7 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 		description = value.description();
 		defaultSynoptic = value.synoptic();
 		isProtected = value.isProtected();
+		isDynamic = value.isDynamic();
 		setDisplayBlocks(value.getBlocks());
 		setGroups(value.getGroups());
 		return this;
@@ -126,6 +128,15 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 	*/
 	public boolean isProtected() {
 		return isProtected;
+	}
+	
+	/**
+	*Returns if the dynamic flag is set or not.
+	*@return the dynamic flag
+	*
+	*/
+	public boolean isDynamic() {
+		return isDynamic;
 	}
 
 	/**
