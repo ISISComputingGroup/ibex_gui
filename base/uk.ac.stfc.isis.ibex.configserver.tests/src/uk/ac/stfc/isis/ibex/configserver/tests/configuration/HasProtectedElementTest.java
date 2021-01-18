@@ -52,7 +52,7 @@ public class HasProtectedElementTest {
         // Arrange
     	Collection<ConfigInfo> infos = new ArrayList<ConfigInfo>();
         for (int i = 0; i < 10 ; i++) {
-        	ConfigInfo elem = new ConfigInfo("", false, "", "", "", Collections.emptyList());
+        	ConfigInfo elem = new ConfigInfo("", false, false, "", "", "", Collections.emptyList());
             infos.add(elem);
         }
 
@@ -67,7 +67,7 @@ public class HasProtectedElementTest {
     public void WHEN_one_element_and_not_protected_THEN_return_true() {
         // Arrange
     	Collection<ConfigInfo> infos = new ArrayList<ConfigInfo>();
-    	ConfigInfo elem = new ConfigInfo("", false, "", "", "", Collections.emptyList());
+    	ConfigInfo elem = new ConfigInfo("", false, false, "", "", "", Collections.emptyList());
         infos.add(elem);
 
         // Act
@@ -81,7 +81,7 @@ public class HasProtectedElementTest {
     public void WHEN_one_element_and_protected_THEN_return_true() {
         // Arrange
     	Collection<ConfigInfo> infos = new ArrayList<ConfigInfo>();
-    	ConfigInfo elem = new ConfigInfo("", true, "", "", "", Collections.emptyList());
+    	ConfigInfo elem = new ConfigInfo("", true, false, "", "", "", Collections.emptyList());
         infos.add(elem);
 
         // Act
@@ -96,10 +96,10 @@ public class HasProtectedElementTest {
         // Arrange
     	Collection<ConfigInfo> infos = new ArrayList<ConfigInfo>();
         for (int i = 0; i < 9 ; i++) {
-        	ConfigInfo elem = new ConfigInfo("", false, "", "", "", Collections.emptyList());
+        	ConfigInfo elem = new ConfigInfo("", false, false, "", "", "", Collections.emptyList());
             infos.add(elem);
         }
-    	ConfigInfo elem = new ConfigInfo("", true, "", "", "", Collections.emptyList());
+    	ConfigInfo elem = new ConfigInfo("", true, false, "", "", "", Collections.emptyList());
         infos.add(elem);
 
         // Act
@@ -115,10 +115,10 @@ public class HasProtectedElementTest {
     	Collection<ConfigInfo> infos = new ArrayList<ConfigInfo>();
         for (int i = 0; i < 10 ; i++) {
         	if (i%2==0) { 
-        		ConfigInfo elem = new ConfigInfo("", false, "", "", "", Collections.emptyList());
+        		ConfigInfo elem = new ConfigInfo("", false, false, "", "", "", Collections.emptyList());
         		infos.add(elem);
         	} else { 
-        		ConfigInfo elem = new ConfigInfo("", true, "", "", "", Collections.emptyList());
+        		ConfigInfo elem = new ConfigInfo("", true, false, "", "", "", Collections.emptyList());
         		infos.add(elem);
         	}
         }
@@ -135,7 +135,7 @@ public class HasProtectedElementTest {
         // Arrange
     	Collection<ConfigInfo> infos = new ArrayList<ConfigInfo>();
         for (int i = 0; i < 10 ; i++) {
-    		ConfigInfo elem = new ConfigInfo("", true, "", "", "", Collections.emptyList());
+    		ConfigInfo elem = new ConfigInfo("", true, false, "", "", "", Collections.emptyList());
     		infos.add(elem);
         }
 

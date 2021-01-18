@@ -2557,5 +2557,15 @@
         </categories>
       </value>
     </entry>
+    <entry>
+      <key>MuSR Rotation control</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>musr_rotation.opi</path>
+        <description>Controls the orientation of MuSR</description>
+        <macros />
+        <categories />
+      </value>
+    </entry>
   </opis>
 </descriptions>
