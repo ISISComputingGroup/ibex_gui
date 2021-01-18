@@ -59,7 +59,7 @@ public class ParametersTable extends DataboundTable<Parameter> {
 	 * @param style the SWT style
 	 */
     public ParametersTable(Composite parent, int style) {
-        super(parent, style, SWT.MULTI | SWT.FULL_SELECTION | SWT.BORDER | SWT.NO_SCROLL | SWT.V_SCROLL, false);
+        super(parent, style, SWT.MULTI | SWT.FULL_SELECTION | SWT.BORDER | SWT.NO_SCROLL | SWT.V_SCROLL);
 		initialise();
 	}
 

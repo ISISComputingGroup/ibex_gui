@@ -74,7 +74,7 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 	 * @param isBlockVisibilityShown Whether the block visibility column should be shown.
 	 */
 	public BlocksTable(Composite parent, int style, int tableStyle, boolean isBlockVisibilityShown) {
-		super(parent, style, tableStyle | SWT.BORDER, false);
+		super(parent, style, tableStyle | SWT.BORDER);
 		
 		setSortAction(() -> visibilityLabelProvider.resetCheckBoxListenerUpdateFlags());
 		

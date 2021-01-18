@@ -2,6 +2,7 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -142,7 +143,12 @@ public class ScriptDefinitionLoader extends ModelObject {
 			ArrayList<JavaActionParameter> parameters = scriptDefinition.getParameters().stream()
 					.map(param_details -> new JavaActionParameter(param_details.getName(), param_details.getDefaultValue(), param_details.getCopyPreviousRow()))
 					.collect(Collectors.toCollection(ArrayList::new));
-			firePropertyChange("parameters", this.parameters, this.parameters = parameters);
+		
+			if (areAllCopyPreviousRowValEqual(parameters)) {
+				firePropertyChange("parameters", this.parameters, this.parameters = parameters);
+			} else {
+				firePropertyChange("parameters", null, this.parameters = parameters);
+			}
 			selectedScriptDefinition = Optional.ofNullable(scriptDefinition);
 			selectedScriptDefinition.ifPresentOrElse(presentSelectedScriptDefinition -> {
 				lastSelectedScriptName = Optional.of(presentSelectedScriptDefinition.getName());
@@ -152,6 +158,27 @@ public class ScriptDefinitionLoader extends ModelObject {
 			LOG.error(e);
 			pythonInterface.handlePythonReadinessChange(false);
 		}
+	}
+	
+	/**
+	 * Compare the copyPreviousRowVal of existing parameters with new parameters that we are about to change to.
+	 * @param parameters new parameters from script definitions
+	 * @return
+	 */
+	private boolean areAllCopyPreviousRowValEqual(ArrayList<JavaActionParameter> parameters) {
+		boolean retVal = true;
+		if (parameters.size() == this.parameters.size()) {
+		    Iterator<JavaActionParameter> newParameters = parameters.iterator();
+		    Iterator<JavaActionParameter> currentParameters = this.parameters.iterator();
+		    while (newParameters.hasNext() && currentParameters.hasNext()) {
+	            JavaActionParameter newParam = newParameters.next();
+	            JavaActionParameter currentParam = currentParameters.next();
+	            retVal = retVal && newParam.getCopyPreviousRow() && currentParam.getCopyPreviousRow();
+	        } 
+		} else {
+			retVal = false;
+		}
+		return retVal;
 	}
 	
 	/**

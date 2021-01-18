@@ -48,7 +48,7 @@ public class RunControlSettingsTable extends DataboundTable<DisplayBlock> {
      *                  
      */
     public RunControlSettingsTable(Composite parent, int style, int tableStyle) {
-        super(parent, style, tableStyle, false);
+        super(parent, style, tableStyle);
 
         initialise();
     }

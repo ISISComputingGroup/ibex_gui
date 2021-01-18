@@ -84,29 +84,38 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @param parent the parent
      * @param style the style
      * @param tableStyle the table style
+     */
+    public DataboundTable(Composite parent, int style, int tableStyle) {
+    this(parent, style, tableStyle, false);
+    }
+    
+    /**
+     * Constructor for creating table with empty row.
+     * @param parent the parent
+     * @param style the style
+     * @param tableStyle the table style
      * @param emptyRow to add empty row or not
      */
     public DataboundTable(Composite parent, int style, int tableStyle, boolean emptyRow) {
-	super(parent, style);
-	this.tableStyle = tableStyle | SWT.BORDER;
+    super(parent, style);
+    this.tableStyle = tableStyle | SWT.BORDER;
 
-	// GridLayout is used so that the table can be excluded from a view
-	// using the exclude property that is not present on other layouts
-	GridLayout gridLayout = new GridLayout(1, false);
-	gridLayout.horizontalSpacing = 0;
-	gridLayout.verticalSpacing = 0;
-	gridLayout.marginWidth = 0;
-	gridLayout.marginHeight = 0;
-	setLayout(gridLayout);
+    // GridLayout is used so that the table can be excluded from a view
+    // using the exclude property that is not present on other layouts
+    GridLayout gridLayout = new GridLayout(1, false);
+    gridLayout.horizontalSpacing = 0;
+    gridLayout.verticalSpacing = 0;
+    gridLayout.marginWidth = 0;
+    gridLayout.marginHeight = 0;
+    setLayout(gridLayout);
 
-	tableComposite = new Composite(this, style);
-	tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	tableComposite.setLayout(tableColumnLayout);
-	
-	viewer = createViewer(emptyRow);
-	table = viewer.getTable();
+    tableComposite = new Composite(this, style);
+    tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+    tableComposite.setLayout(tableColumnLayout);
+    	
+    viewer = createViewer(emptyRow);
+    table = viewer.getTable();
     }
-
     /**
      * Instantiates a new databound table with default table style.
      *

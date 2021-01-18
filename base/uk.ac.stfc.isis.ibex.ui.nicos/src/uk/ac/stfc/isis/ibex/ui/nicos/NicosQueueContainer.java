@@ -122,7 +122,7 @@ public class NicosQueueContainer {
         lblQueuedScriptsSubLabel.setText("(double-click name to view / edit contents)");
         lblQueuedScriptsSubLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
         
-        queuedScriptsViewer = new DataboundTable<QueuedScript>(parent, SWT.NONE, SWT.V_SCROLL, false) {
+        queuedScriptsViewer = new DataboundTable<QueuedScript>(parent, SWT.NONE, SWT.V_SCROLL) {
 			@Override
 			protected void addColumns() {
 				createColumn("Name", 100, new DataboundCellLabelProvider<QueuedScript>(observeProperty("name")) {

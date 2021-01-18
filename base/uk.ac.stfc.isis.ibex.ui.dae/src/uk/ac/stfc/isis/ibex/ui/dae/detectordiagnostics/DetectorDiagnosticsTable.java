@@ -41,7 +41,7 @@ public class DetectorDiagnosticsTable extends DataboundTable<SpectrumInformation
      * @param tableStyle the table style
      */
     public DetectorDiagnosticsTable(Composite parent, int style, int tableStyle) {
-        super(parent, style, tableStyle, false);       
+        super(parent, style, tableStyle);       
         initialise();        
     }
     

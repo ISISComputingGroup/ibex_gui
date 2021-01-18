@@ -52,7 +52,7 @@ public class BlockPVTable extends DataboundTable<PV> {
      *            The SWT table style.
      */
 	public BlockPVTable(Composite parent, int style, int tableStyle) {
-		super(parent, style, tableStyle | SWT.BORDER, false);
+		super(parent, style, tableStyle | SWT.BORDER);
 
 		initialise();
 	

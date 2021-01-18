@@ -107,7 +107,7 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
      *            The SWT table style.
      */
     public EditableIocsTable(Composite parent, int style, int tableStyle) {
-		super(parent, style, tableStyle | SWT.NO_SCROLL | SWT.V_SCROLL, false);
+		super(parent, style, tableStyle | SWT.NO_SCROLL | SWT.V_SCROLL);
 		
         setSortAction(() -> resetCheckboxLabelProvidersUpdateFlags());
 				

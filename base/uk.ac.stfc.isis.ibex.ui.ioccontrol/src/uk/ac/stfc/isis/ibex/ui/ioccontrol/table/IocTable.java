@@ -54,7 +54,7 @@ public class IocTable extends DataboundTable<IocState> {
      *            The style of the table.
      */
     public IocTable(Composite parent, int style, int tableStyle) {
-        super(parent, style, tableStyle | SWT.NO_SCROLL | SWT.V_SCROLL, false);
+        super(parent, style, tableStyle | SWT.NO_SCROLL | SWT.V_SCROLL);
         initialise();
     }
 

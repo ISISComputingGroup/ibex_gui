@@ -76,11 +76,10 @@ public class JavaActionParameter implements ActionParameter {
 		if (!(other instanceof JavaActionParameter)) {
 		    return false;	
 		}
-		
+	
 		JavaActionParameter actionParameter = (JavaActionParameter) other;
 		return Objects.equals(this.getName(), actionParameter.getName()) 
-			&& Objects.equals(this.getDefaultValue(), actionParameter.getDefaultValue())
-			&& Objects.deepEquals(this.getCopyPreviousRow(), actionParameter.getCopyPreviousRow());
+			&& Objects.equals(this.getDefaultValue(), actionParameter.getDefaultValue());
 	}
 	
 	/**

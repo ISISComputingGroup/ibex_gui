@@ -46,7 +46,7 @@ public class AvailableIocsTable extends DataboundTable<EditableIoc> {
      *            The SWT table style.
      */
     public AvailableIocsTable(Composite parent, int style, int tableStyle) {
-        super(parent, style, tableStyle | SWT.BORDER, false);
+        super(parent, style, tableStyle | SWT.BORDER);
         initialise();
     }
 

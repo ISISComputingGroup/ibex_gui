@@ -41,7 +41,7 @@ public class IocPVSetsTable extends DataboundTable<EditablePVSet> {
 	 * @param tableStyle The SWT style for the underlying table.
 	 */
 	public IocPVSetsTable(Composite parent, int style, int tableStyle) {
-		super(parent, style, tableStyle | SWT.BORDER, false);
+		super(parent, style, tableStyle | SWT.BORDER);
 
 		initialise();
 	}

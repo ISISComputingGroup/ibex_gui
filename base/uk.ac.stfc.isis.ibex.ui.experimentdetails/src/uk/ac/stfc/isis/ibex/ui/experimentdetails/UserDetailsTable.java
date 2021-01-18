@@ -45,7 +45,7 @@ public abstract class UserDetailsTable extends DataboundTable<UserDetails> {
 	 * @param tableStyle The style of the underlying table.
 	 */
 	public UserDetailsTable(Composite parent, int style, int tableStyle) {
-		super(parent, style, tableStyle, false);
+		super(parent, style, tableStyle);
 		initialise();
 	}
 
