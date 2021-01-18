@@ -136,7 +136,6 @@ public class SummaryPanel extends Composite {
         protectedCheckBox.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));   
         protectLabel.setToolTipText(PROTECT_TOOLTIP);  
         
-        
         dynamicLabel = new Label(optionsContainer,  SWT.NONE);
         dynamicLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1));
         dynamicLabel.setText("Dynamic:");
@@ -215,6 +214,12 @@ public class SummaryPanel extends Composite {
 
         bindingContext.bindValue(WidgetProperties.visible().observe(lblSynoptic),
 		BeanProperties.value("isComponent", Boolean.class).observe(config), null, UIUtils.NOT_CONVERTER);
+        
+        bindingContext.bindValue(WidgetProperties.visible().observe(dynamicLabel),
+        		BeanProperties.value("isComponent", Boolean.class).observe(config));
+        bindingContext.bindValue(WidgetProperties.visible().observe(dynamicCheckBox),
+        		BeanProperties.value("isComponent", Boolean.class).observe(config));
+        
         bindingContext.bindValue(WidgetProperties.visible().observe(cmboSynoptic.getCombo()),
 		BeanProperties.value("isComponent", Boolean.class).observe(config), null, UIUtils.NOT_CONVERTER);
         bindingContext.bindValue(WidgetProperties.text().observe(warning),
