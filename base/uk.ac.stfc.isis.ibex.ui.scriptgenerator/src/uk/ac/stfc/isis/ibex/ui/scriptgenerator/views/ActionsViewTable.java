@@ -143,7 +143,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 					int currentlyFocusedColumn = editor.getFocusCell().getColumnIndex() + 1;
 					
 					// Add new action if tab is pressed by user in the last cell of the table.
-					if (nextCell.getNeighbor(ViewerCell.BELOW, false) == null 
+					if (nextCell.getNeighbor(ViewerCell.BELOW, false).getElement() == null
 					        && (viewer.getTable().getColumnCount() - NON_EDITABLE_COLUMNS_ON_RIGHT == currentlyFocusedColumn)) {
 					    
                     	scriptGeneratorViewModel.addEmptyAction();
