@@ -2543,7 +2543,7 @@
     <entry>
       <key>MuSR Steering</key>
       <value>
-        <type>UNKNOWN</type>
+        <type>MUSR_MAGNET</type>
         <path>musr_steering.opi</path>
         <description>OPI for steering the horizontal and vertical steering magnets</description>
         <macros>
@@ -2558,7 +2558,7 @@
             <default>2</default>
           </macro>
         </macros>
-        <categories>Magnets<categories/>
+        <categories>Magnets</categories>
       </value>
     </entry>
   </opis>
