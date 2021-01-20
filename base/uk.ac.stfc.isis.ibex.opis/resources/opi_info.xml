@@ -2558,7 +2558,7 @@
             <default>2</default>
           </macro>
         </macros>
-        <categories />
+        <categories>Magnets<categories/>
       </value>
     </entry>
   </opis>
