@@ -43,7 +43,7 @@ public class ComponentFilteredConfiguration extends Configuration {
 	public ComponentFilteredConfiguration(Configuration other) {
         super(other.name(), other.description(), other.synoptic(), filterIocs(other.getIocs()),
                 filterBlocks(other.getBlocks()), filterGroups(other.getGroups()), other.getComponents(),
-                other.getHistory(), other.isProtected());
+                other.getHistory(), other.isProtected(), other.isDynamic());
 	}
 	
     /**

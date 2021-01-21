@@ -106,6 +106,11 @@ public class EditPanel extends Composite {
         // General IOC Settings
         Label lblSimLevel = new Label(cmpIocDetails, SWT.NONE);
         lblSimLevel.setText("Sim. Level");
+        lblSimLevel.setToolTipText(
+        		"By default, the simulation level file is set to NONE, meaning that the IOC will not run in simulation mode.\n"
+        		+ "Under normal circumstances, you should not change the default setting.\n"
+        		+ "Simulation mode is used for running the IOC without the actual physical device."
+        );
         lblSimLevel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
 
         simLevel = new ComboViewer(cmpIocDetails, SWT.READ_ONLY);
@@ -118,10 +123,23 @@ public class EditPanel extends Composite {
         autoStart = new Button(cmpIocDetails, SWT.CHECK);
         autoStart.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
         autoStart.setText("Auto-Start");
+        autoStart.setToolTipText(
+        		"If set, the IOC will be started/restarted whenever the configuration is changed.\n"
+        		+ "If not set then if the IOC is not running it will remained stopped after config change,\n"
+        		+ "and if it is running it will remain running throughout the config change.\n"
+        		+ "\n"
+        		+ "Warning: if not set and the IOC is running, any changes you make (e.g. a macro change)\n"
+        		+ "will not be set on the IOC until you restart it manually."
+        );
 
         autoRestart = new Button(cmpIocDetails, SWT.CHECK);
         autoRestart.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
         autoRestart.setText("Auto-Restart");
+        autoRestart.setToolTipText(
+        		"If set, the IOC will be automatically restarted if it is terminated unexpectedly.\n"
+        		+ "If the IOC is stopped from the client then it will not be restarted."
+        );
+
         
         if (ALLOW_REMOTE_PV_PREFIX_CHANGE) {
 	        remotePvPrefixLbl = new Label(cmpIocDetails, SWT.NONE);
