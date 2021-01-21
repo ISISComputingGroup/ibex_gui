@@ -130,7 +130,7 @@ public class Configuration extends ModelObject {
 	}
 
 	/**
-	 * Get a user-friendly display name for this configuration/component
+	 * Get a user-friendly display name for this configuration/component.
 	 * 
 	 * @return The name of the configuration, which may be appended with other
 	 *         information about the component.
