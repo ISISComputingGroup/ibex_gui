@@ -187,7 +187,9 @@ public enum ComponentType {
     /** SANS2D Vacuum Tank. */
     VACUUM_TANK,
     /** Helium Level Gauge. */
-    HE_LEVEL_GAUGE;
+    HE_LEVEL_GAUGE,
+	/** Musr Steering Magnets. */
+	MUSR_STEERING;
 
     private Target target;
 
