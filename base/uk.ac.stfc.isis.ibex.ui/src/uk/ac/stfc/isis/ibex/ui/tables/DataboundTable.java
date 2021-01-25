@@ -66,11 +66,10 @@ public abstract class DataboundTable<TRow> extends Composite {
 
     private static final int DEFAULT_FONT_HEIGHT = 10;
     private static final int MIN_TABLE_COLUMN_WIDTH = 50;
-
     private int tableStyle;
     protected Table table;
     /** View for the data held in this table. */
-    protected TableViewerEmptyRow viewer;
+    protected TableViewer viewer;
     private TableColumnLayout tableColumnLayout = new TableColumnLayout();
     private Composite tableComposite;
     private ObservableListContentProvider<TRow> contentProvider = new ObservableListContentProvider<TRow>();
@@ -335,8 +334,13 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @param addEmptyRow to create table with one "permanent" empty row 
      * @return viewer
      */
-    protected TableViewerEmptyRow createViewer(boolean addEmptyRow) {
-	return viewer = new TableViewerEmptyRow(tableComposite, tableStyle, addEmptyRow);
+    protected TableViewer createViewer(boolean addEmptyRow) {
+    if (addEmptyRow) {
+    	viewer = new TableViewerEmptyRow(tableComposite, tableStyle, addEmptyRow);
+    } else {
+    	viewer = new TableViewer(tableComposite, tableStyle);
+    }
+	return viewer;
     }
 
     /**
