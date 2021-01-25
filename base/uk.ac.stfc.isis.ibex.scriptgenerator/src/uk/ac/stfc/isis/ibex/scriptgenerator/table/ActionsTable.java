@@ -192,6 +192,48 @@ public class ActionsTable extends ModelObject {
 	}
 	
 	/**
+	 * Inserts list of action at given row number/location. Pushes the action at selected
+	 * location below.
+	 * @param listOfActions list of Map. Each instance of map contains row data/action.
+	 * 						Each entry in map contains data for individual cell in table.
+	 * @param pasteLocation row/location where user wants to insert.
+	 */
+	public void pasteActions(List<Map<String, String>> listOfActions, int pasteLocation) {
+		List<Map<JavaActionParameter, String>> newList = new ArrayList<Map<JavaActionParameter, String>>();
+		for (Map<String, String> actions: listOfActions) {
+			newList.add(convertStringMapToJavaActionParameterMap(actions));
+		}
+		insertMultipleActions(newList, pasteLocation);
+	}
+	
+	/**
+	 * Add multiple actions at given row.
+	 * @param list contains mapped action parameters to its values
+	 * @param insertLocation location in table to insert the actions
+	 */
+	public void insertMultipleActions(List<Map<JavaActionParameter, String>> list, int insertLocation) {
+		final List<ScriptGeneratorAction> currentListOfActions = new ArrayList<ScriptGeneratorAction>(actions);
+		for (Map<JavaActionParameter, String> map : list) {
+			var newAction = createAction(map);
+			currentListOfActions.add(insertLocation, newAction);
+			insertLocation++;
+		}
+		firePropertyChange(ACTIONS_PROPERTY, actions, actions = currentListOfActions);
+	}
+	
+	/**
+	 * Converts Map<String, String> to Map<JavaActionParameter, String>.
+	 * @param paramAndValues Map containing values mapped to its parameter.
+	 * @return Map<JavaActionParameter, String>.
+	 */
+	private Map<JavaActionParameter, String> convertStringMapToJavaActionParameterMap(Map<String, String> paramAndValues) {
+		Map<JavaActionParameter, String> convertedParamAndValues = new HashMap<JavaActionParameter, String>(); 
+		for (JavaActionParameter param:this.actionParameters) {
+			convertedParamAndValues.put(param, paramAndValues.get(param.getName()));
+		}
+		return convertedParamAndValues;
+	}
+	/**
 	 * Add multiple actions.
 	 * @param list contains mapped action parameters to its values
 	 */
@@ -350,14 +392,5 @@ public class ActionsTable extends ModelObject {
 	 */
 	public void reloadActions() {
 		firePropertyChange(ACTIONS_PROPERTY, null, actions);
-	}
-	
-	/**
-	 * Update the script generator table data
-	 * @param data data new data to be updated.
-	 */
-	public void updateTable(ArrayList<ScriptGeneratorAction> data) {
-		firePropertyChange(ACTIONS_PROPERTY, actions, actions = data);
-		
 	}
 }

@@ -796,5 +796,14 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		pythonInterface.mergeOrigin();
 		
 	}
+	
+	/**
+	 * Paste actions in given row/location.
+	 * @param map list of map which contains mapped parameters to its values.
+	 * @param pasteLocation location where user wants to paste the copied actions.
+	 */
+	public void pasteActions(ArrayList<Map<String, String>> map, int pasteLocation) {
+		scriptGeneratorTable.pasteActions(map, pasteLocation);
+	}
 
 }

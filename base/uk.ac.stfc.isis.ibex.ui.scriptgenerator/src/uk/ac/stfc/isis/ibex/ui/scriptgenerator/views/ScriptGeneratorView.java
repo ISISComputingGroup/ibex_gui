@@ -46,7 +46,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
@@ -313,6 +312,8 @@ public class ScriptGeneratorView {
             scriptGeneratorViewModel.displayValidityErrors();
         });
 
+
+
         Map<String, String> scriptDefinitionLoadErrors = scriptGeneratorViewModel.getScriptDefinitionLoadErrors();
 
         if (!scriptDefinitionLoadErrors.isEmpty()) {
@@ -350,6 +351,23 @@ public class ScriptGeneratorView {
         estimateLayout.marginRight = 40;
         estimateGrp.setLayout(estimateLayout);
 
+        Composite utilitiesGrp = new Composite(mainParent, SWT.NONE);
+        utilitiesGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        GridLayout ugLayout = new GridLayout(2, true);
+        ugLayout.marginHeight = 10;
+        ugLayout.marginWidth = 10;
+        utilitiesGrp.setLayout(ugLayout);
+        
+        final Button copy = new Button(utilitiesGrp, SWT.NONE);
+        copy.setText("Copy selected actions");
+        copy.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        copy.addListener(SWT.Selection, e -> scriptGeneratorViewModel.copyActions(table.getSelectedTableData()));
+        
+        final Button paste = new Button(utilitiesGrp, SWT.NONE);
+        paste.setText("Paste actions");
+        paste.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        paste.addListener(SWT.Selection, e -> scriptGeneratorViewModel.pasteActions(table.getColumnsLabel(), table.getSelectionIndex()));
+        
         // Label for the total estimated run time
         estimateText = new Label(estimateGrp, SWT.RIGHT);
         estimateText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -392,6 +410,7 @@ public class ScriptGeneratorView {
         btnClearAction.setText("Clear All Actions");
         btnClearAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         btnClearAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.clearAction());
+
 
         // Composite for generate buttons
         Composite generateButtonsGrp = new Composite(mainParent, SWT.NONE);

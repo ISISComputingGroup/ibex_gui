@@ -166,5 +166,12 @@ public class ScriptGeneratorAction extends ModelObject {
     public Optional<Number> getEstimatedTime() {
 	return estimatedTime;
     }
-
-}
+    
+    /**
+     * Returns number of values per action.
+     * @return size of script generator action.
+     */
+    public int getSize() {
+    	return actionParameterValues.size();
+    }
+}	
