@@ -336,7 +336,7 @@ public abstract class DataboundTable<TRow> extends Composite {
      */
     protected TableViewer createViewer(boolean addEmptyRow) {
     if (addEmptyRow) {
-    	viewer = new TableViewerEmptyRow(tableComposite, tableStyle, addEmptyRow);
+    	viewer = new TableViewerEmptyRow(tableComposite, tableStyle);
     } else {
     	viewer = new TableViewer(tableComposite, tableStyle);
     }

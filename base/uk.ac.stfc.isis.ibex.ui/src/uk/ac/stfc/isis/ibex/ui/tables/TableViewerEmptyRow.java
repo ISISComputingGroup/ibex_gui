@@ -12,7 +12,6 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
  * copy-pasting after final (editable) line is possible.
  */
 public class TableViewerEmptyRow extends TableViewer {
-	private boolean addEmptyRow = false;
 	private static final Logger LOG = IsisLog.getLogger(TableViewerEmptyRow.class);
 	/**
 	 * Constructor for creating table using default style bits used by TableViewer.
@@ -26,34 +25,23 @@ public class TableViewerEmptyRow extends TableViewer {
      * Constructor for creating table using style bits.
      * @param composite the parent control
      * @param style SWT style bits
-     * @param addEmptyRow to add empty row or not
      */
-    public TableViewerEmptyRow(Composite composite, int style, boolean addEmptyRow) {
+    public TableViewerEmptyRow(Composite composite, int style) {
         super(composite, style);
-        this.addEmptyRow = addEmptyRow;
     }
 
     @Override
     public void refresh(Object element) {
-    	if (!addEmptyRow) {
-    		super.refresh(element);
-    	} else {
-	        deleteEmptyRow();
-	        super.refresh(element);
-    	}
-
+        deleteEmptyRow();
+        super.refresh(element);
     }
     
     @Override
     protected void inputChanged(Object input, Object oldInput) {
-    	if (!addEmptyRow) {
-    		super.inputChanged(input, oldInput);
-    	} else {
-            deleteEmptyRow();
-            super.inputChanged(input, oldInput);
-            @SuppressWarnings("unused")
-            TableItem emptyRow = new TableItem(getTable(), SWT.NO_BACKGROUND | SWT.NO_FOCUS);
-    	}
+        deleteEmptyRow();
+        super.inputChanged(input, oldInput);
+        @SuppressWarnings("unused")
+        TableItem emptyRow = new TableItem(getTable(), SWT.NO_BACKGROUND | SWT.NO_FOCUS);
     }
     
     /**
@@ -73,15 +61,11 @@ public class TableViewerEmptyRow extends TableViewer {
 
     @Override
     public void refresh() {
-    	if (!addEmptyRow) {
-    		super.refresh();
-    	} else {
-	        deleteEmptyRow();
-	        super.refresh();
-	        @SuppressWarnings("unused")
-	        TableItem tableItem = new TableItem(getTable(), SWT.NO_BACKGROUND | SWT.NO_FOCUS);
-    	}
-    
+        deleteEmptyRow();
+        super.refresh();
+        @SuppressWarnings("unused")
+        TableItem tableItem = new TableItem(getTable(), SWT.NO_BACKGROUND | SWT.NO_FOCUS);
+
     }
 
 }
