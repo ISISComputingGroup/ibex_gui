@@ -225,6 +225,8 @@ public final class ComponentIcons {
             	return "he_level_gauge";
             case VACUUM_TANK:
             	return "sans2d_vacuum_tank";
+            case MUSR_STEERING:
+            	return "musr_steering";
             default:
                 return "cog";
         }
