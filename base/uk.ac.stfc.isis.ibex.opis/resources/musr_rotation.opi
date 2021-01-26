@@ -1326,7 +1326,7 @@ $(pv_value)</tooltip>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
-    <height>55</height>
+    <height>79</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -1344,10 +1344,10 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
-    <width>127</width>
+    <width>289</width>
     <wuid>6cd88813:17719e09a04:-7e9e</wuid>
     <x>12</x>
-    <y>402</y>
+    <y>384</y>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <auto_size>false</auto_size>
@@ -1387,7 +1387,7 @@ $(pv_value)</tooltip>
       <wrap_words>true</wrap_words>
       <wuid>6cd88813:17719e09a04:-7e78</wuid>
       <x>6</x>
-      <y>2</y>
+      <y>9</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -1429,7 +1429,14 @@ $(pv_value)</tooltip>
       <on_label>ON</on_label>
       <pv_name>$(P)CAEN:STATUS:ON</pv_name>
       <pv_value />
-      <rules />
+      <rules>
+        <rule name="Rule" prop_id="tooltip" out_exp="false">
+          <exp bool_exp="pv0 == 1">
+            <value>At least one of the CAENs is on</value>
+          </exp>
+          <pv trig="true">$(P)CAEN:STATUS:ON</pv>
+        </rule>
+      </rules>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -1438,13 +1445,60 @@ $(pv_value)</tooltip>
       <scripts />
       <show_boolean_label>false</show_boolean_label>
       <square_led>false</square_led>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
+      <tooltip>None of the CAENs are on</tooltip>
       <visible>true</visible>
       <widget_type>LED</widget_type>
       <width>25</width>
       <wuid>-320c8295:1771f993e88:-7fb6</wuid>
       <x>60</x>
+      <y>6</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <auto_size>false</auto_size>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <border_style>1</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Red" red="255" green="0" blue="0" />
+      </foreground_color>
+      <height>37</height>
+      <horizontal_alignment>0</horizontal_alignment>
+      <name>Label_15</name>
+      <rules>
+        <rule name="Rule" prop_id="text" out_exp="true">
+          <exp bool_exp="pv0==1.0">
+            <value>"At least one of the CAENs is on"</value>
+          </exp>
+          <pv trig="true">$(P)CAEN:STATUS:ON</pv>
+        </rule>
+      </rules>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_scrollbar>false</show_scrollbar>
+      <text>None of the CAENs are on.</text>
+      <tooltip></tooltip>
+      <transparent>false</transparent>
+      <vertical_alignment>1</vertical_alignment>
+      <visible>true</visible>
+      <widget_type>Label</widget_type>
+      <width>163</width>
+      <wrap_words>true</wrap_words>
+      <wuid>32100500:1773ee544fa:-7f24</wuid>
+      <x>96</x>
       <y>0</y>
     </widget>
   </widget>
