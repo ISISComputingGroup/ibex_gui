@@ -19,8 +19,8 @@
   <macros>
     <include_parent_macros>true</include_parent_macros>
     <KEPCO>$(P)KEPCO_0</KEPCO>
-    <H_STEER>$(KEPCO)1:</H_STEER>
-    <V_STEER>$(KEPCO)2:</V_STEER>
+    <H_STEER_FULL>$(KEPCO)$(H_STEER):</H_STEER_FULL>
+    <V_STEER_FULL>$(KEPCO)$(V_STEER):</V_STEER_FULL>
   </macros>
   <name>$(NAME)</name>
   <rules />
@@ -441,7 +441,7 @@
         <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
       </on_color>
       <on_label>ON</on_label>
-      <pv_name>$(H_STEER)OUTPUTMODE</pv_name>
+      <pv_name>$(H_STEER_FULL)OUTPUTMODE</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -499,7 +499,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
       </on_color>
       <on_label>ON</on_label>
-      <pv_name>$(V_STEER)OUTPUTMODE</pv_name>
+      <pv_name>$(V_STEER_FULL)OUTPUTMODE</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -552,7 +552,7 @@ $(pv_value)</tooltip>
       <name>Text Input</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(H_STEER)_CURRENT:SP</pv_name>
+      <pv_name>$(H_STEER_FULL)_CURRENT:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -609,7 +609,7 @@ $(pv_value)</tooltip>
       <name>Text Input</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(V_STEER)_CURRENT:SP</pv_name>
+      <pv_name>$(V_STEER_FULL)_CURRENT:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -661,7 +661,7 @@ $(pv_value)</tooltip>
       <name>Text Update_1</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(H_STEER)_CURRENT:SP:RBV</pv_name>
+      <pv_name>$(H_STEER_FULL)_CURRENT:SP:RBV</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -713,7 +713,7 @@ $(pv_value)</tooltip>
       <name>Text Update_1</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(V_STEER)_CURRENT:SP:RBV</pv_name>
+      <pv_name>$(V_STEER_FULL)_CURRENT:SP:RBV</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -765,7 +765,7 @@ $(pv_value)</tooltip>
       <name>Text Update_1</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(H_STEER)CURRENT</pv_name>
+      <pv_name>$(H_STEER_FULL)CURRENT</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -817,7 +817,7 @@ $(pv_value)</tooltip>
       <name>Text Update_1</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(V_STEER)CURRENT</pv_name>
+      <pv_name>$(V_STEER_FULL)CURRENT</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -869,7 +869,7 @@ $(pv_value)</tooltip>
       <name>Text Update_1</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(H_STEER)VOLTAGE</pv_name>
+      <pv_name>$(H_STEER_FULL)VOLTAGE</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -921,7 +921,7 @@ $(pv_value)</tooltip>
       <name>Text Update_1</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(V_STEER)VOLTAGE</pv_name>
+      <pv_name>$(V_STEER_FULL)VOLTAGE</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -1081,7 +1081,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
       </on_color>
       <on_label>ON</on_label>
-      <pv_name>$(H_STEER)OUTPUTSTATUS</pv_name>
+      <pv_name>$(H_STEER_FULL)OUTPUTSTATUS</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -1139,7 +1139,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
       </on_color>
       <on_label>ON</on_label>
-      <pv_name>$(V_STEER)OUTPUTSTATUS</pv_name>
+      <pv_name>$(V_STEER_FULL)OUTPUTSTATUS</pv_name>
       <pv_value />
       <rules />
       <scale_options>
