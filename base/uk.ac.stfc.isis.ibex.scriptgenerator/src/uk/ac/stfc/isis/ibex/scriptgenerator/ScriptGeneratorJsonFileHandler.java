@@ -44,7 +44,7 @@ public class ScriptGeneratorJsonFileHandler {
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorSingleton.class);
 	private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	/**
-	 * Save Parameters to a JSON file.
+	 * Save Parameters to a JSON file (with script generator parameters file extension).
 	 * @param scriptGenContent content to generate data file with
 	 * @param scriptDefPath path of script definition used to create data file
 	 * @param absoluteFilePath absolute file path to save data file
@@ -78,7 +78,7 @@ public class ScriptGeneratorJsonFileHandler {
 	}
 
 	/**
-	 * Load parameter values from a file only if the currently loaded script definition is the same as script definition in JSON file.
+	 * Load parameter values from a file only if the currently loaded script definition is the same as script definition in file (JSON/SGP - Script Generator Parameters).
 	 * @param filePath path of file to load parameter values from
 	 * @param scriptDefinitionPath file path to current script definition
 	 * @param currentActionsParams the list of actions in the current script definition
