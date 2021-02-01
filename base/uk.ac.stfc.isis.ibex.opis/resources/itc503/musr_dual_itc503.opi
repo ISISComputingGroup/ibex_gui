@@ -18,8 +18,10 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <TEMP_1>$(P)$(TEMP1)</TEMP_1>
-    <TEMP_2>$(P)$(TEMP2)</TEMP_2>
+    <IOC1>$(P)$(ITC1_IOC)</IOC1>
+    <NAME1>$(ITC1_NAME)</NAME1>
+    <IOC2>$(P)$(ITC2_IOC)</IOC2>
+    <NAME2>$(ITC2_NAME)</NAME2>
   </macros>
   <name>$(NAME)</name>
   <rules />
@@ -163,7 +165,7 @@
     <x>336</x>
     <y>108</y>
   </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.sashContainer" version="1.0.0">
+  <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
     <actions hook="false" hook_all="false" />
     <background_color>
       <color red="240" green="240" blue="240" />
@@ -171,7 +173,7 @@
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
-    <border_style>0</border_style>
+    <border_style>3</border_style>
     <border_width>1</border_width>
     <enabled>true</enabled>
     <font>
@@ -180,18 +182,17 @@
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
-    <height>685</height>
-    <horizontal>true</horizontal>
+    <group_name></group_name>
+    <height>553</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
+      <PV_ROOT>$(IOC1)</PV_ROOT>
+      <NAME>$(NAME1)</NAME>
     </macros>
-    <name>Sash Container</name>
-    <panel1_auto_scale_children>true</panel1_auto_scale_children>
-    <panel2_auto_scale_children>true</panel2_auto_scale_children>
+    <name>Linking Container</name>
+    <opi_file>itc503.opi</opi_file>
+    <resize_behaviour>2</resize_behaviour>
     <rules />
-    <sash_position>0.5081351689612015</sash_position>
-    <sash_style>2</sash_style>
-    <sash_width>1</sash_width>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
@@ -199,179 +200,54 @@
     </scale_options>
     <scripts />
     <tooltip></tooltip>
-    <transparent>false</transparent>
     <visible>true</visible>
-    <widget_type>Sash Container</widget_type>
-    <width>1231</width>
-    <wuid>242afb95:17701b4027d:-7d5a</wuid>
-    <x>6</x>
-    <y>84</y>
-    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-      <actions hook="false" hook_all="false" />
-      <background_color>
-        <color red="240" green="240" blue="240" />
-      </background_color>
-      <border_color>
-        <color red="0" green="128" blue="255" />
-      </border_color>
-      <border_style>0</border_style>
-      <border_width>1</border_width>
-      <enabled>true</enabled>
-      <fc>false</fc>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-      </font>
-      <foreground_color>
-        <color red="192" green="192" blue="192" />
-      </foreground_color>
-      <height>685</height>
-      <lock_children>false</lock_children>
-      <macros>
-        <include_parent_macros>true</include_parent_macros>
-      </macros>
-      <name>Panel 1</name>
-      <rules />
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <show_scrollbar>true</show_scrollbar>
-      <tooltip></tooltip>
-      <transparent>true</transparent>
-      <visible>true</visible>
-      <widget_type>Grouping Container</widget_type>
-      <width>625</width>
-      <wuid>242afb95:17701b4027d:-7d59</wuid>
-      <x>0</x>
-      <y>0</y>
-      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-        <actions hook="false" hook_all="false" />
-        <background_color>
-          <color red="240" green="240" blue="240" />
-        </background_color>
-        <border_color>
-          <color red="0" green="128" blue="255" />
-        </border_color>
-        <border_style>3</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-        </font>
-        <foreground_color>
-          <color red="192" green="192" blue="192" />
-        </foreground_color>
-        <group_name></group_name>
-        <height>690</height>
-        <macros>
-          <include_parent_macros>true</include_parent_macros>
-          <PV_ROOT>$(TEMP_1)</PV_ROOT>
-          <NAME>$(TEMP1)</NAME>
-        </macros>
-        <name>Linking Container</name>
-        <opi_file>itc503.opi</opi_file>
-        <resize_behaviour>2</resize_behaviour>
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <tooltip></tooltip>
-        <visible>true</visible>
-        <widget_type>Linking Container</widget_type>
-        <width>625</width>
-        <wuid>242afb95:17701b4027d:-7efa</wuid>
-        <x>0</x>
-        <y>-6</y>
-      </widget>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-      <actions hook="false" hook_all="false" />
-      <background_color>
-        <color red="240" green="240" blue="240" />
-      </background_color>
-      <border_color>
-        <color red="0" green="128" blue="255" />
-      </border_color>
-      <border_style>0</border_style>
-      <border_width>1</border_width>
-      <enabled>true</enabled>
-      <fc>false</fc>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-      </font>
-      <foreground_color>
-        <color red="192" green="192" blue="192" />
-      </foreground_color>
-      <height>685</height>
-      <lock_children>false</lock_children>
-      <macros>
-        <include_parent_macros>true</include_parent_macros>
-      </macros>
-      <name>Panel 2</name>
-      <rules />
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <show_scrollbar>true</show_scrollbar>
-      <tooltip></tooltip>
-      <transparent>true</transparent>
-      <visible>true</visible>
-      <widget_type>Grouping Container</widget_type>
-      <width>605</width>
-      <wuid>242afb95:17701b4027d:-7d58</wuid>
-      <x>625</x>
-      <y>0</y>
-      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-        <actions hook="false" hook_all="false" />
-        <background_color>
-          <color red="240" green="240" blue="240" />
-        </background_color>
-        <border_color>
-          <color red="0" green="128" blue="255" />
-        </border_color>
-        <border_style>3</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-        </font>
-        <foreground_color>
-          <color red="192" green="192" blue="192" />
-        </foreground_color>
-        <group_name></group_name>
-        <height>690</height>
-        <macros>
-          <include_parent_macros>true</include_parent_macros>
-          <PV_ROOT>$(TEMP_2)</PV_ROOT>
-          <NAME>$(TEMP2)</NAME>
-        </macros>
-        <name>Linking Container_1</name>
-        <opi_file>itc503.opi</opi_file>
-        <resize_behaviour>2</resize_behaviour>
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <tooltip></tooltip>
-        <visible>true</visible>
-        <widget_type>Linking Container</widget_type>
-        <width>625</width>
-        <wuid>242afb95:17701b4027d:-7eed</wuid>
-        <x>0</x>
-        <y>0</y>
-      </widget>
-    </widget>
+    <widget_type>Linking Container</widget_type>
+    <width>607</width>
+    <wuid>3cc65b32:1773a8fa8f7:-743b</wuid>
+    <x>0</x>
+    <y>48</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+    <actions hook="false" hook_all="false" />
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <border_style>3</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+    </font>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <group_name></group_name>
+    <height>553</height>
+    <macros>
+      <include_parent_macros>true</include_parent_macros>
+      <PV_ROOT>$(IOC2)</PV_ROOT>
+      <NAME>$(NAME2)</NAME>
+    </macros>
+    <name>Linking Container_1</name>
+    <opi_file>itc503.opi</opi_file>
+    <resize_behaviour>2</resize_behaviour>
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <tooltip></tooltip>
+    <visible>true</visible>
+    <widget_type>Linking Container</widget_type>
+    <width>607</width>
+    <wuid>3cc65b32:1773a8fa8f7:-73c7</wuid>
+    <x>612</x>
+    <y>48</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
     <actions hook="false" hook_all="false" />

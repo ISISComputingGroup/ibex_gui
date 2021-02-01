@@ -1324,14 +1324,24 @@
         <description>The OPI for dual OI ITC503 temperature controllers</description>
         <macros>
           <macro>
-            <name>TEMP1</name>
+            <name>ITC1_IOC</name>
             <description>The first ITC503 PV prefix (e.g. ITC503_01)</description>
             <default>ITC503_01</default>
           </macro>
 		  <macro>
-            <name>TEMP2</name>
+            <name>ITC1_NAME</name>
+            <description>The first ITC503 Name (e.g. Cryostat)</description>
+            <default>ITC1</default>
+          </macro>
+          <macro>
+            <name>ITC2_IOC</name>
             <description>The second ITC503 PV prefix (e.g. ITC503_02)</description>
             <default>ITC503_02</default>
+          </macro>
+		  <macro>
+            <name>ITC2_NAME</name>
+            <description>The second ITC503 Name (e.g. Insert)</description>
+            <default>ITC2</default>
           </macro>
         </macros>
         <categories>
