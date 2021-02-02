@@ -132,7 +132,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
     public String getSelectedTableData() {
     	String data = "";
     	for (TableItem item : table.getSelection()) {
-			int size = ((ScriptGeneratorAction) item.getData()).getSize();
+			int size = table.getColumnCount() - NON_EDITABLE_COLUMNS_ON_LEFT - NON_EDITABLE_COLUMNS_ON_RIGHT;
 			// TableItem.getText() ensure the values are in order using index.
 			for (int idx = 0; idx < size; idx++) {
 				  data += item.getText(idx + NON_EDITABLE_COLUMNS_ON_LEFT);

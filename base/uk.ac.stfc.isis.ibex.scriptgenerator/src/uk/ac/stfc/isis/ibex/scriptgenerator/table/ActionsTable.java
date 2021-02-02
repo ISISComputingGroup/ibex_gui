@@ -228,22 +228,17 @@ public class ActionsTable extends ModelObject {
 	 */
 	private Map<JavaActionParameter, String> convertStringMapToJavaActionParameterMap(Map<String, String> paramAndValues) {
 		Map<JavaActionParameter, String> convertedParamAndValues = new HashMap<JavaActionParameter, String>(); 
-		for (JavaActionParameter param:this.actionParameters) {
+		for (JavaActionParameter param: actionParameters) {
 			convertedParamAndValues.put(param, paramAndValues.get(param.getName()));
 		}
 		return convertedParamAndValues;
 	}
 	/**
-	 * Add multiple actions.
+	 * Add multiple actions to the end of the table.
 	 * @param list contains mapped action parameters to its values
 	 */
 	public void addMultipleActions(List<Map<JavaActionParameter, String>> list) {
-		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
-		for (Map<JavaActionParameter, String> map : list) {
-			var newAction = createAction(map);
-			newList.add(newAction);
-		}
-		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
+	    insertMultipleActions(list, actions.size());
 	}
 
 	/**

@@ -64,7 +64,6 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  *
  */
 public class ScriptGeneratorViewModel extends ModelObject {
-
     private static final Display DISPLAY = Display.getDefault();
 
     /**
@@ -169,7 +168,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     private ActionsViewTable viewTable;
 
-
     /**
      * The current get validity errors button in the view.
      */
@@ -189,7 +187,13 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * The currently selected rows
      */
     private boolean hasSelection;
+    
+    
+    private static String TAB = "\t";
+    private static String CRLF = "\r\n";    
     private Clipboard clipboard;
+    
+    
     /**
      * A constructor that sets up the script generator model and 
      *   begins listening to property changes in the model.
@@ -1063,16 +1067,16 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		// remove constant labels
 		columnsLabel.removeAll(Arrays.asList("Line", "Validity", "Estimated run time"));
 		// Convert string data to a List
-		ArrayList<String> actions = new ArrayList<String>(Arrays.asList(copiedActions.split("\r\n")));
+		ArrayList<String> actions = new ArrayList<String>(Arrays.asList(copiedActions.split(CRLF)));
 		// find how many values per row
-		int numerOfValuesPerRow = copiedActions.split("\r\n")[0].split("\t").length;
+		int numerOfValuesPerRow = copiedActions.split(CRLF)[0].split(TAB).length;
 		// calculate how many values per row to actually paste. It could be different if user has switched script definition.
-		int numberOfValuesPerRowTopaste = min(numerOfValuesPerRow, columnsLabel.size());
+		int numberOfValuesPerRowToPaste = min(numerOfValuesPerRow, columnsLabel.size());
 		ArrayList<Map<String, String>> listOfActions = new ArrayList<Map<String, String>>();
 		for (String action:actions) {
-			Map<String, String> map = IntStream.range(0, numberOfValuesPerRowTopaste)
+			Map<String, String> map = IntStream.range(0, numberOfValuesPerRowToPaste)
 		            .boxed()
-		            .collect(Collectors.toMap(idx -> columnsLabel.get(idx), idx -> Arrays.asList(action.split("\t")).get(idx)));
+		            .collect(Collectors.toMap(idx -> columnsLabel.get(idx), idx -> Arrays.asList(action.split(TAB)).get(idx)));
 			listOfActions.add(map);
 		}
 		scriptGeneratorModel.pasteActions(listOfActions, pasteLocation);

@@ -13,13 +13,6 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
  */
 public class TableViewerEmptyRow extends TableViewer {
 	private static final Logger LOG = IsisLog.getLogger(TableViewerEmptyRow.class);
-	/**
-	 * Constructor for creating table using default style bits used by TableViewer.
-	 * @param parent the parent control
-	 */
-    public TableViewerEmptyRow(Composite parent) {
-        super(parent);
-    }
     	
     /**
      * Constructor for creating table using style bits.

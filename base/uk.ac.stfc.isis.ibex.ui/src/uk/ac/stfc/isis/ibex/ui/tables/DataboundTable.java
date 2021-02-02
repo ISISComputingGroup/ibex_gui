@@ -67,6 +67,7 @@ public abstract class DataboundTable<TRow> extends Composite {
     private static final int DEFAULT_FONT_HEIGHT = 10;
     private static final int MIN_TABLE_COLUMN_WIDTH = 50;
     private int tableStyle;
+    /** The underlying table. */
     protected Table table;
     /** View for the data held in this table. */
     protected TableViewer viewer;
