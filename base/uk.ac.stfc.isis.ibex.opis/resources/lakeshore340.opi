@@ -27,7 +27,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <PV_ROOT>$(P)LKSH340_01</PV_ROOT>
+    <PV_ROOT>$(P)$(LKSH340)</PV_ROOT>
   </macros>
   <name>$(NAME)</name>
   <rules />
