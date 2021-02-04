@@ -76,7 +76,7 @@ public class IocStateTest {
         // Arrange
         Configuration configWithIoc =
                 new Configuration("Config name", "desc", "", Collections.singleton(new Ioc(IOC_NAME)),
-                        Collections.emptySet(), Collections.emptySet(), Collections.emptySet(), Collections.emptySet(), false, false);
+                        Collections.emptySet(), Collections.emptySet(), Collections.emptySet(), Collections.emptySet(), false, false, false);
 
         when(currentConfig.getValue()).thenReturn(configWithIoc);
         when(componentDetails.getValue()).thenReturn(Collections.emptySet());
@@ -96,11 +96,11 @@ public class IocStateTest {
         // Arrange
         Configuration configWithComp = new Configuration("Config name", "desc", "", Collections.emptySet(),
                 Collections.emptySet(), Collections.emptySet(),
-                Collections.singleton(new ComponentInfo("Selected component")), Collections.emptySet(), false, false);
+                Collections.singleton(new ComponentInfo("Selected component")), Collections.emptySet(), false, false, false);
 
         Collection<Configuration> components = Collections.singleton(new Configuration("Selected component", "desc", "",
                 Collections.singleton(new Ioc(IOC_NAME)), Collections.emptySet(), Collections.emptySet(),
-                Collections.emptySet(), Collections.emptySet(), false, false));
+                Collections.emptySet(), Collections.emptySet(), false, false, false));
 
         when(currentConfig.getValue()).thenReturn(configWithComp);
         when(componentDetails.getValue()).thenReturn(components);
@@ -122,7 +122,7 @@ public class IocStateTest {
 
         Collection<Configuration> components = Collections.singleton(new Configuration("Not selected component", "desc",
                 "", Collections.singleton(new Ioc(IOC_NAME)), Collections.emptySet(), Collections.emptySet(),
-                Collections.emptySet(), Collections.emptySet(), false, false));
+                Collections.emptySet(), Collections.emptySet(), false, false, false));
 
         when(currentConfig.getValue()).thenReturn(configWithNoComp);
         when(componentDetails.getValue()).thenReturn(components);

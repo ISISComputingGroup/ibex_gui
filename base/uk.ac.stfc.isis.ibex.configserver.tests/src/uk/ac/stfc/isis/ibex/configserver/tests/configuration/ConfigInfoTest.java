@@ -57,7 +57,7 @@ public class ConfigInfoTest {
     public void GIVEN_one_item_WHEN_get_names_THEN_return_name() {
         // Arrange
     	Collection<ConfigInfo> infos = new ArrayList<ConfigInfo>();
-		ConfigInfo elem = new ConfigInfo(NAME, false, "", "", "", Collections.emptyList());
+		ConfigInfo elem = new ConfigInfo(NAME, false, false, "", "", "", Collections.emptyList());
 		infos.add(elem);
 		
      	Collection<String> expected = Arrays.asList(NAME);
@@ -74,7 +74,7 @@ public class ConfigInfoTest {
         // Arrange
     	Collection<ConfigInfo> infos = new ArrayList<ConfigInfo>();
         for (int i = 0; i < 10 ; i++) {
-    		ConfigInfo elem = new ConfigInfo(NAME + i, false, "", "", "", Collections.emptyList());
+    		ConfigInfo elem = new ConfigInfo(NAME + i, false, false, "", "", "", Collections.emptyList());
     		infos.add(elem);
         }
         
@@ -106,7 +106,7 @@ public class ConfigInfoTest {
     public void GIVEN_one_item_WHEN_get_descriptions_THEN_return_name() {
         // Arrange
     	Collection<ConfigInfo> infos = new ArrayList<ConfigInfo>();
-		ConfigInfo elem = new ConfigInfo("", false, DESCRIPTION, "", "", Collections.emptyList());
+		ConfigInfo elem = new ConfigInfo("", false, false, DESCRIPTION, "", "", Collections.emptyList());
 		infos.add(elem);
 		
      	Collection<String> expected = Arrays.asList(DESCRIPTION);
@@ -123,7 +123,7 @@ public class ConfigInfoTest {
         // Arrange
     	Collection<ConfigInfo> infos = new ArrayList<ConfigInfo>();
         for (int i = 0; i < 10 ; i++) {
-    		ConfigInfo elem = new ConfigInfo("", false, DESCRIPTION + i, "", "", Collections.emptyList());
+    		ConfigInfo elem = new ConfigInfo("", false, false, DESCRIPTION + i, "", "", Collections.emptyList());
     		infos.add(elem);
         }
         
@@ -155,7 +155,7 @@ public class ConfigInfoTest {
     public void GIVEN_one_item_WHEN_get_namesAndDescriptions_THEN_return_name() {
         // Arrange
     	Collection<ConfigInfo> infos = new ArrayList<ConfigInfo>();
-		ConfigInfo elem = new ConfigInfo(NAME, false, DESCRIPTION, "", "", Collections.emptyList());
+		ConfigInfo elem = new ConfigInfo(NAME, false, false, DESCRIPTION, "", "", Collections.emptyList());
 		infos.add(elem);
 		
 		SortedMap<String, String> expected = new TreeMap<String, String>();
@@ -174,7 +174,7 @@ public class ConfigInfoTest {
     	SortedMap<String, String> expected = new TreeMap<String, String>();
     	Collection<ConfigInfo> infos = new ArrayList<ConfigInfo>();
         for (int i = 0; i < 10 ; i++) {
-    		ConfigInfo elem = new ConfigInfo(NAME + i, false, DESCRIPTION + i, "", "", Collections.emptyList());
+    		ConfigInfo elem = new ConfigInfo(NAME + i, false, false, DESCRIPTION + i, "", "", Collections.emptyList());
     		infos.add(elem);
     		expected.put(NAME + i, DESCRIPTION + i);
         }

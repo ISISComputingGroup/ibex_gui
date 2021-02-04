@@ -131,6 +131,7 @@ public class EditableConfigurationTest {
 				Collections.<ComponentInfo>emptyList(),
 				Collections.<String>emptyList(),
 				true,
+				false, 
 				false);
 	}
 	
@@ -145,7 +146,7 @@ public class EditableConfigurationTest {
 	}
 	
 	protected Configuration config() {
-		return new Configuration(NAME, DESCRIPTION, SYNOPTIC, iocs, blocks, groups, components, history, true, false);
+		return new Configuration(NAME, DESCRIPTION, SYNOPTIC, iocs, blocks, groups, components, history, true, false, false);
 	}
 	
 	protected EditableConfiguration edit(Configuration config) {

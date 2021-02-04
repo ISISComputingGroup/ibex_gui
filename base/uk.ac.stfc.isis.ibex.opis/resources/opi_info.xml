@@ -1316,6 +1316,39 @@
         </categories>
       </value>
     </entry>
+	<entry>
+      <key>Dual ITC503s</key>
+      <value>
+        <type>EUROTHERM</type>
+        <path>itc503/musr_dual_itc503.opi</path>
+        <description>The OPI for dual OI ITC503 temperature controllers</description>
+        <macros>
+          <macro>
+            <name>ITC1_IOC</name>
+            <description>The first ITC503 PV prefix (e.g. ITC503_01)</description>
+            <default>ITC503_01</default>
+          </macro>
+		  <macro>
+            <name>ITC1_NAME</name>
+            <description>The first ITC503 Name (e.g. Cryostat)</description>
+            <default>ITC1</default>
+          </macro>
+          <macro>
+            <name>ITC2_IOC</name>
+            <description>The second ITC503 PV prefix (e.g. ITC503_02)</description>
+            <default>ITC503_02</default>
+          </macro>
+		  <macro>
+            <name>ITC2_NAME</name>
+            <description>The second ITC503 Name (e.g. Insert)</description>
+            <default>ITC2</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+      </value>
+    </entry>
     <entry>
       <key>Polariser</key>
       <value>
@@ -2261,6 +2294,23 @@
       </value>
     </entry>
     <entry>
+      <key>TTIEX355P</key>
+      <value>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+        <type>POWER_SUPPLY</type>
+        <path>ttiex355p.opi</path>
+        <description>The OPI for the TTIEX355P</description>
+        <macros>
+          <macro>
+            <name>TTIEX355P</name>
+            <description>The TTIEX355P PV prefix (e.g. TTIEX355P_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
       <key>Watson-Marlow 323</key>
       <value>
         <type>PUMP</type>
@@ -2538,6 +2588,39 @@
         <categories>
           <category>Temperature controllers</category>
         </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>MuSR Steering</key>
+      <value>
+        <type>MUSR_STEERING</type>
+        <path>musr_steering.opi</path>
+        <description>OPI for steering the horizontal and vertical steering magnets</description>
+        <macros>
+          <macro>
+            <name>H_STEER</name>
+            <description>The KEPCO number (e.g. 1 for KEPCO_01) for the horizontal steering magnet</description>
+            <default>1</default>
+          </macro>
+          <macro>
+            <name>V_STEER</name>
+            <description>The KEPCO number (e.g. 2 for KEPCO_02) for the vertical steering magnet</description>
+            <default>2</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Magnets</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>MuSR Rotation control</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>musr_rotation.opi</path>
+        <description>Controls the orientation of MuSR</description>
+        <macros />
+        <categories />
       </value>
     </entry>
   </opis>
