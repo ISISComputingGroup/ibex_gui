@@ -43,6 +43,7 @@ public class Configuration extends ModelObject {
 	private String pv;
 	private boolean isProtected;
 	private boolean isDynamic;
+        private boolean configuresBlockGWAndArchiver;
 
 	private List<Ioc> iocs = new ArrayList<>();
 	private List<Block> blocks = new ArrayList<>();
@@ -81,13 +82,15 @@ public class Configuration extends ModelObject {
 	 */
 	public Configuration(String name, String description, String defaultSynoptic, Collection<Ioc> iocs,
 			Collection<Block> blocks, Collection<Group> groups, Collection<ComponentInfo> components,
-			Collection<String> history, boolean isProtected, boolean isDynamic) {
+			Collection<String> history, boolean isProtected, boolean isDynamic,
+			boolean configuresBlockGWAndArchiver) {
 		this.name = name;
 		this.description = description;
 		this.synoptic = defaultSynoptic == null || defaultSynoptic.equals("") ? ConfigEditing.NONE_SYNOPTIC_NAME
 				: defaultSynoptic;
 		this.pv = "";
 		this.isProtected = isProtected;
+		this.configuresBlockGWAndArchiver = configuresBlockGWAndArchiver;
 		this.isDynamic = isDynamic;
 
 		for (Ioc ioc : iocs) {
@@ -118,7 +121,7 @@ public class Configuration extends ModelObject {
 	 */
 	public Configuration(Configuration other) {
 		this(other.name(), other.description(), other.synoptic(), other.getIocs(), other.getBlocks(), other.getGroups(),
-				other.getComponents(), other.getHistory(), other.isProtected, other.isDynamic);
+				other.getComponents(), other.getHistory(), other.isProtected, other.isDynamic, other.configuresBlockGWAndArchiver);
 		this.pv = other.pv;
 	}
 
@@ -165,6 +168,14 @@ public class Configuration extends ModelObject {
 	 */
 	public boolean isProtected() {
 		return isProtected;
+	}
+
+	
+	/**
+	 * @return Whether the configuration configures the block gateway and archiver.
+	 */
+	public boolean configuresBlockGWAndArchiver() {
+		return configuresBlockGWAndArchiver;
 	}
 
 	/**
