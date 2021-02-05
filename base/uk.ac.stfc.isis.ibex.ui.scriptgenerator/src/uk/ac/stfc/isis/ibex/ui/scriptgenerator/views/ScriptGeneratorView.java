@@ -109,6 +109,7 @@ public class ScriptGeneratorView {
     private Button btnMoveActionDown;
     private Button btnAddAction;
     private Button btnInsertAction;
+    private Label parametersFileText;
     private Label estimateText;
     private Button generateScriptButton;
     private Button saveExperimentalParametersButton;
@@ -343,15 +344,22 @@ public class ScriptGeneratorView {
         btnMoveActionDown = createMoveRowButton(moveComposite, "move_down.png", "down");
         btnMoveActionDown.addListener(SWT.Selection, e -> scriptGeneratorViewModel.moveActionDown(table.selectedRows()));
 
-        // Composite for the row containing the total estimated run time
-        Composite estimateGrp = new Composite(mainParent, SWT.NONE);
-        estimateGrp.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1));
-        GridLayout estimateLayout = new GridLayout(1, true);
-        estimateLayout.marginRight = 40;
-        estimateGrp.setLayout(estimateLayout);
 
+        
+        // Composite for the row containing the parameter file location and total estimated run time
+        Composite paramFileAndEstimateGrp = new Composite(mainParent, SWT.NONE);
+        paramFileAndEstimateGrp.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1));
+        GridLayout paramFileAndEstimateLayout = new GridLayout(2, true);
+        paramFileAndEstimateLayout.marginRight = 40;
+        paramFileAndEstimateGrp.setLayout(paramFileAndEstimateLayout);
+        
+        // Label for Location of Saved Parameters File
+        parametersFileText = new Label(paramFileAndEstimateGrp, SWT.LEFT);
+        parametersFileText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        parametersFileText.setText("Editing file: ");
+        
         // Label for the total estimated run time
-        estimateText = new Label(estimateGrp, SWT.RIGHT);
+        estimateText = new Label(paramFileAndEstimateGrp, SWT.RIGHT);
         estimateText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         String currentFont = estimateText.getFont().getFontData()[0].getName();
         Font font = new Font(estimateText.getDisplay(), new FontData(currentFont, 11, SWT.BOLD));
@@ -517,6 +525,9 @@ public class ScriptGeneratorView {
 
     table.addSelectionChangedListener(event -> scriptGeneratorViewModel.setSelected(table.selectedRows()));
 
+    bindingContext.bindValue(WidgetProperties.text().observe(parametersFileText),
+    	BeanProperties.value("parametersFile").observe(scriptGeneratorViewModel));
+    
     bindingContext.bindValue(WidgetProperties.text().observe(estimateText),
         BeanProperties.value("timeEstimate").observe(scriptGeneratorViewModel));
 

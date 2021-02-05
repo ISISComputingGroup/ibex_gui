@@ -149,7 +149,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
 
     /**
-     * Default string to display for time estimation
+     * Default string to display the current parameters save file name and location.
+     */
+    private String parametersFileDisplayString = "Editing file: ";
+    
+    /**
+     * Default string to display for time estimation.
      */
     private String displayString = "Total estimated run time: 00:00:00";
 
@@ -462,6 +467,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
     this.scriptGeneratorModel.addPropertyChangeListener(TIME_ESTIMATE_PROPERTY, actionChangeListener);
     }
 
+    private void updateParametersFile(String parametersFilePath) {
+	String displayFile = "Editing file: " + parametersFilePath;
+	firePropertyChange("parametersFile", parametersFileDisplayString, parametersFileDisplayString = displayFile);
+    }
+    
     private void updateTotalEstimatedTime() {
 
     long totalSeconds = scriptGeneratorModel.getTotalEstimatedTime().isPresent() ? scriptGeneratorModel.getTotalEstimatedTime().get() : 0;
@@ -476,6 +486,14 @@ public class ScriptGeneratorViewModel extends ModelObject {
     return String.format("%02d:%02d:%02d", duration.toHours(), duration.toMinutesPart(), duration.toSecondsPart());
     }
 
+    /**
+     * Get the name and location of the parameters save file for the script.
+     * @return The parameters save file name and location.
+     */
+    public String getParametersFile() {
+    return parametersFileDisplayString;
+    }
+    
     /**
      * Get the estimated time for the script, formatted into something human readable.
      * @return The formatted script time estimate.
@@ -981,9 +999,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
         }
 
         Integer dialogResponse; //-1 for cancel, 0 for append, 1 for replace
+        Boolean emptyModel;
         if (scriptGeneratorModel.getActions().isEmpty()) {
+        emptyModel = true;
         dialogResponse = 0;
         } else {
+        emptyModel = false;
         String[] replaceOrAppend = new String[] {"Append", "Replace"};
         MessageDialog dialog = new MessageDialog(DISPLAY.getActiveShell(), "Replace or Append", null,
             "Would you like to replace the current parameters or append the new parameters?", 
@@ -995,6 +1016,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
         Boolean replace = dialogResponse == 1;
         scriptGeneratorModel.addActionsToTable(newActions, replace);
         }
+        
+        if (emptyModel || dialogResponse == 1) {
+	        // Get the save file path from Optional value and update the current file path label.
+	        updateParametersFile(selectedFile.get());
+        }
+
     }
     };
 
