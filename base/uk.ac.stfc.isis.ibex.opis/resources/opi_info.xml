@@ -27,7 +27,7 @@
         <type>MOTION_SET_POINTS</type>
         <path>stage/sans2d_scraper_aperture.opi</path>
         <description>The OPI for motion setpoints</description>
-        <macros />
+        <macros/>
         <categories>
           <category>Miscellaneous motion control</category>
         </categories>
@@ -1683,7 +1683,7 @@
           <category>Power supplies</category>
         </categories>
       </value>
-    </entry>    
+    </entry>
     <entry>
       <key>Zoom FINS PLC</key>
       <value>
@@ -2164,7 +2164,6 @@
         </macros>
       </value>
     </entry>
-    
     <entry>
       <key>Micro-Epsilon Confocal Rangefinder</key>
       <value>
@@ -2474,18 +2473,18 @@
             <default>DMA4500M_01</default>
           </macro>
         </macros>
-	  </value>
+      </value>
     </entry>
-	<entry>
+    <entry>
       <key>SANS2D Vacuum System</key>
       <value>
-      	<type>PRESSURE_GAUGE</type>
-      	<path>sans2d_vacuum_system.opi</path>
-      	<description>OPI for the SANS2D vacuum</description>
+        <type>PRESSURE_GAUGE</type>
+        <path>sans2d_vacuum_system.opi</path>
+        <description>OPI for the SANS2D vacuum</description>
         <categories>
           <category>Pressure sensors</category>
         </categories>
-		<macros/>
+        <macros/>
       </value>
     </entry>
     <entry>
@@ -2558,13 +2557,13 @@
         <type>TESLAMETER</type>
         <path>Metrolab_PT2025.opi</path>
         <description>The OPI teslameter pt2025</description>
-      <macros>
+        <macros>
           <macro>
             <name>PT2025</name>
             <description>NMR Teslameter PT2025 PV name(e.g. PT2025_01).</description>
             <default>PT2025_01</default>
           </macro>
-       </macros>
+        </macros>
       </value>
     </entry>
     <entry>
@@ -2621,6 +2620,21 @@
         <description>Controls the orientation of MuSR</description>
         <macros />
         <categories />
+      </value>
+    </entry>
+    <entry>
+      <key>HIFIMAGS</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>hifimags.opi</path>
+        <description>The OPI for the HIFIMAGS</description>
+        <macros>
+          <macro>
+            <name>HIFIMAGS</name>
+            <description>The HIFIMAGS PV prefix (e.g. HIFIMAGS_01)</description>
+          </macro>
+        </macros>
       </value>
     </entry>
   </opis>
