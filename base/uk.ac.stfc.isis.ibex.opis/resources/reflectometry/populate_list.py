@@ -4,11 +4,13 @@ import time
 import zlib
 
 
-def _set_opi(widget, param_type):
+def _set_opi(widget, param_type, has_cv):
     """
     Set the opi
     Args:
-        widget: wdidget to reload
+        widget: widget to reload
+        param_type: parameter type to load
+        has_cv: has a characteristic value to dispaly
     """
     widget.setPropertyValue("opi_file", "null.opi")
     if param_type == "correction":
@@ -22,7 +24,10 @@ def _set_opi(widget, param_type):
     elif param_type == "enum":
         widget.setPropertyValue("opi_file", "param_enum.opi")        
     else:
-        widget.setPropertyValue("opi_file", "param_move.opi")
+        if has_cv:
+            widget.setPropertyValue("opi_file", "param_move_with_cv.opi")
+        else:
+            widget.setPropertyValue("opi_file", "param_move.opi")
 
 
 def _add_macros(widget, name, value):
@@ -49,10 +54,13 @@ def populate_list(pv, widget_name_prefix, macro_prefix, has_type, max):
         if widget_index <= len(params):
             _add_macros(target_widget, macro_prefix + "_PV", params[widget_index - 1]["prepended_alias"])
             _add_macros(target_widget, macro_prefix + "_NAME", params[widget_index - 1]["name"])
+            _add_macros(target_widget, macro_prefix + "_DESC", params[widget_index - 1].get("description", ""))
+            cv_value = params[widget_index - 1].get("characteristic_value", "")
+            _add_macros(target_widget, "CHARACTERISTIC_PV", cv_value)
             if has_type:
-                _set_opi(target_widget, params[widget_index - 1]["type"])
+                _set_opi(target_widget, params[widget_index - 1]["type"], cv_value != "")
             else:
-                _set_opi(target_widget, "correction")
+                _set_opi(target_widget, "correction", cv_value != "")
             target_widget.setPropertyValue("visible", True)
         else:
             target_widget.setPropertyValue("visible", False)

@@ -10,7 +10,7 @@
   <background_color>
     <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
   </background_color>
-  <boy_version>5.1.0.201707071649</boy_version>
+  <boy_version>5.1.0</boy_version>
   <foreground_color>
     <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
   </foreground_color>
@@ -124,7 +124,7 @@
       <scripts />
       <show_units>true</show_units>
       <text>######</text>
-      <tooltip>$(pv_name)
+      <tooltip>Parameter set point readback $(pv_name)&#xD;
 $(pv_value)</tooltip>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -197,7 +197,7 @@ $(pv_value)</tooltip>
       <show_units>true</show_units>
       <style>0</style>
       <text>0.0</text>
-      <tooltip>$(pv_name)
+      <tooltip>Parameter set point $(pv_name)&#xD;
 $(pv_value)</tooltip>
       <transparent>false</transparent>
       <visible>true</visible>
@@ -256,8 +256,8 @@ $(pv_value)</tooltip>
       <scripts />
       <show_units>true</show_units>
       <text>######</text>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
+      <tooltip>Readback $(pv_name)&#xD;
+$(pv_value)  (current position)</tooltip>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
@@ -297,7 +297,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts />
       <text>$(PARAM_NAME):</text>
-      <tooltip></tooltip>
+      <tooltip>$(PARAM_DESC)</tooltip>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
@@ -424,8 +424,7 @@ $(pv_value)</tooltip>
       <style>1</style>
       <text>Move</text>
       <toggle_button>false</toggle_button>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
+      <tooltip>Move to this parameter setpoint value (Also move other parameters in the mode if this parameter is in the mode)</tooltip>
       <visible>true</visible>
       <widget_type>Action Button</widget_type>
       <width>55</width>
