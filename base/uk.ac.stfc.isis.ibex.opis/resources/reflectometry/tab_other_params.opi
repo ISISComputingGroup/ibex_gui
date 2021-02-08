@@ -69,7 +69,7 @@
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
-    <width>970</width>
+    <width>1050</width>
     <wuid>7a2a102b:175e61f19b2:-6f07</wuid>
     <x>0</x>
     <y>0</y>
@@ -91,7 +91,7 @@
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <group_name></group_name>
-      <height>56</height>
+      <height>55</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
@@ -108,9 +108,9 @@
       <tooltip></tooltip>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
-      <width>951</width>
+      <width>1050</width>
       <wuid>7a2a102b:175e61f19b2:-663f</wuid>
-      <x>6</x>
+      <x>0</x>
       <y>570</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -131,7 +131,7 @@
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <group_name></group_name>
-      <height>540</height>
+      <height>560</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <GROUP_KEY>params_misc</GROUP_KEY>
@@ -156,10 +156,10 @@
       <tooltip></tooltip>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
-      <width>950</width>
+      <width>1050</width>
       <wuid>7a2a102b:175e61f19b2:-313a</wuid>
-      <x>6</x>
-      <y>12</y>
+      <x>0</x>
+      <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0.0">
       <actions hook="true" hook_all="false">
@@ -220,8 +220,8 @@
       <widget_type>Image</widget_type>
       <width>24</width>
       <wuid>-1e199f55:177432fd9ca:-6eea</wuid>
-      <x>933</x>
-      <y>6</y>
+      <x>1023</x>
+      <y>3</y>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
