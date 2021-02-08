@@ -79,6 +79,8 @@ public class Configuration extends ModelObject {
 	 *                        deleted in manager mode
 	 * @param isDynamic       Config is marked as dynamic and can be changed
 	 *                        automatically
+	 * @param configuresBlockGWAndArchiver  True this configuration includes the block gateway and archive files; 
+	 * 		          False these are generated the the block server
 	 */
 	public Configuration(String name, String description, String defaultSynoptic, Collection<Ioc> iocs,
 			Collection<Block> blocks, Collection<Group> groups, Collection<ComponentInfo> components,
