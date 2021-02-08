@@ -149,9 +149,24 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
 
     /**
+     * Path to the current parameters save file.
+     */
+    private String currentParametersFile;
+    
+    /**
+     * The actions of the currently loaded parameters file.
+     */
+    private List<Map<JavaActionParameter, String>> currentFileActions = new ArrayList<Map<JavaActionParameter, String>>();
+    
+    /**
+     * Whether the marker "(*)" for unsaved changes in the current parameters file is currently being displayed or not.
+     */
+    private boolean unsavedChangesMarker = false;
+    
+    /**
      * Default string to display the current parameters save file name and location.
      */
-    private String parametersFileDisplayString = "Editing file: ";
+    private String parametersFileDisplayString = "Current parameters file: <new file>";
     
     /**
      * Default string to display for time estimation.
@@ -184,6 +199,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     private Button btnSaveParam;
 
+    /**
+     * The current Save Parameters As button in the view
+     */
+    private Button btnSaveParamAs;
+    
     /**
      * The currently selected rows
      */
@@ -287,7 +307,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void addEmptyAction() {
     scriptGeneratorModel.addEmptyAction();
     // Make sure the table is updated with the new action before selecting it
-    actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam);
+    actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam, btnSaveParamAs);
     DISPLAY.asyncExec(() -> {
     	viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
     });
@@ -301,7 +321,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void insertEmptyAction(Integer insertionLocation) {
     scriptGeneratorModel.insertEmptyAction(insertionLocation);
     // Make sure the table is updated with the new action before selecting it
-    actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam);
+    actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam, btnSaveParamAs);
     DISPLAY.asyncExec(() -> {
         viewTable.setCellFocus(insertionLocation, 0);
     });
@@ -328,7 +348,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void duplicateAction(List<ScriptGeneratorAction> actionsToDuplicate, Integer insertionLocation) {
     scriptGeneratorModel.duplicateAction(actionsToDuplicate, insertionLocation);
     // Make sure the table is updated with the new action before selecting it
-    actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam);
+    actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam, btnSaveParamAs);
     DISPLAY.asyncExec(() -> {
     	viewTable.setCellFocus(insertionLocation, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
     });
@@ -441,7 +461,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Listen for changes in actions and activate the handler.
      */
     private PropertyChangeListener actionChangeListener = evt -> {
-    actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam);
+    actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam, btnSaveParamAs);
     };
 
     /**
@@ -452,15 +472,20 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @param btnGetValidityErrors The validity check button to style change.
      * @param btnGenerateScript The generate script button to style change.
      * @param btnSaveParam The save parameters button.
+     * @param btnSaveParamAs The save parameters as button.
      */
-    protected void bindActionProperties(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript, Button btnSaveParam) {
+    protected void bindActionProperties(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript, Button btnSaveParam, Button btnSaveParamAs) {
     this.viewTable = viewTable;
     this.btnGetValidityErrors = btnGetValidityErrors;
     this.btnGenerateScript = btnGenerateScript;
     this.btnSaveParam = btnSaveParam;
+    this.btnSaveParamAs = btnSaveParamAs;
     // Remove listeners so as not to bind them twice
     this.scriptGeneratorModel.getScriptGeneratorTable().removePropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
     this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
+    this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, evt -> {
+    	updateParametersFileModifiedStatus();
+	});
     this.scriptGeneratorModel.removePropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
     this.scriptGeneratorModel.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
     this.scriptGeneratorModel.removePropertyChangeListener(TIME_ESTIMATE_PROPERTY, actionChangeListener);
@@ -468,8 +493,38 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
 
     private void updateParametersFile(String parametersFilePath) {
-	String displayFile = "Editing file: " + parametersFilePath;
+	String displayFile = "Current parameters file: " + parametersFilePath;
+	currentParametersFile = parametersFilePath;  	// Update the current parameter file path for Save.
+	unsavedChangesMarker = false;							// Reset unsaved changes
 	firePropertyChange("parametersFile", parametersFileDisplayString, parametersFileDisplayString = displayFile);
+    }
+    
+    private void updateParametersFileModifiedStatus() {
+    	
+    	// Get the action parameters currently in the table
+    	List<Map<JavaActionParameter, String>> tableActionParameters = new ArrayList<Map<JavaActionParameter, String>>();
+    	for (ScriptGeneratorAction action : scriptGeneratorModel.getActions()) {
+    		tableActionParameters.add(action.getActionParameterValueMap());
+    	}
+    	
+    	// Compare them with those of the loaded file
+    	boolean isEqual = tableActionParameters.equals(currentFileActions);
+    	
+    	if (!isEqual) {
+        	if (!unsavedChangesMarker) {
+        		// If table does not match file, and no unsaved changes marker, display it
+        		String displayString = parametersFileDisplayString + " (*)";
+            	firePropertyChange("parametersFile", parametersFileDisplayString, parametersFileDisplayString = displayString);
+            	unsavedChangesMarker = true;
+        	}
+    	} else {
+    		if (unsavedChangesMarker) {
+    			// If table matches file, if unsaved changes marker displayed, remove it
+        		String displayString = parametersFileDisplayString.replace(" (*)", "");
+	    		firePropertyChange("parametersFile", parametersFileDisplayString, parametersFileDisplayString = displayString);
+	    		unsavedChangesMarker = false;
+    		}
+    	}
     }
     
     private void updateTotalEstimatedTime() {
@@ -510,8 +565,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @param btnGetValidityErrors The button to manipulate.
      * @param btnGenerateScript Generate Script button's visibility to manipulate
      * @param btnSaveParam Save Parameter button's visibility to manipulate
+     * @param btnSaveParamAs Save Parameter As button's visibility to manipulate
      */
-    private void actionChangeHandler(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript, Button btnSaveParam) {
+    private void actionChangeHandler(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript, Button btnSaveParam, Button btnSaveParamAs) {
     DISPLAY.asyncExec(() -> {
         if (!viewTable.isDisposed()) {
         viewTable.setRows(scriptGeneratorModel.getActions());
@@ -523,6 +579,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
         if (!btnGenerateScript.isDisposed()) {
         setButtonGenerateStyle(btnGenerateScript);
         setButtonGenerateStyle(btnSaveParam);
+        setButtonGenerateStyle(btnSaveParamAs);
         }
         updateTotalEstimatedTime();
     });
@@ -941,6 +998,26 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
 
     /**
+     * Save Parameter Values to the current file.
+     */
+    public void saveParameterValuesToCurrentFile() {
+    	// If there is no current file, do Save As to new file.
+    	if (currentParametersFile == null || currentParametersFile.isEmpty()) {
+    		saveParameterValues();
+    	} else {
+    		try {
+    		scriptGeneratorModel.saveParameters(currentParametersFile);
+    		updateParametersFile(currentParametersFile);
+            MessageDialog.openInformation(DISPLAY.getActiveShell(), "Saved", "File saved!");  
+    		} catch (NoScriptDefinitionSelectedException e) {
+            LOG.error(e);
+            MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
+                "Cannot generate script. No script definition has been selected");
+    		}
+    	}
+    }
+    
+    /**
      * Save Parameter Values to a file. Checks if file already exists and asks if user wants to overwrite it.
      */
     public void saveParameterValues() {        
@@ -949,8 +1026,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
     if (fileName.isPresent()) {
         try {
         scriptGeneratorModel.saveParameters(fileName.get());
-        MessageDialog.openInformation(DISPLAY.getActiveShell(), "Saved", "File saved!");
-
+        updateParametersFile(fileName.get());
+        MessageDialog.openInformation(DISPLAY.getActiveShell(), "Saved", "File saved!");  
         } catch (NoScriptDefinitionSelectedException e) {
         LOG.error(e);
         MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
@@ -998,6 +1075,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
         return;
         }
 
+        currentFileActions = newActions; // Save the loaded actions to check if modified.
+        
         Integer dialogResponse; //-1 for cancel, 0 for append, 1 for replace
         Boolean emptyModel;
         if (scriptGeneratorModel.getActions().isEmpty()) {
