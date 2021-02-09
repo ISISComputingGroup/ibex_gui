@@ -2628,7 +2628,7 @@
         <categories/>
         <type>UNKNOWN</type>
         <path>hifimags.opi</path>
-        <description>The OPI for the HIFIMAGS</description>
+        <description>An overview of the HIFI Cryomag system</description>
         <macros>
           <macro>
             <name>HIFIMAGS</name>
