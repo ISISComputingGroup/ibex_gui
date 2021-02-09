@@ -155,9 +155,9 @@ public class PVSelectorPanel extends Composite {
 		ActionListener pvSearchTaskPerformer = new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				Display.getDefault().asyncExec(() -> blockPVTable.setSearch(pvAddress.getText()));
-		    	  
 			}
 		};
+		
 		Timer pvSearch = new Timer(pvSearchDelay, pvSearchTaskPerformer);
 		pvSearch.setRepeats(false); // Set timer to go off only once
 		
