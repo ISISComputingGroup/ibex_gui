@@ -86,7 +86,15 @@ $(pv_value)</tooltip>
     <y>6</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false">
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name)</pv_name>
+        <value>1</value>
+        <timeout>10</timeout>
+        <confirm_message></confirm_message>
+        <description></description>
+      </action>
+    </actions>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <border_color>
       <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -107,47 +115,6 @@ $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
     <pv_name>$(PV_ROOT)$(MAG):SET:SP</pv_name>
     <pv_value />
-    <rules />
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <scripts />
-    <style>1</style>
-    <text>Set</text>
-    <toggle_button>false</toggle_button>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <visible>true</visible>
-    <widget_type>Action Button</widget_type>
-    <width>31</width>
-    <wuid>1242d139:17782a388a5:-7d1f</wuid>
-    <x>135</x>
-    <y>2</y>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-    <actions hook="false" hook_all="false" />
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <border_color>
-      <color name="ISIS_Border" red="0" green="0" blue="0" />
-    </border_color>
-    <border_style>0</border_style>
-    <border_width>1</border_width>
-    <enabled>true</enabled>
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
-    </font>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <foreground_color>
-      <color red="0" green="0" blue="0" />
-    </foreground_color>
-    <height>28</height>
-    <image></image>
-    <name>Button_1</name>
-    <push_action_index>0</push_action_index>
-    <pv_name>$(PV_ROOT)$(MAG):ABORT</pv_name>
-    <pv_value />
     <release_action_index>0</release_action_index>
     <rules />
     <scale_options>
@@ -157,15 +124,15 @@ $(pv_value)</tooltip>
     </scale_options>
     <scripts />
     <style>1</style>
-    <text>Abort</text>
+    <text>Set</text>
     <toggle_button>true</toggle_button>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <visible>true</visible>
     <widget_type>Action Button</widget_type>
-    <width>51</width>
-    <wuid>1242d139:17782a388a5:-7d1e</wuid>
-    <x>168</x>
+    <width>31</width>
+    <wuid>1242d139:17782a388a5:-7d1f</wuid>
+    <x>135</x>
     <y>2</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -542,5 +509,55 @@ $(pv_value)</tooltip>
     <wuid>-2f73c46f:17787d2d95e:-7c3e</wuid>
     <x>69</x>
     <y>6</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <actions hook="false" hook_all="false">
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name)</pv_name>
+        <value>1</value>
+        <timeout>10</timeout>
+        <confirm_message></confirm_message>
+        <description></description>
+      </action>
+    </actions>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <fontdata fontName="Segoe UI" height="9" style="1" pixels="false" />
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </foreground_color>
+    <height>28</height>
+    <image></image>
+    <name>Button_1</name>
+    <push_action_index>0</push_action_index>
+    <pv_name>$(PV_ROOT)$(MAG):ABORT</pv_name>
+    <pv_value />
+    <release_action_index>0</release_action_index>
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <style>1</style>
+    <text>Abort</text>
+    <toggle_button>true</toggle_button>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <visible>true</visible>
+    <widget_type>Action Button</widget_type>
+    <width>51</width>
+    <wuid>1242d139:17782a388a5:-7d1e</wuid>
+    <x>168</x>
+    <y>2</y>
   </widget>
 </display>
