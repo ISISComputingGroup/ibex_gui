@@ -61,11 +61,16 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * JSON file extension.
 	 */
+	@SuppressWarnings("unused")
 	private static final String JSON_EXT = ".json";
 	/**
 	 * Python file extension.
 	 */
 	public static final String PYTHON_EXT = ".py";
+	/**
+	 * Script generator parameters file extension.
+	 */
+	public static final String SCRIPT_GEN_PARAMS_EXT = ".sgp";
 	
 	/**
 	 * The preferences supplier to get the area to generate scripts from.
@@ -736,9 +741,9 @@ public class ScriptGeneratorSingleton extends ModelObject {
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException("No Configuration Selected"));
 		
 		try {
-			if (!filePath.endsWith(JSON_EXT)) {
-				//Strip out other any pre-existing file extension and add JSON extension
-				filePath = filePath.substring(0, filePath.lastIndexOf('.')) + JSON_EXT;
+			if (!filePath.endsWith(SCRIPT_GEN_PARAMS_EXT)) {
+				//Strip out other any pre-existing file extension and add the SGP (script generator parameters) file extension
+				filePath = filePath.substring(0, filePath.lastIndexOf('.')) + SCRIPT_GEN_PARAMS_EXT;
 			}
 			scriptGenFileHandler.saveParameters(scriptGeneratorTable.getActions(), getScriptDefinitionPath(scriptDefinition), filePath);
 		} catch (InterruptedException | ExecutionException e) {
