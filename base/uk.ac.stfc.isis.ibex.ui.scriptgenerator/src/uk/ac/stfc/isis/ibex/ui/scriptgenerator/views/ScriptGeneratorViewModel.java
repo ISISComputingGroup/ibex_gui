@@ -949,13 +949,15 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private Optional<String> openFileDialog(int action) {
     FileDialog dialog = new FileDialog(Display.getDefault().getActiveShell(), action);
     dialog.setFilterPath("C:/scripts");
-    dialog.setFilterExtensions(new String[] {"*.json"});
     dialog.setOverwrite(true);
     if (action == SWT.SAVE) {
         dialog.setText("Save as");
+        dialog.setFilterExtensions(new String[] {"*.sgp"});
 
     } else {
         dialog.setText("Load");
+        // Keep JSON extension when loading (for older param. files)
+        dialog.setFilterExtensions(new String[] {"*.sgp", "*.json"});
     }
     return Optional.ofNullable(dialog.open());
     }
