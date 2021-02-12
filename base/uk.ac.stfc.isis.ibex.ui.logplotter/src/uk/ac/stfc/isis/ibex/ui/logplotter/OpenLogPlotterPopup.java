@@ -18,6 +18,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.logplotter;
 
+import org.csstudio.trends.databrowser2.model.PVItem;
+import org.csstudio.trends.databrowser2.model.RequestType;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.IPerspectiveRegistry;
@@ -44,6 +46,7 @@ public class OpenLogPlotterPopup extends org.csstudio.trends.databrowser2.OpenDa
 			super.execute(event);
 			// We can't get the editor from the parent so turn off save changes dialog for all editors
 			LogPlotterHistoryPresenter.getCurrentDataBrowsers().forEach(db -> db.getModel().setSaveChanges(false));
+			LogPlotterHistoryPresenter.getCurrentDataBrowsers().forEach(db -> db.getModel().getItems().forEach(item -> ((PVItem)item).setRequestType(RequestType.RAW)));
 			return null;
 		} catch (ExecutionException | RuntimeException e) {
 			IsisLog.getLogger(getClass()).error(e.getMessage(), e);
