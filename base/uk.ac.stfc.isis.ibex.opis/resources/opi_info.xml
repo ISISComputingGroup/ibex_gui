@@ -2620,18 +2620,6 @@
         <description>Controls the orientation of MuSR</description>
         <macros />
         <categories />
-      <key>HIFIMAGS</key>
-      <value>
-        <categories/>
-        <type>UNKNOWN</type>
-        <path>hifimags.opi</path>
-        <description>The OPI for the HIFIMAGS</description>
-        <macros>
-          <macro>
-            <name>HIFIMAGS</name>
-            <description>The HIFIMAGS PV prefix (e.g. HIFIMAGS_01)</description>
-          </macro>
-        </macros>
       </value>
     </entry>
     <entry>

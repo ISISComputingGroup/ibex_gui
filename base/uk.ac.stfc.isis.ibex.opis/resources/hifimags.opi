@@ -19,6 +19,7 @@
   <macros>
     <include_parent_macros>true</include_parent_macros>
     <PV_ROOT>$(P)$(HIFIMAGS):</PV_ROOT>
+    <NAME>$(NAME)</NAME>
   </macros>
   <name>$(PV_ROOT)M:PERSIST:SP</name>
   <rules />
@@ -480,7 +481,7 @@ Readback</text>
     <foreground_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
-    <height>67</height>
+    <height>90</height>
     <horizontal>false</horizontal>
     <items_from_pv>true</items_from_pv>
     <name>Opmode</name>
@@ -551,11 +552,11 @@ $(pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
     <widget_type>Text Update</widget_type>
-    <width>64</width>
+    <width>113</width>
     <wrap_words>false</wrap_words>
     <wuid>-6952e4b6:1778bc46bd8:-7e77</wuid>
     <x>14</x>
-    <y>468</y>
+    <y>491</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
     <actions hook="false" hook_all="false">
@@ -693,10 +694,10 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
-      <width>64</width>
+      <width>90</width>
       <wrap_words>false</wrap_words>
       <wuid>-6952e4b6:1778bc46bd8:-7e7c</wuid>
-      <x>309</x>
+      <x>324</x>
       <y>105</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -903,7 +904,7 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <height>34</height>
+      <height>44</height>
       <horizontal>false</horizontal>
       <items_from_pv>true</items_from_pv>
       <name>Ramp_Leads</name>
@@ -925,8 +926,8 @@ $(pv_value)</tooltip>
       <widget_type>Choice Button</widget_type>
       <width>90</width>
       <wuid>-6952e4b6:1778bc46bd8:-7e91</wuid>
-      <x>309</x>
-      <y>72</y>
+      <x>324</x>
+      <y>62</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -974,7 +975,7 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
-      <width>64</width>
+      <width>106</width>
       <wrap_words>false</wrap_words>
       <wuid>-6952e4b6:1778bc46bd8:-7e81</wuid>
       <x>204</x>
@@ -1009,7 +1010,7 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <height>34</height>
+      <height>44</height>
       <horizontal>false</horizontal>
       <items_from_pv>true</items_from_pv>
       <name>PM</name>
@@ -1029,10 +1030,10 @@ $(pv_value)</tooltip>
 $(pv_value)</tooltip>
       <visible>true</visible>
       <widget_type>Choice Button</widget_type>
-      <width>90</width>
+      <width>106</width>
       <wuid>-6952e4b6:1778bc46bd8:-7f50</wuid>
       <x>204</x>
-      <y>72</y>
+      <y>62</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
