@@ -2633,6 +2633,7 @@
           <macro>
             <name>HIFIMAGS</name>
             <description>The HIFIMAGS PV prefix (e.g. HIFIMAGS_01)</description>
+            <default>HIFIMAGS_01</default>
           </macro>
         </macros>
       </value>
