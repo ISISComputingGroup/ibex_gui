@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.core.databinding.DataBindingContext;
@@ -168,6 +169,14 @@ public class ScriptGeneratorView {
     scriptGeneratorViewModel.setUpModel();
     }
 
+    /**
+     * Clean up resources being used by the view.
+     */
+    @PreDestroy
+    public void dispose() {
+        scriptGeneratorViewModel.dispose();
+    }
+    
     /**
      * Destroy all child elements of the mainParent.
      */
@@ -366,7 +375,7 @@ public class ScriptGeneratorView {
         final Button paste = new Button(utilitiesGrp, SWT.NONE);
         paste.setText("Paste actions");
         paste.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        paste.addListener(SWT.Selection, e -> scriptGeneratorViewModel.pasteActions(table.getColumnsLabel(), table.getSelectionIndex()));
+        paste.addListener(SWT.Selection, e -> scriptGeneratorViewModel.pasteActions(table.getSelectionIndex()));
         
         // Label for the total estimated run time
         estimateText = new Label(estimateGrp, SWT.RIGHT);

@@ -335,7 +335,7 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @param addEmptyRow to create table with one "permanent" empty row 
      * @return viewer
      */
-    protected TableViewer createViewer(boolean addEmptyRow) {
+    private TableViewer createViewer(boolean addEmptyRow) {
     if (addEmptyRow) {
     	viewer = new TableViewerEmptyRow(tableComposite, tableStyle);
     } else {

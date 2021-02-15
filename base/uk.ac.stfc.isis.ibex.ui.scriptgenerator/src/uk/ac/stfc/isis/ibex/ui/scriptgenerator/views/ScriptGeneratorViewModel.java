@@ -188,10 +188,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     private boolean hasSelection;
     
-    
+    private Clipboard clipboard;
     private static String TAB = "\t";
     private static String CRLF = "\r\n";    
-    private Clipboard clipboard;
     
     
     /**
@@ -720,7 +719,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
         
                     @Override
                     public String getToolTipText(Object element) {
-                        return getScriptGenActionToolTipText((ScriptGeneratorAction) element);
+                        return getScriptGenActionToolTipText(element);
                     }
         });
     	lineNumberColumn.getColumn().setAlignment(SWT.CENTER);
@@ -738,7 +737,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     
                 @Override
                 public String getToolTipText(Object element) {
-                    return getScriptGenActionToolTipText((ScriptGeneratorAction) element);
+                    return getScriptGenActionToolTipText(element);
                 }
                 });
     
@@ -774,7 +773,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     
             @Override
             public String getToolTipText(Object element) {
-            return getScriptGenActionToolTipText((ScriptGeneratorAction) element);
+            return getScriptGenActionToolTipText(element);
             }
     
         });
@@ -799,7 +798,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     
             @Override
             public String getToolTipText(Object element) {
-            return getScriptGenActionToolTipText((ScriptGeneratorAction) element);
+            return getScriptGenActionToolTipText(element);
             }
     
         });
@@ -816,12 +815,16 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @param action The action to get the tooltip text for.
      * @return The text for the action tooltip.
      */
-    private String getScriptGenActionToolTipText(ScriptGeneratorAction action) {
-    if (action.isValid()) {
+    private String getScriptGenActionToolTipText(Object action) {
+    if (action == null) {
+        return null;
+    }
+    ScriptGeneratorAction actionImpl = (ScriptGeneratorAction) action;
+    if (actionImpl.isValid()) {
         return null; // Do not show a tooltip
     }
     return "The reason this row is invalid is:\n"
-    + action.getInvalidityReason().get() + "\n"; // Show reason on next line as a tooltip
+    + actionImpl.getInvalidityReason().get() + "\n"; // Show reason on next line as a tooltip
     }
 
     /**
@@ -1056,30 +1059,35 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	/**
 	 * Paste copied actions to the script generator. If the user wants to paste the copied actions
 	 * to another script definition, it will decide how many values(per row) to paste depending on the number
-	 * column label in new script definition. if there are 10 copied values and the script definition to
+	 * column label in new script definition. If there are 10 copied values and the script definition to
 	 * which user has switched to only contains 3 param, it will paste only first 3 values however,
 	 * all 10 copied values will still be in clipboard.
-	 * @param columnsLabel list of column labels present in current table
 	 * @param pasteLocation row where user wants to paste.
 	 */
-	public void pasteActions(ArrayList<String> columnsLabel, int pasteLocation) {
+	public void pasteActions(int pasteLocation) {
 		String copiedActions = (String) clipboard.getContents(TextTransfer.getInstance());
-		// remove constant labels
-		columnsLabel.removeAll(Arrays.asList("Line", "Validity", "Estimated run time"));
+		List<JavaActionParameter> parameters = scriptGeneratorModel.getActionParameters();
 		// Convert string data to a List
 		ArrayList<String> actions = new ArrayList<String>(Arrays.asList(copiedActions.split(CRLF)));
 		// find how many values per row
 		int numerOfValuesPerRow = copiedActions.split(CRLF)[0].split(TAB).length;
 		// calculate how many values per row to actually paste. It could be different if user has switched script definition.
-		int numberOfValuesPerRowToPaste = min(numerOfValuesPerRow, columnsLabel.size());
-		ArrayList<Map<String, String>> listOfActions = new ArrayList<Map<String, String>>();
-		for (String action:actions) {
-			Map<String, String> map = IntStream.range(0, numberOfValuesPerRowToPaste)
+		int numberOfValuesPerRowToPaste = min(numerOfValuesPerRow, parameters.size());
+		ArrayList<Map<JavaActionParameter, String>> listOfActions = new ArrayList<Map<JavaActionParameter, String>>();
+		for (String action: actions) {
+			Map<JavaActionParameter, String> map = IntStream.range(0, numberOfValuesPerRowToPaste)
 		            .boxed()
-		            .collect(Collectors.toMap(idx -> columnsLabel.get(idx), idx -> Arrays.asList(action.split(TAB)).get(idx)));
+		            .collect(Collectors.toMap(idx -> parameters.get(idx), idx -> Arrays.asList(action.split(TAB)).get(idx)));
 			listOfActions.add(map);
 		}
 		scriptGeneratorModel.pasteActions(listOfActions, pasteLocation);
 	}
+
+	/**
+	 * Cleans up resources being used by the view model.
+	 */
+    public void dispose() {
+        clipboard.dispose();
+    }
 		
 }

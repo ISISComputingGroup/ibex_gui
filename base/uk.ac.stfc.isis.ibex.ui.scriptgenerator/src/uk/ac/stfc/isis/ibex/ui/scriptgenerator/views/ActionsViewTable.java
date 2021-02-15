@@ -104,25 +104,12 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 					 scriptGeneratorViewModel.copyActions(getSelectedTableData());
 			
 				} else if (e.character == CTRL_V) {
-					scriptGeneratorViewModel.pasteActions(getColumnsLabel(), table.getSelectionIndex());
+					scriptGeneratorViewModel.pasteActions(table.getSelectionIndex());
 				}
 			}
 		});
 		
     }
-	
-	/**
-	 * Get labels from table column in order.
-	 * @return list of labels from the table
-	 */
-	protected ArrayList<String> getColumnsLabel() {
-		ArrayList<String> values = new ArrayList<String>();
-		TableColumn[] tableColumns = table.getColumns();
-		for (int idx = 0; idx < tableColumns.length; idx++) {
-			values.add(tableColumns[idx].getText());
-		}
-		return values;
-	}
 	
     /**
      * Format String data such that copying and pasting into excel would work. Clipboard does not support

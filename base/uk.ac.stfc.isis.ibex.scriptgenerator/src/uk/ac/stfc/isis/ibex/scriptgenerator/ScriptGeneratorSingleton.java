@@ -799,11 +799,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	
 	/**
 	 * Paste actions in given row/location.
-	 * @param map list of map which contains mapped parameters to its values.
+	 * @param listOfActions list of map which contains mapped parameters to its values.
 	 * @param pasteLocation location where user wants to paste the copied actions.
 	 */
-	public void pasteActions(ArrayList<Map<String, String>> map, int pasteLocation) {
-		scriptGeneratorTable.pasteActions(map, pasteLocation);
+	public void pasteActions(ArrayList<Map<JavaActionParameter, String>> listOfActions, int pasteLocation) {
+		scriptGeneratorTable.insertMultipleActions(listOfActions, pasteLocation);
 	}
 
 }

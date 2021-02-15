@@ -22,12 +22,6 @@ public class TableViewerEmptyRow extends TableViewer {
     public TableViewerEmptyRow(Composite composite, int style) {
         super(composite, style);
     }
-
-    @Override
-    public void refresh(Object element) {
-        deleteEmptyRow();
-        super.refresh(element);
-    }
     
     @Override
     protected void inputChanged(Object input, Object oldInput) {
