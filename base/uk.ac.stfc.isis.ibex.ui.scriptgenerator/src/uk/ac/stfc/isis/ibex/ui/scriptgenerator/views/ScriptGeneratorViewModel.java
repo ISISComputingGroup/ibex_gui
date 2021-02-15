@@ -147,6 +147,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private static final String PYTHON_READINESS_PROPERTY = "python ready";
 
     private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
+    
+    private static final String UNSAVED_CHANGES_MARKER = " (*)";
 
     /**
      * Path to the current parameters save file.
@@ -159,9 +161,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private List<Map<JavaActionParameter, String>> currentFileActions = new ArrayList<Map<JavaActionParameter, String>>();
     
     /**
-     * Whether the marker "(*)" for unsaved changes in the current parameters file is currently being displayed or not.
+     * Whether the marker for unsaved changes "(*)" in the current parameters file is currently being displayed or not.
      */
-    private boolean unsavedChangesMarker = false;
+    private boolean unsavedChangesMarkerDisplayed = false;
     
     /**
      * Default string to display the current parameters save file name and location.
@@ -494,8 +496,16 @@ public class ScriptGeneratorViewModel extends ModelObject {
 
     private void updateParametersFile(String parametersFilePath) {
 	String displayFile = "Current parameters file: " + parametersFilePath;
-	currentParametersFile = parametersFilePath;  	// Update the current parameter file path for Save.
-	unsavedChangesMarker = false;							// Reset unsaved changes
+	currentParametersFile = parametersFilePath;		// Update the current parameter file path for Save.
+	unsavedChangesMarkerDisplayed = false;			// Reset unsaved changes
+	
+	// Save the loaded actions to check if modified.
+	try {
+		currentFileActions = scriptGeneratorModel.loadParameterValues(Paths.get(parametersFilePath));
+	} catch (UnsupportedOperationException | NoScriptDefinitionSelectedException | ScriptDefinitionNotMatched e) {
+		// pass
+	}
+
 	firePropertyChange("parametersFile", parametersFileDisplayString, parametersFileDisplayString = displayFile);
     }
     
@@ -507,22 +517,20 @@ public class ScriptGeneratorViewModel extends ModelObject {
     		tableActionParameters.add(action.getActionParameterValueMap());
     	}
     	
-    	// Compare them with those of the loaded file
-    	boolean isEqual = tableActionParameters.equals(currentFileActions);
-    	
-    	if (!isEqual) {
-        	if (!unsavedChangesMarker) {
-        		// If table does not match file, and no unsaved changes marker, display it
-        		String displayString = parametersFileDisplayString + " (*)";
+    	// Compare the table parameters with those of the loaded file
+    	if (!tableActionParameters.equals(currentFileActions)) {
+        	if (!unsavedChangesMarkerDisplayed) {
+        		// If table does not match file, and no unsaved changes marker is displayed, display it
+        		String displayString = parametersFileDisplayString + UNSAVED_CHANGES_MARKER;
             	firePropertyChange("parametersFile", parametersFileDisplayString, parametersFileDisplayString = displayString);
-            	unsavedChangesMarker = true;
+            	unsavedChangesMarkerDisplayed = true;
         	}
     	} else {
-    		if (unsavedChangesMarker) {
-    			// If table matches file, if unsaved changes marker displayed, remove it
-        		String displayString = parametersFileDisplayString.replace(" (*)", "");
+    		if (unsavedChangesMarkerDisplayed) {
+    			// If table matches file, and unsaved changes marker is displayed, hide it
+        		String displayString = parametersFileDisplayString.replace(UNSAVED_CHANGES_MARKER, "");
 	    		firePropertyChange("parametersFile", parametersFileDisplayString, parametersFileDisplayString = displayString);
-	    		unsavedChangesMarker = false;
+	    		unsavedChangesMarkerDisplayed = false;
     		}
     	}
     }
@@ -1074,8 +1082,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
         MessageDialog.openError(DISPLAY.getActiveShell(), "Error", e.getMessage());
         return;
         }
-
-        currentFileActions = newActions; // Save the loaded actions to check if modified.
         
         Integer dialogResponse; //-1 for cancel, 0 for append, 1 for replace
         Boolean emptyModel;
