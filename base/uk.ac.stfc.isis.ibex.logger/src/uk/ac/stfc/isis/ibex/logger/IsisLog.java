@@ -115,6 +115,9 @@ public class IsisLog extends AbstractUIPlugin {
 	
 	/**
 	 * Hooks into a java.util.logging.Logger and forces it's message to Log4j instead.
+         *
+         * This is used to remove the logging to the logging that plugins do and to redirect that into the isis logger so
+         * that the logging is to file and console.
 	 * @param logger the logger to hook into.
 	 */
 	public static void hookJavaLogger(final java.util.logging.Logger logger) {
