@@ -6,12 +6,14 @@ import java.nio.file.Paths;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.CellLabelProvider;
@@ -23,6 +25,9 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
@@ -33,6 +38,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
 import org.apache.logging.log4j.Logger;
+import static java.lang.Math.min;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
@@ -58,7 +64,6 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  *
  */
 public class ScriptGeneratorViewModel extends ModelObject {
-
     private static final Display DISPLAY = Display.getDefault();
 
     /**
@@ -163,7 +168,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     private ActionsViewTable viewTable;
 
-
     /**
      * The current get validity errors button in the view.
      */
@@ -183,7 +187,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * The currently selected rows
      */
     private boolean hasSelection;
-
+    
+    private Clipboard clipboard;
+    private static String TAB = "\t";
+    private static String CRLF = "\r\n";    
+    
+    
     /**
      * A constructor that sets up the script generator model and 
      *   begins listening to property changes in the model.
@@ -200,6 +209,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Set up the model. Allows us to attach listeners for the view first.
      */
     public void setUpModel() {
+    clipboard = new Clipboard(Display.getDefault());
     scriptGeneratorModel.createScriptDefinitionLoader();
     scriptGeneratorModel.setUp();
     // Listen to whether the language support is changed
@@ -301,7 +311,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
         viewTable.setCellFocus(insertionLocation, 0);
     });
     }
-
+    
     /**
      * Removes action at position index from ActionsTable.
      * 
@@ -709,7 +719,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
         
                     @Override
                     public String getToolTipText(Object element) {
-                        return getScriptGenActionToolTipText((ScriptGeneratorAction) element);
+                        return getScriptGenActionToolTipText(element);
                     }
         });
     	lineNumberColumn.getColumn().setAlignment(SWT.CENTER);
@@ -727,7 +737,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     
                 @Override
                 public String getToolTipText(Object element) {
-                    return getScriptGenActionToolTipText((ScriptGeneratorAction) element);
+                    return getScriptGenActionToolTipText(element);
                 }
                 });
     
@@ -763,7 +773,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     
             @Override
             public String getToolTipText(Object element) {
-            return getScriptGenActionToolTipText((ScriptGeneratorAction) element);
+            return getScriptGenActionToolTipText(element);
             }
     
         });
@@ -788,7 +798,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     
             @Override
             public String getToolTipText(Object element) {
-            return getScriptGenActionToolTipText((ScriptGeneratorAction) element);
+            return getScriptGenActionToolTipText(element);
             }
     
         });
@@ -805,12 +815,16 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @param action The action to get the tooltip text for.
      * @return The text for the action tooltip.
      */
-    private String getScriptGenActionToolTipText(ScriptGeneratorAction action) {
-    if (action.isValid()) {
+    private String getScriptGenActionToolTipText(Object action) {
+    if (action == null) {
+        return null;
+    }
+    ScriptGeneratorAction actionImpl = (ScriptGeneratorAction) action;
+    if (actionImpl.isValid()) {
         return null; // Do not show a tooltip
     }
     return "The reason this row is invalid is:\n"
-    + action.getInvalidityReason().get() + "\n"; // Show reason on next line as a tooltip
+    + actionImpl.getInvalidityReason().get() + "\n"; // Show reason on next line as a tooltip
     }
 
     /**
@@ -1035,4 +1049,47 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	public void setRepoPath() {
 		scriptGeneratorModel.setRepoPath();
 	}
+	
+	/**
+	 * Copies actions to clipboard.
+	 * @param actions copied actions
+	 */
+	public void copyActions(String actions) {
+		clipboard.setContents(new Object[] {actions}, new Transfer[] {TextTransfer.getInstance()});
+	}
+	
+	/**
+	 * Paste copied actions to the script generator. If the user wants to paste the copied actions
+	 * to another script definition, it will decide how many values(per row) to paste depending on the number
+	 * column label in new script definition. If there are 10 copied values and the script definition to
+	 * which user has switched to only contains 3 param, it will paste only first 3 values however,
+	 * all 10 copied values will still be in clipboard.
+	 * @param pasteLocation row where user wants to paste.
+	 */
+	public void pasteActions(int pasteLocation) {
+		String copiedActions = (String) clipboard.getContents(TextTransfer.getInstance());
+		List<JavaActionParameter> parameters = scriptGeneratorModel.getActionParameters();
+		// Convert string data to a List
+		ArrayList<String> actions = new ArrayList<String>(Arrays.asList(copiedActions.split(CRLF)));
+		// find how many values per row
+		int numerOfValuesPerRow = copiedActions.split(CRLF)[0].split(TAB).length;
+		// calculate how many values per row to actually paste. It could be different if user has switched script definition.
+		int numberOfValuesPerRowToPaste = min(numerOfValuesPerRow, parameters.size());
+		ArrayList<Map<JavaActionParameter, String>> listOfActions = new ArrayList<Map<JavaActionParameter, String>>();
+		for (String action: actions) {
+			Map<JavaActionParameter, String> map = IntStream.range(0, numberOfValuesPerRowToPaste)
+		            .boxed()
+		            .collect(Collectors.toMap(idx -> parameters.get(idx), idx -> Arrays.asList(action.split(TAB)).get(idx)));
+			listOfActions.add(map);
+		}
+		scriptGeneratorModel.pasteActions(listOfActions, pasteLocation);
+	}
+
+	/**
+	 * Cleans up resources being used by the view model.
+	 */
+    public void dispose() {
+        clipboard.dispose();
+    }
+		
 }

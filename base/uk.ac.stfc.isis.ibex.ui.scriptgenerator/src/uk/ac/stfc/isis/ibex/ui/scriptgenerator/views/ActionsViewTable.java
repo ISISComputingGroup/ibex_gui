@@ -26,9 +26,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import static java.lang.Math.min;
-import static java.lang.Math.max;
-
 import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.CellNavigationStrategy;
@@ -42,26 +39,37 @@ import org.eclipse.jface.viewers.TableViewerEditor;
 import org.eclipse.jface.viewers.TableViewerFocusCellManager;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.tables.NullComparator;
-import uk.ac.stfc.isis.ibex.ui.tables.SortableObservableMapCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 
 /**
  * A table that holds the properties for a target.
  */
 public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
-    
+
+	/*
+	 * final character that results after all modifiers have been
+	 * applied.  For example, when the user types Ctrl+A, the character value
+	 * is 0x01.
+	*/
+	private static final int CTRL_C = 0x003; 
+	private static final int CTRL_V = 0x016;
+	private static final String TAB = "\t";
+	private static final String NEW_LINE = "\r\n";
 	private final ScriptGeneratorViewModel scriptGeneratorViewModel;
 	private boolean shiftCellFocusToNewlyAddedRow = false;
 	private static final  Integer NON_EDITABLE_COLUMNS_ON_RIGHT = 2;
 	protected static final Integer NON_EDITABLE_COLUMNS_ON_LEFT = 1;
 	private List<StringEditingSupport<ScriptGeneratorAction>> editingSupports = new ArrayList<StringEditingSupport<ScriptGeneratorAction>>();
-	
 	/**
      * Default constructor for the table. Creates all the correct columns.
      * 
@@ -75,10 +83,9 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
      * 			  The table of actions (rows) to display/write data to.
      */
     public ActionsViewTable(Composite parent, int style, int tableStyle, ScriptGeneratorViewModel scriptGeneratorViewModel) {
-        super(parent, style, tableStyle | SWT.BORDER);
+        super(parent, style, tableStyle | SWT.BORDER, true);
         this.scriptGeneratorViewModel = scriptGeneratorViewModel;
         initialise();
-        
         scriptGeneratorViewModel.addActionParamPropertyListener(this);
 		TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(viewer,
 		        new FocusCellOwnerDrawHighlighter(viewer, false), new CellNavigationStrategy());
@@ -90,8 +97,43 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 				| ColumnViewerEditor.TABBING_CYCLE_IN_VIEWER
 				| ColumnViewerEditor.TABBING_VERTICAL);
 		
+		table.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {	 
+				if (e.character == CTRL_C) {	
+					 scriptGeneratorViewModel.copyActions(getSelectedTableData());
+			
+				} else if (e.character == CTRL_V) {
+					scriptGeneratorViewModel.pasteActions(table.getSelectionIndex());
+				}
+			}
+		});
+		
     }
-    
+	
+    /**
+     * Format String data such that copying and pasting into excel would work. Clipboard does not support
+     * transferring/pasting data to excel so we format plain text data ourselves.
+     * @return table rows data as one string, tab separated. After end of each row, new line is added. "1\t2\r\n1\t2 "
+     */
+    public String getSelectedTableData() {
+    	String data = "";
+    	for (TableItem item : table.getSelection()) {
+			int size = table.getColumnCount() - NON_EDITABLE_COLUMNS_ON_LEFT - NON_EDITABLE_COLUMNS_ON_RIGHT;
+			// TableItem.getText() ensure the values are in order using index.
+			for (int idx = 0; idx < size; idx++) {
+				  data += item.getText(idx + NON_EDITABLE_COLUMNS_ON_LEFT);
+				  // if not final iteration keep appending tab
+				  if (idx != size - 1) {
+					  data += TAB;
+				  } else {
+					  data += NEW_LINE;
+				  }
+			}
+		}
+    	return data;
+    }
+    	
     /**
      * Strategy for editing cell.
      * @param tableViewer our table viewer.
@@ -114,7 +156,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 					int currentlyFocusedColumn = editor.getFocusCell().getColumnIndex() + 1;
 					
 					// Add new action if tab is pressed by user in the last cell of the table.
-					if (nextCell.getNeighbor(ViewerCell.BELOW, false) == null 
+					if (nextCell.getNeighbor(ViewerCell.BELOW, false).getElement() == null
 					        && (viewer.getTable().getColumnCount() - NON_EDITABLE_COLUMNS_ON_RIGHT == currentlyFocusedColumn)) {
 					    
                     	scriptGeneratorViewModel.addEmptyAction();
@@ -131,7 +173,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 			}
 		};
 	}
-	
+
     /**
      * Using a null comparator here stops the columns getting reordered in the UI.
      */

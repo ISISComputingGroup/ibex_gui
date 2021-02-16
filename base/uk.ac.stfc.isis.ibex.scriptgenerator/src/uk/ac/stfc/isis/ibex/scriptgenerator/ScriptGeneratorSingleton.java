@@ -697,7 +697,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
-	 * Set the location of the repository containing script definitions
+	 * Set the location of the repository containing script definitions.
 	 */
 	public void setRepoPath() {
 		this.scriptDefinitionsRepoPath = Paths.get(pythonInterface.getRepoPath());
@@ -800,6 +800,15 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	public void mergeOrigin() {
 		pythonInterface.mergeOrigin();
 		
+	}
+	
+	/**
+	 * Paste actions in given row/location.
+	 * @param listOfActions list of map which contains mapped parameters to its values.
+	 * @param pasteLocation location where user wants to paste the copied actions.
+	 */
+	public void pasteActions(ArrayList<Map<JavaActionParameter, String>> listOfActions, int pasteLocation) {
+		scriptGeneratorTable.insertMultipleActions(listOfActions, pasteLocation);
 	}
 
 }
