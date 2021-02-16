@@ -99,6 +99,10 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     private List<String> history = new ArrayList<>();
     /** if the config is protected or not */
     private boolean isProtected;
+    /** if the config is dynamic or not */
+    private boolean isDynamic;
+    /** Whether the configuration configures the block gateway and archivers or not */
+    private boolean configuresBlockGWAndArchiver;
 
     /** Available PVs. */
     private final List<PV> pvs;
@@ -180,6 +184,8 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	this.description = config.description();
 	this.synoptic = config.synoptic();
 	this.isProtected = config.isProtected();
+	this.isDynamic = config.isDynamic();
+	this.configuresBlockGWAndArchiver = config.configuresBlockGWAndArchiver();
 	originalProtectedFlag = this.isProtected;
 	this.allIocs = new ArrayList<>();
 	this.managerMode = ManagerModeModel.getInstance();
@@ -312,6 +318,21 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     public boolean getIsProtected() {
 	return isProtected;
     }
+    
+    /**
+     * @return if this config is marked as being dynamic
+     */
+    public boolean getIsDynamic() {
+	return isDynamic;
+    }
+
+    /**
+     * @return Whether the configuration configures the block gateway and archiver.
+     */
+    public boolean getIfconfiguresBlockGWAndArchiver() {
+    	return configuresBlockGWAndArchiver;
+    }
+    
     /**
      * @param name
      *            The new configuration name
@@ -345,6 +366,15 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	firePropertyChange("isProtected", this.isProtected, this.isProtected = isProtected);
 	setEnableOrDisableSaveButton();
 	setEnableSaveAsButton();
+    }
+
+    /**
+     * 
+     * @param isDynamic
+     * 				Whether the configuration is dynamic
+     */
+    public void setIsDynamic(boolean isDynamic) {
+	firePropertyChange("isDynamic", this.isDynamic, this.isDynamic = isDynamic);
     }
 
     /**
@@ -627,7 +657,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      */
     public Configuration asConfiguration() {
 	Configuration config = new Configuration(getName(), getDescription(), getSynoptic(), transformIocs(), transformBlocks(),
-		transformGroups(), transformComponents(), getHistory(), getIsProtected());
+		transformGroups(), transformComponents(), getHistory(), getIsProtected(), getIsDynamic(), getIfconfiguresBlockGWAndArchiver());
 	return new ComponentFilteredConfiguration(config);
     }
 
@@ -640,7 +670,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     public Configuration asComponent() {
 	Configuration config = asConfiguration();
 	return new Configuration(config.name(), config.description(), config.synoptic(), config.getIocs(),
-		config.getBlocks(), config.getGroups(), Collections.<ComponentInfo>emptyList(), config.getHistory(), config.isProtected());
+		config.getBlocks(), config.getGroups(), Collections.<ComponentInfo>emptyList(), config.getHistory(), config.isProtected(), config.isDynamic(), config.configuresBlockGWAndArchiver());
     }
 
     /**
@@ -759,7 +789,6 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	    errorMessage = "Warning! If saved, the " + compOrConfName + " " + this.name + " "
 		    + "will be downgraded to an unprotected " + compOrConfName;
 	    firePropertyChange("enableOrDisableSaveButton", isSaveButtonEnabled, this.isSaveButtonEnabled = true);
-
 	} else if (this.originalProtectedFlag && !isProtected && !inManagerMode) {
 	    errorMessage = isComponent ? this.savingProtectedCompWarning : this.savingProtectedConfigWarning;
 	    firePropertyChange("enableOrDisableSaveButton", isSaveButtonEnabled, this.isSaveButtonEnabled = false);

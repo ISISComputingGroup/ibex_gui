@@ -31,7 +31,8 @@ package uk.ac.stfc.isis.ibex.logger;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.logging.LogRecord;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.runtime.ILog;
@@ -39,7 +40,6 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-
 import uk.ac.stfc.isis.ibex.logger.config.LoggingConfiguration;
 
 /**
@@ -81,6 +81,7 @@ public class IsisLog extends AbstractUIPlugin {
 	@Override
     public void start(BundleContext context) throws Exception {
 		super.start(context);
+		
 		plugin = this;
 		
 		// Create log configuration
@@ -92,6 +93,10 @@ public class IsisLog extends AbstractUIPlugin {
 		log.info("Starting " + PLUGIN_ID);
 		
 		hookPluginLoggers(context);
+		
+		java.util.logging.LogManager.getLogManager().reset();
+		
+		hookJavaLogger(java.util.logging.Logger.getGlobal());
 	}
 
 	@Override
@@ -106,6 +111,40 @@ public class IsisLog extends AbstractUIPlugin {
 	        ILog pluginLogger = Platform.getLog(bundle);
 	        pluginLogHooks.add(new LogListener(pluginLogger, LogManager.getLogger(bundle.getSymbolicName())));
 	    }
+	}
+	
+	/**
+	 * Hooks into a java.util.logging.Logger and forces it's message to Log4j instead.
+         *
+         * This is used to remove the logging to the logging that plugins do and to redirect that into the isis logger so
+         * that the logging is to file and console.
+	 * @param logger the logger to hook into.
+	 */
+	public static void hookJavaLogger(final java.util.logging.Logger logger) {
+		// Remove any existing handlers
+		for (var handler : logger.getHandlers()) {
+			logger.removeHandler(handler);
+		}
+		
+		logger.setUseParentHandlers(false);
+		logger.setFilter(record -> true);
+		logger.setLevel(java.util.logging.Level.INFO);
+		
+		logger.addHandler(new java.util.logging.Handler() {
+			@Override
+			public void publish(LogRecord record) {
+				IsisLog.getLogger(record.getSourceClassName()).log(Level.toLevel(record.getLevel().toString(), Level.INFO), record.getMessage(), record.getThrown());
+			}
+
+			@Override
+			public void close() throws SecurityException {}
+
+			@Override
+			public void flush() {}
+		});
+		
+		IsisLog.getLogger(IsisLog.class).info("java.util.logging.Logger logger " + logger.getName() + " hooked successfully (message from log4j).");
+		logger.info("java.util.logging.Logger logger " + logger.getName() + " hooked successfully (message from java logger).");
 	}
 
 	/**

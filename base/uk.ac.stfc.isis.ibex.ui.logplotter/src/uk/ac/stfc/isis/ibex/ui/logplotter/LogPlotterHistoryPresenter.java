@@ -34,6 +34,7 @@ import org.csstudio.trends.databrowser2.model.AxisConfig;
 import org.csstudio.trends.databrowser2.model.Model;
 import org.csstudio.trends.databrowser2.model.ModelListenerAdapter;
 import org.csstudio.trends.databrowser2.model.PVItem;
+import org.csstudio.trends.databrowser2.model.RequestType;
 import org.csstudio.trends.databrowser2.preferences.Preferences;
 import org.csstudio.ui.util.EmptyEditorInput;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -128,6 +129,7 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
             final PVItem item = new PVItem(pvAddress, period);
             item.setDisplayName(displayName);
             item.useDefaultArchiveDataSources();
+            item.setRequestType(RequestType.RAW);
 
             AxisConfig axis;
             if (axisName.isPresent()) {

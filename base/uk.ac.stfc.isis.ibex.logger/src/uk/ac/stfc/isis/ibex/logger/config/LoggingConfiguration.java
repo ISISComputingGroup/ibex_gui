@@ -36,8 +36,6 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.Appender;
 import org.apache.logging.log4j.core.Layout;
 import org.apache.logging.log4j.core.LoggerContext;
-import org.apache.logging.log4j.core.appender.ConsoleAppender;
-import org.apache.logging.log4j.core.appender.ConsoleAppender.Target;
 import org.apache.logging.log4j.core.appender.RollingFileAppender;
 import org.apache.logging.log4j.core.appender.rolling.CompositeTriggeringPolicy;
 import org.apache.logging.log4j.core.appender.rolling.DefaultRolloverStrategy;
@@ -154,18 +152,6 @@ public final class LoggingConfiguration {
 		    .withAlwaysWriteExceptions(false)
 		    .withNoConsoleNoAnsi(false)
 		    .build();
-
-	    Appender console = ConsoleAppender.newBuilder()
-		    .setLayout(layout)
-		    .setTarget(Target.SYSTEM_OUT)
-		    .setName("Console")
-		    .setFollow(true)
-		    .setConfiguration(this)
-		    .build();
-
-	    addAppender(console);
-	    getRootLogger().addAppender(console, loggingLevel, null);
-
 
 	    final TimeBasedTriggeringPolicy timeBasedTriggeringPolicy = TimeBasedTriggeringPolicy.newBuilder()
 		    .withInterval(1)
