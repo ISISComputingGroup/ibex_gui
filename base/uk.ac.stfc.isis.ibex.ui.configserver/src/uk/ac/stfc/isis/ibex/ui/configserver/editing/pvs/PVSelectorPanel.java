@@ -19,9 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.Timer;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
@@ -37,6 +40,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -147,7 +151,17 @@ public class PVSelectorPanel extends Composite {
 			}
 		});
 		
-		pvAddress.addModifyListener(e -> blockPVTable.setSearch(pvAddress.getText()));
+		int pvSearchDelay = 1000; //milliseconds
+		ActionListener pvSearchTaskPerformer = new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				Display.getDefault().asyncExec(() -> blockPVTable.setSearch(pvAddress.getText()));
+			}
+		};
+		
+		Timer pvSearch = new Timer(pvSearchDelay, pvSearchTaskPerformer);
+		pvSearch.setRepeats(false); // Set timer to go off only once
+		
+		pvAddress.addModifyListener(e -> pvSearch.restart());
 	}
 	
     /**

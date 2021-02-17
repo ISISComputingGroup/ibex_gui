@@ -192,16 +192,26 @@ public class ActionsTable extends ModelObject {
 	}
 	
 	/**
-	 * Add multiple actions.
+	 * Add multiple actions at given row.
+	 * @param list contains mapped action parameters to its values
+	 * @param insertLocation location in table to insert the actions
+	 */
+	public void insertMultipleActions(List<Map<JavaActionParameter, String>> list, int insertLocation) {
+		final List<ScriptGeneratorAction> currentListOfActions = new ArrayList<ScriptGeneratorAction>(actions);
+		for (Map<JavaActionParameter, String> map : list) {
+			var newAction = createAction(map);
+			currentListOfActions.add(insertLocation, newAction);
+			insertLocation++;
+		}
+		firePropertyChange(ACTIONS_PROPERTY, actions, actions = currentListOfActions);
+	}
+
+	/**
+	 * Add multiple actions to the end of the table.
 	 * @param list contains mapped action parameters to its values
 	 */
 	public void addMultipleActions(List<Map<JavaActionParameter, String>> list) {
-		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
-		for (Map<JavaActionParameter, String> map : list) {
-			var newAction = createAction(map);
-			newList.add(newAction);
-		}
-		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
+	    insertMultipleActions(list, actions.size());
 	}
 
 	/**

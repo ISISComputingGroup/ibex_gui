@@ -49,7 +49,7 @@ public class ConfigurationTest extends EditableConfigurationTest {
 		String defaultSynoptic = "";
 		
 		// Act
-		Configuration config = new Configuration("name", "description", defaultSynoptic, iocs, blocks, groups, components, history, true, false);
+		Configuration config = new Configuration("name", "description", defaultSynoptic, iocs, blocks, groups, components, history, true, false, false);
 		
 		// Assert
 		assertEquals(ConfigEditing.NONE_SYNOPTIC_NAME, config.synoptic());
@@ -58,7 +58,7 @@ public class ConfigurationTest extends EditableConfigurationTest {
 	
 	@Test
 	public void GIVEN_non_dynamic_configuration_THEN_display_name_is_the_same_as_config_name() {
-		Configuration config = new Configuration("name", "description", "", iocs, blocks, groups, components, history, false, false);
+		Configuration config = new Configuration("name", "description", "", iocs, blocks, groups, components, history, false, false, false);
 		
 		// Assert
 		assertEquals(config.getDisplayName(), "name");
@@ -67,7 +67,7 @@ public class ConfigurationTest extends EditableConfigurationTest {
 	
 	@Test
 	public void GIVEN_dynamic_configuration_THEN_display_name_has_dynamic_appended() {
-		Configuration config = new Configuration("name", "description", "", iocs, blocks, groups, components, history, false, true);
+		Configuration config = new Configuration("name", "description", "", iocs, blocks, groups, components, history, false, true, false);
 		
 		// Assert
 		assertEquals(config.getDisplayName(), "name (dynamic)");

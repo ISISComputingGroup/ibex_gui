@@ -101,6 +101,8 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     private boolean isProtected;
     /** if the config is dynamic or not */
     private boolean isDynamic;
+    /** Whether the configuration configures the block gateway and archivers or not */
+    private boolean configuresBlockGWAndArchiver;
 
     /** Available PVs. */
     private final List<PV> pvs;
@@ -183,6 +185,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	this.synoptic = config.synoptic();
 	this.isProtected = config.isProtected();
 	this.isDynamic = config.isDynamic();
+	this.configuresBlockGWAndArchiver = config.configuresBlockGWAndArchiver();
 	originalProtectedFlag = this.isProtected;
 	this.allIocs = new ArrayList<>();
 	this.managerMode = ManagerModeModel.getInstance();
@@ -321,6 +324,13 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      */
     public boolean getIsDynamic() {
 	return isDynamic;
+    }
+
+    /**
+     * @return Whether the configuration configures the block gateway and archiver.
+     */
+    public boolean getIfconfiguresBlockGWAndArchiver() {
+    	return configuresBlockGWAndArchiver;
     }
     
     /**
@@ -647,7 +657,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      */
     public Configuration asConfiguration() {
 	Configuration config = new Configuration(getName(), getDescription(), getSynoptic(), transformIocs(), transformBlocks(),
-		transformGroups(), transformComponents(), getHistory(), getIsProtected(), getIsDynamic());
+		transformGroups(), transformComponents(), getHistory(), getIsProtected(), getIsDynamic(), getIfconfiguresBlockGWAndArchiver());
 	return new ComponentFilteredConfiguration(config);
     }
 
@@ -660,7 +670,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     public Configuration asComponent() {
 	Configuration config = asConfiguration();
 	return new Configuration(config.name(), config.description(), config.synoptic(), config.getIocs(),
-		config.getBlocks(), config.getGroups(), Collections.<ComponentInfo>emptyList(), config.getHistory(), config.isProtected(), config.isDynamic());
+		config.getBlocks(), config.getGroups(), Collections.<ComponentInfo>emptyList(), config.getHistory(), config.isProtected(), config.isDynamic(), config.configuresBlockGWAndArchiver());
     }
 
     /**
