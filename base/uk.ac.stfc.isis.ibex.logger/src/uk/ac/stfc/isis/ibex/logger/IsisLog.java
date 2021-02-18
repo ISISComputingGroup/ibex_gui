@@ -70,14 +70,27 @@ public class IsisLog extends AbstractUIPlugin {
 	public IsisLog() {
 	}
 	
+	/**
+	 * Gets the logger for the provided class name.
+	 * @param className the class name
+	 * @return the logger
+	 */
 	public static Logger getLogger(String className) {
 		return LogManager.getLogger(className);
 	}
 	
+	/**
+	 * Gets the logger for the provided class.
+	 * @param clazz the class
+	 * @return the logger
+	 */
 	public static Logger getLogger(Class<?> clazz) {
 		return LogManager.getLogger(clazz);
 	}
 
+	/**
+	 * Called on start of the IsisLog plugin.
+	 */
 	@Override
     public void start(BundleContext context) throws Exception {
 		super.start(context);
@@ -99,13 +112,19 @@ public class IsisLog extends AbstractUIPlugin {
 		hookJavaLogger(java.util.logging.Logger.getGlobal());
 	}
 
+	/**
+	 * Called on stop of the IsisLog plugin.
+	 */
 	@Override
     public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
 	}
 	
-	// Hook all loaded bundles into the log4j framework
+	/**
+	 * Hook all loaded bundles into the log4j framework.
+	 * @param context the eclipse bundle context
+	 */
 	private void hookPluginLoggers(final BundleContext context) {
 	    for (Bundle bundle : context.getBundles()) {
 	        ILog pluginLogger = Platform.getLog(bundle);
@@ -115,9 +134,9 @@ public class IsisLog extends AbstractUIPlugin {
 	
 	/**
 	 * Hooks into a java.util.logging.Logger and forces it's message to Log4j instead.
-         *
-         * This is used to remove the logging to the logging that plugins do and to redirect that into the isis logger so
-         * that the logging is to file and console.
+     *
+     * This is used to remove the logging to the logging that plugins do and to redirect that into the isis logger so
+     * that the logging is to file and console.
 	 * @param logger the logger to hook into.
 	 */
 	public static void hookJavaLogger(final java.util.logging.Logger logger) {
@@ -156,6 +175,10 @@ public class IsisLog extends AbstractUIPlugin {
 		return plugin;
 	}
 	
+	/**
+	 * Gets the logger model.
+	 * @return the logger model
+	 */
 	public static RecentLog getLoggerModel() {
 		return loggerModel;
 	}
