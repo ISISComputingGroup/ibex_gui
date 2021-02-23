@@ -186,6 +186,18 @@ $(pv_value)</tooltip>
           </exp>
           <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):CHANGED</pv>
         </rule>
+        <rule name="Enabled" prop_id="enabled" out_exp="false">
+          <exp bool_exp="pv0==1">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):SP_NO_ACTION.DISP</pv>
+        </rule>
+        <rule name="Enabledbg" prop_id="transparent" out_exp="false">
+          <exp bool_exp="pv0==1">
+            <value>true</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):SP_NO_ACTION.DISP</pv>
+        </rule>
       </rules>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -414,7 +426,14 @@ $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
       <pv_name>$(PV_ROOT)$(PREFIXED_PV):ACTION</pv_name>
       <pv_value />
-      <rules />
+      <rules>
+        <rule name="Enabled" prop_id="enabled" out_exp="false">
+          <exp bool_exp="pv0==1">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):ACTION.DISP</pv>
+        </rule>
+      </rules>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>

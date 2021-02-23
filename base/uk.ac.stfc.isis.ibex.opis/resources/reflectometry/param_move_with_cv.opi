@@ -119,7 +119,7 @@
           <exp bool_exp="pv0==1">
             <value>false</value>
           </exp>
-          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV).DISP</pv>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):ACTION.DISP</pv>
         </rule>
       </rules>
       <scale_options>
@@ -245,7 +245,13 @@ $(pv_value)</tooltip>
           <exp bool_exp="pv0==1">
             <value>false</value>
           </exp>
-          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV).DISP</pv>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):SP_NO_ACTION.DISP</pv>
+        </rule>
+        <rule name="Enabledbg" prop_id="transparent" out_exp="false">
+          <exp bool_exp="pv0==1">
+            <value>true</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):SP_NO_ACTION.DISP</pv>
         </rule>
       </rules>
       <scale_options>
