@@ -47,7 +47,9 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.console.ConsolePlugin;
+import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleConstants;
+import org.eclipse.ui.console.IConsoleListener;
 import org.eclipse.ui.internal.console.ConsoleView;
 import org.eclipse.ui.internal.console.OpenConsoleAction;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -110,6 +112,7 @@ public class Consoles extends AbstractUIPlugin {
 
 	private static final Logger LOG = IsisLog.getLogger(Consoles.class);
 	private Set<Runnable> consoleLengthListeners = new HashSet<Runnable>();
+	private Set<Runnable> consoleCountListeners = new HashSet<Runnable>();
 
 	/**
 	 * {@inheritDoc}
@@ -300,6 +303,30 @@ public class Consoles extends AbstractUIPlugin {
 					String.format("Failed to install output length limit to console '%s' because: %s", console, e.getMessage()), e);
 		}
 	}
+	
+	/**
+	 * Adds a listener that runs whenever a console is added or removed.
+	 */
+	public void installConsoleCountListener() {
+		try {
+			ConsolePlugin.getDefault().getConsoleManager().addConsoleListener(new IConsoleListener() {
+				
+				@Override
+				public void consolesRemoved(IConsole[] consoles) {
+					consoleCountListeners.forEach(Runnable::run);
+				}
+				
+				@Override
+				public void consolesAdded(IConsole[] consoles) {
+					consoleCountListeners.forEach(Runnable::run);
+				}
+			});
+		} catch (RuntimeException e) {
+			// If we can't add the listener, log and carry on, this is not a critical error.
+			LoggerUtils.logErrorWithStackTrace(LOG,
+					String.format("Failed to add console count listener because: %s", e.getMessage()), e);
+		}
+	}
 
 	private void writeConsoleOutputToFile(ScriptConsole console) {
 		try (FileWriter writer = new FileWriter(TRIMMED_CONSOLE_LOG_PATH)) {
@@ -323,6 +350,22 @@ public class Consoles extends AbstractUIPlugin {
 	 * @param r the runnable to remove
 	 */
 	public void removeConsoleLengthListener(Runnable r) {
+		consoleLengthListeners.remove(r);
+	}
+	
+	/**
+	 * Register a listener to be called whenever the length of the console output changes.
+	 * @param r a runnable to run whenever the length changes.
+	 */
+	public void addConsoleCountListener(Runnable r) {
+		consoleCountListeners.add(r);
+	}
+
+	/**
+	 * Removes a console number listener that was previously registered.
+	 * @param r the runnable to remove
+	 */
+	public void removeConsoleCountListener(Runnable r) {
 		consoleLengthListeners.remove(r);
 	}
 }
