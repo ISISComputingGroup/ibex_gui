@@ -31,7 +31,6 @@ class DefinitionsRepository:
 
     def __init__(self, path, remote_url: str = REMOTE_URL, bundle_path: str = DEFAULT_BUNDLE_PATH, branch=None):
         self.errors = []
-        # self._append_error("DefinitionsRepository: path = {} (exists: {})".format(path, os.path.exists(path)))
         if path is not None and os.path.exists(path):
             self.path = path
         else:

@@ -50,7 +50,6 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
-import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 
 /**
  * Provides the UI to control the script generator.
