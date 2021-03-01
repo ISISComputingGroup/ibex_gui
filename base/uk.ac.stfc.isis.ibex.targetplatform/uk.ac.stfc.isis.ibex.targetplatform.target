@@ -20,7 +20,7 @@
     </location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="http://eclipse.py4j.org/"/>
-		<unit id="org.py4j.feature.feature.group" version="0.10.9.1-bnd-BlkoVQ"/>
+		<unit id="org.py4j.feature.feature.group" version="0.10.9.2-bnd-BwsoWA"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="https://www.pydev.org/update_sites/8.0.0/"/>
