@@ -30,16 +30,17 @@ class DefinitionsRepository:
     """
 
     def __init__(self, path, remote_url: str = REMOTE_URL, bundle_path: str = DEFAULT_BUNDLE_PATH, branch=None):
-        if path is not None:
-            self.path = pathlib.Path(path)
+        self.errors = []
+        # self._append_error("DefinitionsRepository: path = {} (exists: {})".format(path, os.path.exists(path)))
+        if path is not None and os.path.exists(path):
+            self.path = path
         else:
-            self.path = pathlib.Path(DEFAULT_REPO_PATH)
-        self.path = path
+            self.path = DEFAULT_REPO_PATH
+            
         self.remote_url = remote_url
         self.bundle_path = bundle_path
 
         self.git = Git()
-        self.errors = []
 
         self.repo = self.initialise_repo()
 

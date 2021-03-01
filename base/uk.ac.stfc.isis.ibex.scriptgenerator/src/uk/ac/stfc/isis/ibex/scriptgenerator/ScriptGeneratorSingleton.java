@@ -231,7 +231,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		setUp();
 	}
 
-	private Path scriptDefinitionsRepoPath;
+	public Path scriptDefinitionsRepoPath;
 	
 	private Path getScriptDefinitionPath(ScriptDefinitionWrapper scriptDefinition) {
 		return Paths.get(scriptDefinitionsRepoPath.toString(), scriptDefinition.getName() + PYTHON_EXT);
