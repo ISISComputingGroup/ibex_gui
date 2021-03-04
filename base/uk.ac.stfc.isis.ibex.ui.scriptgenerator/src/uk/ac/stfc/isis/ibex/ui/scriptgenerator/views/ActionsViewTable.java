@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import static java.lang.Math.min;
+import static java.lang.Math.max;
 
 import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.jface.viewers.CellLabelProvider;
@@ -224,16 +226,35 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	}
 	
 	/**
+	 * From the input focusColumn get the corresponding editing support column.
+	 * These columns are indexed differently.
+	 * If there are 2 non editable cells on the left of the table then column 2 of the table cells corresponds
+	 * to column 0 of the editing support columns.
+	 * Also coaxes the value into the range of the editable support columns.
+	 * So if the focusColumn is 6 and there are only editable columns 0, 1, 2 and 3 the value 3 will be returned.
+	 * 
+	 * @param focusColumn The table column number.
+	 * @return The corresponding editing support column.
+	 */
+	private int getEditingSupportFocusColumnFromViewerTableFocusColumn(int focusColumn) {
+		// Offset by the amount of columns to the left of the first editable column
+		int offsetFocusColumn = focusColumn - NON_EDITABLE_COLUMNS_ON_LEFT;
+		// Sanitise for any columns outside of the range of the editing support columns
+		int firstEditingSupportColumn = 0;
+		int lastEditingSupportColumn = editingSupports.size() - 1;
+		return min(max(firstEditingSupportColumn, offsetFocusColumn), lastEditingSupportColumn);
+	}
+	
+	/**
 	 * Sets Rows. Save where the focus was before re writing the table and set the focus back to the cell after
 	 * re writing the table.
 	 */
-	
 	@Override
 	public void setRows(Collection<ScriptGeneratorAction> rows) {
 		if (!viewer.getTable().isDisposed()) {
 			int focusRow = getSelectionIndex();
 			ScriptGeneratorAction previousSelection = firstSelectedRow();
-			int focusColumn = NON_EDITABLE_COLUMNS_ON_LEFT;
+			int focusColumn = 0;
 			
 			if (shiftCellFocusToNewlyAddedRow) {
 				focusRow = viewer.getTable().getSelectionIndex() + 1;
@@ -253,7 +274,8 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 					setCellFocus(focusRow, focusColumn);
 					if (!shiftCellFocusToNewlyAddedRow) {
 					    // Fixes issue see in https://github.com/ISISComputingGroup/IBEX/issues/5708 (hopefully temporary)
-					    editingSupports.get(focusColumn).resetSelectionAfterFocus();
+					    int editingSupportFocusColumn = getEditingSupportFocusColumnFromViewerTableFocusColumn(focusColumn);
+						editingSupports.get(editingSupportFocusColumn).resetSelectionAfterFocus();
 					}
 					shiftCellFocusToNewlyAddedRow = false;
 				}
