@@ -72,7 +72,7 @@
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <scripts />
-    <show_units>true</show_units>
+    <show_units>false</show_units>
     <text>######</text>
     <tooltip>$(pv_name)&#xD;
 $(pv_value)</tooltip>
