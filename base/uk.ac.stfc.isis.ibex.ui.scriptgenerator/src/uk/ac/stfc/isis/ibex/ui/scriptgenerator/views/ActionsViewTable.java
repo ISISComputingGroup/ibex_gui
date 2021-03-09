@@ -25,8 +25,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import static java.lang.Math.min;
-import static java.lang.Math.max;
 
 import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.jface.viewers.CellLabelProvider;
