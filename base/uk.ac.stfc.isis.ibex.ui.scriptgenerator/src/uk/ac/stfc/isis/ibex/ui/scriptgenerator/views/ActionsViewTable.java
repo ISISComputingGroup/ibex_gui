@@ -226,23 +226,27 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	}
 	
 	/**
-	 * From the input focusColumn get the corresponding editing support column.
-	 * These columns are indexed differently.
+	 * From the input focusColumn get the corresponding editing support column or an empty optional if out of range.
+	 * The editing support columns are a subset of the table columns (but there indexing is offset by non-editable columns).
 	 * If there are 2 non editable cells on the left of the table then column 2 of the table cells corresponds
 	 * to column 0 of the editing support columns.
-	 * Also coaxes the value into the range of the editable support columns.
-	 * So if the focusColumn is 6 and there are only editable columns 0, 1, 2 and 3 the value 3 will be returned.
+	 * If there are 2 non editable cells on the right of the table then the last 2 columns of the table do not have
+	 * corresponding columns in the editing supports.
+	 * 
 	 * 
 	 * @param focusColumn The table column number.
-	 * @return The corresponding editing support column.
+	 * @return The corresponding editing support column or if there isn't one an empty optional.
 	 */
-	private int getEditingSupportFocusColumnFromViewerTableFocusColumn(int focusColumn) {
-		// Offset by the amount of columns to the left of the first editable column
-		int offsetFocusColumn = focusColumn - NON_EDITABLE_COLUMNS_ON_LEFT;
+	private Optional<Integer> getEditingSupportFocusColumnFromViewerTableFocusColumn(int focusColumn) {
 		// Sanitise for any columns outside of the range of the editing support columns
-		int firstEditingSupportColumn = 0;
-		int lastEditingSupportColumn = editingSupports.size() - 1;
-		return min(max(firstEditingSupportColumn, offsetFocusColumn), lastEditingSupportColumn);
+		int firstEditingSupportColumn = NON_EDITABLE_COLUMNS_ON_LEFT;
+		int lastEditingSupportColumn = viewer.getTable().getColumnCount() - (1 + NON_EDITABLE_COLUMNS_ON_RIGHT);
+		if (firstEditingSupportColumn > focusColumn || lastEditingSupportColumn < focusColumn) {
+			return Optional.empty();
+		} else {
+			// Offset by the amount of columns to the left of the first editable column
+			return Optional.of(focusColumn - NON_EDITABLE_COLUMNS_ON_LEFT);
+		}
 	}
 	
 	/**
@@ -274,8 +278,10 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 					setCellFocus(focusRow, focusColumn);
 					if (!shiftCellFocusToNewlyAddedRow) {
 					    // Fixes issue see in https://github.com/ISISComputingGroup/IBEX/issues/5708 (hopefully temporary)
-					    int editingSupportFocusColumn = getEditingSupportFocusColumnFromViewerTableFocusColumn(focusColumn);
-						editingSupports.get(editingSupportFocusColumn).resetSelectionAfterFocus();
+					    Optional<Integer> editingSupportFocusColumn = getEditingSupportFocusColumnFromViewerTableFocusColumn(focusColumn);
+						editingSupportFocusColumn.ifPresent(
+							offsetFocusColumn -> editingSupports.get(offsetFocusColumn).resetSelectionAfterFocus()
+						);
 					}
 					shiftCellFocusToNewlyAddedRow = false;
 				}
