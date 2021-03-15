@@ -43,9 +43,9 @@ public class ServerStatusViewModel extends ModelObject {
 	
 	private ServerStatus boolToStatus(boolean isConnected) {
 		if (isConnected) {
-			return ServerStatus.RUNNING;
+			return ServerStatus.UP;
 		} else {
-			return ServerStatus.NOT_RUNNING;
+			return ServerStatus.DOWN;
 		}
 	}
 
@@ -103,15 +103,15 @@ public class ServerStatusViewModel extends ModelObject {
 		@Override
 		public void onValue(String value) {
 			if (value.equals("Shutdown")) {
-				setAlarmServerStatus(ServerStatus.NOT_RUNNING);
+				setAlarmServerStatus(ServerStatus.DOWN);
 			} else if (value.equals("Running")) {
-				setAlarmServerStatus(ServerStatus.RUNNING);
+				setAlarmServerStatus(ServerStatus.UP);
 			}
 		}
 		
 		@Override
 		public void onConnectionStatus(boolean isConnected) {
-			if (psControlStatus == ServerStatus.NOT_RUNNING) {
+			if (psControlStatus == ServerStatus.DOWN) {
 				setAlarmServerStatus(ServerStatus.UNKNOWN);
 			}
 		}
@@ -268,10 +268,10 @@ public class ServerStatusViewModel extends ModelObject {
 		individualStatus.add(dbServerStatus);
 		individualStatus.add(psControlStatus);
 		individualStatus.add(alarmServerStatus);
-		if (individualStatus.stream().allMatch(t -> t.equals(ServerStatus.RUNNING))) {
-			statusToSet = ServerStatus.RUNNING;
-		} else if (individualStatus.stream().allMatch(t -> t.equals(ServerStatus.NOT_RUNNING) || t.equals(ServerStatus.UNKNOWN))) {
-			statusToSet = ServerStatus.NOT_RUNNING;
+		if (individualStatus.stream().allMatch(t -> t.equals(ServerStatus.UP))) {
+			statusToSet = ServerStatus.UP;
+		} else if (individualStatus.stream().allMatch(t -> t.equals(ServerStatus.DOWN) || t.equals(ServerStatus.UNKNOWN))) {
+			statusToSet = ServerStatus.DOWN;
 		} else {
 			statusToSet = ServerStatus.PARTIAL;
 		}

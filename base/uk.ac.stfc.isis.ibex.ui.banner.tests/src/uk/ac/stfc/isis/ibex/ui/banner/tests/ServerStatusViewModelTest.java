@@ -48,7 +48,7 @@ public class ServerStatusViewModelTest {
     @Test
     public void GIVEN_no_initial_value_WHEN_reading_overall_status_THEN_status_is_NOT_RUNNING() {
         // Arrange
-        ServerStatus expected = ServerStatus.NOT_RUNNING;
+        ServerStatus expected = ServerStatus.DOWN;
 
         // Act
         ServerStatus actual = viewModel.getOverallStatus();
@@ -60,8 +60,8 @@ public class ServerStatusViewModelTest {
     @Test
     public void GIVEN_some_variables_off_some_unknown_WHEN_reading_overall_status_THEN_status_is_NOT_RUNNING() {
         // Arrange
-        ServerStatus expected = ServerStatus.NOT_RUNNING;
-    	setAll(ServerStatus.NOT_RUNNING);
+        ServerStatus expected = ServerStatus.DOWN;
+    	setAll(ServerStatus.DOWN);
     	viewModel.setAlarmServerStatus(ServerStatus.UNKNOWN);
 
         // Act
@@ -74,8 +74,8 @@ public class ServerStatusViewModelTest {
     @Test
     public void GIVEN_all_variables_running_WHEN_reading_overall_status_THEN_status_is_RUNNING() {
         // Arrange
-    	setAll(ServerStatus.RUNNING);
-        ServerStatus expected = ServerStatus.RUNNING;
+    	setAll(ServerStatus.UP);
+        ServerStatus expected = ServerStatus.UP;
 
         // Act
         ServerStatus actual = viewModel.getOverallStatus();
@@ -87,8 +87,8 @@ public class ServerStatusViewModelTest {
     @Test
     public void GIVEN_some_variables_running_WHEN_reading_overall_status_THEN_status_is_PARTIAL() {
         // Arrange
-    	viewModel.setBlockGatewayStatus(ServerStatus.RUNNING);
-    	viewModel.setBlockServerStatus(ServerStatus.RUNNING);
+    	viewModel.setBlockGatewayStatus(ServerStatus.UP);
+    	viewModel.setBlockServerStatus(ServerStatus.UP);
 
         ServerStatus expected = ServerStatus.PARTIAL;
 

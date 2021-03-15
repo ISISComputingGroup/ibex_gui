@@ -5,10 +5,10 @@ package uk.ac.stfc.isis.ibex.ui.banner.models;
  */
 public enum ServerStatus {
 
-	/** Server is RUNNING. */
-	RUNNING("RUNNING"),
-	/** Server is NOT RUNNING. */
-	NOT_RUNNING("NOT RUNNING"),
+	/** Server is UP. */
+	UP("UP"),
+	/** Server is DOWN. */
+	DOWN("DOWN"),
 	/** Server is PARTIALLY running. */
 	PARTIAL("PARTIAL"),
 	/** Server status is UNKNOWN. */
