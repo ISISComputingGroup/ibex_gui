@@ -16,6 +16,8 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr:'10'))
     timeout(time: 60, unit: 'MINUTES')
     disableConcurrentBuilds()
+    timestamps()
+	skipDefaultCheckout(true)
     office365ConnectorWebhooks([[
                     name: "Office 365",
                     notifyBackToNormal: true,
@@ -45,7 +47,7 @@ pipeline {
             // env.BRANCH_NAME is only supplied to multi-branch pipeline jobs
             if (env.BRANCH_NAME == null) {
                 env.BRANCH_NAME = ""
-                  }
+            }
             env.GIT_COMMIT = bat(returnStdout: true, script: '@git rev-parse HEAD').trim()
             env.GIT_BRANCH = bat(returnStdout: true, script: '@git rev-parse --abbrev-ref HEAD').trim()
             echo "git commit: ${env.GIT_COMMIT}"
@@ -91,13 +93,7 @@ pipeline {
         """
       }
     }
-    
-    stage("Collate Unit Tests") {
-      steps {
-        junit '**/surefire-reports/TEST-*.xml,**/test-reports/TEST-*.xml'
-      }
-    }
-    
+        
     stage("Checkstyle") {
       steps {
         archiveCheckstyleResults()
@@ -112,6 +108,13 @@ pipeline {
       }
     }
   }
+  
+  post {
+    always {
+	    junit '**/surefire-reports/TEST-*.xml,**/test-reports/TEST-*.xml'
+    }
+  }
+
 }
 
 def archiveCheckstyleResults() {

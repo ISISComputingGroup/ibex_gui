@@ -15,7 +15,13 @@ if "%IS_E4%" == "YES" (
     set BUILT_CLIENT_DIR=base\uk.ac.stfc.isis.ibex.client.product\target\products\ibex.product\win32\win32\x86_64
 )
 
-call build.bat "LOG" %BUILT_CLIENT_DIR%
+set TARGET_DIR=Client_E4
+set MSINAME=ibex_client
+
+call build.bat "LOG" %BUILT_CLIENT_DIR% %TARGET_DIR%
+if %errorlevel% neq 0 exit /b %errorlevel%
+
+call build_msi.bat %BASEDIR%.. %TARGET_DIR% %MSINAME%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM set EXIT=YES will change error code to 1 if not set previously so store the current
@@ -34,10 +40,6 @@ REM Delete older versions?
 REM the password for isis\IBEXbuilder is contained in the BUILDERPW system environment variable on the build server
 net use p: /d /yes
 net use p: \\isis\inst$
-
-%PYTHON3% purge_archive_client.py
-
-set TARGET_DIR=built_client
 
 REM Don't group these. Bat expands whole if at once, not sequentially
 if "%RELEASE%" == "YES" (
@@ -92,6 +94,13 @@ if not "%RELEASE%"=="YES" (
         rmdir "%INSTALLLINKDIR%"
     )
     mklink /J "%INSTALLLINKDIR%" "%INSTALLDIR%"
+)
+
+REM copy MSI
+copy /Y %MSINAME%.msi %INSTALLDIR%
+if %errorlevel% neq 0 (
+    @echo MSI copy failed
+    exit /b %errorlevel%
 )
 
 REM Copy the install script across

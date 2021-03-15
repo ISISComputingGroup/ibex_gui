@@ -1,6 +1,12 @@
+setlocal
 REM We bundle our own JRE with the client, this is where it is
 set "JRELOCATION=\\isis\inst$\Kits$\CompGroup\ICP\ibex_client_jre"
 set "LOCAL_JRE_LOCATION=%~dp0jdk"
+
+set "TARGET_DIR=%3"
+if "%TARGET_DIR%" == "" (
+    set TARGET_DIR=built_client
+)
 
 robocopy "%JRELOCATION%" "%LOCAL_JRE_LOCATION%" /E /PURGE /R:2 /MT /XF "install.log" /NFL /NDL /NC /NS /NP /LOG:NUL
 
@@ -38,9 +44,19 @@ if "%~2" == "" (
 ) else (
 	set built_client="%~dp0..\%~2"
 )
-set sensible_build_dir="%~dp0..\built_client"
+set sensible_build_dir="%~dp0..\%TARGET_DIR%"
 RMDIR /S /Q %sensible_build_dir%
 robocopy "%built_client%" "%sensible_build_dir%" /MT /E /PURGE /R:2 /XF "install.log" /NFL /NDL /NP /NS /NC /LOG:NUL
+set errcode=%ERRORLEVEL%
+if %errcode% GEQ 4 (
+	@echo robocopy error
+    @echo *** Exit Code %errcode% ERROR see %INSTALLDIR%install.log ***
+	@echo ************** Exit Code %errcode% ERROR **************** >>%INSTALLDIR%install.log
+    if not "%1" == "NOLOG" start %INSTALLDIR%install.log
+	exit /b %errcode%
+) else (
+	set ERRORLEVEL=0
+)
 
 REM Copy the JRE across 
 robocopy "%LOCAL_JRE_LOCATION%" "%sensible_build_dir%\jre" /MT /MIR /R:1 /XF "install.log" /NFL /NDL /NP /NS /NC /LOG:NUL
@@ -55,22 +71,6 @@ set /p PythonWriteDir=<Output
 call copy_python.bat %PythonWriteDir%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-set errcode=%ERRORLEVEL%
-if %errcode% GEQ 4 (
-	@echo robocopy error
-    @echo *** Exit Code %errcode% ERROR see %INSTALLDIR%install.log ***
-	@echo ************** Exit Code %errcode% ERROR **************** >>%INSTALLDIR%install.log
-    if not "%1" == "NOLOG" start %INSTALLDIR%install.log
-	exit /b %errcode%
-) else (
-	set ERRORLEVEL=0
-)
-
-REM Copy python into the client
-python get_python_write_dir.py %sensible_build_dir% > Output
-set /p PythonWriteDir=<Output
-call copy_python.bat %PythonWriteDir%
-if %errorlevel% neq 0 exit /b %errorlevel%
-
 @echo Client built in %sensible_build_dir%
-pause
+
+exit /b 0

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-    <Product Id="*" UpgradeCode="{F4878641-6518-445B-B78B-BA9C79F01C18}" Version="$(var.VersionLong)" Language="1033" Name="IBEX Client $(var.VersionShort)" Manufacturer="STFC ISIS Facility" >
-        <Package InstallerVersion="200" Compressed="yes" Keywords='Installer' Description="IBEX Client Installer" Manufacturer="STFC ISIS Facility" InstallScope="perMachine" />
+    <Product Id="*" UpgradeCode="{CEA95FBE-9A75-40BD-A2A0-874C0B9D7D68}" Version="$(var.VersionLong)" Language="1033" Name="IBEX Scriptgenerator $(var.VersionShort)" Manufacturer="STFC ISIS Facility" >
+        <Package InstallerVersion="200" Compressed="yes" Keywords='Installer' Description="IBEX Scriptgenerator Installer" Manufacturer="STFC ISIS Facility" InstallScope="perMachine" />
 
         <Feature Id="ProductComponents" Level="1" Title="Product Components" ConfigurableDirectory='INSTALLDIR'>
             <ComponentGroupRef Id="MyCG" />
@@ -24,6 +24,6 @@
             </Directory>
     </Fragment>
 
-    <?include ibex_client.wxi ?>
+    <?include ibex_script_generator.wxi ?>
 
 </Wix>
