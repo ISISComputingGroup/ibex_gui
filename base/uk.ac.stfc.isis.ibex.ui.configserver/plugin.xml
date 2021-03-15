@@ -14,9 +14,10 @@
             locationURI="popup:org.csstudio.ui.menu.popup.processvariable">
          <command
                commandId="uk.ac.stfc.isis.ibex.ui.configserver.commands.NewBlockHandler"
-               label="Add as Block"
+               label="Add to Current Config"
                style="push"
-               tooltip="Show this PV in a log plotter window">
+               icon="icons/add_block.png"
+               tooltip="Add this PV as a block to the current configuration">
          </command>
       </menuContribution>
    </extension>
