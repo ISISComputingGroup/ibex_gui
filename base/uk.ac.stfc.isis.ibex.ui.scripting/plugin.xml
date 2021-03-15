@@ -61,9 +61,17 @@
             class="uk.ac.stfc.isis.ibex.ui.scripting.ConsoleLengthMonitor"
             id="uk.ac.stfc.isis.ibex.ui.scripting.clearConsole">
       </dynamic>
- 		
+      </menuContribution>
+      
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.console.ConsoleView?before=launchGroup">
+        	  <dynamic
+            class="uk.ac.stfc.isis.ibex.ui.scripting.ConsolesCountMonitor"
+            id="uk.ac.stfc.isis.ibex.ui.scripting.ConsolesNumberMonitor.label">
+      </dynamic>
       </menuContribution>
     </extension>
+    
     <extension
           point="org.eclipse.ui.console.consoleFactories">
        <consoleFactory

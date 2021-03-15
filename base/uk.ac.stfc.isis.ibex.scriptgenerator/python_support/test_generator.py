@@ -17,7 +17,7 @@ class TestGenerator(unittest.TestCase):
         return estimates
 
     def setUp(self):
-        self.generator: Generator = Generator(search_folders=["test_script_definitions"])
+        self.generator: Generator = Generator(repo_path="test_script_definitions")
 
     def test_GIVEN_script_definitions_return_invalid_WHEN_get_generator_invalidity_reasons_THEN_context_as_expected(self):
         # Arrange

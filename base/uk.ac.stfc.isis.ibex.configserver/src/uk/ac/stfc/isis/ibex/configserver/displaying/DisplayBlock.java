@@ -70,30 +70,30 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     /**
      * Indicates whether the block is currently within run-control range.
      */
-    private boolean inRange;
+    private Boolean inRange;
 
     /**
      * The current low limit run-control setting. This can be different from
      * what is set in the configuration.
      */
-    private double lowlimit;
+    private Double lowlimit;
 
     /**
      * The current high limit run-control setting. This can be different from
      * what is set in the configuration.
      */
-    private double highlimit;
+    private Double highlimit;
     
     /**
      * True if runcontrol should be suspended if the block goes into invalid alarm, false otherwise.
      */
-    private boolean suspendIfInvalid;
+    private Boolean suspendIfInvalid;
 
     /**
      * Specifies whether the block is currently under run-control. This can be
      * different from what is set in the configuration.
      */
-    private boolean runcontrolEnabled;
+    private Boolean runcontrolEnabled;
 
     /**
      * Specifies the overall run-control state, for example: enabled and in
@@ -514,7 +514,7 @@ public class DisplayBlock extends ModelObject implements IRuncontrol, Closable {
     }
 
     private RuncontrolState checkRuncontrolState() {
-        if (!runcontrolEnabled) {
+        if (runcontrolEnabled == null || !runcontrolEnabled) {
             return RuncontrolState.DISABLED;
         }
 

@@ -166,5 +166,5 @@ public class ScriptGeneratorAction extends ModelObject {
     public Optional<Number> getEstimatedTime() {
 	return estimatedTime;
     }
-
-}
+    
+}	

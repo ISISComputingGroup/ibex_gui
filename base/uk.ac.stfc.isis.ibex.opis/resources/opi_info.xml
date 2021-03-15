@@ -27,7 +27,7 @@
         <type>MOTION_SET_POINTS</type>
         <path>stage/sans2d_scraper_aperture.opi</path>
         <description>The OPI for motion setpoints</description>
-        <macros />
+        <macros/>
         <categories>
           <category>Miscellaneous motion control</category>
         </categories>
@@ -1316,6 +1316,39 @@
         </categories>
       </value>
     </entry>
+	<entry>
+      <key>Dual ITC503s</key>
+      <value>
+        <type>EUROTHERM</type>
+        <path>itc503/musr_dual_itc503.opi</path>
+        <description>The OPI for dual OI ITC503 temperature controllers</description>
+        <macros>
+          <macro>
+            <name>ITC1_IOC</name>
+            <description>The first ITC503 PV prefix (e.g. ITC503_01)</description>
+            <default>ITC503_01</default>
+          </macro>
+		  <macro>
+            <name>ITC1_NAME</name>
+            <description>The first ITC503 Name (e.g. Cryostat)</description>
+            <default>ITC1</default>
+          </macro>
+          <macro>
+            <name>ITC2_IOC</name>
+            <description>The second ITC503 PV prefix (e.g. ITC503_02)</description>
+            <default>ITC503_02</default>
+          </macro>
+		  <macro>
+            <name>ITC2_NAME</name>
+            <description>The second ITC503 Name (e.g. Insert)</description>
+            <default>ITC2</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+      </value>
+    </entry>
     <entry>
       <key>Polariser</key>
       <value>
@@ -1650,7 +1683,7 @@
           <category>Power supplies</category>
         </categories>
       </value>
-    </entry>    
+    </entry>
     <entry>
       <key>Zoom FINS PLC</key>
       <value>
@@ -2131,7 +2164,6 @@
         </macros>
       </value>
     </entry>
-    
     <entry>
       <key>Micro-Epsilon Confocal Rangefinder</key>
       <value>
@@ -2256,6 +2288,23 @@
           <macro>
             <name>TTI355</name>
             <description>The TTI355 PV prefix (e.g. TTI355_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>TTIEX355P</key>
+      <value>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+        <type>POWER_SUPPLY</type>
+        <path>ttiex355p.opi</path>
+        <description>The OPI for the TTIEX355P</description>
+        <macros>
+          <macro>
+            <name>TTIEX355P</name>
+            <description>The TTIEX355P PV prefix (e.g. TTIEX355P_01)</description>
           </macro>
         </macros>
       </value>
@@ -2424,18 +2473,18 @@
             <default>DMA4500M_01</default>
           </macro>
         </macros>
-	  </value>
+      </value>
     </entry>
-	<entry>
+    <entry>
       <key>SANS2D Vacuum System</key>
       <value>
-      	<type>PRESSURE_GAUGE</type>
-      	<path>sans2d_vacuum_system.opi</path>
-      	<description>OPI for the SANS2D vacuum</description>
+        <type>PRESSURE_GAUGE</type>
+        <path>sans2d_vacuum_system.opi</path>
+        <description>OPI for the SANS2D vacuum</description>
         <categories>
           <category>Pressure sensors</category>
         </categories>
-		<macros/>
+        <macros/>
       </value>
     </entry>
     <entry>
@@ -2474,6 +2523,24 @@
         <description>The OPI for the SANS2D vacuum tank</description>
       </value>
     </entry>
+	<entry>
+      <key>CAENV895</key>
+      <value>
+        <type>MONITOR</type>
+        <path>CAENv895.opi</path>
+        <description>CAEN V895 Discriminators</description>
+        <macros>
+          <macro>
+            <name>CAEN</name>
+            <description>The CAEN PV prefix (e.g. CAENV895_01)</description>
+            <default>CAENV895_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Monitors</category>
+        </categories>
+      </value>
+    </entry>
     <entry>
       <key>User Buttons</key>
       <value>
@@ -2490,13 +2557,13 @@
         <type>TESLAMETER</type>
         <path>Metrolab_PT2025.opi</path>
         <description>The OPI teslameter pt2025</description>
-      <macros>
+        <macros>
           <macro>
             <name>PT2025</name>
             <description>NMR Teslameter PT2025 PV name(e.g. PT2025_01).</description>
             <default>PT2025_01</default>
           </macro>
-       </macros>
+        </macros>
       </value>
     </entry>
     <entry>
@@ -2520,6 +2587,55 @@
         <categories>
           <category>Temperature controllers</category>
         </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>MuSR Steering</key>
+      <value>
+        <type>MUSR_STEERING</type>
+        <path>musr_steering.opi</path>
+        <description>OPI for steering the horizontal and vertical steering magnets</description>
+        <macros>
+          <macro>
+            <name>H_STEER</name>
+            <description>The KEPCO number (e.g. 1 for KEPCO_01) for the horizontal steering magnet</description>
+            <default>1</default>
+          </macro>
+          <macro>
+            <name>V_STEER</name>
+            <description>The KEPCO number (e.g. 2 for KEPCO_02) for the vertical steering magnet</description>
+            <default>2</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Magnets</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>MuSR Rotation control</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>musr_rotation.opi</path>
+        <description>Controls the orientation of MuSR</description>
+        <macros />
+        <categories />
+      </value>
+    </entry>
+    <entry>
+      <key>HIFIMAGS</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>hifimags.opi</path>
+        <description>An overview of the HIFI Cryomag system</description>
+        <macros>
+          <macro>
+            <name>HIFIMAGS</name>
+            <description>The HIFIMAGS PV prefix (e.g. HIFIMAGS_01)</description>
+            <default>HIFIMAGS_01</default>
+          </macro>
+        </macros>
       </value>
     </entry>
   </opis>

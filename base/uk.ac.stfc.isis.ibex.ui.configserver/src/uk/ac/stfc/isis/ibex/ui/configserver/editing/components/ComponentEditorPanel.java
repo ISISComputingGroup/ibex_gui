@@ -64,7 +64,7 @@ public class ComponentEditorPanel extends Composite {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
 		
-		editor = new DoubleListEditor<Configuration>(this, SWT.NONE, "name", false);
+		editor = new DoubleListEditor<Configuration>(this, SWT.NONE, "displayName", false);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 	}
 
