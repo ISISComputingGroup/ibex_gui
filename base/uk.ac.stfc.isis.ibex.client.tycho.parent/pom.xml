@@ -251,6 +251,8 @@
 
 		
 		<module>../uk.ac.stfc.isis.ibex.ui.banner.tests</module>
+		
+		<module>../uk.ac.stfc.isis.ibex.instrument.status</module>
 	</modules>
 </project>
 
