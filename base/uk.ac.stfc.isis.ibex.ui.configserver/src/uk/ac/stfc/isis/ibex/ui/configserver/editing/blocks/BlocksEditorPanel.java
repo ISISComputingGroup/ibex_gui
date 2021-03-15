@@ -106,7 +106,7 @@ public class BlocksEditorPanel extends Composite {
 	                
 	            //adds new block if press "Ctrl + A".
 	            if (e.character == 0x01) {
-	            	addNew(Optional.empty());
+	            	addNew();
 	            }              
             }
         });
@@ -128,7 +128,7 @@ public class BlocksEditorPanel extends Composite {
 		add.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-                addNew(Optional.empty());
+                addNew();
 			}
 		});
 		
@@ -233,9 +233,9 @@ public class BlocksEditorPanel extends Composite {
 	    }
 	}
 
-    public void addNew(Optional<String> newPV) {
+	private void addNew() {
 	    BlockFactory blockFactory = new BlockFactory(config);
-        EditableBlock added = blockFactory.createNewBlock(newPV);
+        EditableBlock added = blockFactory.createNewBlock(Optional.empty());
         EditBlockDialog dialog = new EditBlockDialog(getShell(), added, config);
         dialog.open();
         table.setSelected(added);
