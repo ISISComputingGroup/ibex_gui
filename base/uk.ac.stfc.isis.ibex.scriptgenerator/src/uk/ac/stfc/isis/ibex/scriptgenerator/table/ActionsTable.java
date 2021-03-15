@@ -96,18 +96,66 @@ public class ActionsTable extends ModelObject {
 		return newAction;
 	}
 	
+	/**
+	 * Create the default action for the last row in the table.
+	 * 
+	 * @return The default action for the bottom row of the table.
+	 */
 	private ScriptGeneratorAction createDefaultAction() {
+		return createDefaultAction(Optional.empty());
+	}
+	
+	/**
+	 * Create an action with default values for it's given location.
+	 * It may copy some values from the row directly above it.
+	 * 
+	 * @param insertionLocation The row we are creating the action for.
+	 * @return The default action for the given row.
+	 */
+	private ScriptGeneratorAction createDefaultAction(Optional<Integer> insertionLocation) {
 		var parametersMap = new HashMap<JavaActionParameter, String>();
 		// Make a parameter/string pair for each parameter in the action
 		for (JavaActionParameter actionParameter: this.actionParameters) {
-			if (actionParameter.getCopyPreviousRow() && this.actions.size() > 0) {
-				ScriptGeneratorAction lastRow = this.actions.get(this.actions.size() - 1);
-				parametersMap.put(actionParameter, lastRow.getActionParameterValue(actionParameter));
-			} else { 
-				parametersMap.put(actionParameter, actionParameter.getDefaultValue());
-			}
+			createDefaultActionParameter(insertionLocation, parametersMap, actionParameter);
 		}
 		return createAction(parametersMap);
+	}
+
+	/**
+	 * Get the default value for the action parameter given the insertionLocation (may copy value from previous row).
+	 * Add that default value to the parametersMap.
+	 * 
+	 * @param insertionLocation The row in the table we are inserting the action containing the parametersMap in.
+	 * @param parametersMap A map of action parameter to string that is used to create an action.
+	 * @param actionParameter The key of the parametersMap we are setting the value for.
+	 */
+	private void createDefaultActionParameter(Optional<Integer> insertionLocation,
+			HashMap<JavaActionParameter, String> parametersMap, JavaActionParameter actionParameter) {
+		if (actionParameter.getCopyPreviousRow() && this.actions.size() > 0) {
+			ScriptGeneratorAction rowToCopy = getRowToCopy(insertionLocation);
+			parametersMap.put(actionParameter, rowToCopy.getActionParameterValue(actionParameter));
+		} else { 
+			parametersMap.put(actionParameter, actionParameter.getDefaultValue());
+		}
+	}
+
+	/**
+	 * If the insertionLocation is present get the row action directly 
+	 * above the insertionLocation, else get the last action in the table.
+	 * 
+	 * @param insertionLocation The location we are getting the row to copy for.
+	 * @return A script generator action.
+	 */
+	private ScriptGeneratorAction getRowToCopy(Optional<Integer> insertionLocation) {
+		int positionOfRowToCopy;
+		if (insertionLocation.isPresent()) {
+			positionOfRowToCopy = (insertionLocation.get() - 1);
+		} else {
+			// Copy the last row's value as we are adding to the end
+			positionOfRowToCopy = (this.actions.size() - 1);
+		}
+		ScriptGeneratorAction lastRow = this.actions.get(positionOfRowToCopy);
+		return lastRow;
 	}
 
 	/**
@@ -136,7 +184,7 @@ public class ActionsTable extends ModelObject {
 	 * @param insertionLocation The index to add the specified 
 	 */
 	public void insertEmptyAction(Integer insertionLocation) {
-		var newAction = createDefaultAction();
+		var newAction = createDefaultAction(Optional.of(insertionLocation));
 		var correctedInsertionLocation = coerceActionIndexIntoRange(insertionLocation);
 		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
 		newList.add(correctedInsertionLocation, newAction);
@@ -144,16 +192,26 @@ public class ActionsTable extends ModelObject {
 	}
 	
 	/**
-	 * Add multiple actions.
+	 * Add multiple actions at given row.
+	 * @param list contains mapped action parameters to its values
+	 * @param insertLocation location in table to insert the actions
+	 */
+	public void insertMultipleActions(List<Map<JavaActionParameter, String>> list, int insertLocation) {
+		final List<ScriptGeneratorAction> currentListOfActions = new ArrayList<ScriptGeneratorAction>(actions);
+		for (Map<JavaActionParameter, String> map : list) {
+			var newAction = createAction(map);
+			currentListOfActions.add(insertLocation, newAction);
+			insertLocation++;
+		}
+		firePropertyChange(ACTIONS_PROPERTY, actions, actions = currentListOfActions);
+	}
+
+	/**
+	 * Add multiple actions to the end of the table.
 	 * @param list contains mapped action parameters to its values
 	 */
 	public void addMultipleActions(List<Map<JavaActionParameter, String>> list) {
-		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
-		for (Map<JavaActionParameter, String> map : list) {
-			var newAction = createAction(map);
-			newList.add(newAction);
-		}
-		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
+	    insertMultipleActions(list, actions.size());
 	}
 
 	/**

@@ -79,6 +79,7 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 			// I'm not sure we can get at it.
 			if (event.getJob().getName() == "Create Interactive Console") {
 				Consoles.getDefault().installOutputLengthLimitsOnAllConsoles();
+				Consoles.getDefault().installConsoleCountListener();
 			}
 		}
 	};

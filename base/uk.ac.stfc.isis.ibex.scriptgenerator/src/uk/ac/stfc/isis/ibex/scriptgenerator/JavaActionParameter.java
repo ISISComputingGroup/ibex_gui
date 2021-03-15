@@ -63,7 +63,6 @@ public class JavaActionParameter implements ActionParameter {
 		return copyPreviousRow;
 	}
 
-	
 	/**
 	 * Check to see if the ActionParameter's attributes are equal to provided object.
 	 * @param other The object to compare against
@@ -76,7 +75,7 @@ public class JavaActionParameter implements ActionParameter {
 		if (!(other instanceof JavaActionParameter)) {
 		    return false;	
 		}
-		
+	
 		JavaActionParameter actionParameter = (JavaActionParameter) other;
 		return Objects.equals(this.getName(), actionParameter.getName()) 
 			&& Objects.equals(this.getDefaultValue(), actionParameter.getDefaultValue())

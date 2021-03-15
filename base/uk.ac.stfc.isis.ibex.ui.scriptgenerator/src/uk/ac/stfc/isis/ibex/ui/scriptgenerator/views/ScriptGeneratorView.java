@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.core.databinding.DataBindingContext;
@@ -46,7 +47,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
@@ -109,9 +109,11 @@ public class ScriptGeneratorView {
     private Button btnMoveActionDown;
     private Button btnAddAction;
     private Button btnInsertAction;
+    private Label parametersFileText;
     private Label estimateText;
     private Button generateScriptButton;
     private Button saveExperimentalParametersButton;
+    private Button saveAsExperimentalParametersButton;
     private Button btnDuplicateAction;
 
     /**
@@ -169,6 +171,14 @@ public class ScriptGeneratorView {
     scriptGeneratorViewModel.setUpModel();
     }
 
+    /**
+     * Clean up resources being used by the view.
+     */
+    @PreDestroy
+    public void dispose() {
+        scriptGeneratorViewModel.dispose();
+    }
+    
     /**
      * Destroy all child elements of the mainParent.
      */
@@ -313,6 +323,8 @@ public class ScriptGeneratorView {
             scriptGeneratorViewModel.displayValidityErrors();
         });
 
+
+
         Map<String, String> scriptDefinitionLoadErrors = scriptGeneratorViewModel.getScriptDefinitionLoadErrors();
 
         if (!scriptDefinitionLoadErrors.isEmpty()) {
@@ -343,15 +355,39 @@ public class ScriptGeneratorView {
         btnMoveActionDown = createMoveRowButton(moveComposite, "move_down.png", "down");
         btnMoveActionDown.addListener(SWT.Selection, e -> scriptGeneratorViewModel.moveActionDown(table.selectedRows()));
 
-        // Composite for the row containing the total estimated run time
-        Composite estimateGrp = new Composite(mainParent, SWT.NONE);
-        estimateGrp.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1));
-        GridLayout estimateLayout = new GridLayout(1, true);
-        estimateLayout.marginRight = 40;
-        estimateGrp.setLayout(estimateLayout);
 
+        
+        // Composite for the row containing the parameter file location and total estimated run time
+        Composite paramFileAndEstimateGrp = new Composite(mainParent, SWT.NONE);
+        paramFileAndEstimateGrp.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1));
+        GridLayout paramFileAndEstimateLayout = new GridLayout(2, true);
+        paramFileAndEstimateLayout.marginRight = 40;
+        paramFileAndEstimateGrp.setLayout(paramFileAndEstimateLayout);
+        
+        // Label for Location of Saved Parameters File
+        parametersFileText = new Label(paramFileAndEstimateGrp, SWT.LEFT);
+        parametersFileText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        parametersFileText.setText("Current parameters file: <new file>");
+        
+        Composite utilitiesGrp = new Composite(mainParent, SWT.NONE);
+        utilitiesGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        GridLayout ugLayout = new GridLayout(2, true);
+        ugLayout.marginHeight = 10;
+        ugLayout.marginWidth = 10;
+        utilitiesGrp.setLayout(ugLayout);
+        
+        final Button copy = new Button(utilitiesGrp, SWT.NONE);
+        copy.setText("Copy selected actions");
+        copy.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        copy.addListener(SWT.Selection, e -> scriptGeneratorViewModel.copyActions(table.getSelectedTableData()));
+        
+        final Button paste = new Button(utilitiesGrp, SWT.NONE);
+        paste.setText("Paste actions");
+        paste.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        paste.addListener(SWT.Selection, e -> scriptGeneratorViewModel.pasteActions(table.getSelectionIndex()));
+        
         // Label for the total estimated run time
-        estimateText = new Label(estimateGrp, SWT.RIGHT);
+        estimateText = new Label(paramFileAndEstimateGrp, SWT.RIGHT);
         estimateText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         String currentFont = estimateText.getFont().getFontData()[0].getName();
         Font font = new Font(estimateText.getDisplay(), new FontData(currentFont, 11, SWT.BOLD));
@@ -393,10 +429,11 @@ public class ScriptGeneratorView {
         btnClearAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         btnClearAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.clearAction());
 
+
         // Composite for generate buttons
         Composite generateButtonsGrp = new Composite(mainParent, SWT.NONE);
         generateButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        GridLayout gbgLayout = new GridLayout(3, true);
+        GridLayout gbgLayout = new GridLayout(4, true);
         gbgLayout.marginHeight = 10;
         gbgLayout.marginWidth = 10;
         generateButtonsGrp.setLayout(gbgLayout);
@@ -407,12 +444,16 @@ public class ScriptGeneratorView {
         generateScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         generateScriptButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.generate());
 
-
         saveExperimentalParametersButton = new Button(generateButtonsGrp, SWT.NONE);
         saveExperimentalParametersButton.setText("Save Parameters");
         saveExperimentalParametersButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        saveExperimentalParametersButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.saveParameterValues());
+        saveExperimentalParametersButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.saveParameterValuesToCurrentFile());
 
+        saveAsExperimentalParametersButton = new Button(generateButtonsGrp, SWT.NONE);
+        saveAsExperimentalParametersButton.setText("Save Parameters As ...");
+        saveAsExperimentalParametersButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        saveAsExperimentalParametersButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.saveParameterValues());
+        
         final Button loadExperimentalParametersButton = new Button(generateButtonsGrp, SWT.NONE);
         loadExperimentalParametersButton.setText("Load Parameters");
         loadExperimentalParametersButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -511,12 +552,15 @@ public class ScriptGeneratorView {
         Button manualButton) {
     scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText);
 
-    scriptGeneratorViewModel.bindActionProperties(table, btnGetValidityErrors, generateScriptButton, saveExperimentalParametersButton);
+    scriptGeneratorViewModel.bindActionProperties(table, btnGetValidityErrors, generateScriptButton, saveExperimentalParametersButton, saveAsExperimentalParametersButton);
 
     scriptGeneratorViewModel.bindManualButton(manualButton);
 
     table.addSelectionChangedListener(event -> scriptGeneratorViewModel.setSelected(table.selectedRows()));
 
+    bindingContext.bindValue(WidgetProperties.text().observe(parametersFileText),
+    	BeanProperties.value("parametersFile").observe(scriptGeneratorViewModel));
+    
     bindingContext.bindValue(WidgetProperties.text().observe(estimateText),
         BeanProperties.value("timeEstimate").observe(scriptGeneratorViewModel));
 

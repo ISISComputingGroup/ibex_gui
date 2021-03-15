@@ -36,6 +36,7 @@ public class JsonConvertersTest {
 	private String serverStatusBusy = "{\"status\": \"INITIALISING\"}";
 	private String serverStatusNotBusy = "{\"status\": \"\"}";
 	
+	
 	private String configPVName = "TEST_CONFIG";
 	private String configInfos = "[{\"name\": \"" + configName + "\", \"description\": \"" + configDescription + "\", \"pv\": \"" + configPVName + "\"}]";
 	
@@ -241,7 +242,7 @@ public class JsonConvertersTest {
 		//Arrange
 		Converter<Configuration, String> conv = new JsonConverters().configToString();
 		Configuration testConfig = new Configuration(configName, configDescription);
-		String expected = "{\"name\":\"" + configName + "\",\"description\":\"" + configDescription + "\",\"isProtected\":false,\"iocs\":[],\"blocks\":[],\"groups\":[],\"components\":[],\"history\":[]}";
+		String expected = "{\"name\":\"" + configName + "\",\"description\":\"" + configDescription + "\",\"isProtected\":false,\"isDynamic\":false,\"configuresBlockGWAndArchiver\":false,\"iocs\":[],\"blocks\":[],\"groups\":[],\"components\":[],\"history\":[]}";
 		
 		//Act
 		String test = conv.convert(testConfig);
