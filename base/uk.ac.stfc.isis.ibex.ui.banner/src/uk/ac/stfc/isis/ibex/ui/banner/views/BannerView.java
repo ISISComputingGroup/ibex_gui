@@ -38,10 +38,13 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.BannerButton;
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.configserver.configuration.CustomBannerData;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
+import uk.ac.stfc.isis.ibex.instrument.status.ServerStatusVariables;
 import uk.ac.stfc.isis.ibex.ui.banner.models.BannerItemModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.CustomControlModel;
+import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusViewModel;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Control;
 import uk.ac.stfc.isis.ibex.ui.banner.widgets.Indicator;
+import uk.ac.stfc.isis.ibex.ui.banner.widgets.StatusIndicatorPanel;
 
 /**
  * View of the spangle banner containing various instrument status messages.
@@ -76,15 +79,25 @@ public class BannerView {
         glParent.marginWidth = 0;
         glParent.marginHeight = 0;
         parent.setLayout(glParent);
+        
+        Composite serverStatusPanel = new Composite(parent, SWT.NONE);
+        serverStatusPanel.setLayout(new GridLayout());
+        GridData gdServerStatus = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+        serverStatusPanel.setLayoutData(gdServerStatus);
+        
+        ServerStatusViewModel model = new ServerStatusViewModel(new ServerStatusVariables());
 
-        GridData gd = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-        gd.heightHint = 35;
+        StatusIndicatorPanel statusIndicator = new StatusIndicatorPanel(serverStatusPanel, SWT.NONE, model);
+        statusIndicator.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, true));
+
+        GridData gdBannerItems = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        gdBannerItems.heightHint = 35;
         bannerItemPanel = new Composite(parent, SWT.RIGHT_TO_LEFT);
         bannerItemPanel.setLayout(glBannerItemPanel = new GridLayout(1, false));
-        bannerItemPanel.setLayoutData(gd);
+        bannerItemPanel.setLayoutData(gdBannerItems);
         glBannerItemPanel.marginHeight = 0;
         glBannerItemPanel.horizontalSpacing = 15;
-
+        
         banner.observables().bannerDescription.subscribe(modelAdapter);
 
     }

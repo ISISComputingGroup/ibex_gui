@@ -71,6 +71,7 @@
       <plugin id="uk.ac.stfc.isis.ibex.experimentdetails" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.help" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.instrument" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.instrument.status" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.log" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.logger" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.managermode" autoStart="false" startLevel="0" />
