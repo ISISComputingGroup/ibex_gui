@@ -282,7 +282,16 @@ public class ScriptGeneratorView {
         reloadScriptDefinitionsButton.setText("\u27F3");
         reloadScriptDefinitionsButton.setToolTipText("Reload");
         reloadScriptDefinitionsButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
-        reloadScriptDefinitionsButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.setUpModel());
+        reloadScriptDefinitionsButton.addListener(SWT.Selection, e -> {
+        	DISPLAY.asyncExec(() ->  { 
+        		if (MessageDialog.openQuestion(
+	        		DISPLAY.getActiveShell(), "Reload Definition", 
+	        		"Actions will be cleared if there are changes to the current script definition, continue?"
+	        	)) {
+        			scriptGeneratorViewModel.setUpModel();
+        		}
+        	});
+        });
 
         // Separate help and selector
         new Label(scriptDefinitionComposite, SWT.SEPARATOR | SWT.VERTICAL);
