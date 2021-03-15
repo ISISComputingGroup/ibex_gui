@@ -257,12 +257,12 @@ public class ScriptGeneratorView {
 
         // A composite to contain the elements at the top of the script generator
         Composite topBarComposite = new Composite(mainParent, SWT.NONE);
-        topBarComposite.setLayout(new GridLayout(6, false));
+        topBarComposite.setLayout(new GridLayout(7, false));
         topBarComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
         // Composite to contain help strings from script definitions
         Composite scriptDefinitionComposite = new Composite(topBarComposite, SWT.NONE);
-        scriptDefinitionComposite.setLayout(new GridLayout(5, false));
+        scriptDefinitionComposite.setLayout(new GridLayout(6, false));
         scriptDefinitionComposite.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1));
 
         // The label for the script definition selector drop down
@@ -272,6 +272,16 @@ public class ScriptGeneratorView {
 
         // Drop-down box to select between script definitions.
         ComboViewer scriptDefinitionSelector = setUpScriptDefinitionSelector(scriptDefinitionComposite);
+        
+        // Button to reload script definitions from file
+        final var reloadScriptDefinitionsButton = new Button(scriptDefinitionComposite, SWT.NONE);
+        // Set text size so reload symbol is viewable
+        var reloadScriptDefinitionsButtonFont = reloadScriptDefinitionsButton.getFont().getFontData();
+        reloadScriptDefinitionsButtonFont[0].setHeight(16);
+        reloadScriptDefinitionsButton.setFont(new Font(DISPLAY, reloadScriptDefinitionsButtonFont[0]));
+        reloadScriptDefinitionsButton.setText("\u27F3");
+        reloadScriptDefinitionsButton.setToolTipText("Reload");
+        reloadScriptDefinitionsButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 
         // Separate help and selector
         new Label(scriptDefinitionComposite, SWT.SEPARATOR | SWT.VERTICAL);
