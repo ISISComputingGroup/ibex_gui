@@ -24,6 +24,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Optional;
 
 import org.junit.Test;
 
@@ -51,7 +52,7 @@ public class BlocksTest extends EditableConfigurationTest {
         BlockFactory blockFactory = new BlockFactory(edited);
 
         // Act
-        EditableBlock block = blockFactory.createNewBlock();
+        EditableBlock block = blockFactory.createNewBlock(Optional.empty());
 
         // Assert
         assertEquals(EditableBlock.class, block.getClass());
@@ -64,7 +65,7 @@ public class BlocksTest extends EditableConfigurationTest {
 		// Arrange
 		EditableConfiguration edited = edit(emptyConfig());
         BlockFactory blockFactory = new BlockFactory(edited);
-        EditableBlock block = blockFactory.createNewBlock();
+        EditableBlock block = blockFactory.createNewBlock(Optional.empty());
 	
 		// Act
 		edited.addNewBlock(block);
@@ -79,11 +80,11 @@ public class BlocksTest extends EditableConfigurationTest {
         // Arrange
         EditableConfiguration edited = edit(emptyConfig());
         BlockFactory blockFactory = new BlockFactory(edited);
-        EditableBlock block1 = blockFactory.createNewBlock();
+        EditableBlock block1 = blockFactory.createNewBlock(Optional.empty());
         edited.addNewBlock(block1);
 
         // Act
-        EditableBlock block2 = blockFactory.createNewBlock();
+        EditableBlock block2 = blockFactory.createNewBlock(Optional.empty());
 
         // Assert
         assertNotEquals(block1.getName(), block2.getName());
@@ -95,11 +96,11 @@ public class BlocksTest extends EditableConfigurationTest {
         // Arrange
         EditableConfiguration edited = edit(emptyConfig());
         BlockFactory blockFactory = new BlockFactory(edited);
-        EditableBlock block1 = blockFactory.createNewBlock();
+        EditableBlock block1 = blockFactory.createNewBlock(Optional.empty());
         edited.addNewBlock(block1);
 
         // Act
-        EditableBlock block2 = blockFactory.createNewBlock();
+        EditableBlock block2 = blockFactory.createNewBlock(Optional.empty());
         block2.setName(block1.getName());
 
         // Assert
