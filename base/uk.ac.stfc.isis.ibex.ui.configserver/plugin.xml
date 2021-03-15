@@ -7,5 +7,26 @@
             class="uk.ac.stfc.isis.ibex.ui.configserver.WaitForServer">
       </wait>
    </extension>
-
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.csstudio.ui.menu.popup.processvariable">
+         <command
+               commandId="uk.ac.stfc.isis.ibex.ui.configserver.commands.NewBlockHandler"
+               label="Add to Current Config"
+               style="push"
+               icon="icons/add_block.png"
+               tooltip="Add this PV as a block to the current configuration">
+         </command>
+      </menuContribution>
+   </extension>
+      <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.configserver.commands.NewBlockHandler"
+            id="uk.ac.stfc.isis.ibex.ui.configserver.commands.NewBlockHandler"
+            name="%NewBlock">
+      </command>
+   </extension>
 </plugin>

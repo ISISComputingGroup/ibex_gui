@@ -24,6 +24,7 @@ package uk.ac.stfc.isis.ibex.configserver.editing;
 
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
@@ -52,9 +53,9 @@ public class BlockFactory {
      * 
      * @return the new EditableBlock object
      */
-    public EditableBlock createNewBlock() {
+    public EditableBlock createNewBlock(Optional<String> newPV) {
         String name = blockName.getUnique(blockNames());
-        EditableBlock block = new EditableBlock(new Block(name, "", true, true));
+        EditableBlock block = new EditableBlock(new Block(name, newPV.orElse(""), true, true));
         return block;
     }
 
