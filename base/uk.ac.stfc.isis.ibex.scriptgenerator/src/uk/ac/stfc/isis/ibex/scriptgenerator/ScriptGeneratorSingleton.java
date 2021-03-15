@@ -547,7 +547,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @return An optional of the currently loaded script definition.
 	 */
 	public Optional<ScriptDefinitionWrapper> getScriptDefinition() {
-		return Optional.ofNullable(scriptDefinitionLoader.getScriptDefinition());
+		return scriptDefinitionLoader.getScriptDefinition();
 	}
 
 	/**

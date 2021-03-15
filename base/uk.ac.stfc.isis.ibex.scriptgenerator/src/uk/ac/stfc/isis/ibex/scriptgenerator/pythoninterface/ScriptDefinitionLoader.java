@@ -157,8 +157,8 @@ public class ScriptDefinitionLoader extends ModelObject {
 	/**
 	 * @return The currently loaded script definition.
 	 */
-	public ScriptDefinitionWrapper getScriptDefinition() {
-		return selectedScriptDefinition.get();
+	public Optional<ScriptDefinitionWrapper> getScriptDefinition() {
+		return selectedScriptDefinition;
 	}
 	
 	/**

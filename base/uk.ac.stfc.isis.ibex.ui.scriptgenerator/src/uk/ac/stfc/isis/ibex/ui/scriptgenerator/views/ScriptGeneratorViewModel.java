@@ -218,6 +218,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private Clipboard clipboard;
     private static String TAB = "\t";
     private static String CRLF = "\r\n";    
+    private boolean modelSetUp = false;
     
     
     /**
@@ -236,41 +237,53 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Set up the model. Allows us to attach listeners for the view first.
      */
     public void setUpModel() {
-    clipboard = new Clipboard(Display.getDefault());
-    scriptGeneratorModel.createScriptDefinitionLoader();
-    scriptGeneratorModel.setUp();
-    // Listen to whether the language support is changed
-    // notify the user if the language is not supported
-    scriptGeneratorModel.addPropertyChangeListener(LANGUAGE_SUPPORT_PROPERTY, evt -> {
-        if (Objects.equals(evt.getOldValue(), true) && Objects.equals(evt.getNewValue(), false)) {
-        displayLanguageSupportError();
-        }
-    });
-    // Listen for model threading errors and display to the user if there is one
-    // Model is responsible for logging it
-    scriptGeneratorModel.addPropertyChangeListener(THREAD_ERROR_PROPERTY, evt -> {
-        displayThreadingError();
-    });
-    scriptGeneratorModel.addPropertyChangeListener(SCRIPT_GENERATION_ERROR_PROPERTY, evt -> {
-        LOG.info("Generation error");
-        displayGenerationError();
-    });
-    // Listen for generated script refreshes
-    scriptGeneratorModel.addPropertyChangeListener(GENERATED_SCRIPT_FILENAME_PROPERTY, evt -> {
-        String scriptFilename = (String) evt.getNewValue();
-        DISPLAY.asyncExec(() -> {
-        scriptGeneratorModel.getLastGeneratedScript().ifPresentOrElse(
-            generatedScript -> {
-                (new SaveScriptGeneratorFileMessageDialog(Display.getDefault().getActiveShell(), "Script Generated", scriptFilename, 
-                    scriptGeneratorModel.getDefaultScriptDirectory(), generatedScript, scriptGeneratorModel)).open();
-            },
-            () -> {
-                MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
-            }
-            );
-        });
-    });
-
+    	Optional<ScriptDefinitionWrapper> lastDefinition = Optional.empty();
+    	Optional<List<ScriptGeneratorAction>> originalActions = Optional.empty();
+    	if (modelSetUp) {
+    		originalActions = Optional.of(scriptGeneratorModel.getActions());
+    		lastDefinition = scriptGeneratorModel.getScriptDefinition();
+    	}
+    	
+	    clipboard = new Clipboard(Display.getDefault());
+	    scriptGeneratorModel.createScriptDefinitionLoader();
+	    scriptGeneratorModel.setUp();
+	    // Listen to whether the language support is changed
+	    // notify the user if the language is not supported
+	    scriptGeneratorModel.addPropertyChangeListener(LANGUAGE_SUPPORT_PROPERTY, evt -> {
+	        if (Objects.equals(evt.getOldValue(), true) && Objects.equals(evt.getNewValue(), false)) {
+	        displayLanguageSupportError();
+	        }
+	    });
+	    // Listen for model threading errors and display to the user if there is one
+	    // Model is responsible for logging it
+	    scriptGeneratorModel.addPropertyChangeListener(THREAD_ERROR_PROPERTY, evt -> {
+	        displayThreadingError();
+	    });
+	    scriptGeneratorModel.addPropertyChangeListener(SCRIPT_GENERATION_ERROR_PROPERTY, evt -> {
+	        LOG.info("Generation error");
+	        displayGenerationError();
+	    });
+	    // Listen for generated script refreshes
+	    scriptGeneratorModel.addPropertyChangeListener(GENERATED_SCRIPT_FILENAME_PROPERTY, evt -> {
+	        String scriptFilename = (String) evt.getNewValue();
+	        DISPLAY.asyncExec(() -> {
+	        scriptGeneratorModel.getLastGeneratedScript().ifPresentOrElse(
+	            generatedScript -> {
+	                (new SaveScriptGeneratorFileMessageDialog(Display.getDefault().getActiveShell(), "Script Generated", scriptFilename, 
+	                    scriptGeneratorModel.getDefaultScriptDirectory(), generatedScript, scriptGeneratorModel)).open();
+	            },
+	            () -> {
+	                MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
+	            }
+	            );
+	        });
+	    });
+	    
+	    lastDefinition.ifPresent(definition -> scriptGeneratorModel.getScriptDefinitionLoader().setScriptDefinition(definition));
+	    originalActions.ifPresent(actions -> {
+	    	scriptGeneratorModel.addActionsToTable(actions.stream().map(action -> action.getActionParameterValueMap()).collect(Collectors.toList()), true);
+	    });
+	    modelSetUp = true;
     }
 
     /**
