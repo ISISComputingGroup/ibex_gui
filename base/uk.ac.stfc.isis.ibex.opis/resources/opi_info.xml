@@ -2645,7 +2645,7 @@
 		  <category>Cryogenics</category>
 		  <category>Temperature Controllers</category>
 		</categories>
-        <type>UNKNOWN</type>
+        <type>CRYO_LEVEL_GAUGE</type>
         <path>3hefridge.opi</path>
         <description>An overview of the 3He Refridgerator system</description>
         <macros>
