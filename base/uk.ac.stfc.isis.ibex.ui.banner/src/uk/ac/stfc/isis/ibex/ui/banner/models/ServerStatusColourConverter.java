@@ -25,11 +25,11 @@ public class ServerStatusColourConverter extends Converter<ServerStatus, Color> 
     @Override
     public Color convert(ServerStatus status) {
     	switch (status) {
-    		case RUNNING:
+    		case UP:
     			return GREEN;
     		case PARTIAL:
     			return ORANGE;
-    		case NOT_RUNNING:
+    		case DOWN:
     			return RED;
     		case UNKNOWN:
     		default:
