@@ -43,7 +43,6 @@ import uk.ac.stfc.isis.ibex.configserver.Configurations;
 
 /**
  * Class to add a recently used configurations menu item.
- *
  */
 public class RecentItems extends ContributionItem {
     

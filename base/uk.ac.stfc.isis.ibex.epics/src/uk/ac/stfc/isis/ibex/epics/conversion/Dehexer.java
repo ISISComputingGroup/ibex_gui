@@ -22,6 +22,10 @@ package uk.ac.stfc.isis.ibex.epics.conversion;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
+/**
+ * Converter class that converts an array of hexed characters into an array of dehexed bytes.
+ *
+ */
 public class Dehexer extends Converter<char[], byte[]> {
 	
 	@Override

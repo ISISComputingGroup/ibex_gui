@@ -23,7 +23,14 @@ package uk.ac.stfc.isis.ibex.experimentdetails.sql;
  * Build up a where clause to search the SQL database.
  */
 public abstract class SqlWhereClause {
+    /**
+     * The left hand side of the where clause.
+     */
 	protected final String lhs;
+	
+	/**
+	 * The right hand side of the where clause.
+	 */
 	protected final String rhs;
 	
 	/**
