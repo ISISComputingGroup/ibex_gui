@@ -20,7 +20,7 @@ public interface ScriptDefinitionsWrapper {
 	Map<String, String> getScriptDefinitionLoadErrors();
 	
 	/**
-	 * true if the repository containing the script definitions is dirty and cannot be pulled
+	 * true if the repository containing the script definitions is dirty and cannot be pulled.
 	 * 
 	 * @return true if git reports the repository is dirty
 	 */
@@ -80,32 +80,27 @@ public interface ScriptDefinitionsWrapper {
 	boolean isPythonReady();
 
 	/**
-	 * Returns a list of git errors
-	 * 
-	 * @return
+	 * @return Returns a list of git errors
 	 */
 	List<String> getGitErrors();
 
 	/**
-	 * True if the git remote is available
-	 * @return
+	 * @return True if the git remote is available
 	 */
 	boolean remoteAvailable();
 
 	/**
-	 * True if the git repository has uncommitted changes
-	 * @return
+	 * @return True if the git repository has uncommitted changes
 	 */
 	boolean isDirty();
 
 	/**
-	 * Merges origin/master into script definitions repository
+	 * Merges origin/master into script definitions repository.
 	 */
 	void mergeOrigin();
 
 	/**
-	 * Returns the path to the script definitions repository
-	 * @return
+	 * @return Returns the path to the script definitions repository
 	 */
 	String getRepoPath();
 	

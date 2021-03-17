@@ -51,6 +51,8 @@ public class BlockFactory {
     /**
      * Create a new block with a unique name.
      * 
+     * @param newPV the name of the PV for the block
+     * 
      * @return the new EditableBlock object
      */
     public EditableBlock createNewBlock(Optional<String> newPV) {

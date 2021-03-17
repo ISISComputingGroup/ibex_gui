@@ -524,7 +524,7 @@ public class PythonInterface extends ModelObject {
 	}
 
 	/**
-	 * Gets the path to the script definitions repository
+	 * Gets the path to the script definitions repository.
 	 * @return The path to the script definitions repository.
 	 */
 	public String getRepoPath() {
