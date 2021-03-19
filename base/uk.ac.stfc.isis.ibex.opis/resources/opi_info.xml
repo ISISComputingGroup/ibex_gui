@@ -2638,5 +2638,24 @@
         </macros>
       </value>
     </entry>
+	<entry>
+      <key>3He Refrigerator</key>
+      <value>
+        <categories>
+		  <category>Cryogenics</category>
+		  <category>Temperature Controllers</category>
+		</categories>
+        <type>DILUTION_FRIDGE</type>
+        <path>3hefridge.opi</path>
+        <description>An overview of the 3He Refrigerator system</description>
+        <macros>
+		  <macro>
+            <name>HLX503</name>
+            <description>The HLX503 PV prefix (e.g. HLX503_01)</description>
+            <default>HLX503_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
   </opis>
 </descriptions>
