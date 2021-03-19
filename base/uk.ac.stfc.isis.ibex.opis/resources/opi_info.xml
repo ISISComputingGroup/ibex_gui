@@ -2639,15 +2639,15 @@
       </value>
     </entry>
 	<entry>
-      <key>3He Refridgerator</key>
+      <key>3He Refrigerator</key>
       <value>
         <categories>
 		  <category>Cryogenics</category>
 		  <category>Temperature Controllers</category>
 		</categories>
-        <type>CRYO_LEVEL_GAUGE</type>
+        <type>DILUTION_FRIDGE</type>
         <path>3hefridge.opi</path>
-        <description>An overview of the 3He Refridgerator system</description>
+        <description>An overview of the 3He Refrigerator system</description>
         <macros>
 		  <macro>
             <name>HLX503</name>
