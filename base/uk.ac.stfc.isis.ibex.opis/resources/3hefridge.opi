@@ -262,7 +262,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>587</width>
       <wuid>36fc6a9b:177ff16b62a:-7fc8</wuid>
@@ -2377,7 +2377,7 @@ $(pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>587</width>
       <wuid>36fc6a9b:177ff16b62a:-7fc7</wuid>
@@ -3145,7 +3145,7 @@ $(pv_value)</tooltip>
           <name>Text Update_1</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PV_ROOT):TEMP:SP:RBV</pv_name>
+          <pv_name>$(PV_ROOT):RECONDENSE:TEMP:SP:RBV</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -3238,7 +3238,7 @@ $(pv_value)</tooltip>
           <name>Text Update_1</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PV_ROOT):STABILITY</pv_name>
+          <pv_name>$(PV_ROOT):PART</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -3295,7 +3295,7 @@ $(pv_value)</tooltip>
           <name>Text Input_1</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PV_ROOT):TEMP:SP</pv_name>
+          <pv_name>$(PV_ROOT):RECONDENSE:TEMP:SP</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -3439,7 +3439,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
           </on_color>
           <on_label>ON</on_label>
-          <pv_name></pv_name>
+          <pv_name>$(PV_ROOT):TIMED_OUT</pv_name>
           <pv_value />
           <rules />
           <scale_options>
@@ -3538,7 +3538,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
           </on_color>
           <on_label>ON</on_label>
-          <pv_name></pv_name>
+          <pv_name>$(PV_ROOT):SKIPPED</pv_name>
           <pv_value />
           <rules />
           <scale_options>
