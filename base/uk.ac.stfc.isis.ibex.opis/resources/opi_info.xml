@@ -2620,6 +2620,27 @@
         </macros>
       </value>
     </entry>
+    <entry>
+      <key>HIFI Main Cryomagnet control</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>hifi_main_cryomag.opi</path>
+        <description>Controls for the HIFI Main Cryomag</description>
+        <macros>
+          <macro>
+            <name>CRYOMAG</name>
+            <description>The Cryomag PV prefix (e.g. CRYO)</description>
+            <default>CRYO</default>
+          </macro>
+          <macro>
+            <name>SHOW_SIMPLIFIED_VIEW</name>
+            <description>Whether to show the simplified view of the main cryomag controls (e.g. NO for full controls)</description>
+            <default>YES</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
 	<entry>
       <key>3He Refrigerator</key>
       <value>
