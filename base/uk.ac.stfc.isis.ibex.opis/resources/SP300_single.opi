@@ -18,7 +18,6 @@
   <height>490</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <PV_ROOT_EURO>$(P)$(EURO):A0$(EURO_NUM)</PV_ROOT_EURO>
   </macros>
   <name>$(NAME)</name>
   <rules />
