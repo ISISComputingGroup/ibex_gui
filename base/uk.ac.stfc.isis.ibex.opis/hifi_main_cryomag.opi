@@ -89,7 +89,7 @@
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
-    <height>559</height>
+    <height>553</height>
     <horizontal_tabs>true</horizontal_tabs>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -131,7 +131,7 @@
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Tabbed Container</widget_type>
-    <width>793</width>
+    <width>607</width>
     <wuid>a21544:1785f472377:-7d4e</wuid>
     <x>6</x>
     <y>42</y>
@@ -153,7 +153,7 @@
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
-      <height>530</height>
+      <height>524</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -171,7 +171,7 @@
       <transparent>true</transparent>
       <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>791</width>
+      <width>605</width>
       <wuid>a21544:1785f472377:-7d4d</wuid>
       <x>1</x>
       <y>1</y>
@@ -989,7 +989,7 @@ $(pv_value)</tooltip>
         <border_color>
           <color name="ISIS_Border" red="0" green="0" blue="0" />
         </border_color>
-        <border_style>0</border_style>
+        <border_style>1</border_style>
         <border_width>1</border_width>
         <enabled>true</enabled>
         <font>
@@ -1023,11 +1023,11 @@ $(pv_value)</tooltip>
         <vertical_alignment>1</vertical_alignment>
         <visible>true</visible>
         <widget_type>Text Update</widget_type>
-        <width>211</width>
+        <width>175</width>
         <wrap_words>false</wrap_words>
         <wuid>a21544:1785f472377:-7ce8</wuid>
-        <x>102</x>
-        <y>198</y>
+        <x>6</x>
+        <y>258</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
         <actions hook="false" hook_all="false" />
@@ -1067,8 +1067,8 @@ $(pv_value)</tooltip>
         <widget_type>Action Button</widget_type>
         <width>90</width>
         <wuid>a21544:1785f472377:-7ca0</wuid>
-        <x>330</x>
-        <y>6</y>
+        <x>30</x>
+        <y>357</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
         <actions hook="false" hook_all="false" />
@@ -1108,8 +1108,8 @@ $(pv_value)</tooltip>
         <widget_type>Action Button</widget_type>
         <width>90</width>
         <wuid>a21544:1785f472377:-7c94</wuid>
-        <x>330</x>
-        <y>50</y>
+        <x>30</x>
+        <y>401</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
         <actions hook="false" hook_all="false" />
@@ -1149,8 +1149,8 @@ $(pv_value)</tooltip>
         <widget_type>Action Button</widget_type>
         <width>90</width>
         <wuid>a21544:1785f472377:-7c88</wuid>
-        <x>330</x>
-        <y>94</y>
+        <x>30</x>
+        <y>445</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -1190,7 +1190,7 @@ $(pv_value)</tooltip>
           <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
         </on_color>
         <on_label>ON</on_label>
-        <pv_name></pv_name>
+        <pv_name>$(PV_ROOT):TRIP</pv_name>
         <pv_value />
         <rules />
         <scale_options>
@@ -1207,8 +1207,8 @@ $(pv_value)</tooltip>
         <widget_type>LED</widget_type>
         <width>25</width>
         <wuid>a21544:1785f472377:-7c7c</wuid>
-        <x>395</x>
-        <y>126</y>
+        <x>95</x>
+        <y>477</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -1248,8 +1248,58 @@ $(pv_value)</tooltip>
         <width>85</width>
         <wrap_words>true</wrap_words>
         <wuid>a21544:1785f472377:-7c70</wuid>
-        <x>306</x>
-        <y>129</y>
+        <x>6</x>
+        <y>480</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>3</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <group_name></group_name>
+        <height>451</height>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <name>Linking Container</name>
+        <opi_file>resources/hifi_main_cryomag_advanced.opi</opi_file>
+        <resize_behaviour>3</resize_behaviour>
+        <rules>
+          <rule name="Hide" prop_id="visible" out_exp="false">
+            <exp bool_exp="$(SHOW_SIMPLIFIED_VIEW)==YES">
+              <value>true</value>
+            </exp>
+            <exp bool_exp="$(SHOW_SIMPLIFIED_VIEW)==NO">
+              <value>false</value>
+            </exp>
+            <pv trig="true"></pv>
+          </rule>
+        </rules>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <tooltip></tooltip>
+        <visible>true</visible>
+        <widget_type>Linking Container</widget_type>
+        <width>355</width>
+        <wuid>-42e62b4f:17863c76ae3:-7e88</wuid>
+        <x>216</x>
+        <y>6</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -1270,7 +1320,7 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
-      <height>530</height>
+      <height>524</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -1288,7 +1338,7 @@ $(pv_value)</tooltip>
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>791</width>
+      <width>605</width>
       <wuid>a21544:1785f472377:-7d4c</wuid>
       <x>1</x>
       <y>1</y>
