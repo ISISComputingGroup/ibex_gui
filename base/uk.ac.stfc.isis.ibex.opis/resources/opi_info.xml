@@ -1253,7 +1253,7 @@
       </value>
     </entry>
     <entry>
-      <key>Live View</key>
+      <key>Detector Live View</key>
       <value>
         <type>DAE</type>
         <path>live_view/live_view.opi</path>
