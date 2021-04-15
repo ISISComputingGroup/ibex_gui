@@ -2625,7 +2625,7 @@
       <value>
         <categories>
 		  <category>Cryogenics</category>
-		  <category>Temperature Controllers</category>
+		  <category>Temperature controllers</category>
 		</categories>
         <type>DILUTION_FRIDGE</type>
         <path>3hefridge.opi</path>
