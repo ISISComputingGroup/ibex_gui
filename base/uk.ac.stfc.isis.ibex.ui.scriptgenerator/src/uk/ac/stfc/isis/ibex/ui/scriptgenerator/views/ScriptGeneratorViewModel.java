@@ -788,7 +788,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     protected void addColumns(ActionsViewTable viewTable) {  
         // Add line numbers
-        TableViewerColumn lineNumberColumn = viewTable.createColumn("Line", 0, 
+        TableViewerColumn lineNumberColumn = viewTable.createColumn("Action", 0, 
                 new CellLabelProvider() {
                     @Override
                     public void update(ViewerCell cell) {
