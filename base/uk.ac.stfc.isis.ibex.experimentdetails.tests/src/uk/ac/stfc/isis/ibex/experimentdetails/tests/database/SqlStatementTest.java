@@ -187,20 +187,6 @@ public class SqlStatementTest {
 	}
 	
 	@Test
-	public void group_by_statement() {
-		//Arrange
-		SqlStatement sql = new SqlStatement();
-		ExpDataField userId = ExpDataFieldsCreator.getField(ExpDataTablesEnum.USER_TABLE, ExpDataFieldsEnum.USER_ID);
-		sql.setGroupBy(new ArrayList<ExpDataField>(Arrays.asList(userId)));
-		
-		//Act
-		String result = sql.getSelectStatement();
-		
-		//Assert
-		assertEquals("SELECT  FROM  WHERE  GROUP BY user.userID", result);
-	}
-	
-	@Test
 	public void full_sql_statement() {
 		//Arrange
 		SqlStatement sql = new SqlStatement();
