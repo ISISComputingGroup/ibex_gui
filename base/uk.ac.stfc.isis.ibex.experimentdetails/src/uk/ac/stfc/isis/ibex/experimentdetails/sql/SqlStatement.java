@@ -109,13 +109,15 @@ public class SqlStatement {
     	sqlStatement += selectList() + " FROM " + selectTableList()
 			+ " WHERE " + whereList();
     	
-    	if (groupBy != null) {
-    		sqlStatement += " GROUP BY " + groupByList();
-    	}
+//    	if (groupBy != null) {
+//			sqlStatement += " GROUP BY " + groupByList();
+//    	}
     	
     	if (orderBy != null) {
     		sqlStatement += " ORDER BY " + orderBy;
     	}
+    	
+    	System.out.println(sqlStatement);
     	
 		return sqlStatement;
     }
