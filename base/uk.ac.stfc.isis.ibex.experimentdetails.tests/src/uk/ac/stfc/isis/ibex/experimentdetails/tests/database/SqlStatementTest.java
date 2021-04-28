@@ -228,5 +228,20 @@ public class SqlStatementTest {
 		assertEquals("SELECT  FROM  WHERE  ORDER BY user.userID", result);
 	}
 	
+	@Test
+	public void order_by_multiple_statement() {
+		//Arrange
+		SqlStatement sql = new SqlStatement();
+		ExpDataField userId = ExpDataFieldsCreator.getField(ExpDataTablesEnum.USER_TABLE, ExpDataFieldsEnum.USER_ID);
+		ExpDataField roleName = ExpDataFieldsCreator.getField(ExpDataTablesEnum.ROLE_TABLE, ExpDataFieldsEnum.NAME);
+		sql.setOrderBy(new ArrayList<ExpDataField>(Arrays.asList(userId, roleName)));
+		
+		//Act
+		String result = sql.getSelectStatement();
+		
+		//Assert
+		assertEquals("SELECT  FROM  WHERE  ORDER BY user.userID, role.name", result);
+	}
+	
 	
 }
