@@ -214,5 +214,19 @@ public class SqlStatementTest {
                 result);
 	}
 	
+	@Test
+	public void order_by_statement() {
+		//Arrange
+		SqlStatement sql = new SqlStatement();
+		ExpDataField userId = ExpDataFieldsCreator.getField(ExpDataTablesEnum.USER_TABLE, ExpDataFieldsEnum.USER_ID);
+		sql.setOrderBy(new ArrayList<ExpDataField>(Arrays.asList(userId)));
+		
+		//Act
+		String result = sql.getSelectStatement();
+		
+		//Assert
+		assertEquals("SELECT  FROM  WHERE  ORDER BY user.userID", result);
+	}
+	
 	
 }
