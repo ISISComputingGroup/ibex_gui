@@ -41,7 +41,7 @@ public class SqlStatement {
     private List<SqlWhereClause> whereFields;
     
     private List<ExpDataField> groupBy;
-    private ExpDataField orderBy;
+    private List<ExpDataField> orderBy;
 
     /**
      * Create a new SQL statement.
@@ -95,7 +95,7 @@ public class SqlStatement {
     /**
      * @param orderBy The field to Order By
      */
-    public void setOrderBy(ExpDataField orderBy) {
+    public void setOrderBy(List<ExpDataField> orderBy) {
       this.orderBy = orderBy;
     }
 
@@ -109,12 +109,12 @@ public class SqlStatement {
     	sqlStatement += selectList() + " FROM " + selectTableList()
 			+ " WHERE " + whereList();
     	
-//    	if (groupBy != null) {
-//			sqlStatement += " GROUP BY " + groupByList();
-//    	}
+    	if (groupBy != null) {
+			sqlStatement += " GROUP BY " + groupByList();
+    	}
     	
     	if (orderBy != null) {
-    		sqlStatement += " ORDER BY " + orderBy;
+    		sqlStatement += " ORDER BY " + orderByList();
     	}
     	
     	System.out.println(sqlStatement);
@@ -167,6 +167,10 @@ public class SqlStatement {
     private String whereList() {
 		
 		return joinString(this.whereFields, " AND ");
+    }
+    
+    private String orderByList() {
+    	return joinString(this.orderBy, ", ");
     }
     
     private String groupByList() {

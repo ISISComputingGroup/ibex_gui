@@ -76,6 +76,7 @@ public class ExperimentIDQuery {
 		List<SqlWhereClause> whereClauses = new ArrayList<>();
 		List<ExpDataTablesEnum> fromTables = new ArrayList<>();
 		List<ExpDataField> groupBy = new ArrayList<>();
+		List<ExpDataField> orderBy = new ArrayList<>();
 		
 		ExpDataField userUserID = ExpDataFieldsCreator.getField(ExpDataTablesEnum.USER_TABLE, ExpDataFieldsEnum.USER_ID);
 		
@@ -106,6 +107,9 @@ public class ExperimentIDQuery {
         groupBy.add(experimentStartDate);
 		groupBy.add(userName);
 		
+		orderBy.add(experimentteamsExpID);
+		orderBy.add(roleRoleID);
+		
 		if (searchRole != Role.BLANK) {
 			whereClauses.add(new SqlWhereEqualClause(roleName, searchRole));
 		}
@@ -117,8 +121,8 @@ public class ExperimentIDQuery {
 		sqlStatement.setSelectFields(SQL_SELECT_FIELDS);
 		sqlStatement.setFromTables(fromTables);
 		sqlStatement.setWhereClause(whereClauses);
-		sqlStatement.setGroupBy(groupBy);
-		sqlStatement.setOrderBy(experimentteamsExpID);
+//		sqlStatement.setGroupBy(groupBy);
+		sqlStatement.setOrderBy(orderBy);
 		
 		return sqlStatement;
     }
