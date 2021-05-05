@@ -2639,5 +2639,19 @@
         </macros>
       </value>
     </entry>
+    <entry>
+      <key>NGEM</key>
+      <value>
+        <type>MONITOR</type>
+        <path>ngem.opi</path>
+        <description>NGEM detector</description>
+        <macros>
+          <macro>
+            <name>NGEM</name>
+            <description>The NGEM PV prefix (e.g. NGEM_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
   </opis>
 </descriptions>
