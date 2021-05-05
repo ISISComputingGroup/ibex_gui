@@ -18,10 +18,15 @@
 
 package uk.ac.stfc.isis.ibex.epics.observing;
 
-import java.util.Collection;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
+
+import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * This class is the abstract skeletal implementation of the implemented
@@ -32,39 +37,82 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closable;
  */
 public abstract class ClosableObservable<T> implements Observable<T>, Closable {
 
-    private final Collection<Observer<T>> observers = new CopyOnWriteArrayList<>();
-    private T value;
+	/**
+	 *  Use a set so that duplicate observers cannot be added
+	 */
+    private final Set<Observer<T>> observers = new CopyOnWriteArraySet<>();
+
+    /**
+     *  Optional wrapper around the value of this class.
+     */
+    private Optional<T> value = Optional.empty();
+
+    /**
+     *  Whether the observer is connected to it's underlying data source.
+     */
     private boolean isConnected;
-    private Exception currentError;
-    
+
+    /**
+     * Optional exception that occurred while connecting to the data source.
+     */
+    private Optional<Exception> currentError = Optional.empty();
+
+    private static final Logger LOG = IsisLog.getLogger(ClosableObservable.class);
+
+    /**
+     * Adds an observer to this observable.
+     */
     @Override
-    public Subscription addObserver(Observer<T> observer) {
-        if (!observers.contains(observer)) {
-        	observers.add(observer);
-        }
+    public Subscription subscribe(Observer<T> observer) {
+        observers.add(observer);
+
         // When a new observer is added, update it with the existing observable data
-        observer.update(getValue(), currentError(), isConnected());
-        return new Unsubscriber<Observer<T>>(observers, observer);
+        logErrorsAndContinue(() -> observer.update(getValue(), currentError(), isConnected()));
+        return new Unsubscriber<>(this, observer);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+	public void unsubscribe(Observer<T> observer) {
+        observers.remove(observer);
+    }
+
+    /**
+     * Returns the current value of this observable.
+     */
     @Override
     public T getValue() {
-        return value;
+        return value.orElse(null);
     }
 
+    /**
+     * Returns whether this observable is connected.
+     */
     @Override
     public boolean isConnected() {
         return isConnected;
     }
 
+    /**
+     * Returns the current error status of this observable.
+     */
     @Override
     public Exception currentError() {
-        return currentError;
+        return currentError.orElse(null);
     }
 
+    /**
+     * Closes this observable. This removes any observers which are currently
+     * registered to this observable, such that they will no longer receive updates.
+     *
+     * As a side effect, this will make the observers eligible for garbage collection
+     * (unless there is a reference to them elsewhere in the code).
+     */
     @Override
     public void close() {
-        // Do nothing by default
+        observers.clear();
     }
 
     /**
@@ -73,15 +121,14 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
      * @param value the new value
      */
     protected void setValue(T value) {
-        currentError = null;
-        if (value != null) {
-        	this.value = value;
-        	for (Observer<T> observer : observers) {
-        		observer.onValue(value);
-        	}
-        }
-    }
+    	this.value = Optional.ofNullable(value);
+    	this.value.ifPresent(val -> currentError = Optional.empty());
 
+    	for (Observer<T> observer : observers) {
+    		logErrorsAndContinue(() -> this.value.ifPresent(observer::onValue));
+    	}
+    }
+    
     /**
      * Sets the current error experienced by this observable. Error is blanked
      * if a new value is set
@@ -89,10 +136,10 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
      * @param e the new error
      */
     protected void setError(Exception e) {
-        currentError = e;
+        currentError = Optional.ofNullable(e);
 
         for (Observer<T> observer : observers) {
-            observer.onError(e);
+            logErrorsAndContinue(() -> observer.onError(e));
         }
     }
 
@@ -105,8 +152,20 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
         this.isConnected = isConnected;
 
         for (Observer<T> observer : observers) {
-            observer.onConnectionStatus(isConnected);
+            logErrorsAndContinue(() -> observer.onConnectionStatus(isConnected));
         }
+    }
+
+    /**
+     * Runs a runnable, and if it throws errors then log the error and carry on.
+     * @param runnable the runnable to run.
+     */
+    private static void logErrorsAndContinue(Runnable runnable) {
+    	try {
+    		runnable.run();
+    	} catch (RuntimeException e) {
+    		LoggerUtils.logErrorWithStackTrace(LOG, "Exception while updating observer: " + e.getMessage(), e);
+    	}
     }
 
 }

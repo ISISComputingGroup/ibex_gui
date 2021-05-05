@@ -22,9 +22,9 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.jface.databinding.viewers.ViewersObservables;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.databinding.viewers.typed.ViewerProperties;
 import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -50,6 +50,9 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
  * Dialog panel for editing the settings of an IOC.
  */
 public class EditPanel extends Composite {
+	
+	// Don't show the remote PV prefix to the user until feature is ready 
+	private static final boolean ALLOW_REMOTE_PV_PREFIX_CHANGE = false;
 
     private static final int NUM_COLS = 6;
     private static final int SPACING = 10;
@@ -62,6 +65,8 @@ public class EditPanel extends Composite {
     private MacroPanel macros;
     private IocPVsEditorPanel pvVals;
     private IocPVSetsEditorPanel pvSets;
+	private Label remotePvPrefixLbl;
+	private Text remotePvPrefixTxt;
 
     /**
      * Constructor for the Edit IOC panel.
@@ -101,6 +106,11 @@ public class EditPanel extends Composite {
         // General IOC Settings
         Label lblSimLevel = new Label(cmpIocDetails, SWT.NONE);
         lblSimLevel.setText("Sim. Level");
+        lblSimLevel.setToolTipText(
+        		"By default, the simulation level file is set to NONE, meaning that the IOC will not run in simulation mode.\n"
+        		+ "Under normal circumstances, you should not change the default setting.\n"
+        		+ "Simulation mode is used for running the IOC without the actual physical device."
+        );
         lblSimLevel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
 
         simLevel = new ComboViewer(cmpIocDetails, SWT.READ_ONLY);
@@ -113,10 +123,33 @@ public class EditPanel extends Composite {
         autoStart = new Button(cmpIocDetails, SWT.CHECK);
         autoStart.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
         autoStart.setText("Auto-Start");
+        autoStart.setToolTipText(
+        		"If set, the IOC will be started/restarted whenever the configuration is changed.\n"
+        		+ "If not set then if the IOC is not running it will remained stopped after config change,\n"
+        		+ "and if it is running it will remain running throughout the config change.\n"
+        		+ "\n"
+        		+ "Warning: if not set and the IOC is running, any changes you make (e.g. a macro change)\n"
+        		+ "will not be set on the IOC until you restart it manually."
+        );
 
         autoRestart = new Button(cmpIocDetails, SWT.CHECK);
         autoRestart.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
         autoRestart.setText("Auto-Restart");
+        autoRestart.setToolTipText(
+        		"If set, the IOC will be automatically restarted if it is terminated unexpectedly.\n"
+        		+ "If the IOC is stopped from the client then it will not be restarted."
+        );
+
+        
+        if (ALLOW_REMOTE_PV_PREFIX_CHANGE) {
+	        remotePvPrefixLbl = new Label(cmpIocDetails, SWT.NONE);
+	        remotePvPrefixLbl.setText("Remote PV prefix: ");
+	        remotePvPrefixLbl.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+	        
+	        remotePvPrefixTxt = new Text(cmpIocDetails, SWT.BORDER);
+	        remotePvPrefixTxt.setEditable(true);
+	        remotePvPrefixTxt.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, NUM_COLS - 1, 1));
+        }
 
         TabFolder iocSettings = new TabFolder(this, SWT.NONE);
         iocSettings.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -164,18 +197,21 @@ public class EditPanel extends Composite {
         DataBindingContext bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.text(SWT.NONE).observe(selectedIoc),
                 BeanProperties.value("name").observe(editableIoc));
-        bindingContext.bindValue(WidgetProperties.selection().observe(autoStart),
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(autoStart),
                 BeanProperties.value("autostart").observe(editableIoc));
-        bindingContext.bindValue(WidgetProperties.selection().observe(autoRestart),
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(autoRestart),
                 BeanProperties.value("restart").observe(editableIoc));
-        bindingContext.bindValue(ViewersObservables.observeSingleSelection(simLevel),
+        bindingContext.bindValue(ViewerProperties.singleSelection().observe(simLevel),
                 BeanProperties.value("simLevel").observe(editableIoc));
         bindingContext.bindValue(WidgetProperties.enabled().observe(autoStart),
                 BeanProperties.value("editable").observe(editableIoc));
         bindingContext.bindValue(WidgetProperties.enabled().observe(autoRestart),
                 BeanProperties.value("editable").observe(editableIoc));
         bindingContext.bindValue(WidgetProperties.enabled().observe(simLevel.getCombo()),
-                BeanProperties.value("editable").observe(editableIoc));  
+                BeanProperties.value("editable").observe(editableIoc));
+        if (ALLOW_REMOTE_PV_PREFIX_CHANGE) {
+        	bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(remotePvPrefixTxt), 
+        		BeanProperties.value("remotePvPrefix").observe(editableIoc));
+        }
     }
-
 }

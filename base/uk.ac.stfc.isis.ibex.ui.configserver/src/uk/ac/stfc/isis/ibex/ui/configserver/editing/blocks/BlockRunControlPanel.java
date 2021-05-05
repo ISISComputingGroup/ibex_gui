@@ -20,8 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -32,12 +32,23 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * A panel in the edit block dialog for the block's run-control settings.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class BlockRunControlPanel extends Composite {
     private Text lowLimit;
     private Text highLimit;
     private Button btnEnabled;
+	private Button btnSuspendIfInvalid;
 
+    /**
+     * Standard constructor.
+     * 
+     * @param parent The parent composite.
+     * @param style The SWT style.
+     * @param viewModel The viewModel for the block run-control.
+     */
     public BlockRunControlPanel(Composite parent, int style, BlockRunControlViewModel viewModel) {
         super(parent, style);
 
@@ -45,7 +56,7 @@ public class BlockRunControlPanel extends Composite {
 
         Group grpRuncontrolSettings = new Group(this, SWT.NONE);
         grpRuncontrolSettings.setText("Run-Control Settings");
-        grpRuncontrolSettings.setLayout(new GridLayout(6, false));
+        grpRuncontrolSettings.setLayout(new GridLayout(4, false));
 
         Label lblLowLimit = new Label(grpRuncontrolSettings, SWT.NONE);
         lblLowLimit.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -65,17 +76,25 @@ public class BlockRunControlPanel extends Composite {
         btnEnabled.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
         btnEnabled.setText("Enabled");
         
+        btnSuspendIfInvalid = new Button(grpRuncontrolSettings, SWT.CHECK);
+        btnSuspendIfInvalid.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+        btnSuspendIfInvalid.setText("Suspend data collection if invalid");
+        
         setModel(viewModel);
     }
 	
 	private void setModel(BlockRunControlViewModel viewModel) {
 		DataBindingContext bindingContext = new DataBindingContext();
 		
-        bindingContext.bindValue(WidgetProperties.selection().observe(btnEnabled),
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(btnEnabled),
                 BeanProperties.value(BlockRunControlViewModel.ENABLED_BINDING_NAME).observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(btnSuspendIfInvalid),
+                BeanProperties.value(BlockRunControlViewModel.SUSPEND_ON_INVALID_BINDING_NAME).observe(viewModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(lowLimit),
                 BeanProperties.value(BlockRunControlViewModel.ENABLED_BINDING_NAME).observe(viewModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(highLimit),
+                BeanProperties.value(BlockRunControlViewModel.ENABLED_BINDING_NAME).observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(btnSuspendIfInvalid),
                 BeanProperties.value(BlockRunControlViewModel.ENABLED_BINDING_NAME).observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(lowLimit),
                 BeanProperties.value(BlockRunControlViewModel.LOW_LIMIT_BINDING_NAME).observe(viewModel));

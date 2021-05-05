@@ -85,13 +85,13 @@ public class WritingSetCommandTest {
         when(mockDestination.subscribe(any(ConfigurableWriter.class))).thenReturn(mockSubscription);
         WritingSetCommand<String> command = WritingSetCommand.forDestination(mockDestination);
 
-        verify(mockSubscription, never()).removeObserver();
+        verify(mockSubscription, never()).cancelSubscription();
 
         // Act
         command.close();
 
         // Assert
-        verify(mockSubscription, times(1)).removeObserver();
+        verify(mockSubscription, times(1)).cancelSubscription();
     }
 
     @Test

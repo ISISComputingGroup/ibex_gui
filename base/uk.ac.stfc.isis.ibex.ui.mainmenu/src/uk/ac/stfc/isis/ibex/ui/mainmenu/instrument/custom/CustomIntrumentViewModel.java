@@ -32,28 +32,50 @@ public class CustomIntrumentViewModel extends ErrorMessageProvider {
     private String pvPrefix = "";
     private String instrumentName;
 
+    /**
+     * Standard constructor.
+     * 
+     * @param instrumentName the name of the instrument
+     */
     public CustomIntrumentViewModel(String instrumentName) {
         this.instrumentName = instrumentName;
     }
 
+    /**
+     * @return the name of the custom instrument
+     */
     public String getInstrumentName() {
         return instrumentName;
     }
 
+    /**
+     * @return the PV prefix of the instrument
+     */
     public String getPvPrefix() {
         return pvPrefix;
     }
 
+    /**
+     * Sets the PV prefix of the custom instrument.
+     * 
+     * @param pvPrefix the PV prefix (e.g. TE:NDXXXXX:)
+     */
     public void setPvPrefix(String pvPrefix) {
     	pvPrefix = addColon(pvPrefix);
         validate(pvPrefix);
         firePropertyChange("pvPrefix", this.pvPrefix, this.pvPrefix = pvPrefix);
     }
 
+    /**
+     * @return the InstrumentInfo of the selected instrument
+     */
     public InstrumentInfo getSelectedInstrument() {
         return new CustomInstrumentInfo(instrumentName, pvPrefix);
     }
 
+    /**
+     * Check that the PV prefix is valid and set an error if it is invalid.
+     */
     public void validate() {
         validate(pvPrefix);
     }

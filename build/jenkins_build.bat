@@ -4,21 +4,28 @@ setlocal
 set BASEDIR=%~dp0
 
 set M2=%MAVEN%bin
-set PYTHON=C:\Python27
-set PYTHON_HOME=C:\Python27
-set LOCINSTALLDIR=c:\Installers\CSStudio_ISIS\
-set GENIEPYTHONDIR=c:\Installers\genie_python
+set PYTHON3=C:\Instrument\Apps\Python3\python.exe
+set PYTHON_HOME=C:\Instrument\Apps\Python3
 
-REM We bundle our own JRE with the client, this is where it is
-set JRELOCATION=p:\Kits$\CompGroup\ICP\ibex_client_jre
+set PATH=%M2%;%JAVA_HOME%;%PATH%
 
-REM Find latest Java 7 version
-for /F %%f in ('dir "C:\Program Files\Java\jdk1.*" /b') do set JAVA_HOME=C:\Program Files\Java\%%f
+if "%IS_E4%" == "YES" (
+    set BUILT_CLIENT_DIR=base\uk.ac.stfc.isis.ibex.e4.client.product\target\products\ibex.product\win32\win32\x86_64
+) else (
+    set BUILT_CLIENT_DIR=base\uk.ac.stfc.isis.ibex.client.product\target\products\ibex.product\win32\win32\x86_64
+)
 
-set PATH=%M2%;%JAVA_HOME%;%PYTHON%;%PATH%
+set TARGET_DIR=Client_E4
+set MSINAME=ibex_client
 
-call build.bat
+call build.bat "LOG" %BUILT_CLIENT_DIR% %TARGET_DIR%
 if %errorlevel% neq 0 exit /b %errorlevel%
+
+call build_msi.bat %BASEDIR%.. %TARGET_DIR% %MSINAME%
+if %errorlevel% neq 0 exit /b %errorlevel%
+
+REM set EXIT=YES will change error code to 1 if not set previously so store the current
+set build_error_level=%errorlevel%
 
 @echo on
 
@@ -26,22 +33,13 @@ REM Whether to deploy
 set EXIT=YES
 if "%DEPLOY%" == "YES" set EXIT=NO
 if "%RELEASE%" == "YES" set EXIT=NO
-if "%IS_E4_DEPLOY%" == "YES" set EXIT=NO
-if "%EXIT%" == "YES" exit
+if "%EXIT%" == "YES" exit /b %build_error_level%
 
 REM Copy zip to installs area
 REM Delete older versions?
 REM the password for isis\IBEXbuilder is contained in the BUILDERPW system environment variable on the build server
 net use p: /d /yes
 net use p: \\isis\inst$
-
-python.exe purge_archive_client.py
-
-if "%IS_E4_DEPLOY%" == "YES" (
-    set TARGET_DIR=base\uk.ac.stfc.isis.ibex.e4.client.product\target\products\ibex.product\win32\win32\x86_64
-) else (
-    set TARGET_DIR=base\uk.ac.stfc.isis.ibex.client.product\target\products\ibex.product\win32\win32\x86_64
-)
 
 REM Don't group these. Bat expands whole if at once, not sequentially
 if "%RELEASE%" == "YES" (
@@ -54,7 +52,7 @@ if "%RELEASE%" == "YES" set INSTALLBASEDIR=%RELEASE_DIR%\Client
 if "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%
 
 if not "%RELEASE%" == "YES" (
-    if "%IS_E4_DEPLOY%" == "YES" (
+    if "%IS_E4%" == "YES" (
         set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client_E4
     ) else (
         set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
@@ -81,7 +79,7 @@ if "%RELEASE%" == "YES" (
     )
 )
 
-robocopy %CD%\..\%TARGET_DIR% %INSTALLDIR%\Client /MIR /R:1 /NFL /NDL /NP
+robocopy %CD%\..\%TARGET_DIR% %INSTALLDIR%\Client /MT /MIR /R:1 /NFL /NDL /NP /NS /NC /LOG:NUL
 if %errorlevel% geq 4 (
     if not "%INSTALLDIR%" == "" (
         @echo Removing invalid client directory %INSTALLDIR%\Client
@@ -91,18 +89,18 @@ if %errorlevel% geq 4 (
     exit /b 1
 )
 
-REM Copy the JRE across 
-robocopy %JRELOCATION% %INSTALLDIR%\Client\jre /MIR /R:1 /NFL /NDL /NP
-if %errorlevel% geq 4 (
-    @echo Failed to copy JRE across
-    exit /b 1
-)
-
 if not "%RELEASE%"=="YES" (
     if exist "%INSTALLLINKDIR%" (
         rmdir "%INSTALLLINKDIR%"
     )
     mklink /J "%INSTALLLINKDIR%" "%INSTALLDIR%"
+)
+
+REM copy MSI
+copy /Y %MSINAME%.msi %INSTALLDIR%
+if %errorlevel% neq 0 (
+    @echo MSI copy failed
+    exit /b %errorlevel%
 )
 
 REM Copy the install script across
@@ -121,6 +119,3 @@ if %errorlevel% neq 0 (
 if not "%RELEASE%" == "YES" (
     @echo %BUILD_NUMBER%>%INSTALLDIR%\..\LATEST_BUILD.txt 
 )
-
-REM build MSI kit
-REM call build_msi.bat %INSTALLDIR%

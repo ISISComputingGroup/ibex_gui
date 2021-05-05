@@ -2,7 +2,10 @@ from check_OPI_format_utils.common import WIDGET_XPATH
 
 # If a word contains any of the following, the whole word will be ignored
 IGNORED_WORDS = ["$", "&", "#", '"', "'", "(", ")", "OPI", "PSU", "HW", "Hz", "LED", "A:", "B:", "C:", "D:", "CCD100",
-                 "ISIS", "JJ", "X-Ray", "LTC", "IP", "PID"]
+                 "ISIS", "JJ", "X-Ray", "LTC", "IP", "PID", "WPI", "OBIS", "EEPROM", "TE", "RS-485", "ID", "CP2800",
+                 "DC", "MPS", "IGBT", "DCCT", "HF", "DAC1", "DH-2000", "UPS", "DSP", "GEM", "PnP", "TDK", "TSet", "IEG",
+                 "IVC", "HF", "IOC", "LK-G", "HPLC", "TM-3001P", "OUT", "CDRH"]
+
 
 CONTAINER_NAME_XPATH = "//{groupingContainer}/name".format(groupingContainer=WIDGET_XPATH.format("groupingContainer"))
 

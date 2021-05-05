@@ -18,6 +18,10 @@
 
 package uk.ac.stfc.isis.ibex.nicos.messages;
 
+import java.util.Map;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+
 /**
  * A Banner Message that has been received from NICOS. This message should be
  * the first sent and details various things about the instance of NICOS that we
@@ -30,7 +34,7 @@ package uk.ac.stfc.isis.ibex.nicos.messages;
 public class ReceiveBannerMessage {
     private String custom_path;
     private String nicos_root;
-    private String rsakey;
+    private Map<String, String> rsakey;
     private String daemon_version;
     private String pw_hashing;
     private String serializer;
@@ -38,20 +42,32 @@ public class ReceiveBannerMessage {
     private String custom_version;
 
     private static final String VALID_SERIALISER = "json";
-    private static final Integer VALID_VERSION = 15;
+    private static final Integer VALID_VERSION = 21;
 
     /**
      * @return True if the server is using the correct serializer.
      */
     public boolean serializerValid() {
-        return serializer.equals(VALID_SERIALISER);
+        var valid = serializer.equals(VALID_SERIALISER);
+        
+        if (!valid) {
+        	IsisLog.getLogger(getClass()).warn(String.format("NICOS connected to server with unexpected serialiser. Server=%s, expected=%s", serializer, VALID_SERIALISER));
+        }
+        
+        return valid;
     }
     
     /**
      * @return True if the server is using the correct protocol.
      */
     public boolean protocolValid() {
-        return protocol_version == VALID_VERSION;
+        var valid = protocol_version == VALID_VERSION;
+        
+        if (!valid) {
+        	IsisLog.getLogger(getClass()).warn(String.format("NICOS connected to server with unexpected NICOS protocol version. Server version=%d, expected=%d", protocol_version, VALID_VERSION));
+        }
+        
+        return valid;
     }
 
 }

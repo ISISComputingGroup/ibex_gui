@@ -13,6 +13,7 @@ public abstract class AbstractRunControlViewModel extends ErrorMessageProvider i
 	private Double lowLimit;
     private Double highLimit;
     private boolean enabled;
+    private boolean suspendIfInvalid;
     
     private final RunControlValidator runControlValidator = new RunControlValidator();
     
@@ -32,6 +33,11 @@ public abstract class AbstractRunControlViewModel extends ErrorMessageProvider i
      * Field that the GUI should bind to to update enablement.
      */
 	public static final String ENABLED_BINDING_NAME = "runControlEnabled";
+	
+	/**
+     * Field that the GUI should bind to to update suspend on invalid.
+     */
+	public static final String SUSPEND_ON_INVALID_BINDING_NAME = "suspendIfInvalid";
     
     /**
      * Resets the current values to those from the source.
@@ -155,6 +161,7 @@ public abstract class AbstractRunControlViewModel extends ErrorMessageProvider i
 			setRunControlHighLimit(source.getRunControlHighLimit());
 			setRunControlLowLimit(source.getRunControlLowLimit());
 			setRunControlEnabled(source.getRunControlEnabled());
+			setSuspendIfInvalid(source.getSuspendIfInvalid());
 		}
 		updateErrors();
 	}
@@ -166,4 +173,21 @@ public abstract class AbstractRunControlViewModel extends ErrorMessageProvider i
 	protected void onValidate(boolean validationPassed) {
 		// Default to no implementation - subclasses can override.
 	};
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean getSuspendIfInvalid() {
+		return suspendIfInvalid;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setSuspendIfInvalid(Boolean suspendIfInvalid) {
+		firePropertyChange(SUSPEND_ON_INVALID_BINDING_NAME, this.suspendIfInvalid, this.suspendIfInvalid = suspendIfInvalid);
+		updateErrors();
+	}
 }

@@ -23,8 +23,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * An enum representing the different time channel calculation methods.
+ */
 public enum CalculationMethod {
+    /**
+     * Specify parameters in the GUI.
+     */
     SPECIFY_PARAMETERS("Specify Parameters"),
+    /**
+     * Get parameters from a TCB file.
+     */
     USE_TCB_FILE("Use TCB File");
 	
 	private String text;
@@ -37,10 +46,18 @@ public enum CalculationMethod {
 		}
 	}
 	
+	/**
+	 * Standard enum constructor.
+	 * 
+	 * @param text the text of the enum value.
+	 */
 	CalculationMethod(String text) {
 		this.text = text;
 	}
 	 
+	/**
+	 * @return a list of all enum values as strings.
+	 */
 	public static List<String> allToString() {
 		return Collections.unmodifiableList(ALLTOSTRING);
 	}

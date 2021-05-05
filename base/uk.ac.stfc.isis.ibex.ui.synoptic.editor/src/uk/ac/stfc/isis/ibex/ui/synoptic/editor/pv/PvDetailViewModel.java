@@ -6,18 +6,18 @@
  * This program is distributed in the hope that it will be useful.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+ * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+ * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
  * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
  *
  * You should have received a copy of the Eclipse Public License v1.0
  * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * https://www.eclipse.org/org/documents/epl-v10.php or
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
 /**
- * 
+ *
  */
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.pv;
 
@@ -26,6 +26,8 @@ import java.beans.PropertyChangeListener;
 
 import org.eclipse.swt.widgets.Shell;
 
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
@@ -53,7 +55,7 @@ public class PvDetailViewModel extends ModelObject {
 
     /**
      * The constructor for the view model.
-     * 
+     *
      * @param pvList
      *            The view model for the PV List as a whole
      */
@@ -75,7 +77,7 @@ public class PvDetailViewModel extends ModelObject {
     /**
      * Update the displayed PV from the backend. Directly fire the property
      * changes here as we don't want to update the model at all.
-     * 
+     *
      * @param pv
      *            The PV to update the front end with
      */
@@ -162,7 +164,7 @@ public class PvDetailViewModel extends ModelObject {
 
     /**
      * Change the settings for the selected PV.
-     * 
+     *
      * @param name
      *            the display name
      * @param address
@@ -189,7 +191,7 @@ public class PvDetailViewModel extends ModelObject {
 
     /**
      * Open a dialog for picking a PV out of the known list.
-     * 
+     *
      * @param shell Shell for displaying the dialog
      */
     public void openPvDialog(Shell shell) {
@@ -203,7 +205,7 @@ public class PvDetailViewModel extends ModelObject {
 
     /**
      * Open a dialog for picking a PV out of the block list.
-     * 
+     *
      * @param shell Shell for displaying the dialog
      */
     public void openBlockDialog(Shell shell) {
@@ -211,7 +213,7 @@ public class PvDetailViewModel extends ModelObject {
         try {
             selectPV.safeExecute(shell);
         } catch (Exception e) {
-            e.printStackTrace();
+            LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
         }
 
         if (selectPV.isConfirmed()) {

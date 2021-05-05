@@ -18,6 +18,8 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 /**
  * A class to interact with "local" channels from CS-Studio. This class provides utility methods to read,
  * write and persist these channels.
+ *
+ * @param <T>
  */
 public class PersistedLocalChannel<T> {
 	
@@ -61,7 +63,7 @@ public class PersistedLocalChannel<T> {
     		LoggerUtils.logErrorWithStackTrace(LOG, String.format("Couldn't set initial value to '%s' for local PV '%s'", initialValue, address), e);
     	}
     	
-    	observable.addObserver(new BaseObserver<T>() {
+    	observable.subscribe(new BaseObserver<T>() {
     		@Override
     		public void onValue(T value) {
     			if (value != null) {

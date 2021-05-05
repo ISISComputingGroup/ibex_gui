@@ -1,9 +1,13 @@
 Manifest-Version: 1.0
+Eclipse-BundleShape: dir
 Bundle-ManifestVersion: 2
 Bundle-Name: Preferences
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.preferences;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: uk.ac.stfc.isis.ibex.preferences
 Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0",
+ org.apache.commons.lang
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.preferences

@@ -30,6 +30,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Layout;
 
+/**
+ * Composite for storing beamline components.
+ */
 public class BeamlineCompositeContainer extends BeamlineComposite {
 
 	private final List<BeamlineComposite> targets = new ArrayList<>();

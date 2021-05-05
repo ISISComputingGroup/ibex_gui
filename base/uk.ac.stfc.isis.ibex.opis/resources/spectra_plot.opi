@@ -40,7 +40,7 @@
     <axis_0_axis_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </axis_0_axis_color>
-    <axis_0_axis_title>Time of flight (μs)</axis_0_axis_title>
+    <axis_0_axis_title>Time of flight (us)</axis_0_axis_title>
     <axis_0_dash_grid_line>false</axis_0_dash_grid_line>
     <axis_0_grid_color>
       <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
@@ -63,7 +63,7 @@
     <axis_1_axis_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </axis_1_axis_color>
-    <axis_1_axis_title>Counts / μs</axis_1_axis_title>
+    <axis_1_axis_title>counts/us</axis_1_axis_title>
     <axis_1_dash_grid_line>false</axis_1_dash_grid_line>
     <axis_1_grid_color>
       <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
@@ -115,6 +115,8 @@
         <pv trig="true">$(SPECTRUM_PV$(NUMBER))</pv>
         <pv trig="true">$(PERIOD_PV$(NUMBER))</pv>
         <pv trig="true">$(MODE_PV$(NUMBER))</pv>
+        <pv trig="true">$(P)DAE:SPEC:1:1:X.EGU</pv>
+        <pv trig="true">$(P)DAE:SPEC:1:1:Y.EGU</pv>
       </path>
     </scripts>
     <show_legend>false</show_legend>
@@ -303,10 +305,7 @@ $(trace_0_y_pv_value)</tooltip>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
     <height>32</height>
-    <items>
-      <s>counts/us</s>
-      <s>counts</s>
-    </items>
+    <items />
     <items_from_pv>false</items_from_pv>
     <name>Combo</name>
     <pv_name>$(MODE_PV$(NUMBER))</pv_name>
@@ -317,7 +316,12 @@ $(trace_0_y_pv_value)</tooltip>
       <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts>
+      <path pathString="spectra_plots_mode.py" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">$(P)DAE:SPEC:1:1:Y.EGU</pv>
+        <pv trig="false">$(MODE_PV$(NUMBER))</pv>
+      </path>
+    </scripts>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <visible>true</visible>
@@ -436,5 +440,45 @@ $(pv_value)</tooltip>
     <wuid>1a25a425:169007dc914:-7f62</wuid>
     <x>277</x>
     <y>-6</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <actions hook="false" hook_all="false" />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <height>1</height>
+    <image></image>
+    <name>Dummy</name>
+    <push_action_index>0</push_action_index>
+    <pv_name></pv_name>
+    <pv_value />
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <style>1</style>
+    <text></text>
+    <toggle_button>false</toggle_button>
+    <tooltip></tooltip>
+    <visible>true</visible>
+    <widget_type>Action Button</widget_type>
+    <width>1</width>
+    <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
+    <x>198</x>
+    <y>-13</y>
   </widget>
 </display>

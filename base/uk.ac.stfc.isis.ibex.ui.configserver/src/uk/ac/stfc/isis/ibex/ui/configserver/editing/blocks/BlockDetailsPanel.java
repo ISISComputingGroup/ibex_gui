@@ -20,9 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.SWTObservables;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -35,6 +34,9 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * A panel in the edit block dialog displaying details about the block's name and PV.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class BlockDetailsPanel extends Composite {
 	
@@ -44,6 +46,13 @@ public class BlockDetailsPanel extends Composite {
 	private final Button local;
 	private final Button btnPickPV;
 
+	/**
+     * Standard constructor.
+     * 
+     * @param parent The parent composite.
+     * @param style The SWT style.
+     * @param viewModel The viewModel for the block details.
+     */
 	public BlockDetailsPanel(Composite parent, int style, final BlockDetailsViewModel viewModel) {
 		super(parent, style);
 		
@@ -105,13 +114,13 @@ public class BlockDetailsPanel extends Composite {
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnPickPV),
                 BeanProperties.value("enabled").observe(viewModel));
 
-        bindingContext.bindValue(SWTObservables.observeText(name, SWT.Modify),
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(name),
                 BeanProperties.value("name").observe(viewModel)); 
-        bindingContext.bindValue(SWTObservables.observeText(pvAddress, SWT.Modify),
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(pvAddress),
                 BeanProperties.value("pvAddress").observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.selection().observe(local),
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(local),
                 BeanProperties.value("local").observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.selection().observe(visible),
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(visible),
                 BeanProperties.value("visible").observe(viewModel));
         
 	}

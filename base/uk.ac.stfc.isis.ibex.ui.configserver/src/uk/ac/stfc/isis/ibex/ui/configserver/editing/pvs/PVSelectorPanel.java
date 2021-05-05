@@ -19,12 +19,15 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.Timer;
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -32,13 +35,12 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -149,7 +151,17 @@ public class PVSelectorPanel extends Composite {
 			}
 		});
 		
-		pvAddress.addModifyListener(e -> blockPVTable.setSearch(pvAddress.getText()));
+		int pvSearchDelay = 1000; //milliseconds
+		ActionListener pvSearchTaskPerformer = new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				Display.getDefault().asyncExec(() -> blockPVTable.setSearch(pvAddress.getText()));
+			}
+		};
+		
+		Timer pvSearch = new Timer(pvSearchDelay, pvSearchTaskPerformer);
+		pvSearch.setRepeats(false); // Set timer to go off only once
+		
+		pvAddress.addModifyListener(e -> pvSearch.restart());
 	}
 	
     /**
@@ -162,6 +174,10 @@ public class PVSelectorPanel extends Composite {
 		blockPVTable.setRows(config.pvs());
 		
 		filterFactory = new PVFilterFactory(config.getAddedIocs());
+		
+        // Get the filter values to use on loading the dialog
+        pvSource.setSelection(new StructuredSelection(SourceFilters.lastValue()));
+        interestLevel.setSelection(new StructuredSelection(InterestFilters.lastValue()));
 		
 		//respond to changes in combo box
 		pvSource.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -183,10 +199,6 @@ public class PVSelectorPanel extends Composite {
 				changeInterestFilter(interestFilter);
 			}
 		});
-		
-        // Get the filter values to use on loading the dialog
-        pvSource.setSelection(new StructuredSelection(SourceFilters.lastValue()));
-        interestLevel.setSelection(new StructuredSelection(InterestFilters.lastValue()));
 		
 		//Set up the binding here
 		bindingContext = new DataBindingContext();		

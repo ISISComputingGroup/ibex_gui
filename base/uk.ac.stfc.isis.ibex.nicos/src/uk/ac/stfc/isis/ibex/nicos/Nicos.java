@@ -6,13 +6,13 @@
  * This program is distributed in the hope that it will be useful.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+ * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+ * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
  * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
  *
  * You should have received a copy of the Eclipse Public License v1.0
  * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * https://www.eclipse.org/org/documents/epl-v10.php or
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
@@ -34,7 +34,7 @@ import uk.ac.stfc.isis.ibex.nicos.comms.ZMQWrapper;
  * and the GUI.
  */
 public class Nicos extends Plugin {
-	
+
 	private static BundleContext context;
 	private static Nicos instance;
 
@@ -48,7 +48,7 @@ public class Nicos extends Plugin {
 	public static Nicos getDefault() {
 		return instance;
 	}
-	
+
     /**
      * This class creates and manages the connection to NICOS.
      */
@@ -56,7 +56,7 @@ public class Nicos extends Plugin {
         instance = this;
         ZMQSession session = new ZMQSession(ZMQWrapper.getInstance());
         RepeatingJob connectionJob = new RepeatingJob("NICOSConnection", CONNECT_POLL_TIME) {
-            
+
             @Override
             protected IStatus doTask(IProgressMonitor monitor) {
                 model.connect(Instrument.getInstance().currentInstrument());
@@ -72,7 +72,7 @@ public class Nicos extends Plugin {
     public NicosModel getModel() {
         return model;
 	}
-	
+
     /**
      * @return The context for the plugin.
      */
@@ -82,23 +82,23 @@ public class Nicos extends Plugin {
 
     /**
      * (non-Javadoc).
-     * 
+     *
      * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.
      * BundleContext)
      */
     @Override
-    public void start(BundleContext bundleContext) throws Exception {
+    public void start(BundleContext bundleContext) {
         Nicos.context = bundleContext;
     }
 
     /**
      * (non-Javadoc).
-     * 
+     *
      * @see
      * org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
      */
     @Override
-    public void stop(BundleContext bundleContext) throws Exception {
+    public void stop(BundleContext bundleContext) {
         Nicos.context = null;
     }
 }

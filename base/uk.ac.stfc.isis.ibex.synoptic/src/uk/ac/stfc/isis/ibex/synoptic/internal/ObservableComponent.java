@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2019 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.synoptic.internal;
 
 import java.util.List;
 
+import uk.ac.stfc.isis.ibex.configserver.AlarmState;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
@@ -42,6 +43,11 @@ public class ObservableComponent extends BaseComponent {
 	private final Variables variables;
 	private Target target;
 
+	/**
+	 * Initialise the Observable Component.
+	 * @param componentDescription the component description
+	 * @param variables the component Variables
+	 */
 	public ObservableComponent(ComponentDescription componentDescription, Variables variables) {
 		super(componentDescription);
 		this.variables = variables;
@@ -89,16 +95,17 @@ public class ObservableComponent extends BaseComponent {
 	}
 
 	private ComponentProperty getProperty(PV pv) {
-        ForwardingObservable<String> reader = variables.defaultReaderRemote(pv.address());
+        ForwardingObservable<String> valueReader = variables.defaultReaderRemote(pv.address());
+        ForwardingObservable<AlarmState> alarmReader = variables.defaultReaderRemoteAlarm(pv.address());
 		switch (pv.recordType().io()) {
 			case WRITE:
                 Writable<String> destination = variables.defaultWritableRemote(pv.address());
                 ForwardingObservable<String> readerWithoutUnits = variables
                         .defaultReaderRemoteWithoutUnits(pv.address());
-				return new WritableComponentProperty(pv.displayName(), readerWithoutUnits, destination);
+				return new WritableComponentProperty(pv.displayName(), readerWithoutUnits, alarmReader, destination);
 			case READ:
 			default:
-				return new ReadableComponentProperty(pv.displayName(), reader);
+				return new ReadableComponentProperty(pv.displayName(), valueReader, alarmReader);
 		}
 	}
 }

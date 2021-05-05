@@ -45,6 +45,11 @@ public class TargetBuilder {
 		target = getTarget(component);
 	}
 	
+	/**
+	 * Gets the target.
+	 *
+	 * @return the target
+	 */
 	public Target target() {
 		return target;
 	}

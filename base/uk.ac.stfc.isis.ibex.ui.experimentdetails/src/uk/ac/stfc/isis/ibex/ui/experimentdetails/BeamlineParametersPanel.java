@@ -33,13 +33,13 @@ import org.eclipse.swt.widgets.Display;
 public class BeamlineParametersPanel {
 
     private ParametersTable beamParameters;
-    private final ViewModel viewModel;
+    private final ExperimentDetailsViewModel viewModel;
 
     /**
      * Instantiates a new beamline parameters panel.
      */
     public BeamlineParametersPanel() {
-    	viewModel = ViewModel.getInstance();
+    	viewModel = ExperimentDetailsViewModel.getInstance();
     }
     
     /**

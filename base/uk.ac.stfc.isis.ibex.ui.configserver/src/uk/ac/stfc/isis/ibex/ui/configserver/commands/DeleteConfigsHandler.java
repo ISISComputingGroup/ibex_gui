@@ -19,12 +19,19 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
+import java.io.IOException;
 import java.util.Collection;
+import java.util.Map;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
+import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
+import uk.ac.stfc.isis.ibex.managermode.ManagerModePvNotConnectedException;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MultipleConfigsSelectionDialog;
 
 /**
@@ -46,13 +53,49 @@ public class DeleteConfigsHandler extends DisablingConfigHandler<Collection<Stri
 	 */
 	@Override
 	public void safeExecute(Shell shell) {
+	    Map<String, Boolean> configNamesWithFlags = SERVER.configNamesWithFlags();
         MultipleConfigsSelectionDialog dialog = new MultipleConfigsSelectionDialog(shell, "Delete Configurations",
-                SERVER.configsInfo().getValue(), false, false);
+                SERVER.configsInfo().getValue(), configNamesWithFlags, false, false);
 		if (dialog.open() == Window.OK) {
-		    configService.uncheckedWrite((dialog.selectedConfigs()));
-		    for (String item : dialog.selectedConfigs()) {
-		        Configurations.getInstance().removeNameFromRecentlyLoadedConfigList(item);
-		    }
+		    try {		        
+		        configService.write(dialog.selectedConfigs());
+	            boolean noError = true;
+		    	if (!ManagerModeModel.getInstance().isInManagerMode()) {
+		    		for (String item: dialog.selectedConfigs()) {
+		    			if (configNamesWithFlags.get(item)) {
+		    				noError = false;
+		    				displayErrorDialog(shell);
+		    				break;
+		    			}
+		    		}
+		    	}
+				// Delete selected configs from recently loaded config lists if in Manager mode 
+				if (noError) {	
+					for (String item : dialog.selectedConfigs()) {
+						Configurations.getInstance().removeNameFromRecentlyLoadedConfigList(item);
+					}
+				}
+					
+		    } catch (ManagerModePvNotConnectedException | IOException e) {
+				MessageDialog error = new MessageDialog(shell, "Error", null, e.getMessage(),
+						MessageDialog.ERROR, new String[] {"OK"}, 0);
+				error.open();
+			}
+		    
 		}
+	}
+	
+	/**
+	 * opens and error dialog if there is an error
+	 * @param shell the shell
+	 */
+	private void displayErrorDialog(Shell shell) {
+	    MessageBox errorMessage = new MessageBox(shell, SWT.ICON_ERROR);
+	    errorMessage = new MessageBox(shell, SWT.ICON_ERROR);
+        errorMessage.setMessage("Cannot delete the selected configurations, make sure protected "
+                + "configurations are not selected or try again in Manager mode to delete it");
+        errorMessage.setText("ERROR");
+        errorMessage.open();
+	    
 	}
 }

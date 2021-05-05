@@ -134,10 +134,9 @@ public class DeviceDescriptionWrapper {
      * @return the property value for the specified key
      */
     public String getMacroDescription(String key) {
-        if (opi != null && opi.getKeys().contains(key)) {
-            return opi.getMacroDescription(key);
+        if (opi != null) {
+        	return opi.getMacroDescription(key);
         }
-
         return "";
     }
 
@@ -164,7 +163,7 @@ public class DeviceDescriptionWrapper {
             for (MacroInfo m : opi.getMacros()) {
                 String name = m.getName();
                 // Set to blank
-                properties.add(new PropertyDescription(name, ""));
+                properties.add(new PropertyDescription(name, m.getDefault()));
                 for (PropertyDescription p : device.getProperties()) {
                     if (name.equals(p.getKey())) {
                         // Set to value

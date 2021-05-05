@@ -26,5 +26,5 @@ public interface Subscription {
     /**
      * Removes the observer.
      */
-	void removeObserver();
+	void cancelSubscription();
 }

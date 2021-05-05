@@ -21,11 +21,11 @@ public class ResetLayoutButton extends Button {
      *            Composite
      * @param perspectivesProvider
      *            PerspectivesProvider
+     * @param model
+     *            ResetLayoutButtonViewModel
      */
-    public ResetLayoutButton(Composite parent, PerspectivesProvider perspectivesProvider) {
-        super(parent, RESET_PERSPECTIVE_URI, "Sets the layout of the current perspective back to its default",
-                new ResetLayoutButtonViewModel());
-        model.setText("Reset Layout");
+    public ResetLayoutButton(Composite parent, PerspectivesProvider perspectivesProvider, ResetLayoutButtonViewModel model) {
+        super(parent, RESET_PERSPECTIVE_URI, "Reset Layout: Sets the layout of the current perspective back to its default", model);
         resetAdapter = new PerspectiveResetAdapter(perspectivesProvider);
     }
 

@@ -25,8 +25,16 @@ import uk.ac.stfc.isis.ibex.experimentdetails.Role;
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
 import uk.ac.stfc.isis.ibex.ui.widgets.EnumEditingSupport;
 
+/**
+ * Editing support for roles.
+ */
 public class RoleEditingSupport extends EnumEditingSupport<UserDetails, Role> {
 
+	/**
+	 * Constructor.
+	 *
+	 * @param viewer the column viewer
+	 */
 	public RoleEditingSupport(ColumnViewer viewer) {
 		super(viewer, UserDetails.class, Role.class);
 	}

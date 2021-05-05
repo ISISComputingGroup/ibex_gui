@@ -20,8 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.dae.experimentsetup;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.dialogs.MessageDialog;
 
 import java.beans.PropertyChangeEvent;
@@ -44,7 +44,7 @@ import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.ui.Utils;
+import uk.ac.stfc.isis.ibex.ui.UIUtils;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.periods.PeriodsPanel;
@@ -138,7 +138,7 @@ public class ExperimentSetup {
 		
 		Composite timeChannelsComposite = new Composite(tabFolder, SWT.NONE);
 		tbtmTimeChannels.setControl(timeChannelsComposite);
-		timeChannelsComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
+		timeChannelsComposite.setLayout(new FillLayout(SWT.HORIZONTAL | SWT.VERTICAL));
 		timeChannels = new TimeChannelsPanel(timeChannelsComposite, SWT.NONE, panelViewModel);
 		
 		CTabItem tbtmDataAcquisition = new CTabItem(tabFolder, SWT.NONE);
@@ -146,7 +146,7 @@ public class ExperimentSetup {
 		
 		Composite dataAcquisitionComposite = new Composite(tabFolder, SWT.NONE);
 		tbtmDataAcquisition.setControl(dataAcquisitionComposite);
-		dataAcquisitionComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
+		dataAcquisitionComposite.setLayout(new FillLayout(SWT.HORIZONTAL | SWT.VERTICAL));
 		dataAcquisition = new DataAcquisitionPanel(dataAcquisitionComposite, SWT.NONE, panelViewModel);
 		
 		CTabItem tbtmPeriods = new CTabItem(tabFolder, SWT.NONE);
@@ -154,7 +154,7 @@ public class ExperimentSetup {
 		
 		Composite periodsComposite = new Composite(tabFolder, SWT.NONE);
 		tbtmPeriods.setControl(periodsComposite);
-		periodsComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
+		periodsComposite.setLayout(new FillLayout(SWT.HORIZONTAL | SWT.VERTICAL));
 		periods = new PeriodsPanel(periodsComposite, SWT.NONE, panelViewModel);
 		
 		tabFolder.setSelection(0);
@@ -228,9 +228,9 @@ public class ExperimentSetup {
      * @param enabled whether the contents should be enabled or not
      */
     public void setChildrenEnabled(boolean enabled) {
-        Utils.recursiveSetEnabled(timeChannels, enabled);
-        Utils.recursiveSetEnabled(dataAcquisition, enabled);
-        Utils.recursiveSetEnabled(periods, enabled);
+        UIUtils.recursiveSetEnabled(timeChannels, enabled);
+        UIUtils.recursiveSetEnabled(dataAcquisition, enabled);
+        UIUtils.recursiveSetEnabled(periods, enabled);
     }
 
     /**

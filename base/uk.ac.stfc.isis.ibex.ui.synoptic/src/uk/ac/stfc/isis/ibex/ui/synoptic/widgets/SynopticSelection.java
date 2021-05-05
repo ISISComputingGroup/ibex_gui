@@ -19,8 +19,8 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.widgets;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -88,7 +88,7 @@ public class SynopticSelection extends Composite {
 		
         bindingContext.bindList(WidgetProperties.items().observe(synopticCombo),
                 BeanProperties.list(SynopticSelectionViewModel.SYNOPTIC_LIST).observe(model));
-        bindingContext.bindValue(WidgetProperties.selection().observe(synopticCombo),
+        bindingContext.bindValue(WidgetProperties.comboSelection().observe(synopticCombo),
                 BeanProperties.value(SynopticSelectionViewModel.SELECTED).observe(model));
         bindingContext.bindValue(WidgetProperties.enabled().observe(synopticCombo),
                 BeanProperties.value(SynopticSelectionViewModel.ENABLED).observe(model));

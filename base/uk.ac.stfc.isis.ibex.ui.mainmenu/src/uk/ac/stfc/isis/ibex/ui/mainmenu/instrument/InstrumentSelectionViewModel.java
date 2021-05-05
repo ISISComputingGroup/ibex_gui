@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.mainmenu.instrument;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 import uk.ac.stfc.isis.ibex.validators.InstrumentNameValidator;
@@ -36,24 +37,44 @@ public class InstrumentSelectionViewModel extends ErrorMessageProvider {
     private Collection<InstrumentInfo> instruments;
     private String selectedName = "";
 
+    /**
+     * @param instruments a Collection containing the InstrumentInfo.
+     */
     public InstrumentSelectionViewModel(Collection<InstrumentInfo> instruments) {
         checkPreconditions(instruments);
         this.instruments = instruments;
     }
 
+    /**
+     * @return the name of the currently selected instrument.
+     */
     public String getSelectedName() {
         return selectedName;
     }
 
+    /**
+     * Validates and sets the name of the selected instrument (Used for testing).
+     * 
+     * @param name the instrument name to set.
+     */
     public void setSelectedName(String name) {
         validate(name);
         firePropertyChange("selectedName", this.selectedName, this.selectedName = name);
     }
-
-    public Collection<InstrumentInfo> getInstruments() {
-        return instruments;
+    
+    /**
+     * Returns a list of Instruments that is allowed to be seen.
+     * 
+     * @return List of allowed instruments.
+     */
+    public Collection<InstrumentInfo> getInstrumentAllowlist() {
+    	return Instrument.getInstrumentAllowlist(instruments);
     }
+    
 
+    /**
+     * @return the InstrumentInfo for the selected instrument.
+     */
     public InstrumentInfo getSelectedInstrument() {
         for (InstrumentInfo instrument : instruments) {
             if (nameMatches(getSelectedName(), instrument.name())) {
@@ -64,6 +85,9 @@ public class InstrumentSelectionViewModel extends ErrorMessageProvider {
         return null;
     }
 
+    /**
+     * @return whether or not the currently selected instrument exists in the list of instruments.
+     */
     public boolean selectedInstrumentExists() {
         if (getSelectedName().isEmpty()) {
             return false;
@@ -78,6 +102,9 @@ public class InstrumentSelectionViewModel extends ErrorMessageProvider {
         return false;
     }
 
+    /**
+     * Validate the instrument name against the requirements and set an error.
+     */
     public void validate() {
         validate(selectedName);
     }
@@ -111,4 +138,5 @@ public class InstrumentSelectionViewModel extends ErrorMessageProvider {
             throw new IllegalArgumentException("Input instruments cannot be null");
         }
     }
+
 }

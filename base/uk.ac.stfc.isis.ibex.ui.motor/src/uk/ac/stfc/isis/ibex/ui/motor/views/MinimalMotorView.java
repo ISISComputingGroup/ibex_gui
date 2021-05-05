@@ -19,38 +19,44 @@
 
 package uk.ac.stfc.isis.ibex.ui.motor.views;
 
+import java.util.Optional;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+
+import com.google.common.base.Objects;
+import com.google.common.base.Strings;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
+import uk.ac.stfc.isis.ibex.motor.Motor;
 
 /**
  * The viewer for an individual motor.
  */
-@SuppressWarnings("checkstyle:magicnumber")
 public class MinimalMotorView extends Composite {
 	
-    private MinimalMotorViewModel minimalMotorViewModel;
+	private Optional<Composite> standardView = Optional.empty();
+	private Optional<Composite> advancedView = Optional.empty();
 
+	private MinimalMotorViewModel minimalMotorViewModel;
+	
+	private final StackLayout stackLayout;
+	
 	private DataBindingContext bindingContext = new DataBindingContext();
 
-	private MinimalMotionIndicator indicator;
-		
-	private Label motorName;
-
-	private Label value;
-	private Label setpoint;
-
-    /**
+	/**
      * Constructor. Creates a new instance of the MinimalMotorView object.
      * 
      * @param parent
@@ -61,43 +67,44 @@ public class MinimalMotorView extends Composite {
      *            the view model to be used by this view.
      */
     public MinimalMotorView(Composite parent, int style, MinimalMotorViewModel minimalMotorViewModel) {
-        super(parent, SWT.BORDER);
-
-        GridLayout glMotorComposite = new GridLayout(1, false);
-		glMotorComposite.verticalSpacing = 2;
-		glMotorComposite.marginWidth = 2;
-		glMotorComposite.marginHeight = 1;
-        setLayout(glMotorComposite);
-
+        super(parent, SWT.NONE);
+       
         this.minimalMotorViewModel = minimalMotorViewModel;
-		
-        motorName = new Label(this, SWT.NONE);
-		motorName.setAlignment(SWT.CENTER);
-		GridData gdMotorName = new GridData(SWT.TOP, SWT.TOP, false, false, 1, 1);
-		gdMotorName.minimumWidth = 80;
-		gdMotorName.widthHint = 80;
-		motorName.setLayoutData(gdMotorName);
-		motorName.setText("Motor name");
-				
-        value = new Label(this, SWT.NONE);
-		value.setAlignment(SWT.CENTER);
-		value.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
-        value.setText("");
-		
-        setpoint = new Label(this, SWT.NONE);
-		setpoint.setAlignment(SWT.CENTER);
-		setpoint.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
-        setpoint.setText("");
-		
-        indicator = new MinimalMotionIndicator(this, SWT.NONE);
-		indicator.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
-        indicator.setMotor(this.minimalMotorViewModel.getMotor());
-		
-		setMouseListeners();
-		
-        bind();
 
+        stackLayout = new StackLayout();
+        stackLayout.marginHeight = 2;
+        stackLayout.marginWidth = 2;
+        setLayout(stackLayout);
+        
+        setActiveView(minimalMotorViewModel.isAdvancedMinimalMotorView());
+
+        final var activeViewListener = minimalMotorViewModel.addUiThreadPropertyChangeListener("advancedMinimalMotorView", 
+        		event -> setActiveView(minimalMotorViewModel.isAdvancedMinimalMotorView()));
+        
+        addDisposeListener(disposeEvent -> minimalMotorViewModel.removePropertyChangeListener("advancedMinimalMotorView", activeViewListener));
+        
+        bind();
 	}
+    
+    private void bind() {
+      	
+        bindingContext.bindValue(WidgetProperties.background().observe(this),
+                BeanProperties.value("borderColor").observe(this.getViewModel()));
+	}
+    
+    private void setActiveView(boolean advanced) {
+    	Composite newTopControl;
+		if (minimalMotorViewModel.isAdvancedMinimalMotorView()) {
+			newTopControl = advancedView.orElseGet(MinimalMotorView.this::createNewAdvancedView);
+		} else {
+			newTopControl = standardView.orElseGet(MinimalMotorView.this::createNewStandardView);
+		}
+
+		if (!Objects.equal(newTopControl, stackLayout.topControl)) {
+			stackLayout.topControl = newTopControl;
+			requestLayout();
+		}
+    }
 
     /**
      * Gets the MinimalMotorViewModel used by the cell.
@@ -107,59 +114,58 @@ public class MinimalMotorView extends Composite {
     public MinimalMotorViewModel getViewModel() {
         return minimalMotorViewModel;
     }
-
-    /**
-     * Binds the model to the view.
-     */
-    private void bind() {
-        
-        bindingContext.bindValue(WidgetProperties.text().observe(setpoint),
-                BeanProperties.value("setpoint").observe(minimalMotorViewModel));
-
-        bindingContext.bindValue(WidgetProperties.text().observe(value),
-                BeanProperties.value("value").observe(minimalMotorViewModel));
-
-        bindingContext.bindValue(WidgetProperties.text().observe(motorName),
-                BeanProperties.value("motorName").observe(minimalMotorViewModel));
-
-        bindingContext.bindValue(WidgetProperties.font().observe(motorName),
-                BeanProperties.value("font").observe(minimalMotorViewModel));
-
-        bindingContext.bindValue(WidgetProperties.background().observe(motorName),
-                BeanProperties.value("color").observe(minimalMotorViewModel));
-
-        bindingContext.bindValue(WidgetProperties.background().observe(indicator),
-                BeanProperties.value("color").observe(minimalMotorViewModel));
-
-        bindingContext.bindValue(WidgetProperties.background().observe(value),
-                BeanProperties.value("color").observe(minimalMotorViewModel));
-
-        bindingContext.bindValue(WidgetProperties.background().observe(setpoint),
-                BeanProperties.value("color").observe(minimalMotorViewModel));
-
-        bindingContext.bindValue(WidgetProperties.background().observe(this),
-                BeanProperties.value("color").observe(minimalMotorViewModel));
-
-        bindingContext.bindValue(WidgetProperties.tooltipText().observe(this),
-                BeanProperties.value("tooltip").observe(minimalMotorViewModel));
-
+	
+	/** Listens for clicks on a motor in the table, and makes a call to open the OPI for that motor. */
+	public MouseListener motorSelection = new MouseAdapter() {
+		@Override
+		public void mouseDown(MouseEvent e) {
+			if (e.widget instanceof MotorInfoView) {
+				MotorInfoView minimal = (MotorInfoView) e.widget;
+                openMotorView(minimal.getViewModel().getMotor());
+			}
+		}
+	};
+	
+	/**
+	 * Creates a new standard view and registers necessary listeners.
+	 * @return the created view
+	 */
+	private Composite createNewStandardView() {
+		Composite view = new MotorInfoStdView(this, SWT.NONE, minimalMotorViewModel);
+		view.addMouseListener(motorSelection);
+		standardView = Optional.of(view);
+		return view;
 	}
 	
-	private void setMouseListeners() {
-		final MinimalMotorView self = this;
-		MouseListener forwardDoubleClick = new MouseAdapter() {
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				Event event = new Event();
-				event.widget = self;
-		
-				self.notifyListeners(SWT.MouseDoubleClick, event);
-			}
-		};
-		
-		motorName.addMouseListener(forwardDoubleClick);
-		value.addMouseListener(forwardDoubleClick);
-		setpoint.addMouseListener(forwardDoubleClick);
-		indicator.addMouseListener(forwardDoubleClick);
+	/**
+	 * Creates a new advanced view and registers necessary listeners.
+	 * @return the created view
+	 */
+	private Composite createNewAdvancedView() {
+		Composite view = new MotorInfoAdvView(this, SWT.NONE, minimalMotorViewModel);
+		view.addMouseListener(motorSelection);
+		advancedView = Optional.of(view);
+		return view;
+	}
+	
+	/**
+	 * Opens the motor OPI for a particular motor.
+	 * @param motor The motor to show
+	 */
+	private static void openMotorView(Motor motor) {
+		try {
+    		// Display OPI motor view
+			String description = motor.getDescription();
+			String secondaryID = Strings.isNullOrEmpty(description) ? motor.name() : description;
+			secondaryID = secondaryID.replace(":", "");
+
+			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+			IViewPart view = page.showView(MotorOPIView.ID, secondaryID, IWorkbenchPage.VIEW_ACTIVATE);
+
+			((MotorOPIView) view).displayOpi(secondaryID, motor.motorAddress());
+
+		} catch (PartInitException e) {
+			LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(TableOfMotorsView.class), e.getMessage(), e);
+		}
 	}
 }

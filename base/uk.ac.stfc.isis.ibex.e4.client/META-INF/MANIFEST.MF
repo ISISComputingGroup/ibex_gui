@@ -1,4 +1,5 @@
 Manifest-Version: 1.0
+Eclipse-BundleShape: dir
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.e4.client;singleton:=true
 Bundle-Name: IBEX
 Bundle-Version: 1.0.0.qualifier
@@ -29,8 +30,11 @@ Require-Bundle: uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;bundle-version="1
  uk.ac.stfc.isis.ibex.ui.nicos;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.logplotter;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.journalviewer;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.ui.graphing;bundle-version="1.0.0"
+ uk.ac.stfc.isis.ibex.ui.graphing;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.ui.reflectometry;bundle-version="1.0.0"
 Bundle-ManifestVersion: 2
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-Vendor: ISIS
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.e4.client
 

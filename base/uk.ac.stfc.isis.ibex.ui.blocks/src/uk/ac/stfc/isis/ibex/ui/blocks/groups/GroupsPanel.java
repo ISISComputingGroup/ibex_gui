@@ -55,10 +55,11 @@ public class GroupsPanel extends Composite {
 	
     protected static final Font MESSAGE_FONT = SWTResourceManager.getFont("Arial", 14, SWT.NORMAL);
     private static final String DISCONNECTED_MESSAGE = "IBEX SERVER DISCONNECTED\nPlease talk to your point of contact";
-    private static final String CONNECTED_NO_GROUPS_MESSAGE = "IBEX SERVER CONNECTED:\nNo Groups Present";
+    private static final String CONNECTED_NO_GROUPS_MESSAGE =
+            "IBEX SERVER CONNECTED:\nNo Groups Present\nNew Blocks can be added by going to\n Configuration->Edit Current Configuration->Blocks->Add Blocks";
     
     private enum ConnectionStatus {
-    	EMPTY(-1), DISCONNECTED(0), CONNECTED_NO_GOUPS(1);
+    	EMPTY(-1), DISCONNECTED(0), CONNECTED_NO_GROUPS(1);
     	
     	ConnectionStatus(int status) {
     	}
@@ -109,7 +110,7 @@ public class GroupsPanel extends Composite {
 			showBanner(ConnectionStatus.DISCONNECTED);
 			return;
 		} else if (groups.isPresent() && groups.get().isEmpty()) {
-			showBanner(ConnectionStatus.CONNECTED_NO_GOUPS);
+			showBanner(ConnectionStatus.CONNECTED_NO_GROUPS);
 			return;
 		} else {
 			addGroups();
@@ -150,7 +151,7 @@ public class GroupsPanel extends Composite {
 	 */
 	public synchronized void updateGroups(final Optional<List<DisplayGroup>> groups) {
 		
-		this.displayGroups = HiddenGroupFilter.getVisibleGroups(groups, showHiddenBlocks);
+		this.displayGroups = groups;
 		
 		display.syncExec(new Runnable() {
 			@Override
@@ -173,7 +174,7 @@ public class GroupsPanel extends Composite {
 		banner.setAlignment(SWT.CENTER);
 		if (status == ConnectionStatus.EMPTY) {
 			banner.setText("");
-		} else if (status == ConnectionStatus.CONNECTED_NO_GOUPS) {
+		} else if (status == ConnectionStatus.CONNECTED_NO_GROUPS) {
 			banner.setText(CONNECTED_NO_GROUPS_MESSAGE);
 		} else if (status == ConnectionStatus.DISCONNECTED) {
 			banner.setText(DISCONNECTED_MESSAGE);
@@ -193,7 +194,8 @@ public class GroupsPanel extends Composite {
 	}
 	
 	private void addGroups() {
-		for (DisplayGroup group : displayGroups.orElseThrow(IllegalStateException::new)) {
+		Optional<List<DisplayGroup>> visibleGroups = HiddenGroupFilter.getVisibleGroups(displayGroups, showHiddenBlocks);
+		for (DisplayGroup group : visibleGroups.orElseThrow(IllegalStateException::new)) {
 		    groups.add(groupWidget(group));
 		}
 	}

@@ -24,7 +24,9 @@ import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
+
 import uk.ac.stfc.isis.ibex.epics.pvmanager.PVManagerSettings;
+import uk.ac.stfc.isis.ibex.ui.JMXServer;
 
 /**
  * This class controls all aspects of the application's execution.
@@ -36,6 +38,12 @@ public class Application implements IApplication {
 	 */
 	@Override
     public Object start(IApplicationContext context) {
+		
+		// If you get an error here, you need to go (in Eclipse) to:
+		// window -> Preferences -> Java -> compiler
+		// and change workspace compliance to Java 11.
+		@SuppressWarnings("unused") final var java11Check = new Object(); 
+		
 		// Start a JMX server for remote diagnostics.
 		JMXServer.startJMXServer();
 		

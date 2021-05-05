@@ -42,6 +42,16 @@ public final class ComponentIcons {
     public static Image iconForType(ComponentType componentType) {
         return icon(getIconNameForType(componentType) + ".png");
     }
+    
+    /**
+     * Gets the appropriate icon name for a given component type.
+     * 
+     * @param componentType the component type
+     * @return the icon name corresponding to the component type
+     */
+    public static String iconNameForType(ComponentType componentType) {
+        return getIconNameForType(componentType) + ".png";
+    }
 
     /**
      * Gets the appropriate thumbnail icon for a given component type.
@@ -52,6 +62,17 @@ public final class ComponentIcons {
     public static Image thumbnailForType(ComponentType componentType) {
         String iconName = getIconNameForType(componentType);
         return icon("thumbs/" + iconName + "_tb.png");
+    }
+    
+    /**
+     * Gets the appropriate thumbnail name for a given component type.
+     * 
+     * @param componentType the input component type
+     * @return the thumbnail name corresponding to the component type
+     */
+    public static String thumbnailNameForType(ComponentType componentType) {
+    	String thumbName = getIconNameForType(componentType) + "_tb.png";
+    	return thumbName;
     }
 
     private static Image icon(String fileName) {
@@ -150,6 +171,7 @@ public final class ComponentIcons {
             case GAS_EXCHANGE:
                 return "gas_exchange";
             case CRYO_LEVEL_GAUGE:
+            case CP2800:
                 return "cryo_level_gauge";
             case OSCILLATING_COLLIMATOR:
                 return "oscillating_collimator";
@@ -179,8 +201,32 @@ public final class ComponentIcons {
             	return "water_bath_valve";
             case REFLECTOMETRY:
             	return "reflectometry";
+            case SENSOR:
+            	return "sensor";
             case FILM_FABRICATION:
             	return "film_fabrication";
+            case OBIS_LASER_REMOTE:
+            	return "coherent_obis_laser_remote";
+            case ZERO_FIELD:
+            	return "zerofield";
+            case LSICORR:
+            	return "lsicorr";
+            case DENSITY_METER:
+                return "density_meter";
+            case WAVEGUIDE_APERTURE:
+            	return "waveguide_aperture";
+            case SPIN_FLIPPER:
+            	return "flipper";
+            case PLC:
+            	return "plc";
+            case DEBUG:
+            	return "debug";
+            case HE_LEVEL_GAUGE:
+            	return "he_level_gauge";
+            case VACUUM_TANK:
+            	return "sans2d_vacuum_tank";
+            case MUSR_STEERING:
+            	return "musr_steering";
             default:
                 return "cog";
         }

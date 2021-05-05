@@ -20,8 +20,15 @@
 /**
  * Defines the XML namespace.
  */
-@XmlSchema(namespace = "http://epics.isis.rl.ac.uk/schema/screens/1.0/", elementFormDefault = XmlNsForm.QUALIFIED)
+@XmlSchema(
+    namespace = "http://epics.isis.rl.ac.uk/schema/screens/1.0/", 
+    elementFormDefault = XmlNsForm.QUALIFIED,
+    
+	xmlns = {
+        @XmlNs(prefix = "", namespaceURI = "http://epics.isis.rl.ac.uk/schema/screens/1.0/")
+    }) 
 package uk.ac.stfc.isis.ibex.devicescreens.desc;
  
+import javax.xml.bind.annotation.XmlNs;
 import javax.xml.bind.annotation.XmlNsForm;
 import javax.xml.bind.annotation.XmlSchema;

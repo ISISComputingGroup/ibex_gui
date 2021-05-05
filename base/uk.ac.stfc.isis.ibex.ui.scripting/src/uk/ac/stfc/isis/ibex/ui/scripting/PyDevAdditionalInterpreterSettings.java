@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.scripting;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.io.File;
 
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
@@ -37,7 +38,8 @@ import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntriesAdapter {
 	
 	private static final String PREFERENCE_STORE_ID_FOR_EPICS_LIBS = "org.csstudio.platform.libs.epics";
-	final IPreferencesService prefs;
+	private final IPreferencesService preferenceService;
+	private final PreferenceSupplier preferenceSupplier;
 	Instrument instrumentBundle;
 	
 	/**
@@ -45,11 +47,12 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 	 * 
 	 * This constructor is usually used for testing only
 	 *
-	 * @param iPreferencesService the iPreferences service to use
+	 * @param preferenceService the iPreferences service to use
 	 * @param instrumentBundle the instrument bundle to use to get details from
 	 */
-	public PyDevAdditionalInterpreterSettings(IPreferencesService iPreferencesService, Instrument instrumentBundle) {
-		prefs = iPreferencesService;
+	public PyDevAdditionalInterpreterSettings(IPreferencesService preferenceService, Instrument instrumentBundle) {
+		this.preferenceService = preferenceService;
+		this.preferenceSupplier = new PreferenceSupplier(preferenceService);
 		this.instrumentBundle = instrumentBundle;
 	}
 	
@@ -66,7 +69,8 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 		List<String> entriesToAdd = new ArrayList<String>();
 		
 		entriesToAdd.add(pvPrefix());
-		entriesToAdd.add(epicsBasePath());
+		entriesToAdd.add(extraPaths());
+		entriesToAdd.add("IPYTHONENABLE=True"); //Required so that we can hook into autocomplete for load_script
 		addEpicsEnvironment(entriesToAdd);
 
 		return entriesToAdd;
@@ -85,13 +89,19 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 		return "MYPVPREFIX=" + instrumentBundle.currentInstrument().pvPrefix();
 	}
 	
-	private String epicsBasePath() {
-        return "PATH=" + toOSPath(PreferenceSupplier.epicsBase()) + ";" + toOSPath(PreferenceSupplier.epicsUtilsPath())
-                + ";" + System.getenv("PATH");
+	private String extraPaths() {
+        return "PATH=" + toOSPath(preferenceSupplier.epicsBase()) 
+           + File.pathSeparator + toOSPath(preferenceSupplier.epicsUtilsPath())
+           + File.pathSeparator + geniePythonDir()
+           + File.pathSeparator + System.getenv("PATH");
 	}
 
 	private String geniePythonPath() {
-		return toOSPath(PreferenceSupplier.geniePythonPath());
+		return toOSPath(preferenceSupplier.geniePythonPath());
+	}
+
+	private String geniePythonDir() {
+		return toOSPath(new File(preferenceSupplier.getPythonPath()).getParent());
 	}
 	
 	private void addEpicsEnvironment(List<String> entries) {
@@ -101,21 +111,21 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 	}
 	
 	/**
-	 *  Get the channel access environment variables from EPICS preferences
+	 *  Get the channel access environment variables from EPICS preferences.
 	 *  
 	 * @return list of environment variables and their settings
 	 */
-	private List<String> epicsEnvironment() {
+	public List<String> epicsEnvironment() {
 		List<String> epicsEnv = new ArrayList<String>();
 
-        final String addList = prefs.getString(PREFERENCE_STORE_ID_FOR_EPICS_LIBS, "addr_list", null, null);
+        final String addList = preferenceService.getString(PREFERENCE_STORE_ID_FOR_EPICS_LIBS, "addr_list", null, null);
         epicsEnv.add("EPICS_CA_ADDR_LIST=" + addList);
         
-        final String autoAddr = prefs.getBoolean(PREFERENCE_STORE_ID_FOR_EPICS_LIBS, "auto_addr_list", true, null) ? "YES" : "NO";
+        final String autoAddr = preferenceService.getBoolean(PREFERENCE_STORE_ID_FOR_EPICS_LIBS, "auto_addr_list", true, null) ? "YES" : "NO";
         epicsEnv.add("EPICS_CA_AUTO_ADDR_LIST=" + autoAddr);
         
         final String maxArrayBytes =
-                prefs.getString(PREFERENCE_STORE_ID_FOR_EPICS_LIBS, "max_array_bytes", "16384", null);
+        		preferenceService.getString(PREFERENCE_STORE_ID_FOR_EPICS_LIBS, "max_array_bytes", "16384", null);
         epicsEnv.add("EPICS_CA_MAX_ARRAY_BYTES=" + maxArrayBytes);
         
         return epicsEnv;

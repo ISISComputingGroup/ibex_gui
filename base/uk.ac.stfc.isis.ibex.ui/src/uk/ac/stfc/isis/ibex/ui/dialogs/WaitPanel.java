@@ -27,8 +27,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-/*
- * The panel inside the "Instrument Updating" dialogue box 
+/**
+ * The panel inside the "Instrument Updating" dialogue box.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class WaitPanel extends Composite {

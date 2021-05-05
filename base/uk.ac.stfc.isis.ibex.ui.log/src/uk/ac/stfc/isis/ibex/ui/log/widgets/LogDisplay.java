@@ -122,14 +122,11 @@ public class LogDisplay extends Canvas {
      */
 	public LogDisplay(Composite parent, LogDisplayModel model) {
 		super(parent, SWT.NONE);
-
 		comparator = new LogMessageComparator();
-
-		createLayout();
-
 		if (model != null) {
 			setModel(model);
 		}
+		createLayout();
 	}
 
 	/**
@@ -139,8 +136,10 @@ public class LogDisplay extends Canvas {
      * @param model the view model
      */
 	public void setModel(final LogDisplayModel model) {
+		if (this.searchControl != null) {
+			this.searchControl.setSearcher(model);
+		}
 		this.model = model;
-		this.searchControl.setSearcher(model);
         this.asyncMessageModerator = new AsyncMessageModerator(model);
 
 		// Listen for updates to the list of messages to be displayed
@@ -305,6 +304,8 @@ public class LogDisplay extends Canvas {
 		// Add the search box
 		searchControl = new SearchControl(this, model);
 		searchControl.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		searchControl.setSearcher(model);
+		
 
         // Add table title label
         lblTableTitle = new Label(this, SWT.NONE);
@@ -319,7 +320,9 @@ public class LogDisplay extends Canvas {
 		// Add JMS connection status notification
 		jmsStatusLabel = new Label(this, SWT.BORDER);
 		jmsStatusLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		setConnectionStatus(false);
+		if (model != null) {
+			setConnectionStatus(model.getConnectionStatus());
+		}
 
 		// Layout the table columns and link them to the correct properties of
 		// the LogMessage object.
@@ -504,7 +507,7 @@ public class LogDisplay extends Canvas {
 
 		boolean anyItems = tableViewer.getTable().getItemCount() > 0;
 		boolean anySelected = selection.size() > 0;
-		boolean clearAllEnabled = anyItems && !model.isSearchMode();
+		boolean clearAllEnabled = anyItems && model != null && !model.isSearchMode();
 
 		mnuClearRecent.setEnabled(clearAllEnabled);
 		mnuClearSelected.setEnabled(anySelected);
@@ -577,7 +580,9 @@ public class LogDisplay extends Canvas {
 			msgs.add((LogMessage) msg);
 		}
 
-		model.removeMessagesFromCurrentView(msgs);
+		if (model != null) {
+			model.removeMessagesFromCurrentView(msgs);
+		}
 	}
 
     /**

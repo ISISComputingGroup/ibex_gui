@@ -21,9 +21,14 @@ package uk.ac.stfc.isis.ibex.ui.dialogs;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.SortedMap;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -45,9 +50,9 @@ import org.eclipse.swt.widgets.TableItem;
 public abstract class BasicSelectionDialog extends Dialog {
 
     private String title;
-
+    
     /**
-     * The single column table for displaying the list of items to select from.
+     * A single or multiple-column table for displaying the list of items to select from.
      */
     public Table items;
 
@@ -145,27 +150,76 @@ public abstract class BasicSelectionDialog extends Dialog {
 
     /**
      * Abstract method that creates and returns a table pre-configured with
-     * single column layout.
+     * a single or multiple column layout.
      * 
      * @param parent
      *            The parent composite
      * @param style
      *            The style settings
+     * @param columnNames
+     * 			  The names (and number) of table columns
      * @return The table object
      */
-    protected abstract Table createTable(Composite parent, int style);
+    protected abstract Table createTable(Composite parent, int style, List<String> columnNames);
 
+    /**
+     * Sets a list of names as items in the selection table specifically for deleting config dialog.
+     * 
+     * @param names
+     *            The names
+     *            
+     * @param configNamesWithFlags
+     *            Names of the configuration and its protection flag
+     */
+    protected void setItems(List<String> names, Map<String, Boolean> configNamesWithFlags) {
+        this.items.clearAll();
+        for (String name : names) {
+            TableItem item = new TableItem(this.items, SWT.NONE);
+            item.setText(name);
+            if (configNamesWithFlags.get(name)) {
+                item.setImage(JFaceResources.
+                        getImage(DLG_IMG_MESSAGE_WARNING));   
+            }
+        }
+    }
+    
     /**
      * Sets a list of names as items in the selection table.
      * 
      * @param names
      *            The names
      */
-    protected void setItems(String[] names) {
+    protected void setItems(List<String> names) {
         this.items.clearAll();
         for (String name : names) {
             TableItem item = new TableItem(this.items, SWT.NONE);
             item.setText(name);
         }
     }
+    
+    /**
+    * Sets a list of configuration names and their description as items in a
+    * selection table with two columns.
+    * 
+    * @param namesAndDescriptions
+    *             A map containing the names and descriptions of the recent configurations in key/value pairs.      
+    * @param configNamesWithFlags
+    *             Names of the configuration and its protection flag
+    */
+   protected void setMultipleColumnItems(SortedMap<String, String> namesAndDescriptions, Map<String, Boolean> configNamesWithFlags) {
+       this.items.clearAll();
+       String[] columns = new String[2];
+
+       for (Entry<String, String> entry : namesAndDescriptions.entrySet()) {
+           TableItem item = new TableItem(this.items, SWT.NONE);
+           columns[0] = entry.getKey();
+           columns[1] = entry.getValue();
+           
+           item.setText(columns);
+           if (configNamesWithFlags.get(entry.getKey())) {
+               item.setImage(JFaceResources.
+                       getImage(DLG_IMG_MESSAGE_WARNING));   
+           }
+       }
+   }
 }

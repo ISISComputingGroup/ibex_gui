@@ -52,7 +52,7 @@ public final class WritingSetCommand<T> extends SetCommand<T> implements Closabl
     private WritingSetCommand(Writable<T> destination) {
         checkPreconditions(destination);
 
-		writerSubscription = destinationWriter.writeTo(destination);
+		writerSubscription = destinationWriter.subscribe(destination);
 		destinationSubscription = destination.subscribe(destinationWriter);
 	}
 
@@ -88,8 +88,8 @@ public final class WritingSetCommand<T> extends SetCommand<T> implements Closabl
 	
 	@Override
 	public void close() {
-		writerSubscription.removeObserver();
-		destinationSubscription.removeObserver();
+		writerSubscription.cancelSubscription();
+		destinationSubscription.cancelSubscription();
 	}
 
     private void checkPreconditions(Writable<T> destination) {

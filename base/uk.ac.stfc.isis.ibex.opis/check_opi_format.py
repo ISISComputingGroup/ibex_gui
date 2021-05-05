@@ -11,10 +11,13 @@ from check_OPI_format_utils.text import check_label_punctuation, check_label_cas
     check_label_case_outside_containers
 from check_OPI_format_utils.container import get_items_not_in_grouping_container
 from check_OPI_format_utils.font import get_incorrect_fonts
+from check_OPI_format_utils.position import get_widgets_outside_of_boundary
 from xmlrunner import XMLTestRunner
 
-from check_OPI_format_utils.xy_graph import get_traces_with_different_buffer_sizes
+from check_OPI_format_utils.xy_graph import get_traces_with_different_buffer_sizes, get_trigger_pv
 from check_opi_format_tests import TestCheckOpiFormatMethods
+
+from check_opi_info import TestOpiInfo
 
 # Directory to iterate through
 DEFAULT_ROOT_DIR = r"./resources/"
@@ -43,12 +46,20 @@ def file_iterator(directory, file_name=None):
         yield os.path.join(directory, file_name)
 
 
-class CheckOpiFormat(unittest.TestCase):
+class CheckStrictOpiFormat(unittest.TestCase):
+    """
+    These are the tests run in CI.
+    """
+    IGNORED_OPIS = ["dma4500m", "/stage\\", "sdtest", "qepro", "/pinhole_selector\\", "/gateway\\", "/autosave\\",
+                    "/asyn\\", "template", "scimag3D", "analyser", "attenuator", "polariser", "rotating_bench",
+                    "/SKFG5Chopper\\"]
+
+
     # Need the 'None' default because unittest's test loader uses a
     # no-argument constructor when getting the test names.
     def __init__(self, methodName, xml_root=None):
         # Boilerplate so that unittest knows how to run these tests.
-        super(CheckOpiFormat, self).__init__(methodName=methodName)
+        super(CheckStrictOpiFormat, self).__init__(methodName=methodName)
         self.xml_root = xml_root
 
     def _assert_colour_correct(self, location, widget, colours):
@@ -73,8 +84,8 @@ class CheckOpiFormat(unittest.TestCase):
     def test_GIVEN_an_opi_file_with_textbox_WHEN_checking_background_colour_THEN_it_is_the_isis_textbox_background(self):
         self._assert_colour_correct("background_color", "TextInput", ["ISIS_Textbox_Background"])
 
-    def test_GIVEN_an_opi_file_with_xygraph_WHEN_checking_background_colour_THEN_it_is_the_isis_textbox_background(self):
-        self._assert_colour_correct("background_color", "xyGraph", ["ISIS_Textbox_Background"])
+    def test_GIVEN_an_opi_file_with_xygraph_WHEN_checking_background_colour_THEN_it_is_the_isis_background(self):
+        self._assert_colour_correct("background_color", "xyGraph", ["ISIS_OPI_Background"])
 
     def test_GIVEN_an_opi_file_with_textbox_WHEN_checking_foreground_colour_THEN_it_is_the_isis_textbox_foreground(self):
         self._assert_colour_correct("foreground_color", "TextInput", ["ISIS_Standard_Text"])
@@ -84,6 +95,32 @@ class CheckOpiFormat(unittest.TestCase):
 
     def test_GIVEN_an_opi_file_with_led_WHEN_checking_off_colour_THEN_it_is_the_isis_led_off_colour(self):
         self._assert_colour_correct("off_color", "LED", ["ISIS_Green_LED_Off", "ISIS_Red_LED_Off"])
+
+    def test_GIVEN_plot_area_THEN_it_has_correct_plot_area_background_colour(self):
+        errors = check_plot_area_backgrounds(self.xml_root)
+        if len(errors):
+            message = "\n".join(["Plot on line {} with name '{}' has incorrect plot area background colour"
+                                .format(*error) for error in errors])
+            self.fail(message)
+
+    def test_GIVEN_plot_area_THEN_it_has_a_trigger_PV(self):
+        errors = get_trigger_pv(self.xml_root)
+        if len(errors):
+            message = "\n".join(["Plot on line {} has no trigger PV, it should be triggered on a heartbeat"
+                                .format(*error) for error in errors])
+            self.fail(message)
+
+
+class CheckOpiFormat(CheckStrictOpiFormat):
+
+    def _assert_widgets_inside_x_y_boundary(self):
+        errors = get_widgets_outside_of_boundary(self.xml_root)
+        if len(errors):
+            self.fail("\n".join(["On line {}, widget '{}', outside of boundary with position {}."
+                                .format(*error) for error in errors]))
+
+    def test_GIVEN_an_opi_file_with_widgets_WHEN_checking_if_widget_within_boundaries_THEN_widget_is_within_boundaries(self):
+        self._assert_widgets_inside_x_y_boundary()
 
     def test_GIVEN_an_opi_file_with_graph_widgets_WHEN_checking_buffer_sizes_THEN_all_buffer_sizes_are_the_same(self):
         self._assert_trace_buffers_are_the_same()
@@ -135,13 +172,6 @@ class CheckOpiFormat(unittest.TestCase):
                                 .format(*error) for error in errors])
             self.fail(message)
 
-    def test_GIVEN_plot_area_THEN_it_has_correct_plot_area_background_colour(self):
-        errors = check_plot_area_backgrounds(self.xml_root)
-        if len(errors):
-            message = "\n".join(["Plot on line {} with name '{}' has incorrect plot area background colour"
-                                .format(*error) for error in errors])
-            self.fail(message)
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog='check_opi_format')
@@ -152,6 +182,8 @@ if __name__ == "__main__":
                         help='A directory to check files in')
     parser.add_argument('-logs_directory', type=str, default=DEFAULT_LOGS_DIR,
                         help='A directory to save the logs into')
+    parser.add_argument('-strict', action="store_true", default=False,
+                        help="Run only the strict tests")
 
     args = parser.parse_args()
 
@@ -190,8 +222,19 @@ if __name__ == "__main__":
             return_values.append(False)
             continue
 
-        suite.addTests([CheckOpiFormat(test, root) for test in loader.getTestCaseNames(CheckOpiFormat)])
+        if args.strict:
+            if not any(opi in filename for opi in CheckStrictOpiFormat.IGNORED_OPIS):
+                suite.addTests([CheckStrictOpiFormat(test, root) for test in loader.getTestCaseNames(CheckStrictOpiFormat)])
+        else:
+            suite.addTests([CheckOpiFormat(test, root) for test in loader.getTestCaseNames(CheckOpiFormat)])
         runner = XMLTestRunner(output=os.path.join(logs_dir, filename), stream=sys.stdout)
         return_values.append(runner.run(suite).wasSuccessful())
+
+    # for the opi_info.xml check
+    print("Testing '{}'".format(os.path.join(root_dir, "opi_info.xml")))
+    suite = unittest.TestSuite()
+    suite.addTests(loader.loadTestsFromTestCase(TestOpiInfo))
+    runner = XMLTestRunner(output=os.path.join(logs_dir, "TestOpiInfo"), stream=sys.stdout)
+    return_values.append(runner.run(suite).wasSuccessful())
 
     sys.exit(False in return_values)

@@ -1,3 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
 <display typeId="org.csstudio.opibuilder.Display" version="1.0">
   <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
   <macros>
@@ -5,22 +6,22 @@
   </macros>
   <wuid>-cbb41b:142c71b4f20:-74c0</wuid>
   <boy_version>3.1.4.201301231545</boy_version>
-  <scripts />
+  <scripts/>
   <show_ruler>true</show_ruler>
   <height>330</height>
-  <name />
+  <name/>
   <snap_to_geometry>true</snap_to_geometry>
   <show_grid>true</show_grid>
   <background_color>
-    <color blue="240" green="240" name="ISIS_OPI_Background" red="240" />
+    <color blue="240" green="240" name="ISIS_OPI_Background" red="240"/>
   </background_color>
   <foreground_color>
-    <color blue="192" green="192" name="ISIS_OPI_Foreground" red="192" />
+    <color blue="192" green="192" name="ISIS_OPI_Foreground" red="192"/>
   </foreground_color>
   <widget_type>Display</widget_type>
   <show_close_button>true</show_close_button>
   <width>720</width>
-  <rules />
+  <rules/>
   <show_edit_range>true</show_edit_range>
   <grid_space>6</grid_space>
   <auto_scale_widgets>
@@ -28,7 +29,7 @@
     <min_width>-1</min_width>
     <min_height>-1</min_height>
   </auto_scale_widgets>
-  <actions hook="false" hook_all="false" />
+  <actions hook="false" hook_all="false"/>
   <y>-1</y>
   <x>-1</x>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
@@ -36,7 +37,7 @@
     <vertical_alignment>1</vertical_alignment>
     <wuid>-300abe50:144ac7aacb4:-7fac</wuid>
     <auto_size>false</auto_size>
-    <scripts />
+    <scripts/>
     <height>25</height>
     <name>Label_2</name>
     <scale_options>
@@ -47,10 +48,10 @@
     <transparent>false</transparent>
     <show_scrollbar>false</show_scrollbar>
     <background_color>
-      <color blue="240" green="240" name="ISIS_Label_Background" red="240" />
+      <color blue="240" green="240" name="ISIS_Label_Background" red="240"/>
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color blue="0" green="0" name="ISIS_Standard_Text" red="0"/>
     </foreground_color>
     <widget_type>Label</widget_type>
     <enabled>true</enabled>
@@ -60,16 +61,16 @@
     </font>
     <width>163</width>
     <border_style>0</border_style>
-    <rules />
+    <rules/>
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color blue="255" green="128" name="ISIS_Check_Border" red="0"/>
     </border_color>
     <horizontal_alignment>2</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>60</y>
     <wrap_words>true</wrap_words>
-    <tooltip />
+    <tooltip/>
     <x>144</x>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
@@ -80,7 +81,7 @@
     <wuid>-300abe50:144ac7aacb4:-7edf</wuid>
     <auto_size>false</auto_size>
     <rotation_angle>0.0</rotation_angle>
-    <scripts />
+    <scripts/>
     <height>25</height>
     <name>Text Update_1</name>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -94,10 +95,10 @@
     <transparent>false</transparent>
     <pv_name>$(P)MOT:MTR0501.RBV</pv_name>
     <background_color>
-      <color blue="200" green="200" name="ISIS_Textbox_Readonly_Background" red="200" />
+      <color blue="200" green="200" name="ISIS_Textbox_Readonly_Background" red="200"/>
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color blue="0" green="0" name="ISIS_Standard_Text" red="0"/>
     </foreground_color>
     <widget_type>Text Update</widget_type>
     <enabled>true</enabled>
@@ -109,14 +110,14 @@
     </font>
     <width>100</width>
     <border_style>0</border_style>
-    <rules />
-    <pv_value />
+    <rules/>
+    <pv_value/>
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color blue="255" green="128" name="ISIS_Check_Border" red="0"/>
     </border_color>
     <horizontal_alignment>0</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>60</y>
     <wrap_words>false</wrap_words>
     <tooltip>$(pv_name)
@@ -129,22 +130,22 @@ $(pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <multiline_input>false</multiline_input>
     <auto_size>false</auto_size>
-    <scripts />
+    <scripts/>
     <height>25</height>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <precision_from_pv>true</precision_from_pv>
     <background_color>
-      <color blue="255" green="255" name="ISIS_Textbox_Background" red="255" />
+      <color blue="255" green="255" name="ISIS_Textbox_Background" red="255"/>
     </background_color>
     <widget_type>Text Input</widget_type>
     <enabled>true</enabled>
-    <text />
+    <text/>
     <font>
       <opifont.name fontName="Arial" height="14" style="1">ISIS_Value</opifont.name>
     </font>
     <width>100</width>
     <border_style>3</border_style>
-    <pv_value />
+    <pv_value/>
     <border_width>1</border_width>
     <maximum>1.7976931348623157E308</maximum>
     <minimum>-1.7976931348623157E308</minimum>
@@ -162,18 +163,18 @@ $(pv_value)</tooltip>
     <selector_type>0</selector_type>
     <pv_name>$(P)MOT:MTR0501</pv_name>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color blue="0" green="0" name="ISIS_Standard_Text" red="0"/>
     </foreground_color>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <precision>0</precision>
-    <confirm_message />
-    <rules />
+    <confirm_message/>
+    <rules/>
     <limits_from_pv>false</limits_from_pv>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color blue="255" green="128" name="ISIS_Check_Border" red="0"/>
     </border_color>
     <horizontal_alignment>0</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>60</y>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
@@ -184,7 +185,7 @@ $(pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <wuid>-300abe50:144ac7aacb4:-7e6d</wuid>
     <auto_size>false</auto_size>
-    <scripts />
+    <scripts/>
     <height>25</height>
     <name>Label_3</name>
     <scale_options>
@@ -195,10 +196,10 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <show_scrollbar>false</show_scrollbar>
     <background_color>
-      <color blue="240" green="240" name="ISIS_Label_Background" red="240" />
+      <color blue="240" green="240" name="ISIS_Label_Background" red="240"/>
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color blue="0" green="0" name="ISIS_Standard_Text" red="0"/>
     </foreground_color>
     <widget_type>Label</widget_type>
     <enabled>true</enabled>
@@ -208,16 +209,16 @@ $(pv_value)</tooltip>
     </font>
     <width>235</width>
     <border_style>0</border_style>
-    <rules />
+    <rules/>
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color blue="255" green="128" name="ISIS_Check_Border" red="0"/>
     </border_color>
     <horizontal_alignment>2</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>98</y>
     <wrap_words>true</wrap_words>
-    <tooltip />
+    <tooltip/>
     <x>72</x>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
@@ -228,7 +229,7 @@ $(pv_value)</tooltip>
     <wuid>-300abe50:144ac7aacb4:-7e6c</wuid>
     <auto_size>false</auto_size>
     <rotation_angle>0.0</rotation_angle>
-    <scripts />
+    <scripts/>
     <height>25</height>
     <name>Text Update_2</name>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -242,10 +243,10 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <pv_name>$(P)MOT:MTR0502.RBV</pv_name>
     <background_color>
-      <color blue="200" green="200" name="ISIS_Textbox_Readonly_Background" red="200" />
+      <color blue="200" green="200" name="ISIS_Textbox_Readonly_Background" red="200"/>
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color blue="0" green="0" name="ISIS_Standard_Text" red="0"/>
     </foreground_color>
     <widget_type>Text Update</widget_type>
     <enabled>true</enabled>
@@ -257,14 +258,14 @@ $(pv_value)</tooltip>
     </font>
     <width>100</width>
     <border_style>0</border_style>
-    <rules />
-    <pv_value />
+    <rules/>
+    <pv_value/>
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color blue="255" green="128" name="ISIS_Check_Border" red="0"/>
     </border_color>
     <horizontal_alignment>0</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>98</y>
     <wrap_words>false</wrap_words>
     <tooltip>$(pv_name)
@@ -277,22 +278,22 @@ $(pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <multiline_input>false</multiline_input>
     <auto_size>false</auto_size>
-    <scripts />
+    <scripts/>
     <height>25</height>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <precision_from_pv>true</precision_from_pv>
     <background_color>
-      <color blue="255" green="255" name="ISIS_Textbox_Background" red="255" />
+      <color blue="255" green="255" name="ISIS_Textbox_Background" red="255"/>
     </background_color>
     <widget_type>Text Input</widget_type>
     <enabled>true</enabled>
-    <text />
+    <text/>
     <font>
       <opifont.name fontName="Arial" height="14" style="1">ISIS_Value</opifont.name>
     </font>
     <width>100</width>
     <border_style>3</border_style>
-    <pv_value />
+    <pv_value/>
     <border_width>1</border_width>
     <maximum>1.7976931348623157E308</maximum>
     <minimum>-1.7976931348623157E308</minimum>
@@ -310,18 +311,18 @@ $(pv_value)</tooltip>
     <selector_type>0</selector_type>
     <pv_name>$(P)MOT:MTR0502</pv_name>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color blue="0" green="0" name="ISIS_Standard_Text" red="0"/>
     </foreground_color>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <precision>0</precision>
-    <confirm_message />
-    <rules />
+    <confirm_message/>
+    <rules/>
     <limits_from_pv>false</limits_from_pv>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color blue="255" green="128" name="ISIS_Check_Border" red="0"/>
     </border_color>
     <horizontal_alignment>0</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>98</y>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
@@ -332,7 +333,7 @@ $(pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <wuid>-300abe50:144ac7aacb4:-7e2a</wuid>
     <auto_size>false</auto_size>
-    <scripts />
+    <scripts/>
     <height>25</height>
     <name>Label_5</name>
     <scale_options>
@@ -343,10 +344,10 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <show_scrollbar>false</show_scrollbar>
     <background_color>
-      <color blue="240" green="240" name="ISIS_Label_Background" red="240" />
+      <color blue="240" green="240" name="ISIS_Label_Background" red="240"/>
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color blue="0" green="0" name="ISIS_Standard_Text" red="0"/>
     </foreground_color>
     <widget_type>Label</widget_type>
     <enabled>true</enabled>
@@ -356,16 +357,16 @@ $(pv_value)</tooltip>
     </font>
     <width>163</width>
     <border_style>0</border_style>
-    <rules />
+    <rules/>
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color blue="255" green="128" name="ISIS_Check_Border" red="0"/>
     </border_color>
     <horizontal_alignment>2</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>168</y>
     <wrap_words>true</wrap_words>
-    <tooltip />
+    <tooltip/>
     <x>144</x>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
@@ -376,7 +377,7 @@ $(pv_value)</tooltip>
     <wuid>-300abe50:144ac7aacb4:-7e29</wuid>
     <auto_size>false</auto_size>
     <rotation_angle>0.0</rotation_angle>
-    <scripts />
+    <scripts/>
     <height>25</height>
     <name>Text Update_4</name>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -390,10 +391,10 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <pv_name>$(P)MOT:MTR0505.RBV</pv_name>
     <background_color>
-      <color blue="200" green="200" name="ISIS_Textbox_Readonly_Background" red="200" />
+      <color blue="200" green="200" name="ISIS_Textbox_Readonly_Background" red="200"/>
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color blue="0" green="0" name="ISIS_Standard_Text" red="0"/>
     </foreground_color>
     <widget_type>Text Update</widget_type>
     <enabled>true</enabled>
@@ -405,14 +406,14 @@ $(pv_value)</tooltip>
     </font>
     <width>100</width>
     <border_style>0</border_style>
-    <rules />
-    <pv_value />
+    <rules/>
+    <pv_value/>
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color blue="255" green="128" name="ISIS_Check_Border" red="0"/>
     </border_color>
     <horizontal_alignment>0</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>168</y>
     <wrap_words>false</wrap_words>
     <tooltip>$(pv_name)
@@ -425,22 +426,22 @@ $(pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <multiline_input>false</multiline_input>
     <auto_size>false</auto_size>
-    <scripts />
+    <scripts/>
     <height>25</height>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <precision_from_pv>true</precision_from_pv>
     <background_color>
-      <color blue="255" green="255" name="ISIS_Textbox_Background" red="255" />
+      <color blue="255" green="255" name="ISIS_Textbox_Background" red="255"/>
     </background_color>
     <widget_type>Text Input</widget_type>
     <enabled>true</enabled>
-    <text />
+    <text/>
     <font>
       <opifont.name fontName="Arial" height="14" style="1">ISIS_Value</opifont.name>
     </font>
     <width>100</width>
     <border_style>3</border_style>
-    <pv_value />
+    <pv_value/>
     <border_width>1</border_width>
     <maximum>1.7976931348623157E308</maximum>
     <minimum>-1.7976931348623157E308</minimum>
@@ -458,18 +459,18 @@ $(pv_value)</tooltip>
     <selector_type>0</selector_type>
     <pv_name>$(P)MOT:MTR0505</pv_name>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color blue="0" green="0" name="ISIS_Standard_Text" red="0"/>
     </foreground_color>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <precision>0</precision>
-    <confirm_message />
-    <rules />
+    <confirm_message/>
+    <rules/>
     <limits_from_pv>false</limits_from_pv>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color blue="255" green="128" name="ISIS_Check_Border" red="0"/>
     </border_color>
     <horizontal_alignment>0</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>168</y>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
@@ -480,7 +481,7 @@ $(pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <wuid>-300abe50:144ac7aacb4:-7e1b</wuid>
     <auto_size>false</auto_size>
-    <scripts />
+    <scripts/>
     <height>25</height>
     <name>Label_6</name>
     <scale_options>
@@ -491,10 +492,10 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <show_scrollbar>false</show_scrollbar>
     <background_color>
-      <color blue="240" green="240" name="ISIS_Label_Background" red="240" />
+      <color blue="240" green="240" name="ISIS_Label_Background" red="240"/>
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color blue="0" green="0" name="ISIS_Standard_Text" red="0"/>
     </foreground_color>
     <widget_type>Label</widget_type>
     <enabled>true</enabled>
@@ -504,16 +505,16 @@ $(pv_value)</tooltip>
     </font>
     <width>237</width>
     <border_style>0</border_style>
-    <rules />
+    <rules/>
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color blue="255" green="128" name="ISIS_Check_Border" red="0"/>
     </border_color>
     <horizontal_alignment>2</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>204</y>
     <wrap_words>true</wrap_words>
-    <tooltip />
+    <tooltip/>
     <x>70</x>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
@@ -524,7 +525,7 @@ $(pv_value)</tooltip>
     <wuid>-300abe50:144ac7aacb4:-7e1a</wuid>
     <auto_size>false</auto_size>
     <rotation_angle>0.0</rotation_angle>
-    <scripts />
+    <scripts/>
     <height>25</height>
     <name>Text Update_5</name>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -538,10 +539,10 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <pv_name>$(P)MOT:MTR0506.RBV</pv_name>
     <background_color>
-      <color blue="200" green="200" name="ISIS_Textbox_Readonly_Background" red="200" />
+      <color blue="200" green="200" name="ISIS_Textbox_Readonly_Background" red="200"/>
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color blue="0" green="0" name="ISIS_Standard_Text" red="0"/>
     </foreground_color>
     <widget_type>Text Update</widget_type>
     <enabled>true</enabled>
@@ -553,14 +554,14 @@ $(pv_value)</tooltip>
     </font>
     <width>100</width>
     <border_style>0</border_style>
-    <rules />
-    <pv_value />
+    <rules/>
+    <pv_value/>
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color blue="255" green="128" name="ISIS_Check_Border" red="0"/>
     </border_color>
     <horizontal_alignment>0</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>204</y>
     <wrap_words>false</wrap_words>
     <tooltip>$(pv_name)
@@ -573,22 +574,22 @@ $(pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <multiline_input>false</multiline_input>
     <auto_size>false</auto_size>
-    <scripts />
+    <scripts/>
     <height>25</height>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <precision_from_pv>true</precision_from_pv>
     <background_color>
-      <color blue="255" green="255" name="ISIS_Textbox_Background" red="255" />
+      <color blue="255" green="255" name="ISIS_Textbox_Background" red="255"/>
     </background_color>
     <widget_type>Text Input</widget_type>
     <enabled>true</enabled>
-    <text />
+    <text/>
     <font>
       <opifont.name fontName="Arial" height="14" style="1">ISIS_Value</opifont.name>
     </font>
     <width>100</width>
     <border_style>3</border_style>
-    <pv_value />
+    <pv_value/>
     <border_width>1</border_width>
     <maximum>1.7976931348623157E308</maximum>
     <minimum>-1.7976931348623157E308</minimum>
@@ -606,18 +607,18 @@ $(pv_value)</tooltip>
     <selector_type>0</selector_type>
     <pv_name>$(P)MOT:MTR0506</pv_name>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color blue="0" green="0" name="ISIS_Standard_Text" red="0"/>
     </foreground_color>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <precision>0</precision>
-    <confirm_message />
-    <rules />
+    <confirm_message/>
+    <rules/>
     <limits_from_pv>false</limits_from_pv>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color blue="255" green="128" name="ISIS_Check_Border" red="0"/>
     </border_color>
     <horizontal_alignment>0</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>204</y>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
@@ -628,7 +629,7 @@ $(pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <wuid>-300abe50:144ac7aacb4:-7e0c</wuid>
     <auto_size>false</auto_size>
-    <scripts />
+    <scripts/>
     <height>25</height>
     <name>Label_7</name>
     <scale_options>
@@ -639,10 +640,10 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <show_scrollbar>false</show_scrollbar>
     <background_color>
-      <color blue="240" green="240" name="ISIS_Label_Background" red="240" />
+      <color blue="240" green="240" name="ISIS_Label_Background" red="240"/>
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color blue="0" green="0" name="ISIS_Standard_Text" red="0"/>
     </foreground_color>
     <widget_type>Label</widget_type>
     <enabled>true</enabled>
@@ -652,16 +653,16 @@ $(pv_value)</tooltip>
     </font>
     <width>163</width>
     <border_style>0</border_style>
-    <rules />
+    <rules/>
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color blue="255" green="128" name="ISIS_Check_Border" red="0"/>
     </border_color>
     <horizontal_alignment>2</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>132</y>
     <wrap_words>true</wrap_words>
-    <tooltip />
+    <tooltip/>
     <x>144</x>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
@@ -672,7 +673,7 @@ $(pv_value)</tooltip>
     <wuid>-300abe50:144ac7aacb4:-7e0b</wuid>
     <auto_size>false</auto_size>
     <rotation_angle>0.0</rotation_angle>
-    <scripts />
+    <scripts/>
     <height>25</height>
     <name>Text Update_6</name>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -686,10 +687,10 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <pv_name>$(P)MOT:MTR0504.RBV</pv_name>
     <background_color>
-      <color blue="200" green="200" name="ISIS_Textbox_Readonly_Background" red="200" />
+      <color blue="200" green="200" name="ISIS_Textbox_Readonly_Background" red="200"/>
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color blue="0" green="0" name="ISIS_Standard_Text" red="0"/>
     </foreground_color>
     <widget_type>Text Update</widget_type>
     <enabled>true</enabled>
@@ -701,14 +702,14 @@ $(pv_value)</tooltip>
     </font>
     <width>100</width>
     <border_style>0</border_style>
-    <rules />
-    <pv_value />
+    <rules/>
+    <pv_value/>
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color blue="255" green="128" name="ISIS_Check_Border" red="0"/>
     </border_color>
     <horizontal_alignment>0</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>132</y>
     <wrap_words>false</wrap_words>
     <tooltip>$(pv_name)
@@ -721,22 +722,22 @@ $(pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <multiline_input>false</multiline_input>
     <auto_size>false</auto_size>
-    <scripts />
+    <scripts/>
     <height>25</height>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <precision_from_pv>true</precision_from_pv>
     <background_color>
-      <color blue="255" green="255" name="ISIS_Textbox_Background" red="255" />
+      <color blue="255" green="255" name="ISIS_Textbox_Background" red="255"/>
     </background_color>
     <widget_type>Text Input</widget_type>
     <enabled>true</enabled>
-    <text />
+    <text/>
     <font>
       <opifont.name fontName="Arial" height="14" style="1">ISIS_Value</opifont.name>
     </font>
     <width>100</width>
     <border_style>3</border_style>
-    <pv_value />
+    <pv_value/>
     <border_width>1</border_width>
     <maximum>1.7976931348623157E308</maximum>
     <minimum>-1.7976931348623157E308</minimum>
@@ -754,18 +755,18 @@ $(pv_value)</tooltip>
     <selector_type>0</selector_type>
     <pv_name>$(P)MOT:MTR0504</pv_name>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color blue="0" green="0" name="ISIS_Standard_Text" red="0"/>
     </foreground_color>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <precision>0</precision>
-    <confirm_message />
-    <rules />
+    <confirm_message/>
+    <rules/>
     <limits_from_pv>false</limits_from_pv>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color blue="255" green="128" name="ISIS_Check_Border" red="0"/>
     </border_color>
     <horizontal_alignment>0</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>132</y>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
@@ -776,7 +777,7 @@ $(pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <wuid>-300abe50:144ac7aacb4:-7df3</wuid>
     <auto_size>false</auto_size>
-    <scripts />
+    <scripts/>
     <height>25</height>
     <name>Label_9</name>
     <scale_options>
@@ -787,10 +788,10 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <show_scrollbar>false</show_scrollbar>
     <background_color>
-      <color blue="240" green="240" name="ISIS_Label_Background" red="240" />
+      <color blue="240" green="240" name="ISIS_Label_Background" red="240"/>
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color blue="0" green="0" name="ISIS_Standard_Text" red="0"/>
     </foreground_color>
     <widget_type>Label</widget_type>
     <enabled>true</enabled>
@@ -800,16 +801,16 @@ $(pv_value)</tooltip>
     </font>
     <width>235</width>
     <border_style>0</border_style>
-    <rules />
+    <rules/>
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color blue="255" green="128" name="ISIS_Check_Border" red="0"/>
     </border_color>
     <horizontal_alignment>2</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>240</y>
     <wrap_words>true</wrap_words>
-    <tooltip />
+    <tooltip/>
     <x>70</x>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
@@ -820,7 +821,7 @@ $(pv_value)</tooltip>
     <wuid>-300abe50:144ac7aacb4:-7df2</wuid>
     <auto_size>false</auto_size>
     <rotation_angle>0.0</rotation_angle>
-    <scripts />
+    <scripts/>
     <height>25</height>
     <name>Text Update_7</name>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -834,10 +835,10 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <pv_name>$(P)MOT:MTR0507.RBV</pv_name>
     <background_color>
-      <color blue="200" green="200" name="ISIS_Textbox_Readonly_Background" red="200" />
+      <color blue="200" green="200" name="ISIS_Textbox_Readonly_Background" red="200"/>
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color blue="0" green="0" name="ISIS_Standard_Text" red="0"/>
     </foreground_color>
     <widget_type>Text Update</widget_type>
     <enabled>true</enabled>
@@ -849,14 +850,14 @@ $(pv_value)</tooltip>
     </font>
     <width>100</width>
     <border_style>0</border_style>
-    <rules />
-    <pv_value />
+    <rules/>
+    <pv_value/>
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color blue="255" green="128" name="ISIS_Check_Border" red="0"/>
     </border_color>
     <horizontal_alignment>0</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>240</y>
     <wrap_words>false</wrap_words>
     <tooltip>$(pv_name)
@@ -869,22 +870,22 @@ $(pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <multiline_input>false</multiline_input>
     <auto_size>false</auto_size>
-    <scripts />
+    <scripts/>
     <height>25</height>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <precision_from_pv>true</precision_from_pv>
     <background_color>
-      <color blue="255" green="255" name="ISIS_Textbox_Background" red="255" />
+      <color blue="255" green="255" name="ISIS_Textbox_Background" red="255"/>
     </background_color>
     <widget_type>Text Input</widget_type>
     <enabled>true</enabled>
-    <text />
+    <text/>
     <font>
       <opifont.name fontName="Arial" height="14" style="1">ISIS_Value</opifont.name>
     </font>
     <width>100</width>
     <border_style>3</border_style>
-    <pv_value />
+    <pv_value/>
     <border_width>1</border_width>
     <maximum>1.7976931348623157E308</maximum>
     <minimum>-1.7976931348623157E308</minimum>
@@ -902,18 +903,18 @@ $(pv_value)</tooltip>
     <selector_type>0</selector_type>
     <pv_name>$(P)MOT:MTR0507</pv_name>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color blue="0" green="0" name="ISIS_Standard_Text" red="0"/>
     </foreground_color>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <precision>0</precision>
-    <confirm_message />
-    <rules />
+    <confirm_message/>
+    <rules/>
     <limits_from_pv>false</limits_from_pv>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color blue="255" green="128" name="ISIS_Check_Border" red="0"/>
     </border_color>
     <horizontal_alignment>0</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>240</y>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
@@ -923,7 +924,7 @@ $(pv_value)</tooltip>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <visible>true</visible>
     <wuid>-300abe50:144ac7aacb4:-7d14</wuid>
-    <scripts />
+    <scripts/>
     <height>40</height>
     <name>Action Button</name>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
@@ -932,12 +933,12 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <pv_name />
+    <pv_name/>
     <background_color>
-      <color blue="187" green="187" name="ISIS_Standard_Button" red="187" />
+      <color blue="187" green="187" name="ISIS_Standard_Button" red="187"/>
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color blue="0" green="0" name="ISIS_Standard_Text" red="0"/>
     </foreground_color>
     <widget_type>Action Button</widget_type>
     <enabled>true</enabled>
@@ -949,13 +950,13 @@ $(pv_value)</tooltip>
     <width>163</width>
     <border_style>0</border_style>
     <push_action_index>0</push_action_index>
-    <image />
-    <rules />
-    <pv_value />
+    <image/>
+    <rules/>
+    <pv_value/>
     <toggle_button>false</toggle_button>
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color blue="255" green="128" name="ISIS_Check_Border" red="0"/>
     </border_color>
     <y>276</y>
     <actions hook="false" hook_all="false">
@@ -963,7 +964,7 @@ $(pv_value)</tooltip>
         <pv_name>loc://synoptic:oneShot</pv_name>
         <value>Goniometer Motors</value>
         <timeout>10</timeout>
-        <description />
+        <description/>
       </action>
     </actions>
     <tooltip>$(pv_name)
@@ -978,7 +979,7 @@ $(pv_value)</tooltip>
     <fill_level>0.0</fill_level>
     <wuid>49adebdf:144b5da073f:-6626</wuid>
     <rotation_angle>0.0</rotation_angle>
-    <scripts />
+    <scripts/>
     <arrows>3</arrows>
     <height>229</height>
     <anti_alias>true</anti_alias>
@@ -991,16 +992,16 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>true</keep_wh_ratio>
     </scale_options>
     <points>
-      <point x="48" y="48" />
-      <point x="48" y="276" />
+      <point x="48" y="48"/>
+      <point x="48" y="276"/>
     </points>
     <transparent>false</transparent>
-    <pv_name />
+    <pv_name/>
     <background_color>
-      <color blue="0" green="0" name="ISIS_Border" red="0" />
+      <color blue="0" green="0" name="ISIS_Border" red="0"/>
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Red" red="255" />
+      <color blue="0" green="0" name="ISIS_Red" red="255"/>
     </foreground_color>
     <widget_type>Polyline</widget_type>
     <enabled>true</enabled>
@@ -1011,15 +1012,15 @@ $(pv_value)</tooltip>
     <width>1</width>
     <line_style>0</line_style>
     <border_style>0</border_style>
-    <rules />
-    <pv_value />
+    <rules/>
+    <pv_value/>
     <border_width>3</border_width>
     <line_width>5</line_width>
     <horizontal_fill>true</horizontal_fill>
     <border_color>
-      <color blue="0" green="0" name="ISIS_Border" red="0" />
+      <color blue="0" green="0" name="ISIS_Border" red="0"/>
     </border_color>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>48</y>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
@@ -1030,7 +1031,7 @@ $(pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <wuid>49adebdf:144b5da073f:-661c</wuid>
     <auto_size>false</auto_size>
-    <scripts />
+    <scripts/>
     <height>31</height>
     <name>Label_10</name>
     <scale_options>
@@ -1041,10 +1042,10 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <show_scrollbar>false</show_scrollbar>
     <background_color>
-      <color blue="240" green="240" name="ISIS_Label_Background" red="240" />
+      <color blue="240" green="240" name="ISIS_Label_Background" red="240"/>
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color blue="0" green="0" name="ISIS_Standard_Text" red="0"/>
     </foreground_color>
     <widget_type>Label</widget_type>
     <enabled>true</enabled>
@@ -1054,16 +1055,16 @@ $(pv_value)</tooltip>
     </font>
     <width>73</width>
     <border_style>0</border_style>
-    <rules />
+    <rules/>
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color blue="255" green="128" name="ISIS_Check_Border" red="0"/>
     </border_color>
     <horizontal_alignment>1</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>12</y>
     <wrap_words>true</wrap_words>
-    <tooltip />
+    <tooltip/>
     <x>12</x>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
@@ -1071,7 +1072,7 @@ $(pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <wuid>49adebdf:144b5da073f:-6603</wuid>
     <auto_size>false</auto_size>
-    <scripts />
+    <scripts/>
     <height>31</height>
     <name>Label_11</name>
     <scale_options>
@@ -1082,10 +1083,10 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <show_scrollbar>false</show_scrollbar>
     <background_color>
-      <color blue="240" green="240" name="ISIS_Label_Background" red="240" />
+      <color blue="240" green="240" name="ISIS_Label_Background" red="240"/>
     </background_color>
     <foreground_color>
-      <color blue="0" green="0" name="ISIS_Standard_Text" red="0" />
+      <color blue="0" green="0" name="ISIS_Standard_Text" red="0"/>
     </foreground_color>
     <widget_type>Label</widget_type>
     <enabled>true</enabled>
@@ -1095,16 +1096,56 @@ $(pv_value)</tooltip>
     </font>
     <width>73</width>
     <border_style>0</border_style>
-    <rules />
+    <rules/>
     <border_width>1</border_width>
     <border_color>
-      <color blue="255" green="128" name="ISIS_Check_Border" red="0" />
+      <color blue="255" green="128" name="ISIS_Check_Border" red="0"/>
     </border_color>
     <horizontal_alignment>1</horizontal_alignment>
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <y>280</y>
     <wrap_words>true</wrap_words>
-    <tooltip />
+    <tooltip/>
     <x>12</x>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <actions hook="false" hook_all="false"/>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0"/>
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
+    </foreground_color>
+    <height>1</height>
+    <image/>
+    <name>Dummy</name>
+    <push_action_index>0</push_action_index>
+    <pv_name/>
+    <pv_value/>
+    <rules/>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts/>
+    <style>1</style>
+    <text/>
+    <toggle_button>false</toggle_button>
+    <tooltip/>
+    <visible>true</visible>
+    <widget_type>Action Button</widget_type>
+    <width>1</width>
+    <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
+    <x>12</x>
+    <y>12</y>
   </widget>
 </display>

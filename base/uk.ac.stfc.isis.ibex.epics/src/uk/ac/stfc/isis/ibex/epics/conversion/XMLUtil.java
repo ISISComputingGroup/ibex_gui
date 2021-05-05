@@ -19,15 +19,13 @@
 
 package uk.ac.stfc.isis.ibex.epics.conversion;
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
-
 import javax.xml.XMLConstants;
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -36,12 +34,14 @@ import org.xml.sax.SAXException;
 
 import com.google.common.base.Strings;
 
+import uk.ac.stfc.isis.ibex.jaxb.JAXB;
+
 /**
  * Static utility class that deals with decoding/encoding XML into classes.
  */
 public final class XMLUtil {
-    
-    private XMLUtil() {
+
+	private XMLUtil() {
     }
 
     /**
@@ -54,15 +54,16 @@ public final class XMLUtil {
      * @param clazz
      *            the type to parse the XML into
      * @return the xml data converted into the specified type
-     * @throws JAXBException
+     * @throws IOException
      *             XML Exception thrown if the conversion failed
      */
     @SuppressWarnings("unchecked")
-    public static synchronized <T> T fromXml(Reader xml, Class<T> clazz) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(clazz);
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-
-        return (T) unmarshaller.unmarshal(xml);
+    public static synchronized <T> T fromXml(Reader xml, Class<T> clazz) throws IOException {
+    	try {
+    		return (T) JAXB.getUnmarshaller(clazz).unmarshal(xml);
+    	} catch (JAXBException e) {
+    		throw new IOException(e.getMessage(), e);
+    	}
     }
 
     /**
@@ -75,10 +76,10 @@ public final class XMLUtil {
      * @param clazz
      *            the type to parse the XML into
      * @return the xml data converted into the specified type
-     * @throws JAXBException
+     * @throws IOException
      *             XML Exception thrown if the conversion failed
      */
-    public static synchronized <T> T fromXml(String xml, Class<T> clazz) throws JAXBException {
+    public static synchronized <T> T fromXml(String xml, Class<T> clazz) throws IOException {
         return fromXml(new StringReader(xml), clazz);
 	}
 
@@ -92,13 +93,11 @@ public final class XMLUtil {
      * @param clazz
      *            the type to parse the XML into
      * @return the XML that the object has been converted into
-     * @throws JAXBException
+     * @throws IOException
      *             XML Exception for if the conversion to xml failed
-     * @throws SAXException
-     *             XML Exception for if the xml doesn't conform to the schema
      */
     public static synchronized <T> String toXml(T toConvert, Class<T> clazz)
-            throws JAXBException, SAXException {
+            throws IOException {
         
         return XMLUtil.toXml(toConvert, clazz, null);
     }
@@ -116,25 +115,30 @@ public final class XMLUtil {
      * @param rawSchema
      *            the schema to check against
      * @return the XML that the object has been converted into
-     * @throws JAXBException
+     * @throws IOException
      *             XML Exception for if the conversion to xml failed
-     * @throws SAXException
-     *             XML Exception for if the xml doesn't conform to the schema
      */
     public static synchronized <T> String toXml(T toConvert, Class<T> clazz, String rawSchema)
-            throws JAXBException, SAXException {
+            throws IOException {
         Schema schema = null; // Null means no validation
         
         if (!Strings.isNullOrEmpty(rawSchema)) {
             SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            schema = sf.newSchema(new StreamSource(new StringReader(rawSchema)));
+            try {
+            	schema = sf.newSchema(new StreamSource(new StringReader(rawSchema)));
+            } catch (SAXException e) {
+                throw new IOException(e.getMessage(), e);
+            }
         }
         
-        JAXBContext context = JAXBContext.newInstance(clazz);
-        Marshaller marshaller = context.createMarshaller();
+        Marshaller marshaller = JAXB.getMarshaller(clazz);
         StringWriter writer = new StringWriter();
         marshaller.setSchema(schema);
-        marshaller.marshal(toConvert, writer);
+        try {
+        	marshaller.marshal(toConvert, writer);
+        } catch (JAXBException e) {
+        	throw new IOException(e.getMessage(), e);
+        }
 		
 		return writer.toString();		
 	}

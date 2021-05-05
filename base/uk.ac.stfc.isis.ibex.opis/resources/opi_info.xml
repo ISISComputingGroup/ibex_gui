@@ -11,12 +11,25 @@
           <macro>
             <name>MOTION_SET_POINT</name>
             <description>The motion setpoint to display (e.g. LKUP:SAMPLE)</description>
+            <default/>
           </macro>
         </macros>
         <categories>
           <category>Miscellaneous motion control</category>
           <category>Sample stacks and goniometers</category>
           <category>Sample changers</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>SANS2D Scraper Aperture</key>
+      <value>
+        <type>MOTION_SET_POINTS</type>
+        <path>stage/sans2d_scraper_aperture.opi</path>
+        <description>The OPI for motion setpoints</description>
+        <macros/>
+        <categories>
+          <category>Miscellaneous motion control</category>
         </categories>
       </value>
     </entry>
@@ -30,6 +43,7 @@
           <macro>
             <name>INST_PREFIX</name>
             <description>The prefix for the instrument this OPI is looking at, e.g. IN:LARMOR: (default: local prefix)</description>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -47,6 +61,7 @@
           <macro>
             <name>SP2XX</name>
             <description>The SP2XX PV prefix (e.g. SP2XX_01)</description>
+            <default>SP2XX_01</default>
           </macro>
         </macros>
         <categories>
@@ -64,6 +79,7 @@
           <macro>
             <name>KEYENCE</name>
             <description>The Keyence PV prefix (e.g. KYNCTM3K_01)</description>
+            <default>KYNCTM3K_01</default>
           </macro>
         </macros>
         <categories/>
@@ -82,6 +98,18 @@
       </value>
     </entry>
     <entry>
+      <key>SANS Sample changer</key>
+      <value>
+        <type>SAMPLECHANGER</type>
+        <path>stage/sans_sample_changer.opi</path>
+        <description>The OPI for the sample changer. No properties required.</description>
+        <macros/>
+        <categories>
+          <category>Sample changers</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>OscillatingCollimator</key>
       <value>
         <type>OSCILLATING_COLLIMATOR</type>
@@ -91,6 +119,7 @@
           <macro>
             <name>MOT</name>
             <description>The motor controlling the collimator (e.g. MOT:MTR0101)</description>
+            <default>MOT:MTR0101</default>
           </macro>
         </macros>
         <categories>
@@ -108,6 +137,7 @@
           <macro>
             <name>FERMCHOP</name>
             <description>The Fermi chopper PV prefix (e.g. FERMCHOP_01).</description>
+            <default>FERMCHOP_01</default>
           </macro>
         </macros>
         <categories>
@@ -125,30 +155,37 @@
           <macro>
             <name>M</name>
             <description>The monitor number (e.g. 1).</description>
+            <default/>
           </macro>
           <macro>
             <name>MA</name>
             <description>The internal number for the first channel (e.g. 1).</description>
+            <default/>
           </macro>
           <macro>
             <name>MB</name>
             <description>The internal number for the second channel (e.g. 2).</description>
+            <default/>
           </macro>
           <macro>
             <name>MAHVCHAN</name>
             <description>CAEN HV channel for A (e.g. 0).</description>
+            <default/>
           </macro>
           <macro>
             <name>MBHVCHAN</name>
             <description>CAEN HV channel for B (e.g. 1).</description>
+            <default/>
           </macro>
           <macro>
             <name>MAHVSLOT</name>
             <description>CAEN HV slot for A (e.g. 0).</description>
+            <default/>
           </macro>
           <macro>
             <name>MBHVSLOT</name>
             <description>CAEN HV slot for B (e.g. 1).</description>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -166,6 +203,7 @@
           <macro>
             <name>PDR2000</name>
             <description>The MKS PDR 2000 PV prefix (e.g. PDR2000_01).</description>
+            <default>PDR2000_01</default>
           </macro>
         </macros>
         <categories>
@@ -183,14 +221,17 @@
           <macro>
             <name>J</name>
             <description>The Jaws PV (e.g. MOT:JAWS1).</description>
+            <default>MOT:JAWS1</default>
           </macro>
           <macro>
             <name>M1</name>
             <description>The motor PV relating to motor 1 (e.g. MTR0601).</description>
+            <default>MTR0601</default>
           </macro>
           <macro>
             <name>M2</name>
             <description>The motor PV relating to motor 2 (e.g. MTR0602).</description>
+            <default>MTR0602</default>
           </macro>
         </macros>
         <categories>
@@ -202,12 +243,13 @@
       <key>ILM200</key>
       <value>
         <type>CRYO_LEVEL_GAUGE</type>
-        <path>ilm200\ilm200.opi</path>
+        <path>ilm200/ilm200.opi</path>
         <description>The OPI for the ILM200</description>
         <macros>
           <macro>
             <name>ILM200</name>
             <description>The ILM200 PV prefix (e.g. ILM200_01)</description>
+            <default>ILM200_01</default>
           </macro>
         </macros>
         <categories>
@@ -237,6 +279,7 @@
           <macro>
             <name>LINKAM95</name>
             <description>The Linkam 95 PV prefix (e.g. LINKAM95_01).</description>
+            <default>LINKAM95_01</default>
           </macro>
         </macros>
         <categories>
@@ -248,16 +291,18 @@
       <key>Pinhole Selector</key>
       <value>
         <type>PINHOLESELECTOR</type>
-        <path>pinhole_selector\pinhole_selector.opi</path>
+        <path>pinhole_selector/pinhole_selector.opi</path>
         <description>The OPI for the pinhole selector.</description>
         <macros>
           <macro>
             <name>PH</name>
             <description>The name of the device, as defined in the positions look-up file (e.g. PINHOLE)</description>
+            <default/>
           </macro>
           <macro>
             <name>MM</name>
             <description>The motor PV to point at, as defined in the motionsetpoints file (e.g. MOT:MTR0605)</description>
+            <default>MOT:MTR0101</default>
           </macro>
         </macros>
         <categories>
@@ -269,24 +314,28 @@
       <key>Slit motors</key>
       <value>
         <type>JAWS</type>
-        <path>slit_motors.opi</path>
+        <path>jaws/slit_motors_4.opi</path>
         <description>The OPI displaying the motors of a slit.</description>
         <macros>
           <macro>
             <name>M1</name>
             <description>The motor PV relating to motor 1 (e.g. MTR0601).</description>
+            <default>MTR0601</default>
           </macro>
           <macro>
             <name>M2</name>
             <description>The motor PV relating to motor 2 (e.g. MTR0602).</description>
+            <default>MTR0602</default>
           </macro>
           <macro>
             <name>M3</name>
             <description>The motor PV relating to motor 3 (e.g. MTR0603).</description>
+            <default>MTR0603</default>
           </macro>
           <macro>
             <name>M4</name>
             <description>The motor PV relating to motor 4 (e.g. MTR0604).</description>
+            <default>MTR0604</default>
           </macro>
         </macros>
         <categories>
@@ -316,10 +365,12 @@
           <macro>
             <name>S</name>
             <description>The name to display for the stage</description>
+            <default/>
           </macro>
           <macro>
             <name>MM</name>
             <description>The motor PV relating to the motor controlling the stage (e.g. MOT:MTR0605).</description>
+            <default>MOT:MTR0101</default>
           </macro>
         </macros>
         <categories>
@@ -331,12 +382,13 @@
       <key>Lakeshore 460</key>
       <value>
         <type>LKSH460</type>
-        <path>Lakeshore460/lakeshore460.opi</path>
+        <path>Lakeshore460/Lakeshore460.opi</path>
         <description>The OPI for the Lakeshore 460 Gaussmeter.</description>
         <macros>
           <macro>
             <name>LKSH460</name>
             <description>The Lakeshore460 PV prefix (e.g. LKSH460_01).</description>
+            <default>LKSH460_01</default>
           </macro>
         </macros>
         <categories>
@@ -354,6 +406,7 @@
           <macro>
             <name>TPG300</name>
             <description>The TPG300 PV prefix (e.g. TPG300_01).</description>
+            <default>TPG300_01</default>
           </macro>
         </macros>
         <categories>
@@ -371,10 +424,12 @@
           <macro>
             <name>M</name>
             <description>The monitor number (e.g. 1).</description>
+            <default/>
           </macro>
           <macro>
             <name>MM</name>
             <description>The motor PV relating to the motor controlling the monitor (e.g. MOT:MTR0605).</description>
+            <default>MOT:MTR0101</default>
           </macro>
         </macros>
         <categories>
@@ -393,6 +448,7 @@
           <macro>
             <name>MOXA1210</name>
             <description>The Moxa E1210 PV prefix (e.g. MOXA12XX_01).</description>
+            <default>MOXA12XX_01</default>
           </macro>
         </macros>
         <categories/>
@@ -408,6 +464,7 @@
           <macro>
             <name>MOXA1210</name>
             <description>The Moxa E1240 PV prefix (e.g. MOXA12XX_01).</description>
+            <default>MOXA12XX_01</default>
           </macro>
         </macros>
         <categories>
@@ -425,6 +482,7 @@
           <macro>
             <name>MOXA1210</name>
             <description>The Moxa E1262 PV prefix (e.g. MOXA12XX_01).</description>
+            <default>MOXA12XX_01</default>
           </macro>
         </macros>
         <categories>
@@ -442,6 +500,7 @@
           <macro>
             <name>EURO</name>
             <description>The Eurotherm PV prefix (e.g. EUROTHRM_01).</description>
+            <default>EUROTHRM_01</default>
           </macro>
         </macros>
         <categories>
@@ -453,36 +512,72 @@
       <key>Mercury iTC</key>
       <value>
         <type>MERCURY</type>
-        <path>mercuryiTC\mercuryiTC.opi</path>
+        <path>mercuryiTC/mercuryiTC.opi</path>
         <description>The OPI for the Mercury temperature controller.</description>
         <macros>
           <macro>
             <name>MERCURY</name>
             <description>The Mercury PV prefix (e.g. MERCURY_01).</description>
+            <default>MERCURY_01</default>
           </macro>
           <macro>
             <name>TEMP_NUM1</name>
             <description>The first temperature card number (e.g. 1, optional).</description>
+            <default>1</default>
           </macro>
           <macro>
             <name>TEMP_NUM2</name>
             <description>The second temperature card number (e.g. 2, optional).</description>
+            <default>2</default>
           </macro>
           <macro>
             <name>TEMP_NUM3</name>
             <description>The third temperature card number (e.g. 3, optional).</description>
+            <default>3</default>
           </macro>
           <macro>
             <name>TEMP_NUM4</name>
             <description>The fourth temperature card number (e.g. 4, optional).</description>
+            <default>4</default>
           </macro>
           <macro>
             <name>LEVEL_NUM1</name>
             <description>The first level card number (e.g. 1, optional).</description>
+            <default>1</default>
           </macro>
           <macro>
             <name>LEVEL_NUM2</name>
-            <description>The second level card number (e.g. 1, optional).</description>
+            <description>The second level card number (e.g. 2, optional).</description>
+            <default>2</default>
+          </macro>
+          <macro>
+            <name>PRESSURE_NUM1</name>
+            <description>The first pressure card number (e.g. 1, optional).</description>
+            <default>1</default>
+          </macro>
+          <macro>
+            <name>PRESSURE_NUM2</name>
+            <description>The second pressure card number (e.g. 2, optional).</description>
+            <default>2</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Temperature controllers</category>
+          <category>Cryogenics</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Mercury Flow Cryostat</key>
+      <value>
+        <type>MERCURY</type>
+        <path>mercuryiTC/mercuryiTC_flow.opi</path>
+        <description>The OPI for the Mercury temperature controller connected to the flow cryostat.</description>
+        <macros>
+          <macro>
+            <name>MERCURY</name>
+            <description>The Mercury PV prefix (e.g. MERCURY_01).</description>
+            <default>MERCURY_01</default>
           </macro>
         </macros>
         <categories>
@@ -501,6 +596,7 @@
           <macro>
             <name>KHLY2400</name>
             <description>The Keithley 2400 PV name (e.g. KHLY2400_01).</description>
+            <default>KHLY2400_01</default>
           </macro>
         </macros>
         <categories>
@@ -518,6 +614,7 @@
           <macro>
             <name>MOT</name>
             <description>The PV for this slit set's motor (e.g. MOT:MTR0101).</description>
+            <default>MOT:MTR0101</default>
           </macro>
         </macros>
         <categories>
@@ -547,18 +644,22 @@
           <macro>
             <name>CCD_1</name>
             <description>The PV prefix for the first CCD100 (e.g CCD100_01).</description>
+            <default>CCD100_01</default>
           </macro>
           <macro>
             <name>CCD_2</name>
-            <description>The PV prefix for the second CCD100 (e.g CCD100_01).</description>
+            <description>The PV prefix for the second CCD100 (e.g CCD100_02).</description>
+            <default>CCD100_02</default>
           </macro>
           <macro>
             <name>CCD_3</name>
-            <description>The PV prefix for the third CCD100 (e.g CCD100_01).</description>
+            <description>The PV prefix for the third CCD100 (e.g CCD100_03).</description>
+            <default>CCD100_03</default>
           </macro>
           <macro>
             <name>CCD_4</name>
-            <description>The PV prefix for the fourth CCD100 (e.g CCD100_01).</description>
+            <description>The PV prefix for the fourth CCD100 (e.g CCD100_04).</description>
+            <default>CCD100_04</default>
           </macro>
         </macros>
         <categories>
@@ -577,6 +678,7 @@
           <macro>
             <name>CYBAMAN</name>
             <description>The cybaman PV prefix (e.g. CYBAMAN_01).</description>
+            <default>CYBAMAN_01</default>
           </macro>
         </macros>
         <categories>
@@ -594,6 +696,7 @@
           <macro>
             <name>LAKESHORE336</name>
             <description>The Lakeshore 336 PV prefix (e.g. LKSH336_01).</description>
+            <default>LKSH336_01</default>
           </macro>
         </macros>
         <categories>
@@ -605,21 +708,23 @@
       <key>PGC</key>
       <value>
         <type>PGC</type>
-        <path>pgc\pgc.opi</path>
+        <path>pgc/pgc.opi</path>
         <description>The OPI for the Polariser , Guide and Collimation ticket.</description>
         <macros>
           <macro>
             <name>PGC</name>
             <description>The name of the device, as defined in the positions look-up file (e.g. PGC))</description>
+            <default/>
           </macro>
           <macro>
             <name>MM</name>
             <description>The motor PV to point at (as defined in the motionsetpoints file (e.g. MOT:MTR0101))</description>
+            <default>MOT:MTR0101</default>
           </macro>
         </macros>
         <categories>
           <category>Miscellaneous motion control</category>
-		            <category>Polarisers and Analysers</category>
+          <category>Polarisers and Analysers</category>
         </categories>
       </value>
     </entry>
@@ -633,10 +738,12 @@
           <macro>
             <name>IOC_NUM</name>
             <description>PSU IOC Number, two digits (e.g. 01).</description>
+            <default/>
           </macro>
           <macro>
             <name>PS_NUM</name>
             <description>Number of the unit within the IOC (e.g. 3).</description>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -654,14 +761,17 @@
           <macro>
             <name>MAX_CRATES</name>
             <description>The maximum number of crates to display (default: 2, max: 15)</description>
+            <default/>
           </macro>
           <macro>
             <name>MAX_SLOTS</name>
             <description>The maximum number of slots to display per crate (default: 5)</description>
+            <default/>
           </macro>
           <macro>
             <name>MAX_CHANNELS</name>
             <description>The maximum number of channels per slot per crate to display (default: 25)</description>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -679,6 +789,7 @@
           <macro>
             <name>CRYVALVE</name>
             <description>The cryo valve PV prefix (e.g. CRYVALVE_01).</description>
+            <default>CRYVALVE_01</default>
           </macro>
         </macros>
         <categories>
@@ -702,7 +813,7 @@
       <key>Polaris jaw set</key>
       <value>
         <type>JAWS</type>
-        <path>jaws/polaris_jaws/Jaws_manager.opi</path>
+        <path>jaws/jaws_managers/polaris_manager.opi</path>
         <description>The OPI for the Polaris jaw set. No properties required.</description>
         <macros/>
         <categories>
@@ -720,6 +831,25 @@
           <macro>
             <name>LAKESHORE218</name>
             <description>The Lakeshore 218 PV prefix (e.g. LKSH218_01).</description>
+            <default>LKSH218_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Lakeshore 372</key>
+      <value>
+        <type>LAKESHORE</type>
+        <path>lakeshore372.opi</path>
+        <description>The OPI for the Lakeshore 372 temperature controller.</description>
+        <macros>
+          <macro>
+            <name>LAKESHORE372</name>
+            <description>The Lakeshore 372 PV prefix (e.g. LKSH372_01).</description>
+            <default>LKSH372_01</default>
           </macro>
         </macros>
         <categories>
@@ -737,22 +867,27 @@
           <macro>
             <name>J</name>
             <description>The Jaws PV (e.g. MOT:JAWS1).</description>
+            <default/>
           </macro>
           <macro>
             <name>M1</name>
             <description>The motor PV relating to motor 1 (e.g. MTR0601).</description>
+            <default>MTR0601</default>
           </macro>
           <macro>
             <name>M2</name>
             <description>The motor PV relating to motor 2 (e.g. MTR0602).</description>
+            <default>MTR0602</default>
           </macro>
           <macro>
             <name>M3</name>
             <description>The motor PV relating to motor 3 (e.g. MTR0603).</description>
+            <default>MTR0603</default>
           </macro>
           <macro>
             <name>M4</name>
             <description>The motor PV relating to motor 4 (e.g. MTR0604).</description>
+            <default>MTR0604</default>
           </macro>
         </macros>
         <categories>
@@ -770,6 +905,7 @@
           <macro>
             <name>IP</name>
             <description>The IP address of the oscilloscope.</description>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -787,10 +923,12 @@
           <macro>
             <name>NUMBER</name>
             <description>The chopper number (e.g. CH1).</description>
+            <default/>
           </macro>
           <macro>
             <name>INST_PREFIX</name>
             <description>The prefix for the instrument this OPI is looking at, e.g. IN:LARMOR: (default: local prefix)</description>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -806,8 +944,8 @@
         <description>The OPI for the analyser. No properties required.</description>
         <macros/>
         <categories>
-                   <category>Monitors</category>
-		           <category>Polarisers and Analysers</category>
+          <category>Monitors</category>
+          <category>Polarisers and Analysers</category>
         </categories>
       </value>
     </entry>
@@ -831,6 +969,7 @@
           <macro>
             <name>J</name>
             <description>The Jaws PV (e.g. MOT:JAWS1).</description>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -848,6 +987,7 @@
           <macro>
             <name>COUETTE</name>
             <description>The COUETTE PV prefix (e.g. COUETTE_01)</description>
+            <default>COUETTE_01</default>
           </macro>
         </macros>
         <categories>
@@ -858,13 +998,14 @@
     <entry>
       <key>SD Test</key>
       <value>
-        <type>UNCONFIRMED</type>
+        <type>DEBUG</type>
         <path>SDTEST.opi</path>
         <description>Software development test OPI.</description>
         <macros>
           <macro>
             <name>DEV</name>
             <description>The SDTest PV prefix (e.g. SDTEST_01)</description>
+            <default>SDTEST_01</default>
           </macro>
         </macros>
         <categories/>
@@ -873,13 +1014,14 @@
     <entry>
       <key>Galil Engineering View</key>
       <value>
-        <type>GALIL_ENGINEERING</type>
+        <type>DEBUG</type>
         <path>galil/galil.opi</path>
         <description>The OPI giving a detailed engineering view of a galil.</description>
         <macros>
           <macro>
             <name>M</name>
             <description>The galil number to view. E.g. the galil at MOT:MTR0304 would be 03</description>
+            <default>01</default>
           </macro>
         </macros>
         <categories>
@@ -897,6 +1039,7 @@
           <macro>
             <name>SCIMAG3D</name>
             <description>The magnet PV prefix (e.g. SCIMAG3D_01).</description>
+            <default>SCIMAG3D_01</default>
           </macro>
         </macros>
         <categories>
@@ -914,6 +1057,7 @@
           <macro>
             <name>SKFMB350</name>
             <description>The chopper PV prefix (e.g. SKFMB350_01).</description>
+            <default>SKFMB350_01</default>
           </macro>
         </macros>
         <categories>
@@ -953,6 +1097,7 @@
           <macro>
             <name>MM</name>
             <description>The PV for the motor controlling the bench rotation (e.g. MOT:MTR0605).</description>
+            <default>MOT:MTR0101</default>
           </macro>
         </macros>
         <categories>
@@ -970,6 +1115,7 @@
           <macro>
             <name>AMINT2L</name>
             <description>The AM Int2-L PV prefix (e.g. AMINT2L_01).</description>
+            <default>AMINT2L_01</default>
           </macro>
         </macros>
         <categories>
@@ -987,6 +1133,7 @@
           <macro>
             <name>MK2CHOPR</name>
             <description>The Mk2 Chopper PV prefix (e.g. MK2CHOPR_01).</description>
+            <default>MK2CHOPR_01</default>
           </macro>
         </macros>
         <categories>
@@ -998,40 +1145,48 @@
       <key>Sample stack</key>
       <value>
         <type>SAMPLESTACK</type>
-        <path>sample_stack\sample_stack.opi</path>
+        <path>sample_stack/sample_stack.opi</path>
         <description>Generic sample stack OPI supporting up to 8 motors. PV prefixs are typically of the form MOT:STACK:Z </description>
         <macros>
           <macro>
             <name>AXIS_PV_1</name>
             <description>The axis PV for motor 1</description>
+            <default/>
           </macro>
           <macro>
             <name>AXIS_PV_2</name>
             <description>The axis PV for motor 2</description>
+            <default/>
           </macro>
           <macro>
             <name>AXIS_PV_3</name>
             <description>The axis PV for motor 3</description>
+            <default/>
           </macro>
           <macro>
             <name>AXIS_PV_4</name>
             <description>The axis PV for motor 4</description>
+            <default/>
           </macro>
           <macro>
             <name>AXIS_PV_5</name>
             <description>The axis PV for motor 5</description>
+            <default/>
           </macro>
           <macro>
             <name>AXIS_PV_6</name>
             <description>The axis PV for motor 6</description>
+            <default/>
           </macro>
           <macro>
             <name>AXIS_PV_7</name>
             <description>The axis PV for motor 7</description>
+            <default/>
           </macro>
           <macro>
             <name>AXIS_PV_8</name>
             <description>The axis PV for motor 8</description>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -1049,6 +1204,7 @@
           <macro>
             <name>HLG</name>
             <description>The HLG PV prefix (e.g. HLG_01).</description>
+            <default>HLG_01</default>
           </macro>
         </macros>
         <categories>
@@ -1066,6 +1222,7 @@
           <macro>
             <name>DFKPS</name>
             <description>The Danfysik PV prefix (e.g. DFKPS_01).</description>
+            <default>DFKPS_01</default>
           </macro>
         </macros>
         <categories>
@@ -1088,7 +1245,7 @@
     <entry>
       <key>LARMOR Spin Flipper</key>
       <value>
-        <type>UNCONFIRMED</type>
+        <type>SPIN_FLIPPER</type>
         <path>SpinFlipper306015.opi</path>
         <description>The OPI for the LARMOR Spin Flipper.</description>
         <macros/>
@@ -1096,19 +1253,7 @@
       </value>
     </entry>
     <entry>
-      <key>XY Beam-stop</key>
-      <value>
-        <type>BEAMSTOP</type>
-        <path>beamstop.opi</path>
-        <description>The OPI for the XY beam-stop. No properties required.</description>
-        <macros/>
-        <categories>
-          <category>Miscellaneous motion control</category>
-        </categories>
-      </value>
-    </entry>
-    <entry>
-      <key>Live View</key>
+      <key>Detector Live View</key>
       <value>
         <type>DAE</type>
         <path>live_view/live_view.opi</path>
@@ -1117,6 +1262,7 @@
           <macro>
             <name>DET</name>
             <description>Detector number (1 is first)</description>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -1138,12 +1284,13 @@
       <key>Jaws</key>
       <value>
         <type>JAWS</type>
-        <path>jaws/jaws.opi</path>
+        <path>jaws/Jaws.opi</path>
         <description>The OPI for a Jaw set.</description>
         <macros>
           <macro>
             <name>J</name>
             <description>The Jaws PV (e.g. MOT:JAWS1).</description>
+            <default>MOT:JAWS1</default>
           </macro>
         </macros>
         <categories>
@@ -1155,12 +1302,46 @@
       <key>ITC503</key>
       <value>
         <type>EUROTHERM</type>
-        <path>itc503\itc503.opi</path>
+        <path>itc503/itc503.opi</path>
         <description>The OPI for the OI ITC503 temperature controller</description>
         <macros>
           <macro>
             <name>ITC503</name>
             <description>The ITC503 PV prefix (e.g. ITC503_01)</description>
+            <default>ITC503_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+      </value>
+    </entry>
+	<entry>
+      <key>Dual ITC503s</key>
+      <value>
+        <type>EUROTHERM</type>
+        <path>itc503/musr_dual_itc503.opi</path>
+        <description>The OPI for dual OI ITC503 temperature controllers</description>
+        <macros>
+          <macro>
+            <name>ITC1_IOC</name>
+            <description>The first ITC503 PV prefix (e.g. ITC503_01)</description>
+            <default>ITC503_01</default>
+          </macro>
+		  <macro>
+            <name>ITC1_NAME</name>
+            <description>The first ITC503 Name (e.g. Cryostat)</description>
+            <default>ITC1</default>
+          </macro>
+          <macro>
+            <name>ITC2_IOC</name>
+            <description>The second ITC503 PV prefix (e.g. ITC503_02)</description>
+            <default>ITC503_02</default>
+          </macro>
+		  <macro>
+            <name>ITC2_NAME</name>
+            <description>The second ITC503 Name (e.g. Insert)</description>
+            <default>ITC2</default>
           </macro>
         </macros>
         <categories>
@@ -1174,10 +1355,10 @@
         <type>POLARISER</type>
         <path>polariser.opi</path>
         <description>The OPI for the polariser. No properties required.</description>
-                <macros />
-                <categories>
-                    <category>Polarisers and Analysers</category>
-                </categories>
+        <macros/>
+        <categories>
+          <category>Polarisers and Analysers</category>
+        </categories>
       </value>
     </entry>
     <entry>
@@ -1190,14 +1371,17 @@
           <macro>
             <name>M</name>
             <description>The monitor number (e.g. 1).</description>
+            <default/>
           </macro>
           <macro>
             <name>MHVCHAN</name>
             <description>CAEN HV channel for the monitor (default: 0).</description>
+            <default/>
           </macro>
           <macro>
             <name>MHVSLOT</name>
             <description>CAEN HV slot for the monitor (default: 0).</description>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -1215,6 +1399,7 @@
           <macro>
             <name>TPG</name>
             <description>The TPG26x PV prefix (e.g. TPG26X_01).</description>
+            <default>TPG26X_01</default>
           </macro>
         </macros>
         <categories>
@@ -1232,6 +1417,7 @@
           <macro>
             <name>TPG</name>
             <description>The TPG36X PV prefix (e.g. TPG36X_01).</description>
+            <default>TPG36X_01</default>
           </macro>
         </macros>
         <categories>
@@ -1243,7 +1429,7 @@
       <key>Gem jaw set</key>
       <value>
         <type>JAWS</type>
-        <path>jaws/gem_jaws/Jaws_gem.opi</path>
+        <path>jaws/jaws_managers/gem_manager.opi</path>
         <description>The OPI for the Gem jaw set. No properties required.</description>
         <macros/>
         <categories>
@@ -1261,18 +1447,22 @@
           <macro>
             <name>MM_EMU</name>
             <description>The motor PV relating to the EMU barndoors (e.g. MOT:MTR0101).</description>
+            <default>MOT:MTR0101</default>
           </macro>
           <macro>
             <name>MM_MUSR</name>
             <description>The motor PV relating to the MuSR barndoors (e.g. MOT:MTR0102).</description>
+            <default>MOT:MTR0102</default>
           </macro>
           <macro>
             <name>MM_HIFI</name>
             <description>The motor PV relating to the HiFi barndoors (e.g. MOT:MTR0103).</description>
+            <default>MOT:MTR0103</default>
           </macro>
           <macro>
             <name>MM_MOMENTUM</name>
             <description>The motor PV relating to the momentum slits (e.g. MOT:MTR0104).</description>
+            <default>MOT:MTR0104</default>
           </macro>
         </macros>
         <categories/>
@@ -1324,6 +1514,7 @@
           <macro>
             <name>MOTION_SET_POINT</name>
             <description>The motion setpoint to display (e.g. LKUP:LSR)</description>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -1341,6 +1532,7 @@
           <macro>
             <name>NEOCERA</name>
             <description>The neocera PV prefix (e.g. NEOCERA_01).</description>
+            <default>NEOCERA_01</default>
           </macro>
         </macros>
         <categories>
@@ -1353,12 +1545,32 @@
       <key>Triton dilution fridge</key>
       <value>
         <type>DILUTION_FRIDGE</type>
-        <path>triton\triton.opi</path>
+        <path>triton/triton.opi</path>
         <description>The OPI for the Triton</description>
         <macros>
           <macro>
             <name>TRITON</name>
             <description>The triton PV prefix (e.g. TRITON_01).</description>
+            <default>TRITON_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Cryogenics</category>
+          <category>Temperature controllers</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Heliox</key>
+      <value>
+        <type>DILUTION_FRIDGE</type>
+        <path>heliox.opi</path>
+        <description>The OPI for the Heliox (Mercury) sorption fridge</description>
+        <macros>
+          <macro>
+            <name>HELIOX</name>
+            <description>The heliox PV prefix (e.g. HELIOX_01).</description>
+            <default>HELIOX_01</default>
           </macro>
         </macros>
         <categories>
@@ -1389,6 +1601,7 @@
           <macro>
             <name>NGPSPSU</name>
             <description>The NGPSPSU PV prefix (e.g. NGPSPSU_01)</description>
+            <default>NGPSPSU_01</default>
           </macro>
         </macros>
         <categories>
@@ -1406,6 +1619,7 @@
           <macro>
             <name>KHLY2700</name>
             <description>The Keithley 2700 PV name (e.g. KHLY2700_01).</description>
+            <default>KHLY2700_01</default>
           </macro>
         </macros>
         <categories>
@@ -1423,6 +1637,7 @@
           <macro>
             <name>SPRLG</name>
             <description>The Superlogics PV prefix (e.g. SPRLG_01).</description>
+            <default>SPRLG_01</default>
           </macro>
         </macros>
         <categories/>
@@ -1438,6 +1653,7 @@
           <macro>
             <name>KEPCO</name>
             <description>The Kepco PV name (e.g. KEPCO_01).</description>
+            <default>KEPCO_01</default>
           </macro>
         </macros>
         <categories>
@@ -1446,19 +1662,25 @@
       </value>
     </entry>
     <entry>
-      <key>XY Shutter Arm Beam-stop</key>
+      <key>HTS Magnet</key>
       <value>
-        <type>BEAMSTOP</type>
-        <path>xyShutterArmBeamstop.opi</path>
-        <description>The OPI for the XY Arm Beam-stop with a shutter.</description>
+        <type>HTS_MAGNET</type>
+        <path>hts_magnet.opi</path>
+        <description>The OPI for the HTS Magnet.</description>
         <macros>
           <macro>
-            <name>XYSHUTTERARMBEAMSTOP</name>
-            <description>The XY Arm Shutter Beamstop PV prefix (e.g. MOT).</description>
+            <name>KEPCO</name>
+            <description>The Kepco PV name (e.g. KEPCO_01).</description>
+            <default>KEPCO_01</default>
+          </macro>
+          <macro>
+            <name>SMRTMON</name>
+            <description>Smart Monitor PV (e.g. SMRTMON_01).</description>
+            <default>SMRTMON_01</default>
           </macro>
         </macros>
         <categories>
-          <category>Miscellaneous motion control</category>
+          <category>Power supplies</category>
         </categories>
       </value>
     </entry>
@@ -1472,6 +1694,7 @@
           <macro>
             <name>Q</name>
             <description>The Omron FINS PLC Zoom vacuum PV prefix (e.g. VACUUM).</description>
+            <default/>
           </macro>
         </macros>
         <categories/>
@@ -1483,7 +1706,13 @@
         <type>UNKNOWN</type>
         <path>matplotlib.opi</path>
         <description>The OPI for displaying plots created via matplotlib</description>
-        <macros/>
+        <macros>
+          <macro>
+            <name>URL</name>
+            <description>The URL from which to retrieve the plot.</description>
+            <default>http://localhost:8988</default>
+          </macro>
+        </macros>
         <categories/>
       </value>
     </entry>
@@ -1497,6 +1726,7 @@
           <macro>
             <name>JULABO</name>
             <description>The Julabo PV prefix (e.g. JULABO_01).</description>
+            <default>JULABO_01</default>
           </macro>
         </macros>
         <categories>
@@ -1549,6 +1779,7 @@
           <macro>
             <name>DEFAULT_ACTIVE_TAB</name>
             <description>The tab which is displayed when the OPI is opened (1 to 5).</description>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -1566,6 +1797,7 @@
           <macro>
             <name>IEG</name>
             <description>The gas exchange system PV prefix (e.g. IEG_01).</description>
+            <default>IEG_01</default>
           </macro>
         </macros>
         <categories>
@@ -1583,6 +1815,7 @@
           <macro>
             <name>MOTION_SET_POINT</name>
             <description>The prefix of the Motion set points being used(e.g. LKUP:SAMPLE)</description>
+            <default/>
           </macro>
         </macros>
         <categories>
@@ -1615,14 +1848,17 @@
           <macro>
             <name>LAKESHORE218</name>
             <description>The Lakeshore 218 PV prefix (e.g. LKSH218_01).</description>
+            <default>LKSH218_01</default>
           </macro>
           <macro>
             <name>MOTION_SET_POINT</name>
             <description>The prefix of the Motion set points being used(e.g. LKUP:SAMPLE)</description>
+            <default/>
           </macro>
           <macro>
             <name>MOTOR</name>
             <description>The prefix of the Motor being used(e.g. MOT:MTR0101)</description>
+            <default>MOT:MTR0101</default>
           </macro>
         </macros>
       </value>
@@ -1640,18 +1876,19 @@
           <macro>
             <name>MM</name>
             <description>The sample positioner motor (e.g. MTR0101)</description>
+            <default>MOT:MTR0101</default>
           </macro>
         </macros>
       </value>
     </entry>
     <entry>
-      <key>Reflectometry Front Panel</key>
+      <key>Reflectometry OPI</key>
       <value>
         <categories>
           <category>Miscellaneous motion control</category>
         </categories>
         <type>REFLECTOMETRY</type>
-        <path>reflectometry/front_panel.opi</path>
+        <path>reflectometry/full_opi.opi</path>
         <description>The OPI for the reflectometry information panel.</description>
         <macros/>
       </value>
@@ -1669,10 +1906,11 @@
           <macro>
             <name>SEPRTR</name>
             <description>The PV relating to the separator SPU (e.g. SEPRTR_01).</description>
+            <default>SEPRTR_01</default>
           </macro>
         </macros>
       </value>
-        </entry>
+    </entry>
     <entry>
       <key>Induction Furnace</key>
       <value>
@@ -1699,6 +1937,7 @@
           <macro>
             <name>J</name>
             <description>The Jaws PV (e.g. MOT:JAWS1).</description>
+            <default>MOT:JAWS1</default>
           </macro>
         </macros>
       </value>
@@ -1716,6 +1955,7 @@
           <macro>
             <name>KHLY2001</name>
             <description>The Keithley 2001 PV prefix (e.g. KHLY2001_01).</description>
+            <default>KHLY2001_01</default>
           </macro>
         </macros>
       </value>
@@ -1730,6 +1970,7 @@
           <macro>
             <name>DH2000</name>
             <description>The Ocean optics DH-2000 PV prefix (e.g. DH2000_01).</description>
+            <default>DH2000_01</default>
           </macro>
         </macros>
       </value>
@@ -1747,6 +1988,7 @@
           <macro>
             <name>KNR1050</name>
             <description>The KNR1050 PV prefix (e.g. KNR1050_01)</description>
+            <default>KNR1050_01</default>
           </macro>
         </macros>
       </value>
@@ -1764,11 +2006,12 @@
           <macro>
             <name>TTIPLP</name>
             <description>The TTIPLP PV prefix (e.g. TTIPLP_01)</description>
+            <default>TTIPLP_01</default>
           </macro>
         </macros>
       </value>
     </entry>
-    <entry>        
+    <entry>
       <key>Spectra plot</key>
       <value>
         <categories>
@@ -1781,14 +2024,17 @@
           <macro>
             <name>SPECTRUM_PV</name>
             <description>e.g. loc://_LOCAL:SPEC:SPEC1</description>
+            <default>loc://_LOCAL:SPEC:SPEC1</default>
           </macro>
           <macro>
             <name>PERIOD_PV</name>
             <description>e.g. loc://_LOCAL:SPEC:PERIOD1</description>
+            <default>loc://_LOCAL:SPEC:PERIOD1</default>
           </macro>
           <macro>
             <name>MODE_PV</name>
             <description>e.g. loc://_LOCAL:SPEC:MODE1</description>
+            <default>loc://_LOCAL:SPEC:MODE1</default>
           </macro>
         </macros>
       </value>
@@ -1803,6 +2049,7 @@
           <macro>
             <name>ASTRIUM</name>
             <description>The ASTRIUM PV prefix (e.g. ASTRIUM_01)</description>
+            <default>ASTRIUM_01</default>
           </macro>
         </macros>
         <categories>
@@ -1820,6 +2067,7 @@
           <macro>
             <name>WBVALVE</name>
             <description>The water bath valve PV prefix (e.g. WBVALVE_01).</description>
+            <default>WBVALVE_01</default>
           </macro>
         </macros>
         <categories>
@@ -1831,24 +2079,43 @@
     <entry>
       <key>Mezei spin flipper</key>
       <value>
-        <type>UNKNOWN</type>
+        <type>SPIN_FLIPPER</type>
         <path>mezflipper.opi</path>
         <description>The OPI for the Mezei flipper.</description>
         <macros>
           <macro>
             <name>MEZFLIPR</name>
             <description>The mezei flipper PV prefix (e.g. MEZFLIPR_01).</description>
+            <default>MEZFLIPR_01</default>
           </macro>
         </macros>
         <categories>
-		  <category>Polarisers and Analysers</category>
+          <category>Polarisers and Analysers</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Mezei spin flipper (v1)</key>
+      <value>
+        <type>SPIN_FLIPPER</type>
+        <path>mezflipper_v1.opi</path>
+        <description>The OPI for the Mezei flipper.</description>
+        <macros>
+          <macro>
+            <name>MEZFLIPR</name>
+            <description>The mezei flipper PV prefix (e.g. MEZFLIPR_01).</description>
+            <default>MEZFLIPR_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Polarisers and Analysers</category>
         </categories>
       </value>
     </entry>
     <entry>
       <key>JASCO PU-4180 Pump</key>
       <value>
-	    <categories>
+        <categories>
           <category>Gas and liquid handling systems</category>
         </categories>
         <type>PUMP</type>
@@ -1858,6 +2125,7 @@
           <macro>
             <name>JSCO4180</name>
             <description>The JSCO4180 PV prefix (e.g. JSCO4180_01)</description>
+            <default>JSCO4180_01</default>
           </macro>
         </macros>
       </value>
@@ -1873,6 +2141,43 @@
           <macro>
             <name>KNRK6</name>
             <description>The KNRK6 PV prefix (e.g. KNRK6_01)</description>
+            <default>KNRK6_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Keyence LK-G laser positioning sensor</key>
+      <value>
+        <categories>
+          <category>Distance sensors</category>
+        </categories>
+        <type>SENSOR</type>
+        <path>keylkg.opi</path>
+        <description>The OPI for the KEYLKG</description>
+        <macros>
+          <macro>
+            <name>KEYLKG</name>
+            <description>The KEYLKG PV prefix (e.g. KEYLKG_01)</description>
+            <default>KEYLKG_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Micro-Epsilon Confocal Rangefinder</key>
+      <value>
+        <categories>
+          <category>Distance sensors</category>
+        </categories>
+        <type>SENSOR</type>
+        <path>mecfrf.opi</path>
+        <description>The OPI for the micro-epsilon confocal rangefinder</description>
+        <macros>
+          <macro>
+            <name>MECFRF</name>
+            <description>The MECFRF PV prefix (e.g. MECFRF_01)</description>
+            <default>MECFRF_01</default>
           </macro>
         </macros>
       </value>
@@ -1891,19 +2196,447 @@
           <macro>
             <name>LKSH340</name>
             <description>The LKSH340 PV prefix (e.g. LKSH340_01)</description>
+            <default>LKSH340_01</default>
           </macro>
         </macros>
       </value>
     </entry>
-	<entry>
+    <entry>
       <key>NIMA Trough</key>
       <value>
         <type>FILM_FABRICATION</type>
         <path>nimatro.opi</path>
         <description>The OPI for the NIMA Trough.</description>
         <categories>
-		  <category>Gas and liquid handling systems</category>
+          <category>Gas and liquid handling systems</category>
         </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Nimrod jaw set</key>
+      <value>
+        <type>JAWS</type>
+        <path>jaws/jaws_managers/nimrod_manager.opi</path>
+        <description>The OPI for the Nimrod jaw set. No properties required.</description>
+        <macros/>
+        <categories>
+          <category>Jaws and slits</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Aladdin 1000</key>
+      <value>
+        <categories/>
+        <type>SYRINGE_PUMP</type>
+        <path>aldn1000.opi</path>
+        <description>The OPI for the ALDN1000</description>
+        <macros>
+          <macro>
+            <name>ALDN1000</name>
+            <description>The ALDN1000 PV prefix (e.g. ALDN1000_01)</description>
+            <default>ALDN1000_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Gas and liquid handling systems</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Coherent OBIS Laser Remote</key>
+      <value>
+        <categories/>
+        <type>OBIS_LASER_REMOTE</type>
+        <path>chtobisr.opi</path>
+        <description>The OPI for the Coherent OBIS Laser Remote</description>
+        <macros>
+          <macro>
+            <name>CHTOBISR</name>
+            <description>The PV prefix (e.g. CHTOBISR_01)</description>
+            <default>CHTOBISR_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>CP2800</key>
+      <value>
+        <categories/>
+        <type>CP2800</type>
+        <path>cp2800.opi</path>
+        <description>The OPI for the CP2800</description>
+        <macros>
+          <macro>
+            <name>CP2800</name>
+            <description>The CP2800 PV prefix (e.g. CP2800_01)</description>
+            <default>CP2800_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>TTI355</key>
+      <value>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+        <type>POWER_SUPPLY</type>
+        <path>tti355.opi</path>
+        <description>The OPI for the TTIEX355P</description>
+        <macros>
+          <macro>
+            <name>TTI355</name>
+            <description>The TTI355 PV prefix (e.g. TTI355_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>TTIEX355P</key>
+      <value>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+        <type>POWER_SUPPLY</type>
+        <path>ttiex355p.opi</path>
+        <description>The OPI for the TTIEX355P</description>
+        <macros>
+          <macro>
+            <name>TTIEX355P</name>
+            <description>The TTIEX355P PV prefix (e.g. TTIEX355P_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Watson-Marlow 323</key>
+      <value>
+        <type>PUMP</type>
+        <path>wm323.opi</path>
+        <description>The OPI for the WM323</description>
+        <macros>
+          <macro>
+            <name>WM323</name>
+            <description>The WM323 PV prefix (e.g. WM323_01)</description>
+            <default>WM323_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Gas and liquid handling systems</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>NIMROD Gas Panel</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>nimrod_gas_panel.opi</path>
+        <description>The OPI for the NIMROD Gas Panel</description>
+        <macros/>
+        <categories>
+          <category>Gas and liquid handling systems</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Oerlikon Centre-One Pressure Gauge</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>oercone.opi</path>
+        <description>The OPI for the Oerlikon Centre-One Pressure Gauge</description>
+        <categories>
+          <category>Pressure sensors</category>
+        </categories>
+        <macros>
+          <macro>
+            <name>OERCONE</name>
+            <description>The OERCONE PV prefix (e.g. OERCONE_01)</description>
+            <default>OERCONE_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Edwards Turbo Instrument Controller</key>
+      <value>
+        <type>PUMP</type>
+        <path>edwardstic.opi</path>
+        <description>The OPI for the Edwards Turbo Instrument Controller</description>
+        <categories>
+          <category>Gas and liquid handling systems</category>
+        </categories>
+        <macros>
+          <macro>
+            <name>EDTIC</name>
+            <description>The EDTIC PV prefix (e.g. EDTIC_01)</description>
+            <default>EDTIC_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Muon Jaws</key>
+      <value>
+        <type>JAWS</type>
+        <path>MuonJaws.opi</path>
+        <description>The OPI for the Muon Jaws</description>
+        <categories>
+          <category>Jaws and slits</category>
+        </categories>
+        <macros>
+          <macro>
+            <name>MUONJAWS</name>
+            <description>The Muon Jaws PV prefix (e.g. MUONJAWS_01)</description>
+            <default>MUONJAWS_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Zero field magnetometer</key>
+      <value>
+        <type>ZERO_FIELD</type>
+        <path>zero_field_controller/field_strength.opi</path>
+        <description>OPI for zero field strength</description>
+        <categories>
+          <category>Magnets</category>
+        </categories>
+        <macros>
+          <macro>
+            <name>ZFMAGFLD</name>
+            <description>The ZFMAGFLD PV prefix (e.g. ZFMAGFLD_01)</description>
+            <default>ZFMAGFLD_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Zero field controller</key>
+      <value>
+        <type>ZERO_FIELD</type>
+        <path>zero_field_controller/zero_field_controller.opi</path>
+        <description>OPI for the Muon Zero-field controller</description>
+        <categories>
+          <category>Magnets</category>
+        </categories>
+        <macros/>
+      </value>
+    </entry>
+    <entry>
+      <key>LSI correlator</key>
+      <value>
+        <type>LSICORR</type>
+        <path>lsicorr.opi</path>
+        <description>OPI for the LSI correlator</description>
+        <categories/>
+        <macros>
+          <macro>
+            <name>LSICORR</name>
+            <description>The LSICORR PV prefix (e.g. LSICORR_01)</description>
+            <default>LSICORR_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Anton Paar DMA4500M</key>
+      <value>
+        <type>DENSITY_METER</type>
+        <path>dma4500m.opi</path>
+        <description>OPI for the Anton Paar DMA4500M density meter</description>
+        <categories>
+          <category>Gas and liquid handling systems</category>
+        </categories>
+        <macros>
+          <macro>
+            <name>DMA4500M</name>
+            <description>The DMA4500M PV prefix (e.g. DMA4500M_01)</description>
+            <default>DMA4500M_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>SANS2D Vacuum System</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>sans2d_vacuum_system.opi</path>
+        <description>OPI for the SANS2D vacuum</description>
+        <categories>
+          <category>Pressure sensors</category>
+        </categories>
+        <macros/>
+      </value>
+    </entry>
+    <entry>
+      <key>CRISP Flipper system</key>
+      <value>
+        <categories>
+          <category>Polarisers and Analysers</category>
+        </categories>
+        <type>SPIN_FLIPPER</type>
+        <path>flipprps.opi</path>
+        <description>The OPI for the CRISP Flipper system</description>
+        <macros>
+          <macro>
+            <name>FLIPPRPS</name>
+            <description>The FLIPPRPS PV prefix (e.g. FLIPPRPS_01)</description>
+            <default>FLIPPRPS_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>SANS2D Waveguide and Aperture</key>
+      <value>
+        <type>WAVEGUIDE_APERTURE</type>
+        <path>waveguide_aperture/waveguide_aperture.opi</path>
+        <description>The OPI for SANS2D Waveguide and Aperture.</description>
+        <categories/>
+      </value>
+    </entry>
+    <entry>
+      <key>SANS2D Vacuum Tank</key>
+      <value>
+        <categories/>
+        <type>VACUUM_TANK</type>
+        <path>sans2d_vacuum_tank.opi</path>
+        <description>The OPI for the SANS2D vacuum tank</description>
+      </value>
+    </entry>
+	<entry>
+      <key>CAENV895</key>
+      <value>
+        <type>MONITOR</type>
+        <path>CAENv895.opi</path>
+        <description>CAEN V895 Discriminators</description>
+        <macros>
+          <macro>
+            <name>CAEN</name>
+            <description>The CAEN PV prefix (e.g. CAENV895_01)</description>
+            <default>CAENV895_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Monitors</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>User Buttons</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>instetc/user_buttons.opi</path>
+        <description>The OPI for user buttons which run some action</description>
+      </value>
+    </entry>
+    <entry>
+      <key>NMR Teslameter PT2025</key>
+      <value>
+        <categories/>
+        <type>TESLAMETER</type>
+        <path>Metrolab_PT2025.opi</path>
+        <description>The OPI teslameter pt2025</description>
+        <macros>
+          <macro>
+            <name>PT2025</name>
+            <description>NMR Teslameter PT2025 PV name(e.g. PT2025_01).</description>
+            <default>PT2025_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>HRPD In Situ DSC</key>
+      <value>
+        <type>DSC</type>
+        <path>hrpd_in_situ_dsc.opi</path>
+        <description>The OPI for the HRPD in situ dsc experiment</description>
+        <macros>
+          <macro>
+            <name>DSC_EUROTHRM</name>
+            <description>The eurotherm ioc number (e.g. 03).</description>
+            <default>03</default>
+          </macro>
+          <macro>
+            <name>DSC_LKSH</name>
+            <description>The lakeshore 336 ioc number (e.g. 02).</description>
+            <default>02</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>MuSR Steering</key>
+      <value>
+        <type>MUSR_STEERING</type>
+        <path>musr_steering.opi</path>
+        <description>OPI for steering the horizontal and vertical steering magnets</description>
+        <macros>
+          <macro>
+            <name>H_STEER</name>
+            <description>The KEPCO number (e.g. 1 for KEPCO_01) for the horizontal steering magnet</description>
+            <default>1</default>
+          </macro>
+          <macro>
+            <name>V_STEER</name>
+            <description>The KEPCO number (e.g. 2 for KEPCO_02) for the vertical steering magnet</description>
+            <default>2</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Magnets</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>MuSR Rotation control</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>musr_rotation.opi</path>
+        <description>Controls the orientation of MuSR</description>
+        <macros />
+        <categories />
+      </value>
+    </entry>
+    <entry>
+      <key>HIFIMAGS</key>
+      <value>
+        <categories/>
+        <type>SCIMAG3D</type>
+        <path>hifimags.opi</path>
+        <description>An overview of the HIFI Cryomag system</description>
+        <macros>
+          <macro>
+            <name>HIFIMAGS</name>
+            <description>The HIFIMAGS PV prefix (e.g. HIFIMAGS_01)</description>
+            <default>HIFIMAGS_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+	<entry>
+      <key>3He Refrigerator</key>
+      <value>
+        <categories>
+		  <category>Cryogenics</category>
+		  <category>Temperature controllers</category>
+		</categories>
+        <type>DILUTION_FRIDGE</type>
+        <path>3hefridge.opi</path>
+        <description>An overview of the 3He Refrigerator system</description>
+        <macros>
+		  <macro>
+            <name>HLX503</name>
+            <description>The HLX503 PV prefix (e.g. HLX503_01)</description>
+            <default>HLX503_01</default>
+          </macro>
+        </macros>
       </value>
     </entry>
     <entry>
@@ -1918,9 +2651,6 @@
             <description>The NGEM PV prefix (e.g. NGEM_01)</description>
           </macro>
         </macros>
-        <categories>
-          <category>Monitors</category>
-        </categories>
       </value>
     </entry>
   </opis>

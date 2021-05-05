@@ -22,14 +22,22 @@ package uk.ac.stfc.isis.ibex.ui.configserver.dialogs;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.ui.dialogs.SelectionDialog;
+
 
 /**
  * Dialog for asking the user to select a multiple configurations or components.
@@ -62,6 +70,11 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
      * template.
      */
     protected int extraListOptions;
+    
+    /**
+     * Component or config names as key and protection flag as value.
+     */
+    protected Map<String, Boolean> compOrConfigNamesWithFlags;
 
 	/**
      * @param parentShell The shell to create the dialog in.
@@ -72,16 +85,20 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
      *            components.
      * @param includeCurrent Whether the current config/component should be
      *            included in the list of available items
+     * @param compOrConfigNamesWithFlags Component or config names as key and protection flag as value.
      */
 	public MultipleConfigsSelectionDialog(
 			Shell parentShell, 
 			String title,
-            Collection<ConfigInfo> available, boolean isComponent, boolean includeCurrent) {
+            Collection<ConfigInfo> available,
+            Map<String, Boolean> compOrConfigNamesWithFlags,
+            boolean isComponent, boolean includeCurrent) {
 		super(parentShell, title);
 		this.available = available;
 		this.isComponent = isComponent;
         this.includeCurrent = includeCurrent;
         this.extraListOptions = SWT.MULTI;
+        this.compOrConfigNamesWithFlags = compOrConfigNamesWithFlags;
 	}
 
 	/**
@@ -91,28 +108,54 @@ public class MultipleConfigsSelectionDialog extends SelectionDialog {
 		return selected;
 	}
 
-	@Override
-	protected void okPressed() {
-        selected = asString(items.getSelection());
-		super.okPressed();
-	}
+    @Override
+   protected void okPressed() {
+       Collection<String> selectedItems = asString(items.getSelection());
+       
+       /* The following ensures that double clicking on the description/white space doesn't
+        * launch the process using a description/null as the name.
+        */    
+       List<String> names = ConfigInfo.names(available);
+       boolean anyMatch = selectedItems.stream().anyMatch(names::contains);
+       if (anyMatch) {
+    	   selected = asString(items.getSelection());
+    	   super.okPressed();
+       }
+   }
 
 	@Override
     protected void createSelection(Composite container) {
+	    
 		Label lblSelect = new Label(container, SWT.NONE);
         lblSelect.setText("Select " + getTypeString() + ":");
-        items = createTable(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions);
+        List<String> columnNames = Arrays.asList("Name", "Description");
+        items = createTable(container, SWT.BORDER | SWT.V_SCROLL | extraListOptions, columnNames);
 
-        String[] names;
+        SortedMap<String, String> namesAndDescriptions = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER);
         if (includeCurrent) {
-            names = ConfigInfo.names(available).toArray(new String[0]);
+            namesAndDescriptions = ConfigInfo.namesAndDescriptions(available);
         } else {
-            names = ConfigInfo.namesWithoutCurrent(available).toArray(new String[0]);
+        	namesAndDescriptions = ConfigInfo.namesAndDescriptionsWithoutCurrent(available);
         }
-		Arrays.sort(names, String.CASE_INSENSITIVE_ORDER);
-        setItems(names);
+      
+		setMultipleColumnItems(namesAndDescriptions, compOrConfigNamesWithFlags);
+		
+		// show protected configuration message only if relevant (the list has protected configurations)
+		Boolean hasProtectedConfigs = ConfigInfo.hasProtectedElement(available);
+		if (hasProtectedConfigs) {
+			Group group = new Group(container, SWT.SHADOW_IN);
+			group.setLayout(new RowLayout(SWT.HORIZONTAL));
+			
+			Label messageImageLabel = new Label(group, SWT.NONE);
+			messageImageLabel.setImage(JFaceResources.getImage(DLG_IMG_MESSAGE_WARNING)); 
+			
+			Label messageLabel = new Label(group, SWT.NONE);
+			messageLabel.setFont(JFaceResources.getDialogFont());
+			messageLabel.setText("Represents Protected " + getTypeString());
+		}
+			
 	}
-
+	
     /**
      * @return A string corresponding to the type of item in the list.
      */

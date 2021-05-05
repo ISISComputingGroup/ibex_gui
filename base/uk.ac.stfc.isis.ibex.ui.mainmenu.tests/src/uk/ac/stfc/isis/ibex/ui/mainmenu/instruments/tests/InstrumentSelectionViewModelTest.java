@@ -47,7 +47,7 @@ public class InstrumentSelectionViewModelTest {
         InstrumentSelectionViewModel viewModel = new InstrumentSelectionViewModel(emptyInstruments);
 
         // Assert
-        assertTrue(viewModel.getInstruments().isEmpty());
+        assertTrue(viewModel.getInstrumentAllowlist().isEmpty());
     }
 
     @Test

@@ -39,6 +39,9 @@ import uk.ac.stfc.isis.ibex.experimentdetails.ExperimentDetails;
 
 public class PreferencePage extends FieldEditorPreferencePage implements
 	IWorkbenchPreferencePage {
+    /**
+     * Constructor.
+     */
     public PreferencePage() {
 	super(GRID);
 	setPreferenceStore(ExperimentDetails.getInstance().getPreferenceStore());
