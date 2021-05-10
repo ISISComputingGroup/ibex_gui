@@ -440,8 +440,8 @@ $(pv_value)</tooltip>
           <minimum>-1.7976931348623157E308</minimum>
           <multiline_input>false</multiline_input>
           <name>Text Input_1</name>
-          <precision>2</precision>
-          <precision_from_pv>false</precision_from_pv>
+          <precision>0</precision>
+          <precision_from_pv>true</precision_from_pv>
           <pv_name>$(P)$(L)COORD0:SP</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
@@ -497,8 +497,8 @@ $(pv_value)</tooltip>
           <minimum>-1.7976931348623157E308</minimum>
           <multiline_input>false</multiline_input>
           <name>Text Input_1</name>
-          <precision>2</precision>
-          <precision_from_pv>false</precision_from_pv>
+          <precision>0</precision>
+          <precision_from_pv>true</precision_from_pv>
           <pv_name>$(P)$(L)COORD1:SP</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
