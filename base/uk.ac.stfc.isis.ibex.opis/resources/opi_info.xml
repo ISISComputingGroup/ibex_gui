@@ -1253,7 +1253,7 @@
       </value>
     </entry>
     <entry>
-      <key>Live View</key>
+      <key>Detector Live View</key>
       <value>
         <type>DAE</type>
         <path>live_view/live_view.opi</path>
@@ -2625,7 +2625,7 @@
       <value>
         <categories>
 		  <category>Cryogenics</category>
-		  <category>Temperature Controllers</category>
+		  <category>Temperature controllers</category>
 		</categories>
         <type>DILUTION_FRIDGE</type>
         <path>3hefridge.opi</path>
@@ -2635,6 +2635,20 @@
             <name>HLX503</name>
             <description>The HLX503 PV prefix (e.g. HLX503_01)</description>
             <default>HLX503_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>NGEM</key>
+      <value>
+        <type>MONITOR</type>
+        <path>ngem.opi</path>
+        <description>NGEM detector</description>
+        <macros>
+          <macro>
+            <name>NGEM</name>
+            <description>The NGEM PV prefix (e.g. NGEM_01)</description>
           </macro>
         </macros>
       </value>

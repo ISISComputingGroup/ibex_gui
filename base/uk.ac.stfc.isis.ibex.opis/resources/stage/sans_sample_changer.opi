@@ -157,7 +157,7 @@
         <macros>
           <include_parent_macros>true</include_parent_macros>
         </macros>
-        <name>State</name>
+        <name>Load Position</name>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -205,7 +205,7 @@
             <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
           </foreground_color>
           <height>26</height>
-          <label>Select Sample...</label>
+          <label>Select Position...</label>
           <name>SetPosnBtn</name>
           <pv_name></pv_name>
           <pv_value />
@@ -369,8 +369,8 @@ $(pv_value)</tooltip>
           <height>20</height>
           <horizontal_alignment>0</horizontal_alignment>
           <name>Text Update_1</name>
-          <precision>0</precision>
-          <precision_from_pv>true</precision_from_pv>
+          <precision>2</precision>
+          <precision_from_pv>false</precision_from_pv>
           <pv_name>$(P)$(L)COORD0:RBV</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
@@ -843,8 +843,8 @@ $(pv_value)</tooltip>
           <height>20</height>
           <horizontal_alignment>0</horizontal_alignment>
           <name>Text Update_1</name>
-          <precision>0</precision>
-          <precision_from_pv>true</precision_from_pv>
+          <precision>2</precision>
+          <precision_from_pv>false</precision_from_pv>
           <pv_name>$(P)$(L)COORD1:RBV</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
@@ -948,7 +948,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
         </macros>
-        <name>Load Positions</name>
+        <name>Load Rack</name>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -1048,7 +1048,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Changer:</text>
+          <text>Rack:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -1516,8 +1516,8 @@ Use sample changer "_ALL" to enable the use of positions from all sample changer
           <height>20</height>
           <horizontal_alignment>0</horizontal_alignment>
           <name>Text Update</name>
-          <precision>0</precision>
-          <precision_from_pv>true</precision_from_pv>
+          <precision>2</precision>
+          <precision_from_pv>false</precision_from_pv>
           <pv_name>$(P)$(L)COORD1:OFFSET</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
@@ -1650,8 +1650,8 @@ $(pv_value)</tooltip>
           <height>20</height>
           <horizontal_alignment>0</horizontal_alignment>
           <name>Text Update</name>
-          <precision>0</precision>
-          <precision_from_pv>true</precision_from_pv>
+          <precision>2</precision>
+          <precision_from_pv>false</precision_from_pv>
           <pv_name>$(P)$(L)COORD0:OFFSET</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
@@ -1707,8 +1707,8 @@ $(pv_value)</tooltip>
           <minimum>-1.7976931348623157E308</minimum>
           <multiline_input>false</multiline_input>
           <name>Text Input</name>
-          <precision>0</precision>
-          <precision_from_pv>true</precision_from_pv>
+          <precision>2</precision>
+          <precision_from_pv>false</precision_from_pv>
           <pv_name>$(P)$(L)COORD0:OFFSET:SP</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
@@ -1764,8 +1764,8 @@ $(pv_value)</tooltip>
           <minimum>-1.7976931348623157E308</minimum>
           <multiline_input>false</multiline_input>
           <name>Text Input_1</name>
-          <precision>0</precision>
-          <precision_from_pv>true</precision_from_pv>
+          <precision>2</precision>
+          <precision_from_pv>false</precision_from_pv>
           <pv_name>$(P)$(L)COORD1:OFFSET:SP</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
@@ -2136,96 +2136,6 @@ $(pv_value)</tooltip>
           <wuid>-22ece291:175513ff093:-7f51</wuid>
           <x>221</x>
           <y>36</y>
-        </widget>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-        <actions hook="false" hook_all="false" />
-        <background_color>
-          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
-        </background_color>
-        <border_color>
-          <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
-        </border_color>
-        <border_style>13</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <fc>false</fc>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_GroupBox_NEW</opifont.name>
-        </font>
-        <foreground_color>
-          <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
-        </foreground_color>
-        <height>79</height>
-        <lock_children>false</lock_children>
-        <macros>
-          <include_parent_macros>true</include_parent_macros>
-        </macros>
-        <name>Presets</name>
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <show_scrollbar>true</show_scrollbar>
-        <tooltip></tooltip>
-        <transparent>false</transparent>
-        <visible>true</visible>
-        <widget_type>Grouping Container</widget_type>
-        <width>181</width>
-        <wuid>-25b890ea:178e56fe4ca:-7f43</wuid>
-        <x>6</x>
-        <y>198</y>
-        <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-          <actions hook="false" hook_all="false">
-            <action type="WRITE_PV">
-              <pv_name>$(pv_name)</pv_name>
-              <value>1</value>
-              <timeout>10</timeout>
-              <confirm_message></confirm_message>
-              <description></description>
-            </action>
-          </actions>
-          <border_alarm_sensitive>false</border_alarm_sensitive>
-          <border_color>
-            <color name="ISIS_Border" red="0" green="0" blue="0" />
-          </border_color>
-          <border_style>0</border_style>
-          <border_width>1</border_width>
-          <enabled>true</enabled>
-          <font>
-            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
-          </font>
-          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-          <foreground_color>
-            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-          </foreground_color>
-          <height>28</height>
-          <image></image>
-          <name>Button_1</name>
-          <push_action_index>0</push_action_index>
-          <pv_name>$(P)SAMPCHNG:RECALC</pv_name>
-          <pv_value />
-          <rules />
-          <scale_options>
-            <width_scalable>true</width_scalable>
-            <height_scalable>true</height_scalable>
-            <keep_wh_ratio>false</keep_wh_ratio>
-          </scale_options>
-          <scripts />
-          <style>1</style>
-          <text>Reload Presets</text>
-          <toggle_button>false</toggle_button>
-          <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-          <visible>true</visible>
-          <widget_type>Action Button</widget_type>
-          <width>121</width>
-          <wuid>-25b890ea:178e56fe4ca:-7f40</wuid>
-          <x>0</x>
-          <y>6</y>
         </widget>
       </widget>
     </widget>
