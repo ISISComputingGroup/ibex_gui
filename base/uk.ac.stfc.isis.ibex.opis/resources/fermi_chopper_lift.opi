@@ -512,10 +512,10 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
-      <width>158</width>
+      <width>105</width>
       <wrap_words>false</wrap_words>
       <wuid>-4b1242c3:1795bbcf12e:-7fdf</wuid>
-      <x>60</x>
+      <x>113</x>
       <y>36</y>
     </widget>
   </widget>
