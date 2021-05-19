@@ -19,11 +19,6 @@
 		<unit id="org.py4j.feature.feature.group" version="0.10.9.2-bnd-BwsoWA"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="https://www.pydev.org/update_sites/8.0.0/"/>
-		<unit id="org.python.pydev.feature.feature.group" version="8.0.0.202009061309"/>
-		<unit id="org.python.pydev.feature.source.feature.group" version="8.0.0.202009061309"/>
-	</location>
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="https://download.eclipse.org/releases/2020-09/"/>
 		<unit id="org.eclipse.emf.sdk.feature.group" version="2.23.0.v20200822-0801"/>
 		<unit id="org.eclipse.gef.cloudio.sdk.feature.group" version="5.0.2.202009090201"/>
@@ -119,6 +114,11 @@
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="https://download.eclipse.org/nebula/releases/2.4.3/"/>
 		<unit id="org.eclipse.nebula.visualization.feature.feature.group" version="2.1.0.202011020719"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="https://www.pydev.org/update_sites/8.3.0/"/>
+		<unit id="org.python.pydev.feature.feature.group" version="8.3.0.202104101217"/>
+		<unit id="org.python.pydev.feature.source.feature.group" version="8.3.0.202104101217"/>
 	</location>
 </locations>
 <environment>
