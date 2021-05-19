@@ -7,10 +7,6 @@
 <repository location="http://shadow.nd.rl.ac.uk/ICP_P2/Mockito_P2/"/>
 </location>
     <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-        <repository location="http://download.eclipse.org/rt/eclipselink/updates/"/>
-	    <unit id="org.eclipse.persistence.sdk.feature.group" version="2.7.7.v20200504-69f2c2b80d"/>
-    </location>
-    <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
         <repository location="http://shadow.nd.rl.ac.uk/ICP_P2/jacorb/target/repository/"/>
         <unit id="org.jacorb.omgapi" version="3.9.0"/>
     </location>
@@ -28,10 +24,6 @@
 		<unit id="org.python.pydev.feature.source.feature.group" version="8.0.0.202009061309"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="https://download.eclipse.org/nebula/releases/2.4.2/"/>
-		<unit id="org.eclipse.nebula.visualization.feature.feature.group" version="2.1.0.202007241204"/>
-	</location>
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="https://download.eclipse.org/releases/2020-09/"/>
 		<unit id="org.eclipse.emf.sdk.feature.group" version="2.23.0.v20200822-0801"/>
 		<unit id="org.eclipse.gef.cloudio.sdk.feature.group" version="5.0.2.202009090201"/>
@@ -45,12 +37,6 @@
 		<unit id="org.eclipse.gef.layout.sdk.feature.group" version="5.0.0.202009090201"/>
 		<unit id="org.eclipse.gef.mvc.sdk.feature.group" version="5.2.2.202009090201"/>
 		<unit id="org.eclipse.gef.zest.sdk.feature.group" version="5.1.2.202009090201"/>
-	</location>
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="https://download.eclipse.org/eclipse/updates/4.17/"/>
-		<unit id="org.eclipse.platform.ide" version="4.17.0.I20200902-1800"/>
-		<unit id="org.eclipse.rcp.feature.group" version="4.17.0.v20200902-1800"/>
-		<unit id="org.eclipse.rcp.source.feature.group" version="4.17.0.v20200902-1800"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
          <unit id="org.eclipse.sapphire.ui.swt.gef.feature.group" version="9.1.0.201609301330"/>
@@ -119,6 +105,20 @@
 		<unit id="org.eclipse.fx.runtime.feature.feature.group" version="3.7.0.202010120723"/>
 		<unit id="org.eclipse.fx.runtime.min.feature.feature.group" version="3.7.0.202010120720"/>
 		<unit id="org.eclipse.fx.slf4j.target.feature.feature.group" version="3.7.0.202006221030"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="https://download.eclipse.org/rt/eclipselink/updates/"/>
+		<unit id="org.eclipse.persistence.sdk.feature.group" version="2.7.7.v20200504-69f2c2b80d"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="https://download.eclipse.org/eclipse/updates/4.19/"/>
+		<unit id="org.eclipse.platform.ide" version="4.19.0.I20210303-1800"/>
+		<unit id="org.eclipse.rcp.feature.group" version="4.19.0.v20210303-1800"/>
+		<unit id="org.eclipse.rcp.source.feature.group" version="4.19.0.v20210303-1800"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="https://download.eclipse.org/nebula/releases/2.4.3/"/>
+		<unit id="org.eclipse.nebula.visualization.feature.feature.group" version="2.1.0.202011020719"/>
 	</location>
 </locations>
 <environment>
