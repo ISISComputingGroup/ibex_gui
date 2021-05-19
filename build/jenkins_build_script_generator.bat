@@ -38,8 +38,8 @@ net use p: \\isis\inst$
 
 REM Don't group these. Bat expands whole if at once, not sequentially
 if "%RELEASE%" == "YES" (
-    set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\script_generator_release\%GIT_BRANCH:~8%
-    set RELEASE_VERSION=%GIT_BRANCH:~8%    
+    set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\script_generator_release\%GIT_BRANCH:~19%
+    set RELEASE_VERSION=%GIT_BRANCH:~19%
 ) else (
     set RELEASE_VERSION=devel-%GIT_COMMIT:~0,7%
 )
