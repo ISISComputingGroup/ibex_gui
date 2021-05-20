@@ -4,8 +4,10 @@ Bundle-SymbolicName: uk.ac.stfc.isis.scriptgenerator.client;singleton:=true
 Bundle-Name: IBEX
 Bundle-Version: 1.0.0.qualifier
 Require-Bundle: uk.ac.stfc.isis.ibex.ui.scriptgenerator,
- uk.ac.stfc.isis.scriptgenerator.product
+ uk.ac.stfc.isis.scriptgenerator.product,
+ uk.ac.stfc.isis.ibex.ui.help;bundle-version="1.0.0"
 Bundle-ManifestVersion: 2
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-Vendor: ISIS
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.scriptgenerator.client
+
