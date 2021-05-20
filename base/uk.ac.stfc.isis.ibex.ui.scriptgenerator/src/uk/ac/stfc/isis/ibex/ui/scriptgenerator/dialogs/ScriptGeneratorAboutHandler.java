@@ -1,5 +1,5 @@
 
-package uk.ac.stfc.isis.ibex.ui.help;
+package uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;

@@ -53,13 +53,15 @@ import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.SaveScriptGeneratorFileMe
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.ui.help.AboutHandler;
 
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
  * The ViewModel for the ScriptGeneratorView.
+ * 
+ * @author James King
+ *
  */
 public class ScriptGeneratorViewModel extends ModelObject {
     private static final Display DISPLAY = Display.getDefault();
@@ -189,6 +191,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private ActionsViewTable viewTable;
 
     /**
+     * The current get validity errors button in the view.
+     */
+    private Button btnGetValidityErrors;
+
+    /**
      * The current generate script button in the view.
      */
     private Button btnGenerateScript;
@@ -207,11 +214,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * The currently selected rows
      */
     private boolean hasSelection;
-    
-    /**
-     * Whether the manual is available or not.
-     */
-    public Optional<URL> manualUrl = Optional.empty();
     
     private Clipboard clipboard;
     private static String TAB = "\t";
@@ -317,7 +319,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void addEmptyAction() {
     scriptGeneratorModel.addEmptyAction();
     // Make sure the table is updated with the new action before selecting it
-    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs);
+    actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam, btnSaveParamAs);
     DISPLAY.asyncExec(() -> {
     	viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
     });
@@ -331,7 +333,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void insertEmptyAction(Integer insertionLocation) {
     scriptGeneratorModel.insertEmptyAction(insertionLocation);
     // Make sure the table is updated with the new action before selecting it
-    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs);
+    actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam, btnSaveParamAs);
     DISPLAY.asyncExec(() -> {
         viewTable.setCellFocus(insertionLocation, 0);
     });
@@ -358,7 +360,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void duplicateAction(List<ScriptGeneratorAction> actionsToDuplicate, Integer insertionLocation) {
     scriptGeneratorModel.duplicateAction(actionsToDuplicate, insertionLocation);
     // Make sure the table is updated with the new action before selecting it
-    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs);
+    actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam, btnSaveParamAs);
     DISPLAY.asyncExec(() -> {
     	viewTable.setCellFocus(insertionLocation, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
     });
@@ -471,7 +473,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Listen for changes in actions and activate the handler.
      */
     private PropertyChangeListener actionChangeListener = evt -> {
-    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs);
+    actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam, btnSaveParamAs);
     };
 
     /**
@@ -479,12 +481,14 @@ public class ScriptGeneratorViewModel extends ModelObject {
      *  update the view table.
      * 
      * @param viewTable The view table to update.
+     * @param btnGetValidityErrors The validity check button to style change.
      * @param btnGenerateScript The generate script button to style change.
      * @param btnSaveParam The save parameters button.
      * @param btnSaveParamAs The save parameters as button.
      */
-    protected void bindActionProperties(ActionsViewTable viewTable, Button btnGenerateScript, Button btnSaveParam, Button btnSaveParamAs) {
+    protected void bindActionProperties(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript, Button btnSaveParam, Button btnSaveParamAs) {
     this.viewTable = viewTable;
+    this.btnGetValidityErrors = btnGetValidityErrors;
     this.btnGenerateScript = btnGenerateScript;
     this.btnSaveParam = btnSaveParam;
     this.btnSaveParamAs = btnSaveParamAs;
@@ -576,15 +580,19 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Set the UI table's actions from the model and update validity checking.
      * 
      * @param viewTable The view table to update.
+     * @param btnGetValidityErrors The button to manipulate.
      * @param btnGenerateScript Generate Script button's visibility to manipulate
      * @param btnSaveParam Save Parameter button's visibility to manipulate
      * @param btnSaveParamAs Save Parameter As button's visibility to manipulate
      */
-    private void actionChangeHandler(ActionsViewTable viewTable, Button btnGenerateScript, Button btnSaveParam, Button btnSaveParamAs) {
+    private void actionChangeHandler(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript, Button btnSaveParam, Button btnSaveParamAs) {
     DISPLAY.asyncExec(() -> {
         if (!viewTable.isDisposed()) {
         viewTable.setRows(scriptGeneratorModel.getActions());
         updateValidityChecks(viewTable);
+        }
+        if (!btnGetValidityErrors.isDisposed()) {
+        setButtonValidityStyle(btnGetValidityErrors);
         }
         if (!btnGenerateScript.isDisposed()) {
         setButtonGenerateStyle(btnGenerateScript);
@@ -602,6 +610,21 @@ public class ScriptGeneratorViewModel extends ModelObject {
     } else {
         // Grey the button out when language is not supported
         btnGenerateScript.setEnabled(false);
+    }
+    }
+
+    private void setButtonValidityStyle(Button btnGetValidityErrors) {
+    if (scriptGeneratorModel.languageSupported) {
+        // Grey the button out if parameters are valid, if not make it red
+        btnGetValidityErrors.setEnabled(!scriptGeneratorModel.areParamsValid());
+        if (scriptGeneratorModel.areParamsValid()) {
+        btnGetValidityErrors.setBackground(GREY_COLOR);
+        } else {
+        btnGetValidityErrors.setBackground(INVALID_LIGHT_COLOR);
+        }
+    } else {
+        // Alert the user with an orange colour that the validity checks may be incorrect
+        btnGetValidityErrors.setBackground(LIGHT_VALIDITY_CHECK_ERROR_COLOR);
     }
     }
 
@@ -677,12 +700,16 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
     /**
      * Asynchronously get the URL of the user manual and bind it to the Open Manual button.
+     * 
+     * @param manualButton The button that should open the manual
      */
-    public void bindManualButton() {
+    public void bindManualButton(Button manualButton) {
     CompletableFuture.supplyAsync(() -> getUserManualUrl())
     .thenAccept(url -> {
         DISPLAY.asyncExec(() -> {
-        	manualUrl = url;
+        if (!manualButton.isDisposed()) {
+            setupLinkButton(manualButton, url);
+        }
         });
     });
     }
@@ -899,12 +926,21 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
 
     /**
-     * Display a new dialog with information about the script generator.
+     * Display the first few validity errors or that there are none in a popup box.
      */
-    public void displayAbout() {
-    	var shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-    	var handler = new AboutHandler();
-    	handler.execute(shell);
+    public void displayValidityErrors() {
+    if (scriptGeneratorModel.languageSupported) {
+        String body = getFirstNLinesOfInvalidityErrors(MAX_ERRORS_TO_DISPLAY_IN_DIALOG);
+        if (!body.isEmpty()) {
+        String heading = "Validity errors:\n\n";
+        String message = heading + body;
+        MessageDialog.openWarning(DISPLAY.getActiveShell(), "Validity Errors", message);
+        } else {
+        MessageDialog.openInformation(DISPLAY.getActiveShell(), "Validity Errors", "No validity errors");
+        }
+    } else {
+        displayLanguageSupportError();
+    }
     }
 
     /**

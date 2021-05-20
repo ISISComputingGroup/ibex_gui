@@ -19,4 +19,25 @@
     </property>
   </product>
 </extension>
+<extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <command
+               commandId="uk.ac.stfc.isis.scriptgenerator.client.command.about"
+               id="uk.ac.stfc.isis.scriptgenerator.client.menu.about"
+               label="About"
+               tooltip="About the IBEX Script Generator">
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.ScriptGeneratorAboutHandler"
+            description="About the IBEX Script Generator"
+            id="uk.ac.stfc.isis.scriptgenerator.client.command.about"
+            name="About">
+      </command>
+   </extension>
 </plugin>
