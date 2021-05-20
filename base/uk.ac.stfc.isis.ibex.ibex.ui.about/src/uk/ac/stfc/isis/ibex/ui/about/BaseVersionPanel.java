@@ -17,7 +17,7 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs;
+package uk.ac.stfc.isis.ibex.ui.about;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
@@ -30,17 +30,16 @@ import org.eclipse.swt.widgets.Label;
 
 
 /**
- * A panel showing the Ibex client and server version numbers.
+ * A panel showing the application version and java information.
  */
-public class VersionPanel extends Composite {
+public class BaseVersionPanel extends Composite {
 
-    /** The version of the client. */
-	private Label clientVersion;
+    /** The version of the application. */
+	private Label applicationVersion;
     /** The version of Java that the client is using */
     private Label javaVersion;
     /** The path to the Java that the client is using */
     private Label javaPathLabel;
-
 
     /**
      * Construct a new version panel.
@@ -49,31 +48,32 @@ public class VersionPanel extends Composite {
      * @param style The style to apply to the panel
      */
     @SuppressWarnings("checkstyle:magicnumber")
-	public VersionPanel(Composite parent, int style) {
+	public BaseVersionPanel(Composite parent, int style, String applicationName) {
 		super(parent, style);
 		setLayout(new GridLayout(2, false));
 
+		// Application version
         Label lblClientVersion = new Label(this, SWT.NONE);
         lblClientVersion.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        lblClientVersion.setText("Client Version:");
+        lblClientVersion.setText(applicationName + " Version:");
 
-        clientVersion = new Label(this, SWT.NONE);
-        clientVersion.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        // Not bound as fixed
+        applicationVersion = new Label(this, SWT.NONE);
+        applicationVersion.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         final String versionText = Platform.getProduct().getDefiningBundle().getVersion().toString();
-        clientVersion.setText(versionText);
+        applicationVersion.setText(versionText);
 
+        // Java version
         Label lblJavaVersion = new Label(this, SWT.NONE);
         lblJavaVersion.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblJavaVersion.setText("Java Version:");
 
         javaVersion = new Label(this, SWT.NONE);
         GridData javaVersionGd = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-        // Not bound as fixed
         javaVersion.setText(System.getProperty("java.version"));
         javaVersionGd.widthHint = AboutDialogBox.WIDTH;
         javaVersion.setLayoutData(javaVersionGd);
 
+        // Java Location
         Label lblJavaPath = new Label(this, SWT.NONE);
         lblJavaPath.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblJavaPath.setText("Java Path:");
@@ -82,8 +82,6 @@ public class VersionPanel extends Composite {
         GridData javaPathGd = new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1);
         javaPathGd.widthHint = 250;
         javaPathLabel.setLayoutData(javaPathGd);
-
-        // Not bound as fixed
 
         String javaPath = System.getProperties().getProperty("java.home");
         Point pathSize = new GC(javaPathLabel).stringExtent(javaPath);

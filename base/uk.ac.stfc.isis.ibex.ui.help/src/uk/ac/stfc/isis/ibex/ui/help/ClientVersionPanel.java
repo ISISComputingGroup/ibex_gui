@@ -21,34 +21,25 @@ package uk.ac.stfc.isis.ibex.ui.help;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.help.Help;
+import uk.ac.stfc.isis.ibex.ui.about.AboutDialogBox;
+import uk.ac.stfc.isis.ibex.ui.about.BaseVersionPanel;
 
 
 /**
  * A panel showing the Ibex client and server version numbers.
  */
-public class VersionPanel extends Composite {
+public class ClientVersionPanel extends BaseVersionPanel {
 
-    /** The version of the client. */
-	private Label clientVersion;
     /** The version of the server. */
 	private Label serverVersion;
-    /** The ID of the bundle which owns the client version number. */
-    private final String versionBundleId = "uk.ac.stfc.isis.ibex.product";
-    /** The version of Java that the client is using */
-    private Label javaVersion;
-    /** The path to the Java that the client is using */
-    private Label javaPathLabel;
     /** The PV prefix the client is using */
     private Label clientPvPrefix;
 
@@ -59,24 +50,13 @@ public class VersionPanel extends Composite {
      * @param style The style to apply to the panel
      */
     @SuppressWarnings("checkstyle:magicnumber")
-	public VersionPanel(Composite parent, int style) {
-		super(parent, style);
-		setLayout(new GridLayout(2, false));
+	public ClientVersionPanel(Composite parent, int style) {
+		super(parent, style, "IBEX");
 
-        Label lblClientVersion = new Label(this, SWT.NONE);
-        lblClientVersion.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        lblClientVersion.setText("Client Version:");
-
-        clientVersion = new Label(this, SWT.NONE);
-        clientVersion.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        // Not bound as fixed
-        final String versionText = Platform.getProduct().getDefiningBundle().getVersion().toString();
-        clientVersion.setText(versionText);
-
-        Label lblPvPrefix = new Label(this, SWT.NONE);
+		Label lblPvPrefix = new Label(this, SWT.NONE);
         lblPvPrefix.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblPvPrefix.setText("Client PV Prefix:");
-
+        
         clientPvPrefix = new Label(this, SWT.NONE);
         clientPvPrefix.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         // Not bound as fixed
@@ -91,40 +71,7 @@ public class VersionPanel extends Composite {
 		GridData serverVersionGd = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		serverVersionGd.widthHint = AboutDialogBox.WIDTH;
 		serverVersion.setLayoutData(serverVersionGd);
-
-        Label lblJavaVersion = new Label(this, SWT.NONE);
-        lblJavaVersion.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        lblJavaVersion.setText("Java Version:");
-
-        javaVersion = new Label(this, SWT.NONE);
-        GridData javaVersionGd = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-        // Not bound as fixed
-        javaVersion.setText(System.getProperty("java.version"));
-        javaVersionGd.widthHint = AboutDialogBox.WIDTH;
-        javaVersion.setLayoutData(javaVersionGd);
-
-        Label lblJavaPath = new Label(this, SWT.NONE);
-        lblJavaPath.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        lblJavaPath.setText("Java Path:");
-
-        javaPathLabel = new Label(this, SWT.NONE);
-        GridData javaPathGd = new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1);
-        javaPathGd.widthHint = 250;
-        javaPathLabel.setLayoutData(javaPathGd);
-
-        // Not bound as fixed
-
-        String javaPath = System.getProperties().getProperty("java.home");
-        Point pathSize = new GC(javaPathLabel).stringExtent(javaPath);
-        if (pathSize.x > javaPathGd.widthHint) {
-            javaPathLabel.setToolTipText(javaPath);
-            // Assuming chars are the same width calculate how many can we fit
-            // on one line
-            int charsToPrint = javaPathGd.widthHint * javaPath.length() / pathSize.x;
-            javaPathLabel.setText(javaPath.substring(0, charsToPrint - 3) + "...");
-        } else {
-            javaPathLabel.setText(javaPath);
-        }
+        
         bind(Help.getInstance());
 	}
 
