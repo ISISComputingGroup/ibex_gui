@@ -24,7 +24,6 @@ import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
@@ -51,7 +50,7 @@ public class ClientVersionPanel extends BaseVersionPanel {
      */
     @SuppressWarnings("checkstyle:magicnumber")
 	public ClientVersionPanel(Composite parent, int style) {
-		super(parent, style, "IBEX");
+		super(parent, style, "Client");
 
 		Label lblPvPrefix = new Label(this, SWT.NONE);
         lblPvPrefix.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));

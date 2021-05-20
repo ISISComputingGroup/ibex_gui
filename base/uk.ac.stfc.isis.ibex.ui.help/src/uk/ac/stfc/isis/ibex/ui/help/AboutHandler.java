@@ -23,8 +23,6 @@ import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.widgets.Shell;
 
-import uk.ac.stfc.isis.ibex.ui.about.AboutDialogBox;
-
 /**
  * The handler for opening the about dialog window via the menu.
  */
