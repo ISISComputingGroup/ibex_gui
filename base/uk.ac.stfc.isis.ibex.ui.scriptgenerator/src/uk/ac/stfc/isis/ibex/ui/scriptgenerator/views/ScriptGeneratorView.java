@@ -27,6 +27,7 @@ import javax.annotation.PreDestroy;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
@@ -55,8 +56,13 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.browser.IWebBrowser;
 import org.eclipse.wb.swt.ResourceManager;
 
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
 /**
@@ -66,6 +72,8 @@ import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class ScriptGeneratorView {
+	
+	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorView.class);
 
     private static PreferenceSupplier preferences = new PreferenceSupplier();
 
@@ -322,6 +330,23 @@ public class ScriptGeneratorView {
 		        
 		        MenuItem item1 = new MenuItem(helpMenu, SWT.PUSH);
 		        item1.setText("Open Manual");
+		        scriptGeneratorViewModel.manualUrl.ifPresentOrElse(
+	        		url -> {
+	        			item1.setEnabled(true);
+	        			item1.setToolTipText(url.toString());
+	        			item1.addListener(SWT.Selection, e1 -> {
+		        	        try {
+		        	            IWebBrowser browser = PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser();
+		        	            browser.openURL(url);
+		        	        } catch (PartInitException ex) {
+		        	            LoggerUtils.logErrorWithStackTrace(LOG, "Failed to open URL in browser: " + url, ex);
+		        	        }
+	        	        });
+	        	    }, 
+	        		() -> {
+	        			item1.setEnabled(false);
+	        		}
+		        );
 		        
 		        MenuItem item2 = new MenuItem(helpMenu, SWT.PUSH);
 		        item2.setText("About");
@@ -339,18 +364,6 @@ public class ScriptGeneratorView {
                 helpMenu.setVisible(true);
             }
         });
-        
-
-        // Composite for the Open Manual button
-        Composite manualButtonComposite = new Composite(topBarComposite, SWT.NONE);
-        manualButtonComposite.setLayout(new GridLayout(1, false));
-        manualButtonComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-
-        // Button to open the user manual in a button
-        final Button manualButton = new Button(manualButtonComposite, SWT.NONE);
-        manualButton.setEnabled(false);
-        manualButton.setText("Open Manual");
-        manualButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
         Map<String, String> scriptDefinitionLoadErrors = scriptGeneratorViewModel.getScriptDefinitionLoadErrors();
 
@@ -487,8 +500,7 @@ public class ScriptGeneratorView {
         loadExperimentalParametersButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.loadParameterValues());
         // Bind the context and the validity checking listeners
         bind(scriptDefinitionSelector,
-            helpText,
-            manualButton);
+            helpText);
 
         } else {
 
@@ -573,13 +585,12 @@ public class ScriptGeneratorView {
      * Binds the Script Generator Table, script definition selector and validity check models to their views.
      */
     private void bind(ComboViewer scriptDefinitionSelector,
-        Text helpText,
-        Button manualButton) {
+        Text helpText) {
     scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText);
 
     scriptGeneratorViewModel.bindActionProperties(table, generateScriptButton, saveExperimentalParametersButton, saveAsExperimentalParametersButton);
 
-    scriptGeneratorViewModel.bindManualButton(manualButton);
+    scriptGeneratorViewModel.bindManualButton();
 
     table.addSelectionChangedListener(event -> scriptGeneratorViewModel.setSelected(table.selectedRows()));
 

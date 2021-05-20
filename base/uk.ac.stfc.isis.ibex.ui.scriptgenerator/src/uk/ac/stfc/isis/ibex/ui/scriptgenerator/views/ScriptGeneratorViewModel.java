@@ -60,9 +60,6 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
  * The ViewModel for the ScriptGeneratorView.
- * 
- * @author James King
- *
  */
 public class ScriptGeneratorViewModel extends ModelObject {
     private static final Display DISPLAY = Display.getDefault();
@@ -210,6 +207,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * The currently selected rows
      */
     private boolean hasSelection;
+    
+    /**
+     * Whether the manual is available or not.
+     */
+    public Optional<URL> manualUrl = Optional.empty();
     
     private Clipboard clipboard;
     private static String TAB = "\t";
@@ -675,16 +677,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
     /**
      * Asynchronously get the URL of the user manual and bind it to the Open Manual button.
-     * 
-     * @param manualButton The button that should open the manual
      */
-    public void bindManualButton(Button manualButton) {
+    public void bindManualButton() {
     CompletableFuture.supplyAsync(() -> getUserManualUrl())
     .thenAccept(url -> {
         DISPLAY.asyncExec(() -> {
-        if (!manualButton.isDisposed()) {
-            setupLinkButton(manualButton, url);
-        }
+        	manualUrl = url;
         });
     });
     }
