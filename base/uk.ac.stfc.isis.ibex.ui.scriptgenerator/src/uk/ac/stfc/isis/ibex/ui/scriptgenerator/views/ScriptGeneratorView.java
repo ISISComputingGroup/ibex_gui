@@ -26,6 +26,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
@@ -33,9 +34,14 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -43,12 +49,21 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.browser.IWebBrowser;
 import org.eclipse.wb.swt.ResourceManager;
 
+import org.apache.logging.log4j.Logger;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
 /**
@@ -58,6 +73,8 @@ import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class ScriptGeneratorView {
+	
+	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorView.class);
 
     private static PreferenceSupplier preferences = new PreferenceSupplier();
 
@@ -298,32 +315,56 @@ public class ScriptGeneratorView {
             },
             () -> helpText.setText("")
             );
+        
+        final Composite btnCntrl = new Composite(topBarComposite, SWT.BORDER);
+        GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).spacing(0, 1).applyTo(btnCntrl);
+        CLabel lbl = new CLabel(btnCntrl, SWT.NONE);
+        lbl.setText("Help");
+        Button btn = new Button(btnCntrl, SWT.ARROW|SWT.DOWN);
+        btn.setLayoutData(new GridData(GridData.FILL_VERTICAL));
 
-        // Composite for the Open Manual button
-        Composite manualButtonComposite = new Composite(topBarComposite, SWT.NONE);
-        manualButtonComposite.setLayout(new GridLayout(1, false));
-        manualButtonComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        btn.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                super.widgetSelected(e);
+		        var helpMenu = new Menu(DISPLAY.getActiveShell(), SWT.POP_UP);
 
-        // Button to open the user manual in a button
-        final Button manualButton = new Button(manualButtonComposite, SWT.NONE);
-        manualButton.setEnabled(false);
-        manualButton.setText("Open Manual");
-        manualButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		        MenuItem item1 = new MenuItem(helpMenu, SWT.PUSH);
+		        item1.setText("Open Manual");
+		        scriptGeneratorViewModel.manualUrl.ifPresentOrElse(
+		        		url -> {
+		        			item1.setEnabled(true);
+		        			item1.setToolTipText(url.toString());
+		        			item1.addListener(SWT.Selection, e1 -> {
+			        	        try {
+			        	            IWebBrowser browser = PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser();
+			        	            browser.openURL(url);
+			        	        } catch (PartInitException ex) {
+			        	            LoggerUtils.logErrorWithStackTrace(LOG, "Failed to open URL in browser: " + url, ex);
+			        	        }
+		        	        });
+		        	    }, 
+		        		() -> {
+		        			item1.setEnabled(false);
+		        		}
+			        );
 
-        // The composite to contain the button to check validity
-        Composite validityComposite = new Composite(topBarComposite, SWT.NONE);
-        validityComposite.setLayout(new GridLayout(1, false));
-        validityComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		        MenuItem item2 = new MenuItem(helpMenu, SWT.PUSH);
+		        item2.setText("About");
+		        item2.addListener(SWT.Selection, e2 -> {
+		            scriptGeneratorViewModel.displayAbout();
+		        });
 
-        // Button to check validity errors
-        final Button btnGetValidityErrors = new Button(validityComposite, SWT.NONE);
-        btnGetValidityErrors.setText("Get Validity Errors");
-        btnGetValidityErrors.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        btnGetValidityErrors.addListener(SWT.Selection, e -> {
-            scriptGeneratorViewModel.displayValidityErrors();
+		        Point loc = btnCntrl.getLocation();
+                Rectangle rect = btnCntrl.getBounds();
+
+                Point mLoc = new Point(loc.x-1, loc.y+rect.height);
+
+                helpMenu.setLocation(DISPLAY.map(btnCntrl.getParent(), null, mLoc));
+
+                helpMenu.setVisible(true);
+            }
         });
-
-
 
         Map<String, String> scriptDefinitionLoadErrors = scriptGeneratorViewModel.getScriptDefinitionLoadErrors();
 
@@ -460,9 +501,7 @@ public class ScriptGeneratorView {
         loadExperimentalParametersButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.loadParameterValues());
         // Bind the context and the validity checking listeners
         bind(scriptDefinitionSelector,
-            btnGetValidityErrors,
-            helpText,
-            manualButton);
+            helpText);
 
         } else {
 
@@ -547,14 +586,12 @@ public class ScriptGeneratorView {
      * Binds the Script Generator Table, script definition selector and validity check models to their views.
      */
     private void bind(ComboViewer scriptDefinitionSelector,
-        Button btnGetValidityErrors,
-        Text helpText,
-        Button manualButton) {
+        Text helpText) {
     scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText);
 
-    scriptGeneratorViewModel.bindActionProperties(table, btnGetValidityErrors, generateScriptButton, saveExperimentalParametersButton, saveAsExperimentalParametersButton);
+    scriptGeneratorViewModel.bindActionProperties(table, generateScriptButton, saveExperimentalParametersButton, saveAsExperimentalParametersButton);
 
-    scriptGeneratorViewModel.bindManualButton(manualButton);
+    scriptGeneratorViewModel.bindManualUrl();
 
     table.addSelectionChangedListener(event -> scriptGeneratorViewModel.setSelected(table.selectedRows()));
 
