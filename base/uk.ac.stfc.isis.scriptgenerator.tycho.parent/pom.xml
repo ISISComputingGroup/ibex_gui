@@ -139,7 +139,7 @@
 
 	<modules>
 
-
+		<module>../uk.ac.stfc.isis.ibex.ui.about</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.widgets</module>
 		<module>../uk.ac.stfc.isis.ibex.preferences</module>
 		<module>../uk.ac.stfc.isis.ibex.ui</module>
