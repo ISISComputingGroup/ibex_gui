@@ -135,7 +135,7 @@ class ScriptDefinitionWrapper(object):
         """
         return self.script_definition.run(**action)
 
-    def globalParamsValid(self, global_params) -> Union[None, AnyStr]:
+    def globalParamsValid(self, global_param, index) -> Union[None, AnyStr]:
         """
         checks if global params are valid for the script definition
 
@@ -145,15 +145,8 @@ class ScriptDefinitionWrapper(object):
         Returns:
             None if all params are valid.
         """
-        logger = logging.getLogger("py4j")
-        logger.setLevel(logging.ERROR)
-        logger.addHandler(logging.StreamHandler())
-
         try:
-            for param in global_params:
-                logging.error(param)
-                logging.error(self.script_definition.global_params_definition[param])
-                self.script_definition.global_params_definition[param][1](param)
+            list(self.script_definition.global_params_definition.values())[index][1](global_param)
             return
         except Exception as e:
             return str(e)
@@ -230,9 +223,11 @@ class Generator(object):
         for action in list_of_actions:
             if script_definition.parametersValid(action) != None:
                 return False
-
-        if script_definition.globalParamsValid(global_params) !=None:
-            return False
+        i = 0
+        for global_param in global_params:
+            if script_definition.globalParamsValid(global_param, i) !=None:
+                return False
+            i += 1
         return True
 
     def getValidityErrors(self, list_of_actions, script_definition: ScriptDefinitionWrapper) -> Dict[int, AnyStr]:

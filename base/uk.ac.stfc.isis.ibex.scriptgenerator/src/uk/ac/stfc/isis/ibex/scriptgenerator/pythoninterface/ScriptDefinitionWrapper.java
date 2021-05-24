@@ -29,7 +29,7 @@ public interface ScriptDefinitionWrapper {
 	 * @param the global param to check validity of
 	 * @return the error if the arugements are not valid.
 	 */
-    String globalParamsValid(List<String> globalParams);
+    String globalParamsValid(String globalParam, int index);
       
 	
 	/**

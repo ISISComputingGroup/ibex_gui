@@ -288,7 +288,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 
 		setActionParameters(scriptDefinitionLoader.getParameters());
 		try {
-			List<ActionParameter> globals =this.scriptDefinitionLoader.getScriptDefinition().getGlobalParameters();
+			List<ActionParameter> globals = this.scriptDefinitionLoader.getScriptDefinition().getGlobalParameters();
 			for(ActionParameter global:globals) {
 				this.globalParams.add(global.getDefaultValue());
 			}
