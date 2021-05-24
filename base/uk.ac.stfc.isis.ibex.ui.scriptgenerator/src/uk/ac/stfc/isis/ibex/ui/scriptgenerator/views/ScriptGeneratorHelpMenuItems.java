@@ -2,6 +2,7 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import java.net.URL;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
@@ -15,18 +16,22 @@ import org.eclipse.ui.browser.IWebBrowser;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorManual;
 import uk.ac.stfc.isis.ibex.ui.about.AboutDialogBox;
 
 import org.eclipse.swt.widgets.Display;
 
+/**
+ * Container for open manual and about menu items to display in the help menu of the script generator.
+ */
 public class ScriptGeneratorHelpMenuItems extends SelectionAdapter {
 	
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorHelpMenuItems.class);
 	
-	private Optional<URL> manualUrl;
+	private Optional<URL> manualUrl = Optional.empty();
 	
-	public ScriptGeneratorHelpMenuItems(Optional<URL> manualUrl) {
-		this.manualUrl = manualUrl;
+	public ScriptGeneratorHelpMenuItems() {
+		bindManualUrl();
 	}
 	
 	@Override
@@ -72,14 +77,20 @@ public class ScriptGeneratorHelpMenuItems extends SelectionAdapter {
             displayAbout();
         });
 	}
-	
-	/**
-     * Display a new dialog with information about the script generator.
-     */
-    public void displayAbout() {
+
+    private void displayAbout() {
     	var shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
     	var dialogBox = new AboutDialogBox(shell, "Script Generator");
     	dialogBox.open();
+    }
+    
+    private void bindManualUrl() {
+	    CompletableFuture.supplyAsync(() -> ScriptGeneratorManual.getUserManualUrl())
+		    .thenAccept(url -> {
+		        Display.getDefault().asyncExec(() -> {
+		        	manualUrl = url;
+		        });
+	    });
     }
 
 }

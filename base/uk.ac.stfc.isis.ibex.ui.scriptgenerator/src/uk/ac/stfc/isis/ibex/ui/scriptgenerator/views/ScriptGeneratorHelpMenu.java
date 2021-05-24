@@ -1,8 +1,5 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
-import java.net.URL;
-import java.util.Optional;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.layout.GridData;
@@ -10,14 +7,18 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
+/**
+ * A menu containing help items for the script generator including a button to open the manual and 
+ * to display information about the script generator.
+ */
 public class ScriptGeneratorHelpMenu {
 	
 	Composite helpMenuComposite;
 	
-	public ScriptGeneratorHelpMenu(Composite containingComposite, Optional<URL> manualUrl) {
+	public ScriptGeneratorHelpMenu(Composite containingComposite) {
 		setUpHelpMenuComposite(containingComposite);
 		createLabel();
-		createDropDownButton(manualUrl);
+		createDropDownButton();
 	}
 	
 	private void setUpHelpMenuComposite(Composite containingComposite) {
@@ -31,10 +32,10 @@ public class ScriptGeneratorHelpMenu {
         lbl.setText("Help");
 	}
 	
-	private void createDropDownButton(Optional<URL> manualUrl) {
+	private void createDropDownButton() {
 		Button btn = new Button(helpMenuComposite, SWT.ARROW|SWT.DOWN);
         btn.setLayoutData(new GridData(GridData.FILL_VERTICAL));
-        btn.addSelectionListener(new ScriptGeneratorHelpMenuItems(manualUrl));
+        btn.addSelectionListener(new ScriptGeneratorHelpMenuItems());
 	}
 
 }

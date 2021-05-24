@@ -206,11 +206,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     private boolean hasSelection;
     
-    /**
-     * Whether the manual is available or not.
-     */
-    public Optional<URL> manualUrl = Optional.empty();
-    
     private Clipboard clipboard;
     private static String TAB = "\t";
     private static String CRLF = "\r\n";    
@@ -673,40 +668,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
             helpText.setText("");
         });
     }
-    /**
-     * Asynchronously get the URL of the user manual and bind it to the Open Manual button.
-     * 
-     * @param manualButton The button that should open the manual
-     */
-    public void bindManualUrl() {
-    CompletableFuture.supplyAsync(() -> getUserManualUrl())
-    .thenAccept(url -> {
-        DISPLAY.asyncExec(() -> {
-        	manualUrl = url;
-        });
-    });
-    }
-
-    /**
-     * Sets up the button that links to the manual of the script generator.
-     * 
-     * @param linkButton The button to set up.
-     * @param target The url to point the button towards (an empty optional, if nowhere to point the button to).
-     */
-    protected void setupLinkButton(Button linkButton, Optional<URL> target) {
-    target.ifPresent(url -> {
-        linkButton.setEnabled(true);
-        linkButton.setToolTipText(url.toString());
-        linkButton.addListener(SWT.Selection, e -> {
-        try {
-            IWebBrowser browser = PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser();
-            browser.openURL(url);
-        } catch (PartInitException ex) {
-            LoggerUtils.logErrorWithStackTrace(LOG, "Failed to open URL in browser: " + url, ex);
-        }
-        });
-    });
-    }
 
     /**
      * Get the first i lines of invalidity errors for the current script definition and parameters.
@@ -1098,15 +1059,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 
     }
     };
-
-
-    /** Get the user manual URL for the script generator from the model.
-     * 
-     * @return An optional with a value containing the URL if there is a user manual to load.
-     */
-    public Optional<URL> getUserManualUrl() {
-    return scriptGeneratorModel.getUserManualUrl();
-    }
 
     /**
      * Set the selected actions.
