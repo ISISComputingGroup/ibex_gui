@@ -73,8 +73,6 @@ import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class ScriptGeneratorView {
-	
-	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorView.class);
 
     private static PreferenceSupplier preferences = new PreferenceSupplier();
 
@@ -316,55 +314,7 @@ public class ScriptGeneratorView {
             () -> helpText.setText("")
             );
         
-        final Composite btnCntrl = new Composite(topBarComposite, SWT.BORDER);
-        GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).spacing(0, 1).applyTo(btnCntrl);
-        CLabel lbl = new CLabel(btnCntrl, SWT.NONE);
-        lbl.setText("Help");
-        Button btn = new Button(btnCntrl, SWT.ARROW|SWT.DOWN);
-        btn.setLayoutData(new GridData(GridData.FILL_VERTICAL));
-
-        btn.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                super.widgetSelected(e);
-		        var helpMenu = new Menu(DISPLAY.getActiveShell(), SWT.POP_UP);
-
-		        MenuItem item1 = new MenuItem(helpMenu, SWT.PUSH);
-		        item1.setText("Open Manual");
-		        scriptGeneratorViewModel.manualUrl.ifPresentOrElse(
-		        		url -> {
-		        			item1.setEnabled(true);
-		        			item1.setToolTipText(url.toString());
-		        			item1.addListener(SWT.Selection, e1 -> {
-			        	        try {
-			        	            IWebBrowser browser = PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser();
-			        	            browser.openURL(url);
-			        	        } catch (PartInitException ex) {
-			        	            LoggerUtils.logErrorWithStackTrace(LOG, "Failed to open URL in browser: " + url, ex);
-			        	        }
-		        	        });
-		        	    }, 
-		        		() -> {
-		        			item1.setEnabled(false);
-		        		}
-			        );
-
-		        MenuItem item2 = new MenuItem(helpMenu, SWT.PUSH);
-		        item2.setText("About");
-		        item2.addListener(SWT.Selection, e2 -> {
-		            scriptGeneratorViewModel.displayAbout();
-		        });
-
-		        Point loc = btnCntrl.getLocation();
-                Rectangle rect = btnCntrl.getBounds();
-
-                Point mLoc = new Point(loc.x-1, loc.y+rect.height);
-
-                helpMenu.setLocation(DISPLAY.map(btnCntrl.getParent(), null, mLoc));
-
-                helpMenu.setVisible(true);
-            }
-        });
+        new ScriptGeneratorHelpMenu(topBarComposite, scriptGeneratorViewModel.manualUrl);
 
         Map<String, String> scriptDefinitionLoadErrors = scriptGeneratorViewModel.getScriptDefinitionLoadErrors();
 

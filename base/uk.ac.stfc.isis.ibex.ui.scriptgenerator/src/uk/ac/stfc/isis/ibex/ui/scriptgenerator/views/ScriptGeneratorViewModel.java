@@ -915,15 +915,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
         displayLanguageSupportError();
     }
     }
-    
-    /**
-     * Display a new dialog with information about the script generator.
-     */
-    public void displayAbout() {
-    	var shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-    	var dialogBox = new AboutDialogBox(shell, "Script Generator");
-    	dialogBox.open();
-    }
 
     /**
      * Generate a script and display the file it was generated to. If fail display warnings.
