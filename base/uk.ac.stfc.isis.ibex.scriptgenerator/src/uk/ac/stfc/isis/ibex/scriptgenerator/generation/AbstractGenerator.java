@@ -91,7 +91,7 @@ public abstract class AbstractGenerator extends ModelObject {
      * @throws ExecutionException A failure to execute the call to generate a script
      * @throws InterruptedException The call to generate a script was interrupted
      */
-    public abstract void refreshTimeEstimation(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition) throws InterruptedException, ExecutionException;
+    public abstract void refreshTimeEstimation(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams) throws InterruptedException, ExecutionException;
 
     /**
      * Get the generated script from the given ID.

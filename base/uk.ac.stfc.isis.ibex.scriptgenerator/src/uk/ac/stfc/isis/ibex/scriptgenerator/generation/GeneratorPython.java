@@ -84,9 +84,9 @@ public class GeneratorPython extends AbstractGenerator {
 	}
 
 	@Override
-	public void refreshTimeEstimation(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition) throws InterruptedException, ExecutionException {
+	public void refreshTimeEstimation(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams) throws InterruptedException, ExecutionException {
         try {
-            pythonInterface.refreshTimeEstimation(scriptGenContent, scriptDefinition);
+            pythonInterface.refreshTimeEstimation(scriptGenContent, scriptDefinition, globalParams);
         } catch (PythonNotReadyException e) {
             // ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
             LOG.error(e);

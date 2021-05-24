@@ -44,7 +44,7 @@ public interface ScriptDefinitionWrapper {
      * @param action The action to estimate
      * @return An estimate in seconds
      */
-    Number estimateTime(Map<String, String> action);
+    Number estimateTime(Map<String, String> action, List<String> global_params);
 	
 	/**
 	 * @return The name of this script definition.

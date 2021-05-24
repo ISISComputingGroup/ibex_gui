@@ -107,19 +107,13 @@ class ScriptDefinitionWrapper(object):
         Returns:
             arguments: List of the parameter names (strings)
         """
-        logger = logging.getLogger("py4j")
-        logger.setLevel(logging.ERROR)
-        logger.addHandler(logging.StreamHandler())
         arguments = self.script_definition.global_params_definition
-        logger.error(arguments)
         list_of_globals = []
         for arg in arguments:
             name = arg
             default = arguments[arg][0]
-            logger.error("name = {}. default = {}.".format(name, default))
             action_parameter = PythonActionParameter(name, default, False)
             list_of_globals.append(action_parameter)
-        logger.error(list_of_globals)
         return ListConverter().convert(list_of_globals, gateway._gateway_client)
 
     def getHelp(self) -> str:
@@ -151,8 +145,15 @@ class ScriptDefinitionWrapper(object):
         Returns:
             None if all params are valid.
         """
+        logger = logging.getLogger("py4j")
+        logger.setLevel(logging.ERROR)
+        logger.addHandler(logging.StreamHandler())
+
         try:
-            self.script_definition.global_params_definition[0][1](global_params)
+            for param in global_params:
+                logging.error(param)
+                logging.error(self.script_definition.global_params_definition[param])
+                self.script_definition.global_params_definition[param][1](param)
             return
         except Exception as e:
             return str(e)
@@ -172,7 +173,7 @@ class ScriptDefinitionWrapper(object):
         except Exception as e:
             return str(e)  # If there is an error validating return to the user
 
-    def estimateTime(self, action) -> Union[None, int]:
+    def estimateTime(self, action, globalparams) -> Union[None, int]:
         """
         Returns an estimate (in seconds) of the time necessary to complete the action
 
@@ -183,6 +184,8 @@ class ScriptDefinitionWrapper(object):
             An int representing the estimated time in seconds
             or None if the parameters are invalid or the estimate could not be calculated
         """
+        self.script_definition.global_params = dict(zip(self.script_definition.global_params_definition.keys(),
+                                                        globalparams))
         estimate = self.script_definition.estimate_time(**action)
         try:
             return round(estimate)
@@ -228,8 +231,8 @@ class Generator(object):
             if script_definition.parametersValid(action) != None:
                 return False
 
-        #if script_definition.globalParamsValid(global_params) !=None:
-        #    return False
+        if script_definition.globalParamsValid(global_params) !=None:
+            return False
         return True
 
     def getValidityErrors(self, list_of_actions, script_definition: ScriptDefinitionWrapper) -> Dict[int, AnyStr]:
@@ -248,7 +251,7 @@ class Generator(object):
             current_action_index += 1
         return validityCheck
 
-    def estimateTime(self, list_of_actions, script_definition: ScriptDefinitionWrapper) -> Dict[int, int]:
+    def estimateTime(self, list_of_actions, script_definition: ScriptDefinitionWrapper, global_params) -> Dict[int, int]:
         """
         Estimates the time necessary to complete each action.
         Actions are only estimated if their parameters are valid.
@@ -259,7 +262,7 @@ class Generator(object):
         time_estimates: Dict[int, int] = {}
         for current_action_index, action in enumerate(list_of_actions, 0):
             if script_definition.parametersValid(action) is None:
-                time_estimate = script_definition.estimateTime(action)
+                time_estimate = script_definition.estimateTime(action, global_params)
                 if time_estimate != None:
                     time_estimates[current_action_index] = time_estimate
             current_action_index += 1
@@ -286,7 +289,6 @@ class Generator(object):
                 rendered_template = self.template.render(inserted_script_definition=script_definition_template,
                                                          script_generator_actions=list_of_actions,
                                                          global_params=global_params, hexed_value=val)
-                logging.error(rendered_template)
             except Exception:
                 rendered_template = None
             return rendered_template
@@ -404,7 +406,7 @@ class ScriptDefinitionsWrapper(object):
             self.convert_list_of_actions_to_python(list_of_actions), script_definition),
             gateway._gateway_client)
 
-    def estimateTime(self, list_of_actions, script_definition: ScriptDefinitionWrapper) -> Dict[int, int]:
+    def estimateTime(self, list_of_actions, script_definition: ScriptDefinitionWrapper, global_parameters) -> Dict[int, int]:
         """
         Get the estimated time to complete the current actions
 
@@ -412,7 +414,7 @@ class ScriptDefinitionsWrapper(object):
             Dictionary containing line numbers as keys and estimates as values
         """
         return MapConverter().convert(self.generator.estimateTime(
-            self.convert_list_of_actions_to_python(list_of_actions), script_definition),
+            self.convert_list_of_actions_to_python(list_of_actions), script_definition, global_parameters),
             gateway._gateway_client)
 
     def generate(self, list_of_actions, jsonString, global_params,

@@ -27,6 +27,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
@@ -44,7 +45,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionLoader;
-
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
@@ -197,6 +198,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * an initial script definition.
 	 */
 	public ScriptGeneratorSingleton() {  
+		this.globalParams = new ArrayList<String>();
 	}
 
 	/**
@@ -213,6 +215,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		this.pythonInterface = pythonInterface;
 		this.scriptDefinitionLoader = scriptDefinitionLoader;
 		this.scriptGeneratorTable = scriptGeneratorTable;
+		this.globalParams = new ArrayList<String>();
 		setUp();
 	}
 
@@ -284,6 +287,15 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		});
 
 		setActionParameters(scriptDefinitionLoader.getParameters());
+		try {
+			List<ActionParameter> globals =this.scriptDefinitionLoader.getScriptDefinition().getGlobalParameters();
+			for(ActionParameter global:globals) {
+				this.globalParams.add(global.getDefaultValue());
+			}
+		}catch(NoSuchElementException e) {
+			LOG.info("No scriptDefinition yet");
+		}
+		
 	}
 
 	/**
@@ -596,7 +608,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
                 .orElseThrow(() -> new NoScriptDefinitionSelectedException(
                         "Tried to refresh time estimation with no script definition selected"));
         try {
-            generator.refreshTimeEstimation(scriptGeneratorTable, scriptDefinition);
+            generator.refreshTimeEstimation(scriptGeneratorTable, scriptDefinition, this.globalParams );
             languageSupported = true;
             threadError = false;
         } catch (UnsupportedLanguageException e) {
