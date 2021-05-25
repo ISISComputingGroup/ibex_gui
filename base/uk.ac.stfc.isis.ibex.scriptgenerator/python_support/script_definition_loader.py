@@ -148,8 +148,10 @@ class ScriptDefinitionWrapper(object):
         try:
             list(self.script_definition.global_params_definition.values())[index][1](global_param)
             return
-        except Exception as e:
-            return str(e)
+        except Exception:
+            return 'Expected type: "{}" for global: "{}", but recieved: "{}"\n'.format(
+                str(list(self.script_definition.global_params_definition.values())[index][1])[8:-2],
+                list(self.script_definition.global_params_definition.keys())[index], global_param)
 
     def parametersValid(self, action) -> Union[None, AnyStr]:
         """
@@ -225,12 +227,13 @@ class Generator(object):
                 return False
         i = 0
         for global_param in global_params:
-            if script_definition.globalParamsValid(global_param, i) !=None:
+            if script_definition.globalParamsValid(global_param, i) != None:
                 return False
             i += 1
         return True
 
-    def getValidityErrors(self, global_params, list_of_actions, script_definition: ScriptDefinitionWrapper) -> Dict[int, AnyStr]:
+    def getValidityErrors(self, global_params, list_of_actions, script_definition: ScriptDefinitionWrapper) -> Dict[
+        int, AnyStr]:
         """
         Get a map of validity errors
 
@@ -255,7 +258,8 @@ class Generator(object):
             current_action_index += 1
         return validityCheck
 
-    def estimateTime(self, list_of_actions, script_definition: ScriptDefinitionWrapper, global_params) -> Dict[int, int]:
+    def estimateTime(self, list_of_actions, script_definition: ScriptDefinitionWrapper, global_params) -> Dict[
+        int, int]:
         """
         Estimates the time necessary to complete each action.
         Actions are only estimated if their parameters are valid.
@@ -389,7 +393,7 @@ class ScriptDefinitionsWrapper(object):
         python_list_of_actions: List = ListConverter().convert(list_of_actions, gateway._gateway_client)
         return [MapConverter().convert(action, gateway._gateway_client) for action in python_list_of_actions]
 
-    def areParamsValid(self, list_of_actions, global_params,script_definition: ScriptDefinitionWrapper) -> bool:
+    def areParamsValid(self, list_of_actions, global_params, script_definition: ScriptDefinitionWrapper) -> bool:
         """
         Checks if a list of parameters are valid for the script_definition
 
@@ -408,10 +412,12 @@ class ScriptDefinitionsWrapper(object):
             Dictionary containing keys of the line numbers where errors are and values of the error messages.
         """
         return MapConverter().convert(self.generator.getValidityErrors(global_params,
-            self.convert_list_of_actions_to_python(list_of_actions), script_definition),
-            gateway._gateway_client)
+                                                                       self.convert_list_of_actions_to_python(
+                                                                           list_of_actions), script_definition),
+                                      gateway._gateway_client)
 
-    def estimateTime(self, list_of_actions, script_definition: ScriptDefinitionWrapper, global_parameters) -> Dict[int, int]:
+    def estimateTime(self, list_of_actions, script_definition: ScriptDefinitionWrapper, global_parameters) -> Dict[
+        int, int]:
         """
         Get the estimated time to complete the current actions
 

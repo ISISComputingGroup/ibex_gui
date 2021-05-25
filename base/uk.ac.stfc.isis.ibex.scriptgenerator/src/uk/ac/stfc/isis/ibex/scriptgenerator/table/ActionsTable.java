@@ -337,9 +337,10 @@ public class ActionsTable extends ModelObject {
 	public ArrayList<String> getInvalidityErrorLines() {
 		var errors = new ArrayList<String>();
 		if (this.globalValidError!="") {
-			String errorString = "Global Parameter Errors: \n" + globalValidError + "\n";
+			String errorString = "Global Parameter Errors: \n" + globalValidError;
 			errors.add(errorString);
 		}
+		errors.add("Action Errors:");
 		for (int i = 0; i < actions.size(); i++) {
 			ScriptGeneratorAction action = actions.get(i);
 			if (!action.isValid()) {
