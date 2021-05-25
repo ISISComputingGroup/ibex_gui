@@ -27,6 +27,8 @@ public class ActionsTable extends ModelObject {
 	 */
 	private List<JavaActionParameter> actionParameters;
 	
+	private String globalValidError = "";
+	
 	/**
 	 * The actions (rows) of the table that have values for the action parameters.
 	 */
@@ -304,9 +306,12 @@ public class ActionsTable extends ModelObject {
 	 * @param validityErrors The hashmap to set validity errors based on.
 	 */
 	public void setValidityErrors(Map<Integer, String> validityErrors) {
+		if(validityErrors.containsKey(0)) {
+			this.globalValidError = validityErrors.get(0);
+		}
 		for (int i = 0; i < actions.size(); i++) {
-			if (validityErrors.containsKey(i)) {
-				actions.get(i).setInvalid(validityErrors.get(i));
+			if (validityErrors.containsKey(i+1)) {
+				actions.get(i).setInvalid(validityErrors.get(i+1));
 			} else {
 				actions.get(i).setValid();
 			}
@@ -331,10 +336,14 @@ public class ActionsTable extends ModelObject {
 	 */
 	public ArrayList<String> getInvalidityErrorLines() {
 		var errors = new ArrayList<String>();
+		if (this.globalValidError!="") {
+			String errorString = "Global Parameter Errors: \n" + globalValidError + "\n";
+			errors.add(errorString);
+		}
 		for (int i = 0; i < actions.size(); i++) {
 			ScriptGeneratorAction action = actions.get(i);
 			if (!action.isValid()) {
-				String errorString = "Row: " + (i + 1) + ", Reason: " + "\n" + action.getInvalidityReason().get() + "\n";
+				String errorString = "Row: " + (i+1) + ", Reason: " + "\n" + action.getInvalidityReason().get() + "\n";
 				
 				errors.addAll(Arrays.asList(errorString.split("\n")));
 			}

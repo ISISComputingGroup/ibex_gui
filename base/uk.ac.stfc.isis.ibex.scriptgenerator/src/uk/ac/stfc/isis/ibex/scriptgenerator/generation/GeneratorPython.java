@@ -74,9 +74,9 @@ public class GeneratorPython extends AbstractGenerator {
 	 * @throws InterruptedException The Py4J call was interrupted.
 	 */
 	@Override
-	public void refreshValidityErrors(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefintion) throws InterruptedException, ExecutionException {
+	public void refreshValidityErrors(List<String> globalParams, List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefintion) throws InterruptedException, ExecutionException {
 		try {
-			pythonInterface.refreshValidityErrors(scriptGenContent, scriptDefintion);
+			pythonInterface.refreshValidityErrors(globalParams,scriptGenContent, scriptDefintion);
 		} catch (PythonNotReadyException e) {
 			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
 			LOG.error(e);

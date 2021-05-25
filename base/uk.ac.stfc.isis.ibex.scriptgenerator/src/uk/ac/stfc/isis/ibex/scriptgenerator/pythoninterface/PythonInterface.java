@@ -390,12 +390,12 @@ public class PythonInterface extends ModelObject {
 	 * @throws InterruptedException The Py4J call was interrupted
 	 * @throws PythonNotReadyException When python is not ready to accept calls.
 	 */
-	public void refreshValidityErrors(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition)
+	public void refreshValidityErrors(List<String> globalParams, List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition)
 			throws InterruptedException, ExecutionException, PythonNotReadyException {
 		if (pythonReady) {
 			CompletableFuture.supplyAsync(() -> {
 				try {
-					return scriptDefinitionsWrapper.getValidityErrors(convertScriptGenContentToPython(scriptGenContent), scriptDefinition);
+					return scriptDefinitionsWrapper.getValidityErrors(globalParams,convertScriptGenContentToPython(scriptGenContent), scriptDefinition);
 				} catch (Py4JException e) {
 					LOG.error(e);
 					handlePythonReadinessChange(false);

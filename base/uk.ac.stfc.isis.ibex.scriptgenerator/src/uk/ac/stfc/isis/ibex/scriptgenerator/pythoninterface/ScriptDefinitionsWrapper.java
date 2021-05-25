@@ -51,7 +51,7 @@ public interface ScriptDefinitionsWrapper {
 	 * @return A map where the key is the index of the action in the list and 
 	 * 		the value is the invalidity reason. Empty if there are no invalidity errors.
 	 */
-	Map<Integer, String> getValidityErrors(List<Map<String, String>> scriptGenContent, ScriptDefinitionWrapper scriptDefinition);
+	Map<Integer, String> getValidityErrors(List<String> globalParams, List<Map<String, String>> scriptGenContent, ScriptDefinitionWrapper scriptDefinition);
 	
 	/**
 	 * Check if a list of actions are valid under the passed script definitions.

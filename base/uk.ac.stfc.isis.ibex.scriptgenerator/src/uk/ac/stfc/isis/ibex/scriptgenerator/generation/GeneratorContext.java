@@ -202,10 +202,10 @@ public class GeneratorContext extends ModelObject {
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
 	 */
-	public void refreshValidityErrors(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage) 
+	public void refreshValidityErrors(List<String> globalParams, ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
 		AbstractGenerator generator = getGenerator(generatedLanguage);
-		generator.refreshValidityErrors(actionsTable.getActions(), scriptDefinition);
+		generator.refreshValidityErrors(globalParams, actionsTable.getActions(), scriptDefinition);
 	}
 
 	/**
@@ -217,9 +217,9 @@ public class GeneratorContext extends ModelObject {
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
 	 */
-	public void refreshValidityErrors(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition) 
+	public void refreshValidityErrors(List<String> globalParams, ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
-		refreshValidityErrors(actionsTable, scriptDefinition, GeneratedLanguage.PYTHON);
+		refreshValidityErrors(globalParams, actionsTable, scriptDefinition, GeneratedLanguage.PYTHON);
 	}
 	
 	/**

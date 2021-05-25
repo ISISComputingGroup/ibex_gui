@@ -478,6 +478,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			this.globalParams = new ArrayList<String>();
 			this.globalParams.add(params);
 		}
+		try {
+			refreshParameterValidityChecking();
+		}catch(NoScriptDefinitionSelectedException e) {
+			return;
+		}
 	}
 
 	/**
@@ -584,7 +589,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 						"Tried to refresh parameter validity with no script definition selected"));
 		try {
 			generator.refreshAreParamsValid(scriptGeneratorTable, scriptDefinition, this.globalParams);
-			generator.refreshValidityErrors(scriptGeneratorTable, scriptDefinition);
+			generator.refreshValidityErrors(this.globalParams ,scriptGeneratorTable, scriptDefinition);
 			languageSupported = true;
 			threadError = false;
 		} catch (UnsupportedLanguageException e) {
