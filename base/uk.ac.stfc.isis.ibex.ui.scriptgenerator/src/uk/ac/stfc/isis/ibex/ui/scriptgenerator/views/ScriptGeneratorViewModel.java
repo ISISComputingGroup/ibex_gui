@@ -53,6 +53,7 @@ import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.SaveScriptGeneratorFileMe
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.ui.about.AboutDialogBox;
 
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -85,11 +86,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * A clear colour for use in other script generator table columns when a row is valid.
      */
     private static final Color CLEAR_COLOR = DISPLAY.getSystemColor(SWT.COLOR_WHITE);
-
-    /**
-     * The colour of the "get validity errors" button when it is grayed out.
-     */
-    private static final Color GREY_COLOR = DISPLAY.getSystemColor(SWT.COLOR_GRAY);
 
     /**
      * A light orange to use when validity checks may be incorrect e.g. for when using an unsupported language.
@@ -189,11 +185,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * The current viewTable in the actions.
      */
     private ActionsViewTable viewTable;
-
-    /**
-     * The current get validity errors button in the view.
-     */
-    private Button btnGetValidityErrors;
 
     /**
      * The current generate script button in the view.
@@ -319,7 +310,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void addEmptyAction() {
     scriptGeneratorModel.addEmptyAction();
     // Make sure the table is updated with the new action before selecting it
-    actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam, btnSaveParamAs);
+    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs);
     DISPLAY.asyncExec(() -> {
     	viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
     });
@@ -333,7 +324,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void insertEmptyAction(Integer insertionLocation) {
     scriptGeneratorModel.insertEmptyAction(insertionLocation);
     // Make sure the table is updated with the new action before selecting it
-    actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam, btnSaveParamAs);
+    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs);
     DISPLAY.asyncExec(() -> {
         viewTable.setCellFocus(insertionLocation, 0);
     });
@@ -360,7 +351,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void duplicateAction(List<ScriptGeneratorAction> actionsToDuplicate, Integer insertionLocation) {
     scriptGeneratorModel.duplicateAction(actionsToDuplicate, insertionLocation);
     // Make sure the table is updated with the new action before selecting it
-    actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam, btnSaveParamAs);
+    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs);
     DISPLAY.asyncExec(() -> {
     	viewTable.setCellFocus(insertionLocation, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
     });
@@ -473,7 +464,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Listen for changes in actions and activate the handler.
      */
     private PropertyChangeListener actionChangeListener = evt -> {
-    actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam, btnSaveParamAs);
+    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs);
     };
 
     /**
@@ -481,14 +472,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
      *  update the view table.
      * 
      * @param viewTable The view table to update.
-     * @param btnGetValidityErrors The validity check button to style change.
      * @param btnGenerateScript The generate script button to style change.
      * @param btnSaveParam The save parameters button.
      * @param btnSaveParamAs The save parameters as button.
      */
-    protected void bindActionProperties(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript, Button btnSaveParam, Button btnSaveParamAs) {
+    protected void bindActionProperties(ActionsViewTable viewTable, Button btnGenerateScript, Button btnSaveParam, Button btnSaveParamAs) {
     this.viewTable = viewTable;
-    this.btnGetValidityErrors = btnGetValidityErrors;
     this.btnGenerateScript = btnGenerateScript;
     this.btnSaveParam = btnSaveParam;
     this.btnSaveParamAs = btnSaveParamAs;
@@ -580,19 +569,15 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Set the UI table's actions from the model and update validity checking.
      * 
      * @param viewTable The view table to update.
-     * @param btnGetValidityErrors The button to manipulate.
      * @param btnGenerateScript Generate Script button's visibility to manipulate
      * @param btnSaveParam Save Parameter button's visibility to manipulate
      * @param btnSaveParamAs Save Parameter As button's visibility to manipulate
      */
-    private void actionChangeHandler(ActionsViewTable viewTable, Button btnGetValidityErrors, Button btnGenerateScript, Button btnSaveParam, Button btnSaveParamAs) {
+    private void actionChangeHandler(ActionsViewTable viewTable, Button btnGenerateScript, Button btnSaveParam, Button btnSaveParamAs) {
     DISPLAY.asyncExec(() -> {
         if (!viewTable.isDisposed()) {
         viewTable.setRows(scriptGeneratorModel.getActions());
         updateValidityChecks(viewTable);
-        }
-        if (!btnGetValidityErrors.isDisposed()) {
-        setButtonValidityStyle(btnGetValidityErrors);
         }
         if (!btnGenerateScript.isDisposed()) {
         setButtonGenerateStyle(btnGenerateScript);
@@ -610,21 +595,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
     } else {
         // Grey the button out when language is not supported
         btnGenerateScript.setEnabled(false);
-    }
-    }
-
-    private void setButtonValidityStyle(Button btnGetValidityErrors) {
-    if (scriptGeneratorModel.languageSupported) {
-        // Grey the button out if parameters are valid, if not make it red
-        btnGetValidityErrors.setEnabled(!scriptGeneratorModel.areParamsValid());
-        if (scriptGeneratorModel.areParamsValid()) {
-        btnGetValidityErrors.setBackground(GREY_COLOR);
-        } else {
-        btnGetValidityErrors.setBackground(INVALID_LIGHT_COLOR);
-        }
-    } else {
-        // Alert the user with an orange colour that the validity checks may be incorrect
-        btnGetValidityErrors.setBackground(LIGHT_VALIDITY_CHECK_ERROR_COLOR);
     }
     }
 
@@ -697,42 +667,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
         () -> {
             helpText.setText("");
         });
-    }
-    /**
-     * Asynchronously get the URL of the user manual and bind it to the Open Manual button.
-     * 
-     * @param manualButton The button that should open the manual
-     */
-    public void bindManualButton(Button manualButton) {
-    CompletableFuture.supplyAsync(() -> getUserManualUrl())
-    .thenAccept(url -> {
-        DISPLAY.asyncExec(() -> {
-        if (!manualButton.isDisposed()) {
-            setupLinkButton(manualButton, url);
-        }
-        });
-    });
-    }
-
-    /**
-     * Sets up the button that links to the manual of the script generator.
-     * 
-     * @param linkButton The button to set up.
-     * @param target The url to point the button towards (an empty optional, if nowhere to point the button to).
-     */
-    protected void setupLinkButton(Button linkButton, Optional<URL> target) {
-    target.ifPresent(url -> {
-        linkButton.setEnabled(true);
-        linkButton.setToolTipText(url.toString());
-        linkButton.addListener(SWT.Selection, e -> {
-        try {
-            IWebBrowser browser = PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser();
-            browser.openURL(url);
-        } catch (PartInitException ex) {
-            LoggerUtils.logErrorWithStackTrace(LOG, "Failed to open URL in browser: " + url, ex);
-        }
-        });
-    });
     }
 
     /**
@@ -1125,15 +1059,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 
     }
     };
-
-
-    /** Get the user manual URL for the script generator from the model.
-     * 
-     * @return An optional with a value containing the URL if there is a user manual to load.
-     */
-    public Optional<URL> getUserManualUrl() {
-    return scriptGeneratorModel.getUserManualUrl();
-    }
 
     /**
      * Set the selected actions.

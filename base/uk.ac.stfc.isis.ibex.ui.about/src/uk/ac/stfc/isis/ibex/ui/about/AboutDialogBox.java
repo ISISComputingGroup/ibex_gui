@@ -17,7 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.help;
+package uk.ac.stfc.isis.ibex.ui.about;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -39,22 +39,25 @@ public class AboutDialogBox extends TitleAreaDialog {
     public static final int WIDTH = 400;
     /** Dialog height. */
     private static final int HEIGHT = 300;
+    /** Name of the application */
+    private String applicationName;
 
     /**
      * Construct a new about Ibex dialog box.
      * 
      * @param parentShell The parent shell in which in the dialog will be loaded
      */
-	public AboutDialogBox(Shell parentShell) {
+	public AboutDialogBox(Shell parentShell, String applicationName) {
 		super(parentShell);	
 		setShellStyle(getShellStyle() | SWT.RESIZE | SWT.MAX);
+		this.applicationName = applicationName;
 	}
 
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
         setShellStyle(SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
-		setTitle("About IBEX");
+		setTitle("About " + applicationName);
 		
 	}
 	
@@ -65,15 +68,19 @@ public class AboutDialogBox extends TitleAreaDialog {
 
 	@Override
 	protected Control createDialogArea(Composite parent) {
-		setTitle("About IBEX");
+		setTitle("About " + applicationName);
 		
-		Composite container = (Composite) super.createDialogArea(parent);
+		var container = superCreateDialogArea(parent);
 		container.setLayout(new GridLayout(1, false));
-			
-		new VersionPanel(container, SWT.NONE);
-
+		
+		new BaseVersionPanel(container, SWT.NONE, applicationName);
+		
 		return container;
-	}	
+	}
+	
+	protected Composite superCreateDialogArea(Composite parent) {
+		return (Composite) super.createDialogArea(parent);
+	}
 
 	@Override
 	protected Button createButton(Composite parent, int id, String label, boolean defaultButton) {
@@ -82,4 +89,5 @@ public class AboutDialogBox extends TitleAreaDialog {
 		}
 		return super.createButton(parent, id, label, defaultButton);
 	}
+	
 }

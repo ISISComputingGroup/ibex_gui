@@ -298,32 +298,8 @@ public class ScriptGeneratorView {
             },
             () -> helpText.setText("")
             );
-
-        // Composite for the Open Manual button
-        Composite manualButtonComposite = new Composite(topBarComposite, SWT.NONE);
-        manualButtonComposite.setLayout(new GridLayout(1, false));
-        manualButtonComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-
-        // Button to open the user manual in a button
-        final Button manualButton = new Button(manualButtonComposite, SWT.NONE);
-        manualButton.setEnabled(false);
-        manualButton.setText("Open Manual");
-        manualButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-        // The composite to contain the button to check validity
-        Composite validityComposite = new Composite(topBarComposite, SWT.NONE);
-        validityComposite.setLayout(new GridLayout(1, false));
-        validityComposite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-
-        // Button to check validity errors
-        final Button btnGetValidityErrors = new Button(validityComposite, SWT.NONE);
-        btnGetValidityErrors.setText("Get Validity Errors");
-        btnGetValidityErrors.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        btnGetValidityErrors.addListener(SWT.Selection, e -> {
-            scriptGeneratorViewModel.displayValidityErrors();
-        });
-
-
+        
+        new ScriptGeneratorHelpMenu(topBarComposite);
 
         Map<String, String> scriptDefinitionLoadErrors = scriptGeneratorViewModel.getScriptDefinitionLoadErrors();
 
@@ -460,9 +436,7 @@ public class ScriptGeneratorView {
         loadExperimentalParametersButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.loadParameterValues());
         // Bind the context and the validity checking listeners
         bind(scriptDefinitionSelector,
-            btnGetValidityErrors,
-            helpText,
-            manualButton);
+            helpText);
 
         } else {
 
@@ -547,14 +521,10 @@ public class ScriptGeneratorView {
      * Binds the Script Generator Table, script definition selector and validity check models to their views.
      */
     private void bind(ComboViewer scriptDefinitionSelector,
-        Button btnGetValidityErrors,
-        Text helpText,
-        Button manualButton) {
+        Text helpText) {
     scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText);
 
-    scriptGeneratorViewModel.bindActionProperties(table, btnGetValidityErrors, generateScriptButton, saveExperimentalParametersButton, saveAsExperimentalParametersButton);
-
-    scriptGeneratorViewModel.bindManualButton(manualButton);
+    scriptGeneratorViewModel.bindActionProperties(table, generateScriptButton, saveExperimentalParametersButton, saveAsExperimentalParametersButton);
 
     table.addSelectionChangedListener(event -> scriptGeneratorViewModel.setSelected(table.selectedRows()));
 
