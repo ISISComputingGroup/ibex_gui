@@ -145,11 +145,13 @@ class ScriptDefinitionWrapper(object):
         Returns:
             None if all params are valid.
         """
+        if self.script_definition.global_params_definition is None:
+            return
         try:
             list(self.script_definition.global_params_definition.values())[index][1](global_param)
             return
-        except Exception:
-            return 'Expected type: "{}" for global: "{}", but recieved: "{}"\n'.format(
+        except (TypeError, ValueError):
+            return 'Expected type: "{}" for global: "{}" but recieved: "{}"\n'.format(
                 str(list(self.script_definition.global_params_definition.values())[index][1])[8:-2],
                 list(self.script_definition.global_params_definition.keys())[index], global_param)
 
