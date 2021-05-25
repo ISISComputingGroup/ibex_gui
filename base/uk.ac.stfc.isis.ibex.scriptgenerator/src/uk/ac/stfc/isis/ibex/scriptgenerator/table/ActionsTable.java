@@ -51,6 +51,14 @@ public class ActionsTable extends ModelObject {
 	public List<ScriptGeneratorAction> getActions() {
 		return actions;
 	}
+	
+	/**
+	 * 
+	 * @return The globalValidError string on this object.
+	 */
+	public String getGlobalValidityErrors() {
+		return this.globalValidError;
+	}
 
 	/**
 	 * The actions table holds each action and its parameter values in an ordered list.
@@ -340,10 +348,14 @@ public class ActionsTable extends ModelObject {
 			String errorString = "Global Parameter Errors: \n" + globalValidError;
 			errors.add(errorString);
 		}
-		errors.add("Action Errors:");
+		boolean first = true;
 		for (int i = 0; i < actions.size(); i++) {
 			ScriptGeneratorAction action = actions.get(i);
 			if (!action.isValid()) {
+				if(first) {
+					errors.add("Action Errors:");
+					first = false;
+				}
 				String errorString = "Row: " + (i+1) + ", Reason: " + "\n" + action.getInvalidityReason().get() + "\n";
 				
 				errors.addAll(Arrays.asList(errorString.split("\n")));
