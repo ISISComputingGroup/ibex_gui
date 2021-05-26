@@ -47,7 +47,7 @@ public class TabIsShownListener extends PartAdapter {
         /**
          * Constructor.
          * 
-         * @param tbtmDiagnostics
+         * @param tabSelection
          *            The tab item containing detector diagnostics
          */
         private TabSelectionListener(TabIsShownAction tabSelection) {

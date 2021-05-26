@@ -100,6 +100,7 @@ public class NewBlockHandler extends AbstractHandler {
      * 
      * @param event The selection that caused the open
      * @throws Exception if no PV could be found in the selection
+     * @return The PV address
      */
     private String getPVFromEvent(ExecutionEvent event) throws Exception {
         String pvAddress = "";

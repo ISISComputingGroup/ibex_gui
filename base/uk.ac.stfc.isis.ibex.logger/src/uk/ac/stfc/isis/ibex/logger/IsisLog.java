@@ -156,10 +156,14 @@ public class IsisLog extends AbstractUIPlugin {
 			}
 
 			@Override
-			public void close() throws SecurityException {}
+			public void close() throws SecurityException {
+				
+			}
 
 			@Override
-			public void flush() {}
+			public void flush() {
+				
+			}
 		});
 		
 		IsisLog.getLogger(IsisLog.class).info("java.util.logging.Logger logger " + logger.getName() + " hooked successfully (message from log4j).");

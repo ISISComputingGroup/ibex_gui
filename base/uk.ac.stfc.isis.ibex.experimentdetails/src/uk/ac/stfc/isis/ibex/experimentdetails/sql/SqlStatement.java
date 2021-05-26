@@ -161,6 +161,7 @@ public class SqlStatement {
 
     /**
      * Get string representation of the list of WHERE clauses.
+     * @return A string representation of the list of WHERE clauses.
      */
     private String whereList() {
 		

@@ -314,6 +314,7 @@ public class BeamGraphView extends ModelListenerAdapter {
 	 * 
 	 * @param pvAddress
 	 *            Name of the PV to add to the plot
+	 * @return The generated PV item
 	 */
 	private PVItem generatePVItem(final String pvAddress) {
 		try {
