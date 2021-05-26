@@ -335,6 +335,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * String> representation. Required because of casting generics in Java.
 	 * 
 	 * @param validityMessages The validity messages to convert.
+	 * @param <T> class for keys in map.
+	 * @param <S> class for values in map.
+	 * @param keyClass The class the key entry should be cast to before placing in the generated map
+	 * @param valueClass The class the value entry should be cast to before placing in the generated map
 	 * @return The converted messages property.
 	 */
 	@SuppressWarnings("rawtypes")

@@ -1,6 +1,5 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
-import java.net.URL;
 import java.time.Duration;
 import java.nio.file.Paths;
 import java.beans.PropertyChangeEvent;
@@ -11,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -34,9 +32,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.browser.IWebBrowser;
 import org.apache.logging.log4j.Logger;
 import static java.lang.Math.min;
 
@@ -53,9 +48,7 @@ import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.SaveScriptGeneratorFileMe
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.ui.about.AboutDialogBox;
 
-import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -913,7 +906,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
     public void reloadScriptDefinitions() {
     scriptGeneratorModel.reloadScriptDefinitions();
     }
-
+    
+    /**
+     * Creates a prompt message string. 
+     * @return The prompt message
+     */
 	public String getPromptMessage() {
         String message = "Updates to the script definitions are available. Updating your definitions may erase current scripts.";
 		if (scriptGeneratorModel.isDirty()) {

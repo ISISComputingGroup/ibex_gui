@@ -46,6 +46,7 @@ public class BaseVersionPanel extends Composite {
      * 
      * @param parent The parent component
      * @param style The style to apply to the panel
+     * @param applicationName The application's name
      */
     @SuppressWarnings("checkstyle:magicnumber")
 	public BaseVersionPanel(Composite parent, int style, String applicationName) {

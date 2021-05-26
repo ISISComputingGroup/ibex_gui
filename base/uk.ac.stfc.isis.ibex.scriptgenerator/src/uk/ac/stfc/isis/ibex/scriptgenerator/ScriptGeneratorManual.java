@@ -10,7 +10,15 @@ import org.apache.logging.log4j.Logger;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
-public class ScriptGeneratorManual {
+/**
+ * A wrapper for getting the user manual URL. 
+ *
+ */
+public final class ScriptGeneratorManual {
+	
+	private ScriptGeneratorManual() {
+		// not called
+	}
 	
 	/**
 	 * The time to wait before timing out from trying to connect to the manual.

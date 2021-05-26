@@ -15,6 +15,10 @@ public class ScriptGeneratorHelpMenu {
 	
 	Composite helpMenuComposite;
 	
+	/**
+	 * Creates a help menu.
+	 * @param containingComposite The containing composite
+	 */
 	public ScriptGeneratorHelpMenu(Composite containingComposite) {
 		setUpHelpMenuComposite(containingComposite);
 		createLabel();
@@ -33,7 +37,7 @@ public class ScriptGeneratorHelpMenu {
 	}
 	
 	private void createDropDownButton() {
-		Button btn = new Button(helpMenuComposite, SWT.ARROW|SWT.DOWN);
+		Button btn = new Button(helpMenuComposite, SWT.ARROW | SWT.DOWN);
         btn.setLayoutData(new GridData(GridData.FILL_VERTICAL));
         btn.addSelectionListener(new ScriptGeneratorHelpMenuItems());
 	}
