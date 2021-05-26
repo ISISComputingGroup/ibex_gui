@@ -463,6 +463,8 @@ public class ScriptGeneratorView {
 
     /**
      * Set up a composite and table to display script definition load errors.
+     * @param parent The parent container
+     * @param scriptDefinitionLoadErrors The map containing the script definition load errors.
      */
     private void setUpScriptDefinitionLoadErrorTable(Composite parent, Map<String, String> scriptDefinitionLoadErrors) {
     if (!preferences.hideScriptGenScriptDefinitionErrorTable()) {
@@ -519,6 +521,8 @@ public class ScriptGeneratorView {
 
     /**
      * Binds the Script Generator Table, script definition selector and validity check models to their views.
+     * @param scriptDefinitionSelector The selector for script definitions
+     * @param helpText The help text
      */
     private void bind(ComboViewer scriptDefinitionSelector,
         Text helpText) {

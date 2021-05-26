@@ -46,6 +46,7 @@ public class AboutDialogBox extends TitleAreaDialog {
      * Construct a new about Ibex dialog box.
      * 
      * @param parentShell The parent shell in which in the dialog will be loaded
+     * @param applicationName The application's name
      */
 	public AboutDialogBox(Shell parentShell, String applicationName) {
 		super(parentShell);	
@@ -78,6 +79,11 @@ public class AboutDialogBox extends TitleAreaDialog {
 		return container;
 	}
 	
+	/**
+	 * Creates a dialog area container.
+	 * @param parent The parent of the dialog
+	 * @return A composite of the created area container
+	 */
 	protected Composite superCreateDialogArea(Composite parent) {
 		return (Composite) super.createDialogArea(parent);
 	}
