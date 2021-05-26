@@ -56,9 +56,9 @@ public class GeneratorPython extends AbstractGenerator {
 	 * @throws ExecutionException A failure to execute the py4j call.
 	 * @throws InterruptedException The Py4J call was interrupted.
 	 */
-	public void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition) throws InterruptedException, ExecutionException {
+	public void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams) throws InterruptedException, ExecutionException {
 		try {	
-			pythonInterface.refreshAreParamsValid(scriptGenContent, scriptDefinition);
+			pythonInterface.refreshAreParamsValid(scriptGenContent, globalParams, scriptDefinition);
 		} catch (PythonNotReadyException e) {
 			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
 			LOG.error(e);
@@ -95,9 +95,9 @@ public class GeneratorPython extends AbstractGenerator {
 
 	@Override
 	public Optional<Integer> refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent,
-			ScriptDefinitionWrapper scriptDefinition, String jsonContent) throws InterruptedException, ExecutionException {
+			ScriptDefinitionWrapper scriptDefinition, String jsonContent, List<String> globalParams) throws InterruptedException, ExecutionException {
 		try {
-			return Optional.of(pythonInterface.refreshGeneratedScript(scriptGenContent, jsonContent, scriptDefinition));
+			return Optional.of(pythonInterface.refreshGeneratedScript(scriptGenContent, jsonContent, globalParams, scriptDefinition));
 		} catch (PythonNotReadyException e) {
 			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
 			LOG.error(e);

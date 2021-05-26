@@ -79,6 +79,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * The table containing the script generator contents (actions).
 	 */
 	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<JavaActionParameter>());
+	
+	private List<String> globalParams;
 
 	/**
 	 * The loader to select and update the script definition being used.
@@ -194,7 +196,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * The constructor, will create without a script definition loader and without loading
 	 * an initial script definition.
 	 */
-	public ScriptGeneratorSingleton() {   
+	public ScriptGeneratorSingleton() {  
 	}
 
 	/**
@@ -450,6 +452,21 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	public void moveActionDown(List<ScriptGeneratorAction> actionsToMove) {
 		scriptGeneratorTable.moveActionDown(actionsToMove);
 	}
+	
+	public void updateGlobalParams(String params, int index) {
+		if(this.globalParams != null) {
+			
+			if(this.globalParams.size()>index) {
+				this.globalParams.set(index, params);			
+			}else {
+				this.globalParams.add(params);
+			}
+			
+		}else {
+			this.globalParams = new ArrayList<String>();
+			this.globalParams.add(params);
+		}
+	}
 
 	/**
 	 * Get the list of actions in the ActionsTable.
@@ -554,7 +571,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException(
 						"Tried to refresh parameter validity with no script definition selected"));
 		try {
-			generator.refreshAreParamsValid(scriptGeneratorTable, scriptDefinition);
+			generator.refreshAreParamsValid(scriptGeneratorTable, scriptDefinition, this.globalParams);
 			generator.refreshValidityErrors(scriptGeneratorTable, scriptDefinition);
 			languageSupported = true;
 			threadError = false;
@@ -614,7 +631,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			if (areParamsValid()) {
 				Path filePath = getScriptDefinitionPath(scriptDefinition);
 				String jsonContent = scriptGenFileHandler.createJsonString(scriptGeneratorTable.getActions(), scriptGenFileHandler.readFileContent(filePath), filePath);
-				return generator.refreshGeneratedScript(scriptGeneratorTable, scriptDefinition, jsonContent);
+				return generator.refreshGeneratedScript(scriptGeneratorTable, scriptDefinition, jsonContent, this.globalParams);
 			} else {
 				throw new InvalidParamsException("Parameters are invalid, cannot generate script");
 			}

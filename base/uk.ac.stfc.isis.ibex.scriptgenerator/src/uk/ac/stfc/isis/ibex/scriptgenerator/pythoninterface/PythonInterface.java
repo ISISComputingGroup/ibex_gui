@@ -419,12 +419,12 @@ public class PythonInterface extends ModelObject {
 	 * @throws InterruptedException The Py4J call was interrupted
 	 * @throws PythonNotReadyException When python is not ready to accept calls.
 	 */
-	public void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition)
+	public void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, List<String> globalParams, ScriptDefinitionWrapper scriptDefinition)
 			throws InterruptedException, ExecutionException, PythonNotReadyException {
 		if (pythonReady) {
 			CompletableFuture.supplyAsync(() -> {
 				try {
-					return scriptDefinitionsWrapper.areParamsValid(convertScriptGenContentToPython(scriptGenContent), scriptDefinition);
+					return scriptDefinitionsWrapper.areParamsValid(convertScriptGenContentToPython(scriptGenContent), globalParams, scriptDefinition);
 				} catch (Py4JException e) {
 					LOG.error(e);
 					handlePythonReadinessChange(false);
@@ -477,9 +477,9 @@ public class PythonInterface extends ModelObject {
 	 * @param scriptDefinition           The script definition to generate the script with.
 	 * @return An optional script.
      */
-    private Optional<String> generateScript(List<ScriptGeneratorAction> scriptGenContent, String jsonContent, ScriptDefinitionWrapper scriptDefinition) {
+    private Optional<String> generateScript(List<ScriptGeneratorAction> scriptGenContent, String jsonContent, List<String> globalParams, ScriptDefinitionWrapper scriptDefinition) {
     	try {
-			return Optional.of(scriptDefinitionsWrapper.generate(convertScriptGenContentToPython(scriptGenContent), jsonContent, scriptDefinition));
+			return Optional.of(scriptDefinitionsWrapper.generate(convertScriptGenContentToPython(scriptGenContent), jsonContent, globalParams, scriptDefinition));
 		} catch (Py4JException e) {
 			LOG.error(e);
 			handlePythonReadinessChange(false);
@@ -498,14 +498,14 @@ public class PythonInterface extends ModelObject {
 	 * @throws PythonNotReadyException When python is not ready to accept calls.
 	 * @return An ID for the generated script.
 	 */
-	public int refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, String jsonContent, ScriptDefinitionWrapper scriptDefinition)
+	public int refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, String jsonContent, List<String> globalParams, ScriptDefinitionWrapper scriptDefinition)
 			throws InterruptedException, ExecutionException, PythonNotReadyException {
 		lastScriptId += 1;
 		var scriptId = lastScriptId;
 		generatedScripts.put(scriptId, Optional.empty());
 		if (pythonReady) {
 			CompletableFuture.supplyAsync(() -> {
-				return generateScript(scriptGenContent, jsonContent, scriptDefinition);
+				return generateScript(scriptGenContent, jsonContent, globalParams, scriptDefinition);
 			}, THREAD)
 				.thenAccept(generatedScript -> {
 					generatedScripts.put(scriptId, generatedScript);

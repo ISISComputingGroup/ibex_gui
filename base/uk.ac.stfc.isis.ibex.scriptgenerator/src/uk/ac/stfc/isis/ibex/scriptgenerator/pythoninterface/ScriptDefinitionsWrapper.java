@@ -41,7 +41,7 @@ public interface ScriptDefinitionsWrapper {
 	 * @param scriptDefinition The script definition to generate the script with.
 	 * @return A string containing the generated script.
 	 */
-	String generate(List<Map<String, String>> scriptGenContent, String jsonString, ScriptDefinitionWrapper scriptDefinition);
+	String generate(List<Map<String, String>> scriptGenContent, String jsonString, List<String> globalParams ,ScriptDefinitionWrapper scriptDefinition);
 	
 	/**
 	 * Get a mapping of validity errors of the scriptGenContent against the script definition.
@@ -60,7 +60,7 @@ public interface ScriptDefinitionsWrapper {
 	 * @param scriptDefinition The script definition to check with.
 	 * @return True if valid, False if not.
 	 */
-	boolean areParamsValid(List<Map<String, String>> scriptGenContent, ScriptDefinitionWrapper scriptDefinition);
+	boolean areParamsValid(List<Map<String, String>> scriptGenContent, List<String> globalParams,ScriptDefinitionWrapper scriptDefinition);
 	
     /**
      * Estimate how long (in seconds) the current actions will take.

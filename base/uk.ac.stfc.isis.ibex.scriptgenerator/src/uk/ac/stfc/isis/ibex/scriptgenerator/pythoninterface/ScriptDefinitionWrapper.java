@@ -14,11 +14,23 @@ public interface ScriptDefinitionWrapper {
 	List<ActionParameter> getParameters();
 	
 	/**
+	 * @return The global parameter names and their values. e.g. ["param1", "val1", "param2", "val2"]
+	 */
+	List<ActionParameter> getGlobalParameters();
+	/**
 	 * Performs the defined action.
 	 * @param action The action to do.
 	 * @return The error if there has been one.
 	 */
 	String doAction(Map<String, String> action);
+	
+	/**
+	 * checks global params are valid
+	 * @param the global param to check validity of
+	 * @return the error if the arugements are not valid.
+	 */
+    String globalParamsValid(List<String> globalParams);
+      
 	
 	/**
 	 * Performs the check that the arguments are valid.
