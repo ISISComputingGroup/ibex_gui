@@ -615,9 +615,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private PropertyChangeListener scriptDefinitionSwitchHelpListener = new PropertyChangeListener() {
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-    	List<ActionParameter> temp = null;
-    	
+    public void propertyChange(PropertyChangeEvent evt) {    	
         for (Label label : globalLabel) {
         	label.dispose();
         }
@@ -783,6 +781,18 @@ public class ScriptGeneratorViewModel extends ModelObject {
         LOG.warn("ScriptGeneratorViewModel - ActionsTable and UI Table mismatch");
         }
     }
+    Map<Integer, String> globals = scriptGeneratorModel.getGlobalParamErrors();
+    for(int i = 0; i< this.globalParamText.size(); i++) {
+    	if(globals.containsKey(i)) {
+    		globalParamText.get(i).setBackground(INVALID_LIGHT_COLOR);
+    		globalParamText.get(i).setBackground(INVALID_DARK_COLOR);
+    		globalParamText.get(i).setToolTipText(globals.get(i));
+    	}else {
+    		globalParamText.get(i).setBackground(CLEAR_COLOR);
+    		globalParamText.get(i).setToolTipText(null);
+    	}
+    }
+    
     }
 
     /**

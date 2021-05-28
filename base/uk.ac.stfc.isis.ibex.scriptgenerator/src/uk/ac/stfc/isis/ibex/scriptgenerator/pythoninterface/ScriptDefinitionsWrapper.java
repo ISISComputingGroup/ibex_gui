@@ -44,14 +44,14 @@ public interface ScriptDefinitionsWrapper {
 	String generate(List<Map<String, String>> scriptGenContent, String jsonString, List<String> globalParams ,ScriptDefinitionWrapper scriptDefinition);
 	
 	/**
-	 * Get a mapping of validity errors of the scriptGenContent against the script definition.
+	 * Get a list of mappings of validity errors of the scriptGenContent against the script definition.
 	 * 
 	 * @param scriptGenContent The list of actions to check.
 	 * @param scriptDefinition The script definition to check with.
-	 * @return A map where the key is the index of the action in the list and 
+	 * @return A list of maps where the key is the index of the action in the list and 
 	 * 		the value is the invalidity reason. Empty if there are no invalidity errors.
 	 */
-	Map<Integer, String> getValidityErrors(List<String> globalParams, List<Map<String, String>> scriptGenContent, ScriptDefinitionWrapper scriptDefinition);
+	List<Map<Integer, String>> getValidityErrors(List<String> globalParams, List<Map<String, String>> scriptGenContent, ScriptDefinitionWrapper scriptDefinition);
 	
 	/**
 	 * Check if a list of actions are valid under the passed script definitions.

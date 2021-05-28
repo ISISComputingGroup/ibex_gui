@@ -27,7 +27,7 @@ public class ActionsTable extends ModelObject {
 	 */
 	private List<JavaActionParameter> actionParameters;
 	
-	private String globalValidError = "";
+	private Map<Integer, String> globalValidError = Collections.emptyMap();
 	
 	/**
 	 * The actions (rows) of the table that have values for the action parameters.
@@ -56,7 +56,7 @@ public class ActionsTable extends ModelObject {
 	 * 
 	 * @return The globalValidError string on this object.
 	 */
-	public String getGlobalValidityErrors() {
+	public Map<Integer, String> getGlobalValidityErrors() {
 		return this.globalValidError;
 	}
 
@@ -311,15 +311,13 @@ public class ActionsTable extends ModelObject {
 	/**
 	 * Set the validity errors for each action based on the hashmap.
 	 * 
-	 * @param validityErrors The hashmap to set validity errors based on.
+	 * @param validityErrors The list of hashmaps to set validity errors based on.
 	 */
-	public void setValidityErrors(Map<Integer, String> validityErrors) {
-		if(validityErrors.containsKey(0)) {
-			this.globalValidError = validityErrors.get(0);
-		}
+	public void setValidityErrors(List<Map<Integer, String>> validityErrors) {
+		this.globalValidError = validityErrors.get(0);
 		for (int i = 0; i < actions.size(); i++) {
-			if (validityErrors.containsKey(i+1)) {
-				actions.get(i).setInvalid(validityErrors.get(i+1));
+			if (validityErrors.get(1).containsKey(i)) {
+				actions.get(i).setInvalid(validityErrors.get(1).get(i));
 			} else {
 				actions.get(i).setValid();
 			}
@@ -344,9 +342,19 @@ public class ActionsTable extends ModelObject {
 	 */
 	public ArrayList<String> getInvalidityErrorLines() {
 		var errors = new ArrayList<String>();
-		if (this.globalValidError!="") {
-			String errorString = "Global Parameter Errors: \n" + globalValidError;
-			errors.add(errorString);
+		if (this.globalValidError.size()>0) {
+			String errorString = "Global Parameter Errors: \n";
+			int initialLen = errorString.length();
+			for(int i = 0; i < globalValidError.size(); i++) {
+				String reason = globalValidError.get(i);
+				if(reason != "") {
+					errorString += "Global Parameter: " + (i+1) +", Reason: " + "\n" + globalValidError.get(i) + "\n";
+				}
+			}
+			if (errorString.length() > initialLen){
+				errors.addAll(Arrays.asList(errorString.split("\n")));
+			}
+				
 		}
 		boolean first = true;
 		for (int i = 0; i < actions.size(); i++) {

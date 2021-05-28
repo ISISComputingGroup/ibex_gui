@@ -186,7 +186,7 @@ class ScriptDefinitionWrapper(object):
                                                             globalparams))
             estimate = self.script_definition.estimate_time(**action)
             return round(estimate)
-        except (ValueError, TypeError) as ex:
+        except (ValueError, TypeError, KeyError) as ex:
             return None
 
     def equals(self, other_script_definition) -> bool:
@@ -234,8 +234,8 @@ class Generator(object):
             i += 1
         return True
 
-    def getValidityErrors(self, global_params, list_of_actions, script_definition: ScriptDefinitionWrapper) -> Dict[
-        int, AnyStr]:
+    def getValidityErrors(self, global_params, list_of_actions, script_definition: ScriptDefinitionWrapper) -> List[
+                        Dict[int, AnyStr]]:
         """
         Get a map of validity errors
 
@@ -243,20 +243,19 @@ class Generator(object):
             Dictionary containing keys of the line numbers where errors are and values of the error messages.
         """
         current_action_index = 0
-        global_param_index = 0
-        validityCheck: Dict[int, AnyStr] = {}
-
-        validityCheck[current_action_index] = ""
+        param_type_index = 0
+        validityCheck: List[Dict[int, AnyStr]] = [{}, {}]
         for global_param in global_params:
-            singleParamValidityCheck = script_definition.globalParamsValid(global_param, global_param_index)
+            singleParamValidityCheck = script_definition.globalParamsValid(global_param, current_action_index)
             if singleParamValidityCheck != None:
-                validityCheck[current_action_index] += singleParamValidityCheck
-            global_param_index += 1
-        current_action_index += 1
+                validityCheck[param_type_index][current_action_index] = singleParamValidityCheck
+            current_action_index += 1
+        param_type_index = 1
+        current_action_index = 0
         for action in list_of_actions:
             singleActionValidityCheck = script_definition.parametersValid(action)
             if singleActionValidityCheck != None:
-                validityCheck[current_action_index] = singleActionValidityCheck
+                validityCheck[param_type_index][current_action_index] = singleActionValidityCheck
             current_action_index += 1
         return validityCheck
 
@@ -411,12 +410,12 @@ class ScriptDefinitionsWrapper(object):
         Get the validity errors of the current actions
 
         Returns:
-            Dictionary containing keys of the line numbers where errors are and values of the error messages.
+            List of dictionaries containing keys of the line numbers where errors are and values of the error messages.
         """
-        return MapConverter().convert(self.generator.getValidityErrors(global_params,
-                                                                       self.convert_list_of_actions_to_python(
-                                                                           list_of_actions), script_definition),
-                                      gateway._gateway_client)
+        errors_list = self.generator.getValidityErrors(global_params, self.convert_list_of_actions_to_python(
+            list_of_actions), script_definition)
+        converted_list = [MapConverter().convert(errors, gateway._gateway_client) for errors in errors_list]
+        return ListConverter().convert(converted_list, gateway._gateway_client)
 
     def estimateTime(self, list_of_actions, script_definition: ScriptDefinitionWrapper, global_parameters) -> Dict[
         int, int]:

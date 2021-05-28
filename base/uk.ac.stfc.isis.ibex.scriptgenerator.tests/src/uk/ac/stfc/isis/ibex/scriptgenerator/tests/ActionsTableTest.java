@@ -6,8 +6,10 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import java.awt.Container;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -211,12 +213,15 @@ public class ActionsTableTest {
 	}
 	
 	@Test
-	public void test_GIVEN_validity_errors_WHEN_first_error_THEN_error_is_for_globals() {
+	public void test_GIVEN_validity_errors_WHEN_first_map_THEN_error_is_for_globals() {
 		// Arrange
 		addEmptyActions(2);
-		HashMap<Integer, String> validityErrors = new HashMap<Integer, String>();
-		validityErrors.put(0, "invalid 0");
-		
+		Map<Integer, String> validityErrorsGlobal = new HashMap<Integer, String>();
+		Map<Integer, String> validityErrorsParam = Collections.<Integer, String>emptyMap();
+		validityErrorsGlobal.put(0, "invalid 0");
+		List<Map> validityErrors = new ArrayList<Map>();
+		validityErrors.add(validityErrorsGlobal);
+		validityErrors.add(validityErrorsParam);
 		// Act
 		table.setValidityErrors(validityErrors);
 		ArrayList<String> actualValidityErrors = table.getInvalidityErrorLines();

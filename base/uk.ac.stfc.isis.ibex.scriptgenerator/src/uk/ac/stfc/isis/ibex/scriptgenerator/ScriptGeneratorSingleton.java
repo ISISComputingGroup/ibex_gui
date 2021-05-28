@@ -236,7 +236,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		// If the validity error message property of the generator is changed update the
 		// validity errors in the scriptGeneratorTable
 		generator.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
-			scriptGeneratorTable.setValidityErrors(convertToMap(evt.getNewValue(), Integer.class, String.class));
+			scriptGeneratorTable.setValidityErrors(convertToListMap(evt.getNewValue()));
 			firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
         // If the time estimation message property of the generator is changed update the
@@ -372,6 +372,29 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			return new HashMap<T, S>();
 		}
 	}
+	
+	/**
+	 * Convert the VALIDITY_ERROR_MESSAGE_PROPERTY return to the list<Map<Integer,
+	 * String>> representation. Required because of casting generics in Java.
+	 * 
+	 * @param validityMessages The validity messages to convert.
+	 * @return The converted messages property.
+	 */
+	@SuppressWarnings("rawtypes")
+	private static List<Map<Integer, String>> convertToListMap(Object validityMessages) {
+		try {
+			List listCastValidityMessages = List.class.cast(validityMessages);
+			List<Map<Integer, String>> castValidityMessages = new ArrayList<Map<Integer, String>>();
+			for (Object nonCastEntry : listCastValidityMessages) {
+				Map<Integer, String> castEntry = convertToMap(nonCastEntry, Integer.class, String.class);
+				castValidityMessages.add(castEntry);
+			}
+			return castValidityMessages;
+		} catch (ClassCastException e) {
+			LOG.error(e);
+			return new ArrayList<Map<Integer, String>>();
+		}
+	}
 
 	/**
 	 * Get the python interface.
@@ -492,6 +515,15 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	public List<ScriptGeneratorAction> getActions() {
 		return scriptGeneratorTable.getActions();
+	}
+	
+	/**
+	 * Get the map of global parameter errors.
+	 * 
+	 * @return map of global parameter errors in the table.
+	 */
+	public Map<Integer, String> getGlobalParamErrors() {
+		return scriptGeneratorTable.getGlobalValidityErrors();
 	}
 
 	/**
