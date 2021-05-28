@@ -488,6 +488,12 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		scriptGeneratorTable.moveActionDown(actionsToMove);
 	}
 	
+	/**
+	 * Updates the globalParams 
+	 * @param params The new value for the parameter
+	 * @param index The global parameter to be update
+	 */
+	
 	public void updateGlobalParams(String params, int index) {
 		if(this.globalParams != null) {
 			
@@ -506,6 +512,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		}catch(NoScriptDefinitionSelectedException e) {
 			return;
 		}
+	}
+	
+	public void clearGlobalParams() {
+		this.globalParams.clear();
 	}
 
 	/**

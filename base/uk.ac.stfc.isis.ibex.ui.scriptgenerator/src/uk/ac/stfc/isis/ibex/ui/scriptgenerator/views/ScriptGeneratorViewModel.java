@@ -623,6 +623,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
         for(Text text: globalParamText) {
         	text.dispose();
         }
+        scriptGeneratorModel.clearGlobalParams();
         currentGlobals.clear();
         globalParamText.clear();
         createGlobalParamsWidgets();
