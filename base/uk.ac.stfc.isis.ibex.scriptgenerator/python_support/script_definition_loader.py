@@ -182,8 +182,10 @@ class ScriptDefinitionWrapper(object):
             or None if the parameters are invalid or the estimate could not be calculated
         """
         try:
-            self.script_definition.global_params = dict(zip(self.script_definition.global_params_definition.keys(),
-                                                            globalparams))
+            if self.script_definition.global_params_definition is not None:
+                self.script_definition.global_params = dict(zip(self.script_definition.global_params_definition.keys(),
+                                                                globalparams))
+
             estimate = self.script_definition.estimate_time(**action)
             return round(estimate)
         except (ValueError, TypeError, KeyError) as ex:
@@ -240,7 +242,7 @@ class Generator(object):
         Get a map of validity errors
 
         Returns:
-            Dictionary containing keys of the line numbers where errors are and values of the error messages.
+            List of dictionaries containing keys of the line numbers where errors are and values of the error messages.
         """
         current_action_index = 0
         param_type_index = 0
@@ -298,7 +300,7 @@ class Generator(object):
                 rendered_template = self.template.render(inserted_script_definition=script_definition_template,
                                                          script_generator_actions=list_of_actions,
                                                          global_params=global_params, hexed_value=val)
-            except Exception:
+            except Exception as e:
                 rendered_template = None
             return rendered_template
         else:
