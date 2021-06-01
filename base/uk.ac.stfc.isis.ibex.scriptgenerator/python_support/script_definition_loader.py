@@ -15,8 +15,6 @@ from genie_python import utilities
 import importlib.machinery
 import importlib.util
 
-import logging
-
 
 class PythonActionParameter(object):
     """
@@ -185,7 +183,6 @@ class ScriptDefinitionWrapper(object):
             if self.script_definition.global_params_definition is not None:
                 self.script_definition.global_params = dict(zip(self.script_definition.global_params_definition.keys(),
                                                                 globalparams))
-
             estimate = self.script_definition.estimate_time(**action)
             return round(estimate)
         except (ValueError, TypeError, KeyError) as ex:

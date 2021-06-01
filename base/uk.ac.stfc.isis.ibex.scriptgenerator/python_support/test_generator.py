@@ -6,6 +6,7 @@ from hamcrest.core import assert_that, equal_to
 from hamcrest.library.text import matches_regexp
 from test_script_definitions.valid_script_definition import DoRun as ValidDoRun
 from pprint import pprint
+import pathlib
 
 
 class TestGenerator(unittest.TestCase):
@@ -174,6 +175,8 @@ class DoRun(ScriptDefinition):
 
 def runscript():
     script_definition = DoRun()
+    if hasattr(script_definition, "global_params_definition"):
+        script_definition.global_params = dict(zip(script_definition.global_params_definition.keys(), {}))
     script_definition.run(**{'param1': '1', 'param2': '2'})
     script_definition.run(**{'param1': '1', 'param2': '2'})
     
