@@ -123,7 +123,6 @@ public final class DetectorDiagnosticsModel extends ModelObject {
     /**
      * Constructor.
      *
-     * @param viewModel the view model
      */
     private DetectorDiagnosticsModel() {
         setUpWritables();

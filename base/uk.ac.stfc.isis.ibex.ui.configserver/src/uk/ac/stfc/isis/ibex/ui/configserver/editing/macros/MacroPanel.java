@@ -123,7 +123,7 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 	 * 
 	 * @param setMacros A collection containing the macros that have been set
 	 * @param availableMacros A collection containing all the available macros
-	 * @return
+	 * @return A list of macros to display
 	 */
 	private Collection<Macro> makeDisplayMacroList(Collection<Macro> setMacros, Collection<Macro> availableMacros) {
 		displayMacros = new ArrayList<Macro>();

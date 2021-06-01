@@ -30,6 +30,9 @@ public class ScriptGeneratorHelpMenuItems extends SelectionAdapter {
 	
 	private Optional<URL> manualUrl = Optional.empty();
 	
+	/**
+	 * Gets the help menu items for the help drop-down. 
+	 */
 	public ScriptGeneratorHelpMenuItems() {
 		bindManualUrl();
 	}
