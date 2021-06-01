@@ -219,7 +219,7 @@ public class ActionsTableTest {
 		Map<Integer, String> validityErrorsGlobal = new HashMap<Integer, String>();
 		Map<Integer, String> validityErrorsParam = Collections.<Integer, String>emptyMap();
 		validityErrorsGlobal.put(0, "invalid 0");
-		List<Map> validityErrors = new ArrayList<Map>();
+		List<Map<Integer, String>> validityErrors = new ArrayList<Map<Integer, String>>();
 		validityErrors.add(validityErrorsGlobal);
 		validityErrors.add(validityErrorsParam);
 		// Act
@@ -227,7 +227,7 @@ public class ActionsTableTest {
 		ArrayList<String> actualValidityErrors = table.getInvalidityErrorLines();
 		
 		// Assert
-				String[] arrayExpectedValidityErrors = {"Global Parameter Errors: \ninvalid 0"};
+				String[] arrayExpectedValidityErrors = {"Global Parameter Errors: ","Global Parameter: 1, Reason: ","invalid 0"};
 				List<String> expectedValidityErrors = Arrays.asList(arrayExpectedValidityErrors);
 				assertThat("We expect validity errors to match those set into actions",
 						expectedValidityErrors, equalTo(actualValidityErrors));
@@ -237,34 +237,39 @@ public class ActionsTableTest {
 	public void test_WHEN_setting_actions_as_invalid_THEN_correct_actions_are_invalid() {
 		// Arrange
 		addEmptyActions(5);
-		HashMap<Integer, String> validityErrors = new HashMap<Integer, String>();
-		validityErrors.put(0, "invalid 0");
-		validityErrors.put(1, "invalid 1");
-		validityErrors.put(4, "invalid 2");
-		validityErrors.put(3, "invalid 3");
+		Map<Integer, String> validityErrorsGlobal = new HashMap<Integer, String>();
+		Map<Integer, String> validityErrorsParam = new HashMap<Integer, String>();
+		List<Map<Integer, String>> validityErrors = new ArrayList<Map<Integer, String>>();
+		validityErrors.add(validityErrorsGlobal);
+		validityErrors.add(validityErrorsParam);
+		
+		validityErrors.get(0).put(0, "invalid 0");
+		validityErrors.get(1).put(1, "invalid 1");
+		validityErrors.get(1).put(4, "invalid 2");
+		validityErrors.get(1).put(3, "invalid 3");
 		
 		// Act
 		table.setValidityErrors(validityErrors);
 		
 		// Assert
-		assertThat("We set 0 to invalid, so global parameter error should be set",
-				table.getGlobalValidityErrors(), equalTo("invalid 0"));
-		assertThat("We set 1 to invalid so should not be valid", 
-				table.getActions().get(0).isValid(), is(false));
+		assertThat("We set 0 in global params to invalid, so global parameter error should be set",
+				table.getGlobalValidityErrors().get(0), equalTo("invalid 0"));
+		assertThat("We set 1 in params to invalid so should not be valid", 
+				table.getActions().get(1).isValid(), is(false));
 		assertThat("We set 1 to invalid so should give same invalidity error string",
-				table.getActions().get(0).getInvalidityReason().get(), equalTo("invalid 1"));
+				table.getActions().get(1).getInvalidityReason().get(), equalTo("invalid 1"));
 		assertThat("We did not set 2 to invalid so should be valid",
-				table.getActions().get(1).isValid(), is(true));
+				table.getActions().get(2).isValid(), is(true));
 		assertThat("As 2 is valid should return null",
-				table.getActions().get(1).getInvalidityReason(), is(Optional.empty()));
+				table.getActions().get(2).getInvalidityReason(), is(Optional.empty()));
 		assertThat("We set 3 to invalid so should not be valid",
-				table.getActions().get(2).isValid(), is(false));
-		assertThat("We set 3 to invalid so should give same invalidity error string",
-				table.getActions().get(2).getInvalidityReason().get(), equalTo("invalid 3"));
-		assertThat("We set 4 to invalid so should not be valid",
 				table.getActions().get(3).isValid(), is(false));
+		assertThat("We set 3 to invalid so should give same invalidity error string",
+				table.getActions().get(3).getInvalidityReason().get(), equalTo("invalid 3"));
+		assertThat("We set 4 to invalid so should not be valid",
+				table.getActions().get(4).isValid(), is(false));
 		assertThat("We set 4 to invalid so should give same invalidity error string",
-				table.getActions().get(3).getInvalidityReason().get(), equalTo("invalid 2"));
+				table.getActions().get(4).getInvalidityReason().get(), equalTo("invalid 2"));
 	}
 	
 	@Test
