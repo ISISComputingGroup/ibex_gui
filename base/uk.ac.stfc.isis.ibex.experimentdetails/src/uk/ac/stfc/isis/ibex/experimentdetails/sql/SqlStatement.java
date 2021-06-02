@@ -39,9 +39,7 @@ public class SqlStatement {
 	private List<ExpDataField> selectFields;
     private List<ExpDataTablesEnum> fromTables;
     private List<SqlWhereClause> whereFields;
-    
-    private List<ExpDataField> groupBy;
-    private ExpDataField orderBy;
+    private List<ExpDataField> orderBy;
 
     /**
      * Create a new SQL statement.
@@ -86,16 +84,9 @@ public class SqlStatement {
     }
     
     /**
-     * @param groupBy The fields to group the returned results by.
-     */
-    public void setGroupBy(List<ExpDataField> groupBy) {
-      this.groupBy = groupBy;
-    }
-    
-    /**
      * @param orderBy The field to Order By
      */
-    public void setOrderBy(ExpDataField orderBy) {
+    public void setOrderBy(List<ExpDataField> orderBy) {
       this.orderBy = orderBy;
     }
 
@@ -109,12 +100,8 @@ public class SqlStatement {
     	sqlStatement += selectList() + " FROM " + selectTableList()
 			+ " WHERE " + whereList();
     	
-    	if (groupBy != null) {
-    		sqlStatement += " GROUP BY " + groupByList();
-    	}
-    	
     	if (orderBy != null) {
-    		sqlStatement += " ORDER BY " + orderBy;
+    		sqlStatement += " ORDER BY " + orderByList();
     	}
     	
 		return sqlStatement;
@@ -168,7 +155,10 @@ public class SqlStatement {
 		return joinString(this.whereFields, " AND ");
     }
     
-    private String groupByList() {
-    	return joinString(this.groupBy, ", ");
+    /**
+     * Get string representation of the list of ORDER BY clauses. 
+     */
+    private String orderByList() {
+    	return joinString(this.orderBy, ", ");
     }
 }
