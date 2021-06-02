@@ -25,8 +25,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
+import uk.ac.stfc.isis.ibex.nicos.comms.ZMQWrapper;
 
 /**
  * A message that can be serialised and sent to NICOS.
@@ -37,8 +39,11 @@ import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
  * 			  The type of the response.
  */
 public abstract class NICOSMessage<TSEND, TRESP> {
+	
     protected String command = "";
     protected List<TSEND> parameters = new ArrayList<>();
+    protected String responseStatus;
+    protected String response;
     
     /**
      * Converts the message into a list of messages to send NICOS.
@@ -64,4 +69,20 @@ public abstract class NICOSMessage<TSEND, TRESP> {
      *             Thrown when the response from NICOS is not as expected.
      */
     public abstract TRESP parseResponse(String response) throws ConversionException;
+    
+    public void receiveResponse(ZMQWrapper zmq) {
+    	responseStatus = zmq.receiveString();
+    	// NICOS protocol leaves the second package empty for future expansion
+        // so read and throw away.
+    	zmq.receiveString();
+    	response = zmq.receiveString();
+    }
+    
+    public String getResponse() {
+    	return response;
+    }
+    
+    public String getResponseStatus() {
+    	return responseStatus;
+    }
 }
