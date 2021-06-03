@@ -426,7 +426,7 @@ public class ScriptGeneratorView {
         queueScriptButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/play.png"));
         queueScriptButton.setText("Queue Script");
         queueScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        queueScriptButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.queueScript());
+        queueScriptButton.addListener(SWT.Selection, e -> nicosModel.queueScript());
         nicosModel.bindQueueScriptButton(queueScriptButton);
 
         // Button to generate a script
