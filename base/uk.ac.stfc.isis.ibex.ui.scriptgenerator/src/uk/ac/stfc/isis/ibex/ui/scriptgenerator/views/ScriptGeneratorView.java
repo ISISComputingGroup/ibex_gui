@@ -74,6 +74,11 @@ public class ScriptGeneratorView {
      * The ViewModel the View is updated by.
      */
     private ScriptGeneratorViewModel scriptGeneratorViewModel;
+    
+    /**
+     * The ViewModel to control nicos interactions.
+     */
+    private ScriptGeneratorNicosViewModel nicosModel;
 
     /**
      * The main parent for UI elements
@@ -150,6 +155,7 @@ public class ScriptGeneratorView {
     public void createPartControl(Composite parent) {
 
     scriptGeneratorViewModel = new ScriptGeneratorViewModel();
+    nicosModel = new ScriptGeneratorNicosViewModel();
 
     GridData gdQueueContainer = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
     gdQueueContainer.heightHint = 300;
@@ -421,6 +427,7 @@ public class ScriptGeneratorView {
         queueScriptButton.setText("Queue Script");
         queueScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         queueScriptButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.queueScript());
+        nicosModel.bindQueueScriptButton(queueScriptButton);
 
         // Button to generate a script
         generateScriptButton = new Button(generateButtonsGrp, SWT.NONE);
