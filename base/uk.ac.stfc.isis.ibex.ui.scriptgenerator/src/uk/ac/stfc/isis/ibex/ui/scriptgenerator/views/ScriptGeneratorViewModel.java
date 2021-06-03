@@ -1149,10 +1149,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * 
      * @param scriptId The ID of the script to set
      */
-	public void setNicosScript(Optional<Integer> scriptId) {
-		scriptId.ifPresent(id -> {
-			nicosScriptIds.add(id);
-		});
+	public void setNicosScript(Integer scriptId) {
+		nicosScriptIds.add(scriptId);
 	}
 		
 }
