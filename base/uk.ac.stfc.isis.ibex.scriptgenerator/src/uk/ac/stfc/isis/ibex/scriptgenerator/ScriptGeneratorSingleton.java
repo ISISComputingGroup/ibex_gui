@@ -254,11 +254,11 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		generator.addPropertyChangeListener(GENERATED_SCRIPT_PROPERTY, evt -> {
 
 			lastGeneratedScriptId = (Optional<Integer>) evt.getNewValue();
-			lastGeneratedScriptId.ifPresentOrElse(script -> {
+			lastGeneratedScriptId.ifPresentOrElse(scriptId -> {
 				try {
 					String generatedScriptFilename = generateScriptFileName();
 					firePropertyChange(GENERATED_SCRIPT_FILENAME_PROPERTY, null, generatedScriptFilename);
-					firePropertyChange(GENERATED_SCRIPT_PROPERTY, null, script);
+					firePropertyChange(GENERATED_SCRIPT_PROPERTY, null, scriptId);
 				} catch (NoScriptDefinitionSelectedException e) {
 					LOG.error(e);
 				}
