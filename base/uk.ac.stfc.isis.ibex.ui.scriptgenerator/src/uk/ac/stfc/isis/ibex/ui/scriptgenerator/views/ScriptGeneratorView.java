@@ -126,6 +126,11 @@ public class ScriptGeneratorView {
      * A property to listen for when python becomes ready or not ready.
      */
     private static final String PYTHON_READINESS_PROPERTY = "python ready";
+    
+    /**
+     * A property to listen for when a nicos script has been generated.
+     */
+    private static final String NICOS_SCRIPT_GENERATED_PROPERTY = "nicos script generated";
 
     /**
      * Create a button to manipulate the rows of the script generator table and
@@ -173,6 +178,10 @@ public class ScriptGeneratorView {
         } else {
         displayLoading();
         }
+    });
+    
+    scriptGeneratorViewModel.addPropertyChangeListener(NICOS_SCRIPT_GENERATED_PROPERTY, evt -> {
+    	nicosModel.queueScript("Script generator", (String) evt.getNewValue()); 
     });
 
     scriptGeneratorViewModel.setUpModel();
@@ -426,8 +435,11 @@ public class ScriptGeneratorView {
         queueScriptButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/play.png"));
         queueScriptButton.setText("Queue Script");
         queueScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        queueScriptButton.addListener(SWT.Selection, e -> nicosModel.queueScript());
         nicosModel.bindQueueScriptButton(queueScriptButton);
+        queueScriptButton.addListener(SWT.Selection, e -> {
+        	var scriptId = scriptGeneratorViewModel.generate();
+        	scriptGeneratorViewModel.setNicosScript(scriptId);
+        });
 
         // Button to generate a script
         generateScriptButton = new Button(generateButtonsGrp, SWT.NONE);

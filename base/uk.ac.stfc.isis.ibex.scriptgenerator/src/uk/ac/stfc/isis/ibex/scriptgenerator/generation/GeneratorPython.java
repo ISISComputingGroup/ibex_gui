@@ -1,6 +1,7 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.generation;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 import org.apache.logging.log4j.Logger;
@@ -93,14 +94,20 @@ public class GeneratorPython extends AbstractGenerator {
 	}
 
 	@Override
-	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent,
+	public Optional<Integer> refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent,
 			ScriptDefinitionWrapper scriptDefinition, String jsonContent) throws InterruptedException, ExecutionException {
 		try {
-			pythonInterface.refreshGeneratedScript(scriptGenContent, jsonContent, scriptDefinition);
+			return Optional.of(pythonInterface.refreshGeneratedScript(scriptGenContent, jsonContent, scriptDefinition));
 		} catch (PythonNotReadyException e) {
 			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
 			LOG.error(e);
+			return Optional.empty();
 		}
 		
+	}
+
+	@Override
+	public Optional<String> getScriptFromId(Integer scriptId) {
+		return pythonInterface.getScriptFromId(scriptId);
 	}
 }

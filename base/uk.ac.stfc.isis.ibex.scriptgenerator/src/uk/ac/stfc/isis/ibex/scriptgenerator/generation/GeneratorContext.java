@@ -106,10 +106,10 @@ public class GeneratorContext extends ModelObject {
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
 	 */
-	public void refreshGeneratedScript(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage, String jsonContent)
+	public Optional<Integer> refreshGeneratedScript(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage, String jsonContent)
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
 		AbstractGenerator generator = getGenerator(generatedLanguage);
-		generator.refreshGeneratedScript(actionsTable.getActions(), scriptDefinition, jsonContent);
+		return generator.refreshGeneratedScript(actionsTable.getActions(), scriptDefinition, jsonContent);
 	}
 	
 	/**
@@ -121,10 +121,11 @@ public class GeneratorContext extends ModelObject {
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
+	 * @return An ID for the generated script.
 	 */
-	public void refreshGeneratedScript(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, String jsonContent) 
+	public Optional<Integer> refreshGeneratedScript(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, String jsonContent) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
-		refreshGeneratedScript(actionsTable, scriptDefinition, GeneratedLanguage.PYTHON, jsonContent);
+		return refreshGeneratedScript(actionsTable, scriptDefinition, GeneratedLanguage.PYTHON, jsonContent);
 	}
 	
 	/**
@@ -218,6 +219,28 @@ public class GeneratorContext extends ModelObject {
 	public void refreshValidityErrors(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
 		refreshValidityErrors(actionsTable, scriptDefinition, GeneratedLanguage.PYTHON);
+	}
+	
+	/**
+     * Get the generated script from the given ID.
+     * 
+     * @param scriptId The ID of the script to get.
+     * @param language The language used to generate the script.
+     * @return The script
+     */
+	public Optional<String> getScriptFromId(Integer scriptId, GeneratedLanguage language) {
+		var generator = generatorStrategies.get(language);
+		return generator.getScriptFromId(scriptId);
+	}
+	
+	/**
+     * Get the generated script from the given ID.
+     * 
+     * @param scriptId The ID of the script to get.
+     * @return The script
+     */
+	public Optional<String> getScriptFromId(Integer scriptId) {
+		return getScriptFromId(scriptId, GeneratedLanguage.PYTHON);
 	}
 
 }

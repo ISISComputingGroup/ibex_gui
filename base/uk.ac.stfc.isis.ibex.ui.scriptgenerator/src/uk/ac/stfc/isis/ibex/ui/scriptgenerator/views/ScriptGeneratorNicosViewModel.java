@@ -34,10 +34,11 @@ public class ScriptGeneratorNicosViewModel {
 	/**
      * Queue the current script generator contents as a script in nicos.
      */
-    public void queueScript() {
+    public void queueScript(String name, String code) {
     	if (!nicosInError()) {
     		var scriptToSend = new QueuedScript();
-        	scriptToSend.setCode("# James Script\nprint(\"James Script\")");
+    		scriptToSend.setName(name);
+        	scriptToSend.setCode(code);
         	nicosModel.sendScript(scriptToSend);
     	} else {
     		var display = Display.getDefault();
