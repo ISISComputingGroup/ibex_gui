@@ -620,11 +620,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			}
 		} catch (InterruptedException | ExecutionException e) {
 			registerThreadError(e);
-			return Optional.empty();
 		} catch (IOException e) {
 			LOG.error(e);
-			return Optional.empty();
 		}
+		return Optional.empty();
 	}
 
 	private void registerThreadError(Exception e) {
