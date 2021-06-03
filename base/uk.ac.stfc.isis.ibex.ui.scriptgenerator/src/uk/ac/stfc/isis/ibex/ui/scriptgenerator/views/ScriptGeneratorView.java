@@ -181,7 +181,7 @@ public class ScriptGeneratorView {
     });
     
     scriptGeneratorViewModel.addPropertyChangeListener(NICOS_SCRIPT_GENERATED_PROPERTY, evt -> {
-    	nicosModel.queueScript("Script generator", (String) evt.getNewValue()); 
+    	nicosModel.queueScript("Script generator", (String) evt.getNewValue() + "\nrunscript()"); 
     });
 
     scriptGeneratorViewModel.setUpModel();
