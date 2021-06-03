@@ -890,6 +890,14 @@ public class ScriptGeneratorViewModel extends ModelObject {
             "Cannot generate script. No script definition has been selected");
     }
     }
+    
+    /**
+     * Generate a script and queue it in nicos.
+     * @throws UnsupportLanguageException
+     */
+    public void queueScript() {
+    	
+    }
 
     /**
      * Get the current selected script definition.

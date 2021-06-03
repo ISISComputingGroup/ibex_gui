@@ -111,6 +111,7 @@ public class ScriptGeneratorView {
     private Button btnInsertAction;
     private Label parametersFileText;
     private Label estimateText;
+    private Button queueScriptButton;
     private Button generateScriptButton;
     private Button saveExperimentalParametersButton;
     private Button saveAsExperimentalParametersButton;
@@ -409,10 +410,17 @@ public class ScriptGeneratorView {
         // Composite for generate buttons
         Composite generateButtonsGrp = new Composite(mainParent, SWT.NONE);
         generateButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        GridLayout gbgLayout = new GridLayout(4, true);
+        GridLayout gbgLayout = new GridLayout(5, true);
         gbgLayout.marginHeight = 10;
         gbgLayout.marginWidth = 10;
         generateButtonsGrp.setLayout(gbgLayout);
+        
+        // Button to run script in nicos
+        queueScriptButton = new Button(generateButtonsGrp, SWT.NONE);
+        queueScriptButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/play.png"));
+        queueScriptButton.setText("Queue Script");
+        queueScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        queueScriptButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.queueScript());
 
         // Button to generate a script
         generateScriptButton = new Button(generateButtonsGrp, SWT.NONE);
