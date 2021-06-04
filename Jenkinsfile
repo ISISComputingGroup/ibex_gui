@@ -49,7 +49,7 @@ pipeline {
                 env.BRANCH_NAME = ""
             }
             env.GIT_COMMIT = bat(returnStdout: true, script: '@git rev-parse HEAD').trim()
-            env.GIT_BRANCH = "origin/" scm.branches[0].name
+            env.GIT_BRANCH = "origin/" + scm.branches[0].name
             echo "git commit: ${env.GIT_COMMIT}"
             echo "git branch: ${env.BRANCH_NAME} ${env.GIT_BRANCH}"
             if (env.BRANCH_NAME.startsWith("Release")) {
