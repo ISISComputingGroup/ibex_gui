@@ -48,6 +48,7 @@ pipeline {
             if (env.BRANCH_NAME == null) {
                 env.BRANCH_NAME = ""
             }
+            env.GIT_BRANCH = scm.branches[0].name
             echo "git commit: ${env.GIT_COMMIT}"
             echo "git branch: ${env.BRANCH_NAME} ${env.GIT_BRANCH}"
             if (env.BRANCH_NAME.startsWith("Release")) {
