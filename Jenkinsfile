@@ -46,11 +46,12 @@ pipeline {
         script {
             // env.BRANCH_NAME is only supplied to multi-branch pipeline jobs
             if (env.BRANCH_NAME == null) {
-                env.GIT_BRANCH = "origin/" + scm.branches[0].name
-            }
+                env.BRANCH_NAME = ""
+	    }
+            env.GIT_BRANCH = "origin/" + scm.branches[0].name
             env.GIT_COMMIT = bat(returnStdout: true, script: '@git rev-parse HEAD').trim()
             echo "git commit: ${env.GIT_COMMIT}"
-            echo "git branch: ${env.BRANCH_NAME} ${env.GIT_BRANCH}"
+            echo "git branch: ${env.GIT_BRANCH} (${env.BRANCH_NAME})"
             if (env.BRANCH_NAME.startsWith("Release")) {
                 env.IS_RELEASE = "YES"
                 env.IS_DEPLOY = "NO"
