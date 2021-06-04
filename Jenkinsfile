@@ -73,7 +73,7 @@ pipeline {
         }
       }
     }
-
+  }
 }
 
 def archiveCheckstyleResults() {
