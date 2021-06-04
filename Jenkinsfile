@@ -48,6 +48,7 @@ pipeline {
             if (env.BRANCH_NAME == null) {
                 env.BRANCH_NAME = ""
             }
+            env.GIT_COMMIT = bat(returnStdout: true, script: '@git rev-parse HEAD').trim()
             env.GIT_BRANCH = scm.branches[0].name
             echo "git commit: ${env.GIT_COMMIT}"
             echo "git branch: ${env.BRANCH_NAME} ${env.GIT_BRANCH}"
@@ -72,9 +73,48 @@ pipeline {
                 env.IS_E4 = "YES"
             }
         }
+        
+        bat """
+            cd build
+            set GIT_COMMIT=${env.GIT_COMMIT}
+            set GIT_BRANCH=${env.BRANCH_NAME}
+            set RELEASE=${env.IS_RELEASE}
+            set DEPLOY=${env.IS_DEPLOY}
+            jenkins_build.bat
+            """
+      }
+    }
+    
+    stage("OPI Checker") {
+      steps {
+        bat """
+            set PYTHON3=C:\\Instrument\\Apps\\Python3\\python.exe
+            %PYTHON3% .\\base\\uk.ac.stfc.isis.ibex.opis\\check_opi_format.py -strict 
+        """
+      }
+    }
+        
+    stage("Checkstyle") {
+      steps {
+        archiveCheckstyleResults()
+      }
+    }
+    
+    stage("Doxygen") {
+      steps {
+        bat '''
+            "C:\\Program Files\\doxygen\\bin\\doxygen.exe" build\\ibex_gui_doxy.config
+            '''
       }
     }
   }
+  
+  post {
+    always {
+	    junit '**/surefire-reports/TEST-*.xml,**/test-reports/TEST-*.xml'
+    }
+  }
+
 }
 
 def archiveCheckstyleResults() {
