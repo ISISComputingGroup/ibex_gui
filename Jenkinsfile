@@ -48,21 +48,21 @@ pipeline {
             if (env.BRANCH_NAME == null) {
                 env.BRANCH_NAME = ""
 	    }
-            env.GIT_BRANCH = "origin/" + scm.branches[0].name
+            env.GIT_BRANCH = scm.branches[0].name
             env.GIT_COMMIT = bat(returnStdout: true, script: '@git rev-parse HEAD').trim()
             echo "git commit: ${env.GIT_COMMIT}"
-            echo "git branch: ${env.GIT_BRANCH} (${env.BRANCH_NAME})"
+            echo "git branch: ${env.BRANCH_NAME} (${env.GIT_BRANCH})"
             if (env.BRANCH_NAME.startsWith("Release")) {
                 env.IS_RELEASE = "YES"
                 env.IS_DEPLOY = "NO"
                 env.IS_E4 = "YES"
             }
-            else if (env.GIT_BRANCH == "origin/master_E3_maint") {
+            else if (env.GIT_BRANCH == "refs/heads/master_E3_maint") {
                 env.IS_RELEASE = "NO"
                 env.IS_DEPLOY = "YES"
                 env.IS_E4 = "NO"
             }
-            else if (env.GIT_BRANCH == "origin/master") {
+            else if (env.GIT_BRANCH == "refs/heads/master") {
                 env.IS_RELEASE = "NO"
                 env.IS_DEPLOY = "YES"
                 env.IS_E4 = "YES"
