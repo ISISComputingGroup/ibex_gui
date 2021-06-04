@@ -105,13 +105,15 @@ class ScriptDefinitionWrapper(object):
         Returns:
             arguments: List of the parameter names (strings)
         """
-        arguments = self.script_definition.global_params_definition
         list_of_globals = []
-        for arg in arguments:
-            name = arg
-            default = arguments[arg][0]
-            action_parameter = PythonActionParameter(name, default, False)
-            list_of_globals.append(action_parameter)
+        if hasattr(self.script_definition, "global_params_definition"):
+            arguments = self.script_definition.global_params_definition
+            for arg in arguments:
+                name = arg
+                default = arguments[arg][0]
+                action_parameter = PythonActionParameter(name, default, False)
+                list_of_globals.append(action_parameter)
+
         return ListConverter().convert(list_of_globals, gateway._gateway_client)
 
     def getHelp(self) -> str:
@@ -143,7 +145,7 @@ class ScriptDefinitionWrapper(object):
         Returns:
             None if all params are valid.
         """
-        if self.script_definition.global_params_definition is None:
+        if not hasattr(self.script_definition, "global_params_definition"):
             return
         try:
             list(self.script_definition.global_params_definition.values())[index][1](global_param)
@@ -180,7 +182,7 @@ class ScriptDefinitionWrapper(object):
             or None if the parameters are invalid or the estimate could not be calculated
         """
         try:
-            if self.script_definition.global_params_definition is not None:
+            if hasattr(self.script_definition, "global_params_definition"):
                 self.script_definition.global_params = dict(zip(self.script_definition.global_params_definition.keys(),
                                                                 globalparams))
             estimate = self.script_definition.estimate_time(**action)
