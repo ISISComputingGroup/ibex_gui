@@ -966,7 +966,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     		}
     		i++;
     	}
-    	actionChangeHandler(viewTable, btnGetValidityErrors, btnGenerateScript, btnSaveParam, btnSaveParamAs);
+    	actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs);
     }
 
     /**
