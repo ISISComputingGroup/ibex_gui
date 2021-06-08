@@ -6,10 +6,12 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -114,6 +116,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * A property that carries the time estimation to listen for in order to update table rows.
      */
     private static final String TIME_ESTIMATE_PROPERTY = "time estimate";
+    
+    /**
+     * A property to listen for when a nicos script has been generated.
+     */
+    private static final String NICOS_SCRIPT_GENERATED_PROPERTY = "nicos script generated";
 
     /**
      * The property to listen for changes in a Generator containing the generated script (String).
@@ -143,6 +150,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
     
     private static final String UNSAVED_CHANGES_MARKER = " (*)";
+    
+    private Set<Integer> nicosScriptIds = new HashSet<>();
 
     /**
      * Path to the current parameters save file.
@@ -243,10 +252,18 @@ public class ScriptGeneratorViewModel extends ModelObject {
     scriptGeneratorModel.addPropertyChangeListener(GENERATED_SCRIPT_FILENAME_PROPERTY, evt -> {
         String scriptFilename = (String) evt.getNewValue();
         DISPLAY.asyncExec(() -> {
-        scriptGeneratorModel.getLastGeneratedScript().ifPresentOrElse(
-            generatedScript -> {
-                (new SaveScriptGeneratorFileMessageDialog(Display.getDefault().getActiveShell(), "Script Generated", scriptFilename, 
-                    scriptGeneratorModel.getDefaultScriptDirectory(), generatedScript, scriptGeneratorModel)).open();
+        scriptGeneratorModel.getLastGeneratedScriptId().ifPresentOrElse(
+            generatedScriptId -> {
+            	scriptGeneratorModel.getScriptFromId(generatedScriptId).ifPresentOrElse(generatedScript -> {
+            		if (nicosScriptIds.contains(generatedScriptId)) {
+            			firePropertyChange(NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
+            		} else {
+            			(new SaveScriptGeneratorFileMessageDialog(Display.getDefault().getActiveShell(), "Script Generated", scriptFilename, 
+                                scriptGeneratorModel.getDefaultScriptDirectory(), generatedScript, scriptGeneratorModel)).open();
+            		}
+            	}, () -> {
+            		MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
+            	});
             },
             () -> {
                 MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
@@ -874,9 +891,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Generate a script and display the file it was generated to. If fail display warnings.
      * @throws UnsupportedLanguageException 
      */
-    public void generate() {
+    public Optional<Integer> generate() {
     try {
-        scriptGeneratorModel.refreshGeneratedScript();
+        return scriptGeneratorModel.refreshGeneratedScript();
     } catch (InvalidParamsException e) {
         MessageDialog.openWarning(DISPLAY.getActiveShell(), "Params Invalid", 
             "Cannot generate script. Parameters are invalid.");
@@ -889,6 +906,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
         MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
             "Cannot generate script. No script definition has been selected");
     }
+    return Optional.empty();
     }
 
     /**
@@ -1125,5 +1143,14 @@ public class ScriptGeneratorViewModel extends ModelObject {
     public void dispose() {
         clipboard.dispose();
     }
+
+    /**
+     * Set that the given script ID is for nicos.
+     * 
+     * @param scriptId The ID of the script to set
+     */
+	public void setNicosScript(Integer scriptId) {
+		nicosScriptIds.add(scriptId);
+	}
 		
 }

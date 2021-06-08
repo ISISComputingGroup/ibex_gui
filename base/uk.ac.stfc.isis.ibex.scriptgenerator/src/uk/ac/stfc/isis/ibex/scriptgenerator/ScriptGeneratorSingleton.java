@@ -175,9 +175,9 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorSingleton.class);
 
 	/**
-	 * The string containing the last generated script.
+	 * The Integer containing the last generated script.
 	 */
-	private Optional<String> lastGeneratedScript;
+	private Optional<Integer> lastGeneratedScriptId;
 	
 	/**
 	 * JSON file handler for saving parameters
@@ -253,11 +253,12 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		// Write the script to file, send up generated script filepath
 		generator.addPropertyChangeListener(GENERATED_SCRIPT_PROPERTY, evt -> {
 
-			lastGeneratedScript = (Optional<String>) evt.getNewValue();
-			lastGeneratedScript.ifPresentOrElse(script -> {
+			lastGeneratedScriptId = (Optional<Integer>) evt.getNewValue();
+			lastGeneratedScriptId.ifPresentOrElse(scriptId -> {
 				try {
 					String generatedScriptFilename = generateScriptFileName();
 					firePropertyChange(GENERATED_SCRIPT_FILENAME_PROPERTY, null, generatedScriptFilename);
+					firePropertyChange(GENERATED_SCRIPT_PROPERTY, null, scriptId);
 				} catch (NoScriptDefinitionSelectedException e) {
 					LOG.error(e);
 				}
@@ -324,10 +325,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
      * Get the last generated script.
      * 
      * @return An optional that is empty if no script has been generated successfully,
-     *   or the contents is the generated script.
+     *   or the id of the generated script.
      */
-    public Optional<String> getLastGeneratedScript() {
-    	return lastGeneratedScript;
+    public Optional<Integer> getLastGeneratedScriptId() {
+    	return lastGeneratedScriptId;
     }
 
 	/**
@@ -602,8 +603,9 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @throws NoScriptDefinitionSelectedException If there is no script definition
 	 *                                             selected to refresh checking
 	 *                                             against.
+	 * @return An ID for the generated script.
 	 */
-	public void refreshGeneratedScript()
+	public Optional<Integer> refreshGeneratedScript()
 			throws InvalidParamsException, UnsupportedLanguageException, NoScriptDefinitionSelectedException {
 		ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException(
@@ -612,7 +614,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			if (areParamsValid()) {
 				Path filePath = getScriptDefinitionPath(scriptDefinition);
 				String jsonContent = scriptGenFileHandler.createJsonString(scriptGeneratorTable.getActions(), scriptGenFileHandler.readFileContent(filePath), filePath);
-				generator.refreshGeneratedScript(scriptGeneratorTable, scriptDefinition, jsonContent);
+				return generator.refreshGeneratedScript(scriptGeneratorTable, scriptDefinition, jsonContent);
 			} else {
 				throw new InvalidParamsException("Parameters are invalid, cannot generate script");
 			}
@@ -621,6 +623,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		} catch (IOException e) {
 			LOG.error(e);
 		}
+		return Optional.empty();
 	}
 
 	private void registerThreadError(Exception e) {
@@ -761,6 +764,16 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	public void pasteActions(ArrayList<Map<JavaActionParameter, String>> listOfActions, int pasteLocation) {
 		scriptGeneratorTable.insertMultipleActions(listOfActions, pasteLocation);
+	}
+	
+	/**
+     * Get the generated script from the given ID.
+     * 
+     * @param scriptId The ID of the script to get.
+     * @return The script
+     */
+	public Optional<String> getScriptFromId(Integer scriptId) {
+		return generator.getScriptFromId(scriptId);
 	}
 
 }

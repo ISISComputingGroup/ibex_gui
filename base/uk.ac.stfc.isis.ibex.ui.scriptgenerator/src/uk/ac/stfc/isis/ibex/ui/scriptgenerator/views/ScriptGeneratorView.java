@@ -74,6 +74,11 @@ public class ScriptGeneratorView {
      * The ViewModel the View is updated by.
      */
     private ScriptGeneratorViewModel scriptGeneratorViewModel;
+    
+    /**
+     * The ViewModel to control nicos interactions.
+     */
+    private ScriptGeneratorNicosViewModel nicosModel;
 
     /**
      * The main parent for UI elements
@@ -111,6 +116,7 @@ public class ScriptGeneratorView {
     private Button btnInsertAction;
     private Label parametersFileText;
     private Label estimateText;
+    private Button queueScriptButton;
     private Button generateScriptButton;
     private Button saveExperimentalParametersButton;
     private Button saveAsExperimentalParametersButton;
@@ -120,6 +126,11 @@ public class ScriptGeneratorView {
      * A property to listen for when python becomes ready or not ready.
      */
     private static final String PYTHON_READINESS_PROPERTY = "python ready";
+    
+    /**
+     * A property to listen for when a nicos script has been generated.
+     */
+    private static final String NICOS_SCRIPT_GENERATED_PROPERTY = "nicos script generated";
 
     /**
      * Create a button to manipulate the rows of the script generator table and
@@ -149,6 +160,7 @@ public class ScriptGeneratorView {
     public void createPartControl(Composite parent) {
 
     scriptGeneratorViewModel = new ScriptGeneratorViewModel();
+    nicosModel = new ScriptGeneratorNicosViewModel();
 
     GridData gdQueueContainer = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
     gdQueueContainer.heightHint = 300;
@@ -166,6 +178,10 @@ public class ScriptGeneratorView {
         } else {
         displayLoading();
         }
+    });
+    
+    scriptGeneratorViewModel.addPropertyChangeListener(NICOS_SCRIPT_GENERATED_PROPERTY, evt -> {
+    	nicosModel.queueScript("Script generator", (String) evt.getNewValue() + "\nrunscript()"); 
     });
 
     scriptGeneratorViewModel.setUpModel();
@@ -409,10 +425,21 @@ public class ScriptGeneratorView {
         // Composite for generate buttons
         Composite generateButtonsGrp = new Composite(mainParent, SWT.NONE);
         generateButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        GridLayout gbgLayout = new GridLayout(4, true);
+        GridLayout gbgLayout = new GridLayout(5, true);
         gbgLayout.marginHeight = 10;
         gbgLayout.marginWidth = 10;
         generateButtonsGrp.setLayout(gbgLayout);
+        
+        // Button to run script in nicos
+        queueScriptButton = new Button(generateButtonsGrp, SWT.NONE);
+        queueScriptButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/play.png"));
+        queueScriptButton.setText("Queue Script");
+        queueScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        nicosModel.bindQueueScriptButton(queueScriptButton);
+        queueScriptButton.addListener(SWT.Selection, e -> {
+        	var scriptId = scriptGeneratorViewModel.generate();
+        	scriptId.ifPresent(id -> scriptGeneratorViewModel.setNicosScript(id));
+        });
 
         // Button to generate a script
         generateScriptButton = new Button(generateButtonsGrp, SWT.NONE);

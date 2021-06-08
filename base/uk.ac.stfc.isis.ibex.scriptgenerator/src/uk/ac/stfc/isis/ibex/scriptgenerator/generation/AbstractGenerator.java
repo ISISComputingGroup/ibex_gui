@@ -1,6 +1,7 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.generation;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -55,10 +56,12 @@ public abstract class AbstractGenerator extends ModelObject {
 	 * @param scriptGenContent The script generator content to produce the script from.
 	 * @param scriptDefinition The instrument script definition to generate the script with.
 	 * @param currentlyLoadedDataFileContent the data file that user has currently loaded to generate script
+	 * @return 
 	 * @throws ExecutionException A failure to execute the call to generate a script
 	 * @throws InterruptedException The call to generate a script was interrupted
+	 * @return An ID for the generated script.
 	 */
-	public abstract void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, String currentlyLoadedDataFileContent) throws InterruptedException, ExecutionException;
+	public abstract Optional<Integer> refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, String currentlyLoadedDataFileContent) throws InterruptedException, ExecutionException;
 	
 	/**
 	 * Refresh the property of whether the contents of the script generator (actionsTable) are valid (bool).
@@ -90,4 +93,11 @@ public abstract class AbstractGenerator extends ModelObject {
      */
     public abstract void refreshTimeEstimation(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition) throws InterruptedException, ExecutionException;
 
+    /**
+     * Get the generated script from the given ID.
+     * 
+     * @param scriptId The ID of the script to get.
+     * @return The script
+     */
+    public abstract Optional<String> getScriptFromId(Integer scriptId);
 }
