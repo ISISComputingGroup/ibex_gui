@@ -175,7 +175,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorSingleton.class);
 
 	/**
-	 * The string containing the last generated script.
+	 * The Integer containing the last generated script.
 	 */
 	private Optional<Integer> lastGeneratedScriptId;
 	
