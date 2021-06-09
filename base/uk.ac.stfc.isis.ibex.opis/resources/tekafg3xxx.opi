@@ -18,7 +18,7 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <PV_ROOT>$(P)$(REPLACE_WITH_IOC_NAME_MACRO)</PV_ROOT>
+    <PV_ROOT>$(P)$(TEKAFG3XXX):</PV_ROOT>
   </macros>
   <name>$(NAME)</name>
   <rules />
@@ -883,7 +883,7 @@ $(pv_value)</tooltip>
       <name>Text Input_7</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT)OUTPUT2:VOLT:OFFSET:SP</pv_name>
+      <pv_name>$(PV_ROOT)OUTPUT1:VOLT:OFFSET:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -1403,8 +1403,8 @@ $(pv_value)</tooltip>
       <height>28</height>
       <horizontal>true</horizontal>
       <items>
-        <s>On</s>
-        <s>Off</s>
+        <s>ON</s>
+        <s>OFF</s>
       </items>
       <items_from_pv>false</items_from_pv>
       <name>ChoiceBtn</name>
@@ -1453,8 +1453,8 @@ $(pv_value)</tooltip>
       <height>28</height>
       <horizontal>true</horizontal>
       <items>
-        <s>On</s>
-        <s>Off</s>
+        <s>ON</s>
+        <s>OFF</s>
       </items>
       <items_from_pv>false</items_from_pv>
       <name>ChoiceBtn</name>
