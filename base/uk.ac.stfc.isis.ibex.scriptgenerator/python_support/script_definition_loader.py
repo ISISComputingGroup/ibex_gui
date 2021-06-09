@@ -151,7 +151,7 @@ class ScriptDefinitionWrapper(object):
             list(self.script_definition.global_params_definition.values())[index][1](global_param)
             return
         except (TypeError, ValueError):
-            return 'Expected type: "{}" for global: "{}" but recieved: "{}"\n'.format(
+            return 'Expected type: "{}" for global: "{}" but received: "{}"\n'.format(
                 str(list(self.script_definition.global_params_definition.values())[index][1])[8:-2],
                 list(self.script_definition.global_params_definition.keys())[index], global_param)
 

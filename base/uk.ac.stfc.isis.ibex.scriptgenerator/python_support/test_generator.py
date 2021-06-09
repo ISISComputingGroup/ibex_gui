@@ -26,7 +26,7 @@ class TestGenerator(unittest.TestCase):
         # Arrange
         mock_script_definition: ScriptDefinitionWrapper = MagicMock()
         mock_script_definition.parametersValid.return_value = "invalid reason"
-        validityCheck: Dict[int, AnyStr] = self.generator.getValidityErrors({}, [
+        validityCheck: List[Dict[int, AnyStr]] = self.generator.getValidityErrors({}, [
             {"param1": "param1Val", "param2": "param2Val"},
             {"param1": "param1Val", "param2": "param2Val"}
         ], mock_script_definition)
@@ -40,7 +40,7 @@ class TestGenerator(unittest.TestCase):
         mock_script_definition: ScriptDefinitionWrapper = MagicMock()
         mock_script_definition.parametersValid.return_value = "invalid reason"
         mock_script_definition.globalParamsValid.return_value = "invalid reason"
-        validityCheck: Dict[int, AnyStr] = self.generator.getValidityErrors({"global1": "global1Val"}, [
+        validityCheck: List[Dict[int, AnyStr]] = self.generator.getValidityErrors({"global1": "global1Val"}, [
             {"param1": "param1Val", "param2": "param2Val"},
             {"param1": "param1Val", "param2": "param2Val"}
         ], mock_script_definition)
@@ -52,7 +52,7 @@ class TestGenerator(unittest.TestCase):
         # Arrange
         mock_script_definition: ScriptDefinitionWrapper = MagicMock()
         mock_script_definition.parametersValid.return_value = None
-        validityCheck: Dict[int, AnyStr] = self.generator.getValidityErrors({}, [
+        validityCheck: List[Dict[int, AnyStr]] = self.generator.getValidityErrors({}, [
             {"param1": "param1Val", "param2": "param2Val"},
             {"param1": "param1Val", "param2": "param2Val"}
         ], mock_script_definition)
@@ -63,8 +63,8 @@ class TestGenerator(unittest.TestCase):
         # Arrange
         mock_script_definition: ScriptDefinitionWrapper = MagicMock()
         mock_script_definition.globalParamsValid.return_value = None
-        validityCheck: Dict[int, AnyStr] = self.generator.getValidityErrors(
-            {"param1": "param1Val", "param2": "param2Val", "param1": "param1Val", "param2": "param2Val"}, [],
+        validityCheck: List[Dict[int, AnyStr]] = self.generator.getValidityErrors(
+            {"param1": "param1Val", "param2": "param2Val"}, [],
             mock_script_definition)
         # Act and Assert
         assert_that(validityCheck, equal_to([{}, {}]), "2 globals, both valid")
@@ -81,7 +81,7 @@ class TestGenerator(unittest.TestCase):
         # Arrange
         mock_script_definition: ScriptDefinitionWrapper = MagicMock()
         mock_script_definition.parametersValid.side_effect = self.params_valid_side_effect
-        validityCheck: Dict[int, AnyStr] = self.generator.getValidityErrors({}, [
+        validityCheck: List[Dict[int, AnyStr]] = self.generator.getValidityErrors({}, [
             {"param1": "param1Val"}, {"param2": "param2Val"}
         ], mock_script_definition)
         # Act and Assert
