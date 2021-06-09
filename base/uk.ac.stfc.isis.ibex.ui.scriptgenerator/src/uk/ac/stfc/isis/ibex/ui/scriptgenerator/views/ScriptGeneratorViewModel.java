@@ -324,7 +324,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void addEmptyAction() {
     scriptGeneratorModel.addEmptyAction();
     // Make sure the table is updated with the new action before selecting it
-    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs);
+    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, true);
     DISPLAY.asyncExec(() -> {
     	viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
     });
@@ -338,7 +338,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void insertEmptyAction(Integer insertionLocation) {
     scriptGeneratorModel.insertEmptyAction(insertionLocation);
     // Make sure the table is updated with the new action before selecting it
-    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs);
+    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, true);
     DISPLAY.asyncExec(() -> {
         viewTable.setCellFocus(insertionLocation, 0);
     });
@@ -365,7 +365,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void duplicateAction(List<ScriptGeneratorAction> actionsToDuplicate, Integer insertionLocation) {
     scriptGeneratorModel.duplicateAction(actionsToDuplicate, insertionLocation);
     // Make sure the table is updated with the new action before selecting it
-    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs);
+    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, true);
     DISPLAY.asyncExec(() -> {
     	viewTable.setCellFocus(insertionLocation, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
     });
@@ -478,7 +478,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Listen for changes in actions and activate the handler.
      */
     private PropertyChangeListener actionChangeListener = evt -> {
-    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs);
+    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, false);
     };
 
     /**
@@ -587,9 +587,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @param btnSaveParam Save Parameter button's visibility to manipulate
      * @param btnSaveParamAs Save Parameter As button's visibility to manipulate
      */
-    private void actionChangeHandler(ActionsViewTable viewTable, Button btnGenerateScript, Button btnSaveParam, Button btnSaveParamAs) {
+    private void actionChangeHandler(ActionsViewTable viewTable, Button btnGenerateScript, Button btnSaveParam, Button btnSaveParamAs, boolean rowsChanged) {
     DISPLAY.asyncExec(() -> {
-        if (!viewTable.isDisposed()) {
+        if ((!viewTable.isDisposed()) && rowsChanged) {
         viewTable.setRows(scriptGeneratorModel.getActions());
         updateValidityChecks(viewTable);
         }
@@ -966,7 +966,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     		}
     		i++;
     	}
-    	actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs);
+    	actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, false);
     }
 
     /**
