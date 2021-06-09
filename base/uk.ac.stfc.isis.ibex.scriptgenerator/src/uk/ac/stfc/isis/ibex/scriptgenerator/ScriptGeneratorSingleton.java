@@ -509,6 +509,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		}
 		try {
 			refreshParameterValidityChecking();
+			refreshTimeEstimation();
 		}catch(NoScriptDefinitionSelectedException e) {
 			return;
 		}
