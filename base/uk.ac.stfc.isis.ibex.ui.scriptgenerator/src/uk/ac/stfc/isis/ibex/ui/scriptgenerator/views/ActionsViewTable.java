@@ -285,7 +285,13 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 			}
 		}
 	} 
-	
+	/**
+	 * Sets Rows without touching focus, called when updating globals so table is updated but focus
+	 * not changed.
+	 */
+	public void setRowsNoFocus(Collection<ScriptGeneratorAction> rows) {
+		viewer.setInput(new WritableList<ScriptGeneratorAction>(rows, null));
+	}
 	/**
 	 * Sets focus of cell.
 	 * @param row row number of table

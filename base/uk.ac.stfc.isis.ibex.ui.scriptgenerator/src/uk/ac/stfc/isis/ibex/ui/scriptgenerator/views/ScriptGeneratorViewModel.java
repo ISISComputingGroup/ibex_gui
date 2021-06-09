@@ -589,8 +589,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     private void actionChangeHandler(ActionsViewTable viewTable, Button btnGenerateScript, Button btnSaveParam, Button btnSaveParamAs, boolean rowsChanged) {
     DISPLAY.asyncExec(() -> {
-        if ((!viewTable.isDisposed()) && rowsChanged) {
-        viewTable.setRows(scriptGeneratorModel.getActions());
+        if (!viewTable.isDisposed()) {
+        if(rowsChanged) {
+        	viewTable.setRows(scriptGeneratorModel.getActions());
+        }else {
+        	viewTable.setRowsNoFocus(scriptGeneratorModel.getActions());
+        }
         updateValidityChecks(viewTable);
         }
         if (!btnGenerateScript.isDisposed()) {
