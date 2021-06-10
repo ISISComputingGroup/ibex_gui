@@ -1,6 +1,7 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.generation;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
@@ -106,10 +107,10 @@ public class GeneratorContext extends ModelObject {
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
 	 */
-	public Optional<Integer> refreshGeneratedScript(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage, String jsonContent)
+	public Optional<Integer> refreshGeneratedScript(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage, String jsonContent, List<String> globalParams)
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
 		AbstractGenerator generator = getGenerator(generatedLanguage);
-		return generator.refreshGeneratedScript(actionsTable.getActions(), scriptDefinition, jsonContent);
+		return generator.refreshGeneratedScript(actionsTable.getActions(), scriptDefinition, jsonContent, globalParams);
 	}
 	
 	/**
@@ -123,9 +124,9 @@ public class GeneratorContext extends ModelObject {
 	 * @throws InterruptedException The call to generate was interrupted.
 	 * @return An ID for the generated script.
 	 */
-	public Optional<Integer> refreshGeneratedScript(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, String jsonContent) 
+	public Optional<Integer> refreshGeneratedScript(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, String jsonContent, List<String> globalParams) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
-		return refreshGeneratedScript(actionsTable, scriptDefinition, GeneratedLanguage.PYTHON, jsonContent);
+		return refreshGeneratedScript(actionsTable, scriptDefinition, GeneratedLanguage.PYTHON, jsonContent, globalParams);
 	}
 	
 	/**
@@ -139,10 +140,10 @@ public class GeneratorContext extends ModelObject {
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
 	 */
-	public void refreshAreParamsValid(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage) 
+	public void refreshAreParamsValid(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage, List<String> globalParams) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
 		AbstractGenerator generator = getGenerator(generatedLanguage);
-		generator.refreshAreParamsValid(actionsTable.getActions(), scriptDefinition);
+		generator.refreshAreParamsValid(actionsTable.getActions(), scriptDefinition, globalParams);
 	}
 	
 	/**
@@ -155,9 +156,9 @@ public class GeneratorContext extends ModelObject {
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
 	 */
-	public void refreshAreParamsValid(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition) 
+	public void refreshAreParamsValid(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
-		refreshAreParamsValid(actionsTable, scriptDefinition, GeneratedLanguage.PYTHON);
+		refreshAreParamsValid(actionsTable, scriptDefinition, GeneratedLanguage.PYTHON, globalParams);
 	}
 	
     /**
@@ -170,10 +171,10 @@ public class GeneratorContext extends ModelObject {
      * @throws ExecutionException A failure to execute the call to generate.
      * @throws InterruptedException The call to generate was interrupted.
      */
-    public void refreshTimeEstimation(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage)
+    public void refreshTimeEstimation(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage, List<String> globalParams)
             throws UnsupportedLanguageException, InterruptedException, ExecutionException {
         AbstractGenerator generator = getGenerator(generatedLanguage);
-        generator.refreshTimeEstimation(actionsTable.getActions(), scriptDefinition);
+        generator.refreshTimeEstimation(actionsTable.getActions(), scriptDefinition, globalParams);
     }
     
     /**
@@ -186,9 +187,9 @@ public class GeneratorContext extends ModelObject {
      * @throws ExecutionException A failure to execute the call to generate.
      * @throws InterruptedException The call to generate was interrupted.
      */
-    public void refreshTimeEstimation(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition)
+    public void refreshTimeEstimation(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition,List<String> globalParams)
             throws UnsupportedLanguageException, InterruptedException, ExecutionException {
-        refreshTimeEstimation(actionsTable, scriptDefinition, GeneratedLanguage.PYTHON);
+        refreshTimeEstimation(actionsTable, scriptDefinition, GeneratedLanguage.PYTHON, globalParams);
     }
 	
 	/**
@@ -201,10 +202,10 @@ public class GeneratorContext extends ModelObject {
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
 	 */
-	public void refreshValidityErrors(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage) 
+	public void refreshValidityErrors(List<String> globalParams, ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
 		AbstractGenerator generator = getGenerator(generatedLanguage);
-		generator.refreshValidityErrors(actionsTable.getActions(), scriptDefinition);
+		generator.refreshValidityErrors(globalParams, actionsTable.getActions(), scriptDefinition);
 	}
 
 	/**
@@ -216,9 +217,9 @@ public class GeneratorContext extends ModelObject {
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
 	 */
-	public void refreshValidityErrors(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition) 
+	public void refreshValidityErrors(List<String> globalParams, ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
-		refreshValidityErrors(actionsTable, scriptDefinition, GeneratedLanguage.PYTHON);
+		refreshValidityErrors(globalParams, actionsTable, scriptDefinition, GeneratedLanguage.PYTHON);
 	}
 	
 	/**

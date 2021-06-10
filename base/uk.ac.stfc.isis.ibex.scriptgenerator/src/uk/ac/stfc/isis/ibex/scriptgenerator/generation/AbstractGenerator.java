@@ -61,7 +61,7 @@ public abstract class AbstractGenerator extends ModelObject {
 	 * @throws InterruptedException The call to generate a script was interrupted
 	 * @return An ID for the generated script.
 	 */
-	public abstract Optional<Integer> refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, String currentlyLoadedDataFileContent) throws InterruptedException, ExecutionException;
+	public abstract Optional<Integer> refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, String currentlyLoadedDataFileContent, List<String> globalParams) throws InterruptedException, ExecutionException;
 	
 	/**
 	 * Refresh the property of whether the contents of the script generator (actionsTable) are valid (bool).
@@ -71,7 +71,7 @@ public abstract class AbstractGenerator extends ModelObject {
 	 * @throws ExecutionException A failure to execute the call to generate a script
 	 * @throws InterruptedException The call to generate a script was interrupted
 	 */
-	public abstract void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition) throws InterruptedException, ExecutionException;
+	public abstract void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams) throws InterruptedException, ExecutionException;
 	
 	/**
 	 * Refresh the validity errors returned when checking validity (Map<Integer,String>).
@@ -81,7 +81,7 @@ public abstract class AbstractGenerator extends ModelObject {
 	 * @throws ExecutionException A failure to execute the call to generate a script
 	 * @throws InterruptedException The call to generate a script was interrupted
 	 */
-	public abstract void refreshValidityErrors(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition) throws InterruptedException, ExecutionException;
+	public abstract void refreshValidityErrors(List<String> globalParams, List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition) throws InterruptedException, ExecutionException;
     
     /**
      * Refresh the time estimation of the specified actions (Map<Integer,Double>).
@@ -91,7 +91,7 @@ public abstract class AbstractGenerator extends ModelObject {
      * @throws ExecutionException A failure to execute the call to generate a script
      * @throws InterruptedException The call to generate a script was interrupted
      */
-    public abstract void refreshTimeEstimation(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition) throws InterruptedException, ExecutionException;
+    public abstract void refreshTimeEstimation(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams) throws InterruptedException, ExecutionException;
 
     /**
      * Get the generated script from the given ID.

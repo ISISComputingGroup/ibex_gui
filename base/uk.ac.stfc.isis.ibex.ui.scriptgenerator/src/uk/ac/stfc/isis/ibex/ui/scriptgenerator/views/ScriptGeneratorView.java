@@ -19,6 +19,8 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -50,6 +52,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
 
 /**
  * Provides the UI to control the script generator.
@@ -316,7 +319,12 @@ public class ScriptGeneratorView {
             );
         
         new ScriptGeneratorHelpMenu(topBarComposite);
-
+        Composite globalParamComposite = new Composite(mainParent, SWT.NONE);
+        globalParamComposite.setLayout(new GridLayout(24, false));
+        globalParamComposite.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 1, 5));
+        
+        List<Label> globalLabel = new ArrayList<Label>();
+        List<Text> globalParamText = new ArrayList<Text>();
         Map<String, String> scriptDefinitionLoadErrors = scriptGeneratorViewModel.getScriptDefinitionLoadErrors();
 
         if (!scriptDefinitionLoadErrors.isEmpty()) {
@@ -463,8 +471,11 @@ public class ScriptGeneratorView {
         loadExperimentalParametersButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.loadParameterValues());
         // Bind the context and the validity checking listeners
         bind(scriptDefinitionSelector,
-            helpText);
-
+            helpText,
+            globalLabel,
+            globalParamText,
+            globalParamComposite);
+        scriptGeneratorViewModel.createGlobalParamsWidgets();
         } else {
 
         Label warningMessage = new Label(mainParent, SWT.NONE);
@@ -552,8 +563,11 @@ public class ScriptGeneratorView {
      * @param helpText The help text
      */
     private void bind(ComboViewer scriptDefinitionSelector,
-        Text helpText) {
-    scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText);
+        Text helpText,
+        List<Label> globalLabel,
+        List<Text> globalParamText,
+        Composite globalParamsComposite) {
+    scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText, globalLabel, globalParamText, globalParamsComposite, mainParent);
 
     scriptGeneratorViewModel.bindActionProperties(table, generateScriptButton, saveExperimentalParametersButton, saveAsExperimentalParametersButton);
 

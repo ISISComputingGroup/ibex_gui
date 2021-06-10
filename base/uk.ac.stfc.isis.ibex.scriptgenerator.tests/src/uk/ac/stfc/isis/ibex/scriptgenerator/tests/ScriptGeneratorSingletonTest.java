@@ -2,7 +2,9 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.Before;
@@ -22,6 +24,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.NoScriptDefinitionSelectedException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionLoader;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 
@@ -45,7 +48,6 @@ public class ScriptGeneratorSingletonTest {
 		mockPythonInterface = mock(PythonInterface.class);
 		mockConfigLoader = mock(ScriptDefinitionLoader.class);
 		mockActionsTable = mock(ActionsTable.class);
-		model = new ScriptGeneratorSingleton(mockPythonInterface, mockConfigLoader, mockActionsTable);
 		
 		// Mock out the model to test some methods and make real calls to others
 		mockModel = mock(ScriptGeneratorSingleton.class);
@@ -53,6 +55,10 @@ public class ScriptGeneratorSingletonTest {
 		jsonLine = "{\"test:me\"}";
 		mockConfig = mock(ScriptDefinitionWrapper.class);
 		configName = "config";
+		List<ActionParameter> list = Collections.emptyList();
+		when(mockConfig.getGlobalParameters()).thenReturn(list);
+		when(mockConfigLoader.getScriptDefinition()).thenReturn(mockConfig);
+		model = new ScriptGeneratorSingleton(mockPythonInterface, mockConfigLoader, mockActionsTable);
 		
 		filepathPrefix = (System.getProperty("user.dir") + "\\test_script_gen_handler_scripts\\");
 		if(!(new File(filepathPrefix).mkdir())) {
@@ -62,6 +68,9 @@ public class ScriptGeneratorSingletonTest {
 		// Mock out some methods to test real calls to others
 		when(mockModel.getScriptDefinition()).thenReturn(Optional.of(mockConfig));
 		when(mockConfig.getName()).thenReturn(configName);
+		
+		
+		mockConfig.getGlobalParameters();
 		try {
 			when(mockModel.generateScriptFileName()).thenCallRealMethod();
 		} catch (NoScriptDefinitionSelectedException e) {
