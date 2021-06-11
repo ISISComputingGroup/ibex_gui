@@ -40,9 +40,24 @@ import uk.ac.stfc.isis.ibex.nicos.comms.ZMQWrapper;
  */
 public abstract class NICOSMessage<TSEND, TRESP> {
 	
+	/**
+	 * The command to be sent as this message.
+	 */
     protected String command = "";
+    
+    /**
+     * The parameters to send alongside the command.
+     */
     protected List<TSEND> parameters = new ArrayList<>();
+    
+    /**
+     * The status of the response to this message.
+     */
     protected String responseStatus;
+    
+    /**
+     * The response content of this message.
+     */
     protected String response;
     
     /**
@@ -70,6 +85,11 @@ public abstract class NICOSMessage<TSEND, TRESP> {
      */
     public abstract TRESP parseResponse(String response) throws ConversionException;
     
+    /**
+     * Receive the response from this message using the given ZMQWrapper.
+     * 
+     * @param zmq The wrapper to receive the message with.
+     */
     public void receiveResponse(ZMQWrapper zmq) {
     	responseStatus = zmq.receiveString();
     	// NICOS protocol leaves the second package empty for future expansion
@@ -78,10 +98,20 @@ public abstract class NICOSMessage<TSEND, TRESP> {
     	response = zmq.receiveString();
     }
     
+    /**
+     * Get the response filled out by calling receiveResponse.
+     * 
+     * @return The content of the response to this message.
+     */
     public String getResponse() {
     	return response;
     }
     
+    /**
+     * Get the response status filled out by calling receiveResponse.
+     * 
+     * @return The status of the response to this message.
+     */
     public String getResponseStatus() {
     	return responseStatus;
     }
