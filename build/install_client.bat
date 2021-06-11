@@ -34,11 +34,11 @@ if %errcode% GEQ 4 (
 
 REM genie_python already has its own script
 REM the hierarchy is slightly different for release and development builds
-if exist "%BASEDIR%..\genie_python" (
-    set GENIE_PYTHON_TOP=%BASEDIR%..\genie_python
+if exist "%BASEDIR%..\genie_python_3" (
+    set GENIE_PYTHON_TOP=%BASEDIR%..\genie_python_3
     call !GENIE_PYTHON_TOP!\genie_python_install.bat
 ) else (
-    set GENIE_PYTHON_TOP=%BASEDIR%..\..\genie_python
+    set GENIE_PYTHON_TOP=%BASEDIR%..\..\genie_python_3
     for /F %%I in ( !GENIE_PYTHON_TOP!\LATEST_BUILD.txt ) DO SET LATEST_BUILD=%%I
     call !GENIE_PYTHON_TOP!\BUILD-!LATEST_BUILD!\genie_python_install.bat
 )
