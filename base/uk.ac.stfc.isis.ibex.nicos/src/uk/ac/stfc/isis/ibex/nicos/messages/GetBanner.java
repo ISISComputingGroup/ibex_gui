@@ -44,6 +44,12 @@ public class GetBanner extends NICOSMessage<String, ReceiveBannerMessage> {
         return new JsonDeserialisingConverter<>(ReceiveBannerMessage.class).convert(response);
     }
     
+    /**
+     * Receive the response to this GetBanner message using the given ZMQWrapper
+     * and store that response and responseStatus in the messages fields.
+     * 
+     * @param zmq The wrapper to receive the string with.
+     */
     public void receiveResponse(ZMQWrapper zmq) {
     	zmq.receiveString();
     	responseStatus = zmq.receiveString();
