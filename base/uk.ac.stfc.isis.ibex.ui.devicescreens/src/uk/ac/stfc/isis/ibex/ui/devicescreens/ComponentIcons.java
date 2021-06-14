@@ -227,6 +227,8 @@ public final class ComponentIcons {
             	return "sans2d_vacuum_tank";
             case MUSR_STEERING:
             	return "musr_steering";
+            case FUNCTION_GENERATOR:
+            	return "function_generator";
             default:
                 return "cog";
         }
