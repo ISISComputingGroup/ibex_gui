@@ -2653,5 +2653,14 @@
         </macros>
       </value>
     </entry>
+    <entry>
+      <key>WISH Vacuum PLC</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>wishvacuumplc.opi</path>
+        <description>WISH Vacuum PLC</description>
+        <macros/>
+      </value>
+    </entry>
   </opis>
 </descriptions>
