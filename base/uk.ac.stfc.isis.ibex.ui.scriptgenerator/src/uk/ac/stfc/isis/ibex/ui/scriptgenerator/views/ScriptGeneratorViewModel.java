@@ -324,7 +324,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void addEmptyAction() {
     scriptGeneratorModel.addEmptyAction();
     // Make sure the table is updated with the new action before selecting it
-    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, true);
     DISPLAY.asyncExec(() -> {
     	viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
     });
@@ -338,7 +337,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void insertEmptyAction(Integer insertionLocation) {
     scriptGeneratorModel.insertEmptyAction(insertionLocation);
     // Make sure the table is updated with the new action before selecting it
-    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, true);
     DISPLAY.asyncExec(() -> {
         viewTable.setCellFocus(insertionLocation, 0);
     });
@@ -365,7 +363,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void duplicateAction(List<ScriptGeneratorAction> actionsToDuplicate, Integer insertionLocation) {
     scriptGeneratorModel.duplicateAction(actionsToDuplicate, insertionLocation);
     // Make sure the table is updated with the new action before selecting it
-    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, true);
     DISPLAY.asyncExec(() -> {
     	viewTable.setCellFocus(insertionLocation, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
     });
@@ -478,7 +475,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Listen for changes in actions and activate the handler.
      */
     private PropertyChangeListener actionChangeListener = evt -> {
-    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, false);
+    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, true);
     };
 
     /**
@@ -590,9 +587,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private void actionChangeHandler(ActionsViewTable viewTable, Button btnGenerateScript, Button btnSaveParam, Button btnSaveParamAs, boolean rowsChanged) {
     DISPLAY.asyncExec(() -> {
         if (!viewTable.isDisposed()) {
-        if(rowsChanged) {
+        if (rowsChanged) {
         	viewTable.setRows(scriptGeneratorModel.getActions());
-        }else {
+        } else {
         	viewTable.setRowsNoFocus(scriptGeneratorModel.getActions());
         }
         updateValidityChecks(viewTable);
@@ -962,10 +959,10 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
     }
     
-    public void updateGlobalParams(String params, String toUpdate){
-    	int i =0;
-    	for(String paramName: this.currentGlobals) {
-    		if( paramName.equals(toUpdate)){
+    public void updateGlobalParams(String params, String toUpdate) {
+    	int i = 0;
+    	for (String paramName: this.currentGlobals) {
+    		if (paramName.equals(toUpdate)) {
     			scriptGeneratorModel.updateGlobalParams(params, i);
     		}
     		i++;
