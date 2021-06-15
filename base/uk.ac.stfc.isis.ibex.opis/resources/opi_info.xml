@@ -2657,7 +2657,7 @@
       <key>WISH Vacuum PLC</key>
       <value>
         <type>UNKNOWN</type>
-        <path>wishvacuumplc.opi</path>
+        <path>wish_vacuum_plc.opi</path>
         <description>WISH Vacuum PLC</description>
         <macros/>
       </value>
