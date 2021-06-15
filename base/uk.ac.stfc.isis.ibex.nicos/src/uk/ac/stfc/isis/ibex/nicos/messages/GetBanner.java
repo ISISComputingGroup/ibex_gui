@@ -21,13 +21,16 @@
  */
 package uk.ac.stfc.isis.ibex.nicos.messages;
 
+
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
+import uk.ac.stfc.isis.ibex.nicos.comms.ZMQWrapper;
 
 /**
  * Command that gets banner information from NICOS.
  */
 public class GetBanner extends NICOSMessage<String, ReceiveBannerMessage> {
+	
 
     /**
      * Create the get banner command.
@@ -40,5 +43,19 @@ public class GetBanner extends NICOSMessage<String, ReceiveBannerMessage> {
     public ReceiveBannerMessage parseResponse(String response) throws ConversionException {
         return new JsonDeserialisingConverter<>(ReceiveBannerMessage.class).convert(response);
     }
+    
+    /**
+     * Receive the response to this GetBanner message using the given ZMQWrapper
+     * and store that response and responseStatus in the messages fields.
+     * 
+     * @param zmq The wrapper to receive the string with.
+     */
+    public void receiveResponse(ZMQWrapper zmq) {
+    	zmq.receiveString();
+    	responseStatus = zmq.receiveString();
+    	zmq.receiveString();
+    	response = zmq.receiveString();
+    }
+    
 
 }

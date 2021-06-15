@@ -27,6 +27,8 @@ public class ActionsTable extends ModelObject {
 	 */
 	private List<JavaActionParameter> actionParameters;
 	
+	private Map<Integer, String> globalValidError = Collections.emptyMap();
+	
 	/**
 	 * The actions (rows) of the table that have values for the action parameters.
 	 */
@@ -48,6 +50,14 @@ public class ActionsTable extends ModelObject {
 	 */
 	public List<ScriptGeneratorAction> getActions() {
 		return actions;
+	}
+	
+	/**
+	 * 
+	 * @return The globalValidError string on this object.
+	 */
+	public Map<Integer, String> getGlobalValidityErrors() {
+		return this.globalValidError;
 	}
 
 	/**
@@ -301,12 +311,13 @@ public class ActionsTable extends ModelObject {
 	/**
 	 * Set the validity errors for each action based on the hashmap.
 	 * 
-	 * @param validityErrors The hashmap to set validity errors based on.
+	 * @param validityErrors The list of hashmaps to set validity errors based on.
 	 */
-	public void setValidityErrors(Map<Integer, String> validityErrors) {
+	public void setValidityErrors(List<Map<Integer, String>> validityErrors) {
+		this.globalValidError = validityErrors.get(0);
 		for (int i = 0; i < actions.size(); i++) {
-			if (validityErrors.containsKey(i)) {
-				actions.get(i).setInvalid(validityErrors.get(i));
+			if (validityErrors.get(1).containsKey(i)) {
+				actions.get(i).setInvalid(validityErrors.get(1).get(i));
 			} else {
 				actions.get(i).setValid();
 			}
@@ -331,10 +342,29 @@ public class ActionsTable extends ModelObject {
 	 */
 	public ArrayList<String> getInvalidityErrorLines() {
 		var errors = new ArrayList<String>();
+		if (this.globalValidError.size()>0) {
+			String errorString = "Global Parameter Errors: \n";
+			int initialLen = errorString.length();
+			for(int i = 0; i < globalValidError.size(); i++) {
+				String reason = globalValidError.get(i);
+				if(reason != "") {
+					errorString += "Global Parameter: " + (i+1) +", Reason: " + "\n" + globalValidError.get(i) + "\n";
+				}
+			}
+			if (errorString.length() > initialLen){
+				errors.addAll(Arrays.asList(errorString.split("\n")));
+			}
+				
+		}
+		boolean first = true;
 		for (int i = 0; i < actions.size(); i++) {
 			ScriptGeneratorAction action = actions.get(i);
 			if (!action.isValid()) {
-				String errorString = "Row: " + (i + 1) + ", Reason: " + "\n" + action.getInvalidityReason().get() + "\n";
+				if(first) {
+					errors.add("Action Errors:");
+					first = false;
+				}
+				String errorString = "Row: " + (i+1) + ", Reason: " + "\n" + action.getInvalidityReason().get() + "\n";
 				
 				errors.addAll(Arrays.asList(errorString.split("\n")));
 			}

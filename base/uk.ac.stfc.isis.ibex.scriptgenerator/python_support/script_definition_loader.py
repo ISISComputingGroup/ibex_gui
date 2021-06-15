@@ -20,9 +20,10 @@ class PythonActionParameter(object):
     """
     Class containing a parameter name and value.
     """
+
     class Java:
         implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter']
-    
+
     def __init__(self, name, default_value, copyPreviousRow):
         """
         Initialise the name and default value of the action parameter.
@@ -57,6 +58,7 @@ class ScriptDefinitionWrapper(object):
     """
     Class containing the definition and validation functions of a single script_definition.
     """
+
     class Java:
         implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper']
 
@@ -93,8 +95,26 @@ class ScriptDefinitionWrapper(object):
             else:
                 action_parameter = PythonActionParameter(arg, str(arguments[arg].default), False)
             kwargs_with_defaults.append(action_parameter)
-            
+
         return ListConverter().convert(kwargs_with_defaults, gateway._gateway_client)
+
+    def getGlobalParameters(self) -> List[PythonActionParameter]:
+        """
+        Gets the global parameters and default values from the script_definition defined in this script_definition
+
+        Returns:
+            arguments: List of the parameter names (strings)
+        """
+        list_of_globals = []
+        if hasattr(self.script_definition, "global_params_definition"):
+            arguments = self.script_definition.global_params_definition
+            for arg in arguments:
+                name = arg
+                default = arguments[arg][0]
+                action_parameter = PythonActionParameter(name, default, False)
+                list_of_globals.append(action_parameter)
+
+        return ListConverter().convert(list_of_globals, gateway._gateway_client)
 
     def getHelp(self) -> str:
         """
@@ -115,6 +135,26 @@ class ScriptDefinitionWrapper(object):
         """
         return self.script_definition.run(**action)
 
+    def globalParamsValid(self, global_param, index) -> Union[None, AnyStr]:
+        """
+        checks if global params are valid for the script definition
+
+        Args:
+            The values of the global parameters to check for validity.
+
+        Returns:
+            None if all params are valid.
+        """
+        if not hasattr(self.script_definition, "global_params_definition"):
+            return
+        try:
+            list(self.script_definition.global_params_definition.values())[index][1](global_param)
+            return
+        except (TypeError, ValueError):
+            return 'Expected type: "{}" for global: "{}" but received: "{}"\n'.format(
+                str(list(self.script_definition.global_params_definition.values())[index][1])[8:-2],
+                list(self.script_definition.global_params_definition.keys())[index], global_param)
+
     def parametersValid(self, action) -> Union[None, AnyStr]:
         """
         Checks if the parameters are valid for the script_definition
@@ -128,9 +168,9 @@ class ScriptDefinitionWrapper(object):
         try:
             return self.script_definition.parameters_valid(**action)
         except Exception as e:
-            return str(e) # If there is an error validating return to the user
+            return str(e)  # If there is an error validating return to the user
 
-    def estimateTime(self, action) -> Union[None, int]:
+    def estimateTime(self, action, globalparams) -> Union[None, int]:
         """
         Returns an estimate (in seconds) of the time necessary to complete the action
 
@@ -141,11 +181,14 @@ class ScriptDefinitionWrapper(object):
             An int representing the estimated time in seconds
             or None if the parameters are invalid or the estimate could not be calculated
         """
-        estimate = self.script_definition.estimate_time(**action)
         try:
-          return round(estimate)
-        except (ValueError, TypeError) as ex:
-          return None
+            if hasattr(self.script_definition, "global_params_definition"):
+                self.script_definition.global_params = dict(zip(self.script_definition.global_params_definition.keys(),
+                                                                globalparams))
+            estimate = self.script_definition.estimate_time(**action)
+            return round(estimate)
+        except (ValueError, TypeError, KeyError) as ex:
+            return None
 
     def equals(self, other_script_definition) -> bool:
         """ Implement equals needed for py4j
@@ -163,6 +206,7 @@ class ScriptDefinitionWrapper(object):
         """Return the name of the script_definition"""
         return self.getName()
 
+
 class Generator(object):
 
     def __init__(self, repo_path: str):
@@ -174,7 +218,7 @@ class Generator(object):
         self.env = Environment(loader=self.loader, keep_trailing_newline=True)
         self.template = self.env.get_template('generator_template.py')
 
-    def areParamsValid(self, list_of_actions, script_definition: ScriptDefinitionWrapper) -> bool:
+    def areParamsValid(self, list_of_actions, script_definition: ScriptDefinitionWrapper, global_params) -> bool:
         """
         Checks if a list of parameters are valid for the script_definition
 
@@ -184,25 +228,40 @@ class Generator(object):
         for action in list_of_actions:
             if script_definition.parametersValid(action) != None:
                 return False
+        i = 0
+        for global_param in global_params:
+            if script_definition.globalParamsValid(global_param, i) != None:
+                return False
+            i += 1
         return True
 
-    def getValidityErrors(self, list_of_actions, script_definition: ScriptDefinitionWrapper) -> Dict[int, AnyStr]:
+    def getValidityErrors(self, global_params, list_of_actions, script_definition: ScriptDefinitionWrapper) -> List[
+                        Dict[int, AnyStr]]:
         """
         Get a map of validity errors
 
         Returns:
-            Dictionary containing keys of the line numbers where errors are and values of the error messages.
+            List of dictionaries containing keys of the line numbers where errors are and values of the error messages.
         """
         current_action_index = 0
-        validityCheck: Dict[int, AnyStr] = {}
+        param_type_index = 0
+        validityCheck: List[Dict[int, AnyStr]] = [{}, {}]
+        for global_param in global_params:
+            singleParamValidityCheck = script_definition.globalParamsValid(global_param, current_action_index)
+            if singleParamValidityCheck != None:
+                validityCheck[param_type_index][current_action_index] = singleParamValidityCheck
+            current_action_index += 1
+        param_type_index = 1
+        current_action_index = 0
         for action in list_of_actions:
             singleActionValidityCheck = script_definition.parametersValid(action)
             if singleActionValidityCheck != None:
-                validityCheck[current_action_index] = singleActionValidityCheck
+                validityCheck[param_type_index][current_action_index] = singleActionValidityCheck
             current_action_index += 1
         return validityCheck
 
-    def estimateTime(self, list_of_actions, script_definition: ScriptDefinitionWrapper) -> Dict[int, int]:
+    def estimateTime(self, list_of_actions, script_definition: ScriptDefinitionWrapper, global_params) -> Dict[
+        int, int]:
         """
         Estimates the time necessary to complete each action.
         Actions are only estimated if their parameters are valid.
@@ -213,32 +272,39 @@ class Generator(object):
         time_estimates: Dict[int, int] = {}
         for current_action_index, action in enumerate(list_of_actions, 0):
             if script_definition.parametersValid(action) is None:
-              time_estimate = script_definition.estimateTime(action)
-              if time_estimate != None:
-                  time_estimates[current_action_index] = time_estimate
+                time_estimate = script_definition.estimateTime(action, global_params)
+                if time_estimate != None:
+                    time_estimates[current_action_index] = time_estimate
             current_action_index += 1
         return time_estimates
 
-    def generate(self, list_of_actions, jsonString, script_definition: ScriptDefinitionWrapper) -> Union[None, AnyStr]:
+    def generate(self, list_of_actions, jsonString, global_params,
+                 script_definition: ScriptDefinitionWrapper) -> Union[None, AnyStr]:
         """
         Generates a script from a list of parameters and script_definition
 
         Returns:
            None if there is an error or parameters are invalid, otherwise a string of a generated script.
         """
-        if self.areParamsValid(list_of_actions, script_definition):
+        if self.areParamsValid(list_of_actions, script_definition, global_params):
+
             try:
                 script_definition_file_path = "{}.py".format(script_definition.getName())
                 script_definition_template = self.env.get_template(script_definition_file_path)
                 val = str(utilities.compress_and_hex(jsonString))
+
+                # if you need to change the template rendering, the file you need to change is
+                # uk.ac.stfc.isis.ibex.scriptgenerator/python_support/templates/generator_template.py
+
                 rendered_template = self.template.render(inserted_script_definition=script_definition_template,
-                    script_generator_actions=list_of_actions, hexed_value=val)
-            except Exception:
+                                                         script_generator_actions=list_of_actions,
+                                                         global_params=global_params, hexed_value=val)
+            except Exception as e:
                 rendered_template = None
             return rendered_template
         else:
             return None
-    
+
     def get_script_definition_filepath(self, script_definition: ScriptDefinitionWrapper) -> str:
         """
         Find the absolute file path to the script_definition
@@ -256,6 +322,7 @@ class ScriptDefinitionsWrapper(object):
     """
     Exposes all ScriptDefinitions which have been found supplied to the constructor.
     """
+
     class Java:
         implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionsWrapper']
 
@@ -327,28 +394,32 @@ class ScriptDefinitionsWrapper(object):
     def convert_list_of_actions_to_python(self, list_of_actions) -> List[Dict[AnyStr, AnyStr]]:
         python_list_of_actions: List = ListConverter().convert(list_of_actions, gateway._gateway_client)
         return [MapConverter().convert(action, gateway._gateway_client) for action in python_list_of_actions]
-    
-    def areParamsValid(self, list_of_actions, script_definition: ScriptDefinitionWrapper) -> bool:
+
+    def areParamsValid(self, list_of_actions, global_params, script_definition: ScriptDefinitionWrapper) -> bool:
         """
         Checks if a list of parameters are valid for the script_definition
 
         Returns:
             True if valid, False if not.
         """
-        return self.generator.areParamsValid(self.convert_list_of_actions_to_python(list_of_actions), script_definition)
+        return self.generator.areParamsValid(self.convert_list_of_actions_to_python(list_of_actions), script_definition,
+                                             global_params)
 
-    def getValidityErrors(self, list_of_actions, script_definition: ScriptDefinitionWrapper) -> Dict[int, AnyStr]:
+    def getValidityErrors(self, global_params, list_of_actions,
+                          script_definition: ScriptDefinitionWrapper) -> Dict[int, AnyStr]:
         """
         Get the validity errors of the current actions
 
         Returns:
-            Dictionary containing keys of the line numbers where errors are and values of the error messages.
+            List of dictionaries containing keys of the line numbers where errors are and values of the error messages.
         """
-        return MapConverter().convert(self.generator.getValidityErrors(
-                self.convert_list_of_actions_to_python(list_of_actions), script_definition),
-            gateway._gateway_client)
+        errors_list = self.generator.getValidityErrors(global_params, self.convert_list_of_actions_to_python(
+            list_of_actions), script_definition)
+        converted_list = [MapConverter().convert(errors, gateway._gateway_client) for errors in errors_list]
+        return ListConverter().convert(converted_list, gateway._gateway_client)
 
-    def estimateTime(self, list_of_actions, script_definition: ScriptDefinitionWrapper) -> Dict[int, int]:
+    def estimateTime(self, list_of_actions, script_definition: ScriptDefinitionWrapper, global_parameters) -> Dict[
+        int, int]:
         """
         Get the estimated time to complete the current actions
 
@@ -356,17 +427,19 @@ class ScriptDefinitionsWrapper(object):
             Dictionary containing line numbers as keys and estimates as values
         """
         return MapConverter().convert(self.generator.estimateTime(
-                self.convert_list_of_actions_to_python(list_of_actions), script_definition),
+            self.convert_list_of_actions_to_python(list_of_actions), script_definition, global_parameters),
             gateway._gateway_client)
 
-    def generate(self, list_of_actions, jsonString, script_definition: ScriptDefinitionWrapper) -> Union[None, AnyStr]:
+    def generate(self, list_of_actions, jsonString, global_params,
+                 script_definition: ScriptDefinitionWrapper) -> Union[None, AnyStr]:
         """
         Generates a script from a list of parameters and script_definition
 
         Returns:
            None if parameters are invalid, otherwise a string of a generated script.
         """
-        return self.generator.generate(self.convert_list_of_actions_to_python(list_of_actions), jsonString, script_definition)
+        return self.generator.generate(self.convert_list_of_actions_to_python(list_of_actions), jsonString,
+                                       global_params, script_definition)
 
     def isPythonReady(self) -> bool:
         """
@@ -412,7 +485,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('java_port', type=int, help='the java port to connect on')
     parser.add_argument('python_port', type=int, help='the python port to connect on')
-    parser.add_argument('--repo_path', type=str, help='Path to the script generator repository', default=DEFAULT_REPO_PATH)
+    parser.add_argument('--repo_path', type=str, help='Path to the script generator repository',
+                        default=DEFAULT_REPO_PATH)
 
     args = parser.parse_args()
 

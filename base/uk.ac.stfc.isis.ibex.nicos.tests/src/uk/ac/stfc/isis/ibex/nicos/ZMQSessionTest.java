@@ -58,6 +58,9 @@ public class ZMQSessionTest {
     public void setUp() {
     	Mockito.when(zmq.getLock()).thenReturn(new Object());
         session = new ZMQSession(zmq);
+        Mockito.doCallRealMethod().when(mockMessage).receiveResponse(zmq);
+        Mockito.doCallRealMethod().when(mockMessage).getResponse();
+        Mockito.doCallRealMethod().when(mockMessage).getResponseStatus();
     }
 
     @Test

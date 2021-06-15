@@ -14,11 +14,23 @@ public interface ScriptDefinitionWrapper {
 	List<ActionParameter> getParameters();
 	
 	/**
+	 * @return The global parameter names and their values. e.g. ["param1", "val1", "param2", "val2"]
+	 */
+	List<ActionParameter> getGlobalParameters();
+	/**
 	 * Performs the defined action.
 	 * @param action The action to do.
 	 * @return The error if there has been one.
 	 */
 	String doAction(Map<String, String> action);
+	
+	/**
+	 * checks global params are valid
+	 * @param the global param to check validity of
+	 * @return the error if the arugements are not valid.
+	 */
+    String globalParamsValid(String globalParam, int index);
+      
 	
 	/**
 	 * Performs the check that the arguments are valid.
@@ -32,7 +44,7 @@ public interface ScriptDefinitionWrapper {
      * @param action The action to estimate
      * @return An estimate in seconds
      */
-    Number estimateTime(Map<String, String> action);
+    Number estimateTime(Map<String, String> action, List<String> global_params);
 	
 	/**
 	 * @return The name of this script definition.

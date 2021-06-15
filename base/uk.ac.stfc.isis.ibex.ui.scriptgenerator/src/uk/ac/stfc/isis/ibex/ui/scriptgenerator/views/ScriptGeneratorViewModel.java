@@ -6,10 +6,12 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -27,9 +29,12 @@ import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.apache.logging.log4j.Logger;
@@ -42,6 +47,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptDefinitionNotMatched;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.SaveScriptGeneratorFileMessageDialog;
@@ -114,6 +120,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * A property that carries the time estimation to listen for in order to update table rows.
      */
     private static final String TIME_ESTIMATE_PROPERTY = "time estimate";
+    
+    /**
+     * A property to listen for when a nicos script has been generated.
+     */
+    private static final String NICOS_SCRIPT_GENERATED_PROPERTY = "nicos script generated";
 
     /**
      * The property to listen for changes in a Generator containing the generated script (String).
@@ -143,6 +154,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
     
     private static final String UNSAVED_CHANGES_MARKER = " (*)";
+    
+    private Set<Integer> nicosScriptIds = new HashSet<>();
 
     /**
      * Path to the current parameters save file.
@@ -201,7 +214,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     
     private Clipboard clipboard;
     private static String TAB = "\t";
-    private static String CRLF = "\r\n";    
+    private static String CRLF = "\r\n";   
     
     
     /**
@@ -243,10 +256,18 @@ public class ScriptGeneratorViewModel extends ModelObject {
     scriptGeneratorModel.addPropertyChangeListener(GENERATED_SCRIPT_FILENAME_PROPERTY, evt -> {
         String scriptFilename = (String) evt.getNewValue();
         DISPLAY.asyncExec(() -> {
-        scriptGeneratorModel.getLastGeneratedScript().ifPresentOrElse(
-            generatedScript -> {
-                (new SaveScriptGeneratorFileMessageDialog(Display.getDefault().getActiveShell(), "Script Generated", scriptFilename, 
-                    scriptGeneratorModel.getDefaultScriptDirectory(), generatedScript, scriptGeneratorModel)).open();
+        scriptGeneratorModel.getLastGeneratedScriptId().ifPresentOrElse(
+            generatedScriptId -> {
+            	scriptGeneratorModel.getScriptFromId(generatedScriptId).ifPresentOrElse(generatedScript -> {
+            		if (nicosScriptIds.contains(generatedScriptId)) {
+            			firePropertyChange(NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
+            		} else {
+            			(new SaveScriptGeneratorFileMessageDialog(Display.getDefault().getActiveShell(), "Script Generated", scriptFilename, 
+                                scriptGeneratorModel.getDefaultScriptDirectory(), generatedScript, scriptGeneratorModel)).open();
+            		}
+            	}, () -> {
+            		MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
+            	});
             },
             () -> {
                 MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
@@ -303,7 +324,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void addEmptyAction() {
     scriptGeneratorModel.addEmptyAction();
     // Make sure the table is updated with the new action before selecting it
-    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs);
+    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, true);
     DISPLAY.asyncExec(() -> {
     	viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
     });
@@ -317,7 +338,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void insertEmptyAction(Integer insertionLocation) {
     scriptGeneratorModel.insertEmptyAction(insertionLocation);
     // Make sure the table is updated with the new action before selecting it
-    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs);
+    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, true);
     DISPLAY.asyncExec(() -> {
         viewTable.setCellFocus(insertionLocation, 0);
     });
@@ -344,7 +365,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void duplicateAction(List<ScriptGeneratorAction> actionsToDuplicate, Integer insertionLocation) {
     scriptGeneratorModel.duplicateAction(actionsToDuplicate, insertionLocation);
     // Make sure the table is updated with the new action before selecting it
-    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs);
+    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, true);
     DISPLAY.asyncExec(() -> {
     	viewTable.setCellFocus(insertionLocation, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
     });
@@ -457,7 +478,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Listen for changes in actions and activate the handler.
      */
     private PropertyChangeListener actionChangeListener = evt -> {
-    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs);
+    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, false);
     };
 
     /**
@@ -566,10 +587,14 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @param btnSaveParam Save Parameter button's visibility to manipulate
      * @param btnSaveParamAs Save Parameter As button's visibility to manipulate
      */
-    private void actionChangeHandler(ActionsViewTable viewTable, Button btnGenerateScript, Button btnSaveParam, Button btnSaveParamAs) {
+    private void actionChangeHandler(ActionsViewTable viewTable, Button btnGenerateScript, Button btnSaveParam, Button btnSaveParamAs, boolean rowsChanged) {
     DISPLAY.asyncExec(() -> {
         if (!viewTable.isDisposed()) {
-        viewTable.setRows(scriptGeneratorModel.getActions());
+        if(rowsChanged) {
+        	viewTable.setRows(scriptGeneratorModel.getActions());
+        }else {
+        	viewTable.setRowsNoFocus(scriptGeneratorModel.getActions());
+        }
         updateValidityChecks(viewTable);
         }
         if (!btnGenerateScript.isDisposed()) {
@@ -594,7 +619,20 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private PropertyChangeListener scriptDefinitionSwitchHelpListener = new PropertyChangeListener() {
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
+    public void propertyChange(PropertyChangeEvent evt) {    	
+        for (Label label : globalLabel) {
+        	label.dispose();
+        }
+        globalLabel.clear();
+        for(Text text: globalParamText) {
+        	text.dispose();
+        }
+        scriptGeneratorModel.clearGlobalParams();
+        currentGlobals.clear();
+        globalParamText.clear();
+        createGlobalParamsWidgets();
+        globalParamsComposite.layout();
+        mainParent.layout();
         // Display the new script definition help string
         if (!helpText.isDisposed()) {
         Optional<ScriptDefinitionWrapper> optionalScriptDefinition = getScriptDefinition();
@@ -608,11 +646,48 @@ public class ScriptGeneratorViewModel extends ModelObject {
         }
     }
     };
+    
+    public void createGlobalParamsWidgets() {
+		List<ActionParameter> temp;
+		String param = "No Global Paramaters";
+    	String paramVal = "";
+        if(getScriptDefinition().get().getGlobalParameters() != null) {
+      	  temp = getScriptDefinition().get().getGlobalParameters();
+      	  if(!temp.isEmpty()) {
+      		  for (ActionParameter global : temp) {
+      			  param=global.getName();
+      			  currentGlobals.add(global.getName());
+      			  paramVal = global.getDefaultValue();
+
+                	  Label globalLabelCurrent = new Label (globalParamsComposite, SWT.NONE);
+                	  globalLabelCurrent.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER,false,false, 1, 1));
+                	  globalLabelCurrent.setText(param);
+                	  globalLabel.add(globalLabelCurrent);
+                	  Text globalParamTextCurrent = new Text(globalParamsComposite,SWT.NONE);
+                	  globalParamTextCurrent.setLayoutData(new GridData(SWT.FILL,SWT.CENTER,true,false,5,1));
+                	  globalParamTextCurrent.setEnabled(true);
+                	  globalParamTextCurrent.addListener(SWT.Modify, e->{updateGlobalParams(globalParamTextCurrent.getText(), globalLabelCurrent.getText());});
+                	  globalParamTextCurrent.setText(paramVal);
+                	  globalParamText.add(globalParamTextCurrent);
+      		  }
+      	  }
+      }
+	}
 
     /**
      * The view's current helpText element.
      */
     private Text helpText;
+    
+    private List<Label> globalLabel;
+    
+    private List<Text> globalParamText;
+    
+    private List<String> currentGlobals;
+    
+    private Composite globalParamsComposite;
+    
+    private Composite mainParent;
 
     private ISelectionChangedListener scriptDefinitionSwitchListener = new ISelectionChangedListener() {
 
@@ -637,12 +712,17 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @param scriptDefinitionSelector The script definition selector ui element to bind.
      * @param helpText The UI element to display help string text in.
      */
-    protected void bindScriptDefinitionLoader(ComboViewer scriptDefinitionSelector, Text helpText) {
+    protected void bindScriptDefinitionLoader(ComboViewer scriptDefinitionSelector, Text helpText, List<Label> globalLabel, List<Text> globalParamText, Composite scriptDefintionComposite, Composite mainParent) {
     // Switch the composite value when script definition switched
     scriptDefinitionSelector.removeSelectionChangedListener(scriptDefinitionSwitchListener);
     scriptDefinitionSelector.addSelectionChangedListener(scriptDefinitionSwitchListener);
     // Display new help when script definition switch or make invisible if not help available
     this.helpText = helpText;
+    this.globalLabel = globalLabel;
+    this.globalParamText = globalParamText;
+    this.globalParamsComposite = scriptDefintionComposite;
+    this.mainParent = mainParent;
+    this.currentGlobals = new ArrayList<String>();
     scriptGeneratorModel.getScriptDefinitionLoader().addPropertyChangeListener(SCRIPT_DEFINITION_SWITCH_PROPERTY, scriptDefinitionSwitchHelpListener);
     }
 
@@ -706,6 +786,18 @@ public class ScriptGeneratorViewModel extends ModelObject {
         LOG.warn("ScriptGeneratorViewModel - ActionsTable and UI Table mismatch");
         }
     }
+    Map<Integer, String> globals = scriptGeneratorModel.getGlobalParamErrors();
+    for(int i = 0; i< this.globalParamText.size(); i++) {
+    	if(globals.containsKey(i)) {
+    		globalParamText.get(i).setBackground(INVALID_LIGHT_COLOR);
+    		globalParamText.get(i).setBackground(INVALID_DARK_COLOR);
+    		globalParamText.get(i).setToolTipText(globals.get(i));
+    	}else {
+    		globalParamText.get(i).setBackground(CLEAR_COLOR);
+    		globalParamText.get(i).setToolTipText(null);
+    	}
+    }
+    
     }
 
     /**
@@ -869,14 +961,25 @@ public class ScriptGeneratorViewModel extends ModelObject {
         displayLanguageSupportError();
     }
     }
+    
+    public void updateGlobalParams(String params, String toUpdate){
+    	int i =0;
+    	for(String paramName: this.currentGlobals) {
+    		if( paramName.equals(toUpdate)){
+    			scriptGeneratorModel.updateGlobalParams(params, i);
+    		}
+    		i++;
+    	}
+    	actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, false);
+    }
 
     /**
      * Generate a script and display the file it was generated to. If fail display warnings.
      * @throws UnsupportedLanguageException 
      */
-    public void generate() {
+    public Optional<Integer> generate() {
     try {
-        scriptGeneratorModel.refreshGeneratedScript();
+        return scriptGeneratorModel.refreshGeneratedScript();
     } catch (InvalidParamsException e) {
         MessageDialog.openWarning(DISPLAY.getActiveShell(), "Params Invalid", 
             "Cannot generate script. Parameters are invalid.");
@@ -889,6 +992,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
         MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
             "Cannot generate script. No script definition has been selected");
     }
+    return Optional.empty();
     }
 
     /**
@@ -1125,5 +1229,14 @@ public class ScriptGeneratorViewModel extends ModelObject {
     public void dispose() {
         clipboard.dispose();
     }
+
+    /**
+     * Set that the given script ID is for nicos.
+     * 
+     * @param scriptId The ID of the script to set
+     */
+	public void setNicosScript(Integer scriptId) {
+		nicosScriptIds.add(scriptId);
+	}
 		
 }

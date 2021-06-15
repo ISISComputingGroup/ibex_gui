@@ -85,7 +85,7 @@ public class DoubleListEditor<T> extends Composite {
 		unselectedViewer = new ListViewer(this, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
 		configureViewer(unselectedViewer, observedProperty);
 		unselectedList = unselectedViewer.getList();
-		unselectedList.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2));
+		unselectedList.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
 		
 		select = new Button(this, SWT.NONE);
 		select.setEnabled(false);
@@ -95,7 +95,7 @@ public class DoubleListEditor<T> extends Composite {
 		selectedViewer = new ListViewer(this, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
 		configureViewer(selectedViewer, observedProperty);
 		selectedList = selectedViewer.getList();
-		selectedList.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2));
+		selectedList.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
 		
 		btnUp =  new Button(this, SWT.NONE);
 		btnUp.setEnabled(false);
