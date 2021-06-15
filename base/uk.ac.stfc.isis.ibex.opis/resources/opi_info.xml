@@ -2662,5 +2662,20 @@
         <macros/>
       </value>
     </entry>
+    <entry>
+      <key>Tektronix AFG3000</key>
+      <value>
+        <type>FUNCTION_GENERATOR</type>
+        <path>tekafg3xxx.opi</path>
+        <description>Tektronix AFG3000 series function generator</description>
+        <macros>
+          <macro>
+            <name>TEKAFG3XXX</name>
+            <description>The tekafg3xxx PV prefix (e.g. TEKAFG3XXX_01)</description>
+            <default>TEKAFG3XXX_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
   </opis>
 </descriptions>

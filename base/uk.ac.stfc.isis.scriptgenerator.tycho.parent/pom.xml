@@ -149,9 +149,15 @@
 		<module>../uk.ac.stfc.isis.scriptgenerator.client</module>
 		<module>../uk.ac.stfc.isis.ibex.logger</module>
 		
+		<module>../uk.ac.stfc.isis.ibex.e4.ui</module>
+		<module>../uk.ac.stfc.isis.ibex.model</module>
+		<module>../uk.ac.stfc.isis.ibex.epics</module>
+		<module>../uk.ac.stfc.isis.ibex.jaxb</module>
+		<module>../uk.ac.stfc.isis.ibex.instrument</module>
+		<module>../uk.ac.stfc.isis.ibex.nicos</module>
 		<module>../uk.ac.stfc.isis.scriptgenerator.client.product</module>
 		<module>../uk.ac.stfc.isis.ibex.scriptgenerator</module>
-		<module>../uk.ac.stfc.isis.ibex.model</module>
+		
 		
 		<module>../uk.ac.stfc.isis.ibex.scriptgenerator.tests</module>
 	</modules>
