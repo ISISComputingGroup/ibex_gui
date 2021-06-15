@@ -2656,7 +2656,7 @@
     <entry>
       <key>Tektronix AFG3000</key>
       <value>
-        <type>UNKNOWN</type>
+        <type>FUNCTION_GENERATOR</type>
         <path>tekafg3xxx.opi</path>
         <description>Tektronix AFG3000 series function generator</description>
         <macros>
