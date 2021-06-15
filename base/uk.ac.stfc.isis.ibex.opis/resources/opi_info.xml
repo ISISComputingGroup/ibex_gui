@@ -2654,6 +2654,15 @@
       </value>
     </entry>
     <entry>
+      <key>WISH Vacuum PLC</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>wish_vacuum_plc.opi</path>
+        <description>WISH Vacuum PLC</description>
+        <macros/>
+      </value>
+    </entry>
+    <entry>
       <key>Tektronix AFG3000</key>
       <value>
         <type>FUNCTION_GENERATOR</type>
