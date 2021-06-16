@@ -1,5 +1,7 @@
 package uk.ac.stfc.isis.ibex.ui.graphing;
 
+import java.util.ArrayList;
+
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IPerspectiveListener;
@@ -21,9 +23,10 @@ public class ConnectionHandler {
     private static final String REFL_PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.reflectometry";
     private static final String SCRIPTING_PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.ui.scripting.perspective";
     
+    private ArrayList<String> perspectivesToRefresh = new ArrayList<String>();
+    
     private String url;
     private boolean isPrimary;
-    private Boolean graphRefreshRequired = false;
     
     private IPerspectiveListener openOnSwitchingPerspective = new IPerspectiveListener() {   
         @Override
@@ -32,28 +35,33 @@ public class ConnectionHandler {
         
         @Override
         public void perspectiveActivated(IWorkbenchPage page, IPerspectiveDescriptor perspective) {
-            if (graphRefreshRequired) {
+            if (!perspectivesToRefresh.isEmpty()) {
                 Display.getDefault().asyncExec(new Runnable() {
                     @Override
                     public void run() {
                         openPlotInCurrentPerspective(perspective, url, isPrimary);
                     }
                 });
-                graphRefreshRequired = false;
             }
         }
     };
     
-    private Boolean openPlotInCurrentPerspective(IPerspectiveDescriptor currentPerspective, final String url, final boolean isPrimary) {
-        Boolean plotOpened = true;
-        if (currentPerspective.getId().equals(REFL_PERSPECTIVE_ID)) {
-            FixedMatplotlibOpiTargetView.displayOpi(url);
-        } else if (currentPerspective.getId().equals(SCRIPTING_PERSPECTIVE_ID)) {
-            MatplotlibOpiTargetView.displayOpi(url, isPrimary);
-        } else {
-            plotOpened = false;
+    /**
+     * Tries to open the plot in current perspective, if it is the correct one to open it in.
+     * @param currentPerspective The current perspective
+     * @param url The URL of the plot
+     * @param isPrimary Whether the plot is the primary plot
+     */
+    private void openPlotInCurrentPerspective(IPerspectiveDescriptor currentPerspective, final String url, final boolean isPrimary) {
+        if (perspectivesToRefresh.contains(currentPerspective.getId())) {
+            if (currentPerspective.getId().equals(REFL_PERSPECTIVE_ID)) {
+                FixedMatplotlibOpiTargetView.displayOpi(url);
+                perspectivesToRefresh.remove(REFL_PERSPECTIVE_ID);
+            } else if (currentPerspective.getId().equals(SCRIPTING_PERSPECTIVE_ID)) {
+                MatplotlibOpiTargetView.displayOpi(url, isPrimary);
+                perspectivesToRefresh.remove(SCRIPTING_PERSPECTIVE_ID);
+            }
         }
-        return plotOpened;
     }
     
     /**
@@ -70,7 +78,9 @@ public class ConnectionHandler {
     	    public void run() {
     	        PlatformUI.getWorkbench().getActiveWorkbenchWindow().addPerspectiveListener(openOnSwitchingPerspective);
         		IPerspectiveDescriptor currentPerspective = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getPerspective();    		
-        		graphRefreshRequired = !openPlotInCurrentPerspective(currentPerspective, url, isPrimary);
+        		perspectivesToRefresh.add(REFL_PERSPECTIVE_ID);
+        		perspectivesToRefresh.add(SCRIPTING_PERSPECTIVE_ID);
+        		openPlotInCurrentPerspective(currentPerspective, url, isPrimary);
     	    }
     	});
     }
