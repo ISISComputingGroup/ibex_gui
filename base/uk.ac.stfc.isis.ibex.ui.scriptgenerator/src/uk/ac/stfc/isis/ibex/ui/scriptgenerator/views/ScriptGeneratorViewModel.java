@@ -49,6 +49,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
+import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.SaveScriptGeneratorFileMessageDialog;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
@@ -324,7 +325,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void addEmptyAction() {
     scriptGeneratorModel.addEmptyAction();
     // Make sure the table is updated with the new action before selecting it
-    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, true);
     DISPLAY.asyncExec(() -> {
     	viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
     });
@@ -338,9 +338,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void insertEmptyAction(Integer insertionLocation) {
     scriptGeneratorModel.insertEmptyAction(insertionLocation);
     // Make sure the table is updated with the new action before selecting it
-    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, true);
     DISPLAY.asyncExec(() -> {
-        viewTable.setCellFocus(insertionLocation, 0);
+        viewTable.setCellFocus(insertionLocation, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
     });
     }
     
@@ -365,7 +364,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void duplicateAction(List<ScriptGeneratorAction> actionsToDuplicate, Integer insertionLocation) {
     scriptGeneratorModel.duplicateAction(actionsToDuplicate, insertionLocation);
     // Make sure the table is updated with the new action before selecting it
-    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, true);
     DISPLAY.asyncExec(() -> {
     	viewTable.setCellFocus(insertionLocation, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
     });
@@ -478,7 +476,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Listen for changes in actions and activate the handler.
      */
     private PropertyChangeListener actionChangeListener = evt -> {
-    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, false);
+    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs);
     };
 
     /**
@@ -587,15 +585,10 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @param btnSaveParam Save Parameter button's visibility to manipulate
      * @param btnSaveParamAs Save Parameter As button's visibility to manipulate
      */
-    private void actionChangeHandler(ActionsViewTable viewTable, Button btnGenerateScript, Button btnSaveParam, Button btnSaveParamAs, boolean rowsChanged) {
+    private void actionChangeHandler(ActionsViewTable viewTable, Button btnGenerateScript, Button btnSaveParam, Button btnSaveParamAs) {
     DISPLAY.asyncExec(() -> {
         if (!viewTable.isDisposed()) {
-        if(rowsChanged) {
-        	viewTable.setRows(scriptGeneratorModel.getActions());
-        }else {
-        	viewTable.setRowsNoFocus(scriptGeneratorModel.getActions());
-        }
-        updateValidityChecks(viewTable);
+        	updateValidityChecks(viewTable);
         }
         if (!btnGenerateScript.isDisposed()) {
         setButtonGenerateStyle(btnGenerateScript);
@@ -767,25 +760,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @param viewTable The table in the view to update.
      */
     protected void updateValidityChecks(ActionsViewTable viewTable) {
-    List<ScriptGeneratorAction> actions = scriptGeneratorModel.getActions();
-    TableItem[] items = viewTable.table().getItems();
-    int validityColumnIndex = viewTable.table().getColumnCount() - 2;
-    for (int i = 0; i < actions.size(); i++) {
-        if (i < items.length) {
-        if (!scriptGeneratorModel.languageSupported) {
-            items[i].setBackground(LIGHT_VALIDITY_CHECK_ERROR_COLOR);
-            items[i].setBackground(validityColumnIndex, DARK_VALIDITY_CHECK_ERROR_COLOR);
-        } else if (actions.get(i).isValid()) {
-            items[i].setBackground(CLEAR_COLOR);
-            items[i].setBackground(validityColumnIndex, VALID_COLOR);
-        } else {
-            items[i].setBackground(INVALID_LIGHT_COLOR);
-            items[i].setBackground(validityColumnIndex, INVALID_DARK_COLOR);
-        }
-        } else {
-        LOG.warn("ScriptGeneratorViewModel - ActionsTable and UI Table mismatch");
-        }
-    }
     Map<Integer, String> globals = scriptGeneratorModel.getGlobalParamErrors();
     for(int i = 0; i< this.globalParamText.size(); i++) {
     	if(globals.containsKey(i)) {
@@ -811,6 +785,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
                 new CellLabelProvider() {
                     @Override
                     public void update(ViewerCell cell) {
+                    	if (((ScriptGeneratorAction) cell.getElement()).isValid()) {
+                    		cell.setBackground(CLEAR_COLOR);
+                        } else {
+                        	cell.setBackground(INVALID_LIGHT_COLOR);
+                        }
                         for (int i = 0; i < viewTable.table().getItemCount(); i++) {
                             if (cell.getElement().equals(viewTable.viewer().getElementAt(i))) {
                                 cell.setText(String.valueOf(i + 1));
@@ -841,6 +820,19 @@ public class ScriptGeneratorViewModel extends ModelObject {
                 public String getToolTipText(Object element) {
                     return getScriptGenActionToolTipText(element);
                 }
+                
+                @Override
+            	public void update(ViewerCell cell) {
+                	ScriptGeneratorAction row = getRow(cell);
+            		cell.setText(stringFromRow(row));
+                    cell.setImage(imageFromRow(row));
+                    if (row.isValid()) {
+                    	cell.setBackground(CLEAR_COLOR);
+                    } else {
+                    	cell.setBackground(INVALID_LIGHT_COLOR);
+                    }
+            	}
+                
                 });
     
             var editingSupport = new StringEditingSupport<ScriptGeneratorAction>(viewTable.viewer(), ScriptGeneratorAction.class) {          
@@ -877,6 +869,18 @@ public class ScriptGeneratorViewModel extends ModelObject {
             public String getToolTipText(Object element) {
             return getScriptGenActionToolTipText(element);
             }
+            
+            @Override
+        	public void update(ViewerCell cell) {
+            	ScriptGeneratorAction row = getRow(cell);
+        		cell.setText(stringFromRow(row));
+                cell.setImage(imageFromRow(row));
+                if (row.isValid()) {
+                	cell.setBackground(VALID_COLOR);
+                } else {
+                	cell.setBackground(INVALID_DARK_COLOR);
+                }
+        	}
     
         });
         validityColumn.getColumn().setAlignment(SWT.CENTER);
@@ -887,21 +891,33 @@ public class ScriptGeneratorViewModel extends ModelObject {
             new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty(TIME_ESTIMATE_PROPERTY)) {
             @Override
             protected String stringFromRow(ScriptGeneratorAction row) {
-            if (!scriptGeneratorModel.languageSupported) {
-                return "\u003F"; // A question mark to say we cannot be certain
-            }
-    
-            Optional<Number> estimatedTime = row.getEstimatedTime();
-            if (estimatedTime.isEmpty()) {
-                return "Unknown";
-            }
-            return changeSecondsToTimeFormat(estimatedTime.get().longValue());
+	            if (!scriptGeneratorModel.languageSupported) {
+	                return "\u003F"; // A question mark to say we cannot be certain
+	            }
+	    
+	            Optional<Number> estimatedTime = row.getEstimatedTime();
+	            if (estimatedTime.isEmpty()) {
+	                return "Unknown";
+	            }
+	            return changeSecondsToTimeFormat(estimatedTime.get().longValue());
             }
     
             @Override
             public String getToolTipText(Object element) {
             return getScriptGenActionToolTipText(element);
             }
+            
+            @Override
+        	public void update(ViewerCell cell) {
+            	ScriptGeneratorAction row = getRow(cell);
+        		cell.setText(stringFromRow(row));
+                cell.setImage(imageFromRow(row));
+                if (row.isValid()) {
+                	cell.setBackground(CLEAR_COLOR);
+                } else {
+                	cell.setBackground(INVALID_LIGHT_COLOR);
+                }
+        	}
     
         });
         timeEstimateColumn.getColumn().setAlignment(SWT.CENTER);
@@ -918,15 +934,15 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @return The text for the action tooltip.
      */
     private String getScriptGenActionToolTipText(Object action) {
-    if (action == null) {
-        return null;
-    }
-    ScriptGeneratorAction actionImpl = (ScriptGeneratorAction) action;
-    if (actionImpl.isValid()) {
-        return null; // Do not show a tooltip
-    }
-    return "The reason this row is invalid is:\n"
-    + actionImpl.getInvalidityReason().get() + "\n"; // Show reason on next line as a tooltip
+	    if (action == null) {
+	        return null;
+	    }
+	    ScriptGeneratorAction actionImpl = (ScriptGeneratorAction) action;
+	    if (actionImpl.isValid()) {
+	        return null; // Do not show a tooltip
+	    }
+	    return "The reason this row is invalid is:\n"
+	    + actionImpl.getInvalidityReason().get() + "\n"; // Show reason on next line as a tooltip
     }
 
     /**
@@ -970,7 +986,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
     		}
     		i++;
     	}
-    	actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, false);
     }
 
     /**
@@ -1237,6 +1252,10 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
 	public void setNicosScript(Integer scriptId) {
 		nicosScriptIds.add(scriptId);
+	}
+
+	public ActionsTable getScriptGeneratorTable() {
+		return scriptGeneratorModel.getScriptGeneratorTable();
 	}
 		
 }
