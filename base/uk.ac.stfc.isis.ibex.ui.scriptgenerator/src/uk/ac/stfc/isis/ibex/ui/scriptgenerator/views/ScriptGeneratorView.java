@@ -121,8 +121,7 @@ public class ScriptGeneratorView {
     private Label estimateText;
     private Button queueScriptButton;
     private Button generateScriptButton;
-    private Button saveExperimentalParametersButton;
-    private Button saveAsExperimentalParametersButton;
+    private Button generateScriptAsButton;
     private Button btnDuplicateAction;
 
     /**
@@ -367,7 +366,7 @@ public class ScriptGeneratorView {
         // Label for Location of Saved Parameters File
         parametersFileText = new Label(paramFileAndEstimateGrp, SWT.LEFT);
         parametersFileText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        parametersFileText.setText("Current parameters file: <new file>");
+        parametersFileText.setText("Current Script: <new file>");
         
         Composite utilitiesGrp = new Composite(mainParent, SWT.NONE);
         utilitiesGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -449,24 +448,19 @@ public class ScriptGeneratorView {
         	scriptId.ifPresent(id -> scriptGeneratorViewModel.setNicosScript(id));
         });
 
-        // Button to generate a script
+        // Buttons to generate a script
         generateScriptButton = new Button(generateButtonsGrp, SWT.NONE);
         generateScriptButton.setText("Generate Script");
         generateScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        generateScriptButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.generate());
-
-        saveExperimentalParametersButton = new Button(generateButtonsGrp, SWT.NONE);
-        saveExperimentalParametersButton.setText("Save Parameters");
-        saveExperimentalParametersButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        saveExperimentalParametersButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.saveParameterValuesToCurrentFile());
-
-        saveAsExperimentalParametersButton = new Button(generateButtonsGrp, SWT.NONE);
-        saveAsExperimentalParametersButton.setText("Save Parameters As ...");
-        saveAsExperimentalParametersButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        saveAsExperimentalParametersButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.saveParameterValues());
+        generateScriptButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.generateToCurrent());
+        
+        generateScriptAsButton = new Button(generateButtonsGrp, SWT.NONE);
+        generateScriptAsButton.setText("Generate Script As");
+        generateScriptAsButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        generateScriptAsButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.generate());
         
         final Button loadExperimentalParametersButton = new Button(generateButtonsGrp, SWT.NONE);
-        loadExperimentalParametersButton.setText("Load Parameters");
+        loadExperimentalParametersButton.setText("Load Script");
         loadExperimentalParametersButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         loadExperimentalParametersButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.loadParameterValues());
         // Bind the context and the validity checking listeners
@@ -569,7 +563,7 @@ public class ScriptGeneratorView {
         Composite globalParamsComposite) {
     scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText, globalLabel, globalParamText, globalParamsComposite, mainParent);
 
-    scriptGeneratorViewModel.bindActionProperties(table, generateScriptButton, saveExperimentalParametersButton, saveAsExperimentalParametersButton);
+    scriptGeneratorViewModel.bindActionProperties(table, generateScriptButton, generateScriptAsButton);
 
     table.addSelectionChangedListener(event -> scriptGeneratorViewModel.setSelected(table.selectedRows()));
 

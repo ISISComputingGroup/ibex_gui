@@ -55,8 +55,9 @@ public class SaveScriptGeneratorFileMessageDialog {
 
 	/**
 	 * Opens the dialog and saves the file to the location specified by the user.
+	 * @return The path of the saved script file.
 	 */
-	public void open() {
+	public String open() {
 		String filepath = saveDialog.open();
 		
 		if (filepath != null) {
@@ -80,5 +81,6 @@ public class SaveScriptGeneratorFileMessageDialog {
 				}
 			}
 		}
+		return filepath;
 	}
 }

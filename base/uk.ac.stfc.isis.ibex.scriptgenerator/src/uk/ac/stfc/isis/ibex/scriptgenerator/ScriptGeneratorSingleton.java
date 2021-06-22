@@ -773,16 +773,35 @@ public class ScriptGeneratorSingleton extends ModelObject {
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException("No Configuration Selected"));
 		
 		try {
-			if (!filePath.endsWith(SCRIPT_GEN_PARAMS_EXT)) {
-				//Strip out other any pre-existing file extension and add the SGP (script generator parameters) file extension
-				filePath = filePath.substring(0, filePath.lastIndexOf('.')) + SCRIPT_GEN_PARAMS_EXT;
-			}
+			filePath = this.setParametersFileExtension(filePath);
 			scriptGenFileHandler.saveParameters(scriptGeneratorTable.getActions(), getScriptDefinitionPath(scriptDefinition), filePath);
 		} catch (InterruptedException | ExecutionException e) {
 			registerThreadError(e);
 		}
 	}
 	
+	/**
+	 * Strip out other any pre-existing file extension and add the SGP (script generator parameters) file extension.
+	 * @param filePath The file path, with or without the parameter file extension.
+	 * @return The file path with the parameters file extension.
+	 */
+	public String setParametersFileExtension(String filePath) {
+		return (!filePath.endsWith(SCRIPT_GEN_PARAMS_EXT)) ? filePath.substring(0, filePath.lastIndexOf('.')) + SCRIPT_GEN_PARAMS_EXT : filePath;
+	}
+	
+	/**
+	 * Strip out other any pre-existing file extension and add the script file extension.
+	 * @param filePath The file path, with or without the script file extension.
+	 * @return The file path with the script file extension.
+	 */
+	public String setScriptFileExtension(String filePath) {
+		try {
+			return (!filePath.endsWith(PYTHON_EXT)) ? filePath.substring(0, filePath.lastIndexOf('.')) + PYTHON_EXT : filePath;
+		} catch (StringIndexOutOfBoundsException e) {
+			// If path has file with no extension
+			return filePath + PYTHON_EXT;
+		}
+	}
 	
 	/**
 	 * Get the file writer to use to write scripts to file.
