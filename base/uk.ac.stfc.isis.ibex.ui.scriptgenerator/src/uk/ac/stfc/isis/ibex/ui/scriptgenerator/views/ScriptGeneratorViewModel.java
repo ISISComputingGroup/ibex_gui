@@ -588,7 +588,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private void actionChangeHandler(ActionsViewTable viewTable, Button btnGenerateScript, Button btnSaveParam, Button btnSaveParamAs) {
     DISPLAY.asyncExec(() -> {
         if (!viewTable.isDisposed()) {
-        	viewTable.refresh(scriptGeneratorModel.getActions());
+        	viewTable.updateActions(scriptGeneratorModel.getActions());
         	updateValidityChecks(viewTable);
         }
         if (!btnGenerateScript.isDisposed()) {

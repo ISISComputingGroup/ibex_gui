@@ -68,7 +68,6 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	private static final  Integer NON_EDITABLE_COLUMNS_ON_RIGHT = 2;
 	protected static final Integer NON_EDITABLE_COLUMNS_ON_LEFT = 1;
 	private List<StringEditingSupport<ScriptGeneratorAction>> editingSupports = new ArrayList<StringEditingSupport<ScriptGeneratorAction>>();
-	private static final Logger LOG = IsisLog.getLogger(ActionsViewTable.class);
 	private ActionProvider provider;
 	/**
      * Default constructor for the table. Creates all the correct columns.
@@ -227,7 +226,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	 * Sets Rows. Save where the focus was before re writing the table and set the focus back to the cell after
 	 * re writing the table.
 	 */
-	public void refresh(List<ScriptGeneratorAction> newActions) {
+	public void updateActions(List<ScriptGeneratorAction> newActions) {
 		provider.updateActions(newActions);
 	}
 	
