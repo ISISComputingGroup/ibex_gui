@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.logging.log4j.Logger;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.CellNavigationStrategy;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
@@ -41,9 +40,9 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
@@ -68,7 +67,12 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	private static final  Integer NON_EDITABLE_COLUMNS_ON_RIGHT = 2;
 	protected static final Integer NON_EDITABLE_COLUMNS_ON_LEFT = 1;
 	private List<StringEditingSupport<ScriptGeneratorAction>> editingSupports = new ArrayList<StringEditingSupport<ScriptGeneratorAction>>();
-	private ActionProvider provider;
+	
+	/**
+	 * The current actions displayed by this ActionsViewTable.
+	 */
+	private List<ScriptGeneratorAction> actions = new ArrayList<ScriptGeneratorAction>();
+	
 	/**
      * Default constructor for the table. Creates all the correct columns.
      * 
@@ -107,8 +111,6 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 				}
 			}
 		});
-		provider = new ActionProvider(viewer);
-        viewer.setContentProvider(provider);
     }
 	
     /**
@@ -223,11 +225,68 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	}
 	
 	/**
-	 * Sets Rows. Save where the focus was before re writing the table and set the focus back to the cell after
-	 * re writing the table.
+	 * Detect if the values displayed by the table item cells and the action parameter values are different.
+	 * 
+	 * @param item The table row to compare the action to.
+	 * @param columns The columns that identify the action parameters and table item cells.
+	 * @param action The action to check if the cells are different to.
+	 * @return true if any values differ, false if none differ.
+	 */
+	private boolean valuesDiffer(TableItem item, TableColumn[] columns, ScriptGeneratorAction action) {
+		for (TableColumn column : columns) {
+			var columnHeader = column.getText();
+			var actionParameterValues = action.getActionParameterValueMapAsStrings();
+			Optional<String> parameterValue = Optional.ofNullable(actionParameterValues.get(columnHeader));
+			if (parameterValue.isPresent() && !parameterValue.get().equals(item.getText())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Remove any actions being displayed that are not in the newActions list.
+	 * 
+	 * @param newActions The actions that we want to display.
+	 */
+	private void removeDeletedRows(List<ScriptGeneratorAction> newActions) {
+		for (int i = newActions.size(); i < this.actions.size(); i++) {
+			viewer.remove(this.actions.get(i));
+		}
+	}
+	
+	/**
+	 * Update the values of the action at the given index if they are different to the current display,
+	 *  or if the action doesn't exist add it.
+	 * 
+	 * @param action The action to update or add.
+	 * @param index The index of the action.
+	 * @param columns The columns of the table to compare the action to the current display against.
+	 */
+	private void updateAction(ScriptGeneratorAction action, int index, TableColumn[] columns) {
+		try {
+			var item = viewer.getTable().getItem(index);
+			if (valuesDiffer(item, columns, action)) {
+				viewer.replace(action, index);
+			}
+		} catch (IllegalArgumentException e) {
+			// Thrown if we cannot get them item from the table as it doesn't exist so we need to add it
+			viewer.add(action);
+		}
+	}
+	
+	/**
+	 * Update the actions being displayed by this table.
+	 * 
+	 * @param newActions The actions to display.
 	 */
 	public void updateActions(List<ScriptGeneratorAction> newActions) {
-		provider.updateActions(newActions);
+		removeDeletedRows(newActions);
+		var columns = viewer.getTable().getColumns();
+		for (int i = 0; i < newActions.size(); i++) {
+			updateAction(newActions.get(i), i, columns);
+		}
+		this.actions = newActions;
 	}
 	
 	/**
@@ -241,5 +300,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 			viewer.editElement(element, column);
 		}
 	}
+	
+	
 	
 }

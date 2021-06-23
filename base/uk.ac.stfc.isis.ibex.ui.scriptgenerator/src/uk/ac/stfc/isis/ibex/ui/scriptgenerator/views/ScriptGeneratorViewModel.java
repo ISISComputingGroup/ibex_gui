@@ -35,7 +35,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.apache.logging.log4j.Logger;
 import static java.lang.Math.min;
@@ -49,7 +48,6 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
-import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.SaveScriptGeneratorFileMessageDialog;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
@@ -60,9 +58,6 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
  * The ViewModel for the ScriptGeneratorView.
- * 
- * @author James King
- *
  */
 public class ScriptGeneratorViewModel extends ModelObject {
     private static final Display DISPLAY = Display.getDefault();
@@ -86,16 +81,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * A clear colour for use in other script generator table columns when a row is valid.
      */
     private static final Color CLEAR_COLOR = DISPLAY.getSystemColor(SWT.COLOR_WHITE);
-
-    /**
-     * A light orange to use when validity checks may be incorrect e.g. for when using an unsupported language.
-     */
-    private static final Color LIGHT_VALIDITY_CHECK_ERROR_COLOR = new Color(DISPLAY, 255, 201, 102);
-
-    /**
-     * A dark orange to use when validity checks may be incorrect e.g. for when using an unsupported language.
-     */
-    private static final Color DARK_VALIDITY_CHECK_ERROR_COLOR = new Color(DISPLAY, 255, 165, 0);
 
     /**
      * The maximum number of lines to display in the "Get Validity Errors" dialog box before suppressing others.
@@ -216,7 +201,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private Clipboard clipboard;
     private static String TAB = "\t";
     private static String CRLF = "\r\n";   
-        
+    
     
     /**
      * A constructor that sets up the script generator model and 
@@ -326,7 +311,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     scriptGeneratorModel.addEmptyAction();
     // Make sure the table is updated with the new action before selecting it
     DISPLAY.asyncExec(() -> {
-    	viewTable.setCellFocus(scriptGeneratorModel.getActions().size(), ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
+    	viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
     });
     }
     
@@ -1254,10 +1239,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
 	public void setNicosScript(Integer scriptId) {
 		nicosScriptIds.add(scriptId);
-	}
-
-	public ActionsTable getScriptGeneratorTable() {
-		return scriptGeneratorModel.getScriptGeneratorTable();
 	}
 		
 }
