@@ -69,6 +69,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	protected static final Integer NON_EDITABLE_COLUMNS_ON_LEFT = 1;
 	private List<StringEditingSupport<ScriptGeneratorAction>> editingSupports = new ArrayList<StringEditingSupport<ScriptGeneratorAction>>();
 	private static final Logger LOG = IsisLog.getLogger(ActionsViewTable.class);
+	private ActionProvider provider;
 	/**
      * Default constructor for the table. Creates all the correct columns.
      * 
@@ -107,10 +108,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 				}
 			}
 		});
-		ActionProvider provider = new ActionProvider(viewer);
-		scriptGeneratorViewModel.getScriptGeneratorTable().addPropertyChangeListener("actions", actions -> {
-        	provider.updateActions((List<ScriptGeneratorAction>) actions.getNewValue());
-        });
+		provider = new ActionProvider(viewer);
         viewer.setContentProvider(provider);
     }
 	
@@ -229,8 +227,8 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	 * Sets Rows. Save where the focus was before re writing the table and set the focus back to the cell after
 	 * re writing the table.
 	 */
-	public void refresh() {
-		//viewer.refresh();
+	public void refresh(List<ScriptGeneratorAction> newActions) {
+		provider.updateActions(newActions);
 	}
 	
 	/**

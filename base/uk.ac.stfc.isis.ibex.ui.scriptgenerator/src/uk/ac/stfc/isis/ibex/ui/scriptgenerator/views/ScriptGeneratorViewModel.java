@@ -216,7 +216,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private Clipboard clipboard;
     private static String TAB = "\t";
     private static String CRLF = "\r\n";   
-    
+        
     
     /**
      * A constructor that sets up the script generator model and 
@@ -588,6 +588,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private void actionChangeHandler(ActionsViewTable viewTable, Button btnGenerateScript, Button btnSaveParam, Button btnSaveParamAs) {
     DISPLAY.asyncExec(() -> {
         if (!viewTable.isDisposed()) {
+        	viewTable.refresh(scriptGeneratorModel.getActions());
         	updateValidityChecks(viewTable);
         }
         if (!btnGenerateScript.isDisposed()) {
@@ -873,6 +874,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
             @Override
         	public void update(ViewerCell cell) {
             	ScriptGeneratorAction row = getRow(cell);
+            	LOG.warn("Updating validity: " + row.isValid());
         		cell.setText(stringFromRow(row));
                 cell.setImage(imageFromRow(row));
                 if (row.isValid()) {

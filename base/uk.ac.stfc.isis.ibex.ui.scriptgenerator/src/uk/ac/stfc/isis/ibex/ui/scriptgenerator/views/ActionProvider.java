@@ -71,5 +71,4 @@ public class ActionProvider implements IStructuredContentProvider {
 		}
 		this.actions = newActions;
 	}
-
 }
