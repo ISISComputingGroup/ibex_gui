@@ -326,7 +326,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     scriptGeneratorModel.addEmptyAction();
     // Make sure the table is updated with the new action before selecting it
     DISPLAY.asyncExec(() -> {
-    	viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
+    	viewTable.setCellFocus(scriptGeneratorModel.getActions().size(), ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
     });
     }
     

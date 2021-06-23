@@ -112,8 +112,6 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
         	provider.updateActions((List<ScriptGeneratorAction>) actions.getNewValue());
         });
         viewer.setContentProvider(provider);
-
-        viewer.setInput(scriptGeneratorViewModel.getActions());
     }
 	
     /**
@@ -158,11 +156,12 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
  					 * is because we want to go to a new row when we are on the penultimate
  					 * column rather than when we are on the last column. This is because the 
  					 * last column is a non editable validity column.*/
-					int currentlyFocusedColumn = editor.getFocusCell().getColumnIndex() + NON_EDITABLE_COLUMNS_ON_LEFT;
+					int currentlyFocusedColumn = editor.getFocusCell().getColumnIndex() + 1;
 					
 					Optional<ViewerCell> neighbour = Optional.ofNullable(nextCell.getNeighbor(ViewerCell.BELOW, false));
-					if (neighbour.isPresent() && neighbour.get().getElement() == null
-					        && (viewer.getTable().getColumnCount() - NON_EDITABLE_COLUMNS_ON_RIGHT == currentlyFocusedColumn)) {
+					boolean noActionBelow = neighbour.isEmpty() || neighbour.get().getElement() == null;
+					if (noActionBelow
+					        && (viewer.getTable().getColumnCount() - NON_EDITABLE_COLUMNS_ON_RIGHT <= currentlyFocusedColumn)) {
 					    
                     	scriptGeneratorViewModel.addEmptyAction();
                     	// return false as we will handle this specific case of traversal
