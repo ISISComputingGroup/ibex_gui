@@ -1,10 +1,7 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.table;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -168,21 +165,6 @@ public class ScriptGeneratorAction extends ModelObject {
      */
     public Optional<Number> getEstimatedTime() {
 	return estimatedTime;
-    }
-    
-    public JavaActionParameter[] getDifferingParameters(ScriptGeneratorAction other) {
-    	var differingParameters = new HashSet<JavaActionParameter>();
-    	for (Map.Entry<JavaActionParameter, String> parameter : actionParameterValues.entrySet()) {
-    		if (!other.getActionParameterValue(parameter.getKey()).equals(parameter.getValue())) {
-    			differingParameters.add(parameter.getKey());
-    		}
-    	}
-    	for (Map.Entry<JavaActionParameter, String> parameter : other.actionParameterValues.entrySet()) {
-    		if (!this.getActionParameterValue(parameter.getKey()).equals(parameter.getValue())) {
-    			differingParameters.add(parameter.getKey());
-    		}
-    	}
-    	return differingParameters.toArray(new JavaActionParameter[differingParameters.size()]);
     }
     
 }	
