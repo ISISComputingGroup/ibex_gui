@@ -69,11 +69,6 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	private List<StringEditingSupport<ScriptGeneratorAction>> editingSupports = new ArrayList<StringEditingSupport<ScriptGeneratorAction>>();
 	
 	/**
-	 * The current actions displayed by this ActionsViewTable.
-	 */
-	private List<ScriptGeneratorAction> actions = new ArrayList<ScriptGeneratorAction>();
-	
-	/**
      * Default constructor for the table. Creates all the correct columns.
      * 
      * @param parent
@@ -224,6 +219,23 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	    editingSupports.add(editingSupport);
 	}
 	
+	private boolean validityChanged(String columnHeader, TableItem item, int column, ScriptGeneratorAction action) {
+		var validityText = item.getText(column);
+		var validityDisplay = ValidityDisplay.fromText(validityText);
+		return columnHeader.equals(ScriptGeneratorViewModel.VALIDITY_COLUMN_HEADER) && !validityDisplay.equalsAction(action);
+	}
+	
+	private boolean parameterValueChanged(Optional<String> parameterValue, TableItem item, int columnNumber) {
+		return parameterValue.isPresent() && !parameterValue.get().equals(item.getText(columnNumber));
+	}
+	
+	private boolean estimatedTimeChanged(String columnHeader, TableItem item, int column, ScriptGeneratorAction action) {
+		var estimatedTimeText = item.getText(column);
+		return action.getEstimatedTime().isPresent() &&
+				columnHeader.equals(ScriptGeneratorViewModel.ESTIMATED_RUN_TIME_COLUMN_HEADER) &&
+				!estimatedTimeText.equals(action.getEstimatedTime().get().toString());
+	}
+	
 	/**
 	 * Detect if the values displayed by the table item cells and the action parameter values are different.
 	 * 
@@ -233,15 +245,27 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	 * @return true if any values differ, false if none differ.
 	 */
 	private boolean valuesDiffer(TableItem item, TableColumn[] columns, ScriptGeneratorAction action) {
+		
+		int columnNumber = 0;
 		for (TableColumn column : columns) {
 			var columnHeader = column.getText();
 			var actionParameterValues = action.getActionParameterValueMapAsStrings();
 			Optional<String> parameterValue = Optional.ofNullable(actionParameterValues.get(columnHeader));
-			if (parameterValue.isPresent() && !parameterValue.get().equals(item.getText())) {
+			if (parameterValueChanged(parameterValue, item, columnNumber) || 
+					validityChanged(columnHeader, item, columnNumber, action) || 
+					estimatedTimeChanged(columnHeader, item, columnNumber, action)) {
 				return true;
-			}
+			} 
+			columnNumber++;
 		}
 		return false;
+	}
+	
+	private boolean actionChanged(ScriptGeneratorAction tableAction, ScriptGeneratorAction newAction) {
+		return tableAction == null ||
+				!tableAction.equals(newAction) ||
+				tableAction.isValid() != newAction.isValid() ||
+				tableAction.getEstimatedTime() != newAction.getEstimatedTime();
 	}
 	
 	/**
@@ -250,8 +274,8 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	 * @param newActions The actions that we want to display.
 	 */
 	private void removeDeletedRows(List<ScriptGeneratorAction> newActions) {
-		for (int i = newActions.size(); i < this.actions.size(); i++) {
-			viewer.remove(this.actions.get(i));
+		for (int i = newActions.size(); i < viewer.getTable().getItemCount(); i++) {
+			viewer.remove(viewer.getElementAt(i));
 		}
 	}
 	
@@ -264,9 +288,11 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	 * @param columns The columns of the table to compare the action to the current display against.
 	 */
 	private void updateAction(ScriptGeneratorAction action, int index, TableColumn[] columns) {
+		ScriptGeneratorAction tableAction = (ScriptGeneratorAction) viewer.getElementAt(index);
+		
 		try {
-			var item = viewer.getTable().getItem(index);
-			if (valuesDiffer(item, columns, action)) {
+			TableItem item = viewer.getTable().getItem(index);
+			if (tableAction == null || actionChanged(tableAction, action) || valuesDiffer(item, columns, tableAction)) {
 				viewer.replace(action, index);
 			}
 		} catch (IllegalArgumentException e) {
@@ -286,7 +312,6 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 		for (int i = 0; i < newActions.size(); i++) {
 			updateAction(newActions.get(i), i, columns);
 		}
-		this.actions = newActions;
 	}
 	
 	/**
@@ -300,7 +325,4 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 			viewer.editElement(element, column);
 		}
 	}
-	
-	
-	
 }

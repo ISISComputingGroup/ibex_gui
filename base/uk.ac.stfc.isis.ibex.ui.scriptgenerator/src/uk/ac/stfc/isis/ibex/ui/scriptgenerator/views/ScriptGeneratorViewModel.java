@@ -141,6 +141,16 @@ public class ScriptGeneratorViewModel extends ModelObject {
     
     private static final String UNSAVED_CHANGES_MARKER = " (*)";
     
+    /**
+     * The header of the validity column.
+     */
+    public static final String VALIDITY_COLUMN_HEADER = "Validity";
+    
+    /**
+     * The header of the estimated run time column.
+     */
+    public static final String ESTIMATED_RUN_TIME_COLUMN_HEADER = "Estimated run time";
+    
     private Set<Integer> nicosScriptIds = new HashSet<>();
 
     /**
@@ -376,6 +386,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     protected void moveActionUp(List<ScriptGeneratorAction> actionsToMove) {
     scriptGeneratorModel.moveActionUp(actionsToMove);
+    DISPLAY.asyncExec(() -> {
+    	viewTable.setSelected(actionsToMove, true); 
+    });
     }
 
     /**
@@ -386,6 +399,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     protected void moveActionDown(List<ScriptGeneratorAction> actionsToMove) {
     scriptGeneratorModel.moveActionDown(actionsToMove);
+    DISPLAY.asyncExec(() -> {
+    	viewTable.setSelected(actionsToMove, true);
+    });
     }
 
     /**
@@ -837,18 +853,18 @@ public class ScriptGeneratorViewModel extends ModelObject {
             
         }
         // Add validity notifier column
-        TableViewerColumn validityColumn = viewTable.createColumn("Validity", 
+        TableViewerColumn validityColumn = viewTable.createColumn(VALIDITY_COLUMN_HEADER, 
             1, 
             new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty("validity")) {
             @Override
             protected String stringFromRow(ScriptGeneratorAction row) {
             if (!scriptGeneratorModel.languageSupported) {
-                return "\u003F"; // A question mark to say we cannot be certain
+                return ValidityDisplay.UNCERTAIN.getText();
             }
             if (row.isValid()) {
-                return "\u2714"; // A tick for valid
+                return ValidityDisplay.VALID.getText();
             }
-            return "\u2718"; // Unicode cross for invalidity
+            return ValidityDisplay.INVALID.getText();
             }
     
             @Override
@@ -859,7 +875,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
             @Override
         	public void update(ViewerCell cell) {
             	ScriptGeneratorAction row = getRow(cell);
-            	LOG.warn("Updating validity: " + row.isValid());
         		cell.setText(stringFromRow(row));
                 cell.setImage(imageFromRow(row));
                 if (row.isValid()) {
@@ -873,7 +888,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
         validityColumn.getColumn().setAlignment(SWT.CENTER);
     
         // Add estimated time column
-        TableViewerColumn timeEstimateColumn = viewTable.createColumn("Estimated run time", 
+        TableViewerColumn timeEstimateColumn = viewTable.createColumn(ESTIMATED_RUN_TIME_COLUMN_HEADER, 
             1, 
             new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty(TIME_ESTIMATE_PROPERTY)) {
             @Override
