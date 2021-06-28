@@ -432,7 +432,7 @@ public class ScriptGeneratorView {
         // Composite for generate buttons
         Composite generateButtonsGrp = new Composite(mainParent, SWT.NONE);
         generateButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        GridLayout gbgLayout = new GridLayout(5, true);
+        GridLayout gbgLayout = new GridLayout(4, true);
         gbgLayout.marginHeight = 10;
         gbgLayout.marginWidth = 10;
         generateButtonsGrp.setLayout(gbgLayout);
