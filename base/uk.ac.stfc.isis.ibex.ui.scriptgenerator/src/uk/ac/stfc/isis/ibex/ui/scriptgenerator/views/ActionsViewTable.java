@@ -276,8 +276,13 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	 * @param newActions The actions that we want to display.
 	 */
 	private void removeDeletedRows(List<ScriptGeneratorAction> newActions) {
-		for (int i = newActions.size(); i < viewer.getTable().getItemCount(); i++) {
-			viewer.remove(viewer.getElementAt(i));
+		int numberOfActionsToRemove = viewer.getTable().getItemCount() - newActions.size();
+		if (numberOfActionsToRemove > 0) {
+			Object[] elementsToRemove = new Object[numberOfActionsToRemove];
+			for (int i = newActions.size(); i < viewer.getTable().getItemCount(); i++) {
+				elementsToRemove[i - newActions.size()] = viewer.getElementAt(i);
+			}
+			viewer.remove(elementsToRemove);
 		}
 	}
 	
