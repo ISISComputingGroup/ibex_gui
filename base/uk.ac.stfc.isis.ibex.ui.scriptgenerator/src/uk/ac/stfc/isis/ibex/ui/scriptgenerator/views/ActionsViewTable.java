@@ -231,9 +231,11 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	
 	private boolean estimatedTimeChanged(String columnHeader, TableItem item, int column, ScriptGeneratorAction action) {
 		var estimatedTimeText = item.getText(column);
-		return action.getEstimatedTime().isPresent() &&
-				columnHeader.equals(ScriptGeneratorViewModel.ESTIMATED_RUN_TIME_COLUMN_HEADER) &&
-				!estimatedTimeText.equals(action.getEstimatedTime().get().toString());
+		return columnHeader.equals(ScriptGeneratorViewModel.ESTIMATED_RUN_TIME_COLUMN_HEADER) &&
+				(
+						(action.getEstimatedTime().isEmpty() && !estimatedTimeText.equals(ScriptGeneratorViewModel.UNKNOWN_TEXT)) ||
+						(action.getEstimatedTime().isPresent() && !estimatedTimeText.equals(ScriptGeneratorViewModel.changeSecondsToTimeFormat(action.getEstimatedTime().get().longValue())))
+				);
 	}
 	
 	/**

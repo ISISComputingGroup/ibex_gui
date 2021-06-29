@@ -151,6 +151,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     public static final String ESTIMATED_RUN_TIME_COLUMN_HEADER = "Estimated run time";
     
+    /**
+     * The string to use to denote an unknown amount of estimated time.
+     */
+    public static final String UNKNOWN_TEXT = "Unknown";
+    
     private Set<Integer> nicosScriptIds = new HashSet<>();
 
     /**
@@ -556,7 +561,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
 
 
-    private String changeSecondsToTimeFormat(long totalSeconds) {
+    public static String changeSecondsToTimeFormat(long totalSeconds) {
     Duration duration = Duration.ofSeconds(totalSeconds);
     return String.format("%02d:%02d:%02d", duration.toHours(), duration.toMinutesPart(), duration.toSecondsPart());
     }
@@ -899,7 +904,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    
 	            Optional<Number> estimatedTime = row.getEstimatedTime();
 	            if (estimatedTime.isEmpty()) {
-	                return "Unknown";
+	                return UNKNOWN_TEXT;
 	            }
 	            return changeSecondsToTimeFormat(estimatedTime.get().longValue());
             }
