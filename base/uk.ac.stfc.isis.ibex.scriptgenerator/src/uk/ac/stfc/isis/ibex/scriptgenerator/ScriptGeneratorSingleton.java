@@ -773,7 +773,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException("No Configuration Selected"));
 		
 		try {
-			filePath = this.setParametersFileExtension(filePath);
+			filePath = this.getParametersFileNameFromFilepath(filePath);
 			scriptGenFileHandler.saveParameters(scriptGeneratorTable.getActions(), getScriptDefinitionPath(scriptDefinition), filePath);
 		} catch (InterruptedException | ExecutionException e) {
 			registerThreadError(e);
@@ -785,8 +785,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @param filePath The file path, with or without the parameter file extension.
 	 * @return The file path with the parameters file extension.
 	 */
-	public String setParametersFileExtension(String filePath) {
-		return (!filePath.endsWith(SCRIPT_GEN_PARAMS_EXT)) ? filePath.substring(0, filePath.lastIndexOf('.')) + SCRIPT_GEN_PARAMS_EXT : filePath;
+	public String getParametersFileNameFromFilepath(String filePath) {
+		return addFileExtensionToFilepath(filePath, SCRIPT_GEN_PARAMS_EXT);
 	}
 	
 	/**
@@ -794,12 +794,21 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @param filePath The file path, with or without the script file extension.
 	 * @return The file path with the script file extension.
 	 */
-	public String setScriptFileExtension(String filePath) {
+	public String getScriptFileNameFromFilepath(String filePath) {
+		return addFileExtensionToFilepath(filePath, PYTHON_EXT);
+	}
+	
+	/**
+	 * Strip out other any pre-existing file extension and add the given file extension.
+	 * @param filePath The file path, with or without the required file extension.
+	 * @return The file path with the desired file extension.
+	 */
+	private String addFileExtensionToFilepath(String filePath, String ext) {
 		try {
-			return (!filePath.endsWith(PYTHON_EXT)) ? filePath.substring(0, filePath.lastIndexOf('.')) + PYTHON_EXT : filePath;
+			return (!filePath.endsWith(ext)) ? filePath.substring(0, filePath.lastIndexOf('.')) + ext : filePath;
 		} catch (StringIndexOutOfBoundsException e) {
 			// If path has file with no extension
-			return filePath + PYTHON_EXT;
+			return filePath + ext;
 		}
 	}
 	

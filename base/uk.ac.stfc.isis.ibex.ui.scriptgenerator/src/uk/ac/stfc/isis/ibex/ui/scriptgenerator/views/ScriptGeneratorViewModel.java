@@ -157,6 +157,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private static final String UNSAVED_CHANGES_MARKER = " (*)";
     
     private Set<Integer> nicosScriptIds = new HashSet<>();
+    
+    /**
+     * Script IDs that are to be generated to the current file path, if it exists.
+     */
+    private Set<Integer> scriptsToGenerateToCurrentFilepath = new HashSet<>();
 
     /**
      * Path to the current parameters save file.
@@ -202,12 +207,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * The current Generate Script As button in the view.
      */
     private Button btnGenerateScriptAs;
-    
-    
-    /**
-     * Whether to save the generated script to the current file or create a new one.
-     */
-    private boolean generateToCurrent;
     
     /**
      * The currently selected rows
@@ -264,32 +263,10 @@ public class ScriptGeneratorViewModel extends ModelObject {
             		if (nicosScriptIds.contains(generatedScriptId)) {
             			firePropertyChange(NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
             		} else {
-            			if (generateToCurrent) {
-            				try {
-            					// Get the script file name using the current parameters file. If no file is loaded, generate name.
-            					String scriptFilePath = currentParametersFilePath != null
-            											? currentParametersFilePath
-            											: scriptGeneratorModel.getDefaultScriptDirectory() + scriptGeneratorModel.generateScriptFileName();
-            					scriptFilePath = scriptGeneratorModel.setScriptFileExtension(scriptFilePath);
-            					scriptGeneratorModel.getFileHandler().generate(scriptFilePath, generatedScript);
-            					scriptGeneratorModel.saveParameters(scriptFilePath);
-            					MessageDialog.openInformation(DISPLAY.getActiveShell(), "Script Generated", 
-            							String.format("Generated script saved to %s.", scriptFilePath));
-            					this.updateParametersFilePath(scriptGeneratorModel.setParametersFileExtension(scriptFilePath));
-            				} catch (IOException e) {
-            					LOG.error(e);
-            					MessageDialog.openError(DISPLAY.getActiveShell(), "Error", "Failed to write generated script to file");
-            				} catch (NoScriptDefinitionSelectedException e) {
-            			        MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
-            			                "Cannot generate script. No script definition has been selected");
-            				}
+            			if (scriptsToGenerateToCurrentFilepath.contains(generatedScriptId)) {
+            				saveScriptToCurrentFilepath(generatedScript);
             			} else {
-							String genFilePath = (new SaveScriptGeneratorFileMessageDialog(Display.getDefault().getActiveShell(), "Script Generated", scriptFilename, 
-												  scriptGeneratorModel.getDefaultScriptDirectory(), generatedScript, scriptGeneratorModel)).open();
-							if (genFilePath != null) {
-								String paramsFilePath = scriptGeneratorModel.setParametersFileExtension(genFilePath);
-								this.updateParametersFilePath(paramsFilePath);
-							}
+            				saveScriptToNewFilepath(generatedScript, scriptFilename);
             			}
             		}
             	}, () -> {
@@ -303,6 +280,37 @@ public class ScriptGeneratorViewModel extends ModelObject {
         });
     });
 
+    }
+    
+    private void saveScriptToCurrentFilepath(String generatedScript) {
+		try {
+	    	// Get the script file name using the current parameters file. If no file is loaded, generate name.
+			String scriptFilePath = currentParametersFilePath != null
+									? currentParametersFilePath
+									: scriptGeneratorModel.getDefaultScriptDirectory() + scriptGeneratorModel.generateScriptFileName();
+			scriptFilePath = scriptGeneratorModel.getScriptFileNameFromFilepath(scriptFilePath);
+			scriptGeneratorModel.getFileHandler().generate(scriptFilePath, generatedScript);
+			scriptGeneratorModel.saveParameters(scriptFilePath);
+			this.updateParametersFilePath(scriptGeneratorModel.getParametersFileNameFromFilepath(scriptFilePath));
+			MessageDialog.openInformation(DISPLAY.getActiveShell(), "Script Generated", 
+					String.format("Generated script saved to %s.", scriptFilePath));
+			
+		} catch (IOException e) {
+			LOG.error(e);
+			MessageDialog.openError(DISPLAY.getActiveShell(), "Error", "Failed to write generated script to file");
+		} catch (NoScriptDefinitionSelectedException e) {
+	        MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
+	                "Cannot generate script. No script definition has been selected");
+		}
+    }
+    
+    private void saveScriptToNewFilepath(String generatedScript, String scriptFilename) {
+		String genFilePath = (new SaveScriptGeneratorFileMessageDialog(Display.getDefault().getActiveShell(), "Script Generated", scriptFilename, 
+				  scriptGeneratorModel.getDefaultScriptDirectory(), generatedScript, scriptGeneratorModel)).open();
+		if (genFilePath != null) {
+			String paramsFilePath = scriptGeneratorModel.getParametersFileNameFromFilepath(genFilePath);
+			this.updateParametersFilePath(paramsFilePath);
+		}
     }
 
     /**
@@ -1002,26 +1010,19 @@ public class ScriptGeneratorViewModel extends ModelObject {
     /**
      * Generate a script and save it to the current script file. If fail display warnings.
      * @throws UnsupportedLanguageException 
+     * @returns The script ID.
      */
-    public Optional<Integer> generateToCurrent() {
-        this.generateToCurrent = true;
-    	return this.generateScript();
+    public Optional<Integer> generateScriptToCurrentFilepath() {
+    	Optional<Integer> scriptId = generateScript();
+    	scriptId.ifPresent(id -> scriptsToGenerateToCurrentFilepath.add(id));
+    	return scriptId;
     }
     
     /**
      * Generate a script and display the file it was generated to. If fail display warnings.
      * @throws UnsupportedLanguageException 
      */
-    public Optional<Integer> generate() {
-        this.generateToCurrent = false;
-    	return this.generateScript();
-    }
-    
-    /**
-     * Generate a script and display the file it was generated to. If fail display warnings.
-     * @throws UnsupportedLanguageException 
-     */
-    private Optional<Integer> generateScript() {
+    public Optional<Integer> generateScript() {
     try {
         return scriptGeneratorModel.refreshGeneratedScript();
     } catch (InvalidParamsException e) {
