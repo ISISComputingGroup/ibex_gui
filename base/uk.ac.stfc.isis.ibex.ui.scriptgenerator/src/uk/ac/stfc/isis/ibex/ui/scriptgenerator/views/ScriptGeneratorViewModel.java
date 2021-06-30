@@ -1,6 +1,8 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.nio.file.Paths;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -169,6 +171,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private String currentParametersFilePath;
     
     /**
+     * Time and date of when the script was generated.
+     */
+    private String scriptGenerationTime;
+    
+    /**
      * The actions of the currently loaded parameters file.
      */
     private List<Map<JavaActionParameter, String>> currentFileActions = new ArrayList<Map<JavaActionParameter, String>>();
@@ -292,6 +299,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			scriptGeneratorModel.getFileHandler().generate(scriptFilePath, generatedScript);
 			scriptGeneratorModel.saveParameters(scriptFilePath);
 			this.updateParametersFilePath(scriptGeneratorModel.getParametersFileNameFromFilepath(scriptFilePath));
+			this.updateGenerationTime();
 			MessageDialog.openInformation(DISPLAY.getActiveShell(), "Script Generated", 
 					String.format("Generated script saved to %s.", scriptFilePath));
 			
@@ -305,11 +313,15 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
     
     private void saveScriptToNewFilepath(String generatedScript, String scriptFilename) {
-		String genFilePath = (new SaveScriptGeneratorFileMessageDialog(Display.getDefault().getActiveShell(), "Script Generated", scriptFilename, 
+    	SaveScriptGeneratorFileMessageDialog saveAs = (new SaveScriptGeneratorFileMessageDialog(Display.getDefault().getActiveShell(), "Script Generated", scriptFilename, 
+				   scriptGeneratorModel.getDefaultScriptDirectory(), generatedScript, scriptGeneratorModel));
+    	String genFilePath = (new SaveScriptGeneratorFileMessageDialog(Display.getDefault().getActiveShell(), "Script Generated", scriptFilename, 
 				  scriptGeneratorModel.getDefaultScriptDirectory(), generatedScript, scriptGeneratorModel)).open();
 		if (genFilePath != null) {
 			String paramsFilePath = scriptGeneratorModel.getParametersFileNameFromFilepath(genFilePath);
 			this.updateParametersFilePath(paramsFilePath);
+			this.updateGenerationTime();
+			saveAs.askIfOpenInEditor(genFilePath);
 		}
     }
 
@@ -541,6 +553,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
 
     private void updateParametersFilePath(String parametersFilePath) {
+	this.clearGenerationTime();
 	String displayFile = "Current Script: " + parametersFilePath;
 	currentParametersFilePath = parametersFilePath;		// Update the current parameter file path for Save.
 	unsavedChangesMarkerDisplayed = false;				// Reset unsaved changes marker.
@@ -581,6 +594,18 @@ public class ScriptGeneratorViewModel extends ModelObject {
     	}
     }
     
+    private void updateGenerationTime() {
+    	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy");  
+	    String now = dtf.format(LocalDateTime.now());
+    	String displayString = "Last Script Generated at: " + now;
+
+    	firePropertyChange("scriptGenerationTime", scriptGenerationTime, scriptGenerationTime = displayString);
+    }
+    
+    private void clearGenerationTime() {
+    	firePropertyChange("scriptGenerationTime", scriptGenerationTime, scriptGenerationTime = "");
+    }
+    
     private void updateTotalEstimatedTime() {
 
     long totalSeconds = scriptGeneratorModel.getTotalEstimatedTime().isPresent() ? scriptGeneratorModel.getTotalEstimatedTime().get() : 0;
@@ -601,6 +626,14 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     public String getParametersFile() {
     return parametersFileDisplayString;
+    }
+    
+    /**
+     * Get the time and date of last script generation.
+     * @return The time and date when the last script was generated.
+     */
+    public String getScriptGenerationTime() {
+    return scriptGenerationTime;
     }
     
     /**
