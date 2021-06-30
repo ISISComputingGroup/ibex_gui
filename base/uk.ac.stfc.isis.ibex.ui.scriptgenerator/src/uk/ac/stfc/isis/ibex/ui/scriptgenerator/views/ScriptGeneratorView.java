@@ -436,7 +436,7 @@ public class ScriptGeneratorView {
         // Composite for generate buttons
         Composite generateButtonsGrp = new Composite(mainParent, SWT.NONE);
         generateButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        GridLayout gbgLayout = new GridLayout(5, true);
+        GridLayout gbgLayout = new GridLayout(4, true);
         gbgLayout.marginHeight = 10;
         gbgLayout.marginWidth = 10;
         generateButtonsGrp.setLayout(gbgLayout);
@@ -448,7 +448,7 @@ public class ScriptGeneratorView {
         queueScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         nicosModel.bindQueueScriptButton(queueScriptButton);
         queueScriptButton.addListener(SWT.Selection, e -> {
-        	var scriptId = scriptGeneratorViewModel.generate();
+        	var scriptId = scriptGeneratorViewModel.generateScript();
         	scriptId.ifPresent(id -> scriptGeneratorViewModel.setNicosScript(id));
         });
 
@@ -456,12 +456,12 @@ public class ScriptGeneratorView {
         generateScriptButton = new Button(generateButtonsGrp, SWT.NONE);
         generateScriptButton.setText("Generate Script");
         generateScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        generateScriptButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.generateToCurrent());
+        generateScriptButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.generateScriptToCurrentFilepath());
         
         generateScriptAsButton = new Button(generateButtonsGrp, SWT.NONE);
         generateScriptAsButton.setText("Generate Script As");
         generateScriptAsButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        generateScriptAsButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.generate());
+        generateScriptAsButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.generateScript());
         
         final Button loadExperimentalParametersButton = new Button(generateButtonsGrp, SWT.NONE);
         loadExperimentalParametersButton.setText("Load Script");
