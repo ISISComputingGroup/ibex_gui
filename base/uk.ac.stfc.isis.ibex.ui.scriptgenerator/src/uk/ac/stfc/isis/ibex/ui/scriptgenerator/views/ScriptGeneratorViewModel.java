@@ -299,6 +299,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			scriptGeneratorModel.getFileHandler().generate(scriptFilePath, generatedScript);
 			scriptGeneratorModel.saveParameters(scriptFilePath);
 			this.updateParametersFilePath(scriptGeneratorModel.getParametersFileNameFromFilepath(scriptFilePath));
+			this.updateGenerationTime();
 			MessageDialog.openInformation(DISPLAY.getActiveShell(), "Script Generated", 
 					String.format("Generated script saved to %s.", scriptFilePath));
 			
@@ -312,11 +313,15 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
     
     private void saveScriptToNewFilepath(String generatedScript, String scriptFilename) {
-		String genFilePath = (new SaveScriptGeneratorFileMessageDialog(Display.getDefault().getActiveShell(), "Script Generated", scriptFilename, 
+    	SaveScriptGeneratorFileMessageDialog saveAs = (new SaveScriptGeneratorFileMessageDialog(Display.getDefault().getActiveShell(), "Script Generated", scriptFilename, 
+				   scriptGeneratorModel.getDefaultScriptDirectory(), generatedScript, scriptGeneratorModel));
+    	String genFilePath = (new SaveScriptGeneratorFileMessageDialog(Display.getDefault().getActiveShell(), "Script Generated", scriptFilename, 
 				  scriptGeneratorModel.getDefaultScriptDirectory(), generatedScript, scriptGeneratorModel)).open();
 		if (genFilePath != null) {
 			String paramsFilePath = scriptGeneratorModel.getParametersFileNameFromFilepath(genFilePath);
 			this.updateParametersFilePath(paramsFilePath);
+			this.updateGenerationTime();
+			saveAs.askIfOpenInEditor(genFilePath);
 		}
     }
 
