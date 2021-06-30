@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.nio.file.Paths;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -156,11 +157,16 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private static final String UNSAVED_CHANGES_MARKER = " (*)";
     
     private Set<Integer> nicosScriptIds = new HashSet<>();
+    
+    /**
+     * Script IDs that are to be generated to the current file path, if it exists.
+     */
+    private Set<Integer> scriptsToGenerateToCurrentFilepath = new HashSet<>();
 
     /**
      * Path to the current parameters save file.
      */
-    private String currentParametersFile;
+    private String currentParametersFilePath;
     
     /**
      * The actions of the currently loaded parameters file.
@@ -175,7 +181,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     /**
      * Default string to display the current parameters save file name and location.
      */
-    private String parametersFileDisplayString = "Current parameters file: <new file>";
+    private String parametersFileDisplayString = "Current Script: <new file>";
     
     /**
      * Default string to display for time estimation.
@@ -196,16 +202,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * The current generate script button in the view.
      */
     private Button btnGenerateScript;
-
+    
     /**
-     * The current Save Parameters button in the view
+     * The current Generate Script As button in the view.
      */
-    private Button btnSaveParam;
-
-    /**
-     * The current Save Parameters As button in the view
-     */
-    private Button btnSaveParamAs;
+    private Button btnGenerateScriptAs;
     
     /**
      * The currently selected rows
@@ -262,8 +263,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
             		if (nicosScriptIds.contains(generatedScriptId)) {
             			firePropertyChange(NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
             		} else {
-            			(new SaveScriptGeneratorFileMessageDialog(Display.getDefault().getActiveShell(), "Script Generated", scriptFilename, 
-                                scriptGeneratorModel.getDefaultScriptDirectory(), generatedScript, scriptGeneratorModel)).open();
+            			if (scriptsToGenerateToCurrentFilepath.contains(generatedScriptId)) {
+            				saveScriptToCurrentFilepath(generatedScript);
+            			} else {
+            				saveScriptToNewFilepath(generatedScript, scriptFilename);
+            			}
             		}
             	}, () -> {
             		MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
@@ -276,6 +280,37 @@ public class ScriptGeneratorViewModel extends ModelObject {
         });
     });
 
+    }
+    
+    private void saveScriptToCurrentFilepath(String generatedScript) {
+		try {
+	    	// Get the script file name using the current parameters file. If no file is loaded, generate name.
+			String scriptFilePath = currentParametersFilePath != null
+									? currentParametersFilePath
+									: scriptGeneratorModel.getDefaultScriptDirectory() + scriptGeneratorModel.generateScriptFileName();
+			scriptFilePath = scriptGeneratorModel.getScriptFileNameFromFilepath(scriptFilePath);
+			scriptGeneratorModel.getFileHandler().generate(scriptFilePath, generatedScript);
+			scriptGeneratorModel.saveParameters(scriptFilePath);
+			this.updateParametersFilePath(scriptGeneratorModel.getParametersFileNameFromFilepath(scriptFilePath));
+			MessageDialog.openInformation(DISPLAY.getActiveShell(), "Script Generated", 
+					String.format("Generated script saved to %s.", scriptFilePath));
+			
+		} catch (IOException e) {
+			LOG.error(e);
+			MessageDialog.openError(DISPLAY.getActiveShell(), "Error", "Failed to write generated script to file");
+		} catch (NoScriptDefinitionSelectedException e) {
+	        MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
+	                "Cannot generate script. No script definition has been selected");
+		}
+    }
+    
+    private void saveScriptToNewFilepath(String generatedScript, String scriptFilename) {
+		String genFilePath = (new SaveScriptGeneratorFileMessageDialog(Display.getDefault().getActiveShell(), "Script Generated", scriptFilename, 
+				  scriptGeneratorModel.getDefaultScriptDirectory(), generatedScript, scriptGeneratorModel)).open();
+		if (genFilePath != null) {
+			String paramsFilePath = scriptGeneratorModel.getParametersFileNameFromFilepath(genFilePath);
+			this.updateParametersFilePath(paramsFilePath);
+		}
     }
 
     /**
@@ -324,7 +359,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void addEmptyAction() {
     scriptGeneratorModel.addEmptyAction();
     // Make sure the table is updated with the new action before selecting it
-    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, true);
+    actionChangeHandler(viewTable, btnGenerateScript, btnGenerateScriptAs, true);
     DISPLAY.asyncExec(() -> {
     	viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
     });
@@ -338,7 +373,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void insertEmptyAction(Integer insertionLocation) {
     scriptGeneratorModel.insertEmptyAction(insertionLocation);
     // Make sure the table is updated with the new action before selecting it
-    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, true);
+    actionChangeHandler(viewTable, btnGenerateScript, btnGenerateScriptAs, true);
     DISPLAY.asyncExec(() -> {
         viewTable.setCellFocus(insertionLocation, 0);
     });
@@ -365,7 +400,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void duplicateAction(List<ScriptGeneratorAction> actionsToDuplicate, Integer insertionLocation) {
     scriptGeneratorModel.duplicateAction(actionsToDuplicate, insertionLocation);
     // Make sure the table is updated with the new action before selecting it
-    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, true);
+    actionChangeHandler(viewTable, btnGenerateScript, btnGenerateScriptAs, true);
     DISPLAY.asyncExec(() -> {
     	viewTable.setCellFocus(insertionLocation, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
     });
@@ -478,7 +513,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Listen for changes in actions and activate the handler.
      */
     private PropertyChangeListener actionChangeListener = evt -> {
-    actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, false);
+    actionChangeHandler(viewTable, btnGenerateScript, btnGenerateScriptAs, false);
     };
 
     /**
@@ -487,14 +522,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * 
      * @param viewTable The view table to update.
      * @param btnGenerateScript The generate script button to style change.
-     * @param btnSaveParam The save parameters button.
-     * @param btnSaveParamAs The save parameters as button.
+     * @param btnGenerateScriptAs The generate script as button to style change.
      */
-    protected void bindActionProperties(ActionsViewTable viewTable, Button btnGenerateScript, Button btnSaveParam, Button btnSaveParamAs) {
+    protected void bindActionProperties(ActionsViewTable viewTable, Button btnGenerateScript, Button btnGenerateScriptAs) {
     this.viewTable = viewTable;
     this.btnGenerateScript = btnGenerateScript;
-    this.btnSaveParam = btnSaveParam;
-    this.btnSaveParamAs = btnSaveParamAs;
+    this.btnGenerateScriptAs = btnGenerateScriptAs;
     // Remove listeners so as not to bind them twice
     this.scriptGeneratorModel.getScriptGeneratorTable().removePropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
     this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
@@ -507,10 +540,10 @@ public class ScriptGeneratorViewModel extends ModelObject {
     this.scriptGeneratorModel.addPropertyChangeListener(TIME_ESTIMATE_PROPERTY, actionChangeListener);
     }
 
-    private void updateParametersFile(String parametersFilePath) {
-	String displayFile = "Current parameters file: " + parametersFilePath;
-	currentParametersFile = parametersFilePath;		// Update the current parameter file path for Save.
-	unsavedChangesMarkerDisplayed = false;			// Reset unsaved changes
+    private void updateParametersFilePath(String parametersFilePath) {
+	String displayFile = "Current Script: " + parametersFilePath;
+	currentParametersFilePath = parametersFilePath;		// Update the current parameter file path for Save.
+	unsavedChangesMarkerDisplayed = false;				// Reset unsaved changes marker.
 	
 	// Save the loaded actions to check if modified.
 	try {
@@ -584,23 +617,22 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * 
      * @param viewTable The view table to update.
      * @param btnGenerateScript Generate Script button's visibility to manipulate
-     * @param btnSaveParam Save Parameter button's visibility to manipulate
-     * @param btnSaveParamAs Save Parameter As button's visibility to manipulate
      */
-    private void actionChangeHandler(ActionsViewTable viewTable, Button btnGenerateScript, Button btnSaveParam, Button btnSaveParamAs, boolean rowsChanged) {
+    private void actionChangeHandler(ActionsViewTable viewTable, Button btnGenerateScript, Button btnGenerateScriptAs, boolean rowsChanged) {
     DISPLAY.asyncExec(() -> {
         if (!viewTable.isDisposed()) {
-        if(rowsChanged) {
+        if (rowsChanged) {
         	viewTable.setRows(scriptGeneratorModel.getActions());
-        }else {
+        } else {
         	viewTable.setRowsNoFocus(scriptGeneratorModel.getActions());
         }
         updateValidityChecks(viewTable);
         }
         if (!btnGenerateScript.isDisposed()) {
         setButtonGenerateStyle(btnGenerateScript);
-        setButtonGenerateStyle(btnSaveParam);
-        setButtonGenerateStyle(btnSaveParamAs);
+        }
+        if (!btnGenerateScriptAs.isDisposed()) {
+        setButtonGenerateStyle(btnGenerateScriptAs);
         }
         updateTotalEstimatedTime();
     });
@@ -624,7 +656,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
         	label.dispose();
         }
         globalLabel.clear();
-        for(Text text: globalParamText) {
+        for (Text text: globalParamText) {
         	text.dispose();
         }
         scriptGeneratorModel.clearGlobalParams();
@@ -651,24 +683,26 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		List<ActionParameter> temp;
 		String param = "No Global Paramaters";
     	String paramVal = "";
-        if(getScriptDefinition().get().getGlobalParameters() != null) {
+        if (getScriptDefinition().get().getGlobalParameters() != null) {
       	  temp = getScriptDefinition().get().getGlobalParameters();
-      	  if(!temp.isEmpty()) {
+      	  if (!temp.isEmpty()) {
       		  for (ActionParameter global : temp) {
-      			  param=global.getName();
+      			  param = global.getName();
       			  currentGlobals.add(global.getName());
       			  paramVal = global.getDefaultValue();
 
-                	  Label globalLabelCurrent = new Label (globalParamsComposite, SWT.NONE);
-                	  globalLabelCurrent.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER,false,false, 1, 1));
-                	  globalLabelCurrent.setText(param);
-                	  globalLabel.add(globalLabelCurrent);
-                	  Text globalParamTextCurrent = new Text(globalParamsComposite,SWT.NONE);
-                	  globalParamTextCurrent.setLayoutData(new GridData(SWT.FILL,SWT.CENTER,true,false,5,1));
-                	  globalParamTextCurrent.setEnabled(true);
-                	  globalParamTextCurrent.addListener(SWT.Modify, e->{updateGlobalParams(globalParamTextCurrent.getText(), globalLabelCurrent.getText());});
-                	  globalParamTextCurrent.setText(paramVal);
-                	  globalParamText.add(globalParamTextCurrent);
+            	  Label globalLabelCurrent = new Label(globalParamsComposite, SWT.NONE);
+            	  globalLabelCurrent.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+            	  globalLabelCurrent.setText(param);
+            	  globalLabel.add(globalLabelCurrent);
+            	  Text globalParamTextCurrent = new Text(globalParamsComposite, SWT.NONE);
+            	  globalParamTextCurrent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
+            	  globalParamTextCurrent.setEnabled(true);
+            	  globalParamTextCurrent.addListener(SWT.Modify, e -> {
+            		  updateGlobalParams(globalParamTextCurrent.getText(), globalLabelCurrent.getText());
+            	  });
+            	  globalParamTextCurrent.setText(paramVal);
+            	  globalParamText.add(globalParamTextCurrent);
       		  }
       	  }
       }
@@ -970,14 +1004,25 @@ public class ScriptGeneratorViewModel extends ModelObject {
     		}
     		i++;
     	}
-    	actionChangeHandler(viewTable, btnGenerateScript, btnSaveParam, btnSaveParamAs, false);
+    	actionChangeHandler(viewTable, btnGenerateScript, btnGenerateScriptAs, false);
     }
 
+    /**
+     * Generate a script and save it to the current script file. If fail display warnings.
+     * @throws UnsupportedLanguageException 
+     * @returns The script ID.
+     */
+    public Optional<Integer> generateScriptToCurrentFilepath() {
+    	Optional<Integer> scriptId = generateScript();
+    	scriptId.ifPresent(id -> scriptsToGenerateToCurrentFilepath.add(id));
+    	return scriptId;
+    }
+    
     /**
      * Generate a script and display the file it was generated to. If fail display warnings.
      * @throws UnsupportedLanguageException 
      */
-    public Optional<Integer> generate() {
+    public Optional<Integer> generateScript() {
     try {
         return scriptGeneratorModel.refreshGeneratedScript();
     } catch (InvalidParamsException e) {
@@ -1055,45 +1100,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
 
     /**
-     * Save Parameter Values to the current file.
-     */
-    public void saveParameterValuesToCurrentFile() {
-    	// If there is no current file, do Save As to new file.
-    	if (currentParametersFile == null || currentParametersFile.isEmpty()) {
-    		saveParameterValues();
-    	} else {
-    		try {
-    		scriptGeneratorModel.saveParameters(currentParametersFile);
-    		updateParametersFile(currentParametersFile);
-            MessageDialog.openInformation(DISPLAY.getActiveShell(), "Saved", "File saved!");  
-    		} catch (NoScriptDefinitionSelectedException e) {
-            LOG.error(e);
-            MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
-                "Cannot generate script. No script definition has been selected");
-    		}
-    	}
-    }
-    
-    /**
-     * Save Parameter Values to a file. Checks if file already exists and asks if user wants to overwrite it.
-     */
-    public void saveParameterValues() {        
-    Optional<String> fileName  = openFileDialog(SWT.SAVE);
-    // filename will be null if user has clicked cancel button
-    if (fileName.isPresent()) {
-        try {
-        scriptGeneratorModel.saveParameters(fileName.get());
-        updateParametersFile(fileName.get());
-        MessageDialog.openInformation(DISPLAY.getActiveShell(), "Saved", "File saved!");  
-        } catch (NoScriptDefinitionSelectedException e) {
-        LOG.error(e);
-        MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
-            "Cannot generate script. No script definition has been selected");
-        } 
-    }
-    }
-
-    /**
      * Open file dialog which opens file browser for saving and loading parameter values.
      * @param action save or load
      * @return filename to save or load
@@ -1155,7 +1161,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
         
         if (emptyModel || dialogResponse == 1) {
 	        // Get the save file path from Optional value and update the current file path label.
-	        updateParametersFile(selectedFile.get());
+	        updateParametersFilePath(selectedFile.get());
         }
 
     }
