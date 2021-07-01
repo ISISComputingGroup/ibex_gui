@@ -22,6 +22,7 @@ public class SpectraPlotConfiguration {
 
 	private final PersistedLocalChannel<Double> specNum;
 	private final PersistedLocalChannel<Double> specPeriod;
+	private final PersistedLocalChannel<String> specPeriodStr;
 	private final PersistedLocalChannel<String> specMode;
 	
 	/**
@@ -49,6 +50,13 @@ public class SpectraPlotConfiguration {
     			() -> preferences.getDouble(PERIOD_PREF_KEY, 1.)
     	);
     	
+        this.specPeriodStr = new PersistedLocalChannel<String>(
+                getLocalPvName("PERIOD_STR"), 
+                new StringChannel(), 
+                i -> { }, 
+                () -> String.valueOf(preferences.getDouble(PERIOD_PREF_KEY, 1.))
+        );
+    	
     	this.specMode = new PersistedLocalChannel<String>(
     			getLocalPvName("MODE"), 
     			new StringChannel(), 
@@ -61,6 +69,7 @@ public class SpectraPlotConfiguration {
     public void initializeFromPreferenceStore() {
     	specNum.setInitialValueAndSubscribeToChanges();
     	specPeriod.setInitialValueAndSubscribeToChanges();
+    	specPeriodStr.setInitialValueAndSubscribeToChanges();
     	specMode.setInitialValueAndSubscribeToChanges();
     }
     
@@ -73,6 +82,7 @@ public class SpectraPlotConfiguration {
     	Map<String, String> res = new HashMap<>();
     	res.put("SPECTRUM_PV" + plotNumber, specNum.getPVAddress());
     	res.put("PERIOD_PV" + plotNumber, specPeriod.getPVAddress());
+        res.put("PERIOD_PV_STR" + plotNumber, specPeriodStr.getPVAddress());
     	res.put("MODE_PV" + plotNumber, specMode.getPVAddress());
     	return res;
     }
