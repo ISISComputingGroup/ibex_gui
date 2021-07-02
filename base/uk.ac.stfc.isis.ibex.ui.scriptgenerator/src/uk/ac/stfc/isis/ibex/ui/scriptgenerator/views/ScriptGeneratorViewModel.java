@@ -213,8 +213,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private boolean hasSelection;
     
     private Clipboard clipboard;
-    private static String TAB = "\t";
-    private static String CRLF = "\r\n";   
+    private static final String TAB = "\t";
+    private static final String CRLF = "\r\n";   
     
     
     /**
@@ -406,7 +406,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
 
     /**
-     * Clean up resources when the plugin is destroyed.
+     * Clean up resources when the plug-in is destroyed.
      */
     protected void cleanUp() {
     scriptGeneratorModel.cleanUp();
@@ -461,7 +461,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected LabelProvider getScriptDefinitionSelectorLabelProvider() {
     return new LabelProvider() {
         /**
-         * Use getName method on python ScriptGeneratorWrapper class to get labels.
+         * Use getName method on Python ScriptGeneratorWrapper class to get labels.
          */
         @Override
         public String getText(Object element) {
@@ -590,9 +590,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private void actionChangeHandler(ActionsViewTable viewTable, Button btnGenerateScript, Button btnSaveParam, Button btnSaveParamAs, boolean rowsChanged) {
     DISPLAY.asyncExec(() -> {
         if (!viewTable.isDisposed()) {
-        if(rowsChanged) {
+        if (rowsChanged) {
         	viewTable.setRows(scriptGeneratorModel.getActions());
-        }else {
+        } else {
         	viewTable.setRowsNoFocus(scriptGeneratorModel.getActions());
         }
         updateValidityChecks(viewTable);
@@ -624,7 +624,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
         	label.dispose();
         }
         globalLabel.clear();
-        for(Text text: globalParamText) {
+        for (Text text: globalParamText) {
         	text.dispose();
         }
         scriptGeneratorModel.clearGlobalParams();
@@ -647,28 +647,34 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
     };
     
+    /**
+     * Create widgets for the global parameters.
+     */
+    @SuppressWarnings("checkstyle:magicnumber")
     public void createGlobalParamsWidgets() {
 		List<ActionParameter> temp;
 		String param = "No Global Paramaters";
     	String paramVal = "";
-        if(getScriptDefinition().get().getGlobalParameters() != null) {
+        if (getScriptDefinition().get().getGlobalParameters() != null) {
       	  temp = getScriptDefinition().get().getGlobalParameters();
-      	  if(!temp.isEmpty()) {
+      	  if (!temp.isEmpty()) {
       		  for (ActionParameter global : temp) {
-      			  param=global.getName();
+      			  param = global.getName();
       			  currentGlobals.add(global.getName());
       			  paramVal = global.getDefaultValue();
 
-                	  Label globalLabelCurrent = new Label (globalParamsComposite, SWT.NONE);
-                	  globalLabelCurrent.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER,false,false, 1, 1));
-                	  globalLabelCurrent.setText(param);
-                	  globalLabel.add(globalLabelCurrent);
-                	  Text globalParamTextCurrent = new Text(globalParamsComposite,SWT.NONE);
-                	  globalParamTextCurrent.setLayoutData(new GridData(SWT.FILL,SWT.CENTER,true,false,5,1));
-                	  globalParamTextCurrent.setEnabled(true);
-                	  globalParamTextCurrent.addListener(SWT.Modify, e->{updateGlobalParams(globalParamTextCurrent.getText(), globalLabelCurrent.getText());});
-                	  globalParamTextCurrent.setText(paramVal);
-                	  globalParamText.add(globalParamTextCurrent);
+            	  Label globalLabelCurrent = new Label(globalParamsComposite, SWT.NONE);
+            	  globalLabelCurrent.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+            	  globalLabelCurrent.setText(param);
+            	  globalLabel.add(globalLabelCurrent);
+            	  Text globalParamTextCurrent = new Text(globalParamsComposite, SWT.NONE);
+            	  globalParamTextCurrent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
+            	  globalParamTextCurrent.setEnabled(true);
+            	  globalParamTextCurrent.addListener(SWT.Modify, e -> { 
+            		  updateGlobalParams(globalParamTextCurrent.getText(), globalLabelCurrent.getText());
+            	  });
+            	  globalParamTextCurrent.setText(paramVal);
+            	  globalParamText.add(globalParamTextCurrent);
       		  }
       	  }
       }
@@ -709,7 +715,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     /**
      * Bind the script definition loader to the context.
      * 
-     * @param scriptDefinitionSelector The script definition selector ui element to bind.
+     * @param scriptDefinitionSelector The script definition selector UI element to bind.
      * @param helpText The UI element to display help string text in.
      */
     protected void bindScriptDefinitionLoader(ComboViewer scriptDefinitionSelector, Text helpText, List<Label> globalLabel, List<Text> globalParamText, Composite scriptDefintionComposite, Composite mainParent) {
