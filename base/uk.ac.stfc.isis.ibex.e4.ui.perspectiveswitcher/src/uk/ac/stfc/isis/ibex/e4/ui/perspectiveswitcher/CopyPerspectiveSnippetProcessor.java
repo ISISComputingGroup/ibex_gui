@@ -11,10 +11,17 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.swt.widgets.Display;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButtonModel;
+import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
+import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
+import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
+import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
+import uk.ac.stfc.isis.ibex.instrument.channels.BooleanChannel;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
 /**
@@ -28,23 +35,50 @@ public class CopyPerspectiveSnippetProcessor {
     private PerspectivesProvider perspectivesProvider;
     private MPerspectiveStack perspectiveStack;
 
+    // TODO: need to close this
+    private ObservableFactory switchingObsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
+
     /**
-     * Clone each snippet that is a perspective and add the cloned perspective
-     * to the main PerspectiveStack.
+     * Clone each snippet that is a perspective and add the cloned perspective to
+     * the main PerspectiveStack.
      *
-     * @param app
-     *            The MApplication used.
-     * @param partService
-     *            The EPartService used.
-     * @param modelService
-     *            The EModelService used.
-     * @param broker
-     *            The IEventBroker used.           
+     * @param app          The MApplication used.
+     * @param partService  The EPartService used.
+     * @param modelService The EModelService used.
+     * @param broker       The IEventBroker used.
      */
     @Execute
-    public void execute(MApplication app, EPartService partService, EModelService modelService, IEventBroker broker) {
+    public void execute(MApplication app, EModelService modelService, EPartService partService, IEventBroker broker) {
         perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
         perspectiveStack = perspectivesProvider.getTopLevelStack();
+
+        SwitchableObservable<Boolean> displayLog = switchingObsFactory.getSwitchableObservable(new BooleanChannel(),
+                InstrumentUtils.addPrefix("SIMPLE:BI"));
+
+        displayLog.subscribe(new BaseObserver<Boolean>() {
+            @Override
+            public void onValue(Boolean value) {
+                System.out.println("Hiding perspectives");
+                Display.getDefault().asyncExec(new Runnable() {
+                    @Override
+                    public void run() {
+                        perspectiveStack.getChildren().forEach(c -> c.setVisible(value));
+                    }
+                });
+            }
+
+            @Override
+            public void onError(Exception e) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onConnectionStatus(boolean isConnected) {
+                // TODO Auto-generated method stub
+
+            }
+        });
 
         // Only do this when no other children, or the restored workspace state
         // will be overwritten.
@@ -66,6 +100,7 @@ public class CopyPerspectiveSnippetProcessor {
             subscribeChangedElement(broker, perspective);
             subscribeSelectedPerspective(broker, perspective);
         }
+
         ResetLayoutButtonModel.getInstance().reset(perspectiveStack.getSelectedElement());
     }
 
@@ -73,19 +108,18 @@ public class CopyPerspectiveSnippetProcessor {
      * Listen to perspective changes and set the new perspective as current
      * perspective in ResetLayoutButtonModel.
      *
-     * @param broker
-     *            IEventBroker
-     * @param perspective
-     *            The new current perspective
+     * @param broker      IEventBroker
+     * @param perspective The new current perspective
      */
-    public void subscribeSelectedPerspective(IEventBroker broker, MPerspective perspective) {
+    private void subscribeSelectedPerspective(IEventBroker broker, MPerspective perspective) {
 
         EventHandler handler = new EventHandler() {
             @Override
             public void handleEvent(Event event) {
                 MUIElement element = (MUIElement) event.getProperty(EventTags.NEW_VALUE);
 
-                if (!perspectiveStack.getSelectedElement().equals(perspective)) {
+                if (perspectiveStack.getSelectedElement() != null
+                        && !perspectiveStack.getSelectedElement().equals(perspective)) {
                     return;
                 }
 
@@ -105,12 +139,10 @@ public class CopyPerspectiveSnippetProcessor {
      * Listen to perspective content changes set the current perspective in
      * ResetLayoutButtonModel to changed.
      *
-     * @param broker
-     *            IEventBroker
-     * @param perspective
-     *            The new current perspective
+     * @param broker      IEventBroker
+     * @param perspective The new current perspective
      */
-    public void subscribeChangedElement(IEventBroker broker, MPerspective perspective) {
+    private void subscribeChangedElement(IEventBroker broker, MPerspective perspective) {
 
         EventHandler handler = new EventHandler() {
             boolean alreadyCalled = false;

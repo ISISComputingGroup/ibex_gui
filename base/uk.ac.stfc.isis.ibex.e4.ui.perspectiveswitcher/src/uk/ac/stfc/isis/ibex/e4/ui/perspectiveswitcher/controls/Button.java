@@ -96,6 +96,7 @@ public abstract class Button extends CLabel {
                 BeanProperties.value("color").observe(model));
         bindingContext.bindValue(WidgetProperties.text().observe(this), BeanProperties.value("text").observe(model));
         bindingContext.bindValue(WidgetProperties.font().observe(this), BeanProperties.value("font").observe(model));
+        bindingContext.bindValue(WidgetProperties.visible().observe(this), BeanProperties.value("visible").observe(model));
     }
 
     /**

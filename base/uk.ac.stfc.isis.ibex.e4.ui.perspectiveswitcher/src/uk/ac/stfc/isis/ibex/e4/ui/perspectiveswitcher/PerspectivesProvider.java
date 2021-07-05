@@ -13,13 +13,14 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 
+import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.ExperimentSetupViewModel;
 
 /**
  * Class for accessing the perspectives in the application model.
  */
-public class PerspectivesProvider {
+public class PerspectivesProvider extends ModelObject {
 
     private ExperimentSetupViewModel experimentSetupViewModel;
     private Shell shell;
@@ -28,7 +29,7 @@ public class PerspectivesProvider {
     private MPerspectiveStack perspectivesStack;
     private MApplication app;
     private EModelService modelService;
-
+    
     private static final String MAIN_PERSPECTIVE_STACK_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspectivestack.0";
 
     /**
@@ -50,12 +51,11 @@ public class PerspectivesProvider {
         
         perspectives = new ArrayList<>();
         for (MPerspective perspective : modelService.findElements(app, null, MPerspective.class, null)) {
-            if (perspective.isVisible()) {
-                perspectives.add(perspective);
-            }
+            perspectives.add(perspective);
         }
 
         this.perspectivesStack = modelService.findElements(app, null, MPerspectiveStack.class, null).get(0);
+        
     }
 
     /**
