@@ -221,8 +221,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private boolean hasSelection;
     
     private Clipboard clipboard;
-    private static String TAB = "\t";
-    private static String CRLF = "\r\n";   
+    private static final String TAB = "\t";
+    private static final String CRLF = "\r\n";   
     
     
     /**
@@ -453,7 +453,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
 
     /**
-     * Clean up resources when the plugin is destroyed.
+     * Clean up resources when the plug-in is destroyed.
      */
     protected void cleanUp() {
     scriptGeneratorModel.cleanUp();
@@ -508,7 +508,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected LabelProvider getScriptDefinitionSelectorLabelProvider() {
     return new LabelProvider() {
         /**
-         * Use getName method on python ScriptGeneratorWrapper class to get labels.
+         * Use getName method on Python ScriptGeneratorWrapper class to get labels.
          */
         @Override
         public String getText(Object element) {
@@ -712,6 +712,10 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
     };
     
+    /**
+     * Create widgets for the global parameters.
+     */
+    @SuppressWarnings("checkstyle:magicnumber")
     public void createGlobalParamsWidgets() {
 		List<ActionParameter> temp;
 		String param = "No Global Paramaters";
@@ -776,7 +780,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     /**
      * Bind the script definition loader to the context.
      * 
-     * @param scriptDefinitionSelector The script definition selector ui element to bind.
+     * @param scriptDefinitionSelector The script definition selector UI element to bind.
      * @param helpText The UI element to display help string text in.
      */
     protected void bindScriptDefinitionLoader(ComboViewer scriptDefinitionSelector, Text helpText, List<Label> globalLabel, List<Text> globalParamText, Composite scriptDefintionComposite, Composite mainParent) {
