@@ -17,7 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.configserver;
+package uk.ac.stfc.isis.ibex.ui.widgets;
 
 import java.util.Map;
 import java.util.Optional;
@@ -33,8 +33,6 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TypedListener;
-
-import uk.ac.stfc.isis.ibex.ui.widgets.ButtonCellLabelProvider;
 
 /**
  * A LabelProvider that adds a check box to a cell in a table. 
