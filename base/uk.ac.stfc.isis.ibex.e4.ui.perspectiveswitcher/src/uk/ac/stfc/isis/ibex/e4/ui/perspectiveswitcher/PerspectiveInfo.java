@@ -4,6 +4,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 public class PerspectiveInfo extends ModelObject {
     private String name;
+    private String id;
     private boolean remoteVisible;
     private boolean localVisible;
     
@@ -19,8 +20,9 @@ public class PerspectiveInfo extends ModelObject {
      * @param description
      *            description of the IOC
      */
-    public PerspectiveInfo(String name, boolean remoteVisible, boolean localVisible) {
+    public PerspectiveInfo(String name, String id, boolean remoteVisible, boolean localVisible) {
         this.name = name;
+        this.id = id;
         this.remoteVisible = remoteVisible;
         this.localVisible = localVisible;
     }
@@ -38,6 +40,13 @@ public class PerspectiveInfo extends ModelObject {
         firePropertyChange("name", this.name, this.name = name);
     }
     
+    public void setId(String id) {
+        firePropertyChange("id", this.id, this.id = id);
+    }
+    
+    public String getId() {
+        return id;
+    }
     /**
      * Gets whether this IOC is running or not.
      *

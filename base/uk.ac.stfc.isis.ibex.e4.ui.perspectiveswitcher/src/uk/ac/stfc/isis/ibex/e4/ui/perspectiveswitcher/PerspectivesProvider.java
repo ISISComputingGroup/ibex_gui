@@ -13,14 +13,13 @@ import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 
-import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.ExperimentSetupViewModel;
 
 /**
  * Class for accessing the perspectives in the application model.
  */
-public class PerspectivesProvider extends ModelObject {
+public class PerspectivesProvider {
 
     private ExperimentSetupViewModel experimentSetupViewModel;
     private Shell shell;

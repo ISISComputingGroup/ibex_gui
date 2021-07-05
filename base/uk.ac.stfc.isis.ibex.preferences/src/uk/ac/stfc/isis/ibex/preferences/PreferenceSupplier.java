@@ -30,9 +30,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
+import org.osgi.service.prefs.BackingStoreException;
+import org.osgi.service.prefs.Preferences;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
+
 import org.apache.commons.lang.SystemUtils;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.runtime.FileLocator;
@@ -47,6 +52,9 @@ public class PreferenceSupplier {
 	
 	private final IPreferencesService preferenceService;
 	
+    private final Preferences writablePreferences =
+            ConfigurationScope.INSTANCE.getNode("uk.ac.stfc.isis.ibex.preferences");
+	
 	/**
 	 * Instantiate a new preference supplier.
 	 */
@@ -56,7 +64,7 @@ public class PreferenceSupplier {
 	
 	/**
 	 * Instantiate a new preference supplier based on a specific preferenceService.
-	 * @param preferenceService the preference serice to use
+	 * @param preferenceService the preference service to use
 	 */
 	public PreferenceSupplier(IPreferencesService preferenceService) {
 		this.preferenceService = preferenceService;
@@ -277,6 +285,20 @@ public class PreferenceSupplier {
 		}
 		return Arrays.asList(preferencesString.split(",")).stream().map(String::trim).collect(Collectors.toList());
 	}
+	
+    /**
+     * Gets a list of perspective IDs which should not be shown.
+     * 
+     * @return a list of perspective IDs which should not be shown (may be empty, but never null).
+     */
+    public void setPerspectivesToHide(List<String> preferences) {
+        writablePreferences.put(PERSPECTIVES_TO_HIDE, preferences.stream().collect(Collectors.joining(",")));
+        try {
+            writablePreferences.flush();
+        } catch (BackingStoreException e) {
+            LoggerUtils.logErrorWithStackTrace(LOG, "Unable to set perspectives to hide", e);
+        }
+    }	
 	
 	/**
      * Gets the preference setting for genie_python directory.

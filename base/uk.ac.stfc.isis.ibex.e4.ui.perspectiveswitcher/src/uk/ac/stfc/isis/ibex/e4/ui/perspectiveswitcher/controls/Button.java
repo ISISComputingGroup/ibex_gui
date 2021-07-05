@@ -91,12 +91,24 @@ public abstract class Button extends CLabel {
                 mouseExitAction();
             }
         });
+        
+        model.addPropertyChangeListener("visible", new PropertyChangeListener() {
+            
+            @Override
+            public void propertyChange(PropertyChangeEvent e) {
+                GridData data = (GridData) getLayoutData();
+                boolean nowVisible = (boolean) e.getNewValue();
+                data.exclude = !nowVisible;
+                setVisible(nowVisible);
+                parent.requestLayout();
+            }
+        });
+        
         this.model = model;
         bindingContext.bindValue(WidgetProperties.background().observe(this),
                 BeanProperties.value("color").observe(model));
         bindingContext.bindValue(WidgetProperties.text().observe(this), BeanProperties.value("text").observe(model));
         bindingContext.bindValue(WidgetProperties.font().observe(this), BeanProperties.value("font").observe(model));
-        bindingContext.bindValue(WidgetProperties.visible().observe(this), BeanProperties.value("visible").observe(model));
     }
 
     /**

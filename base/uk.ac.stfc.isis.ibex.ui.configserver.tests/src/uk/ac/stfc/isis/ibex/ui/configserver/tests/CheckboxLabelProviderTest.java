@@ -42,8 +42,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import uk.ac.stfc.isis.ibex.ui.configserver.CheckboxLabelProvider;
-import uk.ac.stfc.isis.ibex.ui.configserver.CheckboxLabelProvider.CheckboxSelectionAdapter;
+import uk.ac.stfc.isis.ibex.ui.widgets.CheckboxLabelProvider;
+import uk.ac.stfc.isis.ibex.ui.widgets.CheckboxLabelProvider.CheckboxSelectionAdapter;
 
 /**
  *
