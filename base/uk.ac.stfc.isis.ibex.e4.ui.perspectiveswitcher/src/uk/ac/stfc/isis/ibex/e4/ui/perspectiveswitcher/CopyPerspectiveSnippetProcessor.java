@@ -1,5 +1,8 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;
 
+import java.lang.reflect.Type;
+import java.util.Map;
+
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.MApplication;
@@ -15,13 +18,16 @@ import org.eclipse.swt.widgets.Display;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButtonModel;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
-import uk.ac.stfc.isis.ibex.instrument.channels.BooleanChannel;
+import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
 /**
@@ -35,9 +41,14 @@ public class CopyPerspectiveSnippetProcessor {
     private PerspectivesProvider perspectivesProvider;
     private MPerspectiveStack perspectiveStack;
 
+    private static final Gson GSON = new Gson();
+    private static final Type SERVER_IOC_DATA_FORMAT = new TypeToken<Map<String, Boolean>>() { }.getType();
+    
     // TODO: need to close this
     private ObservableFactory switchingObsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
 
+    private final String PERSPECTIVE_CONFIG_PV = "CS:PERSP:SETTINGS";
+    
     /**
      * Clone each snippet that is a perspective and add the cloned perspective to
      * the main PerspectiveStack.
@@ -52,17 +63,17 @@ public class CopyPerspectiveSnippetProcessor {
         perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
         perspectiveStack = perspectivesProvider.getTopLevelStack();
 
-        SwitchableObservable<Boolean> displayLog = switchingObsFactory.getSwitchableObservable(new BooleanChannel(),
-                InstrumentUtils.addPrefix("SIMPLE:BI"));
+        SwitchableObservable<String> displayLog = switchingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+                InstrumentUtils.addPrefix(PERSPECTIVE_CONFIG_PV));
 
-        displayLog.subscribe(new BaseObserver<Boolean>() {
+        displayLog.subscribe(new BaseObserver<String>() {
             @Override
-            public void onValue(Boolean value) {
-                System.out.println("Hiding perspectives");
+            public void onValue(String value) {
+                Map<String, Boolean> visiblePerspectives = GSON.fromJson(value, SERVER_IOC_DATA_FORMAT); 
                 Display.getDefault().asyncExec(new Runnable() {
                     @Override
                     public void run() {
-                        perspectiveStack.getChildren().forEach(c -> c.setVisible(value));
+                        perspectiveStack.getChildren().forEach(c -> c.setVisible(visiblePerspectives.getOrDefault(c.getElementId(), true)));
                     }
                 });
             }

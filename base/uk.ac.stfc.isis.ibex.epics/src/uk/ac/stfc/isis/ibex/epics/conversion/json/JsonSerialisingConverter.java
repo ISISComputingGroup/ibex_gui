@@ -19,6 +19,7 @@
 package uk.ac.stfc.isis.ibex.epics.conversion.json;
 
 import java.beans.PropertyChangeSupport;
+import java.lang.reflect.Type;
 
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.Gson;
@@ -43,7 +44,7 @@ public class JsonSerialisingConverter<T> extends Converter<T, String> {
 			.setExclusionStrategies(EXCLUDE_PROPERTY_CHANGE_SUPPORT)
 			.create();
 
-    private final Class<? extends T> classOfT;
+    private final Type classOfT;
 
     /**
      * Constructor.
@@ -51,10 +52,20 @@ public class JsonSerialisingConverter<T> extends Converter<T, String> {
      * @param classOfT
      *            the class of T
      */
-    public JsonSerialisingConverter(Class<? extends T> classOfT) {
+//    public JsonSerialisingConverter(Class<? extends T> classOfT) {
+//        this.classOfT = classOfT;
+//	}
+
+    /**
+     * Constructor.
+     * 
+     * @param classOfT
+     *            the class of T
+     */
+    public JsonSerialisingConverter(Type classOfT) {
         this.classOfT = classOfT;
-	}
-	
+    }
+    
 	@Override
 	public String convert(T value) throws ConversionException {
 		return gson.toJson(value, classOfT);
