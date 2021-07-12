@@ -71,17 +71,28 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
             checkbox.setText(stringFromRow(model));
         }
     }
-	
+    
+    
+    /**
+     * The default constructor for the CheckboxLabelProvider.
+     * @param stateProperties The properties that this label provider should be observing.
+     */
+    public CheckboxLabelProvider(IObservableMap<T, ?> stateProperty) {
+        this(new IObservableMap[] { stateProperty });
+    }
+    
 	/**
 	 * The default constructor for the CheckboxLabelProvider.
 	 * @param stateProperties The properties that this label provider should be observing.
 	 */
-	public CheckboxLabelProvider(IObservableMap<T, ?> stateProperties) {
+	public CheckboxLabelProvider(IObservableMap<T, ?>[] stateProperties) {
 		super(stateProperties);
 		
-		stateProperties.addMapChangeListener(event -> {
-		    updateCheckboxListenerUpdateFlags(stateProperties);
-		});
+        for (IObservableMap<T, ?> attributeMap : stateProperties) {
+            attributeMap.addMapChangeListener(event -> {
+                updateCheckboxListenerUpdateFlags(attributeMap);
+            });
+        }
 	}
 
 	@SuppressWarnings("unchecked")
@@ -103,7 +114,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
          * check box.*/
         getOptionalUpdateFlag(model).ifPresent(updateFlag -> resetCheckBoxListeners(
                 updateFlag, checkBox, model));
-		
+        
 		checkBox.setEnabled(isEditable(model));
 	}
 	

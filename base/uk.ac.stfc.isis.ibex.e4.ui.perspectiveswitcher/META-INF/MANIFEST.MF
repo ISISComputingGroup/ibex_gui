@@ -29,10 +29,11 @@ Require-Bundle: javax.inject;bundle-version="1.0.0",
  org.eclipse.e4.core.di;bundle-version="1.7.600",
  org.eclipse.e4.ui.services;bundle-version="1.3.700",
  org.eclipse.osgi.services;bundle-version="3.9.0",
- org.eclipse.e4.core.services;bundle-version="2.2.400"
+ org.eclipse.e4.core.services;bundle-version="2.2.400",
+ uk.ac.stfc.isis.ibex.ui.widgets;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.managermode
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher
-Import-Package: uk.ac.stfc.isis.ibex.ui.tables,
- uk.ac.stfc.isis.ibex.ui.widgets

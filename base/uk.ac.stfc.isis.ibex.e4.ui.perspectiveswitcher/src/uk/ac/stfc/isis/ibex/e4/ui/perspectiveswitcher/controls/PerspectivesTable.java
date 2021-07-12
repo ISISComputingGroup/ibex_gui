@@ -19,14 +19,18 @@
 
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectiveInfo;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesVisibleModel;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.widgets.CheckboxLabelProvider;
@@ -41,7 +45,7 @@ import uk.ac.stfc.isis.ibex.ui.widgets.CheckboxLabelProvider;
  * in the table (unsure why)
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class PerspectivesTable extends DataboundTable<PerspectiveInfo> {
+public class PerspectivesTable extends DataboundTable<PerspectiveInfo> {   
     /**
      * A table that shows the status of all IOCs on the instrument.
      * 
@@ -82,7 +86,8 @@ public class PerspectivesTable extends DataboundTable<PerspectiveInfo> {
     }
 
     private void visibleRemotely() {
-        createColumn("Visible to Users", 4, true, new CheckboxLabelProvider<PerspectiveInfo>(observeProperty("visibleRemotely")) {
+        IObservableMap[] observables = {observeProperty("visibleRemotely"), observeProperty("remoteEditable")};
+        createColumn("Visible to Users", 4, true, new CheckboxLabelProvider<PerspectiveInfo>(observables) {
             @Override
             protected boolean checked(PerspectiveInfo perspective) {
                 return perspective.getVisibleRemotely();
@@ -93,7 +98,7 @@ public class PerspectivesTable extends DataboundTable<PerspectiveInfo> {
             }
             @Override
             protected boolean isEditable(PerspectiveInfo model) {
-                return true;
+                return model.getRemoteEditable();
             }
         });
     }

@@ -7,6 +7,7 @@ public class PerspectiveInfo extends ModelObject {
     private String id;
     private boolean remoteVisible;
     private boolean localVisible;
+    private boolean remoteEditable;
     
     /**
      * Instantiates a new perspective info model.
@@ -25,6 +26,7 @@ public class PerspectiveInfo extends ModelObject {
         this.id = id;
         this.remoteVisible = remoteVisible;
         this.localVisible = localVisible;
+        this.remoteEditable = true;
     }
 
     /**
@@ -58,6 +60,14 @@ public class PerspectiveInfo extends ModelObject {
 
     public void setVisibleRemotely(boolean remoteVisible) {
         firePropertyChange("visibleRemotely", this.remoteVisible, this.remoteVisible = remoteVisible);
+    }
+    
+    public void setRemoteEditable(boolean remoteEditable) {
+        firePropertyChange("remoteEditable", this.remoteEditable, this.remoteEditable = remoteEditable);
+    }
+
+    public boolean getRemoteEditable() {
+        return remoteEditable;
     }
     
     /**

@@ -1,6 +1,7 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -10,9 +11,11 @@ import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.layout.GridLayout;
 
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesVisibleModel;
@@ -49,16 +52,35 @@ public class PerspectiveHidingDialog extends TitleAreaDialog {
         Composite container = (Composite) super.createDialogArea(parent);
         container.setLayout(new GridLayout(1, false));
         
-        table = new PerspectivesTable(container, SWT.NONE, SWT.FULL_SELECTION);
+        model = new PerspectivesVisibleModel(app, partService, modelService);
+        
+        model.addPropertyChangeListener("remoteErrors", event -> {
+            setRemoteErrors(model.getRemoteErrors());
+        });
+        setRemoteErrors(model.getRemoteErrors());
+        
+        table = new PerspectivesTable(container, SWT.NONE, SWT.NONE);
         table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         
-        model = new PerspectivesVisibleModel(app, partService, modelService);
         table.setRows(model.getPerspectiveInfo());
         
         Button btnCheckButton = new Button(container, SWT.CHECK);
         btnCheckButton.setText("Check Button");
         
         return container;
+    }
+    
+    private void setRemoteErrors(List<String> remoteErrors) {
+        Display.getDefault().asyncExec(() -> {  
+            if (model.getRemoteErrors().isEmpty()) {
+                setMessage(null, IMessageProvider.NONE);
+            } else {                
+                String result = remoteErrors.stream()
+                        .map(n -> String.valueOf(n))
+                        .collect(Collectors.joining(",", "Cannot set remote perspectives: ", ""));
+                setMessage(result, IMessageProvider.WARNING);
+            }
+        });
     }
     
     @Override
@@ -82,5 +104,12 @@ public class PerspectiveHidingDialog extends TitleAreaDialog {
     protected void okPressed() {
         model.saveState();
         super.okPressed();
+    }
+
+    /**
+     * Show the current error messages.
+     */
+    protected void showErrorMessage() {
+        setMessage("", IMessageProvider.WARNING);
     }
 }
