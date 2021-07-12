@@ -6,10 +6,13 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.e4.ui.model.application.MApplication;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -65,7 +68,11 @@ public class PerspectiveHidingDialog extends TitleAreaDialog {
         table.setRows(model.getPerspectiveInfo());
         
         Button btnCheckButton = new Button(container, SWT.CHECK);
-        btnCheckButton.setText("Check Button");
+        btnCheckButton.setText("Use Local Settings"); 
+        
+        DataBindingContext bindingContext = new DataBindingContext();
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(btnCheckButton),
+                BeanProperties.value("useLocal").observe(model));
         
         return container;
     }
@@ -104,12 +111,5 @@ public class PerspectiveHidingDialog extends TitleAreaDialog {
     protected void okPressed() {
         model.saveState();
         super.okPressed();
-    }
-
-    /**
-     * Show the current error messages.
-     */
-    protected void showErrorMessage() {
-        setMessage("", IMessageProvider.WARNING);
     }
 }

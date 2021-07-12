@@ -1,7 +1,10 @@
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.services.events.IEventBroker;
@@ -41,6 +44,8 @@ public class CopyPerspectiveSnippetProcessor {
     private PerspectivesProvider perspectivesProvider;
     private MPerspectiveStack perspectiveStack;
 
+    private final PreferenceSupplier preferenceSupplier = new PreferenceSupplier();
+    
     private static final Gson GSON = new Gson();
     private static final Type SERVER_IOC_DATA_FORMAT = new TypeToken<Map<String, Boolean>>() { }.getType();
     
@@ -66,16 +71,15 @@ public class CopyPerspectiveSnippetProcessor {
         SwitchableObservable<String> displayLog = switchingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
                 InstrumentUtils.addPrefix(PERSPECTIVE_CONFIG_PV));
 
+        //TODO: Test this logic, is this the best class for it?
+        
         displayLog.subscribe(new BaseObserver<String>() {
             @Override
             public void onValue(String value) {
-                Map<String, Boolean> visiblePerspectives = GSON.fromJson(value, SERVER_IOC_DATA_FORMAT); 
-                Display.getDefault().asyncExec(new Runnable() {
-                    @Override
-                    public void run() {
-                        perspectiveStack.getChildren().forEach(c -> c.setVisible(visiblePerspectives.getOrDefault(c.getElementId(), true)));
-                    }
-                });
+                if (!preferenceSupplier.getUseLocalPerspectives()) {
+                    Map<String, Boolean> visiblePerspectives = GSON.fromJson(value, SERVER_IOC_DATA_FORMAT);
+                    setVisiblePerspectives(visiblePerspectives);
+                }
             }
 
             @Override
@@ -90,7 +94,23 @@ public class CopyPerspectiveSnippetProcessor {
 
             }
         });
+        
+        preferenceSupplier.addUseLocalPerspectives(useLocal -> {
+            if (useLocal) {
+                setVisiblePerspectives(preferenceSupplier.perspectivesToHide());
+            } else {
+                Map<String, Boolean> visiblePerspectives = GSON.fromJson(displayLog.getValue(), SERVER_IOC_DATA_FORMAT);
+                setVisiblePerspectives(visiblePerspectives);
+            }
+        });
+        
+        preferenceSupplier.addHiddenPerspectivesListener(hiddenPerspectives -> {
+            if (preferenceSupplier.getUseLocalPerspectives()) {
+                setVisiblePerspectives(hiddenPerspectives);
+            }
+        });
 
+        // TODO: Should we just copy it all?
         // Only do this when no other children, or the restored workspace state
         // will be overwritten.
         if (!perspectiveStack.getChildren().isEmpty()) {
@@ -101,7 +121,7 @@ public class CopyPerspectiveSnippetProcessor {
         // perspective into the main PerspectiveStack
         boolean isFirst = true;
         for (MPerspective perspective : perspectivesProvider.getInitialPerspectives()) {
-            if (!new PreferenceSupplier().perspectivesToHide().contains(perspective.getElementId())) {
+            if (!preferenceSupplier.perspectivesToHide().contains(perspective.getElementId())) {
                 perspectiveStack.getChildren().add(perspective);
                 if (isFirst) {
                     perspectiveStack.setSelectedElement(perspective);
@@ -115,6 +135,23 @@ public class CopyPerspectiveSnippetProcessor {
         ResetLayoutButtonModel.getInstance().reset(perspectiveStack.getSelectedElement());
     }
 
+    private void setVisiblePerspectives(List<String> hiddenPerspectives) {
+        Map<String, Boolean> visibilityMap = new HashMap<String, Boolean>();
+        for (MPerspective perspective : perspectivesProvider.getInitialPerspectives()) {
+            visibilityMap.put(perspective.getElementId(), !hiddenPerspectives.contains(perspective.getElementId()));
+        }
+        setVisiblePerspectives(visibilityMap);
+    }
+    
+    private void setVisiblePerspectives(Map<String, Boolean> visiblePerspectiveMap) {
+        Display.getDefault().asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                perspectiveStack.getChildren().forEach(c -> c.setVisible(visiblePerspectiveMap.getOrDefault(c.getElementId(), true)));
+            }
+        });
+    }
+    
     /**
      * Listen to perspective changes and set the new perspective as current
      * perspective in ResetLayoutButtonModel.

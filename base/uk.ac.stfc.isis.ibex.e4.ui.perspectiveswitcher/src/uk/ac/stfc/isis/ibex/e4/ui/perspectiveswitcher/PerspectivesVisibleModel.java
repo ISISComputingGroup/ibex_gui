@@ -47,6 +47,7 @@ public class PerspectivesVisibleModel extends ModelObject {
     
     private boolean remoteInError = false;
     private boolean remoteInManager = false;
+    private boolean useLocal = false;
     
     private static final Gson GSON = new Gson();
     private static final Type SERVER_PERSPECTIVE_SETTINGS = new TypeToken<Map<String, Boolean>>() { }.getType();
@@ -90,6 +91,8 @@ public class PerspectivesVisibleModel extends ModelObject {
                 setRemoteInError(true);
             }
         });
+        
+        useLocal = new PreferenceSupplier().getUseLocalPerspectives();
     }
 
     private void setRemoteInManager() {
@@ -128,12 +131,24 @@ public class PerspectivesVisibleModel extends ModelObject {
         return perspectiveInfos;
     }
     
+    public Boolean getUseLocal() {
+        return useLocal;
+    }
+    
+    public void setUseLocal(Boolean useLocal) {
+        this.useLocal = useLocal; 
+    }
+    
     public void saveState() {
+        //TODO: test logic
+        PreferenceSupplier preferenceSupplier = new PreferenceSupplier();
         List<String> locallyVisiblePerspectiveIDs = perspectiveInfos.stream()
                 .filter(persp -> !persp.getVisibleLocally())
                 .map(persp -> persp.getId())
                 .collect(Collectors.toList());
-        new PreferenceSupplier().setPerspectivesToHide(locallyVisiblePerspectiveIDs);
+        preferenceSupplier.setPerspectivesToHide(locallyVisiblePerspectiveIDs);
+        preferenceSupplier.setUseLocalPerspectives(useLocal);
+        
         MPerspectiveStack perspectiveStack = perspectivesProvider.getTopLevelStack();
         Display.getDefault().asyncExec(() ->
                 perspectiveStack.getChildren().stream()

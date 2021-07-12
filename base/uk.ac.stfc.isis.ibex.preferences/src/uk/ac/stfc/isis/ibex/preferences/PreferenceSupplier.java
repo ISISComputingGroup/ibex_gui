@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.net.URL;
 import java.nio.file.Files;
@@ -31,13 +33,12 @@ import java.nio.file.Paths;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
 import org.osgi.service.prefs.BackingStoreException;
-import org.osgi.service.prefs.Preferences;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
-
 import org.apache.commons.lang.SystemUtils;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.runtime.FileLocator;
@@ -52,7 +53,7 @@ public class PreferenceSupplier {
 	
 	private final IPreferencesService preferenceService;
 	
-    private final Preferences writablePreferences =
+    private final IEclipsePreferences writablePreferences =
             ConfigurationScope.INSTANCE.getNode("uk.ac.stfc.isis.ibex.preferences");
 	
 	/**
@@ -189,6 +190,11 @@ public class PreferenceSupplier {
      * Defines which perspectives to hide by default.
      */
     private static final String DEFAULT_PERSPECTIVES_TO_HIDE = "";
+
+    /**
+     * Defines whether to use the local perspective settings or those from the server.
+     */
+    private static final String USE_LOCAL_PERSPECTIVES = "use_local_perspectives";
     
     /**
      * Defines whether to show the values of blocks in an invalid alarm.
@@ -298,8 +304,40 @@ public class PreferenceSupplier {
         } catch (BackingStoreException e) {
             LoggerUtils.logErrorWithStackTrace(LOG, "Unable to set perspectives to hide", e);
         }
-    }	
+    }
+    
+    public void addHiddenPerspectivesListener(Consumer<List<String>> listener) {
+        writablePreferences.addPreferenceChangeListener(event -> {
+            if (event.getKey().equals(PERSPECTIVES_TO_HIDE)) {
+                listener.accept(perspectivesToHide());
+            }
+        });
+    }
 	
+    public Boolean getUseLocalPerspectives() {
+        writablePreferences.addPreferenceChangeListener(event -> {
+            System.out.println(event);
+        });
+        return getBoolean(USE_LOCAL_PERSPECTIVES, false);
+    }
+    
+    public void setUseLocalPerspectives(Boolean useLocal) {
+        writablePreferences.put(USE_LOCAL_PERSPECTIVES, useLocal.toString());
+        try {
+            writablePreferences.flush();
+        } catch (BackingStoreException e) {
+            LoggerUtils.logErrorWithStackTrace(LOG, "Unable to set to use local perspective settings", e);
+        }
+    }
+    
+    public void addUseLocalPerspectives(Consumer<Boolean> listener) {
+        writablePreferences.addPreferenceChangeListener(event -> {
+            if (event.getKey().equals(USE_LOCAL_PERSPECTIVES)) {
+                listener.accept(getUseLocalPerspectives());
+            }
+        });
+    }
+    
 	/**
      * Gets the preference setting for genie_python directory.
      * 
