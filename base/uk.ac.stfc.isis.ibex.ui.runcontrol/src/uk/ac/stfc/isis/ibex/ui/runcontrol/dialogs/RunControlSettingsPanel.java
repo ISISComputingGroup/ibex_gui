@@ -39,6 +39,7 @@ import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
+import uk.ac.stfc.isis.ibex.ui.runcontrol.commands.RunControlHandler;
 
 /**
  * UI elements for editing run control settings, as used by run control dialog.
@@ -72,8 +73,9 @@ public class RunControlSettingsPanel extends Composite {
      * @param configServer the configuration server
      * @param runControlServer the runcontrol server
      * @param viewModel the view model
+     * @param dialog The initial dialog that opened this panel
      */
-	public RunControlSettingsPanel(Composite parent, int style, ConfigServer configServer, RunControlServer runControlServer,
+	public RunControlSettingsPanel(EditRunControlDialog dialog, Composite parent, int style, ConfigServer configServer, RunControlServer runControlServer,
 			RunControlViewModel viewModel) {
 		super(parent, style);
 		
@@ -88,7 +90,7 @@ public class RunControlSettingsPanel extends Composite {
 		table.setLayoutData(gdTable);
         table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		
-        editor = new RunControlEditorPanel(this, SWT.NONE, this.configServer, viewModel);
+        editor = new RunControlEditorPanel(dialog, this, SWT.NONE, this.configServer, viewModel);
         
         config.addPropertyChangeListener(updateTable, true);
         table.addSelectionChangedListener(new ISelectionChangedListener() {
