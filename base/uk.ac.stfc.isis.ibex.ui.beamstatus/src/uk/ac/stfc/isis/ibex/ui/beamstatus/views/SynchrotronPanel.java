@@ -72,11 +72,11 @@ public class SynchrotronPanel extends Composite {
 
     private void bind(SynchrotronObservables sync) {
         DataBindingContext bindingContext = new DataBindingContext();
-        bindingContext.bindValue(WidgetProperties.text().observe(beamCurrent), BeanProperties.value("value").observe(sync.beamCurrent));
-        bindingContext.bindValue(WidgetProperties.text().observe(beamFrequency), BeanProperties.value("value").observe(sync.beamFrequency));
-        bindingContext.bindValue(WidgetProperties.text().observe(beamEnergy), BeanProperties.value("value").observe(sync.beamEnergy));
-        bindingContext.bindValue(WidgetProperties.text().observe(bunchLength), BeanProperties.value("value").observe(sync.bunchLength));
-        bindingContext.bindValue(WidgetProperties.text().observe(extractDelay), BeanProperties.value("value").observe(sync.extractDelay));
+        bindingContext.bindValue(WidgetProperties.text().observe(beamCurrent), BeanProperties.value("value").observe(sync.beamCurrent.updatedValue));
+        bindingContext.bindValue(WidgetProperties.text().observe(beamFrequency), BeanProperties.value("value").observe(sync.beamFrequency.updatedValue));
+        bindingContext.bindValue(WidgetProperties.text().observe(beamEnergy), BeanProperties.value("value").observe(sync.beamEnergy.updatedValue));
+        bindingContext.bindValue(WidgetProperties.text().observe(bunchLength), BeanProperties.value("value").observe(sync.bunchLength.updatedValue));
+        bindingContext.bindValue(WidgetProperties.text().observe(extractDelay), BeanProperties.value("value").observe(sync.extractDelay.updatedValue));
     }
 
 }

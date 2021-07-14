@@ -146,31 +146,31 @@ public class TargetStationTwoPanel extends Composite {
     private void bind(TS2Observables ts) {
         DataBindingContext bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.text().observe(beam),
-                BeanProperties.value("value").observe(ts.beam()));
-        bindingContext.bindValue(WidgetProperties.text().observe(pps), BeanProperties.value("value").observe(ts.pps()));
+                BeanProperties.value("value").observe(ts.beam().updatedValue));
+        bindingContext.bindValue(WidgetProperties.text().observe(pps), BeanProperties.value("value").observe(ts.pps().updatedValue));
         bindingContext.bindValue(WidgetProperties.text().observe(current),
-                BeanProperties.value("value").observe(ts.beamCurrent()));
+                BeanProperties.value("value").observe(ts.beamCurrent().updatedValue));
         bindingContext.bindValue(WidgetProperties.text().observe(uAhSince0830),
-                BeanProperties.value("value").observe(ts.uAHToday()));
+                BeanProperties.value("value").observe(ts.uAHToday().updatedValue));
         bindingContext.bindValue(WidgetProperties.text().observe(lastOff),
-                BeanProperties.value("value").observe(ts.lastBeamOff()));
+                BeanProperties.value("value").observe(ts.lastBeamOff().updatedValue));
         bindingContext.bindValue(WidgetProperties.text().observe(lastOn),
-                BeanProperties.value("value").observe(ts.lastBeamOn()));
+                BeanProperties.value("value").observe(ts.lastBeamOn().updatedValue));
 
         bindingContext.bindValue(WidgetProperties.text().observe(coupledMethaneTemperature),
-                BeanProperties.value("value").observe(ts.coupledMethaneTemperature));
+                BeanProperties.value("value").observe(ts.coupledMethaneTemperature.updatedValue));
         bindingContext.bindValue(WidgetProperties.text().observe(coupledHydrogenTemperature),
-                BeanProperties.value("value").observe(ts.coupledHydrogenTemperature));
+                BeanProperties.value("value").observe(ts.coupledHydrogenTemperature.updatedValue));
         bindingContext.bindValue(WidgetProperties.text().observe(decoupledMethaneTemperature),
-                BeanProperties.value("value").observe(ts.decoupledMethaneTemperature));
+                BeanProperties.value("value").observe(ts.decoupledMethaneTemperature.updatedValue));
         bindingContext.bindValue(WidgetProperties.text().observe(decoupledModeratorRuntime),
-                BeanProperties.value("value").observe(ts.decoupledModeratorRuntime));
+                BeanProperties.value("value").observe(ts.decoupledModeratorRuntime.updatedValue));
         bindingContext.bindValue(WidgetProperties.text().observe(decoupledModeratorRuntimeLimit),
-                BeanProperties.value("value").observe(ts.decoupledModeratorRuntimeLimit));
+                BeanProperties.value("value").observe(ts.decoupledModeratorRuntimeLimit.updatedValue));
         bindingContext.bindValue(WidgetProperties.text().observe(decoupledModeratorAnnealPressure),
-                BeanProperties.value("value").observe(ts.decoupledModeratorAnnealPressure));
+                BeanProperties.value("value").observe(ts.decoupledModeratorAnnealPressure.updatedValue));
         bindingContext.bindValue(WidgetProperties.text().observe(decoupledModeratoruAhBeam),
-                BeanProperties.value("value").observe(ts.decoupledModeratorUAHBeam));
+                BeanProperties.value("value").observe(ts.decoupledModeratorUAHBeam.updatedValue));
     }
 
 }

@@ -35,17 +35,17 @@ public class TS1Observables extends EndStationObservables {
     /**
      * An updating value giving the temperature of the TS1 methane moderator.
      */
-    public final UpdatedValue<String> methaneTemperature;
+    public final FacilityPV methaneTemperature;
 
     /**
      * An updating value giving the temperature of the TS1 hydrogen moderator.
      */
-    public final UpdatedValue<String> hydrogenTemperature;
+    public final FacilityPV hydrogenTemperature;
 
     /**
      * An updating value giving the status of the muon kicker in TS1.
      */
-    public final UpdatedValue<String> muonKicker;
+    public final FacilityPV muonKicker;
     
     private static final String MOD_PREFIX = "TG:TS1:MOD:";
 
@@ -57,15 +57,15 @@ public class TS1Observables extends EndStationObservables {
         
         ForwardingObservable<Number> methaneTempObs = obsFactory
                 .getSwitchableObservable(new NumberWithPrecisionChannel(), MOD_PREFIX + "METH:TEMP");
-        methaneTemperature = adaptNumber(methaneTempObs);
+        methaneTemperature = new FacilityPV ( MOD_PREFIX + "METH:TEMP",adaptNumber(methaneTempObs));
 
         ForwardingObservable<Number> hydrogenTempObs = obsFactory
                 .getSwitchableObservable(new NumberWithPrecisionChannel(), MOD_PREFIX + "HDGN:TEMP");
-        hydrogenTemperature = adaptNumber(hydrogenTempObs);
+        hydrogenTemperature = new FacilityPV(MOD_PREFIX + "HDGN:TEMP", adaptNumber(hydrogenTempObs));
 
         ForwardingObservable<OnOff> muonKickerObs = obsFactory
                 .getSwitchableObservable(new EnumChannel<OnOff>(OnOff.class), "AC:MUON:KICKR:STAT");
-        muonKicker = adaptEnum(muonKickerObs);
+        muonKicker = new FacilityPV ("AC:MUON:KICKR:STAT", adaptEnum(muonKickerObs));
     }
 
 }

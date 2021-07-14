@@ -34,12 +34,12 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
  * The observables for a generic ISIS end station.
  */
 public abstract class EndStationObservables extends Observables {
-    private final UpdatedValue<String> beam;
-    private final UpdatedValue<String> pps;
-    private final UpdatedValue<String> beamCurrent;
-    private final UpdatedValue<String> uAHToday;
-    private final UpdatedValue<String> lastBeamOff;
-    private final UpdatedValue<String> lastBeamOn;
+    private final FacilityPV beam;
+    private final FacilityPV pps;
+    private final FacilityPV beamCurrent;
+    private final FacilityPV uAHToday;
+    private final FacilityPV lastBeamOff;
+    private final FacilityPV lastBeamOn;
 
     /**
      * Constructor to register the observables for an ISIS end station.
@@ -49,42 +49,50 @@ public abstract class EndStationObservables extends Observables {
      */
     protected EndStationObservables(PVAddress prefix) {
 
-        beam = adaptEnum(
-                obsFactory.getSwitchableObservable(new EnumChannel<OnOff>(OnOff.class), prefix.endWith("BEAM:STAT")));
-        pps = adaptNumber(obsFactory.getSwitchableObservable(new NumberChannel(), prefix.endWith(FREQ)));
-        beamCurrent = adaptNumber(
-                obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), prefix.endWith(BEAM_CURRENT)));
-        uAHToday = adaptNumber(
-                obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), prefix.endWith("BEAM:TOTAL")));
-        lastBeamOff = adapt(obsFactory.getSwitchableObservable(new DateTimeChannel(), prefix.endWith("BEAMOFF:TIME")));
-        lastBeamOn = adapt(obsFactory.getSwitchableObservable(new DateTimeChannel(), prefix.endWith("BEAMON:TIME")));
+        beam = new FacilityPV(prefix.endWith("BEAM:STAT"),adaptEnum(
+                obsFactory.getSwitchableObservable(new EnumChannel<OnOff>(OnOff.class), prefix.endWith("BEAM:STAT"))));
+        
+        pps = new FacilityPV(prefix.endWith(FREQ), adaptNumber(obsFactory.getSwitchableObservable(new NumberChannel(), prefix.endWith(FREQ))));
+        
+        beamCurrent = new FacilityPV(prefix.endWith(BEAM_CURRENT), adaptNumber(
+                obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), prefix.endWith(BEAM_CURRENT))));
+                
+        uAHToday = new FacilityPV(prefix.endWith("BEAM:TOTAL"), adaptNumber(
+                obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), prefix.endWith("BEAM:TOTAL"))));
+                
+        lastBeamOff = new FacilityPV(prefix.endWith("BEAMOFF:TIME"),
+        		adapt(obsFactory.getSwitchableObservable(new DateTimeChannel(), prefix.endWith("BEAMOFF:TIME"))));
+        
+        lastBeamOn = new FacilityPV( prefix.endWith("BEAMON:TIME"),
+        		adapt(obsFactory.getSwitchableObservable(new DateTimeChannel(), prefix.endWith("BEAMON:TIME"))));
     }
+    
 
     /**
      * @return The updated value for the end station beam status.
      */
-    public UpdatedValue<String> beam() {
+    public FacilityPV beam() {
         return beam;
     }
 
     /**
      * @return The updated value for the end station beam frequency.
      */
-    public UpdatedValue<String> pps() {
+    public FacilityPV pps() {
         return pps;
     }
 
     /**
      * @return The updated value for the end station beam current.
      */
-    public UpdatedValue<String> beamCurrent() {
+    public FacilityPV beamCurrent() {
         return beamCurrent;
     }
 
     /**
      * @return The updated value for the total current today at the end station.
      */
-    public UpdatedValue<String> uAHToday() {
+    public FacilityPV uAHToday() {
         return uAHToday;
     }
 
@@ -92,7 +100,7 @@ public abstract class EndStationObservables extends Observables {
      * @return The updated value for the last time the beam was off for the end
      *         station.
      */
-    public UpdatedValue<String> lastBeamOff() {
+    public FacilityPV lastBeamOff() {
         return lastBeamOff;
     }
 
@@ -100,7 +108,7 @@ public abstract class EndStationObservables extends Observables {
      * @return The updated value for the last time the beam was on for the end
      *         station.
      */
-    public UpdatedValue<String> lastBeamOn() {
+    public FacilityPV lastBeamOn() {
         return lastBeamOn;
     }
 }

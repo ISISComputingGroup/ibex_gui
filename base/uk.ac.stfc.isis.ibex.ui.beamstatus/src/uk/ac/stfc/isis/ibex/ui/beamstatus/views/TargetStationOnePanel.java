@@ -118,23 +118,23 @@ public class TargetStationOnePanel extends Composite {
     private void bind(TS1Observables ts) {
         DataBindingContext bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.text().observe(beam),
-                BeanProperties.value("value").observe(ts.beam()));
-        bindingContext.bindValue(WidgetProperties.text().observe(pps), BeanProperties.value("value").observe(ts.pps()));
+                BeanProperties.value("value").observe(ts.beam().updatedValue));
+        bindingContext.bindValue(WidgetProperties.text().observe(pps), BeanProperties.value("value").observe(ts.pps().updatedValue));
         bindingContext.bindValue(WidgetProperties.text().observe(current),
-                BeanProperties.value("value").observe(ts.beamCurrent()));
+                BeanProperties.value("value").observe(ts.beamCurrent().updatedValue));
         bindingContext.bindValue(WidgetProperties.text().observe(uAhSince0830),
-                BeanProperties.value("value").observe(ts.uAHToday()));
+                BeanProperties.value("value").observe(ts.uAHToday().updatedValue));
         bindingContext.bindValue(WidgetProperties.text().observe(lastOff),
-                BeanProperties.value("value").observe(ts.lastBeamOff()));
+                BeanProperties.value("value").observe(ts.lastBeamOff().updatedValue));
         bindingContext.bindValue(WidgetProperties.text().observe(lastOn),
-                BeanProperties.value("value").observe(ts.lastBeamOn()));
+                BeanProperties.value("value").observe(ts.lastBeamOn().updatedValue));
 
         bindingContext.bindValue(WidgetProperties.text().observe(methaneTemperature),
-                BeanProperties.value("value").observe(ts.methaneTemperature));
+                BeanProperties.value("value").observe(ts.methaneTemperature.updatedValue));
         bindingContext.bindValue(WidgetProperties.text().observe(hydrogenTemperature),
-                BeanProperties.value("value").observe(ts.hydrogenTemperature));
+                BeanProperties.value("value").observe(ts.hydrogenTemperature.updatedValue));
         bindingContext.bindValue(WidgetProperties.text().observe(muonKicker),
-                BeanProperties.value("value").observe(ts.muonKicker));
+                BeanProperties.value("value").observe(ts.muonKicker.updatedValue));
     }
 
 }
