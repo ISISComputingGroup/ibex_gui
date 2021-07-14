@@ -218,7 +218,7 @@ public class RunControlEditorPanel extends Composite {
 		GridData gdBtnManual = new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1);
 		gdBtnManual.widthHint = 100;
 		btnShowManual.setLayoutData(gdBtnManual);
-		btnShowManual.setText("Show Manual \n Run Control");
+		btnShowManual.setText("Show User Manual \n Run Control");
 		btnShowManual.addSelectionListener(new SelectionAdapter() {
 	        @Override
 	        public void widgetSelected(SelectionEvent e) {
