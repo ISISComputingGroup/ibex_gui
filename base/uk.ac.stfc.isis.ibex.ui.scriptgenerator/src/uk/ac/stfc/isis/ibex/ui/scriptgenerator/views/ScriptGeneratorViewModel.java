@@ -398,7 +398,17 @@ public class ScriptGeneratorViewModel extends ModelObject {
      *             the actions to delete.
      */
     protected void deleteAction(List<ScriptGeneratorAction> actionsToDelete) {
+    int selectedIndex = viewTable.getSelectionIndex();
+    // Exclude the last empty row
+    int actionCount = viewTable.table().getItemCount() - 1;
+    // If last action is selected, select new last action, otherwise select next action
+    int toSelect = selectedIndex == actionCount - 1 ? selectedIndex - actionsToDelete.size() : selectedIndex - actionsToDelete.size() + 1;
+    
     scriptGeneratorModel.deleteAction(actionsToDelete);
+    
+    DISPLAY.asyncExec(() -> {
+    	viewTable.setCellFocus(toSelect, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
+    });
     }
 
     /**
