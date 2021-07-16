@@ -69,8 +69,8 @@ public class QueueScriptPreviewDialog extends TitleAreaDialog {
 	 * @return Whether to preview the script or not.
 	 */
 	public Boolean askIfPreviewScript() {
-		String dialogMessage = "Preview the generated script before queuing?";
-		Boolean previewScript = MessageDialog.openQuestion(parentShell, "Preview Script", dialogMessage); 
+		Boolean previewScript = MessageDialog.openQuestion(parentShell, "Preview Script", 
+				"Preview the generated script before queuing?"); 
 		return previewScript;
 	}
 }

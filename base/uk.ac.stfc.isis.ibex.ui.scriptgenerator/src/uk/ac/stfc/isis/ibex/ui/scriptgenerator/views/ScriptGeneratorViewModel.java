@@ -270,15 +270,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
             generatedScriptId -> {
             	scriptGeneratorModel.getScriptFromId(generatedScriptId).ifPresentOrElse(generatedScript -> {
             		if (nicosScriptIds.contains(generatedScriptId)) {
-            			QueueScriptPreviewDialog scriptPreview = new QueueScriptPreviewDialog(Display.getDefault().getActiveShell(), generatedScript);
-            			if (scriptPreview.askIfPreviewScript()) {
-            				if (scriptPreview.open() == IDialogConstants.OK_ID) {
-            					firePropertyChange(NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
-            				}
-            			}
-            			else {
-            				firePropertyChange(NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
-            			}
+            			previewScriptOrQueueDirectly(generatedScript);
             		} else {
             			if (scriptsToGenerateToCurrentFilepath.contains(generatedScriptId)) {
             				saveScriptToCurrentFilepath(generatedScript);
@@ -297,6 +289,18 @@ public class ScriptGeneratorViewModel extends ModelObject {
         });
     });
 
+    }
+    
+    private void previewScriptOrQueueDirectly(String generatedScript) {
+		QueueScriptPreviewDialog scriptPreview = new QueueScriptPreviewDialog(Display.getDefault().getActiveShell(), generatedScript);
+		if (scriptPreview.askIfPreviewScript()) {
+			if (scriptPreview.open() == IDialogConstants.OK_ID) {
+				firePropertyChange(NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
+			}
+		}
+		else {
+			firePropertyChange(NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
+		}
     }
     
     private void saveScriptToCurrentFilepath(String generatedScript) {
