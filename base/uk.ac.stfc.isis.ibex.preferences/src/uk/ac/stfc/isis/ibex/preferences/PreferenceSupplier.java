@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2020 Science & Technology Facilities Council.
+* Copyright (C) 2012-2021 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -25,7 +25,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.net.URL;
 import java.nio.file.Files;
@@ -293,9 +292,9 @@ public class PreferenceSupplier {
 	}
 	
     /**
-     * Gets a list of perspective IDs which should not be shown.
+     * Set which perspectives are hidden to the user for this client.
      * 
-     * @return a list of perspective IDs which should not be shown (may be empty, but never null).
+     * @param preferences a list of perspective IDs which should not be shown
      */
     public void setPerspectivesToHide(List<String> preferences) {
         writablePreferences.put(PERSPECTIVES_TO_HIDE, preferences.stream().collect(Collectors.joining(",")));

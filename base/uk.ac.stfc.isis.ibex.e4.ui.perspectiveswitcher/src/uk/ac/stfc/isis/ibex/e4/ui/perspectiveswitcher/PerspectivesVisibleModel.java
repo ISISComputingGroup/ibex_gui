@@ -34,12 +34,26 @@ import uk.ac.stfc.isis.ibex.managermode.ManagerModePvNotConnectedException;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
+/**
+ * A model holding information about which perspectives are to be made visible.
+ * 
+ * Provides a list of the perspectives and whether they are set to visible locally (e.g. in the preferences) or on the server
+ * as well as information on which settings should be used and whether the remote settings can be altered.
+ *
+ */
 public class PerspectivesVisibleModel extends ModelObject {
     private PerspectivesProvider perspectivesProvider;
     private ArrayList<PerspectiveInfo> perspectiveInfos = new ArrayList<PerspectiveInfo>();
     
-    public static String MANAGER_MODE_ERR = "Manager mode is required";
-    public static String SERVER_COMMS_ERR = "Server unavailable";
+    /**
+     * The error to display to a user if in manager mode.
+     */
+    public static final String MANAGER_MODE_ERR = "Manager mode is required";
+    
+    /**
+     * The error to display to the user if the server cannot be reached.
+     */
+    public static final String SERVER_COMMS_ERR = "Server unavailable";
     
     private Writable<String> writePerspectiveSettings;
     
@@ -56,8 +70,14 @@ public class PerspectivesVisibleModel extends ModelObject {
     private WritableFactory switchingWritableFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
     private ObservableFactory switchingObsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
     
-    private final String PERSPECTIVE_CONFIG_PV = "CS:PERSP:SETTINGS";
+    private static final String PERSPECTIVE_CONFIG_PV = "CS:PERSP:SETTINGS";
     
+    /**
+     * Constructor for the model of which perspectives to show or hide.
+     * @param app The eclipse application.
+     * @param partService The part service.
+     * @param modelService The model service.
+     */
     public PerspectivesVisibleModel(MApplication app, EPartService partService, EModelService modelService) {
         perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
         
@@ -123,24 +143,47 @@ public class PerspectivesVisibleModel extends ModelObject {
         firePropertyChange("remoteErrors", this.remoteErrorReasons, this.remoteErrorReasons = newReasons);
     }
     
+    /**
+     * Get any errors on whether the remote perspectives can be changed.
+     * An empty list means that there are no such errors.
+     * @return A list of the human readable errors that mean the remote settings cannot be altered.
+     */
     public List<String> getRemoteErrors() {
         return remoteErrorReasons;
     }
     
+    /**
+     * Get the list of perspectives and their associated settings.
+     * @return A list of {@link PerspectiveInfo}s for all available perspectives
+     */
     public ArrayList<PerspectiveInfo> getPerspectiveInfo() {
         return perspectiveInfos;
     }
     
+    /**
+     * Get whether the local or server side should be used.
+     * @return True if the local settings should be used.
+     */
     public Boolean getUseLocal() {
         return useLocal;
     }
     
+    /**
+     * Set whether the local or remote settings should be used.
+     * @param useLocal True to use the local settings.
+     */
     public void setUseLocal(Boolean useLocal) {
         this.useLocal = useLocal; 
     }
     
+    /**
+     * Save the settings to both the server and the local preferences.
+     * 
+     * The remote settings will be sent to the server whereas the local settings and which settings to use are saved to the preference supplier.
+     */
     public void saveState() {
         //TODO: test logic
+        //TODO: What happens if the settings become unwritable  whilst dialog up?
         PreferenceSupplier preferenceSupplier = new PreferenceSupplier();
         List<String> locallyVisiblePerspectiveIDs = perspectiveInfos.stream()
                 .filter(persp -> !persp.getVisibleLocally())

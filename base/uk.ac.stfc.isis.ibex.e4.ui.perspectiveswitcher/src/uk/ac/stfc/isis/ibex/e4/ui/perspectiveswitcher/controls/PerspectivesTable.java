@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2021 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -30,24 +28,18 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectiveInfo;
-import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesVisibleModel;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.widgets.CheckboxLabelProvider;
 
 /**
- * Table allowing IOCs to be started and stopped.
- * 
- * Note that all columns in this table are not resizable as the H_SCROLL has
- * been removed and resizing could cause columns to disappear.
- * 
- * The H_SCROLL has been removed as it was appearing despite no extra data being
- * in the table (unsure why)
+ * Table allowing Perspectives to be made visible both remotely and locally.
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class PerspectivesTable extends DataboundTable<PerspectiveInfo> {   
     /**
-     * A table that shows the status of all IOCs on the instrument.
+     * A table that shows whether perspectives are set to be visible just for the 
+     * local client or remotely for all clients.
      * 
      * @param parent
      *            the parent composite for the table.
@@ -64,7 +56,6 @@ public class PerspectivesTable extends DataboundTable<PerspectiveInfo> {
     @Override
     public void setRows(Collection<PerspectiveInfo> rows) {
         List<PerspectiveInfo> states = new ArrayList<>(rows);
-        //Collections.sort(states);
         super.setRows(states);
         refresh();
     }
@@ -85,6 +76,7 @@ public class PerspectivesTable extends DataboundTable<PerspectiveInfo> {
         });
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     private void visibleRemotely() {
         IObservableMap[] observables = {observeProperty("visibleRemotely"), observeProperty("remoteEditable")};
         createColumn("Visible to Users", 4, true, new CheckboxLabelProvider<PerspectiveInfo>(observables) {

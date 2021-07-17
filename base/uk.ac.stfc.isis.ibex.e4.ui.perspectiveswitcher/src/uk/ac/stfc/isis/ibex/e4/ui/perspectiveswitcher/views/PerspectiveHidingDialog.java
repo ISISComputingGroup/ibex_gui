@@ -29,8 +29,11 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.e4.ui.services.IServiceConstants;
 
+/**
+ * A dialog box for selecting which perspectives to show and hide.
+ *
+ */
 public class PerspectiveHidingDialog extends TitleAreaDialog {
     private PerspectivesTable table;
     private PerspectivesVisibleModel model;
@@ -44,6 +47,10 @@ public class PerspectiveHidingDialog extends TitleAreaDialog {
     @Inject
     EModelService modelService;
     
+    /**
+     * Constructor for a dialog box to select which perspectives to show and hide.
+     * @param parentShell The shell to launch the dialog in (injected by eclipse)
+     */
     @Inject
     public PerspectiveHidingDialog(@Named (IServiceConstants.ACTIVE_SHELL) Shell parentShell) {
         super(parentShell);

@@ -75,10 +75,12 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
     
     /**
      * The default constructor for the CheckboxLabelProvider.
-     * @param stateProperties The properties that this label provider should be observing.
+     * @param stateProperty The property that this label provider should be observing, 
+     *                          this property should give the checked value for the box.
      */
+    @SuppressWarnings("unchecked")
     public CheckboxLabelProvider(IObservableMap<T, ?> stateProperty) {
-        this(new IObservableMap[] { stateProperty });
+        this(new IObservableMap[] {stateProperty});
     }
     
 	/**
