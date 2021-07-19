@@ -22,6 +22,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -54,6 +55,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.SaveScriptGeneratorFileMessageDialog;
+import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.QueueScriptPreviewDialog;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -268,7 +270,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
             generatedScriptId -> {
             	scriptGeneratorModel.getScriptFromId(generatedScriptId).ifPresentOrElse(generatedScript -> {
             		if (nicosScriptIds.contains(generatedScriptId)) {
-            			firePropertyChange(NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
+            			previewScriptOrQueueDirectly(generatedScript);
             		} else {
             			if (scriptsToGenerateToCurrentFilepath.contains(generatedScriptId)) {
             				saveScriptToCurrentFilepath(generatedScript);
@@ -287,6 +289,18 @@ public class ScriptGeneratorViewModel extends ModelObject {
         });
     });
 
+    }
+    
+    private void previewScriptOrQueueDirectly(String generatedScript) {
+		QueueScriptPreviewDialog scriptPreview = new QueueScriptPreviewDialog(Display.getDefault().getActiveShell(), generatedScript);
+		if (scriptPreview.askIfPreviewScript()) {
+			if (scriptPreview.open() == IDialogConstants.OK_ID) {
+				firePropertyChange(NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
+			}
+		}
+		else {
+			firePropertyChange(NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
+		}
     }
     
     private void saveScriptToCurrentFilepath(String generatedScript) {
