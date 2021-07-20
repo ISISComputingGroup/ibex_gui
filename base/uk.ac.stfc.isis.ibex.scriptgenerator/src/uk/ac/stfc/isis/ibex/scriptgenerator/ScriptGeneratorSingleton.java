@@ -773,16 +773,44 @@ public class ScriptGeneratorSingleton extends ModelObject {
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException("No Configuration Selected"));
 		
 		try {
-			if (!filePath.endsWith(SCRIPT_GEN_PARAMS_EXT)) {
-				//Strip out other any pre-existing file extension and add the SGP (script generator parameters) file extension
-				filePath = filePath.substring(0, filePath.lastIndexOf('.')) + SCRIPT_GEN_PARAMS_EXT;
-			}
+			filePath = this.getParametersFileNameFromFilepath(filePath);
 			scriptGenFileHandler.saveParameters(scriptGeneratorTable.getActions(), getScriptDefinitionPath(scriptDefinition), filePath);
 		} catch (InterruptedException | ExecutionException e) {
 			registerThreadError(e);
 		}
 	}
 	
+	/**
+	 * Strip out other any pre-existing file extension and add the SGP (script generator parameters) file extension.
+	 * @param filePath The file path, with or without the parameter file extension.
+	 * @return The file path with the parameters file extension.
+	 */
+	public String getParametersFileNameFromFilepath(String filePath) {
+		return addFileExtensionToFilepath(filePath, SCRIPT_GEN_PARAMS_EXT);
+	}
+	
+	/**
+	 * Strip out other any pre-existing file extension and add the script file extension.
+	 * @param filePath The file path, with or without the script file extension.
+	 * @return The file path with the script file extension.
+	 */
+	public String getScriptFileNameFromFilepath(String filePath) {
+		return addFileExtensionToFilepath(filePath, PYTHON_EXT);
+	}
+	
+	/**
+	 * Strip out other any pre-existing file extension and add the given file extension.
+	 * @param filePath The file path, with or without the required file extension.
+	 * @return The file path with the desired file extension.
+	 */
+	private String addFileExtensionToFilepath(String filePath, String ext) {
+		try {
+			return (!filePath.endsWith(ext)) ? filePath.substring(0, filePath.lastIndexOf('.')) + ext : filePath;
+		} catch (StringIndexOutOfBoundsException e) {
+			// If path has file with no extension
+			return filePath + ext;
+		}
+	}
 	
 	/**
 	 * Get the file writer to use to write scripts to file.
