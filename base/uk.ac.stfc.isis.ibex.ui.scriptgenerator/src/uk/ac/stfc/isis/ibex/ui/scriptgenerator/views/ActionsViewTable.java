@@ -296,14 +296,12 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	 */
 	private void updateAction(ScriptGeneratorAction action, int index, TableColumn[] columns) {
 		ScriptGeneratorAction tableAction = (ScriptGeneratorAction) viewer.getElementAt(index);
-		
-		try {
+		if (0 <= index && index < viewer.getTable().getItemCount()) {
 			TableItem item = viewer.getTable().getItem(index);
 			if (tableAction == null || actionChanged(tableAction, action) || valuesDiffer(item, columns, tableAction)) {
 				viewer.replace(action, index);
 			}
-		} catch (IllegalArgumentException e) {
-			// Thrown if we cannot get them item from the table as it doesn't exist so we need to add it
+		} else {
 			viewer.add(action);
 		}
 	}
