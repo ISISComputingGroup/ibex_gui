@@ -35,6 +35,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
+import uk.ac.stfc.isis.ibex.ui.configserver.commands.NewBlockHandler;
 
 
 
@@ -96,6 +97,7 @@ public class BeamInfoView {
 				//Presenter.pvHistoryPresenter().newDisplay(block.blockServerAlias(), block.getName());
 			}
 		};
+		
 //
 //        logSubMenu.addMenuListener(new IMenuListener() {
 //			@Override

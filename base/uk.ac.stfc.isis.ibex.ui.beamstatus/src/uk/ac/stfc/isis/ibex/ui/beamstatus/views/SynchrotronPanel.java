@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.beamstatus.BeamStatus;
 import uk.ac.stfc.isis.ibex.beamstatus.SynchrotronObservables;
+import uk.ac.stfc.isis.ibex.ui.blocks.groups.BlocksMenu;
 
 /**
  * The GUI panel for showing the synchrotron information.
@@ -67,6 +68,8 @@ public class SynchrotronPanel extends Composite {
 
         Label display = new Label(this, SWT.BORDER | SWT.RIGHT);
         display.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        TestMenu menuToUse = new TestMenu(name);
+        display.setMenu(menuToUse.createContextMenu(this));
         return display;
     }
 
