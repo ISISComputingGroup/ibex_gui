@@ -398,11 +398,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      *             the actions to delete.
      */
     protected void deleteAction(List<ScriptGeneratorAction> actionsToDelete) {
-    int selectedIndex = viewTable.getSelectionIndex();
-    // Exclude the last empty row
-    int actionCount = viewTable.table().getItemCount() - 1;
-    // If last action is selected, select new last action, otherwise select next action
-    int toSelect = selectedIndex == actionCount - 1 ? selectedIndex - actionsToDelete.size() : selectedIndex - actionsToDelete.size() + 1;
+    int toSelect = getFocusRowIndexAfterDelete(actionsToDelete);
     
     scriptGeneratorModel.deleteAction(actionsToDelete);
     
@@ -411,6 +407,18 @@ public class ScriptGeneratorViewModel extends ModelObject {
     });
     }
 
+    private int getFocusRowIndexAfterDelete(List<ScriptGeneratorAction> actionsToDelete) {
+    ScriptGeneratorAction lastActionToDelete = actionsToDelete.get(actionsToDelete.size() - 1);
+    int lastActionToDeleteIndex = scriptGeneratorModel.getActions().indexOf(lastActionToDelete);
+    
+    // If last action is selected, select new last action, otherwise select next action
+ 	int focusRowIndex = lastActionToDeleteIndex == scriptGeneratorModel.getActions().size() - 1
+ 						? lastActionToDeleteIndex - actionsToDelete.size() : (lastActionToDeleteIndex - actionsToDelete.size()) + 1;
+    
+    return focusRowIndex;
+    
+    }
+    
     /**
      * Duplicates action at position indices in ActionsTable.
      * 
