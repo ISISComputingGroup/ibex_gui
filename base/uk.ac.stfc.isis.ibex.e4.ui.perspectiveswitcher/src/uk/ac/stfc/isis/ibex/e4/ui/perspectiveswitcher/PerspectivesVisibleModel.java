@@ -32,7 +32,6 @@ import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
 import uk.ac.stfc.isis.ibex.managermode.ManagerModePvNotConnectedException;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
 /**
  * A model holding information about which perspectives are to be made visible.
@@ -45,6 +44,8 @@ public class PerspectivesVisibleModel extends ModelObject {
     private PerspectivesProvider perspectivesProvider;
     private ArrayList<PerspectiveInfo> perspectiveInfos = new ArrayList<PerspectiveInfo>();
     
+    private PerspectivePreferenceSupplier preferenceSupplier = new PerspectivePreferenceSupplier();
+    
     /**
      * The error to display to a user if in manager mode.
      */
@@ -56,6 +57,7 @@ public class PerspectivesVisibleModel extends ModelObject {
     public static final String SERVER_COMMS_ERR = "Server unavailable";
     
     private Writable<String> writePerspectiveSettings;
+    private SwitchableObservable<String> perspectiveSettings;
     
     private List<String> remoteErrorReasons = new ArrayList<String>();
     
@@ -66,7 +68,6 @@ public class PerspectivesVisibleModel extends ModelObject {
     private static final Gson GSON = new Gson();
     private static final Type SERVER_PERSPECTIVE_SETTINGS = new TypeToken<Map<String, Boolean>>() { }.getType();
     
-    //TODO: Definitely need to close this
     private WritableFactory switchingWritableFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
     private ObservableFactory switchingObsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
     
@@ -81,7 +82,7 @@ public class PerspectivesVisibleModel extends ModelObject {
     public PerspectivesVisibleModel(MApplication app, EPartService partService, EModelService modelService) {
         perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
         
-        SwitchableObservable<String> perspectiveSettings = switchingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+        perspectiveSettings = switchingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
                 InstrumentUtils.addPrefix(PERSPECTIVE_CONFIG_PV));
         writePerspectiveSettings = switchingWritableFactory.getSwitchableWritable(new CompressedCharWaveformChannel(),
                 InstrumentUtils.addPrefix(PERSPECTIVE_CONFIG_PV));
@@ -92,7 +93,7 @@ public class PerspectivesVisibleModel extends ModelObject {
         setRemoteInManager();
         
         for (MPerspective perspective : perspectivesProvider.getInitialPerspectives()) {
-            boolean locallyVisible = !(new PreferenceSupplier().perspectivesToHide().contains(perspective.getElementId()));
+            boolean locallyVisible = !preferenceSupplier.perspectivesToHide().contains(perspective.getElementId());
             perspectiveInfos.add(new PerspectiveInfo(perspective.getLabel(), perspective.getElementId(), true, locallyVisible));
         }
         
@@ -112,7 +113,7 @@ public class PerspectivesVisibleModel extends ModelObject {
             }
         });
         
-        useLocal = new PreferenceSupplier().getUseLocalPerspectives();
+        useLocal = preferenceSupplier.getUseLocalPerspectives();
     }
 
     private void setRemoteInManager() {
@@ -183,20 +184,14 @@ public class PerspectivesVisibleModel extends ModelObject {
      */
     public void saveState() {
         //TODO: test logic
-        //TODO: What happens if the settings become unwritable  whilst dialog up?
-        PreferenceSupplier preferenceSupplier = new PreferenceSupplier();
         List<String> locallyVisiblePerspectiveIDs = perspectiveInfos.stream()
                 .filter(persp -> !persp.getVisibleLocally())
                 .map(persp -> persp.getId())
                 .collect(Collectors.toList());
         preferenceSupplier.setPerspectivesToHide(locallyVisiblePerspectiveIDs);
         preferenceSupplier.setUseLocalPerspectives(useLocal);
-        
-        MPerspectiveStack perspectiveStack = perspectivesProvider.getTopLevelStack();
-        Display.getDefault().asyncExec(() ->
-                perspectiveStack.getChildren().stream()
-                .forEach(persp -> persp.setVisible(!locallyVisiblePerspectiveIDs.contains(persp.getElementId()))));
-        JsonSerialisingConverter<Map<String, Boolean>> remoteVisibleSerialiser = new JsonSerialisingConverter<Map<String, Boolean>>(new TypeToken<Map<String, Boolean>>(){}.getType());
+
+        JsonSerialisingConverter<Map<String, Boolean>> remoteVisibleSerialiser = new JsonSerialisingConverter<Map<String, Boolean>>(new TypeToken<Map<String, Boolean>>() { }.getType());
         try {
             String json = remoteVisibleSerialiser.convert(perspectiveInfos.stream().collect(Collectors.toMap(PerspectiveInfo::getId, PerspectiveInfo::getVisibleRemotely)));
             writePerspectiveSettings.write(json);

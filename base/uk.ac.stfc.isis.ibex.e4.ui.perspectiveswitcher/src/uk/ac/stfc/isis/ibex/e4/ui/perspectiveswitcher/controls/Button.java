@@ -24,6 +24,9 @@ import org.eclipse.wb.swt.ResourceManager;
  */
 public abstract class Button extends CLabel {
 
+    /**
+     * The view model that dictates how the button should behave.
+     */
     protected ButtonViewModel model;
     private final DataBindingContext bindingContext = new DataBindingContext();
 

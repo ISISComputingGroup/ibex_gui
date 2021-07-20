@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.Logger;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.services.events.IEventBroker;
 import org.eclipse.e4.ui.model.application.MApplication;
@@ -30,7 +31,7 @@ import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
-import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * Copies all snippet perspectives to perspective stack called
@@ -40,18 +41,19 @@ import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
  */
 public class CopyPerspectiveSnippetProcessor {
 
+    private static final Logger LOG = IsisLog.getLogger(CopyPerspectiveSnippetProcessor.class);
+    
     private PerspectivesProvider perspectivesProvider;
     private MPerspectiveStack perspectiveStack;
 
-    private final PreferenceSupplier preferenceSupplier = new PreferenceSupplier();
+    private final PerspectivePreferenceSupplier preferenceSupplier = new PerspectivePreferenceSupplier();
     
     private static final Gson GSON = new Gson();
     private static final Type SERVER_IOC_DATA_FORMAT = new TypeToken<Map<String, Boolean>>() { }.getType();
     
-    // TODO: need to close this
     private ObservableFactory switchingObsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
 
-    private final String PERSPECTIVE_CONFIG_PV = "CS:PERSP:SETTINGS";
+    private static final String PERSPECTIVE_CONFIG_PV = "CS:PERSP:SETTINGS";
     
     /**
      * Clone each snippet that is a perspective and add the cloned perspective to
@@ -67,49 +69,9 @@ public class CopyPerspectiveSnippetProcessor {
         perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
         perspectiveStack = perspectivesProvider.getTopLevelStack();
 
-        SwitchableObservable<String> displayLog = switchingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+        SwitchableObservable<String> perspectiveSettings = switchingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
                 InstrumentUtils.addPrefix(PERSPECTIVE_CONFIG_PV));
 
-        //TODO: Test this logic, is this the best class for it?
-        
-        displayLog.subscribe(new BaseObserver<String>() {
-            @Override
-            public void onValue(String value) {
-                if (!preferenceSupplier.getUseLocalPerspectives()) {
-                    Map<String, Boolean> visiblePerspectives = GSON.fromJson(value, SERVER_IOC_DATA_FORMAT);
-                    setVisiblePerspectives(visiblePerspectives);
-                }
-            }
-
-            @Override
-            public void onError(Exception e) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void onConnectionStatus(boolean isConnected) {
-                // TODO Auto-generated method stub
-
-            }
-        });
-        
-        preferenceSupplier.addUseLocalPerspectives(useLocal -> {
-            if (useLocal) {
-                setVisiblePerspectives(preferenceSupplier.perspectivesToHide());
-            } else {
-                Map<String, Boolean> visiblePerspectives = GSON.fromJson(displayLog.getValue(), SERVER_IOC_DATA_FORMAT);
-                setVisiblePerspectives(visiblePerspectives);
-            }
-        });
-        
-        preferenceSupplier.addHiddenPerspectivesListener(hiddenPerspectives -> {
-            if (preferenceSupplier.getUseLocalPerspectives()) {
-                setVisiblePerspectives(hiddenPerspectives);
-            }
-        });
-
-        // TODO: Should we just copy it all?
         // Only do this when no other children, or the restored workspace state
         // will be overwritten.
         if (!perspectiveStack.getChildren().isEmpty()) {
@@ -120,29 +82,75 @@ public class CopyPerspectiveSnippetProcessor {
         // perspective into the main PerspectiveStack
         boolean isFirst = true;
         for (MPerspective perspective : perspectivesProvider.getInitialPerspectives()) {
-            if (!preferenceSupplier.perspectivesToHide().contains(perspective.getElementId())) {
-                perspectiveStack.getChildren().add(perspective);
-                if (isFirst) {
-                    perspectiveStack.setSelectedElement(perspective);
-                    isFirst = false;
-                }
+            
+            perspectiveStack.getChildren().add(perspective);
+            if (isFirst) {
+                perspectiveStack.setSelectedElement(perspective);
+                isFirst = false;
             }
             subscribeChangedElement(broker, perspective);
             subscribeSelectedPerspective(broker, perspective);
         }
+        
+        //TODO: Test this logic, is this the best class for it?
+        
+        perspectiveSettings.subscribe(new BaseObserver<String>() {
+            @Override
+            public void onValue(String value) {
+                if (!preferenceSupplier.getUseLocalPerspectives()) {
+                    Map<String, Boolean> visiblePerspectives = GSON.fromJson(value, SERVER_IOC_DATA_FORMAT);
+                    setVisiblePerspectivesAsync(visiblePerspectives);
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                LOG.error("Remote perspective PV in error, using last known good value.");
+            }
+
+            @Override
+            public void onConnectionStatus(boolean isConnected) {
+                if (!isConnected) {
+                    LOG.error("Remote perspective PV disconnected, using last known good value.");
+                }
+            }
+        });
+        
+        preferenceSupplier.addUseLocalPerspectivesListener(useLocal -> {
+            if (useLocal) {
+                setVisiblePerspectives(preferenceSupplier.perspectivesToHide());
+            } else {
+                Map<String, Boolean> visiblePerspectives = GSON.fromJson(perspectiveSettings.getValue(), SERVER_IOC_DATA_FORMAT);
+                setVisiblePerspectivesAsync(visiblePerspectives);
+            }
+        });
+        
+        preferenceSupplier.addHiddenPerspectivesListener(hiddenPerspectives -> {
+            if (preferenceSupplier.getUseLocalPerspectives()) {
+                setVisiblePerspectives(hiddenPerspectives);
+            }
+        });
 
         ResetLayoutButtonModel.getInstance().reset(perspectiveStack.getSelectedElement());
     }
 
+    /**
+     * Set which perspectives are visible based on a list of the ones that are hidden.
+     * @param hiddenPerspectives The list of hidden perspectives
+     */
     private void setVisiblePerspectives(List<String> hiddenPerspectives) {
         Map<String, Boolean> visibilityMap = new HashMap<String, Boolean>();
         for (MPerspective perspective : perspectivesProvider.getInitialPerspectives()) {
             visibilityMap.put(perspective.getElementId(), !hiddenPerspectives.contains(perspective.getElementId()));
         }
-        setVisiblePerspectives(visibilityMap);
+        setVisiblePerspectivesAsync(visibilityMap);
     }
     
-    private void setVisiblePerspectives(Map<String, Boolean> visiblePerspectiveMap) {
+    /**
+     * Set which perspectives are visible based on a map of the perspective ID against and true if visible, false if hidden.
+     * @param visiblePerspectiveMap A map of perspective ID vs true if visible, false if hidden.
+     */
+    private void setVisiblePerspectivesAsync(Map<String, Boolean> visiblePerspectiveMap) {
         Display.getDefault().asyncExec(new Runnable() {
             @Override
             public void run() {
