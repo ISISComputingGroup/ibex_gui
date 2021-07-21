@@ -86,6 +86,12 @@
       <handler
             class="uk.ac.stfc.isis.ibex.ui.scripting.InterruptScript"
             commandId="uk.ac.stfc.isis.ibex.ui.scripting.KillScript">
+    	      <activeWhen>
+		       <with variable="activeWorkbenchWindow.activePerspective">
+		          <equals value="uk.ac.stfc.isis.ibex.ui.reflectometry.perspective">
+		         </equals>
+		      </with>
+	   </activeWhen>
       </handler>
    </extension>
 
