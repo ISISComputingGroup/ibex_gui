@@ -44,7 +44,8 @@ public final class Commands {
 			"import matplotlib \n"
 			+ "matplotlib.use('module://genie_python.matplotlib_backend.ibex_web_backend') \n"
 			+ "from genie_python.genie_startup import * \n"
-			+ "g.from_ibex = True \n";
+			+ "import os \n"
+			+ "os.environ[\"FROM_IBEX\"] = str(True) \n";
 
 	
     private Commands() {
