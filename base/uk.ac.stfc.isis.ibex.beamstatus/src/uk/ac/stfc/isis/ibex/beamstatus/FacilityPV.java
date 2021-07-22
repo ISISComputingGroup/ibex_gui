@@ -10,7 +10,7 @@ public class FacilityPV {
 	
 	
 	public FacilityPV (String PV, UpdatedValue<String> updatedValue) {
-		this.pv = pv;
+		this.pv = PV;
 		this.updatedValue = updatedValue;
 				
 	}

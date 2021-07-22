@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -35,7 +36,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.ExpandItem;
-import uk.ac.stfc.isis.ibex.ui.configserver.commands.NewBlockHandler;
+
+
+
 
 
 
@@ -81,40 +84,6 @@ public class BeamInfoView {
     }
     
     
-    public void BeamInformationMenu(Composite menu) {
-    	
-    	final MenuManager logSubMenu = new MenuManager("Add/Log values");
-        logSubMenu.add(new Action("never shown entry") {
-        	//needed if it's a submenu
-        });
-        // Allows the menu to be dynamic
-        logSubMenu.setRemoveAllWhenShown(true);
 
-        final IAction newPlotAction = new Action("Add/Log values") {
-			@Override
-			public void run() {
-
-				//Presenter.pvHistoryPresenter().newDisplay(block.blockServerAlias(), block.getName());
-			}
-		};
-		
-//
-//        logSubMenu.addMenuListener(new IMenuListener() {
-//			@Override
-//			public void menuAboutToShow(IMenuManager manager) {
-//				logSubMenu.add(newPlotAction);
-//
-//				HashMap<String, ArrayList<String>> dataBrowserData = Presenter.pvHistoryPresenter().getPlotsAndAxes();
-//				for (String plotName : dataBrowserData.keySet()) {
-//				    MenuManager plotSubMenu = new MenuManager("Add to " + plotName + " plot...");
-//
-//				    plotSubMenu.add(createAddToPlotAction(plotName));
-//				    dataBrowserData.get(plotName).stream().forEach(a -> plotSubMenu.add(createAddToAxisAction(plotName, a)));
-//
-//				    logSubMenu.add(plotSubMenu);
-//				}
-//			}
-//        }
-    }
     
 }

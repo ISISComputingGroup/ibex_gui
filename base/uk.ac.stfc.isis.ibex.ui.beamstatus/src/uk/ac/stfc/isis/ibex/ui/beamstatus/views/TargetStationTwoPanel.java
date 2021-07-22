@@ -145,30 +145,68 @@ public class TargetStationTwoPanel extends Composite {
 
     private void bind(TS2Observables ts) {
         DataBindingContext bindingContext = new DataBindingContext();
+        
+        BeamInfoMenu beamMenu = new BeamInfoMenu(ts.beam());
+    	beam.setMenu(beamMenu.createContextMenu(this));
         bindingContext.bindValue(WidgetProperties.text().observe(beam),
                 BeanProperties.value("value").observe(ts.beam().updatedValue));
+        
+        BeamInfoMenu ppsMenu = new BeamInfoMenu(ts.pps());
+    	pps.setMenu(ppsMenu.createContextMenu(this));
         bindingContext.bindValue(WidgetProperties.text().observe(pps), BeanProperties.value("value").observe(ts.pps().updatedValue));
+        
+        BeamInfoMenu beamCurrentMenu = new BeamInfoMenu(ts.beamCurrent());
+    	current.setMenu(beamCurrentMenu.createContextMenu(this));
         bindingContext.bindValue(WidgetProperties.text().observe(current),
                 BeanProperties.value("value").observe(ts.beamCurrent().updatedValue));
+        
+        BeamInfoMenu uAHTodayMenu= new BeamInfoMenu(ts.uAHToday());
+    	uAhSince0830.setMenu(uAHTodayMenu.createContextMenu(this));
         bindingContext.bindValue(WidgetProperties.text().observe(uAhSince0830),
                 BeanProperties.value("value").observe(ts.uAHToday().updatedValue));
+        
+        BeamInfoMenu lastBeamOffMenu = new BeamInfoMenu(ts.lastBeamOff());
+    	lastOff.setMenu(lastBeamOffMenu.createContextMenu(this));
         bindingContext.bindValue(WidgetProperties.text().observe(lastOff),
                 BeanProperties.value("value").observe(ts.lastBeamOff().updatedValue));
+        
+        BeamInfoMenu lastBeamOnMenu = new BeamInfoMenu(ts.lastBeamOn());
+    	lastOn.setMenu(lastBeamOnMenu.createContextMenu(this));
         bindingContext.bindValue(WidgetProperties.text().observe(lastOn),
                 BeanProperties.value("value").observe(ts.lastBeamOn().updatedValue));
-
+        
+        BeamInfoMenu coupledMethaneTempMenu = new BeamInfoMenu(ts.coupledMethaneTemperature);
+    	coupledMethaneTemperature.setMenu(coupledMethaneTempMenu.createContextMenu(this));
         bindingContext.bindValue(WidgetProperties.text().observe(coupledMethaneTemperature),
                 BeanProperties.value("value").observe(ts.coupledMethaneTemperature.updatedValue));
+        
+        BeamInfoMenu coupledHydrogenTempMenu = new BeamInfoMenu(ts.coupledHydrogenTemperature);
+    	coupledHydrogenTemperature.setMenu(coupledHydrogenTempMenu.createContextMenu(this));
         bindingContext.bindValue(WidgetProperties.text().observe(coupledHydrogenTemperature),
                 BeanProperties.value("value").observe(ts.coupledHydrogenTemperature.updatedValue));
+        
+        BeamInfoMenu decoupledMethaneTempMenu = new BeamInfoMenu(ts.decoupledMethaneTemperature);
+    	decoupledMethaneTemperature.setMenu(decoupledMethaneTempMenu.createContextMenu(this));
         bindingContext.bindValue(WidgetProperties.text().observe(decoupledMethaneTemperature),
                 BeanProperties.value("value").observe(ts.decoupledMethaneTemperature.updatedValue));
+        
+        BeamInfoMenu decoupledModeratorMenu = new BeamInfoMenu(ts.decoupledModeratorRuntime);
+    	decoupledModeratorRuntime.setMenu(decoupledModeratorMenu.createContextMenu(this));
         bindingContext.bindValue(WidgetProperties.text().observe(decoupledModeratorRuntime),
                 BeanProperties.value("value").observe(ts.decoupledModeratorRuntime.updatedValue));
+        
+        BeamInfoMenu decoupledModeratorLimitMenu = new BeamInfoMenu(ts.decoupledModeratorRuntimeLimit);
+    	decoupledModeratorRuntimeLimit.setMenu(decoupledModeratorLimitMenu.createContextMenu(this));
         bindingContext.bindValue(WidgetProperties.text().observe(decoupledModeratorRuntimeLimit),
                 BeanProperties.value("value").observe(ts.decoupledModeratorRuntimeLimit.updatedValue));
+        
+        BeamInfoMenu decoupledModeratorAPressureMenu = new BeamInfoMenu(ts.decoupledModeratorAnnealPressure);
+    	decoupledModeratorAnnealPressure.setMenu(decoupledModeratorAPressureMenu.createContextMenu(this));
         bindingContext.bindValue(WidgetProperties.text().observe(decoupledModeratorAnnealPressure),
                 BeanProperties.value("value").observe(ts.decoupledModeratorAnnealPressure.updatedValue));
+        
+        BeamInfoMenu decoupledModeratoruAhBeamMenu = new BeamInfoMenu(ts.decoupledModeratorUAHBeam);
+    	decoupledModeratoruAhBeam.setMenu(decoupledModeratoruAhBeamMenu.createContextMenu(this));
         bindingContext.bindValue(WidgetProperties.text().observe(decoupledModeratoruAhBeam),
                 BeanProperties.value("value").observe(ts.decoupledModeratorUAHBeam.updatedValue));
     }

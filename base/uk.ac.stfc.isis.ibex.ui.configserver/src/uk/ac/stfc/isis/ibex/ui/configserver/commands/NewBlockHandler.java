@@ -47,13 +47,16 @@ import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.EditBlockDialog;
 
+import org.apache.logging.log4j.Logger;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+
 /**
  * The handler class for creating a new block with a default PV.
  */
 public class NewBlockHandler extends AbstractHandler {
     static final ConfigServer SERVER = Configurations.getInstance().server();
     static final Shell SHELL = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-    
+    private static final Logger LOG = IsisLog.getLogger(NewBlockHandler.class);
     /**
      * Open the new block dialogue.
      *
@@ -67,6 +70,7 @@ public class NewBlockHandler extends AbstractHandler {
     	    String pvAddress = getPVFromEvent(event);
             createDialog(pvAddress);
         } catch (Exception ex) {
+        
             MessageDialog.openError(SHELL, "Error", ex.getMessage());
         }
         
@@ -80,8 +84,9 @@ public class NewBlockHandler extends AbstractHandler {
      * @throws TimeoutException thrown if connecting to the server times out
      * @throws IOException thrown if the server cannot be written to
      */
-    private void createDialog(String pvAddress) throws TimeoutException, IOException {
-        ConfigurationViewModels configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
+    public void createDialog(String pvAddress) throws TimeoutException, IOException {
+
+    	ConfigurationViewModels configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
 
         EditableConfiguration config = configurationViewModels.getCurrentConfig();
         BlockFactory blockFactory = new BlockFactory(config);

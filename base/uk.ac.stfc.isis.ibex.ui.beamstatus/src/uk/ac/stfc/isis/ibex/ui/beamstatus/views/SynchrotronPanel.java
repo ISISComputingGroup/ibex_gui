@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
@@ -29,8 +30,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.beamstatus.BeamStatus;
+import uk.ac.stfc.isis.ibex.beamstatus.FacilityPV;
 import uk.ac.stfc.isis.ibex.beamstatus.SynchrotronObservables;
-import uk.ac.stfc.isis.ibex.ui.blocks.groups.BlocksMenu;
+
 
 /**
  * The GUI panel for showing the synchrotron information.
@@ -68,18 +70,41 @@ public class SynchrotronPanel extends Composite {
 
         Label display = new Label(this, SWT.BORDER | SWT.RIGHT);
         display.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        TestMenu menuToUse = new TestMenu(name);
-        display.setMenu(menuToUse.createContextMenu(this));
         return display;
     }
+    
+
+   
 
     private void bind(SynchrotronObservables sync) {
         DataBindingContext bindingContext = new DataBindingContext();
+        
+        BeamInfoMenu beamCurrentMenu = new BeamInfoMenu(sync.beamCurrent);
+    	beamCurrent.setMenu(beamCurrentMenu.createContextMenu(this));
         bindingContext.bindValue(WidgetProperties.text().observe(beamCurrent), BeanProperties.value("value").observe(sync.beamCurrent.updatedValue));
-        bindingContext.bindValue(WidgetProperties.text().observe(beamFrequency), BeanProperties.value("value").observe(sync.beamFrequency.updatedValue));
-        bindingContext.bindValue(WidgetProperties.text().observe(beamEnergy), BeanProperties.value("value").observe(sync.beamEnergy.updatedValue));
-        bindingContext.bindValue(WidgetProperties.text().observe(bunchLength), BeanProperties.value("value").observe(sync.bunchLength.updatedValue));
-        bindingContext.bindValue(WidgetProperties.text().observe(extractDelay), BeanProperties.value("value").observe(sync.extractDelay.updatedValue));
+        
+        BeamInfoMenu beamFrequencyMenu  = new BeamInfoMenu(sync.beamFrequency);
+    	beamFrequency.setMenu(beamFrequencyMenu.createContextMenu(this));
+    	bindingContext.bindValue(WidgetProperties.text().observe(beamFrequency), BeanProperties.value("value").observe(sync.beamFrequency.updatedValue));
+    	
+    	BeamInfoMenu beamEnergyMenu = new BeamInfoMenu(sync.beamEnergy);
+     	beamEnergy.setMenu(beamEnergyMenu.createContextMenu(this));
+    	bindingContext.bindValue(WidgetProperties.text().observe(beamEnergy), BeanProperties.value("value").observe(sync.beamEnergy.updatedValue));
+    	
+    	BeamInfoMenu bunchLengthMenu = new BeamInfoMenu(sync.bunchLength);
+     	bunchLength.setMenu(bunchLengthMenu.createContextMenu(this));
+    	bindingContext.bindValue(WidgetProperties.text().observe(bunchLength), BeanProperties.value("value").observe(sync.bunchLength.updatedValue));
+    	
+    	BeamInfoMenu extractDelayMenu = new BeamInfoMenu(sync.extractDelay);
+     	extractDelay.setMenu(extractDelayMenu.createContextMenu(this));
+    	bindingContext.bindValue(WidgetProperties.text().observe(extractDelay), BeanProperties.value("value").observe(sync.extractDelay.updatedValue));
+        
+        
+        
+    
+ 
     }
+
+    
 
 }
