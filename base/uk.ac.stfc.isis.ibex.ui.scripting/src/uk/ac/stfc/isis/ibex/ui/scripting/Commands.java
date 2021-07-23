@@ -41,11 +41,11 @@ public final class Commands {
 	 * The command to initialise genie.
 	 */
 	public static final String GENIE_INITIALISATION_CMDS = 
-			"import matplotlib \n"
+			"import os \n"
+			+ "os.environ[\"FROM_IBEX\"] = str(True) \n"
+			+ "import matplotlib \n"
 			+ "matplotlib.use('module://genie_python.matplotlib_backend.ibex_web_backend') \n"
-			+ "from genie_python.genie_startup import * \n"
-			+ "import os \n"
-			+ "os.environ[\"FROM_IBEX\"] = str(True) \n";
+			+ "from genie_python.genie_startup import * \n";
 
 	
     private Commands() {
