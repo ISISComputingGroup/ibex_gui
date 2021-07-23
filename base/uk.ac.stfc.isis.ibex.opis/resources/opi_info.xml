@@ -2620,6 +2620,27 @@
         </macros>
       </value>
     </entry>
+    <entry>
+      <key>HIFI Main Cryomagnet control</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>hifi_main_cryomag.opi</path>
+        <description>Controls for the HIFI Main CryoMagnet</description>
+        <macros>
+          <macro>
+            <name>CRYOMAG</name>
+            <description>The CryoMagnet PV prefix (e.g. CRYOSMS_01)</description>
+            <default>CRYOSMS_01</default>
+          </macro>
+          <macro>
+            <name>SHOW_SIMPLIFIED_VIEW</name>
+            <description>Whether or not to show the simplified view of the main CryoMagnet controls (e.g. NO for full controls)</description>
+            <default>YES</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
 	<entry>
       <key>3He Refrigerator</key>
       <value>
@@ -2649,6 +2670,30 @@
           <macro>
             <name>NGEM</name>
             <description>The NGEM PV prefix (e.g. NGEM_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>WISH Vacuum PLC</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>wish_vacuum_plc.opi</path>
+        <description>WISH Vacuum PLC</description>
+        <macros/>
+      </value>
+    </entry>
+    <entry>
+      <key>Tektronix AFG3000</key>
+      <value>
+        <type>FUNCTION_GENERATOR</type>
+        <path>tekafg3xxx.opi</path>
+        <description>Tektronix AFG3000 series function generator</description>
+        <macros>
+          <macro>
+            <name>TEKAFG3XXX</name>
+            <description>The tekafg3xxx PV prefix (e.g. TEKAFG3XXX_01)</description>
+            <default>TEKAFG3XXX_01</default>
           </macro>
         </macros>
       </value>

@@ -42,7 +42,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
@@ -286,7 +285,13 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 			}
 		}
 	} 
-	
+	/**
+	 * Sets Rows without touching focus, called when updating globals so table is updated but focus
+	 * not changed.
+	 */
+	public void setRowsNoFocus(Collection<ScriptGeneratorAction> rows) {
+		viewer.setInput(new WritableList<ScriptGeneratorAction>(rows, null));
+	}
 	/**
 	 * Sets focus of cell.
 	 * @param row row number of table

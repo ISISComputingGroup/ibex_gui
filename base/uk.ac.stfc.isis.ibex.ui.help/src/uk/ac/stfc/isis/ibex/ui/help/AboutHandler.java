@@ -34,7 +34,7 @@ public class AboutHandler {
 	 */
 	@Execute
 	public void execute(Shell shell) {
-		AboutDialogBox dialog = new AboutDialogBox(shell);
+		var dialog = new ClientAboutDialogBox(shell);
 		dialog.open();
 	}
 	

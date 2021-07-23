@@ -17,12 +17,9 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.ui.help;
+package uk.ac.stfc.isis.ibex.ui.about;
 
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
@@ -31,78 +28,53 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-import uk.ac.stfc.isis.ibex.help.Help;
-
 
 /**
- * A panel showing the Ibex client and server version numbers.
+ * A panel showing the application version and java information.
  */
-public class VersionPanel extends Composite {
+public class BaseVersionPanel extends Composite {
 
-    /** The version of the client. */
-	private Label clientVersion;
-    /** The version of the server. */
-	private Label serverVersion;
-    /** The ID of the bundle which owns the client version number. */
-    private final String versionBundleId = "uk.ac.stfc.isis.ibex.product";
+    /** The version of the application. */
+	private Label applicationVersion;
     /** The version of Java that the client is using */
     private Label javaVersion;
     /** The path to the Java that the client is using */
     private Label javaPathLabel;
-    /** The PV prefix the client is using */
-    private Label clientPvPrefix;
 
     /**
      * Construct a new version panel.
      * 
      * @param parent The parent component
      * @param style The style to apply to the panel
+     * @param applicationName The application's name
      */
     @SuppressWarnings("checkstyle:magicnumber")
-	public VersionPanel(Composite parent, int style) {
+	public BaseVersionPanel(Composite parent, int style, String applicationName) {
 		super(parent, style);
 		setLayout(new GridLayout(2, false));
 
+		// Application version
         Label lblClientVersion = new Label(this, SWT.NONE);
         lblClientVersion.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        lblClientVersion.setText("Client Version:");
+        lblClientVersion.setText(applicationName + " Version:");
 
-        clientVersion = new Label(this, SWT.NONE);
-        clientVersion.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        // Not bound as fixed
+        applicationVersion = new Label(this, SWT.NONE);
+        applicationVersion.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         final String versionText = Platform.getProduct().getDefiningBundle().getVersion().toString();
-        clientVersion.setText(versionText);
+        applicationVersion.setText(versionText);
 
-        Label lblPvPrefix = new Label(this, SWT.NONE);
-        lblPvPrefix.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        lblPvPrefix.setText("Client PV Prefix:");
-
-        clientPvPrefix = new Label(this, SWT.NONE);
-        clientPvPrefix.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        // Not bound as fixed
-        final String pvPrefix = Help.getInstance().getPvPrefix();
-        clientPvPrefix.setText(pvPrefix);
-
-		Label lblServerVersion = new Label(this, SWT.NONE);
-		lblServerVersion.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblServerVersion.setText("Server Version:");
-
-		serverVersion = new Label(this, SWT.NONE);
-		GridData serverVersionGd = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		serverVersionGd.widthHint = AboutDialogBox.WIDTH;
-		serverVersion.setLayoutData(serverVersionGd);
-
+        // Java version
         Label lblJavaVersion = new Label(this, SWT.NONE);
         lblJavaVersion.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblJavaVersion.setText("Java Version:");
 
         javaVersion = new Label(this, SWT.NONE);
         GridData javaVersionGd = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-        // Not bound as fixed
         javaVersion.setText(System.getProperty("java.version"));
         javaVersionGd.widthHint = AboutDialogBox.WIDTH;
         javaVersion.setLayoutData(javaVersionGd);
 
+        // Java Location
         Label lblJavaPath = new Label(this, SWT.NONE);
         lblJavaPath.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblJavaPath.setText("Java Path:");
@@ -111,8 +83,6 @@ public class VersionPanel extends Composite {
         GridData javaPathGd = new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1);
         javaPathGd.widthHint = 250;
         javaPathLabel.setLayoutData(javaPathGd);
-
-        // Not bound as fixed
 
         String javaPath = System.getProperties().getProperty("java.home");
         Point pathSize = new GC(javaPathLabel).stringExtent(javaPath);
@@ -125,18 +95,5 @@ public class VersionPanel extends Composite {
         } else {
             javaPathLabel.setText(javaPath);
         }
-        bind(Help.getInstance());
-	}
-
-    /**
-     * Bind the server version as read from the target instrument to the local
-     * server version so we can see changes.
-     * 
-     * @param help The help model which monitors, amongst other things, the
-     *            server version
-     */
-	private void bind(Help help) {
-		DataBindingContext bindingContext = new DataBindingContext();
-		bindingContext.bindValue(WidgetProperties.text().observe(serverVersion), BeanProperties.value("value").observe(help.revision()));	
 	}
 }

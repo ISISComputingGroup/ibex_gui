@@ -127,16 +127,16 @@ public final class LoggingConfiguration {
 		    .getString(PreferenceConstants.P_ARCHIVE_PATTERN);
 	    int maxFiles = prefs
 		    .getInt(PreferenceConstants.P_MAX_ARCHIVE_PER_DAY);
-	    int fileSizeMB = prefs.getInt(PreferenceConstants.P_MAX_FILE_SIZE);
+	    int fileSizeKB = prefs.getInt(PreferenceConstants.P_MAX_FILE_SIZE);
 	    String level = prefs.getString(PreferenceConstants.P_LOGGING_LEVEL);
 
-	    // Apply minimums to int values
+	    // Apply minimums to integer values
 	    if (maxFiles < 1) {
 		maxFiles = 1;
 	    }
 
-	    if (fileSizeMB < MIN_FILE_SIZE_KB) {
-		fileSizeMB = MIN_FILE_SIZE_KB;
+	    if (fileSizeKB < MIN_FILE_SIZE_KB) {
+		fileSizeKB = MIN_FILE_SIZE_KB;
 	    }
 
 	    Level loggingLevel = Level.getLevel(level);
@@ -144,7 +144,7 @@ public final class LoggingConfiguration {
 	    patternLayout = "*" + patternLayout;
 	    filename = directory + "/" + filename;
 	    String pattern = directory + "/" + archivePattern;
-	    int fileSizeInBytes = fileSizeMB * BYTES_PER_KB;
+	    int fileSizeInBytes = fileSizeKB * BYTES_PER_KB;
 
 	    Layout<? extends Serializable> layout = PatternLayout.newBuilder()
 		    .withPattern(patternLayout)
