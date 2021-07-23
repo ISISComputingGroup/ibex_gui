@@ -20,6 +20,10 @@
          id="org.eclipse.e4.rcp"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.persistence.moxy"
+         version="0.0.0"/>
+
    <plugin
          id="uk.ac.stfc.isis.ibex.ui.scriptgenerator"
          download-size="0"
@@ -411,13 +415,6 @@
 
    <plugin
          id="javax.annotation"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="javax.activation"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -892,6 +889,48 @@
 
    <plugin
          id="uk.ac.stfc.isis.ibex.e4.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.diirt.datasource"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.diirt.util"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.diirt.vtype"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.platform.libs.jdbc"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="javax.activation"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="javax.activation-api"
          download-size="0"
          install-size="0"
          version="0.0.0"
