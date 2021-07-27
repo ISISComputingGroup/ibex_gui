@@ -55,8 +55,9 @@ public class SaveScriptGeneratorFileMessageDialog {
 
 	/**
 	 * Opens the dialog and saves the file to the location specified by the user.
+	 * @return The path of the saved script file.
 	 */
-	public void open() {
+	public String open() {
 		String filepath = saveDialog.open();
 		
 		if (filepath != null) {
@@ -68,16 +69,23 @@ public class SaveScriptGeneratorFileMessageDialog {
 			} catch (NoScriptDefinitionSelectedException e) {
 				MessageDialog.openError(parentShell, "Error", "No Script Definition selected");
 			}
-			
-			String dialogMessage = "Script successfully saved to " + filepath + ". Would you like to open the script in an editor?";
-			Boolean openInEditor = MessageDialog.openQuestion(parentShell, "Open in Editor", dialogMessage); 
-			
-			if (openInEditor) {
-				try {
-					model.getFileHandler().openFile(filepath);
-				} catch (OpenFileException | IOException e) {
-					MessageDialog.openWarning(parentShell, "Error", "Failed to open file: " + e.getMessage());
-				}
+		}
+		return filepath;
+	}
+	
+	/**
+	 * Asks the user if they want to open the generated script in an editor.
+	 * @param filepath The path to the script.
+	 */
+	public void askIfOpenInEditor(String filepath) {
+		String dialogMessage = "Script successfully saved to " + filepath + ". Would you like to open the script in an editor?";
+		Boolean openInEditor = MessageDialog.openQuestion(parentShell, "Open in Editor", dialogMessage); 
+		
+		if (openInEditor) {
+			try {
+				model.getFileHandler().openFile(filepath);
+			} catch (OpenFileException | IOException e) {
+				MessageDialog.openWarning(parentShell, "Error", "Failed to open file: " + e.getMessage());
 			}
 		}
 	}
