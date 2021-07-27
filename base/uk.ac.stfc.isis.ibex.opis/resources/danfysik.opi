@@ -5573,7 +5573,7 @@ $(pv_value)</tooltip>
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
-    <name>Model 9100 Interlocks</name>
+    <name>Model 9X00 Interlocks</name>
     <rules>
       <rule name="Rule" prop_id="visible" out_exp="false">
         <exp bool_exp="pvStr0 == &quot;9X00&quot;">
@@ -8355,7 +8355,7 @@ $(pv_value)</tooltip>
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
-    <name>Model 9100 Interlocks</name>
+    <name>Model 9X00 Interlocks</name>
     <rules>
       <rule name="Rule" prop_id="visible" out_exp="false">
         <exp bool_exp="pvStr0 == &quot;9X00&quot;">
