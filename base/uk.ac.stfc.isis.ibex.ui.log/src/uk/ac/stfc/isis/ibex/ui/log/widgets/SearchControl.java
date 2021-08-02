@@ -322,9 +322,9 @@ public class SearchControl extends Canvas {
                 final String value = txtValue.getText();
 
                 final Calendar from = chkFrom.getSelection()
-                        ? dtFromDate.getDateTime() : null;
+                        ? getSearchDateAndTime(dtFromDate.getDateTime(), dtFromTime.getDateTime()) : null;
                 final Calendar to = chkTo.getSelection()
-                        ? dtToDate.getDateTime() : null;
+                        ? getSearchDateAndTime(dtToDate.getDateTime(), dtToTime.getDateTime())  : null;
 
                 runSearchJob(field, value, from, to);
 
@@ -348,6 +348,19 @@ public class SearchControl extends Canvas {
 
         searchJobThread.start();
 	}
+    
+    /**
+     * Get both the date and time search filter as one object.
+     * @param The search date filter.
+     * @param The search time filter.
+     * @return The search calendar date and time filter.
+     */
+    private Calendar getSearchDateAndTime(Calendar date, Calendar time) {
+    	date.set(Calendar.HOUR, time.get(Calendar.HOUR));
+    	date.set(Calendar.MINUTE, time.get(Calendar.MINUTE));
+    	date.set(Calendar.SECOND, time.get(Calendar.SECOND));
+    	return date;
+    }
 
     private void setProgressIndicatorsVisible(final boolean visible) {
 
