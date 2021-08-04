@@ -5,9 +5,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.apache.logging.log4j.Logger;
-
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
@@ -53,45 +53,48 @@ public class ScriptGeneratorFileHandler {
 	 * Open the specified file in notepad++.
 	 * 
 	 * @param filepath The full path to open, including extension
+	 * @param notepadExe The path to the editor (notepad/notepad++)
 	 * @throws OpenFileException Thrown when failing to find notepad to open the file.
 	 * @throws IOException Thrown when attempting to open the file.
 	 */
-	public void openFile(String filepath) 
+	public void openFile(String filepath, String notepadExe) 
 			throws OpenFileException, IOException {
 		File file = new File(filepath);
-		try {
-			if (file.exists()) {
+
+		if (file.exists()) {
+			// Try to open in Notepad++. If not found, display warning and open in Windows Notepad
+			try {
 				Runtime rs = Runtime.getRuntime();
-				String notepadExe = findNotepadExe();
 				rs.exec(String.format("%s %s", notepadExe, file));
-			} else {
-				String notepadLaunchWarning = "Could not launch notepad++, file does not exist";
-				LOG.info(notepadLaunchWarning);
-				LOG.error("Failed to open file " + file.getAbsolutePath());
-				throw new OpenFileException(notepadLaunchWarning);
+			} catch (IOException e) {
+				LOG.catching(e);
+				throw e;
 			}
-		} catch (IOException e) {
-			LOG.catching(e);
+		} else {
+			String notepadLaunchWarning = "File does not exist";
+			LOG.info(notepadLaunchWarning);
 			LOG.error("Failed to open file " + file.getAbsolutePath());
-			throw e;
-		}
+			throw new OpenFileException(notepadLaunchWarning);
+			}
+
 	}
 	
 	/**
-	 * Find the notepad executable so we can launch it to open the file.
+	 * Find the notepad++ executable so we can launch it to open the file.
 	 * 
 	 * @return The location of notepad.exe
-	 * @throws IOException If we fail to find notepad throw this
+	 * @throws IOException If we fail to find notepad++ throw this
 	 */
-	private String findNotepadExe() throws IOException {
+	public String findNotepadExe() throws IOException {
 		String[] possibleLocations = {"C:\\Program Files\\Notepad++", "C:\\Program Files (x86)\\Notepad++"};
+		String notepadExe = "notepad++.exe";
 		for (String location : possibleLocations) {
 			File directory = new File(location);
 			if (directory.exists()) {
 				File[] possibleFiles = directory.listFiles(new FilenameFilter() {
 					@Override
 					public boolean accept(File dir, String name) {
-						return name.equals("notepad++.exe");
+						return name.equals(notepadExe);
 					}
 				});
 				if (possibleFiles.length > 0) {
@@ -99,7 +102,9 @@ public class ScriptGeneratorFileHandler {
 				}
 			}
 		}
-		throw new IOException("Failed to find notepad to launch");
+		String notFoundMessage = String.format("%s not found in %s", notepadExe, Arrays.toString(possibleLocations));
+		LOG.warn(notFoundMessage);
+		throw new IOException(notFoundMessage);
 	}
 
 }
