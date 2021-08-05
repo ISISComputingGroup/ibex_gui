@@ -37,6 +37,12 @@ public class ObservableSynoptic implements Synoptic {
 
 	private final List<Component> components = new ArrayList<>();
 
+	/**
+	 * Create the synoptic layout given the description of the instrument synoptic and the variables information.
+	 * 
+	 * @param instrument The instrument synoptic description.
+	 * @param variables The variables containing the information to observe.
+	 */
 	public ObservableSynoptic(SynopticDescription instrument, Variables variables) {
 		this.instrument = instrument;
 

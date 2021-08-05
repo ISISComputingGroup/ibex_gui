@@ -24,8 +24,31 @@ import java.util.List;
  * Interface to allow for general access to component parents.
  */
 public interface SynopticParentDescription {
+	
+	/**
+	 * @return The components of this parent.
+	 */
 	List<ComponentDescription> components();
+	
+	/**
+	 * Add the given component to this parent.
+	 * 
+	 * @param component The component to add.
+	 */
 	void addComponent(ComponentDescription component);
+	
+	/**
+	 * Add the given component to this parent at the given index.
+	 * 
+	 * @param component The component to add.
+	 * @param index The index to add it at.
+	 */
 	void addComponent(ComponentDescription component, int index);
+	
+	/**
+	 * Remove the given component from this parent.
+	 * 
+	 * @param component The component to remove.
+	 */
 	void removeComponent(ComponentDescription component);
 }
