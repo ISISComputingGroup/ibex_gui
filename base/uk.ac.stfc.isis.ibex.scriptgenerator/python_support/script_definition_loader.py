@@ -1,7 +1,7 @@
 from py4j.clientserver import ClientServer, JavaParameters, PythonParameters
 from py4j.java_collections import ListConverter, JavaList, JavaMap, MapConverter
 from py4j.protocol import Py4JError
-from genie_python.genie_script_generator import ScriptDefinition, CopyPreviousRow
+from genie_python.genie_script_generator import ScriptDefinition, CopyPreviousRow, GlobalParamValidationError
 from typing import Dict, AnyStr, Union, List, Tuple
 from inspect import signature
 import inspect
@@ -174,6 +174,8 @@ class ScriptDefinitionWrapper(object):
             return 'Expected type: "{}" for global: "{}" but received: "{}"\n'.format(
                 str(list(self.script_definition.global_params_definition.values())[index][1])[8:-2],
                 list(self.script_definition.global_params_definition.keys())[index], global_param)
+        except GlobalParamValidationError as e:
+            return str(e)
 
     def parametersValid(self, action, global_params) -> Union[None, AnyStr]:
         """
