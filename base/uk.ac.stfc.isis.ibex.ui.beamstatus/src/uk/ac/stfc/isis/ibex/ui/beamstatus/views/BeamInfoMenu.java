@@ -9,11 +9,15 @@ import org.eclipse.jface.action.Action;
 
 
 import org.eclipse.jface.action.MenuManager;
-
+import org.eclipse.ui.IPerspectiveRegistry;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.beamstatus.FacilityPV;
-
+import uk.ac.stfc.isis.ibex.ui.blocks.presentation.Presenter;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.NewBlockHandler;
+
 
 /*
  * Right-click menu from Beam Information
@@ -22,6 +26,8 @@ import uk.ac.stfc.isis.ibex.ui.configserver.commands.NewBlockHandler;
 public class BeamInfoMenu extends MenuManager  {
 	
 	FacilityPV facilityPV;
+	private static final String LOG_PLOTTER_PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.logplotter";
+
 	
 	 /**
      * The constructor, creates the menu for when the specific facility PV is right-clicked on.
@@ -30,14 +36,15 @@ public class BeamInfoMenu extends MenuManager  {
      */
     public BeamInfoMenu(FacilityPV facilityPV) {
     	
+    	// Creating right-click menu
     	 
-        add(new Action("Add/log: "+facilityPV.pv) {
+        add(new Action("Add to config: "+facilityPV.pv) { //Opening configuration dialog window
             @Override
             public void run() {
                
             	try {
             		
-					new NewBlockHandler().createDialog(facilityPV.pv); // Creating right-click menu
+					new NewBlockHandler().createDialog(facilityPV.pv);
 					
 				} catch (TimeoutException e) {
 					
@@ -49,6 +56,25 @@ public class BeamInfoMenu extends MenuManager  {
                 super.run();
             }
         });
+        
+        add(new Action("Log Plotter "+ facilityPV.pv) { //Opening log plotter window
+        	public void run() {
+        	    		
+        			switchToLogPlotter();
+        			Presenter.pvHistoryPresenter().newDisplay(facilityPV.pv, facilityPV.pv);
+      
+        	}
+        });
+    }
+    
+    /**
+     * Switching perspective to log plotter
+     */
+    private static void switchToLogPlotter() {
+        final IWorkbench workbench = PlatformUI.getWorkbench();
+        final IPerspectiveRegistry registry = workbench.getPerspectiveRegistry();
+        final IWorkbenchPage page = workbench.getActiveWorkbenchWindow().getActivePage();
+        page.setPerspective(registry.findPerspectiveWithId(LOG_PLOTTER_PERSPECTIVE_ID));
     }
     
    
