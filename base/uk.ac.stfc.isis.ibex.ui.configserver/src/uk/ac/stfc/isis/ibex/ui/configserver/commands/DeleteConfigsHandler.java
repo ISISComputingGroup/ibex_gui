@@ -28,6 +28,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
@@ -47,6 +48,16 @@ public class DeleteConfigsHandler extends DisablingConfigHandler<Collection<Stri
 	}
 	
 	/**
+	 * Opens dialog to confirm deleting configurations
+	 * @param selectedConfigs Configs that will be displayed in confirmation
+	 * @return
+	 */
+    private boolean deleteConfigsConfirmDialog(Collection<String> selectedConfigs) {
+        return MessageDialog.openQuestion(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Confirm Delete Configurations",
+                "The following configurations " + selectedConfigs + " will be permanently deleted. Are you sure you want to delete them?");
+    }
+	
+	/**
 	 * Open the delete configs dialogue.
 	 *
 	 * @param shell the shell
@@ -57,31 +68,33 @@ public class DeleteConfigsHandler extends DisablingConfigHandler<Collection<Stri
         MultipleConfigsSelectionDialog dialog = new MultipleConfigsSelectionDialog(shell, "Delete Configurations",
                 SERVER.configsInfo().getValue(), configNamesWithFlags, false, false);
 		if (dialog.open() == Window.OK) {
-		    try {		        
-		        configService.write(dialog.selectedConfigs());
-	            boolean noError = true;
-		    	if (!ManagerModeModel.getInstance().isInManagerMode()) {
-		    		for (String item: dialog.selectedConfigs()) {
-		    			if (configNamesWithFlags.get(item)) {
-		    				noError = false;
-		    				displayErrorDialog(shell);
-		    				break;
-		    			}
-		    		}
-		    	}
-				// Delete selected configs from recently loaded config lists if in Manager mode 
-				if (noError) {	
-					for (String item : dialog.selectedConfigs()) {
-						Configurations.getInstance().removeNameFromRecentlyLoadedConfigList(item);
+	    	if(deleteConfigsConfirmDialog(dialog.selectedConfigs()))
+	    	{
+			    try {		        
+			        configService.write(dialog.selectedConfigs());
+		            boolean noError = true;
+			    	if (!ManagerModeModel.getInstance().isInManagerMode()) {
+			    		for (String item: dialog.selectedConfigs()) {
+			    			if (configNamesWithFlags.get(item)) {
+			    				noError = false;
+			    				displayErrorDialog(shell);
+			    				break;
+			    			}
+			    		}
+			    	}
+					// Delete selected configs from recently loaded config lists if in Manager mode 
+					if (noError) {	
+						for (String item : dialog.selectedConfigs()) {
+							Configurations.getInstance().removeNameFromRecentlyLoadedConfigList(item);
+						}
 					}
+						
+			    } catch (ManagerModePvNotConnectedException | IOException e) {
+					MessageDialog error = new MessageDialog(shell, "Error", null, e.getMessage(),
+							MessageDialog.ERROR, new String[] {"OK"}, 0);
+					error.open();
 				}
-					
-		    } catch (ManagerModePvNotConnectedException | IOException e) {
-				MessageDialog error = new MessageDialog(shell, "Error", null, e.getMessage(),
-						MessageDialog.ERROR, new String[] {"OK"}, 0);
-				error.open();
-			}
-		    
+	    	}
 		}
 	}
 	

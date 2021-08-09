@@ -28,6 +28,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
 import uk.ac.stfc.isis.ibex.managermode.ManagerModePvNotConnectedException;
@@ -48,6 +49,16 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
 	public DeleteComponentsHandler() {
 		super(SERVER.deleteComponents());
 	}
+	
+	/**
+	 * Opens dialog to confirm deleting components
+	 * @param selectedConfigs Components that will be displayed in confirmation
+	 * @return
+	 */
+    private boolean deleteComponentsConfirmDialog(Collection<String> selectedComponents) {
+        return MessageDialog.openQuestion(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Confirm Delete Components",
+                "The following components " + selectedComponents + " will be permanently deleted. Are you sure you want to delete them?");
+    }
 
     /**
      * Open the delete components dialogue.
@@ -63,28 +74,30 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
                 SERVER.componentsInfo().getValue(), viewModel.getDependencies().keySet(), compNamesWithFlags);
         if (dialog.open() == Window.OK) {
             Collection<String> toDelete = dialog.selectedConfigs();
-            Map<String, Collection<String>> selectedDependencies = viewModel.filterSelected(toDelete);
-            try {
-                if (selectedDependencies.isEmpty()) {
-                    configService.write(toDelete);
-                } else {
-                    displayWarning(selectedDependencies, shell);
-                    safeExecute(shell);
-                }
-                if (!ManagerModeModel.getInstance().isInManagerMode()) {
-                    for (String item: dialog.selectedConfigs()) {
-                        if (compNamesWithFlags.get(item)) {
-                            displayError(shell);
-                            break;
+            if(deleteComponentsConfirmDialog(toDelete))
+            {
+                Map<String, Collection<String>> selectedDependencies = viewModel.filterSelected(toDelete);
+                try {
+                    if (selectedDependencies.isEmpty()) {
+                        configService.write(toDelete);
+                    } else {
+                        displayWarning(selectedDependencies, shell);
+                        safeExecute(shell);
+                    }
+                    if (!ManagerModeModel.getInstance().isInManagerMode()) {
+                        for (String item: dialog.selectedConfigs()) {
+                            if (compNamesWithFlags.get(item)) {
+                                displayError(shell);
+                                break;
+                            }
                         }
                     }
+                } catch (ManagerModePvNotConnectedException | IOException e) {
+                    MessageDialog error = new MessageDialog(shell, "Error", null, e.getMessage(),
+                        MessageDialog.ERROR, new String[] {"OK"}, 0);
+                    error.open();
                 }
-            } catch (ManagerModePvNotConnectedException | IOException e) {
-                MessageDialog error = new MessageDialog(shell, "Error", null, e.getMessage(),
-                    MessageDialog.ERROR, new String[] {"OK"}, 0);
-                error.open();
             }
-            
         }
     }
     
