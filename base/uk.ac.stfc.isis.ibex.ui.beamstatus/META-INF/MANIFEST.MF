@@ -29,7 +29,9 @@ Export-Package: uk.ac.stfc.isis.ibex.ui.beamstatus,
 Import-Package: org.eclipse.wb.swt,
  uk.ac.stfc.isis.ibex.configserver.configuration,
  uk.ac.stfc.isis.ibex.configserver.editing,
+ uk.ac.stfc.isis.ibex.ui.blocks.presentation,
  uk.ac.stfc.isis.ibex.ui.configserver.dialogs,
  uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs,
+ uk.ac.stfc.isis.ibex.ui.logplotter,
  uk.ac.stfc.isis.ibex.validators
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.beamstatus
