@@ -37,7 +37,7 @@ public interface ScriptDefinitionWrapper {
 	 * @param action The action to check for validity.
 	 * @return The error if the arguments are not valid.
 	 */
-	String parametersValid(Map<String, String> action);
+	String parametersValid(Map<String, String> action, List<String> global_params);
 	
     /**
      * Estimate how long the action is expected to take.

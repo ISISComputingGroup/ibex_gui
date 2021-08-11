@@ -106,7 +106,7 @@ class ScriptDefinitionWrapper(object):
             arguments: List of the parameter names (strings)
         """
         list_of_globals = []
-        if hasattr(self.script_definition, "global_params_definition"):
+        if self.hasGlobalParameters():
             arguments = self.script_definition.global_params_definition
             for arg in arguments:
                 name = arg
@@ -115,6 +115,26 @@ class ScriptDefinitionWrapper(object):
                 list_of_globals.append(action_parameter)
 
         return ListConverter().convert(list_of_globals, gateway._gateway_client)
+    
+    def setGlobalParameters(self, global_params):
+        """
+        Using global_params set the global parameters for the script definition.
+
+        Args:
+            global_params: the values to assign to the global parameters.
+
+        Throws:
+            ValueError: if at least one of the global parameters cannot be cast to the correct type.
+        """
+        defs_and_vals = zip(self.script_definition.global_params_definition.items(), global_params)
+        self.script_definition.global_params = {name: type_[1](val) for (name, type_), val in defs_and_vals}
+
+    def hasGlobalParameters(self):
+        """
+        Returns:
+            True if this script definition has global parameters, or False if not.
+        """
+        return hasattr(self.script_definition, "global_params_definition")
 
     def getHelp(self) -> str:
         """
@@ -145,7 +165,7 @@ class ScriptDefinitionWrapper(object):
         Returns:
             None if all params are valid.
         """
-        if not hasattr(self.script_definition, "global_params_definition"):
+        if not self.hasGlobalParameters():
             return
         try:
             list(self.script_definition.global_params_definition.values())[index][1](global_param)
@@ -155,7 +175,7 @@ class ScriptDefinitionWrapper(object):
                 str(list(self.script_definition.global_params_definition.values())[index][1])[8:-2],
                 list(self.script_definition.global_params_definition.keys())[index], global_param)
 
-    def parametersValid(self, action) -> Union[None, AnyStr]:
+    def parametersValid(self, action, global_params) -> Union[None, AnyStr]:
         """
         Checks if the parameters are valid for the script_definition
 
@@ -166,11 +186,17 @@ class ScriptDefinitionWrapper(object):
             None if all parameters are valid, otherwise a String containing an error message.
         """
         try:
+            if self.hasGlobalParameters():
+                try:
+                    self.setGlobalParameters(global_params)
+                except ValueError as e:
+                    return f"Global parameter value is of the wrong type.\nDetails: {e}"
+
             return self.script_definition.parameters_valid(**action)
         except Exception as e:
             return str(e)  # If there is an error validating return to the user
 
-    def estimateTime(self, action, globalparams) -> Union[None, int]:
+    def estimateTime(self, action, global_params) -> Union[None, int]:
         """
         Returns an estimate (in seconds) of the time necessary to complete the action
 
@@ -182,9 +208,8 @@ class ScriptDefinitionWrapper(object):
             or None if the parameters are invalid or the estimate could not be calculated
         """
         try:
-            if hasattr(self.script_definition, "global_params_definition"):
-                self.script_definition.global_params = dict(zip(self.script_definition.global_params_definition.keys(),
-                                                                globalparams))
+            if self.hasGlobalParameters():
+                self.setGlobalParameters(global_params)
             estimate = self.script_definition.estimate_time(**action)
             return round(estimate)
         except (ValueError, TypeError, KeyError) as ex:
@@ -226,7 +251,7 @@ class Generator(object):
             True if valid, False if not
         """
         for action in list_of_actions:
-            if script_definition.parametersValid(action) != None:
+            if script_definition.parametersValid(action, global_params) != None:
                 return False
         i = 0
         for global_param in global_params:
@@ -254,7 +279,7 @@ class Generator(object):
         param_type_index = 1
         current_action_index = 0
         for action in list_of_actions:
-            singleActionValidityCheck = script_definition.parametersValid(action)
+            singleActionValidityCheck = script_definition.parametersValid(action, global_params)
             if singleActionValidityCheck != None:
                 validityCheck[param_type_index][current_action_index] = singleActionValidityCheck
             current_action_index += 1
@@ -271,7 +296,7 @@ class Generator(object):
         """
         time_estimates: Dict[int, int] = {}
         for current_action_index, action in enumerate(list_of_actions, 0):
-            if script_definition.parametersValid(action) is None:
+            if script_definition.parametersValid(action, global_params) is None:
                 time_estimate = script_definition.estimateTime(action, global_params)
                 if time_estimate != None:
                     time_estimates[current_action_index] = time_estimate
