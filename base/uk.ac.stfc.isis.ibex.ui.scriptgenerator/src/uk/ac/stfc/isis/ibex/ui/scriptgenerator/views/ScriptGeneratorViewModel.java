@@ -457,7 +457,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
             "Warning",
             "This will delete all actions, are you sure you want to continue?");
         if (userConfirmation) {
-        scriptGeneratorModel.clearAction();
+        scriptGeneratorModel.clearActions();
         }
     });
     }
@@ -715,7 +715,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private PropertyChangeListener scriptDefinitionSwitchHelpListener = new PropertyChangeListener() {
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {    	
+    public void propertyChange(PropertyChangeEvent evt) {
+    	scriptGeneratorModel.clearActions();
         for (Label label : globalLabel) {
         	label.dispose();
         }
