@@ -741,6 +741,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
                 helpText.setText("");
             });
         }
+        scriptGeneratorModel.clearActions();
     }
     };
     

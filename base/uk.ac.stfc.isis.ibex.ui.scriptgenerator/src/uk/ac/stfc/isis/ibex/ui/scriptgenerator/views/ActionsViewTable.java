@@ -67,6 +67,9 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	private static final String NEW_LINE = "\r\n";
 	private final ScriptGeneratorViewModel scriptGeneratorViewModel;
 	private static final  Integer NON_EDITABLE_COLUMNS_ON_RIGHT = 2;
+	/**
+	 * The number of read only columns on the left of the table.
+	 */
 	protected static final Integer NON_EDITABLE_COLUMNS_ON_LEFT = 1;
 	private List<StringEditingSupport<ScriptGeneratorAction>> editingSupports = new ArrayList<StringEditingSupport<ScriptGeneratorAction>>();
 	
@@ -239,10 +242,10 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	
 	private boolean estimatedTimeChanged(String columnHeader, TableItem item, int column, ScriptGeneratorAction action) {
 		var estimatedTimeText = item.getText(column);
-		return columnHeader.equals(ScriptGeneratorViewModel.ESTIMATED_RUN_TIME_COLUMN_HEADER) &&
-				(
-						(action.getEstimatedTime().isEmpty() && !estimatedTimeText.equals(ScriptGeneratorViewModel.UNKNOWN_TEXT)) ||
-						(action.getEstimatedTime().isPresent() && !estimatedTimeText.equals(ScriptGeneratorViewModel.changeSecondsToTimeFormat(action.getEstimatedTime().get().longValue())))
+		return columnHeader.equals(ScriptGeneratorViewModel.ESTIMATED_RUN_TIME_COLUMN_HEADER) 
+				&& (
+						(action.getEstimatedTime().isEmpty() && !estimatedTimeText.equals(ScriptGeneratorViewModel.UNKNOWN_TEXT)) 
+						|| (action.getEstimatedTime().isPresent() && !estimatedTimeText.equals(ScriptGeneratorViewModel.changeSecondsToTimeFormat(action.getEstimatedTime().get().longValue())))
 				);
 	}
 	
@@ -261,9 +264,9 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 			var columnHeader = column.getText();
 			var actionParameterValues = action.getActionParameterValueMapAsStrings();
 			Optional<String> parameterValue = Optional.ofNullable(actionParameterValues.get(columnHeader));
-			if (parameterValueChanged(parameterValue, item, columnNumber) || 
-					validityChanged(columnHeader, item, columnNumber, action) || 
-					estimatedTimeChanged(columnHeader, item, columnNumber, action)) {
+			if (parameterValueChanged(parameterValue, item, columnNumber) 
+					|| validityChanged(columnHeader, item, columnNumber, action) 
+					|| estimatedTimeChanged(columnHeader, item, columnNumber, action)) {
 				return true;
 			} 
 			columnNumber++;
@@ -272,10 +275,10 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	}
 	
 	private boolean actionChanged(ScriptGeneratorAction tableAction, ScriptGeneratorAction newAction) {
-		return tableAction == null ||
-				!tableAction.equals(newAction) ||
-				tableAction.isValid() != newAction.isValid() ||
-				tableAction.getEstimatedTime() != newAction.getEstimatedTime();
+		return tableAction == null 
+				|| !tableAction.equals(newAction) 
+				|| tableAction.isValid() != newAction.isValid() 
+				|| tableAction.getEstimatedTime() != newAction.getEstimatedTime();
 	}
 	
 	/**
@@ -284,14 +287,14 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	 * @param newActions The actions that we want to display.
 	 */
 	private void removeDeletedRows(List<ScriptGeneratorAction> newActions) {
-		int numberOfActionsToRemove = viewer.getTable().getItemCount() - newActions.size();
-		if (numberOfActionsToRemove > 0) {
-			Object[] elementsToRemove = new Object[numberOfActionsToRemove];
-			for (int i = newActions.size(); i < viewer.getTable().getItemCount(); i++) {
-				elementsToRemove[i - newActions.size()] = viewer.getElementAt(i);
+		List<TableItem> elementsToRemove = new ArrayList<TableItem>();
+		for (TableItem element : viewer.getTable().getItems()) {
+			ScriptGeneratorAction action = (ScriptGeneratorAction) element.getData();
+			if (action != null && !newActions.contains(action)) {
+				elementsToRemove.add(element);
 			}
-			viewer.remove(elementsToRemove);
 		}
+		viewer.remove(elementsToRemove);
 	}
 	
 	/**
