@@ -19,8 +19,8 @@ import uk.ac.stfc.isis.ibex.ui.blocks.presentation.Presenter;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.NewBlockHandler;
 
 
-/*
- * Right-click menu from Beam Information
+/**
+ * Right-click menu from Beam Information.
  * 
  */
 public class BeamInfoMenu extends MenuManager  {
@@ -38,7 +38,7 @@ public class BeamInfoMenu extends MenuManager  {
     	
     	// Creating right-click menu
     	 
-        add(new Action("Add to config: "+facilityPV.pv) { //Opening configuration dialog window
+        add(new Action("Add block to config: " + facilityPV.pv) { //Opening configuration dialog window
             @Override
             public void run() {
                
@@ -57,7 +57,7 @@ public class BeamInfoMenu extends MenuManager  {
             }
         });
         
-        add(new Action("Log Plotter "+ facilityPV.pv) { //Opening log plotter window
+        add(new Action("Open in Log Plotter: " + facilityPV.pv) { //Opening log plotter window
         	public void run() {
         	    		
         			switchToLogPlotter();
