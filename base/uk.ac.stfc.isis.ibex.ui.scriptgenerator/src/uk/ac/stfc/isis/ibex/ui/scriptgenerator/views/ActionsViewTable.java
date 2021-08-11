@@ -287,14 +287,15 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	 * @param newActions The actions that we want to display.
 	 */
 	private void removeDeletedRows(List<ScriptGeneratorAction> newActions) {
-		List<TableItem> elementsToRemove = new ArrayList<TableItem>();
-		for (TableItem element : viewer.getTable().getItems()) {
-			ScriptGeneratorAction action = (ScriptGeneratorAction) element.getData();
+		List<Object> elementsToRemove = new ArrayList<Object>();
+		var itemCount = viewer.getTable().getItemCount();
+		for (int i = 0; i < itemCount; i++) {
+			ScriptGeneratorAction action = (ScriptGeneratorAction) viewer.getElementAt(i);
 			if (action != null && !newActions.contains(action)) {
-				elementsToRemove.add(element);
+				elementsToRemove.add(action);
 			}
 		}
-		viewer.remove(elementsToRemove);
+		viewer.remove(elementsToRemove.toArray());
 	}
 	
 	/**
@@ -309,7 +310,8 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 		ScriptGeneratorAction tableAction = (ScriptGeneratorAction) viewer.getElementAt(index);
 		if (0 <= index && index < viewer.getTable().getItemCount()) {
 			TableItem item = viewer.getTable().getItem(index);
-			if (tableAction == null || actionChanged(tableAction, action) || valuesDiffer(item, columns, tableAction)) {
+			if (tableAction == null || actionChanged(tableAction, action) || valuesDiffer(item, columns, tableAction)
+					|| Integer.valueOf(index).toString() != item.getText(0)) {
 				viewer.replace(action, index);
 			}
 		} else {
