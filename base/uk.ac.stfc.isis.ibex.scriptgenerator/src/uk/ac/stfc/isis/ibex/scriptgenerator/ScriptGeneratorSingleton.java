@@ -445,10 +445,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * Removes action at position index from ActionsTable.
 	 * 
-	 * @param actionsToDeletes the actions to delete.
+	 * @param actionsToDelete the actions to delete.
 	 */
-	public void deleteAction(List<ScriptGeneratorAction> actionsToDeletes) {
-		scriptGeneratorTable.deleteAction(actionsToDeletes);
+	public void deleteAction(List<ScriptGeneratorAction> actionsToDelete) {
+		scriptGeneratorTable.deleteAction(actionsToDelete);
 	}
 
 	/**

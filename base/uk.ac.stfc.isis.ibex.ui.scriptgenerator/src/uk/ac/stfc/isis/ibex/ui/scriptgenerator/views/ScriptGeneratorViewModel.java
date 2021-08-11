@@ -412,9 +412,27 @@ public class ScriptGeneratorViewModel extends ModelObject {
      *             the actions to delete.
      */
     protected void deleteAction(List<ScriptGeneratorAction> actionsToDelete) {
+    int toSelect = getFocusRowIndexAfterDelete(actionsToDelete);
+    
     scriptGeneratorModel.deleteAction(actionsToDelete);
+    
+    DISPLAY.asyncExec(() -> {
+    	viewTable.setCellFocus(toSelect, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
+    });
     }
 
+    private int getFocusRowIndexAfterDelete(List<ScriptGeneratorAction> actionsToDelete) {
+    ScriptGeneratorAction lastActionToDelete = actionsToDelete.get(actionsToDelete.size() - 1);
+    int lastActionToDeleteIndex = scriptGeneratorModel.getActions().indexOf(lastActionToDelete);
+    
+    // If last action is selected, select new last action, otherwise select next action
+ 	int focusRowIndex = lastActionToDeleteIndex == scriptGeneratorModel.getActions().size() - 1
+ 						? lastActionToDeleteIndex - actionsToDelete.size() : (lastActionToDeleteIndex - actionsToDelete.size()) + 1;
+    
+    return focusRowIndex;
+    
+    }
+    
     /**
      * Duplicates action at position indices in ActionsTable.
      * 

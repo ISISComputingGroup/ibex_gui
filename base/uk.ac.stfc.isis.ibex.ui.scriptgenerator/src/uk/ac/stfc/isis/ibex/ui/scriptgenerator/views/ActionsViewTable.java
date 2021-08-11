@@ -62,6 +62,8 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	*/
 	private static final int CTRL_C = 0x003; 
 	private static final int CTRL_V = 0x016;
+	private static final int CTRL_A = 0x001;
+	private static final int DEL = 0x07F;
 	private static final String TAB = "\t";
 	private static final String NEW_LINE = "\r\n";
 	private final ScriptGeneratorViewModel scriptGeneratorViewModel;
@@ -101,15 +103,20 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 			public void keyPressed(KeyEvent e) {	 
 				if (e.character == CTRL_C) {	
 					 scriptGeneratorViewModel.copyActions(getSelectedTableData());
-			
 				} else if (e.character == CTRL_V) {
 					scriptGeneratorViewModel.pasteActions(table.getSelectionIndex());
+				} else if (e.character == CTRL_A) {
+					table.selectAll();
+				} else if (e.character == DEL) {
+					List<ScriptGeneratorAction> selected = selectedRows();
+					if (selected != null && !selected.isEmpty())  {
+						scriptGeneratorViewModel.deleteAction(selected);
+					}
 				}
 			}
 		});
-		
     }
-	
+		
     /**
      * Format String data such that copying and pasting into excel would work. Clipboard does not support
      * transferring/pasting data to excel so we format plain text data ourselves.

@@ -424,6 +424,7 @@ public class ScriptGeneratorView {
         
         btnDeleteAction = new Button(actionsControlsGrp, SWT.NONE);
         btnDeleteAction.setText("Delete Selected Actions");
+        btnDeleteAction.setToolTipText("Delete a single or multiple actions.\nTo select multiple actions, use Ctrl+Click or Shift+Click.");
         btnDeleteAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         btnDeleteAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.deleteAction(table.selectedRows()));
 
