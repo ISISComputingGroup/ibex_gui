@@ -659,6 +659,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     /**
      * Get the name and location of the parameters save file for the script.
      * @return The parameters save file name and location.
+     */
     public String getParametersFile() {
     return parametersFileDisplayString;
     }
