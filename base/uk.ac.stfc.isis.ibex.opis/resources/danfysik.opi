@@ -1885,7 +1885,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts/>
       <style>1</style>
-      <text>Reset PSU</text>
+      <text>Reset Interlocks</text>
       <toggle_button>false</toggle_button>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
@@ -5497,7 +5497,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts/>
       <show_scrollbar>false</show_scrollbar>
-      <text>DAC1 Slew:</text>
+      <text>Slew Rate:</text>
       <tooltip/>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
