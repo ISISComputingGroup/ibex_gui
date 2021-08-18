@@ -51,7 +51,6 @@ public class GetBanner extends NICOSMessage<String, ReceiveBannerMessage> {
      * @param zmq The wrapper to receive the string with.
      */
     public void receiveResponse(ZMQWrapper zmq) {
-    	zmq.receiveString();
     	responseStatus = zmq.receiveString();
     	zmq.receiveString();
     	response = zmq.receiveString();
