@@ -154,7 +154,9 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		} catch (OverlappingFileLockException e1) {
 			return null;
 		} catch (IOException e) {
-		    throw new Error(e);
+			LOG.warn("Exception found while locking file.\n");
+		    e.printStackTrace();
+		    return null;
 		}
     }
 
