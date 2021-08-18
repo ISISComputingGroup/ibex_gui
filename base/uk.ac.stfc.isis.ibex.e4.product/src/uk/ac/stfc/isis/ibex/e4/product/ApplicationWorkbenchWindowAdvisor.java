@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.e4.product;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
@@ -33,7 +32,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.resources.ResourcesPlugin;
