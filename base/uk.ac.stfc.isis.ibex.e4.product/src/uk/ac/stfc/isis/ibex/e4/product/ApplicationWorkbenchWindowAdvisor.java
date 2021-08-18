@@ -22,12 +22,18 @@ package uk.ac.stfc.isis.ibex.e4.product;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
+import java.nio.channels.OverlappingFileLockException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -107,7 +113,15 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         
         // Check if this is not the only instance running
 		File tempFolder = new File(TEMP_PATH);
-		String[] files = tempFolder.list();
+		File[] files = tempFolder.listFiles();
+		for (File f : files) {
+			// Check if files are locked. This is only needed if deleteOnExit() didn't work (for example SIGKILL was sent)
+			if (lockFile(f) != null) {
+				LOG.warn("Unlocked temporary file found. It's possible last application exit was ungraceful. Deleting file.\n");
+				f.delete();
+			}
+		}
+		files = tempFolder.listFiles();
 		if (files.length > 0) {
 			LOG.info("Another instance of IBEX found running.\n");
 	        if (!MessageDialog.openQuestion(Display.getDefault().getActiveShell(), DIALOG_BOX_TITLE, DIALOG_QUESTION)) {
@@ -121,9 +135,28 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		try {
 			File tempFile = Files.createTempFile(Paths.get(TEMP_PATH), "ClientInstance", ".tmp").toFile();
 			tempFile.deleteOnExit();
+			lockFile(tempFile);
 		} catch (IOException e1) {
 			LOG.warn("Exception found while creating temporary file.\n");
 			e1.printStackTrace();
+		}
+    }
+    
+    /**
+     * This function will return file lock or null if file is already locked.
+     * @param file File to lock.
+     * @return
+     */
+    private FileLock lockFile(File file) {
+		try {
+		    FileChannel channel = FileChannel.open(file.toPath(),
+		    		StandardOpenOption.CREATE, StandardOpenOption.WRITE);
+		    FileLock lock = channel.tryLock();
+		    return lock;
+		} catch (OverlappingFileLockException e1) {
+			return null;
+		} catch (IOException e) {
+		    throw new Error(e);
 		}
     }
 
