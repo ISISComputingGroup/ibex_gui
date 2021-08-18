@@ -24,13 +24,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.logging.log4j.Logger;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
@@ -46,6 +52,19 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
     private static final int MIN_WINDOW_HEIGHT = 800;
     private static final int MIN_WINDOW_WIDTH = 1100;
+    
+	private static final String DIALOG_BOX_TITLE = "IBEX is already running.";
+	private static final String DIALOG_QUESTION = "It appears that IBEX client is already running. "
+			+ "Are you sure you want to open another instance?";
+	
+	private static final String TEMP_PATH = System.getProperty("user.home") + "\\AppData\\Local\\IBEX\\tmp";
+	
+	private static final Logger LOG = IsisLog.getLogger(ApplicationWorkbenchWindowAdvisor.class);
+    
+    /**
+     * Setting this flag to true allows workbench to close without prompt.
+     */
+    protected boolean shutDown = false;
 
     /**
      * Constructor.
@@ -70,13 +89,42 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     public void postWindowCreate() {
     	super.postWindowCreate();
         final Shell shell = getWindowConfigurer().getWindow().getShell();
-
+        
         WindowLayout windowLayout = getPreviousWindowSettings();
 
         shell.setMinimumSize(MIN_WINDOW_WIDTH, MIN_WINDOW_HEIGHT);
         shell.setLocation(windowLayout.windowX, windowLayout.windowY);
         shell.setSize(windowLayout.windowWidth, windowLayout.windowHeight);
         shell.setMaximized(windowLayout.windowMaximised);
+        
+        // Create local application directory
+        try {
+			Files.createDirectories(Paths.get(TEMP_PATH));
+		} catch (IOException e) {
+			LOG.warn("Exception found while creating local directory.\n");
+			e.printStackTrace();
+		}
+        
+        // Check if this is not the only instance running
+		File tempFolder = new File(TEMP_PATH);
+		String[] files = tempFolder.list();
+		if (files.length > 0) {
+			LOG.info("Another instance of IBEX found running.\n");
+	        if (!MessageDialog.openQuestion(Display.getDefault().getActiveShell(), DIALOG_BOX_TITLE, DIALOG_QUESTION)) {
+	            shutDown = true;
+	            PlatformUI.getWorkbench().close();
+	            return;
+	        }
+		}
+        
+        // Create temporary file
+		try {
+			File tempFile = Files.createTempFile(Paths.get(TEMP_PATH), "ClientInstance", ".tmp").toFile();
+			tempFile.deleteOnExit();
+		} catch (IOException e1) {
+			LOG.warn("Exception found while creating temporary file.\n");
+			e1.printStackTrace();
+		}
     }
 
     /**
