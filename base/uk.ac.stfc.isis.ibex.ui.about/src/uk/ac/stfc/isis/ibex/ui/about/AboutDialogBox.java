@@ -19,9 +19,17 @@
 
 package uk.ac.stfc.isis.ibex.ui.about;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -41,6 +49,7 @@ public class AboutDialogBox extends TitleAreaDialog {
     private static final int HEIGHT = 300;
     /** Name of the application */
     private String applicationName;
+    private Image image;
 
     /**
      * Construct a new about Ibex dialog box.
@@ -52,6 +61,14 @@ public class AboutDialogBox extends TitleAreaDialog {
 		super(parentShell);	
 		setShellStyle(getShellStyle() | SWT.RESIZE | SWT.MAX);
 		this.applicationName = applicationName;
+		
+	      try {
+			image = new Image(null, new FileInputStream("C:\\Instrument\\Dev\\ibex_gui\\base\\uk.ac.stfc.isis.ibex.e4.product\\icons\\IBEX-icon-web48.gif"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
 	}
 
 	@Override
@@ -59,6 +76,8 @@ public class AboutDialogBox extends TitleAreaDialog {
 		super.configureShell(newShell);
         setShellStyle(SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
 		setTitle("About " + applicationName);
+		setTitleImage(image);
+
 		
 	}
 	
@@ -70,10 +89,10 @@ public class AboutDialogBox extends TitleAreaDialog {
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		setTitle("About " + applicationName);
-		
 		var container = superCreateDialogArea(parent);
 		container.setLayout(new GridLayout(1, false));
-		
+	
+
 		new BaseVersionPanel(container, SWT.NONE, applicationName);
 		
 		return container;
