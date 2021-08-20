@@ -167,6 +167,7 @@ class ScriptDefinitionWrapper(object):
         """
         if not self.hasGlobalParameters():
             return
+
         try:
             list(self.script_definition.global_params_definition.values())[index][1](global_param)
             return
@@ -174,6 +175,9 @@ class ScriptDefinitionWrapper(object):
             return 'Expected type: "{}" for global: "{}" but received: "{}"\n'.format(
                 str(list(self.script_definition.global_params_definition.values())[index][1])[8:-2],
                 list(self.script_definition.global_params_definition.keys())[index], global_param)
+        # Fix for edge case where python hasn't changed the script definition yet but java thinks it has.
+        except IndexError:
+            return 'Tried to find validity for global: "{}" but no such global was found.\n'.format(global_param)
 
     def parametersValid(self, action, global_params) -> Union[None, AnyStr]:
         """
