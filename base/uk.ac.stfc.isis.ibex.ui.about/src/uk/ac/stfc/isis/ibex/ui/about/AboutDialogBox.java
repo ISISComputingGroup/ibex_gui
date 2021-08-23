@@ -43,47 +43,38 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class AboutDialogBox extends TitleAreaDialog {
 
-    /** Dialog width. */
-    public static final int WIDTH = 400;
-    /** Dialog height. */
-    private static final int HEIGHT = 300;
-    /** Name of the application */
-    private String applicationName;
-    private Image image;
+	/** Dialog width. */
+	public static final int WIDTH = 500;
+	/** Dialog height. */
+	private static final int HEIGHT = 400;
+	/** Name of the application */
+	private String applicationName;
+	private Image image;
 
-    /**
-     * Construct a new about Ibex dialog box.
-     * 
-     * @param parentShell The parent shell in which in the dialog will be loaded
-     * @param applicationName The application's name
-     */
+	/**
+	 * Construct a new about Ibex dialog box.
+	 * 
+	 * @param parentShell     The parent shell in which in the dialog will be loaded
+	 * @param applicationName The application's name
+	 */
 	public AboutDialogBox(Shell parentShell, String applicationName) {
-		super(parentShell);	
+		super(parentShell);
 		setShellStyle(getShellStyle() | SWT.RESIZE | SWT.MAX);
 		this.applicationName = applicationName;
-		
-	      try {
-			image = new Image(null, new FileInputStream("C:\\Instrument\\Dev\\ibex_gui\\base\\uk.ac.stfc.isis.ibex.e4.product\\icons\\IBEX-icon-web48.gif"));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    
+
 	}
 
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
-        setShellStyle(SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
+		setShellStyle(SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
 		setTitle("About " + applicationName);
-		setTitleImage(image);
 
-		
 	}
-	
+
 	@Override
 	protected Point getInitialSize() {
-        return new Point(WIDTH, HEIGHT);
+		return new Point(WIDTH, HEIGHT);
 	}
 
 	@Override
@@ -91,15 +82,15 @@ public class AboutDialogBox extends TitleAreaDialog {
 		setTitle("About " + applicationName);
 		var container = superCreateDialogArea(parent);
 		container.setLayout(new GridLayout(1, false));
-	
 
 		new BaseVersionPanel(container, SWT.NONE, applicationName);
-		
+
 		return container;
 	}
-	
+
 	/**
 	 * Creates a dialog area container.
+	 * 
 	 * @param parent The parent of the dialog
 	 * @return A composite of the created area container
 	 */
@@ -114,5 +105,5 @@ public class AboutDialogBox extends TitleAreaDialog {
 		}
 		return super.createButton(parent, id, label, defaultButton);
 	}
-	
+
 }

@@ -3,6 +3,7 @@ package uk.ac.stfc.isis.ibex.ui.help;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
@@ -11,12 +12,14 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.graphics.GC;
 
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.ui.about.AboutDialogBox;
 
 public class ClientAboutDialogBox extends AboutDialogBox {
 	Image image;
+	private static final Logger LOG = IsisLog.getLogger(ClientAboutDialogBox.class);
 
 	public ClientAboutDialogBox(Shell parentShell) {
 		super(parentShell, "IBEX");
@@ -34,8 +37,8 @@ public class ClientAboutDialogBox extends AboutDialogBox {
 			
 
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			LOG.error(e);
 		}
 
 		setTitle("About IBEX");
