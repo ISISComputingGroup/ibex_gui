@@ -23,13 +23,20 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.channels.OverlappingFileLockException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,6 +55,7 @@ import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
+import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
 /**
  * The workbench window advisor for the application.
@@ -61,9 +69,14 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	private static final String DIALOG_QUESTION = "It appears that IBEX client is already running. "
 			+ "Are you sure you want to open another instance?";
 	
-	private static final String TEMP_PATH = System.getProperty("user.home") + "\\AppData\\Local\\IBEX\\tmp";
+	private static final String TEMP_PATH = Paths.get(new PreferenceSupplier().tempFilePath(), "instance.txt").toString();
 	
 	private static final Logger LOG = IsisLog.getLogger(ApplicationWorkbenchWindowAdvisor.class);
+	
+	private static final String MULTIPLE_INSTANCES_CHECKING_ERROR = "Exception encountered while checking for multiple instances.";
+	private static final String ANOTHER_INSTANCE_LOG_INFO = "Another instance of IBEX found running.";
+	private static final String TEMPORARY_FILE_LOCKED_ERROR = "Could not access temporary file due to a lock. Another process is "
+			+ "refusing to release the lock.";
     
     /**
      * Setting this flag to true allows workbench to close without prompt.
@@ -101,71 +114,149 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         shell.setSize(windowLayout.windowWidth, windowLayout.windowHeight);
         shell.setMaximized(windowLayout.windowMaximised);
         
-        // Create local application directory
         try {
-			Files.createDirectories(Paths.get(TEMP_PATH));
-		} catch (IOException e) {
-			LOG.warn("Exception found while creating local directory.\n");
+    		if (clearTempFile().length > 0) {
+    			LOG.info(ANOTHER_INSTANCE_LOG_INFO);
+    	        if (!MessageDialog.openQuestion(Display.getDefault().getActiveShell(), DIALOG_BOX_TITLE, DIALOG_QUESTION)) {
+    	            shutDown = true;
+    	            PlatformUI.getWorkbench().close();
+    	        }
+    		}
+    		if (!shutDown) {
+    			writeTempFile(new String[] {Long.toString(ProcessHandle.current().pid())}, true);
+    		}
+		} catch (Exception e) {
+			LOG.error(MULTIPLE_INSTANCES_CHECKING_ERROR);
 			e.printStackTrace();
-		}
-        
-        // Check if this is not the only instance running
-		File tempFolder = new File(TEMP_PATH);
-		File[] files = tempFolder.listFiles();
-		for (File f : files) {
-			// Check if files are locked. This is only needed if deleteOnExit() didn't work (for example SIGKILL was sent)
-			if (lockFile(f) != null) {
-				LOG.warn("Unlocked temporary file found. It's possible last application exit was ungraceful. Deleting file.\n");
-				f.delete();
-			}
-		}
-		files = tempFolder.listFiles();
-		if (files.length > 0) {
-			LOG.info("Another instance of IBEX found running.\n");
-	        if (!MessageDialog.openQuestion(Display.getDefault().getActiveShell(), DIALOG_BOX_TITLE, DIALOG_QUESTION)) {
-	            shutDown = true;
-	            PlatformUI.getWorkbench().close();
-	            return;
-	        }
-		}
-        
-        // Create temporary file
-		try {
-			File tempFile = Files.createTempFile(Paths.get(TEMP_PATH), "ClientInstance", ".tmp").toFile();
-			tempFile.deleteOnExit();
-			lockFile(tempFile);
-		} catch (IOException e1) {
-			LOG.warn("Exception found while creating temporary file.\n");
-			e1.printStackTrace();
 		}
     }
     
     /**
-     * This function will return file lock or null if file is already locked.
-     * @param file File to lock.
-     * @return
+     * This function compares contents of temporary file to the list of PIDs obtained from process list
+     * and overwrites the file only with those that match.
+     * @return New contents of temporary file as a string array.
+     * @throws IOException - if any of the operations result in IOException.
      */
-    private FileLock lockFile(File file) {
-		try {
-		    FileChannel channel = FileChannel.open(file.toPath(),
-		    		StandardOpenOption.CREATE, StandardOpenOption.WRITE);
-		    FileLock lock = channel.tryLock();
-		    return lock;
-		} catch (OverlappingFileLockException e1) {
-			return null;
-		} catch (IOException e) {
-			LOG.warn("Exception found while locking file.\n");
-		    e.printStackTrace();
-		    return null;
-		}
+    String[] clearTempFile() throws IOException {
+    	String[] current = readTempFile();
+    	
+        ArrayList<String> procs = new ArrayList<String>();
+        ProcessHandle.allProcesses()
+        .forEach(process -> procs.add(Long.toString(process.pid())));
+        
+        ArrayList<String> newContent = new ArrayList<String>();
+        
+        for (String l : current) {
+        	for (String s : procs) {
+        		if (l.equals(s)) {
+        			newContent.add(l);
+        			break;
+        		}
+        	}
+        }
+        String[] newContentArr = newContent.toArray(new String[newContent.size()]);
+        writeTempFile(newContentArr, false);
+        
+        return newContentArr;
+    }
+    
+    /**
+     * Locks the temporary file. The lock is only needed in a rare edge case
+     * where someone would fire multiple instances exactly at the same time,
+     * creating write racing conditions.
+     * @return Lock, or empty optional if it fails to acquire lock within reasonable time.
+     * @throws IOException - if any of the operations result in IOException.
+     */
+    @SuppressWarnings("checkstyle:magicnumber")
+    Optional<FileLock> lockTemporaryFile() throws IOException {
+    	
+        /**
+         * The lock is only needed in a rare edge case where someone would fire multiple
+         * instances exactly at the same time, creating write racing conditions.
+         */
+    	
+        FileChannel channel = FileChannel.open(Paths.get(TEMP_PATH), StandardOpenOption.WRITE);
+        FileLock lock = null;
+
+        Instant time = Instant.now();
+        while (lock == null) {
+        	try {
+            	lock = channel.tryLock();
+        	} catch (OverlappingFileLockException e) {
+        		lock = null;
+        	}
+        	if (lock != null) {
+        		return Optional.of(lock);
+        	}
+        	
+        	/**
+        	 * This is just a security measure in case something goes terribly bad. Realistically I/O
+        	 * operation of another instance would only take milliseconds. This will prevent program
+        	 * from hanging if that happens.
+        	 */
+        	long timeElapsed = Duration.between(time, Instant.now()).toSeconds();
+        	if (timeElapsed > 3) {
+        		LOG.error(TEMPORARY_FILE_LOCKED_ERROR);
+        		break;
+        	}
+        }
+    	
+		return Optional.empty();
+    }
+    
+    /**
+     * Helper function for writing to temporary file.
+     * @param lines Lines of text to write.
+     * @param append When true the lines will be appended. When false, the file will be
+     * Overwritten.
+     * @throws IOException - if any of the operations result in IOException.
+     */
+    void writeTempFile(String[] lines, boolean append) throws IOException, NoSuchElementException {
+    	createTempFile();
+    	String content = "";
+    	for (String line : lines) {
+    		content += line + '\n';
+    	}
+    	
+    	FileLock lock = lockTemporaryFile().get();
+    	FileWriter writer = new FileWriter(TEMP_PATH, append);
+        writer.write(content);
+        
+        if (lock != null) {
+            lock.release();
+        }
+        writer.close();
+    }
+    
+    /**
+     * Helper function for getting info from temporary file.
+     * @return Lines of text in the temporary file.
+     * @throws IOException - if any of the operations result in IOException.
+     */
+    String[] readTempFile() throws IOException {
+    	createTempFile();
+		String content = Files.readString(Paths.get(TEMP_PATH));
+		String[] lines = content.split("\n");
+		return lines;
+    }
+    
+    /**
+     * Helper function for creating temporary file. Does nothing if file already exists.
+     * @throws IOException - if any of the operations result in IOException.
+     */
+    void createTempFile() throws IOException {
+    	try {
+	        Files.createDirectories(Paths.get(TEMP_PATH).getParent());
+	        Files.createFile(Paths.get(TEMP_PATH));
+    	} catch (FileAlreadyExistsException e) { }
     }
 
     /**
      * Attempts to get previous window settings, otherwise returning sensible
      * defaults.
      *
-     * @return An object with parameters for width, heigh, x position, y
-     *         poistion and maximised flag
+     * @return An object with parameters for width, height, x position, y
+     *         position and maximised flag
      */
     @SuppressWarnings("checkstyle:magicnumber")
     private WindowLayout getPreviousWindowSettings() {
