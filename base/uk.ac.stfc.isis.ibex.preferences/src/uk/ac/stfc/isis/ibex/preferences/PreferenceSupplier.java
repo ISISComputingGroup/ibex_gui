@@ -229,6 +229,9 @@ public class PreferenceSupplier {
      */
     private static final String HIDE_SCRIPT_DEFINITION_ERRORS = "hide_script_definition_error_table";
     
+    /**
+     * User defined location for temporary folder.
+     */
     private static final String USER_TEMP_PATH = "temporary_files_folder";
     
     /**
