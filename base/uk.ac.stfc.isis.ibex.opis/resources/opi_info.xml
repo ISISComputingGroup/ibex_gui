@@ -2710,11 +2710,6 @@
             <description>The weeder PV prefix (e.g. WEEDER_01)</description>
             <default>WEEDER_01</default>
           </macro>
-          <macro>
-            <name>ADDRESS</name>
-            <description>The weeder ADDRESS (e.g. A)</description>
-            <default>A</default>
-          </macro>
         </macros>
       </value>
     </entry>
