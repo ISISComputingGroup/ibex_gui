@@ -31,7 +31,7 @@ import uk.ac.stfc.isis.ibex.beamstatus.TS1Observables;
 /**
  * The GUI panel for displaying information from target station 1.
  */
-public class TargetStationOnePanel extends Composite {
+public class TargetStationOnePanel extends BeamInfoComposite {
 	private final Label beam;
 	private final Label pps;
 	private final Label current;
@@ -118,15 +118,15 @@ public class TargetStationOnePanel extends Composite {
 	 * @param ts
 	 */
 	private void bind(TS1Observables ts) {
-		DataBindingBeamInfo.bindAndAddMenu(ts.beam(), beam, this);
-		DataBindingBeamInfo.bindAndAddMenu(ts.pps(), pps, this);
-		DataBindingBeamInfo.bindAndAddMenu(ts.beamCurrent(), current, this);
-		DataBindingBeamInfo.bindAndAddMenu(ts.uAHToday(), uAhSince0830, this);
-		DataBindingBeamInfo.bindAndAddMenu(ts.lastBeamOff(), lastOff, this);
-		DataBindingBeamInfo.bindAndAddMenu(ts.lastBeamOn(), lastOn, this);
-		DataBindingBeamInfo.bindAndAddMenu(ts.methaneTemperature, methaneTemperature, this);
-		DataBindingBeamInfo.bindAndAddMenu(ts.hydrogenTemperature, hydrogenTemperature, this);
-		DataBindingBeamInfo.bindAndAddMenu(ts.muonKicker, muonKicker, this);
+		bindAndAddMenu(ts.beam(), beam, this);
+		bindAndAddMenu(ts.pps(), pps, this);
+		bindAndAddMenu(ts.beamCurrent(), current, this);
+		bindAndAddMenu(ts.uAHToday(), uAhSince0830, this);
+		bindAndAddMenu(ts.lastBeamOff(), lastOff, this);
+		bindAndAddMenu(ts.lastBeamOn(), lastOn, this);
+		bindAndAddMenu(ts.methaneTemperature, methaneTemperature, this);
+		bindAndAddMenu(ts.hydrogenTemperature, hydrogenTemperature, this);
+		bindAndAddMenu(ts.muonKicker, muonKicker, this);
 
 	}
 

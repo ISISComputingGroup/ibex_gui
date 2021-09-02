@@ -31,7 +31,7 @@ import uk.ac.stfc.isis.ibex.beamstatus.SynchrotronObservables;
 /**
  * The GUI panel for showing the synchrotron information.
  */
-public class SynchrotronPanel extends Composite {
+public class SynchrotronPanel extends BeamInfoComposite {
 	private final Label beamCurrent;
 	private final Label beamFrequency;
 	private final Label beamEnergy;
@@ -73,11 +73,11 @@ public class SynchrotronPanel extends Composite {
 	 * @param ts
 	 */
 	private void bind(SynchrotronObservables sync) {
-		DataBindingBeamInfo.bindAndAddMenu(sync.beamCurrent, beamCurrent, this);
-		DataBindingBeamInfo.bindAndAddMenu(sync.beamFrequency, beamFrequency, this);
-		DataBindingBeamInfo.bindAndAddMenu(sync.beamEnergy, beamEnergy, this);
-		DataBindingBeamInfo.bindAndAddMenu(sync.bunchLength, bunchLength, this);
-		DataBindingBeamInfo.bindAndAddMenu(sync.extractDelay, extractDelay, this);
+		bindAndAddMenu(sync.beamCurrent, beamCurrent, this);
+		bindAndAddMenu(sync.beamFrequency, beamFrequency, this);
+		bindAndAddMenu(sync.beamEnergy, beamEnergy, this);
+		bindAndAddMenu(sync.bunchLength, bunchLength, this);
+		bindAndAddMenu(sync.extractDelay, extractDelay, this);
 
 	}
 

@@ -31,7 +31,7 @@ import uk.ac.stfc.isis.ibex.beamstatus.TS2Observables;
 /**
  * The GUI panel for displaying information from target station 2.
  */
-public class TargetStationTwoPanel extends Composite {
+public class TargetStationTwoPanel extends BeamInfoComposite {
 	private final Label beam;
 	private final Label pps;
 	private final Label current;
@@ -139,25 +139,27 @@ public class TargetStationTwoPanel extends Composite {
 			bind(BeamStatus.getInstance().ts2());
 		}
 	}
+
 	/**
 	 * Binding observable facilityPV with the Label
+	 * 
 	 * @param ts
 	 */
 
 	private void bind(TS2Observables ts) {
-		DataBindingBeamInfo.bindAndAddMenu(ts.beam(), beam, this);
-		DataBindingBeamInfo.bindAndAddMenu(ts.pps(), pps, this);
-		DataBindingBeamInfo.bindAndAddMenu(ts.beamCurrent(), current, this);
-		DataBindingBeamInfo.bindAndAddMenu(ts.uAHToday(), uAhSince0830, this);
-		DataBindingBeamInfo.bindAndAddMenu(ts.lastBeamOff(), lastOff, this);
-		DataBindingBeamInfo.bindAndAddMenu(ts.lastBeamOn(), lastOn, this);
-		DataBindingBeamInfo.bindAndAddMenu(ts.coupledMethaneTemperature, coupledMethaneTemperature, this);
-		DataBindingBeamInfo.bindAndAddMenu(ts.coupledHydrogenTemperature, coupledHydrogenTemperature, this);
-		DataBindingBeamInfo.bindAndAddMenu(ts.decoupledMethaneTemperature, decoupledMethaneTemperature, this);
-		DataBindingBeamInfo.bindAndAddMenu(ts.decoupledModeratorRuntime, decoupledModeratorRuntime, this);
-		DataBindingBeamInfo.bindAndAddMenu(ts.decoupledModeratorRuntimeLimit, decoupledModeratorRuntimeLimit, this);
-		DataBindingBeamInfo.bindAndAddMenu(ts.decoupledModeratorAnnealPressure, decoupledModeratorAnnealPressure, this);
-		DataBindingBeamInfo.bindAndAddMenu(ts.decoupledModeratorUAHBeam, decoupledModeratoruAhBeam, this);
+		bindAndAddMenu(ts.beam(), beam, this);
+		bindAndAddMenu(ts.pps(), pps, this);
+		bindAndAddMenu(ts.beamCurrent(), current, this);
+		bindAndAddMenu(ts.uAHToday(), uAhSince0830, this);
+		bindAndAddMenu(ts.lastBeamOff(), lastOff, this);
+		bindAndAddMenu(ts.lastBeamOn(), lastOn, this);
+		bindAndAddMenu(ts.coupledMethaneTemperature, coupledMethaneTemperature, this);
+		bindAndAddMenu(ts.coupledHydrogenTemperature, coupledHydrogenTemperature, this);
+		bindAndAddMenu(ts.decoupledMethaneTemperature, decoupledMethaneTemperature, this);
+		bindAndAddMenu(ts.decoupledModeratorRuntime, decoupledModeratorRuntime, this);
+		bindAndAddMenu(ts.decoupledModeratorRuntimeLimit, decoupledModeratorRuntimeLimit, this);
+		bindAndAddMenu(ts.decoupledModeratorAnnealPressure, decoupledModeratorAnnealPressure, this);
+		bindAndAddMenu(ts.decoupledModeratorUAHBeam, decoupledModeratoruAhBeam, this);
 
 	}
 
