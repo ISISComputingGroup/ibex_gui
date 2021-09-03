@@ -45,10 +45,21 @@ public interface Component {
 	 */
 	Set<ComponentProperty> properties();
 	
+	/**
+	 * @return the components contained by this component.
+	 */
 	List<? extends Component> components();
 	
+	/**
+	 * @return the target to display the view of the component.
+	 */
 	Target target();
 	
+	/**
+	 * Set the target to display the view of the component.
+	 * 
+	 * @param target the target to display the view of the component.
+	 */
 	void setTarget(Target target);
 	
 	/**
