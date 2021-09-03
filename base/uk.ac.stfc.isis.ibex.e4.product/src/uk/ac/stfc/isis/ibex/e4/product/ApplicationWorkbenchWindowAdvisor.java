@@ -114,6 +114,14 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         shell.setSize(windowLayout.windowWidth, windowLayout.windowHeight);
         shell.setMaximized(windowLayout.windowMaximised);
         
+        performMultipleClientsCheck();
+    }
+    
+    /**
+     * This function contains logic for checking for multiple instances running and will prompt
+     * a user to confirm opening another client if another instance is already running
+     */
+    void performMultipleClientsCheck() {
         try {
     		if (clearTempFile().length > 0) {
     			LOG.info(ANOTHER_INSTANCE_LOG_INFO);
@@ -138,18 +146,18 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
      * @throws IOException - if any of the operations result in IOException.
      */
     String[] clearTempFile() throws IOException {
-    	String[] current = readTempFile();
+    	String[] fileContents = readTempFile();
     	
-        ArrayList<String> procs = new ArrayList<String>();
+        ArrayList<String> processPIDs = new ArrayList<String>();
         ProcessHandle.allProcesses()
-        .forEach(process -> procs.add(Long.toString(process.pid())));
+        .forEach(process -> processPIDs.add(Long.toString(process.pid())));
         
         ArrayList<String> newContent = new ArrayList<String>();
         
-        for (String l : current) {
-        	for (String s : procs) {
-        		if (l.equals(s)) {
-        			newContent.add(l);
+        for (String line : fileContents) {
+        	for (String pid : processPIDs) {
+        		if (line.equals(pid)) {
+        			newContent.add(line);
         			break;
         		}
         	}
@@ -158,50 +166,6 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         writeTempFile(newContentArr, false);
         
         return newContentArr;
-    }
-    
-    /**
-     * Locks the temporary file. The lock is only needed in a rare edge case
-     * where someone would fire multiple instances exactly at the same time,
-     * creating write racing conditions.
-     * @return Lock, or empty optional if it fails to acquire lock within reasonable time.
-     * @throws IOException - if any of the operations result in IOException.
-     */
-    @SuppressWarnings("checkstyle:magicnumber")
-    Optional<FileLock> lockTemporaryFile() throws IOException {
-    	
-        /**
-         * The lock is only needed in a rare edge case where someone would fire multiple
-         * instances exactly at the same time, creating write racing conditions.
-         */
-    	
-        FileChannel channel = FileChannel.open(Paths.get(TEMP_PATH), StandardOpenOption.WRITE);
-        FileLock lock = null;
-
-        Instant time = Instant.now();
-        while (lock == null) {
-        	try {
-            	lock = channel.tryLock();
-        	} catch (OverlappingFileLockException e) {
-        		lock = null;
-        	}
-        	if (lock != null) {
-        		return Optional.of(lock);
-        	}
-        	
-        	/**
-        	 * This is just a security measure in case something goes terribly bad. Realistically I/O
-        	 * operation of another instance would only take milliseconds. This will prevent program
-        	 * from hanging if that happens.
-        	 */
-        	long timeElapsed = Duration.between(time, Instant.now()).toSeconds();
-        	if (timeElapsed > 3) {
-        		LOG.error(TEMPORARY_FILE_LOCKED_ERROR);
-        		break;
-        	}
-        }
-    	
-		return Optional.empty();
     }
     
     /**
@@ -217,14 +181,8 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     	for (String line : lines) {
     		content += line + '\n';
     	}
-    	
-    	FileLock lock = lockTemporaryFile().get();
     	FileWriter writer = new FileWriter(TEMP_PATH, append);
         writer.write(content);
-        
-        if (lock != null) {
-            lock.release();
-        }
         writer.close();
     }
     
