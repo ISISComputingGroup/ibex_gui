@@ -19,6 +19,20 @@
                icon="icons/add_block.png"
                tooltip="Add this PV as a block to the current configuration">
          </command>
+         <command
+               commandId="uk.ac.stfc.isis.ibex.ui.configserver.commands.AddBlockToConfigHandler"
+               label="Add to a Config"
+               style="push"
+               icon="icons/add_block.png"
+               tooltip="Add this PV as a block to the current configuration">
+         </command>
+         <command
+               commandId="uk.ac.stfc.isis.ibex.ui.configserver.commands.AddBlockToComponentHandler"
+               label="Add to a Component"
+               style="push"
+               icon="icons/add_block.png"
+               tooltip="Add this PV as a block to the current configuration">
+         </command>
       </menuContribution>
    </extension>
       <extension
@@ -26,6 +40,17 @@
       <command
             defaultHandler="uk.ac.stfc.isis.ibex.ui.configserver.commands.NewBlockHandler"
             id="uk.ac.stfc.isis.ibex.ui.configserver.commands.NewBlockHandler"
+            name="%NewBlock">
+      </command>
+      
+      <command
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.configserver.commands.AddBlockToConfigHandler"
+            id="uk.ac.stfc.isis.ibex.ui.configserver.commands.AddBlockToConfigHandler"
+            name="%NewBlock">
+      </command>
+        <command
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.configserver.commands.AddBlockToComponentHandler"
+            id="uk.ac.stfc.isis.ibex.ui.configserver.commands.AddBlockToComponentHandler"
             name="%NewBlock">
       </command>
    </extension>
