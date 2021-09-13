@@ -47,7 +47,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
  */
 public class EditComponentHelper extends ConfigHelper {
 
-    private ConfigServer server;
+    protected ConfigServer server;
     private static final String[] OK = {"OK"};
 
     /**
@@ -70,7 +70,7 @@ public class EditComponentHelper extends ConfigHelper {
     }
 
     @Override
-    protected void openDialog(EditableConfiguration component, boolean isCurrent,
+    public void openDialog(EditableConfiguration component, boolean isCurrent,
             boolean editBlockFirst) {
         openDialogComponent(component, editBlockFirst);
     }
