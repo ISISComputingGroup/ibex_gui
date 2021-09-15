@@ -2202,6 +2202,25 @@
       </value>
     </entry>
     <entry>
+      <key>Lakeshore 350</key>
+      <value>
+        <categories>
+          <category>Cryogenics</category>
+          <category>Temperature controllers</category>
+        </categories>
+        <type>LAKESHORE</type>
+        <path>Lakeshore350/lakeshore350.opi</path>
+        <description>The OPI for the Lakeshore 350</description>
+        <macros>
+          <macro>
+            <name>LKSH340</name>
+            <description>The LKSH340 PV prefix (e.g. LKSH340_01)</description>
+            <default>LKSH340_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
       <key>NIMA Trough</key>
       <value>
         <type>FILM_FABRICATION</type>
