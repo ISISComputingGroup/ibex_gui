@@ -2699,6 +2699,7 @@
       </value>
     </entry>
     <entry>
+<<<<<<< HEAD
       <key>Keithley 6517B</key>
       <value>
         <categories/>
@@ -2710,6 +2711,18 @@
             <name>KHLY6517</name>
             <description>The KHLY6517 PV prefix (e.g. KHLY6517_01)</description>
             <default>KHLY6517_01</default>
+=======
+      <key>Weeder WTDAC-M</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>Weeder_WTDAC-M.opi</path>
+        <description>Analog output module</description>
+        <macros>
+          <macro>
+            <name>IOC_NAME</name>
+            <description>The weeder PV prefix (e.g. WEEDER_01)</description>
+            <default>WEEDER_01</default>
+>>>>>>> 8d835bb758a7ee2f879346c60586995a85240f55
           </macro>
         </macros>
       </value>

@@ -35,7 +35,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
  */
 public class EditConfigHelper extends ConfigHelper {
 
-    private ConfigServer server;
+    protected ConfigServer server;
 
     /**
      * Constructor for the helper class.
