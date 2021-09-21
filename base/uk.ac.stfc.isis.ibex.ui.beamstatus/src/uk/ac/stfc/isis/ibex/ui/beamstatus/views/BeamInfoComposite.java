@@ -8,7 +8,10 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.beamstatus.FacilityPV;
-
+/**
+ * A class to bend PV labels on menu to FacilityPV objects 
+ *
+ */
 public class BeamInfoComposite extends Composite {
 
 	BeamInfoComposite(Composite parent, int style) {
