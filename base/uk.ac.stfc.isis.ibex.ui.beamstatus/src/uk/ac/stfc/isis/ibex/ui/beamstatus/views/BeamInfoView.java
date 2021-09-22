@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.ExpandItem;
 /**
  * The parent composite for the beam information widgets.
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class BeamInfoView {
 
 	/**
