@@ -78,14 +78,29 @@ public abstract class BaseComponent implements Component {
 		return new ArrayList<>(components);
 	}
 
+	/**
+	 * Add the given property to the base component's properties.
+	 * 
+	 * @param property The property to add.
+	 */
 	protected void addProperty(ComponentProperty property) {
 		properties.add(property);
 	}
 
+	/**
+	 * Add a component to the base component's components.
+	 * 
+	 * @param component The component to add.
+	 */
 	protected void addComponent(Component component) {
 		components.add(component);
 	}
 	
+	/**
+	 * Get the description of this component.
+	 * 
+	 * @return The component's description.
+	 */
 	protected ComponentDescription description() {
 		return description;
 	}

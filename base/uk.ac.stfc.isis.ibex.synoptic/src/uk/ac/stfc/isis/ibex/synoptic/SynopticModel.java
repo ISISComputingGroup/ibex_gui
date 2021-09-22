@@ -54,6 +54,11 @@ public class SynopticModel extends ModelObject {
         setCurrentSynoptic = new SynopticWriter(variables.synopticSetter, variables.synopticSchema);
 	}
 	
+	/**
+	 * Get the instrument's synoptic.
+	 * 
+	 * @return The instrument's synoptic,
+	 */
 	public Synoptic instrument() {
 		return instrument;
 	}
@@ -87,6 +92,11 @@ public class SynopticModel extends ModelObject {
 		}
 	}
 	
+	/**
+	 * Get a navigation graph for the instrument's synoptic.
+	 * 
+	 * @return A navigation graph for the instrument's synoptic.
+	 */
 	public InstrumentNavigationGraph instrumentGraph() {
 		return new InstrumentNavigationGraph(instrument);
 	}

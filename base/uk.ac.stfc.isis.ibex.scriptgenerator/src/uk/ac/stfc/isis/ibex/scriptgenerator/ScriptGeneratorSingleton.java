@@ -445,10 +445,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * Removes action at position index from ActionsTable.
 	 * 
-	 * @param actionsToDeletes the actions to delete.
+	 * @param actionsToDelete the actions to delete.
 	 */
-	public void deleteAction(List<ScriptGeneratorAction> actionsToDeletes) {
-		scriptGeneratorTable.deleteAction(actionsToDeletes);
+	public void deleteAction(List<ScriptGeneratorAction> actionsToDelete) {
+		scriptGeneratorTable.deleteAction(actionsToDelete);
 	}
 
 	/**
@@ -466,7 +466,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
     /**
      * Clears all actions from the ActionsTable.
      */
-    public void clearAction() {
+    public void clearActions() {
         scriptGeneratorTable.clearAction();
     }
     
@@ -489,32 +489,35 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
-	 * Updates the globalParams 
+	 * Updates the globalParams.
 	 * @param params The new value for the parameter
 	 * @param index The global parameter to be update
 	 */
 	
 	public void updateGlobalParams(String params, int index) {
-		if(this.globalParams != null) {
+		if (this.globalParams != null) {
 			
-			if(this.globalParams.size()>index) {
+			if (this.globalParams.size() > index) {
 				this.globalParams.set(index, params);			
-			}else {
+			} else {
 				this.globalParams.add(params);
 			}
 			
-		}else {
+		} else {
 			this.globalParams = new ArrayList<String>();
 			this.globalParams.add(params);
 		}
 		try {
 			refreshParameterValidityChecking();
 			refreshTimeEstimation();
-		}catch(NoScriptDefinitionSelectedException e) {
+		} catch (NoScriptDefinitionSelectedException e) {
 			return;
 		}
 	}
 	
+	/**
+	 * Remove all global parameters from the list of global parameters.
+	 */
 	public void clearGlobalParams() {
 		this.globalParams.clear();
 	}

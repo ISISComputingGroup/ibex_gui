@@ -19,9 +19,17 @@
 
 package uk.ac.stfc.isis.ibex.ui.about;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -35,52 +43,54 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class AboutDialogBox extends TitleAreaDialog {
 
-    /** Dialog width. */
-    public static final int WIDTH = 400;
-    /** Dialog height. */
-    private static final int HEIGHT = 300;
-    /** Name of the application */
-    private String applicationName;
+	/** Dialog width. */
+	public static final int WIDTH = 500;
+	/** Dialog height. */
+	private static final int HEIGHT = 400;
+	/** Name of the application */
+	private String applicationName;
+	private Image image;
 
-    /**
-     * Construct a new about Ibex dialog box.
-     * 
-     * @param parentShell The parent shell in which in the dialog will be loaded
-     * @param applicationName The application's name
-     */
+	/**
+	 * Construct a new about Ibex dialog box.
+	 * 
+	 * @param parentShell     The parent shell in which in the dialog will be loaded
+	 * @param applicationName The application's name
+	 */
 	public AboutDialogBox(Shell parentShell, String applicationName) {
-		super(parentShell);	
+		super(parentShell);
 		setShellStyle(getShellStyle() | SWT.RESIZE | SWT.MAX);
 		this.applicationName = applicationName;
+
 	}
 
 	@Override
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
-        setShellStyle(SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
+		setShellStyle(SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
 		setTitle("About " + applicationName);
-		
+
 	}
-	
+
 	@Override
 	protected Point getInitialSize() {
-        return new Point(WIDTH, HEIGHT);
+		return new Point(WIDTH, HEIGHT);
 	}
 
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		setTitle("About " + applicationName);
-		
 		var container = superCreateDialogArea(parent);
 		container.setLayout(new GridLayout(1, false));
-		
+
 		new BaseVersionPanel(container, SWT.NONE, applicationName);
-		
+
 		return container;
 	}
-	
+
 	/**
 	 * Creates a dialog area container.
+	 * 
 	 * @param parent The parent of the dialog
 	 * @return A composite of the created area container
 	 */
@@ -95,5 +105,5 @@ public class AboutDialogBox extends TitleAreaDialog {
 		}
 		return super.createButton(parent, id, label, defaultButton);
 	}
-	
+
 }
