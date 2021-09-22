@@ -2698,5 +2698,20 @@
         </macros>
       </value>
     </entry>
+    <entry>
+      <key>Weeder WTDAC-M</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>Weeder_WTDAC-M.opi</path>
+        <description>Analog output module</description>
+        <macros>
+          <macro>
+            <name>IOC_NAME</name>
+            <description>The weeder PV prefix (e.g. WEEDER_01)</description>
+            <default>WEEDER_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
   </opis>
 </descriptions>
