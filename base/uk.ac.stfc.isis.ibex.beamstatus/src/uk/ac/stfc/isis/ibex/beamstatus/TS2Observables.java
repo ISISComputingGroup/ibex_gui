@@ -36,42 +36,42 @@ public class TS2Observables extends EndStationObservables {
      * An updating value giving the temperature of the TS2 coupled methane
      * moderator.
      */
-    public final UpdatedValue<String> coupledMethaneTemperature;
+    public final FacilityPV coupledMethaneTemperature;
 
     /**
      * An updating value giving the temperature of the TS2 coupled hydrogen
      * moderator.
      */
-    public final UpdatedValue<String> coupledHydrogenTemperature;
+    public final FacilityPV coupledHydrogenTemperature;
 
     /**
      * An updating value giving the temperature of the TS2 decoupled methane
      * moderator.
      */
-    public final UpdatedValue<String> decoupledMethaneTemperature;
+    public final FacilityPV decoupledMethaneTemperature;
 
     /**
      * An updating value giving the runtime duration of the TS2 decoupled
      * moderator.
      */
-    public final UpdatedValue<String> decoupledModeratorRuntime;
+    public final FacilityPV decoupledModeratorRuntime;
 
     /**
      * An updating value giving the runtime limit of the TS2 decoupled
      * moderator.
      */
-    public final UpdatedValue<String> decoupledModeratorRuntimeLimit;
+    public final FacilityPV decoupledModeratorRuntimeLimit;
 
     /**
      * An updating value giving the anneal pressure of the TS2 decoupled
      * moderator.
      */
-    public final UpdatedValue<String> decoupledModeratorAnnealPressure;
+    public final FacilityPV decoupledModeratorAnnealPressure;
 
     /**
      * An updating value giving the beam of the TS2 decoupled moderator.
      */
-    public final UpdatedValue<String> decoupledModeratorUAHBeam;
+    public final FacilityPV decoupledModeratorUAHBeam;
 
     private static final PVAddress TS2_PV = PVAddress.startWith("AC").append("TS2");
     
@@ -83,19 +83,26 @@ public class TS2Observables extends EndStationObservables {
     protected TS2Observables() {
         super(TS2_PV);
 
-        coupledMethaneTemperature = adaptNumber(
-                obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), TS2_PV.endWith("CMOD:METH:TEMP")));
-        coupledHydrogenTemperature = adaptNumber(
-                obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), TS2_PV.endWith("CMOD:HDGN:TEMP")));
-        decoupledMethaneTemperature = adaptNumber(
-                obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), MOD_PREFIX + "METH:TEMP"));
-        decoupledModeratorRuntime = adaptNumber(
-                obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), MOD_PREFIX + "RTIME:DUR"));
-        decoupledModeratorRuntimeLimit =
-                adaptNumber(obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), MOD_PREFIX + "RTLIM"));
-        decoupledModeratorAnnealPressure = adaptEnum(
-                obsFactory.getSwitchableObservable(new EnumChannel<YesNo>(YesNo.class), MOD_PREFIX + "ANNPLOW:STAT"));
-        decoupledModeratorUAHBeam =
-                adaptNumber(obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), MOD_PREFIX + "BEAM"));
+        coupledMethaneTemperature = new FacilityPV (TS2_PV.endWith("CMOD:METH:TEMP"), adaptNumber(
+                obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), TS2_PV.endWith("CMOD:METH:TEMP"))));
+                
+        coupledHydrogenTemperature = new FacilityPV (TS2_PV.endWith("CMOD:HDGN:TEMP"), adaptNumber(
+                obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), TS2_PV.endWith("CMOD:HDGN:TEMP"))));
+        
+        decoupledMethaneTemperature = new FacilityPV(MOD_PREFIX + "METH:TEMP",adaptNumber(
+                obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), MOD_PREFIX + "METH:TEMP")));
+        
+        decoupledModeratorRuntime = new FacilityPV(MOD_PREFIX + "RTIME:DUR", adaptNumber(
+                obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), MOD_PREFIX + "RTIME:DUR")));
+        
+        decoupledModeratorRuntimeLimit = new FacilityPV(MOD_PREFIX + "RTLIM",
+                adaptNumber(obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), MOD_PREFIX + "RTLIM")));
+        
+        decoupledModeratorAnnealPressure = new FacilityPV(MOD_PREFIX + "RTLIM", adaptEnum(
+                obsFactory.getSwitchableObservable(new EnumChannel<YesNo>(YesNo.class), MOD_PREFIX + "ANNPLOW:STAT")));
+        
+        decoupledModeratorUAHBeam = new FacilityPV(MOD_PREFIX + "BEAM",
+                adaptNumber(obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), MOD_PREFIX + "BEAM")));
+        
     }
 }
