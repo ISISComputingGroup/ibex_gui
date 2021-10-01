@@ -10,7 +10,7 @@
   <background_color>
     <color red="240" green="240" blue="240" />
   </background_color>
-  <boy_version>5.1.0.201707071649</boy_version>
+  <boy_version>5.1.0</boy_version>
   <foreground_color>
     <color red="192" green="192" blue="192" />
   </foreground_color>
@@ -5204,7 +5204,7 @@ $(pv_value)</tooltip>
         <width>109</width>
         <wuid>-4c80a147:173b4c097c7:-7e50</wuid>
         <x>336</x>
-        <y>340</y>
+        <y>330</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -5295,7 +5295,6 @@ $(pv_value)</tooltip>
             <pv trig="true">$(P)REARDET:ON.SEVR</pv>
           </rule>
         </rules>
-
         <scale_options>
           <width_scalable>true</width_scalable>
           <height_scalable>true</height_scalable>
@@ -5315,27 +5314,41 @@ $(pv_value)</tooltip>
         <x>511</x>
         <y>414</y>
       </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-        <actions hook="false" hook_all="false" />
-        <auto_size>false</auto_size>
+      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+        <actions hook="false" hook_all="true">
+          <action type="WRITE_PV">
+            <pv_name>$(P)MOT:SANS2DVAC:CAN_MOVE_CALC_FDFB.PROC</pv_name>
+            <value>1</value>
+            <timeout>10</timeout>
+            <confirm_message></confirm_message>
+            <description></description>
+          </action>
+        </actions>
+        <alarm_pulsing>false</alarm_pulsing>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
         <background_color>
-          <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          <color name="ISIS_Red" red="255" green="0" blue="0" />
         </background_color>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
         <border_color>
-          <color red="0" green="128" blue="255" />
+          <color name="ISIS_Border" red="0" green="0" blue="0" />
         </border_color>
-        <border_style>0</border_style>
+        <border_style>1</border_style>
         <border_width>1</border_width>
         <enabled>true</enabled>
         <font>
-          <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
         </font>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
         <foreground_color>
-          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          <color red="0" green="0" blue="0" />
         </foreground_color>
-        <height>20</height>
-        <horizontal_alignment>0</horizontal_alignment>
-        <name>Label_1</name>
+        <height>40</height>
+        <image></image>
+        <name>Action Button</name>
+        <push_action_index>0</push_action_index>
+        <pv_name></pv_name>
+        <pv_value />
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -5343,17 +5356,17 @@ $(pv_value)</tooltip>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
         <scripts />
-        <text>Last collision avoidance stop:</text>
-        <tooltip></tooltip>
-        <transparent>true</transparent>
-        <vertical_alignment>1</vertical_alignment>
+        <style>0</style>
+        <text>MOVE ALL</text>
+        <toggle_button>false</toggle_button>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
         <visible>true</visible>
-        <widget_type>Label</widget_type>
-        <width>165</width>
-        <wrap_words>false</wrap_words>
-        <wuid>281c0c19:174737972c1:-7f7d</wuid>
-        <x>265</x>
-        <y>396</y>
+        <widget_type>Action Button</widget_type>
+        <width>109</width>
+        <wuid>-25353267:17c269ea466:-7e81</wuid>
+        <x>336</x>
+        <y>375</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -5378,12 +5391,12 @@ $(pv_value)</tooltip>
           <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
         </foreground_color>
         <format_type>0</format_type>
-        <height>20</height>
+        <height>88</height>
         <horizontal_alignment>0</horizontal_alignment>
-        <name>Text Update_6</name>
+        <name>Collision_text</name>
         <precision>0</precision>
         <precision_from_pv>true</precision_from_pv>
-        <pv_name>$(P)MOT:SANS2DVAC:_LAST_STOP_TIME</pv_name>
+        <pv_name></pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -5392,7 +5405,21 @@ $(pv_value)</tooltip>
           <height_scalable>true</height_scalable>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
-        <scripts />
+        <scripts>
+          <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
+            <scriptName>concatenate message</scriptName>
+            <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+message = [PVUtil.getString(pvs[0]),  PVUtil.getString(pvs[1]), PVUtil.getString(pvs[2])]
+
+message = "\n".join(filter(None, message))
+
+display.getWidget("Collision_text").setPropertyValue("text", message)]]></scriptText>
+            <pv trig="true">$(P)MOT:SANS2DVAC:FBFD_COLLISION</pv>
+            <pv trig="true">$(P)MOT:SANS2DVAC:FBRB_COLLISION</pv>
+            <pv trig="true">$(P)MOT:SANS2DVAC:RBRD_COLLISION</pv>
+          </path>
+        </scripts>
         <show_units>true</show_units>
         <text>######</text>
         <tooltip>$(pv_name)
@@ -5401,11 +5428,11 @@ $(pv_value)</tooltip>
         <vertical_alignment>1</vertical_alignment>
         <visible>true</visible>
         <widget_type>Text Update</widget_type>
-        <width>134</width>
-        <wrap_words>false</wrap_words>
-        <wuid>281c0c19:174737972c1:-7f73</wuid>
-        <x>429</x>
-        <y>396</y>
+        <width>236</width>
+        <wrap_words>true</wrap_words>
+        <wuid>-25353267:17c269ea466:-cef</wuid>
+        <x>265</x>
+        <y>429</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
