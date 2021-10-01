@@ -114,30 +114,12 @@
       <value>
         <type>OSCILLATING_COLLIMATOR</type>
         <path>OscillatingCollimator/OscillatingCollimator.opi</path>
-        <description>The OPI for the LET oscillating collimator.</description>
+        <description>The OPI for the LET/WISH oscillating collimator.</description>
         <macros>
           <macro>
             <name>MOT</name>
             <description>The motor controlling the collimator (e.g. MOT:MTR0101)</description>
             <default>MOT:MTR0101</default>
-          </macro>
-        </macros>
-        <categories>
-          <category>Miscellaneous motion control</category>
-        </categories>
-      </value>
-    </entry>
-    <entry>
-      <key>OscillatingCollimatorWISH</key>
-      <value>
-        <type>OSCILLATING_COLLIMATOR</type>
-        <path>OscillatingCollimator/OscillatingCollimatorWISH.opi</path>
-        <description>The OPI for the WISH oscillating collimator.</description>
-        <macros>
-          <macro>
-            <name>MOT</name>
-            <description>The motor controlling the collimator (e.g. MOT:MTR0401)</description>
-            <default>MOT:MTR0401</default>
           </macro>
         </macros>
         <categories>
