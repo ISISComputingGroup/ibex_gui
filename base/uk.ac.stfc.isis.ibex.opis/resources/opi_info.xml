@@ -114,7 +114,7 @@
       <value>
         <type>OSCILLATING_COLLIMATOR</type>
         <path>OscillatingCollimator/OscillatingCollimator.opi</path>
-        <description>The OPI for the LET oscillating collimator.</description>
+        <description>The OPI for the LET/WISH oscillating collimator.</description>
         <macros>
           <macro>
             <name>MOT</name>
