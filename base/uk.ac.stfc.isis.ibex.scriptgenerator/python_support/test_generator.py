@@ -70,7 +70,7 @@ class TestGenerator(unittest.TestCase):
         assert_that(validityCheck, equal_to([{}, {}]), "2 globals, both valid")
 
     # Allows us to return whether invalid or not based on passed vals
-    def params_valid_side_effect(self, params) -> AnyStr:
+    def params_valid_side_effect(self, params, global_params) -> AnyStr:
         if params == {"param1": "param1Val"}:
             return None
         else:
