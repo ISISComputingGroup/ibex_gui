@@ -2488,11 +2488,11 @@
       </value>
     </entry>
     <entry>
-      <key>SANS2D Waveguide and Aperture</key>
+      <key>SANS2D Guide and Aperture</key>
       <value>
-        <type>WAVEGUIDE_APERTURE</type>
-        <path>waveguide_aperture/waveguide_aperture.opi</path>
-        <description>The OPI for SANS2D Waveguide and Aperture.</description>
+        <type>GUIDE_APERTURE</type>
+        <path>guide_aperture/guide_aperture.opi</path>
+        <description>The OPI for SANS2D Guide and Aperture.</description>
         <categories/>
       </value>
     </entry>

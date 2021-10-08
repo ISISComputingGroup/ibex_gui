@@ -253,7 +253,7 @@ $(pv_value)</tooltip>
         <pv_name/>
         <pv_value/>
         <rules>
-          <rule name="waveguideMovement" prop_id="y" out_exp="true">
+          <rule name="guideMovement" prop_id="y" out_exp="true">
             <exp bool_exp="pv0 &gt; pv1">
               <value>0</value>
             </exp>
