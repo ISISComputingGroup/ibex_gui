@@ -119,6 +119,7 @@ public class ScriptGeneratorView {
     private Label parametersFileText;
     private Label scriptGenerationTimeText;
     private Label estimateText;
+    private Label expectedFinishText;
     private Button queueScriptButton;
     private Button generateScriptButton;
     private Button generateScriptAsButton;
