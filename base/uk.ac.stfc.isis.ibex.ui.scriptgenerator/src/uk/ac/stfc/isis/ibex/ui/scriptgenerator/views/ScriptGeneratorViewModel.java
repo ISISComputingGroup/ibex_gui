@@ -59,7 +59,6 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrap
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.SaveScriptGeneratorFileMessageDialog;
 import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.QueueScriptPreviewDialog;
-import uk.ac.stfc.isis.ibex.ui.scriptgenerator.views.ScriptGeneratorExpectedFinishTimer;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -207,6 +206,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Class to handle updating the expected finish time.
      */
     private ScriptGeneratorExpectedFinishTimer finishTimer;
+    
+    /**
+     * The Scheduler for finish timer
+     */
+    private ScheduledExecutorService scheduler;
     
     /**
      * The reference to the singleton model that the ViewModel is to use.
@@ -687,6 +691,14 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     public String getTimeEstimate() {
     	return displayString;
+    }
+    
+    /**
+     * Get the Finish timer.
+     * @return The finish timer object of the view model.
+     */
+    public ScriptGeneratorExpectedFinishTimer getFinishTimer() {
+    	return this.finishTimer;
     }
     
     /**
