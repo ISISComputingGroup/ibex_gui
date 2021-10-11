@@ -403,7 +403,7 @@ public class ScriptGeneratorView {
 	        estimateText.setFont(font);
 	        estimateText.setText("Total estimated run time: 0 seconds");
 	        
-	     // Label for the expected finish time
+	        // Label for the expected finish time
 	        expectedFinishText = new Label(scriptTimeGrp, SWT.BOTTOM);
 	        expectedFinishText.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
 	        currentFont = expectedFinishText.getFont().getFontData()[0].getName();
@@ -492,7 +492,8 @@ public class ScriptGeneratorView {
 	            helpText,
 	            globalLabel,
 	            globalParamText,
-	            globalParamComposite);
+	            globalParamComposite,
+                expectedFinishText);
 	        scriptGeneratorViewModel.createGlobalParamsWidgets();
 	        
         } else {
@@ -586,8 +587,9 @@ public class ScriptGeneratorView {
         Text helpText,
         List<Label> globalLabel,
         List<Text> globalParamText,
-        Composite globalParamsComposite) {
-    scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText, globalLabel, globalParamText, globalParamsComposite, mainParent);
+        Composite globalParamsComposite,
+        Label expectedFinishTime) {
+    scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText, globalLabel, globalParamText, globalParamsComposite, mainParent, expectedFinishTime);
 
     scriptGeneratorViewModel.bindActionProperties(table, generateScriptButton, generateScriptAsButton);
 

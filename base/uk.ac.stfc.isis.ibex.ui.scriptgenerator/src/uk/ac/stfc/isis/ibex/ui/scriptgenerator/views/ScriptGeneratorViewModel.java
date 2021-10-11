@@ -16,6 +16,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -56,6 +59,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrap
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.SaveScriptGeneratorFileMessageDialog;
 import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.QueueScriptPreviewDialog;
+import uk.ac.stfc.isis.ibex.ui.scriptgenerator.views.ScriptGeneratorExpectedFinishTimer;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -198,7 +202,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Default string to display for time estimation.
      */
     private String displayString = "Total estimated run time: 00:00:00";
-
+    
+    /**
+     * Class to handle updating the expected finish time.
+     */
+    private ScriptGeneratorExpectedFinishTimer finishTimer;
+    
     /**
      * The reference to the singleton model that the ViewModel is to use.
      */
@@ -687,6 +696,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     public ScriptGeneratorExpectedFinishTimer getFinishTimer() {
     	return this.finishTimer;
     }
+    
 
     /**
      * Handle a change in the actions or their properties.

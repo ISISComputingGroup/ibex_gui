@@ -3,8 +3,6 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import org.eclipse.core.databinding.beans.typed.BeanProperties;
-import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.widgets.Label;
 
 
