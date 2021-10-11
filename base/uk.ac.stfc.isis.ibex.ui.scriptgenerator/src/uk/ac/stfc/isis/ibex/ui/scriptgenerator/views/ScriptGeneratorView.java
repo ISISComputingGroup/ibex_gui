@@ -492,8 +492,7 @@ public class ScriptGeneratorView {
 	            helpText,
 	            globalLabel,
 	            globalParamText,
-	            globalParamComposite,
-                expectedFinishText);
+	            globalParamComposite);
 	        scriptGeneratorViewModel.createGlobalParamsWidgets();
 	        
         } else {
@@ -587,9 +586,8 @@ public class ScriptGeneratorView {
         Text helpText,
         List<Label> globalLabel,
         List<Text> globalParamText,
-        Composite globalParamsComposite,
-        Label expectedFinishTime) {
-    scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText, globalLabel, globalParamText, globalParamsComposite, mainParent, expectedFinishTime);
+        Composite globalParamsComposite) {
+    scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText, globalLabel, globalParamText, globalParamsComposite, mainParent);
 
     scriptGeneratorViewModel.bindActionProperties(table, generateScriptButton, generateScriptAsButton);
 
@@ -603,6 +601,9 @@ public class ScriptGeneratorView {
     
     bindingContext.bindValue(WidgetProperties.text().observe(estimateText),
         BeanProperties.value("timeEstimate").observe(scriptGeneratorViewModel));
+    
+    scriptGeneratorViewModel.getFinishTimer().addPropertyChangeListener("finishTimeVal",
+    		e->{DISPLAY.asyncExec(()->{expectedFinishText.setText((String) e.getNewValue());});});
 
     bindToHasSelected(btnDeleteAction);
     bindToHasSelected(btnMoveActionUp);

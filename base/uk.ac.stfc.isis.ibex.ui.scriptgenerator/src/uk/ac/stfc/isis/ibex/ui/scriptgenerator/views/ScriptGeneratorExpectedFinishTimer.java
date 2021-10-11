@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import java.time.format.DateTimeFormatter;
 
-
 /***
  * 
  * Helper class that calculates expected finish time.
@@ -12,24 +11,21 @@ import java.time.format.DateTimeFormatter;
  */
 public class ScriptGeneratorExpectedFinishTimer extends ModelObject implements Runnable{
 	private volatile long timeEstimateVal;
-	private volatile String finishTime; 
+	private String finishTime; 
 	
-	public ScriptGeneratorExpectedFinishTimer(long timeEstimateVal) {
-		this.timeEstimateVal = timeEstimateVal;
-		System.out.println("made class");
+	public ScriptGeneratorExpectedFinishTimer() {
+		this.timeEstimateVal = 0;
 	}
 	
 	public void SetTimeEstimateVal(long timeEstimateVal) {
 		this.timeEstimateVal = timeEstimateVal;
 	}
 	
-	public String getFinishTime() {
-		return finishTime;
-	}
 	public void run() {
 		LocalDateTime currentTime = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 		currentTime = currentTime.plusSeconds(timeEstimateVal);
-		firePropertyChange("finishTimeVal", finishTime, finishTime = "Expected Finish Time: "+ currentTime.format(formatter));
+		finishTime = "Expected Finish Time: "+ currentTime.format(formatter);
+		firePropertyChange("finishTimeVal", null, finishTime);
 	}
 }
