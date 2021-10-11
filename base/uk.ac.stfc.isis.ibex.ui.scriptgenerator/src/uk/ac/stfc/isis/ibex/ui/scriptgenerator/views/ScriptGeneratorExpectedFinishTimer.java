@@ -28,7 +28,7 @@ public class ScriptGeneratorExpectedFinishTimer implements Runnable{
 	public void run() {
 		LocalDateTime currentTime = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+		currentTime.plusSeconds(timeEstimateVal);
 		expectedFinishTime.setText(currentTime.format(formatter));
-		
 	}
 }
