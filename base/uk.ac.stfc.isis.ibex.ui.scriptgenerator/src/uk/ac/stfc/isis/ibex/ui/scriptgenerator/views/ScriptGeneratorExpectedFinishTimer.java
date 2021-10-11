@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import java.time.format.DateTimeFormatter;
 
-import org.eclipse.swt.widgets.Label;
-
 
 /***
  * 
@@ -13,11 +11,10 @@ import org.eclipse.swt.widgets.Label;
  *
  */
 public class ScriptGeneratorExpectedFinishTimer extends ModelObject implements Runnable{
-	private Label expectedFinishTime;
 	private volatile long timeEstimateVal;
+	private volatile String finishTime; 
 	
-	public ScriptGeneratorExpectedFinishTimer(Label expectedFinishTime, long timeEstimateVal) {
-		this.expectedFinishTime = expectedFinishTime;
+	public ScriptGeneratorExpectedFinishTimer(long timeEstimateVal) {
 		this.timeEstimateVal = timeEstimateVal;
 		System.out.println("made class");
 	}
@@ -25,11 +22,14 @@ public class ScriptGeneratorExpectedFinishTimer extends ModelObject implements R
 	public void SetTimeEstimateVal(long timeEstimateVal) {
 		this.timeEstimateVal = timeEstimateVal;
 	}
+	
+	public String getFinishTime() {
+		return finishTime;
+	}
 	public void run() {
 		LocalDateTime currentTime = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-		currentTime.plusSeconds(timeEstimateVal);
-		firePropertyChange("finishTimeVal", "now", "Expected Finish Time: "+ currentTime.format(formatter));
-		System.out.println("Expected Finish Time: "+ currentTime.format(formatter));
+		currentTime = currentTime.plusSeconds(timeEstimateVal);
+		firePropertyChange("finishTimeVal", finishTime, finishTime = "Expected Finish Time: "+ currentTime.format(formatter));
 	}
 }
