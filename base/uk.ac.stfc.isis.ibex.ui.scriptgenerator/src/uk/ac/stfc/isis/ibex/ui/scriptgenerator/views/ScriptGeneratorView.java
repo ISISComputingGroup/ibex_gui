@@ -602,8 +602,11 @@ public class ScriptGeneratorView {
     bindingContext.bindValue(WidgetProperties.text().observe(estimateText),
         BeanProperties.value("timeEstimate").observe(scriptGeneratorViewModel));
     
-    scriptGeneratorViewModel.getFinishTimer().addPropertyChangeListener("finishTimeVal",
-    		e->{DISPLAY.asyncExec(()->{expectedFinishText.setText((String) e.getNewValue());});});
+    scriptGeneratorViewModel.getFinishTimer().addPropertyChangeListener("finishTimeVal", e->{
+    	DISPLAY.asyncExec(()->{
+    		expectedFinishText.setText((String) e.getNewValue());
+    	});
+    });
 
     bindToHasSelected(btnDeleteAction);
     bindToHasSelected(btnMoveActionUp);

@@ -13,14 +13,27 @@ public class ScriptGeneratorExpectedFinishTimer extends ModelObject implements R
 	private volatile long timeEstimateVal;
 	private String finishTime; 
 	
+	/**
+	 * The default constructor
+	 *
+	 */
 	public ScriptGeneratorExpectedFinishTimer() {
 		this.timeEstimateVal = 0;
 	}
 	
+	/**
+	 * Function to set the current time estimate
+	 * @param timeEstimateVal the current time estimate of the script
+	 */
 	public void SetTimeEstimateVal(long timeEstimateVal) {
 		this.timeEstimateVal = timeEstimateVal;
 	}
 	
+	/**
+	 * Function to be ran by a scheduler every second.
+	 * 
+	 * Adds the timeEstimateVal to the current time and then alerts the gui that the property has changed.
+	 */
 	public void run() {
 		LocalDateTime currentTime = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
