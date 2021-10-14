@@ -79,8 +79,8 @@ public class MotorsOverview extends Composite {
      * @param motorsTable - The table of motors to be displayed in the view
      */
     public void setMotors(MotorsTable motorsTable) {
-    	
-    	GridLayout motorsGrid = new GridLayout(motorsTable.getNumMotors(), true);
+    	    	
+    	GridLayout motorsGrid = new GridLayout(8, true);
     	motorsGrid.verticalSpacing = MARGIN;
     	motorsGrid.horizontalSpacing = MARGIN;
     	motorsGrid.marginWidth = MARGIN;
@@ -89,8 +89,10 @@ public class MotorsOverview extends Composite {
 		
 		resetViews();
 		
-		for (Motor motor : motorsTable.motors()) {
-			addMinimalView(motor);
+		for (java.util.Map.Entry<Integer, ArrayList<Motor>> e : motorsTable.motors().entrySet()) {
+			for (Motor motor : e.getValue()) {
+				addMinimalView(motor);
+			}
 		}
 	}
 	

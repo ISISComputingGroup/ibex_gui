@@ -74,8 +74,8 @@ public class TableOfMotorsView {
 		scrolledComposite.setMinHeight(numCrates * MOTOR_HEIGHT + TABLE_MARGIN);
 		scrolledComposite.setExpandHorizontal(true);
 
-		int numMotors = motorsTable.getNumMotors();
-		scrolledComposite.setMinWidth(numMotors * MOTOR_WIDTH + TABLE_MARGIN);
+		// TODO: we need to calculate the actual height according to how many rows each controller will take up
+		scrolledComposite.setMinWidth(8 * MOTOR_WIDTH + TABLE_MARGIN);
 		scrolledComposite.setExpandVertical(true);
 		
         motorsOverview =

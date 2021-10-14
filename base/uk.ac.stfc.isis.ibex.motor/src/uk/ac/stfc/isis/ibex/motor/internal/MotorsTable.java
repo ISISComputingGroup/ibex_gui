@@ -20,25 +20,24 @@
 package uk.ac.stfc.isis.ibex.motor.internal;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.Map.Entry;
 
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.motor.Motor;
 import uk.ac.stfc.isis.ibex.motor.observable.MotorVariables;
 import uk.ac.stfc.isis.ibex.motor.observable.ObservableMotor;
-
+import java.util.TreeMap;
 /**
  * A table containing information about the motors.
  */
 public class MotorsTable extends Closer {
 	
 	private static final String MOTOR_NAME_FORMAT = "MTR%02d%02d";
-	private int numberMotors;
-	private int numberCrates;
+
+	private TreeMap<Integer, Integer> numMotorsPerControllers = new TreeMap<>();
 	
-	private List<Motor> motors = new ArrayList<>();
+	private TreeMap<Integer, ArrayList<Motor>> motors = new TreeMap<>();
 	
 	/**
 	 * Create the table.
@@ -49,16 +48,19 @@ public class MotorsTable extends Closer {
 	 * @param startCrate the crate to start on
 	 */
 	public MotorsTable(Instrument instrument, int numberCrates, int numberMotors, int startCrate) {
-		this.numberMotors = numberMotors;
-		this.numberCrates = numberCrates;
-		
 		for (int crate = startCrate; crate < startCrate + numberCrates; crate++) {
-			for (int motorNumber = 1; motorNumber <= numberMotors; motorNumber++) {
+			this.numMotorsPerControllers.put(crate, numberMotors); 
+		}
+		
+		for (Entry<Integer, Integer> entry : this.numMotorsPerControllers.entrySet() ) {
+			int crate = entry.getKey();
+			int numMotors = entry.getValue();
+			motors.put(crate, new ArrayList<Motor>());
+			for (int motorNumber = 1; motorNumber <= numMotors; motorNumber++) {
 				String name = motorName(crate, motorNumber);
 				MotorVariables variables = registerForClose(new MotorVariables(name, instrument));
 				Motor motor = new ObservableMotor(variables);
-
-				motors.add(motor);
+				motors.get(crate).add(motor);
 			}
 		}
 	}
@@ -67,8 +69,8 @@ public class MotorsTable extends Closer {
 	 * Gets the motors in this table.
 	 * @return the motors in this table
 	 */
-	public Collection<Motor> motors() {
-		return new ArrayList<>(motors);
+	public TreeMap<Integer,ArrayList<Motor>> motors() {
+		return motors;
 	}
 	
 	private String motorName(int row, int column) {
@@ -78,14 +80,22 @@ public class MotorsTable extends Closer {
 	/**
 	 * @return the number of motors per controller/crate
 	 */
-	public int getNumMotors() {
-		return numberMotors;
+	public int getNumMotors(int crateNum) {
+		return numMotorsPerControllers.get(crateNum);
+	}
+	
+	public int getTotalNumMotors() {
+		int count = 0; 
+		for (int numOfMotors : this.numMotorsPerControllers.values()) {
+			count += numOfMotors;
+		}
+		return count;
 	}
 	
 	/**
      * @return the number of crates/controllers
      */
 	public int getNumCrates() {
-		return numberCrates;
+		return numMotorsPerControllers.size();
 	}
 }
