@@ -70,6 +70,24 @@
       </value>
     </entry>
     <entry>
+      <key>PEARLPC</key>
+      <value>
+        <type>PEARLPC</type>
+        <path>PEARLPC.opi</path>
+        <description>The OPI for the PEARLPC</description>
+        <macros>
+          <macro>
+            <name>PEARLPC</name>
+            <description>The PEARLPC PV prefix (e.g. PEARLPC_01)</description>
+            <default>PEARLPC_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Pressure control handling systems</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Keyence TM-3001P</key>
       <value>
         <type>KEYENCE</type>
@@ -114,7 +132,7 @@
       <value>
         <type>OSCILLATING_COLLIMATOR</type>
         <path>OscillatingCollimator/OscillatingCollimator.opi</path>
-        <description>The OPI for the LET oscillating collimator.</description>
+        <description>The OPI for the LET/WISH oscillating collimator.</description>
         <macros>
           <macro>
             <name>MOT</name>
@@ -2694,6 +2712,21 @@
             <name>TEKAFG3XXX</name>
             <description>The tekafg3xxx PV prefix (e.g. TEKAFG3XXX_01)</description>
             <default>TEKAFG3XXX_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Weeder WTDAC-M</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>Weeder_WTDAC-M.opi</path>
+        <description>Analog output module</description>
+        <macros>
+          <macro>
+            <name>IOC_NAME</name>
+            <description>The weeder PV prefix (e.g. WEEDER_01)</description>
+            <default>WEEDER_01</default>
           </macro>
         </macros>
       </value>

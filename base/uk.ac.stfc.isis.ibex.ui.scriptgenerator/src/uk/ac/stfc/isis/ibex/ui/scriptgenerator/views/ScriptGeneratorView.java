@@ -52,7 +52,6 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
-import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
 
 /**
  * Provides the UI to control the script generator.
@@ -424,6 +423,7 @@ public class ScriptGeneratorView {
         
         btnDeleteAction = new Button(actionsControlsGrp, SWT.NONE);
         btnDeleteAction.setText("Delete Selected Actions");
+        btnDeleteAction.setToolTipText("Delete a single or multiple actions.\nTo select multiple actions, use Ctrl+Click or Shift+Click.");
         btnDeleteAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         btnDeleteAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.deleteAction(table.selectedRows()));
 

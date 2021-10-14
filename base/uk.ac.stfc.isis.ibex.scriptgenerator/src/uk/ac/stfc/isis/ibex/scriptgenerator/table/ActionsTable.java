@@ -226,12 +226,12 @@ public class ActionsTable extends ModelObject {
 
 	/**
 	 * Removes an action from the list in specified location.
-	 * @param actionsToDeletes
+	 * @param actionsToDelete
 	 * 		  	The actions to remove from the actions list.
 	 */
-	public void deleteAction(List<ScriptGeneratorAction> actionsToDeletes) {
+	public void deleteAction(List<ScriptGeneratorAction> actionsToDelete) {
 		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
-		newList.removeAll(actionsToDeletes);
+		newList.removeAll(actionsToDelete);
 		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
 	}
 

@@ -83,7 +83,15 @@ public class SaveScriptGeneratorFileMessageDialog {
 		
 		if (openInEditor) {
 			try {
-				model.getFileHandler().openFile(filepath);
+				String notepadExe = "notepad";
+				try {
+					notepadExe = model.getFileHandler().findNotepadExe();
+				} catch (IOException e) {
+					MessageDialog.openWarning(parentShell, "Notepad++ not found",
+							"Notepad++ was not found, file will be opened using the default Windows Notepad.\n"
+							+ "Note: Installing Notepad++ is highly recommended.");
+				}
+				model.getFileHandler().openFile(filepath, notepadExe);
 			} catch (OpenFileException | IOException e) {
 				MessageDialog.openWarning(parentShell, "Error", "Failed to open file: " + e.getMessage());
 			}

@@ -60,6 +60,12 @@ public class ObservingSynopticModel extends ModelObject {
 	private final Variables variables;
     private final SwitchableObservable<SynopticDescription> synopticObservable;
 
+    /**
+     * Create a link between the PV observables used to define the synoptic and the synoptic model.
+     * 
+     * @param variables Contains the PV observables.
+     * @param model The synoptic model to link to.
+     */
 	public ObservingSynopticModel(Variables variables, SynopticModel model) {
 		this.model = model;
 		this.variables = variables;
@@ -69,15 +75,31 @@ public class ObservingSynopticModel extends ModelObject {
         synopticObservable.subscribe(descriptionObserver);
 	}
 
+	/**
+	 * Change this synoptic to use the new information given and set the details 
+	 *  observable to the new description.
+	 * 
+	 * @param newSynoptic The information for the synoptic to switch to.
+	 */
 	public void switchSynoptic(SynopticInfo newSynoptic) {
         synopticInfo = newSynoptic;
         synopticObservable.setSource(variables.getSynopticDescription(newSynoptic.pv()));
 	}
 
+	/**
+	 * Get an observable description of the synoptic.
+	 * 
+	 * @return An observable description of the synoptic.
+	 */
     public SwitchableObservable<SynopticDescription> getSynopticObservable() {
         return synopticObservable;
     }
 
+    /**
+     * Get basic information about this synoptic.
+     * 
+     * @return Basic information about this synoptic.
+     */
     public SynopticInfo getSynopticInfo() {
         return synopticInfo;
     }
