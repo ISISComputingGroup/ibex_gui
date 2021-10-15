@@ -36,7 +36,7 @@ public class LoggingConfigurationObserver extends LoggingObserver<Configuration>
 	public void onValue(Configuration value) {
 		super.onValue(value);
 		try {
-			log.info(id + " " + new JsonSerialisingConverter<>(Configuration.class).convert(value).toString());
+			log.info(id + " " + new JsonSerialisingConverter<>(Configuration.class).apply(value).toString());
 		} catch (ConversionException e) {
 			log.info(id + " " + e.toString());
 		}

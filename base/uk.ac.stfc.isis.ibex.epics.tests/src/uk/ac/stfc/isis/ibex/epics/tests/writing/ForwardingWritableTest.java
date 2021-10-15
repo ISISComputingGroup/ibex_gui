@@ -24,12 +24,12 @@ import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.io.IOException;
+import java.util.function.Function;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.writing.ConfigurableWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritable;
@@ -42,13 +42,13 @@ public class ForwardingWritableTest {
     private static final String CONVERTED_VALUE = "456";
 
     private Writable<String> mockDestination;
-    private Converter<String, String> mockConverter;
+    private Function<String, String> mockConverter;
 
     @Before
     public void setUp() {
         // Arrange
         mockDestination = mock(Writable.class);
-        mockConverter = mock(Converter.class);
+        mockConverter = mock(Function.class);
     }
 
     private ForwardingWritable<String, String> createWritable() {
@@ -221,7 +221,7 @@ public class ForwardingWritableTest {
     public void setting_a_new_destination_writable_allows_to_write_to_new_destination() throws ConversionException, IOException {
         // Arrange
         Writable<String> mockNewDestination = mock(Writable.class);
-        when(mockConverter.convert(VALUE)).thenReturn(CONVERTED_VALUE);
+        when(mockConverter.apply(VALUE)).thenReturn(CONVERTED_VALUE);
         ForwardingWritable<String, String> forwardingWritable = createWritable();
 
         verify(mockNewDestination, never()).write(anyString());
@@ -247,7 +247,7 @@ public class ForwardingWritableTest {
     @Test
     public void write_writes_the_converted_value() throws ConversionException, IOException {
         // Arrange
-        when(mockConverter.convert(VALUE)).thenReturn(CONVERTED_VALUE);
+        when(mockConverter.apply(VALUE)).thenReturn(CONVERTED_VALUE);
         ForwardingWritable<String, String> forwardingWritable = createWritable();
         verify(mockDestination, never()).write(anyString());
 
@@ -263,7 +263,7 @@ public class ForwardingWritableTest {
     public void value_conversion_error_is_stored_in_last_error() throws ConversionException, IOException {
         // Arrange
         ConversionException exception = new ConversionException("conversion error");
-        when(mockConverter.convert(VALUE)).thenThrow(exception);
+        when(mockConverter.apply(VALUE)).thenThrow(exception);
         ForwardingWritable<String, String> forwardingWritable = createWritable();
 
         assertNull(forwardingWritable.lastError());
@@ -280,7 +280,7 @@ public class ForwardingWritableTest {
             throws ConversionException, IOException {
         // Arrange
         ConversionException exception = new ConversionException("conversion error");
-        when(mockConverter.convert(VALUE)).thenThrow(exception);
+        when(mockConverter.apply(VALUE)).thenThrow(exception);
 
         ForwardingWritable<String, String> forwardingWritable = createWritable();
 

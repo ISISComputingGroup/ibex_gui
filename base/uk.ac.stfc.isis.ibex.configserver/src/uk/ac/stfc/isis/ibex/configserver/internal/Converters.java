@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.configserver.internal;
 
 import java.util.Collection;
+import java.util.function.Function;
 
 import uk.ac.stfc.isis.ibex.configserver.BlockRules;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
@@ -30,7 +31,6 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
 
 /**
@@ -41,76 +41,76 @@ public interface Converters {
     /**
      * @return converter for converting a to a configuration.
      */
-	Converter<String, Configuration> toConfig();
+    Function<String, Configuration> toConfig();
 
     /**
      * @return converter for converting to a list of configurations.
      */
-    Converter<String, Collection<Configuration>> toConfigList();
+    Function<String, Collection<Configuration>> toConfigList();
 
     /**
      * @return converter for converting to server status.
      */
-	Converter<String, ServerStatus> toServerStatus();
+	Function<String, ServerStatus> toServerStatus();
 	
     /**
      * @return converter for the block rules.
      */
-	Converter<String, BlockRules> toBlockRules();
+	Function<String, BlockRules> toBlockRules();
 
     /**
      * @return converter for block server text validator rules.
      */
-    Converter<String, BlockServerNameValidator> toBlockServerTextValidor();
+    Function<String, BlockServerNameValidator> toBlockServerTextValidor();
 
     /**
      * @return converter for converting to config info.
      */
-	Converter<String, Collection<ConfigInfo>> toConfigsInfo();
+	Function<String, Collection<ConfigInfo>> toConfigsInfo();
 
     /**
      * @return converter for converting to component info.
      */
-	Converter<String, Collection<ComponentInfo>> toComponents();
+	Function<String, Collection<ComponentInfo>> toComponents();
 
     /**
      * @return converter for converting to IOCs.
      */
-	Converter<String, Collection<EditableIoc>> toIocs();
+	Function<String, Collection<EditableIoc>> toIocs();
 
     /**
      * @return converter for converting to PVs.
      */
-	Converter<String, Collection<PV>> toPVs();
+	Function<String, Collection<PV>> toPVs();
 
     /**
      * @return converter for converting a configuration to string.
      */
-	Converter<Configuration, String> configToString();
+	Function<Configuration, String> configToString();
 
     /**
      * @return converter for converting a list of config names to string.
      */
-	Converter<Collection<String>, String> namesToString();
+	Function<Collection<String>, String> namesToString();
 
     /**
      * @return converter for converting a name to string.
      */
-	Converter<String, String> nameToString();
+	Function<String, String> nameToString();
 
     /**
      * @return converter for converting to a list of IOC states.
      */
-	Converter<String, Collection<IocState>> toIocStates();
+	Function<String, Collection<IocState>> toIocStates();
 
     /**
      * @return converter for converting to a list of names.
      */
-	Converter<String, Collection<String>> toNames();
+	Function<String, Collection<String>> toNames();
 
 	/**
      * @return converter for the banner description
      */
-    Converter<String, CustomBannerData> toBannerDescription();
+    Function<String, CustomBannerData> toBannerDescription();
 
 }
