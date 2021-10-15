@@ -97,16 +97,14 @@ public class PVTest {
         PV copied = new PV(source);
 
         // Assert
-        assertEquals(source.recordType(), copied.recordType());
+        assertEquals(source.recordType().io(), copied.recordType().io());
     }
 
     @Test
     public void copied_object_has_record_type_that_is_not_linked_to_source_object() {
         // Act
         PV copied = new PV(source);
-        RecordType newRecordType = new RecordType();
-        newRecordType.setIO(IO.WRITE);
-        copied.setRecordType(newRecordType);
+        copied.recordType().setIO(IO.WRITE);
 
         // Assert
         assertEquals(IO.READ, source.recordType().io());
