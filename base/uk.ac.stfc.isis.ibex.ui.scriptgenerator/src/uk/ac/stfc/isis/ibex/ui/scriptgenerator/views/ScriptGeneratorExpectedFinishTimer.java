@@ -14,7 +14,7 @@ public class ScriptGeneratorExpectedFinishTimer extends ModelObject implements R
 	private String finishTime; 
 	
 	/**
-	 * The default constructor
+	 * The default constructor.
 	 *
 	 */
 	public ScriptGeneratorExpectedFinishTimer() {
@@ -22,8 +22,8 @@ public class ScriptGeneratorExpectedFinishTimer extends ModelObject implements R
 	}
 	
 	/**
-	 * Function to set the current time estimate
-	 * @param timeEstimateVal the current time estimate of the script
+	 * Function to set the current time estimate.
+	 * @param timeEstimateVal the current time estimate of the script.
 	 */
 	public void SetTimeEstimateVal(long timeEstimateVal) {
 		this.timeEstimateVal = timeEstimateVal;

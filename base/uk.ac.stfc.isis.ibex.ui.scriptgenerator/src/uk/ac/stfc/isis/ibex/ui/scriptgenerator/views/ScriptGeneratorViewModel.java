@@ -208,7 +208,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private ScriptGeneratorExpectedFinishTimer finishTimer;
     
     /**
-     * The Scheduler for finish timer
+     * The Scheduler for finish timer.
      */
     private ScheduledExecutorService scheduler;
     
