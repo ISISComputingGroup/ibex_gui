@@ -20,9 +20,9 @@
 package uk.ac.stfc.isis.ibex.epics.writing;
 
 import java.io.IOException;
+import java.util.function.Function;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
@@ -62,7 +62,7 @@ public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
     private Subscription readingSubscription;
 	private Subscription writingSubsciption;
 	
-    private final Converter<TIn, TOut> converter;
+    private final Function<TIn, TOut> converter;
 
     /**
      * Constructor.
@@ -72,7 +72,7 @@ public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
      * @param converter
      *            converts types from In to Out
      */
-    public ForwardingWritable(Writable<TOut> destination, Converter<TIn, TOut> converter) {
+    public ForwardingWritable(Writable<TOut> destination, Function<TIn, TOut> converter) {
         this.converter = converter;
         setWritable(destination);
     }
@@ -106,7 +106,7 @@ public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
 
     private TOut transform(TIn value) {
         try {
-            return converter.convert(value);
+            return converter.apply(value);
         } catch (ConversionException e) {
             error(e);
         }
