@@ -60,7 +60,7 @@ public class DuplicatePvValidator extends ErrorMessageProvider {
     private String constructError(Collection<String> duplicates) {
         StringBuilder b = new StringBuilder();
         for (String duplicate : duplicates) {
-            b.append(duplicate + " repeated");
+            b.append("PV name '" + duplicate + "' is repeated.");
         }
         return b.toString();
     }

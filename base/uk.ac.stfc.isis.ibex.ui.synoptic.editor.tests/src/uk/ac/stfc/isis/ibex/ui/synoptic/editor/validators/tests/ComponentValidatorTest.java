@@ -100,6 +100,4 @@ public class ComponentValidatorTest {
 
         assertTrue(validator.getError().getMessage().contains(COMP_NAME_TWO));
     }
-    
-    
 }
