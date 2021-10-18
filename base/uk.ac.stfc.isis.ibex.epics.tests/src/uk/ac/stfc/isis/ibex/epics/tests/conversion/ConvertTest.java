@@ -3,9 +3,11 @@ package uk.ac.stfc.isis.ibex.epics.tests.conversion;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
+
+import java.util.function.Function;
+
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
 @SuppressWarnings({ "checkstyle:methodname", "checkstyle:magicnumber" })
 public class ConvertTest {
@@ -17,12 +19,12 @@ public class ConvertTest {
 	@Test
 	public void convert_from_zipped_hex() throws ConversionException {
 		//Arrange
-		Converter<byte[], String> converter = Convert.fromZippedHex();
+		Function<byte[], String> converter = Convert.fromZippedHex();
 		
 		String expected = "test";
 		
 		//Act
-		String result = converter.convert(testZippedHexed);
+		String result = converter.apply(testZippedHexed);
 		
 		//Assert
 		assertEquals(expected, result);
@@ -31,12 +33,12 @@ public class ConvertTest {
 	@Test
 	public void convert_to_zipped_hex() throws ConversionException {
 		//Arrange
-		Converter<String, byte[]> converter = Convert.toZippedHex();
+		Function<String, byte[]> converter = Convert.toZippedHex();
 		
 		String test = "test";
 				
 		//Act
-		byte[] result = converter.convert(test);
+		byte[] result = converter.apply(test);
 		
 		//Assert
 		assertArrayEquals(testZippedHexed, result);
@@ -45,12 +47,12 @@ public class ConvertTest {
 	@Test
 	public void convert_from_hex() throws ConversionException {
 		//Arrange
-		Converter<String, String> converter = Convert.fromHexString();
+		Function<String, String> converter = Convert.fromHexString();
 		
 		String expected = "test";
 		
 		//Act
-		String result = converter.convert(testHexed);
+		String result = converter.apply(testHexed);
 		
 		//Assert
 		assertEquals(expected, result);
@@ -60,12 +62,12 @@ public class ConvertTest {
 	@Test
 	public void convert_to_hex() throws ConversionException {
 		//Arrange
-		Converter<String, String> converter = Convert.toHexString();
+		Function<String, String> converter = Convert.toHexString();
 		
 		String test = "test";
 		
 		//Act
-		String result = converter.convert(test);
+		String result = converter.apply(test);
 		
 		//Assert
 		assertEquals(testHexed, result);
@@ -74,10 +76,10 @@ public class ConvertTest {
 	@Test
 	public void convert_yes_to_boolean() throws ConversionException {
 		//Arrange
-		Converter<String, Boolean> converter = Convert.toBoolean();
+		Function<String, Boolean> converter = Convert.toBoolean();
 		
 		//Act
-		boolean result = converter.convert("YES");
+		boolean result = converter.apply("YES");
 		
 		//Assert
 		assertEquals(true, result);
@@ -86,10 +88,10 @@ public class ConvertTest {
 	@Test
 	public void convert_no_to_boolean() throws ConversionException {
 		//Arrange
-		Converter<String, Boolean> converter = Convert.toBoolean();
+		Function<String, Boolean> converter = Convert.toBoolean();
 		
 		//Act
-		boolean result = converter.convert("NO");
+		boolean result = converter.apply("NO");
 		
 		//Assert
 		assertEquals(false, result);

@@ -19,12 +19,13 @@
 
 package uk.ac.stfc.isis.ibex.synoptic.internal;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.function.Function;
 
 import uk.ac.stfc.isis.ibex.configserver.AlarmState;
 import uk.ac.stfc.isis.ibex.configserver.internal.ConfigEditing;
 import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
 import uk.ac.stfc.isis.ibex.epics.observing.ConcatenatingObservable;
@@ -128,8 +129,8 @@ public class Variables {
         synopticSchema = readCompressed(SYNOPTIC_ADDRESS + "SCHEMA");
     }
 
-    private Converter<String, Collection<SynopticInfo>> toSynopticInfo() {
-		return new JsonDeserialisingConverter<>(SynopticInfo[].class).apply(Convert.<SynopticInfo>toCollection());
+    private Function<String, Collection<SynopticInfo>> toSynopticInfo() {
+		return new JsonDeserialisingConverter<>(SynopticInfo[].class).andThen(Arrays::asList);
 	}	
 
     /**
@@ -192,8 +193,8 @@ public class Variables {
         return SYNOPTIC_ADDRESS + synopticPV + GET_SYNOPTIC;
     }
 
-    private Converter<Collection<String>, String> namesToString() {
-        return Convert.toArray(new String[0]).apply(new JsonSerialisingConverter<String[]>(String[].class));
+    private Function<Collection<String>, String> namesToString() {
+        return Convert.toArray(new String[0]).andThen(new JsonSerialisingConverter<String[]>(String[].class));
     }
 
     private Writable<String> writeCompressed(String address) {
