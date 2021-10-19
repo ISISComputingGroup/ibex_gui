@@ -37,8 +37,8 @@ public class AddBlockToConfigHandler extends AbstractHandler {
 	String configName;
 
 	/**
-	 * Open the configuration selection dialog and adding new block to the selected.
-	 * configuration
+	 * Open the configuration selection dialog and adding new block to the selected
+	 * configuration.
 	 * 
 	 * @param event The event that caused the open.
 	 * @throws ExecutionException

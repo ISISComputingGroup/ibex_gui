@@ -34,6 +34,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
  * A helper class to open config editing dialog boxes.
  */
 public class EditConfigHelper extends ConfigHelper {
+	
 	/**
 	 * Configuration server.
 	 */

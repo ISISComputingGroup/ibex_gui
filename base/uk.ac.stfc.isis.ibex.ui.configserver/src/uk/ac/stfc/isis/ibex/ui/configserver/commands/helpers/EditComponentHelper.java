@@ -46,11 +46,12 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
  * A helper class to open component editing dialog boxes.
  */
 public class EditComponentHelper extends ConfigHelper {
+	
 	/**
-	 * Configuration server
+	 * Configuration server.
 	 */
 	protected ConfigServer server;
-	private static final String[] OK = { "OK" };
+	private static final String[] OK = {"OK"};
 
 	/**
 	 * The title of the dialog

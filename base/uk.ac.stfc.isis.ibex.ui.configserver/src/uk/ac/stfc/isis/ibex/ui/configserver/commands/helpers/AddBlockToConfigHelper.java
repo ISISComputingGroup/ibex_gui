@@ -44,8 +44,8 @@ public class AddBlockToConfigHelper extends EditConfigHelper {
 
 		EditConfigDialog dialog = new EditConfigDialog(shell, title, subTitle, config, false, configurationViewModels,
 				editBlockFirst, openEditBlockDialog, pvName); // Creating dialog to edit configuration
-		dialog.addNew(config);// Open edit block dialog before editing the configuration
-		if (dialog.open() == Window.OK) {// Edit configuration dialog
+		dialog.addNew(config);  // Open edit block dialog before editing the configuration
+		if (dialog.open() == Window.OK) {  // Edit configuration dialog
 
 			server.saveAs().write(config.asConfiguration()); // Saving the block to the configuration
 
