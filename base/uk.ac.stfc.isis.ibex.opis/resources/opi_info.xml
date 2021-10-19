@@ -705,11 +705,11 @@
       </value>
     </entry>
     <entry>
-      <key>Lakeshore 336</key>
+      <key>Lakeshore 336/350</key>
       <value>
         <type>LAKESHORE</type>
         <path>Lakeshore336/Lakeshore336.opi</path>
-        <description>The OPI for the Lakeshore 336 temperature controller.</description>
+        <description>The OPI for the Lakeshore 336/350 temperature controller.</description>
         <macros>
           <macro>
             <name>LAKESHORE336</name>
