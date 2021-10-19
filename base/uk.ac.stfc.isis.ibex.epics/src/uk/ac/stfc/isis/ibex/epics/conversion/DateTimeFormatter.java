@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.epics.conversion;
 
 import java.util.Locale;
+import java.util.function.Function;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -28,7 +29,7 @@ import org.joda.time.format.DateTimeFormatterBuilder;
 /**
  * A class for formatting and converting between different time formats.
  */
-public class DateTimeFormatter extends Converter<String, String> {
+public class DateTimeFormatter implements Function<String, String> {
 		
 	private static final String ISO_PATTERN_NO_MILLIS_NO_OFFSET =  "yyyy-MM-dd'T'HH:mm:ss";
 	private static final String DATE_TIME_MILLIS =  "yyyy/MM/dd HH:mm:ss.SSS";
@@ -55,7 +56,7 @@ public class DateTimeFormatter extends Converter<String, String> {
 				.withLocale(Locale.ENGLISH);
 	
 	@Override
-	public String convert(String dateTime) throws ConversionException {
+	public String apply(String dateTime) throws ConversionException {
 		try {
 			DateTime dt = PARSER.parseDateTime(dateTime);
 			return PRINTER.print(dt);

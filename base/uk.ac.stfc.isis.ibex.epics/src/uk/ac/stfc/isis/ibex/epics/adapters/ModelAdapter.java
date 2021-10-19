@@ -20,14 +20,15 @@
 
 package uk.ac.stfc.isis.ibex.epics.adapters;
 
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
+import java.util.function.Function;
+
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 public class ModelAdapter extends Closer {
-	protected <T> ForwardingObservable<String> convert(ForwardingObservable<T> observable, Converter<T, String> converter) {
+	protected <T> ForwardingObservable<String> convert(ForwardingObservable<T> observable, Function<T, String> converter) {
 		ConvertingObservable<T, String> converted = new ConvertingObservable<>(observable, converter);
 		return registerForClose(new ForwardingObservable<>(converted));
 	}

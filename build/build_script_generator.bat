@@ -23,6 +23,9 @@ SET "JAVA_HOME=%LOCAL_JRE_LOCATION%"
 if "%PYTHON3%" == "" (
 	set "PYTHON3=C:\Instrument\Apps\Python3\python.exe"
 )
+
+call %~dp0run_python_support_tests.bat
+if %errorlevel% neq 0 exit /b %errorlevel%
  
 %PYTHON3% .\check_build.py ..\base\
 if %errorlevel% neq 0 exit /b %errorlevel%

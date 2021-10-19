@@ -26,6 +26,7 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
+import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 
@@ -39,6 +40,9 @@ public class ComponentDescriptionTest {
 
     private static final String PV_NAME_1 = "pv1";
     private static final String PV_NAME_2 = "pv2";
+
+    private static final String PV_ADDR_1 = "PV:ONE";
+    private static final String PV_ADDR_2 = "PV:TWO";
 
     private static final String CHILD_NAME_1 = "child1";
     private static final String CHILD_NAME_2 = "child2";
@@ -62,10 +66,8 @@ public class ComponentDescriptionTest {
         targetDescription.setName(NEW_NAME);
         source.setTarget(targetDescription);
         
-        pv1 = new PV();
-        pv1.setDisplayName(PV_NAME_1);
-        pv2 = new PV();
-        pv2.setDisplayName(PV_NAME_2);
+        pv1 = new PV(PV_NAME_1, PV_ADDR_1, IO.READ);
+        pv2 = new PV(PV_NAME_2, PV_ADDR_2, IO.READ);
         source.addPV(pv1);
         source.addPV(pv2);
 

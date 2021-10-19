@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.configserver;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.function.Function;
 
 import uk.ac.stfc.isis.ibex.alarm.AlarmReloadManager;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
@@ -29,7 +30,6 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-import uk.ac.stfc.isis.ibex.epics.conversion.DoNothingConverter;
 import uk.ac.stfc.isis.ibex.epics.observing.FilteredCollectionObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
@@ -385,7 +385,7 @@ public class ConfigServer extends Closer {
 	 */
 	private <T> Writable<T> logWithRestartAlarmConfig(String id, Writable<T> destination) {
 	    return new ForwardingWritableWithAction<>(updateAlarmManager,
-                new LoggingForwardingWritable<>(Configurations.LOG, id, destination, new DoNothingConverter<T>()));
+                new LoggingForwardingWritable<>(Configurations.LOG, id, destination, Function.identity()));
 	}
 
 	/**

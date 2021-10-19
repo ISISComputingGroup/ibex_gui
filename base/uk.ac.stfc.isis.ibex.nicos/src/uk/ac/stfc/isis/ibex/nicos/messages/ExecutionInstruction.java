@@ -57,7 +57,7 @@ public class ExecutionInstruction extends NICOSMessage<Integer, ReceiveNullMessa
      */
     @Override
     public ReceiveNullMessage parseResponse(String response) throws ConversionException {
-        return new JsonDeserialisingConverter<ReceiveNullMessage>(ReceiveNullMessage.class).convert(response);
+        return new JsonDeserialisingConverter<ReceiveNullMessage>(ReceiveNullMessage.class).apply(response);
     }
 
     @Override
