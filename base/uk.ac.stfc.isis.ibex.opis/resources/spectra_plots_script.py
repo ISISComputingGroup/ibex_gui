@@ -1,9 +1,5 @@
 from org.csstudio.opibuilder.scriptUtil import PVUtil
 
-
-pvInt0 = PVUtil.getLong(pvs[0])
-pvInt1 = PVUtil.getLong(pvs[1])
-
 spectrumPv = pvs[0]
 periodPv = pvs[1]
 modePv = pvs[2]
@@ -41,7 +37,8 @@ def main():
         x_axis_title = "Time of flight (" + PVUtil.getString(xAxisUnitsPv) + ")"
     else:
         x_axis_title = "Time of flight (us)"
-        
+
+    widget.clearGraph();
     widget.setPropertyValue("trace_0_x_pv","$(P)DAE:SPEC:" + str(period) + ":" + str(spectrum) + ":X")
     widget.setPropertyValue("trace_0_y_pv","$(P)DAE:SPEC:" + str(period) + ":" + str(spectrum) + ":" + mode)
     widget.setPropertyValue("axis_0_axis_title", x_axis_title)
