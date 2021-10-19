@@ -5317,8 +5317,8 @@ $(pv_value)</tooltip>
       <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
         <actions hook="false" hook_all="true">
           <action type="WRITE_PV">
-            <pv_name>$(P)MOT:SANS2DVAC:CAN_MOVE_CALC_FDFB.PROC</pv_name>
-            <value>1</value>
+            <pv_name>$(P)MOT:SANS2DVAC:MOVE_ALL</pv_name>
+            <value>2</value>
             <timeout>10</timeout>
             <confirm_message></confirm_message>
             <description></description>
@@ -5415,7 +5415,7 @@ message = [PVUtil.getString(pvs[0]),  PVUtil.getString(pvs[1]), PVUtil.getString
 message = "\n".join(filter(None, message))
 
 display.getWidget("Collision_text").setPropertyValue("text", message)]]></scriptText>
-            <pv trig="true">$(P)MOT:SANS2DVAC:FBFD_COLLISION</pv>
+            <pv trig="true">$(P)MOT:SANS2DVAC:FDFB_COLLISION</pv>
             <pv trig="true">$(P)MOT:SANS2DVAC:FBRB_COLLISION</pv>
             <pv trig="true">$(P)MOT:SANS2DVAC:RBRD_COLLISION</pv>
           </path>
