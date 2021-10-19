@@ -8,18 +8,24 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
 
 /**
- * A helper class to open block editing and configuration editing dialog boxes
+ * A helper class to open block editing and configuration editing dialog boxes.
  *
  */
 public class AddBlockToConfigHelper extends EditConfigHelper {
 
+	/**
+	 * Constructor for the helper class.
+	 * 
+	 * @param shell
+	 * @param server
+	 */
 	public AddBlockToConfigHelper(Shell shell, ConfigServer server) {
 		super(shell, server);
 
 	}
 
 	/**
-	 * Create the dialogs to edit the block and edit the configuration
+	 * Create the dialogs to edit the block and edit the configuration.
 	 * 
 	 * @param config              Configuration selected by the user to add the
 	 *                            block to
