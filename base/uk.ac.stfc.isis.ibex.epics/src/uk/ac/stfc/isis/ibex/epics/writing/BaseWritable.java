@@ -40,7 +40,7 @@ public abstract class BaseWritable<T> implements Writable<T> {
 
 	private boolean canWrite;
 	private Exception lastError;
-
+	
 	@Override
 	public synchronized Subscription subscribe(ConfigurableWriter<?, ?> writer) {
 		writer.onCanWriteChanged(canWrite());

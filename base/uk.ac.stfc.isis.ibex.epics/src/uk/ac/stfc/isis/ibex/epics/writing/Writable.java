@@ -53,7 +53,7 @@ public interface Writable<T> extends Closable, Subscribable<ConfigurableWriter<?
 	/**
 	 * Write the value to destination.
 	 *
-	 * Does not throw an exception on failed write.
+	 * Throws a runtime exception on failed writes.
 	 *
 	 * This method should not be used unless you are
 	 * certain that the write cannot possibly fail.

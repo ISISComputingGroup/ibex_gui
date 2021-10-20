@@ -37,7 +37,7 @@ import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
-import uk.ac.stfc.isis.ibex.epics.writing.ConfigurableWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.BooleanChannel;
@@ -503,22 +503,7 @@ public final class DetectorDiagnosticsModel extends ModelObject {
      *
      */
     private void rescheduleDetectorDiagnosticJobOnCanWriteChange() {
-        diagnosticsEnabledSubscription = diagnosticsEnabled.subscribe(new ConfigurableWriter<Integer, Integer>() {
-
-            @Override
-            public void write(Integer value) throws IOException {
-                //
-            }
-
-            @Override
-            public void uncheckedWrite(Integer value) {
-                //
-            }
-
-            @Override
-            public void onError(Exception e) {
-                //
-            }
+        diagnosticsEnabledSubscription = diagnosticsEnabled.subscribe(new SameTypeWriter<Integer>() {
 
             @Override
             public void onCanWriteChanged(boolean canWrite) {
@@ -529,21 +514,6 @@ public final class DetectorDiagnosticsModel extends ModelObject {
                         detectorDiagnosticsEnabledJob.schedule();
                     }
                 }
-            }
-
-            @Override
-            public boolean canWrite() {
-                return false;
-            }
-
-            @Override
-            public Subscription subscribe(Writable<Integer> writable) {
-                return null;
-            }
-
-            @Override
-            public void unsubscribe(Writable<Integer> writable) {
-
             }
         });
     }

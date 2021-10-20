@@ -76,11 +76,4 @@ public class ObservableCustomControl extends ModelAdapter {
     public void setValueToWrite(Long valueToWrite) {
         this.valueToWrite = valueToWrite;
     }
-    
-    /**
-     * @param writable the writable to set
-     */
-    public void setWritable(Writable<Long> writable) {
-        act.subscribe(writable);
-    }
 }
