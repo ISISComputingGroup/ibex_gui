@@ -1667,7 +1667,20 @@ $(pv_value)</tooltip>
           <pv_name>$(P)MOT:FRONTDETZ:SP</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
-          <rules />
+          <rules>
+            <rule name="DisableWhenMoving" prop_id="enabled" out_exp="true">
+              <exp bool_exp="pvInt0 == 1">
+                <value>false</value>
+              </exp>
+              <pv trig="true">$(P)MOT:FRONTDETZ:MTR.MOVN</pv>
+            </rule>
+            <rule name="GreyOutWhenMoving" prop_id="background_color" out_exp="true">
+              <exp bool_exp="pv0 == 1">
+                <value>ColorFontUtil.getColorFromRGB(200,200,200)</value>
+              </exp>
+              <pv trig="true">$(P)MOT:FRONTDETZ:MTR.MOVN</pv>
+            </rule>
+          </rules>
           <scale_options>
             <width_scalable>true</width_scalable>
             <height_scalable>true</height_scalable>
@@ -2304,7 +2317,20 @@ $(pv_value)</tooltip>
           <pv_name>$(P)MOT:REARDETZ:SP</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
-          <rules />
+          <rules>
+            <rule name="DisableWhenMoving" prop_id="enabled" out_exp="true">
+              <exp bool_exp="pv0 == 1">
+                <value>false</value>
+              </exp>
+              <pv trig="true">$(P)MOT:REARDETZ:MTR.MOVN</pv>
+            </rule>
+            <rule name="GreyOutWhenMoving" prop_id="background_color" out_exp="true">
+              <exp bool_exp="pv0 == 1">
+                <value>ColorFontUtil.getColorFromRGB(200,200,200)</value>
+              </exp>
+              <pv trig="true">$(P)MOT:REARDETZ:MTR.MOVN</pv>
+            </rule>
+          </rules>
           <scale_options>
             <width_scalable>true</width_scalable>
             <height_scalable>true</height_scalable>
@@ -2665,7 +2691,20 @@ $(pv_value)</tooltip>
           <pv_name>$(P)MOT:FRONTBAFFLEZ:SP</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
-          <rules />
+          <rules>
+            <rule name="DisableWhenMoving" prop_id="enabled" out_exp="true">
+              <exp bool_exp="pv0 == 1">
+                <value>false</value>
+              </exp>
+              <pv trig="true">$(P)MOT:FRONTBAFFLEZ:MTR.MOVN</pv>
+            </rule>
+            <rule name="GreyOutWhenMoving" prop_id="background_color" out_exp="true">
+              <exp bool_exp="pv0 == 1">
+                <value>ColorFontUtil.getColorFromRGB(200,200,200)</value>
+              </exp>
+              <pv trig="true">$(P)MOT:FRONTBAFFLEZ:MTR.MOVN</pv>
+            </rule>
+          </rules>
           <scale_options>
             <width_scalable>true</width_scalable>
             <height_scalable>true</height_scalable>
@@ -2855,7 +2894,20 @@ $(pv_value)</tooltip>
           <pv_name>$(P)MOT:REARBAFFLEZ:SP</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
-          <rules />
+          <rules>
+            <rule name="DisableWhenMoving" prop_id="enabled" out_exp="true">
+              <exp bool_exp="pv0 == 1">
+                <value>false</value>
+              </exp>
+              <pv trig="true">$(P)MOT:REARBAFFLEZ:MTR.MOVN</pv>
+            </rule>
+            <rule name="GreyOutWhenMoving" prop_id="background_color" out_exp="true">
+              <exp bool_exp="pv0 == 1">
+                <value>ColorFontUtil.getColorFromRGB(200,200,200)</value>
+              </exp>
+              <pv trig="true">$(P)MOT:REARBAFFLEZ:MTR.MOVN</pv>
+            </rule>
+          </rules>
           <scale_options>
             <width_scalable>true</width_scalable>
             <height_scalable>true</height_scalable>
