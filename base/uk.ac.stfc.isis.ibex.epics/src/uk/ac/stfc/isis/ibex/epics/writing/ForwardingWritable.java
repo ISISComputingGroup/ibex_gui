@@ -27,13 +27,13 @@ import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
 /**
- * Forwards the values written to it to another writable (only if the orginal
+ * Forwards the values written to it to another writable (only if the original
  * and transformed values are not null. With conversion.
  *
  * @param <TIn>
  *            the type of data coming in
  * @param <TOut>
- *            the type of data to outpu
+ *            the type of data to output
  */
 public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
 

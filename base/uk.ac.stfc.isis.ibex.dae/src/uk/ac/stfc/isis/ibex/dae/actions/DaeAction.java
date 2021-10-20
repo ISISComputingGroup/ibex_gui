@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.dae.actions;
 
-import java.io.IOException;
-
 import uk.ac.stfc.isis.ibex.dae.DaeRunState;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
@@ -28,6 +26,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.Action;
@@ -37,13 +36,7 @@ import uk.ac.stfc.isis.ibex.model.Action;
  */
 public abstract class DaeAction extends Action implements Closable {
 		
-	private final BaseWriter<String, String> actionWriter = new BaseWriter<String, String>() {
-
-		@Override
-		public void write(String value) throws IOException {
-            writeToWritables(value);
-		}
-		
+	private final BaseWriter<String, String> actionWriter = new SameTypeWriter<String>() {
 		@Override
 		public void onCanWriteChanged(boolean canWrite) {
 			super.onCanWriteChanged(canWrite);

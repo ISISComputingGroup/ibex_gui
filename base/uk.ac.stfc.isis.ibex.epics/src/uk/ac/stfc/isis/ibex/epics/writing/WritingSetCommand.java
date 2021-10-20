@@ -36,17 +36,11 @@ public final class WritingSetCommand<T> extends SetCommand<T> implements Closabl
 	private final Subscription destinationSubscription;
 	private final Subscription writerSubscription;	
 	
-	private final BaseWriter<T, T> destinationWriter = new BaseWriter<T, T>() {
+	private final BaseWriter<T, T> destinationWriter = new SameTypeWriter<T>() {
 		@Override
 		public void onCanWriteChanged(boolean canWrite) {
 			setCanSend(canWrite);
-		}
-
-		@Override
-		public void write(T value) throws IOException {
-			writeToWritables(value);
-		}
-		
+		}		
 	};
 
     private WritingSetCommand(Writable<T> destination) {

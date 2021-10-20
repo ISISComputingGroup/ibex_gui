@@ -26,8 +26,8 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
-import uk.ac.stfc.isis.ibex.epics.writing.BaseWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.ConfigurableWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
 public abstract class SettingsGateway implements Closable {
@@ -42,12 +42,7 @@ public abstract class SettingsGateway implements Closable {
 	private final Subscription destinationSubscription;
 	private final Subscription writerSubscription;
 
-	private ConfigurableWriter<String, String> updateWriter = new BaseWriter<String, String>() {
-		@Override
-		public void write(String value) throws IOException {
-			writeToWritables(value);
-		}
-	};
+	private ConfigurableWriter<String, String> updateWriter = new SameTypeWriter<String>();
 
 	public SettingsGateway(ForwardingObservable<String> settingsSource, Writable<String> settingsDestination) {
 		sourceSubscription = settingsSource.subscribe(settingsObserver);

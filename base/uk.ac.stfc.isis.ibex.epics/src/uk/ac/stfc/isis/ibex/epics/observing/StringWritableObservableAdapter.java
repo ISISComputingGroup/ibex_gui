@@ -24,6 +24,7 @@ import java.io.IOException;
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
@@ -37,12 +38,7 @@ public class StringWritableObservableAdapter implements Closable {
 	
 	private final UpdatedValue<String> text;
 	private final SettableUpdatedValue<Boolean> canSetText;
-	private final BaseWriter<String, String> writer = new BaseWriter<String, String>() {
-		@Override
-		public void write(String value) throws IOException {
-			writeToWritables(value);
-		}
-		
+	private final BaseWriter<String, String> writer = new SameTypeWriter<String>() {	
 		@Override
         public void onCanWriteChanged(boolean canWrite) {
 			canSetText.setValue(canWrite);
