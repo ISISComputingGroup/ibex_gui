@@ -65,4 +65,7 @@ public interface Writable<T> extends Closable, Subscribable<ConfigurableWriter<?
 	
 	void addOnCanWriteChangeListener(OnCanWriteChangeListener listener);
 	void removeOnCanWriteChangeListener(OnCanWriteChangeListener listener);
+	
+    void addOnErrorListener(OnErrorListener listener);
+    void removeOnErrorListener(OnErrorListener listener);
 }

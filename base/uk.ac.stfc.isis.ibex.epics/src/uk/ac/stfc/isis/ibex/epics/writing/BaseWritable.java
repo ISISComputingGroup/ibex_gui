@@ -37,6 +37,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.Unsubscriber;
 public abstract class BaseWritable<T> implements Writable<T> {
 
     private final Set<OnCanWriteChangeListener> onCanWriteChangeListeners = new CopyOnWriteArraySet<OnCanWriteChangeListener>();
+    private final Set<OnErrorListener> onErrorListeners = new CopyOnWriteArraySet<OnErrorListener>();  
     
 	private final Set<ConfigurableWriter<?, ?>> writers = new CopyOnWriteArraySet<>();
 
@@ -52,6 +53,17 @@ public abstract class BaseWritable<T> implements Writable<T> {
     @Override
     public synchronized void removeOnCanWriteChangeListener(OnCanWriteChangeListener listener) {
         onCanWriteChangeListeners.remove(listener);
+    }
+    
+    @Override
+    public synchronized void addOnErrorListener(OnErrorListener listener) {
+        listener.onError(lastError());
+        onErrorListeners.add(listener);
+    }
+    
+    @Override
+    public synchronized void removeOnErrorListener(OnErrorListener listener) {
+        onErrorListeners.remove(listener);
     }
 	
 	@Override
@@ -82,6 +94,7 @@ public abstract class BaseWritable<T> implements Writable<T> {
 	protected synchronized void error(Exception e) {
 		lastError = e;
 		writers.forEach(writer -> writer.onError(e));
+		onErrorListeners.forEach(writer -> writer.onError(e));
 	}
 
 	/**

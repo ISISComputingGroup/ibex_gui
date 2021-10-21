@@ -20,11 +20,10 @@
 package uk.ac.stfc.isis.ibex.epics.writing;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.function.Function;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
-import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
 /**
  * Forwards the values written to it to another writable (only if the original
@@ -37,30 +36,10 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closable;
  */
 public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
 
-    private Closable resource;
-
-	private ConfigurableWriter<TIn, TOut> forwardingWriter = new BaseWriter<TIn, TOut>() {
-		@Override
-		public void write(TIn value) throws IOException {
-            TOut tranformedValue = transform(value);
-            if (tranformedValue != null) {
-            	writeToWritables(tranformedValue);
-            }
-		}
-		
-		@Override
-        public void onError(Exception e) {
-			error(e);
-		}
-		
-		@Override
-        public void onCanWriteChanged(boolean canWrite) {
-			canWriteChanged(canWrite);
-		}
-	};
-	
-    private Subscription readingSubscription;
-	private Subscription writingSubsciption;
+    private Optional<Writable<TOut>> destination = Optional.empty();
+    
+    private OnCanWriteChangeListener canWriteChangedListener = canWrite -> canWriteChanged(canWrite);
+    private OnErrorListener onErrorListener = e -> error(e);
 	
     private final Function<TIn, TOut> converter;
 
@@ -80,7 +59,12 @@ public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
 	@Override
 	public void write(TIn value) throws IOException {
 		if (value != null) {
-			forwardingWriter.write(value);
+            TOut tranformedValue = transform(value);
+            if (tranformedValue != null) {
+                if (destination.isPresent()) {
+                    destination.get().write(tranformedValue);
+                }
+            }
 		}
 	}
 	
@@ -94,14 +78,14 @@ public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
         checkPreconditions(destination);
 
 		cancelSubscriptions();
-		forwardingWriter.onCanWriteChanged(false);
-		forwardingWriter.onCanWriteChanged(destination.canWrite());
+		canWriteChangedListener.onCanWriteChanged(false);
+		canWriteChangedListener.onCanWriteChanged(destination.canWrite());
 		
-        readingSubscription = destination.subscribe(forwardingWriter);
-		writingSubsciption = forwardingWriter.subscribe(destination);
+        destination.addOnCanWriteChangeListener(canWriteChangedListener);
+        destination.addOnErrorListener(onErrorListener);
 
         closeResource();
-        resource = destination;
+        this.destination = Optional.of(destination);
 	}
 
     private TOut transform(TIn value) {
@@ -115,19 +99,14 @@ public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
     }
 
 	private void cancelSubscriptions() {
-        if (readingSubscription != null) {
-            readingSubscription.cancelSubscription();
-        }
-
-		if (writingSubsciption != null) {
-			writingSubsciption.cancelSubscription();
-		}
+	    destination.ifPresent(dest -> {
+	        dest.removeOnCanWriteChangeListener(canWriteChangedListener);
+	        dest.removeOnErrorListener(onErrorListener);
+	    });
 	}
 
     private void closeResource() {
-        if (resource != null) {
-            resource.close();
-        }
+        destination.ifPresent(dest -> dest.close());
     }
 
     private void checkPreconditions(Writable<TOut> destination) {
