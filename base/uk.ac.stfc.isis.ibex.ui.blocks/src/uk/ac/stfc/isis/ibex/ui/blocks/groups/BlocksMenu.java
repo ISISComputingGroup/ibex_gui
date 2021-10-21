@@ -33,9 +33,8 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
-import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.Presenter;
 import uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.EditBlockHandler;
@@ -54,29 +53,21 @@ public class BlocksMenu extends MenuManager {
     private static final String CONFIGURATION_SUFFIX = "configuration";
 	private static final String LOGPLOTTER_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.logplotter";
 
-	private final IAction editBlockAction;
+	private IAction editBlockAction;
 
 	/**
 	 * This is an inner anonymous class inherited from SameTypeWriter with added functionality
 	 * for modifying the command if the underlying configuration PV cannot be written to.
 	 */
-	protected final SameTypeWriter<Configuration> readOnlyListener = new SameTypeWriter<Configuration>() {
-		@Override
-		public void onCanWriteChanged(final boolean canWrite) {
-			Display.getDefault().asyncExec(new Runnable() {
-				@Override
-				public void run() {
-					if (canWrite) {
-						if (find(editBlockAction.getId()) == null) {
-                            appendToGroup(BLOCK_MENU_GROUP, editBlockAction);
-						}
-					} else {
-						remove(editBlockAction.getId());
-					}
-				}
-			});
-		}
-	};
+    protected final OnCanWriteChangeListener readOnlyListener = canWrite -> Display.getDefault().asyncExec(() -> {
+        if (canWrite) {
+            if (find(editBlockAction.getId()) == null) {
+                appendToGroup(BLOCK_MENU_GROUP, editBlockAction);
+            }
+        } else {
+            remove(editBlockAction.getId());
+        }
+    });
 
 	private IAction createAddToPlotAction(String plotName) {
 		return new Action("Add to new axis") {
@@ -105,7 +96,7 @@ public class BlocksMenu extends MenuManager {
      */
     public BlocksMenu(DisplayBlock displayBlock) {
 		this.block = displayBlock;
-		Configurations.getInstance().server().setCurrentConfig().subscribe(readOnlyListener);
+		Configurations.getInstance().server().setCurrentConfig().addOnCanWriteChangeListener(readOnlyListener);
 
         add(new GroupMarker(BLOCK_MENU_GROUP));
 
@@ -156,4 +147,8 @@ public class BlocksMenu extends MenuManager {
             }
         };
 	}
+    
+    public void finalize() {
+        Configurations.getInstance().server().setCurrentConfig().removeOnCanWriteChangeListener(readOnlyListener);
+    }
 }

@@ -20,7 +20,7 @@
 package uk.ac.stfc.isis.ibex.banner;
 
 import uk.ac.stfc.isis.ibex.epics.adapters.ModelAdapter;
-import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
@@ -32,7 +32,8 @@ public class ObservableCustomControl extends ModelAdapter {
 
     private Long valueToWrite;
     
-    private final SameTypeWriter<Long> act = new SameTypeWriter<Long>();
+    private final Writable<Long> act;
+    private final OnCanWriteChangeListener canWriteListener = canWrite -> ObservableCustomControl.this.canWrite.setValue(canWrite);
 
     private SettableUpdatedValue<Boolean> canWrite = new SettableUpdatedValue<Boolean>();
     
@@ -45,13 +46,8 @@ public class ObservableCustomControl extends ModelAdapter {
      *            The value to write to the PV to perform the action
      */
     public ObservableCustomControl(Writable<Long> act, Long valueToWrite) {
-        this.act.subscribe(act);
-        act.subscribe(new SameTypeWriter<Long>() {
-            @Override
-            public void onCanWriteChanged(boolean canwrite) {
-                ObservableCustomControl.this.canWrite.setValue(canwrite);
-            }
-        });
+        this.act = act;
+        act.addOnCanWriteChangeListener(canWriteListener);
         this.valueToWrite = valueToWrite;
     }
 
@@ -77,4 +73,8 @@ public class ObservableCustomControl extends ModelAdapter {
         this.valueToWrite = valueToWrite;
     }
 
+    public void finalize() {
+        act.removeOnCanWriteChangeListener(canWriteListener);
+    }
+    
 }

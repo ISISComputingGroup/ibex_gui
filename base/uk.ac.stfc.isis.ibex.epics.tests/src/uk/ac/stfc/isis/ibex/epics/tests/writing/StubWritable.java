@@ -28,6 +28,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.observing.Unsubscriber;
 import uk.ac.stfc.isis.ibex.epics.writing.ConfigurableWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
 /**
@@ -95,5 +96,17 @@ public class StubWritable<T> implements Writable<T> {
     @Override
     public void uncheckedWrite(T value) {
         write(value);
+    }
+
+    @Override
+    public void addOnCanWriteChangeListener(OnCanWriteChangeListener listener) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void removeOnCanWriteChangeListener(OnCanWriteChangeListener listener) {
+        // TODO Auto-generated method stub
+        
     }
 }

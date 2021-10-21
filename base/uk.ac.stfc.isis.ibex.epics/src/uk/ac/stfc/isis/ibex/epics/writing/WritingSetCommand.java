@@ -20,7 +20,6 @@ package uk.ac.stfc.isis.ibex.epics.writing;
 
 import java.io.IOException;
 
-import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.model.SetCommand;
 
@@ -32,22 +31,16 @@ import uk.ac.stfc.isis.ibex.model.SetCommand;
  *            the type of the model to send
  */
 public final class WritingSetCommand<T> extends SetCommand<T> implements Closable {
-		
-	private final Subscription destinationSubscription;
-	private final Subscription writerSubscription;	
+	private final OnCanWriteChangeListener canWriteListener = canWrite -> setCanSend(canWrite);
 	
-	private final BaseWriter<T, T> destinationWriter = new SameTypeWriter<T>() {
-		@Override
-		public void onCanWriteChanged(boolean canWrite) {
-			setCanSend(canWrite);
-		}		
-	};
+	private final Writable<T> destinationWriter;
 
     private WritingSetCommand(Writable<T> destination) {
         checkPreconditions(destination);
 
-		writerSubscription = destinationWriter.subscribe(destination);
-		destinationSubscription = destination.subscribe(destinationWriter);
+        destinationWriter = destination;
+        
+        destinationWriter.addOnCanWriteChangeListener(canWriteListener);
 	}
 
     /**
@@ -82,8 +75,7 @@ public final class WritingSetCommand<T> extends SetCommand<T> implements Closabl
 	
 	@Override
 	public void close() {
-		writerSubscription.cancelSubscription();
-		destinationSubscription.cancelSubscription();
+	    destinationWriter.removeOnCanWriteChangeListener(canWriteListener);
 	}
 
     private void checkPreconditions(Writable<T> destination) {

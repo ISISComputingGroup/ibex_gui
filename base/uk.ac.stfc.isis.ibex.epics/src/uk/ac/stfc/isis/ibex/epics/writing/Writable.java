@@ -24,7 +24,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.Subscribable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
 /**
- * Allows writting to a value, with indication of whether the value can be
+ * Allows writing to a value, with indication of whether the value can be
  * written. For example if this is a PV writable the value is written to the PV
  * and the can write state can be queried.
  *
@@ -62,4 +62,7 @@ public interface Writable<T> extends Closable, Subscribable<ConfigurableWriter<?
 	 *             the value to write
 	 */
 	void uncheckedWrite(T value);
+	
+	void addOnCanWriteChangeListener(OnCanWriteChangeListener listener);
+	void removeOnCanWriteChangeListener(OnCanWriteChangeListener listener);
 }
