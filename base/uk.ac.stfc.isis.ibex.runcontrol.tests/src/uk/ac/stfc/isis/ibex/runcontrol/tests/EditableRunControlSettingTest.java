@@ -27,6 +27,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writer;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlSetter;
@@ -34,17 +35,18 @@ import uk.ac.stfc.isis.ibex.runcontrol.RunControlSetter;
 // A lot of unchecked type conversions for mocking purposes
 @SuppressWarnings({ "unchecked", "checkstyle:methodname" })
 public class EditableRunControlSettingTest {
+    String blockName = "blockname";
+    
 	@Test
 	public void set_low_limit() throws IOException {
 		// Arrange
-		String blockName = "blockname";
 
-		// Mock writer with stub method for write
-		Writer<Double> mockWriter = mock(Writer.class);
+	    // Mock writer with stub method for write
+		Writable<Double> mockWritable = mock(Writable.class);
 
 		// Mock run-control server
 		RunControlServer mockRunControlServer = mock(RunControlServer.class);
-		when(mockRunControlServer.blockRunControlLowLimitSetter(blockName)).thenReturn(mockWriter);
+		when(mockRunControlServer.blockRunControlLowLimitSetter(blockName)).thenReturn(mockWritable);
 
 		// Object we are really testing
 		RunControlSetter setting = new RunControlSetter(blockName, mockRunControlServer);
@@ -54,20 +56,19 @@ public class EditableRunControlSettingTest {
 
 		// Assert
 		// The writer's write method is called with the correct value
-		verify(mockWriter, times(1)).uncheckedWrite(0.);
+		verify(mockWritable, times(1)).uncheckedWrite(0.);
 	}
 	
 	@Test
 	public void set_high_limit() throws IOException {
 		// Arrange
-		String blockName = "blockname";
 
 		// Mock writer with stub method for write
-		Writer<Double> mockWriter = mock(Writer.class);
+		Writable<Double> mockWritable = mock(Writable.class);
 
 		// Mock run-control server
 		RunControlServer mockRunControlServer = mock(RunControlServer.class);
-		when(mockRunControlServer.blockRunControlHighLimitSetter(blockName)).thenReturn(mockWriter);
+		when(mockRunControlServer.blockRunControlHighLimitSetter(blockName)).thenReturn(mockWritable);
 
 		// Object we are really testing
 		RunControlSetter setting = new RunControlSetter(blockName, mockRunControlServer);
@@ -77,20 +78,19 @@ public class EditableRunControlSettingTest {
 
 		// Assert
 		// The writer's write method is called with the correct value
-		verify(mockWriter, times(1)).uncheckedWrite(100.);
+		verify(mockWritable, times(1)).uncheckedWrite(100.);
 	}
 	
 	@Test
 	public void set_enabled_true() throws IOException {
 		// Arrange
-		String blockName = "blockname";
 
 		// Mock writer with stub method for write
-		Writer<String> mockWriter = mock(Writer.class);
+		Writable<String> mockWritable = mock(Writable.class);
 
 		// Mock run-control server
 		RunControlServer mockRunControlServer = mock(RunControlServer.class);
-		when(mockRunControlServer.blockRunControlEnabledSetter(blockName)).thenReturn(mockWriter);
+		when(mockRunControlServer.blockRunControlEnabledSetter(blockName)).thenReturn(mockWritable);
 
 		// Object we are really testing
 		RunControlSetter setting = new RunControlSetter(blockName, mockRunControlServer);
@@ -100,16 +100,15 @@ public class EditableRunControlSettingTest {
 
 		// Assert
 		// The writer's write method is called with the correct value
-		verify(mockWriter, times(1)).uncheckedWrite("YES");
+		verify(mockWritable, times(1)).uncheckedWrite("YES");
 	}
 	
 	@Test
 	public void set_enabled_false() throws IOException {
 		// Arrange
-		String blockName = "blockname";
 
 		// Mock writer with stub method for write
-		Writer<String> mockWriter = mock(Writer.class);
+		Writable<String> mockWriter = mock(Writable.class);
 
 		// Mock run-control server
 		RunControlServer mockRunControlServer = mock(RunControlServer.class);

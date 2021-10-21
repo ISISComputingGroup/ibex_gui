@@ -76,4 +76,5 @@ public class ObservableCustomControl extends ModelAdapter {
     public void setValueToWrite(Long valueToWrite) {
         this.valueToWrite = valueToWrite;
     }
+
 }
