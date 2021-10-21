@@ -30,7 +30,7 @@ import org.xml.sax.SAXParseException;
 
 import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
-import uk.ac.stfc.isis.ibex.synoptic.SynopticWriter;
+import uk.ac.stfc.isis.ibex.synoptic.SynopticWritable;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.EditSynopticDialog;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
@@ -45,7 +45,7 @@ public abstract class SynopticEditorHandler {
     protected static final Synoptic SYNOPTIC = Synoptic.getInstance();
     
     /** Synoptic writer, to write the model to the blockserver. */
-    protected final SynopticWriter writer = SYNOPTIC.edit().saveSynoptic();
+    protected final SynopticWritable writer = SYNOPTIC.edit().saveSynoptic();
     
     /** can execute the handler */
     private boolean canExecute;

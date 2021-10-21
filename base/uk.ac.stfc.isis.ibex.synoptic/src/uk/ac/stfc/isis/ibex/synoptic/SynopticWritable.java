@@ -25,7 +25,8 @@ import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
-import uk.ac.stfc.isis.ibex.epics.writing.TransformingWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
+import uk.ac.stfc.isis.ibex.epics.writing.TransformingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
@@ -36,11 +37,13 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
  * This class is responsible for writing the synoptic data back to the BlockServer.
  *
  */
-public class SynopticWriter extends TransformingWriter<SynopticDescription, String> {
+public class SynopticWritable extends TransformingWritable<SynopticDescription, String> {
 	
 	private SettableUpdatedValue<Boolean> canSave = new SettableUpdatedValue<>();
-    private final Observable<String> schema;
-
+    private Observable<String> schema;
+    
+    private OnCanWriteChangeListener canWriteListener = canWrite -> canSave.setValue(canWrite);
+    
     /**
      * Create a new synoptic writer that converts a synoptic to xml, checks this
      * against the supplied schema and writes it to the supplied destination.
@@ -50,11 +53,11 @@ public class SynopticWriter extends TransformingWriter<SynopticDescription, Stri
      * @param schema
      *            The schema to check the synoptic against.
      */
-    public SynopticWriter(Writable<String> destination, Observable<String> schema) {
-		subscribe(destination);
-		canSave.setValue(destination.canWrite());
-		destination.subscribe(this);
+    public SynopticWritable(Writable<String> destination, Observable<String> schema) {
+        super(destination);
         this.schema = schema;
+        
+        destination.addOnCanWriteChangeListener(canWriteListener);
 	}
 	
 
@@ -67,16 +70,10 @@ public class SynopticWriter extends TransformingWriter<SynopticDescription, Stri
 		try {
             return XMLUtil.toXml(value, SynopticDescription.class, schema.getValue());
 		} catch (IOException e) {
-			onError(e);
+			error(e);
 		}
 		
 		return null;
-	}
-
-	@Override
-	public void onCanWriteChanged(boolean canWrite) {
-		super.onCanWriteChanged(canWrite);
-		canSave.setValue(canWrite);
 	}
 	
     /**
@@ -86,4 +83,10 @@ public class SynopticWriter extends TransformingWriter<SynopticDescription, Stri
 	public UpdatedValue<Boolean> canSave() {
 		return canSave;
 	}
+
+
+    @Override
+    public void close() {
+        destination.ifPresent(dest -> addOnCanWriteChangeListener(canWriteListener));
+    }
 }

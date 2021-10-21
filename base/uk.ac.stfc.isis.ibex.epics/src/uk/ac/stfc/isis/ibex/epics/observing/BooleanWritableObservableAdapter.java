@@ -23,7 +23,8 @@ import java.io.IOException;
 
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
-import uk.ac.stfc.isis.ibex.epics.writing.TransformingWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
+import uk.ac.stfc.isis.ibex.epics.writing.TransformingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
@@ -36,31 +37,11 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 public class BooleanWritableObservableAdapter implements Closable {
 	
     private final UpdatedValue<Boolean> value;
-    private final SettableUpdatedValue<Boolean> canSetValue;
-    private final TransformingWriter<Boolean, Long> writer = new TransformingWriter<Boolean, Long>() {
-        @Override
-        public void write(Boolean value) throws IOException {
-            if (transform(value) != writer.lastWritten()) {
-                super.write(value);
-            }
-        }
-
-        @Override
-        public void onCanWriteChanged(boolean canWrite) {
-            canSetValue.setValue(canWrite);
-        }
-
-        @Override
-        protected Long transform(Boolean value) {
-            if (value) {
-                return (long) 1;
-            }
-            return (long) 0;
-        }
-	};
-
-	private final Subscription writerSubscription;
-	private final Subscription writableSubscription;	
+    private SettableUpdatedValue<Boolean> canSetValue;
+    
+    private final TransformingWritable<Boolean, Long> transformingWritable;
+    
+    private OnCanWriteChangeListener canWriteListener = canWrite -> canSetValue.setValue(canWrite);
 	
 	/**
 	 * @param writable The object for writing to a PV
@@ -68,11 +49,20 @@ public class BooleanWritableObservableAdapter implements Closable {
 	 */
     public BooleanWritableObservableAdapter(Writable<Long> writable, ForwardingObservable<Boolean> observable) {
         value = new UpdatedObservableAdapter<Boolean>(observable);
+        
+        transformingWritable = new TransformingWritable<Boolean, Long>(writable) {
+            @Override
+            protected Long transform(Boolean input) {
+                if (input) {
+                    return (long) 1;
+                }
+                return (long) 0;
+            }
+            
+        };
+        
         canSetValue = new SettableUpdatedValue<>();
-        canSetValue.setValue(writable.canWrite());
-		
-		writableSubscription = writer.subscribe(writable);
-		writerSubscription = writable.subscribe(writer);
+        transformingWritable.addOnCanWriteChangeListener(canWriteListener);
 	}
 	
     /**
@@ -91,7 +81,7 @@ public class BooleanWritableObservableAdapter implements Closable {
      * @throws IOException if the write failed
      */
     public void setValue(Boolean value) throws IOException {
-        writer.write(value);
+        transformingWritable.write(value);
 	}
     
     /**
@@ -100,7 +90,7 @@ public class BooleanWritableObservableAdapter implements Closable {
      * @param value the new value
      */
     public void uncheckedSetValue(Boolean value) {
-        writer.uncheckedWrite(value);
+        transformingWritable.uncheckedWrite(value);
     }
 
     /**
@@ -117,7 +107,7 @@ public class BooleanWritableObservableAdapter implements Closable {
      */
 	@Override
 	public void close() {
-		writerSubscription.cancelSubscription();
-		writableSubscription.cancelSubscription();
+	    transformingWritable.removeOnCanWriteChangeListener(canWriteListener);
+	    transformingWritable.close();
 	}
 }

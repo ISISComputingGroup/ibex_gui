@@ -32,7 +32,7 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.writing.ConfigurableWriter;
-import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritable;
+import uk.ac.stfc.isis.ibex.epics.writing.TransformingWritableWithConverter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
 @SuppressWarnings({ "unchecked", "checkstyle:methodname" })
@@ -51,14 +51,14 @@ public class ForwardingWritableTest {
         mockConverter = mock(Function.class);
     }
 
-    private ForwardingWritable<String, String> createWritable() {
-        return new ForwardingWritable<String, String>(mockDestination, mockConverter);
+    private TransformingWritableWithConverter<String, String> createWritable() {
+        return new TransformingWritableWithConverter<String, String>(mockDestination, mockConverter);
     }
 
     @Test
     public void a_null_value_is_not_written() throws IOException {
         // Arrange
-        ForwardingWritable<String, String> forwardingWritable = createWritable();
+        TransformingWritableWithConverter<String, String> forwardingWritable = createWritable();
 
         // Act
         forwardingWritable.write(null);
@@ -70,7 +70,7 @@ public class ForwardingWritableTest {
     @Test
     public void closing_the_writable_closes_current_destination_writable() {
         // Arrange
-        ForwardingWritable<String, String> forwardingWritable = createWritable();
+        TransformingWritableWithConverter<String, String> forwardingWritable = createWritable();
         verify(mockDestination, never()).close();
 
         // Act
@@ -86,7 +86,7 @@ public class ForwardingWritableTest {
         Subscription mockSubscription = mock(Subscription.class);
         when(mockDestination.subscribe(any(ConfigurableWriter.class))).thenReturn(mockSubscription);
 
-        ForwardingWritable<String, String> forwardingWritable = createWritable();
+        TransformingWritableWithConverter<String, String> forwardingWritable = createWritable();
 
         verify(mockSubscription, never()).cancelSubscription();
 
@@ -100,7 +100,7 @@ public class ForwardingWritableTest {
     @Test
     public void closing_the_writable_stops_updating_the_destination_writable_on_further_writes() throws IOException {
         // Act
-        ForwardingWritable<String, String> forwardingWritable = createWritable();
+        TransformingWritableWithConverter<String, String> forwardingWritable = createWritable();
         forwardingWritable.close();
         forwardingWritable.write(VALUE);
 
@@ -115,7 +115,7 @@ public class ForwardingWritableTest {
         when(mockDestination.canWrite()).thenReturn(expected);
 
         // Act
-        ForwardingWritable<String, String> forwardingWritable = createWritable();
+        TransformingWritableWithConverter<String, String> forwardingWritable = createWritable();
 
         // Assert
         assertEquals(expected, forwardingWritable.canWrite());
@@ -128,7 +128,7 @@ public class ForwardingWritableTest {
         when(mockDestination.canWrite()).thenReturn(expected);
 
         // Act
-        ForwardingWritable<String, String> forwardingWritable = createWritable();
+        TransformingWritableWithConverter<String, String> forwardingWritable = createWritable();
 
         // Assert
         assertEquals(expected, forwardingWritable.canWrite());
@@ -144,7 +144,7 @@ public class ForwardingWritableTest {
         Writable<String> mockNewDestination = mock(Writable.class);
         when(mockNewDestination.canWrite()).thenReturn(newValue);
 
-        ForwardingWritable<String, String> forwardingWritable = createWritable();
+        TransformingWritableWithConverter<String, String> forwardingWritable = createWritable();
         assertEquals(oldValue, forwardingWritable.canWrite());
 
         // Act
@@ -158,7 +158,7 @@ public class ForwardingWritableTest {
     public void setting_a_new_destination_writable_subscribes_to_the_new_destination() {
         // Arrange
         Writable<String> mockNewDestination = mock(Writable.class);
-        ForwardingWritable<String, String> forwardingWritable = createWritable();
+        TransformingWritableWithConverter<String, String> forwardingWritable = createWritable();
 
         verify(mockNewDestination, never()).subscribe(any(ConfigurableWriter.class));
 
@@ -173,7 +173,7 @@ public class ForwardingWritableTest {
     public void setting_a_new_destination_writable_closes_old_destination() {
         // Arrange
         Writable<String> mockNewDestination = mock(Writable.class);
-        ForwardingWritable<String, String> forwardingWritable = createWritable();
+        TransformingWritableWithConverter<String, String> forwardingWritable = createWritable();
 
         verify(mockDestination, never()).close();
 
@@ -192,7 +192,7 @@ public class ForwardingWritableTest {
 
         Writable<String> mockNewDestination = mock(Writable.class);
 
-        ForwardingWritable<String, String> forwardingWritable = createWritable();
+        TransformingWritableWithConverter<String, String> forwardingWritable = createWritable();
 
         verify(mockSubscription, never()).cancelSubscription();
 
@@ -207,7 +207,7 @@ public class ForwardingWritableTest {
     public void setting_a_new_destination_writable_stops_writing_to_old_destination() throws IOException {
         // Arrange
         Writable<String> mockNewDestination = mock(Writable.class);
-        ForwardingWritable<String, String> forwardingWritable = createWritable();
+        TransformingWritableWithConverter<String, String> forwardingWritable = createWritable();
 
         // Act
         forwardingWritable.setWritable(mockNewDestination);
@@ -222,7 +222,7 @@ public class ForwardingWritableTest {
         // Arrange
         Writable<String> mockNewDestination = mock(Writable.class);
         when(mockConverter.apply(VALUE)).thenReturn(CONVERTED_VALUE);
-        ForwardingWritable<String, String> forwardingWritable = createWritable();
+        TransformingWritableWithConverter<String, String> forwardingWritable = createWritable();
 
         verify(mockNewDestination, never()).write(anyString());
 
@@ -238,7 +238,7 @@ public class ForwardingWritableTest {
     @Test(expected = IllegalArgumentException.class)
     public void setting_a_new_destination_writable_throws_for_null_destination() {
         // Arrange
-        ForwardingWritable<String, String> forwardingWritable = createWritable();
+        TransformingWritableWithConverter<String, String> forwardingWritable = createWritable();
 
         // Act
         forwardingWritable.setWritable(null);
@@ -248,7 +248,7 @@ public class ForwardingWritableTest {
     public void write_writes_the_converted_value() throws ConversionException, IOException {
         // Arrange
         when(mockConverter.apply(VALUE)).thenReturn(CONVERTED_VALUE);
-        ForwardingWritable<String, String> forwardingWritable = createWritable();
+        TransformingWritableWithConverter<String, String> forwardingWritable = createWritable();
         verify(mockDestination, never()).write(anyString());
 
         // Act
@@ -264,7 +264,7 @@ public class ForwardingWritableTest {
         // Arrange
         ConversionException exception = new ConversionException("conversion error");
         when(mockConverter.apply(VALUE)).thenThrow(exception);
-        ForwardingWritable<String, String> forwardingWritable = createWritable();
+        TransformingWritableWithConverter<String, String> forwardingWritable = createWritable();
 
         assertNull(forwardingWritable.lastError());
 
@@ -282,7 +282,7 @@ public class ForwardingWritableTest {
         ConversionException exception = new ConversionException("conversion error");
         when(mockConverter.apply(VALUE)).thenThrow(exception);
 
-        ForwardingWritable<String, String> forwardingWritable = createWritable();
+        TransformingWritableWithConverter<String, String> forwardingWritable = createWritable();
 
         // Act
         forwardingWritable.write(VALUE);
@@ -297,7 +297,7 @@ public class ForwardingWritableTest {
         StubWritable<String> stubDestination = new StubWritable<>();
         Exception exception = new Exception();
 
-        ForwardingWritable<String, String> forwardingWritable = new ForwardingWritable<>(stubDestination,
+        TransformingWritableWithConverter<String, String> forwardingWritable = new TransformingWritableWithConverter<>(stubDestination,
                 mockConverter);
 
         assertNull(forwardingWritable.lastError());

@@ -21,9 +21,6 @@ package uk.ac.stfc.isis.ibex.epics.writing;
 
 import java.io.IOException;
 import java.util.Optional;
-import java.util.function.Function;
-
-import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 
 /**
  * Forwards the values written to it to another writable (only if the original
@@ -34,28 +31,38 @@ import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
  * @param <TOut>
  *            the type of data to output
  */
-public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
-
-    private Optional<Writable<TOut>> destination = Optional.empty();
-    
+public abstract class TransformingWritable<TIn, TOut> extends BaseWritable<TIn> {
     private OnCanWriteChangeListener canWriteChangedListener = canWrite -> canWriteChanged(canWrite);
     private OnErrorListener onErrorListener = e -> error(e);
-	
-    private final Function<TIn, TOut> converter;
-
-    /**
-     * Constructor.
-     * 
-     * @param destination
-     *            the destination
-     * @param converter
-     *            converts types from In to Out
-     */
-    public ForwardingWritable(Writable<TOut> destination, Function<TIn, TOut> converter) {
-        this.converter = converter;
+    
+    protected Optional<Writable<TOut>> destination = Optional.empty();
+    
+    protected abstract TOut transform (TIn input);
+    
+    public TransformingWritable(Writable<TOut> destination) {
         setWritable(destination);
     }
 
+    @Override
+    public void close() {
+        cancelSubscriptions();
+        closeResource();
+    }
+    
+    public void setWritable(Writable<TOut> destination) {
+        checkPreconditions(destination);
+
+        cancelSubscriptions();
+        canWriteChangedListener.onCanWriteChanged(false);
+        canWriteChangedListener.onCanWriteChanged(destination.canWrite());
+        
+        destination.addOnCanWriteChangeListener(canWriteChangedListener);
+        destination.addOnErrorListener(onErrorListener);
+
+        closeResource();
+        this.destination = Optional.of(destination);
+    }
+    
 	@Override
 	public void write(TIn value) throws IOException {
 		if (value != null) {
@@ -68,42 +75,12 @@ public class ForwardingWritable<TIn, TOut> extends BaseWritable<TIn> {
 		}
 	}
 	
-	@Override
-	public void close() {
-		cancelSubscriptions();
-        closeResource();
-	}
-	
-    public void setWritable(Writable<TOut> destination) {
-        checkPreconditions(destination);
-
-		cancelSubscriptions();
-		canWriteChangedListener.onCanWriteChanged(false);
-		canWriteChangedListener.onCanWriteChanged(destination.canWrite());
-		
-        destination.addOnCanWriteChangeListener(canWriteChangedListener);
-        destination.addOnErrorListener(onErrorListener);
-
-        closeResource();
-        this.destination = Optional.of(destination);
-	}
-
-    private TOut transform(TIn value) {
-        try {
-            return converter.apply(value);
-        } catch (ConversionException e) {
-            error(e);
-        }
-
-        return null;
-    }
-
 	private void cancelSubscriptions() {
-	    destination.ifPresent(dest -> {
-	        dest.removeOnCanWriteChangeListener(canWriteChangedListener);
-	        dest.removeOnErrorListener(onErrorListener);
-	    });
-	}
+        destination.ifPresent(dest -> {
+            dest.removeOnCanWriteChangeListener(canWriteChangedListener);
+            dest.removeOnErrorListener(onErrorListener);
+        });
+    }
 
     private void closeResource() {
         destination.ifPresent(dest -> dest.close());
