@@ -20,7 +20,6 @@ package uk.ac.stfc.isis.ibex.epics.writing;
 
 import java.io.IOException;
 
-import uk.ac.stfc.isis.ibex.epics.observing.Subscribable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 
 /**
@@ -31,7 +30,7 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closable;
  * @param <T>
  *            Type that is written
  */
-public interface Writable<T> extends Closable, Subscribable<ConfigurableWriter<?, ?>> {
+public interface Writable<T> extends Closable {
 
     /**
      *

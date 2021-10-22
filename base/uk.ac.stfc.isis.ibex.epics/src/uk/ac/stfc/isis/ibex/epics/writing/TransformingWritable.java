@@ -84,6 +84,7 @@ public abstract class TransformingWritable<TIn, TOut> extends BaseWritable<TIn> 
 
     private void closeResource() {
         destination.ifPresent(dest -> dest.close());
+        destination = Optional.empty();
     }
 
     private void checkPreconditions(Writable<TOut> destination) {
