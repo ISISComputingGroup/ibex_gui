@@ -1,5 +1,7 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
+import java.nio.file.Path;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.layout.GridData;
@@ -14,15 +16,17 @@ import org.eclipse.swt.widgets.Composite;
 public class ScriptGeneratorHelpMenu {
 	
 	Composite helpMenuComposite;
+	Path scriptDefinitionsLocation;
 	
 	/**
 	 * Creates a help menu.
 	 * @param containingComposite The containing composite
 	 */
-	public ScriptGeneratorHelpMenu(Composite containingComposite) {
+	public ScriptGeneratorHelpMenu(Composite containingComposite, Path scriptDefinitionsLocation) {
 		setUpHelpMenuComposite(containingComposite);
 		createLabel();
 		createDropDownButton();
+		this.scriptDefinitionsLocation = scriptDefinitionsLocation;
 	}
 	
 	private void setUpHelpMenuComposite(Composite containingComposite) {
@@ -39,7 +43,7 @@ public class ScriptGeneratorHelpMenu {
 	private void createDropDownButton() {
 		Button btn = new Button(helpMenuComposite, SWT.ARROW | SWT.DOWN);
         btn.setLayoutData(new GridData(GridData.FILL_VERTICAL));
-        btn.addSelectionListener(new ScriptGeneratorHelpMenuItems());
+        btn.addSelectionListener(new ScriptGeneratorHelpMenuItems(scriptDefinitionsLocation));
 	}
 
 }

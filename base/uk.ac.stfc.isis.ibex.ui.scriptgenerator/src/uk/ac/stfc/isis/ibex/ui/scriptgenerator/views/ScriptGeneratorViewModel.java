@@ -3,6 +3,7 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -1141,6 +1142,13 @@ public class ScriptGeneratorViewModel extends ModelObject {
     public Optional<ScriptDefinitionWrapper> getScriptDefinition() {
     return scriptGeneratorModel.getScriptDefinition();
     }
+    
+    /**
+	 * Get the location of the repository containing script definitions.
+	 */
+	public Path getScriptDefinitionsRepoPath() {
+		return scriptGeneratorModel.getRepoPath();
+	}
 
     /**
      * Reload the available script definition.

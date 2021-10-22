@@ -317,7 +317,8 @@ public class ScriptGeneratorView {
             () -> helpText.setText("")
             );
         
-        new ScriptGeneratorHelpMenu(topBarComposite);
+        var scriptDefinitionsRepoPath = scriptGeneratorViewModel.getScriptDefinitionsRepoPath();
+        new ScriptGeneratorHelpMenu(topBarComposite, scriptDefinitionsRepoPath);
         Composite globalParamComposite = new Composite(mainParent, SWT.NONE);
         globalParamComposite.setLayout(new GridLayout(24, false));
         globalParamComposite.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 1, 5));
