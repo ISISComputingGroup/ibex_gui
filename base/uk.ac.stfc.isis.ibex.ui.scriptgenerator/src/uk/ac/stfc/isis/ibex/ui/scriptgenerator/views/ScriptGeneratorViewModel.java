@@ -719,20 +719,27 @@ public class ScriptGeneratorViewModel extends ModelObject {
     public void propertyChange(PropertyChangeEvent evt) {
     	scriptGeneratorModel.clearActions();
         for (Label label : globalLabel) {
+        	if (!label.isDisposed()) {
         	label.dispose();
+        	}
         }
         globalLabel.clear();
         for (Text text: globalParamText) {
+        	if(!text.isDisposed()) {
         	text.dispose();
+        	}
         }
         scriptGeneratorModel.clearGlobalParams();
         currentGlobals.clear();
         globalParamText.clear();
         createGlobalParamsWidgets();
-        globalParamsComposite.layout();
-        mainParent.layout();
+        if(!globalParamsComposite.isDisposed()) {
+	        globalParamsComposite.layout();
+        }
+	     mainParent.layout();
         // Display the new script definition help string
         if (!helpText.isDisposed()) {
+        	
         Optional<ScriptDefinitionWrapper> optionalScriptDefinition = getScriptDefinition();
         optionalScriptDefinition.ifPresentOrElse(
             realScriptDefinition -> {
@@ -761,20 +768,22 @@ public class ScriptGeneratorViewModel extends ModelObject {
       			  param = global.getName();
       			  currentGlobals.add(global.getName());
       			  paramVal = global.getDefaultValue();
-
-            	  Label globalLabelCurrent = new Label(globalParamsComposite, SWT.NONE);
-            	  globalLabelCurrent.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-            	  globalLabelCurrent.setText(param);
-            	  globalLabel.add(globalLabelCurrent);
-            	  Text globalParamTextCurrent = new Text(globalParamsComposite, SWT.NONE);
-            	  globalParamTextCurrent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
-            	  globalParamTextCurrent.setEnabled(true);
-            	  globalParamTextCurrent.addListener(SWT.Modify, e -> {
-            		  updateGlobalParams(globalParamTextCurrent.getText(), globalLabelCurrent.getText());
-            	  });
-            	  globalParamTextCurrent.setText(paramVal);
-            	  globalParamText.add(globalParamTextCurrent);
-      		  }
+      			  if(!globalParamsComposite.isDisposed()) {
+	            	  Label globalLabelCurrent = new Label(globalParamsComposite, SWT.NONE);
+	            	  globalLabelCurrent.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+	            	  globalLabelCurrent.setText(param);
+	            	  globalLabel.add(globalLabelCurrent);
+	            	  Text globalParamTextCurrent = new Text(globalParamsComposite, SWT.NONE);
+	            	  globalParamTextCurrent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
+	            	  globalParamTextCurrent.setEnabled(true);
+	            	  globalParamTextCurrent.addListener(SWT.Modify, e -> {
+	            		  updateGlobalParams(globalParamTextCurrent.getText(), globalLabelCurrent.getText());
+	            	  
+	            	  	});
+	            	  globalParamTextCurrent.setText(paramVal);
+	            	  globalParamText.add(globalParamTextCurrent);
+      			  }
+      			  }
       	  }
       }
 	}
@@ -1339,3 +1348,4 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	}
 		
 }
+
