@@ -62,9 +62,35 @@ public interface Writable<T> extends Closable {
 	 */
 	void uncheckedWrite(T value);
 	
+	/**
+     * Add a listener that gets notified when the Writable becomes (un)available for writing.
+     *
+     * @param listener
+     *             the listener to add
+     */
 	void addOnCanWriteChangeListener(OnCanWriteChangeListener listener);
+	
+    /**
+     * Remove a listener that gets notified when the Writable becomes (un)available for writing.
+     *
+     * @param listener
+     *             the listener to remove
+     */
 	void removeOnCanWriteChangeListener(OnCanWriteChangeListener listener);
 	
+	/**
+     * Add a listener that gets notified when the Writable goes into/out of error.
+     *
+     * @param listener
+     *             the listener to add
+     */
     void addOnErrorListener(OnErrorListener listener);
+    
+    /**
+     * Remove a listener that gets notified when the Writable goes into/out of error.
+     *
+     * @param listener
+     *             the listener to remove
+     */
     void removeOnErrorListener(OnErrorListener listener);
 }

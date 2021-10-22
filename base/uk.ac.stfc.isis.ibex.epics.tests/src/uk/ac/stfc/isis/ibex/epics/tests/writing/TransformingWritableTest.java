@@ -24,7 +24,6 @@ import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.io.IOException;
-import java.util.function.Function;
 
 import org.junit.Before;
 import org.junit.Test;
