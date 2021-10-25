@@ -28,6 +28,10 @@ public class ScriptGeneratorHelpMenu {
 		createDropDownButton();
 	}
 	
+	/**
+	 * Set the path of the script definitions to be displayed in the about dialog.
+	 * @param scriptDefinitionsLocation The path to the script definitions.
+	 */
 	public void setScriptDefinitionsLocation(Path scriptDefinitionsLocation) {
 		items.setScriptDefinitionsLocation(scriptDefinitionsLocation);
 	}

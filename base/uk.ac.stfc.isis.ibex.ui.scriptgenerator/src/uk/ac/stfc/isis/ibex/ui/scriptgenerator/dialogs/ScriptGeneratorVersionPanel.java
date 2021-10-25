@@ -30,7 +30,7 @@ import org.eclipse.swt.widgets.Label;
 import uk.ac.stfc.isis.ibex.ui.about.BaseVersionPanel;
 
 /**
- * A panel showing the Ibex client and server version numbers.
+ * A panel showing the script generator and java version, and the location of the script definitions.
  */
 public class ScriptGeneratorVersionPanel extends BaseVersionPanel {
 
@@ -42,6 +42,7 @@ public class ScriptGeneratorVersionPanel extends BaseVersionPanel {
      * 
      * @param parent The parent component
      * @param style The style to apply to the panel
+     * @param scriptDefinitionsLocation Optionally a path to the script definitions location.
      */
     @SuppressWarnings("checkstyle:magicnumber")
 	public ScriptGeneratorVersionPanel(Composite parent, int style, Optional<Path> scriptDefinitionsLocation) {

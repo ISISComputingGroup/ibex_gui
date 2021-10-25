@@ -39,6 +39,11 @@ public class ScriptGeneratorHelpMenuItems extends SelectionAdapter {
 		bindManualUrl();
 	}
 	
+	/**
+	 * Set the path of the script definitions to be displayed in the about dialog.
+	 * 
+	 * @param scriptDefinitionsLocation The path to the script definitions.
+	 */
 	public void setScriptDefinitionsLocation(Path scriptDefinitionsLocation) {
 		this.scriptDefinitionsLocation = Optional.ofNullable(scriptDefinitionsLocation);
 	}
