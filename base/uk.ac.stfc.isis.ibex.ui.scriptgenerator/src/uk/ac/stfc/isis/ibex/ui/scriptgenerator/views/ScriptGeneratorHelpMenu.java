@@ -16,17 +16,20 @@ import org.eclipse.swt.widgets.Composite;
 public class ScriptGeneratorHelpMenu {
 	
 	Composite helpMenuComposite;
-	Path scriptDefinitionsLocation;
+	private ScriptGeneratorHelpMenuItems items;
 	
 	/**
 	 * Creates a help menu.
 	 * @param containingComposite The containing composite
 	 */
-	public ScriptGeneratorHelpMenu(Composite containingComposite, Path scriptDefinitionsLocation) {
+	public ScriptGeneratorHelpMenu(Composite containingComposite) {
 		setUpHelpMenuComposite(containingComposite);
 		createLabel();
 		createDropDownButton();
-		this.scriptDefinitionsLocation = scriptDefinitionsLocation;
+	}
+	
+	public void setScriptDefinitionsLocation(Path scriptDefinitionsLocation) {
+		items.setScriptDefinitionsLocation(scriptDefinitionsLocation);
 	}
 	
 	private void setUpHelpMenuComposite(Composite containingComposite) {
@@ -43,7 +46,8 @@ public class ScriptGeneratorHelpMenu {
 	private void createDropDownButton() {
 		Button btn = new Button(helpMenuComposite, SWT.ARROW | SWT.DOWN);
         btn.setLayoutData(new GridData(GridData.FILL_VERTICAL));
-        btn.addSelectionListener(new ScriptGeneratorHelpMenuItems(scriptDefinitionsLocation));
+        items = new ScriptGeneratorHelpMenuItems();
+        btn.addSelectionListener(items);
 	}
 
 }

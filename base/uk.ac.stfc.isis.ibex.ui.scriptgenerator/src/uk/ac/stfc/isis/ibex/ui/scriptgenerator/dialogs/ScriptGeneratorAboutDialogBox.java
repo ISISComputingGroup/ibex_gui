@@ -1,6 +1,7 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs;
 
 import java.nio.file.Path;
+import java.util.Optional;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
@@ -12,9 +13,9 @@ import uk.ac.stfc.isis.ibex.ui.about.AboutDialogBox;
 
 public class ScriptGeneratorAboutDialogBox extends AboutDialogBox {
 	
-	private Path scriptDefinitionsLocation;
+	private Optional<Path> scriptDefinitionsLocation = Optional.empty();
 
-	public ScriptGeneratorAboutDialogBox(Shell parentShell, Path scriptDefinitionsLocation) {
+	public ScriptGeneratorAboutDialogBox(Shell parentShell, Optional<Path> scriptDefinitionsLocation) {
 		super(parentShell, "Script Generator");
 		this.scriptDefinitionsLocation = scriptDefinitionsLocation;
 	}

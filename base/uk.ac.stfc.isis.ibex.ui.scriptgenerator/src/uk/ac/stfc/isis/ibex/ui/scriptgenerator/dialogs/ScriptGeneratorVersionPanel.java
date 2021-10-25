@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs;
 
 import java.nio.file.Path;
+import java.util.Optional;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -43,7 +44,7 @@ public class ScriptGeneratorVersionPanel extends BaseVersionPanel {
      * @param style The style to apply to the panel
      */
     @SuppressWarnings("checkstyle:magicnumber")
-	public ScriptGeneratorVersionPanel(Composite parent, int style, Path scriptDefinitionsLocation) {
+	public ScriptGeneratorVersionPanel(Composite parent, int style, Optional<Path> scriptDefinitionsLocation) {
 		super(parent, style, "Script Generator");
 
 		scriptDefinitionsLabel = new Label(this, SWT.NONE);
@@ -52,9 +53,9 @@ public class ScriptGeneratorVersionPanel extends BaseVersionPanel {
         
 		scriptDefinitionsLocationsLabel = new Label(this, SWT.NONE);
 		scriptDefinitionsLocationsLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		if (scriptDefinitionsLocation != null) {
-			scriptDefinitionsLocationsLabel.setText(scriptDefinitionsLocation.toString());
-		}
+		scriptDefinitionsLocation.ifPresent(scriptDefinitionsLocationPath -> {
+			scriptDefinitionsLocationsLabel.setText(scriptDefinitionsLocationPath.toString());
+		});
 	}
 }
 

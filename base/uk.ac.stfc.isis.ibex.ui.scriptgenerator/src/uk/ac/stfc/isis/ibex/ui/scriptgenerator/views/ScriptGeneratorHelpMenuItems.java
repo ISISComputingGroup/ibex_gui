@@ -30,14 +30,17 @@ public class ScriptGeneratorHelpMenuItems extends SelectionAdapter {
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorHelpMenuItems.class);
 	
 	private Optional<URL> manualUrl = Optional.empty();
-	private Path scriptDefinitionsLocation;
+	private Optional<Path> scriptDefinitionsLocation = Optional.empty();
 	
 	/**
 	 * Gets the help menu items for the help drop-down. 
 	 */
-	public ScriptGeneratorHelpMenuItems(Path scriptDefinitionsLocation) {
+	public ScriptGeneratorHelpMenuItems() {
 		bindManualUrl();
-		this.scriptDefinitionsLocation = scriptDefinitionsLocation;
+	}
+	
+	public void setScriptDefinitionsLocation(Path scriptDefinitionsLocation) {
+		this.scriptDefinitionsLocation = Optional.ofNullable(scriptDefinitionsLocation);
 	}
 	
 	@Override
