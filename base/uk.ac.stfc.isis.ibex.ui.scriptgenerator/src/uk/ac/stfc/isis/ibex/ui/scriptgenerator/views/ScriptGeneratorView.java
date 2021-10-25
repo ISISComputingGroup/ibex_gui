@@ -175,8 +175,8 @@ public class ScriptGeneratorView {
         boolean ready = (boolean) evt.getNewValue();
         if (ready) {
         doGitActions();
-        scriptGeneratorViewModel.reloadScriptDefinitions();
         displayLoaded();
+        scriptGeneratorViewModel.reloadScriptDefinitions();
         } else {
         displayLoading();
         }
@@ -238,7 +238,7 @@ public class ScriptGeneratorView {
 			}
 		});
 
-		scriptGeneratorViewModel.reloadScriptDefinitions();
+		//scriptGeneratorViewModel.reloadScriptDefinitions();
 		scriptGeneratorViewModel.setRepoPath();
 	}
 

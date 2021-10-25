@@ -235,7 +235,9 @@ public class ScriptGeneratorSingleton extends ModelObject {
 
 		// If the validity error message property of the generator is changed update the
 		// validity errors in the scriptGeneratorTable
+		
 		generator.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
+//			scriptGeneratorTable.setValidityErrors(new ArrayList<Map<Integer,String>>());
 			scriptGeneratorTable.setValidityErrors(convertToListMap(evt.getNewValue()));
 			firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
