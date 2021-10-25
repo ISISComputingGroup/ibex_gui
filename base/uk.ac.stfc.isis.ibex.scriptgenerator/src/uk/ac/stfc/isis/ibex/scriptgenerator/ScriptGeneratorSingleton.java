@@ -735,7 +735,14 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * Set the location of the repository containing script definitions.
 	 */
 	public void setRepoPath() {
-		this.scriptDefinitionsRepoPath = Paths.get(pythonInterface.getRepoPath());
+		scriptDefinitionsRepoPath = Paths.get(pythonInterface.getRepoPath());
+	}
+	
+	/**
+	 * Get the location of the repository containing script definitions.
+	 */
+	public Path getRepoPath() {
+		return scriptDefinitionsRepoPath;
 	}
 	
 	/**
