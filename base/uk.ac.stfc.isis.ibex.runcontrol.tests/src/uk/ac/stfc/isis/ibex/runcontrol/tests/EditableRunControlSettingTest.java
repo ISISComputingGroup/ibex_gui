@@ -28,7 +28,6 @@ import java.io.IOException;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.epics.writing.Writer;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlSetter;
 
