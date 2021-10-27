@@ -73,7 +73,8 @@ public class ObservableCustomControl extends ModelAdapter {
         this.valueToWrite = valueToWrite;
     }
 
-    public void finalize() {
+    @Override
+    protected void finalize() {
         act.removeOnCanWriteChangeListener(canWriteListener);
     }
     

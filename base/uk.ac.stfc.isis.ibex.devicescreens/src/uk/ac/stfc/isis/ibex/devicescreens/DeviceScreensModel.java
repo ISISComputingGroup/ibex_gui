@@ -107,6 +107,7 @@ public class DeviceScreensModel extends ModelObject {
         });
     }
 
+    @Override
     protected void finalize() {
         this.writableDeviceScreenDescriptions.removeOnCanWriteChangeListener(canWriteListener);
     }

@@ -148,7 +148,8 @@ public class BlocksMenu extends MenuManager {
         };
 	}
     
-    public void finalize() {
+    @Override
+    protected void finalize() {
         Configurations.getInstance().server().setCurrentConfig().removeOnCanWriteChangeListener(readOnlyListener);
     }
 }
