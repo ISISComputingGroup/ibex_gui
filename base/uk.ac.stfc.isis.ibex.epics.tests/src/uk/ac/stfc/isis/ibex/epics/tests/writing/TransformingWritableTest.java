@@ -24,6 +24,7 @@ import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.io.IOException;
+import java.util.function.Function;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -41,6 +42,7 @@ public class TransformingWritableTest {
     private static final String CONVERTED_VALUE = "456";
 
     private Writable<String> mockDestination;
+    private Function<String, String> mockConverter = input -> input == VALUE ? CONVERTED_VALUE : null;
 
     @Before
     public void setUp() {
@@ -49,14 +51,7 @@ public class TransformingWritableTest {
     }
 
     private TransformingWritable<String, String> createWritable() {
-        return new TransformingWritable<String, String>(mockDestination) {
-
-            @Override
-            protected String transform(String input) {
-                return input == VALUE ? CONVERTED_VALUE : null; 
-            }
-            
-        };
+        return new TransformingWritable<String, String>(mockDestination, mockConverter);
     }
 
     @Test
@@ -267,15 +262,9 @@ public class TransformingWritableTest {
         // Arrange
         StubWritable<String> stubDestination = new StubWritable<>();
         Exception exception = new Exception();
+        Function<String, String> badConverter = input -> null;
 
-        TransformingWritable<String, String> forwardingWritable = new TransformingWritable<String, String>(stubDestination) {
-
-            @Override
-            protected String transform(String input) {
-                return null;
-            }
-            
-        };
+        TransformingWritable<String, String> forwardingWritable = new TransformingWritable<String, String>(stubDestination, badConverter);
 
         assertNull(forwardingWritable.lastError());
 
@@ -284,6 +273,40 @@ public class TransformingWritableTest {
 
         // Assert
         assertEquals(exception, forwardingWritable.lastError());
+    }
+    
+    @Test
+    public void value_conversion_error_is_stored_in_last_error() throws ConversionException, IOException {
+        // Arrange
+        ConversionException exception = new ConversionException("conversion error");
+        mockConverter = mock(Function.class);
+        when(mockConverter.apply(VALUE)).thenThrow(exception);
+        TransformingWritable<String, String> forwardingWritable = createWritable();
+
+        assertNull(forwardingWritable.lastError());
+
+        // Act
+        forwardingWritable.write(VALUE);
+
+        // Assert
+        assertEquals(exception, forwardingWritable.lastError());
+    }
+
+    @Test
+    public void when_converter_throws_conversion_error_then_writable_does_not_write_to_destination()
+            throws ConversionException, IOException {
+        // Arrange
+        ConversionException exception = new ConversionException("conversion error");
+        mockConverter = mock(Function.class);
+        when(mockConverter.apply(VALUE)).thenThrow(exception);
+
+        TransformingWritable<String, String> forwardingWritable = createWritable();
+
+        // Act
+        forwardingWritable.write(VALUE);
+
+        // Assert
+        verify(mockDestination, never()).write(anyString());
     }
 }
 

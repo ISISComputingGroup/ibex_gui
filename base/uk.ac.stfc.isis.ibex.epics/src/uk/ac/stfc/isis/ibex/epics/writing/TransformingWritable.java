@@ -21,6 +21,9 @@ package uk.ac.stfc.isis.ibex.epics.writing;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.function.Function;
+
+import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 
 /**
  * Forwards the values written to it to another writable (only if the original
@@ -31,18 +34,36 @@ import java.util.Optional;
  * @param <TOut>
  *            the type of data to output
  */
-public abstract class TransformingWritable<TIn, TOut> extends BaseWritable<TIn> {
+public class TransformingWritable<TIn, TOut> extends BaseWritable<TIn> {
     private OnCanWriteChangeListener canWriteChangedListener = canWrite -> canWriteChanged(canWrite);
     private OnErrorListener onErrorListener = e -> error(e);
+    private final Function<TIn, TOut> converter;
     
     protected Optional<Writable<TOut>> destination = Optional.empty();
-    
-    protected abstract TOut transform (TIn input);
-    
-    public TransformingWritable(Writable<TOut> destination) {
+
+    /**
+     * Constructor.
+     * 
+     * @param destination
+     *            the destination
+     * @param converter
+     *            converts types from In to Out
+     */
+    public TransformingWritable(Writable<TOut> destination, Function<TIn, TOut> converter) {
+        this.converter = converter;
         setWritable(destination);
     }
+    
+    protected TOut transform(TIn value) {
+        try {
+            return converter.apply(value);
+        } catch (ConversionException e) {
+            error(e);
+        }
 
+        return null;
+    }
+    
     @Override
     public void close() {
         cancelSubscriptions();

@@ -20,6 +20,7 @@
 package uk.ac.stfc.isis.ibex.epics.observing;
 
 import java.io.IOException;
+import java.util.function.Function;
 
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
@@ -40,6 +41,12 @@ public class BooleanWritableObservableAdapter implements Closable {
     private SettableUpdatedValue<Boolean> canSetValue;
     
     private final TransformingWritable<Boolean, Long> transformingWritable;
+    private final Function<Boolean, Long> converter = input -> {
+        if (input) {
+            return (long) 1;
+        }
+        return (long) 0;
+    };
     
     private OnCanWriteChangeListener canWriteListener = canWrite -> canSetValue.setValue(canWrite);
 	
@@ -50,16 +57,7 @@ public class BooleanWritableObservableAdapter implements Closable {
     public BooleanWritableObservableAdapter(Writable<Long> writable, ForwardingObservable<Boolean> observable) {
         value = new UpdatedObservableAdapter<Boolean>(observable);
         
-        transformingWritable = new TransformingWritable<Boolean, Long>(writable) {
-            @Override
-            protected Long transform(Boolean input) {
-                if (input) {
-                    return (long) 1;
-                }
-                return (long) 0;
-            }
-            
-        };
+        transformingWritable = new TransformingWritable<Boolean, Long>(writable, converter);
         
         canSetValue = new SettableUpdatedValue<>();
         transformingWritable.addOnCanWriteChangeListener(canWriteListener);

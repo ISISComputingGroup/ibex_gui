@@ -24,7 +24,7 @@ import java.util.function.Function;
 
 import org.apache.logging.log4j.Logger;
 
-public class LoggingForwardingWritable<T> extends TransformingWritableWithConverter<T, T> {
+public class LoggingForwardingWritable<T> extends TransformingWritable<T, T> {
 
 	private final Logger log;
 	private final String id;

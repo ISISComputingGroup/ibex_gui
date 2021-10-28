@@ -29,7 +29,7 @@ import java.util.function.Function;
  * @param <T>
  *            the type of the item to write
  */
-public class ForwardingWritableWithAction<T> extends TransformingWritableWithConverter<T, T> {
+public class ForwardingWritableWithAction<T> extends TransformingWritable<T, T> {
 
 
     private ForwardingWritableAction action;
