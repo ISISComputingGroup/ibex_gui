@@ -27,7 +27,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 
 /**
  * Forwards the values written to it to another writable (only if the original
- * and transformed values are not null. With conversion.
+ * and transformed values are not null.
  *
  * @param <TIn>
  *            the type of data coming in
@@ -47,14 +47,14 @@ public class TransformingWritable<TIn, TOut> extends BaseWritable<TIn> {
      * @param destination
      *            the destination
      * @param converter
-     *            converts types from In to Out
+     *            function that converts types from In to Out
      */
     public TransformingWritable(Writable<TOut> destination, Function<TIn, TOut> converter) {
         this.converter = converter;
         setWritable(destination);
     }
     
-    protected TOut transform(TIn value) {
+    private TOut transform(TIn value) {
         try {
             return converter.apply(value);
         } catch (ConversionException e) {
@@ -70,6 +70,10 @@ public class TransformingWritable<TIn, TOut> extends BaseWritable<TIn> {
         closeResource();
     }
     
+    /**
+     * Change the destination being written to.
+     * @param destination The new destination
+     */
     public void setWritable(Writable<TOut> destination) {
         checkPreconditions(destination);
 
