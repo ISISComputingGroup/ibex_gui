@@ -19,8 +19,8 @@
 package uk.ac.stfc.isis.ibex.epics.writing;
 
 import java.io.IOException;
+import java.util.Optional;
 
-import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.model.SetCommand;
 
@@ -32,28 +32,16 @@ import uk.ac.stfc.isis.ibex.model.SetCommand;
  *            the type of the model to send
  */
 public final class WritingSetCommand<T> extends SetCommand<T> implements Closable {
-		
-	private final Subscription destinationSubscription;
-	private final Subscription writerSubscription;	
+	private final OnCanWriteChangeListener canWriteListener = canWrite -> setCanSend(canWrite);
 	
-	private final BaseWriter<T, T> destinationWriter = new BaseWriter<T, T>() {
-		@Override
-		public void onCanWriteChanged(boolean canWrite) {
-			setCanSend(canWrite);
-		}
-
-		@Override
-		public void write(T value) throws IOException {
-			writeToWritables(value);
-		}
-		
-	};
+	private Optional<Writable<T>> destinationWriter = Optional.empty();
 
     private WritingSetCommand(Writable<T> destination) {
         checkPreconditions(destination);
 
-		writerSubscription = destinationWriter.subscribe(destination);
-		destinationSubscription = destination.subscribe(destinationWriter);
+        destinationWriter = Optional.of(destination);
+        
+        destinationWriter.ifPresent(dest -> dest.addOnCanWriteChangeListener(canWriteListener));
 	}
 
     /**
@@ -75,7 +63,9 @@ public final class WritingSetCommand<T> extends SetCommand<T> implements Closabl
      */
 	@Override
 	public void send(T value) throws IOException {
-		destinationWriter.write(value);
+	    if (destinationWriter.isPresent()) {
+	        destinationWriter.get().write(value);
+	    }
 	}
 	
 	/**
@@ -83,13 +73,13 @@ public final class WritingSetCommand<T> extends SetCommand<T> implements Closabl
 	 */
 	@Override
 	public void uncheckedSend(T value) {
-	    destinationWriter.uncheckedWrite(value);
+	    destinationWriter.ifPresent(dest -> dest.uncheckedWrite(value));
 	}
 	
 	@Override
 	public void close() {
-		writerSubscription.cancelSubscription();
-		destinationSubscription.cancelSubscription();
+	    destinationWriter.ifPresent(dest -> dest.removeOnCanWriteChangeListener(canWriteListener));
+	    destinationWriter = Optional.empty();
 	}
 
     private void checkPreconditions(Writable<T> destination) {

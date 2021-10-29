@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.epics.switching;
 import java.util.function.Function;
 
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
-import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritable;
+import uk.ac.stfc.isis.ibex.epics.writing.TransformingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
@@ -33,7 +33,7 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
  *
  * @param <T>
  */
-public class SwitchableWritable<T> extends ForwardingWritable<T, T> implements Switchable {
+public class SwitchableWritable<T> extends TransformingWritable<T, T> implements Switchable {
 
     private Switcher switcher;
     private Writable<T> source;

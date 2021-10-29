@@ -24,7 +24,7 @@ import java.util.function.Function;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritable;
+import uk.ac.stfc.isis.ibex.epics.writing.TransformingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
 /**
@@ -88,7 +88,7 @@ public final class InstrumentUtils {
      * @return The new writable
      */
     public static <S, T> Writable<T> convert(Writable<S> destination, Function<T, S> converter) {
-        return new ForwardingWritable<>(destination, converter);
+        return new TransformingWritable<>(destination, converter);
     }
 
     /**

@@ -23,9 +23,6 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
-import uk.ac.stfc.isis.ibex.epics.observing.Unsubscriber;
-
 /**
  * Base implementation of the writable interface.
  *
@@ -36,23 +33,33 @@ import uk.ac.stfc.isis.ibex.epics.observing.Unsubscriber;
  */
 public abstract class BaseWritable<T> implements Writable<T> {
 
-	private final Set<ConfigurableWriter<?, ?>> writers = new CopyOnWriteArraySet<>();
+    private final Set<OnCanWriteChangeListener> onCanWriteChangeListeners = new CopyOnWriteArraySet<OnCanWriteChangeListener>();
+    private final Set<OnErrorListener> onErrorListeners = new CopyOnWriteArraySet<OnErrorListener>();  
 
 	private boolean canWrite;
 	private Exception lastError;
-
+	
 	@Override
-	public synchronized Subscription subscribe(ConfigurableWriter<?, ?> writer) {
-		writer.onCanWriteChanged(canWrite());
-		writer.onError(lastError());
-		writers.add(writer); // As a set is used, duplicates won't be added.
-		return new Unsubscriber<>(this, writer);
+	public synchronized void addOnCanWriteChangeListener(OnCanWriteChangeListener listener) {
+	    listener.onCanWriteChanged(canWrite());
+	    onCanWriteChangeListeners.add(listener);
 	}
-
-	@Override
-	public synchronized void unsubscribe(ConfigurableWriter<?, ?> writer) {
-		writers.remove(writer);
-	}
+	
+    @Override
+    public synchronized void removeOnCanWriteChangeListener(OnCanWriteChangeListener listener) {
+        onCanWriteChangeListeners.remove(listener);
+    }
+    
+    @Override
+    public synchronized void addOnErrorListener(OnErrorListener listener) {
+        listener.onError(lastError());
+        onErrorListeners.add(listener);
+    }
+    
+    @Override
+    public synchronized void removeOnErrorListener(OnErrorListener listener) {
+        onErrorListeners.remove(listener);
+    }
 
 	@Override
     public synchronized boolean canWrite() {
@@ -68,7 +75,7 @@ public abstract class BaseWritable<T> implements Writable<T> {
 
 	protected synchronized void error(Exception e) {
 		lastError = e;
-		writers.forEach(writer -> writer.onError(e));
+		onErrorListeners.forEach(writer -> writer.onError(e));
 	}
 
 	/**
@@ -78,7 +85,7 @@ public abstract class BaseWritable<T> implements Writable<T> {
 	 */
 	protected synchronized void canWriteChanged(boolean canWrite) {
 		this.canWrite = canWrite;
-		writers.forEach(writer -> writer.onCanWriteChanged(canWrite));
+		onCanWriteChangeListeners.forEach(writer -> writer.onCanWriteChanged(canWrite));
 	}
 
 	@Override
