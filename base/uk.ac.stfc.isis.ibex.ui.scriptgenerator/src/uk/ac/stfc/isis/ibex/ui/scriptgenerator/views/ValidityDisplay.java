@@ -2,10 +2,16 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
+/**
+ * Display properties related to validation.
+ */
 public enum ValidityDisplay {
 	
+	/** Element is valid */
 	VALID,
+	/** Element is invalid */
 	INVALID,
+	/** Element validity is uncertain */
 	UNCERTAIN;
 	
 	/**
@@ -27,7 +33,7 @@ public enum ValidityDisplay {
      * @return Text to display the enum in the table.
      */
 	public String getText() {
-		switch(this) {
+		switch (this) {
 			case VALID:
 				return TICK_MARK;
 			case INVALID:
@@ -39,11 +45,12 @@ public enum ValidityDisplay {
 	
 	/**
 	 * Get the ValidityDisplay from it's displayed text.
-	 * @param text
-	 * @return
+	 * 
+	 * @param text The string to generate a Validity display element from.
+	 * @return A ValidityDisplay element generated from the given string.
 	 */
 	public static ValidityDisplay fromText(String text) {
-		switch(text) {
+		switch (text) {
 			case TICK_MARK:
 				return ValidityDisplay.VALID;
 			case CROSS_MARK:
@@ -60,7 +67,7 @@ public enum ValidityDisplay {
 	 * @return True if the action and this enum have the same validity or false if not.
 	 */
 	public boolean equalsAction(ScriptGeneratorAction action) {
-		switch(this) {
+		switch (this) {
 			case VALID:
 				return action.isValid();
 			case INVALID:

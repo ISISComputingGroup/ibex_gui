@@ -9,11 +9,19 @@ import uk.ac.stfc.isis.ibex.nicos.NicosErrorState;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 
+/**
+ * A ViewModel to control the View in relation to elements from the nicos model.
+ */
 public class ScriptGeneratorNicosViewModel {
 	
 	private NicosModel nicosModel = Nicos.getDefault().getModel();
 	private Button queueScriptButton;
 	
+	/**
+	 * Bind the given button to a property that enables and disables it.
+	 * 
+	 * @param queueScriptButton The button to enable/disable.
+	 */
 	public void bindQueueScriptButton(Button queueScriptButton) {
 		this.queueScriptButton = queueScriptButton;
 		nicosModel.addPropertyChangeListener(e -> updateButtonEnablement());
@@ -33,6 +41,9 @@ public class ScriptGeneratorNicosViewModel {
 	
 	/**
      * Queue the current script generator contents as a script in nicos.
+     * 
+     * @param name The name of the script to queue.
+     * @param code The code for the script to send.
      */
     public void queueScript(String name, String code) {
     	if (!nicosInError()) {
