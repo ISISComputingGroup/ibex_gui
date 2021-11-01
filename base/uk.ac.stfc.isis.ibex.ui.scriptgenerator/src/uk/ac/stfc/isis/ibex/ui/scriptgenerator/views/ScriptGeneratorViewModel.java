@@ -646,7 +646,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 
 	    long totalSeconds = scriptGeneratorModel.getTotalEstimatedTime().isPresent() ? scriptGeneratorModel.getTotalEstimatedTime().get() : 0;
 	    String displayTotal = "Total estimated run time: " + changeSecondsToTimeFormat(totalSeconds);
-	
+	    finishTimer.SetTimeEstimateVal(totalSeconds);
 	    firePropertyChange("timeEstimate", displayString, displayString = displayTotal);
     }
 
@@ -678,6 +678,14 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     public String getTimeEstimate() {
     	return displayString;
+    }
+    
+    /**
+     * Get the Finish timer.
+     * @return The finish timer object of the view model.
+     */
+    public ScriptGeneratorExpectedFinishTimer getFinishTimer() {
+    	return this.finishTimer;
     }
 
     /**
@@ -837,6 +845,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    this.globalParamsComposite = scriptDefintionComposite;
 	    this.mainParent = mainParent;
 	    this.currentGlobals = new ArrayList<String>();
+	    this.finishTimer = new ScriptGeneratorExpectedFinishTimer();
+	    this.scheduler = Executors.newScheduledThreadPool(1);
+	    this.scheduler.scheduleWithFixedDelay(finishTimer, 0, 1, TimeUnit.SECONDS);
 	    scriptGeneratorModel.getScriptDefinitionLoader().addPropertyChangeListener(SCRIPT_DEFINITION_SWITCH_PROPERTY, scriptDefinitionSwitchHelpListener);
     }
 
