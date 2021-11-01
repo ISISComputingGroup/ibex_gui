@@ -700,15 +700,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
     public ScriptGeneratorExpectedFinishTimer getFinishTimer() {
     	return this.finishTimer;
     }
-    
-    /**
-     * Get the Finish timer.
-     * @return The finish timer object of the view model.
-     */
-    public ScriptGeneratorExpectedFinishTimer getFinishTimer() {
-    	return this.finishTimer;
-    }
-    
 
     /**
      * Handle a change in the actions or their properties.
