@@ -442,7 +442,7 @@ public class ScriptGeneratorView {
 	        
 	        // Button to run script in nicos
 	        queueScriptButton = new Button(generateButtonsGrp, SWT.NONE);
-	        queueScriptButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/play.png"));
+	        queueScriptButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/play.png"));
 	        queueScriptButton.setText("Queue Script");
 	        queueScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 	        nicosModel.bindQueueScriptButton(queueScriptButton);
