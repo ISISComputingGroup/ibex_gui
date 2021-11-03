@@ -5379,7 +5379,7 @@ $(pv_value)</tooltip>
         <alarm_pulsing>false</alarm_pulsing>
         <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
         <background_color>
-          <color name="ISIS_Red" red="255" green="0" blue="0" />
+          <color red="192" green="192" blue="192" />
         </background_color>
         <border_alarm_sensitive>false</border_alarm_sensitive>
         <border_color>
