@@ -20,12 +20,15 @@
 package uk.ac.stfc.isis.ibex.synoptic;
 
 import java.io.IOException;
+import java.util.function.Function;
 
 import com.google.common.base.Strings;
 
+import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
-import uk.ac.stfc.isis.ibex.epics.writing.TransformingWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
+import uk.ac.stfc.isis.ibex.epics.writing.TransformingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
@@ -36,11 +39,31 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
  * This class is responsible for writing the synoptic data back to the BlockServer.
  *
  */
-public class SynopticWriter extends TransformingWriter<SynopticDescription, String> {
+public class SynopticWritable extends TransformingWritable<SynopticDescription, String> {
 	
-	private SettableUpdatedValue<Boolean> canSave = new SettableUpdatedValue<>();
-    private final Observable<String> schema;
-
+    private SettableUpdatedValue<Boolean> canSave = new SettableUpdatedValue<>();
+    
+    private OnCanWriteChangeListener canWriteListener = canWrite -> canSave.setValue(canWrite);
+    
+    /**
+     * Create a function that will convert a synoptic structure into xml, checking it against the provided schema.
+     * @param schema The schema to check against
+     * @return A function that will do the conversion
+     */
+    private static Function<SynopticDescription, String> getConverter(String schema) {
+        return value -> {
+            // Converts the raw synoptic description into XML
+            if (Strings.isNullOrEmpty(schema)) {
+                Synoptic.LOG.debug("Synoptic schema not found, attempting to save anyway.");
+            }
+            try {
+                return XMLUtil.toXml(value, SynopticDescription.class, schema);
+            } catch (IOException e) {
+                throw new ConversionException(e.getMessage());
+            }
+        };
+    }
+    
     /**
      * Create a new synoptic writer that converts a synoptic to xml, checks this
      * against the supplied schema and writes it to the supplied destination.
@@ -50,33 +73,10 @@ public class SynopticWriter extends TransformingWriter<SynopticDescription, Stri
      * @param schema
      *            The schema to check the synoptic against.
      */
-    public SynopticWriter(Writable<String> destination, Observable<String> schema) {
-		subscribe(destination);
-		canSave.setValue(destination.canWrite());
-		destination.subscribe(this);
-        this.schema = schema;
-	}
-	
+    public SynopticWritable(Writable<String> destination, Observable<String> schema) {
+        super(destination, getConverter(schema.getValue()));
 
-	@Override
-	protected String transform(SynopticDescription value) {
-		// Converts the raw synoptic description into XML
-        if (Strings.isNullOrEmpty(schema.getValue())) {
-            Synoptic.LOG.debug("Synoptic schema not found, attempting to save anyway.");
-        }
-		try {
-            return XMLUtil.toXml(value, SynopticDescription.class, schema.getValue());
-		} catch (IOException e) {
-			onError(e);
-		}
-		
-		return null;
-	}
-
-	@Override
-	public void onCanWriteChanged(boolean canWrite) {
-		super.onCanWriteChanged(canWrite);
-		canSave.setValue(canWrite);
+        destination.addOnCanWriteChangeListener(canWriteListener);
 	}
 	
     /**
@@ -86,4 +86,10 @@ public class SynopticWriter extends TransformingWriter<SynopticDescription, Stri
 	public UpdatedValue<Boolean> canSave() {
 		return canSave;
 	}
+
+
+    @Override
+    public void close() {
+        destination.ifPresent(dest -> addOnCanWriteChangeListener(canWriteListener));
+    }
 }

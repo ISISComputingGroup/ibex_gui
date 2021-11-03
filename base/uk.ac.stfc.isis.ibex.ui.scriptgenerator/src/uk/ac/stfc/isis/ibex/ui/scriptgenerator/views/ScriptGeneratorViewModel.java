@@ -3,6 +3,7 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -15,6 +16,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -197,7 +201,17 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Default string to display for time estimation.
      */
     private String displayString = "Total estimated run time: 00:00:00";
-
+    
+    /**
+     * Class to handle updating the expected finish time.
+     */
+    private ScriptGeneratorExpectedFinishTimer finishTimer;
+    
+    /**
+     * The Scheduler for finish timer.
+     */
+    private ScheduledExecutorService scheduler;
+    
     /**
      * The reference to the singleton model that the ViewModel is to use.
      */
@@ -233,62 +247,62 @@ public class ScriptGeneratorViewModel extends ModelObject {
      *   begins listening to property changes in the model.
      */
     public ScriptGeneratorViewModel() {
-    // Set up the model
-    scriptGeneratorModel = Activator.getModel();
-    scriptGeneratorModel.addPropertyChangeListener(PYTHON_READINESS_PROPERTY, evt -> {
-        firePropertyChange(PYTHON_READINESS_PROPERTY, evt.getOldValue(), evt.getNewValue());
-    });
+	    // Set up the model
+	    scriptGeneratorModel = Activator.getModel();
+	    scriptGeneratorModel.addPropertyChangeListener(PYTHON_READINESS_PROPERTY, evt -> {
+	        firePropertyChange(PYTHON_READINESS_PROPERTY, evt.getOldValue(), evt.getNewValue());
+	    });
     }
 
     /**
      * Set up the model. Allows us to attach listeners for the view first.
      */
     public void setUpModel() {
-    clipboard = new Clipboard(Display.getDefault());
-    scriptGeneratorModel.createScriptDefinitionLoader();
-    scriptGeneratorModel.setUp();
-    // Listen to whether the language support is changed
-    // notify the user if the language is not supported
-    scriptGeneratorModel.addPropertyChangeListener(LANGUAGE_SUPPORT_PROPERTY, evt -> {
-        if (Objects.equals(evt.getOldValue(), true) && Objects.equals(evt.getNewValue(), false)) {
-        displayLanguageSupportError();
-        }
-    });
-    // Listen for model threading errors and display to the user if there is one
-    // Model is responsible for logging it
-    scriptGeneratorModel.addPropertyChangeListener(THREAD_ERROR_PROPERTY, evt -> {
-        displayThreadingError();
-    });
-    scriptGeneratorModel.addPropertyChangeListener(SCRIPT_GENERATION_ERROR_PROPERTY, evt -> {
-        LOG.info("Generation error");
-        displayGenerationError();
-    });
-    // Listen for generated script refreshes
-    scriptGeneratorModel.addPropertyChangeListener(GENERATED_SCRIPT_FILENAME_PROPERTY, evt -> {
-        String scriptFilename = (String) evt.getNewValue();
-        DISPLAY.asyncExec(() -> {
-        scriptGeneratorModel.getLastGeneratedScriptId().ifPresentOrElse(
-            generatedScriptId -> {
-            	scriptGeneratorModel.getScriptFromId(generatedScriptId).ifPresentOrElse(generatedScript -> {
-            		if (nicosScriptIds.contains(generatedScriptId)) {
-            			previewScriptOrQueueDirectly(generatedScript);
-            		} else {
-            			if (scriptsToGenerateToCurrentFilepath.contains(generatedScriptId)) {
-            				saveScriptToCurrentFilepath(generatedScript);
-            			} else {
-            				saveScriptToNewFilepath(generatedScript, scriptFilename);
-            			}
-            		}
-            	}, () -> {
-            		MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
-            	});
-            },
-            () -> {
-                MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
-            }
-            );
-        });
-    });
+	    clipboard = new Clipboard(Display.getDefault());
+	    scriptGeneratorModel.createScriptDefinitionLoader();
+	    scriptGeneratorModel.setUp();
+	    // Listen to whether the language support is changed
+	    // notify the user if the language is not supported
+	    scriptGeneratorModel.addPropertyChangeListener(LANGUAGE_SUPPORT_PROPERTY, evt -> {
+	        if (Objects.equals(evt.getOldValue(), true) && Objects.equals(evt.getNewValue(), false)) {
+	        displayLanguageSupportError();
+	        }
+	    });
+	    // Listen for model threading errors and display to the user if there is one
+	    // Model is responsible for logging it
+	    scriptGeneratorModel.addPropertyChangeListener(THREAD_ERROR_PROPERTY, evt -> {
+	        displayThreadingError();
+	    });
+	    scriptGeneratorModel.addPropertyChangeListener(SCRIPT_GENERATION_ERROR_PROPERTY, evt -> {
+	        LOG.info("Generation error");
+	        displayGenerationError();
+	    });
+	    // Listen for generated script refreshes
+	    scriptGeneratorModel.addPropertyChangeListener(GENERATED_SCRIPT_FILENAME_PROPERTY, evt -> {
+	        String scriptFilename = (String) evt.getNewValue();
+	        DISPLAY.asyncExec(() -> {
+	        scriptGeneratorModel.getLastGeneratedScriptId().ifPresentOrElse(
+	            generatedScriptId -> {
+	            	scriptGeneratorModel.getScriptFromId(generatedScriptId).ifPresentOrElse(generatedScript -> {
+	            		if (nicosScriptIds.contains(generatedScriptId)) {
+	            			previewScriptOrQueueDirectly(generatedScript);
+	            		} else {
+	            			if (scriptsToGenerateToCurrentFilepath.contains(generatedScriptId)) {
+	            				saveScriptToCurrentFilepath(generatedScript);
+	            			} else {
+	            				saveScriptToNewFilepath(generatedScript, scriptFilename);
+	            			}
+	            		}
+	            	}, () -> {
+	            		MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
+	            	});
+	            },
+	            () -> {
+	                MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
+	            }
+	            );
+	        });
+	    });
 
     }
     
@@ -298,8 +312,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			if (scriptPreview.open() == IDialogConstants.OK_ID) {
 				firePropertyChange(NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
 			}
-		}
-		else {
+		} else {
 			firePropertyChange(NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
 		}
     }
@@ -346,7 +359,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @return true if there is at least one script definition loaded, false if not.
      */
     public boolean scriptDefinitionsAvailable() {
-    return this.scriptGeneratorModel.getScriptDefinitionLoader().scriptDefinitionAvailable();
+    	return this.scriptGeneratorModel.getScriptDefinitionLoader().scriptDefinitionAvailable();
     }
 
 
@@ -354,41 +367,41 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Display a message dialog box that the language that is being used is unsupported.
      */
     private void displayLanguageSupportError() {
-    MessageDialog.openError(DISPLAY.getActiveShell(), 
-        "Language support issue",
-        "You are attempting to use an unsupported language, "
-            + "parameter validity checking and script generation are disabled at this time");
+	    MessageDialog.openError(DISPLAY.getActiveShell(), 
+	        "Language support issue",
+	        "You are attempting to use an unsupported language, "
+	            + "parameter validity checking and script generation are disabled at this time");
     }
 
     /**
      * Display a message dialog box that there was a threading issue when generating or checking parameter validity.
      */
     private void displayGenerationError() {
-    DISPLAY.asyncExec(() -> {
-        MessageDialog.openError(DISPLAY.getActiveShell(), 
-            "Error",
-            "Error when generating a script, are your parameters valid?");
-    });
+	    DISPLAY.asyncExec(() -> {
+	        MessageDialog.openError(DISPLAY.getActiveShell(), 
+	            "Error",
+	            "Error when generating a script, are your parameters valid?");
+	    });
     }
 
     /**
      * Display a message dialog box that there was an issue when generating a script
      */
     private void displayThreadingError() {
-    MessageDialog.openError(DISPLAY.getActiveShell(), 
-        "Error",
-        "Generating or parameter validity checking error. Threading issue.");
+	    MessageDialog.openError(DISPLAY.getActiveShell(), 
+	        "Error",
+	        "Generating or parameter validity checking error. Threading issue.");
     }
 
     /**
      * Adds a new action (row) to the ActionsTable, with default parameter values.
      */
     protected void addEmptyAction() {
-    scriptGeneratorModel.addEmptyAction();
-    // Make sure the table is updated with the new action before selecting it
-    DISPLAY.asyncExec(() -> {
-    	viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
-    });
+	    scriptGeneratorModel.addEmptyAction();
+	    // Make sure the table is updated with the new action before selecting it
+	    DISPLAY.asyncExec(() -> {
+	    	viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
+	    });
     }
     
     /**
@@ -397,11 +410,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * @param insertionLocation The index to add the specified 
 	 */
     protected void insertEmptyAction(Integer insertionLocation) {
-    scriptGeneratorModel.insertEmptyAction(insertionLocation);
-    // Make sure the table is updated with the new action before selecting it
-    DISPLAY.asyncExec(() -> {
-        viewTable.setCellFocus(insertionLocation, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
-    });
+	    scriptGeneratorModel.insertEmptyAction(insertionLocation);
+	    // Make sure the table is updated with the new action before selecting it
+	    DISPLAY.asyncExec(() -> {
+	        viewTable.setCellFocus(insertionLocation, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
+	    });
     }
     
     /**
@@ -411,24 +424,24 @@ public class ScriptGeneratorViewModel extends ModelObject {
      *             the actions to delete.
      */
     protected void deleteAction(List<ScriptGeneratorAction> actionsToDelete) {
-    int toSelect = getFocusRowIndexAfterDelete(actionsToDelete);
-    
-    scriptGeneratorModel.deleteAction(actionsToDelete);
-    
-    DISPLAY.asyncExec(() -> {
-    	viewTable.setCellFocus(toSelect, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
-    });
+	    int toSelect = getFocusRowIndexAfterDelete(actionsToDelete);
+	    
+	    scriptGeneratorModel.deleteAction(actionsToDelete);
+	    
+	    DISPLAY.asyncExec(() -> {
+	    	viewTable.setCellFocus(toSelect, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
+	    });
     }
 
     private int getFocusRowIndexAfterDelete(List<ScriptGeneratorAction> actionsToDelete) {
-    ScriptGeneratorAction lastActionToDelete = actionsToDelete.get(actionsToDelete.size() - 1);
-    int lastActionToDeleteIndex = scriptGeneratorModel.getActions().indexOf(lastActionToDelete);
-    
-    // If last action is selected, select new last action, otherwise select next action
- 	int focusRowIndex = lastActionToDeleteIndex == scriptGeneratorModel.getActions().size() - 1
- 						? lastActionToDeleteIndex - actionsToDelete.size() : (lastActionToDeleteIndex - actionsToDelete.size()) + 1;
-    
-    return focusRowIndex;
+	    ScriptGeneratorAction lastActionToDelete = actionsToDelete.get(actionsToDelete.size() - 1);
+	    int lastActionToDeleteIndex = scriptGeneratorModel.getActions().indexOf(lastActionToDelete);
+	    
+	    // If last action is selected, select new last action, otherwise select next action
+	 	int focusRowIndex = lastActionToDeleteIndex == scriptGeneratorModel.getActions().size() - 1
+	 						? lastActionToDeleteIndex - actionsToDelete.size() : (lastActionToDeleteIndex - actionsToDelete.size()) + 1;
+	    
+	    return focusRowIndex;
     
     }
     
@@ -441,25 +454,25 @@ public class ScriptGeneratorViewModel extends ModelObject {
      *          The index in the list to do the insertion.
      */
     protected void duplicateAction(List<ScriptGeneratorAction> actionsToDuplicate, Integer insertionLocation) {
-    scriptGeneratorModel.duplicateAction(actionsToDuplicate, insertionLocation);
-    // Make sure the table is updated with the new action before selecting it
-    DISPLAY.asyncExec(() -> {
-    	viewTable.setCellFocus(insertionLocation, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
-    });
+	    scriptGeneratorModel.duplicateAction(actionsToDuplicate, insertionLocation);
+	    // Make sure the table is updated with the new action before selecting it
+	    DISPLAY.asyncExec(() -> {
+	    	viewTable.setCellFocus(insertionLocation, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
+	    });
     }
 
     /**
      * Clears all actions from the ActionsTable.
      */
     protected void clearAction() {
-    DISPLAY.asyncExec(() -> {
-        boolean userConfirmation = MessageDialog.openConfirm(DISPLAY.getActiveShell(),
-            "Warning",
-            "This will delete all actions, are you sure you want to continue?");
-        if (userConfirmation) {
-        scriptGeneratorModel.clearActions();
-        }
-    });
+	    DISPLAY.asyncExec(() -> {
+	        boolean userConfirmation = MessageDialog.openConfirm(DISPLAY.getActiveShell(),
+	            "Warning",
+	            "This will delete all actions, are you sure you want to continue?");
+	        if (userConfirmation) {
+	        scriptGeneratorModel.clearActions();
+	        }
+	    });
     }
 
     /**
@@ -469,10 +482,10 @@ public class ScriptGeneratorViewModel extends ModelObject {
      *             the actions to move.
      */
     protected void moveActionUp(List<ScriptGeneratorAction> actionsToMove) {
-    scriptGeneratorModel.moveActionUp(actionsToMove);
-    DISPLAY.asyncExec(() -> {
-    	viewTable.setSelected(actionsToMove, true); 
-    });
+	    scriptGeneratorModel.moveActionUp(actionsToMove);
+	    DISPLAY.asyncExec(() -> {
+	    	viewTable.setSelected(actionsToMove, true); 
+	    });
     }
 
     /**
@@ -482,17 +495,17 @@ public class ScriptGeneratorViewModel extends ModelObject {
      *             the actions to move.
      */
     protected void moveActionDown(List<ScriptGeneratorAction> actionsToMove) {
-    scriptGeneratorModel.moveActionDown(actionsToMove);
-    DISPLAY.asyncExec(() -> {
-    	viewTable.setSelected(actionsToMove, true);
-    });
+	    scriptGeneratorModel.moveActionDown(actionsToMove);
+	    DISPLAY.asyncExec(() -> {
+	    	viewTable.setSelected(actionsToMove, true);
+	    });
     }
 
     /**
      * Clean up resources when the plug-in is destroyed.
      */
     protected void cleanUp() {
-    scriptGeneratorModel.cleanUp();
+    	scriptGeneratorModel.cleanUp();
     }
 
     /**
@@ -501,10 +514,10 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @return A list of available script definitions.
      */
     protected List<String> getAvailableScriptDefinitionsNames() {
-    return scriptGeneratorModel.getAvailableScriptDefinitions()
-        .stream()
-        .map(scriptDefinition -> scriptDefinition.getName())
-        .collect(Collectors.toList());
+	    return scriptGeneratorModel.getAvailableScriptDefinitions()
+	        .stream()
+	        .map(scriptDefinition -> scriptDefinition.getName())
+	        .collect(Collectors.toList());
     }
 
     /**
@@ -514,7 +527,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      *  and the value as the reason it could not be loaded.
      */
     protected Map<String, String> getScriptDefinitionLoadErrors() {
-    return scriptGeneratorModel.getScriptDefinitionLoadErrors();
+    	return scriptGeneratorModel.getScriptDefinitionLoadErrors();
     }
 
     /**
@@ -542,26 +555,26 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @return The label provider.
      */
     protected LabelProvider getScriptDefinitionSelectorLabelProvider() {
-    return new LabelProvider() {
-        /**
-         * Use getName method on Python ScriptGeneratorWrapper class to get labels.
-         */
-        @Override
-        public String getText(Object element) {
-        if (element instanceof ScriptDefinitionWrapper) {
-            ScriptDefinitionWrapper scriptDefinitionWrapper = (ScriptDefinitionWrapper) element;
-            return scriptDefinitionWrapper.getName();
-        }
-        return super.getText(element);
-        }
-    };
+	    return new LabelProvider() {
+	        /**
+	         * Use getName method on Python ScriptGeneratorWrapper class to get labels.
+	         */
+	        @Override
+	        public String getText(Object element) {
+	        if (element instanceof ScriptDefinitionWrapper) {
+	            ScriptDefinitionWrapper scriptDefinitionWrapper = (ScriptDefinitionWrapper) element;
+	            return scriptDefinitionWrapper.getName();
+	        }
+	        return super.getText(element);
+	        }
+	    };
     }
 
     /**
      * Listen for changes in actions and activate the handler.
      */
     private PropertyChangeListener actionChangeListener = evt -> {
-    actionChangeHandler(viewTable, btnGenerateScript, btnGenerateScriptAs, false);
+    	actionChangeHandler(viewTable, btnGenerateScript, btnGenerateScriptAs, false);
     };
 
     /**
@@ -573,35 +586,35 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @param btnGenerateScriptAs The generate script as button to style change.
      */
     protected void bindActionProperties(ActionsViewTable viewTable, Button btnGenerateScript, Button btnGenerateScriptAs) {
-    this.viewTable = viewTable;
-    this.btnGenerateScript = btnGenerateScript;
-    this.btnGenerateScriptAs = btnGenerateScriptAs;
-    // Remove listeners so as not to bind them twice
-    this.scriptGeneratorModel.getScriptGeneratorTable().removePropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
-    this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
-    this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, evt -> {
-    	updateParametersFileModifiedStatus();
-	});
-    this.scriptGeneratorModel.removePropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
-    this.scriptGeneratorModel.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
-    this.scriptGeneratorModel.removePropertyChangeListener(TIME_ESTIMATE_PROPERTY, actionChangeListener);
-    this.scriptGeneratorModel.addPropertyChangeListener(TIME_ESTIMATE_PROPERTY, actionChangeListener);
-    }
-
-    private void updateParametersFilePath(String parametersFilePath) {
-	this.clearGenerationTime();
-	String displayFile = "Current Script: " + parametersFilePath;
-	currentParametersFilePath = parametersFilePath;		// Update the current parameter file path for Save.
-	unsavedChangesMarkerDisplayed = false;				// Reset unsaved changes marker.
+	    this.viewTable = viewTable;
+	    this.btnGenerateScript = btnGenerateScript;
+	    this.btnGenerateScriptAs = btnGenerateScriptAs;
+	    // Remove listeners so as not to bind them twice
+	    this.scriptGeneratorModel.getScriptGeneratorTable().removePropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
+	    this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
+	    this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, evt -> {
+	    	updateParametersFileModifiedStatus();
+		});
+	    this.scriptGeneratorModel.removePropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
+	    this.scriptGeneratorModel.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
+	    this.scriptGeneratorModel.removePropertyChangeListener(TIME_ESTIMATE_PROPERTY, actionChangeListener);
+	    this.scriptGeneratorModel.addPropertyChangeListener(TIME_ESTIMATE_PROPERTY, actionChangeListener);
+	    }
 	
-	// Save the loaded actions to check if modified.
-	try {
-		currentFileActions = scriptGeneratorModel.loadParameterValues(Paths.get(parametersFilePath));
-	} catch (UnsupportedOperationException | NoScriptDefinitionSelectedException | ScriptDefinitionNotMatched e) {
-		// pass
-	}
-
-	firePropertyChange("parametersFile", parametersFileDisplayString, parametersFileDisplayString = displayFile);
+	    private void updateParametersFilePath(String parametersFilePath) {
+		this.clearGenerationTime();
+		String displayFile = "Current Script: " + parametersFilePath;
+		currentParametersFilePath = parametersFilePath;		// Update the current parameter file path for Save.
+		unsavedChangesMarkerDisplayed = false;				// Reset unsaved changes marker.
+		
+		// Save the loaded actions to check if modified.
+		try {
+			currentFileActions = scriptGeneratorModel.loadParameterValues(Paths.get(parametersFilePath));
+		} catch (UnsupportedOperationException | NoScriptDefinitionSelectedException | ScriptDefinitionNotMatched e) {
+			// pass
+		}
+	
+		firePropertyChange("parametersFile", parametersFileDisplayString, parametersFileDisplayString = displayFile);
     }
     
     private void updateParametersFileModifiedStatus() {
@@ -644,16 +657,16 @@ public class ScriptGeneratorViewModel extends ModelObject {
     
     private void updateTotalEstimatedTime() {
 
-    long totalSeconds = scriptGeneratorModel.getTotalEstimatedTime().isPresent() ? scriptGeneratorModel.getTotalEstimatedTime().get() : 0;
-    String displayTotal = "Total estimated run time: " + changeSecondsToTimeFormat(totalSeconds);
-
-    firePropertyChange("timeEstimate", displayString, displayString = displayTotal);
+	    long totalSeconds = scriptGeneratorModel.getTotalEstimatedTime().isPresent() ? scriptGeneratorModel.getTotalEstimatedTime().get() : 0;
+	    String displayTotal = "Total estimated run time: " + changeSecondsToTimeFormat(totalSeconds);
+	    finishTimer.SetTimeEstimateVal(totalSeconds);
+	    firePropertyChange("timeEstimate", displayString, displayString = displayTotal);
     }
 
 
     public static String changeSecondsToTimeFormat(long totalSeconds) {
-    Duration duration = Duration.ofSeconds(totalSeconds);
-    return String.format("%02d:%02d:%02d", duration.toHours(), duration.toMinutesPart(), duration.toSecondsPart());
+	    Duration duration = Duration.ofSeconds(totalSeconds);
+	    return String.format("%02d:%02d:%02d", duration.toHours(), duration.toMinutesPart(), duration.toSecondsPart());
     }
 
     /**
@@ -661,7 +674,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @return The parameters save file name and location.
      */
     public String getParametersFile() {
-    return parametersFileDisplayString;
+    	return parametersFileDisplayString;
     }
     
     /**
@@ -669,7 +682,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @return The time and date when the last script was generated.
      */
     public String getScriptGenerationTime() {
-    return scriptGenerationTime;
+    	return scriptGenerationTime;
     }
     
     /**
@@ -677,7 +690,15 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @return The formatted script time estimate.
      */
     public String getTimeEstimate() {
-    return displayString;
+    	return displayString;
+    }
+    
+    /**
+     * Get the Finish timer.
+     * @return The finish timer object of the view model.
+     */
+    public ScriptGeneratorExpectedFinishTimer getFinishTimer() {
+    	return this.finishTimer;
     }
 
     /**
@@ -688,62 +709,69 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @param btnGenerateScript Generate Script button's visibility to manipulate
      */
     private void actionChangeHandler(ActionsViewTable viewTable, Button btnGenerateScript, Button btnGenerateScriptAs, boolean rowsChanged) {
-    DISPLAY.asyncExec(() -> {
-        if (!viewTable.isDisposed()) {
-        	viewTable.updateActions(scriptGeneratorModel.getActions());
-        	updateValidityChecks(viewTable);
-        }
-        if (!btnGenerateScript.isDisposed()) {
-        setButtonGenerateStyle(btnGenerateScript);
-        }
-        if (!btnGenerateScriptAs.isDisposed()) {
-        setButtonGenerateStyle(btnGenerateScriptAs);
-        }
-        updateTotalEstimatedTime();
-    });
+	    DISPLAY.asyncExec(() -> {
+	        if (!viewTable.isDisposed()) {
+	        	viewTable.updateActions(scriptGeneratorModel.getActions());
+	        	updateValidityChecks(viewTable);
+	        }
+	        if (!btnGenerateScript.isDisposed()) {
+	        setButtonGenerateStyle(btnGenerateScript);
+	        }
+	        if (!btnGenerateScriptAs.isDisposed()) {
+	        setButtonGenerateStyle(btnGenerateScriptAs);
+	        }
+	        updateTotalEstimatedTime();
+	    });
     }
 
     private void setButtonGenerateStyle(Button btnGenerateScript) {
-    if (scriptGeneratorModel.languageSupported) {
-        // Grey the button out if parameters are valid
-        btnGenerateScript.setEnabled(scriptGeneratorModel.areParamsValid());
-    } else {
-        // Grey the button out when language is not supported
-        btnGenerateScript.setEnabled(false);
-    }
+	    if (scriptGeneratorModel.languageSupported) {
+	        // Grey the button out if parameters are valid
+	        btnGenerateScript.setEnabled(scriptGeneratorModel.areParamsValid());
+	    } else {
+	        // Grey the button out when language is not supported
+	        btnGenerateScript.setEnabled(false);
+	    }
     }
 
     private PropertyChangeListener scriptDefinitionSwitchHelpListener = new PropertyChangeListener() {
 
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-    	scriptGeneratorModel.clearActions();
-        for (Label label : globalLabel) {
-        	label.dispose();
-        }
-        globalLabel.clear();
-        for (Text text: globalParamText) {
-        	text.dispose();
-        }
-        scriptGeneratorModel.clearGlobalParams();
-        currentGlobals.clear();
-        globalParamText.clear();
-        createGlobalParamsWidgets();
-        globalParamsComposite.layout();
-        mainParent.layout();
-        // Display the new script definition help string
-        if (!helpText.isDisposed()) {
-        Optional<ScriptDefinitionWrapper> optionalScriptDefinition = getScriptDefinition();
-        optionalScriptDefinition.ifPresentOrElse(
-            realScriptDefinition -> {
-                displayHelpString(realScriptDefinition, helpText);
-            },
-            () -> {
-                helpText.setText("");
-            });
-        }
-        scriptGeneratorModel.clearActions();
-    }
+	    @Override
+	    public void propertyChange(PropertyChangeEvent evt) {
+	    	scriptGeneratorModel.clearActions();
+	        for (Label label : globalLabel) {
+	        	if (!label.isDisposed()) {
+	        	label.dispose();
+	        	}
+	        }
+	        globalLabel.clear();
+	        for (Text text: globalParamText) {
+	        	if(!text.isDisposed()) {
+	        	text.dispose();
+	        	}
+	        }
+	        scriptGeneratorModel.clearGlobalParams();
+	        currentGlobals.clear();
+	        globalParamText.clear();
+	        createGlobalParamsWidgets();
+	        if(!globalParamsComposite.isDisposed()) {
+		        globalParamsComposite.layout();
+	        }
+		     mainParent.layout();
+	        // Display the new script definition help string
+	        if (!helpText.isDisposed()) {
+	        	
+	        Optional<ScriptDefinitionWrapper> optionalScriptDefinition = getScriptDefinition();
+	        optionalScriptDefinition.ifPresentOrElse(
+	            realScriptDefinition -> {
+	                displayHelpString(realScriptDefinition, helpText);
+	            },
+	            () -> {
+	                helpText.setText("");
+	            });
+	        }
+	        scriptGeneratorModel.clearActions();
+	    }
     };
     
     /**
@@ -761,20 +789,22 @@ public class ScriptGeneratorViewModel extends ModelObject {
       			  param = global.getName();
       			  currentGlobals.add(global.getName());
       			  paramVal = global.getDefaultValue();
-
-            	  Label globalLabelCurrent = new Label(globalParamsComposite, SWT.NONE);
-            	  globalLabelCurrent.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-            	  globalLabelCurrent.setText(param);
-            	  globalLabel.add(globalLabelCurrent);
-            	  Text globalParamTextCurrent = new Text(globalParamsComposite, SWT.NONE);
-            	  globalParamTextCurrent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
-            	  globalParamTextCurrent.setEnabled(true);
-            	  globalParamTextCurrent.addListener(SWT.Modify, e -> {
-            		  updateGlobalParams(globalParamTextCurrent.getText(), globalLabelCurrent.getText());
-            	  });
-            	  globalParamTextCurrent.setText(paramVal);
-            	  globalParamText.add(globalParamTextCurrent);
-      		  }
+      			  if(!globalParamsComposite.isDisposed()) {
+	            	  Label globalLabelCurrent = new Label(globalParamsComposite, SWT.NONE);
+	            	  globalLabelCurrent.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+	            	  globalLabelCurrent.setText(param);
+	            	  globalLabel.add(globalLabelCurrent);
+	            	  Text globalParamTextCurrent = new Text(globalParamsComposite, SWT.NONE);
+	            	  globalParamTextCurrent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
+	            	  globalParamTextCurrent.setEnabled(true);
+	            	  globalParamTextCurrent.addListener(SWT.Modify, e -> {
+	            		  updateGlobalParams(globalParamTextCurrent.getText(), globalLabelCurrent.getText());
+	            	  
+	            	  	});
+	            	  globalParamTextCurrent.setText(paramVal);
+	            	  globalParamText.add(globalParamTextCurrent);
+      			  }
+      			  }
       	  }
       }
 	}
@@ -818,17 +848,20 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @param helpText The UI element to display help string text in.
      */
     protected void bindScriptDefinitionLoader(ComboViewer scriptDefinitionSelector, Text helpText, List<Label> globalLabel, List<Text> globalParamText, Composite scriptDefintionComposite, Composite mainParent) {
-    // Switch the composite value when script definition switched
-    scriptDefinitionSelector.removeSelectionChangedListener(scriptDefinitionSwitchListener);
-    scriptDefinitionSelector.addSelectionChangedListener(scriptDefinitionSwitchListener);
-    // Display new help when script definition switch or make invisible if not help available
-    this.helpText = helpText;
-    this.globalLabel = globalLabel;
-    this.globalParamText = globalParamText;
-    this.globalParamsComposite = scriptDefintionComposite;
-    this.mainParent = mainParent;
-    this.currentGlobals = new ArrayList<String>();
-    scriptGeneratorModel.getScriptDefinitionLoader().addPropertyChangeListener(SCRIPT_DEFINITION_SWITCH_PROPERTY, scriptDefinitionSwitchHelpListener);
+	    // Switch the composite value when script definition switched
+	    scriptDefinitionSelector.removeSelectionChangedListener(scriptDefinitionSwitchListener);
+	    scriptDefinitionSelector.addSelectionChangedListener(scriptDefinitionSwitchListener);
+	    // Display new help when script definition switch or make invisible if not help available
+	    this.helpText = helpText;
+	    this.globalLabel = globalLabel;
+	    this.globalParamText = globalParamText;
+	    this.globalParamsComposite = scriptDefintionComposite;
+	    this.mainParent = mainParent;
+	    this.currentGlobals = new ArrayList<String>();
+	    this.finishTimer = new ScriptGeneratorExpectedFinishTimer();
+	    this.scheduler = Executors.newScheduledThreadPool(1);
+	    this.scheduler.scheduleWithFixedDelay(finishTimer, 0, 1, TimeUnit.SECONDS);
+	    scriptGeneratorModel.getScriptDefinitionLoader().addPropertyChangeListener(SCRIPT_DEFINITION_SWITCH_PROPERTY, scriptDefinitionSwitchHelpListener);
     }
 
     /**
@@ -838,12 +871,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @param helpText The text UI element to display the help string in.
      */
     private void displayHelpString(ScriptDefinitionWrapper scriptDefinition, Text helpText) {
-    Optional.ofNullable(scriptDefinition.getHelp()).ifPresentOrElse(
-        helpString -> {
-            helpText.setText(helpString);
-        },
-        () -> {
-            helpText.setText("");
+    	Optional.ofNullable(scriptDefinition.getHelp()).ifPresentOrElse(
+	        helpString -> {
+	            helpText.setText(helpString);
+	        },
+	        () -> {
+	            helpText.setText("");
         });
     }
 
@@ -854,7 +887,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @return Invalidity errors.
      */
     protected String getFirstNLinesOfInvalidityErrors(int i) {
-    return scriptGeneratorModel.getFirstNLinesOfInvalidityErrors(i);
+    	return scriptGeneratorModel.getFirstNLinesOfInvalidityErrors(i);
     }
 
     /**
@@ -863,7 +896,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @return A list of script generator actions
      */
     protected List<ScriptGeneratorAction> getActions() {
-    return scriptGeneratorModel.getActions();
+    	return scriptGeneratorModel.getActions();
     }
 
     /**
@@ -872,17 +905,17 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @param viewTable The table in the view to update.
      */
     protected void updateValidityChecks(ActionsViewTable viewTable) {
-    Map<Integer, String> globals = scriptGeneratorModel.getGlobalParamErrors();
-    for(int i = 0; i< this.globalParamText.size(); i++) {
-    	if(globals.containsKey(i)) {
-    		globalParamText.get(i).setBackground(INVALID_LIGHT_COLOR);
-    		globalParamText.get(i).setBackground(INVALID_DARK_COLOR);
-    		globalParamText.get(i).setToolTipText(globals.get(i));
-    	}else {
-    		globalParamText.get(i).setBackground(CLEAR_COLOR);
-    		globalParamText.get(i).setToolTipText(null);
-    	}
-    }
+	    Map<Integer, String> globals = scriptGeneratorModel.getGlobalParamErrors();
+	    for(int i = 0; i< this.globalParamText.size(); i++) {
+	    	if(globals.containsKey(i)) {
+	    		globalParamText.get(i).setBackground(INVALID_LIGHT_COLOR);
+	    		globalParamText.get(i).setBackground(INVALID_DARK_COLOR);
+	    		globalParamText.get(i).setToolTipText(globals.get(i));
+	    	}else {
+	    		globalParamText.get(i).setBackground(CLEAR_COLOR);
+	    		globalParamText.get(i).setToolTipText(null);
+	    	}
+	    }
     
     }
 
@@ -1063,12 +1096,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @param viewTable The table to update the columns of.
      */
     protected void addActionParamPropertyListener(ActionsViewTable viewTable) {
-    scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener("actionParameters", 
-        e -> DISPLAY.asyncExec(() -> {
-            if (!viewTable.isDisposed()) {
-            viewTable.updateTableColumns();
-            }
-        })
+    	scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener("actionParameters", 
+	        e -> DISPLAY.asyncExec(() -> {
+	            if (!viewTable.isDisposed()) {
+	            viewTable.updateTableColumns();
+	            }
+	        })
         );
     }
 
@@ -1076,18 +1109,18 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Display the first few validity errors or that there are none in a popup box.
      */
     public void displayValidityErrors() {
-    if (scriptGeneratorModel.languageSupported) {
-        String body = getFirstNLinesOfInvalidityErrors(MAX_ERRORS_TO_DISPLAY_IN_DIALOG);
-        if (!body.isEmpty()) {
-        String heading = "Validity errors:\n\n";
-        String message = heading + body;
-        MessageDialog.openWarning(DISPLAY.getActiveShell(), "Validity Errors", message);
-        } else {
-        MessageDialog.openInformation(DISPLAY.getActiveShell(), "Validity Errors", "No validity errors");
-        }
-    } else {
-        displayLanguageSupportError();
-    }
+	    if (scriptGeneratorModel.languageSupported) {
+	        String body = getFirstNLinesOfInvalidityErrors(MAX_ERRORS_TO_DISPLAY_IN_DIALOG);
+	        if (!body.isEmpty()) {
+	        String heading = "Validity errors:\n\n";
+	        String message = heading + body;
+	        MessageDialog.openWarning(DISPLAY.getActiveShell(), "Validity Errors", message);
+	        } else {
+	        MessageDialog.openInformation(DISPLAY.getActiveShell(), "Validity Errors", "No validity errors");
+	        }
+	    } else {
+	        displayLanguageSupportError();
+	    }
     }
     
     public void updateGlobalParams(String params, String toUpdate){
@@ -1116,21 +1149,21 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @throws UnsupportedLanguageException 
      */
     public Optional<Integer> generateScript() {
-    try {
-        return scriptGeneratorModel.refreshGeneratedScript();
-    } catch (InvalidParamsException e) {
-        MessageDialog.openWarning(DISPLAY.getActiveShell(), "Params Invalid", 
-            "Cannot generate script. Parameters are invalid.");
-    } catch (UnsupportedLanguageException e) {
-        LOG.error(e);
-        MessageDialog.openWarning(DISPLAY.getActiveShell(), "Unsupported language", 
-            "Cannot generate script. Language to generate in is unsupported.");
-    } catch (NoScriptDefinitionSelectedException e) {
-        LOG.error(e);
-        MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
-            "Cannot generate script. No script definition has been selected");
-    }
-    return Optional.empty();
+	    try {
+	        return scriptGeneratorModel.refreshGeneratedScript();
+	    } catch (InvalidParamsException e) {
+	        MessageDialog.openWarning(DISPLAY.getActiveShell(), "Params Invalid", 
+	            "Cannot generate script. Parameters are invalid.");
+	    } catch (UnsupportedLanguageException e) {
+	        LOG.error(e);
+	        MessageDialog.openWarning(DISPLAY.getActiveShell(), "Unsupported language", 
+	            "Cannot generate script. Language to generate in is unsupported.");
+	    } catch (NoScriptDefinitionSelectedException e) {
+	        LOG.error(e);
+	        MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
+	            "Cannot generate script. No script definition has been selected");
+	    }
+	    return Optional.empty();
     }
 
     /**
@@ -1139,14 +1172,21 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @return The selected script definition.
      */
     public Optional<ScriptDefinitionWrapper> getScriptDefinition() {
-    return scriptGeneratorModel.getScriptDefinition();
+    	return scriptGeneratorModel.getScriptDefinition();
     }
+    
+    /**
+	 * Get the location of the repository containing script definitions.
+	 */
+	public Path getScriptDefinitionsRepoPath() {
+		return scriptGeneratorModel.getRepoPath();
+	}
 
     /**
      * Reload the available script definition.
      */
     public void reloadScriptDefinitions() {
-    scriptGeneratorModel.reloadScriptDefinitions();
+    	scriptGeneratorModel.reloadScriptDefinitions();
     }
     
     /**
@@ -1189,7 +1229,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Reload the actions table actions.
      */
     public void reloadActions() {
-    scriptGeneratorModel.reloadActions();
+    	scriptGeneratorModel.reloadActions();
     }
 
     /**
@@ -1198,66 +1238,66 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @return filename to save or load
      */
     private Optional<String> openFileDialog(int action) {
-    FileDialog dialog = new FileDialog(Display.getDefault().getActiveShell(), action);
-    dialog.setFilterPath("C:/scripts");
-    dialog.setOverwrite(true);
-    if (action == SWT.SAVE) {
-        dialog.setText("Save as");
-        dialog.setFilterExtensions(new String[] {"*.sgp"});
-
-    } else {
-        dialog.setText("Load");
-        // Keep JSON extension when loading (for older param. files)
-        dialog.setFilterExtensions(new String[] {"*.sgp", "*.json"});
-    }
-    return Optional.ofNullable(dialog.open());
+	    FileDialog dialog = new FileDialog(Display.getDefault().getActiveShell(), action);
+	    dialog.setFilterPath("C:/scripts");
+	    dialog.setOverwrite(true);
+	    if (action == SWT.SAVE) {
+	        dialog.setText("Save as");
+	        dialog.setFilterExtensions(new String[] {"*.sgp"});
+	
+	    } else {
+	        dialog.setText("Load");
+	        // Keep JSON extension when loading (for older param. files)
+	        dialog.setFilterExtensions(new String[] {"*.sgp", "*.json"});
+	    }
+	    return Optional.ofNullable(dialog.open());
     }
 
     /**
      * Load parameter values.
      */
     public void loadParameterValues() {
-    Optional<String> selectedFile = openFileDialog(SWT.OPEN);
-    if (selectedFile.isPresent()) {
-        List<Map<JavaActionParameter, String>> newActions = new ArrayList<Map<JavaActionParameter, String>>();
-        try {
-        newActions = scriptGeneratorModel.loadParameterValues(Paths.get(selectedFile.get()));
-        } catch (NoScriptDefinitionSelectedException e) {
-        LOG.error(e);
-        MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
-            "Cannot generate script. No script definition has been selected");
-        return;
-        } catch (ScriptDefinitionNotMatched | UnsupportedOperationException e) {
-        LOG.error(e);
-        MessageDialog.openError(DISPLAY.getActiveShell(), "Error", e.getMessage());
-        return;
-        }
-        
-        Integer dialogResponse; //-1 for cancel, 0 for append, 1 for replace
-        Boolean emptyModel;
-        if (scriptGeneratorModel.getActions().isEmpty()) {
-        emptyModel = true;
-        dialogResponse = 0;
-        } else {
-        emptyModel = false;
-        String[] replaceOrAppend = new String[] {"Append", "Replace"};
-        MessageDialog dialog = new MessageDialog(DISPLAY.getActiveShell(), "Replace or Append", null,
-            "Would you like to replace the current parameters or append the new parameters?", 
-            MessageDialog.QUESTION, replaceOrAppend, -1);
-        dialogResponse = dialog.open();
-        }
-
-        if (dialogResponse != -1) {
-        Boolean replace = dialogResponse == 1;
-        scriptGeneratorModel.addActionsToTable(newActions, replace);
-        }
-        
-        if (emptyModel || dialogResponse == 1) {
-	        // Get the save file path from Optional value and update the current file path label.
-	        updateParametersFilePath(selectedFile.get());
-        }
-
-    }
+	    Optional<String> selectedFile = openFileDialog(SWT.OPEN);
+	    if (selectedFile.isPresent()) {
+	        List<Map<JavaActionParameter, String>> newActions = new ArrayList<Map<JavaActionParameter, String>>();
+	        try {
+	        newActions = scriptGeneratorModel.loadParameterValues(Paths.get(selectedFile.get()));
+	        } catch (NoScriptDefinitionSelectedException e) {
+	        LOG.error(e);
+	        MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
+	            "Cannot generate script. No script definition has been selected");
+	        return;
+	        } catch (ScriptDefinitionNotMatched | UnsupportedOperationException e) {
+	        LOG.error(e);
+	        MessageDialog.openError(DISPLAY.getActiveShell(), "Error", e.getMessage());
+	        return;
+	        }
+	        
+	        Integer dialogResponse; //-1 for cancel, 0 for append, 1 for replace
+	        Boolean emptyModel;
+	        if (scriptGeneratorModel.getActions().isEmpty()) {
+	        emptyModel = true;
+	        dialogResponse = 0;
+	        } else {
+	        emptyModel = false;
+	        String[] replaceOrAppend = new String[] {"Append", "Replace"};
+	        MessageDialog dialog = new MessageDialog(DISPLAY.getActiveShell(), "Replace or Append", null,
+	            "Would you like to replace the current parameters or append the new parameters?", 
+	            MessageDialog.QUESTION, replaceOrAppend, -1);
+	        dialogResponse = dialog.open();
+	        }
+	
+	        if (dialogResponse != -1) {
+	        Boolean replace = dialogResponse == 1;
+	        scriptGeneratorModel.addActionsToTable(newActions, replace);
+	        }
+	        
+	        if (emptyModel || dialogResponse == 1) {
+		        // Get the save file path from Optional value and update the current file path label.
+		        updateParametersFilePath(selectedFile.get());
+	        }
+	
+	    }
     };
 
     /**
@@ -1265,11 +1305,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @param selectedRows The selected actions.
      */
     public void setSelected(List<ScriptGeneratorAction> selectedRows) {
-    setHasSelection(selectedRows.size() > 0);
+    	setHasSelection(selectedRows.size() > 0);
     }
 
     private void setHasSelection(boolean hasSelection) {
-    firePropertyChange("hasSelection", this.hasSelection, this.hasSelection = hasSelection);
+    	firePropertyChange("hasSelection", this.hasSelection, this.hasSelection = hasSelection);
     }
 
     /**
@@ -1277,7 +1317,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @return True if an action has been selected, false otherwise.
      */
     public boolean getHasSelection() {
-    return hasSelection;
+    	return hasSelection;
     }
 
 	/**
@@ -1339,3 +1379,4 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	}
 		
 }
+

@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands;
 
 import java.io.IOException;
-import java.util.Collection;
 
 import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.jface.window.Window;
@@ -29,9 +28,9 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.xml.sax.SAXParseException;
 
-import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
-import uk.ac.stfc.isis.ibex.synoptic.SynopticWriter;
+import uk.ac.stfc.isis.ibex.synoptic.SynopticWritable;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.EditSynopticDialog;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
@@ -46,7 +45,7 @@ public abstract class SynopticEditorHandler {
     protected static final Synoptic SYNOPTIC = Synoptic.getInstance();
     
     /** Synoptic writer, to write the model to the blockserver. */
-    protected final SynopticWriter writer = SYNOPTIC.edit().saveSynoptic();
+    protected final SynopticWritable writer = SYNOPTIC.edit().saveSynoptic();
     
     /** can execute the handler */
     private boolean canExecute;
@@ -55,22 +54,10 @@ public abstract class SynopticEditorHandler {
      * Constructor.
      */
     public SynopticEditorHandler() {
-	synopticService.subscribe(SYNOPTIC.delete());
-	SYNOPTIC.delete().subscribe(synopticService);
-
-	canExecute = synopticService.canWrite();
+	SYNOPTIC.delete().addOnCanWriteChangeListener(canWriteListener);
     }
-
-    /**
-     * This is an inner anonymous class inherited from SameTypeWriter with added functionality
-     * for modifying the command if the underlying PV cannot be written to.
-     */
-    protected final SameTypeWriter<Collection<String>> synopticService = new SameTypeWriter<Collection<String>>() {
-	@Override
-	public synchronized void onCanWriteChanged(boolean canWrite) {
-	    canExecute = canWrite;
-	}
-    };
+    
+    private OnCanWriteChangeListener canWriteListener = canWrite -> canExecute = canWrite;
 
     /**
      * 

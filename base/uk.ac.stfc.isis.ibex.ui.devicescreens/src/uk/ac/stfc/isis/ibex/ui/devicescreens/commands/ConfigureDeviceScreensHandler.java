@@ -30,7 +30,7 @@ import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreens;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
-import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.dialogs.ConfigureDeviceScreensDialog;
 
@@ -41,26 +41,13 @@ public class ConfigureDeviceScreensHandler extends AbstractHandler {
 
     /** The writable for the setting the devices screens. */
     private final Writable<DeviceScreensDescription> writeable = DeviceScreens.getInstance().getDevicesSetter();
-
-    /**
-     * This is an inner anonymous class inherited from SameTypeWriter with added
-     * functionality for disabling the command if the underlying PV cannot be
-     * written to.
-     */
-    protected final SameTypeWriter<DeviceScreensDescription> configService =
-            new SameTypeWriter<DeviceScreensDescription>() {
-                @Override
-                public void onCanWriteChanged(boolean canWrite) {
-                    setBaseEnabled(canWrite);
-                }
-            };
-
+    private final OnCanWriteChangeListener canWriteListener = canWrite -> setBaseEnabled(canWrite);
+            
     /**
      * Constructor.
      */
     public ConfigureDeviceScreensHandler() {
-        configService.subscribe(writeable);
-        writeable.subscribe(configService);
+        writeable.addOnCanWriteChangeListener(canWriteListener);
     }
 
     /**

@@ -34,11 +34,8 @@ import org.eclipse.swt.widgets.Label;
  */
 public class BaseVersionPanel extends Composite {
 
-    /** The version of the application. */
 	private Label applicationVersion;
-    /** The version of Java that the client is using */
     private Label javaVersion;
-    /** The path to the Java that the client is using */
     private Label javaPathLabel;
 
     /**

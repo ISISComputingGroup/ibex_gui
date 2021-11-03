@@ -26,8 +26,6 @@ import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -42,18 +40,12 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
-import uk.ac.stfc.isis.ibex.configserver.Configurations;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
-import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
-import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
-import uk.ac.stfc.isis.ibex.runcontrol.RunControlActivator;
-import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.EditBlockHandler;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
-import uk.ac.stfc.isis.ibex.ui.runcontrol.commands.RunControlHandler;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -66,7 +58,6 @@ public class RunControlEditorPanel extends Composite {
     private static final String RESET_ALL_DIALOG_TITLE = "Confirm Run-Control Restore";
     private static final String RESET_ALL_DIALOG_MESSAGE = "Are you sure you want to restore all run-control settings to their configuration values?";
 	private static final String CONFIRM_CHANGES_HINT = "WARNING! The settings applied here are not permanent and will be overriden if current configuration changes (see: User Manual - Run Controls)";
-	private final ConfigServer configServer;
 	private final Label name;
 	private final Text txtLowLimit;
 	private final Text txtHighLimit;
@@ -74,7 +65,7 @@ public class RunControlEditorPanel extends Composite {
 	private final Button chkInvalid;
 	private final Button btnSend;
     private final Button btnRestoreSingle;
-    private final Button btnRestoreAll;
+    private Button btnRestoreAll;
 	private final Button btnShowManual;
 	private final Button btnDisplayBlockInfo;
     private final Label spacerLabel;
@@ -86,20 +77,12 @@ public class RunControlEditorPanel extends Composite {
     private DisplayBlock currentBlock;
 
     private final RunControlViewModel viewModel;
-	
-    private Subscription saveAsSubscription;
     
     private static final Logger LOG = IsisLog.getLogger(RunControlEditorPanel.class);
-
-	/**
-	 * Disable the send button if does not have permission to edit configs.
-	 */
-    protected final SameTypeWriter<Configuration> configService = new SameTypeWriter<Configuration>() {
-		@Override
-		public void onCanWriteChanged(boolean canWrite) {
-            canSend = canWrite;
-            btnRestoreAll.setEnabled(canWrite);
-		};
+	
+	private OnCanWriteChangeListener canWriteListener = canWrite -> {
+        canSend = canWrite;
+        btnRestoreAll.setEnabled(canWrite);
 	};
 
     /**
@@ -120,7 +103,6 @@ public class RunControlEditorPanel extends Composite {
     public RunControlEditorPanel(EditRunControlDialog dialog, Composite parent, int style, ConfigServer configServer,
             final RunControlViewModel viewModel) {
 		super(parent, style);
-		this.configServer = configServer;
         this.viewModel = viewModel;
 
         setLayout(new GridLayout(3, false));
@@ -241,19 +223,12 @@ public class RunControlEditorPanel extends Composite {
 		);
 		btnDisplayBlockInfo.setEnabled(false);
 
-        // A bit of a work-around to see if we have write permissions
-        // by seeing if we are able to edit the config.
-        saveAsSubscription = this.configServer.saveAs().subscribe(configService);
+        configServer.saveAs().addOnCanWriteChangeListener(canWriteListener);
 
         setModel(viewModel);
         setBlock(null);
         
-        parent.addDisposeListener(new DisposeListener() {
-			@Override
-			public void widgetDisposed(DisposeEvent e) {
-				saveAsSubscription.cancelSubscription();
-			}
-		});
+        parent.addDisposeListener(e -> configServer.saveAs().removeOnCanWriteChangeListener(canWriteListener));
 	}
 
     private void setModel(RunControlViewModel viewModel) {
