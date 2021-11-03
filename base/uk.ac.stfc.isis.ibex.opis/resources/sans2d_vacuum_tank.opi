@@ -5483,14 +5483,20 @@ $(pv_value)</tooltip>
             <scriptName>concatenate message</scriptName>
             <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
 
-message = [PVUtil.getString(pvs[0]),  PVUtil.getString(pvs[1]), PVUtil.getString(pvs[2])]
+allowed_interval = "allowed interval is {} mm"
+message = ""
 
-message = "\n".join(filter(None, message))
+for idx in range(3):
+	if PVUtil.getString(pvs[idx]):
+		message += PVUtil.getString(pvs[idx]) + ", " + allowed_interval.format(PVUtil.getString(pvs[idx + 3])) + "\n"
 
 display.getWidget("Collision_text").setPropertyValue("text", message)]]></scriptText>
             <pv trig="true">$(P)MOT:SANS2DVAC:FDFB_COLLISION</pv>
             <pv trig="true">$(P)MOT:SANS2DVAC:FBRB_COLLISION</pv>
             <pv trig="true">$(P)MOT:SANS2DVAC:RBRD_COLLISION</pv>
+            <pv trig="true">$(P)MOT:SANS2DVAC:FDFB:MINIMUM_INTERVAL</pv>
+            <pv trig="true">$(P)MOT:SANS2DVAC:FBRB:MINIMUM_INTERVAL</pv>
+            <pv trig="true">$(P)MOT:SANS2DVAC:RBRD:MINIMUM_INTERVAL</pv>
           </path>
         </scripts>
         <show_units>true</show_units>
