@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 
@@ -18,29 +19,6 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
  *
  */
 public class GeneratorContext extends ModelObject {
-	
-	/**
-	 * The property to listen for changes in a Generator containing the mapping Map<Integer, String> of
-	 *  validity checks for each row of the script generator.
-	 */
-	private static final String VALIDITY_ERROR_MESSAGE_PROPERTY = "validity error messages";
-	
-	/**
-	 * The property to listen for changes in a Generator containing whether or not all
-	 *  script generator contents are valid or not (bool).
-	 */
-	private static final String PARAM_VALIDITY_PROPERTY = "parameter validity";
-	
-    /**
-     * The property to listen for changes in a Generator containing how long each action is
-     *  expected to take.
-     */
-    private static final String TIME_ESTIMATE_PROPERTY = "time estimate";
-	
-	/**
-	 * The property to listen for changes in a Generator containing the generated script (String).
-	 */
-	private static final String GENERATED_SCRIPT_PROPERTY = "generated script";
 	
 	/**
 	 * A mapping from the type of generated language to it's generator.
@@ -56,17 +34,17 @@ public class GeneratorContext extends ModelObject {
 	 * @param generator The generator to use.
 	 */
 	public void putGenerator(GeneratedLanguage generatedLanguage, AbstractGenerator generator) {
-		generator.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
-			firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		generator.addPropertyChangeListener(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
+			firePropertyChange(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
-		generator.addPropertyChangeListener(PARAM_VALIDITY_PROPERTY, evt -> {
-			firePropertyChange(PARAM_VALIDITY_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		generator.addPropertyChangeListener(ScriptGeneratorProperties.PARAM_VALIDITY_PROPERTY, evt -> {
+			firePropertyChange(ScriptGeneratorProperties.PARAM_VALIDITY_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
-        generator.addPropertyChangeListener(TIME_ESTIMATE_PROPERTY, evt -> {
-            firePropertyChange(TIME_ESTIMATE_PROPERTY, evt.getOldValue(), evt.getNewValue());
+        generator.addPropertyChangeListener(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, evt -> {
+            firePropertyChange(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, evt.getOldValue(), evt.getNewValue());
         });
-		generator.addPropertyChangeListener(GENERATED_SCRIPT_PROPERTY, evt -> {
-			firePropertyChange(GENERATED_SCRIPT_PROPERTY, null, evt.getNewValue());
+		generator.addPropertyChangeListener(ScriptGeneratorProperties.GENERATED_SCRIPT_PROPERTY, evt -> {
+			firePropertyChange(ScriptGeneratorProperties.GENERATED_SCRIPT_PROPERTY, null, evt.getNewValue());
 		});
 		generatorStrategies.put(generatedLanguage, generator);
 	}
