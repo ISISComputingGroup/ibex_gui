@@ -44,11 +44,7 @@ import org.eclipse.swt.widgets.Text;
 import org.apache.logging.log4j.Logger;
 import static java.lang.Math.min;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
-import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
-import uk.ac.stfc.isis.ibex.scriptgenerator.NoScriptDefinitionSelectedException;
-import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptDefinitionNotMatched;
-import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
+import uk.ac.stfc.isis.ibex.scriptgenerator.*;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
@@ -92,56 +88,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * The maximum number of lines to display in the "Get Validity Errors" dialog box before suppressing others.
      */
     private static final int MAX_ERRORS_TO_DISPLAY_IN_DIALOG = 10;
-
-    /**
-     * A property that denotes whether the language to generate and check validity errors in is supported,
-     */
-    private static final String LANGUAGE_SUPPORT_PROPERTY = "language_supported";
-
-    /**
-     * A property that denotes whether there has been a threading error in generation or validity checking.
-     */
-    private static final String THREAD_ERROR_PROPERTY = "thread error";
-
-    /**
-     * A property that carries the validity error messages to listen for in order to update table rows.
-     */
-    private static final String VALIDITY_ERROR_MESSAGE_PROPERTY = "validity error messages";
-
-    /**
-     * A property that carries the time estimation to listen for in order to update table rows.
-     */
-    private static final String TIME_ESTIMATE_PROPERTY = "time estimate";
-    
-    /**
-     * A property to listen for when a nicos script has been generated.
-     */
-    private static final String NICOS_SCRIPT_GENERATED_PROPERTY = "nicos script generated";
-
-    /**
-     * The property to listen for changes in a Generator containing the generated script (String).
-     */
-    private static final String GENERATED_SCRIPT_FILENAME_PROPERTY = "generated script filename";
-
-    /**
-     * A property to listen to for when actions change in the model.
-     */
-    private static final String ACTIONS_PROPERTY = "actions";
-
-    /**
-     * A property to fire a change of when there is an error generating a script.
-     */
-    private static final String SCRIPT_GENERATION_ERROR_PROPERTY = "script generation error";
-
-    /**
-     * A property that is changed when script definitions are switched.
-     */
-    private static final String SCRIPT_DEFINITION_SWITCH_PROPERTY = "scriptDefinition";
-
-    /**
-     * A property to notify listeners when python becomes ready or not ready.
-     */
-    private static final String PYTHON_READINESS_PROPERTY = "python ready";
 
     private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
     
@@ -236,8 +182,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
     public ScriptGeneratorViewModel() {
 	    // Set up the model
 	    scriptGeneratorModel = Activator.getModel();
-	    scriptGeneratorModel.addPropertyChangeListener(PYTHON_READINESS_PROPERTY, evt -> {
-	        firePropertyChange(PYTHON_READINESS_PROPERTY, evt.getOldValue(), evt.getNewValue());
+	    scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.PYTHON_READINESS_PROPERTY, evt -> {
+	        firePropertyChange(ScriptGeneratorProperties.PYTHON_READINESS_PROPERTY, evt.getOldValue(), evt.getNewValue());
 	    });
     }
 
@@ -250,22 +196,22 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    scriptGeneratorModel.setUp();
 	    // Listen to whether the language support is changed
 	    // notify the user if the language is not supported
-	    scriptGeneratorModel.addPropertyChangeListener(LANGUAGE_SUPPORT_PROPERTY, evt -> {
+	    scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.LANGUAGE_SUPPORT_PROPERTY, evt -> {
 	        if (Objects.equals(evt.getOldValue(), true) && Objects.equals(evt.getNewValue(), false)) {
 	        displayLanguageSupportError();
 	        }
 	    });
 	    // Listen for model threading errors and display to the user if there is one
 	    // Model is responsible for logging it
-	    scriptGeneratorModel.addPropertyChangeListener(THREAD_ERROR_PROPERTY, evt -> {
+	    scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.THREAD_ERROR_PROPERTY, evt -> {
 	        displayThreadingError();
 	    });
-	    scriptGeneratorModel.addPropertyChangeListener(SCRIPT_GENERATION_ERROR_PROPERTY, evt -> {
+	    scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.SCRIPT_GENERATION_ERROR_PROPERTY, evt -> {
 	        LOG.info("Generation error");
 	        displayGenerationError();
 	    });
 	    // Listen for generated script refreshes
-	    scriptGeneratorModel.addPropertyChangeListener(GENERATED_SCRIPT_FILENAME_PROPERTY, evt -> {
+	    scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.GENERATED_SCRIPT_FILENAME_PROPERTY, evt -> {
 	        String scriptFilename = (String) evt.getNewValue();
 	        DISPLAY.asyncExec(() -> {
 	        scriptGeneratorModel.getLastGeneratedScriptId().ifPresentOrElse(
@@ -297,10 +243,10 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		QueueScriptPreviewDialog scriptPreview = new QueueScriptPreviewDialog(Display.getDefault().getActiveShell(), generatedScript);
 		if (scriptPreview.askIfPreviewScript()) {
 			if (scriptPreview.open() == IDialogConstants.OK_ID) {
-				firePropertyChange(NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
+				firePropertyChange(ScriptGeneratorProperties.NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
 			}
 		} else {
-			firePropertyChange(NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
+			firePropertyChange(ScriptGeneratorProperties.NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
 		}
     }
     
@@ -577,15 +523,15 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    this.btnGenerateScript = btnGenerateScript;
 	    this.btnGenerateScriptAs = btnGenerateScriptAs;
 	    // Remove listeners so as not to bind them twice
-	    this.scriptGeneratorModel.getScriptGeneratorTable().removePropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
-	    this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
-	    this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, evt -> {
+	    this.scriptGeneratorModel.getScriptGeneratorTable().removePropertyChangeListener(ScriptGeneratorProperties.ACTIONS_PROPERTY, actionChangeListener);
+	    this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ScriptGeneratorProperties.ACTIONS_PROPERTY, actionChangeListener);
+	    this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ScriptGeneratorProperties.ACTIONS_PROPERTY, evt -> {
 	    	updateParametersFileModifiedStatus();
 		});
-	    this.scriptGeneratorModel.removePropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
-	    this.scriptGeneratorModel.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
-	    this.scriptGeneratorModel.removePropertyChangeListener(TIME_ESTIMATE_PROPERTY, actionChangeListener);
-	    this.scriptGeneratorModel.addPropertyChangeListener(TIME_ESTIMATE_PROPERTY, actionChangeListener);
+	    this.scriptGeneratorModel.removePropertyChangeListener(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
+	    this.scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
+	    this.scriptGeneratorModel.removePropertyChangeListener(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, actionChangeListener);
+	    this.scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, actionChangeListener);
 	    }
 	
 	    private void updateParametersFilePath(String parametersFilePath) {
@@ -837,7 +783,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    this.globalParamsComposite = scriptDefintionComposite;
 	    this.mainParent = mainParent;
 	    this.currentGlobals = new ArrayList<String>();
-	    scriptGeneratorModel.getScriptDefinitionLoader().addPropertyChangeListener(SCRIPT_DEFINITION_SWITCH_PROPERTY, scriptDefinitionSwitchHelpListener);
+	    scriptGeneratorModel.getScriptDefinitionLoader().addPropertyChangeListener(ScriptGeneratorProperties.SCRIPT_DEFINITION_SWITCH_PROPERTY, scriptDefinitionSwitchHelpListener);
     }
 
     /**
@@ -1009,7 +955,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
         // Add estimated time column
         TableViewerColumn timeEstimateColumn = viewTable.createColumn(ESTIMATED_RUN_TIME_COLUMN_HEADER, 
             1, 
-            new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty(TIME_ESTIMATE_PROPERTY)) {
+            new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY)) {
             @Override
             protected String stringFromRow(ScriptGeneratorAction row) {
 	            if (!scriptGeneratorModel.languageSupported) {
