@@ -64,5 +64,20 @@ public class ScriptGeneratorProperties {
      * A property to notify listeners when python becomes ready or not ready.
      */
     public static final String PYTHON_READINESS_PROPERTY = "python ready";
+    
+    /**
+     * A property to notify listeners when parameters change.
+     */
+    public static final String PARAMETERS_PROPERTY = "parameters";
+    
+    /**
+     * A property to notify listeners when action parameters change.
+     */
+    public static final String ACTION_PARAMETERS_PROPERTY = "actionParameters";
+    
+    /**
+	 * The property of an action to listen to for changes.
+	 */
+	public static final String VALUE_PROPERTY = "value";
 
 }
