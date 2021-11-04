@@ -477,6 +477,15 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
+	 * Get the action at the corresponding index or an empty optional.
+	 * 
+	 * @return the action at the corresponding index or an empty optional.
+	 */
+	public Optional<ScriptGeneratorAction> getAction(Integer actionIndex) {
+		return scriptGeneratorTable.getAction(actionIndex);
+	}
+	
+	/**
 	 * Get the map of global parameter errors.
 	 * 
 	 * @return map of global parameter errors in the table.

@@ -44,6 +44,24 @@ public class ActionsTable extends ModelObject {
 	}
 	
 	/**
+	 * Get the action at the corresponding index or an empty optional.
+	 * 
+	 * @return the action at the corresponding index or an empty optional.
+	 */
+	public Optional<ScriptGeneratorAction> getAction(Integer actionIndex) {
+		if (actionIndexInRange(actionIndex)) {
+			var action = actions.get(actionIndex);
+			return Optional.of(action);
+		} else {
+			return Optional.empty();
+		}
+	}
+	
+	private Boolean actionIndexInRange(Integer actionIndex) {
+		return actionIndex >= 0 && actionIndex < actions.size();
+	}
+	
+	/**
 	 * 
 	 * @return The globalValidError string on this object.
 	 */
