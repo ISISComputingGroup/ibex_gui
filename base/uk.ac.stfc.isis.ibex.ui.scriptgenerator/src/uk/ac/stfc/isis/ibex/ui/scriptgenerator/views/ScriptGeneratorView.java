@@ -52,6 +52,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
 
 /**
  * Provides the UI to control the script generator.
@@ -126,16 +127,6 @@ public class ScriptGeneratorView {
     private ScriptGeneratorHelpMenu helpMenu;
 
     /**
-     * A property to listen for when python becomes ready or not ready.
-     */
-    private static final String PYTHON_READINESS_PROPERTY = "python ready";
-    
-    /**
-     * A property to listen for when a nicos script has been generated.
-     */
-    private static final String NICOS_SCRIPT_GENERATED_PROPERTY = "nicos script generated";
-
-    /**
      * Create a button to manipulate the rows of the script generator table and
      *  move them up and down.
      * 
@@ -172,7 +163,7 @@ public class ScriptGeneratorView {
 
     mainParent = parent;
 
-    scriptGeneratorViewModel.addPropertyChangeListener(PYTHON_READINESS_PROPERTY, evt -> {
+    scriptGeneratorViewModel.addPropertyChangeListener(ScriptGeneratorProperties.PYTHON_READINESS_PROPERTY, evt -> {
         boolean ready = (boolean) evt.getNewValue();
         if (ready) {
         doGitActions();
@@ -183,7 +174,7 @@ public class ScriptGeneratorView {
         }
     });
     
-    scriptGeneratorViewModel.addPropertyChangeListener(NICOS_SCRIPT_GENERATED_PROPERTY, evt -> {
+    scriptGeneratorViewModel.addPropertyChangeListener(ScriptGeneratorProperties.NICOS_SCRIPT_GENERATED_PROPERTY, evt -> {
     	nicosModel.queueScript("Script generator", (String) evt.getNewValue() + "\nrunscript()"); 
     });
 

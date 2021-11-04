@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
 
 /**
  * Class defines one action or 'step' in the script.
@@ -27,21 +28,6 @@ public class ScriptGeneratorAction extends ModelObject {
      * Contains the estimated time to complete the action. Empty optional if the action is invalid
      */
     private Optional<Number> estimatedTime = Optional.empty();
-
-    /**
-     * The property to fire a change of if the action becomes valid or invalid.
-     */
-    private static final String VALIDITY_PROPERTY = "validity";
-
-    /**
-     * The property to fire a change when the time taken to complete the action is estimated
-     */
-    private static final String ESTIMATED_TIME_PROPERTY = "time estimate";
-
-    /**
-     * The property to fire if the actions values change.
-     */
-    private static final String VALUE_PROPERTY = "value";
 
     /**
      * Default constructor sets each parameter/value pair using input argument.
@@ -76,7 +62,7 @@ public class ScriptGeneratorAction extends ModelObject {
 	String oldValue = actionParameterValues.get(actionParameter); 
 	actionParameterValues.put(actionParameter, value);
 	firePropertyChange(actionParameter.getName(), oldValue, value);
-	firePropertyChange(VALUE_PROPERTY, oldValue, value);
+	firePropertyChange(ScriptGeneratorProperties.VALUE_PROPERTY, oldValue, value);
     }
 
     /**
@@ -118,7 +104,7 @@ public class ScriptGeneratorAction extends ModelObject {
      * Set this action as valid.
      */
     public void setValid() {
-	firePropertyChange(VALIDITY_PROPERTY, isValid(), true);
+	firePropertyChange(ScriptGeneratorProperties.VALIDITY_PROPERTY, isValid(), true);
 	invalidityReason = Optional.empty();
     }
 
@@ -128,7 +114,7 @@ public class ScriptGeneratorAction extends ModelObject {
      * @param reason The reason for this being invalid.
      */
     public void setInvalid(String reason) {
-	firePropertyChange(VALIDITY_PROPERTY, isValid(), false);
+	firePropertyChange(ScriptGeneratorProperties.VALIDITY_PROPERTY, isValid(), false);
 	invalidityReason = Optional.of(reason);
     }
 
@@ -155,7 +141,7 @@ public class ScriptGeneratorAction extends ModelObject {
      * @param newEstimatedTime estimated time
      */
     public void setEstimatedTime(Optional<Number> newEstimatedTime) {
-	firePropertyChange(ESTIMATED_TIME_PROPERTY, estimatedTime, newEstimatedTime);
+	firePropertyChange(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, estimatedTime, newEstimatedTime);
 	estimatedTime = newEstimatedTime;
     }
 
