@@ -459,4 +459,8 @@ public class NicosModel extends ModelObject {
 	public void sendReorderedQueue(List<String> listOfScriptIDs) {
         sendMessageToNicos(new SendReorderedQueue(listOfScriptIDs));
 	}
+	
+	public void runTestUpdate(ScriptStatus scriptStatus) {
+        firePropertyChange("scriptStatus", this.scriptStatus, this.scriptStatus = scriptStatus);
+    }
 }

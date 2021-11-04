@@ -8,8 +8,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.AssumptionViolatedException;
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+import org.mockito.Matchers;
 
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
+import uk.ac.stfc.isis.ibex.nicos.ScriptStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.NoScriptDefinitionSelectedException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
@@ -27,21 +32,34 @@ public class ScriptGeneratorMockBuilder {
 	
 	public ScriptGeneratorMockBuilder() {
 		mockScriptGeneratorModel = mock(ScriptGeneratorSingleton.class);
+		nicosMock = mock(NicosModel.class);
 		mockScriptGeneratorActions = List.of(mock(ScriptGeneratorAction.class), mock(ScriptGeneratorAction.class), mock(ScriptGeneratorAction.class));
 		setUpMockActions();
+		setUpMockNicosModel();
 	}
 	
 	private void setUpMockActions() {
+		when(mockScriptGeneratorModel.getActions()).thenReturn(mockScriptGeneratorActions);
 		Integer numberOfActions = mockScriptGeneratorActions.size();
 		for (int i = 0; i < numberOfActions ; i++) {
-			when(mockScriptGeneratorModel.getAction(0)).thenReturn(Optional.of(mockScriptGeneratorActions.get(i)));
+			when(mockScriptGeneratorModel.getAction(i)).thenReturn(Optional.of(mockScriptGeneratorActions.get(i)));
 		}
-		for (int j = 0; j > -5; j--) {
-			when(mockScriptGeneratorModel.getAction(0)).thenReturn(Optional.empty());
+		for (int j = -1; j > -5; j--) {
+			when(mockScriptGeneratorModel.getAction(j)).thenReturn(Optional.empty());
 		}
-		for (int k = numberOfActions; k < numberOfActions + 5; k++) {
-			when(mockScriptGeneratorModel.getAction(0)).thenReturn(Optional.empty());
+		for (int k = numberOfActions + 1; k < numberOfActions + 5; k++) {
+			when(mockScriptGeneratorModel.getAction(k)).thenReturn(Optional.empty());
 		}
+	}
+	
+	private void setUpMockNicosModel() {
+		Mockito.doAnswer(new Answer() {
+			@Override
+			public Object answer(InvocationOnMock invocation) throws Throwable {
+				nicosMock.runTestUpdate(ScriptStatus.RUNNING);
+				return null;
+			}
+		}).when(nicosMock).sendScript(Matchers.any());
 	}
 	
 	public ScriptGeneratorSingleton getMockScriptGeneratorModel() {
@@ -54,6 +72,14 @@ public class ScriptGeneratorMockBuilder {
 	
 	public List<ScriptGeneratorAction> getMockScriptGeneratorActions() {
 		return mockScriptGeneratorActions;
+	}
+	
+	public Optional<ScriptGeneratorAction> getMockScriptGeneratorAction(Integer actionIndex) {
+		if (actionIndex >= 0 && actionIndex < mockScriptGeneratorActions.size()) {
+			return Optional.of(mockScriptGeneratorActions.get(actionIndex));
+		} else {
+			return Optional.empty();
+		}
 	}
 	
 	public InvalidParamsException getinvalidParamsException() {
