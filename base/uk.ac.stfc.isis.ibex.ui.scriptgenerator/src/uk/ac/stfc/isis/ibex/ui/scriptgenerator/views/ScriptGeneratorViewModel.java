@@ -190,7 +190,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     /**
      * Set up the model. Allows us to attach listeners for the view first.
      */
-    public void setUpModel() {
+    public ScriptGeneratorSingleton setUpModel() {
 	    clipboard = new Clipboard(Display.getDefault());
 	    scriptGeneratorModel.createScriptDefinitionLoader();
 	    scriptGeneratorModel.setUp();
@@ -236,7 +236,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	            );
 	        });
 	    });
-
+	    return scriptGeneratorModel;
     }
     
     private void previewScriptOrQueueDirectly(String generatedScript) {

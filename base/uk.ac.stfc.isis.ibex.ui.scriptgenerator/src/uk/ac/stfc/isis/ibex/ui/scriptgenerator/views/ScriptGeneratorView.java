@@ -154,7 +154,7 @@ public class ScriptGeneratorView {
     public void createPartControl(Composite parent) {
 
     scriptGeneratorViewModel = new ScriptGeneratorViewModel();
-    nicosModel = new ScriptGeneratorNicosViewModel();
+    
 
     GridData gdQueueContainer = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
     gdQueueContainer.heightHint = 300;
@@ -178,7 +178,8 @@ public class ScriptGeneratorView {
     	nicosModel.queueScript("Script generator", (String) evt.getNewValue() + "\nrunscript()"); 
     });
 
-    scriptGeneratorViewModel.setUpModel();
+    var scriptGeneratorModel = scriptGeneratorViewModel.setUpModel();
+    nicosModel = new ScriptGeneratorNicosViewModel(scriptGeneratorModel);
     }
 
     /**
