@@ -579,8 +579,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException(
 						"Tried to refresh parameter validity with no script definition selected"));
 		try {
-			generator.refreshAreParamsValid(scriptGeneratorTable, scriptDefinition, this.globalParams);
-			generator.refreshValidityErrors(this.globalParams ,scriptGeneratorTable, scriptDefinition);
+			generator.refreshAreParamsValid(scriptGeneratorTable.getActions(), scriptDefinition, this.globalParams);
+			generator.refreshValidityErrors(this.globalParams, scriptGeneratorTable.getActions(), scriptDefinition);
 			languageSupported = true;
 			threadError = false;
 		} catch (UnsupportedLanguageException e) {
@@ -604,7 +604,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
                 .orElseThrow(() -> new NoScriptDefinitionSelectedException(
                         "Tried to refresh time estimation with no script definition selected"));
         try {
-            generator.refreshTimeEstimation(scriptGeneratorTable, scriptDefinition, this.globalParams );
+            generator.refreshTimeEstimation(scriptGeneratorTable.getActions(), scriptDefinition, this.globalParams );
             languageSupported = true;
             threadError = false;
         } catch (UnsupportedLanguageException e) {
@@ -639,7 +639,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			if (areParamsValid()) {
 				Path filePath = getScriptDefinitionPath(scriptDefinition);
 				String jsonContent = scriptGenFileHandler.createJsonString(scriptGeneratorTable.getActions(), scriptGenFileHandler.readFileContent(filePath), filePath);
-				return generator.refreshGeneratedScript(scriptGeneratorTable, scriptDefinition, jsonContent, this.globalParams);
+				return generator.refreshGeneratedScript(scriptGeneratorTable.getActions(), scriptDefinition, jsonContent, this.globalParams);
 			} else {
 				throw new InvalidParamsException("Parameters are invalid, cannot generate script");
 			}
