@@ -624,7 +624,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
         }
     }
 
-	/**
+    /**
 	 * Generate a script and save it to file.
 	 * 
 	 * @throws InvalidParamsException              If the parameters are invalid a
@@ -641,17 +641,67 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	public Optional<Integer> refreshGeneratedScript()
 			throws InvalidParamsException, UnsupportedLanguageException, NoScriptDefinitionSelectedException {
+		if (areParamsValid()) {
+			List<ScriptGeneratorAction> actions = scriptGeneratorTable.getActions();
+			return refreshGeneratedScript(actions);
+		} else {
+			throw new InvalidParamsException("Parameters are invalid, cannot generate script");
+		}
+	}
+	
+	/**
+	 * Generate a script and save it to file.
+	 * 
+	 * @param actionIndex The index of the action to refresh the generated script with.
+	 * 
+	 * @throws InvalidParamsException              If the parameters are invalid a
+	 *                                             script cannot be generated.
+	 * @throws IOException                         If we fail to create and write to
+	 *                                             a file.
+	 * @throws UnsupportedLanguageException        If the language we are trying to
+	 *                                             generate a script in is
+	 *                                             unsupported.
+	 * @throws NoScriptDefinitionSelectedException If there is no script definition
+	 *                                             selected to refresh checking
+	 *                                             against.
+	 * @return An ID for the generated script.
+	 */
+	public Optional<Integer> refreshGeneratedScript(ScriptGeneratorAction action)
+			throws InvalidParamsException, UnsupportedLanguageException, NoScriptDefinitionSelectedException {
+		if (action.isValid()) {
+			List<ScriptGeneratorAction> actions = List.of(action);
+			return refreshGeneratedScript(actions);
+		} else {
+			throw new InvalidParamsException("Parameters are invalid, cannot generate script");
+		}
+	}
+	
+	/**
+	 * Generate a script and save it to file.
+	 * 
+	 * @param actionIndex The index of the action to refresh the generated script with.
+	 * 
+	 * @throws InvalidParamsException              If the parameters are invalid a
+	 *                                             script cannot be generated.
+	 * @throws IOException                         If we fail to create and write to
+	 *                                             a file.
+	 * @throws UnsupportedLanguageException        If the language we are trying to
+	 *                                             generate a script in is
+	 *                                             unsupported.
+	 * @throws NoScriptDefinitionSelectedException If there is no script definition
+	 *                                             selected to refresh checking
+	 *                                             against.
+	 * @return An ID for the generated script.
+	 */
+	private Optional<Integer> refreshGeneratedScript(List<ScriptGeneratorAction> actions)
+			throws InvalidParamsException, UnsupportedLanguageException, NoScriptDefinitionSelectedException {
 		ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException(
 						"Tried to generate a script with no script definition selected to generate it with"));
 		try {
-			if (areParamsValid()) {
-				Path filePath = getScriptDefinitionPath(scriptDefinition);
-				String jsonContent = scriptGenFileHandler.createJsonString(scriptGeneratorTable.getActions(), scriptGenFileHandler.readFileContent(filePath), filePath);
-				return generator.refreshGeneratedScript(scriptGeneratorTable.getActions(), scriptDefinition, jsonContent, this.globalParams);
-			} else {
-				throw new InvalidParamsException("Parameters are invalid, cannot generate script");
-			}
+			Path filePath = getScriptDefinitionPath(scriptDefinition);
+			String jsonContent = scriptGenFileHandler.createJsonString(actions, scriptGenFileHandler.readFileContent(filePath), filePath);
+			return generator.refreshGeneratedScript(actions, scriptDefinition, jsonContent, this.globalParams);
 		} catch (InterruptedException | ExecutionException e) {
 			registerThreadError(e);
 		} catch (IOException e) {
