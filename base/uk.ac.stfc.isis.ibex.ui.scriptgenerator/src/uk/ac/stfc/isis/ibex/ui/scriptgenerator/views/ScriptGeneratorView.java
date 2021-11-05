@@ -53,6 +53,7 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingProperties;
 
 /**
  * Provides the UI to control the script generator.
@@ -174,7 +175,7 @@ public class ScriptGeneratorView {
         }
     });
     
-    scriptGeneratorViewModel.addPropertyChangeListener(ScriptGeneratorProperties.NICOS_SCRIPT_GENERATED_PROPERTY, evt -> {
+    scriptGeneratorViewModel.addPropertyChangeListener(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, evt -> {
     	nicosModel.queueScript("Script generator", (String) evt.getNewValue() + "\nrunscript()"); 
     });
 

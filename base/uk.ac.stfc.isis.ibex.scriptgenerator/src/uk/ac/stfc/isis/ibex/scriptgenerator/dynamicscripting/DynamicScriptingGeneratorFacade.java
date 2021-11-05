@@ -28,7 +28,7 @@ public class DynamicScriptingGeneratorFacade extends ModelObject {
 	}
 	
 	public void handleScriptGeneration(String newCode) {
-		firePropertyChange(ScriptGeneratorProperties.NICOS_SCRIPT_GENERATED_PROPERTY, Optional.empty(), scriptCode = Optional.of(newCode));
+		firePropertyChange(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, Optional.empty(), scriptCode = Optional.of(newCode));
 	}
 
 	public void refreshGeneratedScript(ScriptGeneratorAction action) throws DynamicScriptingException {

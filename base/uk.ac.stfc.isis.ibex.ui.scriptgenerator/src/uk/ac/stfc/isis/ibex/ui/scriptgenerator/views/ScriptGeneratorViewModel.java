@@ -45,6 +45,7 @@ import org.apache.logging.log4j.Logger;
 import static java.lang.Math.min;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.*;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
@@ -243,10 +244,10 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		QueueScriptPreviewDialog scriptPreview = new QueueScriptPreviewDialog(Display.getDefault().getActiveShell(), generatedScript);
 		if (scriptPreview.askIfPreviewScript()) {
 			if (scriptPreview.open() == IDialogConstants.OK_ID) {
-				firePropertyChange(ScriptGeneratorProperties.NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
+				firePropertyChange(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
 			}
 		} else {
-			firePropertyChange(ScriptGeneratorProperties.NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
+			firePropertyChange(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
 		}
     }
     

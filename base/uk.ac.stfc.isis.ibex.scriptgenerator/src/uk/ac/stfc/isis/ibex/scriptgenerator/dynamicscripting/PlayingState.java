@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.nicos.ScriptStatus;
-import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
@@ -23,7 +22,7 @@ public class PlayingState extends DynamicScriptingState {
 				setUpNextExecutingAction();
 			}
 		});
-		this.generatorFacade.addPropertyChangeListener(ScriptGeneratorProperties.NICOS_SCRIPT_GENERATED_PROPERTY, event -> {
+		this.generatorFacade.addPropertyChangeListener(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, event -> {
 			executeScript();
 		});
 		setUpFirstExecutingAction();

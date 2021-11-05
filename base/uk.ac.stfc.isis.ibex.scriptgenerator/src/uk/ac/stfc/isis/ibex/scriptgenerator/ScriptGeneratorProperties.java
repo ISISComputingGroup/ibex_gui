@@ -29,11 +29,6 @@ public class ScriptGeneratorProperties {
     public static final String TIME_ESTIMATE_PROPERTY = "time estimate";
     
     /**
-     * A property to listen for when a nicos script has been generated.
-     */
-    public static final String NICOS_SCRIPT_GENERATED_PROPERTY = "nicos script generated";
-
-    /**
 	 * The property to listen for changes in a Generator containing the generated
 	 * script (String).
 	 */

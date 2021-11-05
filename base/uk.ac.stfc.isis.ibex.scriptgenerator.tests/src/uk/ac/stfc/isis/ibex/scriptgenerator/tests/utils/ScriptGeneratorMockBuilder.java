@@ -18,6 +18,7 @@ import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.nicos.ScriptStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.NoScriptDefinitionSelectedException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
@@ -137,6 +138,16 @@ public class ScriptGeneratorMockBuilder {
 			mockScriptGeneratorActions.add(mock(ScriptGeneratorAction.class));
 		}
 		setUpMockActions();
+	}
+	
+	public ScriptGeneratorAction arrangeExceptionToThrowForAction(Integer actionIndex, Class<? extends Throwable> exceptionToThrow) {
+		ScriptGeneratorAction action = getMockScriptGeneratorAction(actionIndex).get();
+		try {
+			when(mockScriptGeneratorModel.refreshGeneratedScript(action)).thenThrow(exceptionToThrow);
+			return action;
+		} catch (InvalidParamsException | UnsupportedLanguageException | NoScriptDefinitionSelectedException e) {
+			throw new AssumptionViolatedException("Assumed we could create mock and failed");
+		}
 	}
 
 }
