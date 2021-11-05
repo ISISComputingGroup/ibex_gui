@@ -41,9 +41,5 @@ public class DynamicScriptingNicosFacade extends ModelObject {
 	public void setScriptStatus(ScriptStatus scriptStatus) {
         firePropertyChange("scriptStatus", this.scriptStatus, this.scriptStatus = scriptStatus);
     }
-	
-	public ScriptStatus getScriptStatus() {
-		return scriptStatus;
-	}
 
 }
