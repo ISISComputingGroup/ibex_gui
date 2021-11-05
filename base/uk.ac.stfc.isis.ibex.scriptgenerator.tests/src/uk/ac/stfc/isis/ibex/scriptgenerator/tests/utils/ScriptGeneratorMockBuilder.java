@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.AssumptionViolatedException;
+import org.mockito.Matchers;
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import uk.ac.stfc.isis.ibex.nicos.NicosErrorState;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
@@ -29,8 +33,7 @@ public class ScriptGeneratorMockBuilder {
 	public ScriptGeneratorMockBuilder() {
 		mockScriptGeneratorModel = mock(ScriptGeneratorSingleton.class);
 		nicosMock = mock(NicosModel.class);
-		mockScriptGeneratorActions = List.of(mock(ScriptGeneratorAction.class), mock(ScriptGeneratorAction.class), mock(ScriptGeneratorAction.class));
-		setUpMockActions();
+		arrangeNumberOfActions(3);
 		setUpMockNicosModel();
 	}
 	
@@ -107,6 +110,30 @@ public class ScriptGeneratorMockBuilder {
 		} catch (InvalidParamsException | UnsupportedLanguageException | NoScriptDefinitionSelectedException e1) {
 			throw new AssumptionViolatedException("Assumed we could create mock and failed");
 		}
+	}
+	
+	public void arrangeNicosError() {
+		when(nicosMock.getError()).thenReturn(NicosErrorState.FAILED_LOGIN);
+	}
+	
+	public void arrangeNicosSendScriptFail() {
+		Mockito.doAnswer(new Answer() {
+
+			@Override
+			public Object answer(InvocationOnMock invocation) throws Throwable {
+				when(nicosMock.getError()).thenReturn(NicosErrorState.SCRIPT_SEND_FAIL);
+				return null;
+			}
+			
+		}).when(nicosMock).sendScript(Matchers.any());
+	}
+	
+	public void arrangeNumberOfActions(Integer numberOfActions) {
+		mockScriptGeneratorActions = new ArrayList<>();
+		for (int i = 0; i < numberOfActions; i++) {
+			mockScriptGeneratorActions.add(mock(ScriptGeneratorAction.class));
+		}
+		setUpMockActions();
 	}
 
 }
