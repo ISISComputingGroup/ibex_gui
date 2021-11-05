@@ -9,8 +9,6 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 public abstract class DynamicScriptingState extends ModelObject {
 	
-	protected static final String STATE_CHANGE_PROPERTY = "stateChange";
-	
 	protected ScriptGeneratorSingleton scriptGeneratorModel;
 	protected NicosModel nicosModel;
 	protected DynamicScriptingNicosFacade nicosFacade;

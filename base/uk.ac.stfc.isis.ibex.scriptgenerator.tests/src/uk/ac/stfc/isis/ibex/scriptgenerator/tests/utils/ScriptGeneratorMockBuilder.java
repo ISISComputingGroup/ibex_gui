@@ -43,7 +43,7 @@ public class ScriptGeneratorMockBuilder {
 		for (int j = -1; j > -5; j--) {
 			when(mockScriptGeneratorModel.getAction(j)).thenReturn(Optional.empty());
 		}
-		for (int k = numberOfActions + 1; k < numberOfActions + 5; k++) {
+		for (int k = numberOfActions; k < numberOfActions + 5; k++) {
 			when(mockScriptGeneratorModel.getAction(k)).thenReturn(Optional.empty());
 		}
 	}

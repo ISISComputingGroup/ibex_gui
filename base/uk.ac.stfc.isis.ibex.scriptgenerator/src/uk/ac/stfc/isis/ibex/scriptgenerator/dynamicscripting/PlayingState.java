@@ -10,14 +10,12 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 public class PlayingState extends DynamicScriptingState {
 	
-	private static final String SCRIPT_STATUS_PROPERTY = "scriptStatus";
-	
 	private Optional<ScriptGeneratorAction> currentlyExecutingAction;
 	private Optional<Integer> currentlyExecutingActionIndex;
 	
 	public PlayingState(ScriptGeneratorSingleton scriptGeneratorModel, NicosModel nicosModel, DynamicScriptingNicosFacade nicosFacade) {
 		super(scriptGeneratorModel, nicosModel, nicosFacade);
-		this.nicosFacade.addPropertyChangeListener(SCRIPT_STATUS_PROPERTY, event -> {
+		this.nicosFacade.addPropertyChangeListener(DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, event -> {
 			ScriptStatus newStatus = (ScriptStatus) event.getNewValue();
 			ScriptStatus oldStatus = (ScriptStatus) event.getOldValue();
 			if (newStatus == ScriptStatus.IDLE && oldStatus == ScriptStatus.RUNNING) {
@@ -45,10 +43,10 @@ public class PlayingState extends DynamicScriptingState {
 				ScriptGeneratorAction action = currentlyExecutingAction.get();
 				nicosFacade.executeAction(action);
 			} catch (DynamicScriptingException e) {
-				firePropertyChange(STATE_CHANGE_PROPERTY, this, new ErrorState(scriptGeneratorModel, nicosModel, nicosFacade));
+				firePropertyChange(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, this, new ErrorState(scriptGeneratorModel, nicosModel, nicosFacade));
 			}
 		} else {
-			firePropertyChange(STATE_CHANGE_PROPERTY, this, new StoppedState(scriptGeneratorModel, nicosModel, nicosFacade));
+			firePropertyChange(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, this, new StoppedState(scriptGeneratorModel, nicosModel, nicosFacade));
 		}
 	}
 

@@ -6,12 +6,14 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.not;
 
 import uk.ac.stfc.isis.ibex.nicos.ScriptStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosFacade;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingState;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.PlayingState;
@@ -22,6 +24,7 @@ public class PlayingStateTest {
 	
 	private PlayingState state;
 	private DynamicScriptingNicosFacade nicosFacade;
+	private Integer numberOfSwitchesFromPlayingToStoppedState;
 	
 	private ScriptGeneratorMockBuilder scriptGeneratorMockBuilder;
 	
@@ -29,6 +32,7 @@ public class PlayingStateTest {
 	public void setUp() {
 		// Set up mocks
 		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
+		numberOfSwitchesFromPlayingToStoppedState = 0;
 		// Set up class under test
 		nicosFacade = new DynamicScriptingNicosFacade(scriptGeneratorMockBuilder.getMockNicosModel());
 		state = new PlayingState(
@@ -36,6 +40,13 @@ public class PlayingStateTest {
 				scriptGeneratorMockBuilder.getMockNicosModel(), 
 				nicosFacade
 		);
+		state.addPropertyChangeListener(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, event -> {
+			DynamicScriptingState oldState = (DynamicScriptingState) event.getOldValue();
+			DynamicScriptingState newState = (DynamicScriptingState) event.getNewValue();
+			if (oldState.getStatus() == DynamicScriptingStatus.PLAYING && newState.getStatus() == DynamicScriptingStatus.STOPPED) {
+				numberOfSwitchesFromPlayingToStoppedState++;
+			}
+		});
 	}
 	
 	@Test
@@ -72,21 +83,36 @@ public class PlayingStateTest {
 //	}
 	
 	@Test
-	public void test_stepping_through_actions() {
-		// Act
+	public void test_step_through_one_action() {
+		// Assert
 		Optional<ScriptGeneratorAction> currentAction = state.getCurrentlyExecutingAction();
 		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
-		// Assert
 		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(0)));
 		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
 		// Act
 		nicosFacade.setScriptStatus(ScriptStatus.IDLE);
-		// Act
+		// Assert
 		currentAction = state.getCurrentlyExecutingAction();
 		nextAction = state.getNextExecutingAction();
-		// Assert
 		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
 		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(2)));
+	}
+	
+	@Test
+	public void test_stepping_through_actions() {
+		Optional<ScriptGeneratorAction> currentAction;
+		Optional<ScriptGeneratorAction> nextAction;
+		assertThat(numberOfSwitchesFromPlayingToStoppedState, is(0));
+		int i = 0;
+		do {
+			currentAction = state.getCurrentlyExecutingAction();
+			nextAction = state.getNextExecutingAction();
+			assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(i)));
+			assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(i + 1)));
+			nicosFacade.setScriptStatus(ScriptStatus.IDLE);
+			i++;
+		} while (nextAction.isPresent());
+		assertThat(numberOfSwitchesFromPlayingToStoppedState, is(1));
 	}
 
 }
