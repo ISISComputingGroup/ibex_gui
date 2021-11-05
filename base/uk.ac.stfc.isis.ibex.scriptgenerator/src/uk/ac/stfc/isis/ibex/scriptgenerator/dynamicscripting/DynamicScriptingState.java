@@ -12,11 +12,13 @@ public abstract class DynamicScriptingState extends ModelObject {
 	protected ScriptGeneratorSingleton scriptGeneratorModel;
 	protected NicosModel nicosModel;
 	protected DynamicScriptingNicosFacade nicosFacade;
+	protected DynamicScriptingGeneratorFacade generatorFacade;
 	
-	public DynamicScriptingState(ScriptGeneratorSingleton scriptGeneratorModel, NicosModel nicosModel, DynamicScriptingNicosFacade nicosFacade) {
+	public DynamicScriptingState(ScriptGeneratorSingleton scriptGeneratorModel, NicosModel nicosModel, DynamicScriptingNicosFacade nicosFacade, DynamicScriptingGeneratorFacade generatorFacade) {
 		this.scriptGeneratorModel = scriptGeneratorModel;
 		this.nicosModel = nicosModel;
 		this.nicosFacade = nicosFacade;
+		this.generatorFacade = generatorFacade;
 	}
 	
 	public abstract Optional<ScriptGeneratorAction> getCurrentlyExecutingAction();

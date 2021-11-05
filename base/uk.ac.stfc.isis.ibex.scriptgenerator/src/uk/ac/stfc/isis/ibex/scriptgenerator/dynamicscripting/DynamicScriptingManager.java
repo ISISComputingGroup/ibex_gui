@@ -12,8 +12,8 @@ public class DynamicScriptingManager {
 	private HashSet<Integer> dynamicScriptIds = new HashSet<>();
 	private DynamicScriptingState dynamicScriptingState;
 	
-	public DynamicScriptingManager(ScriptGeneratorSingleton scriptGeneratorModel, NicosModel nicosModel, DynamicScriptingNicosFacade nicosFacade) {
-		dynamicScriptingState = new StoppedState(scriptGeneratorModel, nicosModel, nicosFacade);
+	public DynamicScriptingManager(ScriptGeneratorSingleton scriptGeneratorModel, NicosModel nicosModel, DynamicScriptingNicosFacade nicosFacade, DynamicScriptingGeneratorFacade generatorFacade) {
+		dynamicScriptingState = new StoppedState(scriptGeneratorModel, nicosModel, nicosFacade, generatorFacade);
 		handleStateChange(dynamicScriptingState);
 	}
 	

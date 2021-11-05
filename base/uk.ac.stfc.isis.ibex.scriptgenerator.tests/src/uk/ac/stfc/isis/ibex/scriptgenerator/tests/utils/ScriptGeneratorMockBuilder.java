@@ -36,6 +36,7 @@ public class ScriptGeneratorMockBuilder {
 		nicosMock = mock(NicosModel.class);
 		arrangeNumberOfActions(3);
 		setUpMockNicosModel();
+		arrangeCorrectScriptId();
 	}
 	
 	private void setUpMockActions() {

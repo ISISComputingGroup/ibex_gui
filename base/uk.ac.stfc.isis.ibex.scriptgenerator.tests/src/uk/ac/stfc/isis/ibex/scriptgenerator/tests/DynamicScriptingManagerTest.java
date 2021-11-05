@@ -16,6 +16,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import uk.ac.stfc.isis.ibex.scriptgenerator.NoScriptDefinitionSelectedException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingException;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingGeneratorFacade;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingManager;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosFacade;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStatus;
@@ -28,6 +29,7 @@ public class DynamicScriptingManagerTest {
 	
 	private DynamicScriptingManager dynamicScriptingManager;
 	private DynamicScriptingNicosFacade nicosFacade;
+	private DynamicScriptingGeneratorFacade generatorFacade;
 	
 	private ScriptGeneratorMockBuilder scriptGeneratorMockBuilder;
 	
@@ -37,10 +39,11 @@ public class DynamicScriptingManagerTest {
 		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
 		// Set up class under test
 		nicosFacade = new DynamicScriptingNicosFacade(scriptGeneratorMockBuilder.getMockNicosModel());
+		generatorFacade = new DynamicScriptingGeneratorFacade(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
 		dynamicScriptingManager = new DynamicScriptingManager(
 				scriptGeneratorMockBuilder.getMockScriptGeneratorModel(), 
 				scriptGeneratorMockBuilder.getMockNicosModel(), 
-				nicosFacade
+				nicosFacade, generatorFacade
 		);
 	}
 	
