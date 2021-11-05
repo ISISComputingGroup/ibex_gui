@@ -27,6 +27,7 @@ public class PlayingStateTest {
 	private DynamicScriptingGeneratorFacade generatorFacade;
 	private Integer numberOfSwitchesFromPlayingToStoppedState;
 	private Integer numberOfSwitchesFromPlayingToIdleExc;
+	private Optional<Integer> scriptId;
 	
 	private ScriptGeneratorMockBuilder scriptGeneratorMockBuilder;
 	
@@ -36,6 +37,7 @@ public class PlayingStateTest {
 		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
 		numberOfSwitchesFromPlayingToStoppedState = 0;
 		numberOfSwitchesFromPlayingToIdleExc = 0;
+		scriptId = Optional.empty();
 		// Set up class under test
 		setUpClassUnderTest();
 	}
@@ -57,6 +59,9 @@ public class PlayingStateTest {
 			if (oldState.getStatus() == DynamicScriptingStatus.PLAYING && newState.getStatus() == DynamicScriptingStatus.STOPPED) {
 				numberOfSwitchesFromPlayingToIdleExc++;
 			}
+		});
+		state.addPropertyChangeListener(DynamicScriptingProperties.NEW_SCRIPT_ID_PROPERTY, evt -> {
+			scriptId = (Optional<Integer>) evt.getNewValue();
 		});
 	}
 	
@@ -85,14 +90,6 @@ public class PlayingStateTest {
 		assertThat(newState.getStatus(), is(DynamicScriptingStatus.STOPPED));
 	}
 	
-//	@Test
-//	public void test_WHEN_pause_THEN_state_is_paused() {
-//		// Act
-//		DynamicScriptingState newState = state.pause();
-//		// Assert
-//		assertThat(newState, is(not(state)));
-//	}
-	
 	@Test
 	public void test_step_through_one_action() {
 		// Assert
@@ -100,15 +97,16 @@ public class PlayingStateTest {
 		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
 		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(0)));
 		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
+		assertThat(scriptId, is(Optional.empty()));
 		// Act
 		generatorFacade.handleScriptGeneration("test");
 		nicosFacade.setScriptStatus(ScriptStatus.IDLE);
+		assertThat(scriptId, is(Optional.of(0)));
 		// Assert
 		currentAction = state.getCurrentlyExecutingAction();
 		nextAction = state.getNextExecutingAction();
 		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
 		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(2)));
-		
 	}
 	
 	@Test
@@ -116,6 +114,7 @@ public class PlayingStateTest {
 		Optional<ScriptGeneratorAction> currentAction;
 		Optional<ScriptGeneratorAction> nextAction;
 		assertThat(numberOfSwitchesFromPlayingToStoppedState, is(0));
+		assertThat(scriptId, is(Optional.empty()));
 		int i = 0;
 		do {
 			currentAction = state.getCurrentlyExecutingAction();
@@ -124,6 +123,7 @@ public class PlayingStateTest {
 			assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(i + 1)));
 			generatorFacade.handleScriptGeneration("test");
 			nicosFacade.setScriptStatus(ScriptStatus.IDLE);
+			assertThat(scriptId, is(Optional.of(i)));
 			i++;
 		} while (nextAction.isPresent());
 		assertThat(numberOfSwitchesFromPlayingToStoppedState, is(1));
@@ -135,13 +135,16 @@ public class PlayingStateTest {
 		scriptGeneratorMockBuilder.arrangeNicosError();
 		// Assert
 		assertThat(numberOfSwitchesFromPlayingToIdleExc, is(0));
+		assertThat(scriptId, is(Optional.empty()));
 		Optional<ScriptGeneratorAction> currentAction = state.getCurrentlyExecutingAction();
 		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
 		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(0)));
 		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
+		assertThat(scriptId, is(Optional.empty()));
 		// Act
 		nicosFacade.setScriptStatus(ScriptStatus.IDLE);
 		// Assert
+		assertThat(scriptId, is(Optional.empty()));
 		assertThat(numberOfSwitchesFromPlayingToStoppedState, is(0));
 	}
 	
@@ -151,13 +154,16 @@ public class PlayingStateTest {
 		scriptGeneratorMockBuilder.arrangeNicosSendScriptFail();
 		// Assert
 		assertThat(numberOfSwitchesFromPlayingToIdleExc, is(0));
+		assertThat(scriptId, is(Optional.empty()));
 		Optional<ScriptGeneratorAction> currentAction = state.getCurrentlyExecutingAction();
 		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
 		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(0)));
 		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
+		assertThat(scriptId, is(Optional.empty()));
 		// Act
 		nicosFacade.setScriptStatus(ScriptStatus.IDLE);
 		// Assert
+		assertThat(scriptId, is(Optional.empty()));
 		assertThat(numberOfSwitchesFromPlayingToStoppedState, is(0));
 	}
 	
@@ -165,9 +171,11 @@ public class PlayingStateTest {
 	public void test_WHEN_no_next_action_THEN_next_action_is_empty() {
 		// Arrange
 		scriptGeneratorMockBuilder.arrangeNumberOfActions(1);
+		assertThat(scriptId, is(Optional.empty()));
 		// Assert
 		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
 		assertThat(nextAction, is(Optional.empty()));
+		assertThat(scriptId, is(Optional.empty()));
 	}
 	
 	@Test
@@ -175,11 +183,13 @@ public class PlayingStateTest {
 		// Arrange
 		scriptGeneratorMockBuilder.arrangeNumberOfActions(0);
 		setUpClassUnderTest();
+		assertThat(scriptId, is(Optional.empty()));
 		// Assert
 		Optional<ScriptGeneratorAction> currentAction = state.getCurrentlyExecutingAction();
 		assertThat(currentAction, is(Optional.empty()));
 		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
 		assertThat(nextAction, is(Optional.empty()));
+		assertThat(scriptId, is(Optional.empty()));
 	}
 
 }

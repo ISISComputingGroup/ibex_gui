@@ -92,7 +92,8 @@ public class DynamicScriptingGeneratorFacadeTest {
 		// Assert and Act
 		assertThat(scriptsGeneratedCount, is(0));
 		try {
-			generatorFacade.refreshGeneratedScript(action);
+			Optional<Integer> scriptId = generatorFacade.refreshGeneratedScript(action);
+			assertThat(scriptId, is(Optional.of(0)));
 			assertThat(scriptsGeneratedCount, is(0));
 			generatorFacade.handleScriptGeneration("test");
 			assertThat(scriptsGeneratedCount, is(1));

@@ -5,6 +5,8 @@ public class DynamicScriptingProperties {
 	public static final String SCRIPT_STATUS_PROPERTY = "scriptStatus";
 	
 	public static final String STATE_CHANGE_PROPERTY = "stateChange";
+	
+	public static final String NEW_SCRIPT_ID_PROPERTY = "newScriptId";
 
 	/**
 	 * A property to listen for when a nicos script has been generated.

@@ -37,7 +37,6 @@ public class ScriptGeneratorMockBuilder {
 		nicosMock = mock(NicosModel.class);
 		arrangeNumberOfActions(3);
 		setUpMockNicosModel();
-		arrangeCorrectScriptId();
 	}
 	
 	private void setUpMockActions() {
@@ -52,6 +51,7 @@ public class ScriptGeneratorMockBuilder {
 		for (int k = numberOfActions; k < numberOfActions + 5; k++) {
 			when(mockScriptGeneratorModel.getAction(k)).thenReturn(Optional.empty());
 		}
+		
 	}
 	
 	private void setUpMockNicosModel() {
@@ -138,6 +138,7 @@ public class ScriptGeneratorMockBuilder {
 			mockScriptGeneratorActions.add(mock(ScriptGeneratorAction.class));
 		}
 		setUpMockActions();
+		arrangeCorrectScriptId();
 	}
 	
 	public ScriptGeneratorAction arrangeExceptionToThrowForAction(Integer actionIndex, Class<? extends Throwable> exceptionToThrow) {

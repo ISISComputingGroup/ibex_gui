@@ -31,9 +31,10 @@ public class DynamicScriptingGeneratorFacade extends ModelObject {
 		firePropertyChange(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, Optional.empty(), scriptCode = Optional.of(newCode));
 	}
 
-	public void refreshGeneratedScript(ScriptGeneratorAction action) throws DynamicScriptingException {
+	public Optional<Integer> refreshGeneratedScript(ScriptGeneratorAction action) throws DynamicScriptingException {
 		try {
 			scriptId = scriptGeneratorModel.refreshGeneratedScript(action);
+			return scriptId;
 		} catch (InvalidParamsException e) {
 			throw new DynamicScriptingException("Invalid parameters, cannot generate dynamic script");
 		} catch (UnsupportedLanguageException e) {

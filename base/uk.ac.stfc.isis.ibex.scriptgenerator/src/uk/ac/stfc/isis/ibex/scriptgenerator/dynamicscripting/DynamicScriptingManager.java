@@ -31,6 +31,13 @@ public class DynamicScriptingManager {
 			DynamicScriptingState nextState = (DynamicScriptingState) event.getNewValue();
 			handleStateChange(nextState);
 		});
+		dynamicScriptingState.addPropertyChangeListener(DynamicScriptingProperties.NEW_SCRIPT_ID_PROPERTY, event -> {
+			Optional<Integer> optionalDynamicScriptId = (Optional<Integer>) event.getNewValue();
+			if (optionalDynamicScriptId.isPresent()) {
+				Integer scriptId = optionalDynamicScriptId.get();
+				dynamicScriptIds.add(scriptId);
+			}
+		});
 	}
 	
 //	private void refreshGeneratedScriptWithSingleAction(ScriptGeneratorAction action) throws DynamicScriptingException {
