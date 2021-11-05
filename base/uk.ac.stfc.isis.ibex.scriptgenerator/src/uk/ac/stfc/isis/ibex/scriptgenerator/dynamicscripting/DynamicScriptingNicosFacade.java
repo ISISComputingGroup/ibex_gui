@@ -24,11 +24,11 @@ public class DynamicScriptingNicosFacade extends ModelObject {
     		scriptToSend.setName(name);
         	scriptToSend.setCode(code);
         	nicosModel.sendScript(scriptToSend);
-        	setScriptStatus(ScriptStatus.RUNNING);
         	if (nicosInError()) {
         		setScriptStatus(ScriptStatus.IDLEEXC);
     			throw new DynamicScriptingException("Nicos in error, cannot play script.");
     		}
+        	setScriptStatus(ScriptStatus.RUNNING);
     	} else {
     		setScriptStatus(ScriptStatus.IDLEEXC);
     		throw new DynamicScriptingException("Nicos in error, cannot play script.");

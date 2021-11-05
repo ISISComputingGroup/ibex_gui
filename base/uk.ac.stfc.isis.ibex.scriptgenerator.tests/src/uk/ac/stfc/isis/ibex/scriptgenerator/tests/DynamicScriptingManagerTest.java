@@ -1,5 +1,6 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.Before;
@@ -16,6 +17,8 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.NoScriptDefinitionSelectedException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingManager;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosFacade;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
@@ -24,6 +27,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.ScriptGeneratorMockBuild
 public class DynamicScriptingManagerTest {
 	
 	private DynamicScriptingManager dynamicScriptingManager;
+	private DynamicScriptingNicosFacade nicosFacade;
 	
 	private ScriptGeneratorMockBuilder scriptGeneratorMockBuilder;
 	
@@ -32,7 +36,12 @@ public class DynamicScriptingManagerTest {
 		// Set up mocks
 		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
 		// Set up class under test
-		dynamicScriptingManager = new DynamicScriptingManager(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
+		nicosFacade = new DynamicScriptingNicosFacade(scriptGeneratorMockBuilder.getMockNicosModel());
+		dynamicScriptingManager = new DynamicScriptingManager(
+				scriptGeneratorMockBuilder.getMockScriptGeneratorModel(), 
+				scriptGeneratorMockBuilder.getMockNicosModel(), 
+				nicosFacade
+		);
 	}
 	
 	private void playScript() {
@@ -45,6 +54,7 @@ public class DynamicScriptingManagerTest {
 	
 	private void assertDynamicScriptingInErrorState() {
 		assertThat(dynamicScriptingManager.getCurrentlyExecutingAction(), is(Optional.empty()));
+		assertThat(dynamicScriptingManager.getDynamicScriptingStatus(), is(DynamicScriptingStatus.ERROR));
 	}
 	
 	@Test
@@ -54,17 +64,17 @@ public class DynamicScriptingManagerTest {
 		// Act
 		playScript();
 		// Assert
-		assertThat(dynamicScriptingManager.getCurrentlyExecutingAction(), is(scriptGeneratorMockBuilder.getMockScriptGeneratorActionOptional()));
+		assertThat(dynamicScriptingManager.getCurrentlyExecutingAction(), is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(0)));
 	}
 	
 	@Test
 	public void test_WHEN_play_script_THEN_dynamic_scripting_manager_knows_it_is_a_dynamic_script() {
 		// Arrange
-		Integer scriptId = scriptGeneratorMockBuilder.arrangeCorrectScriptId();
+		List<Integer> scriptIds = scriptGeneratorMockBuilder.arrangeCorrectScriptId();
 		// Act
 		playScript();
 		// Assert
-		assertThat(dynamicScriptingManager.isScriptDynamic(scriptId), is(true));
+		assertThat(dynamicScriptingManager.isScriptDynamic(scriptIds.get(0)), is(true));
 	}
 	
 	@Test
