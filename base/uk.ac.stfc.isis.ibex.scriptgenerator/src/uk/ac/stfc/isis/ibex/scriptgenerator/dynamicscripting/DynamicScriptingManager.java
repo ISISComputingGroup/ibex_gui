@@ -18,42 +18,31 @@ public class DynamicScriptingManager {
 	}
 	
 	public void playScript() throws DynamicScriptingException {
-		dynamicScriptingState.play();
+		DynamicScriptingState newState = dynamicScriptingState.play();
+		handleStateChange(newState);
 	}
 	
 	public void stopScript() {
-		dynamicScriptingState.stop();
+		DynamicScriptingState newState = dynamicScriptingState.stop();
+		handleStateChange(newState);
 	}
 	
 	private void handleStateChange(DynamicScriptingState newState) {
-		dynamicScriptingState = newState;
-		dynamicScriptingState.addPropertyChangeListener(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, event -> {
-			DynamicScriptingState nextState = (DynamicScriptingState) event.getNewValue();
-			handleStateChange(nextState);
-		});
-		dynamicScriptingState.addPropertyChangeListener(DynamicScriptingProperties.NEW_SCRIPT_ID_PROPERTY, event -> {
-			Optional<Integer> optionalDynamicScriptId = (Optional<Integer>) event.getNewValue();
-			if (optionalDynamicScriptId.isPresent()) {
-				Integer scriptId = optionalDynamicScriptId.get();
-				dynamicScriptIds.add(scriptId);
-			}
-		});
+		if (newState != dynamicScriptingState) {
+			dynamicScriptingState = newState;
+			dynamicScriptingState.addPropertyChangeListener(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, event -> {
+				DynamicScriptingState nextState = (DynamicScriptingState) event.getNewValue();
+				handleStateChange(nextState);
+			});
+			dynamicScriptingState.addPropertyChangeListener(DynamicScriptingProperties.NEW_SCRIPT_ID_PROPERTY, event -> {
+				Optional<Integer> optionalDynamicScriptId = (Optional<Integer>) event.getNewValue();
+				if (optionalDynamicScriptId.isPresent()) {
+					Integer scriptId = optionalDynamicScriptId.get();
+					dynamicScriptIds.add(scriptId);
+				}
+			});
+		}
 	}
-	
-//	private void refreshGeneratedScriptWithSingleAction(ScriptGeneratorAction action) throws DynamicScriptingException {
-//		try {
-//			Optional<Integer> dynamicScriptId = scriptGeneratorModel.refreshGeneratedScript(action);
-//			dynamicScriptId.ifPresent(scriptId -> {
-//				dynamicScriptIds.add(scriptId);
-//			});
-//		} catch (InvalidParamsException e) {
-//			throw new DynamicScriptingException("Invalid params, cannot play script");
-//		} catch (UnsupportedLanguageException e) {
-//			throw new DynamicScriptingException("Unsupported language selected, cannot play script");
-//		} catch (NoScriptDefinitionSelectedException e) {
-//			throw new DynamicScriptingException("No script definition has been selected, cannot play script");
-//		}
-//	}
 	
 	public Optional<ScriptGeneratorAction> getCurrentlyExecutingAction() {
 		return dynamicScriptingState.getCurrentlyExecutingAction();
