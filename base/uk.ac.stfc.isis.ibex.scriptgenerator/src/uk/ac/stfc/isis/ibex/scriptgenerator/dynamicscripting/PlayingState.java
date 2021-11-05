@@ -82,12 +82,6 @@ public class PlayingState extends DynamicScriptingState {
 	}
 
 	@Override
-	public DynamicScriptingState pause() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public DynamicScriptingState stop() {
 		return new StoppedState(scriptGeneratorModel, nicosModel, nicosFacade);
 	}

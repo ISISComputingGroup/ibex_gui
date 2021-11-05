@@ -26,9 +26,7 @@ public abstract class DynamicScriptingState extends ModelObject {
 	public abstract DynamicScriptingStatus getStatus();
 	
 	public abstract DynamicScriptingState play();
-	
-	public abstract DynamicScriptingState pause();
-	
+		
 	public abstract DynamicScriptingState stop();
 
 }

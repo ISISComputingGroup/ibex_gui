@@ -33,11 +33,6 @@ public class StoppedState extends DynamicScriptingState {
 	}
 
 	@Override
-	public DynamicScriptingState pause() {
-		return this;
-	}
-
-	@Override
 	public DynamicScriptingState stop() {
 		return this;
 	}

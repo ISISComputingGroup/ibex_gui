@@ -63,14 +63,6 @@ public class StoppedStateTest {
 	}
 	
 	@Test
-	public void test_WHEN_pause_THEN_state_the_same() {
-		// Act
-		DynamicScriptingState newState = state.pause();
-		// Assert
-		assertThat(newState, is(state));
-	}
-	
-	@Test
 	public void test_no_current_action() {
 		// Act
 		Optional<ScriptGeneratorAction> actionOptional = state.getCurrentlyExecutingAction();
