@@ -5,7 +5,6 @@ import uk.ac.stfc.isis.ibex.nicos.NicosErrorState;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.nicos.ScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
-import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 public class DynamicScriptingNicosFacade extends ModelObject {
 	
@@ -14,12 +13,13 @@ public class DynamicScriptingNicosFacade extends ModelObject {
 	
 	public DynamicScriptingNicosFacade(NicosModel nicosModel) {
 		this.nicosModel = nicosModel;
+		setScriptStatus(this.nicosModel.getScriptStatus());
 	}
 	
-	public void executeAction(ScriptGeneratorAction action) throws DynamicScriptingException {
+	public void executeAction(String name, String code) throws DynamicScriptingException {
 		if (!nicosInError()) {
-			String name = "Script Generator: " + action;
-			String code = "print(" + action + ")";
+//			String name = "Script Generator: " + action;
+//			String code = "print(" + action + ")";
     		var scriptToSend = new QueuedScript();
     		scriptToSend.setName(name);
         	scriptToSend.setCode(code);

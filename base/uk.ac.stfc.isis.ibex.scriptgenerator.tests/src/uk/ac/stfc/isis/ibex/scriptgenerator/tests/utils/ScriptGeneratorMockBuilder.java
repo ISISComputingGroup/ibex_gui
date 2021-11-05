@@ -15,6 +15,7 @@ import org.mockito.stubbing.Answer;
 
 import uk.ac.stfc.isis.ibex.nicos.NicosErrorState;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
+import uk.ac.stfc.isis.ibex.nicos.ScriptStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.NoScriptDefinitionSelectedException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
@@ -53,6 +54,7 @@ public class ScriptGeneratorMockBuilder {
 	
 	private void setUpMockNicosModel() {
 		when(nicosMock.getError()).thenReturn(NicosErrorState.NO_ERROR);
+		when(nicosMock.getScriptStatus()).thenReturn(ScriptStatus.IDLE);
 	}
 	
 	public ScriptGeneratorSingleton getMockScriptGeneratorModel() {
