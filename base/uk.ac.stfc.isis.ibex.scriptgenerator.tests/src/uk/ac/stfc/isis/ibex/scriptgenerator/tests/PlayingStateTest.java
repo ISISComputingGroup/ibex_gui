@@ -22,14 +22,14 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingSta
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.PlayingState;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.ScriptGeneratorMockBuilder;
+import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.StatusSwitchCounter;
 
 public class PlayingStateTest {
 	
 	private PlayingState state;
 	private DynamicScriptingNicosFacade nicosFacade;
 	private DynamicScriptingGeneratorFacade generatorFacade;
-	private Integer numberOfSwitchesFromPlayingToStoppedState;
-	private Integer numberOfSwitchesFromPlayingToIdleExc;
+	private StatusSwitchCounter<DynamicScriptingState, DynamicScriptingStatus> statusSwitchCounter;
 	private Set<Integer> scriptIds;
 	
 	private ScriptGeneratorMockBuilder scriptGeneratorMockBuilder;
@@ -38,8 +38,7 @@ public class PlayingStateTest {
 	public void setUp() {
 		// Set up mocks
 		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
-		numberOfSwitchesFromPlayingToStoppedState = 0;
-		numberOfSwitchesFromPlayingToIdleExc = 0;
+		statusSwitchCounter = new StatusSwitchCounter<DynamicScriptingState, DynamicScriptingStatus>();
 		scriptIds = new HashSet<>();
 		// Set up class under test
 		setUpClassUnderTest();
@@ -53,16 +52,7 @@ public class PlayingStateTest {
 				scriptGeneratorMockBuilder.getMockNicosModel(), 
 				nicosFacade, generatorFacade
 		);
-		state.addPropertyChangeListener(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, event -> {
-			DynamicScriptingState oldState = (DynamicScriptingState) event.getOldValue();
-			DynamicScriptingState newState = (DynamicScriptingState) event.getNewValue();
-			if (oldState.getStatus() == DynamicScriptingStatus.PLAYING && newState.getStatus() == DynamicScriptingStatus.STOPPED) {
-				numberOfSwitchesFromPlayingToStoppedState++;
-			}
-			if (oldState.getStatus() == DynamicScriptingStatus.PLAYING && newState.getStatus() == DynamicScriptingStatus.STOPPED) {
-				numberOfSwitchesFromPlayingToIdleExc++;
-			}
-		});
+		state.addPropertyChangeListener(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, statusSwitchCounter);
 		state.addPropertyChangeListener(DynamicScriptingProperties.NEW_SCRIPT_ID_PROPERTY, evt -> {
 			Optional<Integer> scriptId = (Optional<Integer>) evt.getNewValue();
 			scriptId.ifPresent(Id -> { scriptIds.add(Id); });
@@ -118,7 +108,9 @@ public class PlayingStateTest {
 	public void test_stepping_through_actions() {
 		Optional<ScriptGeneratorAction> currentAction;
 		Optional<ScriptGeneratorAction> nextAction;
-		assertThat(numberOfSwitchesFromPlayingToStoppedState, is(0));
+		statusSwitchCounter.assertNumberOfSwitches(
+			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.STOPPED, 0
+		);
 		assertTrue(scriptIds.isEmpty());
 		int i = 0;
 		do {
@@ -132,7 +124,9 @@ public class PlayingStateTest {
 			assertThat(scriptIds.size(), is(i + 1));
 			i++;
 		} while (nextAction.isPresent());
-		assertThat(numberOfSwitchesFromPlayingToStoppedState, is(1));
+		statusSwitchCounter.assertNumberOfSwitches(
+			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.STOPPED, 1
+		);
 	}
 	
 	@Test
@@ -140,7 +134,9 @@ public class PlayingStateTest {
 		// Arrange
 		scriptGeneratorMockBuilder.arrangeNicosError();
 		// Assert
-		assertThat(numberOfSwitchesFromPlayingToIdleExc, is(0));
+		statusSwitchCounter.assertNumberOfSwitches(
+			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.ERROR, 0
+		);
 		assertTrue(scriptIds.isEmpty());
 		Optional<ScriptGeneratorAction> currentAction = state.getCurrentlyExecutingAction();
 		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
@@ -148,10 +144,13 @@ public class PlayingStateTest {
 		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
 		assertTrue(scriptIds.isEmpty());
 		// Act
+		generatorFacade.handleScriptGeneration("test");
 		nicosFacade.setScriptStatus(ScriptStatus.IDLE);
 		// Assert
 		assertTrue(scriptIds.isEmpty());
-		assertThat(numberOfSwitchesFromPlayingToStoppedState, is(0));
+		statusSwitchCounter.assertNumberOfSwitches(
+			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.ERROR, 1
+		);
 	}
 	
 	@Test
@@ -159,7 +158,9 @@ public class PlayingStateTest {
 		// Arrange
 		scriptGeneratorMockBuilder.arrangeNicosSendScriptFail();
 		// Assert
-		assertThat(numberOfSwitchesFromPlayingToIdleExc, is(0));
+		statusSwitchCounter.assertNumberOfSwitches(
+			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.ERROR, 0
+		);
 		assertTrue(scriptIds.isEmpty());
 		Optional<ScriptGeneratorAction> currentAction = state.getCurrentlyExecutingAction();
 		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
@@ -167,10 +168,13 @@ public class PlayingStateTest {
 		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
 		assertTrue(scriptIds.isEmpty());
 		// Act
+		generatorFacade.handleScriptGeneration("test");
 		nicosFacade.setScriptStatus(ScriptStatus.IDLE);
 		// Assert
 		assertTrue(scriptIds.isEmpty());
-		assertThat(numberOfSwitchesFromPlayingToStoppedState, is(0));
+		statusSwitchCounter.assertNumberOfSwitches(
+			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.ERROR, 1
+		);
 	}
 	
 	@Test

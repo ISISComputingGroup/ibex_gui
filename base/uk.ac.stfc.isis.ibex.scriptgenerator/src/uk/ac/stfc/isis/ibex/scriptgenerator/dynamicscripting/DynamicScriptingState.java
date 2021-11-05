@@ -2,12 +2,13 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting;
 
 import java.util.Optional;
 
+import uk.ac.stfc.isis.ibex.model.HasStatus;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
-public abstract class DynamicScriptingState extends ModelObject {
+public abstract class DynamicScriptingState extends ModelObject implements HasStatus<DynamicScriptingStatus> {
 	
 	protected ScriptGeneratorSingleton scriptGeneratorModel;
 	protected NicosModel nicosModel;

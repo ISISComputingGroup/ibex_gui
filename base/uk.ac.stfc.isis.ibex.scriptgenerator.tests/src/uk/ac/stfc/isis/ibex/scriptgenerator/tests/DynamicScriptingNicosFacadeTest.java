@@ -16,14 +16,14 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.StatusSwitchCounter;
 public class DynamicScriptingNicosFacadeTest {
 	
 	private ScriptGeneratorMockBuilder scriptGeneratorMockBuilder;
-	private StatusSwitchCounter statusSwitchCounter;
+	private StatusSwitchCounter<ScriptStatus, ScriptStatus> statusSwitchCounter;
 	private DynamicScriptingNicosFacade nicosFacade;
 	
 	@Before
 	public void setUp() {
 		// Set up mocks
 		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
-		statusSwitchCounter = new StatusSwitchCounter();
+		statusSwitchCounter = new StatusSwitchCounter<ScriptStatus, ScriptStatus>();
 		// Set up class under test
 		nicosFacade = new DynamicScriptingNicosFacade(scriptGeneratorMockBuilder.getMockNicosModel());
 		nicosFacade.addPropertyChangeListener(DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, statusSwitchCounter);

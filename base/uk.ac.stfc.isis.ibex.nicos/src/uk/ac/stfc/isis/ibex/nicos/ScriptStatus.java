@@ -21,10 +21,12 @@
  */
 package uk.ac.stfc.isis.ibex.nicos;
 
+import uk.ac.stfc.isis.ibex.model.HasStatus;
+
 /**
  * Contains possible run states for a script in NICOS.
  */
-public enum ScriptStatus {
+public enum ScriptStatus implements HasStatus<ScriptStatus> {
     /**
      * Nothing started, last script raised exception.
      */
@@ -100,4 +102,9 @@ public enum ScriptStatus {
         }
         return INVALID;
     }
+
+	@Override
+	public ScriptStatus getStatus() {
+		return this;
+	}
 }
