@@ -8,13 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.AssumptionViolatedException;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-import org.mockito.Matchers;
 
+import uk.ac.stfc.isis.ibex.nicos.NicosErrorState;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
-import uk.ac.stfc.isis.ibex.nicos.ScriptStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.NoScriptDefinitionSelectedException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
@@ -53,13 +49,7 @@ public class ScriptGeneratorMockBuilder {
 	}
 	
 	private void setUpMockNicosModel() {
-		Mockito.doAnswer(new Answer() {
-			@Override
-			public Object answer(InvocationOnMock invocation) throws Throwable {
-				nicosMock.runTestUpdate(ScriptStatus.RUNNING);
-				return null;
-			}
-		}).when(nicosMock).sendScript(Matchers.any());
+		when(nicosMock.getError()).thenReturn(NicosErrorState.NO_ERROR);
 	}
 	
 	public ScriptGeneratorSingleton getMockScriptGeneratorModel() {

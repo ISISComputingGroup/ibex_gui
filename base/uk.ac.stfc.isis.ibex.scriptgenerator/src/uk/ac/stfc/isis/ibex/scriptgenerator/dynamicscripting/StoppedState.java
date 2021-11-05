@@ -8,8 +8,8 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 public class StoppedState extends DynamicScriptingState {
 
-	public StoppedState(ScriptGeneratorSingleton scriptGeneratorModel, NicosModel nicosModel) {
-		super(scriptGeneratorModel, nicosModel);
+	public StoppedState(ScriptGeneratorSingleton scriptGeneratorModel, NicosModel nicosModel, DynamicScriptingNicosFacade nicosFacade) {
+		super(scriptGeneratorModel, nicosModel, nicosFacade);
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public class StoppedState extends DynamicScriptingState {
 
 	@Override
 	public DynamicScriptingState play() {
-		return new PlayingState(scriptGeneratorModel, nicosModel);
+		return new PlayingState(scriptGeneratorModel, nicosModel, nicosFacade);
 	}
 
 	@Override

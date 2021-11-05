@@ -10,6 +10,7 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosFacade;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingState;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.StoppedState;
@@ -19,6 +20,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.ScriptGeneratorMockBuild
 public class StoppedStateTest {
 	
 	private StoppedState state;
+	private DynamicScriptingNicosFacade nicosFacade;
 	
 	private ScriptGeneratorMockBuilder scriptGeneratorMockBuilder;
 	
@@ -27,7 +29,12 @@ public class StoppedStateTest {
 		// Set up mocks
 		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
 		// Set up class under test
-		state = new StoppedState(scriptGeneratorMockBuilder.getMockScriptGeneratorModel(), scriptGeneratorMockBuilder.getMockNicosModel());
+		nicosFacade = new DynamicScriptingNicosFacade(scriptGeneratorMockBuilder.getMockNicosModel());
+		state = new StoppedState(
+				scriptGeneratorMockBuilder.getMockScriptGeneratorModel(), 
+				scriptGeneratorMockBuilder.getMockNicosModel(),
+				nicosFacade
+		);
 	}
 	
 	@Test

@@ -8,8 +8,8 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 public class ErrorState extends DynamicScriptingState {
 
-	public ErrorState(ScriptGeneratorSingleton scriptGeneratorModel, NicosModel nicosModel) {
-		super(scriptGeneratorModel, nicosModel);
+	public ErrorState(ScriptGeneratorSingleton scriptGeneratorModel, NicosModel nicosModel, DynamicScriptingNicosFacade nicosFacade) {
+		super(scriptGeneratorModel, nicosModel, nicosFacade);
 	}
 
 	@Override

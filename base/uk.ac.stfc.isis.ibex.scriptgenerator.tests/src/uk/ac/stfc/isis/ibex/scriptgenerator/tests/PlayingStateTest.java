@@ -2,9 +2,6 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -14,6 +11,7 @@ import java.util.Optional;
 import static org.hamcrest.CoreMatchers.not;
 
 import uk.ac.stfc.isis.ibex.nicos.ScriptStatus;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosFacade;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingState;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.PlayingState;
@@ -23,6 +21,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.ScriptGeneratorMockBuild
 public class PlayingStateTest {
 	
 	private PlayingState state;
+	private DynamicScriptingNicosFacade nicosFacade;
 	
 	private ScriptGeneratorMockBuilder scriptGeneratorMockBuilder;
 	
@@ -31,7 +30,12 @@ public class PlayingStateTest {
 		// Set up mocks
 		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
 		// Set up class under test
-		state = new PlayingState(scriptGeneratorMockBuilder.getMockScriptGeneratorModel(), scriptGeneratorMockBuilder.getMockNicosModel());
+		nicosFacade = new DynamicScriptingNicosFacade(scriptGeneratorMockBuilder.getMockNicosModel());
+		state = new PlayingState(
+				scriptGeneratorMockBuilder.getMockScriptGeneratorModel(), 
+				scriptGeneratorMockBuilder.getMockNicosModel(), 
+				nicosFacade
+		);
 	}
 	
 	@Test
@@ -69,7 +73,6 @@ public class PlayingStateTest {
 	
 	@Test
 	public void test_stepping_through_actions() {
-		var mockNicosModel = scriptGeneratorMockBuilder.getMockNicosModel();
 		// Act
 		Optional<ScriptGeneratorAction> currentAction = state.getCurrentlyExecutingAction();
 		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
@@ -77,8 +80,7 @@ public class PlayingStateTest {
 		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(0)));
 		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
 		// Act
-		mockNicosModel.getScriptStatus();
-		mockNicosModel.runTestUpdate(ScriptStatus.IDLE);
+		nicosFacade.setScriptStatus(ScriptStatus.IDLE);
 		// Act
 		currentAction = state.getCurrentlyExecutingAction();
 		nextAction = state.getNextExecutingAction();

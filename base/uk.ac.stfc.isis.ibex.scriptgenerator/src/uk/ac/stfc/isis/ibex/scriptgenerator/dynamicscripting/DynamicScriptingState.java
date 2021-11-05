@@ -11,12 +11,14 @@ public abstract class DynamicScriptingState extends ModelObject {
 	
 	protected static final String STATE_CHANGE_PROPERTY = "stateChange";
 	
-	ScriptGeneratorSingleton scriptGeneratorModel;
-	NicosModel nicosModel;
+	protected ScriptGeneratorSingleton scriptGeneratorModel;
+	protected NicosModel nicosModel;
+	protected DynamicScriptingNicosFacade nicosFacade;
 	
-	public DynamicScriptingState(ScriptGeneratorSingleton scriptGeneratorModel, NicosModel nicosModel) {
+	public DynamicScriptingState(ScriptGeneratorSingleton scriptGeneratorModel, NicosModel nicosModel, DynamicScriptingNicosFacade nicosFacade) {
 		this.scriptGeneratorModel = scriptGeneratorModel;
 		this.nicosModel = nicosModel;
+		this.nicosFacade = nicosFacade;
 	}
 	
 	public abstract Optional<ScriptGeneratorAction> getCurrentlyExecutingAction();

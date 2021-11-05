@@ -3,10 +3,8 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting;
 import java.util.List;
 import java.util.Optional;
 
-import uk.ac.stfc.isis.ibex.nicos.NicosErrorState;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.nicos.ScriptStatus;
-import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
@@ -17,12 +15,12 @@ public class PlayingState extends DynamicScriptingState {
 	private Optional<ScriptGeneratorAction> currentlyExecutingAction;
 	private Optional<Integer> currentlyExecutingActionIndex;
 	
-	public PlayingState(ScriptGeneratorSingleton scriptGeneratorModel, NicosModel nicosModel) {
-		super(scriptGeneratorModel, nicosModel);
-		this.nicosModel.addPropertyChangeListener(SCRIPT_STATUS_PROPERTY, event -> {
+	public PlayingState(ScriptGeneratorSingleton scriptGeneratorModel, NicosModel nicosModel, DynamicScriptingNicosFacade nicosFacade) {
+		super(scriptGeneratorModel, nicosModel, nicosFacade);
+		this.nicosFacade.addPropertyChangeListener(SCRIPT_STATUS_PROPERTY, event -> {
 			ScriptStatus newStatus = (ScriptStatus) event.getNewValue();
 			ScriptStatus oldStatus = (ScriptStatus) event.getOldValue();
-			if (oldStatus != ScriptStatus.IDLE && newStatus == ScriptStatus.IDLE) {
+			if (newStatus == ScriptStatus.IDLE && oldStatus == ScriptStatus.RUNNING) {
 				setUpNextExecutingAction();
 			}
 		});
@@ -44,26 +42,14 @@ public class PlayingState extends DynamicScriptingState {
 	private void executeCurrentAction()  {
 		if (currentlyExecutingAction.isPresent()) {
 			try {
-				String name = "Script Generator: " + currentlyExecutingAction.toString();
-				String code = "print(" + currentlyExecutingActionIndex.get() + ")";
-				executeScript(name, code);
+				ScriptGeneratorAction action = currentlyExecutingAction.get();
+				nicosFacade.executeAction(action);
 			} catch (DynamicScriptingException e) {
-				firePropertyChange(STATE_CHANGE_PROPERTY, this, new ErrorState(scriptGeneratorModel, nicosModel));
+				firePropertyChange(STATE_CHANGE_PROPERTY, this, new ErrorState(scriptGeneratorModel, nicosModel, nicosFacade));
 			}
 		} else {
-			firePropertyChange(STATE_CHANGE_PROPERTY, this, new StoppedState(scriptGeneratorModel, nicosModel));
+			firePropertyChange(STATE_CHANGE_PROPERTY, this, new StoppedState(scriptGeneratorModel, nicosModel, nicosFacade));
 		}
-	}
-	
-	private void executeScript(String name, String code) throws DynamicScriptingException {
-		if (!nicosInError()) {
-    		var scriptToSend = new QueuedScript();
-    		scriptToSend.setName(name);
-        	scriptToSend.setCode(code);
-        	nicosModel.sendScript(scriptToSend);
-    	} else {
-    		throw new DynamicScriptingException("Nicos in error, cannot play script.");
-    	}
 	}
 
 	@Override
@@ -105,12 +91,7 @@ public class PlayingState extends DynamicScriptingState {
 
 	@Override
 	public DynamicScriptingState stop() {
-		return new StoppedState(scriptGeneratorModel, nicosModel);
-	}
-	
-	private boolean nicosInError() {
-		var nicosError = nicosModel.getError();
-		return nicosError != NicosErrorState.NO_ERROR && nicosError != NicosErrorState.SCRIPT_SEND_FAIL;
+		return new StoppedState(scriptGeneratorModel, nicosModel, nicosFacade);
 	}
 
 }
