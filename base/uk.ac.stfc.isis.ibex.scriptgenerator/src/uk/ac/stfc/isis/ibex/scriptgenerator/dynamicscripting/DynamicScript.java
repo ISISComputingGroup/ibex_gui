@@ -43,6 +43,9 @@ public class DynamicScript {
 	}
 	
 	public Optional<String> getCode() {
+		if (code.isPresent()) {
+			return Optional.of(code.get() + "\nrunscript()");
+		}
 		return code;
 	}
 
