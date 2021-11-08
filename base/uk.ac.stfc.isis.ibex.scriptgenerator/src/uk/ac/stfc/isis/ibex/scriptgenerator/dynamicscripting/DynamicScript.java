@@ -21,16 +21,18 @@ public class DynamicScript {
 		this.code = Optional.of(code);
 	}
 	
-	public static Integer getIdFromName(String name) throws DynamicScriptingException {
-		var splitName = name.split(" ");
-		if (splitName.length == 3) {
+	public static Integer getIdFromName(String name) throws DynamicScriptNameFormatException {
+		String prefix = "Script Generator: ";
+		if (name.startsWith(prefix)) {
+			String idWithWhitespace = name.substring(prefix.length());
+			String id = idWithWhitespace.strip();
 			try {
-				return Integer.parseInt(splitName[2]);
+				return Integer.parseInt(id);
 			} catch(NumberFormatException e) {
-				throw new DynamicScriptingException("Format should be like 'Script Generator: <Integer ID>'");
+				throw new DynamicScriptNameFormatException("Format should be like 'Script Generator: <Integer ID>'");
 			}
 		} else {
-			throw new DynamicScriptingException("Format should be like 'Script Generator: <Integer ID>'");
+			throw new DynamicScriptNameFormatException("Format should be like 'Script Generator: <Integer ID>'");
 		}
 	}
 	
