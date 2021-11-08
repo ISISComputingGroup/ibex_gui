@@ -38,8 +38,7 @@ public class StoppedState extends DynamicScriptingState {
 
 	@Override
 	public void tearDownListeners() {
-		// TODO Auto-generated method stub
-		
+		// Do nothing
 	}
 
 }

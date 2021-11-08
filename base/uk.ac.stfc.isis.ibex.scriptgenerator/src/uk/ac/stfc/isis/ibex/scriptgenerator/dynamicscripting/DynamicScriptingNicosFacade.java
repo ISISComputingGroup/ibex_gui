@@ -39,23 +39,15 @@ public class DynamicScriptingNicosFacade extends ModelObject {
 		return nicosError != NicosErrorState.NO_ERROR;
 	}
 	
-	private void scriptRunning() {
-		firePropertyChange(DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY, false, true);
-	}
-	
-	private void scriptError() {
-		firePropertyChange(DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY, true, false);
-	}
-	
-	private void scriptIdle() {
+	private void scriptChanged() {
 		firePropertyChange(DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY, false, true);
 	}
 	
 	public void setScriptName(String newName) {
 		if (scriptName.isPresent()) {
 			var oldName = scriptName.get();
-			if (oldName != newName) {
-				scriptIdle();
+			if (!oldName.equals(newName)) {
+				scriptChanged();
 			}
 			this.scriptName = Optional.ofNullable(newName);
 		} else {

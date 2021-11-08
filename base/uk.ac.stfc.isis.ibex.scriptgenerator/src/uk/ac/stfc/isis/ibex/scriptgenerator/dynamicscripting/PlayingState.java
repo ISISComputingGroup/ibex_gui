@@ -27,7 +27,7 @@ public class PlayingState extends DynamicScriptingState {
 		actionExecutor = new PropertyChangeListener() {
 			
 			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
+			public void propertyChange(PropertyChangeEvent evt) { 
 				executeScript();
 			}
 		};
