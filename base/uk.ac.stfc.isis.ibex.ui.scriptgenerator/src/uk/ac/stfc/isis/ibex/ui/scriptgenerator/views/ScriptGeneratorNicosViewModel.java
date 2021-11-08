@@ -1,8 +1,7 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
-import java.util.HashSet;
+import java.util.HashMap;
 
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
@@ -16,6 +15,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingExc
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingManager;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosFacade;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.StoppedState;
+import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
  * A ViewModel to control the View in relation to elements from the nicos model.
@@ -29,7 +29,7 @@ public class ScriptGeneratorNicosViewModel {
 	public ScriptGeneratorNicosViewModel(ScriptGeneratorSingleton scriptGeneratorModel) {
 		var nicosFacade = new DynamicScriptingNicosFacade(nicosModel);
 		var generatorFacade = new DynamicScriptingModelFacade(scriptGeneratorModel);
-		var dynamicScriptingState = new StoppedState(nicosFacade, generatorFacade, new HashSet<Integer>());
+		var dynamicScriptingState = new StoppedState(nicosFacade, generatorFacade, new HashMap<Integer, ScriptGeneratorAction>());
 		dynamicScriptingManager = new DynamicScriptingManager(dynamicScriptingState);
 		scriptGeneratorModel.setDynamicScriptingManager(dynamicScriptingManager);
 	}

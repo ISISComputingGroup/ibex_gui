@@ -79,5 +79,10 @@ public class ScriptGeneratorProperties {
      * The property to fire a change of if the action becomes valid or invalid.
      */
 	public static final String VALIDITY_PROPERTY = "validity";
+	
+	/**
+     * The property to fire a change of if the action becomes executing or not executing.
+     */
+	public static final String EXECUTING_PROPERTY = "executing";
 
 }

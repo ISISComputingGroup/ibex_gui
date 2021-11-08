@@ -44,5 +44,4 @@ public class DynamicScriptingManager {
 		return dynamicScriptingState.isScriptDynamic(integer);
 	}
 	
-
 }

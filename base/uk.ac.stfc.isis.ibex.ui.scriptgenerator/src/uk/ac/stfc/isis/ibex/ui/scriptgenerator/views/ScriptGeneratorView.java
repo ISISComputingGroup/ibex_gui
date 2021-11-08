@@ -441,8 +441,6 @@ public class ScriptGeneratorView {
 	        nicosModel.bindQueueScriptButton(playScriptButton);
 	        playScriptButton.addListener(SWT.Selection, e -> {
 	        	nicosModel.playScript();
-//	        	var scriptId = scriptGeneratorViewModel.generateScript();
-//	        	scriptId.ifPresent(id -> scriptGeneratorViewModel.setNicosScript(id));
 	        });
 	        
 	        // Needs to be after nicos model has been set up

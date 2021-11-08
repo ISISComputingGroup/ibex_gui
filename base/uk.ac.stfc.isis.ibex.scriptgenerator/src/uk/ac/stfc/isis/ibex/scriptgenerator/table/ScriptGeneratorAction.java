@@ -28,6 +28,8 @@ public class ScriptGeneratorAction extends ModelObject {
      * Contains the estimated time to complete the action. Empty optional if the action is invalid
      */
     private Optional<Number> estimatedTime = Optional.empty();
+    
+    private Boolean executing = false;
 
     /**
      * Default constructor sets each parameter/value pair using input argument.
@@ -151,6 +153,18 @@ public class ScriptGeneratorAction extends ModelObject {
      */
     public Optional<Number> getEstimatedTime() {
 	return estimatedTime;
+    }
+    
+    public void setExecuting() {
+    	firePropertyChange(ScriptGeneratorProperties.VALUE_PROPERTY, executing, executing = true);
+    }
+    
+    public void setNotExecuting() {
+    	firePropertyChange(ScriptGeneratorProperties.VALUE_PROPERTY, executing, executing = false);
+    }
+    
+    public Boolean isExecuting() {
+    	return executing;
     }
     
 }	

@@ -99,6 +99,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     public static final String VALIDITY_COLUMN_HEADER = "Validity";
     
+    public static final String ACTION_NUMBER_COLUMN_HEADER = "Action";
+    
     /**
      * The header of the estimated run time column.
      */
@@ -847,18 +849,23 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     protected void addColumns(ActionsViewTable viewTable) {  
         // Add line numbers
-        TableViewerColumn lineNumberColumn = viewTable.createColumn("Action", 0, 
+        TableViewerColumn lineNumberColumn = viewTable.createColumn(ACTION_NUMBER_COLUMN_HEADER, 0, 
                 new CellLabelProvider() {
                     @Override
                     public void update(ViewerCell cell) {
-                    	if (((ScriptGeneratorAction) cell.getElement()).isValid()) {
+                    	ScriptGeneratorAction action = (ScriptGeneratorAction) cell.getElement();
+                    	if (action.isValid()) {
                     		cell.setBackground(CLEAR_COLOR);
                         } else {
                         	cell.setBackground(INVALID_LIGHT_COLOR);
                         }
                         for (int i = 0; i < viewTable.table().getItemCount(); i++) {
-                            if (cell.getElement().equals(viewTable.viewer().getElementAt(i))) {
-                                cell.setText(String.valueOf(i + 1));
+                            if (action.equals(viewTable.viewer().getElementAt(i))) {
+                            	String lineNumber = String.valueOf(i + 1);
+                            	if (action.isExecuting()) {
+                            		lineNumber += "\u25B6";
+                            	}
+                                cell.setText(lineNumber);
                                 break;
                             }
                         }
