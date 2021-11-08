@@ -97,7 +97,7 @@ public class DynamicScriptingGeneratorFacadeTest {
 			assertThat(scriptsGeneratedCount, is(0));
 			generatorFacade.handleScriptGeneration("test");
 			assertThat(scriptsGeneratedCount, is(1));
-			assertScriptIs(Optional.of(0), Optional.of("Script Generator: 0"), Optional.of("test"));
+			assertScriptIs(Optional.of(0), Optional.of("Script Generator: 0"), Optional.of("test" + "\nrunscript()"));
 		} catch (DynamicScriptingException e) {
 			throw new AssertionError("Should refresh correctly");
 		}

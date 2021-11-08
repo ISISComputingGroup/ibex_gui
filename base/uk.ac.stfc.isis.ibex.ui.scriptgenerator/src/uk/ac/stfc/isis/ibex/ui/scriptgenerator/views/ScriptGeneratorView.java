@@ -175,9 +175,9 @@ public class ScriptGeneratorView {
         }
     });
     
-    scriptGeneratorViewModel.addPropertyChangeListener(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, evt -> {
-    	nicosModel.queueScript("Script generator", (String) evt.getNewValue() + "\nrunscript()"); 
-    });
+//    scriptGeneratorViewModel.addPropertyChangeListener(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, evt -> {
+//    	nicosModel.queueScript("Script generator", (String) evt.getNewValue() + "\nrunscript()"); 
+//    });
 
     var scriptGeneratorModel = scriptGeneratorViewModel.setUpModel();
     nicosModel = new ScriptGeneratorNicosViewModel(scriptGeneratorModel);

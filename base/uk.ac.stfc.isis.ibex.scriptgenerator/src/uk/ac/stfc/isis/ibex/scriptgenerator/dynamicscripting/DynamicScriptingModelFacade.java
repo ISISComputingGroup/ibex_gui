@@ -58,7 +58,11 @@ public class DynamicScriptingModelFacade extends ModelObject {
 	}
 	
 	public Optional<String> getScriptCode() {
-		return scriptCode;
+		if (scriptCode.isPresent()) {
+			var code = scriptCode.get();
+			return Optional.of(code + "\nrunscript()");
+		}
+		return Optional.empty();
 	}
 	
 	public Optional<ScriptGeneratorAction> getAction(Integer actionIndex) {
