@@ -1,5 +1,7 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -9,16 +11,64 @@ public class PlayingState extends DynamicScriptingState {
 	
 	private Optional<ScriptGeneratorAction> currentlyExecutingAction;
 	private Optional<Integer> nextScriptId = Optional.empty();
+	PropertyChangeListener nextActionSetup;
+	PropertyChangeListener actionExecutor;
 	
 	public PlayingState(DynamicScriptingNicosFacade nicosFacade, DynamicScriptingModelFacade generatorFacade, HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction) {
 		super(nicosFacade, generatorFacade, dynamicScriptIdsToAction);
-		this.nicosFacade.addPropertyChangeListener(DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY, event -> {
-			setUpNextExecutingAction();
-		});
-		this.scriptGeneratorFacade.addPropertyChangeListener(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, event -> {
-			executeScript();
-		});
+		nextActionSetup = new PropertyChangeListener() {
+			
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				setUpNextExecutingAction();
+			}
+		};
+		this.nicosFacade.addPropertyChangeListener(DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY, nextActionSetup);
+		actionExecutor = new PropertyChangeListener() {
+			
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				executeScript();
+			}
+		};
+		this.scriptGeneratorFacade.addPropertyChangeListener(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, actionExecutor);
 		setUpFirstExecutingAction();
+	}
+	
+	@Override
+	public Optional<ScriptGeneratorAction> getCurrentlyExecutingAction() {
+		return currentlyExecutingAction;
+	}
+
+	@Override
+	public Optional<ScriptGeneratorAction> getNextExecutingAction() {
+		if (currentlyExecutingAction.isPresent()) {
+			var currentAction = currentlyExecutingAction.get();
+			return scriptGeneratorFacade.getActionAfter(currentAction);
+		} else {
+			return Optional.empty();
+		}
+	}
+
+	@Override
+	public DynamicScriptingStatus getStatus() {
+		return DynamicScriptingStatus.PLAYING;
+	}
+
+	@Override
+	public void play() {
+		// Do nothing
+	}
+
+	@Override
+	public void stop() {
+		changeState(DynamicScriptingStatus.STOPPED);
+	}
+
+	@Override
+	public void tearDownListeners() {
+		this.nicosFacade.removePropertyChangeListener(DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY, nextActionSetup);
+		this.scriptGeneratorFacade.removePropertyChangeListener(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, actionExecutor);
 	}
 	
 	private void setUpFirstExecutingAction() {
@@ -43,10 +93,10 @@ public class PlayingState extends DynamicScriptingState {
 					dynamicScriptIdsToAction.put(scriptId, action);
 				});
 			} catch (DynamicScriptingException e) {
-				firePropertyChange(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, this, new ErrorState(nicosFacade, scriptGeneratorFacade, dynamicScriptIdsToAction));
+				changeState(DynamicScriptingStatus.ERROR);
 			}
 		} else {
-			firePropertyChange(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, this, new StoppedState(nicosFacade, scriptGeneratorFacade, getClearScriptIdMap()));
+			changeState(DynamicScriptingStatus.STOPPED);
 		}
 	}
 	
@@ -60,46 +110,17 @@ public class PlayingState extends DynamicScriptingState {
 							action.setExecuting();
 						});
 					} catch (DynamicScriptingException e) {
-						firePropertyChange(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, this, new ErrorState(nicosFacade, scriptGeneratorFacade, dynamicScriptIdsToAction));
+						changeState(DynamicScriptingStatus.ERROR);
 					}
 				}, () -> {
+					changeState(DynamicScriptingStatus.ERROR);
 					firePropertyChange(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, this, new ErrorState(nicosFacade, scriptGeneratorFacade, dynamicScriptIdsToAction));
 				});
 				
 			},  () -> {
-				firePropertyChange(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, this, new ErrorState(nicosFacade, scriptGeneratorFacade, dynamicScriptIdsToAction));
+				changeState(DynamicScriptingStatus.ERROR);
 			}
 		);
-	}
-
-	@Override
-	public Optional<ScriptGeneratorAction> getCurrentlyExecutingAction() {
-		return currentlyExecutingAction;
-	}
-
-	@Override
-	public Optional<ScriptGeneratorAction> getNextExecutingAction() {
-		if (currentlyExecutingAction.isPresent()) {
-			var currentAction = currentlyExecutingAction.get();
-			return scriptGeneratorFacade.getActionAfter(currentAction);
-		} else {
-			return Optional.empty();
-		}
-	}
-
-	@Override
-	public DynamicScriptingStatus getStatus() {
-		return DynamicScriptingStatus.PLAYING;
-	}
-
-	@Override
-	public DynamicScriptingState play() {
-		return this;
-	}
-
-	@Override
-	public DynamicScriptingState stop() {
-		return new StoppedState(nicosFacade, scriptGeneratorFacade, getClearScriptIdMap());
 	}
 
 }

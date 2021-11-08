@@ -27,13 +27,18 @@ public class ErrorState extends DynamicScriptingState {
 	}
 
 	@Override
-	public DynamicScriptingState play() {
-		return this;
+	public void play() {
+		//Do nothing
 	}
 
 	@Override
-	public DynamicScriptingState stop() {
-		return this;
+	public void stop() {
+		// Do nothing
+	}
+
+	@Override
+	public void tearDownListeners() {
+		// Do nothing
 	}
 
 }

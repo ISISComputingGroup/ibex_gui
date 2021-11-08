@@ -9,26 +9,32 @@ public class DynamicScriptingManager {
 	private DynamicScriptingState dynamicScriptingState;
 	
 	public DynamicScriptingManager(DynamicScriptingState dynamicScriptingState) {
-		handleStateChange(dynamicScriptingState);
+		setupNewState(dynamicScriptingState);
 	}
 	
 	public void playScript() throws DynamicScriptingException {
-		DynamicScriptingState newState = dynamicScriptingState.play();
-		handleStateChange(newState);
+		dynamicScriptingState.play();
 	}
 	
 	public void stopScript() {
-		DynamicScriptingState newState = dynamicScriptingState.stop();
-		handleStateChange(newState);
+		dynamicScriptingState.stop();
+	}
+	
+	private void setupNewState(DynamicScriptingState newState) {
+		if (dynamicScriptingState != null) {
+			dynamicScriptingState.tearDownListeners();
+		}
+		dynamicScriptingState = newState;
+		dynamicScriptingState.addPropertyChangeListener(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, event -> {
+			DynamicScriptingStatus nextStatus = (DynamicScriptingStatus) event.getNewValue();
+			DynamicScriptingState nextState = DynamicScriptingStateFactory.getNewState(dynamicScriptingState, nextStatus);
+			handleStateChange(nextState);
+		});
 	}
 	
 	private void handleStateChange(DynamicScriptingState newState) {
 		if (newState != dynamicScriptingState) {
-			dynamicScriptingState = newState;
-			dynamicScriptingState.addPropertyChangeListener(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, event -> {
-				DynamicScriptingState nextState = (DynamicScriptingState) event.getNewValue();
-				handleStateChange(nextState);
-			});
+			setupNewState(newState);
 		}
 	}
 	

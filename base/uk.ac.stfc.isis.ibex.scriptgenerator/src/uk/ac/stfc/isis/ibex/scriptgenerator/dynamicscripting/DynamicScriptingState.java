@@ -27,14 +27,28 @@ public abstract class DynamicScriptingState extends ModelObject implements HasSt
 		return new HashMap<Integer, ScriptGeneratorAction>();
 	}
 	
+	public void changeState(DynamicScriptingStatus newStatus) {
+		firePropertyChange(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, getStatus(), newStatus);
+	}
+	
+	public DynamicScriptingNicosFacade getNicosFacade() {
+		return nicosFacade;
+	}
+	
+	public DynamicScriptingModelFacade getModelFacade() {
+		return scriptGeneratorFacade;
+	}
+	
 	public abstract Optional<ScriptGeneratorAction> getCurrentlyExecutingAction();
 	
 	public abstract Optional<ScriptGeneratorAction> getNextExecutingAction();
 	
 	public abstract DynamicScriptingStatus getStatus();
 	
-	public abstract DynamicScriptingState play();
+	public abstract void play();
 		
-	public abstract DynamicScriptingState stop();
+	public abstract void stop();
+	
+	public abstract void tearDownListeners();
 
 }

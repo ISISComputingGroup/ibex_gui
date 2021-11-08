@@ -27,13 +27,19 @@ public class StoppedState extends DynamicScriptingState {
 	}
 
 	@Override
-	public DynamicScriptingState play() {
-		return new PlayingState(nicosFacade, scriptGeneratorFacade, getClearScriptIdMap());
+	public void play() {
+		changeState(DynamicScriptingStatus.PLAYING);
 	}
 
 	@Override
-	public DynamicScriptingState stop() {
-		return this;
+	public void stop() {
+		// Do nothing
+	}
+
+	@Override
+	public void tearDownListeners() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
