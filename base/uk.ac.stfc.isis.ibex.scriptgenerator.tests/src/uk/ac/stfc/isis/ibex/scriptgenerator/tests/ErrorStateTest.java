@@ -8,7 +8,7 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingGeneratorFacade;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelFacade;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosFacade;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingState;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStatus;
@@ -19,7 +19,7 @@ public class ErrorStateTest {
 	
 	private ErrorState state;
 	private DynamicScriptingNicosFacade nicosFacade;
-	private DynamicScriptingGeneratorFacade generatorFacade;
+	private DynamicScriptingModelFacade scriptGeneratorFacade;
 	
 	private ScriptGeneratorMockBuilder scriptGeneratorMockBuilder;
 	
@@ -27,12 +27,8 @@ public class ErrorStateTest {
 	public void setUp() {
 		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
 		nicosFacade = new DynamicScriptingNicosFacade(scriptGeneratorMockBuilder.getMockNicosModel());
-		generatorFacade = new DynamicScriptingGeneratorFacade(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
-		state = new ErrorState(
-			scriptGeneratorMockBuilder.getMockScriptGeneratorModel(), 
-			scriptGeneratorMockBuilder.getMockNicosModel(),
-			nicosFacade, generatorFacade
-		);
+		scriptGeneratorFacade = new DynamicScriptingModelFacade(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
+		state = new ErrorState(nicosFacade, scriptGeneratorFacade);
 	}
 	
 	public void assertActionsEmpty() {

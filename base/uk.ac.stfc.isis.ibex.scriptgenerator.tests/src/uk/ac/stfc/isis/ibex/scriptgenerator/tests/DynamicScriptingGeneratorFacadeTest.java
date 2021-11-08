@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.NoScriptDefinitionSelectedException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingException;
-import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingGeneratorFacade;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelFacade;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
@@ -22,7 +22,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.ScriptGeneratorMockBuild
 public class DynamicScriptingGeneratorFacadeTest {
 	
 	private ScriptGeneratorMockBuilder scriptGeneratorMockBuilder;
-	private DynamicScriptingGeneratorFacade generatorFacade;
+	private DynamicScriptingModelFacade generatorFacade;
 	private Integer scriptsGeneratedCount;
 	
 	@Before
@@ -31,7 +31,7 @@ public class DynamicScriptingGeneratorFacadeTest {
 		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
 		scriptsGeneratedCount = 0;
 		// Set up class under test
-		generatorFacade = new DynamicScriptingGeneratorFacade(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
+		generatorFacade = new DynamicScriptingModelFacade(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
 		generatorFacade.addPropertyChangeListener(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, evt -> {
 			scriptsGeneratedCount++;
 		});

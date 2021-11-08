@@ -1,5 +1,6 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting;
 
+import java.util.List;
 import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -10,13 +11,13 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
-public class DynamicScriptingGeneratorFacade extends ModelObject {
+public class DynamicScriptingModelFacade extends ModelObject {
 	
 	private ScriptGeneratorSingleton scriptGeneratorModel;
 	private Optional<Integer> scriptId = Optional.empty();
 	private Optional<String> scriptCode = Optional.empty();
 	
-	public DynamicScriptingGeneratorFacade(ScriptGeneratorSingleton scriptGeneratorModel) {
+	public DynamicScriptingModelFacade(ScriptGeneratorSingleton scriptGeneratorModel) {
 		this.scriptGeneratorModel = scriptGeneratorModel;
 		this.scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.SCRIPT_GENERATION_ERROR_PROPERTY, event -> {
 			firePropertyChange(ScriptGeneratorProperties.SCRIPT_GENERATION_ERROR_PROPERTY, event.getOldValue(), event.getNewValue());
@@ -58,6 +59,14 @@ public class DynamicScriptingGeneratorFacade extends ModelObject {
 	
 	public Optional<String> getScriptCode() {
 		return scriptCode;
+	}
+	
+	public Optional<ScriptGeneratorAction> getAction(Integer actionIndex) {
+		return scriptGeneratorModel.getAction(actionIndex);
+	}
+	
+	public List<ScriptGeneratorAction> getActions() {
+		return scriptGeneratorModel.getActions();
 	}
 
 }

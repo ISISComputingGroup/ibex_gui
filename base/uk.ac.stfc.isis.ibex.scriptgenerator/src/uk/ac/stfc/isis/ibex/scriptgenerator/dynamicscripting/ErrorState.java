@@ -2,14 +2,12 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting;
 
 import java.util.Optional;
 
-import uk.ac.stfc.isis.ibex.nicos.NicosModel;
-import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 public class ErrorState extends DynamicScriptingState {
 
-	public ErrorState(ScriptGeneratorSingleton scriptGeneratorModel, NicosModel nicosModel, DynamicScriptingNicosFacade nicosFacade, DynamicScriptingGeneratorFacade generatorFacade) {
-		super(scriptGeneratorModel, nicosModel, nicosFacade, generatorFacade);
+	public ErrorState(DynamicScriptingNicosFacade nicosFacade, DynamicScriptingModelFacade generatorFacade) {
+		super(nicosFacade, generatorFacade);
 	}
 
 	@Override

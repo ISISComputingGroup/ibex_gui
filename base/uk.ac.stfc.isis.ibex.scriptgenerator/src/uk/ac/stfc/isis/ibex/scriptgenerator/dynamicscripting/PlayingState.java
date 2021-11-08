@@ -14,8 +14,8 @@ public class PlayingState extends DynamicScriptingState {
 	private Optional<Integer> currentlyExecutingActionIndex;
 	private Optional<Integer> nextScriptId = Optional.empty();
 	
-	public PlayingState(ScriptGeneratorSingleton scriptGeneratorModel, NicosModel nicosModel, DynamicScriptingNicosFacade nicosFacade, DynamicScriptingGeneratorFacade generatorFacade) {
-		super(scriptGeneratorModel, nicosModel, nicosFacade, generatorFacade);
+	public PlayingState(DynamicScriptingNicosFacade nicosFacade, DynamicScriptingModelFacade generatorFacade) {
+		super(nicosFacade, generatorFacade);
 		this.nicosFacade.addPropertyChangeListener(DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, event -> {
 			ScriptStatus newStatus = (ScriptStatus) event.getNewValue();
 			ScriptStatus oldStatus = (ScriptStatus) event.getOldValue();
@@ -23,7 +23,7 @@ public class PlayingState extends DynamicScriptingState {
 				setUpNextExecutingAction();
 			}
 		});
-		this.generatorFacade.addPropertyChangeListener(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, event -> {
+		this.scriptGeneratorFacade.addPropertyChangeListener(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, event -> {
 			executeScript();
 		});
 		setUpFirstExecutingAction();
@@ -31,7 +31,7 @@ public class PlayingState extends DynamicScriptingState {
 	
 	private void setUpFirstExecutingAction() {
 		currentlyExecutingActionIndex = Optional.of(0);
-		currentlyExecutingAction = scriptGeneratorModel.getAction(currentlyExecutingActionIndex.get());
+		currentlyExecutingAction = scriptGeneratorFacade.getAction(currentlyExecutingActionIndex.get());
 		refreshGeneratedScriptWithCurrentAction();
 	}
 	
@@ -45,28 +45,28 @@ public class PlayingState extends DynamicScriptingState {
 		if (currentlyExecutingAction.isPresent()) {
 			try {
 				ScriptGeneratorAction action = currentlyExecutingAction.get();
-				nextScriptId = generatorFacade.refreshGeneratedScript(action);
+				nextScriptId = scriptGeneratorFacade.refreshGeneratedScript(action);
 			} catch (DynamicScriptingException e) {
-				firePropertyChange(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, this, new ErrorState(scriptGeneratorModel, nicosModel, nicosFacade, generatorFacade));
+				firePropertyChange(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, this, new ErrorState(nicosFacade, scriptGeneratorFacade));
 			}
 		} else {
-			firePropertyChange(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, this, new StoppedState(scriptGeneratorModel, nicosModel, nicosFacade, generatorFacade));
+			firePropertyChange(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, this, new StoppedState(nicosFacade, scriptGeneratorFacade));
 		}
 	}
 	
 	private void executeScript()  {
-		Optional<Integer> scriptId = generatorFacade.getScriptId();
-		Optional<String> scriptName = generatorFacade.getScriptName();
-		Optional<String> scriptCode = generatorFacade.getScriptCode();
+		Optional<Integer> scriptId = scriptGeneratorFacade.getScriptId();
+		Optional<String> scriptName = scriptGeneratorFacade.getScriptName();
+		Optional<String> scriptCode = scriptGeneratorFacade.getScriptCode();
 		if (scriptName.isPresent() && scriptCode.isPresent() && scriptId.isPresent()) {
 			try {
 				nicosFacade.executeAction(scriptName.get(), scriptCode.get());
 				firePropertyChange(DynamicScriptingProperties.NEW_SCRIPT_ID_PROPERTY, Optional.empty(), nextScriptId);
 			} catch (DynamicScriptingException e) {
-				firePropertyChange(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, this, new ErrorState(scriptGeneratorModel, nicosModel, nicosFacade, generatorFacade));
+				firePropertyChange(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, this, new ErrorState(nicosFacade, scriptGeneratorFacade));
 			}
 		} else {
-			firePropertyChange(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, this, new ErrorState(scriptGeneratorModel, nicosModel, nicosFacade, generatorFacade));
+			firePropertyChange(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, this, new ErrorState(nicosFacade, scriptGeneratorFacade));
 		}
 	}
 
@@ -77,7 +77,7 @@ public class PlayingState extends DynamicScriptingState {
 
 	@Override
 	public Optional<ScriptGeneratorAction> getNextExecutingAction() {
-		List<ScriptGeneratorAction> actions = scriptGeneratorModel.getActions();
+		List<ScriptGeneratorAction> actions = scriptGeneratorFacade.getActions();
 		Optional<ScriptGeneratorAction> nextAction = Optional.empty();
 		if (currentlyExecutingAction.isPresent()) {
 			ScriptGeneratorAction currentAction = currentlyExecutingAction.get();
@@ -85,7 +85,7 @@ public class PlayingState extends DynamicScriptingState {
 			// indexOf returns -1 if action is not in table
 			if (actionIndex >= 0) {
 				Integer nextActionIndex = actionIndex + 1;
-				nextAction = scriptGeneratorModel.getAction(nextActionIndex);
+				nextAction = scriptGeneratorFacade.getAction(nextActionIndex);
 			}
 		}
 		return nextAction;
@@ -103,7 +103,7 @@ public class PlayingState extends DynamicScriptingState {
 
 	@Override
 	public DynamicScriptingState stop() {
-		return new StoppedState(scriptGeneratorModel, nicosModel, nicosFacade, generatorFacade);
+		return new StoppedState(nicosFacade, scriptGeneratorFacade);
 	}
 
 }

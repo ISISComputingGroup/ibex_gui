@@ -4,22 +4,16 @@ import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.model.HasStatus;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
-import uk.ac.stfc.isis.ibex.nicos.NicosModel;
-import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 public abstract class DynamicScriptingState extends ModelObject implements HasStatus<DynamicScriptingStatus> {
 	
-	protected ScriptGeneratorSingleton scriptGeneratorModel;
-	protected NicosModel nicosModel;
 	protected DynamicScriptingNicosFacade nicosFacade;
-	protected DynamicScriptingGeneratorFacade generatorFacade;
+	protected DynamicScriptingModelFacade scriptGeneratorFacade;
 	
-	public DynamicScriptingState(ScriptGeneratorSingleton scriptGeneratorModel, NicosModel nicosModel, DynamicScriptingNicosFacade nicosFacade, DynamicScriptingGeneratorFacade generatorFacade) {
-		this.scriptGeneratorModel = scriptGeneratorModel;
-		this.nicosModel = nicosModel;
+	public DynamicScriptingState(DynamicScriptingNicosFacade nicosFacade, DynamicScriptingModelFacade generatorFacade) {
 		this.nicosFacade = nicosFacade;
-		this.generatorFacade = generatorFacade;
+		this.scriptGeneratorFacade = generatorFacade;
 	}
 	
 	public abstract Optional<ScriptGeneratorAction> getCurrentlyExecutingAction();

@@ -14,7 +14,7 @@ import java.util.Set;
 import static org.hamcrest.CoreMatchers.not;
 
 import uk.ac.stfc.isis.ibex.nicos.ScriptStatus;
-import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingGeneratorFacade;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelFacade;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosFacade;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingState;
@@ -28,7 +28,7 @@ public class PlayingStateTest {
 	
 	private PlayingState state;
 	private DynamicScriptingNicosFacade nicosFacade;
-	private DynamicScriptingGeneratorFacade generatorFacade;
+	private DynamicScriptingModelFacade scriptGeneratorFacade;
 	private StatusSwitchCounter<DynamicScriptingState, DynamicScriptingStatus> statusSwitchCounter;
 	private Set<Integer> scriptIds;
 	
@@ -46,12 +46,8 @@ public class PlayingStateTest {
 	
 	private void setUpClassUnderTest() {
 		nicosFacade = new DynamicScriptingNicosFacade(scriptGeneratorMockBuilder.getMockNicosModel());
-		generatorFacade = new DynamicScriptingGeneratorFacade(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
-		state = new PlayingState(
-				scriptGeneratorMockBuilder.getMockScriptGeneratorModel(), 
-				scriptGeneratorMockBuilder.getMockNicosModel(), 
-				nicosFacade, generatorFacade
-		);
+		scriptGeneratorFacade = new DynamicScriptingModelFacade(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
+		state = new PlayingState(nicosFacade, scriptGeneratorFacade);
 		state.addPropertyChangeListener(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, statusSwitchCounter);
 		state.addPropertyChangeListener(DynamicScriptingProperties.NEW_SCRIPT_ID_PROPERTY, evt -> {
 			Optional<Integer> scriptId = (Optional<Integer>) evt.getNewValue();
@@ -93,7 +89,7 @@ public class PlayingStateTest {
 		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
 		assertTrue(scriptIds.isEmpty());
 		// Act
-		generatorFacade.handleScriptGeneration("test");
+		scriptGeneratorFacade.handleScriptGeneration("test");
 		nicosFacade.setScriptStatus(ScriptStatus.IDLE);
 		assertTrue(scriptIds.contains(0));
 		assertThat(scriptIds.size(), is(1));
@@ -118,7 +114,7 @@ public class PlayingStateTest {
 			nextAction = state.getNextExecutingAction();
 			assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(i)));
 			assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(i + 1)));
-			generatorFacade.handleScriptGeneration("test");
+			scriptGeneratorFacade.handleScriptGeneration("test");
 			nicosFacade.setScriptStatus(ScriptStatus.IDLE);
 			assertTrue(scriptIds.contains(i));
 			assertThat(scriptIds.size(), is(i + 1));
@@ -144,7 +140,7 @@ public class PlayingStateTest {
 		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
 		assertTrue(scriptIds.isEmpty());
 		// Act
-		generatorFacade.handleScriptGeneration("test");
+		scriptGeneratorFacade.handleScriptGeneration("test");
 		nicosFacade.setScriptStatus(ScriptStatus.IDLE);
 		// Assert
 		assertTrue(scriptIds.isEmpty());
@@ -168,7 +164,7 @@ public class PlayingStateTest {
 		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
 		assertTrue(scriptIds.isEmpty());
 		// Act
-		generatorFacade.handleScriptGeneration("test");
+		scriptGeneratorFacade.handleScriptGeneration("test");
 		nicosFacade.setScriptStatus(ScriptStatus.IDLE);
 		// Assert
 		assertTrue(scriptIds.isEmpty());

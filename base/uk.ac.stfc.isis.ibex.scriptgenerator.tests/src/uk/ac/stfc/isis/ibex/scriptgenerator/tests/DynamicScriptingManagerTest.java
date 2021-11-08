@@ -13,10 +13,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import uk.ac.stfc.isis.ibex.nicos.ScriptStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingException;
-import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingGeneratorFacade;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelFacade;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingManager;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosFacade;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingState;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStatus;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.StoppedState;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.ScriptGeneratorMockBuilder;
 
@@ -24,7 +26,8 @@ public class DynamicScriptingManagerTest {
 	
 	private DynamicScriptingManager dynamicScriptingManager;
 	private DynamicScriptingNicosFacade nicosFacade;
-	private DynamicScriptingGeneratorFacade generatorFacade;
+	private DynamicScriptingModelFacade scriptGeneratorFacade;
+	private DynamicScriptingState initialState;
 	
 	private ScriptGeneratorMockBuilder scriptGeneratorMockBuilder;
 	
@@ -34,12 +37,9 @@ public class DynamicScriptingManagerTest {
 		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
 		// Set up class under test
 		nicosFacade = new DynamicScriptingNicosFacade(scriptGeneratorMockBuilder.getMockNicosModel());
-		generatorFacade = new DynamicScriptingGeneratorFacade(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
-		dynamicScriptingManager = new DynamicScriptingManager(
-				scriptGeneratorMockBuilder.getMockScriptGeneratorModel(), 
-				scriptGeneratorMockBuilder.getMockNicosModel(), 
-				nicosFacade, generatorFacade
-		);
+		scriptGeneratorFacade = new DynamicScriptingModelFacade(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
+		initialState = new StoppedState(nicosFacade, scriptGeneratorFacade);
+		dynamicScriptingManager = new DynamicScriptingManager(initialState);
 	}
 	
 	private void playScript() {
@@ -51,7 +51,7 @@ public class DynamicScriptingManagerTest {
 	}
 	
 	private void triggerActionExecuted() {
-		generatorFacade.handleScriptGeneration("test");
+		scriptGeneratorFacade.handleScriptGeneration("test");
 		nicosFacade.setScriptStatus(ScriptStatus.IDLE);
 	}
 	
