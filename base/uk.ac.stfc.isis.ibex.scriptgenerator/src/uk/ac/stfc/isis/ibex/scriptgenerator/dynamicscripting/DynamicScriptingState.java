@@ -1,5 +1,6 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting;
 
+import java.util.HashSet;
 import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.model.HasStatus;
@@ -10,10 +11,16 @@ public abstract class DynamicScriptingState extends ModelObject implements HasSt
 	
 	protected DynamicScriptingNicosFacade nicosFacade;
 	protected DynamicScriptingModelFacade scriptGeneratorFacade;
+	protected HashSet<Integer> dynamicScriptIds;
 	
-	public DynamicScriptingState(DynamicScriptingNicosFacade nicosFacade, DynamicScriptingModelFacade generatorFacade) {
+	public DynamicScriptingState(DynamicScriptingNicosFacade nicosFacade, DynamicScriptingModelFacade generatorFacade, HashSet<Integer> dynamicScriptIds) {
 		this.nicosFacade = nicosFacade;
 		this.scriptGeneratorFacade = generatorFacade;
+		this.dynamicScriptIds = dynamicScriptIds;
+	}
+	
+	public Boolean isScriptDynamic(Integer scriptId) {
+		return dynamicScriptIds.contains(scriptId);
 	}
 	
 	public abstract Optional<ScriptGeneratorAction> getCurrentlyExecutingAction();

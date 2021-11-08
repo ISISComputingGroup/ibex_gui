@@ -1,13 +1,14 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting;
 
+import java.util.HashSet;
 import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 public class ErrorState extends DynamicScriptingState {
 
-	public ErrorState(DynamicScriptingNicosFacade nicosFacade, DynamicScriptingModelFacade generatorFacade) {
-		super(nicosFacade, generatorFacade);
+	public ErrorState(DynamicScriptingNicosFacade nicosFacade, DynamicScriptingModelFacade generatorFacade, HashSet<Integer> dynamicScriptIds) {
+		super(nicosFacade, generatorFacade, dynamicScriptIds);
 	}
 
 	@Override

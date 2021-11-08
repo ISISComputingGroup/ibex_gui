@@ -1,13 +1,14 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting;
 
+import java.util.HashSet;
 import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 public class StoppedState extends DynamicScriptingState {
 
-	public StoppedState(DynamicScriptingNicosFacade nicosFacade, DynamicScriptingModelFacade generatorFacade) {
-		super(nicosFacade, generatorFacade);
+	public StoppedState(DynamicScriptingNicosFacade nicosFacade, DynamicScriptingModelFacade generatorFacade, HashSet<Integer> dynamicScriptIds) {
+		super(nicosFacade, generatorFacade, dynamicScriptIds);
 	}
 
 	@Override
@@ -27,7 +28,7 @@ public class StoppedState extends DynamicScriptingState {
 
 	@Override
 	public DynamicScriptingState play() {
-		return new PlayingState(nicosFacade, scriptGeneratorFacade);
+		return new PlayingState(nicosFacade, scriptGeneratorFacade, dynamicScriptIds);
 	}
 
 	@Override

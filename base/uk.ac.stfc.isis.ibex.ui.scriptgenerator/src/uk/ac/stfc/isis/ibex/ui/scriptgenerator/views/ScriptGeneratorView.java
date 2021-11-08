@@ -121,7 +121,7 @@ public class ScriptGeneratorView {
     private Label parametersFileText;
     private Label scriptGenerationTimeText;
     private Label estimateText;
-    private Button queueScriptButton;
+    private Button playScriptButton;
     private Button generateScriptButton;
     private Button generateScriptAsButton;
     private Button btnDuplicateAction;
@@ -434,14 +434,15 @@ public class ScriptGeneratorView {
 	        generateButtonsGrp.setLayout(gbgLayout);
 	        
 	        // Button to run script in nicos
-	        queueScriptButton = new Button(generateButtonsGrp, SWT.NONE);
-	        queueScriptButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/play.png"));
-	        queueScriptButton.setText("Queue Script");
-	        queueScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	        nicosModel.bindQueueScriptButton(queueScriptButton);
-	        queueScriptButton.addListener(SWT.Selection, e -> {
-	        	var scriptId = scriptGeneratorViewModel.generateScript();
-	        	scriptId.ifPresent(id -> scriptGeneratorViewModel.setNicosScript(id));
+	        playScriptButton = new Button(generateButtonsGrp, SWT.NONE);
+	        playScriptButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/play.png"));
+	        playScriptButton.setText("Play");
+	        playScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+	        nicosModel.bindQueueScriptButton(playScriptButton);
+	        playScriptButton.addListener(SWT.Selection, e -> {
+	        	nicosModel.playScript();
+//	        	var scriptId = scriptGeneratorViewModel.generateScript();
+//	        	scriptId.ifPresent(id -> scriptGeneratorViewModel.setNicosScript(id));
 	        });
 	        
 	        // Needs to be after nicos model has been set up

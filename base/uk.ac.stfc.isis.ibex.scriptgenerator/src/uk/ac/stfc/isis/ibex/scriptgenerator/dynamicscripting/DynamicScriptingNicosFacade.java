@@ -1,19 +1,24 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting;
 
+import java.util.Optional;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.nicos.NicosErrorState;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
-import uk.ac.stfc.isis.ibex.nicos.ScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 
 public class DynamicScriptingNicosFacade extends ModelObject {
 	
 	private NicosModel nicosModel;
-	private ScriptStatus scriptStatus = ScriptStatus.IDLE;
+	private Optional<String> scriptName = Optional.empty();
+	
 	
 	public DynamicScriptingNicosFacade(NicosModel nicosModel) {
 		this.nicosModel = nicosModel;
-		setScriptStatus(this.nicosModel.getScriptStatus());
+		this.nicosModel.addPropertyChangeListener(DynamicScriptingProperties.CURRENTLY_EXECUTING_SCRIPT, evt -> {
+			setScriptName(this.nicosModel.getScriptName());
+		});
+		scriptIdle();
 	}
 	
 	public void executeAction(String name, String code) throws DynamicScriptingException {
@@ -23,12 +28,12 @@ public class DynamicScriptingNicosFacade extends ModelObject {
         	scriptToSend.setCode(code);
         	nicosModel.sendScript(scriptToSend);
         	if (nicosInError()) {
-        		setScriptStatus(ScriptStatus.IDLEEXC);
+        		scriptError();
     			throw new DynamicScriptingException("Nicos in error, cannot play script.");
     		}
-        	setScriptStatus(ScriptStatus.RUNNING);
+        	scriptRunning();
     	} else {
-    		setScriptStatus(ScriptStatus.IDLEEXC);
+    		scriptError();
     		throw new DynamicScriptingException("Nicos in error, cannot play script.");
     	}
 	}
@@ -38,8 +43,28 @@ public class DynamicScriptingNicosFacade extends ModelObject {
 		return nicosError != NicosErrorState.NO_ERROR;
 	}
 	
-	public void setScriptStatus(ScriptStatus scriptStatus) {
-        firePropertyChange("scriptStatus", this.scriptStatus, this.scriptStatus = scriptStatus);
-    }
+	private void scriptRunning() {
+		firePropertyChange(DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY, false, true);
+	}
+	
+	private void scriptError() {
+		firePropertyChange(DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY, true, false);
+	}
+	
+	private void scriptIdle() {
+		firePropertyChange(DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY, true, false);
+	}
+	
+	public void setScriptName(String newName) {
+		if (scriptName.isPresent()) {
+			var oldName = scriptName.get();
+			if (oldName != newName) {
+				firePropertyChange(DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY, false, true);
+			}
+			this.scriptName = Optional.of(newName);
+		} else {
+			this.scriptName = Optional.of(newName);
+		}
+	}
 
 }

@@ -1,5 +1,6 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,8 +15,8 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 public class DynamicScriptingModelFacade extends ModelObject {
 	
 	private ScriptGeneratorSingleton scriptGeneratorModel;
-	private Optional<Integer> scriptId = Optional.empty();
-	private Optional<String> scriptCode = Optional.empty();
+	private Optional<DynamicScript> dynamicScript = Optional.empty();
+	private HashMap<Integer, DynamicScriptingException> errors = new HashMap<>();
 	
 	public DynamicScriptingModelFacade(ScriptGeneratorSingleton scriptGeneratorModel) {
 		this.scriptGeneratorModel = scriptGeneratorModel;
@@ -23,18 +24,31 @@ public class DynamicScriptingModelFacade extends ModelObject {
 			firePropertyChange(ScriptGeneratorProperties.SCRIPT_GENERATION_ERROR_PROPERTY, event.getOldValue(), event.getNewValue());
 		});
 		this.scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.GENERATED_SCRIPT_PROPERTY, event -> {
-			String newCode = (String) event.getNewValue();
-			handleScriptGeneration(newCode);
+			Integer newScriptId = (Integer) event.getNewValue();
+			Optional<String> newCode = scriptGeneratorModel.getScriptFromId(newScriptId);
+			newCode.ifPresentOrElse(code -> {
+					handleScriptGeneration(code);
+				}, () -> {
+					errors.put(newScriptId, new DynamicScriptingException("Error getting script from ID"));
+				}
+			);			
 		});
 	}
 	
 	public void handleScriptGeneration(String newCode) {
-		firePropertyChange(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, Optional.empty(), scriptCode = Optional.of(newCode));
+		dynamicScript.ifPresent(script -> {
+			script.setCode(newCode);
+		});
+		firePropertyChange(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, Optional.empty(), dynamicScript);
 	}
 
 	public Optional<Integer> refreshGeneratedScript(ScriptGeneratorAction action) throws DynamicScriptingException {
 		try {
-			scriptId = scriptGeneratorModel.refreshGeneratedScript(action);
+			var scriptId = scriptGeneratorModel.refreshGeneratedScript(action);
+			scriptId.ifPresent(id -> {
+				var newDynamicScript = new DynamicScript(id);
+				dynamicScript = Optional.of(newDynamicScript);
+			});
 			return scriptId;
 		} catch (InvalidParamsException e) {
 			throw new DynamicScriptingException("Invalid parameters, cannot generate dynamic script");
@@ -45,32 +59,16 @@ public class DynamicScriptingModelFacade extends ModelObject {
 		}
 	}
 	
-	public Optional<String> getScriptName() {
-		if (scriptId.isPresent()) {
-			return Optional.of(String.format("Script Generator: %d", scriptId.get()));
-		} else {
-			return Optional.empty();
-		}
-	}
-	
-    public Optional<Integer> getScriptId() {
-		return scriptId;
-	}
-	
-	public Optional<String> getScriptCode() {
-		if (scriptCode.isPresent()) {
-			var code = scriptCode.get();
-			return Optional.of(code + "\nrunscript()");
-		}
-		return Optional.empty();
-	}
-	
 	public Optional<ScriptGeneratorAction> getAction(Integer actionIndex) {
 		return scriptGeneratorModel.getAction(actionIndex);
 	}
 	
 	public List<ScriptGeneratorAction> getActions() {
 		return scriptGeneratorModel.getActions();
+	}
+	
+	public Optional<DynamicScript> getDynamicScript() {
+		return dynamicScript;
 	}
 
 }

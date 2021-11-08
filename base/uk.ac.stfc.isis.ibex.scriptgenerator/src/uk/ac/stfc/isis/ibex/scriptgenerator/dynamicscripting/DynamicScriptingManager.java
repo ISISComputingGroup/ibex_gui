@@ -3,7 +3,6 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting;
 import java.util.HashSet;
 import java.util.Optional;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 public class DynamicScriptingManager {
@@ -32,13 +31,6 @@ public class DynamicScriptingManager {
 				DynamicScriptingState nextState = (DynamicScriptingState) event.getNewValue();
 				handleStateChange(nextState);
 			});
-			dynamicScriptingState.addPropertyChangeListener(DynamicScriptingProperties.NEW_SCRIPT_ID_PROPERTY, event -> {
-				Optional<Integer> optionalDynamicScriptId = (Optional<Integer>) event.getNewValue();
-				if (optionalDynamicScriptId.isPresent()) {
-					Integer scriptId = optionalDynamicScriptId.get();
-					dynamicScriptIds.add(scriptId);
-				}
-			});
 		}
 	}
 	
@@ -51,7 +43,7 @@ public class DynamicScriptingManager {
 	}
 
 	public Boolean isScriptDynamic(Integer integer) {
-		return dynamicScriptIds.contains(integer);
+		return dynamicScriptingState.isScriptDynamic(integer);
 	}
 	
 

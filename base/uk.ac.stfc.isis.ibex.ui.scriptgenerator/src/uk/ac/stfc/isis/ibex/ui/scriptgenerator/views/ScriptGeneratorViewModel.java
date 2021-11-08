@@ -218,9 +218,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	        scriptGeneratorModel.getLastGeneratedScriptId().ifPresentOrElse(
 	            generatedScriptId -> {
 	            	scriptGeneratorModel.getScriptFromId(generatedScriptId).ifPresentOrElse(generatedScript -> {
-	            		if (nicosScriptIds.contains(generatedScriptId)) {
-	            			previewScriptOrQueueDirectly(generatedScript);
-	            		} else {
+	            		if (!scriptGeneratorModel.isScriptDynamic(generatedScriptId)) {
 	            			if (scriptsToGenerateToCurrentFilepath.contains(generatedScriptId)) {
 	            				saveScriptToCurrentFilepath(generatedScript);
 	            			} else {

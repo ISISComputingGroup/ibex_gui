@@ -1,5 +1,9 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
+import java.util.HashSet;
+
+import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 
@@ -8,6 +12,7 @@ import uk.ac.stfc.isis.ibex.nicos.NicosErrorState;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelFacade;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingManager;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosFacade;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.StoppedState;
@@ -24,8 +29,9 @@ public class ScriptGeneratorNicosViewModel {
 	public ScriptGeneratorNicosViewModel(ScriptGeneratorSingleton scriptGeneratorModel) {
 		var nicosFacade = new DynamicScriptingNicosFacade(nicosModel);
 		var generatorFacade = new DynamicScriptingModelFacade(scriptGeneratorModel);
-		var dynamicScriptingState = new StoppedState(nicosFacade, generatorFacade);
+		var dynamicScriptingState = new StoppedState(nicosFacade, generatorFacade, new HashSet<Integer>());
 		dynamicScriptingManager = new DynamicScriptingManager(dynamicScriptingState);
+		scriptGeneratorModel.setDynamicScriptingManager(dynamicScriptingManager);
 	}
 	
 	/**
@@ -53,8 +59,12 @@ public class ScriptGeneratorNicosViewModel {
 	/**
      * Queue the current script generator contents as a script in nicos.
      */
-    public void queueScript() {
-    	dynamicScriptingManager.playScript();
+    public void playScript() {
+    	try {
+			dynamicScriptingManager.playScript();
+		} catch (DynamicScriptingException e) {
+			MessageDialog.openError(Display.getDefault().getActiveShell(), "Dynamic scripting error", "Dynamic scripting error");
+		}
     }
 
 }

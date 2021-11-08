@@ -39,6 +39,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorContext;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorPython;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingManager;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratedLanguage;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 
@@ -136,6 +137,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * The file handler to write and open scripts with.
 	 */
 	private ScriptGeneratorFileHandler fileHandler = new ScriptGeneratorFileHandler();
+	
+	private Optional<DynamicScriptingManager> dynamicScriptingManager = Optional.empty();
 	
 
 	/**
@@ -893,6 +896,19 @@ public class ScriptGeneratorSingleton extends ModelObject {
      */
 	public Optional<String> getScriptFromId(Integer scriptId) {
 		return generator.getScriptFromId(scriptId);
+	}
+	
+	public void setDynamicScriptingManager(DynamicScriptingManager dynamicScriptingManager) {
+		this.dynamicScriptingManager = Optional.of(dynamicScriptingManager);
+	}
+	
+	public Boolean isScriptDynamic(Integer integer) {
+		if (dynamicScriptingManager.isPresent()) {
+			var manager = dynamicScriptingManager.get();
+			return manager.isScriptDynamic(integer); 
+		} else {
+			return false;
+		}
 	}
 
 }
