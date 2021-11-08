@@ -15,10 +15,9 @@ public class DynamicScriptingNicosFacade extends ModelObject {
 	
 	public DynamicScriptingNicosFacade(NicosModel nicosModel) {
 		this.nicosModel = nicosModel;
-		this.nicosModel.addPropertyChangeListener(DynamicScriptingProperties.CURRENTLY_EXECUTING_SCRIPT, evt -> {
+		this.nicosModel.addPropertyChangeListener(DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, evt -> {
 			setScriptName(this.nicosModel.getScriptName());
 		});
-		scriptIdle();
 	}
 	
 	public void executeAction(String name, String code) throws DynamicScriptingException {
@@ -28,12 +27,9 @@ public class DynamicScriptingNicosFacade extends ModelObject {
         	scriptToSend.setCode(code);
         	nicosModel.sendScript(scriptToSend);
         	if (nicosInError()) {
-        		scriptError();
     			throw new DynamicScriptingException("Nicos in error, cannot play script.");
     		}
-        	scriptRunning();
     	} else {
-    		scriptError();
     		throw new DynamicScriptingException("Nicos in error, cannot play script.");
     	}
 	}
@@ -52,18 +48,18 @@ public class DynamicScriptingNicosFacade extends ModelObject {
 	}
 	
 	private void scriptIdle() {
-		firePropertyChange(DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY, true, false);
+		firePropertyChange(DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY, false, true);
 	}
 	
 	public void setScriptName(String newName) {
 		if (scriptName.isPresent()) {
 			var oldName = scriptName.get();
 			if (oldName != newName) {
-				firePropertyChange(DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY, false, true);
+				scriptIdle();
 			}
-			this.scriptName = Optional.of(newName);
+			this.scriptName = Optional.ofNullable(newName);
 		} else {
-			this.scriptName = Optional.of(newName);
+			this.scriptName = Optional.ofNullable(newName);
 		}
 	}
 

@@ -27,6 +27,9 @@ public class PlayingState extends DynamicScriptingState {
 	}
 	
 	private void setUpNextExecutingAction() {
+		currentlyExecutingAction.ifPresent(action -> {
+			action.setNotExecuting();
+		});
 		currentlyExecutingAction = getNextExecutingAction();
 		refreshGeneratedScriptWithCurrentAction();
 	}
