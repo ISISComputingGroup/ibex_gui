@@ -1,7 +1,6 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
@@ -23,7 +22,7 @@ public class PlayingState extends DynamicScriptingState {
 	}
 	
 	private void setUpFirstExecutingAction() {
-		currentlyExecutingAction = scriptGeneratorFacade.getAction(0);
+		currentlyExecutingAction = scriptGeneratorFacade.getFirstAction();
 		refreshGeneratedScriptWithCurrentAction();
 	}
 	
@@ -74,18 +73,12 @@ public class PlayingState extends DynamicScriptingState {
 
 	@Override
 	public Optional<ScriptGeneratorAction> getNextExecutingAction() {
-		List<ScriptGeneratorAction> actions = scriptGeneratorFacade.getActions();
-		Optional<ScriptGeneratorAction> nextAction = Optional.empty();
 		if (currentlyExecutingAction.isPresent()) {
-			ScriptGeneratorAction currentAction = currentlyExecutingAction.get();
-			Integer actionIndex = actions.indexOf(currentAction);
-			// indexOf returns -1 if action is not in table
-			if (actionIndex >= 0) {
-				Integer nextActionIndex = actionIndex + 1;
-				nextAction = scriptGeneratorFacade.getAction(nextActionIndex);
-			}
+			var currentAction = currentlyExecutingAction.get();
+			return scriptGeneratorFacade.getActionAfter(currentAction);
+		} else {
+			return Optional.empty();
 		}
-		return nextAction;
 	}
 
 	@Override

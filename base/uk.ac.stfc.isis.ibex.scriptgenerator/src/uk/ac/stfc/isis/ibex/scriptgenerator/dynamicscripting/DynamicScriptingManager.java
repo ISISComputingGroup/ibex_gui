@@ -1,13 +1,11 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting;
 
-import java.util.HashSet;
 import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 public class DynamicScriptingManager {
 	
-	private HashSet<Integer> dynamicScriptIds = new HashSet<>();
 	private DynamicScriptingState dynamicScriptingState;
 	
 	public DynamicScriptingManager(DynamicScriptingState dynamicScriptingState) {

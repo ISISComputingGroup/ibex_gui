@@ -59,12 +59,20 @@ public class DynamicScriptingModelFacade extends ModelObject {
 		}
 	}
 	
-	public Optional<ScriptGeneratorAction> getAction(Integer actionIndex) {
-		return scriptGeneratorModel.getAction(actionIndex);
+	public Optional<ScriptGeneratorAction> getActionAfter(ScriptGeneratorAction action) {
+		List<ScriptGeneratorAction> actions = scriptGeneratorModel.getActions();
+		Optional<ScriptGeneratorAction> nextAction = Optional.empty();
+		Integer actionIndex = actions.indexOf(action);
+		// indexOf returns -1 if action is not in table
+		if (actionIndex >= 0) {
+			Integer nextActionIndex = actionIndex + 1;
+			nextAction = scriptGeneratorModel.getAction(nextActionIndex);
+		}
+		return nextAction;
 	}
 	
-	public List<ScriptGeneratorAction> getActions() {
-		return scriptGeneratorModel.getActions();
+	public Optional<ScriptGeneratorAction> getFirstAction() {
+		return scriptGeneratorModel.getAction(0);
 	}
 	
 	public Optional<DynamicScript> getDynamicScript() {
