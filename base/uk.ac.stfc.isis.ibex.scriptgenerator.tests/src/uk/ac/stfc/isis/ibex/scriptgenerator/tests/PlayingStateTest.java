@@ -1,5 +1,6 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 
+import org.junit.After;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -9,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.HashMap;
 import java.util.Optional;
 
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptName;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelFacade;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosFacade;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStatus;
@@ -19,16 +21,34 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.ScriptGeneratorMockBuild
 public class PlayingStateTest extends DynamicScriptingStateTest {
 	
 	private DynamicScriptingNicosFacade nicosFacade;
-	private DynamicScriptingModelFacade scriptGeneratorFacade;
+	private DynamicScriptingModelFacade modelFacade;
 	
 	private ScriptGeneratorMockBuilder scriptGeneratorMockBuilder;
 	
 	@Override
-	protected void setUpState() {
+	protected void setUpScaffolding() {
 		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
+		super.setUpScaffolding();
+	}
+	
+	@Override
+	protected void setUpState() {
 		nicosFacade = new DynamicScriptingNicosFacade(scriptGeneratorMockBuilder.getMockNicosModel());
-		scriptGeneratorFacade = new DynamicScriptingModelFacade(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
-		state = new PlayingState(nicosFacade, scriptGeneratorFacade, dynamicScriptIdsToAction);
+		modelFacade = new DynamicScriptingModelFacade(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
+		state = new PlayingState(nicosFacade, modelFacade, dynamicScriptIdsToAction);
+		nicosFacade.addPropertyChangeListener(state);
+		modelFacade.addPropertyChangeListener(state);
+	}
+	
+	@After
+	public void tearDown() {
+		removeStateListeners();
+		removeStatusSwitchCounterToState();
+	}
+	
+	private void removeStateListeners() {
+		nicosFacade.removePropertyChangeListener(state);
+		modelFacade.removePropertyChangeListener(state);
 	}
 	
 	@Override
@@ -37,11 +57,12 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	}
 	
 	protected void simulateScriptGenerated() {
-		scriptGeneratorFacade.handleScriptGeneration("test");
+		modelFacade.handleScriptGeneration("test");
 	}
 	
-	protected void simulateScriptExecuted(String scriptName) {
-		nicosFacade.setScriptName("Script Generator: " + scriptId);
+	protected void simulateScriptExecuted(Integer scriptId) {
+		DynamicScriptName newName = new DynamicScriptName(Optional.of("Script Generator: " + scriptId));
+		nicosFacade.scriptChanged(newName);
 	}
 	
 	@Test
@@ -73,8 +94,8 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
 		// Act
 		simulateScriptGenerated();
-		simulateScriptExecuted(1);
 		assertTrue(state.isScriptDynamic(0));
+		simulateScriptExecuted(1);
 		// Assert
 		currentAction = state.getCurrentlyExecutingAction();
 		nextAction = state.getNextExecutingAction();
@@ -86,9 +107,6 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	public void test_stepping_through_actions() {
 		Optional<ScriptGeneratorAction> currentAction;
 		Optional<ScriptGeneratorAction> nextAction;
-		statusSwitchCounter.assertNumberOfSwitches(
-			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.STOPPED, 0
-		);
 		int i = 0;
 		do {
 			currentAction = state.getCurrentlyExecutingAction();
@@ -96,8 +114,8 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 			assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(i)));
 			assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(i + 1)));
 			simulateScriptGenerated();
-			simulateScriptExecuted(i);
 			assertTrue(state.isScriptDynamic(i));
+			simulateScriptExecuted(i);
 			i++;
 		} while (nextAction.isPresent());
 		statusSwitchCounter.assertNumberOfSwitches(
@@ -109,10 +127,6 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	public void test_WHEN_nicos_error_THEN_error_state() {
 		// Arrange
 		scriptGeneratorMockBuilder.arrangeNicosError();
-		// Assert
-		statusSwitchCounter.assertNumberOfSwitches(
-			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.ERROR, 0
-		);
 		Optional<ScriptGeneratorAction> currentAction = state.getCurrentlyExecutingAction();
 		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
 		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(0)));
@@ -130,10 +144,6 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	public void test_WHEN_nicos_cannot_send_script_THEN_error_state() {
 		// Arrange
 		scriptGeneratorMockBuilder.arrangeNicosSendScriptFail();
-		// Assert
-		statusSwitchCounter.assertNumberOfSwitches(
-			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.ERROR, 0
-		);
 		Optional<ScriptGeneratorAction> currentAction = state.getCurrentlyExecutingAction();
 		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
 		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(0)));
@@ -160,6 +170,8 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	public void test_WHEN_no_current_action_THEN_next_action_is_empty() {
 		// Arrange
 		scriptGeneratorMockBuilder.arrangeNumberOfActions(0);
+		removeStateListeners();
+		removeStatusSwitchCounterToState();
 		setUpState();
 		// Assert
 		Optional<ScriptGeneratorAction> currentAction = state.getCurrentlyExecutingAction();

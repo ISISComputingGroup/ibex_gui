@@ -59,7 +59,7 @@ public class DynamicScriptingNicosFacade extends ModelObject implements Property
 		});
 	}
 	
-	private void scriptChanged(DynamicScriptName newName) {
+	public void scriptChanged(DynamicScriptName newName) {
 		scriptName.getStatus().ifPresentOrElse(name -> {
 				scriptChangedGivenOldPresent(name, newName);
 			}, () -> {

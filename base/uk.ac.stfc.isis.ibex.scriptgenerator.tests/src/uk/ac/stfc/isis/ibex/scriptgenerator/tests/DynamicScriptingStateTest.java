@@ -48,6 +48,10 @@ public abstract class DynamicScriptingStateTest {
 		state.addPropertyChangeListener(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, statusSwitchCounter);
 	}
 	
+	protected void removeStatusSwitchCounterToState() {
+		state.removePropertyChangeListener(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, statusSwitchCounter);
+	}
+	
 	protected void assertActionsEmpty() {
 		assertThat(state.getCurrentlyExecutingAction(), is(Optional.empty()));
 		assertThat(state.getNextExecutingAction(), is(Optional.empty()));
