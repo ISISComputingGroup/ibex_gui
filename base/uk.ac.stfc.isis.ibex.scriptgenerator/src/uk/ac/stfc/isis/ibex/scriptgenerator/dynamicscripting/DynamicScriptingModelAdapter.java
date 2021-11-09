@@ -1,5 +1,7 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +14,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
-public class DynamicScriptingModelAdapter extends ModelObject {
+public class DynamicScriptingModelAdapter extends ModelObject implements PropertyChangeListener {
 	
 	private ScriptGeneratorSingleton scriptGeneratorModel;
 	private Optional<DynamicScript> dynamicScript = Optional.empty();
@@ -20,26 +22,6 @@ public class DynamicScriptingModelAdapter extends ModelObject {
 	
 	public DynamicScriptingModelAdapter(ScriptGeneratorSingleton scriptGeneratorModel) {
 		this.scriptGeneratorModel = scriptGeneratorModel;
-		this.scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.SCRIPT_GENERATION_ERROR_PROPERTY, event -> {
-			firePropertyChange(ScriptGeneratorProperties.SCRIPT_GENERATION_ERROR_PROPERTY, event.getOldValue(), event.getNewValue());
-		});
-		this.scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.GENERATED_SCRIPT_PROPERTY, event -> {
-			Integer newScriptId = (Integer) event.getNewValue();
-			Optional<String> newCode = scriptGeneratorModel.getScriptFromId(newScriptId);
-			newCode.ifPresentOrElse(code -> {
-					handleScriptGeneration(code);
-				}, () -> {
-					errors.put(newScriptId, new DynamicScriptingException("Error getting script from ID"));
-				}
-			);			
-		});
-	}
-	
-	public void handleScriptGeneration(String newCode) {
-		dynamicScript.ifPresent(script -> {
-			script.setCode(newCode);
-		});
-		firePropertyChange(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, Optional.empty(), dynamicScript);
 	}
 
 	public Optional<Integer> refreshGeneratedScript(ScriptGeneratorAction action) throws DynamicScriptingException {
@@ -77,6 +59,30 @@ public class DynamicScriptingModelAdapter extends ModelObject {
 	
 	public Optional<DynamicScript> getDynamicScript() {
 		return dynamicScript;
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (evt.getPropertyName().equals(ScriptGeneratorProperties.SCRIPT_GENERATION_ERROR_PROPERTY)) {
+			firePropertyChange(ScriptGeneratorProperties.SCRIPT_GENERATION_ERROR_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		} else if (evt.getPropertyName().equals(ScriptGeneratorProperties.GENERATED_SCRIPT_PROPERTY)) {
+			Integer newScriptId = (Integer) evt.getNewValue();
+			Optional<String> newCode = scriptGeneratorModel.getScriptFromId(newScriptId);
+			newCode.ifPresentOrElse(code -> {
+					handleScriptGeneration(code);
+				}, () -> {
+					errors.put(newScriptId, new DynamicScriptingException("Error getting script from ID"));
+					firePropertyChange(ScriptGeneratorProperties.SCRIPT_GENERATION_ERROR_PROPERTY, evt.getOldValue(), evt.getNewValue());
+				}
+			);
+		}
+	}
+	
+	private void handleScriptGeneration(String newCode) {
+		dynamicScript.ifPresent(script -> {
+			script.setCode(newCode);
+		});
+		firePropertyChange(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, Optional.empty(), dynamicScript);
 	}
 
 }

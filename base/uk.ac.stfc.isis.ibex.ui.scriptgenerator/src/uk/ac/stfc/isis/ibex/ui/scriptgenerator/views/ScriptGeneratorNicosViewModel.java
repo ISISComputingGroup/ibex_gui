@@ -29,7 +29,9 @@ public class ScriptGeneratorNicosViewModel {
 	
 	public ScriptGeneratorNicosViewModel(ScriptGeneratorSingleton scriptGeneratorModel) {
 		var nicosAdapter = new DynamicScriptingNicosAdapter(nicosModel);
+		nicosModel.addPropertyChangeListener(nicosAdapter);
 		var modelAdapter = new DynamicScriptingModelAdapter(scriptGeneratorModel);
+		scriptGeneratorModel.addPropertyChangeListener(modelAdapter);
 		var dynamicScriptingState = new StoppedState(new HashMap<Integer, ScriptGeneratorAction>());
 		var dynamicScriptingStateFactory = new DynamicScriptingStateFactory(modelAdapter, nicosAdapter, dynamicScriptingState);
 		dynamicScriptingManager = new DynamicScriptingManager(dynamicScriptingStateFactory);

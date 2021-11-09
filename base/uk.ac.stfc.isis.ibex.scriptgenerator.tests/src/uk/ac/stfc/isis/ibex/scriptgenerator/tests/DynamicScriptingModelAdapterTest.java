@@ -4,7 +4,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThrows;
+import static org.mockito.Mockito.when;
 
+import java.beans.PropertyChangeEvent;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -12,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.NoScriptDefinitionSelectedException;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScript;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelAdapter;
@@ -26,16 +29,21 @@ public class DynamicScriptingModelAdapterTest {
 	private ScriptGeneratorMockBuilder scriptGeneratorMockBuilder;
 	private DynamicScriptingModelAdapter modelAdapter;
 	private Integer scriptsGeneratedCount;
+	private Integer scriptGenerationErrorsCount;
 	
 	@Before
 	public void setUp() {
 		// Set up scaffolding
 		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
 		scriptsGeneratedCount = 0;
+		scriptGenerationErrorsCount = 0;
 		// Set up class under test
 		modelAdapter = new DynamicScriptingModelAdapter(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
 		modelAdapter.addPropertyChangeListener(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, evt -> {
 			scriptsGeneratedCount++;
+		});
+		modelAdapter.addPropertyChangeListener(ScriptGeneratorProperties.SCRIPT_GENERATION_ERROR_PROPERTY, evt -> {
+			scriptGenerationErrorsCount++;
 		});
 	}
 	
@@ -125,12 +133,56 @@ public class DynamicScriptingModelAdapterTest {
 			Optional<Integer> scriptId = modelAdapter.refreshGeneratedScript(action);
 			assertThat(scriptId, is(Optional.of(0)));
 			assertThat(scriptsGeneratedCount, is(0));
-			modelAdapter.handleScriptGeneration("test");
+			when(scriptGeneratorMockBuilder.getMockScriptGeneratorModel().getScriptFromId(1)).thenReturn(Optional.of("test"));
+			PropertyChangeEvent event = new PropertyChangeEvent(
+				scriptGeneratorMockBuilder.getMockScriptGeneratorModel(), 
+				ScriptGeneratorProperties.GENERATED_SCRIPT_PROPERTY, 
+				null, 1
+			);
+			modelAdapter.propertyChange(event);
+			assertThat(scriptGenerationErrorsCount, is(0));
+			assertThat(scriptsGeneratedCount, is(1));
 			assertThat(scriptsGeneratedCount, is(1));
 			assertScriptIs(0, "Script Generator: 0", Optional.of("test" + "\nrunscript()"));
 		} catch (DynamicScriptingException e) {
 			throw new AssertionError("Should refresh correctly");
 		}
+	}
+	
+	@Test
+	public void test_WHEN_script_generation_error_THEN_error() {
+		PropertyChangeEvent event = new PropertyChangeEvent(
+			scriptGeneratorMockBuilder.getMockScriptGeneratorModel(), 
+			ScriptGeneratorProperties.SCRIPT_GENERATION_ERROR_PROPERTY, 
+			true, false
+		);
+		modelAdapter.propertyChange(event);
+		assertThat(scriptGenerationErrorsCount, is(1));
+		assertThat(scriptsGeneratedCount, is(0));
+	}
+	
+	@Test
+	public void test_WHEN_script_generated_with_invalid_id_THEN_generated() {
+		when(scriptGeneratorMockBuilder.getMockScriptGeneratorModel().getScriptFromId(1)).thenReturn(Optional.empty());
+		PropertyChangeEvent event = new PropertyChangeEvent(
+			scriptGeneratorMockBuilder.getMockScriptGeneratorModel(), 
+			ScriptGeneratorProperties.GENERATED_SCRIPT_PROPERTY, 
+			null, 1
+		);
+		modelAdapter.propertyChange(event);
+		assertThat(scriptGenerationErrorsCount, is(1));
+		assertThat(scriptsGeneratedCount, is(0));
+	}
+	
+	@Test
+	public void test_WHEN_property_change_with_other_name_THEN_nothing_fired() {
+		PropertyChangeEvent event = new PropertyChangeEvent(
+			scriptGeneratorMockBuilder.getMockScriptGeneratorModel(), 
+			"test", null, 1
+		);
+		modelAdapter.propertyChange(event);
+		assertThat(scriptGenerationErrorsCount, is(0));
+		assertThat(scriptsGeneratedCount, is(0));
 	}
 	
 
