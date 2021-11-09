@@ -31,12 +31,18 @@ public abstract class DynamicScriptingStateTest {
 	}
 	
 	protected void setUpScaffolding() {
+		setUpDynamicScriptIds();
+		statusSwitchCounter = new StatusSwitchCounter<>();
+	}
+	
+	protected void setUpDynamicScriptIds() {
 		dynamicScriptIdsToAction = new HashMap<Integer, ScriptGeneratorAction>();
 		dynamicScriptId = 1;
 		action = new ScriptGeneratorAction(new HashMap<>());
 		dynamicScriptIdsToAction.put(dynamicScriptId, action);
-		statusSwitchCounter = new StatusSwitchCounter<>();
 	}
+	
+	protected abstract void setUpState();
 	
 	protected void attachStatusSwitchCounterToState() {
 		state.addPropertyChangeListener(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, statusSwitchCounter);
@@ -47,6 +53,6 @@ public abstract class DynamicScriptingStateTest {
 		assertThat(state.getNextExecutingAction(), is(Optional.empty()));
 	}
 	
-	protected abstract void setUpState();
+	
 
 }

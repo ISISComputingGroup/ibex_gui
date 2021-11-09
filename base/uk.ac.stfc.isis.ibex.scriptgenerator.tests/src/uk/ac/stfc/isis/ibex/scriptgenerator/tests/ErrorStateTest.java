@@ -10,6 +10,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.ErrorState;
 
 public class ErrorStateTest extends DynamicScriptingStateTest {
 	
+	@Override
 	public void setUpState() {
 		state = new ErrorState(dynamicScriptIdsToAction);
 	}

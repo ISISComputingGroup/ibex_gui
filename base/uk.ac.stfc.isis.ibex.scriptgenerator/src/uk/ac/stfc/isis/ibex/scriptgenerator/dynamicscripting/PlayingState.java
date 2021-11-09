@@ -1,7 +1,6 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -13,29 +12,11 @@ public class PlayingState extends DynamicScriptingState {
 	private Optional<Integer> nextScriptId = Optional.empty();
 	protected DynamicScriptingNicosFacade nicosFacade;
 	protected DynamicScriptingModelFacade scriptGeneratorFacade;
-	PropertyChangeListener nextActionSetup;
-	PropertyChangeListener actionExecutor;
 	
 	public PlayingState(DynamicScriptingNicosFacade nicosFacade, DynamicScriptingModelFacade generatorFacade, HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction) {
 		super(dynamicScriptIdsToAction);
 		this.nicosFacade = nicosFacade;
 		this.scriptGeneratorFacade = generatorFacade;
-		nextActionSetup = new PropertyChangeListener() {
-			
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				setUpNextExecutingAction();
-			}
-		};
-		this.nicosFacade.addPropertyChangeListener(DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY, nextActionSetup);
-		actionExecutor = new PropertyChangeListener() {
-			
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) { 
-				executeScript();
-			}
-		};
-		this.scriptGeneratorFacade.addPropertyChangeListener(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, actionExecutor);
 		setUpFirstExecutingAction();
 	}
 	

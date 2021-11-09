@@ -12,6 +12,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.StoppedState;
 
 public class StoppedStateTest extends DynamicScriptingStateTest {
 	
+	@Override
 	public void setUpState() {
 		state = new StoppedState(dynamicScriptIdsToAction);
 	}
