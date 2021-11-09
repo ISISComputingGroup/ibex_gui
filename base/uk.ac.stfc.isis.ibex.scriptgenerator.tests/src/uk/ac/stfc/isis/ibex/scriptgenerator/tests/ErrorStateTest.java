@@ -3,8 +3,6 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-
-import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStatus;
@@ -12,11 +10,8 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.ErrorState;
 
 public class ErrorStateTest extends DynamicScriptingStateTest {
 	
-	@Before
-	public void setUp() {
-		setUpScaffolding();
+	public void setUpState() {
 		state = new ErrorState(dynamicScriptIdsToAction);
-		attachStatusSwitchCounterToState();
 	}
 	
 	@Test

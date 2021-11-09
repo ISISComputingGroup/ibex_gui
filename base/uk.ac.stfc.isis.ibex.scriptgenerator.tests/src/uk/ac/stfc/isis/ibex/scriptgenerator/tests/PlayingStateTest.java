@@ -24,30 +24,17 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.ScriptGeneratorMockBuilder;
 import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.StatusSwitchCounter;
 
-public class PlayingStateTest {
+public class PlayingStateTest extends DynamicScriptingStateTest {
 	
-	private PlayingState state;
 	private DynamicScriptingNicosFacade nicosFacade;
 	private DynamicScriptingModelFacade scriptGeneratorFacade;
-	private StatusSwitchCounter<DynamicScriptingState, DynamicScriptingStatus> statusSwitchCounter;
-	private Set<Integer> scriptIds;
 	
 	private ScriptGeneratorMockBuilder scriptGeneratorMockBuilder;
 	
-	@Before
-	public void setUp() {
-		// Set up mocks
-		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
-		statusSwitchCounter = new StatusSwitchCounter<DynamicScriptingState, DynamicScriptingStatus>();
-		scriptIds = new HashSet<>();
-		// Set up class under test
-		setUpClassUnderTest();
-	}
-	
-	private void setUpClassUnderTest() {
+	protected void setUpState() {
 		nicosFacade = new DynamicScriptingNicosFacade(scriptGeneratorMockBuilder.getMockNicosModel());
 		scriptGeneratorFacade = new DynamicScriptingModelFacade(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
-		state = new PlayingState(nicosFacade, scriptGeneratorFacade);
+		state = new PlayingState(nicosFacade, scriptGeneratorFacade, dynamicScriptIdsToAction);
 		state.addPropertyChangeListener(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, statusSwitchCounter);
 		state.addPropertyChangeListener(DynamicScriptingProperties.NEW_SCRIPT_ID_PROPERTY, evt -> {
 			Optional<Integer> scriptId = (Optional<Integer>) evt.getNewValue();
@@ -188,7 +175,7 @@ public class PlayingStateTest {
 	public void test_WHEN_no_current_action_THEN_next_action_is_empty() {
 		// Arrange
 		scriptGeneratorMockBuilder.arrangeNumberOfActions(0);
-		setUpClassUnderTest();
+		setUpState();
 		assertTrue(scriptIds.isEmpty());
 		// Assert
 		Optional<ScriptGeneratorAction> currentAction = state.getCurrentlyExecutingAction();

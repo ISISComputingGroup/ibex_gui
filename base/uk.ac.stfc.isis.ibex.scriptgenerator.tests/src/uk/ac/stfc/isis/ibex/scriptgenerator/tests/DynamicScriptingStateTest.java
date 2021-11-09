@@ -6,6 +6,8 @@ import static org.hamcrest.Matchers.is;
 import java.util.HashMap;
 import java.util.Optional;
 
+import org.junit.Before;
+
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingState;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStatus;
@@ -20,6 +22,13 @@ public abstract class DynamicScriptingStateTest {
 	protected StatusSwitchCounter<DynamicScriptingStatus, DynamicScriptingStatus> statusSwitchCounter;
 	protected Integer dynamicScriptId;
 	protected ScriptGeneratorAction action;
+	
+	@Before
+	public void setUp() {
+		setUpScaffolding();
+		setUpState();
+		attachStatusSwitchCounterToState();
+	}
 	
 	protected void setUpScaffolding() {
 		dynamicScriptIdsToAction = new HashMap<Integer, ScriptGeneratorAction>();
@@ -37,5 +46,7 @@ public abstract class DynamicScriptingStateTest {
 		assertThat(state.getCurrentlyExecutingAction(), is(Optional.empty()));
 		assertThat(state.getNextExecutingAction(), is(Optional.empty()));
 	}
+	
+	protected abstract void setUpState();
 
 }

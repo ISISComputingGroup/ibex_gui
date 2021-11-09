@@ -5,7 +5,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStatus;
@@ -13,11 +12,8 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.StoppedState;
 
 public class StoppedStateTest extends DynamicScriptingStateTest {
 	
-	@Before
-	public void setUp() {
-		setUpScaffolding();
+	public void setUpState() {
 		state = new StoppedState(dynamicScriptIdsToAction);
-		attachStatusSwitchCounterToState();
 	}
 	
 	@Test
