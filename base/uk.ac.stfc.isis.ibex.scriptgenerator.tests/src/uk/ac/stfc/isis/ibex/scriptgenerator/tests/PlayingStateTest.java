@@ -12,7 +12,7 @@ import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptName;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelAdapter;
-import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosFacade;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosAdapter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.PlayingState;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
@@ -20,7 +20,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.ScriptGeneratorMockBuild
 
 public class PlayingStateTest extends DynamicScriptingStateTest {
 	
-	private DynamicScriptingNicosFacade nicosFacade;
+	private DynamicScriptingNicosAdapter nicosAdapter;
 	private DynamicScriptingModelAdapter modelAdapter;
 	
 	private ScriptGeneratorMockBuilder scriptGeneratorMockBuilder;
@@ -33,10 +33,10 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	
 	@Override
 	protected void setUpState() {
-		nicosFacade = new DynamicScriptingNicosFacade(scriptGeneratorMockBuilder.getMockNicosModel());
+		nicosAdapter = new DynamicScriptingNicosAdapter(scriptGeneratorMockBuilder.getMockNicosModel());
 		modelAdapter = new DynamicScriptingModelAdapter(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
-		state = new PlayingState(nicosFacade, modelAdapter, dynamicScriptIdsToAction);
-		nicosFacade.addPropertyChangeListener(state);
+		state = new PlayingState(nicosAdapter, modelAdapter, dynamicScriptIdsToAction);
+		nicosAdapter.addPropertyChangeListener(state);
 		modelAdapter.addPropertyChangeListener(state);
 	}
 	
@@ -47,7 +47,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	}
 	
 	private void removeStateListeners() {
-		nicosFacade.removePropertyChangeListener(state);
+		nicosAdapter.removePropertyChangeListener(state);
 		modelAdapter.removePropertyChangeListener(state);
 	}
 	
@@ -62,7 +62,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	
 	protected void simulateScriptExecuted(Integer scriptId) {
 		DynamicScriptName newName = new DynamicScriptName(Optional.of("Script Generator: " + scriptId));
-		nicosFacade.scriptChanged(newName);
+		nicosAdapter.scriptChanged(newName);
 	}
 	
 	@Test

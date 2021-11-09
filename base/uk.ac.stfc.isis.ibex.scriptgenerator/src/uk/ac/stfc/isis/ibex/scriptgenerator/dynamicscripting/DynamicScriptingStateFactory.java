@@ -5,10 +5,10 @@ import java.util.HashMap;
 public class DynamicScriptingStateFactory {
 	
 	private DynamicScriptingModelAdapter modelFacade;
-	private DynamicScriptingNicosFacade nicosFacade;
+	private DynamicScriptingNicosAdapter nicosFacade;
 	private DynamicScriptingState state;
 	
-	public DynamicScriptingStateFactory(DynamicScriptingModelAdapter modelFacade, DynamicScriptingNicosFacade nicosFacade, DynamicScriptingState state) {
+	public DynamicScriptingStateFactory(DynamicScriptingModelAdapter modelFacade, DynamicScriptingNicosAdapter nicosFacade, DynamicScriptingState state) {
 		this.modelFacade = modelFacade;
 		this.nicosFacade = nicosFacade;
 		this.state = state;

@@ -13,16 +13,16 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptName;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingException;
-import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosFacade;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosAdapter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.ScriptGeneratorMockBuilder;
 import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.StatusSwitchCounter;
 
-public class DynamicScriptingNicosFacadeTest {
+public class DynamicScriptingNicosAdapterTest {
 	
 	private ScriptGeneratorMockBuilder scriptGeneratorMockBuilder;
 	private NicosModel nicosModel;
-	private DynamicScriptingNicosFacade nicosFacade;
+	private DynamicScriptingNicosAdapter nicosAdapter;
 	private StatusSwitchCounter<DynamicScriptName, Optional<String>> statusSwitchCounter;
 	
 	@Before
@@ -30,14 +30,14 @@ public class DynamicScriptingNicosFacadeTest {
 		statusSwitchCounter = new StatusSwitchCounter<>();
 		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
 		nicosModel = scriptGeneratorMockBuilder.getMockNicosModel();
-		nicosFacade = new DynamicScriptingNicosFacade(nicosModel);
-		nicosFacade.addPropertyChangeListener(DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY, statusSwitchCounter);
+		nicosAdapter = new DynamicScriptingNicosAdapter(nicosModel);
+		nicosAdapter.addPropertyChangeListener(DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY, statusSwitchCounter);
 	}
 	
 	@Test
 	public void test_WHEN_no_error_THEN_no_exception() {
 		try {
-			nicosFacade.executeAction("test", "test");
+			nicosAdapter.executeAction("test", "test");
 		} catch(DynamicScriptingException e) {
 			throw new AssertionError("Should correctly run");
 		}
@@ -47,7 +47,7 @@ public class DynamicScriptingNicosFacadeTest {
 	public void test_WHEN_nicos_error_THEN_exception() {
 		scriptGeneratorMockBuilder.arrangeNicosError();
 		assertThrows(DynamicScriptingException.class, () -> {
-			nicosFacade.executeAction("test", "test");
+			nicosAdapter.executeAction("test", "test");
 	    });	
 	}
 	
@@ -55,7 +55,7 @@ public class DynamicScriptingNicosFacadeTest {
 	public void test_WHEN_nicos_cannot_send_script_THEN_exception_AND_property_change() {
 		scriptGeneratorMockBuilder.arrangeNicosSendScriptFail();
 		assertThrows(DynamicScriptingException.class, () -> {
-			nicosFacade.executeAction("test", "test");
+			nicosAdapter.executeAction("test", "test");
 	    });
 	}
 	
@@ -65,7 +65,7 @@ public class DynamicScriptingNicosFacadeTest {
 	
 	private void doScriptChange(String oldScriptName, String newScriptName, String propertyName) {
 		when(nicosModel.getScriptName()).thenReturn(newScriptName);
-		nicosFacade.propertyChange( 
+		nicosAdapter.propertyChange( 
 			new PropertyChangeEvent(
 				nicosModel, propertyName,
 				newScriptName, newScriptName

@@ -16,7 +16,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptName;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelAdapter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingManager;
-import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosFacade;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosAdapter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingState;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStateFactory;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStatus;
@@ -27,7 +27,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.ScriptGeneratorMockBuild
 public class DynamicScriptingManagerTest {
 	
 	private DynamicScriptingManager dynamicScriptingManager;
-	private DynamicScriptingNicosFacade nicosFacade;
+	private DynamicScriptingNicosAdapter nicosAdapter;
 	private DynamicScriptingModelAdapter modelAdapter;
 	private DynamicScriptingState initialState;
 	private HashMap<Integer, ScriptGeneratorAction> dynamicScriptIds;
@@ -41,10 +41,10 @@ public class DynamicScriptingManagerTest {
 		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
 		// Set up class under test
 		dynamicScriptIds = new HashMap<>();
-		nicosFacade = new DynamicScriptingNicosFacade(scriptGeneratorMockBuilder.getMockNicosModel());
+		nicosAdapter = new DynamicScriptingNicosAdapter(scriptGeneratorMockBuilder.getMockNicosModel());
 		modelAdapter = new DynamicScriptingModelAdapter(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
 		initialState = new StoppedState(dynamicScriptIds);
-		stateFactory = new DynamicScriptingStateFactory(modelAdapter, nicosFacade, initialState);
+		stateFactory = new DynamicScriptingStateFactory(modelAdapter, nicosAdapter, initialState);
 		dynamicScriptingManager = new DynamicScriptingManager(stateFactory);
 	}
 	
@@ -67,7 +67,7 @@ public class DynamicScriptingManagerTest {
 	
 	private void simulateScriptExecuted(Integer scriptId) {
 		DynamicScriptName newName = new DynamicScriptName(Optional.of("Script Generator: " + scriptId));
-		nicosFacade.scriptChanged(newName);
+		nicosAdapter.scriptChanged(newName);
 	}
 	
 	private void assertDynamicScriptingInErrorState() {

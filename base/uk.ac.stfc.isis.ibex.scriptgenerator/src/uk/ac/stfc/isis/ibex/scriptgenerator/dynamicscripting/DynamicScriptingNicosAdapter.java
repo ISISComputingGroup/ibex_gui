@@ -9,13 +9,13 @@ import uk.ac.stfc.isis.ibex.nicos.NicosErrorState;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 
-public class DynamicScriptingNicosFacade extends ModelObject implements PropertyChangeListener {
+public class DynamicScriptingNicosAdapter extends ModelObject implements PropertyChangeListener {
 	
 	private NicosModel nicosModel;
 	private DynamicScriptName scriptName = new DynamicScriptName(Optional.empty());
 	
 	
-	public DynamicScriptingNicosFacade(NicosModel nicosModel) {
+	public DynamicScriptingNicosAdapter(NicosModel nicosModel) {
 		this.nicosModel = nicosModel;
 		this.nicosModel.addPropertyChangeListener(this);
 	}
