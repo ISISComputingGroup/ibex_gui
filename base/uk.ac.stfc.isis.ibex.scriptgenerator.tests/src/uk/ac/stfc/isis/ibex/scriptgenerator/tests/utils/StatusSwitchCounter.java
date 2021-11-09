@@ -2,6 +2,7 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertTrue;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -10,8 +11,8 @@ import java.util.HashMap;
 import uk.ac.stfc.isis.ibex.model.HasStatus;
 
 public class StatusSwitchCounter<T extends HasStatus<K>, K> implements PropertyChangeListener {
-	
-	private HashMap<K, HashMap<K, Integer>> switchMap = new HashMap<K, HashMap<K,Integer>>();
+
+	private HashMap<K, HashMap<K, Integer>> switchMap = new HashMap<K, HashMap<K, Integer>>();
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
@@ -44,6 +45,10 @@ public class StatusSwitchCounter<T extends HasStatus<K>, K> implements PropertyC
 		} else {
 			assertThat(0, is(expectedNumber));
 		}
+	}
+	
+	public void assertNoSwitches() {
+		assertTrue(switchMap.isEmpty());
 	}
 
 }

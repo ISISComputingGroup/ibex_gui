@@ -1,39 +1,43 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashMap;
 import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelFacade;
-import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosFacade;
-import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingState;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.StoppedState;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
-import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.ScriptGeneratorMockBuilder;
+import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.StatusSwitchCounter;
 
 public class StoppedStateTest {
 	
 	private StoppedState state;
-	private DynamicScriptingNicosFacade nicosFacade;
-	private DynamicScriptingModelFacade scriptGeneratorFacade;
 	
-	private ScriptGeneratorMockBuilder scriptGeneratorMockBuilder;
+	private HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction;
+	private StatusSwitchCounter<DynamicScriptingStatus, DynamicScriptingStatus> statusSwitchCounter;
+	private Integer dynamicScriptId;
+	private ScriptGeneratorAction action;
 	
 	@Before
 	public void setUp() {
-		// Set up mocks
-		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
+		// Set up scaffolding
+		dynamicScriptIdsToAction = new HashMap<Integer, ScriptGeneratorAction>();
+		dynamicScriptId = 1;
+		action = new ScriptGeneratorAction(new HashMap<>());
+		dynamicScriptIdsToAction.put(dynamicScriptId, action);
+		statusSwitchCounter = new StatusSwitchCounter<>();
 		// Set up class under test
-		nicosFacade = new DynamicScriptingNicosFacade(scriptGeneratorMockBuilder.getMockNicosModel());
-		scriptGeneratorFacade = new DynamicScriptingModelFacade(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
-		state = new StoppedState(nicosFacade, scriptGeneratorFacade);
+		state = new StoppedState(dynamicScriptIdsToAction);
+		state.addPropertyChangeListener(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, statusSwitchCounter);
+		
 	}
 	
 	@Test
@@ -47,18 +51,19 @@ public class StoppedStateTest {
 	@Test
 	public void test_WHEN_play_THEN_state_is_playing() {
 		// Act
-		DynamicScriptingState newState = state.play();
+		state.play();
 		// Assert
-		assertThat(newState, is(not(state)));
-		assertThat(newState.getStatus(), is(DynamicScriptingStatus.PLAYING));
+		statusSwitchCounter.assertNumberOfSwitches(
+			DynamicScriptingStatus.STOPPED, DynamicScriptingStatus.PLAYING, 1
+		);
 	}
 	
 	@Test
 	public void test_WHEN_stop_THEN_state_the_same() {
 		// Act
-		DynamicScriptingState newState = state.stop();
+		state.stop();
 		// Assert
-		assertThat(newState, is(state));
+		statusSwitchCounter.assertNoSwitches();
 	}
 	
 	@Test
@@ -75,6 +80,18 @@ public class StoppedStateTest {
 		Optional<ScriptGeneratorAction> actionOptional = state.getNextExecutingAction();
 		// Assert
 		assertTrue(actionOptional.isEmpty());
+	}
+	
+	@Test
+	public void test_GIVEN_dynamic_script_id_WHEN_check_id_THEN_is_dynamic() {
+		// Act and Assert
+		assertTrue(state.isScriptDynamic(dynamicScriptId));
+	}
+	
+	@Test
+	public void test_GIVEN_incorrect_dynamic_script_id_WHEN_check_id_THEN_is_dynamic() {
+		// Act and Assert
+		assertFalse(state.isScriptDynamic(3));
 	}
 	
 }

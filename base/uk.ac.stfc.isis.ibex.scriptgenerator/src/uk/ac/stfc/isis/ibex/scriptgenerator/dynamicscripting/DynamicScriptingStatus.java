@@ -1,9 +1,16 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting;
 
-public enum DynamicScriptingStatus {
+import uk.ac.stfc.isis.ibex.model.HasStatus;
+
+public enum DynamicScriptingStatus implements HasStatus<DynamicScriptingStatus> {
 	
 	PLAYING,
 	STOPPED,
 	ERROR;
+
+	@Override
+	public DynamicScriptingStatus getStatus() {
+		return this;
+	}
 
 }

@@ -11,11 +11,15 @@ public class PlayingState extends DynamicScriptingState {
 	
 	private Optional<ScriptGeneratorAction> currentlyExecutingAction;
 	private Optional<Integer> nextScriptId = Optional.empty();
+	protected DynamicScriptingNicosFacade nicosFacade;
+	protected DynamicScriptingModelFacade scriptGeneratorFacade;
 	PropertyChangeListener nextActionSetup;
 	PropertyChangeListener actionExecutor;
 	
 	public PlayingState(DynamicScriptingNicosFacade nicosFacade, DynamicScriptingModelFacade generatorFacade, HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction) {
-		super(nicosFacade, generatorFacade, dynamicScriptIdsToAction);
+		super(dynamicScriptIdsToAction);
+		this.nicosFacade = nicosFacade;
+		this.scriptGeneratorFacade = generatorFacade;
 		nextActionSetup = new PropertyChangeListener() {
 			
 			@Override
@@ -64,12 +68,6 @@ public class PlayingState extends DynamicScriptingState {
 	public void stop() {
 		changeState(DynamicScriptingStatus.STOPPED);
 	}
-
-	@Override
-	public void tearDownListeners() {
-		this.nicosFacade.removePropertyChangeListener(DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY, nextActionSetup);
-		this.scriptGeneratorFacade.removePropertyChangeListener(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, actionExecutor);
-	}
 	
 	private void setUpFirstExecutingAction() {
 		currentlyExecutingAction = scriptGeneratorFacade.getFirstAction();
@@ -114,13 +112,24 @@ public class PlayingState extends DynamicScriptingState {
 					}
 				}, () -> {
 					changeState(DynamicScriptingStatus.ERROR);
-					firePropertyChange(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, this, new ErrorState(nicosFacade, scriptGeneratorFacade, dynamicScriptIdsToAction));
 				});
 				
 			},  () -> {
 				changeState(DynamicScriptingStatus.ERROR);
 			}
 		);
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		switch (evt.getPropertyName()) {
+			case DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY:
+				setUpNextExecutingAction();
+				break;
+			case DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY:
+				executeScript();
+				break;
+		}
 	}
 
 }

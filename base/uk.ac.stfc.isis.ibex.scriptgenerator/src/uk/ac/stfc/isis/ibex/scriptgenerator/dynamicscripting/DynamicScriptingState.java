@@ -1,5 +1,7 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -7,15 +9,12 @@ import uk.ac.stfc.isis.ibex.model.HasStatus;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
-public abstract class DynamicScriptingState extends ModelObject implements HasStatus<DynamicScriptingStatus> {
+public abstract class DynamicScriptingState extends ModelObject implements HasStatus<DynamicScriptingStatus>, PropertyChangeListener {
 	
-	protected DynamicScriptingNicosFacade nicosFacade;
-	protected DynamicScriptingModelFacade scriptGeneratorFacade;
+	
 	protected HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction;
 	
-	public DynamicScriptingState(DynamicScriptingNicosFacade nicosFacade, DynamicScriptingModelFacade generatorFacade, HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction) {
-		this.nicosFacade = nicosFacade;
-		this.scriptGeneratorFacade = generatorFacade;
+	public DynamicScriptingState(HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction) {
 		this.dynamicScriptIdsToAction = dynamicScriptIdsToAction;
 	}
 	
@@ -23,32 +22,25 @@ public abstract class DynamicScriptingState extends ModelObject implements HasSt
 		return dynamicScriptIdsToAction.containsKey(scriptId);
 	}
 	
-	public HashMap<Integer, ScriptGeneratorAction> getClearScriptIdMap() {
-		return new HashMap<Integer, ScriptGeneratorAction>();
-	}
-	
 	public void changeState(DynamicScriptingStatus newStatus) {
 		firePropertyChange(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, getStatus(), newStatus);
 	}
 	
-	public DynamicScriptingNicosFacade getNicosFacade() {
-		return nicosFacade;
+	public Optional<ScriptGeneratorAction> getCurrentlyExecutingAction() {
+		return Optional.empty();
+	}
+
+	public Optional<ScriptGeneratorAction> getNextExecutingAction() {
+		return Optional.empty();
 	}
 	
-	public DynamicScriptingModelFacade getModelFacade() {
-		return scriptGeneratorFacade;
-	}
+	public void play() { /* Default function does nothing */ };
 	
-	public abstract Optional<ScriptGeneratorAction> getCurrentlyExecutingAction();
+	public void stop() { /* Default function does nothing */ };
 	
-	public abstract Optional<ScriptGeneratorAction> getNextExecutingAction();
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) { /* Default function does nothing */ };
 	
 	public abstract DynamicScriptingStatus getStatus();
 	
-	public abstract void play();
-		
-	public abstract void stop();
-	
-	public abstract void tearDownListeners();
-
 }
