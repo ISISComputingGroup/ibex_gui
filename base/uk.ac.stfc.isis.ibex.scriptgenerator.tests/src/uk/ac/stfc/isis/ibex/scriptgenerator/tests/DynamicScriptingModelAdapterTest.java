@@ -20,7 +20,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageExcept
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.ScriptGeneratorMockBuilder;
 
-public class DynamicScriptingModelFacadeTest {
+public class DynamicScriptingModelAdapterTest {
 	
 	private ScriptGeneratorMockBuilder scriptGeneratorMockBuilder;
 	private DynamicScriptingModelAdapter modelAdapter;
