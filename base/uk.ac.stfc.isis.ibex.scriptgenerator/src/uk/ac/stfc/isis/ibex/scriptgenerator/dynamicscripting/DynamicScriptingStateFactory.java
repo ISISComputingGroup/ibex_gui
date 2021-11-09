@@ -4,11 +4,11 @@ import java.util.HashMap;
 
 public class DynamicScriptingStateFactory {
 	
-	private DynamicScriptingModelFacade modelFacade;
+	private DynamicScriptingModelAdapter modelFacade;
 	private DynamicScriptingNicosFacade nicosFacade;
 	private DynamicScriptingState state;
 	
-	public DynamicScriptingStateFactory(DynamicScriptingModelFacade modelFacade, DynamicScriptingNicosFacade nicosFacade, DynamicScriptingState state) {
+	public DynamicScriptingStateFactory(DynamicScriptingModelAdapter modelFacade, DynamicScriptingNicosFacade nicosFacade, DynamicScriptingState state) {
 		this.modelFacade = modelFacade;
 		this.nicosFacade = nicosFacade;
 		this.state = state;

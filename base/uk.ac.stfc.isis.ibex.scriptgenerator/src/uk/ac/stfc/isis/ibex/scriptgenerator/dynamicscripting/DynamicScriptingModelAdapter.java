@@ -12,13 +12,13 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
-public class DynamicScriptingModelFacade extends ModelObject {
+public class DynamicScriptingModelAdapter extends ModelObject {
 	
 	private ScriptGeneratorSingleton scriptGeneratorModel;
 	private Optional<DynamicScript> dynamicScript = Optional.empty();
 	private HashMap<Integer, DynamicScriptingException> errors = new HashMap<>();
 	
-	public DynamicScriptingModelFacade(ScriptGeneratorSingleton scriptGeneratorModel) {
+	public DynamicScriptingModelAdapter(ScriptGeneratorSingleton scriptGeneratorModel) {
 		this.scriptGeneratorModel = scriptGeneratorModel;
 		this.scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.SCRIPT_GENERATION_ERROR_PROPERTY, event -> {
 			firePropertyChange(ScriptGeneratorProperties.SCRIPT_GENERATION_ERROR_PROPERTY, event.getOldValue(), event.getNewValue());

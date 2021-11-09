@@ -11,9 +11,9 @@ public class PlayingState extends DynamicScriptingState {
 	private Optional<ScriptGeneratorAction> currentlyExecutingAction;
 	private Optional<Integer> nextScriptId = Optional.empty();
 	protected DynamicScriptingNicosFacade nicosFacade;
-	protected DynamicScriptingModelFacade scriptGeneratorFacade;
+	protected DynamicScriptingModelAdapter scriptGeneratorFacade;
 	
-	public PlayingState(DynamicScriptingNicosFacade nicosFacade, DynamicScriptingModelFacade generatorFacade, HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction) {
+	public PlayingState(DynamicScriptingNicosFacade nicosFacade, DynamicScriptingModelAdapter generatorFacade, HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction) {
 		super(dynamicScriptIdsToAction);
 		this.nicosFacade = nicosFacade;
 		this.scriptGeneratorFacade = generatorFacade;

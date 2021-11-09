@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptName;
-import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelFacade;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelAdapter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosFacade;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.PlayingState;
@@ -21,7 +21,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.ScriptGeneratorMockBuild
 public class PlayingStateTest extends DynamicScriptingStateTest {
 	
 	private DynamicScriptingNicosFacade nicosFacade;
-	private DynamicScriptingModelFacade modelFacade;
+	private DynamicScriptingModelAdapter modelAdapter;
 	
 	private ScriptGeneratorMockBuilder scriptGeneratorMockBuilder;
 	
@@ -34,10 +34,10 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	@Override
 	protected void setUpState() {
 		nicosFacade = new DynamicScriptingNicosFacade(scriptGeneratorMockBuilder.getMockNicosModel());
-		modelFacade = new DynamicScriptingModelFacade(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
-		state = new PlayingState(nicosFacade, modelFacade, dynamicScriptIdsToAction);
+		modelAdapter = new DynamicScriptingModelAdapter(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
+		state = new PlayingState(nicosFacade, modelAdapter, dynamicScriptIdsToAction);
 		nicosFacade.addPropertyChangeListener(state);
-		modelFacade.addPropertyChangeListener(state);
+		modelAdapter.addPropertyChangeListener(state);
 	}
 	
 	@After
@@ -48,7 +48,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	
 	private void removeStateListeners() {
 		nicosFacade.removePropertyChangeListener(state);
-		modelFacade.removePropertyChangeListener(state);
+		modelAdapter.removePropertyChangeListener(state);
 	}
 	
 	@Override
@@ -57,7 +57,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	}
 	
 	protected void simulateScriptGenerated() {
-		modelFacade.handleScriptGeneration("test");
+		modelAdapter.handleScriptGeneration("test");
 	}
 	
 	protected void simulateScriptExecuted(Integer scriptId) {

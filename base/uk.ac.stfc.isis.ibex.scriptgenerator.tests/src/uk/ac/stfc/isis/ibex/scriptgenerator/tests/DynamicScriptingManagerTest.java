@@ -14,7 +14,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptName;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingException;
-import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelFacade;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelAdapter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingManager;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosFacade;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingState;
@@ -28,7 +28,7 @@ public class DynamicScriptingManagerTest {
 	
 	private DynamicScriptingManager dynamicScriptingManager;
 	private DynamicScriptingNicosFacade nicosFacade;
-	private DynamicScriptingModelFacade modelFacade;
+	private DynamicScriptingModelAdapter modelAdapter;
 	private DynamicScriptingState initialState;
 	private HashMap<Integer, ScriptGeneratorAction> dynamicScriptIds;
 	private DynamicScriptingStateFactory stateFactory;
@@ -42,9 +42,9 @@ public class DynamicScriptingManagerTest {
 		// Set up class under test
 		dynamicScriptIds = new HashMap<>();
 		nicosFacade = new DynamicScriptingNicosFacade(scriptGeneratorMockBuilder.getMockNicosModel());
-		modelFacade = new DynamicScriptingModelFacade(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
+		modelAdapter = new DynamicScriptingModelAdapter(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
 		initialState = new StoppedState(dynamicScriptIds);
-		stateFactory = new DynamicScriptingStateFactory(modelFacade, nicosFacade, initialState);
+		stateFactory = new DynamicScriptingStateFactory(modelAdapter, nicosFacade, initialState);
 		dynamicScriptingManager = new DynamicScriptingManager(stateFactory);
 	}
 	
@@ -62,7 +62,7 @@ public class DynamicScriptingManagerTest {
 	}
 	
 	private void simulateScriptGenerated() {
-		modelFacade.handleScriptGeneration("test");
+		modelAdapter.handleScriptGeneration("test");
 	}
 	
 	private void simulateScriptExecuted(Integer scriptId) {

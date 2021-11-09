@@ -13,7 +13,7 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.scriptgenerator.NoScriptDefinitionSelectedException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScript;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingException;
-import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelFacade;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelAdapter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
@@ -23,7 +23,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.ScriptGeneratorMockBuild
 public class DynamicScriptingModelFacadeTest {
 	
 	private ScriptGeneratorMockBuilder scriptGeneratorMockBuilder;
-	private DynamicScriptingModelFacade generatorFacade;
+	private DynamicScriptingModelAdapter modelAdapter;
 	private Integer scriptsGeneratedCount;
 	
 	@Before
@@ -32,14 +32,14 @@ public class DynamicScriptingModelFacadeTest {
 		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
 		scriptsGeneratedCount = 0;
 		// Set up class under test
-		generatorFacade = new DynamicScriptingModelFacade(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
-		generatorFacade.addPropertyChangeListener(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, evt -> {
+		modelAdapter = new DynamicScriptingModelAdapter(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
+		modelAdapter.addPropertyChangeListener(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, evt -> {
 			scriptsGeneratedCount++;
 		});
 	}
 	
 	private void assertScriptIs(Integer id, String name, Optional<String> code) {
-		Optional<DynamicScript> scriptOptional = generatorFacade.getDynamicScript();
+		Optional<DynamicScript> scriptOptional = modelAdapter.getDynamicScript();
 		if (scriptOptional.isEmpty()) {
 			throw new AssertionError("Script not present to test");
 		}
@@ -50,7 +50,7 @@ public class DynamicScriptingModelFacadeTest {
 	}
 	
 	private void assertScriptIsEmpty() {
-		Optional<DynamicScript> script = generatorFacade.getDynamicScript();
+		Optional<DynamicScript> script = modelAdapter.getDynamicScript();
 		assertThat(script, is(Optional.empty()));
 	}
 	
@@ -65,7 +65,7 @@ public class DynamicScriptingModelFacadeTest {
 		ScriptGeneratorAction action = scriptGeneratorMockBuilder.arrangeExceptionToThrowForAction(0, InvalidParamsException.class);
 		// Assert and Act
 		assertThrows(DynamicScriptingException.class, () -> {
-			generatorFacade.refreshGeneratedScript(action);
+			modelAdapter.refreshGeneratedScript(action);
 		});
 		assertScriptIsEmpty();
 	}
@@ -76,7 +76,7 @@ public class DynamicScriptingModelFacadeTest {
 		ScriptGeneratorAction action = scriptGeneratorMockBuilder.arrangeExceptionToThrowForAction(0, UnsupportedLanguageException.class);
 		// Assert and Act
 		assertThrows(DynamicScriptingException.class, () -> {
-			generatorFacade.refreshGeneratedScript(action);
+			modelAdapter.refreshGeneratedScript(action);
 		});
 		assertScriptIsEmpty();
 	}
@@ -87,7 +87,7 @@ public class DynamicScriptingModelFacadeTest {
 		ScriptGeneratorAction action = scriptGeneratorMockBuilder.arrangeExceptionToThrowForAction(0, NoScriptDefinitionSelectedException.class);
 		// Assert and Act
 		assertThrows(DynamicScriptingException.class, () -> {
-			generatorFacade.refreshGeneratedScript(action);
+			modelAdapter.refreshGeneratedScript(action);
 		});
 		assertScriptIsEmpty();
 	}
@@ -99,10 +99,10 @@ public class DynamicScriptingModelFacadeTest {
 		// Assert and Act
 		assertThat(scriptsGeneratedCount, is(0));
 		try {
-			Optional<Integer> scriptId = generatorFacade.refreshGeneratedScript(action);
+			Optional<Integer> scriptId = modelAdapter.refreshGeneratedScript(action);
 			assertThat(scriptId, is(Optional.of(0)));
 			assertThat(scriptsGeneratedCount, is(0));
-			generatorFacade.handleScriptGeneration("test");
+			modelAdapter.handleScriptGeneration("test");
 			assertThat(scriptsGeneratedCount, is(1));
 			assertScriptIs(0, "Script Generator: 0", Optional.of("test" + "\nrunscript()"));
 		} catch (DynamicScriptingException e) {
