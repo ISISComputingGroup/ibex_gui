@@ -3,37 +3,20 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelFacade;
-import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosFacade;
-import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingState;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.ErrorState;
-import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.ScriptGeneratorMockBuilder;
 
-public class ErrorStateTest {
-	
-	private ErrorState state;
-	private DynamicScriptingNicosFacade nicosFacade;
-	private DynamicScriptingModelFacade scriptGeneratorFacade;
-	
-	private ScriptGeneratorMockBuilder scriptGeneratorMockBuilder;
+public class ErrorStateTest extends DynamicScriptingStateTest {
 	
 	@Before
 	public void setUp() {
-		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
-		nicosFacade = new DynamicScriptingNicosFacade(scriptGeneratorMockBuilder.getMockNicosModel());
-		scriptGeneratorFacade = new DynamicScriptingModelFacade(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
-		state = new ErrorState(nicosFacade, scriptGeneratorFacade);
-	}
-	
-	public void assertActionsEmpty() {
-		assertThat(state.getCurrentlyExecutingAction(), is(Optional.empty()));
-		assertThat(state.getNextExecutingAction(), is(Optional.empty()));
+		setUpScaffolding();
+		state = new ErrorState(dynamicScriptIdsToAction);
+		attachStatusSwitchCounterToState();
 	}
 	
 	@Test
@@ -43,16 +26,14 @@ public class ErrorStateTest {
 	
 	@Test
 	public void test_WHEN_play_THEN_status_is_error() {
-		DynamicScriptingState newState = state.play();
-		assertThat(newState.getStatus(), is(DynamicScriptingStatus.ERROR));
-		assertActionsEmpty();
+		state.play();
+		statusSwitchCounter.assertNoSwitches();
 	}
 	
 	@Test
 	public void test_WHEN_stop_THEN_status_is_error() {
-		DynamicScriptingState newState = state.stop();
-		assertThat(newState.getStatus(), is(DynamicScriptingStatus.ERROR));
-		assertActionsEmpty();
+		state.stop();
+		statusSwitchCounter.assertNoSwitches();
 	}
 	
 	@Test

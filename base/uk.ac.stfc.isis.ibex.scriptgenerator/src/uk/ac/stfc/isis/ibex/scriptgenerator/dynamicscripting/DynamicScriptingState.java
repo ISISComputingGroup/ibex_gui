@@ -22,7 +22,7 @@ public abstract class DynamicScriptingState extends ModelObject implements HasSt
 		return dynamicScriptIdsToAction.containsKey(scriptId);
 	}
 	
-	public void changeState(DynamicScriptingStatus newStatus) {
+	protected void changeState(DynamicScriptingStatus newStatus) {
 		firePropertyChange(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, getStatus(), newStatus);
 	}
 	
