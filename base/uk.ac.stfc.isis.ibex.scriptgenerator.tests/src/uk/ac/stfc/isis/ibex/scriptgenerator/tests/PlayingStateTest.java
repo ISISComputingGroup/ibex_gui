@@ -7,17 +7,22 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.mock;
 
 import java.beans.PropertyChangeEvent;
 import java.util.HashMap;
 import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScript;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptName;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelAdapter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosAdapter;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.PlayingState;
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.ScriptGeneratorMockBuilder;
 
@@ -32,12 +37,12 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	protected void setUpScaffolding() {
 		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
 		super.setUpScaffolding();
+		nicosAdapter = new DynamicScriptingNicosAdapter(scriptGeneratorMockBuilder.getMockNicosModel());
+		modelAdapter = new DynamicScriptingModelAdapter(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
 	}
 	
 	@Override
 	protected void setUpState() {
-		nicosAdapter = new DynamicScriptingNicosAdapter(scriptGeneratorMockBuilder.getMockNicosModel());
-		modelAdapter = new DynamicScriptingModelAdapter(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
 		state = new PlayingState(nicosAdapter, modelAdapter, dynamicScriptIdsToAction);
 		nicosAdapter.addPropertyChangeListener(state);
 		modelAdapter.addPropertyChangeListener(state);
@@ -187,6 +192,61 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		assertThat(currentAction, is(Optional.empty()));
 		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
 		assertThat(nextAction, is(Optional.empty()));
+	}
+	
+	@Test
+	public void test_GIVEN_dynamic_scripting_exception_WHEN_generating_THEN_error_state() {
+		scriptGeneratorMockBuilder.arrangeRefreshScriptThrows(new InvalidParamsException("test"));
+		state.propertyChange(new PropertyChangeEvent(
+			modelAdapter, DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY, 
+			Optional.empty(), Optional.of(new DynamicScript(1))
+		));
+		statusSwitchCounter.assertNumberOfSwitches(
+			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.ERROR, 1
+		);
+	}
+	
+	@Test
+	public void test_GIVEN_no_dynamic_script_code_WHEN_execute_script_THEN_error_state() throws DynamicScriptingException {
+		modelAdapter = mock(DynamicScriptingModelAdapter.class);
+		Integer scriptId = 1;
+		DynamicScript script = new DynamicScript(scriptId);
+		ScriptGeneratorAction action = new ScriptGeneratorAction(new HashMap<>());
+		when(modelAdapter.getDynamicScript()).thenReturn(Optional.of(script));
+		when(modelAdapter.getFirstAction()).thenReturn(Optional.of(action));
+		when(modelAdapter.refreshGeneratedScript(action)).thenReturn(Optional.of(scriptId));
+		removeStateListeners();
+		removeStatusSwitchCounterToState();
+		setUpState();
+		attachStatusSwitchCounterToState();
+		state.propertyChange(new PropertyChangeEvent(
+			modelAdapter, DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, 
+			Optional.empty(), Optional.of(script)
+		));
+		statusSwitchCounter.assertNumberOfSwitches(
+			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.ERROR, 1
+		);
+	}
+	
+	@Test
+	public void test_GIVEN_no_dynamic_script_WHEN_execute_script_THEN_error_state() throws DynamicScriptingException {
+		modelAdapter = mock(DynamicScriptingModelAdapter.class);
+		Integer scriptId = 1;
+		ScriptGeneratorAction action = new ScriptGeneratorAction(new HashMap<>());
+		when(modelAdapter.getDynamicScript()).thenReturn(Optional.empty());
+		when(modelAdapter.getFirstAction()).thenReturn(Optional.of(action));
+		when(modelAdapter.refreshGeneratedScript(action)).thenReturn(Optional.of(scriptId));
+		removeStateListeners();
+		removeStatusSwitchCounterToState();
+		setUpState();
+		attachStatusSwitchCounterToState();
+		state.propertyChange(new PropertyChangeEvent(
+			modelAdapter, DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, 
+			Optional.empty(), Optional.of(new DynamicScript(1))
+		));
+		statusSwitchCounter.assertNumberOfSwitches(
+			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.ERROR, 1
+		);
 	}
 
 }
