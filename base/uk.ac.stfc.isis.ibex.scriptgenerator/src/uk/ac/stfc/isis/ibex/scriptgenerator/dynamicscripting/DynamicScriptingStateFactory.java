@@ -22,6 +22,10 @@ public class DynamicScriptingStateFactory {
 		return newState;
 	}
 	
+	public DynamicScriptingState getCurrentState() {
+		return state;
+	}
+	
 	private void removeStateAsPropertyListener(DynamicScriptingState state) {
 		this.nicosFacade.removePropertyChangeListener(state);
 		this.modelFacade.removePropertyChangeListener(state);

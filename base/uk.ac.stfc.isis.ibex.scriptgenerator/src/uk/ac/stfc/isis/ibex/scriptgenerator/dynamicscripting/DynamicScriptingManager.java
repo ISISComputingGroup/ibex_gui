@@ -7,9 +7,11 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 public class DynamicScriptingManager {
 	
 	private DynamicScriptingState dynamicScriptingState;
+	private DynamicScriptingStateFactory dynamicScriptingStateFactory;
 	
-	public DynamicScriptingManager(DynamicScriptingState dynamicScriptingState) {
-		setupNewState(dynamicScriptingState);
+	public DynamicScriptingManager(DynamicScriptingStateFactory dynamicScriptingStateFactory) {
+		this.dynamicScriptingStateFactory = dynamicScriptingStateFactory;
+		setupNewState(dynamicScriptingStateFactory.getCurrentState());
 	}
 	
 	public void playScript() throws DynamicScriptingException {
@@ -21,13 +23,10 @@ public class DynamicScriptingManager {
 	}
 	
 	private void setupNewState(DynamicScriptingState newState) {
-		if (dynamicScriptingState != null) {
-			dynamicScriptingState.tearDownListeners();
-		}
 		dynamicScriptingState = newState;
 		dynamicScriptingState.addPropertyChangeListener(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, event -> {
 			DynamicScriptingStatus nextStatus = (DynamicScriptingStatus) event.getNewValue();
-			DynamicScriptingState nextState = DynamicScriptingStateFactory.getNewState(dynamicScriptingState, nextStatus);
+			DynamicScriptingState nextState = dynamicScriptingStateFactory.changeState(nextStatus);
 			handleStateChange(nextState);
 		});
 	}
