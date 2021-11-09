@@ -6,10 +6,13 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
+import java.beans.PropertyChangeEvent;
 import java.util.HashMap;
 import java.util.Optional;
 
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptName;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelAdapter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosAdapter;
@@ -56,8 +59,14 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		dynamicScriptIdsToAction = new HashMap<Integer, ScriptGeneratorAction>();
 	}
 	
-	protected void simulateScriptGenerated() {
-		modelAdapter.handleScriptGeneration("test");
+	protected void simulateScriptGenerated(Integer scriptId) {
+		when(scriptGeneratorMockBuilder.getMockScriptGeneratorModel().getScriptFromId(1)).thenReturn(Optional.of("test"));
+		PropertyChangeEvent event = new PropertyChangeEvent(
+			scriptGeneratorMockBuilder.getMockScriptGeneratorModel(), 
+			ScriptGeneratorProperties.GENERATED_SCRIPT_PROPERTY, 
+			null, 1
+		);
+		modelAdapter.propertyChange(event);
 	}
 	
 	protected void simulateScriptExecuted(Integer scriptId) {
@@ -93,7 +102,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(0)));
 		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
 		// Act
-		simulateScriptGenerated();
+		simulateScriptGenerated(1);
 		assertTrue(state.isScriptDynamic(0));
 		simulateScriptExecuted(1);
 		// Assert
@@ -113,7 +122,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 			nextAction = state.getNextExecutingAction();
 			assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(i)));
 			assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(i + 1)));
-			simulateScriptGenerated();
+			simulateScriptGenerated(i);
 			assertTrue(state.isScriptDynamic(i));
 			simulateScriptExecuted(i);
 			i++;
@@ -132,7 +141,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(0)));
 		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
 		// Act
-		simulateScriptGenerated();
+		simulateScriptGenerated(1);
 		simulateScriptExecuted(1);
 		// Assert
 		statusSwitchCounter.assertNumberOfSwitches(
@@ -149,7 +158,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(0)));
 		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
 		// Act
-		simulateScriptGenerated();
+		simulateScriptGenerated(1);
 		simulateScriptExecuted(1);
 		// Assert
 		statusSwitchCounter.assertNumberOfSwitches(

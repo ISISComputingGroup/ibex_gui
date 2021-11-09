@@ -1,5 +1,6 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 
+import java.beans.PropertyChangeEvent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +12,9 @@ import org.junit.AssumptionViolatedException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.when;
 
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptName;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelAdapter;
@@ -62,7 +65,13 @@ public class DynamicScriptingManagerTest {
 	}
 	
 	private void simulateScriptGenerated() {
-		modelAdapter.handleScriptGeneration("test");
+		when(scriptGeneratorMockBuilder.getMockScriptGeneratorModel().getScriptFromId(1)).thenReturn(Optional.of("test"));
+		PropertyChangeEvent event = new PropertyChangeEvent(
+			scriptGeneratorMockBuilder.getMockScriptGeneratorModel(), 
+			ScriptGeneratorProperties.GENERATED_SCRIPT_PROPERTY, 
+			null, 1
+		);
+		modelAdapter.propertyChange(event);
 	}
 	
 	private void simulateScriptExecuted(Integer scriptId) {
