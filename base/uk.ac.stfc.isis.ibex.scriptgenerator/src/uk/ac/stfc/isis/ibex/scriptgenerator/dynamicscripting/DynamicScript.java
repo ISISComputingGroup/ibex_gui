@@ -7,18 +7,9 @@ public class DynamicScript {
 	private Integer id;
 	private Optional<String> code;
 	
-	public DynamicScript(Integer id, String code) {
-		this.id = id;
-		this.code = Optional.of(code);
-	}
-	
 	public DynamicScript(Integer id) {
 		this.id = id;
 		this.code = Optional.empty();
-	}
-	
-	public void setCode(String code) {
-		this.code = Optional.of(code);
 	}
 	
 	public static Integer getIdFromName(String name) throws DynamicScriptNameFormatException {
@@ -42,6 +33,10 @@ public class DynamicScript {
 	
 	public Integer getId() {
 		return id;
+	}
+	
+	public void setCode(String code) {
+		this.code = Optional.of(code);
 	}
 	
 	public Optional<String> getCode() {

@@ -11,7 +11,6 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScript;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptNameFormatException;
-import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingException;
 
 public class DynamicScriptTest {
 	
