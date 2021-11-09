@@ -2,9 +2,10 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThrows;
 
-
+import java.util.HashMap;
 import java.util.Optional;
 
 import org.junit.Before;
@@ -57,6 +58,28 @@ public class DynamicScriptingModelAdapterTest {
 	@Test
 	public void test_initially_script_id_and_name_and_code_are_empty() {
 		assertScriptIsEmpty();
+	}
+	
+	@Test
+	public void test_WHEN_get_first_action_THEN_is_first_action() {
+		Optional<ScriptGeneratorAction> action = modelAdapter.getFirstAction();
+		assertThat(action, is(not(Optional.empty())));
+		assertThat(action, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(0)));
+	}
+	
+	@Test
+	public void test_WHEN_get_second_action_THEN_is_second_action() {
+		ScriptGeneratorAction firstAction = modelAdapter.getFirstAction().get();
+		Optional<ScriptGeneratorAction> secondAction = modelAdapter.getActionAfter(firstAction);
+		assertThat(secondAction, is(not(Optional.empty())));
+		assertThat(secondAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
+	}
+	
+	@Test
+	public void test_GIVEN_action_that_does_not_exist_WHEN_get_action_after_THEN_empty() {
+		ScriptGeneratorAction action = new ScriptGeneratorAction(new HashMap<>());
+		Optional<ScriptGeneratorAction> nextAction = modelAdapter.getActionAfter(action);
+		assertThat(nextAction, is(Optional.empty()));
 	}
 	
 	@Test
