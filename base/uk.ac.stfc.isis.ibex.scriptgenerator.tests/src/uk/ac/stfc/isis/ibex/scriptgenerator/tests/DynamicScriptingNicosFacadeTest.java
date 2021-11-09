@@ -60,10 +60,14 @@ public class DynamicScriptingNicosFacadeTest {
 	}
 	
 	private void doScriptChange(String oldScriptName, String newScriptName) {
+		doScriptChange(oldScriptName, newScriptName, DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY);
+	}
+	
+	private void doScriptChange(String oldScriptName, String newScriptName, String propertyName) {
 		when(nicosModel.getScriptName()).thenReturn(newScriptName);
 		nicosFacade.propertyChange( 
 			new PropertyChangeEvent(
-				nicosModel, DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY,
+				nicosModel, propertyName,
 				newScriptName, newScriptName
 			)
 		);
@@ -117,6 +121,13 @@ public class DynamicScriptingNicosFacadeTest {
 		doScriptChange(scriptName, null);
 		statusSwitchCounter.assertNumberOfSwitches(oldScriptName, newScriptName, 1);
 		statusSwitchCounter.assertNumberOfSwitches(newScriptName, oldScriptName, 1);
+	}
+	
+	@Test
+	public void test_WHEN_non_script_change_property_fired_THEN_change_not_notified() {
+		String scriptName = "Script Generator: 0";
+		doScriptChange(null, scriptName, "test");
+		statusSwitchCounter.assertNoSwitches();
 	}
 
 
