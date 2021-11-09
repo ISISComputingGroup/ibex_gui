@@ -14,6 +14,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingMod
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingManager;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosFacade;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStateFactory;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.StoppedState;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
@@ -28,9 +29,10 @@ public class ScriptGeneratorNicosViewModel {
 	
 	public ScriptGeneratorNicosViewModel(ScriptGeneratorSingleton scriptGeneratorModel) {
 		var nicosFacade = new DynamicScriptingNicosFacade(nicosModel);
-		var generatorFacade = new DynamicScriptingModelFacade(scriptGeneratorModel);
-		var dynamicScriptingState = new StoppedState(nicosFacade, generatorFacade, new HashMap<Integer, ScriptGeneratorAction>());
-		dynamicScriptingManager = new DynamicScriptingManager(dynamicScriptingState);
+		var modelFacade = new DynamicScriptingModelFacade(scriptGeneratorModel);
+		var dynamicScriptingState = new StoppedState(new HashMap<Integer, ScriptGeneratorAction>());
+		var dynamicScriptingStateFactory = new DynamicScriptingStateFactory(modelFacade, nicosFacade, dynamicScriptingState);
+		dynamicScriptingManager = new DynamicScriptingManager(dynamicScriptingStateFactory);
 		scriptGeneratorModel.setDynamicScriptingManager(dynamicScriptingManager);
 	}
 	

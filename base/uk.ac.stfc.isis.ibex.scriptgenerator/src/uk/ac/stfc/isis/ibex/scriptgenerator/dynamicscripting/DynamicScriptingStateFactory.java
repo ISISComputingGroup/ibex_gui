@@ -12,21 +12,21 @@ public class DynamicScriptingStateFactory {
 		this.modelFacade = modelFacade;
 		this.nicosFacade = nicosFacade;
 		this.state = state;
-		addStateAsPropertyListener(this.state);
+		addStateAsPropertyListener();
 	}
 
 	public DynamicScriptingState changeState(DynamicScriptingStatus newStatus) {
-		removeStateAsPropertyListener(state);
-		DynamicScriptingState newState = getNewState(newStatus);
-		addStateAsPropertyListener(newState);
-		return newState;
+		removeStateAsPropertyListener();
+		state = getNewState(newStatus);
+		addStateAsPropertyListener();
+		return state;
 	}
 	
 	public DynamicScriptingState getCurrentState() {
 		return state;
 	}
 	
-	private void removeStateAsPropertyListener(DynamicScriptingState state) {
+	private void removeStateAsPropertyListener() {
 		this.nicosFacade.removePropertyChangeListener(state);
 		this.modelFacade.removePropertyChangeListener(state);
 	}
@@ -42,7 +42,7 @@ public class DynamicScriptingStateFactory {
 		}
 	}
 	
-	private void addStateAsPropertyListener(DynamicScriptingState state) {
+	private void addStateAsPropertyListener() {
 		this.nicosFacade.addPropertyChangeListener(state);
 		this.modelFacade.addPropertyChangeListener(state);
 	}
