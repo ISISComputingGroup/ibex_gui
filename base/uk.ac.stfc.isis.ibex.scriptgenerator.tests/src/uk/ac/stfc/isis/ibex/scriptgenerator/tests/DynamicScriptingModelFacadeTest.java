@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.NoScriptDefinitionSelectedException;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScript;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelFacade;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingProperties;
@@ -37,14 +38,20 @@ public class DynamicScriptingModelFacadeTest {
 		});
 	}
 	
-	private void assertScriptIs(Optional<Integer> id, Optional<String> name, Optional<String> code) {
-		assertThat(generatorFacade.getScriptId(), is(id));
-		assertThat(generatorFacade.getScriptName(), is(name));
-		assertThat(generatorFacade.getScriptCode(), is(code));
+	private void assertScriptIs(Integer id, String name, Optional<String> code) {
+		Optional<DynamicScript> scriptOptional = generatorFacade.getDynamicScript();
+		if (scriptOptional.isEmpty()) {
+			throw new AssertionError("Script not present to test");
+		}
+		DynamicScript script = scriptOptional.get();
+		assertThat(script.getId(), is(id));
+		assertThat(script.getName(), is(name));
+		assertThat(script.getCode(), is(code));
 	}
 	
 	private void assertScriptIsEmpty() {
-		assertScriptIs(Optional.empty(), Optional.empty(), Optional.empty());
+		Optional<DynamicScript> script = generatorFacade.getDynamicScript();
+		assertThat(script, is(Optional.empty()));
 	}
 	
 	@Test
@@ -97,7 +104,7 @@ public class DynamicScriptingModelFacadeTest {
 			assertThat(scriptsGeneratedCount, is(0));
 			generatorFacade.handleScriptGeneration("test");
 			assertThat(scriptsGeneratedCount, is(1));
-			assertScriptIs(Optional.of(0), Optional.of("Script Generator: 0"), Optional.of("test" + "\nrunscript()"));
+			assertScriptIs(0, "Script Generator: 0", Optional.of("test" + "\nrunscript()"));
 		} catch (DynamicScriptingException e) {
 			throw new AssertionError("Should refresh correctly");
 		}
