@@ -17,6 +17,7 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
 	
 	private NicosModel nicosModel;
 	private DynamicScriptName scriptName = new DynamicScriptName(Optional.empty());
+	private Boolean executionStopped = false;
 	
 	
 	public DynamicScriptingNicosAdapter(NicosModel nicosModel) {
@@ -33,12 +34,14 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
         	if (nicosInError()) {
     			throw new DynamicScriptingException("Nicos in error, cannot play script.");
     		}
+        	executionStopped = false;
     	} else {
     		throw new DynamicScriptingException("Nicos in error, cannot play script.");
     	}
 	}
 	
 	public void stopExecution() {
+		executionStopped = true;
 		ExecutionInstruction instruction = new ExecutionInstruction(ExecutionInstructionType.STOP, BreakLevel.IMMEDIATE);
 		nicosModel.sendExecutionInstruction(instruction);
 	}
@@ -59,10 +62,14 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
 			DynamicScriptName newDynamicScriptName = new DynamicScriptName(newScriptName);
 			scriptChanged(newDynamicScriptName);
 			ScriptStatus newStatus = (ScriptStatus) evt.getNewValue();
-			if (newStatus == ScriptStatus.IDLE || newStatus == ScriptStatus.IDLEEXC) {
+			if (scriptStopped(newStatus)) {
 				firePropertyChange(DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, null, newStatus);
 			}
 		}
+	}
+	
+	private Boolean scriptStopped(ScriptStatus newStatus) {
+		return (newStatus == ScriptStatus.IDLE || newStatus == ScriptStatus.IDLEEXC) && executionStopped;
 	}
 	
 	private void fireScriptChange(DynamicScriptName newName) {

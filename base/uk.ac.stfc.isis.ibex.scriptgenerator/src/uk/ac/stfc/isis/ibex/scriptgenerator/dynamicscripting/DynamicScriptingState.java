@@ -21,6 +21,10 @@ public abstract class DynamicScriptingState extends ModelObject implements HasSt
 		return dynamicScriptIdsToAction.containsKey(scriptId);
 	}
 	
+	public HashMap<Integer, ScriptGeneratorAction> getDynamicScriptIds() {
+		return dynamicScriptIdsToAction;
+	}
+	
 	public Optional<ScriptGeneratorAction> getCurrentlyExecutingAction() {
 		return Optional.empty();
 	}
