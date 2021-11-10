@@ -52,8 +52,17 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
 	}
 	
 	public void pauseExecution() {
-		executionPaused = true;
-		sendInstruction(ExecutionInstructionType.BREAK);
+		if(!executionStopped) {
+			executionPaused = true;
+			sendInstruction(ExecutionInstructionType.BREAK);
+		}
+	}
+	
+	public void resumeExecution() {
+		if (executionPaused) {
+			executionPaused = false;
+			sendInstruction(ExecutionInstructionType.CONTINUE);
+		}
 	}
 	
 	public void scriptChanged(DynamicScriptName newName) {
@@ -75,9 +84,10 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
 			ScriptStatus oldStatus = (ScriptStatus) evt.getOldValue();
 			if (scriptStopped(newStatus)) {
 				firePropertyChange(DynamicScriptingProperties.SCRIPT_STOPPED_PROPERTY, oldStatus, newStatus);
-			}
-			if (scriptPaused(newStatus)) {
+			} else if (scriptPaused(newStatus)) {
 				firePropertyChange(DynamicScriptingProperties.SCRIPT_PAUSED_PROPERTY, oldStatus, newStatus);
+			} else if (scriptResumed(oldStatus, newStatus)) {
+				firePropertyChange(DynamicScriptingProperties.SCRIPT_RESUMED_PROPERTY, oldStatus, newStatus);
 			}
 		}
 	}
@@ -88,6 +98,10 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
 	
 	private Boolean scriptPaused(ScriptStatus newStatus) {
 		return newStatus == ScriptStatus.INBREAK && executionPaused;
+	}
+	
+	private Boolean scriptResumed(ScriptStatus oldStatus, ScriptStatus newStatus) {
+		return (oldStatus == ScriptStatus.INBREAK && newStatus == ScriptStatus.RUNNING) && !executionPaused;
 	}
 	
 	private void fireScriptChange(DynamicScriptName newName) {

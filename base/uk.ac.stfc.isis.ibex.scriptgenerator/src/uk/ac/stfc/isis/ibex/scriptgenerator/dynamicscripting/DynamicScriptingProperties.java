@@ -8,6 +8,8 @@ public class DynamicScriptingProperties {
 	
 	public static final String SCRIPT_PAUSED_PROPERTY = "scriptPaused";
 	
+	public static final String SCRIPT_RESUMED_PROPERTY = "scriptResumed";
+	
 	public static final String SCRIPT_CHANGED_PROPERTY = "scriptChanged";
 	
 	public static final String CURRENTLY_EXECUTING_SCRIPT = "currentlyExecutingScript";

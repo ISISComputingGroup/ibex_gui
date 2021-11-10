@@ -37,6 +37,7 @@ public class DynamicScriptingNicosAdapterTest {
 		nicosAdapter.addPropertyChangeListener(DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY, dynamicScriptSwitchCounter);
 		nicosAdapter.addPropertyChangeListener(DynamicScriptingProperties.SCRIPT_PAUSED_PROPERTY, statusSwitchCounter);
 		nicosAdapter.addPropertyChangeListener(DynamicScriptingProperties.SCRIPT_STOPPED_PROPERTY, statusSwitchCounter);
+		nicosAdapter.addPropertyChangeListener(DynamicScriptingProperties.SCRIPT_RESUMED_PROPERTY, statusSwitchCounter);
 	}
 	
 	@Test
@@ -149,10 +150,66 @@ public class DynamicScriptingNicosAdapterTest {
 	}
 	
 	@Test
+	public void test_WHEN_pause_from_pause_AND_property_change_THEN_no_property_changed() {
+		nicosAdapter.pauseExecution();
+		doScriptChange(
+			"test", DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, 
+			ScriptStatus.RUNNING, ScriptStatus.INBREAK
+		);
+		nicosAdapter.pauseExecution();
+		doScriptChange(
+			"test", DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, 
+			ScriptStatus.RUNNING, ScriptStatus.INBREAK
+		);
+		statusSwitchCounter.assertNumberOfSwitches(ScriptStatus.RUNNING, ScriptStatus.INBREAK, 1);
+	}
+	
+	@Test
 	public void test_WHEN_stop_AND_property_change_THEN_property_changed() {
 		nicosAdapter.stopExecution();
 		doScriptChange("test", DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY);
 		statusSwitchCounter.assertNumberOfSwitches(ScriptStatus.RUNNING, ScriptStatus.IDLE, 1);
+	}
+	
+	@Test
+	public void test_WHEN_pause_from_stopped_AND_property_change_THEN_no_property_changed() {
+		nicosAdapter.stopExecution();
+		doScriptChange("test", DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY);
+		statusSwitchCounter.assertNumberOfSwitches(ScriptStatus.RUNNING, ScriptStatus.IDLE, 1);
+		nicosAdapter.pauseExecution();
+		doScriptChange(
+			"test", DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, 
+			ScriptStatus.RUNNING, ScriptStatus.INBREAK
+		);
+		statusSwitchCounter.assertNumberOfSwitches(ScriptStatus.IDLE, ScriptStatus.INBREAK, 0);
+	}
+	
+	@Test
+	public void test_WHEN_resumed_from_paused_AND_property_change_THEN_property_changed() {
+		nicosAdapter.pauseExecution();
+		doScriptChange(
+			"test", DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, 
+			ScriptStatus.RUNNING, ScriptStatus.INBREAK
+		);
+		nicosAdapter.resumeExecution();
+		doScriptChange(
+			"test", DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, 
+			ScriptStatus.INBREAK, ScriptStatus.RUNNING
+		);
+		statusSwitchCounter.assertNumberOfSwitches(ScriptStatus.INBREAK, ScriptStatus.RUNNING, 1);
+	}
+	
+	@Test
+	public void test_WHEN_resumed_from_stopped_AND_property_change_THEN_no_property_changed() {
+		nicosAdapter.stopExecution();
+		doScriptChange("test", DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY);
+		statusSwitchCounter.assertNumberOfSwitches(ScriptStatus.RUNNING, ScriptStatus.IDLE, 1);
+		nicosAdapter.resumeExecution();
+		doScriptChange(
+			"test", DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, 
+			ScriptStatus.IDLE, ScriptStatus.RUNNING
+		);
+		statusSwitchCounter.assertNumberOfSwitches(ScriptStatus.IDLE, ScriptStatus.RUNNING, 0);
 	}
 
 
