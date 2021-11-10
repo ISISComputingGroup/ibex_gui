@@ -82,7 +82,7 @@ public class ScriptGeneratorView {
     /**
      * The ViewModel to control nicos interactions.
      */
-    private ScriptGeneratorNicosViewModel nicosModel;
+    private ScriptGeneratorNicosViewModel nicosViewModel;
 
     /**
      * The main parent for UI elements
@@ -123,6 +123,7 @@ public class ScriptGeneratorView {
     private Label estimateText;
     private Button playScriptButton;
     private Button stopScriptButton;
+    private Button pauseScriptButton;
     private Button generateScriptButton;
     private Button generateScriptAsButton;
     private Button btnDuplicateAction;
@@ -181,7 +182,7 @@ public class ScriptGeneratorView {
 //    });
 
     var scriptGeneratorModel = scriptGeneratorViewModel.setUpModel();
-    nicosModel = new ScriptGeneratorNicosViewModel(scriptGeneratorModel);
+    nicosViewModel = new ScriptGeneratorNicosViewModel(scriptGeneratorModel);
     }
 
     /**
@@ -437,7 +438,7 @@ public class ScriptGeneratorView {
 	        // Composite for generate buttons
 	        Composite dynamicScriptingButtonsGrp = new Composite(mainParent, SWT.NONE);
 	        dynamicScriptingButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-	        GridLayout dsgLayout = new GridLayout(2, true);
+	        GridLayout dsgLayout = new GridLayout(3, true);
 	        dsgLayout.marginHeight = 10;
 	        dsgLayout.marginWidth = 10;
 	        dynamicScriptingButtonsGrp.setLayout(dsgLayout);
@@ -447,9 +448,19 @@ public class ScriptGeneratorView {
 	        playScriptButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/play.png"));
 	        playScriptButton.setText("Play");
 	        playScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	        nicosModel.bindQueueScriptButton(playScriptButton);
+	        nicosViewModel.bindQueueScriptButton(playScriptButton);
 	        playScriptButton.addListener(SWT.Selection, e -> {
-	        	nicosModel.playScript();
+	        	nicosViewModel.playScript();
+	        });
+	        
+	        // Button to pause script in nicos
+	        pauseScriptButton = new Button(dynamicScriptingButtonsGrp, SWT.NONE);
+	        pauseScriptButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/pause.png"));
+	        pauseScriptButton.setText("Pause");
+	        pauseScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+	        nicosViewModel.bindQueueScriptButton(pauseScriptButton);
+	        pauseScriptButton.addListener(SWT.Selection, e -> {
+	        	//nicosViewModel.pauseScript();
 	        });
 	        
 	        // Button to stop script in nicos
@@ -457,9 +468,9 @@ public class ScriptGeneratorView {
 	        stopScriptButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/stop.png"));
 	        stopScriptButton.setText("Stop");
 	        stopScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	        nicosModel.bindQueueScriptButton(stopScriptButton);
+	        nicosViewModel.bindQueueScriptButton(stopScriptButton);
 	        stopScriptButton.addListener(SWT.Selection, e -> {
-	        	nicosModel.stopScript();
+	        	nicosViewModel.stopScript();
 	        });
 	        
 	        // Needs to be after nicos model has been set up
