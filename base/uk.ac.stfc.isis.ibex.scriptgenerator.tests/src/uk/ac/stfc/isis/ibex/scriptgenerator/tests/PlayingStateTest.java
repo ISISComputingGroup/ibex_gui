@@ -13,6 +13,7 @@ import java.beans.PropertyChangeEvent;
 import java.util.HashMap;
 import java.util.Optional;
 
+import uk.ac.stfc.isis.ibex.nicos.ScriptStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScript;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptName;
@@ -94,6 +95,12 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	@Test
 	public void test_WHEN_stop_THEN_state_is_stopped() {
 		state.stop();
+		nicosAdapter.propertyChange(
+			new PropertyChangeEvent(
+				scriptGeneratorMockBuilder.getMockNicosModel(), DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY,
+				null, ScriptStatus.IDLE
+			)
+		);
 		statusSwitchCounter.assertNumberOfSwitches(
 			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.STOPPED, 1
 		);

@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
+import uk.ac.stfc.isis.ibex.nicos.ScriptStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptName;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosAdapter;
@@ -59,16 +60,16 @@ public class DynamicScriptingNicosAdapterTest {
 	    });
 	}
 	
-	private void doScriptChange(String oldScriptName, String newScriptName) {
-		doScriptChange(oldScriptName, newScriptName, DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY);
+	private void doScriptChange(String newScriptName) {
+		doScriptChange(newScriptName, DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY);
 	}
 	
-	private void doScriptChange(String oldScriptName, String newScriptName, String propertyName) {
+	private void doScriptChange(String newScriptName, String propertyName) {
 		when(nicosModel.getScriptName()).thenReturn(newScriptName);
 		nicosAdapter.propertyChange( 
 			new PropertyChangeEvent(
 				nicosModel, propertyName,
-				newScriptName, newScriptName
+				ScriptStatus.RUNNING, ScriptStatus.IDLE
 			)
 		);
 	}
@@ -78,14 +79,14 @@ public class DynamicScriptingNicosAdapterTest {
 		Optional<String> oldScriptName = Optional.empty();
 		String scriptName = "Script Generator: 0";
 		Optional<String> newScriptName = Optional.of(scriptName);
-		doScriptChange(null, scriptName);
+		doScriptChange(scriptName);
 		statusSwitchCounter.assertNumberOfSwitches(oldScriptName, newScriptName, 1);
 	}
 	
 	@Test
 	public void test_WHEN_script_still_null_THEN_change_not_notified() {
 		String scriptName = null;
-		doScriptChange(null, scriptName);
+		doScriptChange(scriptName);
 		statusSwitchCounter.assertNoSwitches();
 	}
 	
@@ -94,10 +95,10 @@ public class DynamicScriptingNicosAdapterTest {
 		Optional<String> oldScriptName = Optional.empty();
 		String scriptName = "Script Generator: 0";
 		Optional<String> newScriptName = Optional.of(scriptName);
-		doScriptChange(null, scriptName);
+		doScriptChange(scriptName);
 		String scriptName1 = "Script Generator: 1";
 		Optional<String> newerScriptName = Optional.of(scriptName1);
-		doScriptChange(scriptName, scriptName1);
+		doScriptChange(scriptName1);
 		statusSwitchCounter.assertNumberOfSwitches(oldScriptName, newScriptName, 1);
 		statusSwitchCounter.assertNumberOfSwitches(newScriptName, newerScriptName, 1);
 	}
@@ -107,8 +108,8 @@ public class DynamicScriptingNicosAdapterTest {
 		Optional<String> oldScriptName = Optional.empty();
 		String scriptName = "Script Generator: 0";
 		Optional<String> newScriptName = Optional.of(scriptName);
-		doScriptChange(null, scriptName);
-		doScriptChange(scriptName, scriptName);
+		doScriptChange(scriptName);
+		doScriptChange(scriptName);
 		statusSwitchCounter.assertNumberOfSwitches(oldScriptName, newScriptName, 1);
 	}
 	
@@ -117,8 +118,8 @@ public class DynamicScriptingNicosAdapterTest {
 		Optional<String> oldScriptName = Optional.empty();
 		String scriptName = "Script Generator: 0";
 		Optional<String> newScriptName = Optional.of(scriptName);
-		doScriptChange(null, scriptName);
-		doScriptChange(scriptName, null);
+		doScriptChange(scriptName);
+		doScriptChange(null);
 		statusSwitchCounter.assertNumberOfSwitches(oldScriptName, newScriptName, 1);
 		statusSwitchCounter.assertNumberOfSwitches(newScriptName, oldScriptName, 1);
 	}
@@ -126,7 +127,7 @@ public class DynamicScriptingNicosAdapterTest {
 	@Test
 	public void test_WHEN_non_script_change_property_fired_THEN_change_not_notified() {
 		String scriptName = "Script Generator: 0";
-		doScriptChange(null, scriptName, "test");
+		doScriptChange(scriptName, "test");
 		statusSwitchCounter.assertNoSwitches();
 	}
 

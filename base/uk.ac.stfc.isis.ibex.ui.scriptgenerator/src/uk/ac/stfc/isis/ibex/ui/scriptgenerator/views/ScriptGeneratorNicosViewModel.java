@@ -1,6 +1,8 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Button;
@@ -24,7 +26,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 public class ScriptGeneratorNicosViewModel {
 	
 	private NicosModel nicosModel = Nicos.getDefault().getModel();
-	private Button queueScriptButton;
+	private List<Button> queueScriptButtons = new ArrayList<>();
 	private DynamicScriptingManager dynamicScriptingManager;
 	
 	public ScriptGeneratorNicosViewModel(ScriptGeneratorSingleton scriptGeneratorModel) {
@@ -44,7 +46,7 @@ public class ScriptGeneratorNicosViewModel {
 	 * @param queueScriptButton The button to enable/disable.
 	 */
 	public void bindQueueScriptButton(Button queueScriptButton) {
-		this.queueScriptButton = queueScriptButton;
+		this.queueScriptButtons.add(queueScriptButton);
 		nicosModel.addPropertyChangeListener(e -> updateButtonEnablement());
 		updateButtonEnablement();
 	}
@@ -56,7 +58,9 @@ public class ScriptGeneratorNicosViewModel {
 	
 	private void updateButtonEnablement() {
 		Display.getDefault().asyncExec(() -> {
-			queueScriptButton.setEnabled(!nicosInError());
+			for (Button button : queueScriptButtons) {
+				button.setEnabled(!nicosInError());
+			}
 		});
 	}
 	
