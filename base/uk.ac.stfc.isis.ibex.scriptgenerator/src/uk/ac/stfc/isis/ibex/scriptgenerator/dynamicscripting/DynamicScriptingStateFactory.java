@@ -4,13 +4,13 @@ import java.util.HashMap;
 
 public class DynamicScriptingStateFactory {
 	
-	private DynamicScriptingModelAdapter modelFacade;
-	private DynamicScriptingNicosAdapter nicosFacade;
+	private DynamicScriptingModelAdapter modelAdapter;
+	private DynamicScriptingNicosAdapter nicosAdapter;
 	private DynamicScriptingState state;
 	
 	public DynamicScriptingStateFactory(DynamicScriptingModelAdapter modelFacade, DynamicScriptingNicosAdapter nicosFacade, DynamicScriptingState state) {
-		this.modelFacade = modelFacade;
-		this.nicosFacade = nicosFacade;
+		this.modelAdapter = modelFacade;
+		this.nicosAdapter = nicosFacade;
 		this.state = state;
 		addStateAsPropertyListener();
 	}
@@ -27,14 +27,14 @@ public class DynamicScriptingStateFactory {
 	}
 	
 	private void removeStateAsPropertyListener() {
-		this.nicosFacade.removePropertyChangeListener(state);
-		this.modelFacade.removePropertyChangeListener(state);
+		this.nicosAdapter.removePropertyChangeListener(state);
+		this.modelAdapter.removePropertyChangeListener(state);
 	}
 	
 	private DynamicScriptingState getNewState(DynamicScriptingStatus newStatus) {
 		switch (newStatus) {
 			case PLAYING:
-				return new PlayingState(nicosFacade, modelFacade, new HashMap<>());
+				return new PlayingState(nicosAdapter, modelAdapter, new HashMap<>());
 			case STOPPED:
 				return new StoppedState(new HashMap<>());
 			default:
@@ -43,8 +43,8 @@ public class DynamicScriptingStateFactory {
 	}
 	
 	private void addStateAsPropertyListener() {
-		this.nicosFacade.addPropertyChangeListener(state);
-		this.modelFacade.addPropertyChangeListener(state);
+		this.nicosAdapter.addPropertyChangeListener(state);
+		this.modelAdapter.addPropertyChangeListener(state);
 	}
 
 }

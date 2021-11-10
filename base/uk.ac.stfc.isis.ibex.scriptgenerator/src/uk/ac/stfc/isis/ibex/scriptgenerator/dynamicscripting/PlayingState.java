@@ -10,26 +10,26 @@ public class PlayingState extends DynamicScriptingState {
 	
 	private Optional<ScriptGeneratorAction> currentlyExecutingAction;
 	private Optional<Integer> nextScriptId = Optional.empty();
-	protected DynamicScriptingNicosAdapter nicosFacade;
-	protected DynamicScriptingModelAdapter scriptGeneratorFacade;
+	private DynamicScriptingNicosAdapter nicosAdapter;
+	private DynamicScriptingModelAdapter modelAdapter;
 	
-	public PlayingState(DynamicScriptingNicosAdapter nicosFacade, DynamicScriptingModelAdapter generatorFacade, HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction) {
+	public PlayingState(DynamicScriptingNicosAdapter nicosAdapter, DynamicScriptingModelAdapter modelAdapter, HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction) {
 		super(dynamicScriptIdsToAction);
-		this.nicosFacade = nicosFacade;
-		this.scriptGeneratorFacade = generatorFacade;
+		this.nicosAdapter = nicosAdapter;
+		this.modelAdapter = modelAdapter;
 		setUpFirstExecutingAction();
 	}
 	
 	@Override
-	public Optional<ScriptGeneratorAction> getCurrentlyExecutingAction() {
+    public Optional<ScriptGeneratorAction> getCurrentlyExecutingAction() {
 		return currentlyExecutingAction;
-	}
-
+    }
+	
 	@Override
 	public Optional<ScriptGeneratorAction> getNextExecutingAction() {
 		if (currentlyExecutingAction.isPresent()) {
 			var currentAction = currentlyExecutingAction.get();
-			return scriptGeneratorFacade.getActionAfter(currentAction);
+			return modelAdapter.getActionAfter(currentAction);
 		} else {
 			return Optional.empty();
 		}
@@ -51,7 +51,7 @@ public class PlayingState extends DynamicScriptingState {
 	}
 	
 	private void setUpFirstExecutingAction() {
-		currentlyExecutingAction = scriptGeneratorFacade.getFirstAction();
+		currentlyExecutingAction = modelAdapter.getFirstAction();
 		refreshGeneratedScriptWithCurrentAction();
 	}
 	
@@ -67,7 +67,7 @@ public class PlayingState extends DynamicScriptingState {
 		if (currentlyExecutingAction.isPresent()) {
 			try {
 				ScriptGeneratorAction action = currentlyExecutingAction.get();
-				nextScriptId = scriptGeneratorFacade.refreshGeneratedScript(action);
+				nextScriptId = modelAdapter.refreshGeneratedScript(action);
 				nextScriptId.ifPresent(scriptId -> {
 					dynamicScriptIdsToAction.put(scriptId, action);
 				});
@@ -80,11 +80,11 @@ public class PlayingState extends DynamicScriptingState {
 	}
 	
 	private void executeScript()  {
-		Optional<DynamicScript> dynamicScript = scriptGeneratorFacade.getDynamicScript();
+		Optional<DynamicScript> dynamicScript = modelAdapter.getDynamicScript();
 		dynamicScript.ifPresentOrElse(script -> {
 				script.getCode().ifPresentOrElse(code -> {
 					try {
-						nicosFacade.executeAction(script.getName(), code);
+						nicosAdapter.executeAction(script.getName(), code);
 						currentlyExecutingAction.ifPresent(action -> {
 							action.setExecuting();
 						});

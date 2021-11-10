@@ -11,7 +11,6 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 public abstract class DynamicScriptingState extends ModelObject implements HasStatus<DynamicScriptingStatus>, PropertyChangeListener {
 	
-	
 	protected HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction;
 	
 	public DynamicScriptingState(HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction) {
@@ -20,10 +19,6 @@ public abstract class DynamicScriptingState extends ModelObject implements HasSt
 	
 	public Boolean isScriptDynamic(Integer scriptId) {
 		return dynamicScriptIdsToAction.containsKey(scriptId);
-	}
-	
-	protected void changeState(DynamicScriptingStatus newStatus) {
-		firePropertyChange(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, getStatus(), newStatus);
 	}
 	
 	public Optional<ScriptGeneratorAction> getCurrentlyExecutingAction() {
@@ -42,5 +37,9 @@ public abstract class DynamicScriptingState extends ModelObject implements HasSt
 	public void propertyChange(PropertyChangeEvent evt) { /* Default function does nothing */ };
 	
 	public abstract DynamicScriptingStatus getStatus();
+	
+	protected void changeState(DynamicScriptingStatus newStatus) {
+		firePropertyChange(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, getStatus(), newStatus);
+	}
 	
 }

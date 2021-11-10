@@ -6,47 +6,47 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 public class DynamicScriptingManager {
 	
-	private DynamicScriptingState dynamicScriptingState;
-	private DynamicScriptingStateFactory dynamicScriptingStateFactory;
+	private DynamicScriptingState state;
+	private DynamicScriptingStateFactory stateFactory;
 	
 	public DynamicScriptingManager(DynamicScriptingStateFactory dynamicScriptingStateFactory) {
-		this.dynamicScriptingStateFactory = dynamicScriptingStateFactory;
+		this.stateFactory = dynamicScriptingStateFactory;
 		setupNewState(dynamicScriptingStateFactory.getCurrentState());
 	}
 	
 	public void playScript() throws DynamicScriptingException {
-		dynamicScriptingState.play();
+		state.play();
 	}
 	
 	public void stopScript() {
-		dynamicScriptingState.stop();
+		state.stop();
+	}
+
+	public Boolean isScriptDynamic(Integer integer) {
+		return state.isScriptDynamic(integer);
+	}
+	
+	public Optional<ScriptGeneratorAction> getCurrentlyExecutingAction() {
+		return state.getCurrentlyExecutingAction();
+	}
+	
+	public DynamicScriptingStatus getDynamicScriptingStatus() {
+		return state.getStatus();
 	}
 	
 	private void setupNewState(DynamicScriptingState newState) {
-		dynamicScriptingState = newState;
-		dynamicScriptingState.addPropertyChangeListener(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, event -> {
+		state = newState;
+		state.addPropertyChangeListener(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, event -> {
 			DynamicScriptingStatus nextStatus = (DynamicScriptingStatus) event.getNewValue();
-			DynamicScriptingState nextState = dynamicScriptingStateFactory.changeState(nextStatus);
+			DynamicScriptingState nextState = stateFactory.changeState(nextStatus);
 			handleStateChange(nextState);
 		});
 	}
 	
 	private void handleStateChange(DynamicScriptingState newState) {
-		if (newState != dynamicScriptingState) {
+		if (newState != state) {
 			setupNewState(newState);
 		}
-	}
-	
-	public Optional<ScriptGeneratorAction> getCurrentlyExecutingAction() {
-		return dynamicScriptingState.getCurrentlyExecutingAction();
-	}
-	
-	public DynamicScriptingStatus getDynamicScriptingStatus() {
-		return dynamicScriptingState.getStatus();
-	}
-
-	public Boolean isScriptDynamic(Integer integer) {
-		return dynamicScriptingState.isScriptDynamic(integer);
 	}
 	
 }
