@@ -50,6 +50,18 @@ public class PlayingState extends DynamicScriptingState {
 		changeState(DynamicScriptingStatus.STOPPED);
 	}
 	
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		switch (evt.getPropertyName()) {
+			case DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY:
+				setUpNextExecutingAction();
+				break;
+			case DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY:
+				executeScript();
+				break;
+		}
+	}
+	
 	private void setUpFirstExecutingAction() {
 		currentlyExecutingAction = modelAdapter.getFirstAction();
 		refreshGeneratedScriptWithCurrentAction();
@@ -99,18 +111,6 @@ public class PlayingState extends DynamicScriptingState {
 				changeState(DynamicScriptingStatus.ERROR);
 			}
 		);
-	}
-
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		switch (evt.getPropertyName()) {
-			case DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY:
-				setUpNextExecutingAction();
-				break;
-			case DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY:
-				executeScript();
-				break;
-		}
 	}
 
 }
