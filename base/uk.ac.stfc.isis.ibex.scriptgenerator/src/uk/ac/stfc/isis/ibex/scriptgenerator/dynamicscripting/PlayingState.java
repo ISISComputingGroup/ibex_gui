@@ -42,6 +42,13 @@ public class PlayingState extends DynamicScriptingState {
 
 	@Override
 	public void stop() {
+		nicosAdapter.stopExecution();
+	}
+	
+	private void handleStop() {
+		currentlyExecutingAction.ifPresent(action -> {
+			action.setNotExecuting();
+		});
 		changeState(DynamicScriptingStatus.STOPPED);
 	}
 	
@@ -53,6 +60,9 @@ public class PlayingState extends DynamicScriptingState {
 				break;
 			case DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY:
 				executeScript();
+				break;
+			case DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY:
+				handleStop();
 				break;
 		}
 	}

@@ -5,8 +5,12 @@ import java.beans.PropertyChangeListener;
 import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.nicos.BreakLevel;
+import uk.ac.stfc.isis.ibex.nicos.ExecutionInstructionType;
 import uk.ac.stfc.isis.ibex.nicos.NicosErrorState;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
+import uk.ac.stfc.isis.ibex.nicos.ScriptStatus;
+import uk.ac.stfc.isis.ibex.nicos.messages.ExecutionInstruction;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 
 public class DynamicScriptingNicosAdapter extends ModelObject implements PropertyChangeListener {
@@ -34,6 +38,11 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
     	}
 	}
 	
+	public void stopExecution() {
+		ExecutionInstruction instruction = new ExecutionInstruction(ExecutionInstructionType.STOP, BreakLevel.IMMEDIATE);
+		nicosModel.sendExecutionInstruction(instruction);
+	}
+	
 	public void scriptChanged(DynamicScriptName newName) {
 		scriptName.getStatus().ifPresentOrElse(name -> {
 				scriptChangedGivenOldPresent(name, newName);
@@ -49,6 +58,10 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
 			Optional<String> newScriptName = Optional.ofNullable(nicosModel.getScriptName());
 			DynamicScriptName newDynamicScriptName = new DynamicScriptName(newScriptName);
 			scriptChanged(newDynamicScriptName);
+			ScriptStatus newStatus = (ScriptStatus) evt.getNewValue();
+			if (newStatus == ScriptStatus.IDLE || newStatus == ScriptStatus.IDLEEXC) {
+				firePropertyChange(DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, null, newStatus);
+			}
 		}
 	}
 	
