@@ -70,5 +70,12 @@ public class ScriptGeneratorNicosViewModel {
 			MessageDialog.openError(Display.getDefault().getActiveShell(), "Dynamic scripting error", "Dynamic scripting error");
 		}
     }
+    
+    /**
+     * Queue the current script generator contents as a script in nicos.
+     */
+    public void stopScript() {
+		dynamicScriptingManager.stopScript();
+    }
 
 }
