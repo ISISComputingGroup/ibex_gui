@@ -75,11 +75,12 @@ public class ScriptGeneratorNicosViewModel {
 		}
     }
     
-    /**
-     * Queue the current script generator contents as a script in nicos.
-     */
     public void stopScript() {
 		dynamicScriptingManager.stopScript();
+    }
+    
+    public void pauseScript() {
+		dynamicScriptingManager.pauseScript();
     }
 
 }

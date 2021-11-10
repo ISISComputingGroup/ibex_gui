@@ -21,6 +21,10 @@ public class DynamicScriptingManager {
 	public void stopScript() {
 		state.stop();
 	}
+	
+	public void pauseScript() {
+		state.pause();
+	}
 
 	public Boolean isScriptDynamic(Integer integer) {
 		return state.isScriptDynamic(integer);

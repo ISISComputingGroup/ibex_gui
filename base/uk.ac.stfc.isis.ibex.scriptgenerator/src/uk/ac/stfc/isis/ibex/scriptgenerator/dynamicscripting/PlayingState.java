@@ -137,7 +137,6 @@ public class PlayingState extends DynamicScriptingState {
 				}, () -> {
 					changeState(DynamicScriptingStatus.ERROR);
 				});
-				
 			},  () -> {
 				changeState(DynamicScriptingStatus.ERROR);
 			}

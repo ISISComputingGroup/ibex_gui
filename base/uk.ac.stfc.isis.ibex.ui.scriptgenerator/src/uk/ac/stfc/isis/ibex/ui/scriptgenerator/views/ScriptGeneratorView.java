@@ -460,7 +460,7 @@ public class ScriptGeneratorView {
 	        pauseScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 	        nicosViewModel.bindQueueScriptButton(pauseScriptButton);
 	        pauseScriptButton.addListener(SWT.Selection, e -> {
-	        	//nicosViewModel.pauseScript();
+	        	nicosViewModel.pauseScript();
 	        });
 	        
 	        // Button to stop script in nicos

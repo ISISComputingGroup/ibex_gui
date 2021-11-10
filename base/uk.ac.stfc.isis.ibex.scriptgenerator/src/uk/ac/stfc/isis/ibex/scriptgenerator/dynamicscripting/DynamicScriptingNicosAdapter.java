@@ -41,31 +41,27 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
     	}
 	}
 	
-	public Optional<String> getScriptName() {
-		return scriptName.getStatus();
-	}
-	
-	private void sendInstruction(ExecutionInstructionType instruction) {
-		ExecutionInstruction executionInstruction = new ExecutionInstruction(instruction, BreakLevel.IMMEDIATE);
+	private void sendInstruction(ExecutionInstructionType instruction, BreakLevel level) {
+		ExecutionInstruction executionInstruction = new ExecutionInstruction(instruction, level);
 		nicosModel.sendExecutionInstruction(executionInstruction);
 	}
 	
 	public void stopExecution() {
 		executionStopped = true;
-		sendInstruction(ExecutionInstructionType.STOP);
+		sendInstruction(ExecutionInstructionType.STOP, BreakLevel.IMMEDIATE);
 	}
 	
 	public void pauseExecution() {
 		if(!executionStopped) {
 			executionPaused = true;
-			sendInstruction(ExecutionInstructionType.BREAK);
+			sendInstruction(ExecutionInstructionType.BREAK, BreakLevel.IMMEDIATE);
 		}
 	}
 	
 	public void resumeExecution() {
 		if (executionPaused) {
 			executionPaused = false;
-			sendInstruction(ExecutionInstructionType.CONTINUE);
+			sendInstruction(ExecutionInstructionType.CONTINUE, null);
 		}
 	}
 	
@@ -81,9 +77,6 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getPropertyName().equals(DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY)) {
-			Optional<String> newScriptName = Optional.ofNullable(nicosModel.getScriptName());
-			DynamicScriptName newDynamicScriptName = new DynamicScriptName(newScriptName);
-			scriptChanged(newDynamicScriptName);
 			ScriptStatus newStatus = (ScriptStatus) evt.getNewValue();
 			ScriptStatus oldStatus = (ScriptStatus) evt.getOldValue();
 			if (scriptStopped(newStatus)) {
@@ -92,6 +85,10 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
 				firePropertyChange(DynamicScriptingProperties.SCRIPT_PAUSED_PROPERTY, oldStatus, newStatus);
 			} else if (scriptResumed(oldStatus, newStatus)) {
 				firePropertyChange(DynamicScriptingProperties.SCRIPT_RESUMED_PROPERTY, oldStatus, newStatus);
+			} else {
+				Optional<String> newScriptName = Optional.ofNullable(nicosModel.getScriptName());
+				DynamicScriptName newDynamicScriptName = new DynamicScriptName(newScriptName);
+				scriptChanged(newDynamicScriptName);
 			}
 		}
 	}
