@@ -1,6 +1,7 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
@@ -35,9 +36,12 @@ public class DynamicScriptingStateFactory {
 	
 	private DynamicScriptingState getNewState(DynamicScriptingStatus newStatus) {
 		HashMap<Integer, ScriptGeneratorAction> dynamicScriptIds = state.getDynamicScriptIds();
+		Optional<ScriptGeneratorAction> action = state.getCurrentlyExecutingAction();
 		switch (newStatus) {
 			case PLAYING:
-				return new PlayingState(nicosAdapter, modelAdapter, dynamicScriptIds);
+				return new PlayingState(nicosAdapter, modelAdapter, action, dynamicScriptIds);
+			case PAUSED:
+				return new PausedState(nicosAdapter, action, dynamicScriptIds);
 			case STOPPED:
 				return new StoppedState(dynamicScriptIds);
 			default:

@@ -21,6 +21,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingSta
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStateFactory;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.ErrorState;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.PausedState;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.PlayingState;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.StoppedState;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
@@ -31,28 +32,40 @@ public class DynamicScriptingStateFactoryTests {
 	private DynamicScriptingNicosAdapter nicosAdapter;
 	private DynamicScriptingModelAdapter modelAdapter;
 	private DynamicScriptingState state;
+	private ScriptGeneratorAction action;
+	private Integer scriptId;
+	private DynamicScript script;
 	
 	@Before
 	public void setUp() throws DynamicScriptingException {
 		nicosAdapter = mock(DynamicScriptingNicosAdapter.class);
 		modelAdapter = mock(DynamicScriptingModelAdapter.class);
-		Integer scriptId = 1;
-		DynamicScript script = new DynamicScript(scriptId);
-		ScriptGeneratorAction action = new ScriptGeneratorAction(new HashMap<>());
+		scriptId = 1;
+		script = new DynamicScript(scriptId);
+		action = new ScriptGeneratorAction(new HashMap<>());
 		when(modelAdapter.getDynamicScript()).thenReturn(Optional.of(script));
 		when(modelAdapter.getFirstAction()).thenReturn(Optional.of(action));
 		when(modelAdapter.refreshGeneratedScript(action)).thenReturn(Optional.of(scriptId));
-		state = mock(StoppedState.class);
-		factory = new DynamicScriptingStateFactory(modelAdapter, nicosAdapter, state);
+	}
+	
+	public void setUpFactoryWithState(DynamicScriptingState state) {
+		this.state = state;
+		factory = new DynamicScriptingStateFactory(modelAdapter, nicosAdapter, this.state);
 	}
 	
 	@Test
 	public void test_GIVEN_initial_state_THEN_state_set_by_constructor() {
+		state = mock(StoppedState.class);
+		when(state.getCurrentlyExecutingAction()).thenReturn(Optional.empty());
+		setUpFactoryWithState(state);
 		assertThat(factory.getCurrentState(), is(state));
 	}
 	
 	@Test
-	public void test_WHEN_change_state_to_playing_THEN_state_changed() {
+	public void test_WHEN_change_state_from_stopped_to_playing_THEN_state_changed() {
+		state = mock(StoppedState.class);
+		when(state.getCurrentlyExecutingAction()).thenReturn(Optional.empty());
+		setUpFactoryWithState(state);
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.PLAYING);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
 		assertThat(newState, is(not(state)));
@@ -62,7 +75,10 @@ public class DynamicScriptingStateFactoryTests {
 	}
 	
 	@Test
-	public void test_WHEN_change_state_to_stopped_THEN_state_changed() {
+	public void test_WHEN_change_state_from_stopped_to_stopped_THEN_state_changed() {
+		state = mock(StoppedState.class);
+		when(state.getCurrentlyExecutingAction()).thenReturn(Optional.empty());
+		setUpFactoryWithState(state);
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.STOPPED);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
 		assertThat(newState, is(not(state)));
@@ -72,13 +88,137 @@ public class DynamicScriptingStateFactoryTests {
 	}
 	
 	@Test
-	public void test_WHEN_change_state_to_error_THEN_state_changed() {
+	public void test_WHEN_change_state_from_stopped_to_error_THEN_state_changed() {
+		state = mock(StoppedState.class);
+		when(state.getCurrentlyExecutingAction()).thenReturn(Optional.empty());
+		setUpFactoryWithState(state);
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.ERROR);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
 		assertThat(newState, is(not(state)));
 		assertThat(newStateFromGet, is(not(state)));
 		assertTrue(newState instanceof ErrorState);
 		assertTrue(newStateFromGet instanceof ErrorState);
+	}
+	
+	@Test
+	public void test_WHEN_change_state_from_stopped_to_paused_THEN_state_changed() {
+		state = mock(StoppedState.class);
+		when(state.getCurrentlyExecutingAction()).thenReturn(Optional.empty());
+		setUpFactoryWithState(state);
+		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.PAUSED);
+		DynamicScriptingState newStateFromGet = factory.getCurrentState();
+		assertThat(newState, is(not(state)));
+		assertThat(newStateFromGet, is(not(state)));
+		assertTrue(newState instanceof PausedState);
+		assertTrue(newStateFromGet instanceof PausedState);
+	}
+	
+	@Test
+	public void test_WHEN_change_state_from_playing_to_playing_THEN_state_changed() {
+		state = mock(PlayingState.class);
+		when(state.getCurrentlyExecutingAction()).thenReturn(Optional.of(action));
+		setUpFactoryWithState(state);
+		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.PLAYING);
+		DynamicScriptingState newStateFromGet = factory.getCurrentState();
+		assertThat(newState, is(not(state)));
+		assertThat(newStateFromGet, is(not(state)));
+		assertTrue(newState instanceof PlayingState);
+		assertTrue(newStateFromGet instanceof PlayingState);
+		assertThat(newState.getCurrentlyExecutingAction().get(), is(action));
+	}
+	
+	@Test
+	public void test_WHEN_change_state_from_playing_to_stopped_THEN_state_changed() {
+		state = mock(PlayingState.class);
+		when(state.getCurrentlyExecutingAction()).thenReturn(Optional.of(action));
+		setUpFactoryWithState(state);
+		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.STOPPED);
+		DynamicScriptingState newStateFromGet = factory.getCurrentState();
+		assertThat(newState, is(not(state)));
+		assertThat(newStateFromGet, is(not(state)));
+		assertTrue(newState instanceof StoppedState);
+		assertTrue(newStateFromGet instanceof StoppedState);
+	}
+	
+	@Test
+	public void test_WHEN_change_state_from_playing_to_error_THEN_state_changed() {
+		state = mock(PlayingState.class);
+		when(state.getCurrentlyExecutingAction()).thenReturn(Optional.of(action));
+		setUpFactoryWithState(state);
+		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.ERROR);
+		DynamicScriptingState newStateFromGet = factory.getCurrentState();
+		assertThat(newState, is(not(state)));
+		assertThat(newStateFromGet, is(not(state)));
+		assertTrue(newState instanceof ErrorState);
+		assertTrue(newStateFromGet instanceof ErrorState);
+	}
+	
+	@Test
+	public void test_WHEN_change_state_from_playing_to_paused_THEN_state_changed() {
+		state = mock(PlayingState.class);
+		when(state.getCurrentlyExecutingAction()).thenReturn(Optional.of(action));
+		setUpFactoryWithState(state);
+		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.PAUSED);
+		DynamicScriptingState newStateFromGet = factory.getCurrentState();
+		assertThat(newState, is(not(state)));
+		assertThat(newStateFromGet, is(not(state)));
+		assertTrue(newState instanceof PausedState);
+		assertTrue(newStateFromGet instanceof PausedState);
+		assertThat(newState.getCurrentlyExecutingAction().get(), is(action));
+	}
+	
+	@Test
+	public void test_WHEN_change_state_from_paused_to_playing_THEN_state_changed() {
+		state = mock(PausedState.class);
+		when(state.getCurrentlyExecutingAction()).thenReturn(Optional.of(action));
+		setUpFactoryWithState(state);
+		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.PLAYING);
+		DynamicScriptingState newStateFromGet = factory.getCurrentState();
+		assertThat(newState, is(not(state)));
+		assertThat(newStateFromGet, is(not(state)));
+		assertTrue(newState instanceof PlayingState);
+		assertTrue(newStateFromGet instanceof PlayingState);
+		assertThat(newState.getCurrentlyExecutingAction().get(), is(action));
+	}
+	
+	@Test
+	public void test_WHEN_change_state_from_paused_to_stopped_THEN_state_changed() {
+		state = mock(PausedState.class);
+		when(state.getCurrentlyExecutingAction()).thenReturn(Optional.of(action));
+		setUpFactoryWithState(state);
+		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.STOPPED);
+		DynamicScriptingState newStateFromGet = factory.getCurrentState();
+		assertThat(newState, is(not(state)));
+		assertThat(newStateFromGet, is(not(state)));
+		assertTrue(newState instanceof StoppedState);
+		assertTrue(newStateFromGet instanceof StoppedState);
+	}
+	
+	@Test
+	public void test_WHEN_change_state_from_paused_to_error_THEN_state_changed() {
+		state = mock(PausedState.class);
+		when(state.getCurrentlyExecutingAction()).thenReturn(Optional.of(action));
+		setUpFactoryWithState(state);
+		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.ERROR);
+		DynamicScriptingState newStateFromGet = factory.getCurrentState();
+		assertThat(newState, is(not(state)));
+		assertThat(newStateFromGet, is(not(state)));
+		assertTrue(newState instanceof ErrorState);
+		assertTrue(newStateFromGet instanceof ErrorState);
+	}
+	
+	@Test
+	public void test_WHEN_change_state_from_paused_to_paused_THEN_state_changed() {
+		state = mock(PausedState.class);
+		when(state.getCurrentlyExecutingAction()).thenReturn(Optional.of(action));
+		setUpFactoryWithState(state);
+		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.PAUSED);
+		DynamicScriptingState newStateFromGet = factory.getCurrentState();
+		assertThat(newState, is(not(state)));
+		assertThat(newStateFromGet, is(not(state)));
+		assertTrue(newState instanceof PausedState);
+		assertTrue(newStateFromGet instanceof PausedState);
+		assertThat(newState.getCurrentlyExecutingAction().get(), is(action));
 	}
 
 }

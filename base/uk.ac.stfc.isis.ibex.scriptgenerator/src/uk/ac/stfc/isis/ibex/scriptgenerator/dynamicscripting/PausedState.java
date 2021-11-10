@@ -19,6 +19,11 @@ public class PausedState extends DynamicScriptingState {
 		});
 		this.currentlyExecutingAction = currentlyExecutingAction;
 	}
+	
+	@Override
+	public Optional<ScriptGeneratorAction> getCurrentlyExecutingAction() {
+		return currentlyExecutingAction;
+	}
 
 	@Override
 	public DynamicScriptingStatus getStatus() {
