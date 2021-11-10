@@ -4,6 +4,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -134,7 +135,7 @@ public class ScriptGeneratorMockBuilder {
 	public void arrangeNumberOfActions(Integer numberOfActions) {
 		mockScriptGeneratorActions = new ArrayList<>();
 		for (int i = 0; i < numberOfActions; i++) {
-			mockScriptGeneratorActions.add(mock(ScriptGeneratorAction.class));
+			mockScriptGeneratorActions.add(new ScriptGeneratorAction(new HashMap<>()));
 		}
 		setUpMockActions();
 		arrangeCorrectScriptId();

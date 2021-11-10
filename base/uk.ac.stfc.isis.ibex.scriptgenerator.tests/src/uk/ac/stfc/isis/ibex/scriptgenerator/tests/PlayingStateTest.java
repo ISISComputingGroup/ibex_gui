@@ -279,6 +279,8 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	public void test_GIVEN_action_executing_WHEN_resume_script_THEN_script_resumed() {
 		firstAction = scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1);
 		firstAction.get().setExecuting();
+		dynamicScriptIdsToAction = new HashMap<Integer, ScriptGeneratorAction>();
+		dynamicScriptIdsToAction.put(1, firstAction.get());
 		setUpState();
 		attachStatusSwitchCounterToState();
 		// Assert
@@ -297,7 +299,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	}
 	
 	@Test
-	public void test_GIVEN_action_executing_WHEN_play_script_THEN_script_played() {
+	public void test_GIVEN_action_not_executing_WHEN_play_script_THEN_script_played() {
 		firstAction = scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1);
 		firstAction.get().setNotExecuting();
 		setUpState();
