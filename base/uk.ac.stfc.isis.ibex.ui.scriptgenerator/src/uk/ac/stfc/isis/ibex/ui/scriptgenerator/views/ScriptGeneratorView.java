@@ -123,7 +123,6 @@ public class ScriptGeneratorView {
     private Label estimateText;
     private Button playScriptButton;
     private Button stopScriptButton;
-    private Button pauseScriptButton;
     private Button generateScriptButton;
     private Button generateScriptAsButton;
     private Button btnDuplicateAction;
@@ -438,7 +437,7 @@ public class ScriptGeneratorView {
 	        // Composite for generate buttons
 	        Composite dynamicScriptingButtonsGrp = new Composite(mainParent, SWT.NONE);
 	        dynamicScriptingButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-	        GridLayout dsgLayout = new GridLayout(3, true);
+	        GridLayout dsgLayout = new GridLayout(2, true);
 	        dsgLayout.marginHeight = 10;
 	        dsgLayout.marginWidth = 10;
 	        dynamicScriptingButtonsGrp.setLayout(dsgLayout);
@@ -461,16 +460,6 @@ public class ScriptGeneratorView {
 	        nicosModel.bindQueueScriptButton(stopScriptButton);
 	        stopScriptButton.addListener(SWT.Selection, e -> {
 	        	nicosModel.stopScript();
-	        });
-	        
-	        // Button to pause script in nicos
-	        pauseScriptButton = new Button(dynamicScriptingButtonsGrp, SWT.NONE);
-	        pauseScriptButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/pause.png"));
-	        pauseScriptButton.setText("Pause");
-	        pauseScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	        nicosModel.bindQueueScriptButton(pauseScriptButton);
-	        pauseScriptButton.addListener(SWT.Selection, e -> {
-	        	//nicosModel.stopScript();
 	        });
 	        
 	        // Needs to be after nicos model has been set up
