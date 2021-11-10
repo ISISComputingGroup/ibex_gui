@@ -18,7 +18,7 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
 	private NicosModel nicosModel;
 	private DynamicScriptName scriptName = new DynamicScriptName(Optional.empty());
 	private Boolean executionStopped = false;
-	
+	private Boolean executionPaused = false;
 	
 	public DynamicScriptingNicosAdapter(NicosModel nicosModel) {
 		this.nicosModel = nicosModel;
@@ -35,15 +35,25 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
     			throw new DynamicScriptingException("Nicos in error, cannot play script.");
     		}
         	executionStopped = false;
+        	executionPaused = false;
     	} else {
     		throw new DynamicScriptingException("Nicos in error, cannot play script.");
     	}
 	}
 	
+	private void sendInstruction(ExecutionInstructionType instruction) {
+		ExecutionInstruction executionInstruction = new ExecutionInstruction(instruction, BreakLevel.IMMEDIATE);
+		nicosModel.sendExecutionInstruction(executionInstruction);
+	}
+	
 	public void stopExecution() {
 		executionStopped = true;
-		ExecutionInstruction instruction = new ExecutionInstruction(ExecutionInstructionType.STOP, BreakLevel.IMMEDIATE);
-		nicosModel.sendExecutionInstruction(instruction);
+		sendInstruction(ExecutionInstructionType.STOP);
+	}
+	
+	public void pauseExecution() {
+		executionPaused = true;
+		sendInstruction(ExecutionInstructionType.BREAK);
 	}
 	
 	public void scriptChanged(DynamicScriptName newName) {
@@ -65,11 +75,20 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
 			if (scriptStopped(newStatus)) {
 				firePropertyChange(DynamicScriptingProperties.SCRIPT_STOPPED_PROPERTY, null, newStatus);
 			}
+			System.out.println("Did script pause");
+			if (scriptPaused(newStatus)) {
+				System.out.println("Yes");
+				firePropertyChange(DynamicScriptingProperties.SCRIPT_PAUSED_PROPERTY, null, newStatus);
+			}
 		}
 	}
 	
 	private Boolean scriptStopped(ScriptStatus newStatus) {
 		return (newStatus == ScriptStatus.IDLE || newStatus == ScriptStatus.IDLEEXC) && executionStopped;
+	}
+	
+	private Boolean scriptPaused(ScriptStatus newStatus) {
+		return newStatus == ScriptStatus.INBREAK && executionPaused;
 	}
 	
 	private void fireScriptChange(DynamicScriptName newName) {

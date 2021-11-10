@@ -45,11 +45,23 @@ public class PlayingState extends DynamicScriptingState {
 		nicosAdapter.stopExecution();
 	}
 	
+	@Override
+	public void pause() {
+		nicosAdapter.pauseExecution();
+	}
+	
 	private void handleStop() {
 		currentlyExecutingAction.ifPresent(action -> {
 			action.setNotExecuting();
 		});
 		changeState(DynamicScriptingStatus.STOPPED);
+	}
+	
+	private void handlePause() {
+		currentlyExecutingAction.ifPresent(action -> {
+			action.setNotExecuting();
+		});
+		changeState(DynamicScriptingStatus.PAUSED);
 	}
 	
 	@Override
@@ -63,6 +75,9 @@ public class PlayingState extends DynamicScriptingState {
 				break;
 			case DynamicScriptingProperties.SCRIPT_STOPPED_PROPERTY:
 				handleStop();
+				break;
+			case DynamicScriptingProperties.SCRIPT_PAUSED_PROPERTY:
+				handlePause();
 				break;
 		}
 	}

@@ -255,5 +255,22 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.ERROR, 1
 		);
 	}
+	
+	@Test
+	public void test_WHEN_paused_THEN_paused() {
+		state.pause();
+		nicosAdapter.propertyChange(
+			new PropertyChangeEvent(
+				scriptGeneratorMockBuilder.getMockNicosModel(), DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY,
+				null, ScriptStatus.INBREAK
+			)
+		);
+		statusSwitchCounter.assertNumberOfSwitches(
+			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.STOPPED, 0
+		);
+		statusSwitchCounter.assertNumberOfSwitches(
+			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.PAUSED, 1
+		);
+	}
 
 }

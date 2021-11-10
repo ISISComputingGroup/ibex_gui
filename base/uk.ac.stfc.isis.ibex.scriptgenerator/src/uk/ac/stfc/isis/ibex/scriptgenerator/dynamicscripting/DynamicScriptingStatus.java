@@ -6,7 +6,8 @@ public enum DynamicScriptingStatus implements HasStatus<DynamicScriptingStatus> 
 	
 	PLAYING,
 	STOPPED,
-	ERROR;
+	ERROR,
+	PAUSED;
 
 	@Override
 	public DynamicScriptingStatus getStatus() {
