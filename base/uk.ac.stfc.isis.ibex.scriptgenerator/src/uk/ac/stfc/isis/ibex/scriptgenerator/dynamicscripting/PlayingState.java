@@ -13,10 +13,11 @@ public class PlayingState extends DynamicScriptingState {
 	private DynamicScriptingNicosAdapter nicosAdapter;
 	private DynamicScriptingModelAdapter modelAdapter;
 	
-	public PlayingState(DynamicScriptingNicosAdapter nicosAdapter, DynamicScriptingModelAdapter modelAdapter, HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction) {
+	public PlayingState(DynamicScriptingNicosAdapter nicosAdapter, DynamicScriptingModelAdapter modelAdapter, Optional<ScriptGeneratorAction> currentlyExecutingAction, HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction) {
 		super(dynamicScriptIdsToAction);
 		this.nicosAdapter = nicosAdapter;
 		this.modelAdapter = modelAdapter;
+		this.currentlyExecutingAction = currentlyExecutingAction;
 		setUpFirstExecutingAction();
 	}
 	
@@ -83,8 +84,18 @@ public class PlayingState extends DynamicScriptingState {
 	}
 	
 	private void setUpFirstExecutingAction() {
-		currentlyExecutingAction = modelAdapter.getFirstAction();
-		refreshGeneratedScriptWithCurrentAction();
+		if (currentlyExecutingAction.isEmpty()) {
+			currentlyExecutingAction = modelAdapter.getFirstAction();
+			refreshGeneratedScriptWithCurrentAction();
+		} else {
+			ScriptGeneratorAction action = currentlyExecutingAction.get();
+			if (action.isExecuting()) {
+				nicosAdapter.resumeExecution();
+			} else {
+				refreshGeneratedScriptWithCurrentAction();
+			}
+		}
+		
 	}
 	
 	private void setUpNextExecutingAction() {

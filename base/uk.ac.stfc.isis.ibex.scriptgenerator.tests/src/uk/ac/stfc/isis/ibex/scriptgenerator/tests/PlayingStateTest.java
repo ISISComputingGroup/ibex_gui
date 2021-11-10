@@ -31,11 +31,13 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	
 	private DynamicScriptingNicosAdapter nicosAdapter;
 	private DynamicScriptingModelAdapter modelAdapter;
+	private Optional<ScriptGeneratorAction> firstAction;
 	
 	private ScriptGeneratorMockBuilder scriptGeneratorMockBuilder;
 	
 	@Override
 	protected void setUpScaffolding() {
+		firstAction = Optional.empty();
 		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
 		super.setUpScaffolding();
 		nicosAdapter = new DynamicScriptingNicosAdapter(scriptGeneratorMockBuilder.getMockNicosModel());
@@ -44,7 +46,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	
 	@Override
 	protected void setUpState() {
-		state = new PlayingState(nicosAdapter, modelAdapter, dynamicScriptIdsToAction);
+		state = new PlayingState(nicosAdapter, modelAdapter, firstAction, dynamicScriptIdsToAction);
 		nicosAdapter.addPropertyChangeListener(state);
 		modelAdapter.addPropertyChangeListener(state);
 	}
@@ -271,6 +273,49 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		statusSwitchCounter.assertNumberOfSwitches(
 			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.PAUSED, 1
 		);
+	}
+	
+	@Test
+	public void test_GIVEN_action_executing_WHEN_resume_script_THEN_script_resumed() {
+		firstAction = scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1);
+		firstAction.get().setExecuting();
+		setUpState();
+		attachStatusSwitchCounterToState();
+		// Assert
+		Optional<ScriptGeneratorAction> currentAction = state.getCurrentlyExecutingAction();
+		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
+		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
+		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(2)));
+		// Act
+		assertTrue(state.isScriptDynamic(1));
+		simulateScriptExecuted(1);
+		// Assert
+		currentAction = state.getCurrentlyExecutingAction();
+		nextAction = state.getNextExecutingAction();
+		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(2)));
+		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(3)));
+	}
+	
+	@Test
+	public void test_GIVEN_action_executing_WHEN_play_script_THEN_script_played() {
+		firstAction = scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1);
+		firstAction.get().setNotExecuting();
+		setUpState();
+		attachStatusSwitchCounterToState();
+		// Assert
+		Optional<ScriptGeneratorAction> currentAction = state.getCurrentlyExecutingAction();
+		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
+		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
+		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(2)));
+		// Act
+		simulateScriptGenerated(1);
+		assertTrue(state.isScriptDynamic(1));
+		simulateScriptExecuted(1);
+		// Assert
+		currentAction = state.getCurrentlyExecutingAction();
+		nextAction = state.getNextExecutingAction();
+		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(2)));
+		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(3)));
 	}
 
 }
