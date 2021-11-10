@@ -61,7 +61,7 @@ public class PlayingState extends DynamicScriptingState {
 			case DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY:
 				executeScript();
 				break;
-			case DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY:
+			case DynamicScriptingProperties.SCRIPT_STOPPED_PROPERTY:
 				handleStop();
 				break;
 		}

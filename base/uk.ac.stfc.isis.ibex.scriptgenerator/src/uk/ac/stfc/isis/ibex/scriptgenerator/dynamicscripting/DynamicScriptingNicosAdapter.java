@@ -63,7 +63,7 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
 			scriptChanged(newDynamicScriptName);
 			ScriptStatus newStatus = (ScriptStatus) evt.getNewValue();
 			if (scriptStopped(newStatus)) {
-				firePropertyChange(DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, null, newStatus);
+				firePropertyChange(DynamicScriptingProperties.SCRIPT_STOPPED_PROPERTY, null, newStatus);
 			}
 		}
 	}
