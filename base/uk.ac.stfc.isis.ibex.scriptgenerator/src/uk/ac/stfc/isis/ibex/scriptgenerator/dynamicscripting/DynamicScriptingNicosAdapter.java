@@ -41,6 +41,10 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
     	}
 	}
 	
+	public Optional<String> getScriptName() {
+		return scriptName.getStatus();
+	}
+	
 	private void sendInstruction(ExecutionInstructionType instruction) {
 		ExecutionInstruction executionInstruction = new ExecutionInstruction(instruction, BreakLevel.IMMEDIATE);
 		nicosModel.sendExecutionInstruction(executionInstruction);
