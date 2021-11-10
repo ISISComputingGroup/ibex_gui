@@ -41,11 +41,6 @@ public class PlayingState extends DynamicScriptingState {
 	}
 
 	@Override
-	public void play() {
-		// Do nothing
-	}
-
-	@Override
 	public void stop() {
 		changeState(DynamicScriptingStatus.STOPPED);
 	}

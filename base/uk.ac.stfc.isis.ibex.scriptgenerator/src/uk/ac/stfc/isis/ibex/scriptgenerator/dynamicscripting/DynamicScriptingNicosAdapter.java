@@ -34,9 +34,22 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
     	}
 	}
 	
-	private boolean nicosInError() {
-		var nicosError = nicosModel.getError();
-		return nicosError != NicosErrorState.NO_ERROR;
+	public void scriptChanged(DynamicScriptName newName) {
+		scriptName.getStatus().ifPresentOrElse(name -> {
+				scriptChangedGivenOldPresent(name, newName);
+			}, () -> {
+				scriptChangedGivenOldEmpty(newName);
+			}
+		);
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (evt.getPropertyName().equals(DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY)) {
+			Optional<String> newScriptName = Optional.ofNullable(nicosModel.getScriptName());
+			DynamicScriptName newDynamicScriptName = new DynamicScriptName(newScriptName);
+			scriptChanged(newDynamicScriptName);
+		}
 	}
 	
 	private void fireScriptChange(DynamicScriptName newName) {
@@ -59,22 +72,9 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
 		});
 	}
 	
-	public void scriptChanged(DynamicScriptName newName) {
-		scriptName.getStatus().ifPresentOrElse(name -> {
-				scriptChangedGivenOldPresent(name, newName);
-			}, () -> {
-				scriptChangedGivenOldEmpty(newName);
-			}
-		);
-	}
-
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equals(DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY)) {
-			Optional<String> newScriptName = Optional.ofNullable(nicosModel.getScriptName());
-			DynamicScriptName newDynamicScriptName = new DynamicScriptName(newScriptName);
-			scriptChanged(newDynamicScriptName);
-		}
+	private boolean nicosInError() {
+		var nicosError = nicosModel.getError();
+		return nicosError != NicosErrorState.NO_ERROR;
 	}
 
 }
