@@ -133,6 +133,24 @@ public class DynamicScriptingManagerTest {
 	}
 	
 	@Test
+	public void test_WHEN_play_script_from_stopped_AND_stopped_THEN_actions_executed_AND_stopped() {
+		List<ScriptGeneratorAction> actions = scriptGeneratorMockBuilder.getMockScriptGeneratorActions();
+		// Act
+		playScript();
+		// Assert
+		int i = 0;
+		do {
+			triggerActionExecuted(i);
+			i++;
+		} while (i < actions.size() / 2);
+		dynamicScriptingManager.stopScript();
+		simulateScriptStatusChange(ScriptStatus.RUNNING, ScriptStatus.IDLE);
+		assertThat(dynamicScriptingManager.getCurrentlyExecutingAction(), is(Optional.empty()));
+		assertThat(dynamicScriptingManager.getDynamicScriptingStatus(), is(DynamicScriptingStatus.STOPPED));
+		assertThat(i, is(actions.size() / 2));
+	}
+	
+	@Test
 	public void test_WHEN_play_script_THEN_dynamic_scripting_manager_knows_it_is_a_dynamic_script() {
 		// Arrange
 		List<Integer> scriptIds = scriptGeneratorMockBuilder.arrangeCorrectScriptId();
@@ -224,28 +242,24 @@ public class DynamicScriptingManagerTest {
 	
 	@Test
 	public void test_WHEN_play_script_AND_pause_script_AND_stop_script_from_playing_THEN_actions_executed_AND_stopped() {
+		// Arrange
 		Integer numOfActions = 10;
 		scriptGeneratorMockBuilder.arrangeNumberOfActions(10);
 		List<ScriptGeneratorAction> actions = scriptGeneratorMockBuilder.getMockScriptGeneratorActions();
 		// Act
 		playScript();
-		// Assert
 		int i = 0;
 		do {
-			assertThat(dynamicScriptingManager.getCurrentlyExecutingAction(), is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(i)));
 			dynamicScriptingManager.pauseScript();
 			simulateScriptStatusChange(ScriptStatus.RUNNING, ScriptStatus.INBREAK);
-			assertThat(dynamicScriptingManager.getCurrentlyExecutingAction(), is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(i)));
-			assertThat(dynamicScriptingManager.getDynamicScriptingStatus(), is(DynamicScriptingStatus.PAUSED));
 			playScript();
 			simulateScriptStatusChange(ScriptStatus.INBREAK, ScriptStatus.RUNNING);
-			assertThat(dynamicScriptingManager.getCurrentlyExecutingAction(), is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(i)));
-			assertThat(dynamicScriptingManager.getDynamicScriptingStatus(), is(DynamicScriptingStatus.PLAYING));
 			triggerActionExecuted(i);
 			i++;
 		} while (i < numOfActions / 2);
 		dynamicScriptingManager.stopScript();
 		simulateScriptStatusChange(ScriptStatus.RUNNING, ScriptStatus.IDLE);
+		// Assert
 		assertThat(dynamicScriptingManager.getCurrentlyExecutingAction(), is(Optional.empty()));
 		assertThat(dynamicScriptingManager.getDynamicScriptingStatus(), is(DynamicScriptingStatus.STOPPED));
 		assertThat(i, is(actions.size() / 2));
@@ -261,15 +275,11 @@ public class DynamicScriptingManagerTest {
 		// Assert
 		int i = 0;
 		do {
-			assertThat(dynamicScriptingManager.getCurrentlyExecutingAction(), is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(i)));
-			assertThat(dynamicScriptingManager.getDynamicScriptingStatus(), is(DynamicScriptingStatus.PLAYING));
 			triggerActionExecuted(i);
 			i++;
 		} while (i < numOfActions / 2);
 		dynamicScriptingManager.pauseScript();
 		simulateScriptStatusChange(ScriptStatus.RUNNING, ScriptStatus.INBREAK);
-		assertThat(dynamicScriptingManager.getCurrentlyExecutingAction(), is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(i)));
-		assertThat(dynamicScriptingManager.getDynamicScriptingStatus(), is(DynamicScriptingStatus.PAUSED));
 		dynamicScriptingManager.stopScript();
 		simulateScriptStatusChange(ScriptStatus.RUNNING, ScriptStatus.IDLE);
 		assertThat(dynamicScriptingManager.getCurrentlyExecutingAction(), is(Optional.empty()));
