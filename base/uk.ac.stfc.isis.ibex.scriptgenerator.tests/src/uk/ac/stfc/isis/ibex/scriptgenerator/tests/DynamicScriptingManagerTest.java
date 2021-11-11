@@ -14,12 +14,14 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.when;
 
+import uk.ac.stfc.isis.ibex.nicos.ScriptStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptName;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelAdapter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingManager;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosAdapter;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingState;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStateFactory;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStatus;
@@ -77,6 +79,16 @@ public class DynamicScriptingManagerTest {
 	private void simulateScriptExecuted(Integer scriptId) {
 		DynamicScriptName newName = new DynamicScriptName(Optional.of("Script Generator: " + scriptId));
 		nicosAdapter.scriptChanged(newName);
+	}
+	
+	private void simulateScriptStatusChange(ScriptStatus oldStatus, ScriptStatus newStatus) {
+		nicosAdapter.propertyChange(
+			new PropertyChangeEvent(
+				scriptGeneratorMockBuilder.getMockNicosModel(),
+				DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, 
+				oldStatus, newStatus
+			)
+		);
 	}
 	
 	private void assertDynamicScriptingInErrorState() {
@@ -183,6 +195,31 @@ public class DynamicScriptingManagerTest {
 		dynamicScriptingManager.pauseScript();
 		// Assert
 		assertThat(dynamicScriptingManager.getDynamicScriptingStatus(), is(DynamicScriptingStatus.STOPPED));
+	}
+	
+	@Test
+	public void test_WHEN_play_script_AND_pause_script_from_stopped_THEN_actions_executed() {
+		List<ScriptGeneratorAction> actions = scriptGeneratorMockBuilder.getMockScriptGeneratorActions();
+		// Act
+		playScript();
+		// Assert
+		int i = 0;
+		Optional<ScriptGeneratorAction> currentlyExecutingAction = dynamicScriptingManager.getCurrentlyExecutingAction();
+		do {
+			assertThat(dynamicScriptingManager.getCurrentlyExecutingAction(), is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(i)));
+			dynamicScriptingManager.pauseScript();
+			simulateScriptStatusChange(ScriptStatus.RUNNING, ScriptStatus.INBREAK);
+			assertThat(dynamicScriptingManager.getCurrentlyExecutingAction(), is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(i)));
+			assertThat(dynamicScriptingManager.getDynamicScriptingStatus(), is(DynamicScriptingStatus.PAUSED));
+			playScript();
+			simulateScriptStatusChange(ScriptStatus.INBREAK, ScriptStatus.RUNNING);
+			assertThat(dynamicScriptingManager.getCurrentlyExecutingAction(), is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(i)));
+			assertThat(dynamicScriptingManager.getDynamicScriptingStatus(), is(DynamicScriptingStatus.PLAYING));
+			triggerActionExecuted(i);
+			currentlyExecutingAction = dynamicScriptingManager.getCurrentlyExecutingAction();
+			i++;
+		} while (currentlyExecutingAction.isPresent());
+		assertThat(i, is(actions.size()));
 	}
 
 }
