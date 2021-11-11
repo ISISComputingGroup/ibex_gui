@@ -111,6 +111,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	@Test
 	public void test_step_through_one_action() {
 		// Assert
+		state.start();
 		Optional<ScriptGeneratorAction> currentAction = state.getCurrentlyExecutingAction();
 		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
 		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(0)));
@@ -130,6 +131,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	public void test_stepping_through_actions() {
 		Optional<ScriptGeneratorAction> currentAction;
 		Optional<ScriptGeneratorAction> nextAction;
+		state.start();
 		int i = 0;
 		do {
 			currentAction = state.getCurrentlyExecutingAction();
@@ -150,6 +152,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	public void test_WHEN_nicos_error_THEN_error_state() {
 		// Arrange
 		scriptGeneratorMockBuilder.arrangeNicosError();
+		state.start();
 		Optional<ScriptGeneratorAction> currentAction = state.getCurrentlyExecutingAction();
 		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
 		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(0)));
@@ -167,6 +170,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	public void test_WHEN_nicos_cannot_send_script_THEN_error_state() {
 		// Arrange
 		scriptGeneratorMockBuilder.arrangeNicosSendScriptFail();
+		state.start();
 		Optional<ScriptGeneratorAction> currentAction = state.getCurrentlyExecutingAction();
 		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
 		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(0)));
@@ -206,6 +210,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	@Test
 	public void test_GIVEN_dynamic_scripting_exception_WHEN_generating_THEN_error_state() {
 		scriptGeneratorMockBuilder.arrangeRefreshScriptThrows(new InvalidParamsException("test"));
+		state.start();
 		state.propertyChange(new PropertyChangeEvent(
 			modelAdapter, DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY, 
 			Optional.empty(), Optional.of(new DynamicScript(1))
@@ -310,6 +315,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
 		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(2)));
 		// Act
+		state.start();
 		simulateScriptGenerated(1);
 		assertTrue(state.isScriptDynamic(1));
 		simulateScriptExecuted(1);
