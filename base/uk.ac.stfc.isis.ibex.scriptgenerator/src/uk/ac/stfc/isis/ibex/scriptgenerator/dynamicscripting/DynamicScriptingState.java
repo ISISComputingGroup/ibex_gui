@@ -39,6 +39,8 @@ public abstract class DynamicScriptingState extends ModelObject implements HasSt
 	
 	public void pause() { /* Default function does nothing */ };
 	
+	public void start() { /* Default function does nothing */ };
+	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) { /* Default function does nothing */ };
 	

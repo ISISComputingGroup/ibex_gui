@@ -96,7 +96,7 @@ public class DynamicScriptingManagerTest {
 	}
 	
 	@Test
-	public void test_WHEN_play_script_THEN_first_action_queued() {
+	public void test_WHEN_play_script_from_stopped_THEN_first_action_queued() {
 		// Act
 		playScript();
 		// Assert
@@ -104,7 +104,7 @@ public class DynamicScriptingManagerTest {
 	}
 	
 	@Test
-	public void test_WHEN_play_script_THEN_actions_executed() {
+	public void test_WHEN_play_script_from_stopped_THEN_actions_executed() {
 		List<ScriptGeneratorAction> actions = scriptGeneratorMockBuilder.getMockScriptGeneratorActions();
 		// Act
 		playScript();
@@ -132,7 +132,7 @@ public class DynamicScriptingManagerTest {
 	}
 	
 	@Test
-	public void test_WHEN_play_script_AND_invalid_params_THEN_dynamic_scripting_in_error_state() {
+	public void test_WHEN_play_script_from_stopped_AND_invalid_params_THEN_dynamic_scripting_in_pause_state() {
 		// Arrange
 		scriptGeneratorMockBuilder.arrangeRefreshScriptThrows(scriptGeneratorMockBuilder.getinvalidParamsException());
 		// Act
@@ -143,7 +143,7 @@ public class DynamicScriptingManagerTest {
 	}
 	
 	@Test
-	public void test_WHEN_play_script_AND_language_not_supported_THEN_dynamic_scripting_in_error_state() {
+	public void test_WHEN_play_script_from_stopped_AND_language_not_supported_THEN_dynamic_scripting_in_error_state() {
 		// Arrange
 		scriptGeneratorMockBuilder.arrangeRefreshScriptThrows(scriptGeneratorMockBuilder.getUnsupportedLanguageException());
 		// Act
@@ -155,7 +155,7 @@ public class DynamicScriptingManagerTest {
 	}
 	
 	@Test
-	public void test_WHEN_play_script_AND_no_script_definition_selected_THEN_dynamic_scripting_in_error_state() {
+	public void test_WHEN_play_script_from_stopped_AND_no_script_definition_selected_THEN_dynamic_scripting_in_error_state() {
 		// Arrange
 		scriptGeneratorMockBuilder.arrangeRefreshScriptThrows(scriptGeneratorMockBuilder.getNoScriptDefSelectedException());
 		// Act
@@ -163,6 +163,26 @@ public class DynamicScriptingManagerTest {
 		triggerActionExecuted(1);
 		// Assert
 		assertDynamicScriptingInErrorState();
+	}
+	
+	@Test
+	public void test_WHEN_play_script_from_stopped_AND_action_invalid_THEN_dynamic_scripting_in_pause_state() {
+		// Arrange
+		ScriptGeneratorAction action = scriptGeneratorMockBuilder.getMockScriptGeneratorAction(0).get();
+		action.setInvalid("Invalid");
+		// Act
+		playScript();
+		// Assert
+		assertThat(dynamicScriptingManager.getCurrentlyExecutingAction(), is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(0)));
+		assertThat(dynamicScriptingManager.getDynamicScriptingStatus(), is(DynamicScriptingStatus.PAUSED));
+	}
+	
+	@Test
+	public void test_WHEN_pause_script_from_stopped_THEN_stopped() {
+		// Act
+		dynamicScriptingManager.pauseScript();
+		// Assert
+		assertThat(dynamicScriptingManager.getDynamicScriptingStatus(), is(DynamicScriptingStatus.STOPPED));
 	}
 
 }

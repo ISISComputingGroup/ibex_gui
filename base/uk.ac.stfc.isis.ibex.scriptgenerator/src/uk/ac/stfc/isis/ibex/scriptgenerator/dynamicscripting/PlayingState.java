@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.util.HashMap;
 import java.util.Optional;
 
+import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 public class PlayingState extends DynamicScriptingState {
@@ -18,7 +19,6 @@ public class PlayingState extends DynamicScriptingState {
 		this.nicosAdapter = nicosAdapter;
 		this.modelAdapter = modelAdapter;
 		this.currentlyExecutingAction = currentlyExecutingAction;
-		setUpFirstExecutingAction();
 	}
 	
 	@Override
@@ -49,6 +49,11 @@ public class PlayingState extends DynamicScriptingState {
 	@Override
 	public void pause() {
 		nicosAdapter.pauseExecution();
+	}
+	
+	@Override
+	public void start() {
+		setUpFirstExecutingAction();
 	}
 	
 	private void handleStop() {
@@ -108,14 +113,18 @@ public class PlayingState extends DynamicScriptingState {
 	
 	private void refreshGeneratedScriptWithCurrentAction() {
 		if (currentlyExecutingAction.isPresent()) {
-			try {
-				ScriptGeneratorAction action = currentlyExecutingAction.get();
-				nextScriptId = modelAdapter.refreshGeneratedScript(action);
-				nextScriptId.ifPresent(scriptId -> {
-					dynamicScriptIdsToAction.put(scriptId, action);
-				});
-			} catch (DynamicScriptingException e) {
-				changeState(DynamicScriptingStatus.ERROR);
+			ScriptGeneratorAction action = currentlyExecutingAction.get();
+			if (!action.isValid()) {
+				changeState(DynamicScriptingStatus.PAUSED);
+			} else {
+				try {
+					nextScriptId = modelAdapter.refreshGeneratedScript(action);
+					nextScriptId.ifPresent(scriptId -> {
+						dynamicScriptIdsToAction.put(scriptId, action);
+					});
+				} catch (DynamicScriptingException e) {
+					changeState(DynamicScriptingStatus.ERROR);
+				}
 			}
 		} else {
 			changeState(DynamicScriptingStatus.STOPPED);
