@@ -10,7 +10,7 @@ public class DynamicScriptingProperties {
 	
 	public static final String SCRIPT_RESUMED_PROPERTY = "scriptResumed";
 	
-	public static final String SCRIPT_CHANGED_PROPERTY = "scriptChanged";
+	public static final String SCRIPT_FINISHED_PROPERTY = "scriptFinished";
 	
 	public static final String CURRENTLY_EXECUTING_SCRIPT = "currentlyExecutingScript";
 	

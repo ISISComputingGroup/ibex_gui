@@ -16,9 +16,7 @@ import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 public class DynamicScriptingNicosAdapter extends ModelObject implements PropertyChangeListener {
 	
 	private NicosModel nicosModel;
-	private DynamicScriptName scriptName = new DynamicScriptName(Optional.empty());
-	private Boolean executionStopped = false;
-	private Boolean executionPaused = false;
+	private DynamicScriptName lastScriptName = new DynamicScriptName(Optional.empty());
 	
 	public DynamicScriptingNicosAdapter(NicosModel nicosModel) {
 		this.nicosModel = nicosModel;
@@ -34,8 +32,6 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
         	if (nicosInError()) {
     			throw new DynamicScriptingException("Nicos in error, cannot play script.");
     		}
-        	executionStopped = false;
-        	executionPaused = false;
     	} else {
     		throw new DynamicScriptingException("Nicos in error, cannot play script.");
     	}
@@ -47,31 +43,15 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
 	}
 	
 	public void stopExecution() {
-		executionStopped = true;
 		sendInstruction(ExecutionInstructionType.STOP, BreakLevel.IMMEDIATE);
 	}
 	
 	public void pauseExecution() {
-		if(!executionStopped) {
-			executionPaused = true;
-			sendInstruction(ExecutionInstructionType.BREAK, BreakLevel.IMMEDIATE);
-		}
+		sendInstruction(ExecutionInstructionType.BREAK, BreakLevel.IMMEDIATE);
 	}
 	
 	public void resumeExecution() {
-		if (executionPaused) {
-			executionPaused = false;
-			sendInstruction(ExecutionInstructionType.CONTINUE, null);
-		}
-	}
-	
-	public void scriptChanged(DynamicScriptName newName) {
-		scriptName.getStatus().ifPresentOrElse(name -> {
-				scriptChangedGivenOldPresent(name, newName);
-			}, () -> {
-				scriptChangedGivenOldEmpty(newName);
-			}
-		);
+		sendInstruction(ExecutionInstructionType.CONTINUE, null);
 	}
 
 	@Override
@@ -79,50 +59,20 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
 		if (evt.getPropertyName().equals(DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY)) {
 			ScriptStatus newStatus = (ScriptStatus) evt.getNewValue();
 			ScriptStatus oldStatus = (ScriptStatus) evt.getOldValue();
-			if (scriptStopped(newStatus)) {
-				firePropertyChange(DynamicScriptingProperties.SCRIPT_STOPPED_PROPERTY, oldStatus, newStatus);
-			} else if (scriptPaused(newStatus)) {
-				firePropertyChange(DynamicScriptingProperties.SCRIPT_PAUSED_PROPERTY, oldStatus, newStatus);
-			} else if (scriptResumed(oldStatus, newStatus)) {
-				firePropertyChange(DynamicScriptingProperties.SCRIPT_RESUMED_PROPERTY, oldStatus, newStatus);
-			} else {
-				Optional<String> newScriptName = Optional.ofNullable(nicosModel.getScriptName());
-				DynamicScriptName newDynamicScriptName = new DynamicScriptName(newScriptName);
-				scriptChanged(newDynamicScriptName);
+			if (scriptFinished(newStatus)) {
+				String scriptName = nicosModel.getScriptName();
+				DynamicScriptName newScriptName = new DynamicScriptName(Optional.ofNullable(scriptName));
+				if (!lastScriptName.equals(newScriptName)) {
+					System.out.println(lastScriptName);
+					System.out.println(newScriptName);
+					firePropertyChange(DynamicScriptingProperties.SCRIPT_FINISHED_PROPERTY, lastScriptName, lastScriptName = newScriptName);
+				}
 			}
 		}
 	}
 	
-	private Boolean scriptStopped(ScriptStatus newStatus) {
-		return (newStatus == ScriptStatus.IDLE || newStatus == ScriptStatus.IDLEEXC) && executionStopped;
-	}
-	
-	private Boolean scriptPaused(ScriptStatus newStatus) {
-		return newStatus == ScriptStatus.INBREAK && executionPaused;
-	}
-	
-	private Boolean scriptResumed(ScriptStatus oldStatus, ScriptStatus newStatus) {
-		return (oldStatus == ScriptStatus.INBREAK && newStatus == ScriptStatus.RUNNING) && !executionPaused;
-	}
-	
-	private void fireScriptChange(DynamicScriptName newName) {
-		firePropertyChange(DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY, scriptName, scriptName = newName);
-	}
-	
-	private void scriptChangedGivenOldPresent(String oldScriptName, DynamicScriptName newScriptName) {
-		newScriptName.getStatus().ifPresentOrElse(newName -> {
-			if (!oldScriptName.equals(newName)) {
-				fireScriptChange(newScriptName);
-			}
-		}, () -> {
-			fireScriptChange(newScriptName);
-		});
-	}
-	
-	private void scriptChangedGivenOldEmpty(DynamicScriptName newScriptName) {
-		newScriptName.getStatus().ifPresent(newName -> {
-			fireScriptChange(newScriptName);
-		});
+	private Boolean scriptFinished(ScriptStatus newStatus) {
+		return newStatus.isIdle();
 	}
 	
 	private boolean nicosInError() {

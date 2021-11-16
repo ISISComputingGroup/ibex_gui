@@ -16,17 +16,14 @@ public class DynamicScriptingManager {
 	
 	public void playScript() throws DynamicScriptingException {
 		state.play();
-		state.start();
 	}
 	
 	public void stopScript() {
 		state.stop();
-		state.start();
 	}
 	
 	public void pauseScript() {
 		state.pause();
-		state.start();
 	}
 
 	public Boolean isScriptDynamic(Integer integer) {
@@ -48,6 +45,7 @@ public class DynamicScriptingManager {
 			DynamicScriptingState nextState = stateFactory.changeState(nextStatus);
 			handleStateChange(nextState);
 		});
+		state.start();
 	}
 	
 	private void handleStateChange(DynamicScriptingState newState) {

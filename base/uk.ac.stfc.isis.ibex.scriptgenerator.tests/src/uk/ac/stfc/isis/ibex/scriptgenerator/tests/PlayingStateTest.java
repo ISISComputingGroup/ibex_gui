@@ -212,7 +212,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		scriptGeneratorMockBuilder.arrangeRefreshScriptThrows(new InvalidParamsException("test"));
 		state.start();
 		state.propertyChange(new PropertyChangeEvent(
-			modelAdapter, DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY, 
+			modelAdapter, DynamicScriptingProperties.SCRIPT_FINISHED_PROPERTY, 
 			Optional.empty(), Optional.of(new DynamicScript(1))
 		));
 		statusSwitchCounter.assertNumberOfSwitches(

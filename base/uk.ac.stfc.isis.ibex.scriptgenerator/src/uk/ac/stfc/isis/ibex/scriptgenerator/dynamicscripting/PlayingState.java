@@ -4,7 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.util.HashMap;
 import java.util.Optional;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 public class PlayingState extends DynamicScriptingState {
@@ -44,11 +43,19 @@ public class PlayingState extends DynamicScriptingState {
 	@Override
 	public void stop() {
 		nicosAdapter.stopExecution();
+		currentlyExecutingAction.ifPresent(action -> {
+			action.clearDynamicScriptingStatus();
+		});
+		changeState(DynamicScriptingStatus.STOPPED);
 	}
 	
 	@Override
 	public void pause() {
 		nicosAdapter.pauseExecution();
+		currentlyExecutingAction.ifPresent(action -> {
+			action.setPausedDuringExecution();
+		});
+		changeState(DynamicScriptingStatus.PAUSED);
 	}
 	
 	@Override
@@ -56,65 +63,43 @@ public class PlayingState extends DynamicScriptingState {
 		setUpFirstExecutingAction();
 	}
 	
-	private void handleStop() {
-		currentlyExecutingAction.ifPresent(action -> {
-			action.setNotExecuting();
-		});
-		changeState(DynamicScriptingStatus.STOPPED);
-	}
-	
-	private void handlePause() {
-		currentlyExecutingAction.ifPresent(action -> {
-			action.setNotExecuting();
-		});
-		changeState(DynamicScriptingStatus.PAUSED);
-	}
-	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		switch (evt.getPropertyName()) {
-			case DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY:
+			case DynamicScriptingProperties.SCRIPT_FINISHED_PROPERTY:
 				setUpNextExecutingAction();
 				break;
 			case DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY:
 				executeScript();
 				break;
-			case DynamicScriptingProperties.SCRIPT_STOPPED_PROPERTY:
-				handleStop();
-				break;
-			case DynamicScriptingProperties.SCRIPT_PAUSED_PROPERTY:
-				handlePause();
-				break;
 		}
 	}
 	
 	private void setUpFirstExecutingAction() {
-		if (currentlyExecutingAction.isEmpty()) {
-			currentlyExecutingAction = modelAdapter.getFirstAction();
-			refreshGeneratedScriptWithCurrentAction();
-		} else {
-			ScriptGeneratorAction action = currentlyExecutingAction.get();
-			if (action.isExecuting()) {
+		currentlyExecutingAction.ifPresentOrElse(action -> {
+			if (action.wasPausedDuringExecution()) {
 				nicosAdapter.resumeExecution();
 			} else {
 				refreshGeneratedScriptWithCurrentAction();
 			}
-		}
-		
+		}, () -> {
+			currentlyExecutingAction = modelAdapter.getFirstAction();
+			refreshGeneratedScriptWithCurrentAction();
+		});		
 	}
 	
 	private void setUpNextExecutingAction() {
 		currentlyExecutingAction.ifPresent(action -> {
-			action.setNotExecuting();
+			action.clearDynamicScriptingStatus();
 		});
 		currentlyExecutingAction = getNextExecutingAction();
 		refreshGeneratedScriptWithCurrentAction();
 	}
 	
 	private void refreshGeneratedScriptWithCurrentAction() {
-		if (currentlyExecutingAction.isPresent()) {
-			ScriptGeneratorAction action = currentlyExecutingAction.get();
+		currentlyExecutingAction.ifPresentOrElse(action -> {
 			if (!action.isValid()) {
+				action.setPausedBeforeExecution();
 				changeState(DynamicScriptingStatus.PAUSED);
 			} else {
 				try {
@@ -126,9 +111,9 @@ public class PlayingState extends DynamicScriptingState {
 					changeState(DynamicScriptingStatus.ERROR);
 				}
 			}
-		} else {
+		}, () -> {
 			changeState(DynamicScriptingStatus.STOPPED);
-		}
+		});
 	}
 	
 	private void executeScript()  {

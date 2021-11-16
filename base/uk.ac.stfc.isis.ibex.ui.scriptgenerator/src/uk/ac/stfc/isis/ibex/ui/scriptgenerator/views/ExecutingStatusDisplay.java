@@ -1,22 +1,26 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
+import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionDynamicScriptingStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
-public enum ExecutingStatusDisplay {
-	
-	EXECUTING,
-	NOT_EXECUTING;
+public class ExecutingStatusDisplay {
 	
     private static final String EXECUTING_MARK = "\u25B6";
+    private static final String PAUSED_BEFORE_MARK = "\u23F8";
+    private static final String PAUSED_DURING_MARK = "\u23EF";
     private static final String NOT_EXECUTING_MARK = "";
 	
     /**
      * @return The mark to display whether executing or not.
      */
-	public String getText() {
-		switch (this) {
+	public static String getText(ActionDynamicScriptingStatus status) {
+		switch (status) {
 			case EXECUTING:
 				return EXECUTING_MARK;
+			case PAUSED_BEFORE_EXECUTION:
+				return PAUSED_BEFORE_MARK;
+			case PAUSED_DURING_EXECUTION:
+				return PAUSED_DURING_MARK;
 			default:
 				return NOT_EXECUTING_MARK;
 		}
@@ -28,11 +32,15 @@ public enum ExecutingStatusDisplay {
 	 * @param text The string to generate a Validity display element from.
 	 * @return A ValidityDisplay element generated from the given string.
 	 */
-	public static ExecutingStatusDisplay fromText(String text) {
+	public static ActionDynamicScriptingStatus fromText(String text) {
 		if (text.contains(EXECUTING_MARK)) {
-			return ExecutingStatusDisplay.EXECUTING;
+			return ActionDynamicScriptingStatus.EXECUTING;
+		} else if (text.contains(PAUSED_BEFORE_MARK)) {
+			return ActionDynamicScriptingStatus.PAUSED_BEFORE_EXECUTION;
+		} else if (text.contains(PAUSED_DURING_MARK)) {
+			return ActionDynamicScriptingStatus.PAUSED_DURING_EXECUTION;
 		} else {
-			return ExecutingStatusDisplay.NOT_EXECUTING;
+			return ActionDynamicScriptingStatus.NO_STATUS;
 		}
 	}
 	
@@ -42,13 +50,8 @@ public enum ExecutingStatusDisplay {
 	 * @param action The action to check the executing status of.
 	 * @return True if the action and this enum have the same executing status or false if not.
 	 */
-	public boolean equalsAction(ScriptGeneratorAction action) {
-		switch (this) {
-			case EXECUTING:
-				return action.isExecuting();
-			default:
-				return !action.isExecuting();
-		}
+	public static boolean equalsAction(ActionDynamicScriptingStatus status, ScriptGeneratorAction action) {
+		return status.equals(action.getDynamicScriptingStatus());
 	}
 
 }

@@ -34,7 +34,7 @@ public class DynamicScriptingNicosAdapterTest {
 		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
 		nicosModel = scriptGeneratorMockBuilder.getMockNicosModel();
 		nicosAdapter = new DynamicScriptingNicosAdapter(nicosModel);
-		nicosAdapter.addPropertyChangeListener(DynamicScriptingProperties.SCRIPT_CHANGED_PROPERTY, dynamicScriptSwitchCounter);
+		nicosAdapter.addPropertyChangeListener(DynamicScriptingProperties.SCRIPT_FINISHED_PROPERTY, dynamicScriptSwitchCounter);
 		nicosAdapter.addPropertyChangeListener(DynamicScriptingProperties.SCRIPT_PAUSED_PROPERTY, statusSwitchCounter);
 		nicosAdapter.addPropertyChangeListener(DynamicScriptingProperties.SCRIPT_STOPPED_PROPERTY, statusSwitchCounter);
 		nicosAdapter.addPropertyChangeListener(DynamicScriptingProperties.SCRIPT_RESUMED_PROPERTY, statusSwitchCounter);

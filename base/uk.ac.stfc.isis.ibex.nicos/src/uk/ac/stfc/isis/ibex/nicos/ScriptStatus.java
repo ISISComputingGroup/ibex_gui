@@ -107,4 +107,8 @@ public enum ScriptStatus implements HasStatus<ScriptStatus> {
 	public ScriptStatus getStatus() {
 		return this;
 	}
+	
+	public Boolean isIdle() {
+		return this == ScriptStatus.IDLE || this == ScriptStatus.IDLEEXC; 
+	}
 }

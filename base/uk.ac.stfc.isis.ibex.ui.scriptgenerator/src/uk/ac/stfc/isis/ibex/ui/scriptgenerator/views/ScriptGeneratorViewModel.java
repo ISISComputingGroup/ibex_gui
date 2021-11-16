@@ -862,9 +862,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
                         for (int i = 0; i < viewTable.table().getItemCount(); i++) {
                             if (action.equals(viewTable.viewer().getElementAt(i))) {
                             	String lineNumber = String.valueOf(i + 1);
-                            	if (action.isExecuting()) {
-                            		lineNumber += "\u25B6";
-                            	}
+                            	lineNumber += ExecutingStatusDisplay.getText(action.getDynamicScriptingStatus());
                                 cell.setText(lineNumber);
                                 break;
                             }

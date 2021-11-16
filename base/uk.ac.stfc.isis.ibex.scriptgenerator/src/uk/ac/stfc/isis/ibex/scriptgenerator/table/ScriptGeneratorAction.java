@@ -29,7 +29,7 @@ public class ScriptGeneratorAction extends ModelObject {
      */
     private Optional<Number> estimatedTime = Optional.empty();
     
-    private Boolean executing = false;
+    private ActionDynamicScriptingStatus dynamicScriptingStatus = ActionDynamicScriptingStatus.NO_STATUS;
 
     /**
      * Default constructor sets each parameter/value pair using input argument.
@@ -156,15 +156,27 @@ public class ScriptGeneratorAction extends ModelObject {
     }
     
     public void setExecuting() {
-    	firePropertyChange(ScriptGeneratorProperties.VALUE_PROPERTY, executing, executing = true);
+    	firePropertyChange(ScriptGeneratorProperties.VALUE_PROPERTY, dynamicScriptingStatus, dynamicScriptingStatus = ActionDynamicScriptingStatus.EXECUTING);
+    }   
+    
+    public void setPausedBeforeExecution() {
+    	firePropertyChange(ScriptGeneratorProperties.VALUE_PROPERTY, dynamicScriptingStatus, dynamicScriptingStatus = ActionDynamicScriptingStatus.PAUSED_BEFORE_EXECUTION);
     }
     
-    public void setNotExecuting() {
-    	firePropertyChange(ScriptGeneratorProperties.VALUE_PROPERTY, executing, executing = false);
+    public void setPausedDuringExecution() {
+    	firePropertyChange(ScriptGeneratorProperties.VALUE_PROPERTY, dynamicScriptingStatus, dynamicScriptingStatus = ActionDynamicScriptingStatus.PAUSED_DURING_EXECUTION);
     }
     
-    public Boolean isExecuting() {
-    	return executing;
+    public void clearDynamicScriptingStatus() {
+    	firePropertyChange(ScriptGeneratorProperties.VALUE_PROPERTY, dynamicScriptingStatus, dynamicScriptingStatus = ActionDynamicScriptingStatus.NO_STATUS);
+    }
+    
+    public ActionDynamicScriptingStatus getDynamicScriptingStatus() {
+		return dynamicScriptingStatus;
+	}
+    
+    public Boolean wasPausedDuringExecution() {
+    	return dynamicScriptingStatus.equals(ActionDynamicScriptingStatus.PAUSED_DURING_EXECUTION);
     }
     
 }	

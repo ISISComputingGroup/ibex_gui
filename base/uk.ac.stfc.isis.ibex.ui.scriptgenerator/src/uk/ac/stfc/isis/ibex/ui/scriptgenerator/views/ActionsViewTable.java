@@ -238,8 +238,8 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	
 	private boolean executingStatusChanged(String columnHeader, TableItem item, int column, ScriptGeneratorAction action) {
 		var lineNumberText = item.getText(column);
-		var executingDisplay = ExecutingStatusDisplay.fromText(lineNumberText);
-		return columnHeader.equals(ScriptGeneratorViewModel.ACTION_NUMBER_COLUMN_HEADER) && !executingDisplay.equalsAction(action);
+		var statusFromLastDisplay = ExecutingStatusDisplay.fromText(lineNumberText);
+		return columnHeader.equals(ScriptGeneratorViewModel.ACTION_NUMBER_COLUMN_HEADER) && !ExecutingStatusDisplay.equalsAction(statusFromLastDisplay, action);
 	}
 	
 	private boolean parameterValueChanged(Optional<String> parameterValue, TableItem item, int columnNumber) {

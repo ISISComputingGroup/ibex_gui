@@ -208,6 +208,21 @@ public class DynamicScriptingManagerTest {
 	}
 	
 	@Test
+	public void test_WHEN_play_script_from_stopped_AND_action_invalid_THEN_dynamic_scripting_in_pause_state_WHEN_correct_validity_AND_resume_THEN_resumed() {
+		// Arrange
+		ScriptGeneratorAction action = scriptGeneratorMockBuilder.getMockScriptGeneratorAction(0).get();
+		action.setInvalid("Invalid");
+		// Act
+		playScript();
+		action.setValid();
+		assertThat(dynamicScriptingManager.getCurrentlyExecutingAction(), is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(0)));
+		assertThat(dynamicScriptingManager.getDynamicScriptingStatus(), is(DynamicScriptingStatus.PAUSED));
+		playScript();
+		assertThat(dynamicScriptingManager.getCurrentlyExecutingAction(), is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(0)));
+		assertThat(dynamicScriptingManager.getDynamicScriptingStatus(), is(DynamicScriptingStatus.PLAYING));
+	}
+	
+	@Test
 	public void test_WHEN_pause_script_from_stopped_THEN_stopped() {
 		// Act
 		dynamicScriptingManager.pauseScript();
@@ -263,6 +278,7 @@ public class DynamicScriptingManagerTest {
 		assertThat(dynamicScriptingManager.getCurrentlyExecutingAction(), is(Optional.empty()));
 		assertThat(dynamicScriptingManager.getDynamicScriptingStatus(), is(DynamicScriptingStatus.STOPPED));
 		assertThat(i, is(actions.size() / 2));
+		
 	}
 	
 	@Test

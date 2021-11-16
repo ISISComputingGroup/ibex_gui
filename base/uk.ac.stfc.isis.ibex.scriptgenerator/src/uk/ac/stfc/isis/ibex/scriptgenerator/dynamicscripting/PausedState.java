@@ -14,9 +14,6 @@ public class PausedState extends DynamicScriptingState {
 	public PausedState(DynamicScriptingNicosAdapter nicosAdapter, Optional<ScriptGeneratorAction> currentlyExecutingAction, HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction) {
 		super(dynamicScriptIdsToAction);
 		this.nicosAdapter = nicosAdapter;
-		currentlyExecutingAction.ifPresent(action -> {
-			action.setExecuting();
-		});
 		this.currentlyExecutingAction = currentlyExecutingAction;
 	}
 	
@@ -37,18 +34,14 @@ public class PausedState extends DynamicScriptingState {
 	
 	@Override
 	public void play() {
-		nicosAdapter.resumeExecution();
+		changeState(DynamicScriptingStatus.PLAYING);
 	}
 	
 	private void handleStop() {
 		currentlyExecutingAction.ifPresent(action -> {
-			action.setNotExecuting();
+			action.clearDynamicScriptingStatus();
 		});
 		changeState(DynamicScriptingStatus.STOPPED);
-	}
-	
-	private void handleResume() {
-		changeState(DynamicScriptingStatus.PLAYING);
 	}
 	
 	@Override
@@ -56,9 +49,6 @@ public class PausedState extends DynamicScriptingState {
 		switch (evt.getPropertyName()) {
 			case DynamicScriptingProperties.SCRIPT_STOPPED_PROPERTY:
 				handleStop();
-				break;
-			case DynamicScriptingProperties.SCRIPT_RESUMED_PROPERTY:
-				handleResume();
 				break;
 		}
 	}
