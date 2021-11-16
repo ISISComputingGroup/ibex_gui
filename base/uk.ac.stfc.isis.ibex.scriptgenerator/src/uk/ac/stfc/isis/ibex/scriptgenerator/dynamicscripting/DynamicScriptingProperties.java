@@ -4,12 +4,6 @@ public class DynamicScriptingProperties {
 	
 	public static final String SCRIPT_STATUS_PROPERTY = "scriptStatus";
 	
-	public static final String SCRIPT_STOPPED_PROPERTY = "scriptStopped";
-	
-	public static final String SCRIPT_PAUSED_PROPERTY = "scriptPaused";
-	
-	public static final String SCRIPT_RESUMED_PROPERTY = "scriptResumed";
-	
 	public static final String SCRIPT_FINISHED_PROPERTY = "scriptFinished";
 	
 	public static final String CURRENTLY_EXECUTING_SCRIPT = "currentlyExecutingScript";

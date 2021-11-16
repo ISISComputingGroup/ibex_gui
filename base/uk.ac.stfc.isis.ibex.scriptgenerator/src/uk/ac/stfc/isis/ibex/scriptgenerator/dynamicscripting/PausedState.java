@@ -9,11 +9,14 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 public class PausedState extends DynamicScriptingState {
 	
 	private DynamicScriptingNicosAdapter nicosAdapter;
+	private DynamicScriptingModelAdapter modelAdapter;
 	private Optional<ScriptGeneratorAction> currentlyExecutingAction;
+	private Boolean stopRequested = false;
 
-	public PausedState(DynamicScriptingNicosAdapter nicosAdapter, Optional<ScriptGeneratorAction> currentlyExecutingAction, HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction) {
+	public PausedState(DynamicScriptingNicosAdapter nicosAdapter, DynamicScriptingModelAdapter modelAdapter, Optional<ScriptGeneratorAction> currentlyExecutingAction, HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction) {
 		super(dynamicScriptIdsToAction);
 		this.nicosAdapter = nicosAdapter;
+		this.modelAdapter = modelAdapter;
 		this.currentlyExecutingAction = currentlyExecutingAction;
 	}
 	
@@ -29,6 +32,7 @@ public class PausedState extends DynamicScriptingState {
 	
 	@Override
 	public void stop() {
+		stopRequested = true;
 		nicosAdapter.stopExecution();
 	}
 	
@@ -37,18 +41,21 @@ public class PausedState extends DynamicScriptingState {
 		changeState(DynamicScriptingStatus.PLAYING);
 	}
 	
-	private void handleStop() {
+	private void handleFinished() {
 		currentlyExecutingAction.ifPresent(action -> {
 			action.clearDynamicScriptingStatus();
 		});
-		changeState(DynamicScriptingStatus.STOPPED);
+		if (stopRequested) {
+			changeState(DynamicScriptingStatus.STOPPED);
+		}
+		
 	}
 	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		switch (evt.getPropertyName()) {
-			case DynamicScriptingProperties.SCRIPT_STOPPED_PROPERTY:
-				handleStop();
+			case DynamicScriptingProperties.SCRIPT_FINISHED_PROPERTY:
+				handleFinished();
 				break;
 		}
 	}
