@@ -156,14 +156,10 @@ public class DynamicScriptingNicosAdapterTest {
 	}
 	
 	@Test
-	public void test_WHEN_nicos_paused_THEN_no_property_changed() {
-		doScriptChange(
-			"test", DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, 
-			ScriptStatus.RUNNING, ScriptStatus.INBREAK
-		);
-		dynamicScriptSwitchCounter.assertNoSwitches();
+	public void test_WHEN_resumed_from_THEN_instruction_sent() {
+		nicosAdapter.resumeExecution();
+		assertInstructionTypeSent(ExecutionInstructionType.CONTINUE, 1);
 	}
-	
 	
 	@Test
 	public void test_WHEN_stop_THEN_instruction_sent() {
@@ -172,33 +168,16 @@ public class DynamicScriptingNicosAdapterTest {
 	}
 	
 	@Test
-	public void test_WHEN_script_name_changed_on_finish_THEN_property_change() {
-		String newScriptName = "test new";
-		doScriptChange(newScriptName, DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY);
-		String newScriptName2 = "test new 2";
-		doScriptChange(newScriptName2, DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY);
-		dynamicScriptSwitchCounter.assertNumberOfSwitches(Optional.empty(), Optional.of(newScriptName), 1);
-		dynamicScriptSwitchCounter.assertNumberOfSwitches(Optional.of(newScriptName), Optional.of(newScriptName2), 1);
+	public void test_WHEN_nicos_paused_THEN_no_property_changed() {
+		doScriptChange(
+			"test", DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, 
+			ScriptStatus.RUNNING, ScriptStatus.INBREAK
+		);
+		dynamicScriptSwitchCounter.assertNoSwitches();
 	}
 	
 	@Test
-	public void test_WHEN_script_name_change_BUT_name_equal_THEN_no_switch() {
-		String newScriptName = "test new";
-		doScriptChange(newScriptName, DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY);
-		String newScriptName2 = "test new";
-		doScriptChange(newScriptName2, DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY);
-		dynamicScriptSwitchCounter.assertNumberOfSwitches(Optional.empty(), Optional.of(newScriptName), 1);
-		dynamicScriptSwitchCounter.assertNumberOfSwitches(Optional.of(newScriptName), Optional.of(newScriptName2), 0);
-	}
-	
-	@Test
-	public void test_WHEN_resumed_from_THEN_instruction_sent() {
-		nicosAdapter.resumeExecution();
-		assertInstructionTypeSent(ExecutionInstructionType.CONTINUE, 1);
-	}
-	
-	@Test
-	public void test_WHEN_script_status_changed_to_running_THEN_no_property_changed() {
+	public void test_WHEN_nicos_starts_running_THEN_no_property_change() {
 		doScriptChange(
 			"test", DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, 
 			ScriptStatus.IDLE, ScriptStatus.RUNNING
