@@ -58,16 +58,17 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getPropertyName().equals(DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY)) {
 			ScriptStatus newStatus = (ScriptStatus) evt.getNewValue();
-			ScriptStatus oldStatus = (ScriptStatus) evt.getOldValue();
 			if (scriptFinished(newStatus)) {
 				String scriptName = nicosModel.getScriptName();
-				DynamicScriptName newScriptName = new DynamicScriptName(Optional.ofNullable(scriptName));
-				if (!lastScriptName.equals(newScriptName)) {
-					System.out.println(lastScriptName);
-					System.out.println(newScriptName);
-					firePropertyChange(DynamicScriptingProperties.SCRIPT_FINISHED_PROPERTY, lastScriptName, lastScriptName = newScriptName);
-				}
+				scriptChanged(scriptName);
 			}
+		}
+	}
+	
+	public void scriptChanged(String scriptName) {
+		DynamicScriptName newScriptName = new DynamicScriptName(Optional.ofNullable(scriptName));
+		if (!lastScriptName.equals(newScriptName)) {
+			firePropertyChange(DynamicScriptingProperties.SCRIPT_FINISHED_PROPERTY, lastScriptName, lastScriptName = newScriptName);
 		}
 	}
 	

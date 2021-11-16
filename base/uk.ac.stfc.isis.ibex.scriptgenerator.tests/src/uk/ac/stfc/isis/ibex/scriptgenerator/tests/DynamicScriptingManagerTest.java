@@ -77,8 +77,7 @@ public class DynamicScriptingManagerTest {
 	}
 	
 	private void simulateScriptExecuted(Integer scriptId) {
-		DynamicScriptName newName = new DynamicScriptName(Optional.of("Script Generator: " + scriptId));
-		nicosAdapter.scriptChanged(newName);
+		nicosAdapter.scriptChanged("Script Generator: " + scriptId);
 	}
 	
 	private void simulateScriptStatusChange(ScriptStatus oldStatus, ScriptStatus newStatus) {

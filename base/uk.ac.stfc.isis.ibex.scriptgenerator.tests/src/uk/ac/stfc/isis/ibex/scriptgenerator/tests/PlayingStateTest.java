@@ -78,8 +78,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	}
 	
 	protected void simulateScriptExecuted(Integer scriptId) {
-		DynamicScriptName newName = new DynamicScriptName(Optional.of("Script Generator: " + scriptId));
-		nicosAdapter.scriptChanged(newName);
+		nicosAdapter.scriptChanged("Script Generator: " + scriptId);
 	}
 	
 	@Test
@@ -306,7 +305,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	@Test
 	public void test_GIVEN_action_not_executing_WHEN_play_script_THEN_script_played() {
 		firstAction = scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1);
-		firstAction.get().setNotExecuting();
+		firstAction.get().clearDynamicScriptingStatus();
 		setUpState();
 		attachStatusSwitchCounterToState();
 		// Assert
