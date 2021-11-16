@@ -41,7 +41,7 @@ public class DynamicScriptingStateFactory {
 			case PLAYING:
 				return new PlayingState(nicosAdapter, modelAdapter, action, dynamicScriptIds);
 			case PAUSED:
-				return new PausedState(nicosAdapter, modelAdapter, action, dynamicScriptIds);
+				return new PausedState(nicosAdapter, action, dynamicScriptIds);
 			case STOPPED:
 				return new StoppedState(dynamicScriptIds);
 			default:

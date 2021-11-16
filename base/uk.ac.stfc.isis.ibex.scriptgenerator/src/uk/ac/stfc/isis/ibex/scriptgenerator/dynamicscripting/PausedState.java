@@ -9,14 +9,12 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 public class PausedState extends DynamicScriptingState {
 	
 	private DynamicScriptingNicosAdapter nicosAdapter;
-	private DynamicScriptingModelAdapter modelAdapter;
 	private Optional<ScriptGeneratorAction> currentlyExecutingAction;
 	private Boolean stopRequested = false;
 
-	public PausedState(DynamicScriptingNicosAdapter nicosAdapter, DynamicScriptingModelAdapter modelAdapter, Optional<ScriptGeneratorAction> currentlyExecutingAction, HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction) {
+	public PausedState(DynamicScriptingNicosAdapter nicosAdapter, Optional<ScriptGeneratorAction> currentlyExecutingAction, HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction) {
 		super(dynamicScriptIdsToAction);
 		this.nicosAdapter = nicosAdapter;
-		this.modelAdapter = modelAdapter;
 		this.currentlyExecutingAction = currentlyExecutingAction;
 	}
 	
