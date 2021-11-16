@@ -1,8 +1,14 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThrows;
 
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.times;
+
+import org.mockito.ArgumentCaptor;
 
 import java.beans.PropertyChangeEvent;
 import java.util.Optional;
@@ -10,8 +16,10 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 
+import uk.ac.stfc.isis.ibex.nicos.ExecutionInstructionType;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.nicos.ScriptStatus;
+import uk.ac.stfc.isis.ibex.nicos.messages.ExecutionInstruction;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptName;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosAdapter;
@@ -25,12 +33,10 @@ public class DynamicScriptingNicosAdapterTest {
 	private NicosModel nicosModel;
 	private DynamicScriptingNicosAdapter nicosAdapter;
 	private StatusSwitchCounter<DynamicScriptName, Optional<String>> dynamicScriptSwitchCounter;
-	private StatusSwitchCounter<ScriptStatus, ScriptStatus> statusSwitchCounter;
 	
 	@Before
 	public void setUp() {
 		dynamicScriptSwitchCounter = new StatusSwitchCounter<>();
-		statusSwitchCounter = new StatusSwitchCounter<>();
 		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
 		nicosModel = scriptGeneratorMockBuilder.getMockNicosModel();
 		nicosAdapter = new DynamicScriptingNicosAdapter(nicosModel);
@@ -77,6 +83,13 @@ public class DynamicScriptingNicosAdapterTest {
 				nicosModel, propertyName, oldStatus, newStatus
 			)
 		);
+	}
+	
+	private void assertInstructionTypeSent(ExecutionInstructionType type, Integer numberOfInstructions) {
+		ArgumentCaptor<ExecutionInstruction> captor = ArgumentCaptor.forClass(ExecutionInstruction.class);
+		verify(nicosModel, times(numberOfInstructions)).sendExecutionInstruction(captor.capture());
+		ExecutionInstruction executedInstruction = captor.getValue();
+		assertThat(executedInstruction.toString(), is(type.getCommand()));
 	}
 	
 	@Test
@@ -137,76 +150,60 @@ public class DynamicScriptingNicosAdapterTest {
 	}
 	
 	@Test
-	public void test_WHEN_pause_AND_property_change_THEN_property_changed() {
+	public void test_WHEN_pause_THEN_instruction_sent() {
 		nicosAdapter.pauseExecution();
-		doScriptChange(
-			"test", DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, 
-			ScriptStatus.RUNNING, ScriptStatus.INBREAK
-		);
-		statusSwitchCounter.assertNumberOfSwitches(ScriptStatus.RUNNING, ScriptStatus.INBREAK, 1);
+		assertInstructionTypeSent(ExecutionInstructionType.BREAK, 1);
 	}
 	
 	@Test
-	public void test_WHEN_pause_from_pause_AND_property_change_THEN_no_property_changed() {
-		nicosAdapter.pauseExecution();
+	public void test_WHEN_nicos_paused_THEN_no_property_changed() {
 		doScriptChange(
 			"test", DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, 
 			ScriptStatus.RUNNING, ScriptStatus.INBREAK
 		);
-		nicosAdapter.pauseExecution();
-		doScriptChange(
-			"test", DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, 
-			ScriptStatus.RUNNING, ScriptStatus.INBREAK
-		);
-		statusSwitchCounter.assertNumberOfSwitches(ScriptStatus.RUNNING, ScriptStatus.INBREAK, 1);
+		dynamicScriptSwitchCounter.assertNoSwitches();
 	}
 	
+	
 	@Test
-	public void test_WHEN_stop_AND_property_change_THEN_property_changed() {
+	public void test_WHEN_stop_THEN_instruction_sent() {
 		nicosAdapter.stopExecution();
-		doScriptChange("test", DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY);
-		statusSwitchCounter.assertNumberOfSwitches(ScriptStatus.RUNNING, ScriptStatus.IDLE, 1);
+		assertInstructionTypeSent(ExecutionInstructionType.STOP, 1);
 	}
 	
 	@Test
-	public void test_WHEN_pause_from_stopped_AND_property_change_THEN_no_property_changed() {
-		nicosAdapter.stopExecution();
-		doScriptChange("test", DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY);
-		statusSwitchCounter.assertNumberOfSwitches(ScriptStatus.RUNNING, ScriptStatus.IDLE, 1);
-		nicosAdapter.pauseExecution();
-		doScriptChange(
-			"test", DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, 
-			ScriptStatus.RUNNING, ScriptStatus.INBREAK
-		);
-		statusSwitchCounter.assertNumberOfSwitches(ScriptStatus.IDLE, ScriptStatus.INBREAK, 0);
+	public void test_WHEN_script_name_changed_on_finish_THEN_property_change() {
+		String newScriptName = "test new";
+		doScriptChange(newScriptName, DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY);
+		String newScriptName2 = "test new 2";
+		doScriptChange(newScriptName2, DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY);
+		dynamicScriptSwitchCounter.assertNumberOfSwitches(Optional.empty(), Optional.of(newScriptName), 1);
+		dynamicScriptSwitchCounter.assertNumberOfSwitches(Optional.of(newScriptName), Optional.of(newScriptName2), 1);
 	}
 	
 	@Test
-	public void test_WHEN_resumed_from_paused_AND_property_change_THEN_property_changed() {
-		nicosAdapter.pauseExecution();
-		doScriptChange(
-			"test", DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, 
-			ScriptStatus.RUNNING, ScriptStatus.INBREAK
-		);
+	public void test_WHEN_script_name_change_BUT_name_equal_THEN_no_switch() {
+		String newScriptName = "test new";
+		doScriptChange(newScriptName, DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY);
+		String newScriptName2 = "test new";
+		doScriptChange(newScriptName2, DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY);
+		dynamicScriptSwitchCounter.assertNumberOfSwitches(Optional.empty(), Optional.of(newScriptName), 1);
+		dynamicScriptSwitchCounter.assertNumberOfSwitches(Optional.of(newScriptName), Optional.of(newScriptName2), 0);
+	}
+	
+	@Test
+	public void test_WHEN_resumed_from_THEN_instruction_sent() {
 		nicosAdapter.resumeExecution();
-		doScriptChange(
-			"test", DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, 
-			ScriptStatus.INBREAK, ScriptStatus.RUNNING
-		);
-		statusSwitchCounter.assertNumberOfSwitches(ScriptStatus.INBREAK, ScriptStatus.RUNNING, 1);
+		assertInstructionTypeSent(ExecutionInstructionType.CONTINUE, 1);
 	}
 	
 	@Test
-	public void test_WHEN_resumed_from_stopped_AND_property_change_THEN_no_property_changed() {
-		nicosAdapter.stopExecution();
-		doScriptChange("test", DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY);
-		statusSwitchCounter.assertNumberOfSwitches(ScriptStatus.RUNNING, ScriptStatus.IDLE, 1);
-		nicosAdapter.resumeExecution();
+	public void test_WHEN_script_status_changed_to_running_THEN_no_property_changed() {
 		doScriptChange(
 			"test", DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, 
 			ScriptStatus.IDLE, ScriptStatus.RUNNING
 		);
-		statusSwitchCounter.assertNumberOfSwitches(ScriptStatus.IDLE, ScriptStatus.RUNNING, 0);
+		dynamicScriptSwitchCounter.assertNoSwitches();
 	}
 
 
