@@ -139,12 +139,21 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	
 	@Test
 	public void test_WHEN_stop_THEN_state_is_stopped() {
+		// Arrange
+		firstAction = scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1);
+		reloadState();
+		// Act
 		state.stop();
 		nicosAdapter.propertyChange(
 			new PropertyChangeEvent(
 				scriptGeneratorMockBuilder.getMockNicosModel(), DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY,
 				null, ScriptStatus.IDLE
 			)
+		);
+		// Assert
+		assertThat(
+			state.getCurrentlyExecutingAction().get().getDynamicScriptingStatus(), 
+			is(ActionDynamicScriptingStatus.NO_STATUS)
 		);
 		statusSwitchCounter.assertNumberOfSwitches(
 			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.STOPPED, 1
