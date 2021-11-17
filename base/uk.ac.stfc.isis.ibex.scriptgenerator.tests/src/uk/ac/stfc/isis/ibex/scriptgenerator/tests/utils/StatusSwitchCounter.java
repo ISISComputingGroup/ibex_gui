@@ -10,6 +10,14 @@ import java.util.HashMap;
 
 import uk.ac.stfc.isis.ibex.model.HasStatus;
 
+/**
+ * When attached as a property change listener to a class that implements the HasStatus interface
+ * an object of this class will tally up the amount of property changes from one status to another.
+ * Provides useful assertion methods for testing property change firings.
+ * 
+ * @param <T> The observable class.
+ * @param <K> The type of status the observable class has.
+ */
 public class StatusSwitchCounter<T extends HasStatus<K>, K> implements PropertyChangeListener {
 
 	private HashMap<K, HashMap<K, Integer>> switchMap = new HashMap<K, HashMap<K, Integer>>();
@@ -34,6 +42,14 @@ public class StatusSwitchCounter<T extends HasStatus<K>, K> implements PropertyC
 		}
 	}
 	
+	/**
+	 * Assert that the number of property change switches from the oldStatus to the newStatus is
+	 * exactly the expectedNumber.
+	 * 
+	 * @param oldStatus The status switched from.
+	 * @param newStatus The status switched to.
+	 * @param expectedNumber The expected number of times the switch occurred.
+	 */
 	public void assertNumberOfSwitches(K oldStatus, K newStatus, Integer expectedNumber) {
 		if (switchMap.containsKey(oldStatus)) {
 			HashMap<K, Integer> newStateSwitchMap = switchMap.get(oldStatus);
@@ -47,6 +63,9 @@ public class StatusSwitchCounter<T extends HasStatus<K>, K> implements PropertyC
 		}
 	}
 	
+	/**
+	 * Assert that no property changes have been fired.
+	 */
 	public void assertNoSwitches() {
 		assertTrue(switchMap.isEmpty());
 	}
