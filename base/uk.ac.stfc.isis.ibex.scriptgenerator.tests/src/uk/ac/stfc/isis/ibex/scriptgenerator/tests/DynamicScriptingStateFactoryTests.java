@@ -53,6 +53,13 @@ public class DynamicScriptingStateFactoryTests {
 		factory = new DynamicScriptingStateFactory(modelAdapter, nicosAdapter, this.state);
 	}
 	
+	private void assertStatesAreNewAndAreInstanceOf(DynamicScriptingState newState, DynamicScriptingState otherNewState, DynamicScriptingStatus expectedStatus) {
+		assertThat(newState, is(not(state)));
+		assertThat(otherNewState, is(not(state)));
+		assertThat(newState.getStatus(), is(expectedStatus));
+		assertThat(otherNewState.getStatus(), is(expectedStatus));
+	}
+	
 	@Test
 	public void test_GIVEN_initial_state_THEN_state_set_by_constructor() {
 		state = mock(StoppedState.class);
@@ -68,10 +75,7 @@ public class DynamicScriptingStateFactoryTests {
 		setUpFactoryWithState(state);
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.PLAYING);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
-		assertThat(newState, is(not(state)));
-		assertThat(newStateFromGet, is(not(state)));
-		assertTrue(newState instanceof PlayingState);
-		assertTrue(newStateFromGet instanceof PlayingState);
+		assertStatesAreNewAndAreInstanceOf(newState, newStateFromGet, DynamicScriptingStatus.PLAYING);
 	}
 	
 	@Test
@@ -81,10 +85,7 @@ public class DynamicScriptingStateFactoryTests {
 		setUpFactoryWithState(state);
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.STOPPED);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
-		assertThat(newState, is(not(state)));
-		assertThat(newStateFromGet, is(not(state)));
-		assertTrue(newState instanceof StoppedState);
-		assertTrue(newStateFromGet instanceof StoppedState);
+		assertStatesAreNewAndAreInstanceOf(newState, newStateFromGet, DynamicScriptingStatus.STOPPED);
 	}
 	
 	@Test
@@ -94,10 +95,7 @@ public class DynamicScriptingStateFactoryTests {
 		setUpFactoryWithState(state);
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.ERROR);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
-		assertThat(newState, is(not(state)));
-		assertThat(newStateFromGet, is(not(state)));
-		assertTrue(newState instanceof ErrorState);
-		assertTrue(newStateFromGet instanceof ErrorState);
+		assertStatesAreNewAndAreInstanceOf(newState, newStateFromGet, DynamicScriptingStatus.ERROR);
 	}
 	
 	@Test
@@ -107,10 +105,7 @@ public class DynamicScriptingStateFactoryTests {
 		setUpFactoryWithState(state);
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.PAUSED);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
-		assertThat(newState, is(not(state)));
-		assertThat(newStateFromGet, is(not(state)));
-		assertTrue(newState instanceof PausedState);
-		assertTrue(newStateFromGet instanceof PausedState);
+		assertStatesAreNewAndAreInstanceOf(newState, newStateFromGet, DynamicScriptingStatus.PAUSED);
 	}
 	
 	@Test
@@ -120,10 +115,7 @@ public class DynamicScriptingStateFactoryTests {
 		setUpFactoryWithState(state);
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.PLAYING);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
-		assertThat(newState, is(not(state)));
-		assertThat(newStateFromGet, is(not(state)));
-		assertTrue(newState instanceof PlayingState);
-		assertTrue(newStateFromGet instanceof PlayingState);
+		assertStatesAreNewAndAreInstanceOf(newState, newStateFromGet, DynamicScriptingStatus.PLAYING);
 		assertThat(newState.getCurrentlyExecutingAction().get(), is(action));
 	}
 	
@@ -134,10 +126,7 @@ public class DynamicScriptingStateFactoryTests {
 		setUpFactoryWithState(state);
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.STOPPED);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
-		assertThat(newState, is(not(state)));
-		assertThat(newStateFromGet, is(not(state)));
-		assertTrue(newState instanceof StoppedState);
-		assertTrue(newStateFromGet instanceof StoppedState);
+		assertStatesAreNewAndAreInstanceOf(newState, newStateFromGet, DynamicScriptingStatus.STOPPED);
 	}
 	
 	@Test
@@ -147,10 +136,7 @@ public class DynamicScriptingStateFactoryTests {
 		setUpFactoryWithState(state);
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.ERROR);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
-		assertThat(newState, is(not(state)));
-		assertThat(newStateFromGet, is(not(state)));
-		assertTrue(newState instanceof ErrorState);
-		assertTrue(newStateFromGet instanceof ErrorState);
+		assertStatesAreNewAndAreInstanceOf(newState, newStateFromGet, DynamicScriptingStatus.ERROR);
 	}
 	
 	@Test
@@ -160,10 +146,7 @@ public class DynamicScriptingStateFactoryTests {
 		setUpFactoryWithState(state);
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.PAUSED);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
-		assertThat(newState, is(not(state)));
-		assertThat(newStateFromGet, is(not(state)));
-		assertTrue(newState instanceof PausedState);
-		assertTrue(newStateFromGet instanceof PausedState);
+		assertStatesAreNewAndAreInstanceOf(newState, newStateFromGet, DynamicScriptingStatus.PAUSED);
 		assertThat(newState.getCurrentlyExecutingAction().get(), is(action));
 	}
 	
@@ -174,10 +157,7 @@ public class DynamicScriptingStateFactoryTests {
 		setUpFactoryWithState(state);
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.PLAYING);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
-		assertThat(newState, is(not(state)));
-		assertThat(newStateFromGet, is(not(state)));
-		assertTrue(newState instanceof PlayingState);
-		assertTrue(newStateFromGet instanceof PlayingState);
+		assertStatesAreNewAndAreInstanceOf(newState, newStateFromGet, DynamicScriptingStatus.PLAYING);
 		assertThat(newState.getCurrentlyExecutingAction().get(), is(action));
 	}
 	
@@ -188,10 +168,7 @@ public class DynamicScriptingStateFactoryTests {
 		setUpFactoryWithState(state);
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.STOPPED);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
-		assertThat(newState, is(not(state)));
-		assertThat(newStateFromGet, is(not(state)));
-		assertTrue(newState instanceof StoppedState);
-		assertTrue(newStateFromGet instanceof StoppedState);
+		assertStatesAreNewAndAreInstanceOf(newState, newStateFromGet, DynamicScriptingStatus.STOPPED);
 	}
 	
 	@Test
@@ -201,10 +178,7 @@ public class DynamicScriptingStateFactoryTests {
 		setUpFactoryWithState(state);
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.ERROR);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
-		assertThat(newState, is(not(state)));
-		assertThat(newStateFromGet, is(not(state)));
-		assertTrue(newState instanceof ErrorState);
-		assertTrue(newStateFromGet instanceof ErrorState);
+		assertStatesAreNewAndAreInstanceOf(newState, newStateFromGet, DynamicScriptingStatus.ERROR);
 	}
 	
 	@Test
@@ -214,10 +188,7 @@ public class DynamicScriptingStateFactoryTests {
 		setUpFactoryWithState(state);
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.PAUSED);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
-		assertThat(newState, is(not(state)));
-		assertThat(newStateFromGet, is(not(state)));
-		assertTrue(newState instanceof PausedState);
-		assertTrue(newStateFromGet instanceof PausedState);
+		assertStatesAreNewAndAreInstanceOf(newState, newStateFromGet, DynamicScriptingStatus.PAUSED);
 		assertThat(newState.getCurrentlyExecutingAction().get(), is(action));
 	}
 
