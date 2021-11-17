@@ -7,6 +7,7 @@ import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.reset;
 
 import org.mockito.ArgumentCaptor;
 
@@ -90,13 +91,14 @@ public class DynamicScriptingNicosAdapterTest {
 		verify(nicosModel, times(numberOfInstructions)).sendExecutionInstruction(captor.capture());
 		ExecutionInstruction executedInstruction = captor.getValue();
 		assertThat(executedInstruction.toString(), is(type.getCommand()));
+		reset(nicosModel);
 	}
 	
 	@Test
 	public void test_WHEN_pause_THEN_instruction_sent() {
 		for (int i = 1; i < 5; i++) {
 			nicosAdapter.pauseExecution();
-			assertInstructionTypeSent(ExecutionInstructionType.BREAK, i);
+			assertInstructionTypeSent(ExecutionInstructionType.BREAK, 1);
 		}
 	}
 	
@@ -104,7 +106,7 @@ public class DynamicScriptingNicosAdapterTest {
 	public void test_WHEN_resumed_from_THEN_instruction_sent() {
 		for (int i = 1; i < 5; i++) {
 			nicosAdapter.resumeExecution();
-			assertInstructionTypeSent(ExecutionInstructionType.CONTINUE, i);
+			assertInstructionTypeSent(ExecutionInstructionType.CONTINUE, 1);
 		}
 	}
 	
@@ -112,8 +114,68 @@ public class DynamicScriptingNicosAdapterTest {
 	public void test_WHEN_stop_THEN_instruction_sent() {
 		for (int i = 1; i < 5; i++) {
 			nicosAdapter.stopExecution();
-			assertInstructionTypeSent(ExecutionInstructionType.STOP, i);
+			assertInstructionTypeSent(ExecutionInstructionType.STOP, 1);
 		}
+	}
+	
+	@Test
+	public void test_WHEN_stop_AND_resume_AND_pause_THEN_instructions_sent() {
+		nicosAdapter.stopExecution();
+		assertInstructionTypeSent(ExecutionInstructionType.STOP, 1);
+		nicosAdapter.resumeExecution();
+		assertInstructionTypeSent(ExecutionInstructionType.CONTINUE, 1);
+		nicosAdapter.pauseExecution();
+		assertInstructionTypeSent(ExecutionInstructionType.BREAK, 1);
+	}
+	
+	@Test
+	public void test_WHEN_stop_AND_pause_AND_resume_THEN_instructions_sent() {
+		nicosAdapter.stopExecution();
+		assertInstructionTypeSent(ExecutionInstructionType.STOP, 1);
+		nicosAdapter.pauseExecution();
+		assertInstructionTypeSent(ExecutionInstructionType.BREAK, 1);
+		nicosAdapter.resumeExecution();
+		assertInstructionTypeSent(ExecutionInstructionType.CONTINUE, 1);
+	}
+	
+	@Test
+	public void test_WHEN_resume_AND_pause_AND_stop_THEN_instructions_sent() {
+		nicosAdapter.resumeExecution();
+		assertInstructionTypeSent(ExecutionInstructionType.CONTINUE, 1);
+		nicosAdapter.pauseExecution();
+		assertInstructionTypeSent(ExecutionInstructionType.BREAK, 1);
+		nicosAdapter.stopExecution();
+		assertInstructionTypeSent(ExecutionInstructionType.STOP, 1);
+	}
+	
+	@Test
+	public void test_WHEN_resume_AND_stop_AND_pause_THEN_instructions_sent() {
+		nicosAdapter.resumeExecution();
+		assertInstructionTypeSent(ExecutionInstructionType.CONTINUE, 1);
+		nicosAdapter.stopExecution();
+		assertInstructionTypeSent(ExecutionInstructionType.STOP, 1);
+		nicosAdapter.pauseExecution();
+		assertInstructionTypeSent(ExecutionInstructionType.BREAK, 1);
+	}
+	
+	@Test
+	public void test_WHEN_pause_AND_stop_AND_resume_THEN_instructions_sent() {
+		nicosAdapter.pauseExecution();
+		assertInstructionTypeSent(ExecutionInstructionType.BREAK, 1);
+		nicosAdapter.stopExecution();
+		assertInstructionTypeSent(ExecutionInstructionType.STOP, 1);
+		nicosAdapter.resumeExecution();
+		assertInstructionTypeSent(ExecutionInstructionType.CONTINUE, 1);
+	}
+	
+	@Test
+	public void test_WHEN_pause_AND_resume_AND_stop_THEN_instructions_sent() {
+		nicosAdapter.pauseExecution();
+		assertInstructionTypeSent(ExecutionInstructionType.BREAK, 1);
+		nicosAdapter.resumeExecution();
+		assertInstructionTypeSent(ExecutionInstructionType.CONTINUE, 1);
+		nicosAdapter.stopExecution();
+		assertInstructionTypeSent(ExecutionInstructionType.STOP, 1);
 	}
 	
 	@Test
