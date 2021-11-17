@@ -33,6 +33,7 @@ import org.eclipse.ui.PlatformUI;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
 import uk.ac.stfc.isis.ibex.managermode.ManagerModePvNotConnectedException;
+import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.DeleteItemsDialogHelper;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MultipleConfigsSelectionDialog;
 
 /**
@@ -48,16 +49,6 @@ public class DeleteConfigsHandler extends DisablingConfigHandler<Collection<Stri
 	}
 	
 	/**
-	 * Opens dialog to confirm deleting configurations
-	 * @param selectedConfigs Configs that will be displayed in confirmation
-	 * @return
-	 */
-    private boolean deleteConfigsConfirmDialog(Collection<String> selectedConfigs) {
-        return MessageDialog.openQuestion(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Confirm Delete Configurations",
-                "The following configurations " + selectedConfigs + " will be permanently deleted. Are you sure you want to delete them?");
-    }
-	
-	/**
 	 * Open the delete configs dialogue.
 	 *
 	 * @param shell the shell
@@ -68,7 +59,8 @@ public class DeleteConfigsHandler extends DisablingConfigHandler<Collection<Stri
         MultipleConfigsSelectionDialog dialog = new MultipleConfigsSelectionDialog(shell, "Delete Configurations",
                 SERVER.configsInfo().getValue(), configNamesWithFlags, false, false);
 		if (dialog.open() == Window.OK) {
-	    	if(deleteConfigsConfirmDialog(dialog.selectedConfigs()))
+	        DeleteItemsDialogHelper helper = new DeleteItemsDialogHelper();
+	    	if(helper.deleteItemsConfirmDialog(dialog.selectedConfigs(), "Configurations"))
 	    	{
 			    try {		        
 			        configService.write(dialog.selectedConfigs());

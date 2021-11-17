@@ -33,6 +33,7 @@ import org.eclipse.ui.PlatformUI;
 import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
 import uk.ac.stfc.isis.ibex.managermode.ManagerModePvNotConnectedException;
 import uk.ac.stfc.isis.ibex.ui.configserver.DeleteComponentsViewModel;
+import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.DeleteItemsDialogHelper;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.DeleteComponentsDialog;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MultipleConfigsSelectionDialog;
 
@@ -49,16 +50,6 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
 	public DeleteComponentsHandler() {
 		super(SERVER.deleteComponents());
 	}
-	
-	/**
-	 * Opens dialog to confirm deleting components
-	 * @param selectedConfigs Components that will be displayed in confirmation
-	 * @return
-	 */
-    private boolean deleteComponentsConfirmDialog(Collection<String> selectedComponents) {
-        return MessageDialog.openQuestion(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Confirm Delete Components",
-                "The following components " + selectedComponents + " will be permanently deleted. Are you sure you want to delete them?");
-    }
 
     /**
      * Open the delete components dialogue.
@@ -74,7 +65,8 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
                 SERVER.componentsInfo().getValue(), viewModel.getDependencies().keySet(), compNamesWithFlags);
         if (dialog.open() == Window.OK) {
             Collection<String> toDelete = dialog.selectedConfigs();
-            if(deleteComponentsConfirmDialog(toDelete))
+            DeleteItemsDialogHelper helper = new DeleteItemsDialogHelper();
+            if(helper.deleteItemsConfirmDialog(toDelete, "Components"))
             {
                 Map<String, Collection<String>> selectedDependencies = viewModel.filterSelected(toDelete);
                 try {
