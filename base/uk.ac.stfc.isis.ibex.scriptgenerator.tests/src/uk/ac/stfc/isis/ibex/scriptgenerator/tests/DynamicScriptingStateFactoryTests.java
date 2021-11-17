@@ -3,7 +3,6 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -13,7 +12,6 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScript;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelAdapter;
@@ -21,7 +19,6 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNic
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingState;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStateFactory;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingStatus;
-import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.ErrorState;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.PausedState;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.PlayingState;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.StoppedState;
@@ -49,7 +46,7 @@ public class DynamicScriptingStateFactoryTests {
 		when(modelAdapter.refreshGeneratedScript(action)).thenReturn(Optional.of(scriptId));
 	}
 	
-	public void setUpFactoryWithState(DynamicScriptingState state) {
+	private void setUpFactoryWithState(DynamicScriptingState state) {
 		this.state = state;
 		factory = new DynamicScriptingStateFactory(modelAdapter, nicosAdapter, this.state);
 	}
