@@ -34,6 +34,9 @@ public class DynamicScriptingNicosAdapterTest {
 	private NicosModel nicosModel;
 	private DynamicScriptingNicosAdapter nicosAdapter;
 	private StatusSwitchCounter<DynamicScriptName, Optional<String>> dynamicScriptSwitchCounter;
+	private static final String UNRECOGNISED_PROPERTY_NAME = "test";
+	private static final String SCRIPT_NAME = "test";
+	private static final String SCRIPT_CODE = "test";
 	
 	@Before
 	public void setUp() {
@@ -42,31 +45,6 @@ public class DynamicScriptingNicosAdapterTest {
 		nicosModel = scriptGeneratorMockBuilder.getMockNicosModel();
 		nicosAdapter = new DynamicScriptingNicosAdapter(nicosModel);
 		nicosAdapter.addPropertyChangeListener(DynamicScriptingProperties.SCRIPT_FINISHED_PROPERTY, dynamicScriptSwitchCounter);
-	}
-	
-	@Test
-	public void test_WHEN_no_error_THEN_no_exception() {
-		try {
-			nicosAdapter.executeAction("test", "test");
-		} catch(DynamicScriptingException e) {
-			throw new AssertionError("Should correctly run");
-		}
-	}
-	
-	@Test
-	public void test_WHEN_nicos_error_THEN_exception() {
-		scriptGeneratorMockBuilder.arrangeNicosError();
-		assertThrows(DynamicScriptingException.class, () -> {
-			nicosAdapter.executeAction("test", "test");
-	    });	
-	}
-	
-	@Test
-	public void test_WHEN_nicos_cannot_send_script_THEN_exception_AND_property_change() {
-		scriptGeneratorMockBuilder.arrangeNicosSendScriptFail();
-		assertThrows(DynamicScriptingException.class, () -> {
-			nicosAdapter.executeAction("test", "test");
-	    });
 	}
 	
 	private void doScriptChange(String newScriptName) {
@@ -92,6 +70,31 @@ public class DynamicScriptingNicosAdapterTest {
 		ExecutionInstruction executedInstruction = captor.getValue();
 		assertThat(executedInstruction.toString(), is(type.getCommand()));
 		reset(nicosModel);
+	}
+	
+	@Test
+	public void test_WHEN_no_error_THEN_no_exception() {
+		try {
+			nicosAdapter.executeAction(SCRIPT_NAME, SCRIPT_CODE);
+		} catch(DynamicScriptingException e) {
+			throw new AssertionError("Should correctly run");
+		}
+	}
+	
+	@Test
+	public void test_WHEN_nicos_error_THEN_exception() {
+		scriptGeneratorMockBuilder.arrangeNicosError();
+		assertThrows(DynamicScriptingException.class, () -> {
+			nicosAdapter.executeAction(SCRIPT_NAME, SCRIPT_CODE);
+	    });	
+	}
+	
+	@Test
+	public void test_WHEN_nicos_cannot_send_script_THEN_exception_AND_property_change() {
+		scriptGeneratorMockBuilder.arrangeNicosSendScriptFail();
+		assertThrows(DynamicScriptingException.class, () -> {
+			nicosAdapter.executeAction(SCRIPT_NAME, SCRIPT_CODE);
+	    });
 	}
 	
 	@Test
@@ -180,76 +183,98 @@ public class DynamicScriptingNicosAdapterTest {
 	
 	@Test
 	public void test_WHEN_script_changes_THEN_change_notified() {
+		// Arrange
 		Optional<String> oldScriptName = Optional.empty();
 		String scriptName = "Script Generator: 0";
 		Optional<String> newScriptName = Optional.of(scriptName);
+		// Act
 		doScriptChange(scriptName);
+		// Assert
 		dynamicScriptSwitchCounter.assertNumberOfSwitches(oldScriptName, newScriptName, 1);
 	}
 	
 	@Test
 	public void test_WHEN_script_still_null_THEN_change_not_notified() {
+		// Arrange
 		String scriptName = null;
+		// Act
 		doScriptChange(scriptName);
+		// Assert
 		dynamicScriptSwitchCounter.assertNoSwitches();
 	}
 	
 	@Test
 	public void test_WHEN_script_changes_twice_THEN_change_notified() {
+		// Arrange
 		Optional<String> oldScriptName = Optional.empty();
 		String scriptName = "Script Generator: 0";
 		Optional<String> newScriptName = Optional.of(scriptName);
-		doScriptChange(scriptName);
 		String scriptName1 = "Script Generator: 1";
 		Optional<String> newerScriptName = Optional.of(scriptName1);
+		// Act
+		doScriptChange(scriptName);
 		doScriptChange(scriptName1);
+		// Assert
 		dynamicScriptSwitchCounter.assertNumberOfSwitches(oldScriptName, newScriptName, 1);
 		dynamicScriptSwitchCounter.assertNumberOfSwitches(newScriptName, newerScriptName, 1);
 	}
 	
 	@Test
 	public void test_WHEN_script_changes_twice_are_the_same_THEN_change_not_notified_twice() {
+		// Arrange
 		Optional<String> oldScriptName = Optional.empty();
 		String scriptName = "Script Generator: 0";
 		Optional<String> newScriptName = Optional.of(scriptName);
+		// Act
 		doScriptChange(scriptName);
 		doScriptChange(scriptName);
+		// Assert
 		dynamicScriptSwitchCounter.assertNumberOfSwitches(oldScriptName, newScriptName, 1);
 	}
 	
 	@Test
 	public void test_WHEN_script_changes_back_to_null_THEN_change_notified() {
+		// Arrange
 		Optional<String> oldScriptName = Optional.empty();
 		String scriptName = "Script Generator: 0";
 		Optional<String> newScriptName = Optional.of(scriptName);
+		// Act
 		doScriptChange(scriptName);
 		doScriptChange(null);
+		// Assert
 		dynamicScriptSwitchCounter.assertNumberOfSwitches(oldScriptName, newScriptName, 1);
 		dynamicScriptSwitchCounter.assertNumberOfSwitches(newScriptName, oldScriptName, 1);
 	}
 	
 	@Test
 	public void test_WHEN_non_script_change_property_fired_THEN_change_not_notified() {
+		// Arrange
 		String scriptName = "Script Generator: 0";
-		doScriptChange(scriptName, "test");
+		// Act
+		doScriptChange(scriptName, UNRECOGNISED_PROPERTY_NAME);
+		// Assert
 		dynamicScriptSwitchCounter.assertNoSwitches();
 	}
 	
 	@Test
 	public void test_WHEN_nicos_paused_THEN_no_property_changed() {
+		// Act
 		doScriptChange(
 			"test", DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, 
 			ScriptStatus.RUNNING, ScriptStatus.INBREAK
 		);
+		// Assert
 		dynamicScriptSwitchCounter.assertNoSwitches();
 	}
 	
 	@Test
 	public void test_WHEN_nicos_starts_running_THEN_no_property_change() {
+		// Act
 		doScriptChange(
 			"test", DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY, 
 			ScriptStatus.IDLE, ScriptStatus.RUNNING
 		);
+		// Assert
 		dynamicScriptSwitchCounter.assertNoSwitches();
 	}
 
