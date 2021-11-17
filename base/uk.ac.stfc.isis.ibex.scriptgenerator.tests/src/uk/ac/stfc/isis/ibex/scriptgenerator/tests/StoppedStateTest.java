@@ -39,7 +39,7 @@ public class StoppedStateTest extends DynamicScriptingStateTest {
 	
 	@Test
 	public void test_actions_empty() {
-		assertActionsEmpty();
+		assertCurrentAndNextActionsEmpty();
 	}
 	
 	@Test

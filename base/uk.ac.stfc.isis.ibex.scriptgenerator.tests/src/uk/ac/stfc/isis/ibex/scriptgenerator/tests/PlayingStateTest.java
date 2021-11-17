@@ -16,7 +16,6 @@ import java.util.Optional;
 import uk.ac.stfc.isis.ibex.nicos.ScriptStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScript;
-import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptName;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelAdapter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosAdapter;
@@ -67,7 +66,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		dynamicScriptIdsToAction = new HashMap<Integer, ScriptGeneratorAction>();
 	}
 	
-	protected void simulateScriptGenerated(Integer scriptId) {
+	private void simulateScriptGenerated(Integer scriptId) {
 		when(scriptGeneratorMockBuilder.getMockScriptGeneratorModel().getScriptFromId(1)).thenReturn(Optional.of("test"));
 		PropertyChangeEvent event = new PropertyChangeEvent(
 			scriptGeneratorMockBuilder.getMockScriptGeneratorModel(), 
@@ -77,8 +76,19 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		modelAdapter.propertyChange(event);
 	}
 	
-	protected void simulateScriptExecuted(Integer scriptId) {
+	private void simulateScriptExecuted(Integer scriptId) {
 		nicosAdapter.scriptChanged("Script Generator: " + scriptId);
+	}
+	
+	private void simulateGenerationAndExecutionOfScript(Integer scriptId) {
+		simulateScriptGenerated(scriptId);
+		simulateScriptExecuted(scriptId);
+	}
+	
+	private void simulateGenerationAndExecutionOfScriptWithDynamicScriptIdAssert(Integer scriptId) {
+		simulateScriptGenerated(scriptId);
+		assertTrue(state.isScriptDynamic(scriptId));
+		simulateScriptExecuted(scriptId);
 	}
 	
 	private void assertCurrentAndNextActionsAreThoseFromTheGivenIndices(Integer currentActionIndex, Integer nextActionIndex) {
@@ -120,9 +130,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		state.start();
 		assertCurrentAndNextActionsAreThoseFromTheGivenIndices(0, 1);
 		// Act
-		simulateScriptGenerated(1);
-		assertTrue(state.isScriptDynamic(0));
-		simulateScriptExecuted(1);
+		simulateGenerationAndExecutionOfScript(1);
 		// Assert
 		assertCurrentAndNextActionsAreThoseFromTheGivenIndices(1, 2);
 	}
@@ -133,9 +141,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		int i = 0;
 		do {
 			assertCurrentAndNextActionsAreThoseFromTheGivenIndices(i, i + 1);
-			simulateScriptGenerated(i);
-			assertTrue(state.isScriptDynamic(i));
-			simulateScriptExecuted(i);
+			simulateGenerationAndExecutionOfScriptWithDynamicScriptIdAssert(i);
 			i++;
 		} while (state.getCurrentlyExecutingAction().isPresent());
 		statusSwitchCounter.assertNumberOfSwitches(
@@ -150,8 +156,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		state.start();
 		assertCurrentAndNextActionsAreThoseFromTheGivenIndices(0, 1);
 		// Act
-		simulateScriptGenerated(1);
-		simulateScriptExecuted(1);
+		simulateGenerationAndExecutionOfScript(1);
 		// Assert
 		statusSwitchCounter.assertNumberOfSwitches(
 			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.ERROR, 1
@@ -165,8 +170,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		state.start();
 		assertCurrentAndNextActionsAreThoseFromTheGivenIndices(0, 1);
 		// Act
-		simulateScriptGenerated(1);
-		simulateScriptExecuted(1);
+		simulateGenerationAndExecutionOfScript(1);
 		// Assert
 		statusSwitchCounter.assertNumberOfSwitches(
 			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.ERROR, 1
@@ -178,8 +182,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		// Arrange
 		scriptGeneratorMockBuilder.arrangeNumberOfActions(1);
 		// Assert
-		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
-		assertThat(nextAction, is(Optional.empty()));
+		assertNextActionEmpty();
 	}
 	
 	@Test
@@ -190,10 +193,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		removeStatusSwitchCounterToState();
 		setUpState();
 		// Assert
-		Optional<ScriptGeneratorAction> currentAction = state.getCurrentlyExecutingAction();
-		assertThat(currentAction, is(Optional.empty()));
-		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
-		assertThat(nextAction, is(Optional.empty()));
+		assertCurrentAndNextActionsEmpty();
 	}
 	
 	@Test
