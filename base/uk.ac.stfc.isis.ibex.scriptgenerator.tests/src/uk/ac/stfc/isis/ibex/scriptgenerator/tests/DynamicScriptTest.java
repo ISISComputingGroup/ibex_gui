@@ -23,6 +23,14 @@ public class DynamicScriptTest {
 		script = new DynamicScript(1);
 	}
 	
+	private Integer assertGetIdFromNameDoesNotThrowNameFormatException(String scriptName) {
+		try {
+			return DynamicScript.getIdFromName(scriptName);
+		} catch (DynamicScriptNameFormatException e) {
+			throw new AssertionError("Should be able to get id from name");
+		}
+	}
+	
 	@Test
 	public void test_id_is_correct() {
 		assertThat(script.getId(), is(id));
@@ -54,12 +62,7 @@ public class DynamicScriptTest {
 		Integer testId = 1;
 		String scriptName = "Script Generator: " + testId;
 		// Act
-		Integer idFromName;
-		try {
-			idFromName = DynamicScript.getIdFromName(scriptName);
-		} catch (DynamicScriptNameFormatException e) {
-			throw new AssertionError("Should be able to get id from name");
-		}
+		Integer idFromName = assertGetIdFromNameDoesNotThrowNameFormatException(scriptName);
 		// Assert
 		assertThat(idFromName, is(testId));
 	}
@@ -70,12 +73,7 @@ public class DynamicScriptTest {
 		Integer testId = 32;
 		String scriptName = "Script Generator: " + testId;
 		// Act
-		Integer idFromName;
-		try {
-			idFromName = DynamicScript.getIdFromName(scriptName);
-		} catch (DynamicScriptNameFormatException e) {
-			throw new AssertionError("Should be able to get id from name");
-		}
+		Integer idFromName = assertGetIdFromNameDoesNotThrowNameFormatException(scriptName);
 		// Assert
 		assertThat(idFromName, is(testId));
 	}
@@ -86,12 +84,7 @@ public class DynamicScriptTest {
 		Integer testId = 32;
 		String scriptName = "Script Generator:  " + testId + "   \n";
 		// Act
-		Integer idFromName;
-		try {
-			idFromName = DynamicScript.getIdFromName(scriptName);
-		} catch (DynamicScriptNameFormatException e) {
-			throw new AssertionError("Should be able to get id from name");
-		}
+		Integer idFromName = assertGetIdFromNameDoesNotThrowNameFormatException(scriptName);
 		// Assert
 		assertThat(idFromName, is(testId));
 	}

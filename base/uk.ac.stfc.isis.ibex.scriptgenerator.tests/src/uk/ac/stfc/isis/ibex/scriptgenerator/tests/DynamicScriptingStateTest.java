@@ -65,6 +65,12 @@ public abstract class DynamicScriptingStateTest {
 	protected void assertCurrentAndNextActionsEmpty() {
 		assertCurrentActionEmpty();
 		assertNextActionEmpty();
-	}	
+	}
+	
+	protected void reloadState() {
+		removeStatusSwitchCounterToState();
+		setUpState();
+		attachStatusSwitchCounterToState();
+	}
 
 }

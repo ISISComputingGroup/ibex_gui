@@ -111,9 +111,7 @@ public class PausedStateTest extends DynamicScriptingStateTest {
 	public void test_GIVEN_no_current_action_WHEN_no_stop_AND_script_finishes_THEN_stopped() {
 		// Arrange
 		currentAction = Optional.empty();
-		removeStatusSwitchCounterToState();
-		setUpState();
-		attachStatusSwitchCounterToState();
+		reloadState();
 		// Act
 		simulateScriptFinished();
 		// Assert

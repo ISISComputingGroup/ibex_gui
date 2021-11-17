@@ -69,11 +69,10 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		modelAdapter.removePropertyChangeListener(state);
 	}
 	
-	private void reloadState() {
+	@Override
+	protected void reloadState() {
 		removeStateListeners();
-		removeStatusSwitchCounterToState();
-		setUpState();
-		attachStatusSwitchCounterToState();
+		super.reloadState();
 	}
 	
 	@Override
