@@ -47,7 +47,7 @@ public abstract class DynamicScriptingState extends ModelObject implements HasSt
 	public abstract DynamicScriptingStatus getStatus();
 	
 	protected void changeState(DynamicScriptingStatus newStatus) {
-		firePropertyChange(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, getStatus(), newStatus);
+		firePropertyChange(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, this, newStatus);
 	}
 	
 }
