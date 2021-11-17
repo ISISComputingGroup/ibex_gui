@@ -93,6 +93,30 @@ public class DynamicScriptingNicosAdapterTest {
 	}
 	
 	@Test
+	public void test_WHEN_pause_THEN_instruction_sent() {
+		for (int i = 1; i < 5; i++) {
+			nicosAdapter.pauseExecution();
+			assertInstructionTypeSent(ExecutionInstructionType.BREAK, i);
+		}
+	}
+	
+	@Test
+	public void test_WHEN_resumed_from_THEN_instruction_sent() {
+		for (int i = 1; i < 5; i++) {
+			nicosAdapter.resumeExecution();
+			assertInstructionTypeSent(ExecutionInstructionType.CONTINUE, i);
+		}
+	}
+	
+	@Test
+	public void test_WHEN_stop_THEN_instruction_sent() {
+		for (int i = 1; i < 5; i++) {
+			nicosAdapter.stopExecution();
+			assertInstructionTypeSent(ExecutionInstructionType.STOP, i);
+		}
+	}
+	
+	@Test
 	public void test_WHEN_script_changes_THEN_change_notified() {
 		Optional<String> oldScriptName = Optional.empty();
 		String scriptName = "Script Generator: 0";
@@ -147,24 +171,6 @@ public class DynamicScriptingNicosAdapterTest {
 		String scriptName = "Script Generator: 0";
 		doScriptChange(scriptName, "test");
 		dynamicScriptSwitchCounter.assertNoSwitches();
-	}
-	
-	@Test
-	public void test_WHEN_pause_THEN_instruction_sent() {
-		nicosAdapter.pauseExecution();
-		assertInstructionTypeSent(ExecutionInstructionType.BREAK, 1);
-	}
-	
-	@Test
-	public void test_WHEN_resumed_from_THEN_instruction_sent() {
-		nicosAdapter.resumeExecution();
-		assertInstructionTypeSent(ExecutionInstructionType.CONTINUE, 1);
-	}
-	
-	@Test
-	public void test_WHEN_stop_THEN_instruction_sent() {
-		nicosAdapter.stopExecution();
-		assertInstructionTypeSent(ExecutionInstructionType.STOP, 1);
 	}
 	
 	@Test
