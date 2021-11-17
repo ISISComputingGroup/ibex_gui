@@ -2,7 +2,6 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -59,6 +58,10 @@ public class PausedStateTest extends DynamicScriptingStateTest {
 	
 	@Test
 	public void test_WHEN_stop_AND_script_finishes_THEN_state_is_stopped() {
+		// Arrange
+		currentAction = Optional.of(new ScriptGeneratorAction(new HashMap<>()));
+		currentAction.get().setPausedDuringExecution();
+		reloadState();
 		// Act
 		state.stop();
 		simulateScriptFinished();
@@ -70,12 +73,44 @@ public class PausedStateTest extends DynamicScriptingStateTest {
 	}
 	
 	@Test
-	public void test_WHEN_stop_AND_script_does_not_finish_THEN_no_state_change() {
+	public void test_GIVEN_current_action_paused_during_execution_WHEN_stop_AND_script_not_finished_THEN_no_state_change() {
+		// Arrange
+		currentAction = Optional.of(new ScriptGeneratorAction(new HashMap<>()));
+		currentAction.get().setPausedDuringExecution();
+		reloadState();
 		// Act
 		state.stop();
 		// Assert
 		statusSwitchCounter.assertNoSwitches();
-		assertThat(currentAction.get().getDynamicScriptingStatus(), is(not(ActionDynamicScriptingStatus.NO_STATUS)));
+		assertThat(currentAction.get().wasPausedDuringExecution(), is(true));
+	}
+	
+	@Test
+	public void test_GIVEN_current_action_empty_WHEN_stop_AND_script_does_not_finish_THEN_stop() {
+		// Arrange
+		currentAction = Optional.empty();
+		reloadState();
+		// Act
+		state.stop();
+		// Assert
+		statusSwitchCounter.assertNumberOfSwitches(
+			DynamicScriptingStatus.PAUSED, DynamicScriptingStatus.STOPPED, 1
+		);
+	}
+	
+	@Test
+	public void test_GIVEN_current_action_paused_before_execution_WHEN_stop_THEN_state_change() {
+		// Arrange
+		currentAction = Optional.of(new ScriptGeneratorAction(new HashMap<>()));
+		currentAction.get().setPausedBeforeExecution();
+		reloadState();
+		// Act
+		state.stop();
+		// Assert
+		statusSwitchCounter.assertNumberOfSwitches(
+			DynamicScriptingStatus.PAUSED, DynamicScriptingStatus.STOPPED, 1
+		);
+		assertThat(currentAction.get().getDynamicScriptingStatus(), is(ActionDynamicScriptingStatus.NO_STATUS));
 	}
 	
 	@Test

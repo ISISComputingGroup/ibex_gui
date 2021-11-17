@@ -32,8 +32,17 @@ public class PausedState extends DynamicScriptingState {
 	
 	@Override
 	public void stop() {
-		stopRequested = true;
-		nicosAdapter.stopExecution();
+		currentlyExecutingAction.ifPresentOrElse(action -> {
+			if (action.wasPausedDuringExecution()) {
+				stopRequested = true;
+				nicosAdapter.stopExecution();
+			} else {
+				action.clearDynamicScriptingStatus();
+				changeState(DynamicScriptingStatus.STOPPED);
+			}
+		}, () -> {
+			changeState(DynamicScriptingStatus.STOPPED);
+		});
 	}
 	
 	@Override
