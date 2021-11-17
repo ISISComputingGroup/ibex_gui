@@ -81,6 +81,13 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		nicosAdapter.scriptChanged("Script Generator: " + scriptId);
 	}
 	
+	private void assertCurrentAndNextActionsAreThoseFromTheGivenIndices(Integer currentActionIndex, Integer nextActionIndex) {
+		Optional<ScriptGeneratorAction> currentAction = state.getCurrentlyExecutingAction();
+		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
+		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(currentActionIndex)));
+		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(nextActionIndex)));
+	}
+	
 	@Test
 	public void test_status_is_playing() {
 		DynamicScriptingStatus status = state.getStatus();
@@ -111,37 +118,26 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 	public void test_step_through_one_action() {
 		// Assert
 		state.start();
-		Optional<ScriptGeneratorAction> currentAction = state.getCurrentlyExecutingAction();
-		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
-		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(0)));
-		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
+		assertCurrentAndNextActionsAreThoseFromTheGivenIndices(0, 1);
 		// Act
 		simulateScriptGenerated(1);
 		assertTrue(state.isScriptDynamic(0));
 		simulateScriptExecuted(1);
 		// Assert
-		currentAction = state.getCurrentlyExecutingAction();
-		nextAction = state.getNextExecutingAction();
-		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
-		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(2)));
+		assertCurrentAndNextActionsAreThoseFromTheGivenIndices(1, 2);
 	}
 	
 	@Test
 	public void test_stepping_through_actions() {
-		Optional<ScriptGeneratorAction> currentAction;
-		Optional<ScriptGeneratorAction> nextAction;
 		state.start();
 		int i = 0;
 		do {
-			currentAction = state.getCurrentlyExecutingAction();
-			nextAction = state.getNextExecutingAction();
-			assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(i)));
-			assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(i + 1)));
+			assertCurrentAndNextActionsAreThoseFromTheGivenIndices(i, i + 1);
 			simulateScriptGenerated(i);
 			assertTrue(state.isScriptDynamic(i));
 			simulateScriptExecuted(i);
 			i++;
-		} while (nextAction.isPresent());
+		} while (state.getCurrentlyExecutingAction().isPresent());
 		statusSwitchCounter.assertNumberOfSwitches(
 			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.STOPPED, 1
 		);
@@ -152,10 +148,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		// Arrange
 		scriptGeneratorMockBuilder.arrangeNicosError();
 		state.start();
-		Optional<ScriptGeneratorAction> currentAction = state.getCurrentlyExecutingAction();
-		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
-		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(0)));
-		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
+		assertCurrentAndNextActionsAreThoseFromTheGivenIndices(0, 1);
 		// Act
 		simulateScriptGenerated(1);
 		simulateScriptExecuted(1);
@@ -170,10 +163,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		// Arrange
 		scriptGeneratorMockBuilder.arrangeNicosSendScriptFail();
 		state.start();
-		Optional<ScriptGeneratorAction> currentAction = state.getCurrentlyExecutingAction();
-		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
-		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(0)));
-		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
+		assertCurrentAndNextActionsAreThoseFromTheGivenIndices(0, 1);
 		// Act
 		simulateScriptGenerated(1);
 		simulateScriptExecuted(1);
@@ -288,18 +278,12 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		setUpState();
 		attachStatusSwitchCounterToState();
 		// Assert
-		Optional<ScriptGeneratorAction> currentAction = state.getCurrentlyExecutingAction();
-		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
-		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
-		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(2)));
+		assertCurrentAndNextActionsAreThoseFromTheGivenIndices(1, 2);
 		// Act
 		assertTrue(state.isScriptDynamic(1));
 		simulateScriptExecuted(1);
 		// Assert
-		currentAction = state.getCurrentlyExecutingAction();
-		nextAction = state.getNextExecutingAction();
-		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(2)));
-		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(3)));
+		assertCurrentAndNextActionsAreThoseFromTheGivenIndices(2, 3);
 	}
 	
 	@Test
@@ -309,20 +293,14 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		setUpState();
 		attachStatusSwitchCounterToState();
 		// Assert
-		Optional<ScriptGeneratorAction> currentAction = state.getCurrentlyExecutingAction();
-		Optional<ScriptGeneratorAction> nextAction = state.getNextExecutingAction();
-		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1)));
-		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(2)));
+		assertCurrentAndNextActionsAreThoseFromTheGivenIndices(1, 2);
 		// Act
 		state.start();
 		simulateScriptGenerated(1);
 		assertTrue(state.isScriptDynamic(1));
 		simulateScriptExecuted(1);
 		// Assert
-		currentAction = state.getCurrentlyExecutingAction();
-		nextAction = state.getNextExecutingAction();
-		assertThat(currentAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(2)));
-		assertThat(nextAction, is(scriptGeneratorMockBuilder.getMockScriptGeneratorAction(3)));
+		assertCurrentAndNextActionsAreThoseFromTheGivenIndices(2, 3);
 	}
 
 }
