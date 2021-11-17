@@ -8,6 +8,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.times;
 
 import java.beans.PropertyChangeEvent;
 import java.util.HashMap;
@@ -93,12 +95,12 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		nicosAdapter.scriptChanged("Script Generator: " + scriptId);
 	}
 	
-	private void simulateGenerationAndExecutionOfScript(Integer scriptId) {
+	private void simulateScriptGeneratedAndExecuted(Integer scriptId) {
 		simulateScriptGenerated(scriptId);
 		simulateScriptExecuted(scriptId);
 	}
 	
-	private void simulateGenerationAndExecutionOfScriptWithDynamicScriptIdAssert(Integer scriptId) {
+	private void simulateScriptGeneratedAndExecutedWithDynamicScriptIdAssert(Integer scriptId) {
 		simulateScriptGenerated(scriptId);
 		assertTrue(state.isScriptDynamic(scriptId));
 		simulateScriptExecuted(scriptId);
@@ -123,6 +125,10 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		createModelAdapterAsMock(scriptId);
 		script = new DynamicScript(scriptId);
 		when(modelAdapter.getDynamicScript()).thenReturn(Optional.of(script));
+	}
+	
+	private void createNicosAdapterAsMock() {
+		nicosAdapter = mock(DynamicScriptingNicosAdapter.class);
 	}
 	
 	@Test
@@ -166,22 +172,65 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		state.start();
 		assertCurrentAndNextActionsAreThoseFromTheGivenIndices(0, 1);
 		// Act
-		simulateGenerationAndExecutionOfScript(1);
+		simulateScriptGeneratedAndExecuted(1);
 		// Assert
 		assertCurrentAndNextActionsAreThoseFromTheGivenIndices(1, 2);
 	}
 	
 	@Test
+	public void test_GIVEN_action_not_valid_WHEN_play_script_THEN_script_paused_on_action() {
+		// Arrange
+		firstAction = scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1);
+		firstAction.get().setInvalid("Invalid");
+		reloadState();
+		// Assert
+		assertCurrentAndNextActionsAreThoseFromTheGivenIndices(1, 2);
+		// Act
+		state.start();
+		simulateScriptGenerated(1);
+		// Assert
+		assertCurrentAndNextActionsAreThoseFromTheGivenIndices(1, 2);
+		assertThat(
+			state.getCurrentlyExecutingAction().get().getDynamicScriptingStatus(), 
+			is(ActionDynamicScriptingStatus.PAUSED_BEFORE_EXECUTION)
+		);
+	}
+	
+	@Test
 	public void test_stepping_through_actions() {
+		// Act and Assert
 		state.start();
 		int i = 0;
 		do {
 			assertCurrentAndNextActionsAreThoseFromTheGivenIndices(i, i + 1);
-			simulateGenerationAndExecutionOfScriptWithDynamicScriptIdAssert(i);
+			simulateScriptGeneratedAndExecutedWithDynamicScriptIdAssert(i);
 			i++;
 		} while (state.getCurrentlyExecutingAction().isPresent());
 		statusSwitchCounter.assertNumberOfSwitches(
 			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.STOPPED, 1
+		);
+	}
+		
+	@Test
+	public void test_stepping_through_actions_with_invalid_action() {
+		// Arrange
+		Integer thirdActionIndex = 2;
+		Optional<ScriptGeneratorAction> thirdAction = scriptGeneratorMockBuilder.getMockScriptGeneratorAction(thirdActionIndex);
+		thirdAction.get().setInvalid("Invalid");
+		// Act and Assert
+		state.start();
+		int i = 0;
+		do {
+			assertCurrentAndNextActionsAreThoseFromTheGivenIndices(i, i + 1);
+			simulateScriptGeneratedAndExecutedWithDynamicScriptIdAssert(i);
+			i++;
+		} while (state.getCurrentlyExecutingAction().get().isValid());
+		assertThat(
+			state.getCurrentlyExecutingAction().get().getDynamicScriptingStatus(),
+			is(ActionDynamicScriptingStatus.PAUSED_BEFORE_EXECUTION)
+		);
+		statusSwitchCounter.assertNumberOfSwitches(
+			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.PAUSED, 1
 		);
 	}
 	
@@ -192,7 +241,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		state.start();
 		assertCurrentAndNextActionsAreThoseFromTheGivenIndices(0, 1);
 		// Act
-		simulateGenerationAndExecutionOfScript(1);
+		simulateScriptGeneratedAndExecuted(1);
 		// Assert
 		statusSwitchCounter.assertNumberOfSwitches(
 			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.ERROR, 1
@@ -206,7 +255,7 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		state.start();
 		assertCurrentAndNextActionsAreThoseFromTheGivenIndices(0, 1);
 		// Act
-		simulateGenerationAndExecutionOfScript(1);
+		simulateScriptGeneratedAndExecuted(1);
 		// Assert
 		statusSwitchCounter.assertNumberOfSwitches(
 			DynamicScriptingStatus.PLAYING, DynamicScriptingStatus.ERROR, 1
@@ -331,9 +380,22 @@ public class PlayingStateTest extends DynamicScriptingStateTest {
 		assertCurrentAndNextActionsAreThoseFromTheGivenIndices(1, 2);
 		// Act
 		state.start();
-		simulateGenerationAndExecutionOfScriptWithDynamicScriptIdAssert(1);
+		simulateScriptGeneratedAndExecutedWithDynamicScriptIdAssert(1);
 		// Assert
 		assertCurrentAndNextActionsAreThoseFromTheGivenIndices(2, 3);
+	}
+	
+	@Test
+	public void test_WHEN_pause_AND_start_again_THEN_resumed() {
+		// Arrange
+		createNicosAdapterAsMock();
+		firstAction = scriptGeneratorMockBuilder.getMockScriptGeneratorAction(1);
+		reloadState();
+		// Act
+		state.pause();
+		state.start();
+		// Assert
+		verify(nicosAdapter, times(1)).resumeExecution();
 	}
 
 }
