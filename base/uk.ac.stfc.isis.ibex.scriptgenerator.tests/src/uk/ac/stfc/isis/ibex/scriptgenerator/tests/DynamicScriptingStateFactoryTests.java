@@ -87,100 +87,136 @@ public class DynamicScriptingStateFactoryTests {
 	
 	@Test
 	public void test_WHEN_change_state_from_stopped_to_playing_THEN_state_changed() {
+		// Arrange
 		setUpFactoryWithStoppedStateAndNoAction();
+		// Act
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.PLAYING);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
+		// Assert
 		assertStatesAreNewAndAreInstanceOf(newState, newStateFromGet, DynamicScriptingStatus.PLAYING);
 	}
 	
 	@Test
 	public void test_WHEN_change_state_from_stopped_to_stopped_THEN_state_changed() {
+		// Arrange
 		setUpFactoryWithStoppedStateAndNoAction();
+		// Act
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.STOPPED);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
+		// Assert
 		assertStatesAreNewAndAreInstanceOf(newState, newStateFromGet, DynamicScriptingStatus.STOPPED);
 	}
 	
 	@Test
 	public void test_WHEN_change_state_from_stopped_to_error_THEN_state_changed() {
+		// Arrange
 		setUpFactoryWithStoppedStateAndNoAction();
+		// Act
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.ERROR);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
+		// Assert
 		assertStatesAreNewAndAreInstanceOf(newState, newStateFromGet, DynamicScriptingStatus.ERROR);
 	}
 	
 	@Test
 	public void test_WHEN_change_state_from_stopped_to_paused_THEN_state_changed() {
+		// Arrange
 		setUpFactoryWithStoppedStateAndNoAction();
+		// Act
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.PAUSED);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
+		// Assert
 		assertStatesAreNewAndAreInstanceOf(newState, newStateFromGet, DynamicScriptingStatus.PAUSED);
 	}
 	
 	@Test
 	public void test_WHEN_change_state_from_playing_to_playing_THEN_state_changed() {
+		// Arrange
 		setUpFactoryWithPlayingStateAndAction();
+		// Act
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.PLAYING);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
+		// Assert
 		assertStatesAreNewAndAreInstanceOf(newState, newStateFromGet, DynamicScriptingStatus.PLAYING);
 		assertThat(newState.getCurrentlyExecutingAction().get(), is(action));
 	}
 	
 	@Test
 	public void test_WHEN_change_state_from_playing_to_stopped_THEN_state_changed() {
+		// Arrange
 		setUpFactoryWithPlayingStateAndAction();
+		// Act
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.STOPPED);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
+		// Assert
 		assertStatesAreNewAndAreInstanceOf(newState, newStateFromGet, DynamicScriptingStatus.STOPPED);
 	}
 	
 	@Test
 	public void test_WHEN_change_state_from_playing_to_error_THEN_state_changed() {
+		// Arrange
 		setUpFactoryWithPlayingStateAndAction();
+		// Act
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.ERROR);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
+		// Assert
 		assertStatesAreNewAndAreInstanceOf(newState, newStateFromGet, DynamicScriptingStatus.ERROR);
 	}
 	
 	@Test
 	public void test_WHEN_change_state_from_playing_to_paused_THEN_state_changed() {
+		// Arrange
 		setUpFactoryWithPlayingStateAndAction();
+		// Act
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.PAUSED);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
+		// Assert
 		assertStatesAreNewAndAreInstanceOf(newState, newStateFromGet, DynamicScriptingStatus.PAUSED);
 		assertThat(newState.getCurrentlyExecutingAction().get(), is(action));
 	}
 	
 	@Test
 	public void test_WHEN_change_state_from_paused_to_playing_THEN_state_changed() {
+		// Arrange
 		setUpFactoryWithPausedStateAndAction();
+		// Act
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.PLAYING);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
+		// Assert
 		assertStatesAreNewAndAreInstanceOf(newState, newStateFromGet, DynamicScriptingStatus.PLAYING);
 		assertThat(newState.getCurrentlyExecutingAction().get(), is(action));
 	}
 	
 	@Test
 	public void test_WHEN_change_state_from_paused_to_stopped_THEN_state_changed() {
+		// Arrange
 		setUpFactoryWithPausedStateAndAction();
+		// Act
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.STOPPED);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
+		// Assert
 		assertStatesAreNewAndAreInstanceOf(newState, newStateFromGet, DynamicScriptingStatus.STOPPED);
 	}
 	
 	@Test
 	public void test_WHEN_change_state_from_paused_to_error_THEN_state_changed() {
+		// Arrange
 		setUpFactoryWithPausedStateAndAction();
+		// Act
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.ERROR);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
+		// Assert
 		assertStatesAreNewAndAreInstanceOf(newState, newStateFromGet, DynamicScriptingStatus.ERROR);
 	}
 	
 	@Test
 	public void test_WHEN_change_state_from_paused_to_paused_THEN_state_changed() {
+		// Arrange
 		setUpFactoryWithPausedStateAndAction();
+		// Act
 		DynamicScriptingState newState = factory.changeState(DynamicScriptingStatus.PAUSED);
 		DynamicScriptingState newStateFromGet = factory.getCurrentState();
+		// Assert
 		assertStatesAreNewAndAreInstanceOf(newState, newStateFromGet, DynamicScriptingStatus.PAUSED);
 		assertThat(newState.getCurrentlyExecutingAction().get(), is(action));
 	}
