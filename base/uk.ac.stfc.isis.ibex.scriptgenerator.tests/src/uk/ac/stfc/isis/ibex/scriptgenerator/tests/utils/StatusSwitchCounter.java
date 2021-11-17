@@ -35,7 +35,6 @@ public class StatusSwitchCounter<T extends HasStatus<K>, K> implements PropertyC
 	}
 	
 	public void assertNumberOfSwitches(K oldStatus, K newStatus, Integer expectedNumber) {
-		System.out.println(switchMap);
 		if (switchMap.containsKey(oldStatus)) {
 			HashMap<K, Integer> newStateSwitchMap = switchMap.get(oldStatus);
 			if (newStateSwitchMap.containsKey(newStatus)) {
