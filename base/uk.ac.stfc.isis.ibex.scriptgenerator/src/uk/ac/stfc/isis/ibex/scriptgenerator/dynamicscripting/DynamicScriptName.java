@@ -4,10 +4,16 @@ import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.model.HasStatus;
 
+/**
+ * A utility class for handling dynamic script names.
+ */
 public class DynamicScriptName implements HasStatus<Optional<String>> {
 	
 	private Optional<String> name;
 	
+	/**
+	 * Create a dynamic script name with the given optional name.
+	 */
 	public DynamicScriptName(Optional<String> name) {
 		this.name = name;
 	}
@@ -17,6 +23,9 @@ public class DynamicScriptName implements HasStatus<Optional<String>> {
 		return name;
 	}
 	
+	/**
+	 * @return an optional string of the name.
+	 */
 	public Optional<String> getName() {
 		return name;
 	}
