@@ -4,17 +4,31 @@ import java.util.HashMap;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
+/**
+ * A state for when dynamic scripting is stopped.
+ */
 public class StoppedState extends DynamicScriptingState {
 
+	/**
+	 * Create a stopped state with the given ids to actions map.
+	 * 
+	 * @param dynamicScriptIdsToAction Script ids and their associated actions that are used in dynamic scripting.
+	 */
 	public StoppedState(HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction) {
 		super(dynamicScriptIdsToAction);
 	}
 
+	/**
+	 * @return the status of this state i.e. stopped
+	 */
 	@Override
 	public DynamicScriptingStatus getStatus() {
 		return DynamicScriptingStatus.STOPPED;
 	}
 
+	/**
+	 * Change to the playing state.
+	 */
 	@Override
 	public void play() {
 		changeState(DynamicScriptingStatus.PLAYING);
