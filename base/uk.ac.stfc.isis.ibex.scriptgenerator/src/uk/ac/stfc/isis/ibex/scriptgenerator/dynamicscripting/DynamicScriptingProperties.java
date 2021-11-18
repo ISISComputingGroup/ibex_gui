@@ -1,17 +1,25 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting;
 
+/**
+ * Contains the properties used in dynamic scripting.
+ */
 public class DynamicScriptingProperties {
 	
+	/**
+	 * A property to listen for when the status of the script in nicos has changed.
+	 */
 	public static final String SCRIPT_STATUS_PROPERTY = "scriptStatus";
-	
+
+	/**
+	 * A property to listen for or fire when an actions script is finished. 
+	 */	
 	public static final String SCRIPT_FINISHED_PROPERTY = "scriptFinished";
-	
-	public static final String CURRENTLY_EXECUTING_SCRIPT = "currentlyExecutingScript";
-	
+
+	/**
+	 * A property to listen for or fire when the state of dynamic scripting needs to be changed.
+	 */
 	public static final String STATE_CHANGE_PROPERTY = "stateChange";
 	
-	public static final String NEW_SCRIPT_ID_PROPERTY = "newScriptId";
-
 	/**
 	 * A property to listen for when a nicos script has been generated.
 	 */
