@@ -13,16 +13,30 @@ import uk.ac.stfc.isis.ibex.nicos.ScriptStatus;
 import uk.ac.stfc.isis.ibex.nicos.messages.ExecutionInstruction;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 
+/**
+ * An adapter for dynamic scripting to use when interacting with nicos/the script server.
+ */
 public class DynamicScriptingNicosAdapter extends ModelObject implements PropertyChangeListener {
 	
 	private NicosModel nicosModel;
 	private DynamicScriptName lastScriptName = new DynamicScriptName(Optional.empty());
 	
+	/**
+	 * Create an adapter with the nicos model it depends on injected.
+	 *
+	 * @param nicosModel The injected nicos dependency.
+	 */
 	public DynamicScriptingNicosAdapter(NicosModel nicosModel) {
 		this.nicosModel = nicosModel;
 		this.nicosModel.addPropertyChangeListener(this);
 	}
 	
+	/**
+	 * Execute the action that has been generated with the given name and code to run.
+	 *
+	 * @param name The name of the script to execute.
+	 * @param code The code to execute.
+	 */
 	public void executeAction(String name, String code) throws DynamicScriptingException {
 		if (!nicosInError()) {
     		var scriptToSend = new QueuedScript();
@@ -37,23 +51,36 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
     	}
 	}
 	
-	private void sendInstruction(ExecutionInstructionType instruction, BreakLevel level) {
-		ExecutionInstruction executionInstruction = new ExecutionInstruction(instruction, level);
-		nicosModel.sendExecutionInstruction(executionInstruction);
-	}
-	
+	/**
+	 * Send a stop instruction to nicos.
+	 */
 	public void stopExecution() {
 		sendInstruction(ExecutionInstructionType.STOP, BreakLevel.IMMEDIATE);
 	}
 	
+	/**
+	 * Send a stop instruction to nicos.
+	 */
 	public void pauseExecution() {
 		sendInstruction(ExecutionInstructionType.BREAK, BreakLevel.IMMEDIATE);
 	}
 	
+	/**
+	 * Send a resume instruction to nicos.
+	 */
 	public void resumeExecution() {
 		sendInstruction(ExecutionInstructionType.CONTINUE, null);
 	}
 
+	private void sendInstruction(ExecutionInstructionType instruction, BreakLevel level) {
+		ExecutionInstruction executionInstruction = new ExecutionInstruction(instruction, level);
+		nicosModel.sendExecutionInstruction(executionInstruction);
+	}
+
+	/**
+	 * Detect when a script has finished so nicos is ready for a new action.
+	 * {@inheritdoc}
+	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getPropertyName().equals(DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY)) {
@@ -65,6 +92,11 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
 		}
 	}
 	
+	/**
+	 * Indicate that the script has finished so nicos is ready for a new one by firing a property change.
+	 *
+	 * @param scriptName The script name of the script that has just finished.
+	 */
 	public void scriptChanged(String scriptName) {
 		DynamicScriptName newScriptName = new DynamicScriptName(Optional.ofNullable(scriptName));
 		if (!lastScriptName.equals(newScriptName)) {
