@@ -5,7 +5,7 @@ import java.util.HashMap;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
- * A state for when dynamic scripting is stopped.
+ * A state to use in the dynamic scripting state pattern for when dynamic scripting is stopped.
  */
 public class StoppedState extends DynamicScriptingState {
 

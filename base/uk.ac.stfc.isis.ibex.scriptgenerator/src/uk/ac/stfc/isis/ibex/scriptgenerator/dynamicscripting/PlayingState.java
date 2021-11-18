@@ -7,7 +7,7 @@ import java.util.Optional;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
- * A state for when a script is executing in the script generator.
+ * A state to use in the dynamic scripting state pattern for when a script is executing in the script generator.
  */
 public class PlayingState extends DynamicScriptingState {
 	
@@ -20,8 +20,8 @@ public class PlayingState extends DynamicScriptingState {
 	 * Create a playing state with the injected nicos and scripting generator model dependencies, an action to begin executing with and the script IDs and actions associated with dynamic scripting.
      * start() will need to be called to start the execution of actions.
 	 *
-	 * @param nicosAdapter The nicos dependency to use to executed scripts.
-	 * @param modelAdapter The script generator model dependency to use to generate scripts to execute.
+	 * @param nicosAdapter The nicos dependency to use to control the executions scripts.
+	 * @param modelAdapter The script generator model dependency to use to interact with actions and generate scripts.
      * @param currentlyExecutingAction The first action to execute.
 	 * @param dynamicScriptIdsToAction Script ids and their associated actions that are used in dynamic scripting.
 	 */
