@@ -18,9 +18,6 @@ public class StoppedState extends DynamicScriptingState {
 		super(dynamicScriptIdsToAction);
 	}
 
-	/**
-	 * @return the status of this state i.e. stopped
-	 */
 	@Override
 	public DynamicScriptingStatus getStatus() {
 		return DynamicScriptingStatus.STOPPED;

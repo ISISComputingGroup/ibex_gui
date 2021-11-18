@@ -6,6 +6,9 @@ import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
+/**
+ * A state for when a script is executing in the script generator.
+ */
 public class PlayingState extends DynamicScriptingState {
 	
 	private Optional<ScriptGeneratorAction> currentlyExecutingAction;
@@ -13,6 +16,15 @@ public class PlayingState extends DynamicScriptingState {
 	private DynamicScriptingNicosAdapter nicosAdapter;
 	private DynamicScriptingModelAdapter modelAdapter;
 	
+	/**
+	 * Create a playing state with the injected nicos and scripting generator model dependencies, an action to begin executing with and the script IDs and actions associated with dynamic scripting.
+     * start() will need to be called to start the execution of actions.
+	 *
+	 * @param nicosAdapter The nicos dependency to use to executed scripts.
+	 * @param modelAdapter The script generator model dependency to use to generate scripts to execute.
+     * @param currentlyExecutingAction The first action to execute.
+	 * @param dynamicScriptIdsToAction Script ids and their associated actions that are used in dynamic scripting.
+	 */
 	public PlayingState(DynamicScriptingNicosAdapter nicosAdapter, DynamicScriptingModelAdapter modelAdapter, Optional<ScriptGeneratorAction> currentlyExecutingAction, HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction) {
 		super(dynamicScriptIdsToAction);
 		this.nicosAdapter = nicosAdapter;
@@ -20,11 +32,17 @@ public class PlayingState extends DynamicScriptingState {
 		this.currentlyExecutingAction = currentlyExecutingAction;
 	}
 	
+	/**
+	 * @return the action currently executing.
+	 */
 	@Override
     public Optional<ScriptGeneratorAction> getCurrentlyExecutingAction() {
 		return currentlyExecutingAction;
     }
 	
+	/**
+	 * @return the action to execute after the current action.
+	 */
 	@Override
 	public Optional<ScriptGeneratorAction> getNextExecutingAction() {
 		if (currentlyExecutingAction.isPresent()) {
@@ -40,6 +58,9 @@ public class PlayingState extends DynamicScriptingState {
 		return DynamicScriptingStatus.PLAYING;
 	}
 
+	/**
+	 * Request nicos to stop the execution of the current script, set the currently executing actions status to not executing and change the state to stopped.
+	 */
 	@Override
 	public void stop() {
 		nicosAdapter.stopExecution();
@@ -49,6 +70,9 @@ public class PlayingState extends DynamicScriptingState {
 		changeState(DynamicScriptingStatus.STOPPED);
 	}
 	
+	/**
+	 * Request nicos to stop the execution of the current script, set the currently executing actions status to paused during exection and change the state to stopped.
+	 */
 	@Override
 	public void pause() {
 		nicosAdapter.pauseExecution();
@@ -58,11 +82,19 @@ public class PlayingState extends DynamicScriptingState {
 		changeState(DynamicScriptingStatus.PAUSED);
 	}
 	
+	/**
+	 * Start the playing state by setting up the first action to execute.
+	 * The state will then handle future queueing of the next actions.
+	 */
 	@Override
 	public void start() {
 		setUpFirstExecutingAction();
 	}
 	
+	/**
+	 * Handle property changes from the nicos model for when a script is finished so we can generate a script for the next action to execute.
+	 * Handle property changes from the script generator model for when a script is generated, so we can execute the action.
+	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		switch (evt.getPropertyName()) {
