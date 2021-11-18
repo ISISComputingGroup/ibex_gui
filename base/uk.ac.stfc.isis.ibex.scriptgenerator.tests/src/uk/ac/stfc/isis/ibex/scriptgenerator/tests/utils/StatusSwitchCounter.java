@@ -22,6 +22,10 @@ public class StatusSwitchCounter<T extends HasStatus<K>, K> implements PropertyC
 
 	private HashMap<K, HashMap<K, Integer>> switchMap = new HashMap<K, HashMap<K, Integer>>();
 
+	/**
+	 * Tally up a new property changed from one status to another.
+	 * {@inheritdoc}
+	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		T oldVal = (T) evt.getOldValue();
