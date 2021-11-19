@@ -1334,7 +1334,7 @@
         </categories>
       </value>
     </entry>
-	<entry>
+    <entry>
       <key>Dual ITC503s</key>
       <value>
         <type>EUROTHERM</type>
@@ -1346,7 +1346,7 @@
             <description>The first ITC503 PV prefix (e.g. ITC503_01)</description>
             <default>ITC503_01</default>
           </macro>
-		  <macro>
+          <macro>
             <name>ITC1_NAME</name>
             <description>The first ITC503 Name (e.g. Cryostat)</description>
             <default>ITC1</default>
@@ -1356,7 +1356,7 @@
             <description>The second ITC503 PV prefix (e.g. ITC503_02)</description>
             <default>ITC503_02</default>
           </macro>
-		  <macro>
+          <macro>
             <name>ITC2_NAME</name>
             <description>The second ITC503 Name (e.g. Insert)</description>
             <default>ITC2</default>
@@ -2523,7 +2523,7 @@
         <description>The OPI for the SANS2D vacuum tank</description>
       </value>
     </entry>
-	<entry>
+    <entry>
       <key>CAENV895</key>
       <value>
         <type>MONITOR</type>
@@ -2618,8 +2618,8 @@
         <type>UNKNOWN</type>
         <path>musr_rotation.opi</path>
         <description>Controls the orientation of MuSR</description>
-        <macros />
-        <categories />
+        <macros/>
+        <categories/>
       </value>
     </entry>
     <entry>
@@ -2659,18 +2659,18 @@
         </macros>
       </value>
     </entry>
-	<entry>
+    <entry>
       <key>3He Refrigerator</key>
       <value>
         <categories>
-		  <category>Cryogenics</category>
-		  <category>Temperature controllers</category>
-		</categories>
+          <category>Cryogenics</category>
+          <category>Temperature controllers</category>
+        </categories>
         <type>DILUTION_FRIDGE</type>
         <path>3hefridge.opi</path>
         <description>An overview of the 3He Refrigerator system</description>
         <macros>
-		  <macro>
+          <macro>
             <name>HLX503</name>
             <description>The HLX503 PV prefix (e.g. HLX503_01)</description>
             <default>HLX503_01</default>
@@ -2712,6 +2712,22 @@
             <name>TEKAFG3XXX</name>
             <description>The tekafg3xxx PV prefix (e.g. TEKAFG3XXX_01)</description>
             <default>TEKAFG3XXX_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Keithley 6517B</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>khly6517.opi</path>
+        <description>The OPI for the Keithley 6517B</description>
+        <macros>
+          <macro>
+            <name>KHLY6517</name>
+            <description>The KHLY6517 PV prefix (e.g. KHLY6517_01)</description>
+            <default>KHLY6517_01</default>
           </macro>
         </macros>
       </value>
