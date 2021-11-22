@@ -53,7 +53,7 @@ public class EditSynopticHandler extends SynopticEditorHandler {
 	private static final String TITLE = " Synoptic";
 	
 	EditSynopticHandler() {
-		SYNOPTIC.availableSynopticsInfo().subscribe(configObserver);
+		SYNOPTIC.availableSynopticsInfo().subscribe(synopticObserver);
 	}
 	/**
 	 * Run edit synoptic from the menu. 
@@ -80,7 +80,7 @@ public class EditSynopticHandler extends SynopticEditorHandler {
 	}
 	
 	
-    protected Observer<Collection<SynopticInfo>> configObserver = new BaseObserver<Collection<SynopticInfo>>() {
+    protected Observer<Collection<SynopticInfo>> synopticObserver = new BaseObserver<Collection<SynopticInfo>>() {
 
         @Override
         public void onConnectionStatus(boolean isConnected) {
