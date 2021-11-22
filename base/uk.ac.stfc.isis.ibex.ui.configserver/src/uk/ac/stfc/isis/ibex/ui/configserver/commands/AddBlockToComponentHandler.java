@@ -26,7 +26,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.AddBlockToComponent
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
 
 /**
- * Handler class for adding block to a chosen component by the user
+ * Handler class for adding block to a chosen component by the user.
  *
  */
 public class AddBlockToComponentHandler extends AbstractHandler {
@@ -37,10 +37,11 @@ public class AddBlockToComponentHandler extends AbstractHandler {
 
 	/**
 	 * Open the component selection dialog and adding new block to the selected
-	 * component
+	 * component.
 	 * 
 	 * @param event The event that caused the open
 	 * @throws ExecutionException
+	 * @return null
 	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 

@@ -42,15 +42,6 @@ public class DeleteSynopticHandler extends SynopticEditorHandler {
 
     private static final String TITLE = "Delete Synoptics";
 
-    /**
-     * Constructor that adds a listener to disable the handler if the
-     * destination is disabled.
-     */
-    public DeleteSynopticHandler() {
-        synopticService.subscribe(SYNOPTIC.delete());
-        SYNOPTIC.delete().subscribe(synopticService);
-    }
-
     private boolean deleteConfigSynopticConfirmDialog(Collection<String> inUseSynoptics,
             Collection<String> configsUsingSynoptics) {
         return MessageDialog.openQuestion(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Confirm Delete Synoptics",
@@ -96,7 +87,7 @@ public class DeleteSynopticHandler extends SynopticEditorHandler {
 		}
             } else {
                 try {
-                    synopticService.write(dialog.selectedSynoptics());
+                    SYNOPTIC.delete().write(dialog.selectedSynoptics());
                 } catch (IOException e) {
                     throw new ExecutionException("Failed to write to PV", e);
                 }

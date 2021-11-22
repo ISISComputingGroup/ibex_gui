@@ -27,7 +27,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.AddBlockToConfigHel
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ConfigSelectionDialog;
 
 /**
- * The handler class for adding block to a chosen configuration by the user
+ * The handler class for adding block to a chosen configuration by the user.
  *
  */
 public class AddBlockToConfigHandler extends AbstractHandler {
@@ -38,10 +38,11 @@ public class AddBlockToConfigHandler extends AbstractHandler {
 
 	/**
 	 * Open the configuration selection dialog and adding new block to the selected
-	 * configuration
+	 * configuration.
 	 * 
 	 * @param event The event that caused the open.
 	 * @throws ExecutionException
+	 * @return null
 	 */
 
 	public Object execute(ExecutionEvent event) throws ExecutionException {

@@ -18,11 +18,12 @@
 
 package uk.ac.stfc.isis.ibex.epics.conversion.json;
 
+import java.util.function.Function;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
 /**
  * Converter for deserialising JSON into an object of type T.
@@ -30,7 +31,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
  * @param <T>
  *            The type to deserialise into.
  */
-public class JsonDeserialisingConverter<T> extends Converter<String, T> {
+public class JsonDeserialisingConverter<T> implements Function<String, T> {
 
 	protected final Gson gson;
 	private final Class<T> classOfT;
@@ -72,7 +73,7 @@ public class JsonDeserialisingConverter<T> extends Converter<String, T> {
      *             if there was an error
      */
 	@Override
-	public T convert(String value) throws ConversionException {
+	public T apply(String value) throws ConversionException {
 		try {
 			// NB. Gson uses reflection to initialise the internal
 			//     fields of the class: the returned class will not 

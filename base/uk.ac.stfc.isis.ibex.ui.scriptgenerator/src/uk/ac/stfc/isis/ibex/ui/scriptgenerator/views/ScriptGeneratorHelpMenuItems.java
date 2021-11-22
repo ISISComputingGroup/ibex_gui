@@ -3,6 +3,7 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 import java.net.URL;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.nio.file.Path;
 
 import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
@@ -17,7 +18,7 @@ import org.eclipse.ui.browser.IWebBrowser;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorManual;
-import uk.ac.stfc.isis.ibex.ui.about.AboutDialogBox;
+import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.ScriptGeneratorAboutDialogBox;
 
 import org.eclipse.swt.widgets.Display;
 
@@ -29,12 +30,22 @@ public class ScriptGeneratorHelpMenuItems extends SelectionAdapter {
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorHelpMenuItems.class);
 	
 	private Optional<URL> manualUrl = Optional.empty();
+	private Optional<Path> scriptDefinitionsLocation = Optional.empty();
 	
 	/**
 	 * Gets the help menu items for the help drop-down. 
 	 */
 	public ScriptGeneratorHelpMenuItems() {
 		bindManualUrl();
+	}
+	
+	/**
+	 * Set the path of the script definitions to be displayed in the about dialog.
+	 * 
+	 * @param scriptDefinitionsLocation The path to the script definitions.
+	 */
+	public void setScriptDefinitionsLocation(Path scriptDefinitionsLocation) {
+		this.scriptDefinitionsLocation = Optional.ofNullable(scriptDefinitionsLocation);
 	}
 	
 	@Override
@@ -83,7 +94,7 @@ public class ScriptGeneratorHelpMenuItems extends SelectionAdapter {
 
     private void displayAbout() {
     	var shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-    	var dialogBox = new AboutDialogBox(shell, "Script Generator");
+    	var dialogBox = new ScriptGeneratorAboutDialogBox(shell, scriptDefinitionsLocation);
     	dialogBox.open();
     }
     

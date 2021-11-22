@@ -8,17 +8,22 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
 
 /**
- * A helper class to open block editing and component editing dialog boxes
+ * A helper class to open block editing and component editing dialog boxes.
  *
  */
 public class AddBlockToComponentHelper extends EditComponentHelper {
+	/**
+	 * Constructor.
+	 * @param shell The shell in which to display dialog boxes
+	 * @param server The ConfigServer to save configurations to
+	 */
 	public AddBlockToComponentHelper(Shell shell, ConfigServer server) {
 		super(shell, server);
 
 	}
 
 	/**
-	 * Create the dialogs to edit the block and edit the component
+	 * Create the dialogs to edit the block and edit the component.
 	 * 
 	 * @param component           Component selected by the user to add the block to
 	 * @param isCurrent           If component is current component
@@ -36,8 +41,8 @@ public class AddBlockToComponentHelper extends EditComponentHelper {
 		// Creating dialog to edit component
 		EditConfigDialog dialog = new EditConfigDialog(shell, title, subTitle, component, false,
 				configurationViewModels, editBlockFirst, openEditBlockDialog, pvName);
-		dialog.addNew(component);// Open edit block dialog before editing the component
-		if (dialog.open() == Window.OK) {// Edit component dialog
+		dialog.addNew(component); // Open edit block dialog before editing the component
+		if (dialog.open() == Window.OK) { // Edit component dialog
 
 			server.saveAsComponent().write(dialog.getComponent()); // Saving the block to the component
 

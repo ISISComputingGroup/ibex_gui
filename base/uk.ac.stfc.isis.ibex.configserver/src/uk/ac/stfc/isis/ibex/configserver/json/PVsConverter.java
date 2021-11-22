@@ -22,23 +22,23 @@ package uk.ac.stfc.isis.ibex.configserver.json;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
 /**
  * Converts a JSON representation of a PV into a java object representation.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class PVsConverter extends Converter<String[][], Collection<PV>> {
+public class PVsConverter implements Function<String[][], Collection<PV>> {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Collection<PV> convert(String[][] value) throws ConversionException {
+	public Collection<PV> apply(String[][] value) throws ConversionException {
 		return Arrays.stream(value)
 				.map(info -> new PV(info[0], info[1], info[2], info[3]))
 				.collect(Collectors.toCollection(ArrayList::new));

@@ -70,7 +70,7 @@ public abstract class NICOSMessage<TSEND, TRESP> {
     public List<String> getMulti() throws ConversionException {
         @SuppressWarnings("rawtypes")
 		JsonSerialisingConverter<List<TSEND>> serialiser = new JsonSerialisingConverter(List.class);
-        return Arrays.asList(command, "", serialiser.convert(parameters));
+        return Arrays.asList(command, "", serialiser.apply(parameters));
     }
 
     /**

@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.function.Function;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -20,7 +21,6 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.json.JsonConverters;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
 @SuppressWarnings("checkstyle:methodname")
 public class JsonConvertersTest {
@@ -64,10 +64,10 @@ public class JsonConvertersTest {
 	@Test
 	public void conversion_to_config() throws ConversionException {
 		// Arrange
-		Converter<String, Configuration> conv = new JsonConverters().toConfig();
+		Function<String, Configuration> conv = new JsonConverters().toConfig();
 	
 		// Act
-		Configuration config = conv.convert(configJson);
+		Configuration config = conv.apply(configJson);
 
 		// Assert
 		assertEquals(configDescription, config.description());
@@ -83,10 +83,10 @@ public class JsonConvertersTest {
 	@Test
 	public void conversion_to_server_status_busy() throws ConversionException {
 		// Arrange
-		Converter<String, ServerStatus> conv = new JsonConverters().toServerStatus();
+		Function<String, ServerStatus> conv = new JsonConverters().toServerStatus();
 	
 		// Act
-		ServerStatus server = conv.convert(serverStatusBusy);
+		ServerStatus server = conv.apply(serverStatusBusy);
 
 		// Assert
 		assertTrue(server.isBusy());
@@ -95,10 +95,10 @@ public class JsonConvertersTest {
 	@Test
 	public void conversion_to_server_status_not_busy() throws ConversionException {
 		// Arrange
-		Converter<String, ServerStatus> conv = new JsonConverters().toServerStatus();
+		Function<String, ServerStatus> conv = new JsonConverters().toServerStatus();
 	
 		// Act
-		ServerStatus server = conv.convert(serverStatusNotBusy);
+		ServerStatus server = conv.apply(serverStatusNotBusy);
 
 		// Assert
 		assertTrue(!server.isBusy());
@@ -107,10 +107,10 @@ public class JsonConvertersTest {
 	@Test
 	public void conversion_to_configs_info() throws ConversionException {
 		// Arrange
-		Converter<String, Collection<ConfigInfo>> conv = new JsonConverters().toConfigsInfo();
+		Function<String, Collection<ConfigInfo>> conv = new JsonConverters().toConfigsInfo();
 	
 		// Act
-		Collection<ConfigInfo> cInfos = conv.convert(configInfos);
+		Collection<ConfigInfo> cInfos = conv.apply(configInfos);
 
 		// Assert
 		assertTrue(cInfos.size() == 1);
@@ -125,10 +125,10 @@ public class JsonConvertersTest {
 	@Test
 	public void conversion_to_components() throws ConversionException {
 		// Arrange
-		Converter<String, Collection<ComponentInfo>> conv = new JsonConverters().toComponents();
+		Function<String, Collection<ComponentInfo>> conv = new JsonConverters().toComponents();
 	
 		// Act
-		Collection<ComponentInfo> comps = conv.convert(configInfos);
+		Collection<ComponentInfo> comps = conv.apply(configInfos);
 
 		// Assert
 		assertTrue(comps.size() == 1);
@@ -143,10 +143,10 @@ public class JsonConvertersTest {
 	@Test
 	public void conversion_to_iocs() throws ConversionException {
 		// Arrange
-		Converter<String, Collection<EditableIoc>> conv = new JsonConverters().toIocs();
+		Function<String, Collection<EditableIoc>> conv = new JsonConverters().toIocs();
 	
 		// Act
-		Collection<EditableIoc> iocs = conv.convert(editableIocJson);
+		Collection<EditableIoc> iocs = conv.apply(editableIocJson);
 
 		// Assert
 		assertTrue(iocs.size() == 1);
@@ -159,10 +159,10 @@ public class JsonConvertersTest {
 	@Test
 	public void conversion_to_pvs() throws ConversionException {
 		// Arrange
-		Converter<String, Collection<PV>> conv = new JsonConverters().toPVs();
+		Function<String, Collection<PV>> conv = new JsonConverters().toPVs();
 	
 		// Act
-		Collection<PV> pvs = conv.convert(pvsJson);
+		Collection<PV> pvs = conv.apply(pvsJson);
 
 		// Assert
 		assertTrue(pvs.size() == 1);
@@ -178,10 +178,10 @@ public class JsonConvertersTest {
 	public void conversion_string_to_names() throws ConversionException {
 		//Arrange
 		String namesJson = "[\"TEST_CONFIG1\", \"TEST_CONFIG2\"]";
-		Converter<String, Collection<String>> conv = new JsonConverters().toNames();
+		Function<String, Collection<String>> conv = new JsonConverters().toNames();
 		
 		//Act
-		Collection<String> namesList = conv.convert(namesJson);
+		Collection<String> namesList = conv.apply(namesJson);
 		
 		//Assert
 		assertEquals(namesList.size(), 2);
@@ -193,12 +193,12 @@ public class JsonConvertersTest {
 	@Test
 	public void conversion_names_to_string() throws ConversionException {
 		//Arrange
-		Converter<Collection<String>, String> conv = new JsonConverters().namesToString();
+		Function<Collection<String>, String> conv = new JsonConverters().namesToString();
 		Collection<String> namesList = new ArrayList<>(Arrays.asList("TEST_CONFIG1", "TEST_CONFIG2"));
 		String namesJson = "[\"TEST_CONFIG1\",\"TEST_CONFIG2\"]";
 		
 		//Act
-		String test = conv.convert(namesList);
+		String test = conv.apply(namesList);
 		
 		//Assert
 		assertEquals(namesJson, test);
@@ -208,12 +208,12 @@ public class JsonConvertersTest {
 	@Test
 	public void conversion_name_to_string() throws ConversionException {
 		//Arrange
-		Converter<String, String> conv = new JsonConverters().nameToString();
+		Function<String, String> conv = new JsonConverters().nameToString();
 		String nameJson = "TEST_CONFIG1";
 		String expected = "\"" + nameJson + "\"";
 		
 		//Act
-		String test = conv.convert(nameJson);
+		String test = conv.apply(nameJson);
 		
 		//Assert
 		assertEquals(expected, test);
@@ -224,10 +224,10 @@ public class JsonConvertersTest {
 	@Test
 	public void conversion_to_ioc_states() throws ConversionException {
 		//Arrange
-		Converter<String, Collection<IocState>> conv = new JsonConverters().toIocStates();
+		Function<String, Collection<IocState>> conv = new JsonConverters().toIocStates();
 		
 		//Act
-		Collection<IocState> iocList = conv.convert(editableIocJson);
+		Collection<IocState> iocList = conv.apply(editableIocJson);
 		
 		//Assert
 		assertEquals(1, iocList.size());
@@ -240,12 +240,12 @@ public class JsonConvertersTest {
 	@Test
 	public void conversion_config_to_string() throws ConversionException {		
 		//Arrange
-		Converter<Configuration, String> conv = new JsonConverters().configToString();
+		Function<Configuration, String> conv = new JsonConverters().configToString();
 		Configuration testConfig = new Configuration(configName, configDescription);
 		String expected = "{\"name\":\"" + configName + "\",\"description\":\"" + configDescription + "\",\"isProtected\":false,\"isDynamic\":false,\"configuresBlockGWAndArchiver\":false,\"iocs\":[],\"blocks\":[],\"groups\":[],\"components\":[],\"history\":[]}";
 		
 		//Act
-		String test = conv.convert(testConfig);
+		String test = conv.apply(testConfig);
 		
 		
 		//Assert
@@ -256,20 +256,20 @@ public class JsonConvertersTest {
     @Test(expected = NullPointerException.class)
     public void cannot_convert_invalid_config_empty_json() throws ConversionException {
         // Arrange
-        Converter<String, Configuration> conv = new JsonConverters().toConfig();
+        Function<String, Configuration> conv = new JsonConverters().toConfig();
 
         // Assert
-        conv.convert("{}");
+        conv.apply("{}");
 
     }
 
     @Test(expected = ConversionException.class)
     public void cannot_convert_invalid_config_invalid_json() throws ConversionException {
         // Arrange
-        Converter<String, Configuration> conv = new JsonConverters().toConfig();
+        Function<String, Configuration> conv = new JsonConverters().toConfig();
 
         // Assert
-        conv.convert("{");
+        conv.apply("{");
 
     }
     
@@ -277,10 +277,10 @@ public class JsonConvertersTest {
     public void GIVEN_banner_json_is_valid_WHEN_transformed_to_banneritem_THEN_conversion_is_successful()
             throws ConversionException {
         // Arrange
-        Converter<String, CustomBannerData> conv = new JsonConverters().toBannerDescription();
+        Function<String, CustomBannerData> conv = new JsonConverters().toBannerDescription();
 
         // Act
-        CustomBannerData banner = conv.convert(bannerJson);
+        CustomBannerData banner = conv.apply(bannerJson);
 
         // Assert
         assertEquals(1, banner.buttons.size());
@@ -290,9 +290,9 @@ public class JsonConvertersTest {
     public void GIVEN_banner_json_is_invalid_WHEN_transformed_to_banneritem_THEN_conversion_fails()
             throws ConversionException {
         // Arrange
-        Converter<String, CustomBannerData> conv = new JsonConverters().toBannerDescription();
+        Function<String, CustomBannerData> conv = new JsonConverters().toBannerDescription();
 
         // Act
-        conv.convert(bannerJsonBroken);
+        conv.apply(bannerJsonBroken);
     }
 }

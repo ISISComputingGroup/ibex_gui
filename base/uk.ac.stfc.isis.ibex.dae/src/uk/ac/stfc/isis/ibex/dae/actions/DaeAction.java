@@ -19,15 +19,13 @@
 
 package uk.ac.stfc.isis.ibex.dae.actions;
 
-import java.io.IOException;
-
 import uk.ac.stfc.isis.ibex.dae.DaeRunState;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
-import uk.ac.stfc.isis.ibex.epics.writing.BaseWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.Action;
@@ -36,20 +34,8 @@ import uk.ac.stfc.isis.ibex.model.Action;
  * An abstract class for sending actions to the DAE to move between states.
  */
 public abstract class DaeAction extends Action implements Closable {
-		
-	private final BaseWriter<String, String> actionWriter = new BaseWriter<String, String>() {
-
-		@Override
-		public void write(String value) throws IOException {
-            writeToWritables(value);
-		}
-		
-		@Override
-		public void onCanWriteChanged(boolean canWrite) {
-			super.onCanWriteChanged(canWrite);
-			setCanWrite(canWrite);
-		}
-	};
+	private final OnCanWriteChangeListener canWriteListener = canWrite -> setCanWrite(canWrite);
+    private final Writable<String> target;
 			
     private final Observer<Boolean> transitionObserver = new BaseObserver<Boolean>() {
 		@Override
@@ -94,8 +80,6 @@ public abstract class DaeAction extends Action implements Closable {
 
 	private Subscription runStateSubscription;
 	private final Subscription transitionSubscription;
-	private final Subscription targetSubscribtion;
-	private final Subscription writerSubscription;
 	
 	private boolean inTransition;
 	private boolean canWrite;
@@ -114,25 +98,23 @@ public abstract class DaeAction extends Action implements Closable {
 	public DaeAction(
 			Writable<String> target, 
 			ForwardingObservable<Boolean> inStateTransition,
-			ForwardingObservable<DaeRunState> runState) {
-		
-		targetSubscribtion = target.subscribe(actionWriter);
-		writerSubscription = actionWriter.subscribe(target);
+			ForwardingObservable<DaeRunState> runState) {    
+	    this.target = target;
+		target.addOnCanWriteChangeListener(canWriteListener);
 		transitionSubscription = inStateTransition.subscribe(transitionObserver);
 		runStateSubscription = runState.subscribe(runStateObserver);
 	}
 
 	@Override
 	public synchronized void execute() {
-	    actionWriter.uncheckedWrite("1");
+	    target.uncheckedWrite("1");
 	}
 
 	@Override
 	public synchronized void close() {
 		runStateSubscription.cancelSubscription();
 		transitionSubscription.cancelSubscription();
-		targetSubscribtion.cancelSubscription();
-		writerSubscription.cancelSubscription();
+		target.removeOnCanWriteChangeListener(canWriteListener);
 	}
 	
     /**

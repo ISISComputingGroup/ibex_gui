@@ -74,7 +74,8 @@ public class PV extends ModelObject {
     public PV(PV other) {
         this.displayName = other.displayName;
         this.address = other.address;
-        this.recordType = other.recordType;
+        this.recordType = new RecordType();
+        recordType.setIO(other.recordType.io());
     }
 
     /**
@@ -122,7 +123,7 @@ public class PV extends ModelObject {
      * @param recordType the record type to set.
      */
 	public void setRecordType(RecordType recordType) {
-		this.recordType = recordType;
+	    firePropertyChange("recordType", this.recordType, this.recordType = recordType);
 	}
 	
 	@Override

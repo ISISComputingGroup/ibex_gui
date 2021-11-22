@@ -234,7 +234,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		generator = new GeneratorContext(GeneratedLanguage.PYTHON, new GeneratorPython(pythonInterface));
 
 		// If the validity error message property of the generator is changed update the
-		// validity errors in the scriptGeneratorTable
+		// validity errors in the scriptGeneratorTable		
 		generator.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
 			scriptGeneratorTable.setValidityErrors(convertToListMap(evt.getNewValue()));
 			firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
@@ -735,7 +735,14 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * Set the location of the repository containing script definitions.
 	 */
 	public void setRepoPath() {
-		this.scriptDefinitionsRepoPath = Paths.get(pythonInterface.getRepoPath());
+		scriptDefinitionsRepoPath = Paths.get(pythonInterface.getRepoPath());
+	}
+	
+	/**
+	 * Get the location of the repository containing script definitions.
+	 */
+	public Path getRepoPath() {
+		return scriptDefinitionsRepoPath;
 	}
 	
 	/**
