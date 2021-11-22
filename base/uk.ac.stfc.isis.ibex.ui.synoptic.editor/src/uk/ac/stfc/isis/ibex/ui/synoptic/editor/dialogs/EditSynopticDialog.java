@@ -111,7 +111,6 @@ public class EditSynopticDialog extends TitleAreaDialog {
 	});
 
 	if (!isBlank) { 
-	    // createButton(parent, IDialogConstants.OK_ID, "Save", true);
 	    saveBtn = createButton(parent, IDialogConstants.CLIENT_ID + 2, "Save", false);
 
 	    saveBtn.addSelectionListener(new SelectionAdapter() {
