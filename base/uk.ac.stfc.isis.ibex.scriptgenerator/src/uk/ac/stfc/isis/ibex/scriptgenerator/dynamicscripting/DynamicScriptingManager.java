@@ -2,12 +2,13 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting;
 
 import java.util.Optional;
 
+import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
  * Manages the dynamic scripting functionality of the script generator, acting as a facade.
  */
-public class DynamicScriptingManager {
+public class DynamicScriptingManager extends ModelObject {
 	
 	private DynamicScriptingState state;
 	private DynamicScriptingStateFactory stateFactory;
@@ -81,6 +82,7 @@ public class DynamicScriptingManager {
 	
 	private void handleStateChange(DynamicScriptingState newState) {
 		if (newState != state) {
+			firePropertyChange(DynamicScriptingProperties.STATE_CHANGE_PROPERTY, null, newState.getStatus());
 			setupNewState(newState);
 		}
 	}
