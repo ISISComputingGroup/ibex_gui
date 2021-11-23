@@ -23,7 +23,7 @@ import java.io.IOException;
 
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
-import uk.ac.stfc.isis.ibex.epics.writing.BaseWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
@@ -36,21 +36,10 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 public class StringWritableObservableAdapter implements Closable {
 	
 	private final UpdatedValue<String> text;
-	private final SettableUpdatedValue<Boolean> canSetText;
-	private final BaseWriter<String, String> writer = new BaseWriter<String, String>() {
-		@Override
-		public void write(String value) throws IOException {
-			writeToWritables(value);
-		}
-		
-		@Override
-        public void onCanWriteChanged(boolean canWrite) {
-			canSetText.setValue(canWrite);
-		}
-	};
-
-	private final Subscription writerSubscription;
-	private final Subscription writableSubscription;	
+	private SettableUpdatedValue<Boolean> canSetText;
+	private final OnCanWriteChangeListener canWriteListener = canWrite -> canSetText.setValue(canWrite);
+	private String lastValueWritten = null;
+	private final Writable<String> writable;	
 	
 	/**
 	 * @param writable The object for writing to a PV
@@ -61,8 +50,8 @@ public class StringWritableObservableAdapter implements Closable {
 		canSetText = new SettableUpdatedValue<>();
 		canSetText.setValue(writable.canWrite());
 		
-		writableSubscription = writer.subscribe(writable);
-		writerSubscription = writable.subscribe(writer);
+		this.writable = writable;
+		writable.addOnCanWriteChangeListener(canWriteListener);
 	}
 
     /**
@@ -82,8 +71,9 @@ public class StringWritableObservableAdapter implements Closable {
      * @throws IOException 
      */
 	public void setText(String text) throws IOException {
-		if (text != writer.lastWritten()) {
-			writer.write(text);
+		if (!text.equals(lastValueWritten)) {
+			writable.write(text);
+			lastValueWritten = text;
 		}
 	}
 	
@@ -94,8 +84,9 @@ public class StringWritableObservableAdapter implements Closable {
      *            the new value
      */
 	public void uncheckedSetText(String text) {
-        if (text != writer.lastWritten()) {
-            writer.uncheckedWrite(text);
+        if (!text.equals(lastValueWritten)) {
+            writable.uncheckedWrite(text);
+            lastValueWritten = text;
         }
     }
 
@@ -113,7 +104,6 @@ public class StringWritableObservableAdapter implements Closable {
      */
 	@Override
 	public void close() {
-		writerSubscription.cancelSubscription();
-		writableSubscription.cancelSubscription();
+	    writable.removeOnCanWriteChangeListener(canWriteListener);
 	}
 }

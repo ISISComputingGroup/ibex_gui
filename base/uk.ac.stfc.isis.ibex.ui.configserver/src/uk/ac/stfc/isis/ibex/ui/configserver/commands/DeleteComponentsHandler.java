@@ -32,6 +32,7 @@ import org.eclipse.swt.widgets.Shell;
 import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
 import uk.ac.stfc.isis.ibex.managermode.ManagerModePvNotConnectedException;
 import uk.ac.stfc.isis.ibex.ui.configserver.DeleteComponentsViewModel;
+import uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers.DeleteItemsDialogHelper;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.DeleteComponentsDialog;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.MultipleConfigsSelectionDialog;
 
@@ -63,28 +64,31 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
                 SERVER.componentsInfo().getValue(), viewModel.getDependencies().keySet(), compNamesWithFlags);
         if (dialog.open() == Window.OK) {
             Collection<String> toDelete = dialog.selectedConfigs();
-            Map<String, Collection<String>> selectedDependencies = viewModel.filterSelected(toDelete);
-            try {
-                if (selectedDependencies.isEmpty()) {
-                    configService.write(toDelete);
-                } else {
-                    displayWarning(selectedDependencies, shell);
-                    safeExecute(shell);
-                }
-                if (!ManagerModeModel.getInstance().isInManagerMode()) {
-                    for (String item: dialog.selectedConfigs()) {
-                        if (compNamesWithFlags.get(item)) {
-                            displayError(shell);
-                            break;
+            DeleteItemsDialogHelper helper = new DeleteItemsDialogHelper();
+            if(helper.deleteItemsConfirmDialog(toDelete, "Components"))
+            {
+                Map<String, Collection<String>> selectedDependencies = viewModel.filterSelected(toDelete);
+                try {
+                    if (selectedDependencies.isEmpty()) {
+                        configService.write(toDelete);
+                    } else {
+                        displayWarning(selectedDependencies, shell);
+                        safeExecute(shell);
+                    }
+                    if (!ManagerModeModel.getInstance().isInManagerMode()) {
+                        for (String item: dialog.selectedConfigs()) {
+                            if (compNamesWithFlags.get(item)) {
+                                displayError(shell);
+                                break;
+                            }
                         }
                     }
+                } catch (ManagerModePvNotConnectedException | IOException e) {
+                    MessageDialog error = new MessageDialog(shell, "Error", null, e.getMessage(),
+                        MessageDialog.ERROR, new String[] {"OK"}, 0);
+                    error.open();
                 }
-            } catch (ManagerModePvNotConnectedException | IOException e) {
-                MessageDialog error = new MessageDialog(shell, "Error", null, e.getMessage(),
-                    MessageDialog.ERROR, new String[] {"OK"}, 0);
-                error.open();
             }
-            
         }
     }
     

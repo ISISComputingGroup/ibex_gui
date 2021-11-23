@@ -213,8 +213,8 @@ public final class ComponentIcons {
             	return "lsicorr";
             case DENSITY_METER:
                 return "density_meter";
-            case WAVEGUIDE_APERTURE:
-            	return "waveguide_aperture";
+            case GUIDE_APERTURE:
+            	return "guide_aperture";
             case SPIN_FLIPPER:
             	return "flipper";
             case PLC:

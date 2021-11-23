@@ -70,6 +70,24 @@
       </value>
     </entry>
     <entry>
+      <key>PEARLPC</key>
+      <value>
+        <type>PEARLPC</type>
+        <path>PEARLPC.opi</path>
+        <description>The OPI for the PEARLPC</description>
+        <macros>
+          <macro>
+            <name>PEARLPC</name>
+            <description>The PEARLPC PV prefix (e.g. PEARLPC_01)</description>
+            <default>PEARLPC_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Pressure control handling systems</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Keyence TM-3001P</key>
       <value>
         <type>KEYENCE</type>
@@ -114,7 +132,7 @@
       <value>
         <type>OSCILLATING_COLLIMATOR</type>
         <path>OscillatingCollimator/OscillatingCollimator.opi</path>
-        <description>The OPI for the LET oscillating collimator.</description>
+        <description>The OPI for the LET/WISH oscillating collimator.</description>
         <macros>
           <macro>
             <name>MOT</name>
@@ -687,11 +705,11 @@
       </value>
     </entry>
     <entry>
-      <key>Lakeshore 336</key>
+      <key>Lakeshore 336/350</key>
       <value>
         <type>LAKESHORE</type>
         <path>Lakeshore336/Lakeshore336.opi</path>
-        <description>The OPI for the Lakeshore 336 temperature controller.</description>
+        <description>The OPI for the Lakeshore 336/350 temperature controller.</description>
         <macros>
           <macro>
             <name>LAKESHORE336</name>
@@ -2488,11 +2506,11 @@
       </value>
     </entry>
     <entry>
-      <key>SANS2D Waveguide and Aperture</key>
+      <key>SANS2D Guide and Aperture</key>
       <value>
-        <type>WAVEGUIDE_APERTURE</type>
-        <path>waveguide_aperture/waveguide_aperture.opi</path>
-        <description>The OPI for SANS2D Waveguide and Aperture.</description>
+        <type>GUIDE_APERTURE</type>
+        <path>guide_aperture/guide_aperture.opi</path>
+        <description>The OPI for SANS2D Guide and Aperture.</description>
         <categories/>
       </value>
     </entry>

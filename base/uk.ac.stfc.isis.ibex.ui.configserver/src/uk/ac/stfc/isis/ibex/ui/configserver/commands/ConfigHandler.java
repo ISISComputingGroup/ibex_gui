@@ -34,7 +34,7 @@ import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.Editing;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
-import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
@@ -73,18 +73,8 @@ public abstract class ConfigHandler<T> {
 		return this.canExecute;
 	}
 
-	/**
-	 * This is an inner anonymous class inherited from SameTypeWriter with added functionality
-	 * for modifying the command if the underlying PV cannot be written to.
-	 */
-	protected final SameTypeWriter<T> configService = new SameTypeWriter<T>() {
-		@Override
-		public void onCanWriteChanged(boolean canWrite) {
-			synchronized (writerLock) {
-				canWriteChanged(canWrite);
-			}
-		};
-	};
+	protected final Writable<T> configService;
+	private OnCanWriteChangeListener canWriteListener = canWrite -> canWriteChanged(canWrite);
 
 	/**
 	 * Constructor.
@@ -92,8 +82,8 @@ public abstract class ConfigHandler<T> {
 	 * @param destination where to write the data to
 	 */
 	public ConfigHandler(Writable<T> destination) {
-		configService.subscribe(destination);
-		destination.subscribe(configService);
+	    destination.addOnCanWriteChangeListener(canWriteListener);
+		configService = destination;
 	}
 
     /**

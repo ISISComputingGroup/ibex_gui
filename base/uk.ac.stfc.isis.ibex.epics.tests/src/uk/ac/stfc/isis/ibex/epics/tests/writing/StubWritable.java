@@ -22,34 +22,14 @@
  */
 package uk.ac.stfc.isis.ibex.epics.tests.writing;
 
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
-
-import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
-import uk.ac.stfc.isis.ibex.epics.observing.Unsubscriber;
-import uk.ac.stfc.isis.ibex.epics.writing.ConfigurableWriter;
-import uk.ac.stfc.isis.ibex.epics.writing.Writable;
+import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
 
 /**
  * Helper class for testing, similar to the BaseWritable.
  *
  * @param <T> the type of data being written
  */
-public class StubWritable<T> implements Writable<T> {
-
-    private final Set<ConfigurableWriter<?, ?>> writers = new CopyOnWriteArraySet<>();
-
-    private boolean canWrite;
-    private Exception lastError;
-
-    public void simulateError(Exception e) {
-        error(e);
-    }
-
-    public void simulateCanWriteChanged(boolean canWrite) {
-        canWriteChanged(canWrite);
-    }
-
+public class StubWritable<T> extends BaseWritable<T> {
     @Override
     public void write(T value) {
     }
@@ -58,42 +38,11 @@ public class StubWritable<T> implements Writable<T> {
     public void close() {
     }
 
-    @Override
-    public Subscription subscribe(ConfigurableWriter<?, ?> writer) {
-        writers.add(writer);
-        return new Unsubscriber<>(this, writer);
+    public void canWriteChanged(boolean canWrite) {
+        super.canWriteChanged(canWrite);
     }
-
-    @Override
-    public void unsubscribe(ConfigurableWriter<?, ?> writer) {
-    	writers.remove(writer);
-    }
-
-    @Override
-    public boolean canWrite() {
-        return canWrite;
-    }
-
-    public Exception lastError() {
-        return lastError;
-    }
-
-    private void error(Exception e) {
-        lastError = e;
-        for (ConfigurableWriter<?, ?> writer : writers) {
-            writer.onError(e);
-        }
-    }
-
-    private void canWriteChanged(boolean canWrite) {
-        this.canWrite = canWrite;
-        for (ConfigurableWriter<?, ?> writer : writers) {
-            writer.onCanWriteChanged(canWrite);
-        }
-    }
-
-    @Override
-    public void uncheckedWrite(T value) {
-        write(value);
+    
+    public synchronized void error(Exception e) {
+        super.error(e);
     }
 }

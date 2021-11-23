@@ -214,6 +214,16 @@ public class PreferenceSupplier {
      * Defines whether to hide script definition error table.
      */
     private static final String HIDE_SCRIPT_DEFINITION_ERRORS = "hide_script_definition_error_table";
+    
+    /**
+     * User defined location for temporary folder.
+     */
+    private static final String USER_TEMP_PATH = "temporary_files_folder";
+    
+    /**
+     * Default location for temporary folder for use by GUI.
+     */
+    private static final String DEFAULT_USER_TEMP_PATH = Paths.get(System.getProperty("user.home"), "AppData", "Local", "IBEX").toString();
 	
     /**
      * Gets a string from the IBEX preference store.
@@ -267,6 +277,15 @@ public class PreferenceSupplier {
      */
 	public String epicsUtilsPath() {
 		return getString(EPICS_UTILS_DIRECTORY, DEFAULT_EPICS_UTILS_DIRECTORY);
+	}
+	
+	/**
+	 * Gets the preference location for temporary files.
+	 * 
+	 * @return Temporary files directory
+	 */
+	public String tempFilePath() {
+		return getString(USER_TEMP_PATH, DEFAULT_USER_TEMP_PATH);
 	}
 	
 	/**

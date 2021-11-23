@@ -193,7 +193,7 @@ public class PerspectivesVisibleModel extends ModelObject {
 
         JsonSerialisingConverter<Map<String, Boolean>> remoteVisibleSerialiser = new JsonSerialisingConverter<Map<String, Boolean>>(new TypeToken<Map<String, Boolean>>() { }.getType());
         try {
-            String json = remoteVisibleSerialiser.convert(perspectiveInfos.stream().collect(Collectors.toMap(PerspectiveInfo::getId, PerspectiveInfo::getVisibleRemotely)));
+            String json = remoteVisibleSerialiser.apply(perspectiveInfos.stream().collect(Collectors.toMap(PerspectiveInfo::getId, PerspectiveInfo::getVisibleRemotely)));
             writePerspectiveSettings.write(json);
         } catch (ConversionException | IOException e) {
             MessageDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Error setting remote views", "There was an error setting the remote available views, please contact the IBEX team");

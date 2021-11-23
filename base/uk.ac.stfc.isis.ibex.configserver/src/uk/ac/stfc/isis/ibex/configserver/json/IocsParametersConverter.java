@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.configserver.json;
 
 import java.lang.reflect.Type;
 import java.util.Map;
+import java.util.function.Function;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -28,12 +29,11 @@ import com.google.gson.reflect.TypeToken;
 
 import uk.ac.stfc.isis.ibex.configserver.internal.IocParameters;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
 /**
  * Creates a map of IOC parameters for each IOC specified in the JSON.
  */
-public class IocsParametersConverter extends Converter<String, Map<String, IocParameters>> {
+public class IocsParametersConverter implements Function<String, Map<String, IocParameters>> {
 	private static final Gson GSON = new Gson();
 
     // CHECKSTYLE:OFF The declaration format for GSON's TypeToken upsets
@@ -47,7 +47,7 @@ public class IocsParametersConverter extends Converter<String, Map<String, IocPa
     // CHECKSTYLE:ON
 
 	@Override
-	public Map<String, IocParameters> convert(String json) throws ConversionException {
+	public Map<String, IocParameters> apply(String json) throws ConversionException {
 		try {
 			return GSON.fromJson(json, SERVER_IOC_DATA_FORMAT);
 		} catch (JsonSyntaxException e) {

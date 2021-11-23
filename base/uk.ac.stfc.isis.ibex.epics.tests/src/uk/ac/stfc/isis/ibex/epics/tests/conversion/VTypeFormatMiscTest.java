@@ -21,6 +21,8 @@ package uk.ac.stfc.isis.ibex.epics.tests.conversion;
 
 import static org.junit.Assert.*;
 
+import java.util.function.Function;
+
 import org.diirt.vtype.VByteArray;
 import org.diirt.vtype.VEnum;
 import org.diirt.vtype.VFloatArray;
@@ -30,7 +32,6 @@ import org.diirt.util.array.ListFloat;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.VTypeFormat;
 
 /**
@@ -44,12 +45,12 @@ public class VTypeFormatMiscTest {
 	@Test
 	public void convert_enum_value() throws ConversionException {
 		// Arrange
-		Converter<VEnum, String> converter = VTypeFormat.enumValue();
+		Function<VEnum, String> converter = VTypeFormat.enumValue();
 				
 		VEnum value = ValueFactory.newVEnum(0, TestingEnum.TEST1.getNames(), null, null);
 		
 		// Act
-		String result = converter.convert(value);
+		String result = converter.apply(value);
 		
 		// Assert
 		assertEquals(result, TestingEnum.TEST1.toString());
@@ -58,7 +59,7 @@ public class VTypeFormatMiscTest {
 	@Test
 	public void convert_extract_floats_empty() throws ConversionException {
 		// Arrange
-		Converter<VFloatArray, float[]> converter = VTypeFormat.extractFloats();
+		Function<VFloatArray, float[]> converter = VTypeFormat.extractFloats();
 		
 		ListFloat data = new ListFloat() {
 			@Override
@@ -74,7 +75,7 @@ public class VTypeFormatMiscTest {
 		float[] test = new float[] {};
 		
 		// Act
-		float[] result = converter.convert(value);
+		float[] result = converter.apply(value);
 
 		// Assert
 		assertArrayEquals(result, test, 0);
@@ -83,7 +84,7 @@ public class VTypeFormatMiscTest {
 	@Test
 	public void convert_extract_floats() throws ConversionException {
 		// Arrange
-		Converter<VFloatArray, float[]> converter = VTypeFormat.extractFloats();
+		Function<VFloatArray, float[]> converter = VTypeFormat.extractFloats();
 		
 		ListFloat data = new ListFloat() {
 			@Override
@@ -99,7 +100,7 @@ public class VTypeFormatMiscTest {
 		float[] test = new float[] {0.0f, 1.0f};
 		
 		// Act
-		float[] result = converter.convert(value);
+		float[] result = converter.apply(value);
 
 		// Assert
 		assertArrayEquals(result, test, 0);
@@ -108,7 +109,7 @@ public class VTypeFormatMiscTest {
 	@Test
 	public void convert_extract_bytes_empty() throws ConversionException {
 		// Arrange
-		Converter<VByteArray, byte[]> converter = VTypeFormat.extractBytes();
+		Function<VByteArray, byte[]> converter = VTypeFormat.extractBytes();
 		
 		ListByte data = new ListByte() {
 			@Override
@@ -124,7 +125,7 @@ public class VTypeFormatMiscTest {
 		byte[] test = new byte[] {};
 		
 		// Act
-		byte[] result = converter.convert(value);
+		byte[] result = converter.apply(value);
 
 		// Assert
 		assertArrayEquals(result, test);
@@ -133,7 +134,7 @@ public class VTypeFormatMiscTest {
 	@Test
 	public void convert_extract_bytes() throws ConversionException {
 		// Arrange
-		Converter<VByteArray, byte[]> converter = VTypeFormat.extractBytes();
+		Function<VByteArray, byte[]> converter = VTypeFormat.extractBytes();
 		
 		ListByte data = new ListByte() {
 			@Override
@@ -149,7 +150,7 @@ public class VTypeFormatMiscTest {
 		byte[] test = new byte[] {0x00};
 		
 		// Act
-		byte[] result = converter.convert(value);
+		byte[] result = converter.apply(value);
 
 		// Assert
 		assertArrayEquals(result, test);
