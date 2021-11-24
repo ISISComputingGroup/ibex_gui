@@ -55,15 +55,16 @@ public class StatusSwitchCounter<T extends HasStatus<K>, K> implements PropertyC
 	 * @param expectedNumber The expected number of times the switch occurred.
 	 */
 	public void assertNumberOfSwitches(K oldStatus, K newStatus, Integer expectedNumber) {
+		String failureMessage = getFailureMessage(oldStatus, newStatus, expectedNumber);
 		if (switchMap.containsKey(oldStatus)) {
 			HashMap<K, Integer> newStateSwitchMap = switchMap.get(oldStatus);
 			if (newStateSwitchMap.containsKey(newStatus)) {
-				assertThat(newStateSwitchMap.get(newStatus), is(expectedNumber));
+				assertThat(failureMessage, newStateSwitchMap.get(newStatus), is(expectedNumber));
 			} else {
-				assertThat(0, is(expectedNumber));
+				assertThat(failureMessage, 0, is(expectedNumber));
 			}
 		} else {
-			assertThat(0, is(expectedNumber));
+			assertThat(failureMessage, 0, is(expectedNumber));
 		}
 	}
 	
@@ -71,7 +72,16 @@ public class StatusSwitchCounter<T extends HasStatus<K>, K> implements PropertyC
 	 * Assert that no property changes have been fired.
 	 */
 	public void assertNoSwitches() {
-		assertTrue(switchMap.isEmpty());
+		String failureMessage = "Expected no switches.\nGot: " + switchMap.toString();
+		assertTrue(failureMessage, switchMap.isEmpty());
+	}
+	
+	private String getFailureMessage(K oldStatus, K newStatus, Integer expectedNumber) {
+		return String.format("Expected map to contain: {%s={%s=%d}}.\nActual map: ", 
+				oldStatus, 
+				newStatus,
+				expectedNumber
+			) + switchMap.toString();
 	}
 
 }

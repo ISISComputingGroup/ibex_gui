@@ -15,6 +15,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.when;
 
+import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.nicos.ScriptStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptName;
@@ -33,6 +34,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.ScriptGeneratorMockBuild
 public class DynamicScriptingManagerTest {
 	
 	private DynamicScriptingManager dynamicScriptingManager;
+	private NicosModel nicosMock;
 	private DynamicScriptingNicosAdapter nicosAdapter;
 	private DynamicScriptingModelAdapter modelAdapter;
 	private DynamicScriptingState initialState;
@@ -47,6 +49,7 @@ public class DynamicScriptingManagerTest {
 		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
 		// Set up class under test
 		dynamicScriptIds = new HashMap<>();
+		nicosMock = scriptGeneratorMockBuilder.getMockNicosModel();
 		nicosAdapter = new DynamicScriptingNicosAdapter(scriptGeneratorMockBuilder.getMockNicosModel());
 		modelAdapter = new DynamicScriptingModelAdapter(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
 		initialState = new StoppedState(dynamicScriptIds);
@@ -90,6 +93,7 @@ public class DynamicScriptingManagerTest {
 	}
 	
 	private void simulateScriptStatusChange(ScriptStatus oldStatus, ScriptStatus newStatus) {
+		when(nicosMock.getScriptStatus()).thenReturn(newStatus);
 		nicosAdapter.propertyChange(
 			new PropertyChangeEvent(
 				scriptGeneratorMockBuilder.getMockNicosModel(),

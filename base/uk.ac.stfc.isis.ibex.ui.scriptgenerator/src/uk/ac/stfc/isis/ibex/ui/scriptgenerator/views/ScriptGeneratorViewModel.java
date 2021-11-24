@@ -34,6 +34,7 @@ import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -862,8 +863,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
                         for (int i = 0; i < viewTable.table().getItemCount(); i++) {
                             if (action.equals(viewTable.viewer().getElementAt(i))) {
                             	String lineNumber = String.valueOf(i + 1);
-                            	lineNumber += ExecutingStatusDisplay.getText(action.getDynamicScriptingStatus());
                                 cell.setText(lineNumber);
+                                Image image = ExecutingStatusDisplay.getImage(action.getDynamicScriptingStatus());
+                                cell.setImage(image);
                                 break;
                             }
                         }

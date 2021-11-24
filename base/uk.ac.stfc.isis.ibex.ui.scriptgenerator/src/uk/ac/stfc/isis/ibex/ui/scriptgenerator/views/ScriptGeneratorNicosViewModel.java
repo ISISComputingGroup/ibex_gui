@@ -64,6 +64,7 @@ public class ScriptGeneratorNicosViewModel implements PropertyChangeListener {
 		bindPauseButton(pauseButton);
 		bindStopButton(stopButton);
 		formatButtonsBasedOnStatus(dynamicScriptingManager.getDynamicScriptingStatus());
+		nicosModel.addPropertyChangeListener(e -> updateButtonEnablement());
 	}
 	
 	/**
@@ -82,7 +83,6 @@ public class ScriptGeneratorNicosViewModel implements PropertyChangeListener {
 		runButton.addListener(SWT.Selection, e -> {
         	playScript();
         });
-		bindContolButton(runButton);
 	}
 	
 	private void bindPauseButton(Button pauseButton) {
@@ -90,7 +90,6 @@ public class ScriptGeneratorNicosViewModel implements PropertyChangeListener {
 		pauseButton.addListener(SWT.Selection, e -> {
         	pauseScript();
         });
-		bindContolButton(pauseButton);
 	}
 	
 	private void bindStopButton(Button stopButton) {
@@ -98,7 +97,6 @@ public class ScriptGeneratorNicosViewModel implements PropertyChangeListener {
 		stopButton.addListener(SWT.Selection, e -> {
         	stopScript();
         });
-		bindContolButton(stopButton);
 	}
 
 	private void playScript() {
@@ -116,10 +114,6 @@ public class ScriptGeneratorNicosViewModel implements PropertyChangeListener {
 	private void pauseScript() {
 		dynamicScriptingManager.pauseScript();
     }
-	
-	private void bindContolButton(Button queueScriptButton) {
-		nicosModel.addPropertyChangeListener(e -> updateButtonEnablement());
-	}
 	
 	private boolean nicosInError() {
 		var nicosError = nicosModel.getError();
@@ -156,6 +150,7 @@ public class ScriptGeneratorNicosViewModel implements PropertyChangeListener {
 		pauseButton.setEnabled(false);
 		stopButton.setEnabled(false);
 		runButton.setText(RUN_BUTTON_TEXT);
+		runButton.setImage(ExecutingStatusDisplay.EXECUTING_IMAGE);
 	}
 
 	private void formatButtonsWhenStopped() {
@@ -165,6 +160,7 @@ public class ScriptGeneratorNicosViewModel implements PropertyChangeListener {
 		pauseButton.setEnabled(false);
 		stopButton.setEnabled(false);
 		runButton.setText(RUN_BUTTON_TEXT);
+		runButton.setImage(ExecutingStatusDisplay.EXECUTING_IMAGE);
 	}
 
 	private void formatButtonsWhenPaused() {
@@ -174,6 +170,7 @@ public class ScriptGeneratorNicosViewModel implements PropertyChangeListener {
 		pauseButton.setEnabled(false);
 		stopButton.setEnabled(true && !nicosInError());
 		runButton.setText(RESUME_BUTTON_TEXT);
+		runButton.setImage(ExecutingStatusDisplay.PAUSED_DURING_IMAGE);
 	}
 
 	private void formatButtonsWhenPlaying() {	
@@ -183,6 +180,7 @@ public class ScriptGeneratorNicosViewModel implements PropertyChangeListener {
 		pauseButton.setEnabled(true && !nicosInError());
 		stopButton.setEnabled(true && !nicosInError());
 		runButton.setText(RUN_BUTTON_TEXT);
+		runButton.setImage(ExecutingStatusDisplay.EXECUTING_IMAGE);
 	}
 
 }

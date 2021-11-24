@@ -1,28 +1,33 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
+import java.util.Optional;
+
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.wb.swt.ResourceManager;
+
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionDynamicScriptingStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 public class ExecutingStatusDisplay {
 	
-    private static final String EXECUTING_MARK = "\u25B6";
-    private static final String PAUSED_BEFORE_MARK = "\u23F8";
-    private static final String PAUSED_DURING_MARK = "\u23EF";
-    private static final String NOT_EXECUTING_MARK = "";
+    public static final Image EXECUTING_IMAGE = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/play.png");
+    public static final Image PAUSED_BEFORE_IMAGE = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/pause.png");
+    public static final Image PAUSED_DURING_IMAGE = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/resume.png");
+    public static final Image NOT_EXECUTING_IMAGE = null;
 	
     /**
      * @return The mark to display whether executing or not.
      */
-	public static String getText(ActionDynamicScriptingStatus status) {
+	public static Image getImage(ActionDynamicScriptingStatus status) {
 		switch (status) {
 			case EXECUTING:
-				return EXECUTING_MARK;
+				return EXECUTING_IMAGE;
 			case PAUSED_BEFORE_EXECUTION:
-				return PAUSED_BEFORE_MARK;
+				return PAUSED_BEFORE_IMAGE;
 			case PAUSED_DURING_EXECUTION:
-				return PAUSED_DURING_MARK;
+				return PAUSED_DURING_IMAGE;
 			default:
-				return NOT_EXECUTING_MARK;
+				return NOT_EXECUTING_IMAGE;
 		}
 	}
 	
@@ -32,16 +37,22 @@ public class ExecutingStatusDisplay {
 	 * @param text The string to generate a Validity display element from.
 	 * @return A ValidityDisplay element generated from the given string.
 	 */
-	public static ActionDynamicScriptingStatus fromText(String text) {
-		if (text.contains(EXECUTING_MARK)) {
-			return ActionDynamicScriptingStatus.EXECUTING;
-		} else if (text.contains(PAUSED_BEFORE_MARK)) {
-			return ActionDynamicScriptingStatus.PAUSED_BEFORE_EXECUTION;
-		} else if (text.contains(PAUSED_DURING_MARK)) {
-			return ActionDynamicScriptingStatus.PAUSED_DURING_EXECUTION;
+	public static ActionDynamicScriptingStatus fromImage(Optional<Image> optionalImage) {
+		if (optionalImage.isPresent()) {
+			Image image = optionalImage.get();
+			if (image.equals(EXECUTING_IMAGE)) {
+				return ActionDynamicScriptingStatus.EXECUTING;
+			} else if (image.equals(PAUSED_BEFORE_IMAGE)) {
+				return ActionDynamicScriptingStatus.PAUSED_BEFORE_EXECUTION;
+			} else if (image.equals(PAUSED_DURING_IMAGE)) {
+				return ActionDynamicScriptingStatus.PAUSED_DURING_EXECUTION;
+			} else {
+				return ActionDynamicScriptingStatus.NO_STATUS;
+			}
 		} else {
 			return ActionDynamicScriptingStatus.NO_STATUS;
 		}
+		
 	}
 	
 	/**

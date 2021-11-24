@@ -12,6 +12,7 @@ import java.util.Optional;
 
 import org.junit.Test;
 
+import uk.ac.stfc.isis.ibex.nicos.ScriptStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelAdapter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosAdapter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingProperties;
@@ -26,10 +27,11 @@ public class PausedStateTest extends DynamicScriptingStateTest {
 	private DynamicScriptingModelAdapter modelAdapter;
 	private Optional<ScriptGeneratorAction> currentAction;
 	private Optional<ScriptGeneratorAction> nextAction;
+	private Boolean pauseComplete;
 	
 	@Override
 	protected void setUpState() {
-		state = new PausedState(nicosAdapter, modelAdapter, currentAction, dynamicScriptIdsToAction);
+		state = new PausedState(nicosAdapter, modelAdapter, currentAction, dynamicScriptIdsToAction, pauseComplete);
 	}
 	
 	@Override
@@ -40,6 +42,7 @@ public class PausedStateTest extends DynamicScriptingStateTest {
 		currentAction = Optional.of(new ScriptGeneratorAction(new HashMap<>()));
 		currentAction.get().setPausedBeforeExecution();
 		nextAction = Optional.of(new ScriptGeneratorAction(new HashMap<>()));
+		pauseComplete = false;
 	}
 	
 	private void simulateScriptFinished() {
@@ -157,8 +160,41 @@ public class PausedStateTest extends DynamicScriptingStateTest {
 	}
 	
 	@Test
-	public void test_WHEN_play_THEN_state_switches_to_playing() {
+	public void test_GIVEN_pause_complete_WHEN_play_THEN_state_switches_to_playing() {
+		// Arrange
+		pauseComplete = true;
+		removeStatusSwitchCounterToState();
+		setUpState();
+		attachStatusSwitchCounterToState();
+		// Act
 		state.play();
+		// Assert
+		statusSwitchCounter.assertNumberOfSwitches(
+			DynamicScriptingStatus.PAUSED, DynamicScriptingStatus.PLAYING, 1
+		);
+	}
+	
+	@Test
+	public void test_GIVEN_pause_not_complete_WHEN_play_THEN_state_switches_to_playing_after_script_paused_by_nicos() {
+		// Arrange
+		pauseComplete = false;
+		removeStatusSwitchCounterToState();
+		setUpState();
+		attachStatusSwitchCounterToState();
+		// Act
+		state.play();
+		// Assert
+		statusSwitchCounter.assertNumberOfSwitches(
+			DynamicScriptingStatus.PAUSED, DynamicScriptingStatus.PLAYING, 0
+		);
+		// Act
+		state.propertyChange(
+			new PropertyChangeEvent(
+				nicosAdapter, DynamicScriptingProperties.SCRIPT_PAUSED_PROPERTY, 
+				null, ScriptStatus.INBREAK
+			)
+		);
+		// Assert
 		statusSwitchCounter.assertNumberOfSwitches(
 			DynamicScriptingStatus.PAUSED, DynamicScriptingStatus.PLAYING, 1
 		);

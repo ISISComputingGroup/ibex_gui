@@ -237,8 +237,8 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	}
 	
 	private boolean executingStatusChanged(String columnHeader, TableItem item, int column, ScriptGeneratorAction action) {
-		var lineNumberText = item.getText(column);
-		var statusFromLastDisplay = ExecutingStatusDisplay.fromText(lineNumberText);
+		var lineNumberImage = Optional.ofNullable(item.getImage(column));
+		var statusFromLastDisplay = ExecutingStatusDisplay.fromImage(lineNumberImage);
 		return columnHeader.equals(ScriptGeneratorViewModel.ACTION_NUMBER_COLUMN_HEADER) && !ExecutingStatusDisplay.equalsAction(statusFromLastDisplay, action);
 	}
 	

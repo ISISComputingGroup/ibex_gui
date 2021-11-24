@@ -25,6 +25,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptName;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingNicosAdapter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingProperties;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.PauseNotification;
 import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.ScriptGeneratorMockBuilder;
 import uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils.StatusSwitchCounter;
 
@@ -34,6 +35,7 @@ public class DynamicScriptingNicosAdapterTest {
 	private NicosModel nicosModel;
 	private DynamicScriptingNicosAdapter nicosAdapter;
 	private StatusSwitchCounter<DynamicScriptName, Optional<String>> dynamicScriptSwitchCounter;
+	private StatusSwitchCounter<PauseNotification, PauseNotification> scriptPauseCounter;
 	private static final String UNRECOGNISED_PROPERTY_NAME = "test";
 	private static final String SCRIPT_NAME = "test";
 	private static final String SCRIPT_CODE = "test";
@@ -41,10 +43,13 @@ public class DynamicScriptingNicosAdapterTest {
 	@Before
 	public void setUp() {
 		dynamicScriptSwitchCounter = new StatusSwitchCounter<>();
+		scriptPauseCounter = new StatusSwitchCounter<>();
 		scriptGeneratorMockBuilder = new ScriptGeneratorMockBuilder();
 		nicosModel = scriptGeneratorMockBuilder.getMockNicosModel();
 		nicosAdapter = new DynamicScriptingNicosAdapter(nicosModel);
 		nicosAdapter.addPropertyChangeListener(DynamicScriptingProperties.SCRIPT_FINISHED_PROPERTY, dynamicScriptSwitchCounter);
+		scriptPauseCounter = new StatusSwitchCounter<>();
+		nicosAdapter.addPropertyChangeListener(DynamicScriptingProperties.SCRIPT_PAUSED_PROPERTY, scriptPauseCounter);
 	}
 	
 	private void doScriptChange(String newScriptName) {
@@ -57,6 +62,7 @@ public class DynamicScriptingNicosAdapterTest {
 	
 	private void doScriptChange(String newScriptName, String propertyName, ScriptStatus oldStatus, ScriptStatus newStatus) {
 		when(nicosModel.getScriptName()).thenReturn(newScriptName);
+		when(nicosModel.getScriptStatus()).thenReturn(newStatus);
 		nicosAdapter.propertyChange( 
 			new PropertyChangeEvent(
 				nicosModel, propertyName, oldStatus, newStatus
@@ -264,6 +270,7 @@ public class DynamicScriptingNicosAdapterTest {
 			ScriptStatus.RUNNING, ScriptStatus.INBREAK
 		);
 		// Assert
+		scriptPauseCounter.assertNumberOfSwitches(PauseNotification.OLD_STATE, PauseNotification.NEW_STATE, 1);
 		dynamicScriptSwitchCounter.assertNoSwitches();
 	}
 	
