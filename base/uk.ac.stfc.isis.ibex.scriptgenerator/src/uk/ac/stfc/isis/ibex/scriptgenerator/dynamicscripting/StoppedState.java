@@ -31,4 +31,9 @@ public class StoppedState extends DynamicScriptingState {
 		changeState(DynamicScriptingStatus.PLAYING);
 	}
 
+	@Override
+	public Boolean pauseComplete() {
+		return false;
+	}
+
 }

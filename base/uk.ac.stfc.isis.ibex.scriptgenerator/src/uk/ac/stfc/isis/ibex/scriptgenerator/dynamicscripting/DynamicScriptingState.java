@@ -91,6 +91,11 @@ public abstract class DynamicScriptingState extends ModelObject implements HasSt
 	public abstract DynamicScriptingStatus getStatus();
 	
 	/**
+	 * Get whether a pause has been complete.
+	 */
+	public abstract Boolean pauseComplete();
+	
+	/**
 	 * Fire a property change to indicate we need to change from this state to a state with the new status.
 	 *
 	 * @param newStatus The status of the new state to indicate what state needs changing to.

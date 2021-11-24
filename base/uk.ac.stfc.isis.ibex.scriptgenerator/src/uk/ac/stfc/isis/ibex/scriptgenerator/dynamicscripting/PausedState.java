@@ -14,7 +14,9 @@ public class PausedState extends DynamicScriptingState {
 	private DynamicScriptingNicosAdapter nicosAdapter;
 	private DynamicScriptingModelAdapter modelAdapter;
 	private Optional<ScriptGeneratorAction> currentlyExecutingAction;
+	private Boolean pauseComplete;
 	private Boolean stopRequested = false;
+	private Boolean resumeRequested = false;
 
 	/**
 	 * Create a paused state with the required nicos and script generator model dependencies, the action that the script has been paused on and the IDs and actions of the dynamic scripts.
@@ -24,11 +26,12 @@ public class PausedState extends DynamicScriptingState {
      * @param currentlyExecutingAction The action that the script is paused on.
 	 * @param dynamicScriptIdsToAction Script ids and their associated actions that are used in dynamic scripting.
 	 */
-	public PausedState(DynamicScriptingNicosAdapter nicosAdapter, DynamicScriptingModelAdapter modelAdapter, Optional<ScriptGeneratorAction> currentlyExecutingAction, HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction) {
+	public PausedState(DynamicScriptingNicosAdapter nicosAdapter, DynamicScriptingModelAdapter modelAdapter, Optional<ScriptGeneratorAction> currentlyExecutingAction, HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction, Boolean pauseComplete) {
 		super(dynamicScriptIdsToAction);
 		this.nicosAdapter = nicosAdapter;
 		this.modelAdapter = modelAdapter;
 		this.currentlyExecutingAction = currentlyExecutingAction;
+		this.pauseComplete = pauseComplete;
 	}
 
 	/**
@@ -42,6 +45,11 @@ public class PausedState extends DynamicScriptingState {
 	@Override
 	public DynamicScriptingStatus getStatus() {
 		return DynamicScriptingStatus.PAUSED;
+	}
+	
+	@Override
+	public Boolean pauseComplete() {
+		return pauseComplete;
 	}
 	
 	/**
@@ -69,12 +77,29 @@ public class PausedState extends DynamicScriptingState {
 	 */
 	@Override
 	public void play() {
-		changeState(DynamicScriptingStatus.PLAYING);
+		if (pauseComplete) {
+			changeState(DynamicScriptingStatus.PLAYING);
+		} else {
+			resumeRequested = true;
+			// See property change event for change of state
+		}
 	}
 	
 	/**
 	 * Handle when an action has finished executing (after a stop has been requested).
 	 */
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		switch (evt.getPropertyName()) {
+			case DynamicScriptingProperties.SCRIPT_FINISHED_PROPERTY:
+				handleFinished();
+				break;
+			case DynamicScriptingProperties.SCRIPT_PAUSED_PROPERTY:
+				handlePaused();
+				break;
+		}
+	}
+	
 	private void handleFinished() {
 		currentlyExecutingAction.ifPresent(action -> {
 			action.clearDynamicScriptingStatus();
@@ -87,6 +112,7 @@ public class PausedState extends DynamicScriptingState {
 				nextActionOptional.ifPresentOrElse(nextAction -> {
 					nextAction.setPausedBeforeExecution();
 					currentlyExecutingAction = nextActionOptional;
+					pauseComplete = true;
 					changeState(DynamicScriptingStatus.PAUSED);
 				}, () -> {
 					changeState(DynamicScriptingStatus.STOPPED);
@@ -95,18 +121,12 @@ public class PausedState extends DynamicScriptingState {
 				changeState(DynamicScriptingStatus.STOPPED);
 			});
 		}
-		
 	}
 	
-	/**
-	 * Handle when an action has finished executing (after a stop has been requested).
-	 */
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		switch (evt.getPropertyName()) {
-			case DynamicScriptingProperties.SCRIPT_FINISHED_PROPERTY:
-				handleFinished();
-				break;
+	private void handlePaused() {
+		pauseComplete = true;
+		if (resumeRequested) {
+			changeState(DynamicScriptingStatus.PLAYING);
 		}
 	}
 

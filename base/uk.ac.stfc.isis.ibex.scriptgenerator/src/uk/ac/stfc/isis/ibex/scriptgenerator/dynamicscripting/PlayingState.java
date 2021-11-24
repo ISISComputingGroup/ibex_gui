@@ -15,6 +15,7 @@ public class PlayingState extends DynamicScriptingState {
 	private Optional<Integer> nextScriptId = Optional.empty();
 	private DynamicScriptingNicosAdapter nicosAdapter;
 	private DynamicScriptingModelAdapter modelAdapter;
+	private Boolean pauseComplete = false;
 	
 	/**
 	 * Create a playing state with the injected nicos and scripting generator model dependencies, an action to begin executing with and the script IDs and actions associated with dynamic scripting.
@@ -56,6 +57,11 @@ public class PlayingState extends DynamicScriptingState {
 	@Override
 	public DynamicScriptingStatus getStatus() {
 		return DynamicScriptingStatus.PLAYING;
+	}
+	
+	@Override
+	public Boolean pauseComplete() {
+		return pauseComplete;
 	}
 
 	/**
@@ -104,9 +110,16 @@ public class PlayingState extends DynamicScriptingState {
 			case DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY:
 				executeScript();
 				break;
+			case DynamicScriptingProperties.SCRIPT_PAUSED_PROPERTY:
+				handlePaused();
+				break;
 		}
 	}
 	
+	private void handlePaused() {
+		pauseComplete = true;
+	}
+
 	private void setUpFirstExecutingAction() {
 		currentlyExecutingAction.ifPresentOrElse(action -> {
 			if (action.wasPausedDuringExecution()) {
@@ -132,6 +145,7 @@ public class PlayingState extends DynamicScriptingState {
 		currentlyExecutingAction.ifPresentOrElse(action -> {
 			if (!action.isValid()) {
 				action.setPausedBeforeExecution();
+				pauseComplete = true;
 				changeState(DynamicScriptingStatus.PAUSED);
 			} else {
 				try {

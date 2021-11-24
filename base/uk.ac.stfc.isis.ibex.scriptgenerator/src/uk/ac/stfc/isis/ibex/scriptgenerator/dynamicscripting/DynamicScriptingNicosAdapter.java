@@ -89,6 +89,12 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
 			String scriptName = nicosModel.getScriptName();
 			scriptChanged(scriptName);
 		}
+		if (isPossibleScriptPausePropertyName(propertyName) && newStatus.isPaused()) {
+			firePropertyChange(
+				DynamicScriptingProperties.SCRIPT_PAUSED_PROPERTY, 
+				PauseNotification.OLD_STATE, PauseNotification.NEW_STATE
+			);
+		}
 	}
 	
 	/**
@@ -107,6 +113,10 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
 		return propertyName.equals(DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY) 
 				|| propertyName.equals(DynamicScriptingProperties.CURRENTLY_EXECUTING_SCRIPT_PROPERTY)
 				|| propertyName.equals(DynamicScriptingProperties.SCRIPT_NAME_PROPERTY);
+	}
+	
+	private Boolean isPossibleScriptPausePropertyName(String propertyName) {
+		return propertyName.equals(DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY);
 	}
 
 	private boolean nicosInError() {

@@ -24,6 +24,11 @@ public class DynamicScriptingProperties {
 	 * A property to listen for or fire when an actions script is finished. 
 	 */	
 	public static final String SCRIPT_FINISHED_PROPERTY = "scriptFinished";
+	
+	/**
+	 * A property to listen for or fire when an actions script is paused. 
+	 */	
+	public static final String SCRIPT_PAUSED_PROPERTY = "scriptPaused";
 
 	/**
 	 * A property to listen for or fire when the state of dynamic scripting needs to be changed.

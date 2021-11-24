@@ -24,4 +24,9 @@ public class ErrorState extends DynamicScriptingState {
 		return DynamicScriptingStatus.ERROR;
 	}
 
+	@Override
+	public Boolean pauseComplete() {
+		return false;
+	}
+
 }
