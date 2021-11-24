@@ -83,12 +83,11 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
 	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equals(DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY)) {
-			ScriptStatus newStatus = (ScriptStatus) evt.getNewValue();
-			if (scriptFinished(newStatus)) {
-				String scriptName = nicosModel.getScriptName();
-				scriptChanged(scriptName);
-			}
+		String propertyName = evt.getPropertyName();
+		ScriptStatus newStatus = nicosModel.getScriptStatus();
+		if (isPossibleEndOfScriptPropertyName(propertyName) && newStatus.isIdle()) {
+			String scriptName = nicosModel.getScriptName();
+			scriptChanged(scriptName);
 		}
 	}
 	
@@ -104,10 +103,12 @@ public class DynamicScriptingNicosAdapter extends ModelObject implements Propert
 		}
 	}
 	
-	private Boolean scriptFinished(ScriptStatus newStatus) {
-		return newStatus.isIdle();
+	private Boolean isPossibleEndOfScriptPropertyName(String propertyName) {
+		return propertyName.equals(DynamicScriptingProperties.SCRIPT_STATUS_PROPERTY) 
+				|| propertyName.equals(DynamicScriptingProperties.CURRENTLY_EXECUTING_SCRIPT_PROPERTY)
+				|| propertyName.equals(DynamicScriptingProperties.SCRIPT_NAME_PROPERTY);
 	}
-	
+
 	private boolean nicosInError() {
 		var nicosError = nicosModel.getError();
 		return nicosError != NicosErrorState.NO_ERROR;

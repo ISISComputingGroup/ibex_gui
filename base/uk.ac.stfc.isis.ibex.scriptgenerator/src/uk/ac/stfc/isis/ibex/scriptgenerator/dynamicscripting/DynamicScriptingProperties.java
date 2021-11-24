@@ -9,6 +9,16 @@ public class DynamicScriptingProperties {
 	 * A property to listen for when the status of the script in nicos has changed.
 	 */
 	public static final String SCRIPT_STATUS_PROPERTY = "scriptStatus";
+	
+	/**
+	 * A property to listen for when the currently executing script in nicos has changed.
+	 */
+	public static final String CURRENTLY_EXECUTING_SCRIPT_PROPERTY = "currentlyExecutingScript";
+	
+	/**
+	 * A property to listen for when the script name in nicos has changed.
+	 */
+	public static final String SCRIPT_NAME_PROPERTY = "scriptName";
 
 	/**
 	 * A property to listen for or fire when an actions script is finished. 
