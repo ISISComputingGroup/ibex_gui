@@ -102,7 +102,9 @@ public class GeneratorContext extends ModelObject {
 	 * @param actionsTable The script generator contents to generate the script from.
 	 * @param scriptDefinition The script definition to generate the script from.
 	 * @param generatedLanguage The language to generate the script in.
-	 * @param jsonContent Content of the JSON file 
+	 * @param jsonContent Content of the JSON file.
+	 * @param globalParams The global parameters to generate the script with.
+	 * @return An optional ID of the script that will be generated, the ID can be used to get the generated script once generated.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
@@ -118,11 +120,12 @@ public class GeneratorContext extends ModelObject {
 	 * 
 	 * @param actionsTable The script generator contents to generate the script from.
 	 * @param scriptDefinition The script definition to generate the script from.
-	 * @param jsonContent The JSON content created when generating script
+	 * @param jsonContent The JSON content created when generating script.
+	 * @param globalParams The global parameters to generate the script with.
+	 * @return An optional ID of the script that will be generated, the ID can be used to get the generated script once generated.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
-	 * @return An ID for the generated script.
 	 */
 	public Optional<Integer> refreshGeneratedScript(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, String jsonContent, List<String> globalParams) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
@@ -136,6 +139,7 @@ public class GeneratorContext extends ModelObject {
 	 * @param actionsTable The contents of the script generator to validate.
 	 * @param scriptDefinition The script definition to validate the script against.
 	 * @param generatedLanguage The language that the script will be generated in.
+	 * @param globalParams The global parameters to generate the script with.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
@@ -152,6 +156,7 @@ public class GeneratorContext extends ModelObject {
 	 * 
 	 * @param actionsTable The contents of the script generator to validate.
 	 * @param scriptDefinition The script definition to validate the script against.
+	 * @param globalParams The global parameters to generate the script with.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
@@ -167,6 +172,7 @@ public class GeneratorContext extends ModelObject {
      * @param actionsTable The contents of the script generator
      * @param scriptDefinition The script definition
      * @param generatedLanguage The language that the script will be generated in.
+	 * @param globalParams The global parameters to generate the script with.
      * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
      * @throws ExecutionException A failure to execute the call to generate.
      * @throws InterruptedException The call to generate was interrupted.
@@ -183,6 +189,7 @@ public class GeneratorContext extends ModelObject {
      * 
      * @param actionsTable The contents of the script generator
      * @param scriptDefinition The script definition
+	 * @param globalParams The global parameters to generate the script with.
      * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
      * @throws ExecutionException A failure to execute the call to generate.
      * @throws InterruptedException The call to generate was interrupted.
@@ -198,6 +205,7 @@ public class GeneratorContext extends ModelObject {
 	 * @param actionsTable The contents of the script generator to check for validity errors with.
 	 * @param scriptDefinition The script definition to validate the script against.
 	 * @param generatedLanguage The language that the script will be generated in.
+	 * @param globalParams The global parameters to generate the script with.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
@@ -213,6 +221,7 @@ public class GeneratorContext extends ModelObject {
 	 * 
 	 * @param actionsTable The contents of the script generator to check for validity errors with.
 	 * @param scriptDefinition The script definition to validate the script against.
+	 * @param globalParams The global parameters to generate the script with.
 	 * @throws UnsupportedLanguageException Thrown if the default language (python) to generate the script in is not supported.
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
@@ -227,7 +236,7 @@ public class GeneratorContext extends ModelObject {
      * 
      * @param scriptId The ID of the script to get.
      * @param language The language used to generate the script.
-     * @return The script
+     * @return The script or an optional empty if it doesn't exist.
      */
 	public Optional<String> getScriptFromId(Integer scriptId, GeneratedLanguage language) {
 		var generator = generatorStrategies.get(language);
@@ -238,7 +247,7 @@ public class GeneratorContext extends ModelObject {
      * Get the generated script from the given ID.
      * 
      * @param scriptId The ID of the script to get.
-     * @return The script
+     * @return The script or an optional empty if it doesn't exist.
      */
 	public Optional<String> getScriptFromId(Integer scriptId) {
 		return getScriptFromId(scriptId, GeneratedLanguage.PYTHON);
