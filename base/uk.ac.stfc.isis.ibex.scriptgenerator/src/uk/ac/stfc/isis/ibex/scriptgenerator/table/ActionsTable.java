@@ -342,16 +342,16 @@ public class ActionsTable extends ModelObject {
 	 */
 	public ArrayList<String> getInvalidityErrorLines() {
 		var errors = new ArrayList<String>();
-		if (this.globalValidError.size()>0) {
+		if (this.globalValidError.size() > 0) {
 			String errorString = "Global Parameter Errors: \n";
 			int initialLen = errorString.length();
-			for(int i = 0; i < globalValidError.size(); i++) {
+			for (int i = 0; i < globalValidError.size(); i++) {
 				String reason = globalValidError.get(i);
-				if(reason != "") {
-					errorString += "Global Parameter: " + (i+1) +", Reason: " + "\n" + globalValidError.get(i) + "\n";
+				if (reason != "") {
+					errorString += "Global Parameter: " + (i + 1) + ", Reason: " + "\n" + globalValidError.get(i) + "\n";
 				}
 			}
-			if (errorString.length() > initialLen){
+			if (errorString.length() > initialLen) {
 				errors.addAll(Arrays.asList(errorString.split("\n")));
 			}
 				
@@ -360,11 +360,11 @@ public class ActionsTable extends ModelObject {
 		for (int i = 0; i < actions.size(); i++) {
 			ScriptGeneratorAction action = actions.get(i);
 			if (!action.isValid()) {
-				if(first) {
+				if (first) {
 					errors.add("Action Errors:");
 					first = false;
 				}
-				String errorString = "Row: " + (i+1) + ", Reason: " + "\n" + action.getInvalidityReason().get() + "\n";
+				String errorString = "Row: " + (i + 1) + ", Reason: " + "\n" + action.getInvalidityReason().get() + "\n";
 				
 				errors.addAll(Arrays.asList(errorString.split("\n")));
 			}
