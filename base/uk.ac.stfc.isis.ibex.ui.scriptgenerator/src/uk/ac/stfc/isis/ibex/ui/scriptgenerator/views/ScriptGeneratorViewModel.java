@@ -746,7 +746,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	        }
 	        globalLabel.clear();
 	        for (Text text: globalParamText) {
-	        	if(!text.isDisposed()) {
+	        	if (!text.isDisposed()) {
 	        	text.dispose();
 	        	}
 	        }
@@ -754,7 +754,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	        currentGlobals.clear();
 	        globalParamText.clear();
 	        createGlobalParamsWidgets();
-	        if(!globalParamsComposite.isDisposed()) {
+	        if (!globalParamsComposite.isDisposed()) {
 		        globalParamsComposite.layout();
 	        }
 		     mainParent.layout();
@@ -789,7 +789,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
       			  param = global.getName();
       			  currentGlobals.add(global.getName());
       			  paramVal = global.getDefaultValue();
-      			  if(!globalParamsComposite.isDisposed()) {
+      			  if (!globalParamsComposite.isDisposed()) {
 	            	  Label globalLabelCurrent = new Label(globalParamsComposite, SWT.NONE);
 	            	  globalLabelCurrent.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 	            	  globalLabelCurrent.setText(param);
@@ -906,12 +906,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     protected void updateValidityChecks(ActionsViewTable viewTable) {
 	    Map<Integer, String> globals = scriptGeneratorModel.getGlobalParamErrors();
-	    for(int i = 0; i< this.globalParamText.size(); i++) {
-	    	if(globals.containsKey(i)) {
+	    for (int i = 0; i< this.globalParamText.size(); i++) {
+	    	if (globals.containsKey(i)) {
 	    		globalParamText.get(i).setBackground(INVALID_LIGHT_COLOR);
 	    		globalParamText.get(i).setBackground(INVALID_DARK_COLOR);
 	    		globalParamText.get(i).setToolTipText(globals.get(i));
-	    	}else {
+	    	} else {
 	    		globalParamText.get(i).setBackground(CLEAR_COLOR);
 	    		globalParamText.get(i).setToolTipText(null);
 	    	}
@@ -1123,10 +1123,10 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    }
     }
     
-    public void updateGlobalParams(String params, String toUpdate){
-    	int i =0;
-    	for(String paramName: this.currentGlobals) {
-    		if( paramName.equals(toUpdate)){
+    public void updateGlobalParams(String params, String toUpdate) {
+    	int i = 0;
+    	for (String paramName: this.currentGlobals) {
+    		if (paramName.equals(toUpdate)) {
     			scriptGeneratorModel.updateGlobalParams(params, i);
     		}
     		i++;
