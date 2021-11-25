@@ -846,6 +846,10 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * 
      * @param scriptDefinitionSelector The script definition selector UI element to bind.
      * @param helpText The UI element to display help string text in.
+     * @param globalLabel The label widgets of the global parameters.
+     * @param globalParamText The text widgets of the global parameters.
+     * @param scriptDefintionComposite Composite containing the script definition selector.
+     * @param mainParent A composite containing the script generator as a whole.
      */
     protected void bindScriptDefinitionLoader(ComboViewer scriptDefinitionSelector, Text helpText, List<Label> globalLabel, List<Text> globalParamText, Composite scriptDefintionComposite, Composite mainParent) {
 	    // Switch the composite value when script definition switched
@@ -1136,7 +1140,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     /**
      * Generate a script and save it to the current script file. If fail display warnings.
      * @throws UnsupportedLanguageException 
-     * @returns The script ID.
+     * @return The ID of the generated script or an empty optional if the generation didn't happen.
      */
     public Optional<Integer> generateScriptToCurrentFilepath() {
     	Optional<Integer> scriptId = generateScript();
@@ -1146,7 +1150,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
     
     /**
      * Generate a script and display the file it was generated to. If fail display warnings.
+     * 
      * @throws UnsupportedLanguageException 
+     * @return The ID of the generated script or an empty optional if the generation didn't happen.
      */
     public Optional<Integer> generateScript() {
 	    try {
@@ -1176,7 +1182,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
     
     /**
-	 * Get the location of the repository containing script definitions.
+	 * @return the location of the repository containing script definitions.
 	 */
 	public Path getScriptDefinitionsRepoPath() {
 		return scriptGeneratorModel.getRepoPath();
