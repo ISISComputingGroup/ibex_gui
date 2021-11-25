@@ -659,7 +659,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 
 	    long totalSeconds = scriptGeneratorModel.getTotalEstimatedTime().isPresent() ? scriptGeneratorModel.getTotalEstimatedTime().get() : 0;
 	    String displayTotal = "Total estimated run time: " + changeSecondsToTimeFormat(totalSeconds);
-	    finishTimer.SetTimeEstimateVal(totalSeconds);
+	    finishTimer.setTimeEstimateVal(totalSeconds);
 	    firePropertyChange("timeEstimate", displayString, displayString = displayTotal);
     }
 
