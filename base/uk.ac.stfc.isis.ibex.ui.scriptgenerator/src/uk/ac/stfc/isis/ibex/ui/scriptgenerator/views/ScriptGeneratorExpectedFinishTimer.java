@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
  * Helper class that calculates expected finish time.
  *
  */
-public class ScriptGeneratorExpectedFinishTimer extends ModelObject implements Runnable{
+public class ScriptGeneratorExpectedFinishTimer extends ModelObject implements Runnable {
 	private volatile long timeEstimateVal;
 	private String finishTime; 
 	
@@ -25,7 +25,7 @@ public class ScriptGeneratorExpectedFinishTimer extends ModelObject implements R
 	 * Function to set the current time estimate.
 	 * @param timeEstimateVal the current time estimate of the script.
 	 */
-	public void SetTimeEstimateVal(long timeEstimateVal) {
+	public void setTimeEstimateVal(long timeEstimateVal) {
 		this.timeEstimateVal = timeEstimateVal;
 	}
 	
@@ -38,7 +38,7 @@ public class ScriptGeneratorExpectedFinishTimer extends ModelObject implements R
 		LocalDateTime currentTime = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 		currentTime = currentTime.plusSeconds(timeEstimateVal);
-		finishTime = "Expected Finish Time: "+ currentTime.format(formatter);
+		finishTime = "Expected Finish Time: " + currentTime.format(formatter);
 		firePropertyChange("finishTimeVal", null, finishTime);
 	}
 }

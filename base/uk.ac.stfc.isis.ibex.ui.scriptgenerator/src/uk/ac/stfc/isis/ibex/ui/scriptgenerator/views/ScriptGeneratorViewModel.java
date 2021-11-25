@@ -609,11 +609,17 @@ public class ScriptGeneratorViewModel extends ModelObject {
 
 	    long totalSeconds = scriptGeneratorModel.getTotalEstimatedTime().isPresent() ? scriptGeneratorModel.getTotalEstimatedTime().get() : 0;
 	    String displayTotal = "Total estimated run time: " + changeSecondsToTimeFormat(totalSeconds);
-	    finishTimer.SetTimeEstimateVal(totalSeconds);
+	    finishTimer.setTimeEstimateVal(totalSeconds);
 	    firePropertyChange("timeEstimate", displayString, displayString = displayTotal);
     }
 
 
+    /**
+     * Take the total seconds and format into an understandable time format (HH:MM:SS) for display.
+     * 
+     * @param totalSeconds The number of seconds to format.
+     * @return The formatted string of the time.
+     */
     public static String changeSecondsToTimeFormat(long totalSeconds) {
 	    Duration duration = Duration.ofSeconds(totalSeconds);
 	    return String.format("%02d:%02d:%02d", duration.toHours(), duration.toMinutesPart(), duration.toSecondsPart());
@@ -621,6 +627,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 
     /**
      * Get the name and location of the parameters save file for the script.
+     * 
      * @return The parameters save file name and location.
      */
     public String getParametersFile() {
@@ -796,6 +803,10 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * 
      * @param scriptDefinitionSelector The script definition selector UI element to bind.
      * @param helpText The UI element to display help string text in.
+     * @param globalLabel The label widgets of the global parameters.
+     * @param globalParamText The text widgets of the global parameters.
+     * @param scriptDefintionComposite Composite containing the script definition selector.
+     * @param mainParent A composite containing the script generator as a whole.
      */
     protected void bindScriptDefinitionLoader(ComboViewer scriptDefinitionSelector, Text helpText, List<Label> globalLabel, List<Text> globalParamText, Composite scriptDefintionComposite, Composite mainParent) {
 	    // Switch the composite value when script definition switched
@@ -856,12 +867,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     protected void updateValidityChecks(ActionsViewTable viewTable) {
 	    Map<Integer, String> globals = scriptGeneratorModel.getGlobalParamErrors();
-	    for(int i = 0; i< this.globalParamText.size(); i++) {
-	    	if(globals.containsKey(i)) {
+	    for (int i = 0; i< this.globalParamText.size(); i++) {
+	    	if (globals.containsKey(i)) {
 	    		globalParamText.get(i).setBackground(INVALID_LIGHT_COLOR);
 	    		globalParamText.get(i).setBackground(INVALID_DARK_COLOR);
 	    		globalParamText.get(i).setToolTipText(globals.get(i));
-	    	}else {
+	    	} else {
 	    		globalParamText.get(i).setBackground(CLEAR_COLOR);
 	    		globalParamText.get(i).setToolTipText(null);
 	    	}
@@ -1077,7 +1088,13 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    }
     }
     
-    public void updateGlobalParams(String params, String toUpdate){
+    /**
+     * Take the params and and the params that we need to update and instruct the model to update them.
+     * 
+     * @param params All the params.
+     * @param toUpdate The params to update.
+     */
+    public void updateGlobalParams(String params, String toUpdate) {
     	int i = 0;
     	for (String paramName: this.currentGlobals) {
     		if (paramName.equals(toUpdate)) {
@@ -1090,7 +1107,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     /**
      * Generate a script and save it to the current script file. If fail display warnings.
      * @throws UnsupportedLanguageException 
-     * @return The script ID.
+     * @return The ID of the generated script or an empty optional if the generation didn't happen.
      */
     public Optional<Integer> generateScriptToCurrentFilepath() {
     	Optional<Integer> scriptId = generateScript();
@@ -1100,7 +1117,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
     
     /**
      * Generate a script and display the file it was generated to. If fail display warnings.
+     * 
      * @throws UnsupportedLanguageException 
+     * @return The ID of the generated script or an empty optional if the generation didn't happen.
      */
     public Optional<Integer> generateScript() {
 	    try {

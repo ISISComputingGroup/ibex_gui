@@ -617,9 +617,9 @@ public class ScriptGeneratorView {
     
     bindingContext.bindValue(WidgetProperties.text().observe(estimateText),
         BeanProperties.value("timeEstimate").observe(scriptGeneratorViewModel));
-
-    scriptGeneratorViewModel.getFinishTimer().addPropertyChangeListener("finishTimeVal", e->{
-    	DISPLAY.asyncExec(()->{
+    
+    scriptGeneratorViewModel.getFinishTimer().addPropertyChangeListener("finishTimeVal", e -> {
+    	DISPLAY.asyncExec(() -> {
     		expectedFinishText.setText((String) e.getNewValue());
     	});
     });
