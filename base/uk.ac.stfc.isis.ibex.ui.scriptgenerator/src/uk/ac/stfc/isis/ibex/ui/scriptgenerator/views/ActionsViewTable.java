@@ -236,6 +236,12 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 		return columnHeader.equals(ScriptGeneratorViewModel.VALIDITY_COLUMN_HEADER) && !validityDisplay.equalsAction(action);
 	}
 	
+	private boolean executingStatusChanged(String columnHeader, TableItem item, int column, ScriptGeneratorAction action) {
+		var lineNumberImage = Optional.ofNullable(item.getImage(column));
+		var statusFromLastDisplay = ExecutingStatusDisplay.fromImage(lineNumberImage);
+		return columnHeader.equals(ScriptGeneratorViewModel.ACTION_NUMBER_COLUMN_HEADER) && !ExecutingStatusDisplay.equalsAction(statusFromLastDisplay, action);
+	}
+	
 	private boolean parameterValueChanged(Optional<String> parameterValue, TableItem item, int columnNumber) {
 		return parameterValue.isPresent() && !parameterValue.get().equals(item.getText(columnNumber));
 	}
@@ -266,6 +272,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 			Optional<String> parameterValue = Optional.ofNullable(actionParameterValues.get(columnHeader));
 			if (parameterValueChanged(parameterValue, item, columnNumber) 
 					|| validityChanged(columnHeader, item, columnNumber, action) 
+					|| executingStatusChanged(columnHeader, item, columnNumber, action)
 					|| estimatedTimeChanged(columnHeader, item, columnNumber, action)) {
 				return true;
 			} 

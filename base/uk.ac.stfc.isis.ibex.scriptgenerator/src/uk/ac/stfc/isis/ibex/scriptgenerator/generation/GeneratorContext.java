@@ -7,8 +7,9 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
-import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
+import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
  * Part of the strategy pattern to generate a script in a specified language,
@@ -18,29 +19,6 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
  *
  */
 public class GeneratorContext extends ModelObject {
-	
-	/**
-	 * The property to listen for changes in a Generator containing the mapping Map<Integer, String> of
-	 *  validity checks for each row of the script generator.
-	 */
-	private static final String VALIDITY_ERROR_MESSAGE_PROPERTY = "validity error messages";
-	
-	/**
-	 * The property to listen for changes in a Generator containing whether or not all
-	 *  script generator contents are valid or not (bool).
-	 */
-	private static final String PARAM_VALIDITY_PROPERTY = "parameter validity";
-	
-    /**
-     * The property to listen for changes in a Generator containing how long each action is
-     *  expected to take.
-     */
-    private static final String TIME_ESTIMATE_PROPERTY = "time estimate";
-	
-	/**
-	 * The property to listen for changes in a Generator containing the generated script (String).
-	 */
-	private static final String GENERATED_SCRIPT_PROPERTY = "generated script";
 	
 	/**
 	 * A mapping from the type of generated language to it's generator.
@@ -56,17 +34,17 @@ public class GeneratorContext extends ModelObject {
 	 * @param generator The generator to use.
 	 */
 	public void putGenerator(GeneratedLanguage generatedLanguage, AbstractGenerator generator) {
-		generator.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
-			firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		generator.addPropertyChangeListener(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
+			firePropertyChange(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
-		generator.addPropertyChangeListener(PARAM_VALIDITY_PROPERTY, evt -> {
-			firePropertyChange(PARAM_VALIDITY_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		generator.addPropertyChangeListener(ScriptGeneratorProperties.PARAM_VALIDITY_PROPERTY, evt -> {
+			firePropertyChange(ScriptGeneratorProperties.PARAM_VALIDITY_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
-        generator.addPropertyChangeListener(TIME_ESTIMATE_PROPERTY, evt -> {
-            firePropertyChange(TIME_ESTIMATE_PROPERTY, evt.getOldValue(), evt.getNewValue());
+        generator.addPropertyChangeListener(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, evt -> {
+            firePropertyChange(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, evt.getOldValue(), evt.getNewValue());
         });
-		generator.addPropertyChangeListener(GENERATED_SCRIPT_PROPERTY, evt -> {
-			firePropertyChange(GENERATED_SCRIPT_PROPERTY, null, evt.getNewValue());
+		generator.addPropertyChangeListener(ScriptGeneratorProperties.GENERATED_SCRIPT_PROPERTY, evt -> {
+			firePropertyChange(ScriptGeneratorProperties.GENERATED_SCRIPT_PROPERTY, null, evt.getNewValue());
 		});
 		generatorStrategies.put(generatedLanguage, generator);
 	}
@@ -95,11 +73,11 @@ public class GeneratorContext extends ModelObject {
 	}
 	
 	/**
-	 * Refresh the generated script in the passed generatedLanguage from the actionsTable passed.
+	 * Refresh the generated script in the passed generatedLanguage from the actions passed.
 	 * The generated script may not be refreshed if the parameters are invalid. 
 	 * The parameter validity property will change and alert listeners at this point.
 	 * 
-	 * @param actionsTable The script generator contents to generate the script from.
+	 * @param actions The script generator contents to generate the script from.
 	 * @param scriptDefinition The script definition to generate the script from.
 	 * @param generatedLanguage The language to generate the script in.
 	 * @param jsonContent Content of the JSON file 
@@ -107,16 +85,16 @@ public class GeneratorContext extends ModelObject {
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
 	 */
-	public Optional<Integer> refreshGeneratedScript(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage, String jsonContent, List<String> globalParams)
+	public Optional<Integer> refreshGeneratedScript(List<ScriptGeneratorAction> actions, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage, String jsonContent, List<String> globalParams)
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
 		AbstractGenerator generator = getGenerator(generatedLanguage);
-		return generator.refreshGeneratedScript(actionsTable.getActions(), scriptDefinition, jsonContent, globalParams);
+		return generator.refreshGeneratedScript(actions, scriptDefinition, jsonContent, globalParams);
 	}
 	
 	/**
 	 * Refresh the generated script in the default language (Python).
 	 * 
-	 * @param actionsTable The script generator contents to generate the script from.
+	 * @param actions The script generator contents to generate the script from.
 	 * @param scriptDefinition The script definition to generate the script from.
 	 * @param jsonContent The JSON content created when generating script
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
@@ -124,88 +102,86 @@ public class GeneratorContext extends ModelObject {
 	 * @throws InterruptedException The call to generate was interrupted.
 	 * @return An ID for the generated script.
 	 */
-	public Optional<Integer> refreshGeneratedScript(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, String jsonContent, List<String> globalParams) 
+	public Optional<Integer> refreshGeneratedScript(List<ScriptGeneratorAction> actions, ScriptDefinitionWrapper scriptDefinition, String jsonContent, List<String> globalParams) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
-		return refreshGeneratedScript(actionsTable, scriptDefinition, GeneratedLanguage.PYTHON, jsonContent, globalParams);
+		return refreshGeneratedScript(actions, scriptDefinition, GeneratedLanguage.PYTHON, jsonContent, globalParams);
 	}
 	
 	/**
-	 * Check if the contents of the script generator (actionsTable) 
-	 *  are valid against a generator (generatedLanguage) and refresh the property.
+	 * Check if the actions are valid against a generator (generatedLanguage) and refresh the property.
 	 * 
-	 * @param actionsTable The contents of the script generator to validate.
+	 * @param actions The contents of the script generator to validate.
 	 * @param scriptDefinition The script definition to validate the script against.
 	 * @param generatedLanguage The language that the script will be generated in.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
 	 */
-	public void refreshAreParamsValid(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage, List<String> globalParams) 
+	public void refreshAreParamsValid(List<ScriptGeneratorAction> actions, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage, List<String> globalParams) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
 		AbstractGenerator generator = getGenerator(generatedLanguage);
-		generator.refreshAreParamsValid(actionsTable.getActions(), scriptDefinition, globalParams);
+		generator.refreshAreParamsValid(actions, scriptDefinition, globalParams);
 	}
 	
 	/**
-	 * Check if the contents of the script generator (actionsTable) 
+	 * Check if the actions
 	 *  are valid against the default language generator (Python) and refresh the property.
 	 * 
-	 * @param actionsTable The contents of the script generator to validate.
+	 * @param actions The contents of the script generator to validate.
 	 * @param scriptDefinition The script definition to validate the script against.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
 	 */
-	public void refreshAreParamsValid(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams) 
+	public void refreshAreParamsValid(List<ScriptGeneratorAction> actions, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
-		refreshAreParamsValid(actionsTable, scriptDefinition, GeneratedLanguage.PYTHON, globalParams);
+		refreshAreParamsValid(actions, scriptDefinition, GeneratedLanguage.PYTHON, globalParams);
 	}
 	
     /**
-     * Estimate the time necessary to complete the contents of the script generator (actionsTable).
+     * Estimate the time necessary to complete the actions.
      * 
-     * @param actionsTable The contents of the script generator
+     * @param actions The contents of the script generator
      * @param scriptDefinition The script definition
      * @param generatedLanguage The language that the script will be generated in.
      * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
      * @throws ExecutionException A failure to execute the call to generate.
      * @throws InterruptedException The call to generate was interrupted.
      */
-    public void refreshTimeEstimation(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage, List<String> globalParams)
+    public void refreshTimeEstimation(List<ScriptGeneratorAction> actions, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage, List<String> globalParams)
             throws UnsupportedLanguageException, InterruptedException, ExecutionException {
         AbstractGenerator generator = getGenerator(generatedLanguage);
-        generator.refreshTimeEstimation(actionsTable.getActions(), scriptDefinition, globalParams);
+        generator.refreshTimeEstimation(actions, scriptDefinition, globalParams);
     }
     
     /**
-     * Estimate the time necessary to complete the contents of the script generator (actionsTable)
-     * using the default language generator (Python).
+     * Estimate the time necessary to complete the actions using the default language generator (Python).
      * 
-     * @param actionsTable The contents of the script generator
+     * @param actions The contents of the script generator
      * @param scriptDefinition The script definition
      * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
      * @throws ExecutionException A failure to execute the call to generate.
      * @throws InterruptedException The call to generate was interrupted.
      */
-    public void refreshTimeEstimation(ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition,List<String> globalParams)
+    public void refreshTimeEstimation(List<ScriptGeneratorAction> actions, ScriptDefinitionWrapper scriptDefinition,List<String> globalParams)
             throws UnsupportedLanguageException, InterruptedException, ExecutionException {
-        refreshTimeEstimation(actionsTable, scriptDefinition, GeneratedLanguage.PYTHON, globalParams);
+        refreshTimeEstimation(actions, scriptDefinition, GeneratedLanguage.PYTHON, globalParams);
     }
 	
 	/**
 	 * Refresh the validity errors returned when checking validity.
 	 * 
-	 * @param actionsTable The contents of the script generator to check for validity errors with.
+	 * @param actions The contents of the script generator to check for validity errors with.
 	 * @param scriptDefinition The script definition to validate the script against.
 	 * @param generatedLanguage The language that the script will be generated in.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
 	 */
-	public void refreshValidityErrors(List<String> globalParams, ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage) 
+	public void refreshValidityErrors(List<String> globalParams, List<ScriptGeneratorAction> actions, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
 		AbstractGenerator generator = getGenerator(generatedLanguage);
-		generator.refreshValidityErrors(globalParams, actionsTable.getActions(), scriptDefinition);
+		generator.refreshValidityErrors(globalParams, actions, scriptDefinition);
 	}
 
 	/**
@@ -217,7 +193,7 @@ public class GeneratorContext extends ModelObject {
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
 	 */
-	public void refreshValidityErrors(List<String> globalParams, ActionsTable actionsTable, ScriptDefinitionWrapper scriptDefinition) 
+	public void refreshValidityErrors(List<String> globalParams, List<ScriptGeneratorAction> actionsTable, ScriptDefinitionWrapper scriptDefinition) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
 		refreshValidityErrors(globalParams, actionsTable, scriptDefinition, GeneratedLanguage.PYTHON);
 	}

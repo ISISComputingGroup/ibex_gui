@@ -37,6 +37,7 @@ import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -47,11 +48,8 @@ import org.eclipse.swt.widgets.Text;
 import org.apache.logging.log4j.Logger;
 import static java.lang.Math.min;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
-import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
-import uk.ac.stfc.isis.ibex.scriptgenerator.NoScriptDefinitionSelectedException;
-import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptDefinitionNotMatched;
-import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
+import uk.ac.stfc.isis.ibex.scriptgenerator.*;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
@@ -96,56 +94,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     private static final int MAX_ERRORS_TO_DISPLAY_IN_DIALOG = 10;
 
-    /**
-     * A property that denotes whether the language to generate and check validity errors in is supported,
-     */
-    private static final String LANGUAGE_SUPPORT_PROPERTY = "language_supported";
-
-    /**
-     * A property that denotes whether there has been a threading error in generation or validity checking.
-     */
-    private static final String THREAD_ERROR_PROPERTY = "thread error";
-
-    /**
-     * A property that carries the validity error messages to listen for in order to update table rows.
-     */
-    private static final String VALIDITY_ERROR_MESSAGE_PROPERTY = "validity error messages";
-
-    /**
-     * A property that carries the time estimation to listen for in order to update table rows.
-     */
-    private static final String TIME_ESTIMATE_PROPERTY = "time estimate";
-    
-    /**
-     * A property to listen for when a nicos script has been generated.
-     */
-    private static final String NICOS_SCRIPT_GENERATED_PROPERTY = "nicos script generated";
-
-    /**
-     * The property to listen for changes in a Generator containing the generated script (String).
-     */
-    private static final String GENERATED_SCRIPT_FILENAME_PROPERTY = "generated script filename";
-
-    /**
-     * A property to listen to for when actions change in the model.
-     */
-    private static final String ACTIONS_PROPERTY = "actions";
-
-    /**
-     * A property to fire a change of when there is an error generating a script.
-     */
-    private static final String SCRIPT_GENERATION_ERROR_PROPERTY = "script generation error";
-
-    /**
-     * A property that is changed when script definitions are switched.
-     */
-    private static final String SCRIPT_DEFINITION_SWITCH_PROPERTY = "scriptDefinition";
-
-    /**
-     * A property to notify listeners when python becomes ready or not ready.
-     */
-    private static final String PYTHON_READINESS_PROPERTY = "python ready";
-
     private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
     
     private static final String UNSAVED_CHANGES_MARKER = " (*)";
@@ -154,6 +102,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * The header of the validity column.
      */
     public static final String VALIDITY_COLUMN_HEADER = "Validity";
+    
+    public static final String ACTION_NUMBER_COLUMN_HEADER = "Action";
     
     /**
      * The header of the estimated run time column.
@@ -201,7 +151,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Default string to display for time estimation.
      */
     private String displayString = "Total estimated run time: 00:00:00";
-    
+
     /**
      * Class to handle updating the expected finish time.
      */
@@ -249,44 +199,44 @@ public class ScriptGeneratorViewModel extends ModelObject {
     public ScriptGeneratorViewModel() {
 	    // Set up the model
 	    scriptGeneratorModel = Activator.getModel();
-	    scriptGeneratorModel.addPropertyChangeListener(PYTHON_READINESS_PROPERTY, evt -> {
-	        firePropertyChange(PYTHON_READINESS_PROPERTY, evt.getOldValue(), evt.getNewValue());
+	    scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.PYTHON_READINESS_PROPERTY, evt -> {
+	        firePropertyChange(ScriptGeneratorProperties.PYTHON_READINESS_PROPERTY, evt.getOldValue(), evt.getNewValue());
 	    });
     }
 
     /**
      * Set up the model. Allows us to attach listeners for the view first.
+     * 
+     * @return the model.
      */
-    public void setUpModel() {
+    public ScriptGeneratorSingleton setUpModel() {
 	    clipboard = new Clipboard(Display.getDefault());
 	    scriptGeneratorModel.createScriptDefinitionLoader();
 	    scriptGeneratorModel.setUp();
 	    // Listen to whether the language support is changed
 	    // notify the user if the language is not supported
-	    scriptGeneratorModel.addPropertyChangeListener(LANGUAGE_SUPPORT_PROPERTY, evt -> {
+	    scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.LANGUAGE_SUPPORT_PROPERTY, evt -> {
 	        if (Objects.equals(evt.getOldValue(), true) && Objects.equals(evt.getNewValue(), false)) {
 	        displayLanguageSupportError();
 	        }
 	    });
 	    // Listen for model threading errors and display to the user if there is one
 	    // Model is responsible for logging it
-	    scriptGeneratorModel.addPropertyChangeListener(THREAD_ERROR_PROPERTY, evt -> {
+	    scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.THREAD_ERROR_PROPERTY, evt -> {
 	        displayThreadingError();
 	    });
-	    scriptGeneratorModel.addPropertyChangeListener(SCRIPT_GENERATION_ERROR_PROPERTY, evt -> {
+	    scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.SCRIPT_GENERATION_ERROR_PROPERTY, evt -> {
 	        LOG.info("Generation error");
 	        displayGenerationError();
 	    });
 	    // Listen for generated script refreshes
-	    scriptGeneratorModel.addPropertyChangeListener(GENERATED_SCRIPT_FILENAME_PROPERTY, evt -> {
+	    scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.GENERATED_SCRIPT_FILENAME_PROPERTY, evt -> {
 	        String scriptFilename = (String) evt.getNewValue();
 	        DISPLAY.asyncExec(() -> {
 	        scriptGeneratorModel.getLastGeneratedScriptId().ifPresentOrElse(
 	            generatedScriptId -> {
 	            	scriptGeneratorModel.getScriptFromId(generatedScriptId).ifPresentOrElse(generatedScript -> {
-	            		if (nicosScriptIds.contains(generatedScriptId)) {
-	            			previewScriptOrQueueDirectly(generatedScript);
-	            		} else {
+	            		if (!scriptGeneratorModel.isScriptDynamic(generatedScriptId)) {
 	            			if (scriptsToGenerateToCurrentFilepath.contains(generatedScriptId)) {
 	            				saveScriptToCurrentFilepath(generatedScript);
 	            			} else {
@@ -303,17 +253,17 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	            );
 	        });
 	    });
-
+	    return scriptGeneratorModel;
     }
     
     private void previewScriptOrQueueDirectly(String generatedScript) {
 		QueueScriptPreviewDialog scriptPreview = new QueueScriptPreviewDialog(Display.getDefault().getActiveShell(), generatedScript);
 		if (scriptPreview.askIfPreviewScript()) {
 			if (scriptPreview.open() == IDialogConstants.OK_ID) {
-				firePropertyChange(NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
+				firePropertyChange(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
 			}
 		} else {
-			firePropertyChange(NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
+			firePropertyChange(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
 		}
     }
     
@@ -590,15 +540,15 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    this.btnGenerateScript = btnGenerateScript;
 	    this.btnGenerateScriptAs = btnGenerateScriptAs;
 	    // Remove listeners so as not to bind them twice
-	    this.scriptGeneratorModel.getScriptGeneratorTable().removePropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
-	    this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, actionChangeListener);
-	    this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ACTIONS_PROPERTY, evt -> {
+	    this.scriptGeneratorModel.getScriptGeneratorTable().removePropertyChangeListener(ScriptGeneratorProperties.ACTIONS_PROPERTY, actionChangeListener);
+	    this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ScriptGeneratorProperties.ACTIONS_PROPERTY, actionChangeListener);
+	    this.scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener(ScriptGeneratorProperties.ACTIONS_PROPERTY, evt -> {
 	    	updateParametersFileModifiedStatus();
 		});
-	    this.scriptGeneratorModel.removePropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
-	    this.scriptGeneratorModel.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
-	    this.scriptGeneratorModel.removePropertyChangeListener(TIME_ESTIMATE_PROPERTY, actionChangeListener);
-	    this.scriptGeneratorModel.addPropertyChangeListener(TIME_ESTIMATE_PROPERTY, actionChangeListener);
+	    this.scriptGeneratorModel.removePropertyChangeListener(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
+	    this.scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
+	    this.scriptGeneratorModel.removePropertyChangeListener(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, actionChangeListener);
+	    this.scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, actionChangeListener);
 	    }
 	
 	    private void updateParametersFilePath(String parametersFilePath) {
@@ -692,7 +642,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     public String getTimeEstimate() {
     	return displayString;
     }
-    
+
     /**
      * Get the Finish timer.
      * @return The finish timer object of the view model.
@@ -746,7 +696,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	        }
 	        globalLabel.clear();
 	        for (Text text: globalParamText) {
-	        	if(!text.isDisposed()) {
+	        	if (!text.isDisposed()) {
 	        	text.dispose();
 	        	}
 	        }
@@ -754,7 +704,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	        currentGlobals.clear();
 	        globalParamText.clear();
 	        createGlobalParamsWidgets();
-	        if(!globalParamsComposite.isDisposed()) {
+	        if (!globalParamsComposite.isDisposed()) {
 		        globalParamsComposite.layout();
 	        }
 		     mainParent.layout();
@@ -789,7 +739,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
       			  param = global.getName();
       			  currentGlobals.add(global.getName());
       			  paramVal = global.getDefaultValue();
-      			  if(!globalParamsComposite.isDisposed()) {
+      			  if (!globalParamsComposite.isDisposed()) {
 	            	  Label globalLabelCurrent = new Label(globalParamsComposite, SWT.NONE);
 	            	  globalLabelCurrent.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 	            	  globalLabelCurrent.setText(param);
@@ -861,7 +811,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    this.finishTimer = new ScriptGeneratorExpectedFinishTimer();
 	    this.scheduler = Executors.newScheduledThreadPool(1);
 	    this.scheduler.scheduleWithFixedDelay(finishTimer, 0, 1, TimeUnit.SECONDS);
-	    scriptGeneratorModel.getScriptDefinitionLoader().addPropertyChangeListener(SCRIPT_DEFINITION_SWITCH_PROPERTY, scriptDefinitionSwitchHelpListener);
+	    scriptGeneratorModel.getScriptDefinitionLoader().addPropertyChangeListener(ScriptGeneratorProperties.SCRIPT_DEFINITION_SWITCH_PROPERTY, scriptDefinitionSwitchHelpListener);
     }
 
     /**
@@ -926,18 +876,22 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     protected void addColumns(ActionsViewTable viewTable) {  
         // Add line numbers
-        TableViewerColumn lineNumberColumn = viewTable.createColumn("Action", 0, 
+        TableViewerColumn lineNumberColumn = viewTable.createColumn(ACTION_NUMBER_COLUMN_HEADER, 0, 
                 new CellLabelProvider() {
                     @Override
                     public void update(ViewerCell cell) {
-                    	if (((ScriptGeneratorAction) cell.getElement()).isValid()) {
+                    	ScriptGeneratorAction action = (ScriptGeneratorAction) cell.getElement();
+                    	if (action.isValid()) {
                     		cell.setBackground(CLEAR_COLOR);
                         } else {
                         	cell.setBackground(INVALID_LIGHT_COLOR);
                         }
                         for (int i = 0; i < viewTable.table().getItemCount(); i++) {
-                            if (cell.getElement().equals(viewTable.viewer().getElementAt(i))) {
-                                cell.setText(String.valueOf(i + 1));
+                            if (action.equals(viewTable.viewer().getElementAt(i))) {
+                            	String lineNumber = String.valueOf(i + 1);
+                                cell.setText(lineNumber);
+                                Image image = ExecutingStatusDisplay.getImage(action.getDynamicScriptingStatus());
+                                cell.setImage(image);
                                 break;
                             }
                         }
@@ -1033,7 +987,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
         // Add estimated time column
         TableViewerColumn timeEstimateColumn = viewTable.createColumn(ESTIMATED_RUN_TIME_COLUMN_HEADER, 
             1, 
-            new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty(TIME_ESTIMATE_PROPERTY)) {
+            new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY)) {
             @Override
             protected String stringFromRow(ScriptGeneratorAction row) {
 	            if (!scriptGeneratorModel.languageSupported) {
@@ -1124,9 +1078,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
     
     public void updateGlobalParams(String params, String toUpdate){
-    	int i =0;
-    	for(String paramName: this.currentGlobals) {
-    		if( paramName.equals(toUpdate)){
+    	int i = 0;
+    	for (String paramName: this.currentGlobals) {
+    		if (paramName.equals(toUpdate)) {
     			scriptGeneratorModel.updateGlobalParams(params, i);
     		}
     		i++;
@@ -1136,7 +1090,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     /**
      * Generate a script and save it to the current script file. If fail display warnings.
      * @throws UnsupportedLanguageException 
-     * @returns The script ID.
+     * @return The script ID.
      */
     public Optional<Integer> generateScriptToCurrentFilepath() {
     	Optional<Integer> scriptId = generateScript();
@@ -1176,7 +1130,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
     
     /**
-	 * Get the location of the repository containing script definitions.
+	 * @return the location of the repository containing script definitions.
 	 */
 	public Path getScriptDefinitionsRepoPath() {
 		return scriptGeneratorModel.getRepoPath();

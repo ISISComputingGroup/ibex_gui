@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonNotReadyException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
@@ -33,17 +34,17 @@ public class GeneratorPython extends AbstractGenerator {
 	public GeneratorPython(PythonInterface pythonInterface) {
 	
 		this.pythonInterface = pythonInterface;
-		this.pythonInterface.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
-			firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		this.pythonInterface.addPropertyChangeListener(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
+			firePropertyChange(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
-		this.pythonInterface.addPropertyChangeListener(PARAM_VALIDITY_PROPERTY, evt -> {
-			firePropertyChange(PARAM_VALIDITY_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		this.pythonInterface.addPropertyChangeListener(ScriptGeneratorProperties.PARAM_VALIDITY_PROPERTY, evt -> {
+			firePropertyChange(ScriptGeneratorProperties.PARAM_VALIDITY_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
-        this.pythonInterface.addPropertyChangeListener(TIME_ESTIMATE_PROPERTY, evt -> {
-            firePropertyChange(TIME_ESTIMATE_PROPERTY, evt.getOldValue(), evt.getNewValue());
+        this.pythonInterface.addPropertyChangeListener(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, evt -> {
+            firePropertyChange(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, evt.getOldValue(), evt.getNewValue());
         });
-		this.pythonInterface.addPropertyChangeListener(GENERATED_SCRIPT_PROPERTY, evt -> {
-			firePropertyChange(GENERATED_SCRIPT_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		this.pythonInterface.addPropertyChangeListener(ScriptGeneratorProperties.GENERATED_SCRIPT_PROPERTY, evt -> {
+			firePropertyChange(ScriptGeneratorProperties.GENERATED_SCRIPT_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
 	
 	}
