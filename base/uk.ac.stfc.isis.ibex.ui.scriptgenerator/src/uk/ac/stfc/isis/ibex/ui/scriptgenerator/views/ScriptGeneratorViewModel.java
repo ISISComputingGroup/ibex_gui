@@ -16,6 +16,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -149,6 +152,16 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     private String displayString = "Total estimated run time: 00:00:00";
 
+    /**
+     * Class to handle updating the expected finish time.
+     */
+    private ScriptGeneratorExpectedFinishTimer finishTimer;
+    
+    /**
+     * The Scheduler for finish timer.
+     */
+    private ScheduledExecutorService scheduler;
+    
     /**
      * The reference to the singleton model that the ViewModel is to use.
      */
@@ -596,7 +609,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 
 	    long totalSeconds = scriptGeneratorModel.getTotalEstimatedTime().isPresent() ? scriptGeneratorModel.getTotalEstimatedTime().get() : 0;
 	    String displayTotal = "Total estimated run time: " + changeSecondsToTimeFormat(totalSeconds);
-	
+	    finishTimer.SetTimeEstimateVal(totalSeconds);
 	    firePropertyChange("timeEstimate", displayString, displayString = displayTotal);
     }
 
@@ -628,6 +641,14 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     public String getTimeEstimate() {
     	return displayString;
+    }
+
+    /**
+     * Get the Finish timer.
+     * @return The finish timer object of the view model.
+     */
+    public ScriptGeneratorExpectedFinishTimer getFinishTimer() {
+    	return this.finishTimer;
     }
 
     /**
@@ -787,6 +808,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    this.globalParamsComposite = scriptDefintionComposite;
 	    this.mainParent = mainParent;
 	    this.currentGlobals = new ArrayList<String>();
+	    this.finishTimer = new ScriptGeneratorExpectedFinishTimer();
+	    this.scheduler = Executors.newScheduledThreadPool(1);
+	    this.scheduler.scheduleWithFixedDelay(finishTimer, 0, 1, TimeUnit.SECONDS);
 	    scriptGeneratorModel.getScriptDefinitionLoader().addPropertyChangeListener(ScriptGeneratorProperties.SCRIPT_DEFINITION_SWITCH_PROPERTY, scriptDefinitionSwitchHelpListener);
     }
 

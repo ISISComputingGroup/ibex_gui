@@ -121,9 +121,11 @@ public class ScriptGeneratorView {
     private Label parametersFileText;
     private Label scriptGenerationTimeText;
     private Label estimateText;
+    private Label expectedFinishText;
     private Button runButton;
     private Button stopButton;
     private Button pauseButton;
+
     private Button generateScriptButton;
     private Button generateScriptAsButton;
     private Button btnDuplicateAction;
@@ -382,13 +384,28 @@ public class ScriptGeneratorView {
 	        paste.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 	        paste.addListener(SWT.Selection, e -> scriptGeneratorViewModel.pasteActions(table.getSelectionIndex()));
 	        
+	        // Composite for the row containing  total estimated run time
+	        Composite scriptTimeGrp = new Composite(scriptInfoGrp, SWT.RIGHT);
+	        scriptTimeGrp.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, true, false, 1, 2));
+	        GridLayout scriptTimeLayout = new GridLayout(1, true);
+	        scriptTimeLayout.marginRight = 40;
+	        scriptTimeGrp.setLayout(scriptTimeLayout);
+	        
 	        // Label for the total estimated run time
-	        estimateText = new Label(scriptInfoGrp, SWT.RIGHT);
-	        estimateText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+	        estimateText = new Label(scriptTimeGrp, SWT.TOP);
+	        estimateText.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
 	        String currentFont = estimateText.getFont().getFontData()[0].getName();
 	        Font font = new Font(estimateText.getDisplay(), new FontData(currentFont, 11, SWT.BOLD));
 	        estimateText.setFont(font);
 	        estimateText.setText("Total estimated run time: 0 seconds");
+	
+	        // Label for the expected finish time
+	        expectedFinishText = new Label(scriptTimeGrp, SWT.BOTTOM);
+	        expectedFinishText.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
+	        currentFont = expectedFinishText.getFont().getFontData()[0].getName();
+	        font = new Font(expectedFinishText.getDisplay(), new FontData(currentFont, 11, SWT.BOLD));
+	        expectedFinishText.setFont(font);
+	        expectedFinishText.setText("Expected Finish Time: 00:00:00");
 	
 	        // Composite for laying out new/delete/duplicate action buttons
 	        Composite actionsControlsGrp = new Composite(mainParent, SWT.NONE);
@@ -600,6 +617,12 @@ public class ScriptGeneratorView {
     
     bindingContext.bindValue(WidgetProperties.text().observe(estimateText),
         BeanProperties.value("timeEstimate").observe(scriptGeneratorViewModel));
+
+    scriptGeneratorViewModel.getFinishTimer().addPropertyChangeListener("finishTimeVal", e->{
+    	DISPLAY.asyncExec(()->{
+    		expectedFinishText.setText((String) e.getNewValue());
+    	});
+    });
 
     bindToHasSelected(btnDeleteAction);
     bindToHasSelected(btnMoveActionUp);

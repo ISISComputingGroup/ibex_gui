@@ -26,8 +26,8 @@
       </children>
       <children xsi:type="menu:Menu" xmi:id="_DPuvMGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.synoptic" label="Synoptic" mnemonics="">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_d4mEMGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.synpotic.new" label="New" tooltip="Open a dialogue to create a new synoptic" mnemonics="N" command="_dy2SQKjiEeeauN8XvomWPw"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_ec_KsGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.synpotic.edit" label="Edit" tooltip="Select and edit an existing synoptic" mnemonics="E" command="_OHOt8KjiEeeauN8XvomWPw"/>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_fJsfsGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.synpotic.delete" label="Delete" tooltip="Select and delete a synoptic" mnemonics="D" command="_lNuIYKjiEeeauN8XvomWPw"/>
+        <children xsi:type="menu:DynamicMenuContribution" xmi:id="_EGw3UEkzEeyarfYfx45gAA" elementId="uk.ac.stfc.isis.ibex.e4.client.dynamicmenucontribution.3" label="View or Edit synoptic" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.synoptic.editor/uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.EditSynopticHandler"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_Dm7HMGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.ioc" label="IOC" mnemonics="">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_gCw1sGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.startstopiocs" label="Start/stop IOCs" command="_5dJv8Kj_Eeelm7I_usJ7RQ"/>

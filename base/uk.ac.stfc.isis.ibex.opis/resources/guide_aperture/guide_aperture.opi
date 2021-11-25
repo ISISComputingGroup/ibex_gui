@@ -164,7 +164,7 @@
         <macros>
           <include_parent_macros>true</include_parent_macros>
         </macros>
-        <name>Waveguide</name>
+        <name>Guide</name>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -412,7 +412,7 @@ $(pv_value)</tooltip>
                 <value>Cannot stop motion when galils interlocked</value>
               </exp>
               <exp bool_exp="pv0 == 1">
-                <value>Stop all Apertures and Waveguides motion</value>
+                <value>Stop all Apertures and guides motion</value>
               </exp>
               <pv trig="true">$(P)FINS_VAC:GALIL_INTERLOCK</pv>
             </rule>
@@ -439,7 +439,7 @@ $(pv_value)</tooltip>
           <style>0</style>
           <text>STOP</text>
           <toggle_button>false</toggle_button>
-          <tooltip>Stop all Apertures and Waveguides motion</tooltip>
+          <tooltip>Stop all Apertures and Guides motion</tooltip>
           <visible>true</visible>
           <widget_type>Action Button</widget_type>
           <width>90</width>
@@ -1047,7 +1047,7 @@ $(pv_value)</tooltip>
                 <value>Cannot stop motion when galils interlocked</value>
               </exp>
               <exp bool_exp="pv0 == 1">
-                <value>Stop all Apertures and Waveguides motion</value>
+                <value>Stop all Apertures and guides motion</value>
               </exp>
               <pv trig="true">$(P)FINS_VAC:GALIL_INTERLOCK</pv>
             </rule>
@@ -1061,7 +1061,7 @@ $(pv_value)</tooltip>
           <style>0</style>
           <text>STOP</text>
           <toggle_button>false</toggle_button>
-          <tooltip>Stop all Apertures and Waveguides motion</tooltip>
+          <tooltip>Stop all Apertures and Guides motion</tooltip>
           <visible>true</visible>
           <widget_type>Action Button</widget_type>
           <width>90</width>
@@ -1174,8 +1174,8 @@ $(pv_value)</tooltip>
             <include_parent_macros>true</include_parent_macros>
             <NUMBER>1</NUMBER>
           </macros>
-          <name>Waveguide grouping container 1</name>
-          <opi_file>waveguide.opi</opi_file>
+          <name>Guide grouping container 1</name>
+          <opi_file>Guide.opi</opi_file>
           <resize_behaviour>1</resize_behaviour>
           <rules />
           <scale_options>
@@ -1215,8 +1215,8 @@ $(pv_value)</tooltip>
             <include_parent_macros>true</include_parent_macros>
             <NUMBER>2</NUMBER>
           </macros>
-          <name>Waveguide grouping container 2</name>
-          <opi_file>waveguide.opi</opi_file>
+          <name>Guide grouping container 2</name>
+          <opi_file>guide.opi</opi_file>
           <resize_behaviour>1</resize_behaviour>
           <rules />
           <scale_options>
@@ -1297,8 +1297,8 @@ $(pv_value)</tooltip>
             <include_parent_macros>true</include_parent_macros>
             <NUMBER>3</NUMBER>
           </macros>
-          <name>Waveguide grouping container 3</name>
-          <opi_file>waveguide.opi</opi_file>
+          <name>guide grouping container 3</name>
+          <opi_file>guide.opi</opi_file>
           <resize_behaviour>1</resize_behaviour>
           <rules />
           <scale_options>
@@ -1379,8 +1379,8 @@ $(pv_value)</tooltip>
             <include_parent_macros>true</include_parent_macros>
             <NUMBER>4</NUMBER>
           </macros>
-          <name>Waveguide grouping container 4</name>
-          <opi_file>waveguide.opi</opi_file>
+          <name>guide grouping container 4</name>
+          <opi_file>guide.opi</opi_file>
           <resize_behaviour>1</resize_behaviour>
           <rules />
           <scale_options>
@@ -1461,8 +1461,8 @@ $(pv_value)</tooltip>
             <include_parent_macros>true</include_parent_macros>
             <NUMBER>5</NUMBER>
           </macros>
-          <name>Waveguide grouping container 5</name>
-          <opi_file>waveguide.opi</opi_file>
+          <name>guide grouping container 5</name>
+          <opi_file>guide.opi</opi_file>
           <resize_behaviour>1</resize_behaviour>
           <rules />
           <scale_options>
@@ -1634,7 +1634,7 @@ $(pv_value)</tooltip>
     </scale_options>
     <scripts />
     <show_scrollbar>false</show_scrollbar>
-    <text>SANS2D Apertures &amp; Waveguides</text>
+    <text>SANS2D Apertures &amp; guides</text>
     <tooltip></tooltip>
     <transparent>false</transparent>
     <vertical_alignment>1</vertical_alignment>
