@@ -69,7 +69,7 @@ public abstract class AbstractGenerator extends ModelObject {
 	 * 
 	 * @param scriptGenContent The contents of the script generator to validate.
 	 * @param scriptDefinition The instrument script definition to validate the script against.
-	 * @param globalParams The global parameters to generate the script with.
+	 * @param globalParams The global parameters to check parameter validity.
 	 * @throws ExecutionException A failure to execute the call to generate a script
 	 * @throws InterruptedException The call to generate a script was interrupted
 	 */
@@ -80,6 +80,7 @@ public abstract class AbstractGenerator extends ModelObject {
 	 * 
 	 * @param scriptGenContent The contents of the script generator to check for validity errors with.
 	 * @param scriptDefinition The instrument script definition to validate the script against.
+	 * @param globalParams The global parameters to check parameter validity.
 	 * @throws ExecutionException A failure to execute the call to generate a script
 	 * @throws InterruptedException The call to generate a script was interrupted
 	 */
@@ -90,7 +91,7 @@ public abstract class AbstractGenerator extends ModelObject {
      * 
      * @param scriptGenContent The contents of the script generator
      * @param scriptDefinition The instrument script definition
-     * @param globalParams The global parameters to generate the script with.
+     * @param globalParams The global parameters to refresh time estimation with.
      * @throws ExecutionException A failure to execute the call to generate a script
      * @throws InterruptedException The call to generate a script was interrupted
      */

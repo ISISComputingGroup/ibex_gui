@@ -386,6 +386,7 @@ public class PythonInterface extends ModelObject {
 	 * 
 	 * @param scriptGenContent The script generator content to validate.
 	 * @param scriptDefinition           The script definition to validate against.
+	 * @param globalParams The global parameters to generate the script with.
 	 * @throws ExecutionException   A failure to execute the py4j call
 	 * @throws InterruptedException The Py4J call was interrupted
 	 * @throws PythonNotReadyException When python is not ready to accept calls.
@@ -395,7 +396,7 @@ public class PythonInterface extends ModelObject {
 		if (pythonReady) {
 			CompletableFuture.supplyAsync(() -> {
 				try {
-					return scriptDefinitionsWrapper.getValidityErrors(globalParams,convertScriptGenContentToPython(scriptGenContent), scriptDefinition);
+					return scriptDefinitionsWrapper.getValidityErrors(globalParams, convertScriptGenContentToPython(scriptGenContent), scriptDefinition);
 				} catch (Py4JException e) {
 					LOG.error(e);
 					handlePythonReadinessChange(false);
@@ -415,6 +416,7 @@ public class PythonInterface extends ModelObject {
 	 * 
 	 * @param scriptGenContent The script generator content to validate.
 	 * @param scriptDefinition           The script definition to validate against.
+	 * @param globalParams The global parameters to check parameter validity with.
 	 * @throws ExecutionException   A failure to execute the py4j call
 	 * @throws InterruptedException The Py4J call was interrupted
 	 * @throws PythonNotReadyException When python is not ready to accept calls.
@@ -444,6 +446,7 @@ public class PythonInterface extends ModelObject {
      * 
      * @param scriptGenContent The script generator content
      * @param scriptDefinition           The script definition
+     * @param globalParams The global parameters to refresh time estimation with.
      * @throws ExecutionException   A failure to execute the py4j call
      * @throws InterruptedException The Py4J call was interrupted
      * @throws PythonNotReadyException When python is not ready to accept calls.
@@ -475,6 +478,7 @@ public class PythonInterface extends ModelObject {
      * @param scriptGenContent The contents to generate the script with. An optional that is empty if parameters are invalid.
 	 * @param jsonContent json content that will be hexed and compressed
 	 * @param scriptDefinition           The script definition to generate the script with.
+	 * @param globalParams The global parameters to generate the script with.
 	 * @return An optional script.
      */
     private Optional<String> generateScript(List<ScriptGeneratorAction> scriptGenContent, String jsonContent, List<String> globalParams, ScriptDefinitionWrapper scriptDefinition) {
@@ -493,6 +497,7 @@ public class PythonInterface extends ModelObject {
 	 * @param scriptGenContent The contents to generate the script with. An optional that is empty if parameters are invalid.
 	 * @param jsonContent json content that will be hexed and compressed
 	 * @param scriptDefinition           The script definition to generate the script with.
+	 * @param globalParams The global parameters to refresh the generated script with.
 	 * @throws ExecutionException     A failure to execute the py4j call
 	 * @throws InterruptedException   The Py4J call was interrupted
 	 * @throws PythonNotReadyException When python is not ready to accept calls.

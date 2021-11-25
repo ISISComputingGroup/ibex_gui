@@ -139,7 +139,7 @@ public class GeneratorContext extends ModelObject {
 	 * @param actionsTable The contents of the script generator to validate.
 	 * @param scriptDefinition The script definition to validate the script against.
 	 * @param generatedLanguage The language that the script will be generated in.
-	 * @param globalParams The global parameters to generate the script with.
+	 * @param globalParams The global parameters to check parameter validity with.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
@@ -156,7 +156,7 @@ public class GeneratorContext extends ModelObject {
 	 * 
 	 * @param actionsTable The contents of the script generator to validate.
 	 * @param scriptDefinition The script definition to validate the script against.
-	 * @param globalParams The global parameters to generate the script with.
+	 * @param globalParams The global parameters to check parameter validity with.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
@@ -172,7 +172,7 @@ public class GeneratorContext extends ModelObject {
      * @param actionsTable The contents of the script generator
      * @param scriptDefinition The script definition
      * @param generatedLanguage The language that the script will be generated in.
-	 * @param globalParams The global parameters to generate the script with.
+	 * @param globalParams The global parameters to refresh time estimation with.
      * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
      * @throws ExecutionException A failure to execute the call to generate.
      * @throws InterruptedException The call to generate was interrupted.
@@ -189,7 +189,7 @@ public class GeneratorContext extends ModelObject {
      * 
      * @param actionsTable The contents of the script generator
      * @param scriptDefinition The script definition
-	 * @param globalParams The global parameters to generate the script with.
+	 * @param globalParams The global parameters to refresh time estimation with.
      * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
      * @throws ExecutionException A failure to execute the call to generate.
      * @throws InterruptedException The call to generate was interrupted.
@@ -205,7 +205,7 @@ public class GeneratorContext extends ModelObject {
 	 * @param actionsTable The contents of the script generator to check for validity errors with.
 	 * @param scriptDefinition The script definition to validate the script against.
 	 * @param generatedLanguage The language that the script will be generated in.
-	 * @param globalParams The global parameters to generate the script with.
+	 * @param globalParams The global parameters to check validity with.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
@@ -221,7 +221,7 @@ public class GeneratorContext extends ModelObject {
 	 * 
 	 * @param actionsTable The contents of the script generator to check for validity errors with.
 	 * @param scriptDefinition The script definition to validate the script against.
-	 * @param globalParams The global parameters to generate the script with.
+	 * @param globalParams The global parameters to check validity with.
 	 * @throws UnsupportedLanguageException Thrown if the default language (python) to generate the script in is not supported.
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
