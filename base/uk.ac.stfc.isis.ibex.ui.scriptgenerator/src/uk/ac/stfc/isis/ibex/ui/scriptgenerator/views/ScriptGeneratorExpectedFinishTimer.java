@@ -38,7 +38,7 @@ public class ScriptGeneratorExpectedFinishTimer extends ModelObject implements R
 		LocalDateTime currentTime = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 		currentTime = currentTime.plusSeconds(timeEstimateVal);
-		finishTime = "Expected Finish Time: "+ currentTime.format(formatter);
+		finishTime = "Expected Finish Time: " + currentTime.format(formatter);
 		firePropertyChange("finishTimeVal", null, finishTime);
 	}
 }
