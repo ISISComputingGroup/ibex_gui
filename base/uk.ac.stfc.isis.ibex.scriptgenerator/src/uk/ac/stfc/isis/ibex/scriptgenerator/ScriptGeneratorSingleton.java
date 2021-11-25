@@ -237,13 +237,13 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		setActionParameters(scriptDefinitionLoader.getParameters());
 		try {
 			List<ActionParameter> globals = this.scriptDefinitionLoader.getScriptDefinition().getGlobalParameters();
-			for(ActionParameter global:globals) {
+			for (ActionParameter global : globals) {
 				this.globalParams.add(global.getDefaultValue());
 			}
-		}catch(NoSuchElementException e) {
+		} catch (NoSuchElementException e) {
 			LOG.info("No scriptDefinition yet");
 		}
-		
+
 	}
 
 	/**
@@ -615,8 +615,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
         ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
                 .orElseThrow(() -> new NoScriptDefinitionSelectedException(
                         "Tried to refresh time estimation with no script definition selected"));
-        try {
-            generator.refreshTimeEstimation(scriptGeneratorTable.getActions(), scriptDefinition, this.globalParams );
+		try {
+			generator.refreshTimeEstimation(scriptGeneratorTable.getActions(), scriptDefinition, this.globalParams);
             languageSupported = true;
             threadError = false;
         } catch (UnsupportedLanguageException e) {
@@ -655,7 +655,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * Generate a script and save it to file.
 	 * 
-	 * @param actionIndex The index of the action to refresh the generated script with.
+	 * @param action The action to refresh the generated script with.
 	 * 
 	 * @throws InvalidParamsException              If the parameters are invalid a
 	 *                                             script cannot be generated.
@@ -746,7 +746,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
-	 * Get the location of the repository containing script definitions.
+	 * @return the location of the repository containing script definitions.
 	 */
 	public Path getRepoPath() {
 		return scriptDefinitionsRepoPath;
@@ -898,14 +898,23 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		return generator.getScriptFromId(scriptId);
 	}
 	
+	/**
+	 * @param dynamicScriptingManager
+	 */
 	public void setDynamicScriptingManager(DynamicScriptingManager dynamicScriptingManager) {
 		this.dynamicScriptingManager = Optional.of(dynamicScriptingManager);
 	}
 	
-	public Boolean isScriptDynamic(Integer integer) {
+	/**
+	 * Check a given script is a dynamic script.
+	 * 
+     * @param scriptId The ID of the script to check.
+	 * @return whether the given script is dynamic.
+	 */
+	public Boolean isScriptDynamic(Integer scriptId) {
 		if (dynamicScriptingManager.isPresent()) {
 			var manager = dynamicScriptingManager.get();
-			return manager.isScriptDynamic(integer); 
+			return manager.isScriptDynamic(scriptId); 
 		} else {
 			return false;
 		}

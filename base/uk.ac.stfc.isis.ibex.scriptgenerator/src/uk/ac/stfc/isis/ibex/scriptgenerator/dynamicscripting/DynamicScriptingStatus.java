@@ -8,7 +8,7 @@ import uk.ac.stfc.isis.ibex.model.HasStatus;
 public enum DynamicScriptingStatus implements HasStatus<DynamicScriptingStatus> {
 	
 	/**
-	 * Dynamic scripting is currently playing
+	 * Dynamic scripting is currently playing.
 	 */
 	PLAYING,
 	/**

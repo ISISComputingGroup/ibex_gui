@@ -193,6 +193,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
 
     /**
      * Set up the model. Allows us to attach listeners for the view first.
+     * 
+     * @return the model.
      */
     public ScriptGeneratorSingleton setUpModel() {
 	    clipboard = new Clipboard(Display.getDefault());
@@ -673,7 +675,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	        }
 	        globalLabel.clear();
 	        for (Text text: globalParamText) {
-	        	if(!text.isDisposed()) {
+	        	if (!text.isDisposed()) {
 	        	text.dispose();
 	        	}
 	        }
@@ -681,7 +683,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	        currentGlobals.clear();
 	        globalParamText.clear();
 	        createGlobalParamsWidgets();
-	        if(!globalParamsComposite.isDisposed()) {
+	        if (!globalParamsComposite.isDisposed()) {
 		        globalParamsComposite.layout();
 	        }
 		     mainParent.layout();
@@ -716,7 +718,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
       			  param = global.getName();
       			  currentGlobals.add(global.getName());
       			  paramVal = global.getDefaultValue();
-      			  if(!globalParamsComposite.isDisposed()) {
+      			  if (!globalParamsComposite.isDisposed()) {
 	            	  Label globalLabelCurrent = new Label(globalParamsComposite, SWT.NONE);
 	            	  globalLabelCurrent.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 	            	  globalLabelCurrent.setText(param);
@@ -1052,9 +1054,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
     
     public void updateGlobalParams(String params, String toUpdate){
-    	int i =0;
-    	for(String paramName: this.currentGlobals) {
-    		if( paramName.equals(toUpdate)){
+    	int i = 0;
+    	for (String paramName: this.currentGlobals) {
+    		if (paramName.equals(toUpdate)) {
     			scriptGeneratorModel.updateGlobalParams(params, i);
     		}
     		i++;
@@ -1064,7 +1066,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     /**
      * Generate a script and save it to the current script file. If fail display warnings.
      * @throws UnsupportedLanguageException 
-     * @returns The script ID.
+     * @return The script ID.
      */
     public Optional<Integer> generateScriptToCurrentFilepath() {
     	Optional<Integer> scriptId = generateScript();
@@ -1104,7 +1106,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
     
     /**
-	 * Get the location of the repository containing script definitions.
+	 * @return the location of the repository containing script definitions.
 	 */
 	public Path getScriptDefinitionsRepoPath() {
 		return scriptGeneratorModel.getRepoPath();

@@ -42,7 +42,7 @@ public class DynamicScriptingStateFactory {
 	}
 	
 	/**
-	 * Get the last state created by the factory.
+	 * @return the last state created by the factory.
 	 */
 	public DynamicScriptingState getCurrentState() {
 		return state;

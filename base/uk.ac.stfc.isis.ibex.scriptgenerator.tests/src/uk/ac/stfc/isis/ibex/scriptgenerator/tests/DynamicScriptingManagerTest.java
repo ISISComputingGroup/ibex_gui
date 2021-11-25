@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.eclipse.ui.internal.activities.ws.TriggerPointManager;
 import org.junit.AssumptionViolatedException;
 
 
@@ -18,7 +17,6 @@ import static org.mockito.Mockito.when;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.nicos.ScriptStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
-import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptName;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingModelAdapter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingManager;

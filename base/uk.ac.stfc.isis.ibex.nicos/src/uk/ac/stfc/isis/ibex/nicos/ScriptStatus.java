@@ -108,10 +108,16 @@ public enum ScriptStatus implements HasStatus<ScriptStatus> {
 		return this;
 	}
 	
+	/**
+	 * @return whether the status is "idle".
+	 */
 	public Boolean isIdle() {
 		return this == ScriptStatus.IDLE || this == ScriptStatus.IDLEEXC; 
 	}
-	
+
+	/**
+	 * @return whether the status is "paused".
+	 */
 	public Boolean isPaused() {
 		return this == ScriptStatus.INBREAK; 
 	}

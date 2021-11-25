@@ -29,16 +29,16 @@ public abstract class DynamicScriptingState extends ModelObject implements HasSt
 	}
 	
 	/**
-	 * Check if the given script ID is a dynamic script.
-	 * 
 	 * @param scriptId The ID of the script to check.
+	 * 
+	 * @return whether the given script ID is a dynamic script.
 	 */
 	public Boolean isScriptDynamic(Integer scriptId) {
 		return dynamicScriptIdsToAction.containsKey(scriptId);
 	}
 	
 	/**
-	 * Get the ids and associated actions of the dynamic scripts.
+	 * @return the ids and associated actions of the dynamic scripts.
 	 */
 	public HashMap<Integer, ScriptGeneratorAction> getDynamicScriptIds() {
 		return dynamicScriptIdsToAction;
@@ -86,12 +86,12 @@ public abstract class DynamicScriptingState extends ModelObject implements HasSt
 	public void propertyChange(PropertyChangeEvent evt) { /* Default function does nothing */ };
 	
 	/**
-	 * Get the status of the dynamic scripting in this state.
+	 * @return the status of the dynamic scripting in this state.
 	 */
 	public abstract DynamicScriptingStatus getStatus();
 	
 	/**
-	 * Get whether a pause has been complete.
+	 * @return whether a pause has been complete.
 	 */
 	public abstract Boolean pauseComplete();
 	

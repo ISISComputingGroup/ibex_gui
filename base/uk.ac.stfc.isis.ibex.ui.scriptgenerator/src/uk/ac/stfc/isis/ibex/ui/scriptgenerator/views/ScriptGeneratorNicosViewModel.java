@@ -156,7 +156,7 @@ public class ScriptGeneratorNicosViewModel implements PropertyChangeListener {
 	private void formatButtonsWhenStopped() {
 		runButton.setBackground(DEFAULT_COLOR);
 		pauseButton.setBackground(DEFAULT_COLOR);
-		runButton.setEnabled(true && !nicosInError());
+		runButton.setEnabled(!nicosInError());
 		pauseButton.setEnabled(false);
 		stopButton.setEnabled(false);
 		runButton.setText(RUN_BUTTON_TEXT);
@@ -166,9 +166,9 @@ public class ScriptGeneratorNicosViewModel implements PropertyChangeListener {
 	private void formatButtonsWhenPaused() {
 		runButton.setBackground(DEFAULT_COLOR);
 		pauseButton.setBackground(GREEN);
-		runButton.setEnabled(true && !nicosInError());
+		runButton.setEnabled(!nicosInError());
 		pauseButton.setEnabled(false);
-		stopButton.setEnabled(true && !nicosInError());
+		stopButton.setEnabled(!nicosInError());
 		runButton.setText(RESUME_BUTTON_TEXT);
 		runButton.setImage(ExecutingStatusDisplay.PAUSED_DURING_IMAGE);
 	}
@@ -176,9 +176,9 @@ public class ScriptGeneratorNicosViewModel implements PropertyChangeListener {
 	private void formatButtonsWhenPlaying() {	
 		runButton.setBackground(GREEN);
 		pauseButton.setBackground(DEFAULT_COLOR);
-		runButton.setEnabled(true && !nicosInError());
-		pauseButton.setEnabled(true && !nicosInError());
-		stopButton.setEnabled(true && !nicosInError());
+		runButton.setEnabled(!nicosInError());
+		pauseButton.setEnabled(!nicosInError());
+		stopButton.setEnabled(!nicosInError());
 		runButton.setText(RUN_BUTTON_TEXT);
 		runButton.setImage(ExecutingStatusDisplay.EXECUTING_IMAGE);
 	}
