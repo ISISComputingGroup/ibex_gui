@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
  * Helper class that calculates expected finish time.
  *
  */
-public class ScriptGeneratorExpectedFinishTimer extends ModelObject implements Runnable{
+public class ScriptGeneratorExpectedFinishTimer extends ModelObject implements Runnable {
 	private volatile long timeEstimateVal;
 	private String finishTime; 
 	
