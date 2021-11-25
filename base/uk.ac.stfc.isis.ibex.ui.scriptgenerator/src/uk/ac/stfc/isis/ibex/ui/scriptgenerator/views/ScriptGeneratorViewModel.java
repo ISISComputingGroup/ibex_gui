@@ -664,6 +664,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
 
 
+    /**
+     * Take the total seconds and format into an understandable time format (HH:MM:SS) for display.
+     * 
+     * @param totalSeconds The number of seconds to format.
+     * @return The formatted string of the time.
+     */
     public static String changeSecondsToTimeFormat(long totalSeconds) {
 	    Duration duration = Duration.ofSeconds(totalSeconds);
 	    return String.format("%02d:%02d:%02d", duration.toHours(), duration.toMinutesPart(), duration.toSecondsPart());
@@ -671,6 +677,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 
     /**
      * Get the name and location of the parameters save file for the script.
+     * 
      * @return The parameters save file name and location.
      */
     public String getParametersFile() {
@@ -1127,6 +1134,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    }
     }
     
+    /**
+     * Take the params and and the params that we need to update and instruct the model to update them.
+     * 
+     * @param params All the params.
+     * @param toUpdate The params to update.
+     */
     public void updateGlobalParams(String params, String toUpdate) {
     	int i = 0;
     	for (String paramName: this.currentGlobals) {
