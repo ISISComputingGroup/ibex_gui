@@ -214,7 +214,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
       </on_color>
       <on_label>ON</on_label>
-      <pv_name>$(PV_ROOT)T0LogicNIM:RB</pv_name>
+      <pv_name>$(PV_ROOT)T0LOGICNIM:RB</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -313,7 +313,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
       </on_color>
       <on_label>ON</on_label>
-      <pv_name>$(PV_ROOT)T0LogicTTL:RB</pv_name>
+      <pv_name>$(PV_ROOT)T0LOGICTTL:RB</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -453,7 +453,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
       </on_color>
       <on_label>ON</on_label>
-      <pv_name>$(PV_ROOT)T0LogicNR:RB</pv_name>
+      <pv_name>$(PV_ROOT)T0LOGICNR:RB</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -511,7 +511,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
       </on_color>
       <on_label>ON</on_label>
-      <pv_name>$(PV_ROOT)T0OutputPolarity_OFF</pv_name>
+      <pv_name>$(PV_ROOT)T0OUTPUTPOLARITY_OFF</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -699,7 +699,7 @@ $(pv_value)</tooltip>
       <name>T1Delay Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT)T1Delay:RB</pv_name>
+      <pv_name>$(PV_ROOT)T1DELAY:RB</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -751,7 +751,7 @@ $(pv_value)</tooltip>
       <name>Text Update_4</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT)T1DelayUnit:RB.SVAL</pv_name>
+      <pv_name>$(PV_ROOT)T1DELAYUNIT:RB.SVAL</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />

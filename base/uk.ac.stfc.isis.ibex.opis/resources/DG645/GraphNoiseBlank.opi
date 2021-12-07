@@ -112,11 +112,11 @@
     </scale_options>
     <scripts>
       <path pathString="Graph.py" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">$(PV_ROOT)ADelayWidth</pv>
-        <pv trig="true">$(PV_ROOT)BDelayWidth</pv>
-        <pv trig="true">loc://ABaxisX</pv>
-        <pv trig="true">loc://ABaxisY</pv>
-        <pv trig="true">TE:NDW1798:CS:IOC:DG645_01:DEVIOS:HEARTBEAT</pv>
+        <pv trig="true">$(PV_ROOT)ADELAYWIDTH</pv>
+        <pv trig="true">$(PV_ROOT)BDELAYWIDTH</pv>
+        <pv trig="true">loc://ABAXISX</pv>
+        <pv trig="true">loc://ABAXISY</pv>
+        <pv trig="true">$(CS_ROOT)DEVIOS:HEARTBEAT</pv>
         <pv trig="true">$(PV_ROOT)ABOutputPolarityBI</pv>
       </path>
     </scripts>
@@ -145,10 +145,10 @@ $(pv_value)</tooltip>
     <trace_0_update_mode>0</trace_0_update_mode>
     <trace_0_visible>true</trace_0_visible>
     <trace_0_x_axis_index>0</trace_0_x_axis_index>
-    <trace_0_x_pv>loc://ABaxisX</trace_0_x_pv>
+    <trace_0_x_pv>loc://ABAXISX</trace_0_x_pv>
     <trace_0_x_pv_value />
     <trace_0_y_axis_index>1</trace_0_y_axis_index>
-    <trace_0_y_pv>loc://ABaxisY</trace_0_y_pv>
+    <trace_0_y_pv>loc://ABAXISY</trace_0_y_pv>
     <trace_0_y_pv_value />
     <trace_count>1</trace_count>
     <transparent>false</transparent>
@@ -229,7 +229,7 @@ $(pv_value)</tooltip>
       <name>Text Update_2</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT)ADelayWidthUnit:RB.SVAL</pv_name>
+      <pv_name>$(PV_ROOT)ADELAYWIDTHUNIT:RB.SVAL</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -281,7 +281,7 @@ $(pv_value)</tooltip>
       <name>Text Update_3</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT)BDelayWidthUnit:RB.SVAL</pv_name>
+      <pv_name>$(PV_ROOT)BDELAYWIDTHUNIT:RB.SVAL</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -333,7 +333,7 @@ $(pv_value)</tooltip>
       <name>Text Update_1</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT)BDelayWidth:RB</pv_name>
+      <pv_name>$(PV_ROOT)BDELAYWIDTH:RB</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -385,7 +385,7 @@ $(pv_value)</tooltip>
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT)ADelayWidth:RB</pv_name>
+      <pv_name>$(PV_ROOT)ADELAYWIDTH:RB</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -437,7 +437,7 @@ $(pv_value)</tooltip>
       <name>Text Update_3</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT)ABDelayWidthUnit:RB.SVAL</pv_name>
+      <pv_name>$(PV_ROOT)ABDELAYWIDTHUNIT:RB.SVAL</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -489,7 +489,7 @@ $(pv_value)</tooltip>
       <name>Text Update_1</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT)ABDelayWidth:RB</pv_name>
+      <pv_name>$(PV_ROOT)ABDELAYWIDTH:RB</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />

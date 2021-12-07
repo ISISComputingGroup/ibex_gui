@@ -2750,15 +2750,16 @@
     <entry>
       <key>DG645</key>
       <value>
-        <categories/>
-        <type>UNKNOWN</type>
+        <categories>
+        	<category>Delay Generators</category></categories>
+        <type>DELAY_GENERATORS</type>
         <path>dg645.opi</path>
         <description>The OPI for the DG645</description>
         <macros>
           <macro>
-            <name>IOC_NAME</name>
+            <name>DG645</name>
             <description>The DG645 PV prefix (e.g. DG645_01)</description>
-            <default>DG645</default>
+            <default>DG645_01</default>
           </macro>
         </macros>
       </value>

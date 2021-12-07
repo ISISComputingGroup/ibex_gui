@@ -228,7 +228,7 @@
       <name>Text Input</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT)EDelay:SP</pv_name>
+      <pv_name>$(PV_ROOT)EDELAY:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -280,7 +280,7 @@ $(pv_value)</tooltip>
       </items>
       <items_from_pv>false</items_from_pv>
       <name>Combo_3</name>
-      <pv_name>$(PV_ROOT)EFOutputPolarity:SP</pv_name>
+      <pv_name>$(PV_ROOT)EFOUTPUTPOLARITY:SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -332,7 +332,7 @@ $(pv_value)</tooltip>
       </items>
       <items_from_pv>false</items_from_pv>
       <name>Combo</name>
-      <pv_name>$(PV_ROOT)EReference:SP</pv_name>
+      <pv_name>$(PV_ROOT)EREFERENCE:SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -381,7 +381,7 @@ $(pv_value)</tooltip>
       </items>
       <items_from_pv>false</items_from_pv>
       <name>Combo</name>
-      <pv_name>$(PV_ROOT)EDelayUnit:SP</pv_name>
+      <pv_name>$(PV_ROOT)EDELAYUNIT:SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -432,7 +432,7 @@ $(pv_value)</tooltip>
       <name>Text Input</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT)FDelay:SP</pv_name>
+      <pv_name>$(PV_ROOT)FDELAY:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -490,7 +490,7 @@ $(pv_value)</tooltip>
       </items>
       <items_from_pv>false</items_from_pv>
       <name>Combo</name>
-      <pv_name>$(PV_ROOT)FReference:SP</pv_name>
+      <pv_name>$(PV_ROOT)FREFERENCE:SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -539,7 +539,7 @@ $(pv_value)</tooltip>
       </items>
       <items_from_pv>false</items_from_pv>
       <name>Combo</name>
-      <pv_name>$(PV_ROOT)FDelayUnit:SP</pv_name>
+      <pv_name>$(PV_ROOT)FDELAYUNIT:SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -560,7 +560,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
         <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)EDelayButton</pv_name>
+          <pv_name>$(PV_ROOT)EDELAYBUTTON</pv_name>
           <value></value>
           <timeout>10</timeout>
           <confirm_message></confirm_message>
@@ -609,7 +609,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
         <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)FDelayButton</pv_name>
+          <pv_name>$(PV_ROOT)FDELAYBUTTON</pv_name>
           <value></value>
           <timeout>10</timeout>
           <confirm_message></confirm_message>
@@ -658,7 +658,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
         <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)EFLogicTTL:SP</pv_name>
+          <pv_name>$(PV_ROOT)EFLOGICTTL:SP</pv_name>
           <value></value>
           <timeout>10</timeout>
           <confirm_message></confirm_message>
@@ -707,7 +707,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
         <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)EFLogicNIM:SP</pv_name>
+          <pv_name>$(PV_ROOT)EFLOGICNIM:SP</pv_name>
           <value></value>
           <timeout>10</timeout>
           <confirm_message></confirm_message>

@@ -3,47 +3,55 @@ from jarray import array
 
 # This script controls behaviour of graphs in the OPI
 
-xStart = -1
-xEnd = 60
+x_minimum = -1
+x_maximum = 60
+y_minimum = -1
+y_maximum = 1
 
-# Multiply times 1,000,000 because scale of graph is in microseconds
-multiplier = 1000000
-
-def getVal(val):
-    return round(float(val) * multiplier, 2)
+graph_multiplier_microseconds = 1000000
 
 
-def inRange(loc):
-    return False if loc < xStart or loc > xEnd else True
+def get_value_scaled(val):
+    return round(float(val) * graph_multiplier_microseconds, 2)
 
 
-def getRange(val):
-    return min(max(xStart, val), xEnd)
+def check_in_range(location):
+    return x_minimum < location < x_maximum
 
-x1 = getVal(PVUtil.getDouble(pvs[0]))
-x2 = getVal(PVUtil.getDouble(pvs[1]))
-polarity = PVUtil.getDouble(pvs[5])
-polarity = -1 if polarity == 0 else 1
+
+def get_value_range_clamped(val):
+    return min(max(x_minimum, val), x_maximum)
+
+
+def get_starting_y(x_value, current_polarity):
+    return 0 if check_in_range(x_value) else current_polarity
+
+
+x_start = get_value_scaled(PVUtil.getDouble(pvs[0]))
+x_end = get_value_scaled(PVUtil.getDouble(pvs[1]))
+# Boolean PV to be converted into y or -y
+polarity = y_minimum if PVUtil.getDouble(pvs[5]) == 0 else y_maximum
 
 points = []
+current_y = get_starting_y(x_start, polarity)
 
-height = 0 if x1 >= xStart else polarity
-points.append([xStart, height])
-if inRange(x1) or inRange(x2):
-    points.append([getRange(x1), 0])
-    points.append([getRange(x1), polarity])
-    height = polarity
-if inRange(x2):
-    points.append([getRange(x2), polarity])
-    points.append([getRange(x2), 0])
-    height = 0
-points.append([xEnd, height])
+# Graph start
+points.append([x_minimum, current_y])
+# Bump start
+if check_in_range(x_start) or check_in_range(x_end):
+    points.append([get_value_range_clamped(x_start), 0])
+    points.append([get_value_range_clamped(x_start), polarity])
+    current_y = polarity
+# Bump end
+if check_in_range(x_end):
+    points.append([get_value_range_clamped(x_end), polarity])
+    points.append([get_value_range_clamped(x_end), 0])
+    current_y = 0
+# Graph end
+points.append([x_maximum, current_y])
 
-xArray = []
-yArray = []
-for point in points:
-    xArray.append(point[0])
-    yArray.append(point[1])
+xArray = [x for x, y in points]
+yArray = [y for x, y in points]
 
 pvs[2].setValue(array(xArray, 'd'))
 pvs[3].setValue(array(yArray, 'd'))

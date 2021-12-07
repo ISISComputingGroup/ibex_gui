@@ -269,7 +269,7 @@
       </items>
       <items_from_pv>false</items_from_pv>
       <name>Combo</name>
-      <pv_name>$(PV_ROOT)TriggerSource:SP</pv_name>
+      <pv_name>$(PV_ROOT)TRIGGERSOURCE:SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -413,7 +413,7 @@ $(pv_value)</tooltip>
       </items>
       <items_from_pv>false</items_from_pv>
       <name>Combo_3</name>
-      <pv_name>$(PV_ROOT)T0OutputPolarity:SP</pv_name>
+      <pv_name>$(PV_ROOT)T0OUTPUTPOLARITY:SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -434,7 +434,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
         <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)T0LogicTTL:SP</pv_name>
+          <pv_name>$(PV_ROOT)T0LOGICTTL:SP</pv_name>
           <value></value>
           <timeout>10</timeout>
           <confirm_message></confirm_message>
@@ -483,7 +483,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
         <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)T0LogicNIM:SP</pv_name>
+          <pv_name>$(PV_ROOT)T0LOGICNIM:SP</pv_name>
           <value></value>
           <timeout>10</timeout>
           <confirm_message></confirm_message>
