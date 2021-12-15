@@ -2692,6 +2692,18 @@
         </macros>
       </value>
     </entry>
+     <entry>
+      <key>WISH Jaws</key>
+      <value>
+        <type>JAWS</type>
+        <path>jaws/jaws_managers/WISH_Jawsr.opi</path>
+        <description>The OPI for the WISH jaw set.</description>
+        <macros/>
+        <categories>
+          <category>Jaws and slits</category>
+        </categories>
+      </value>
+    </entry>
     <entry>
       <key>WISH Vacuum PLC</key>
       <value>
