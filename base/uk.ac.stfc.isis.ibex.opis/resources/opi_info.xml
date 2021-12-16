@@ -2696,7 +2696,7 @@
       <key>WISH Jaws</key>
       <value>
         <type>JAWS</type>
-        <path>jaws/jaws_managers/WISH_Jawsr.opi</path>
+        <path>jaws/jaws_managers/WISH_Jaws.opi</path>
         <description>The OPI for the WISH jaw set.</description>
         <macros/>
         <categories>
