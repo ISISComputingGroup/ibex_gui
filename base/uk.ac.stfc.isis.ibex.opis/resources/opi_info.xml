@@ -2747,5 +2747,20 @@
         </macros>
       </value>
     </entry>
+    <entry>
+      <key>ROTSTIRR</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>rotstirr.opi</path>
+        <description>The OPI for the ROTSTIRR</description>
+        <macros>
+          <macro>
+            <name>ROTSTIRR</name>
+            <description>The ROTSTIRR PV prefix (e.g. ROTSTIRR_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
   </opis>
 </descriptions>
