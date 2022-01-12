@@ -72,25 +72,6 @@
 		<unit id="org.eclipse.persistence.sdk.feature.group" version="2.7.10.v20211216-fe64cd39c3"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="https://download.eclipse.org/nebula/releases/2.4.3/"/>
-		<unit id="org.eclipse.nebula.visualization.feature.feature.group" version="2.1.0.202011020719"/>
-	</location>
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="https://download.eclipse.org/releases/2021-03/"/>
-		<unit id="org.eclipse.emf.sdk.feature.group" version="2.25.0.v20210114-1734"/>
-		<unit id="org.eclipse.gef.cloudio.sdk.feature.group" version="5.0.2.202103090301"/>
-		<unit id="org.eclipse.gef.cloudio.user.feature.group" version="5.0.2.202103090301"/>
-		<unit id="org.eclipse.gef.common.sdk.feature.group" version="5.0.1.202103090301"/>
-		<unit id="org.eclipse.gef.dot.sdk.feature.group" version="5.1.3.202103090301"/>
-		<unit id="org.eclipse.gef.dot.user.feature.group" version="5.1.3.202103090301"/>
-		<unit id="org.eclipse.gef.geometry.sdk.feature.group" version="5.0.3.202103090301"/>
-		<unit id="org.eclipse.gef.graph.sdk.feature.group" version="5.1.0.202103090301"/>
-		<unit id="org.eclipse.gef.layout.sdk.feature.group" version="5.0.0.202103090301"/>
-		<unit id="org.eclipse.gef.mvc.sdk.feature.group" version="5.2.3.202103090301"/>
-		<unit id="org.eclipse.gef.zest.sdk.feature.group" version="5.1.2.202103090301"/>
-		<unit id="org.eclipse.gef.fx.sdk.feature.group" version="5.0.5.202103090301"/>
-	</location>
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20210223232630/repository/"/>
 		<unit id="com.google.gson" version="2.8.6.v20201231-1626"/>
 		<unit id="com.google.gson.source" version="2.8.6.v20201231-1626"/>
@@ -119,6 +100,25 @@
 		<unit id="org.eclipse.platform.ide" version="4.22.0.I20211124-1800"/>
 		<unit id="org.eclipse.rcp.feature.group" version="4.22.0.v20211124-1800"/>
 		<unit id="org.eclipse.rcp.source.feature.group" version="4.22.0.v20211124-1800"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="https://download.eclipse.org/nebula/releases/2.5.0/"/>
+		<unit id="org.eclipse.nebula.visualization.feature.feature.group" version="2.1.0.202106201019"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="https://download.eclipse.org/releases/2022-03/"/>
+		<unit id="org.eclipse.emf.sdk.feature.group" version="2.28.0.v20211110-0654"/>
+		<unit id="org.eclipse.gef.cloudio.sdk.feature.group" version="5.0.2.202112010300"/>
+		<unit id="org.eclipse.gef.cloudio.user.feature.group" version="5.0.2.202112010300"/>
+		<unit id="org.eclipse.gef.common.sdk.feature.group" version="5.0.1.202112010300"/>
+		<unit id="org.eclipse.gef.dot.sdk.feature.group" version="5.1.3.202112010300"/>
+		<unit id="org.eclipse.gef.dot.user.feature.group" version="5.1.3.202112010300"/>
+		<unit id="org.eclipse.gef.fx.sdk.feature.group" version="5.0.5.202112010300"/>
+		<unit id="org.eclipse.gef.geometry.sdk.feature.group" version="5.0.3.202112010300"/>
+		<unit id="org.eclipse.gef.graph.sdk.feature.group" version="5.1.0.202112010300"/>
+		<unit id="org.eclipse.gef.layout.sdk.feature.group" version="5.0.0.202112010300"/>
+		<unit id="org.eclipse.gef.mvc.sdk.feature.group" version="5.2.3.202112010300"/>
+		<unit id="org.eclipse.gef.zest.sdk.feature.group" version="5.1.2.202112010300"/>
 	</location>
 </locations>
 <environment>
