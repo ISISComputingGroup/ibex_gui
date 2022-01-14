@@ -2748,16 +2748,17 @@
       </value>
     </entry>
     <entry>
-      <key>ROTSTIRR</key>
+      <key>Rotating Stirrer Rack</key>
       <value>
         <categories/>
         <type>UNKNOWN</type>
-        <path>rotstirr.opi</path>
-        <description>The OPI for the ROTSTIRR</description>
+        <path>rotating_stirrer_rack.opi</path>
+        <description>The OPI for the Rotating Stirrer Rack</description>
         <macros>
           <macro>
             <name>ROTSTIRR</name>
             <description>The ROTSTIRR PV prefix (e.g. ROTSTIRR_01)</description>
+            <default>ROTSTIRR_01</default>
           </macro>
         </macros>
       </value>
