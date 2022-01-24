@@ -38,6 +38,9 @@ public class EditBlockDialog extends TitleAreaDialog {
     
     BlockLogSettingsPanel blockLogSettingsPanel;
     BlockLogSettingsViewModel blockLogSettingsViewModel;
+    
+    BlockGroupPanel blockGroupPanel;
+    BlockGroupViewModel blockGroupViewModel;
 	
 	Button okButton;
 	
@@ -83,8 +86,9 @@ public class EditBlockDialog extends TitleAreaDialog {
         blockLogSettingsViewModel = new BlockLogSettingsViewModel(this.block);
         blockRunControlViewModel = new BlockRunControlViewModel(this.block);
         blockDetailsViewModel = new BlockDetailsViewModel(this.block, this.config);
+        blockGroupViewModel = new BlockGroupViewModel(this.block, this.config);
 		
-		viewModels = Arrays.asList(blockLogSettingsViewModel, blockRunControlViewModel, blockDetailsViewModel);
+		viewModels = Arrays.asList(blockLogSettingsViewModel, blockRunControlViewModel, blockDetailsViewModel, blockGroupViewModel);
 		
 		for (ErrorMessageProvider provider : viewModels) {
 			provider.addPropertyChangeListener("error", errorListener);
@@ -107,6 +111,11 @@ public class EditBlockDialog extends TitleAreaDialog {
         blockLogSettingsPanel = new BlockLogSettingsPanel(blockDetailsPanel, SWT.NONE,
         		blockLogSettingsViewModel);
         blockLogSettingsPanel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        
+        blockGroupPanel = new BlockGroupPanel(blockDetailsPanel, SWT.NONE,
+        		blockGroupViewModel);
+        blockGroupPanel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+
 
         return blockDetailsPanel;
     }
@@ -116,6 +125,7 @@ public class EditBlockDialog extends TitleAreaDialog {
 		blockDetailsViewModel.updateBlock();
 		blockRunControlViewModel.updateBlock();
         blockLogSettingsViewModel.updateBlock();
+        blockGroupViewModel.updateBlock();
         try {
             if (!config.getAllBlocks().contains(this.block)) {
                 config.addNewBlock(this.block);
