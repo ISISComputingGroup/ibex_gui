@@ -57,22 +57,19 @@ public class BlockGroupViewModel extends ErrorMessageProvider {
     
 
     /**
-     * Sets whether logging is enabled. Sets to default value if zero value on
+     * Sets whether adding to a group is enabled. Sets to default value if zero value on
      * enable
      * 
      * @param enabled - Is logging being enabled (true) or disabled (false)
      */
     public void setEnabled(boolean enabled) {
-        // Update enabled value first. We might need the new value in
-        // updatePeriodic.
-        firePropertyChange("enabled", this.enabled, this.enabled = enabled);
-        
+        firePropertyChange("enabled", this.enabled, this.enabled = enabled);        
     }
 
     /**
-     * Gets whether logging is enabled.
+     * Gets whether adding to a group is enabled.
      * 
-     * @return whether logging is enabled
+     * @return whether adding to a group is enabled
      */
     public boolean getEnabled() {
         return enabled;
