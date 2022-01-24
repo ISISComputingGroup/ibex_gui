@@ -22,7 +22,10 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableGroup;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -31,12 +34,13 @@ import java.util.List;
  */
 public class BlockGroupViewModel extends ErrorMessageProvider {
     
-    private final Block editingBlock;
+    private final EditableBlock editingBlock;
     private final EditableConfiguration editingConfig;
     
     private boolean enabled = false;
     private String comboText;
     private String labelText;
+    private EditableGroup activeGroup;
     
 
     /**
@@ -48,7 +52,6 @@ public class BlockGroupViewModel extends ErrorMessageProvider {
     public BlockGroupViewModel(final EditableBlock editingBlock, EditableConfiguration config) {
     	this.editingBlock = editingBlock;
     	this.editingConfig = config;
-    	      
     }
     
     
@@ -98,12 +101,11 @@ public class BlockGroupViewModel extends ErrorMessageProvider {
      */
     public void setComboText(String selection) {
     	
-    	this.editingConfig.getEditableGroups();
-//        if (selection.equals(PERIODIC_STRING)) {
-//        	updatePeriodic(true, false);
-//        } else if (selection.equals(MONITOR_STRING)) {
-//        	updatePeriodic(false, false);
-//        }
+    	for (EditableGroup group : this.editingConfig.getEditableGroups()) {
+    		if (selection.equals(group.getName())) {
+    			this.activeGroup = group;
+    		}
+    	}
         firePropertyChange("comboText", this.comboText, this.comboText = selection);
     }
     
@@ -124,11 +126,10 @@ public class BlockGroupViewModel extends ErrorMessageProvider {
      * Update the settings on the block.
      */
     public void updateBlock() {
-//    	editingBlock.setLogPeriodic(periodic);
-//    	if (periodic) {
-//    		editingBlock.setLogRate(rate);
-//    	} else {
-//    		editingBlock.setLogDeadband(deadband);
-//    	}
+    	if (this.enabled) {
+    		List<EditableBlock> blockToAdd = new ArrayList<>();
+    		blockToAdd.add(this.editingBlock);
+    		this.activeGroup.toggleSelection(blockToAdd);
+    	}
     }
 }
