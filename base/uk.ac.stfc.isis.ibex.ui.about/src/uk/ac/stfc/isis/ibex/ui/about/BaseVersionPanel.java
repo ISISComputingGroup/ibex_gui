@@ -27,17 +27,16 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Link;
+
 
 /**
  * A panel showing the application version and java information.
  */
 public class BaseVersionPanel extends Composite {
 
-	private Link applicationVersion;
+	private Label applicationVersion;
     private Label javaVersion;
     private Label javaPathLabel;
-    private String RELEASE_NOTES_BASE_LINK = "https://github.com/ISISComputingGroup/IBEX/blob/master/release_notes/ReleaseNotes_v10.0.0.md";
 
     /**
      * Construct a new version panel.
@@ -55,12 +54,11 @@ public class BaseVersionPanel extends Composite {
         Label lblClientVersion = new Label(this, SWT.NONE);
         lblClientVersion.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblClientVersion.setText(applicationName + " Version:");
-        
 
-        applicationVersion = new Link(this, SWT.NONE);
+        applicationVersion = new Label(this, SWT.NONE);
         applicationVersion.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         final String versionText = Platform.getProduct().getDefiningBundle().getVersion().toString();
-        applicationVersion.setText("<a href=\"" + RELEASE_NOTES_BASE_LINK + "\">" + versionText  + "</a>");
+        applicationVersion.setText(versionText);
 
         // Java version
         Label lblJavaVersion = new Label(this, SWT.NONE);
