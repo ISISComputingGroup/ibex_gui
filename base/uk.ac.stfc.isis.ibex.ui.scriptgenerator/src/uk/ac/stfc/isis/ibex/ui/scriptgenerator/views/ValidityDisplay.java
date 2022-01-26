@@ -7,11 +7,11 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
  */
 public enum ValidityDisplay {
 	
-	/** Element is valid */
+	/** Element is valid. */
 	VALID,
-	/** Element is invalid */
+	/** Element is invalid. */
 	INVALID,
-	/** Element validity is uncertain */
+	/** Element validity is uncertain. */
 	UNCERTAIN;
 	
 	/**

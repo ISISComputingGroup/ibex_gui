@@ -52,6 +52,8 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingProperties;
 
 /**
  * Provides the UI to control the script generator.
@@ -80,7 +82,7 @@ public class ScriptGeneratorView {
     /**
      * The ViewModel to control nicos interactions.
      */
-    private ScriptGeneratorNicosViewModel nicosModel;
+    private ScriptGeneratorNicosViewModel nicosViewModel;
 
     /**
      * The main parent for UI elements
@@ -120,21 +122,14 @@ public class ScriptGeneratorView {
     private Label scriptGenerationTimeText;
     private Label estimateText;
     private Label expectedFinishText;
-    private Button queueScriptButton;
+    private Button runButton;
+    private Button stopButton;
+    private Button pauseButton;
+
     private Button generateScriptButton;
     private Button generateScriptAsButton;
     private Button btnDuplicateAction;
     private ScriptGeneratorHelpMenu helpMenu;
-
-    /**
-     * A property to listen for when python becomes ready or not ready.
-     */
-    private static final String PYTHON_READINESS_PROPERTY = "python ready";
-    
-    /**
-     * A property to listen for when a nicos script has been generated.
-     */
-    private static final String NICOS_SCRIPT_GENERATED_PROPERTY = "nicos script generated";
 
     /**
      * Create a button to manipulate the rows of the script generator table and
@@ -164,7 +159,7 @@ public class ScriptGeneratorView {
     public void createPartControl(Composite parent) {
 
     scriptGeneratorViewModel = new ScriptGeneratorViewModel();
-    nicosModel = new ScriptGeneratorNicosViewModel();
+    
 
     GridData gdQueueContainer = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
     gdQueueContainer.heightHint = 300;
@@ -173,7 +168,7 @@ public class ScriptGeneratorView {
 
     mainParent = parent;
 
-    scriptGeneratorViewModel.addPropertyChangeListener(PYTHON_READINESS_PROPERTY, evt -> {
+    scriptGeneratorViewModel.addPropertyChangeListener(ScriptGeneratorProperties.PYTHON_READINESS_PROPERTY, evt -> {
         boolean ready = (boolean) evt.getNewValue();
         if (ready) {
         doGitActions();
@@ -184,11 +179,12 @@ public class ScriptGeneratorView {
         }
     });
     
-    scriptGeneratorViewModel.addPropertyChangeListener(NICOS_SCRIPT_GENERATED_PROPERTY, evt -> {
-    	nicosModel.queueScript("Script generator", (String) evt.getNewValue() + "\nrunscript()"); 
-    });
+//    scriptGeneratorViewModel.addPropertyChangeListener(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, evt -> {
+//    	nicosModel.queueScript("Script generator", (String) evt.getNewValue() + "\nrunscript()"); 
+//    });
 
-    scriptGeneratorViewModel.setUpModel();
+    var scriptGeneratorModel = scriptGeneratorViewModel.setUpModel();
+    nicosViewModel = new ScriptGeneratorNicosViewModel(scriptGeneratorModel);
     }
 
     /**
@@ -402,7 +398,7 @@ public class ScriptGeneratorView {
 	        Font font = new Font(estimateText.getDisplay(), new FontData(currentFont, 11, SWT.BOLD));
 	        estimateText.setFont(font);
 	        estimateText.setText("Total estimated run time: 0 seconds");
-	        
+	
 	        // Label for the expected finish time
 	        expectedFinishText = new Label(scriptTimeGrp, SWT.BOTTOM);
 	        expectedFinishText.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
@@ -451,21 +447,41 @@ public class ScriptGeneratorView {
 	        // Composite for generate buttons
 	        Composite generateButtonsGrp = new Composite(mainParent, SWT.NONE);
 	        generateButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-	        GridLayout gbgLayout = new GridLayout(4, true);
+	        GridLayout gbgLayout = new GridLayout(3, true);
 	        gbgLayout.marginHeight = 10;
 	        gbgLayout.marginWidth = 10;
 	        generateButtonsGrp.setLayout(gbgLayout);
 	        
+	        // Composite for generate buttons
+	        Composite dynamicScriptingButtonsGrp = new Composite(mainParent, SWT.NONE);
+	        dynamicScriptingButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+	        GridLayout dsgLayout = new GridLayout(3, true);
+	        dsgLayout.marginHeight = 10;
+	        dsgLayout.marginWidth = 10;
+	        dynamicScriptingButtonsGrp.setLayout(dsgLayout);
+	        
 	        // Button to run script in nicos
-	        queueScriptButton = new Button(generateButtonsGrp, SWT.NONE);
-	        queueScriptButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/play.png"));
-	        queueScriptButton.setText("Queue Script");
-	        queueScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	        nicosModel.bindQueueScriptButton(queueScriptButton);
-	        queueScriptButton.addListener(SWT.Selection, e -> {
-	        	var scriptId = scriptGeneratorViewModel.generateScript();
-	        	scriptId.ifPresent(id -> scriptGeneratorViewModel.setNicosScript(id));
-	        });
+	        runButton = new Button(dynamicScriptingButtonsGrp, SWT.NONE);
+	        runButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/play.png"));
+	        runButton.setText("Run");
+	        runButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+	        
+	        
+	        // Button to pause script in nicos
+	        pauseButton = new Button(dynamicScriptingButtonsGrp, SWT.NONE);
+	        pauseButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/pause.png"));
+	        pauseButton.setText("Pause");
+	        pauseButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+	        
+	        
+	        // Button to stop script in nicos
+	        stopButton = new Button(dynamicScriptingButtonsGrp, SWT.NONE);
+	        stopButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/stop.png"));
+	        stopButton.setText("Stop");
+	        stopButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));	        
+	        
+	        // Bind dynamic scripting controls
+	        nicosViewModel.bindControls(runButton, pauseButton, stopButton);
 	        
 	        // Needs to be after nicos model has been set up
 	        helpMenu = new ScriptGeneratorHelpMenu(topBarComposite);
@@ -602,8 +618,8 @@ public class ScriptGeneratorView {
     bindingContext.bindValue(WidgetProperties.text().observe(estimateText),
         BeanProperties.value("timeEstimate").observe(scriptGeneratorViewModel));
     
-    scriptGeneratorViewModel.getFinishTimer().addPropertyChangeListener("finishTimeVal", e->{
-    	DISPLAY.asyncExec(()->{
+    scriptGeneratorViewModel.getFinishTimer().addPropertyChangeListener("finishTimeVal", e -> {
+    	DISPLAY.asyncExec(() -> {
     		expectedFinishText.setText((String) e.getNewValue());
     	});
     });

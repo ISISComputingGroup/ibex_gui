@@ -1048,6 +1048,18 @@
       </value>
     </entry>
     <entry>
+      <key>Beckhoff Engineering View</key>
+      <value>
+        <type>DEBUG</type>
+        <path>twincat/twincat_engineering.opi</path>
+        <description>The OPI giving a detailed engineering view of a Beckhoff.</description>
+        <macros/>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>SCIMAG3D</key>
       <value>
         <type>SCIMAG3D</type>
@@ -1796,7 +1808,7 @@
         <macros>
           <macro>
             <name>DEFAULT_ACTIVE_TAB</name>
-            <description>The tab which is displayed when the OPI is opened (1 to 5).</description>
+            <description>The tab which is displayed when the OPI is opened (1 to 6).</description>
             <default/>
           </macro>
         </macros>
@@ -2690,6 +2702,18 @@
             <description>The NGEM PV prefix (e.g. NGEM_01)</description>
           </macro>
         </macros>
+      </value>
+    </entry>
+     <entry>
+      <key>WISH Jaws</key>
+      <value>
+        <type>JAWS</type>
+        <path>jaws/jaws_managers/WISH_Jaws.opi</path>
+        <description>The OPI for the WISH jaw set.</description>
+        <macros/>
+        <categories>
+          <category>Jaws and slits</category>
+        </categories>
       </value>
     </entry>
     <entry>
