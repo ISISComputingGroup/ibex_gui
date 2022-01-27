@@ -111,6 +111,7 @@ pipeline {
   
   post {
     always {
+	    archiveArtifacts artifacts: 'build/*.log', caseSensitive: false
 	    junit '**/surefire-reports/TEST-*.xml,**/test-reports/TEST-*.xml'
     }
   }
