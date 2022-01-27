@@ -39,7 +39,7 @@ REM Copy zip to installs area
 REM Delete older versions?
 REM the password for isis\IBEXbuilder is contained in the BUILDERPW system environment variable on the build server
 net use p: /d /yes
-net use p: \\isis\inst$
+net use p: \\isis.cclrc.ac.uk\inst$
 
 REM Don't group these. Bat expands whole if at once, not sequentially
 if "%RELEASE%" == "YES" (
