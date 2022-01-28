@@ -1,12 +1,14 @@
 setlocal enabledelayedexpansion
 REM When run will install all the client stuff (gui, genie_python, epics_utils)
 
+REM if %1 == NOINT then non-interactive mode and no pause when done
+
 REM %~dp0 expands to directory where this file lives
 set BASEDIR=%~dp0
 
 if not exist "%BASEDIR%COPY_COMPLETE.txt" (
     @echo ERROR Client copy in %BASEDIR% is not complete
-	goto FINISH
+	goto ERROR
 )
 
 REM Copy the Client files across
@@ -18,7 +20,7 @@ robocopy "%BASEDIR%Client" "%CLIENTDIR%" /E /R:2 /MT /NFL /NDL /NP /NC /NS /LOG:
 set errcode=%errorlevel%
 if %errcode% GEQ 4 (
     @echo ERROR %errcode% in robocopy copying ibex client
-	goto FINISH
+	goto ERROR
 )
 
 REM Copy EPICS_UTILS across
@@ -28,8 +30,8 @@ mkdir %UTILSDIR%
 robocopy "\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\EPICS_UTILS\EPICS_UTILS" "%UTILSDIR%" /E /R:2 /MT /NFL /NDL /NP /NC /NS /LOG:NUL
 set errcode=%errorlevel%
 if %errcode% GEQ 4 (
-    @echo ERROR copying EPICS UTILS
-	goto FINISH
+    @echo ERROR %errcode% copying EPICS UTILS
+	goto ERROR
 )
 
 REM genie_python already has its own script
@@ -43,11 +45,20 @@ if exist "%BASEDIR%..\genie_python_3" (
     call !GENIE_PYTHON_TOP!\BUILD-!LATEST_BUILD!\genie_python_install.bat
 )
 if %errorlevel% neq 0 (
-    @echo ERROR copying GENIE PYTHON
-    goto FINISH
+    @echo ERROR %errorlevel% copying GENIE PYTHON
+    goto ERROR
 )
 
-@echo %TIME% client install finished
+@echo %TIME% client install finished OK
+if /i not "%1" == "NOINT" (
+    pause
+)
+exit /b 0
 
-:FINISH
-pause
+:ERROR
+@echo %TIME% ERROR in client install
+if /i not "%1" == "NOINT" (
+    pause
+)
+exit /b 1
+
