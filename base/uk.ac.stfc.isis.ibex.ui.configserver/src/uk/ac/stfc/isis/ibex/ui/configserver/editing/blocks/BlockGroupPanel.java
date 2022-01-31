@@ -1,7 +1,7 @@
 
 /**
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2015 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2022 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -31,7 +31,6 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 
 /**
  * A panel in the edit block dialog editing the block's logging settings.
@@ -74,7 +73,11 @@ public class BlockGroupPanel extends Composite {
 
         setModel(viewModel);
     }
-
+    
+    /**
+     * Sets the view model and observers. 
+     * @param viewModel The group settings view model. 
+     */
     public void setModel(BlockGroupViewModel viewModel) {
         DataBindingContext bindingContext = new DataBindingContext();
 
