@@ -50,6 +50,7 @@ public class Group extends Composite {
 	private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
 	private static final int TITLE_HEIGHT = 30;
 	private static final int ROW_HEIGHT = 24;
+	private static final int ROW_VERTICAL_SPACING = 5;
 	private Label title;
 	private Composite groupBlocks;
 
@@ -91,7 +92,7 @@ public class Group extends Composite {
 		// run control status, and for every column but the last we need a
 		// divider label column
 		GridLayout layout = new GridLayout(1, false);
-		layout.verticalSpacing = 5;
+		layout.verticalSpacing = ROW_VERTICAL_SPACING;
 
 		this.setLayout(layout);
 		this.setBackground(WHITE);
@@ -155,8 +156,8 @@ public class Group extends Composite {
 			@Override
 			public void run() {
 				if (!group.isDisposed() && !group.getParent().isDisposed()) {
-					group.getParent().layout();
-					group.getParent().pack();
+					group.getParent().getParent().layout();
+					group.getParent().getParent().pack();
 				}
 			}
 		});
@@ -212,6 +213,16 @@ public class Group extends Composite {
 				rows.get(pos).moveBelow(prevElement);
 			}
 		}
+	}
+	
+	/**
+	 * Calculates desired height of the group widget if it were to be one column.
+	 * @param size how many rows there should be in a group widget
+	 * @return total height of the group
+	 */
+	public int getHeight() {
+		int heightPerRow = Group.ROW_HEIGHT + Group.ROW_VERTICAL_SPACING;
+		return heightPerRow * blocksList.size() + Group.TITLE_HEIGHT;
 	}
 
 	private Font getEditedLabelFont(Label label, int size, int style) {
