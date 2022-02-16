@@ -80,6 +80,7 @@ public class GroupsPanel extends Composite {
 	private Optional<List<DisplayGroup>> displayGroups;
 	
 	private static final int MIN_GROUP_HEIGHT = 100;
+	private static final int COLUMN_HEIGHT_BASE = 20;
     /**
      * Constructor for the groups panel.
      * 
@@ -186,14 +187,14 @@ public class GroupsPanel extends Composite {
 			List<Group> groups = new ArrayList<Group>(this.groups);
 			for (Composite column : columns) {
 				((GridData) column.getLayoutData()).exclude = true;
-				int columnHeight = 15;
+				int columnHeight = COLUMN_HEIGHT_BASE;
 				while (columnHeight < windowHeight) {
 					if (groups.size() == 0) {
 						break;
 					}
 					Group group = groups.get(0);
 					assert (group.getHeight() > 0) : "Invalid group widget";	//secures from infinite loops
-					if (group.getHeight() + columnHeight > windowHeight && columnHeight != 15) {
+					if (group.getHeight() + columnHeight > windowHeight && columnHeight != COLUMN_HEIGHT_BASE) {
 						break;
 					}
 					group.setParent(column);

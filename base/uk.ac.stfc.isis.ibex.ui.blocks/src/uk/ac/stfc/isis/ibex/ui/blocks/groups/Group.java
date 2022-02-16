@@ -22,17 +22,24 @@ package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.Scrollable;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -48,14 +55,15 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 @SuppressWarnings("checkstyle:magicnumber")
 public class Group extends Composite {
 	private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
-	private static final int TITLE_HEIGHT = 30;
+	private static final int TITLE_HEIGHT = 37;
 	private static final int ROW_HEIGHT = 24;
 	private static final int ROW_VERTICAL_SPACING = 5;
-	private Label title;
+	private Button title;
 	private Composite groupBlocks;
 
 	private int numColumns;
 	private int numRows;
+	private boolean collapsed = false;
 
 	private List<Control> rows;
 	private List<DisplayBlock> blocksList;
@@ -98,9 +106,30 @@ public class Group extends Composite {
 		this.setBackground(WHITE);
 
 		// In the first column put the title in
+		/*
 		title = labelMaker(this, SWT.NONE, group.name(), "", null);
 		Font titleFont = getEditedLabelFont(title, 10, SWT.BOLD);
 		title.setFont(titleFont);
+		*/
+		
+		title = new Button(this, SWT.TOGGLE);
+		title.setText(group.name());
+		title.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Button source = (Button) e.getSource();
+				if (source.getSelection()) {
+					groupBlocks.setVisible(false);
+					((GridData) groupBlocks.getLayoutData()).exclude = true;
+					collapsed = true;
+				} else {
+					groupBlocks.setVisible(true);
+					((GridData) groupBlocks.getLayoutData()).exclude = false;
+					collapsed = false;
+				}
+				panel.notifyListeners(SWT.Resize, new Event());
+			}
+		});
 
 		groupBlocks = new Composite(this, SWT.NONE);
 
@@ -217,10 +246,12 @@ public class Group extends Composite {
 	
 	/**
 	 * Calculates desired height of the group widget if it were to be one column.
-	 * @param size how many rows there should be in a group widget
 	 * @return total height of the group
 	 */
 	public int getHeight() {
+		if (collapsed) {
+			return Group.TITLE_HEIGHT;
+		}
 		int heightPerRow = Group.ROW_HEIGHT + Group.ROW_VERTICAL_SPACING;
 		return heightPerRow * blocksList.size() + Group.TITLE_HEIGHT;
 	}
