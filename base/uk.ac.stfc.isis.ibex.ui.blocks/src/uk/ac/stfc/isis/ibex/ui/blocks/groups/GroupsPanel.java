@@ -101,6 +101,12 @@ public class GroupsPanel extends Composite {
 		scrolledComposite.setContent(mainComposite);
 		scrolledComposite.setExpandVertical(true);
 		scrolledComposite.setMinHeight(125);
+		this.addControlListener(new ControlAdapter() {
+			public void controlResized(ControlEvent e) {
+				Composite source = (Composite) e.getSource();
+				relayoutGroups(true, source.getClientArea().height);
+			}
+		});
 		
 		configureMenu();
 
@@ -129,12 +135,6 @@ public class GroupsPanel extends Composite {
 			assert (this.groups.size() == columns.size()) : "Table creation failed";
 			relayoutGroups(false, 0);
 			relayoutGroups(true, this.getClientArea().height);
-			this.addControlListener(new ControlAdapter() {
-				public void controlResized(ControlEvent e) {
-					Composite source = (Composite) e.getSource();
-					relayoutGroups(true, source.getClientArea().height);
-				}
-			});
 		}
 	}
 
