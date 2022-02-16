@@ -76,6 +76,7 @@ public class GroupsPanel extends Composite {
     private Menu contextMenu;
 	
 	private boolean showHiddenBlocks = false;
+	private boolean sortBlocksBySize = false;
 	
 	private Optional<List<DisplayGroup>> displayGroups;
 	
@@ -244,6 +245,17 @@ public class GroupsPanel extends Composite {
 
 		selectBanner(displayGroups);
 	}
+	
+	public boolean sortBlocks() {
+		return sortBlocksBySize;
+	}
+	
+	public void setOrderBlocks(boolean orderBySize) {
+		sortBlocksBySize = orderBySize;
+
+		selectBanner(displayGroups);
+	}
+	
 	
 	/**
 	 * Updates the groups to display a new set of groups/blocks.

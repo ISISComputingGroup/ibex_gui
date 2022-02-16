@@ -55,6 +55,24 @@ public class GroupsMenu {
             manager.appendToGroup(GROUP_MENU_GROUP, hideBlocks);
 		}
 	};
+	
+    private final IAction orderBlocksSize = new Action("Order blocks by size") {
+		@Override
+		public void run() {
+			groups.setOrderBlocks(true);
+            manager.remove(orderBlocksConfig.getId());
+            manager.appendToGroup(GROUP_MENU_GROUP, orderBlocksSize);
+		}
+	};
+	
+    private final IAction orderBlocksConfig = new Action("Order blocks by configuration order") {
+		@Override
+		public void run() {
+			groups.setOrderBlocks(false);
+            manager.remove(orderBlocksSize.getId());
+            manager.appendToGroup(GROUP_MENU_GROUP, orderBlocksConfig);
+		}
+	};
 
     /**
      * Constructor for the class when there is already a menu that we want to
@@ -96,6 +114,12 @@ public class GroupsMenu {
             manager.appendToGroup(GROUP_MENU_GROUP, hideBlocks);
         } else {
             manager.appendToGroup(GROUP_MENU_GROUP, showAllBlocks);
+        }
+        
+        if (groups.sortBlocks()) {
+            manager.appendToGroup(GROUP_MENU_GROUP, orderBlocksConfig);
+        } else {
+        	manager.appendToGroup(GROUP_MENU_GROUP, orderBlocksSize);
         }
     }
 	
