@@ -185,7 +185,13 @@ public class GroupsPanel extends Composite {
 				groups.get(i).setParent(columns.get(i));
 			}
 		} else {
-			List<Group> groups = new ArrayList<Group>(this.groups);
+			// sort this list based on algorithm if setting is on
+			List<Group> groups;
+			if (sortBlocksBySize) {
+				groups = getGroupsSortedBySize(this.groups);
+			} else {
+				groups = new ArrayList<Group>(this.groups);
+			}
 			for (Composite column : columns) {
 				((GridData) column.getLayoutData()).exclude = true;
 				int columnHeight = COLUMN_HEIGHT_BASE;
@@ -207,6 +213,17 @@ public class GroupsPanel extends Composite {
 		}
 	}
 	
+	private List<Group> getGroupsSortedBySize(List<Group> groups) {
+		List<Group> returnGroups = new ArrayList<Group>(groups);
+		Collections.sort(returnGroups, new Comparator<Group>() {
+			@Override
+			public int compare(Group o1, Group o2) {
+				return o1.getHeight() - o2.getHeight();
+			}
+		});
+		return returnGroups;
+	}
+
 	private void layoutColumns() {
 		mainComposite.setLayout(new GridLayout(columns.size(), false));
 		scrolledComposite.setContent(mainComposite);
