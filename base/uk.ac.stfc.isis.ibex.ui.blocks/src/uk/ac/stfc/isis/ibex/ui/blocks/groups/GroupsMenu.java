@@ -56,19 +56,19 @@ public class GroupsMenu {
 		}
 	};
 	
-    private final IAction orderBlocksSize = new Action("Order blocks by size") {
+    private final IAction orderBlocksSize = new Action("Order groups by size") {
 		@Override
 		public void run() {
-			groups.setOrderBlocks(true);
+			groups.setOrderGroups(true);
             manager.remove(orderBlocksConfig.getId());
             manager.appendToGroup(GROUP_MENU_GROUP, orderBlocksSize);
 		}
 	};
 	
-    private final IAction orderBlocksConfig = new Action("Order blocks by configuration order") {
+    private final IAction orderBlocksConfig = new Action("Order groups by configuration order") {
 		@Override
 		public void run() {
-			groups.setOrderBlocks(false);
+			groups.setOrderGroups(false);
             manager.remove(orderBlocksSize.getId());
             manager.appendToGroup(GROUP_MENU_GROUP, orderBlocksConfig);
 		}
@@ -116,7 +116,7 @@ public class GroupsMenu {
             manager.appendToGroup(GROUP_MENU_GROUP, showAllBlocks);
         }
         
-        if (groups.sortBlocks()) {
+        if (groups.sortGroups()) {
             manager.appendToGroup(GROUP_MENU_GROUP, orderBlocksConfig);
         } else {
         	manager.appendToGroup(GROUP_MENU_GROUP, orderBlocksSize);

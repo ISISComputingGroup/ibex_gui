@@ -22,16 +22,12 @@ package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.Scrollable;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -245,7 +241,7 @@ public class Group extends Composite {
 	}
 	
 	/**
-	 * Calculates desired height of the group widget if it were to be one column.
+	 * Calculates desired height of the group widget if all blocks were to be in one column.
 	 * @return total height of the group
 	 */
 	public int getHeight() {
@@ -254,30 +250,6 @@ public class Group extends Composite {
 		}
 		int heightPerRow = Group.ROW_HEIGHT + Group.ROW_VERTICAL_SPACING;
 		return heightPerRow * blocksList.size() + Group.TITLE_HEIGHT;
-	}
-
-	private Font getEditedLabelFont(Label label, int size, int style) {
-		final String currentFontName = label.getFont().getFontData()[0].getName();
-		return SWTResourceManager.getFont(currentFontName, size, style);
-	}
-
-	private Label labelMaker(Composite composite, int style, String text, String toolTip, Font font) {
-		Label label = new Label(composite, style);
-		if (text != null) {
-			label.setText(text);
-		}
-
-		label.setBackground(WHITE);
-
-		if (toolTip != null) {
-			label.setToolTipText(toolTip);
-		}
-
-		if (font != null) {
-			label.setFont(font);
-		}
-
-		return label;
 	}
 
 	@Override
