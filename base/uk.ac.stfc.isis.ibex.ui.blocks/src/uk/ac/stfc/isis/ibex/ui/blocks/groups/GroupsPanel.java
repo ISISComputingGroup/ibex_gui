@@ -77,7 +77,7 @@ public class GroupsPanel extends Composite {
 	
 	private Optional<List<DisplayGroup>> displayGroups;
 	
-	private static final int COLUMN_HEIGHT_BASE = 20;
+	private static final int COLUMN_HEIGHT_BASE = 10;
     /**
      * Constructor for the groups panel.
      * 
@@ -208,7 +208,7 @@ public class GroupsPanel extends Composite {
 	}
 
 	/**
-	 * Assigns groups to columns.
+	 * Assigns groups to columns based on parameters.
 	 * @param stackVertically Whether vertical group stacking should be applied.
 	 * @param windowHeight Height of the panel, needed for calculating how many groups
 	 * can fit in a column.
@@ -222,7 +222,7 @@ public class GroupsPanel extends Composite {
 		} else {
 			List<Group> groups;
 			if (sortGroupsBySize) {
-				groups = getGroupsSortedBySize(this.groups);
+				groups = getGroupsSortedBySize(this.groups, windowHeight);
 			} else {
 				groups = new ArrayList<Group>(this.groups);
 			}
@@ -248,18 +248,45 @@ public class GroupsPanel extends Composite {
 	}
 	
 	/**
-	 * Get a new list of groups that is ordered by amount of blocks inside.
+	 * Get a new list of groups ordered using a size-based algorithm.
+	 * Algorithm's logic is to start with biggest group first and then
+	 * continuously fill remaining space in column with smaller groups.
 	 * @param groups List of groups to order
 	 * @return Ordered list of groups
 	 */
-	private List<Group> getGroupsSortedBySize(List<Group> groups) {
-		List<Group> returnGroups = new ArrayList<Group>(groups);
-		Collections.sort(returnGroups, new Comparator<Group>() {
+	private List<Group> getGroupsSortedBySize(List<Group> groups, int windowHeight) {
+		// Get a group list sorted in descending order of size
+		ArrayList<Group> groupsToSort = new ArrayList<Group>(groups);
+		Collections.sort(groupsToSort, new Comparator<Group>() {
 			@Override
 			public int compare(Group o1, Group o2) {
-				return o1.getHeight() - o2.getHeight();
+				return o2.getHeight() - o1.getHeight();
 			}
 		});
+		
+		List<Group> returnGroups = new ArrayList<Group>();
+		
+		// Apply algorithm to find optimal order of groups in columns
+		int lastGroupsSize = groupsToSort.size();
+		while (groupsToSort.size() > 0) {
+			int columnSpaceRemaining = windowHeight - COLUMN_HEIGHT_BASE;
+			boolean firstGroupInColumn = true;
+			
+			for (int i = 0; i < groupsToSort.size(); i++) {
+				Group nextGroup = groupsToSort.get(i);
+				if (columnSpaceRemaining - nextGroup.getHeight() >= 0 || firstGroupInColumn) {
+					returnGroups.add(nextGroup);
+					columnSpaceRemaining -= nextGroup.getHeight();
+					groupsToSort.remove(i);
+					i -= 1;
+					firstGroupInColumn = false;
+				}
+			}
+			// This assertion prevents infinite loop and helps in debugging
+			assert (lastGroupsSize < groupsToSort.size()) : "Algorithm Failure";
+			lastGroupsSize = groupsToSort.size();
+		}
+		
 		return returnGroups;
 	}
 
@@ -272,6 +299,7 @@ public class GroupsPanel extends Composite {
 		mainComposite.setLayout(glMain);
 		scrolledComposite.setContent(mainComposite);
 		for (Group group : groups) {
+			group.relayout();
 			group.pack(true);
 		}
 		for (Composite column : columns) {

@@ -158,13 +158,6 @@ public class Group extends Composite {
 		groupBlocks.setLayout(glGroup);
 		groupBlocks.setBackground(WHITE);
 		groupBlocks.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
-
-		this.addControlListener(new ControlAdapter() {
-			public void controlResized(ControlEvent e) {
-				Composite source = (Composite) e.getSource();
-				relayout(source);
-			}
-		});
 	}
 
 	/**
@@ -172,17 +165,17 @@ public class Group extends Composite {
 	 * 
 	 * @param group The group which has been resized
 	 */
-	private void relayout(final Composite group) {
-		Rectangle r = group.getClientArea();
+	public void relayout() {
+		Rectangle r = getClientArea();
 		glGroup.numColumns = computeNumColumns(r.height);
 		hideSpacers();
 		reorderRows();
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				if (!group.isDisposed() && !group.getParent().isDisposed()) {
-					group.getParent().getParent().layout();
-					group.getParent().getParent().pack();
+				if (!isDisposed() && !getParent().isDisposed()) {
+					getParent().getParent().layout();
+					getParent().getParent().pack();
 				}
 			}
 		});
@@ -249,7 +242,7 @@ public class Group extends Composite {
 			return Group.TITLE_HEIGHT;
 		}
 		int heightPerRow = Group.ROW_HEIGHT + Group.ROW_VERTICAL_SPACING;
-		return heightPerRow * blocksList.size() + Group.TITLE_HEIGHT;
+		return heightPerRow * blocksList.size() + Group.TITLE_HEIGHT + Group.ROW_VERTICAL_SPACING;
 	}
 
 	@Override
