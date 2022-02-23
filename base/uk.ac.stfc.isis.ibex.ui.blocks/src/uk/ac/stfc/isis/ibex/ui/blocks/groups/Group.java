@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ControlAdapter;
-import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
@@ -162,8 +160,6 @@ public class Group extends Composite {
 
 	/**
 	 * Rearranges the layout of elements in the group according to the new size of the composite.
-	 * 
-	 * @param group The group which has been resized
 	 */
 	public void relayout() {
 		Rectangle r = getClientArea();
