@@ -20,12 +20,16 @@
 package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.FillLayout;
@@ -49,11 +53,12 @@ public class GroupsPanel extends Composite {
 	
 	private Composite mainComposite;
 	private ScrolledComposite scrolledComposite;
+	private List<Composite> columns  = new ArrayList<>();
 	private CLabel banner;
 	
     private static final Color RED = SWTResourceManager.getColor(SWT.COLOR_RED);
 	
-    protected static final Font MESSAGE_FONT = SWTResourceManager.getFont("Arial", 14, SWT.NORMAL);
+    private static final Font MESSAGE_FONT = SWTResourceManager.getFont("Arial", 14, SWT.NORMAL);
     private static final String DISCONNECTED_MESSAGE = "IBEX SERVER DISCONNECTED\nPlease talk to your point of contact";
     private static final String CONNECTED_NO_GROUPS_MESSAGE =
             "IBEX SERVER CONNECTED:\nNo Groups Present\nNew Blocks can be added by going to\n Configuration->Edit Current Configuration->Blocks->Add Blocks";
@@ -68,10 +73,11 @@ public class GroupsPanel extends Composite {
     private Menu contextMenu;
 	
 	private boolean showHiddenBlocks = false;
+	private boolean sortGroupsBySize = false;
 	
 	private Optional<List<DisplayGroup>> displayGroups;
 	
-	private static final int MIN_GROUP_HEIGHT = 100;
+	private static final int COLUMN_HEIGHT_BASE = 10;
     /**
      * Constructor for the groups panel.
      * 
@@ -85,16 +91,33 @@ public class GroupsPanel extends Composite {
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		scrolledComposite = new ScrolledComposite(this, SWT.H_SCROLL | SWT.V_SCROLL);
-		mainComposite = new Composite(scrolledComposite, SWT.NONE);
-		mainComposite.setLayout(new GridLayout(1, false));
+		setMainCompositeLayout(1);
+		
 		scrolledComposite.setContent(mainComposite);
 		scrolledComposite.setExpandVertical(true);
 		scrolledComposite.setMinHeight(125);
+		this.addControlListener(new ControlAdapter() {
+			public void controlResized(ControlEvent e) {
+				Composite source = (Composite) e.getSource();
+				relayoutGroups(true, source.getClientArea().height);
+			}
+		});
 		
 		configureMenu();
 
 		showBanner(ConnectionStatus.EMPTY);
 
+	}
+
+	/**
+	 * Set main composite's layout to be a new GridLayout with correct settings.
+	 * @param columnCount How many columns the main composite's grid should hold
+	 */
+	private void setMainCompositeLayout(int columnCount) {
+		mainComposite = new Composite(scrolledComposite, SWT.NONE);
+		GridLayout glMain = new GridLayout(columnCount, false);
+		glMain.horizontalSpacing = 0;
+		mainComposite.setLayout(glMain);
 	}
 
 	private void configureMenu() {
@@ -113,13 +136,181 @@ public class GroupsPanel extends Composite {
 			showBanner(ConnectionStatus.CONNECTED_NO_GROUPS);
 			return;
 		} else {
+			addColumns();
 			addGroups();
-			setRows();
-			layoutGroups();
+			assert (this.groups.size() == columns.size()) : "Table creation failed";
+			relayoutGroups(false, 0);	// This is needed to calculate height of the panel used below
+			relayoutGroups(true, this.getClientArea().height);
+		}
+	}
+
+	/**
+	 * Creates maximum needed amount of columns for main composite
+	 */
+    private void addColumns() {
+		Optional<List<DisplayGroup>> visibleGroups = HiddenGroupFilter.getVisibleGroups(displayGroups, showHiddenBlocks);
+
+		int groupCount = visibleGroups.orElseThrow(IllegalStateException::new).size();
+		for (int i = 0; i < groupCount; i++) {
+			columns.add(createColumn());
 		}
 	}
 
     /**
+     * Creates a column composite that will hold the groups
+     * @return Column composite
+     */
+	private Composite createColumn() {
+		Composite column = new Composite(mainComposite, SWT.NONE);
+		column.setLayout(new GridLayout(1, false));
+		column.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		column.setMenu(contextMenu);
+		column.pack();
+	
+		return column;
+	}
+	
+	/**
+	 * Creates group widgets and assigns them to main composite by default
+	 */
+	private void addGroups() {
+		Optional<List<DisplayGroup>> visibleGroups = HiddenGroupFilter.getVisibleGroups(displayGroups, showHiddenBlocks);
+		for (DisplayGroup group : visibleGroups.orElseThrow(IllegalStateException::new)) {
+		    groups.add(groupWidget(group, mainComposite));
+		}
+	}
+	
+	/**
+	 * Creates a group composite
+	 * @param group Group data to create widget from
+	 * @param parent Widget's composite parent
+	 * @return Created group widget
+	 */
+	private Group groupWidget(DisplayGroup group, Composite parent) {
+        Group groupWidget = new Group(parent, SWT.NONE, group, this);
+		groupWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		groupWidget.pack();
+        groupWidget.setMenu(contextMenu);
+
+		return groupWidget;
+	}
+	
+	/**
+	 * Restructures panel's layout using columns
+	 * @param stackVertically Whether vertical group stacking should be applied.
+	 * False to add one group per column and thus stack groups horizontally only.
+	 * @param windowHeight Height of the panel, needed for calculating how many groups
+	 * can fit in a column.
+	 */
+	private void relayoutGroups(boolean stackVertically, int windowHeight) {
+		assignGroups(stackVertically, windowHeight);
+		layoutColumns();
+	}
+
+	/**
+	 * Assigns groups to columns based on parameters.
+	 * @param stackVertically Whether vertical group stacking should be applied.
+	 * @param windowHeight Height of the panel, needed for calculating how many groups
+	 * can fit in a column.
+	 */
+	private void assignGroups(boolean stackVertically, int windowHeight) {
+		if (!stackVertically) {
+			int j = Math.min(groups.size(), columns.size());
+			for (int i = 0; i < j; i++) {
+				groups.get(i).setParent(columns.get(i));
+			}
+		} else {
+			List<Group> groups;
+			if (sortGroupsBySize) {
+				groups = getGroupsSortedBySize(this.groups, windowHeight);
+			} else {
+				groups = new ArrayList<Group>(this.groups);
+			}
+			for (Composite column : columns) {
+				((GridData) column.getLayoutData()).exclude = true;
+				int columnHeight = COLUMN_HEIGHT_BASE;
+				while (columnHeight < windowHeight) {
+					if (groups.size() == 0) {
+						break;
+					}
+					Group group = groups.get(0);
+					assert (group.getHeight() > 0) : "Invalid group widget";	//secures from infinite loops
+					if (group.getHeight() + columnHeight > windowHeight && columnHeight != COLUMN_HEIGHT_BASE) {
+						break;
+					}
+					group.setParent(column);
+					((GridData) column.getLayoutData()).exclude = false;
+					columnHeight += group.getHeight();
+					groups.remove(0);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Get a new list of groups ordered using a size-based algorithm.
+	 * Algorithm's logic is to start with biggest group first and then
+	 * continuously fill remaining space in column with smaller groups.
+	 * @param groups List of groups to order
+	 * @return Ordered list of groups
+	 */
+	private List<Group> getGroupsSortedBySize(List<Group> groups, int windowHeight) {
+		// Get a group list sorted in descending order of size
+		ArrayList<Group> groupsToSort = new ArrayList<Group>(groups);
+		Collections.sort(groupsToSort, new Comparator<Group>() {
+			@Override
+			public int compare(Group o1, Group o2) {
+				return o2.getHeight() - o1.getHeight();
+			}
+		});
+		
+		List<Group> returnGroups = new ArrayList<Group>();
+		
+		// Apply algorithm to find optimal order of groups in columns
+		int lastGroupsSize = groupsToSort.size();
+		while (groupsToSort.size() > 0) {
+			int columnSpaceRemaining = windowHeight - COLUMN_HEIGHT_BASE;
+			boolean firstGroupInColumn = true;
+			
+			for (int i = 0; i < groupsToSort.size(); i++) {
+				Group nextGroup = groupsToSort.get(i);
+				if (columnSpaceRemaining - nextGroup.getHeight() >= 0 || firstGroupInColumn) {
+					returnGroups.add(nextGroup);
+					columnSpaceRemaining -= nextGroup.getHeight();
+					groupsToSort.remove(i);
+					i -= 1;
+					firstGroupInColumn = false;
+				}
+			}
+			// This assertion prevents infinite loop and helps in debugging
+			assert (lastGroupsSize < groupsToSort.size()) : "Algorithm Failure";
+			lastGroupsSize = groupsToSort.size();
+		}
+		
+		return returnGroups;
+	}
+
+	/**
+	 * Orders panel's composites to change layout accordingly and reload
+	 */
+	private void layoutColumns() {
+		GridLayout glMain = new GridLayout(columns.size(), false);
+		glMain.horizontalSpacing = 0;
+		mainComposite.setLayout(glMain);
+		scrolledComposite.setContent(mainComposite);
+		for (Group group : groups) {
+			group.relayout();
+			group.pack(true);
+		}
+		for (Composite column : columns) {
+			column.pack(true);
+		}
+		mainComposite.pack(true);
+
+		mainComposite.layout(true, true);
+	}
+
+	/**
      * Get whether the hidden blocks are showing or not.
      * 
      * @return True if blocks are showing
@@ -145,6 +336,28 @@ public class GroupsPanel extends Composite {
 	}
 	
 	/**
+	 * Get whether groups are sorted by size or by configuration order.
+	 * 
+	 * @return True if groups are sorted by size, otherwise false
+	 */
+	public boolean sortGroups() {
+		return sortGroupsBySize;
+	}
+	
+	/**
+	 * Set groups to be ordered by size or by configuration order.
+	 * 
+	 * @param orderBySize True to set groups to be ordered by size or
+	 * false to order them by configuration order
+	 */
+	public void setOrderGroups(boolean orderBySize) {
+		sortGroupsBySize = orderBySize;
+
+		selectBanner(displayGroups);
+	}
+	
+	
+	/**
 	 * Updates the groups to display a new set of groups/blocks.
 	 * 
 	 * @param groups The new set of groups.
@@ -164,7 +377,7 @@ public class GroupsPanel extends Composite {
 			}
 		});
 	}
-
+	
 	private void showBanner(ConnectionStatus status) {
 		banner = new CLabel(scrolledComposite, SWT.NONE);
 		banner.setLeftMargin(50);
@@ -182,40 +395,6 @@ public class GroupsPanel extends Composite {
 		}
 		banner.pack();
 	}
-
-	private void layoutGroups() {
-		scrolledComposite.setContent(mainComposite);
-		mainComposite.pack(true);
-		for (Group group : groups) {
-			group.pack(true);
-		}
-
-		mainComposite.layout(true, true);
-	}
-	
-	private void addGroups() {
-		Optional<List<DisplayGroup>> visibleGroups = HiddenGroupFilter.getVisibleGroups(displayGroups, showHiddenBlocks);
-		for (DisplayGroup group : visibleGroups.orElseThrow(IllegalStateException::new)) {
-		    groups.add(groupWidget(group));
-		}
-	}
-	
-	private void setRows() {
-		mainComposite.setLayout(new GridLayout(groups.size(), false));
-	}
-	
-	private Group groupWidget(DisplayGroup group) {
-        Group groupWidget = new Group(mainComposite, SWT.NONE, group, this);
-		GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-		gd.minimumHeight = MIN_GROUP_HEIGHT;
-		groupWidget.setLayoutData(gd);
-		groupWidget.pack();
-        groupWidget.setMenu(contextMenu);
-		
-		groups.add(groupWidget);
-		
-		return groupWidget;
-	}
 	
 	private void clear() {
 		if (banner != null) {
@@ -225,10 +404,10 @@ public class GroupsPanel extends Composite {
 		// Disposing of the children one by one seems to sometimes fail, so dispose
 		// the parent instead
 		mainComposite.dispose();
-		mainComposite = new Composite(scrolledComposite, SWT.NONE);
-		mainComposite.setLayout(new GridLayout(1, false));
+		setMainCompositeLayout(1);
 		configureMenu();
 		
+		columns.clear();
 		groups.clear();
 	} 
 	

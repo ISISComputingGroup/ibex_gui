@@ -23,16 +23,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ControlAdapter;
-import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -48,13 +49,15 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 @SuppressWarnings("checkstyle:magicnumber")
 public class Group extends Composite {
 	private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
-	private static final int TITLE_HEIGHT = 30;
+	private static final int TITLE_HEIGHT = 37;
 	private static final int ROW_HEIGHT = 24;
-	private Label title;
+	private static final int ROW_VERTICAL_SPACING = 5;
+	private Button title;
 	private Composite groupBlocks;
 
 	private int numColumns;
 	private int numRows;
+	private boolean collapsed = false;
 
 	private List<Control> rows;
 	private List<DisplayBlock> blocksList;
@@ -91,15 +94,36 @@ public class Group extends Composite {
 		// run control status, and for every column but the last we need a
 		// divider label column
 		GridLayout layout = new GridLayout(1, false);
-		layout.verticalSpacing = 5;
+		layout.verticalSpacing = ROW_VERTICAL_SPACING;
 
 		this.setLayout(layout);
 		this.setBackground(WHITE);
 
 		// In the first column put the title in
+		/*
 		title = labelMaker(this, SWT.NONE, group.name(), "", null);
 		Font titleFont = getEditedLabelFont(title, 10, SWT.BOLD);
 		title.setFont(titleFont);
+		*/
+		
+		title = new Button(this, SWT.TOGGLE);
+		title.setText(group.name());
+		title.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Button source = (Button) e.getSource();
+				if (source.getSelection()) {
+					groupBlocks.setVisible(false);
+					((GridData) groupBlocks.getLayoutData()).exclude = true;
+					collapsed = true;
+				} else {
+					groupBlocks.setVisible(true);
+					((GridData) groupBlocks.getLayoutData()).exclude = false;
+					collapsed = false;
+				}
+				panel.notifyListeners(SWT.Resize, new Event());
+			}
+		});
 
 		groupBlocks = new Composite(this, SWT.NONE);
 
@@ -132,31 +156,22 @@ public class Group extends Composite {
 		groupBlocks.setLayout(glGroup);
 		groupBlocks.setBackground(WHITE);
 		groupBlocks.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
-
-		this.addControlListener(new ControlAdapter() {
-			public void controlResized(ControlEvent e) {
-				Composite source = (Composite) e.getSource();
-				relayout(source);
-			}
-		});
 	}
 
 	/**
 	 * Rearranges the layout of elements in the group according to the new size of the composite.
-	 * 
-	 * @param group The group which has been resized
 	 */
-	private void relayout(final Composite group) {
-		Rectangle r = group.getClientArea();
+	public void relayout() {
+		Rectangle r = getClientArea();
 		glGroup.numColumns = computeNumColumns(r.height);
 		hideSpacers();
 		reorderRows();
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				if (!group.isDisposed() && !group.getParent().isDisposed()) {
-					group.getParent().layout();
-					group.getParent().pack();
+				if (!isDisposed() && !getParent().isDisposed()) {
+					getParent().getParent().layout();
+					getParent().getParent().pack();
 				}
 			}
 		});
@@ -213,29 +228,17 @@ public class Group extends Composite {
 			}
 		}
 	}
-
-	private Font getEditedLabelFont(Label label, int size, int style) {
-		final String currentFontName = label.getFont().getFontData()[0].getName();
-		return SWTResourceManager.getFont(currentFontName, size, style);
-	}
-
-	private Label labelMaker(Composite composite, int style, String text, String toolTip, Font font) {
-		Label label = new Label(composite, style);
-		if (text != null) {
-			label.setText(text);
+	
+	/**
+	 * Calculates desired height of the group widget if all blocks were to be in one column.
+	 * @return total height of the group
+	 */
+	public int getHeight() {
+		if (collapsed) {
+			return Group.TITLE_HEIGHT;
 		}
-
-		label.setBackground(WHITE);
-
-		if (toolTip != null) {
-			label.setToolTipText(toolTip);
-		}
-
-		if (font != null) {
-			label.setFont(font);
-		}
-
-		return label;
+		int heightPerRow = Group.ROW_HEIGHT + Group.ROW_VERTICAL_SPACING;
+		return heightPerRow * blocksList.size() + Group.TITLE_HEIGHT + Group.ROW_VERTICAL_SPACING;
 	}
 
 	@Override
