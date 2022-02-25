@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
@@ -40,6 +42,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
+import uk.ac.stfc.isis.ibex.epics.pv.PvState;
 
 /**
  * Provides the display of the groups, which contain the selected blocks. Allows
@@ -52,6 +55,8 @@ public class Group extends Composite {
 	private static final int TITLE_HEIGHT = 37;
 	private static final int ROW_HEIGHT = 24;
 	private static final int ROW_VERTICAL_SPACING = 5;
+	
+	private Composite titleContainer;
 	private Button title;
 	private Composite groupBlocks;
 
@@ -59,6 +64,9 @@ public class Group extends Composite {
 	private int numRows;
 	private boolean collapsed = false;
 
+	private List<PvState> rowStatuses;
+	private BlockStatusBorderColourConverter stateConverter = new BlockStatusBorderColourConverter();
+	
 	private List<Control> rows;
 	private List<DisplayBlock> blocksList;
 	private GridLayout glGroup;
@@ -88,6 +96,10 @@ public class Group extends Composite {
 		}
 
 		rows = new ArrayList<Control>();
+		rowStatuses = new ArrayList<PvState>();
+		for (int i = 0; i < blocksList.size(); i++) {
+			rowStatuses.add(PvState.DEFAULT);
+		}
 
 		// For each block we need three columns in the grid layout, one for
 		// name, one for value, one for
@@ -106,7 +118,15 @@ public class Group extends Composite {
 		title.setFont(titleFont);
 		*/
 		
-		title = new Button(this, SWT.TOGGLE);
+		titleContainer = new Composite(this, SWT.NONE);
+		GridLayout titleContainerLayout = new GridLayout(1, false);
+		titleContainerLayout.marginWidth = 2;
+		titleContainerLayout.marginHeight = 2;
+		titleContainerLayout.verticalSpacing = 0;
+		titleContainerLayout.horizontalSpacing = 0;
+		titleContainer.setLayout(titleContainerLayout);
+		
+		title = new Button(titleContainer, SWT.TOGGLE);
 		title.setText(group.name());
 		title.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -135,11 +155,21 @@ public class Group extends Composite {
 
 			DisplayBlock currentBlock = blocksList.get(i);
 
-			GroupRow row = new GroupRow(groupBlocks, SWT.NONE, currentBlock);
+			GroupRow row = new GroupRow(groupBlocks, SWT.NONE, currentBlock, i);
 			rows.add(row);
 
 			GroupsMenu fullMenu = new GroupsMenu(panel, new BlocksMenu(currentBlock));
 			row.setMenu(fullMenu.get());
+			row.valueContainer.addPaintListener(new PaintListener() {
+				@Override
+				public void paintControl(PaintEvent e) {
+					Composite container = (Composite) e.widget;
+					GroupRow row = (GroupRow) container.getParent();
+					Group group = (Group) (row.getParent().getParent());
+					rowStatuses.set(row.getRowIndex(), row.getBlockStatus());
+					group.reloadTitleStatus();
+				}
+			});
 		}
 		// Add enough spacers to fill all empty spaces in the last column. These
 		// are then simply hidden / unhidden as needed to prevent having to
@@ -156,6 +186,19 @@ public class Group extends Composite {
 		groupBlocks.setLayout(glGroup);
 		groupBlocks.setBackground(WHITE);
 		groupBlocks.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+	}
+
+	/**
+	 * Changes title's border colour to match block with the most severe status in the group.
+	 */
+	protected void reloadTitleStatus() {
+		PvState mostSevereState = PvState.DEFAULT;
+		for (PvState state : rowStatuses) {
+			if (state.compareTo(mostSevereState) > 0) {
+				mostSevereState = state;
+			}
+		}
+		titleContainer.setBackground(stateConverter.convert(mostSevereState));
 	}
 
 	/**
