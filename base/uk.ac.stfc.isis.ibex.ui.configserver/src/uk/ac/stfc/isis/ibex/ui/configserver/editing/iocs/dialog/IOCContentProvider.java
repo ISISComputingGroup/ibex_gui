@@ -65,11 +65,7 @@ public class IOCContentProvider implements ITreeContentProvider {
 
 	@Override
 	public Object getParent(Object element) {
-		//if (element instanceof ComponentDescription) {
-		//	return ((ComponentDescription) element).getParent();
-		//} else {
-			return null;
-		//}
+		return null;
 	}
 
 	@Override
