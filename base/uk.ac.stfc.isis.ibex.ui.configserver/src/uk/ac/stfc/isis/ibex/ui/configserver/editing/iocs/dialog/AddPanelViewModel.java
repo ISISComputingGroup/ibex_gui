@@ -21,7 +21,9 @@
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Hashtable;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -32,7 +34,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 public class AddPanelViewModel extends ModelObject {
 
     private String selectedName;
-    private Collection<EditableIoc> availableIocs;
+    private Hashtable<String, ArrayList<EditableIoc>> availableIocs;
 
     /**
      * Constructor for the add panel view model.
@@ -41,7 +43,15 @@ public class AddPanelViewModel extends ModelObject {
      *            The IOCs available to choose from.
      */
     public AddPanelViewModel(Collection<EditableIoc> availableIocs) {
-        this.availableIocs = availableIocs;
+    	this.availableIocs = new Hashtable<String, ArrayList<EditableIoc>>();
+    	String description = "";
+    	for (EditableIoc ioc : availableIocs) {
+    		description = ioc.getDescription();
+    		if (!this.availableIocs.containsKey(description)) {
+    			this.availableIocs.put(description, new ArrayList<EditableIoc>());
+    		}
+    		this.availableIocs.get(description).add(ioc);
+    	}
     }
 
     /**
@@ -49,7 +59,7 @@ public class AddPanelViewModel extends ModelObject {
      * 
      * @return The available IOCs.
      */
-    public Collection<EditableIoc> getAvailableIocs() {
+    public Hashtable<String, ArrayList<EditableIoc>> getAvailableIocs() {
         return availableIocs;
     }
 
@@ -59,11 +69,11 @@ public class AddPanelViewModel extends ModelObject {
      * @return The selected IOC
      */
     public TempEditableIoc getSelectedIoc() {
-        for (EditableIoc ioc : availableIocs) {
-            if (ioc.getName().equals(selectedName)) {
-                return new TempEditableIoc(ioc);
-            }
-        }
+        //for (EditableIoc ioc : availableIocs) {
+        //    if (ioc.getName().equals(selectedName)) {
+        //        return new TempEditableIoc(ioc);
+        //    }
+        //}
         return new TempEditableIoc(new EditableIoc(selectedName));
     }
 

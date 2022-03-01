@@ -26,18 +26,24 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.AvailableIocsTable;
 
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.ui.ISelectionListener;
+
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog.IOCContentProvider;
 /**
  * Dialog panel for selecting a new IOC to add to a configuration.
  */
 public class AddPanel extends Composite {
-    private AvailableIocsTable availableIocsTable;
-    private static final int TABLE_HEIGHT = 300;
+    private TreeViewer availableIocsTree;
+    private static final int TREE_HEIGHT = 300;
     private static final int SPACING = 25;
 
 
@@ -58,12 +64,17 @@ public class AddPanel extends Composite {
         this.setLayout(glPanel);
 
         // Add selection table
-        availableIocsTable = new AvailableIocsTable(this, SWT.NONE, SWT.FULL_SELECTION);
-        availableIocsTable.setRows(viewModel.getAvailableIocs());
+        TreeViewer treeViewer = new TreeViewer(this, SWT.FULL_SELECTION);
+        treeViewer.setContentProvider(new IOCContentProvider());
+        treeViewer.setLabelProvider(new IOCLabelProvider());
+        treeViewer.setInput(viewModel.getAvailableIocs());
+        availableIocsTree = treeViewer;
+        //availableIocsTable.setRows(viewModel.getAvailableIocs());
 
         GridData gdIocTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-        gdIocTable.heightHint = TABLE_HEIGHT;
-        availableIocsTable.setLayoutData(gdIocTable);
+        gdIocTable.heightHint = TREE_HEIGHT;
+        
+        availableIocsTree.getTree().setLayoutData(gdIocTable);
 
         bind(viewModel);
     }
@@ -76,16 +87,16 @@ public class AddPanel extends Composite {
      */
     private void bind(final AddPanelViewModel viewModel) {
 
-        availableIocsTable.addSelectionChangedListener(new ISelectionChangedListener() {
-            @Override
-            public void selectionChanged(SelectionChangedEvent event) {
-                String selectedIocName = availableIocsTable.firstSelectedRow().getName();
-                viewModel.setSelectedName(selectedIocName);
+        availableIocsTree.addSelectionChangedListener(new ISelectionChangedListener() {
+           @Override
+           public void selectionChanged(SelectionChangedEvent event) {
+               String selectedIocName = availableIocsTree.getTree().getSelection()[0].getText();
+               viewModel.setSelectedName(selectedIocName);
             }
         });
         
         // Enable selection by double click.
-        availableIocsTable.addMouseListener(new MouseAdapter() {
+        availableIocsTree.getTree().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseDoubleClick(MouseEvent e) {
                 viewModel.iocConfirmed();
