@@ -58,18 +58,16 @@ public class AddPanel extends Composite {
         glPanel.verticalSpacing = SPACING;
         this.setLayout(glPanel);
 
-        // Add selection table
-        TreeViewer treeViewer = new TreeViewer(this, SWT.FULL_SELECTION);
-        treeViewer.setContentProvider(new IOCContentProvider());
-        treeViewer.setLabelProvider(new IOCLabelProvider());
-        treeViewer.setInput(viewModel.getAvailableIocs());
-        availableIocsTree = treeViewer;
-        //availableIocsTable.setRows(viewModel.getAvailableIocs());
-
+        // Add selection tree
+        availableIocsTree = new TreeViewer(this, SWT.FULL_SELECTION);
+        availableIocsTree.setContentProvider(new IOCContentProvider());
+        availableIocsTree.setLabelProvider(new IOCLabelProvider());
+        availableIocsTree.setInput(viewModel.getAvailableIocs());
+        
         GridData gdIocTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
         gdIocTable.heightHint = TREE_HEIGHT;
-        
         availableIocsTree.getTree().setLayoutData(gdIocTable);
+        
 
         bind(viewModel);
     }
