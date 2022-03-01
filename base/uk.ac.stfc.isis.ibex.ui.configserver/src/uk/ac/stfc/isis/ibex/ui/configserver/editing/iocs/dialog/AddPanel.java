@@ -31,10 +31,12 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.AvailableIocsTable;
 
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.ISelectionListener;
 
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog.IOCContentProvider;
@@ -90,8 +92,12 @@ public class AddPanel extends Composite {
         availableIocsTree.addSelectionChangedListener(new ISelectionChangedListener() {
            @Override
            public void selectionChanged(SelectionChangedEvent event) {
-               String selectedIocName = availableIocsTree.getTree().getSelection()[0].getText();
-               viewModel.setSelectedName(selectedIocName);
+               TreeItem selectedIoc = availableIocsTree.getTree().getSelection()[0];
+               if(selectedIoc.getData() instanceof EditableIoc) {
+            	   viewModel.setSelectedName(selectedIoc.getText());
+            	   viewModel.setCurrentSelection(EditableIoc.class.cast(selectedIoc.getData()).getDescription());
+               }
+              
             }
         });
         

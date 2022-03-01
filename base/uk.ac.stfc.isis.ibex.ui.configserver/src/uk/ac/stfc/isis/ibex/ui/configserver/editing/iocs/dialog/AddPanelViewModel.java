@@ -34,6 +34,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 public class AddPanelViewModel extends ModelObject {
 
     private String selectedName;
+    private String currentSelection;
     private Hashtable<String, ArrayList<EditableIoc>> availableIocs;
 
     /**
@@ -69,11 +70,11 @@ public class AddPanelViewModel extends ModelObject {
      * @return The selected IOC
      */
     public TempEditableIoc getSelectedIoc() {
-        //for (EditableIoc ioc : availableIocs) {
-        //    if (ioc.getName().equals(selectedName)) {
-        //        return new TempEditableIoc(ioc);
-        //    }
-        //}
+        for (EditableIoc ioc : availableIocs.get(currentSelection)) {
+            if (ioc.getName().equals(selectedName)) {
+                return new TempEditableIoc(ioc);
+            }
+        }
         return new TempEditableIoc(new EditableIoc(selectedName));
     }
 
@@ -101,5 +102,23 @@ public class AddPanelViewModel extends ModelObject {
     public void setSelectedName(String selectedName) {
         firePropertyChange("selectedName", this.selectedName, this.selectedName = selectedName);
     }
+
+    /**
+     * Gets the IOCs description (the key to Hashtable).
+     * @return The selected Ioc's description
+     */
+	public String getCurrentSelection() {
+		return currentSelection;
+	}
+
+	/**
+     * Sets the IOCs description (the key to Hashtable).
+     * 
+     * @param currentSelection
+     *            The IOCs description
+     */
+	public void setCurrentSelection(String currentSelection) {
+		this.currentSelection = currentSelection;
+	}
 
 }
