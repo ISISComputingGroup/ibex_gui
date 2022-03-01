@@ -96,6 +96,9 @@ public class AddPanel extends Composite {
                if(selectedIoc.getData() instanceof EditableIoc) {
             	   viewModel.setSelectedName(selectedIoc.getText());
             	   viewModel.setCurrentSelection(EditableIoc.class.cast(selectedIoc.getData()).getDescription());
+               }else{
+            	   viewModel.setSelectedName(null);
+            	   viewModel.setCurrentSelection(null);
                }
               
             }
