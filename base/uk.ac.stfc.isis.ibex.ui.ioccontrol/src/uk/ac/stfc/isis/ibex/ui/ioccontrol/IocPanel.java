@@ -21,10 +21,16 @@ package uk.ac.stfc.isis.ibex.ui.ioccontrol;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.Hashtable;
 
+import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -33,7 +39,13 @@ import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.configserver.IocControl;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IocTable;
+import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCConfigProvider;
+import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCContentProvider;
+import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCLabelProvider;
+import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCNameProvider;
+import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCStatusProvider;
 
 /**
  * A panel that lists the available IOCs and allows you to control them.
@@ -69,16 +81,62 @@ public class IocPanel extends Composite {
 		
 		setLayout(new GridLayout(1, false));
 		
-		table = new IocTable(this, SWT.NONE, SWT.FULL_SELECTION);
-		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		// Add selection tree
+        TreeViewer availableIocsTree = new TreeViewer(this, SWT.FULL_SELECTION);
+        availableIocsTree.setContentProvider(new IOCContentProvider());
+        
+        TreeViewerColumn mainColumn = new TreeViewerColumn(availableIocsTree, SWT.NONE);
+        mainColumn.getColumn().setText("Ioc");
+        mainColumn.getColumn().setWidth(100);
+        mainColumn.setLabelProvider(new IOCLabelProvider());
+        
+        TreeViewerColumn nameColumn = new TreeViewerColumn(availableIocsTree, SWT.NONE);
+        nameColumn.getColumn().setText("Name");
+        nameColumn.getColumn().setWidth(100);
+        nameColumn.getColumn().setAlignment(SWT.RIGHT);
+        nameColumn.setLabelProvider(new IOCNameProvider());
+        
+        TreeViewerColumn statusColumn = new TreeViewerColumn(availableIocsTree, SWT.NONE);
+        statusColumn.getColumn().setText("Name");
+        statusColumn.getColumn().setWidth(100);
+        statusColumn.getColumn().setAlignment(SWT.RIGHT);
+        statusColumn.setLabelProvider(new IOCStatusProvider());
+        
+        TreeViewerColumn configColumn = new TreeViewerColumn(availableIocsTree, SWT.NONE);
+        configColumn.getColumn().setText("Name");
+        configColumn.getColumn().setWidth(100);
+        configColumn.getColumn().setAlignment(SWT.RIGHT);
+        configColumn.setLabelProvider(new IOCConfigProvider());
+        
+        
+
+        
+        Collection<IocState> rows = control.iocs().getValue();
+        Hashtable<String, ArrayList<IocState>> availableIocs = new Hashtable<String, ArrayList<IocState>>();
+    	String description = "";
+    	for (IocState ioc : rows) {
+    		description = ioc.getDescription();
+    		if (!availableIocs.containsKey(description)) {
+    			availableIocs.put(description, new ArrayList<IocState>());
+    		}
+    		availableIocs.get(description).add(ioc);
+    	}
+    	for (String key: availableIocs.keySet()) {
+    		availableIocs.get(key).sort(Comparator.naturalOrder());
+    	}
+    	availableIocsTree.setInput(availableIocs);
+    	availableIocsTree.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		this.control = control;
 		control.iocs().addPropertyChangeListener(updateTable, true);
 		
-		table.addSelectionChangedListener(new ISelectionChangedListener() {
+		availableIocsTree.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
-				buttons.setIoc(table.firstSelectedRow());
+				Object selection = availableIocsTree.getTree().getSelection()[0].getData();
+				if (selection instanceof IocState) {
+					buttons.setIoc(IocState.class.cast(selection));
+				}	
 			}
 		});
 
