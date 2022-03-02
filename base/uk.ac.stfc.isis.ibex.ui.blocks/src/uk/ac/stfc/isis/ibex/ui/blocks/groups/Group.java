@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
@@ -106,7 +107,7 @@ public class Group extends Composite {
 		// run control status, and for every column but the last we need a
 		// divider label column
 		GridLayout layout = new GridLayout(1, false);
-		layout.verticalSpacing = (int) ROW_VERTICAL_SPACING;
+		layout.verticalSpacing = ROW_VERTICAL_SPACING;
 
 		this.setLayout(layout);
 		this.setBackground(WHITE);
@@ -120,7 +121,9 @@ public class Group extends Composite {
 		titleContainer.setLayout(titleContainerLayout);
 		
 		title = new Button(titleContainer, SWT.TOGGLE);
-		title.setText(group.name());
+		title.setText("   " + group.name());
+		title.setImage(ResourceManager.getPluginImage(
+				"uk.ac.stfc.isis.ibex.ui.blocks", "icons/minus.png"));
 		title.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -128,10 +131,14 @@ public class Group extends Composite {
 				if (source.getSelection()) {
 					groupBlocks.setVisible(false);
 					((GridData) groupBlocks.getLayoutData()).exclude = true;
+					source.setImage(ResourceManager.getPluginImage(
+							"uk.ac.stfc.isis.ibex.ui.blocks", "icons/plus.png"));
 					collapsed = true;
 				} else {
 					groupBlocks.setVisible(true);
 					((GridData) groupBlocks.getLayoutData()).exclude = false;
+					source.setImage(ResourceManager.getPluginImage(
+							"uk.ac.stfc.isis.ibex.ui.blocks", "icons/minus.png"));
 					collapsed = false;
 				}
 				panel.notifyListeners(SWT.Resize, new Event());
@@ -143,12 +150,11 @@ public class Group extends Composite {
 		for (int i = 0; i < blocksList.size(); i++) {
 
 			DisplayBlock currentBlock = blocksList.get(i);
-
 			GroupRow row = new GroupRow(groupBlocks, SWT.NONE, currentBlock, i);
 
 			GroupsMenu fullMenu = new GroupsMenu(panel, new BlocksMenu(currentBlock));
 			row.setMenu(fullMenu.get());
-			row.valueContainer.addPaintListener(new PaintListener() {
+			row.getValueContainer().addPaintListener(new PaintListener() {
 				@Override
 				public void paintControl(PaintEvent e) {
 					Composite container = (Composite) e.widget;
@@ -162,10 +168,10 @@ public class Group extends Composite {
 			rows.add(row);
 			
 		}
+		
 		// Add enough spacers to fill all empty spaces in the last column. These
 		// are then simply hidden / unhidden as needed to prevent having to
 		// add/remove elements to the layout post initialisation
-		
 		for (int i = 0; i < blocksList.size(); i++) {
 			Label spacer = new Label(groupBlocks, SWT.NONE);
 			GridData data = new GridData();
@@ -215,7 +221,11 @@ public class Group extends Composite {
 		});
 	}
 
+	/**
+	 * Reorganises the rows to stack vertically first, rather than SWT default which is horizontally first.
+	 */
 	private void reorderRows() {	
+		// Create new ordering list for rows
 		ArrayList<Integer> indexes = new  ArrayList<Integer>();
 		int currCol = 0;
 		int currRow = 0;
@@ -228,6 +238,7 @@ public class Group extends Composite {
 			currCol += 1;
 		}
 		
+		// Apply the list
 		Control prevRow = rows.get(0);
 		Control nextRow;
 		for (int i : indexes) {
@@ -242,6 +253,9 @@ public class Group extends Composite {
 		}
 	}
 	
+	/**
+	 * Hides unused spacers.
+	 */
 	private void hideSpacers() {
 		int spacersIndex = numRows * numColumns;
 		if (numColumns == 1) {
@@ -254,6 +268,11 @@ public class Group extends Composite {
 		}
 	}
 
+	/**
+	 * Helper method for optionally getting element in row list.
+	 * @param index Where in the list to look for element
+	 * @return Optional of found element or empty optional
+	 */
 	private Optional<Control> getRow(int index) {
 		if (index >= 0 && index < rows.size()) {
 			return Optional.of(rows.get(index));
@@ -272,7 +291,6 @@ public class Group extends Composite {
 		numColumns = (int) Math.ceil((float) blocksList.size() / (float) numRows);
 		return numColumns;
 	}
-	
 	
 	/**
 	 * Calculates desired height of the group widget if all blocks were to be in one column.

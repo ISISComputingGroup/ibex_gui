@@ -56,7 +56,7 @@ public class GroupRow extends Composite {
     private final Label lblName;
     private final Label lblValue;
     private final Label lblStatus;
-    public final Composite valueContainer;
+    private final Composite valueContainer;
     
     private final DisplayBlock block;
     private final int rowIndex;
@@ -200,6 +200,14 @@ public class GroupRow extends Composite {
      */
     public int getRowIndex() {
     	return rowIndex;
+    }
+    
+    /**
+     * Returns container that holds the row's widgets.
+     * @return value container for the row
+     */
+    public Composite getValueContainer() {
+    	return valueContainer;
     }
 
 }
