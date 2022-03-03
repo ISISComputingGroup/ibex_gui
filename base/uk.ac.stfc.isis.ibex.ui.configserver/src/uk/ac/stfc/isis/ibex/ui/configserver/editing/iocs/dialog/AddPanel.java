@@ -21,6 +21,8 @@
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog;
 
+import java.util.Comparator;
+
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
@@ -31,6 +33,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
+
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.TreeItem;
 /**
@@ -62,6 +65,7 @@ public class AddPanel extends Composite {
         availableIocsTree = new TreeViewer(this, SWT.FULL_SELECTION);
         availableIocsTree.setContentProvider(new IOCContentProvider());
         availableIocsTree.setLabelProvider(new IOCLabelProvider());
+        availableIocsTree.setComparator(new IOCViewerComparator(Comparator.naturalOrder()));
         availableIocsTree.setInput(viewModel.getAvailableIocs());
         
         GridData gdIocTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
