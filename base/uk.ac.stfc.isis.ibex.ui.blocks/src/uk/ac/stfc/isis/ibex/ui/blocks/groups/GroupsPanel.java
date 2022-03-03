@@ -88,7 +88,10 @@ public class GroupsPanel extends Composite {
      */
 	public GroupsPanel(Composite parent, int style) {
 		super(parent, SWT.NONE);
-		setLayout(new FillLayout(SWT.HORIZONTAL));
+		FillLayout fLayout = new FillLayout(SWT.HORIZONTAL);
+		fLayout.marginHeight = 0;
+		fLayout.marginWidth = 0;
+		this.setLayout(fLayout);
 		
 		scrolledComposite = new ScrolledComposite(this, SWT.H_SCROLL | SWT.V_SCROLL);
 		setMainCompositeLayout(1);
@@ -116,6 +119,8 @@ public class GroupsPanel extends Composite {
 	private void setMainCompositeLayout(int columnCount) {
 		mainComposite = new Composite(scrolledComposite, SWT.NONE);
 		GridLayout glMain = new GridLayout(columnCount, false);
+		glMain.marginHeight = 0;
+		glMain.marginWidth = 0;
 		glMain.horizontalSpacing = 0;
 		mainComposite.setLayout(glMain);
 	}
@@ -162,7 +167,10 @@ public class GroupsPanel extends Composite {
      */
 	private Composite createColumn() {
 		Composite column = new Composite(mainComposite, SWT.NONE);
-		column.setLayout(new GridLayout(1, false));
+		GridLayout gLayout = new GridLayout(1, false);
+		gLayout.marginHeight = 0;
+		gLayout.marginWidth = 2;
+		column.setLayout(gLayout);
 		column.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		column.setMenu(contextMenu);
 		column.pack();
@@ -204,7 +212,7 @@ public class GroupsPanel extends Composite {
 	 */
 	private void relayoutGroups(boolean stackVertically, int windowHeight) {
 		assignGroups(stackVertically, windowHeight);
-		layoutColumns();
+		layoutColumns(windowHeight);
 	}
 
 	/**
@@ -293,13 +301,13 @@ public class GroupsPanel extends Composite {
 	/**
 	 * Orders panel's composites to change layout accordingly and reload
 	 */
-	private void layoutColumns() {
+	private void layoutColumns(int windowHeight) {
 		GridLayout glMain = new GridLayout(columns.size(), false);
 		glMain.horizontalSpacing = 0;
 		mainComposite.setLayout(glMain);
 		scrolledComposite.setContent(mainComposite);
 		for (Group group : groups) {
-			group.relayout();
+			group.relayout(windowHeight);
 			group.pack(true);
 		}
 		for (Composite column : columns) {
