@@ -31,6 +31,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -46,6 +47,7 @@ import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCContentProvider;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCNameProvider;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCStatusProvider;
+import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCViewerComparator;
 
 /**
  * A panel that lists the available IOCs and allows you to control them.
@@ -84,7 +86,7 @@ public class IocPanel extends Composite {
 		// Add selection tree
         TreeViewer availableIocsTree = new TreeViewer(this, SWT.FULL_SELECTION);
         availableIocsTree.setContentProvider(new IOCContentProvider());
-        
+        availableIocsTree.setComparator(new IOCViewerComparator(Comparator.naturalOrder()));
         TreeViewerColumn mainColumn = new TreeViewerColumn(availableIocsTree, SWT.NONE);
         mainColumn.getColumn().setText("Ioc");
         mainColumn.getColumn().setWidth(100);
@@ -108,9 +110,6 @@ public class IocPanel extends Composite {
         configColumn.getColumn().setAlignment(SWT.RIGHT);
         configColumn.setLabelProvider(new IOCConfigProvider());
         
-        
-
-        
         Collection<IocState> rows = control.iocs().getValue();
         Hashtable<String, ArrayList<IocState>> availableIocs = new Hashtable<String, ArrayList<IocState>>();
     	String description = "";
@@ -124,6 +123,7 @@ public class IocPanel extends Composite {
     	for (String key: availableIocs.keySet()) {
     		availableIocs.get(key).sort(Comparator.naturalOrder());
     	}
+
     	availableIocsTree.setInput(availableIocs);
     	availableIocsTree.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
