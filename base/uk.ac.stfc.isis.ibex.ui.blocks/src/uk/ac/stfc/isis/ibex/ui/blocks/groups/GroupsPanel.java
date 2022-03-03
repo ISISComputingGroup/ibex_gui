@@ -55,6 +55,7 @@ public class GroupsPanel extends Composite {
 	private ScrolledComposite scrolledComposite;
 	private List<Composite> columns  = new ArrayList<>();
 	private CLabel banner;
+	private ConnectionStatus status = ConnectionStatus.EMPTY;
 	
     private static final Color RED = SWTResourceManager.getColor(SWT.COLOR_RED);
 	
@@ -101,8 +102,10 @@ public class GroupsPanel extends Composite {
 		scrolledComposite.setMinHeight(125);
 		this.addControlListener(new ControlAdapter() {
 			public void controlResized(ControlEvent e) {
-				Composite source = (Composite) e.getSource();
-				relayoutGroups(true, source.getClientArea().height);
+				if (status == ConnectionStatus.EMPTY) {
+					Composite source = (Composite) e.getSource();
+					relayoutGroups(true, source.getClientArea().height);
+				}
 			}
 		});
 		
@@ -387,6 +390,7 @@ public class GroupsPanel extends Composite {
 	}
 	
 	private void showBanner(ConnectionStatus status) {
+		this.status = status;
 		banner = new CLabel(scrolledComposite, SWT.NONE);
 		banner.setLeftMargin(50);
 		banner.setFont(MESSAGE_FONT);		
