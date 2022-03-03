@@ -41,8 +41,9 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
  * The H_SCROLL has been removed as it was appearing despite no extra data being
  * in the table (unsure why)
  */
-@SuppressWarnings("checkstyle:magicnumber")
 public class IocTable extends DataboundTable<IocState> {
+	private static final int COLUMN_WIDTH = 4;
+	private static final int STATUS_COLUMN_WIDTH = 4;
     /**
      * A table that shows the status of all IOCs on the instrument.
      * 
@@ -75,7 +76,7 @@ public class IocTable extends DataboundTable<IocState> {
     }
 
     private void name() {
-        createColumn("Name", 4, true, new DataboundCellLabelProvider<IocState>(observeProperty("name")) {
+        createColumn("Name", COLUMN_WIDTH, true, new DataboundCellLabelProvider<IocState>(observeProperty("name")) {
             @Override
             protected String stringFromRow(IocState row) {
                 return row.getName();
@@ -84,7 +85,7 @@ public class IocTable extends DataboundTable<IocState> {
     }
 
     private void description() {
-        createColumn("Description", 4, true, new DataboundCellLabelProvider<IocState>(observeProperty("description")) {
+        createColumn("Description", COLUMN_WIDTH, true, new DataboundCellLabelProvider<IocState>(observeProperty("description")) {
             @Override
             protected String stringFromRow(IocState row) {
                 return row.getDescription();
@@ -93,11 +94,11 @@ public class IocTable extends DataboundTable<IocState> {
     }
 
     private void state() {
-        createColumn("Status", 2, true, new StateLabelProvider(observeProperty("isRunning")));
+        createColumn("Status", STATUS_COLUMN_WIDTH, true, new StateLabelProvider(observeProperty("isRunning")));
     }
 
     private void configState() {
-        createColumn("In config?", 4, true,
+        createColumn("In config?", COLUMN_WIDTH, true,
                 new DataboundCellLabelProvider<IocState>(observeProperty("inCurrentConfig")) {
                     @Override
                     protected String stringFromRow(IocState row) {

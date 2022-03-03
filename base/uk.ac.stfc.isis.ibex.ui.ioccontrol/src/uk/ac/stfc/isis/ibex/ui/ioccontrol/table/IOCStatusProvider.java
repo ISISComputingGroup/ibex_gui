@@ -41,6 +41,7 @@ import uk.ac.stfc.isis.ibex.configserver.IocState;
  * Provides labels for components within the ioc editor.
  */
 public class IOCStatusProvider extends ColumnLabelProvider {
+	private static final int COLOR = 255;
 	@Override
 	public Image getImage(Object element) {
 		return null;
@@ -64,9 +65,9 @@ public class IOCStatusProvider extends ColumnLabelProvider {
 			
 		
 			if (IocState.class.cast(element).getIsRunning()) {
-				return new Color(0, 255, 0);
+				return new Color(0, COLOR, 0);
 			} else {
-				return new Color(255, 0, 0); 
+				return new Color(COLOR, 0, 0); 
 			}	 
 		}
 		return null;

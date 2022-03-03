@@ -26,12 +26,10 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Hashtable;
 
-import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
-import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -40,7 +38,6 @@ import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.configserver.IocControl;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IocTable;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCConfigProvider;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCContentProvider;
@@ -59,6 +56,7 @@ public class IocPanel extends Composite {
 	private IocTable table;
     private IocButtonPanel buttons;
 	private IocControl control;
+	private static final int COLUMN_WIDTH = 100;
 	
 	private PropertyChangeListener updateTable = new PropertyChangeListener() {	
 		@Override
@@ -89,24 +87,24 @@ public class IocPanel extends Composite {
         availableIocsTree.setComparator(new IOCViewerComparator(Comparator.naturalOrder()));
         TreeViewerColumn mainColumn = new TreeViewerColumn(availableIocsTree, SWT.NONE);
         mainColumn.getColumn().setText("Ioc");
-        mainColumn.getColumn().setWidth(100);
+        mainColumn.getColumn().setWidth(COLUMN_WIDTH);
         mainColumn.setLabelProvider(new IOCLabelProvider());
         
         TreeViewerColumn nameColumn = new TreeViewerColumn(availableIocsTree, SWT.NONE);
         nameColumn.getColumn().setText("Name");
-        nameColumn.getColumn().setWidth(100);
+        nameColumn.getColumn().setWidth(COLUMN_WIDTH);
         nameColumn.getColumn().setAlignment(SWT.RIGHT);
         nameColumn.setLabelProvider(new IOCNameProvider());
         
         TreeViewerColumn statusColumn = new TreeViewerColumn(availableIocsTree, SWT.NONE);
         statusColumn.getColumn().setText("Name");
-        statusColumn.getColumn().setWidth(100);
+        statusColumn.getColumn().setWidth(COLUMN_WIDTH);
         statusColumn.getColumn().setAlignment(SWT.RIGHT);
         statusColumn.setLabelProvider(new IOCStatusProvider());
         
         TreeViewerColumn configColumn = new TreeViewerColumn(availableIocsTree, SWT.NONE);
         configColumn.getColumn().setText("Name");
-        configColumn.getColumn().setWidth(100);
+        configColumn.getColumn().setWidth(COLUMN_WIDTH);
         configColumn.getColumn().setAlignment(SWT.RIGHT);
         configColumn.setLabelProvider(new IOCConfigProvider());
         

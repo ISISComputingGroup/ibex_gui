@@ -41,11 +41,14 @@ import uk.ac.stfc.isis.ibex.configserver.IocState;
  * Provides labels for components within the ioc editor.
  */
 public class IOCViewerComparator extends ViewerComparator {
-	
+	/**
+	 * @param comparator The comparator to use for sorting.
+	 */	
 	public IOCViewerComparator(Comparator<? super String> comparator) {
 		super(comparator);
 	}
 	
+	@Override
 	public int compare(Viewer viewer, Object e1, Object e2) {
 		String name1 = this.getLabel(viewer, e1);
 		String name2 = this.getLabel(viewer, e2);
@@ -67,7 +70,7 @@ public class IOCViewerComparator extends ViewerComparator {
 			}
 		}
 		if (name1 == null) {
-			name1 = "";//$NON-NLS-1$
+			name1 = "";
 		}
 		return name1;
 	}
