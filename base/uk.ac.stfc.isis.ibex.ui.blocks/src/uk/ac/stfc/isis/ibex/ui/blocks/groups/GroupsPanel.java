@@ -104,7 +104,6 @@ public class GroupsPanel extends Composite {
 			public void controlResized(ControlEvent e) {
 				Composite source = (Composite) e.getSource();
 				GroupsPanel panel = (GroupsPanel) source;
-				System.out.println("test0" + panel.status.toString());
 				if (panel.status != ConnectionStatus.DISCONNECTED && panel.status != ConnectionStatus.CONNECTED_NO_GROUPS) {
 					relayoutGroups(true, source.getClientArea().height);
 				}
