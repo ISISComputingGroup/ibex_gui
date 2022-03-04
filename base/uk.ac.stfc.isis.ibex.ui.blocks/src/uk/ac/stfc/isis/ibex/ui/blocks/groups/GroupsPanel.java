@@ -102,8 +102,10 @@ public class GroupsPanel extends Composite {
 		scrolledComposite.setMinHeight(125);
 		this.addControlListener(new ControlAdapter() {
 			public void controlResized(ControlEvent e) {
-				if (status == ConnectionStatus.EMPTY) {
-					Composite source = (Composite) e.getSource();
+				Composite source = (Composite) e.getSource();
+				GroupsPanel panel = (GroupsPanel) source;
+				System.out.println("test0" + panel.status.toString());
+				if (panel.status != ConnectionStatus.DISCONNECTED && panel.status != ConnectionStatus.CONNECTED_NO_GROUPS) {
 					relayoutGroups(true, source.getClientArea().height);
 				}
 			}
@@ -139,11 +141,14 @@ public class GroupsPanel extends Composite {
 		clear();
 		if (!groups.isPresent()) {
 			showBanner(ConnectionStatus.DISCONNECTED);
+			this.status = ConnectionStatus.DISCONNECTED;
 			return;
 		} else if (groups.isPresent() && groups.get().isEmpty()) {
 			showBanner(ConnectionStatus.CONNECTED_NO_GROUPS);
+			this.status = ConnectionStatus.CONNECTED_NO_GROUPS;
 			return;
 		} else {
+			this.status = ConnectionStatus.EMPTY;
 			addColumns();
 			addGroups();
 			assert (this.groups.size() == columns.size()) : "Table creation failed";
@@ -390,7 +395,6 @@ public class GroupsPanel extends Composite {
 	}
 	
 	private void showBanner(ConnectionStatus status) {
-		this.status = status;
 		banner = new CLabel(scrolledComposite, SWT.NONE);
 		banner.setLeftMargin(50);
 		banner.setFont(MESSAGE_FONT);		
