@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class ResetPvConnectionButton extends Button {
 
-    private static final String RESET_PV_CONNECTION_URI = "platform:/plugin/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/icons/reset.png";
+    private static final String RESET_PV_CONNECTION_URI = "platform:/plugin/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/icons/resetpv.png";
 	
     /**
      * Constructor.

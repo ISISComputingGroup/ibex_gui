@@ -102,7 +102,7 @@ public class PerspectiveSwitcherView {
 	}
 	
 	private void addResetPvConnectionButton(Composite parent) {
-		ButtonViewModel model = new ButtonViewModel("Reset PV Connection");
+		ButtonViewModel model = new ButtonViewModel("Reset PVs");
 	    buttonModels.add(model);
 	    
 	    ResetPvConnectionButton button = new ResetPvConnectionButton(parent, model);
