@@ -1,2 +1,2 @@
 #!/bin/sh
-/usr/local/python/bin/python3 -m unittest discover .
+/usr/local/genie_python/bin/python3 -m unittest discover .
