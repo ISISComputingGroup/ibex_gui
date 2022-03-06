@@ -24,4 +24,4 @@ pydir=`python get_python_write_dir.py $clientbuild`
 mkdir -p $pydir
 ( cd $pydir; tar -xzf /misc/babylon/Scratch/IBEX/Linux/genie_python.tgz )
 ## link caRepeater so in path
-( cd $pydir/lib/python3.*/site-packages; ln -s ../../../bin/caRepeater . )
+( cd $pydir/lib/python3.*/site-packages; ln -sf ../../../bin/caRepeater . )
