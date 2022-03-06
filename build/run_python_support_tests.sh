@@ -1,4 +1,5 @@
 #!/bin/sh
+set -o errexit
 pushd `dirname $0`
 SCRIPTDIR=`pwd`
 popd
