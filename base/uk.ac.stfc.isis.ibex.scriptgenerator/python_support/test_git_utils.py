@@ -1,6 +1,6 @@
 import unittest
 from mock import patch
-from git_utils import DefinitionsRepository
+from git_utils import DefinitionsRepository, DEFAULT_REPO_PATH
 
 from mock import Mock, MagicMock
 from git.exc import GitCommandError
@@ -25,9 +25,10 @@ class DefinitionsRepositoryTests(unittest.TestCase):
         else:
             raise GitCommandError(command='command', status='status')
 
+    @patch("os.path.exists", return_value=True)
     @patch("git_utils.Git", return_value=Mock())
     @patch.object(DefinitionsRepository, "initialise_repo", return_value=MagicMock())
-    def setUp(self, mock_repo, mock_git):
+    def setUp(self, mock_repo, mock_git, _):
         self.mock_git = mock_git.return_value
         self.mock_repo = mock_repo.return_value
         self.definitions_repo = DefinitionsRepository(path=TEST_REPO_PATH, bundle_path=TEST_BUNDLE_PATH, remote_url=TEST_URL)
@@ -153,3 +154,17 @@ class DefinitionsRepositoryTests(unittest.TestCase):
         branch = Branch("origin/master")
         self.mock_repo.remotes["origin"].fetch.return_value = [branch, Branch("origin/master")]
         self.assertIs(self.definitions_repo.fetch_from_origin(), branch)
+        
+    @patch("os.path.exists", return_value=False)
+    @patch("git_utils.Git", return_value=Mock())
+    @patch.object(DefinitionsRepository, "initialise_repo", return_value=MagicMock())
+    def test_GIVEN_repo_path_does_not_exist_THEN_path_set_to_to_relative_directory_instead(self, mock_repo, mock_git, _):
+        self.definitions_repo = DefinitionsRepository(path=TEST_REPO_PATH, bundle_path=TEST_BUNDLE_PATH, remote_url=TEST_URL)
+        self.assertEqual(self.definitions_repo.path, DEFAULT_REPO_PATH)
+        
+    @patch("os.path.exists", return_value=True)
+    @patch("git_utils.Git", return_value=Mock())
+    @patch.object(DefinitionsRepository, "initialise_repo", return_value=MagicMock())
+    def test_GIVEN_repo_path_does_exist_THEN_repo_path_is_correct(self, mock_repo, mock_git, _):
+        self.definitions_repo = DefinitionsRepository(path=TEST_REPO_PATH, bundle_path=TEST_BUNDLE_PATH, remote_url=TEST_URL)
+        self.assertEqual(self.definitions_repo.path, TEST_REPO_PATH)

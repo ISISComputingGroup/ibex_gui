@@ -85,6 +85,7 @@ public class PasswordHasher {
     /**
      * Hashes the password using the PBKDF2 algorithm.
      * 
+     * @param passwordString The password in string format
      * @return the hashed password
      * @throws NoSuchAlgorithmException
      *             if the algorithm is not available on this machine

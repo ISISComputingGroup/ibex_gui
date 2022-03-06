@@ -19,13 +19,13 @@
 
 package uk.ac.stfc.isis.ibex.ui.runcontrol.dialogs;
 
+import org.apache.logging.log4j.Logger;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -35,13 +35,20 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.browser.IWebBrowser;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
-import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
-import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
-import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
+import uk.ac.stfc.isis.ibex.ui.configserver.commands.EditBlockHandler;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * A panel to edit the run control settings for the selected block.
@@ -50,7 +57,7 @@ import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
 public class RunControlEditorPanel extends Composite {
     private static final String RESET_ALL_DIALOG_TITLE = "Confirm Run-Control Restore";
     private static final String RESET_ALL_DIALOG_MESSAGE = "Are you sure you want to restore all run-control settings to their configuration values?";
-    private final ConfigServer configServer;
+	private static final String CONFIRM_CHANGES_HINT = "WARNING! The settings applied here are not permanent and will be overriden if current configuration changes (see: User Manual - Run Controls)";
 	private final Label name;
 	private final Text txtLowLimit;
 	private final Text txtHighLimit;
@@ -58,26 +65,24 @@ public class RunControlEditorPanel extends Composite {
 	private final Button chkInvalid;
 	private final Button btnSend;
     private final Button btnRestoreSingle;
-    private final Button btnRestoreAll;
+    private Button btnRestoreAll;
+	private final Button btnShowManual;
+	private final Button btnDisplayBlockInfo;
     private final Label spacerLabel;
     private final Label spacerLabel2;
     private final Label spacerLabel3;
     private Group grpGlobalSettings;
+    private Group grpAdditionalSection;
     private boolean canSend;
+    private DisplayBlock currentBlock;
 
     private final RunControlViewModel viewModel;
+    
+    private static final Logger LOG = IsisLog.getLogger(RunControlEditorPanel.class);
 	
-    private Subscription saveAsSubscription;
-
-	/**
-	 * Disable the send button if does not have permission to edit configs.
-	 */
-    protected final SameTypeWriter<Configuration> configService = new SameTypeWriter<Configuration>() {
-		@Override
-		public void onCanWriteChanged(boolean canWrite) {
-            canSend = canWrite;
-            btnRestoreAll.setEnabled(canWrite);
-		};
+	private OnCanWriteChangeListener canWriteListener = canWrite -> {
+        canSend = canWrite;
+        btnRestoreAll.setEnabled(canWrite);
 	};
 
     /**
@@ -91,15 +96,16 @@ public class RunControlEditorPanel extends Composite {
      *            The config server object used to write to the instrument.
      * @param viewModel
      *            The view model for this panel.
+     * @param dialog
+     * 			  The initial dialog that opened this panel.
+     *            
      */
-    public RunControlEditorPanel(Composite parent, int style, ConfigServer configServer,
+    public RunControlEditorPanel(EditRunControlDialog dialog, Composite parent, int style, ConfigServer configServer,
             final RunControlViewModel viewModel) {
 		super(parent, style);
-		
-		this.configServer = configServer;
         this.viewModel = viewModel;
 
-        setLayout(new GridLayout(2, false));
+        setLayout(new GridLayout(3, false));
 
 		Group grpSelectedSetting = new Group(this, SWT.NONE);
         grpSelectedSetting.setText("Block Settings");
@@ -160,13 +166,14 @@ public class RunControlEditorPanel extends Composite {
             }
         });
         btnRestoreSingle.setEnabled(false);
-
+        
 		btnSend = new Button(grpSelectedSetting, SWT.NONE);
 		btnSend.setText("Apply Changes");
         btnSend.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 3, 1));
         btnSend.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
+            	dialog.setMessage(CONFIRM_CHANGES_HINT, IMessageProvider.INFORMATION);
                 viewModel.sendChanges();
             }
         });
@@ -183,20 +190,45 @@ public class RunControlEditorPanel extends Composite {
         btnRestoreAll.setLayoutData(gdBtnRestoreAll);
         btnRestoreAll.setText("Restore All \n Configuration Values");
         btnRestoreAll.addSelectionListener(restoreAllConfigurationValues);
+        
+        grpAdditionalSection = new Group(this, SWT.NONE);
+        grpAdditionalSection.setText("Additional");
+        grpAdditionalSection.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+        grpAdditionalSection.setLayout(new GridLayout(2, false));
+        
+		btnShowManual = new Button(grpAdditionalSection,  SWT.WRAP | SWT.PUSH);
+		GridData gdBtnManual = new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1);
+		gdBtnManual.widthHint = 100;
+		btnShowManual.setLayoutData(gdBtnManual);
+		btnShowManual.setText("Show User Manual \n Run Control");
+		btnShowManual.addSelectionListener(new SelectionAdapter() {
+	        @Override
+	        public void widgetSelected(SelectionEvent e) {
+	        		openLink("https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Menu-Bar#run-control-menu");
+	            }
+	        }
+		);
+		
+		btnDisplayBlockInfo = new Button(grpAdditionalSection,  SWT.WRAP | SWT.PUSH);
+		GridData gdBtnBlockInfo = new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1);
+		gdBtnBlockInfo.widthHint = 100;
+		btnDisplayBlockInfo.setLayoutData(gdBtnBlockInfo);
+		btnDisplayBlockInfo.setText("Edit Host \n Configuration");
+		btnDisplayBlockInfo.addSelectionListener(new SelectionAdapter() {
+	        @Override
+	        public void widgetSelected(SelectionEvent e) {
+	        	new EditBlockHandler(currentBlock.getName()).execute(getShell());
+	            }
+	        }
+		);
+		btnDisplayBlockInfo.setEnabled(false);
 
-        // A bit of a work-around to see if we have write permissions
-        // by seeing if we are able to edit the config.
-        saveAsSubscription = this.configServer.saveAs().subscribe(configService);
+        configServer.saveAs().addOnCanWriteChangeListener(canWriteListener);
 
         setModel(viewModel);
         setBlock(null);
         
-        parent.addDisposeListener(new DisposeListener() {
-			@Override
-			public void widgetDisposed(DisposeEvent e) {
-				saveAsSubscription.cancelSubscription();
-			}
-		});
+        parent.addDisposeListener(e -> configServer.saveAs().removeOnCanWriteChangeListener(canWriteListener));
 	}
 
     private void setModel(RunControlViewModel viewModel) {
@@ -221,6 +253,7 @@ public class RunControlEditorPanel extends Composite {
         chkInvalid.setEnabled(enabled);
         btnRestoreSingle.setEnabled(enabled);
         viewModel.setSendEnabled(enabled);
+        btnDisplayBlockInfo.setEnabled(enabled);
     }
 
     /**
@@ -241,6 +274,7 @@ public class RunControlEditorPanel extends Composite {
         setAllEnabled(canSend);
 
 		name.setText(block.getName());
+		currentBlock = block;
 	}
 
     private SelectionAdapter restoreAllConfigurationValues = new SelectionAdapter() {
@@ -252,4 +286,21 @@ public class RunControlEditorPanel extends Composite {
             }
         }
     };
+    
+    /**
+     * Helper method for opening links from a url presented as string
+     * 
+     * @param url
+     * 			the string that represents url to be opened in a browser.
+     */
+    private void openLink(String url) {
+        try {
+        	IWebBrowser browser = PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser();
+			browser.openURL(new URL(url));
+        } catch (PartInitException ex) {
+		    LoggerUtils.logErrorWithStackTrace(LOG, "Failed to open URL in browser: " + url, ex);
+		} catch (MalformedURLException ex) {
+			LoggerUtils.logErrorWithStackTrace(LOG, "Failed to open URL in browser: " + url, ex);
+		}
+    }
 }

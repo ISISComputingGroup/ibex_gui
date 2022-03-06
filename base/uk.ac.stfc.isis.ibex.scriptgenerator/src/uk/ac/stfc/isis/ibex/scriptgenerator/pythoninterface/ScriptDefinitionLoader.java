@@ -13,6 +13,7 @@ import py4j.Py4JException;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
 
 
 /**
@@ -142,12 +143,12 @@ public class ScriptDefinitionLoader extends ModelObject {
 			ArrayList<JavaActionParameter> parameters = scriptDefinition.getParameters().stream()
 					.map(param_details -> new JavaActionParameter(param_details.getName(), param_details.getDefaultValue(), param_details.getCopyPreviousRow()))
 					.collect(Collectors.toCollection(ArrayList::new));
-			firePropertyChange("parameters", this.parameters, this.parameters = parameters);
+			firePropertyChange(ScriptGeneratorProperties.PARAMETERS_PROPERTY, this.parameters, this.parameters = parameters);
 			selectedScriptDefinition = Optional.ofNullable(scriptDefinition);
 			selectedScriptDefinition.ifPresentOrElse(presentSelectedScriptDefinition -> {
 				lastSelectedScriptName = Optional.of(presentSelectedScriptDefinition.getName());
 			}, () -> lastSelectedScriptName = Optional.empty());
-			firePropertyChange("scriptDefinition", null, null);
+			firePropertyChange(ScriptGeneratorProperties.SCRIPT_DEFINITION_SWITCH_PROPERTY, null, null);
 		} catch (Py4JException e) {
 			LOG.error(e);
 			pythonInterface.handlePythonReadinessChange(false);
@@ -201,7 +202,7 @@ public class ScriptDefinitionLoader extends ModelObject {
 	}
 
 	/**
-	 * Gets the path to the script definitions repository
+	 * Gets the path to the script definitions repository.
 	 * @return The path to the script definitions repository.
 	 */
 	public String getRepoPath() {

@@ -20,7 +20,7 @@ public interface ScriptDefinitionsWrapper {
 	Map<String, String> getScriptDefinitionLoadErrors();
 	
 	/**
-	 * true if the repository containing the script definitions is dirty and cannot be pulled
+	 * true if the repository containing the script definitions is dirty and cannot be pulled.
 	 * 
 	 * @return true if git reports the repository is dirty
 	 */
@@ -39,38 +39,42 @@ public interface ScriptDefinitionsWrapper {
 	 * @param scriptGenContent The list of actions to generate a script for.
 	 * @param jsonString string to write to script defintion file
 	 * @param scriptDefinition The script definition to generate the script with.
+	 * @param globalParams The global parameters to generate the script with.
 	 * @return A string containing the generated script.
 	 */
-	String generate(List<Map<String, String>> scriptGenContent, String jsonString, ScriptDefinitionWrapper scriptDefinition);
+	String generate(List<Map<String, String>> scriptGenContent, String jsonString, List<String> globalParams, ScriptDefinitionWrapper scriptDefinition);
 	
 	/**
-	 * Get a mapping of validity errors of the scriptGenContent against the script definition.
+	 * Get a list of mappings of validity errors of the scriptGenContent against the script definition.
 	 * 
 	 * @param scriptGenContent The list of actions to check.
 	 * @param scriptDefinition The script definition to check with.
-	 * @return A map where the key is the index of the action in the list and 
+	 * @param globalParams The global parameters to get the validity errors with.
+	 * @return A list of maps where the key is the index of the action in the list and 
 	 * 		the value is the invalidity reason. Empty if there are no invalidity errors.
 	 */
-	Map<Integer, String> getValidityErrors(List<Map<String, String>> scriptGenContent, ScriptDefinitionWrapper scriptDefinition);
+	List<Map<Integer, String>> getValidityErrors(List<String> globalParams, List<Map<String, String>> scriptGenContent, ScriptDefinitionWrapper scriptDefinition);
 	
 	/**
 	 * Check if a list of actions are valid under the passed script definitions.
 	 * 
 	 * @param scriptGenContent The list of actions to check.
 	 * @param scriptDefinition The script definition to check with.
+	 * @param globalParams The global parameters to check parameter validity with.
 	 * @return True if valid, False if not.
 	 */
-	boolean areParamsValid(List<Map<String, String>> scriptGenContent, ScriptDefinitionWrapper scriptDefinition);
+	boolean areParamsValid(List<Map<String, String>> scriptGenContent, List<String> globalParams, ScriptDefinitionWrapper scriptDefinition);
 	
     /**
      * Estimate how long (in seconds) the current actions will take.
      * 
      * @param scriptGenContent The list of actions to estimate
      * @param scriptDefinition The script definition
+     * @param globalParams The global parameters to estimate the time with.
      * @return A map where the key is the index of the action in the list and 
      *      the value is the estimated time in seconds
      */
-	Map<Integer, Number> estimateTime(List<Map<String, String>> scriptGenContent, ScriptDefinitionWrapper scriptDefinition);
+	Map<Integer, Number> estimateTime(List<Map<String, String>> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams);
 	
 	/**
 	 * Check if Python is ready.
@@ -80,32 +84,27 @@ public interface ScriptDefinitionsWrapper {
 	boolean isPythonReady();
 
 	/**
-	 * Returns a list of git errors
-	 * 
-	 * @return
+	 * @return Returns a list of git errors
 	 */
 	List<String> getGitErrors();
 
 	/**
-	 * True if the git remote is available
-	 * @return
+	 * @return True if the git remote is available
 	 */
 	boolean remoteAvailable();
 
 	/**
-	 * True if the git repository has uncommitted changes
-	 * @return
+	 * @return True if the git repository has uncommitted changes
 	 */
 	boolean isDirty();
 
 	/**
-	 * Merges origin/master into script definitions repository
+	 * Merges origin/master into script definitions repository.
 	 */
 	void mergeOrigin();
 
 	/**
-	 * Returns the path to the script definitions repository
-	 * @return
+	 * @return Returns the path to the script definitions repository
 	 */
 	String getRepoPath();
 	

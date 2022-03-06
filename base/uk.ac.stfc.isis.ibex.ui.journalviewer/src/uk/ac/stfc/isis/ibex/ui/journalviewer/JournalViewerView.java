@@ -93,7 +93,7 @@ public class JournalViewerView {
     private Button btnSearch;
     private ProgressBar progressBar;
 
-    private DataboundTable<JournalRow> table;
+    private DataboundTable<JournalRow> journalTable;
 
     private Composite searchControls;
     private Button btnClear;
@@ -207,12 +207,12 @@ public class JournalViewerView {
         }
 
 		final int tableStyle = SWT.FILL | SWT.FULL_SELECTION;
-		table = new DataboundTable<JournalRow>(parent, tableStyle, tableStyle) {
+		journalTable = new DataboundTable<JournalRow>(parent, tableStyle, tableStyle) {
 			@Override
 			protected void addColumns() {
 		        for (final JournalField field : JournalField.values()) {
 		            if (model.getFieldSelected(field)) {
-		                TableViewerColumn col = table.createColumn(field.getFriendlyName(), 1, true,
+		                TableViewerColumn col = journalTable.createColumn(field.getFriendlyName(), 1, true,
 		                        new DataboundCellLabelProvider<JournalRow>(new ObservableMap(Collections.emptyMap())) {
 		                            @Override
 		                            protected String stringFromRow(JournalRow row) {
@@ -242,9 +242,9 @@ public class JournalViewerView {
 		        };
 		    }
 		};
-		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		journalTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		table.initialise();
+		journalTable.initialise();
 
         lblError = new Label(parent, SWT.NONE);
         lblError.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, false));
@@ -291,12 +291,12 @@ public class JournalViewerView {
         
         // Goes through the columns of the table,
         // and if it finds the column which is currently sorted, display an indicator
-        Arrays.asList(table.table().getColumns()).stream()
+        Arrays.asList(journalTable.table().getColumns()).stream()
             .filter(col -> col.getText() == activeSort.getSortField().getFriendlyName())
             .findFirst()
             .ifPresent(col -> {
-                table.table().setSortColumn(col);
-                table.table().setSortDirection(model.getSortDirection());
+                journalTable.table().setSortColumn(col);
+                journalTable.table().setSortDirection(model.getSortDirection());
             });
     }
     
@@ -399,9 +399,9 @@ public class JournalViewerView {
         model.addPropertyChangeListener("runs", e -> 
         DISPLAY.asyncExec(() -> {
                 setProgressIndicatorsVisible(true);
-                table.updateTableColumns();
+                journalTable.updateTableColumns();
                 updateSortIndicator();
-                table.setRows(model.getRuns());
+                journalTable.setRows(model.getRuns());
 
                 setProgressIndicatorsVisible(false);
         }));

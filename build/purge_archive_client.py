@@ -1,6 +1,6 @@
 import os, time, sys, datetime, glob, shutil
 
-base_path = r"\\isis\inst$\kits$\CompGroup\ICP"
+base_path = r"\\isis.cclrc.ac.uk\inst$\kits$\CompGroup\ICP"
 paths = [
     r"{}\script_generator\BUILD*".format(base_path),
     r"{}\Client_E4\BUILD*".format(base_path)]

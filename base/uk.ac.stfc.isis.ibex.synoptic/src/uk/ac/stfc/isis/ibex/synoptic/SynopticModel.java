@@ -42,7 +42,7 @@ public class SynopticModel extends ModelObject {
 	private final Variables variables;
 
 	private ObservableSynoptic instrument; 
-	private SynopticWriter setCurrentSynoptic;
+	private SynopticWritable setCurrentSynoptic;
 	
 	/**
 	 * @param variables Data associated with viewing and editing synoptics (e.g. PV, schemas).
@@ -51,9 +51,14 @@ public class SynopticModel extends ModelObject {
 		this.variables = variables;
 		instrument = getInstrument(new SynopticDescription());
 		
-        setCurrentSynoptic = new SynopticWriter(variables.synopticSetter, variables.synopticSchema);
+        setCurrentSynoptic = new SynopticWritable(variables.synopticSetter, variables.synopticSchema);
 	}
 	
+	/**
+	 * Get the instrument's synoptic.
+	 * 
+	 * @return The instrument's synoptic,
+	 */
 	public Synoptic instrument() {
 		return instrument;
 	}
@@ -68,7 +73,7 @@ public class SynopticModel extends ModelObject {
 	/**
 	 * @return An object that will request the current synoptic is saved.
 	 */
-	public SynopticWriter saveSynoptic() {
+	public SynopticWritable saveSynoptic() {
 		return setCurrentSynoptic;
 	}
 	
@@ -87,6 +92,11 @@ public class SynopticModel extends ModelObject {
 		}
 	}
 	
+	/**
+	 * Get a navigation graph for the instrument's synoptic.
+	 * 
+	 * @return A navigation graph for the instrument's synoptic.
+	 */
 	public InstrumentNavigationGraph instrumentGraph() {
 		return new InstrumentNavigationGraph(instrument);
 	}

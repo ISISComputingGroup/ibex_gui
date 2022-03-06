@@ -19,8 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.motor.observable;
 
-import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
+import java.util.function.Function;
+
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
@@ -40,25 +40,19 @@ import uk.ac.stfc.isis.ibex.motor.MotorEnable;
  */
 public class MotorVariables extends Closer {
 
-	private static final Converter<Short, MotorDirection> TO_MOTOR_DIRECTION = new Converter<Short, MotorDirection>() {
-		@Override
-		public MotorDirection convert(Short value) throws ConversionException {
-			if (value == null) {
-				return MotorDirection.UNKNOWN;
-			}
-			
-			return value > 0 ? MotorDirection.POSITIVE : MotorDirection.NEGATIVE;
-		}
-	};
+    private static final Function<Short, MotorDirection> TO_MOTOR_DIRECTION = value -> {
+        if (value == null) {
+            return MotorDirection.UNKNOWN;
+        }
+
+        return value > 0 ? MotorDirection.POSITIVE : MotorDirection.NEGATIVE;
+    };
 	
-	private static final Converter<Short, Boolean> TO_BOOLEAN = new Converter<Short, Boolean>() {
-		@Override
-		public Boolean convert(Short value) throws ConversionException {
-			if (value == null) {
-				return null;
-			}
-			return value > 0;
-		}
+	private static final Function<Short, Boolean> TO_BOOLEAN = value -> {
+	    if (value == null) {
+	        return null;
+	    }
+	    return value > 0;
 	};
 	
 	private enum EnergisedStatus {
@@ -66,25 +60,19 @@ public class MotorVariables extends Closer {
 		OFF;
 	}
 	
-	private static final Converter<EnergisedStatus, Boolean> ENERGISED_CONVERTER = new Converter<EnergisedStatus, Boolean>() {
-		@Override
-		public Boolean convert(EnergisedStatus value) {
-			if (value == null) {
-				return null;
-			} else {
-				return value == EnergisedStatus.ON;
-			}
-		}
+	private static final Function<EnergisedStatus, Boolean> ENERGISED_CONVERTER = value -> {
+	    if (value == null) {
+	        return null;
+	    } else {
+	        return value == EnergisedStatus.ON;
+	    }
 	};
 	
-	private static final Converter<Double, Boolean> GREATER_THAN_ZERO_CONVERTER = new Converter<Double, Boolean>() {
-		@Override
-		public Boolean convert(Double value) throws ConversionException {
-			if (value == null) {
-			    return null;
-			}
-			return value > 0;
-		}
+	private static final Function<Double, Boolean> GREATER_THAN_ZERO_CONVERTER = value -> {
+	    if (value == null) {
+	        return null;
+	    }
+	    return value > 0;
 	};
 	
 	private final PVAddress motorAddress;

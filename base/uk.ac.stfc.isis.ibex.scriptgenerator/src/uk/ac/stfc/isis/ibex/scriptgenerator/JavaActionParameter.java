@@ -38,6 +38,7 @@ public class JavaActionParameter implements ActionParameter {
 	 * This class holds the name about an action parameter.
 	 * @param name The name of the action parameter (column header)
 	 * @param defaultValue The value this parameter should have as a default
+	 * @param copyPreviousRow Whether or not the parameter should copy the previous row
 	 */
 	public JavaActionParameter(String name, String defaultValue, boolean copyPreviousRow) {
 		this.name = name;
@@ -59,11 +60,13 @@ public class JavaActionParameter implements ActionParameter {
 		return defaultValue;
 	}
 	
+	/**
+	 * @return Whether or not the parameter is set to copy the previous action's value. 
+	 */
 	public boolean getCopyPreviousRow() { 
 		return copyPreviousRow;
 	}
 
-	
 	/**
 	 * Check to see if the ActionParameter's attributes are equal to provided object.
 	 * @param other The object to compare against
@@ -76,7 +79,7 @@ public class JavaActionParameter implements ActionParameter {
 		if (!(other instanceof JavaActionParameter)) {
 		    return false;	
 		}
-		
+	
 		JavaActionParameter actionParameter = (JavaActionParameter) other;
 		return Objects.equals(this.getName(), actionParameter.getName()) 
 			&& Objects.equals(this.getDefaultValue(), actionParameter.getDefaultValue())

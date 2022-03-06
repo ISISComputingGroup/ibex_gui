@@ -7,12 +7,15 @@ set M2=%MAVEN%bin
 set PYTHON3=C:\Instrument\Apps\Python3\python.exe
 set PYTHON_HOME=C:\Instrument\Apps\Python3
 
-REM We bundle our own JRE with the script generator, this is where it is
-set JRELOCATION=p:\Kits$\CompGroup\ICP\ibex_client_jre
-
 set PATH=%M2%;%PATH%
 
-call build_script_generator.bat
+set TARGET_DIR=script_generator
+set MSINAME=ibex_script_generator
+
+call build_script_generator.bat "" %TARGET_DIR%
+if %errorlevel% neq 0 exit /b %errorlevel%
+
+call build_msi.bat %BASEDIR%.. %TARGET_DIR% %MSINAME%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 @echo on
@@ -29,17 +32,14 @@ if "%EXIT%" == "YES" exit /b %build_error_level%
 REM Copy zip to installs area
 REM Delete older versions?
 REM the password for isis\IBEXbuilder is contained in the BUILDERPW system environment variable on the build server
-net use p: /d /yes
-net use p: \\isis\inst$
+REM net use p: /d /yes
+REM net use p: \\isis.cclrc.ac.uk\inst$
 
-%PYTHON3% purge_archive_client.py
-
-set TARGET_DIR=built_script_gen
 
 REM Don't group these. Bat expands whole if at once, not sequentially
 if "%RELEASE%" == "YES" (
-    set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\script_generator_release\%GIT_BRANCH:~8%
-    set RELEASE_VERSION=%GIT_BRANCH:~8%    
+    set RELEASE_DIR=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\Releases\script_generator_release\%GIT_BRANCH:~19%
+    set RELEASE_VERSION=%GIT_BRANCH:~19%
 ) else (
     set RELEASE_VERSION=devel-%GIT_COMMIT:~0,7%
 )
@@ -47,7 +47,7 @@ if "%RELEASE%" == "YES" set INSTALLBASEDIR=%RELEASE_DIR%\script_generator
 if "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%
 
 if not "%RELEASE%" == "YES" (
-        set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\script_generator
+        set INSTALLBASEDIR=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\script_generator
 ) 
 
 if not "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
@@ -80,18 +80,18 @@ if %errorlevel% geq 4 (
     exit /b 1
 )
 
-REM Copy the JRE across 
-robocopy %JRELOCATION% %INSTALLDIR%\script_generator\jre /MIR /R:1 /MT /NFL /NDL /NP /NC /NS /LOG:NUL
-if %errorlevel% geq 4 (
-    @echo Failed to copy JRE across
-    exit /b 1
-)
-
 if not "%RELEASE%"=="YES" (
     if exist "%INSTALLLINKDIR%" (
         rmdir "%INSTALLLINKDIR%"
     )
     mklink /J "%INSTALLLINKDIR%" "%INSTALLDIR%"
+)
+
+REM copy MSI
+copy /Y %MSINAME%.msi %INSTALLDIR%
+if %errorlevel% neq 0 (
+    @echo MSI copy failed
+    exit /b %errorlevel%
 )
 
 REM Copy the install script across
@@ -110,6 +110,3 @@ if %errorlevel% neq 0 (
 if not "%RELEASE%" == "YES" (
     @echo %BUILD_NUMBER%>%INSTALLDIR%\..\LATEST_BUILD.txt 
 )
-
-REM build MSI kit
-REM call build_msi.bat %INSTALLDIR%

@@ -66,9 +66,9 @@ public abstract class DataboundTable<TRow> extends Composite {
 
     private static final int DEFAULT_FONT_HEIGHT = 10;
     private static final int MIN_TABLE_COLUMN_WIDTH = 50;
-
     private int tableStyle;
-    private Table table;
+    /** The underlying table. */
+    protected Table table;
     /** View for the data held in this table. */
     protected TableViewer viewer;
     private TableColumnLayout tableColumnLayout = new TableColumnLayout();
@@ -86,28 +86,36 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @param tableStyle the table style
      */
     public DataboundTable(Composite parent, int style, int tableStyle) {
-	super(parent, style);
-	this.tableStyle = tableStyle | SWT.BORDER;
-
-	// GridLayout is used so that the table can be excluded from a view
-	// using the exclude property that is not present on other layouts
-	GridLayout gridLayout = new GridLayout(1, false);
-	gridLayout.horizontalSpacing = 0;
-	gridLayout.verticalSpacing = 0;
-	gridLayout.marginWidth = 0;
-	gridLayout.marginHeight = 0;
-	setLayout(gridLayout);
-
-	tableComposite = new Composite(this, style);
-	tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	tableComposite.setLayout(tableColumnLayout);
-
-	viewer = createViewer();
-
-	table = viewer.getTable();
+    this(parent, style, tableStyle, false);
     }
+    
+    /**
+     * Constructor for creating table with empty row.
+     * @param parent the parent
+     * @param style the style
+     * @param tableStyle the table style
+     * @param emptyRow to add empty row or not
+     */
+    public DataboundTable(Composite parent, int style, int tableStyle, boolean emptyRow) {
+    super(parent, style);
+    this.tableStyle = tableStyle | SWT.BORDER;
 
+    // GridLayout is used so that the table can be excluded from a view
+    // using the exclude property that is not present on other layouts
+    GridLayout gridLayout = new GridLayout(1, false);
+    gridLayout.horizontalSpacing = 0;
+    gridLayout.verticalSpacing = 0;
+    gridLayout.marginWidth = 0;
+    gridLayout.marginHeight = 0;
+    setLayout(gridLayout);
 
+    tableComposite = new Composite(this, style);
+    tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+    tableComposite.setLayout(tableColumnLayout);
+    	
+    viewer = createViewer(emptyRow);
+    table = viewer.getTable();
+    }
     /**
      * Instantiates a new databound table with default table style.
      *
@@ -119,7 +127,7 @@ public abstract class DataboundTable<TRow> extends Composite {
      * @wbp.parser.constructor
      */
     public DataboundTable(Composite parent, int style) {
-	this(parent, style, SWT.FULL_SELECTION | SWT.BORDER | SWT.HIDE_SELECTION);
+	this(parent, style, SWT.FULL_SELECTION | SWT.BORDER | SWT.HIDE_SELECTION, false);
     }
 
     /**
@@ -171,6 +179,15 @@ public abstract class DataboundTable<TRow> extends Composite {
      */
     public void setSelected(TRow selected) {
 	viewer.setSelection(new StructuredSelection(selected));
+    }
+    
+    /**
+     * Sets the selected rows based on multiple rows.
+     *
+     * @param selected the newly selected rows
+     */
+    public void setSelected(List<TRow> selected, boolean reveal) {
+       viewer.setSelection(new StructuredSelection(selected), reveal);
     }
 
     /**
@@ -324,11 +341,16 @@ public abstract class DataboundTable<TRow> extends Composite {
 
     /**
      * Viewer should be created with tableComposite() as it's parent.
-     * 
+     * @param addEmptyRow to create table with one "permanent" empty row 
      * @return viewer
      */
-    protected TableViewer createViewer() {
-	return viewer = new TableViewer(tableComposite, tableStyle);
+    private TableViewer createViewer(boolean addEmptyRow) {
+    if (addEmptyRow) {
+    	viewer = new TableViewerEmptyRow(tableComposite, tableStyle);
+    } else {
+    	viewer = new TableViewer(tableComposite, tableStyle);
+    }
+	return viewer;
     }
 
     /**

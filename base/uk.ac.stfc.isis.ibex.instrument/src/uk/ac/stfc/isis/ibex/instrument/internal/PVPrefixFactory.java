@@ -75,6 +75,7 @@ public class PVPrefixFactory {
      * Calculate the prefix based on the machine name.
      * 
      * @param machineName machine name
+     * @return The prefix
      */
     private String calcPrefix(String machineName) {
         for (String prefix : INSTRUMENT_MACHINE_NAME_PREFIXES) {

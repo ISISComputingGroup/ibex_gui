@@ -16,7 +16,6 @@ public final class TableOfMotorsSettingsViewModel extends ModelObject {
 
 	/**
 	 * The view model for the setting tab in the table of motors.
-	 * @param motorSettingsModel the underlying model
 	 */
 	private TableOfMotorsSettingsViewModel() {
 		bindingContext.bindValue(BeanProperties.value("advancedMinimalMotorView").observe(this),

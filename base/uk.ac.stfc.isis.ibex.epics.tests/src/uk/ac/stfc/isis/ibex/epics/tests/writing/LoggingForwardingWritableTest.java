@@ -26,11 +26,11 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 import java.io.IOException;
+import java.util.function.Function;
 
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.writing.LoggingForwardingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
@@ -45,10 +45,9 @@ public class LoggingForwardingWritableTest {
         // Arrange
         Logger mockLogger = mock(Logger.class);
         Writable<String> mockDestination = mock(Writable.class);
-        Converter<String, String> mockConverter = mock(Converter.class);
 
         LoggingForwardingWritable<String> writable = new LoggingForwardingWritable<>(mockLogger, ID, mockDestination,
-                mockConverter);
+                Function.identity());
 
         String expectedMessage = ID + " " + VALUE;
         verify(mockLogger, never()).info(anyString());

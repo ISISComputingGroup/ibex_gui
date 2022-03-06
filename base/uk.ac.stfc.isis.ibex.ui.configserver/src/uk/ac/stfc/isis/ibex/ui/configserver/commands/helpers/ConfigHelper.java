@@ -31,11 +31,20 @@ import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
  * An interface for a class that is able to open a dialog giving information on the current configuration.
  */
 public abstract class ConfigHelper {
+    /**
+     * The title of the dialog to open.
+     */
     protected String title;
 
+    /**
+     * The view models relating to the configurations.
+     */
     protected ConfigurationViewModels configurationViewModels;
+    
+    /**
+     * The shell to open the dialog from.
+     */
     protected Shell shell;
-    protected static final int MAX_SECONDS_TO_WAIT = 10;
 
     /**
      * Create a dialog box for editing a config other than the current one.

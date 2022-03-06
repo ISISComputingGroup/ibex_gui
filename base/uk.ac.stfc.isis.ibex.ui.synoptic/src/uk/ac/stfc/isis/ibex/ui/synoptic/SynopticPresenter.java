@@ -259,6 +259,7 @@ public class SynopticPresenter extends ModelObject {
 	/**
 	 * Walk up the instrument graph from the target node to the top level,
 	 * extracting the names of the group nodes.
+	 * @return A list of group names
 	 */
 	private List<String> climbInstrumentGraphAndExtractGroupNames(TargetNode targetNode) {
 		List<String> trail = new ArrayList<>();

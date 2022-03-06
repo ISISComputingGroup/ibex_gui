@@ -22,15 +22,16 @@
  */
 package uk.ac.stfc.isis.ibex.instrument.list;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.function.Function;
 
 import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
@@ -104,8 +105,8 @@ public class InstrumentListObservable extends ForwardingObservable<Collection<In
      *         containing the list of instruments
      */
     private static ForwardingObservable<Collection<InstrumentInfo>> convert(ForwardingObservable<String> source) {
-        Converter<String, Collection<InstrumentInfo>> converter =
-                new JsonDeserialisingConverter<>(InstrumentInfo[].class).apply(Convert.<InstrumentInfo>toCollection());
+        Function<String, Collection<InstrumentInfo>> converter =
+                new JsonDeserialisingConverter<>(InstrumentInfo[].class).andThen(Arrays::asList);
         return new ForwardingObservable<>(new ConvertingObservable<>(source, converter));
     }
 

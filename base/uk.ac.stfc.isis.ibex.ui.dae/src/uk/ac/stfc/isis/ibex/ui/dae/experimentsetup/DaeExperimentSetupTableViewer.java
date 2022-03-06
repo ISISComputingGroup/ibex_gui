@@ -137,9 +137,6 @@ public class DaeExperimentSetupTableViewer extends TableViewer {
     
     /**
      * Checks that the recorded value and cell are not empty.
-     * 
-     * @param cachedValues
-     *          The cached cell values that have been applied to the instrument.
      */
     private void tryToChangeBackgroundWhenRecordedValueAndCellAreNotEmpty() {
         if (!recordedValue.isEmpty() && recordedCell != null) {
@@ -149,9 +146,6 @@ public class DaeExperimentSetupTableViewer extends TableViewer {
 
     /**
      * Checks that the text in the cell has been changed and that it is not the same as the cached values.
-     * 
-     * @param cachedValues
-     *          The cached cell values that have been applied to the instrument.
      */
     private void tryToChangeBackgroundWhenTextChanged() {
         if (!recordedValue.equals(recordedCell.getText())) {
@@ -212,9 +206,6 @@ public class DaeExperimentSetupTableViewer extends TableViewer {
     
     /**
      * Allows to get a cell at the point defined by x and y.
-     * 
-     * @param viewer
-     *              The table viewer from which to get the cell.
      * @return
      *              The cell at x and y.
      */
@@ -228,8 +219,6 @@ public class DaeExperimentSetupTableViewer extends TableViewer {
      * 
      * @param cell
      *              The cell from which the next cell is found.
-     * @param viewer
-     *              The table viewer from which to get the cell.
      * @param inSameRow
      *              True if the next cell is in the same row.
      * @return

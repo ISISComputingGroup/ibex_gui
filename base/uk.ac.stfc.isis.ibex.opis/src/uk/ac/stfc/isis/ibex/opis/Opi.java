@@ -19,14 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.opis;
 
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
-import org.apache.logging.log4j.Level;
 import org.csstudio.opibuilder.OPIBuilderPlugin;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.service.log.LogLevel;
-
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**

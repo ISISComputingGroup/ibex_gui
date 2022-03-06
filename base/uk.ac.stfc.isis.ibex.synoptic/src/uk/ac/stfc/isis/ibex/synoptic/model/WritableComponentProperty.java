@@ -21,9 +21,7 @@ package uk.ac.stfc.isis.ibex.synoptic.model;
 
 import uk.ac.stfc.isis.ibex.configserver.AlarmState;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
-import uk.ac.stfc.isis.ibex.epics.writing.Writer;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 /**
@@ -31,8 +29,7 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
  */
 public class WritableComponentProperty extends ComponentProperty {
 
-	private final SameTypeWriter<String> writer = new SameTypeWriter<>();
-
+	private final Writable<String> writer;
 	private final ReadableComponentProperty valueSource;
 	
 	/**
@@ -48,13 +45,13 @@ public class WritableComponentProperty extends ComponentProperty {
 			Writable<String> destination) {
 		super(displayName);
 		valueSource = new ReadableComponentProperty(displayName, source, sourceAlarm);
-		writer.subscribe(destination);	
+		writer = destination;	
 	}
 	
 	/**
 	 * @return the writer to the destination PV
 	 */
-	public Writer<String> writer() {
+	public Writable<String> writer() {
 		return writer;
 	}
 	

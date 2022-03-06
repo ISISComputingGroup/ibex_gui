@@ -143,7 +143,6 @@ public class ConfigurationViewModels {
      * This method takes an observable, waits for it to have a correct value, and
      * then returns that value
      * 
-     * @param <T>        - the type of value
      * @param observable - the observable to monitor
      * @return - the current value
      * @throws TimeoutException - if more than MAX_SECONDS_TO_WAIT_FOR_VALUE elapsed
@@ -174,7 +173,6 @@ public class ConfigurationViewModels {
      * edit.
      * 
      * @param model - the new model to use.
-     * @return an updated observable observing the new model
      */
     private void setAsObservableConfigModel(ObservableEditableConfiguration model) {
 	// Close old observable adapter and model if they were set.

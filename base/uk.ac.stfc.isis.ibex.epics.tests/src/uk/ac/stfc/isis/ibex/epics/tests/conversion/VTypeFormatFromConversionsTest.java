@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.epics.tests.conversion;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
+import java.util.function.Function;
 
 import org.diirt.util.array.ListByte;
 import org.diirt.util.array.ListFloat;
@@ -36,7 +37,6 @@ import org.diirt.vtype.ValueFactory;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.VTypeFormat;
 
 /**
@@ -49,7 +49,7 @@ public class VTypeFormatFromConversionsTest {
     @Test
     public void convert_from_vfloat_array() throws ConversionException {
 	// Arrange
-	Converter<VType, float[]> converter = VTypeFormat.fromVFloatArray();
+	Function<VType, float[]> converter = VTypeFormat.fromVFloatArray();
 
 	ListFloat data = new ListFloat() {
 	    @Override
@@ -65,7 +65,7 @@ public class VTypeFormatFromConversionsTest {
 	VFloatArray value = ValueFactory.newVFloatArray(data, null, null, null);
 
 	// Act
-	float[] result = converter.convert(value);
+	float[] result = converter.apply(value);
 
 	// Assert
 	assertEquals(Arrays.toString(result), "[]");
@@ -74,7 +74,7 @@ public class VTypeFormatFromConversionsTest {
     @Test
     public void convert_from_vbyte_array() throws ConversionException {
 	// Arrange
-	Converter<VByteArray, String> converter = VTypeFormat.fromVByteArray();
+	Function<VByteArray, String> converter = VTypeFormat.fromVByteArray();
 
 	ListByte data = new ListByte() {
 	    @Override
@@ -90,7 +90,7 @@ public class VTypeFormatFromConversionsTest {
 	VByteArray value = (VByteArray) ValueFactory.newVNumberArray(data, null, null, null);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "0");
@@ -100,13 +100,13 @@ public class VTypeFormatFromConversionsTest {
     @Test
     public void convert_from_vstring() throws ConversionException {
 	// Arrange
-	Converter<VString, String> converter = VTypeFormat.fromVString();
+	Function<VString, String> converter = VTypeFormat.fromVString();
 
 	String test = "Test";
 	VString value = ValueFactory.newVString(test, null, null);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, test);
@@ -115,14 +115,14 @@ public class VTypeFormatFromConversionsTest {
     @Test
     public void convert_from_double() throws ConversionException {
 	// Arrange
-	Converter<VDouble, Double> converter = VTypeFormat.fromDouble();
+	Function<VDouble, Double> converter = VTypeFormat.fromDouble();
 
 	Double number = Double.valueOf(123.456);
 
 	VDouble value = ValueFactory.newVDouble(number);
 
 	// Act
-	Double result = converter.convert(value);
+	Double result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, number);
@@ -131,14 +131,14 @@ public class VTypeFormatFromConversionsTest {
     @Test
     public void convert_from_vint() throws ConversionException {
 	// Arrange
-	Converter<VInt, Integer> converter = VTypeFormat.fromVInt();
+	Function<VInt, Integer> converter = VTypeFormat.fromVInt();
 
 	Integer number = Integer.valueOf(123);
 
 	VInt value = ValueFactory.newVInt(number, null, null, null);
 
 	// Act
-	Integer result = converter.convert(value);
+	Integer result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, number);
@@ -147,14 +147,14 @@ public class VTypeFormatFromConversionsTest {
     @Test
     public void convert_from_short() throws ConversionException {
 	// Arrange
-	Converter<VShort, Short> converter = VTypeFormat.fromShort();
+	Function<VShort, Short> converter = VTypeFormat.fromShort();
 
 	Short number = Short.valueOf((short) 123);
 
 	VShort value = ValueFactory.newVShort(number, null, null, null);
 
 	// Act
-	Short result = converter.convert(value);
+	Short result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, number);
@@ -163,14 +163,14 @@ public class VTypeFormatFromConversionsTest {
     @Test
     public void convert_from_long() throws ConversionException {
 	// Arrange
-	Converter<VLong, Long> converter = VTypeFormat.fromLong();
+	Function<VLong, Long> converter = VTypeFormat.fromLong();
 
 	Long number = Long.valueOf(123);
 
 	VLong value = ValueFactory.newVLong(number, null, null, null);
 
 	// Act
-	Long result = converter.convert(value);
+	Long result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, number);

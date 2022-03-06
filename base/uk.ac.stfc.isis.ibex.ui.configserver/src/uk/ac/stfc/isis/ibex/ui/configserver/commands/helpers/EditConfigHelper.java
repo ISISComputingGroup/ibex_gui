@@ -34,40 +34,41 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
  * A helper class to open config editing dialog boxes.
  */
 public class EditConfigHelper extends ConfigHelper {
+	
+	/**
+	 * Configuration server.
+	 */
+	protected ConfigServer server;
 
-    private ConfigServer server;
+	/**
+	 * Constructor for the helper class.
+	 * 
+	 * @param shell  The shell in which to display dialog boxes
+	 * @param server The ConfigServer to save configurations to
+	 */
+	public EditConfigHelper(Shell shell, ConfigServer server) {
+		this.shell = shell;
+		this.server = server;
+		this.configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
 
-    /**
-     * Constructor for the helper class.
-     * 
-     * @param shell The shell in which to display dialog boxes
-     * @param server The ConfigServer to save configurations to
-     */
-    public EditConfigHelper(Shell shell, ConfigServer server) {
-        this.shell = shell;
-        this.server = server;
-        this.configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
-        
-        title = "Edit Configuration";
-    }
+		title = "Edit Configuration";
+	}
 
-    @Override
-    protected void openDialog(EditableConfiguration config, boolean isCurrent,
-            boolean editBlockFirst) {
-        config.setIsComponent(false);
-        final String configName = getConfigDisplayName(config, isCurrent);
-        final String subTitle = "Editing the " + configName + " configuration";
+	@Override
+	protected void openDialog(EditableConfiguration config, boolean isCurrent, boolean editBlockFirst) {
+		config.setIsComponent(false);
+		final String configName = getConfigDisplayName(config, isCurrent);
+		final String subTitle = "Editing the " + configName + " configuration";
 
-        EditConfigDialog dialog =
-                new EditConfigDialog(shell, title, subTitle, config, false, configurationViewModels,
-                        editBlockFirst);
-        if (dialog.open() == Window.OK) {
-            server.ifDoAsComponentChooseSave(config, isCurrent, dialog.doAsComponent(), dialog.switchConfigOnSaveAs(), dialog.calledSwitchConfigOnSaveAs());
-            if (dialog.switchConfigOnSaveAs()) {
-                server.load().uncheckedWrite(dialog.getConfig().name());
-            }
-        }
-    }
-    
+		EditConfigDialog dialog = new EditConfigDialog(shell, title, subTitle, config, false, configurationViewModels,
+				editBlockFirst);
+		if (dialog.open() == Window.OK) {
+			server.ifDoAsComponentChooseSave(config, isCurrent, dialog.doAsComponent(), dialog.switchConfigOnSaveAs(),
+					dialog.calledSwitchConfigOnSaveAs());
+			if (dialog.switchConfigOnSaveAs()) {
+				server.load().uncheckedWrite(dialog.getConfig().name());
+			}
+		}
+	}
+
 }
-

@@ -20,19 +20,19 @@
 package uk.ac.stfc.isis.ibex.devicescreens.desc;
 
 import java.io.IOException;
+import java.util.function.Function;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
 
 /**
  * Parses device screens in XML format and returns them as
  * DeviceScreenDescription instances.
  */
-public class DeviceScreensDescriptionXmlParser extends Converter<String, DeviceScreensDescription> {
+public class DeviceScreensDescriptionXmlParser implements Function<String, DeviceScreensDescription> {
 
     @Override
-    public DeviceScreensDescription convert(String value) throws ConversionException {
+    public DeviceScreensDescription apply(String value) throws ConversionException {
         try {
             return XMLUtil.fromXml(value, DeviceScreensDescription.class);
         } catch (IOException e) {

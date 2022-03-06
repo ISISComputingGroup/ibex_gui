@@ -25,15 +25,27 @@ import java.util.List;
 import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 import uk.ac.stfc.isis.ibex.targets.Target;
 
+/**
+ * Contains a group components to display.
+ */
 public class GroupedComponentTarget extends Target {
 
 	private final List<Component> components;
 	
+	/**
+	 * Create the group of components.
+	 * 
+	 * @param name The name of the target.
+	 * @param components The components in the target.
+	 */
 	public GroupedComponentTarget(String name, List<? extends Component> components) {
 		super(name);
 		this.components = new ArrayList<>(components);
 	}
 	
+	/**
+	 * @return The components that are grouped together.
+	 */
 	public List<Component> components() {
 		return components;
 	}	

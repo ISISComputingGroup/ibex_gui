@@ -159,6 +159,7 @@ public class LogMessageFileWriter {
 	/**
 	 * Get a format string that can be used in String.format. Sets the field
 	 * width for each column.
+	 * @return A format string
 	 */
 	private String getFormatString() {
 		StringBuilder formatString = new StringBuilder();
@@ -173,6 +174,7 @@ public class LogMessageFileWriter {
 	/**
 	 * Get a string that consists of a line of hyphens long enough to cover
 	 * every column
+	 * @return A string that consists of a line of hypens long enough to cover every column
 	 */
 	private String getHyphenLine() {
 		int totalLength = (COL_SEP + 1) * COLUMNS.length;

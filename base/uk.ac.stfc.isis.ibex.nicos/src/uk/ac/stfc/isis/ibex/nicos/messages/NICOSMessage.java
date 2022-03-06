@@ -25,8 +25,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
+import uk.ac.stfc.isis.ibex.nicos.comms.ZMQWrapper;
 
 /**
  * A message that can be serialised and sent to NICOS.
@@ -37,8 +39,26 @@ import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
  * 			  The type of the response.
  */
 public abstract class NICOSMessage<TSEND, TRESP> {
+	
+	/**
+	 * The command to be sent as this message.
+	 */
     protected String command = "";
+    
+    /**
+     * The parameters to send alongside the command.
+     */
     protected List<TSEND> parameters = new ArrayList<>();
+    
+    /**
+     * The status of the response to this message.
+     */
+    protected String responseStatus;
+    
+    /**
+     * The response content of this message.
+     */
+    protected String response;
     
     /**
      * Converts the message into a list of messages to send NICOS.
@@ -50,7 +70,7 @@ public abstract class NICOSMessage<TSEND, TRESP> {
     public List<String> getMulti() throws ConversionException {
         @SuppressWarnings("rawtypes")
 		JsonSerialisingConverter<List<TSEND>> serialiser = new JsonSerialisingConverter(List.class);
-        return Arrays.asList(command, "", serialiser.convert(parameters));
+        return Arrays.asList(command, "", serialiser.apply(parameters));
     }
 
     /**
@@ -64,4 +84,35 @@ public abstract class NICOSMessage<TSEND, TRESP> {
      *             Thrown when the response from NICOS is not as expected.
      */
     public abstract TRESP parseResponse(String response) throws ConversionException;
+    
+    /**
+     * Receive the response from this message using the given ZMQWrapper.
+     * 
+     * @param zmq The wrapper to receive the message with.
+     */
+    public void receiveResponse(ZMQWrapper zmq) {
+    	responseStatus = zmq.receiveString();
+    	// NICOS protocol leaves the second package empty for future expansion
+        // so read and throw away.
+    	zmq.receiveString();
+    	response = zmq.receiveString();
+    }
+    
+    /**
+     * Get the response filled out by calling receiveResponse.
+     * 
+     * @return The content of the response to this message.
+     */
+    public String getResponse() {
+    	return response;
+    }
+    
+    /**
+     * Get the response status filled out by calling receiveResponse.
+     * 
+     * @return The status of the response to this message.
+     */
+    public String getResponseStatus() {
+    	return responseStatus;
+    }
 }

@@ -36,16 +36,27 @@ import uk.ac.stfc.isis.ibex.ui.configserver.BundleConstants;
  * Class providing shared functionality for editing configurations and components.
  */
 public abstract class EditConfigurationsHandler extends ConfigHandler<Configuration>  {
-
+    /**
+     * Whether the configuration can be written to.
+     */
     protected boolean canWrite;
     
-    protected static final String EDIT_MENU_TEXT = "Edit";
-    protected static final String READ_ONLY_TEXT = "View";
-    protected static final String MENU_MNEMONIC = "E";
+    private static final String EDIT_MENU_TEXT = "Edit";
+    private static final String READ_ONLY_TEXT = "View";
+    private static final String MENU_MNEMONIC = "E";
+    
+    /**
+     * The dialog title when editing the config/component.
+     */
     protected final String editTitle = "Edit " + getTypeString();
+    
+    /**
+     * The dialog title when viewing the config/component.
+     */
     protected final String viewTitle = "View " + getTypeString();
-    protected final String editTooltip = "Select and edit an existing " + getTypeString().toLowerCase();
-    protected final String viewTooltip = "Select and view an existing " + getTypeString().toLowerCase();
+    
+    private final String editTooltip = "Select and edit an existing " + getTypeString().toLowerCase();
+    private final String viewTooltip = "Select and view an existing " + getTypeString().toLowerCase();
 
     /**
      * Constructor.

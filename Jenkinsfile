@@ -16,6 +16,8 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr:'10'))
     timeout(time: 60, unit: 'MINUTES')
     disableConcurrentBuilds()
+    timestamps()
+	skipDefaultCheckout(true)
     office365ConnectorWebhooks([[
                     name: "Office 365",
                     notifyBackToNormal: true,
@@ -45,22 +47,22 @@ pipeline {
             // env.BRANCH_NAME is only supplied to multi-branch pipeline jobs
             if (env.BRANCH_NAME == null) {
                 env.BRANCH_NAME = ""
-                  }
+	    }
+            env.GIT_BRANCH = scm.branches[0].name
             env.GIT_COMMIT = bat(returnStdout: true, script: '@git rev-parse HEAD').trim()
-            env.GIT_BRANCH = bat(returnStdout: true, script: '@git rev-parse --abbrev-ref HEAD').trim()
             echo "git commit: ${env.GIT_COMMIT}"
-            echo "git branch: ${env.BRANCH_NAME} ${env.GIT_BRANCH}"
+            echo "git branch: ${env.BRANCH_NAME} (${env.GIT_BRANCH})"
             if (env.BRANCH_NAME.startsWith("Release")) {
                 env.IS_RELEASE = "YES"
                 env.IS_DEPLOY = "NO"
                 env.IS_E4 = "YES"
             }
-            else if (env.GIT_BRANCH == "origin/master_E3_maint") {
+            else if (env.GIT_BRANCH == "refs/heads/master_E3_maint") {
                 env.IS_RELEASE = "NO"
                 env.IS_DEPLOY = "YES"
                 env.IS_E4 = "NO"
             }
-            else if (env.GIT_BRANCH == "origin/master") {
+            else if (env.GIT_BRANCH == "refs/heads/master") {
                 env.IS_RELEASE = "NO"
                 env.IS_DEPLOY = "YES"
                 env.IS_E4 = "YES"
@@ -91,13 +93,7 @@ pipeline {
         """
       }
     }
-    
-    stage("Collate Unit Tests") {
-      steps {
-        junit '**/surefire-reports/TEST-*.xml,**/test-reports/TEST-*.xml'
-      }
-    }
-    
+        
     stage("Checkstyle") {
       steps {
         archiveCheckstyleResults()
@@ -112,6 +108,14 @@ pipeline {
       }
     }
   }
+  
+  post {
+    always {
+	    archiveArtifacts artifacts: 'build/*.log', caseSensitive: false
+	    junit '**/surefire-reports/TEST-*.xml,**/test-reports/TEST-*.xml'
+    }
+  }
+
 }
 
 def archiveCheckstyleResults() {
