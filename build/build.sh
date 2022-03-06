@@ -5,7 +5,7 @@ SCRIPT=$(readlink -f "${BASH_SOURCE[0]}")
 SCRIPTPATH="`dirname \"$SCRIPT\"`"
 TOPPATH="`dirname \"$SCRIPTPATH\"`"
 
-sh /run_python_support_tests.sh
+sh ./run_python_support_tests.sh
 
 mvn --settings="$TOPPATH/mvn_user_settings.xml" \
     -f "$TOPPATH/base/uk.ac.stfc.isis.ibex.client.tycho.parent/pom.xml" \
