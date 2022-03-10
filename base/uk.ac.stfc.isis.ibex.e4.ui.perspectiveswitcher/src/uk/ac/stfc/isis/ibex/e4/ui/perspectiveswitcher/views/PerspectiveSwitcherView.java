@@ -34,6 +34,7 @@ import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectiveButton
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectiveButtonViewModel;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButton;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButtonViewModel;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.RefreshPvConnectionButton;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ScriptServerButtonViewModel;
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 
@@ -90,6 +91,7 @@ public class PerspectiveSwitcherView {
 		perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
 
 		addResetCurrentPerspectiveShortcut(composite);
+		addRefreshPvConnectionButton(composite);
 		addSeparator(composite);
 		addPerspectiveShortcuts(composite);
 		addCollapseButton(parent);
@@ -97,6 +99,20 @@ public class PerspectiveSwitcherView {
 		maximise();
 	}
 	
+	private void addRefreshPvConnectionButton(Composite parent) {
+		ButtonViewModel model = new ButtonViewModel("Refresh PVs");
+	    buttonModels.add(model);
+	    
+	    RefreshPvConnectionButton button = new RefreshPvConnectionButton(parent, model);
+	    button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseDown(MouseEvent e) {
+            	RefreshPvConnectionButton button = (RefreshPvConnectionButton) e.getSource();
+            	button.refreshPvConnections();
+            }
+	    });
+	}
+
 	private void addCollapseButton(Composite parent) {
 	    collapseSidebarButton = new CollapseSidebarButton(parent);
 	    collapseSidebarButton.addMouseListener(new MouseAdapter() {
