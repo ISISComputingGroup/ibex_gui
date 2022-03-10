@@ -6,7 +6,7 @@ import uk.ac.stfc.isis.ibex.epics.switching.InstrumentSwitchers;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 
 /**
- * Reset PV connection button, located below reset layout button in perspective selection menu.
+ * Refresh PV connection button, located below reset layout button in perspective selection menu.
  *
  */
 public class RefreshPvConnectionButton extends Button {
