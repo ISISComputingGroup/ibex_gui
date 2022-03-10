@@ -112,6 +112,7 @@ public class GroupRow extends Composite {
         FontDescriptor boldDescriptor = FontDescriptor.createFrom(lblStatus.getFont()).setStyle(SWT.BOLD);
         Font boldFont = boldDescriptor.createFont(lblStatus.getDisplay());
         lblStatus.setFont(boldFont);
+        boldFont.dispose();
         GridData gdStatus = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
         gdStatus.widthHint = VALUE_HEIGHT;
         lblStatus.setLayoutData(gdStatus);

@@ -34,10 +34,8 @@ import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectiveButton
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectiveButtonViewModel;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButton;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetLayoutButtonViewModel;
-import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ResetPvConnectionButton;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.RefreshPvConnectionButton;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ScriptServerButtonViewModel;
-import uk.ac.stfc.isis.ibex.epics.switching.InstrumentSwitchers;
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 
 /**
@@ -93,7 +91,7 @@ public class PerspectiveSwitcherView {
 		perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
 
 		addResetCurrentPerspectiveShortcut(composite);
-		addResetPvConnectionButton(composite);
+		addRefreshPvConnectionButton(composite);
 		addSeparator(composite);
 		addPerspectiveShortcuts(composite);
 		addCollapseButton(parent);
@@ -101,15 +99,16 @@ public class PerspectiveSwitcherView {
 		maximise();
 	}
 	
-	private void addResetPvConnectionButton(Composite parent) {
-		ButtonViewModel model = new ButtonViewModel("Reset PVs");
+	private void addRefreshPvConnectionButton(Composite parent) {
+		ButtonViewModel model = new ButtonViewModel("Refresh PVs");
 	    buttonModels.add(model);
 	    
-	    ResetPvConnectionButton button = new ResetPvConnectionButton(parent, model);
+	    RefreshPvConnectionButton button = new RefreshPvConnectionButton(parent, model);
 	    button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseDown(MouseEvent e) {
-            	InstrumentSwitchers.getDefault().setInstrument(Instrument.getInstance().currentInstrument());
+            	RefreshPvConnectionButton button = (RefreshPvConnectionButton) e.getSource();
+            	button.refreshPvConnections();
             }
 	    });
 	}
