@@ -2777,7 +2777,7 @@
         <categories>
         	<category>Delay Generators</category></categories>
         <type>DELAY_GENERATORS</type>
-        <path>dg645.opi</path>
+        <path>DG645/dg645.opi</path>
         <description>The OPI for the DG645</description>
         <macros>
           <macro>

@@ -18,6 +18,10 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
+    <CHANNEL_A></CHANNEL_A>
+    <CHANNEL_B></CHANNEL_B>
+    <CHANNEL_AB></CHANNEL_AB>
+    <NAME></NAME>
   </macros>
   <name></name>
   <rules />
@@ -40,7 +44,7 @@
     <border_color>
       <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
     </border_color>
-    <border_style>13</border_style>
+    <border_style>0</border_style>
     <border_width>1</border_width>
     <enabled>true</enabled>
     <fc>false</fc>
@@ -50,7 +54,7 @@
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
-    <height>108</height>
+    <height>96</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -68,7 +72,7 @@
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
-    <width>462</width>
+    <width>420</width>
     <wuid>-5b7331e9:17c12fdab26:-7562</wuid>
     <x>6</x>
     <y>6</y>
@@ -85,13 +89,13 @@
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+        <opifont.name fontName="Segoe UI" height="11" style="1" pixels="false">Header 3</opifont.name>
       </font>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
       <height>20</height>
-      <horizontal_alignment>2</horizontal_alignment>
+      <horizontal_alignment>0</horizontal_alignment>
       <name>Label</name>
       <rules />
       <scale_options>
@@ -101,16 +105,16 @@
       </scale_options>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
-      <text>Blanking Delay</text>
+      <text>$(NAME)</text>
       <tooltip></tooltip>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>91</width>
+      <width>142</width>
       <wrap_words>true</wrap_words>
       <wuid>-5b7331e9:17c12fdab26:-7548</wuid>
-      <x>0</x>
+      <x>9</x>
       <y>3</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -142,7 +146,7 @@
       </scale_options>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
-      <text>Leading Edge (C)</text>
+      <text>Leading Edge ($(CHANNEL_A))</text>
       <tooltip></tooltip>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -183,7 +187,7 @@
       </scale_options>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
-      <text>Trailing Edge (D)</text>
+      <text>Trailing Edge ($(CHANNEL_B))</text>
       <tooltip></tooltip>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -193,7 +197,7 @@
       <wrap_words>true</wrap_words>
       <wuid>-5b7331e9:17c12fdab26:-6c48</wuid>
       <x>0</x>
-      <y>52</y>
+      <y>65</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
       <actions hook="false" hook_all="false" />
@@ -228,7 +232,7 @@
       <name>Text Input</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT)CDELAY:SP</pv_name>
+      <pv_name>$(PV_ROOT)$(CHANNEL_A)DELAY:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -280,7 +284,7 @@ $(pv_value)</tooltip>
       </items>
       <items_from_pv>false</items_from_pv>
       <name>Combo_3</name>
-      <pv_name>$(PV_ROOT)CDOUTPUTPOLARITY:SP</pv_name>
+      <pv_name>$(PV_ROOT)$(CHANNEL_AB)OUTPUTPOLARITY:SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -332,7 +336,7 @@ $(pv_value)</tooltip>
       </items>
       <items_from_pv>false</items_from_pv>
       <name>Combo</name>
-      <pv_name>$(PV_ROOT)CREFERENCE:SP</pv_name>
+      <pv_name>$(PV_ROOT)$(CHANNEL_A)REFERENCE:SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -381,7 +385,7 @@ $(pv_value)</tooltip>
       </items>
       <items_from_pv>false</items_from_pv>
       <name>Combo</name>
-      <pv_name>$(PV_ROOT)CDELAYUNIT:SP</pv_name>
+      <pv_name>$(PV_ROOT)$(CHANNEL_A)DELAYUNIT:SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -432,7 +436,7 @@ $(pv_value)</tooltip>
       <name>Text Input</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT)DDELAY:SP</pv_name>
+      <pv_name>$(PV_ROOT)$(CHANNEL_B)DELAY:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -454,7 +458,7 @@ $(pv_value)</tooltip>
       <width>73</width>
       <wuid>523d7e06:17c3b0603c0:-7fb3</wuid>
       <x>156</x>
-      <y>52</y>
+      <y>65</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.combo" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -490,7 +494,7 @@ $(pv_value)</tooltip>
       </items>
       <items_from_pv>false</items_from_pv>
       <name>Combo</name>
-      <pv_name>$(PV_ROOT)DREFERENCE:SP</pv_name>
+      <pv_name>$(PV_ROOT)$(CHANNEL_B)REFERENCE:SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -506,7 +510,7 @@ $(pv_value)</tooltip>
       <width>43</width>
       <wuid>523d7e06:17c3b0603c0:-7fa9</wuid>
       <x>108</x>
-      <y>50</y>
+      <y>63</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.combo" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -539,7 +543,7 @@ $(pv_value)</tooltip>
       </items>
       <items_from_pv>false</items_from_pv>
       <name>Combo</name>
-      <pv_name>$(PV_ROOT)DDELAYUNIT:SP</pv_name>
+      <pv_name>$(PV_ROOT)$(CHANNEL_B)DELAYUNIT:SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -555,12 +559,12 @@ $(pv_value)</tooltip>
       <width>43</width>
       <wuid>523d7e06:17c3b0603c0:-7fa1</wuid>
       <x>234</x>
-      <y>50</y>
+      <y>63</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
         <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)CDELAYBUTTON</pv_name>
+          <pv_name>$(PV_ROOT)$(CHANNEL_A)DELAYBUTTON</pv_name>
           <value></value>
           <timeout>10</timeout>
           <confirm_message></confirm_message>
@@ -609,7 +613,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
         <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)DDELAYBUTTON</pv_name>
+          <pv_name>$(PV_ROOT)$(CHANNEL_B)DELAYBUTTON</pv_name>
           <value></value>
           <timeout>10</timeout>
           <confirm_message></confirm_message>
@@ -653,12 +657,12 @@ $(pv_value)</tooltip>
       <width>35</width>
       <wuid>523d7e06:17c3b0603c0:-7f1e</wuid>
       <x>282</x>
-      <y>48</y>
+      <y>61</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
         <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)CDLOGICTTL:SP</pv_name>
+          <pv_name>$(PV_ROOT)$(CHANNEL_AB)LOGICTTL:SP</pv_name>
           <value></value>
           <timeout>10</timeout>
           <confirm_message></confirm_message>
@@ -702,12 +706,12 @@ $(pv_value)</tooltip>
       <width>42</width>
       <wuid>-6906150b:17c54eb3068:-6f48</wuid>
       <x>324</x>
-      <y>48</y>
+      <y>60</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
         <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)CDLOGICNIM:SP</pv_name>
+          <pv_name>$(PV_ROOT)$(CHANNEL_AB)LOGICNIM:SP</pv_name>
           <value></value>
           <timeout>10</timeout>
           <confirm_message></confirm_message>
@@ -751,7 +755,7 @@ $(pv_value)</tooltip>
       <width>42</width>
       <wuid>-6906150b:17c54eb3068:-6f47</wuid>
       <x>372</x>
-      <y>48</y>
+      <y>60</y>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
