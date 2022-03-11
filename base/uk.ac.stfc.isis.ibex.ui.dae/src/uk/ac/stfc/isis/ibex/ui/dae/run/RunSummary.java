@@ -28,6 +28,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -37,6 +39,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
+import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.ExperimentSetupViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.widgets.LogMessageBox;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
 
@@ -47,6 +50,7 @@ public class RunSummary {
 	private Label runStatus;
 	private Label runNumber;
 	private Label isisCycle;
+	private Label changeIndicator;
 	private WritableObservingTextBox title;
     private Button btnDisplayTitle;
 	private LogMessageBox messageBox;
@@ -121,8 +125,13 @@ public class RunSummary {
 		runStatus.setLayoutData(gdRunStatus);
 		runStatus.setText("UNKNOWN");
 
-		Label spacer = new Label(infoComposite, SWT.NONE);
-		spacer.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+		changeIndicator = new Label(infoComposite, SWT.NONE);
+		changeIndicator.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
+        String defaultFont = changeIndicator.getFont().getFontData()[0].getName();
+        Font biggerFont = new Font(changeIndicator.getDisplay(), new FontData(defaultFont, 11, SWT.BOLD));
+        changeIndicator.setFont(biggerFont);
+		changeIndicator.setText("Unapplied Changes in Experiment Setup!");
+		changeIndicator.setForeground(SWTResourceManager.getColor(255, 128, 0));
 
 		Label lblRunNumber = new Label(infoComposite, SWT.NONE);
 		lblRunNumber.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -180,8 +189,15 @@ public class RunSummary {
 		daeButtonPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 
         setModel(model);
+        bindChangeIndicator();
 	}
 
+    private void bindChangeIndicator() {
+		DataBindingContext bindingContext = new DataBindingContext();
+        ExperimentSetupViewModel experimentSetupModel = DaeUI.getDefault().viewModel().experimentSetup();
+		bindingContext.bindValue(WidgetProperties.visible().observe(changeIndicator), BeanProperties.value("isChanged").observe(experimentSetupModel));
+    }
+    
     /**
      * Binds run model properties to GUI elements.
      *
