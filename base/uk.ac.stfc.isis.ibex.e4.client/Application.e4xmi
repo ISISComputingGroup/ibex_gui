@@ -82,9 +82,6 @@
     <sharedElements xsi:type="basic:PartStack" xmi:id="_yrd0QBH9Eeq6Ie-xR-8O0g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.35" selectedElement="_SDyz8BH8Eeq6Ie-xR-8O0g">
       <children xsi:type="basic:Part" xmi:id="_SDyz8BH8Eeq6Ie-xR-8O0g" elementId="org.eclipse.ui.console.ConsoleView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="scripting console"/>
     </sharedElements>
-    <sharedElements xsi:type="basic:PartStack" xmi:id="_-0AlUFPmEeqH3pE5MQqo5A" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.36" containerData="50">
-      <children xsi:type="basic:Part" xmi:id="_-0AlUVPmEeqH3pE5MQqo5A" elementId="uk.ac.stfc.isis.ibex.ui.graphing.FixedMatplotlibOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Plot"/>
-    </sharedElements>
     <trimBars xmi:id="_-fkTUGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.trimbar.0" side="Left">
       <children xsi:type="menu:ToolControl" xmi:id="__XZ6QGMWEeecC_eSNHqaWg" elementId="uk.ac.stfc.isis.ibex.e4.client.toolcontrol.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views.PerspectiveSwitcherView"/>
     </trimBars>
@@ -576,12 +573,9 @@
           </children>
         </children>
       </children>
-      <children xsi:type="basic:PartSashContainer" xmi:id="_NvInsBgZEeqNCfSxpw4Lrg" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.29" containerData="70" selectedElement="_L1HAoBg9EeqNCfSxpw4Lrg" horizontal="true">
-        <children xsi:type="basic:PartSashContainer" xmi:id="_L1HAoBg9EeqNCfSxpw4Lrg" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.30" containerData="38">
-          <children xsi:type="advanced:Placeholder" xmi:id="_234KUBH9Eeq6Ie-xR-8O0g" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.18" containerData="50" ref="_yrd0QBH9Eeq6Ie-xR-8O0g"/>
-          <children xsi:type="advanced:Placeholder" xmi:id="_CcERIFPnEeqH3pE5MQqo5A" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.16" containerData="50" ref="_-0AlUFPmEeqH3pE5MQqo5A"/>
-        </children>
-        <children xsi:type="basic:PartStack" xmi:id="_4oBKYBqREeqyO7x5cUnuHg" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.37" containerData="62">
+      <children xsi:type="basic:PartSashContainer" xmi:id="_NvInsBgZEeqNCfSxpw4Lrg" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.29" containerData="70" horizontal="true">
+        <children xsi:type="advanced:Placeholder" xmi:id="_234KUBH9Eeq6Ie-xR-8O0g" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.18" containerData="36" ref="_yrd0QBH9Eeq6Ie-xR-8O0g"/>
+        <children xsi:type="basic:PartStack" xmi:id="_4oBKYBqREeqyO7x5cUnuHg" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.37" containerData="64">
           <children xsi:type="basic:Part" xmi:id="_5pZu4BqREeqyO7x5cUnuHg" elementId="uk.ac.stfc.isis.ibex.ui.reflectometry.ReflectometryFrontPanelTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Front Panel" iconURI=""/>
           <children xsi:type="basic:Part" xmi:id="_l5ccIC5WEeuStKh7k5qgyA" elementId="uk.ac.stfc.isis.ibex.ui.reflectometry.ReflectometryCollimationParametersTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Collimation Plane Parameters" iconURI=""/>
           <children xsi:type="basic:Part" xmi:id="_sv0MIC5YEeuStKh7k5qgyA" elementId="uk.ac.stfc.isis.ibex.ui.reflectometry.ReflectometryActivationParametersTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Activation Parameters" iconURI=""/>
@@ -591,6 +585,7 @@
           <children xsi:type="basic:Part" xmi:id="_uaT_EC5YEeuStKh7k5qgyA" elementId="uk.ac.stfc.isis.ibex.ui.reflectometry.ReflectometryConstantsTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Constants" iconURI=""/>
           <children xsi:type="basic:Part" xmi:id="_udq1EC5YEeuStKh7k5qgyA" elementId="uk.ac.stfc.isis.ibex.ui.reflectometry.ReflectometryErrorLogTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Error Log" iconURI=""/>
           <children xsi:type="basic:Part" xmi:id="_ug4hIC5YEeuStKh7k5qgyA" elementId="uk.ac.stfc.isis.ibex.ui.reflectometry.ReflectometryRedefineMotorsTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Redefine Motors" iconURI=""/>
+          <children xsi:type="basic:Part" xmi:id="_lJqaEKEjEeyLWIXw40pQJA" elementId="uk.ac.stfc.isis.ibex.ui.graphing.MatplotlibOpiTargetView" toBeRendered="false" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Plot"/>
         </children>
       </children>
     </children>
