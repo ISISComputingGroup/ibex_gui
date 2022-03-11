@@ -2704,7 +2704,7 @@
         </macros>
       </value>
     </entry>
-     <entry>
+    <entry>
       <key>WISH Jaws</key>
       <value>
         <type>JAWS</type>
@@ -2767,6 +2767,21 @@
             <name>IOC_NAME</name>
             <description>The weeder PV prefix (e.g. WEEDER_01)</description>
             <default>WEEDER_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>TECHNIX</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>technix.opi</path>
+        <description>The OPI for the technix</description>
+        <macros>
+          <macro>
+            <name>TECHNIX</name>
+            <description>The technix PV prefix (e.g. TECHNIX_01)</description>
           </macro>
         </macros>
       </value>
