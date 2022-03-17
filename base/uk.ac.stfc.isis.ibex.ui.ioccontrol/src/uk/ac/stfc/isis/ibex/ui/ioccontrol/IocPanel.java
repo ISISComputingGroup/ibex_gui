@@ -22,14 +22,15 @@ package uk.ac.stfc.isis.ibex.ui.ioccontrol;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Hashtable;
 
-import org.eclipse.jface.viewers.ISelection;
+
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
@@ -39,6 +40,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Item;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
+
 
 import uk.ac.stfc.isis.ibex.configserver.IocControl;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
@@ -125,7 +129,7 @@ public class IocPanel extends Composite {
 		availableIocsTree.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
-				if(availableIocsTree.getTree().getSelection().length!=0) {
+				if (availableIocsTree.getTree().getSelection().length != 0) {
 					Object selection = availableIocsTree.getTree().getSelection()[0].getData();
 					if (selection instanceof IocState) {
 						buttons.setIoc(IocState.class.cast(selection));
@@ -164,19 +168,23 @@ public class IocPanel extends Composite {
  
 	private void setIocs() {		 
 		if (control.iocs().isSet()) {
-//			ITreeSelection selected = availableIocsTree.getStructuredSelection();
-//
-//            IocState selectedName = null;
-//			if (selected.getFirstElement() instanceof IocState) {
-//				selectedName = (IocState) selected.getFirstElement();
-//			}
-//			ArrayList<Item> newSelection = new ArrayList<Item>();
-//            for (Item treeItem :availableIocsTree.getTree().getItems()) {
-//            	if (treeItem.getText() == selectedName.getName()) {
-//            		newSelection.add(treeItem);
-//            	}
-//            }
-            	
+			
+			TreeItem selected = availableIocsTree.getTree().getSelection()[0];
+			int index = 0;
+			int index2 = 0;
+            if (selected != null) {
+            	TreeItem temp = selected.getParentItem();
+    			TreeItem[] temp2 = availableIocsTree.getTree().getItems();
+    			
+    			while (!temp2[index].getText().equals(temp.getText())) {
+    				index++;
+    			}
+    	
+    			while (!temp.getItems()[index2].getText(1).equals(selected.getText(1))) {
+    				index2++;
+    			}
+            }
+			
             Object[] expandedObjects = availableIocsTree.getExpandedElements();
             ArrayList<String> descriptionsToExpand = new ArrayList<String>();
             for (Object list :expandedObjects) {
@@ -194,7 +202,7 @@ public class IocPanel extends Composite {
 			availableIocsTree.setInput(availableIocs);
             for (String label: availableIocs.keySet()) {
             	ArrayList<IocState> iocList = availableIocs.get(label);
-            	for(IocState ioc: iocList) {
+            	for (IocState ioc: iocList) {
             		availableIocsTree.update(ioc, null);
             	}
             } 
@@ -203,8 +211,8 @@ public class IocPanel extends Composite {
             	newExpandedOjects[i] = availableIocs.get(descriptionsToExpand.get(i));
             }
             availableIocsTree.setExpandedElements(newExpandedOjects);
-            availableIocsTree.setSelection(null);
-            //availableIocsTree.setSelection(newSelection);		
+            TreeItem parent = availableIocsTree.getTree().getItem(index);
+            availableIocsTree.getTree().setSelection(parent.getItem(index2));	
 		}
 	}
 }
