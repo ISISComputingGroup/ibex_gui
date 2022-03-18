@@ -28,8 +28,11 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
@@ -40,6 +43,9 @@ import org.eclipse.swt.widgets.TreeItem;
  * Dialog panel for selecting a new IOC to add to a configuration.
  */
 public class AddPanel extends Composite {
+	private final Button expandButton;
+	private final Button  collapseButton;
+	
     private TreeViewer availableIocsTree;
     private static final int TREE_HEIGHT = 300;
     private static final int SPACING = 25;
@@ -60,7 +66,30 @@ public class AddPanel extends Composite {
         GridLayout glPanel = new GridLayout(2, false);
         glPanel.verticalSpacing = SPACING;
         this.setLayout(glPanel);
-
+        
+      //Add Expand and Collapse Tree buttons
+  		Composite expansionComposite = new Composite(this, SWT.FILL);
+  		expansionComposite.setLayout(new GridLayout(2, true));
+  		expandButton = new Button(expansionComposite, SWT.NONE);
+  		expandButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+  		expandButton.setText("\u25BC Expand All");
+  		expandButton.addSelectionListener(new SelectionAdapter() {
+  			@Override
+  			public void widgetSelected(SelectionEvent e) {
+  				availableIocsTree.expandAll();
+  			}
+  		});
+  		
+  		collapseButton = new Button(expansionComposite, SWT.NONE);
+  		collapseButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+  		collapseButton.setText("\u25B2 Collapse All");
+  		collapseButton.addSelectionListener(new SelectionAdapter() {
+  			@Override
+  			public void widgetSelected(SelectionEvent e) {
+  				availableIocsTree.collapseAll();
+  			}
+  		});
+        
         // Add selection tree
         availableIocsTree = new TreeViewer(this, SWT.FULL_SELECTION);
         availableIocsTree.setContentProvider(new IOCContentProvider());
