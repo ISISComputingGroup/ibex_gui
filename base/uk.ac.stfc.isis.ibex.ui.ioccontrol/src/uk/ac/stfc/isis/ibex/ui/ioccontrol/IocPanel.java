@@ -32,8 +32,11 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TreeItem;
@@ -54,11 +57,14 @@ import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCViewerComparator;
 public class IocPanel extends Composite {
 	
 	private final Display display = Display.getDefault();
+	private final Button expandButton;
+	private final Button  collapseButton;
 	private TreeViewer availableIocsTree;
     private IocButtonPanel buttons;
 	private IocControl control;
 	private Hashtable<String, IOCList> availableIocs;
-	private static final int COLUMN_WIDTH = 60;
+	
+	private static final int COLUMN_WIDTH = 70;
 	
 	private PropertyChangeListener updateTable = new PropertyChangeListener() {	
 		@Override
@@ -83,24 +89,48 @@ public class IocPanel extends Composite {
 		
 		setLayout(new GridLayout(1, false));
 		
+		//Add Expand and Collapse Tree buttons
+		Composite expansionComposite = new Composite(this, SWT.FILL);
+		expansionComposite.setLayout(new GridLayout(2, true));
+		expandButton = new Button(expansionComposite, SWT.NONE);
+		expandButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		expandButton.setText("\u25BC Expand All");
+		expandButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				availableIocsTree.expandAll();
+			}
+		});
+		
+		collapseButton = new Button(expansionComposite, SWT.NONE);
+		collapseButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		collapseButton.setText("\u25B2 Collapse All");
+		collapseButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				availableIocsTree.collapseAll();
+			}
+		});
+		
 		// Add selection tree
         availableIocsTree = new TreeViewer(this, SWT.FULL_SELECTION);
         availableIocsTree.setContentProvider(new IOCContentProvider());
         availableIocsTree.setComparator(new IOCViewerComparator(Comparator.naturalOrder()));
-        TreeViewerColumn mainColumn = new TreeViewerColumn(availableIocsTree, SWT.LEFT);
+        
+        TreeViewerColumn mainColumn = new TreeViewerColumn(availableIocsTree, SWT.NONE);
         mainColumn.getColumn().setText("Ioc");
         mainColumn.setLabelProvider(new IOCLabelProvider());
         
-        TreeViewerColumn statusColumn = new TreeViewerColumn(availableIocsTree, SWT.LEFT);
-        statusColumn.getColumn().setText("Name");
+        TreeViewerColumn statusColumn = new TreeViewerColumn(availableIocsTree, SWT.NONE);
+        statusColumn.getColumn().setText("Status");
         statusColumn.getColumn().setWidth(COLUMN_WIDTH);
-        statusColumn.getColumn().setAlignment(SWT.RIGHT);
+        statusColumn.getColumn().setAlignment(SWT.CENTER);
         statusColumn.setLabelProvider(new IOCStatusProvider());
         
-        TreeViewerColumn configColumn = new TreeViewerColumn(availableIocsTree, SWT.LEFT);
-        configColumn.getColumn().setText("Name");
+        TreeViewerColumn configColumn = new TreeViewerColumn(availableIocsTree, SWT.NONE);
+        configColumn.getColumn().setText("In Config?");
         configColumn.getColumn().setWidth(COLUMN_WIDTH);
-        configColumn.getColumn().setAlignment(SWT.RIGHT);
+        configColumn.getColumn().setAlignment(SWT.CENTER);
         configColumn.setLabelProvider(new IOCConfigProvider());
         
         Collection<IocState> rows = control.iocs().getValue();
@@ -109,6 +139,8 @@ public class IocPanel extends Composite {
     	
     	availableIocsTree.setInput(availableIocs);
     	availableIocsTree.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+    	availableIocsTree.getTree().setHeaderVisible(true);
+    	availableIocsTree.getTree().setLinesVisible(true);
     	mainColumn.getColumn().pack();
 		
 		this.control = control;
@@ -121,12 +153,14 @@ public class IocPanel extends Composite {
 					Object selection = availableIocsTree.getTree().getSelection()[0].getData();
 					if (selection instanceof IocState) {
 						buttons.setIoc(IocState.class.cast(selection));
+						return;
 					}
-				} else {
-					buttons.setIoc(null);
-				}
+				} 
+				buttons.setIoc(null);
+				
 			}
 		});
+		
 
         buttons = new IocButtonPanel(this, SWT.NONE, control);
 		buttons.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
