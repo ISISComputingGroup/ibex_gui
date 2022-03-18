@@ -22,7 +22,6 @@ package uk.ac.stfc.isis.ibex.ui.ioccontrol;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Hashtable;
@@ -30,8 +29,6 @@ import java.util.Hashtable;
 
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
@@ -39,8 +36,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Item;
-import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 
 
@@ -168,51 +163,59 @@ public class IocPanel extends Composite {
  
 	private void setIocs() {		 
 		if (control.iocs().isSet()) {
-			
-			TreeItem selected = availableIocsTree.getTree().getSelection()[0];
-			int index = 0;
-			int index2 = 0;
-            if (selected != null) {
-            	TreeItem temp = selected.getParentItem();
-    			TreeItem[] temp2 = availableIocsTree.getTree().getItems();
-    			
-    			while (!temp2[index].getText().equals(temp.getText())) {
-    				index++;
-    			}
-    	
-    			while (!temp.getItems()[index2].getText(1).equals(selected.getText(1))) {
-    				index2++;
-    			}
-            }
-			
-            Object[] expandedObjects = availableIocsTree.getExpandedElements();
-            ArrayList<String> descriptionsToExpand = new ArrayList<String>();
-            for (Object list :expandedObjects) {
-            	if (list instanceof ArrayList<?>) {
-                    ArrayList<?> expandedList = ArrayList.class.cast(list);
-                    IocState firstInList = IocState.class.cast(expandedList.get(0));
-                    descriptionsToExpand.add(firstInList.getDescription());
-            	}
-            }
-            
+			int[] selectedIndex = getCurrentSelection();
+            ArrayList<String> elementsToExpand = getElementsToExpand();
             
             Collection<IocState> iocs = control.iocs().getValue();
 			availableIocs.clear();
 			availableIocs = updateHashtable(iocs);
 			availableIocsTree.setInput(availableIocs);
-            for (String label: availableIocs.keySet()) {
-            	ArrayList<IocState> iocList = availableIocs.get(label);
-            	for (IocState ioc: iocList) {
-            		availableIocsTree.update(ioc, null);
-            	}
-            } 
-            Object[] newExpandedOjects = new Object[expandedObjects.length];
-            for (int i = 0; i < descriptionsToExpand.size(); i++) {
-            	newExpandedOjects[i] = availableIocs.get(descriptionsToExpand.get(i));
-            }
-            availableIocsTree.setExpandedElements(newExpandedOjects);
-            TreeItem parent = availableIocsTree.getTree().getItem(index);
-            availableIocsTree.getTree().setSelection(parent.getItem(index2));	
+            
+            setElementsToExpand(elementsToExpand);
+            TreeItem parent = availableIocsTree.getTree().getItem(selectedIndex[0]);
+            availableIocsTree.getTree().setSelection(parent.getItem(selectedIndex[1]));	
 		}
+	}
+
+	private void setElementsToExpand(ArrayList<String> elementsToExpand) {
+		Object[] newExpandedOjects = new Object[elementsToExpand.size()];
+		for (int i = 0; i < elementsToExpand.size(); i++) {
+			newExpandedOjects[i] = availableIocs.get(elementsToExpand.get(i));
+		}
+		
+		availableIocsTree.setExpandedElements(newExpandedOjects);
+	}
+
+	private ArrayList<String> getElementsToExpand() {
+		ArrayList<String> descriptionsToExpand = new ArrayList<String>();
+		for (Object list :availableIocsTree.getExpandedElements()) {
+			if (list instanceof ArrayList<?>) {
+		        ArrayList<?> expandedList = ArrayList.class.cast(list);
+		        IocState firstInList = IocState.class.cast(expandedList.get(0));
+		        descriptionsToExpand.add(firstInList.getDescription());
+			}
+		}
+		return descriptionsToExpand;
+	}
+
+	private int[] getCurrentSelection() {
+		int[] selectedIndex = {0, 0};
+		TreeItem selected = availableIocsTree.getTree().getSelection()[0];
+		if (selected != null) {
+			TreeItem selectedParent = selected.getParentItem();
+			TreeItem[] treeItemList = availableIocsTree.getTree().getItems(); 			
+			selectedIndex[0] = treeListIndex(selectedParent, treeItemList, 0);
+			selectedIndex[1] = treeListIndex(selected, selectedParent.getItems(), 1);
+		}
+		return selectedIndex;
+	}
+
+	private int treeListIndex(TreeItem item, TreeItem[] list, int textField) {
+		for (int i = 0; i < list.length; i++) {
+			if (list[i].getText(textField).equals(item.getText(textField))) {
+				return i;
+			}
+		}
+		return 0;
 	}
 }
