@@ -48,7 +48,7 @@ public class IocControlDialog extends TitleAreaDialog {
 	private static final String MAIN_TITLE = "Control IOCs";
 	private static final String SUB_TITLE = "Start or stop IOCs";
 	
-	private static final Point INITIAL_SIZE = new Point(500, 600);
+	private static final Point INITIAL_SIZE = new Point(800, 600);
 	
 	private final IocControl control;
 	/**

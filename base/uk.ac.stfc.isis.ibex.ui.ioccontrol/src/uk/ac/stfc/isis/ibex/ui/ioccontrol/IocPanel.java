@@ -44,7 +44,7 @@ import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCConfigProvider;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCContentProvider;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCLabelProvider;
-import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCNameProvider;
+import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCList;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCStatusProvider;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCViewerComparator;
 
@@ -57,8 +57,8 @@ public class IocPanel extends Composite {
 	private TreeViewer availableIocsTree;
     private IocButtonPanel buttons;
 	private IocControl control;
-	private Hashtable<String, ArrayList<IocState>> availableIocs;
-	private static final int COLUMN_WIDTH = 100;
+	private Hashtable<String, IOCList> availableIocs;
+	private static final int COLUMN_WIDTH = 60;
 	
 	private PropertyChangeListener updateTable = new PropertyChangeListener() {	
 		@Override
@@ -87,36 +87,29 @@ public class IocPanel extends Composite {
         availableIocsTree = new TreeViewer(this, SWT.FULL_SELECTION);
         availableIocsTree.setContentProvider(new IOCContentProvider());
         availableIocsTree.setComparator(new IOCViewerComparator(Comparator.naturalOrder()));
-        TreeViewerColumn mainColumn = new TreeViewerColumn(availableIocsTree, SWT.NONE);
+        TreeViewerColumn mainColumn = new TreeViewerColumn(availableIocsTree, SWT.LEFT);
         mainColumn.getColumn().setText("Ioc");
-        mainColumn.getColumn().setWidth(COLUMN_WIDTH);
         mainColumn.setLabelProvider(new IOCLabelProvider());
         
-        TreeViewerColumn nameColumn = new TreeViewerColumn(availableIocsTree, SWT.NONE);
-        nameColumn.getColumn().setText("Name");
-        nameColumn.getColumn().setWidth(COLUMN_WIDTH);
-        nameColumn.getColumn().setAlignment(SWT.RIGHT);
-        nameColumn.setLabelProvider(new IOCNameProvider());
-        
-        TreeViewerColumn statusColumn = new TreeViewerColumn(availableIocsTree, SWT.NONE);
+        TreeViewerColumn statusColumn = new TreeViewerColumn(availableIocsTree, SWT.LEFT);
         statusColumn.getColumn().setText("Name");
         statusColumn.getColumn().setWidth(COLUMN_WIDTH);
         statusColumn.getColumn().setAlignment(SWT.RIGHT);
         statusColumn.setLabelProvider(new IOCStatusProvider());
         
-        TreeViewerColumn configColumn = new TreeViewerColumn(availableIocsTree, SWT.NONE);
+        TreeViewerColumn configColumn = new TreeViewerColumn(availableIocsTree, SWT.LEFT);
         configColumn.getColumn().setText("Name");
         configColumn.getColumn().setWidth(COLUMN_WIDTH);
         configColumn.getColumn().setAlignment(SWT.RIGHT);
         configColumn.setLabelProvider(new IOCConfigProvider());
         
         Collection<IocState> rows = control.iocs().getValue();
-        availableIocs = new Hashtable<String, ArrayList<IocState>>();
+        availableIocs = new Hashtable<String, IOCList>();
         availableIocs = updateHashtable(rows);
-    	
     	
     	availableIocsTree.setInput(availableIocs);
     	availableIocsTree.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+    	mainColumn.getColumn().pack();
 		
 		this.control = control;
 		control.iocs().addPropertyChangeListener(updateTable, true);
@@ -139,21 +132,29 @@ public class IocPanel extends Composite {
 		buttons.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 	}
 
-	private Hashtable<String, ArrayList<IocState>> updateHashtable(Collection<IocState> rows) {
+	private Hashtable<String, IOCList> updateHashtable(Collection<IocState> rows) {
     	String description = "";
+    	availableIocs.put("Running", new IOCList("Running"));
+    	availableIocs.put("In Config", new IOCList("In Config"));
     	for (IocState ioc : rows) {
     		description = ioc.getDescription();
     		if (!availableIocs.containsKey(description)) {
-    			availableIocs.put(description, new ArrayList<IocState>());
+    			availableIocs.put(description, new IOCList(description));
     		}
     		availableIocs.get(description).add(ioc);
+    		if (ioc.getIsRunning()) {
+    			availableIocs.get("Running").add(ioc);
+    		}
+    		if (ioc.getInCurrentConfig()) {
+    			availableIocs.get("In Config").add(ioc);
+    		}
     	}
     	for (String key: availableIocs.keySet()) {
     		availableIocs.get(key).sort(Comparator.naturalOrder());
     	}
-    	
 		return availableIocs;
 	}
+	
 	
 	@Override
 	public void dispose() {
@@ -172,8 +173,11 @@ public class IocPanel extends Composite {
 			availableIocsTree.setInput(availableIocs);
             
             setElementsToExpand(elementsToExpand);
-            TreeItem parent = availableIocsTree.getTree().getItem(selectedIndex[0]);
-            availableIocsTree.getTree().setSelection(parent.getItem(selectedIndex[1]));	
+            if (selectedIndex[0] != -1 && selectedIndex[1] != -1) {
+            	TreeItem parent = availableIocsTree.getTree().getItem(selectedIndex[0]);
+                availableIocsTree.getTree().setSelection(parent.getItem(selectedIndex[1]));	
+            }
+   
 		}
 	}
 
@@ -197,15 +201,17 @@ public class IocPanel extends Composite {
 		}
 		return descriptionsToExpand;
 	}
-
+	
 	private int[] getCurrentSelection() {
-		int[] selectedIndex = {0, 0};
+		int[] selectedIndex = {-1, -1};
 		TreeItem selected = availableIocsTree.getTree().getSelection()[0];
 		if (selected != null) {
 			TreeItem selectedParent = selected.getParentItem();
-			TreeItem[] treeItemList = availableIocsTree.getTree().getItems(); 			
-			selectedIndex[0] = treeListIndex(selectedParent, treeItemList, 0);
-			selectedIndex[1] = treeListIndex(selected, selectedParent.getItems(), 1);
+			if (selectedParent != null) {
+				TreeItem[] treeItemList = availableIocsTree.getTree().getItems(); 			
+				selectedIndex[0] = treeListIndex(selectedParent, treeItemList, 0);
+				selectedIndex[1] = treeListIndex(selected, selectedParent.getItems(), 1);
+			}
 		}
 		return selectedIndex;
 	}

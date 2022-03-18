@@ -55,7 +55,7 @@ public class IOCContentProvider implements ITreeContentProvider {
 
 	@Override
 	public Object[] getChildren(Object parentElement) {
-		if (parentElement instanceof ArrayList) {
+		if (parentElement instanceof IOCList) {
 			return ArrayList.class.cast(parentElement).toArray();
 		} else {
 			Object[] empty = {};

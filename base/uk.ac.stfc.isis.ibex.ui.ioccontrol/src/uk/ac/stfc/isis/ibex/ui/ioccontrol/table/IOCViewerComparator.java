@@ -29,7 +29,6 @@
  */
 package uk.ac.stfc.isis.ibex.ui.ioccontrol.table;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 
 import org.eclipse.jface.viewers.ContentViewer;
@@ -52,7 +51,18 @@ public class IOCViewerComparator extends ViewerComparator {
 	public int compare(Viewer viewer, Object e1, Object e2) {
 		String name1 = this.getLabel(viewer, e1);
 		String name2 = this.getLabel(viewer, e2);
-
+		if (name1 == "Running") {
+			return -1;
+		}
+		if (name2 == "Running") {
+			return 1;
+		}
+		if (name1 == "In Config") {
+			return -1;
+		}
+		if (name2 == "In Config") {
+			return 1;
+		}
 		// use the comparator to compare the strings
 		return getComparator().compare(name1.toLowerCase(), name2.toLowerCase());
 	}
@@ -62,8 +72,8 @@ public class IOCViewerComparator extends ViewerComparator {
 		if (viewer == null || !(viewer instanceof ContentViewer)) {
 			name1 = e1.toString();
 		} else {
-			if (e1 instanceof ArrayList) {
-				name1 = IocState.class.cast(ArrayList.class.cast(e1).get(0)).getDescription();
+			if (e1 instanceof IOCList) {
+				name1 = IOCList.class.cast(e1).name;
 				
 			} else {
 				name1 = IocState.class.cast(e1).getName();

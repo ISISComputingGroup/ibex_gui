@@ -29,8 +29,6 @@
  */
 package uk.ac.stfc.isis.ibex.ui.ioccontrol.table;
 
-import java.util.ArrayList;
-
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.swt.graphics.Image;
 
@@ -40,6 +38,7 @@ import uk.ac.stfc.isis.ibex.configserver.IocState;
  * Provides labels for components within the ioc editor.
  */
 public class IOCLabelProvider extends ColumnLabelProvider {
+	private static final int LABEL_SIZE = 20;
 	@Override
 	public Image getImage(Object element) {
 		return null;
@@ -47,12 +46,21 @@ public class IOCLabelProvider extends ColumnLabelProvider {
 
 	@Override
 	public String getText(Object element) {
-		if (element instanceof ArrayList<?>) {
+		if (element instanceof IOCList) {
 			// Excessive casting to prevent checkstyle warning
-			IocState ioc = IocState.class.cast((ArrayList.class.cast(element).get(0)));
-			return ioc.getDescription();
+			IOCList list = IOCList.class.cast(element);
+			String name = list.name;
+			if (name.length() > LABEL_SIZE) {
+				int lastSpace = name.lastIndexOf(' ', LABEL_SIZE);
+				String firstSplit = name.substring(0, lastSpace);
+				String secondSplit = name.substring(lastSpace);
+				name = firstSplit + "\n" + secondSplit;
+			}
+			return list.name;
+		} else {
+			IocState ioc = IocState.class.cast(element);
+			return ioc.getName();
 		}
-		return null;
 	}
 
 	@Override
