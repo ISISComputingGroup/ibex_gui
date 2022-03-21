@@ -35,6 +35,8 @@ import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -125,7 +127,12 @@ public class ExperimentSetup {
                 }
             }
         });
-        btnSendChanges.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+        GridData gdBtnSendChanges = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+        gdBtnSendChanges.heightHint = 50;
+        btnSendChanges.setLayoutData(gdBtnSendChanges);
+        String defaultFont = btnSendChanges.getFont().getFontData()[0].getName();
+        Font biggerFont = new Font(btnSendChanges.getDisplay(), new FontData(defaultFont, 14, SWT.BOLD));
+        btnSendChanges.setFont(biggerFont);
         btnSendChanges.setText("Apply Changes");
         
 		
