@@ -2704,7 +2704,7 @@
         </macros>
       </value>
     </entry>
-     <entry>
+    <entry>
       <key>WISH Jaws</key>
       <value>
         <type>JAWS</type>
@@ -2767,6 +2767,21 @@
             <name>IOC_NAME</name>
             <description>The weeder PV prefix (e.g. WEEDER_01)</description>
             <default>WEEDER_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>B17TMAG</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>b17tmag.opi</path>
+        <description>The OPI for the B17TMag</description>
+        <macros>
+          <macro>
+            <name>B17TMAG</name>
+            <description>The B17TMag PV prefix (e.g. B17TMAG_01)</description>
           </macro>
         </macros>
       </value>
