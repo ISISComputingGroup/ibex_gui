@@ -25,10 +25,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Hashtable;
-
-
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
@@ -156,15 +155,13 @@ public class IocPanel extends Composite {
 						return;
 					}
 				} 
-				buttons.setIoc(null);
-				
+				buttons.setIoc(null);	
 			}
 		});
-		
-
         buttons = new IocButtonPanel(this, SWT.NONE, control);
 		buttons.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 	}
+	
 
 	private Hashtable<String, IOCList> updateHashtable(Collection<IocState> rows) {
     	String description = "";
@@ -187,7 +184,7 @@ public class IocPanel extends Composite {
     		availableIocs.get(key).sort(Comparator.naturalOrder());
     	}
 		return availableIocs;
-	}
+	}	
 	
 	
 	@Override
@@ -196,6 +193,7 @@ public class IocPanel extends Composite {
 		control.iocs().removePropertyChangeListener(updateTable);
 	}
  
+	
 	private void setIocs() {		 
 		if (control.iocs().isSet()) {
 			int[] selectedIndex = getCurrentSelection();
@@ -209,21 +207,26 @@ public class IocPanel extends Composite {
             setElementsToExpand(elementsToExpand);
             if (selectedIndex[0] != -1 && selectedIndex[1] != -1) {
             	TreeItem parent = availableIocsTree.getTree().getItem(selectedIndex[0]);
-                availableIocsTree.getTree().setSelection(parent.getItem(selectedIndex[1]));	
+            	if (parent.getItemCount() < selectedIndex[1]) {
+            		availableIocsTree.getTree().setSelection(parent.getItem(selectedIndex[1]));	
+            	} else {
+            		availableIocsTree.getTree().setSelection(parent);
+            	}
             }
-   
 		}
 	}
 
+	
 	private void setElementsToExpand(ArrayList<String> elementsToExpand) {
-		Object[] newExpandedOjects = new Object[elementsToExpand.size()];
-		for (int i = 0; i < elementsToExpand.size(); i++) {
-			newExpandedOjects[i] = availableIocs.get(elementsToExpand.get(i));
+		ArrayList<TreePath> paths = new ArrayList<TreePath>();
+		for (String topLevel :elementsToExpand) {
+			IOCList[] iocArray = {availableIocs.get(topLevel)};
+			paths.add(new TreePath(iocArray));
 		}
-		
-		availableIocsTree.setExpandedElements(newExpandedOjects);
+		availableIocsTree.setExpandedTreePaths(paths.toArray(new TreePath[0]));
 	}
 
+	
 	private ArrayList<String> getElementsToExpand() {
 		ArrayList<String> descriptionsToExpand = new ArrayList<String>();
 		for (Object list :availableIocsTree.getExpandedElements()) {
@@ -233,12 +236,27 @@ public class IocPanel extends Composite {
 		        descriptionsToExpand.add(firstInList.getDescription());
 			}
 		}
+		// These two if statements make sure that items that are only expanded in Running or In Config don't
+		// Get get expanded both there, and in their description.
+		if (availableIocsTree.getTree().getItem(0).getExpanded()) {
+			descriptionsToExpand.remove(0);
+		}
+		if (availableIocsTree.getTree().getItem(1).getExpanded()) {
+			descriptionsToExpand.remove(0);
+		}
+		descriptionsToExpand.add("Running");
+		descriptionsToExpand.add("In Config");
 		return descriptionsToExpand;
 	}
 	
 	private int[] getCurrentSelection() {
 		int[] selectedIndex = {-1, -1};
-		TreeItem selected = availableIocsTree.getTree().getSelection()[0];
+		TreeItem selected = null;
+		
+		if (availableIocsTree.getTree().getSelection().length > 0) {
+			selected = availableIocsTree.getTree().getSelection()[0];
+		}
+
 		if (selected != null) {
 			TreeItem selectedParent = selected.getParentItem();
 			if (selectedParent != null) {
