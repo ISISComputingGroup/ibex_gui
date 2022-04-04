@@ -23,40 +23,13 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 public abstract class AbstractGenerator extends ModelObject {
 	
 	/**
-	 * The property to fire a change of when the validity error messages (Map<Integer, String>)
-	 *  have been retrieved. This will get caught by the GeneratorContext and dealt with up the chain.
-	 * Fire the change with the new value as the retrieved value.
-	 */
-	protected static final String VALIDITY_ERROR_MESSAGE_PROPERTY = "validity error messages";
-	
-	/**
-	 * The property to fire a change of when the validity of the script generator content is
-	 *  retrieved (bool). This will get caught by the GeneratorContext and dealt with up the chain.
-	 * Fire the change with the new value as the retrieved value.
-	 */
-	protected static final String PARAM_VALIDITY_PROPERTY = "parameter validity";
-	
-    /**
-     * The property to fire a change of when the time estimate of the script generator content is
-     *  retrieved (bool). This will get caught by the GeneratorContext and dealt with up the chain.
-     * Fire the change with the new value as the retrieved value.
-     */
-	protected static final String TIME_ESTIMATE_PROPERTY = "time estimate";
-	
-	/**
-	 * The property to fire a change of when the generated script is retrieved (String).
-	 * This will get caught by the GeneratorContext and dealt with up the chain.
-	 * Fire the change with the new value as the retrieved value.
-	 */
-	protected static final String GENERATED_SCRIPT_PROPERTY = "generated script";
-	
-	/**
 	 * Refresh the generated script property with a script (String).
 	 * 
 	 * @param scriptGenContent The script generator content to produce the script from.
 	 * @param scriptDefinition The instrument script definition to generate the script with.
 	 * @param currentlyLoadedDataFileContent the data file that user has currently loaded to generate script
-	 * @return 
+	 * @param globalParams The global parameters to generate the script with.
+	 * @return An optional ID of the script that will be generated, the ID can be used to get the generated script once generated.
 	 * @throws ExecutionException A failure to execute the call to generate a script
 	 * @throws InterruptedException The call to generate a script was interrupted
 	 * @return An ID for the generated script.
@@ -68,6 +41,7 @@ public abstract class AbstractGenerator extends ModelObject {
 	 * 
 	 * @param scriptGenContent The contents of the script generator to validate.
 	 * @param scriptDefinition The instrument script definition to validate the script against.
+	 * @param globalParams The global parameters to check parameter validity.
 	 * @throws ExecutionException A failure to execute the call to generate a script
 	 * @throws InterruptedException The call to generate a script was interrupted
 	 */
@@ -78,6 +52,7 @@ public abstract class AbstractGenerator extends ModelObject {
 	 * 
 	 * @param scriptGenContent The contents of the script generator to check for validity errors with.
 	 * @param scriptDefinition The instrument script definition to validate the script against.
+	 * @param globalParams The global parameters to check parameter validity.
 	 * @throws ExecutionException A failure to execute the call to generate a script
 	 * @throws InterruptedException The call to generate a script was interrupted
 	 */
@@ -88,6 +63,7 @@ public abstract class AbstractGenerator extends ModelObject {
      * 
      * @param scriptGenContent The contents of the script generator
      * @param scriptDefinition The instrument script definition
+     * @param globalParams The global parameters to refresh time estimation with.
      * @throws ExecutionException A failure to execute the call to generate a script
      * @throws InterruptedException The call to generate a script was interrupted
      */

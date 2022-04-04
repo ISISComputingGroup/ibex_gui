@@ -49,7 +49,7 @@
     <foreground_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </foreground_color>
-    <height>534</height>
+    <height>625</height>
     <horizontal_tabs>true</horizontal_tabs>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -206,7 +206,7 @@
     <tooltip>Disabled tabs are because Eurotherm is not active in IOC.</tooltip>
     <visible>true</visible>
     <widget_type>Tabbed Container</widget_type>
-    <width>793</width>
+    <width>794</width>
     <wuid>4fbad31a:1436c3e166f:-6fb0</wuid>
     <x>6</x>
     <y>84</y>
@@ -228,7 +228,7 @@
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>500</height>
+      <height>596</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -244,9 +244,9 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>791</width>
+      <width>792</width>
       <wuid>4fbad31a:1436c3e166f:-6faf</wuid>
       <x>1</x>
       <y>1</y>
@@ -288,7 +288,7 @@
         <widget_type>Linking Container</widget_type>
         <width>776</width>
         <wuid>6892be24:156313795e2:-7d1e</wuid>
-        <x>-36</x>
+        <x>0</x>
         <y>0</y>
       </widget>
     </widget>
@@ -310,7 +310,7 @@
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>500</height>
+      <height>596</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -328,7 +328,7 @@
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>791</width>
+      <width>792</width>
       <wuid>4fbad31a:1436c3e166f:-6fae</wuid>
       <x>1</x>
       <y>1</y>
@@ -392,7 +392,7 @@
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>500</height>
+      <height>596</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -410,7 +410,7 @@
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>791</width>
+      <width>792</width>
       <wuid>4fbad31a:1436c3e166f:-6fad</wuid>
       <x>1</x>
       <y>1</y>
@@ -474,7 +474,7 @@
       <foreground_color>
         <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
       </foreground_color>
-      <height>500</height>
+      <height>596</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -492,7 +492,7 @@
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>791</width>
+      <width>792</width>
       <wuid>4fbad31a:1436c3e166f:-6fac</wuid>
       <x>1</x>
       <y>1</y>
@@ -556,7 +556,7 @@
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
-      <height>500</height>
+      <height>596</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -574,7 +574,7 @@
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>791</width>
+      <width>792</width>
       <wuid>-53236bab:15635d9faea:-7edb</wuid>
       <x>1</x>
       <y>1</y>
@@ -638,7 +638,7 @@
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
-      <height>500</height>
+      <height>596</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -656,7 +656,7 @@
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>791</width>
+      <width>792</width>
       <wuid>-53236bab:15635d9faea:-7eda</wuid>
       <x>1</x>
       <y>1</y>
@@ -720,7 +720,7 @@
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
-      <height>500</height>
+      <height>596</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -738,7 +738,7 @@
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>791</width>
+      <width>792</width>
       <wuid>-53236bab:15635d9faea:-7ed9</wuid>
       <x>1</x>
       <y>1</y>
@@ -802,7 +802,7 @@
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
-      <height>500</height>
+      <height>596</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -818,9 +818,9 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>791</width>
+      <width>792</width>
       <wuid>-620d3863:17acd4438eb:-7b9f</wuid>
       <x>1</x>
       <y>1</y>

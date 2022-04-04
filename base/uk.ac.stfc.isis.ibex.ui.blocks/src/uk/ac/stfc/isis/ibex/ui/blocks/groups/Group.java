@@ -21,24 +21,29 @@ package uk.ac.stfc.isis.ibex.ui.blocks.groups;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ControlAdapter;
-import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
+import uk.ac.stfc.isis.ibex.epics.pv.PvState;
 
 /**
  * Provides the display of the groups, which contain the selected blocks. Allows
@@ -48,14 +53,21 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 @SuppressWarnings("checkstyle:magicnumber")
 public class Group extends Composite {
 	private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
-	private static final int TITLE_HEIGHT = 30;
-	private static final int ROW_HEIGHT = 24;
-	private Label title;
+	private static final int TITLE_HEIGHT = 65;
+	private static final int ROW_HEIGHT = 20;
+	private static final int ROW_VERTICAL_SPACING = 5;
+	
+	private Composite titleContainer;
+	private Button title;
 	private Composite groupBlocks;
 
-	private int numColumns;
-	private int numRows;
+	private int numColumns = 1;
+	private int numRows = 1;
+	private boolean collapsed = false;
 
+	private List<PvState> rowStatuses;
+	private BlockStatusBorderColourConverter stateConverter = new BlockStatusBorderColourConverter();
+	
 	private List<Control> rows;
 	private List<DisplayBlock> blocksList;
 	private GridLayout glGroup;
@@ -85,38 +97,78 @@ public class Group extends Composite {
 		}
 
 		rows = new ArrayList<Control>();
+		rowStatuses = new ArrayList<PvState>();
+		for (int i = 0; i < blocksList.size(); i++) {
+			rowStatuses.add(PvState.DEFAULT);
+		}
 
 		// For each block we need three columns in the grid layout, one for
 		// name, one for value, one for
 		// run control status, and for every column but the last we need a
 		// divider label column
 		GridLayout layout = new GridLayout(1, false);
-		layout.verticalSpacing = 5;
+		layout.verticalSpacing = ROW_VERTICAL_SPACING;
 
 		this.setLayout(layout);
 		this.setBackground(WHITE);
-
-		// In the first column put the title in
-		title = labelMaker(this, SWT.NONE, group.name(), "", null);
-		Font titleFont = getEditedLabelFont(title, 10, SWT.BOLD);
-		title.setFont(titleFont);
+		
+		titleContainer = new Composite(this, SWT.NONE);
+		GridLayout titleContainerLayout = new GridLayout(1, false);
+		titleContainerLayout.marginWidth = 2;
+		titleContainerLayout.marginHeight = 2;
+		titleContainerLayout.verticalSpacing = 0;
+		titleContainerLayout.horizontalSpacing = 0;
+		titleContainer.setLayout(titleContainerLayout);
+		
+		title = new Button(titleContainer, SWT.TOGGLE);
+		title.setText("   " + group.name());
+		title.setImage(ResourceManager.getPluginImage(
+				"uk.ac.stfc.isis.ibex.ui.blocks", "icons/minus.png"));
+		title.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Button source = (Button) e.getSource();
+				if (source.getSelection()) {
+					groupBlocks.setVisible(false);
+					((GridData) groupBlocks.getLayoutData()).exclude = true;
+					source.setImage(ResourceManager.getPluginImage(
+							"uk.ac.stfc.isis.ibex.ui.blocks", "icons/plus.png"));
+					collapsed = true;
+				} else {
+					groupBlocks.setVisible(true);
+					((GridData) groupBlocks.getLayoutData()).exclude = false;
+					source.setImage(ResourceManager.getPluginImage(
+							"uk.ac.stfc.isis.ibex.ui.blocks", "icons/minus.png"));
+					collapsed = false;
+				}
+				panel.notifyListeners(SWT.Resize, new Event());
+			}
+		});
 
 		groupBlocks = new Composite(this, SWT.NONE);
 
-		// Loop over the rows and columns. The GridLayout is filled with labels
-		// across rows first, then moving on to
-		// the next column. So blank labels need to be inserted so that columns
-		// are always filled.
 		for (int i = 0; i < blocksList.size(); i++) {
 
 			DisplayBlock currentBlock = blocksList.get(i);
-
-			GroupRow row = new GroupRow(groupBlocks, SWT.NONE, currentBlock);
-			rows.add(row);
+			GroupRow row = new GroupRow(groupBlocks, SWT.NONE, currentBlock, i);
 
 			GroupsMenu fullMenu = new GroupsMenu(panel, new BlocksMenu(currentBlock));
 			row.setMenu(fullMenu.get());
+			row.getValueContainer().addPaintListener(new PaintListener() {
+				@Override
+				public void paintControl(PaintEvent e) {
+					Composite container = (Composite) e.widget;
+					GroupRow row = (GroupRow) container.getParent();
+					Group group = (Group) (row.getParent().getParent());
+					rowStatuses.set(row.getRowIndex(), row.getBlockStatus());
+					group.reloadTitleStatus();
+				}
+			});
+			
+			rows.add(row);
+			
 		}
+		
 		// Add enough spacers to fill all empty spaces in the last column. These
 		// are then simply hidden / unhidden as needed to prevent having to
 		// add/remove elements to the layout post initialisation
@@ -127,39 +179,105 @@ public class Group extends Composite {
 			spacer.setLayoutData(data);
 			rows.add(spacer);
 		}
-		glGroup = new GridLayout(computeNumColumns(this.getClientArea().height), false);
+		
+		glGroup = new GridLayout(1, false);
 		glGroup.horizontalSpacing = 20;
 		groupBlocks.setLayout(glGroup);
 		groupBlocks.setBackground(WHITE);
 		groupBlocks.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		
+		relayout(this.getClientArea().height);
+	}
 
-		this.addControlListener(new ControlAdapter() {
-			public void controlResized(ControlEvent e) {
-				Composite source = (Composite) e.getSource();
-				relayout(source);
+	/**
+	 * Changes title's border colour to match block with the most severe status in the group.
+	 */
+	protected void reloadTitleStatus() {
+		PvState mostSevereState = PvState.DEFAULT;
+		for (PvState state : rowStatuses) {
+			if (state.compareTo(mostSevereState) > 0) {
+				mostSevereState = state;
+			}
+		}
+		titleContainer.setBackground(stateConverter.convert(mostSevereState));
+	}
+
+	/**
+	 * Rearranges the layout of elements in the group according to the new size of the composite.
+	 * @param groupHeight maximum allowed height of the group composite
+	 */
+	public void relayout(int groupHeight) {
+		glGroup.numColumns = computeNumColumns(groupHeight);
+		reorderRows();
+		hideSpacers();
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				if (!isDisposed() && !getParent().isDisposed()) {
+					getParent().getParent().layout();
+					getParent().getParent().pack();
+				}
 			}
 		});
 	}
 
 	/**
-	 * Rearranges the layout of elements in the group according to the new size of the composite.
-	 * 
-	 * @param group The group which has been resized
+	 * Reorganises the rows to stack vertically first, rather than SWT default which is horizontally first.
 	 */
-	private void relayout(final Composite group) {
-		Rectangle r = group.getClientArea();
-		glGroup.numColumns = computeNumColumns(r.height);
-		hideSpacers();
-		reorderRows();
-		Display.getDefault().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				if (!group.isDisposed() && !group.getParent().isDisposed()) {
-					group.getParent().layout();
-					group.getParent().pack();
-				}
+	private void reorderRows() {	
+		// Create new ordering list for rows
+		ArrayList<Integer> indexes = new  ArrayList<Integer>();
+		int currCol = 0;
+		int currRow = 0;
+		for (int i = 0; i < numColumns * numRows; i++) {
+			if (currCol >= numColumns) {
+				currCol = 0;
+				currRow += 1;
 			}
-		});
+			indexes.add(currRow + currCol * numRows);
+			currCol += 1;
+		}
+		
+		// Apply the list
+		Control prevRow = rows.get(0);
+		Control nextRow;
+		for (int i : indexes) {
+			Optional<Control> row = getRow(i);
+			if (row.isPresent()) {
+				nextRow = row.get();
+				nextRow.moveBelow(prevRow);
+				GridData data = (GridData) nextRow.getLayoutData();
+				data.exclude = false;
+				prevRow = nextRow;
+			}
+		}
+	}
+	
+	/**
+	 * Hides unused spacers.
+	 */
+	private void hideSpacers() {
+		int spacersIndex = numRows * numColumns;
+		if (numColumns == 1) {
+			spacersIndex = blocksList.size();
+		}
+		for (int i = spacersIndex; i < rows.size(); i++) {
+			Control spacer = rows.get(i);
+			GridData data = (GridData) spacer.getLayoutData();
+			data.exclude = true;
+		}
+	}
+
+	/**
+	 * Helper method for optionally getting element in row list.
+	 * @param index Where in the list to look for element
+	 * @return Optional of found element or empty optional
+	 */
+	private Optional<Control> getRow(int index) {
+		if (index >= 0 && index < rows.size()) {
+			return Optional.of(rows.get(index));
+		}
+		return Optional.empty();
 	}
 
 	/**
@@ -169,73 +287,22 @@ public class Group extends Composite {
 	 * @return The required number of columns
 	 */
 	private int computeNumColumns(int height) {
-		numRows = Math.max((height - TITLE_HEIGHT) / ROW_HEIGHT, 1);
-		numColumns = (blocksList.size() / numRows) + 1;
+		numRows = Math.max((height - TITLE_HEIGHT + ROW_VERTICAL_SPACING) / (ROW_HEIGHT + ROW_VERTICAL_SPACING), 3);
+		numColumns = (int) Math.ceil((float) blocksList.size() / (float) numRows);
 		return numColumns;
 	}
 	
 	/**
-	 * Excludes / includes as many spacers as needed for layout considerations.
+	 * Calculates desired height of the group widget if all blocks were to be in one column.
+	 * @return total height of the group
 	 */
-	private void hideSpacers() {
-		int emptyCells = numRows * numColumns - blocksList.size();
-		for (int i = blocksList.size(); i < rows.size(); i++) {
-			GridData data = (GridData) rows.get(i).getLayoutData();
-			if (i < blocksList.size() + emptyCells - 1) {
-				data.exclude = false;
-			} else {
-				data.exclude = true;
-			}
+	public int getHeight() {
+		int rowHeight = ROW_HEIGHT + ROW_VERTICAL_SPACING;
+		int titleHeight = TITLE_HEIGHT - ROW_VERTICAL_SPACING * 3;
+		if (collapsed) {
+			return titleHeight;
 		}
-	}
-
-	/**
-	 * Goes through group cells in order and finds the right block (or a spacer)
-	 * to be moved there.
-	 */
-	private void reorderRows() {
-		int maxRow = Math.min(numRows, rows.size());
-		for (int row = 0; row < maxRow; row++) {
-			for (int col = 0; col < numColumns; col++) {
-				int pos = row + (numRows * col);
-				Control prevElement = null;
-				// First element never moves
-				if (pos == 0) {
-					continue;
-				}
-				if (col == 0) {
-					// last element of previous row
-					prevElement = rows.get((numColumns - 1) * numRows + (row - 1));
-				} else {
-					prevElement = rows.get(pos - numRows);
-				}
-				rows.get(pos).moveBelow(prevElement);
-			}
-		}
-	}
-
-	private Font getEditedLabelFont(Label label, int size, int style) {
-		final String currentFontName = label.getFont().getFontData()[0].getName();
-		return SWTResourceManager.getFont(currentFontName, size, style);
-	}
-
-	private Label labelMaker(Composite composite, int style, String text, String toolTip, Font font) {
-		Label label = new Label(composite, style);
-		if (text != null) {
-			label.setText(text);
-		}
-
-		label.setBackground(WHITE);
-
-		if (toolTip != null) {
-			label.setToolTipText(toolTip);
-		}
-
-		if (font != null) {
-			label.setFont(font);
-		}
-
-		return label;
+		return blocksList.size() * rowHeight + titleHeight;
 	}
 
 	@Override

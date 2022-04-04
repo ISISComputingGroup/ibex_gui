@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands;
 import java.io.IOException;
 
 import org.eclipse.e4.core.di.annotations.CanExecute;
+import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MessageBox;
@@ -33,6 +34,7 @@ import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticWritable;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.EditSynopticDialog;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.ViewSynopticDialog;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 
 /**
@@ -40,6 +42,8 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
  * 
  */
 public abstract class SynopticEditorHandler {
+	protected static final String PLUGIN = "uk.ac.stfc.isis.ibex.ui.synoptic";
+	protected static final String CLASS_URI = "bundleclass://uk.ac.stfc.isis.ibex.ui.synoptic.editor/uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.EditSynopticHandler";
 
     /** Synoptic model. */
     protected static final Synoptic SYNOPTIC = Synoptic.getInstance();
@@ -50,6 +54,12 @@ public abstract class SynopticEditorHandler {
     /** can execute the handler */
     private boolean canExecute;
 
+    
+    
+    protected void setCanExecute(boolean canExecute) {
+    	this.canExecute = canExecute;
+    }
+    
     /**
      * Constructor.
      */
@@ -57,7 +67,7 @@ public abstract class SynopticEditorHandler {
 	SYNOPTIC.delete().addOnCanWriteChangeListener(canWriteListener);
     }
     
-    private OnCanWriteChangeListener canWriteListener = canWrite -> canExecute = canWrite;
+    private OnCanWriteChangeListener canWriteListener = canWrite -> {canExecute = canWrite;};
 
     /**
      * 
@@ -65,7 +75,7 @@ public abstract class SynopticEditorHandler {
      */
     @CanExecute
     public boolean canExecute() {
-	return canExecute;
+    	return canExecute;
     }
 
     /**
@@ -85,10 +95,18 @@ public abstract class SynopticEditorHandler {
     protected void openDialog(Shell shell, SynopticDescription synoptic, String title, boolean isBlank) {
 	SynopticViewModel viewModel = new SynopticViewModel(synoptic);
 	String SynopticName = (viewModel.getSynoptic().name() == null) ? "a new" : viewModel.getSynoptic().name();
-	String subtitle = "Editing " + SynopticName + " synoptic";
-	EditSynopticDialog editDialog =
-		new EditSynopticDialog(shell, title, subtitle, isBlank, viewModel);
-	if (editDialog.open() == Window.OK) {
+	String subtitle = (writer.canWrite() ? "Editing " : "Viewing ") + SynopticName + " synoptic";
+	TitleAreaDialog dialog;
+	
+	if (writer.canWrite()) {
+		dialog =
+				new EditSynopticDialog(shell, title, subtitle, isBlank, viewModel);
+	} else {
+		dialog =
+				new ViewSynopticDialog(shell, title, subtitle, isBlank, viewModel);
+	}
+	
+	if (dialog.open() == Window.OK) {
 	    try {
 		writer.write(viewModel.getSynoptic());
 	    } catch (IOException e) {

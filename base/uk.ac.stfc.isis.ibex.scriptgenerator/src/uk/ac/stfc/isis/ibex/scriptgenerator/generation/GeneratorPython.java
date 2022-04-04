@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonNotReadyException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
@@ -33,29 +34,22 @@ public class GeneratorPython extends AbstractGenerator {
 	public GeneratorPython(PythonInterface pythonInterface) {
 	
 		this.pythonInterface = pythonInterface;
-		this.pythonInterface.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
-			firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		this.pythonInterface.addPropertyChangeListener(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
+			firePropertyChange(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
-		this.pythonInterface.addPropertyChangeListener(PARAM_VALIDITY_PROPERTY, evt -> {
-			firePropertyChange(PARAM_VALIDITY_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		this.pythonInterface.addPropertyChangeListener(ScriptGeneratorProperties.PARAM_VALIDITY_PROPERTY, evt -> {
+			firePropertyChange(ScriptGeneratorProperties.PARAM_VALIDITY_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
-        this.pythonInterface.addPropertyChangeListener(TIME_ESTIMATE_PROPERTY, evt -> {
-            firePropertyChange(TIME_ESTIMATE_PROPERTY, evt.getOldValue(), evt.getNewValue());
+        this.pythonInterface.addPropertyChangeListener(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, evt -> {
+            firePropertyChange(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, evt.getOldValue(), evt.getNewValue());
         });
-		this.pythonInterface.addPropertyChangeListener(GENERATED_SCRIPT_PROPERTY, evt -> {
-			firePropertyChange(GENERATED_SCRIPT_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		this.pythonInterface.addPropertyChangeListener(ScriptGeneratorProperties.GENERATED_SCRIPT_PROPERTY, evt -> {
+			firePropertyChange(ScriptGeneratorProperties.GENERATED_SCRIPT_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
 	
 	}
 	
-	/**
-	 * Refresh the property of whether the contents of the script generator (actionsTable) are valid against Python.
-	 * 
-	 * @param scriptGenContent The contents of the script generator to validate.
-	 * @param scriptDefinition The script definition to validate the script against.
-	 * @throws ExecutionException A failure to execute the py4j call.
-	 * @throws InterruptedException The Py4J call was interrupted.
-	 */
+	@Override
 	public void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams) throws InterruptedException, ExecutionException {
 		try {	
 			pythonInterface.refreshAreParamsValid(scriptGenContent, globalParams, scriptDefinition);
@@ -65,18 +59,10 @@ public class GeneratorPython extends AbstractGenerator {
 		}
 	}
 
-	/**
-	 * Refresh the validity errors returned when checking validity.
-	 * 
-	 * @param scriptGenContent The contents of the script generator to check for validity errors with.
-	 * @param scriptDefintion The script definition to validate the script against.
-	 * @throws ExecutionException A failure to execute the py4j call.
-	 * @throws InterruptedException The Py4J call was interrupted.
-	 */
 	@Override
 	public void refreshValidityErrors(List<String> globalParams, List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefintion) throws InterruptedException, ExecutionException {
 		try {
-			pythonInterface.refreshValidityErrors(globalParams,scriptGenContent, scriptDefintion);
+			pythonInterface.refreshValidityErrors(globalParams, scriptGenContent, scriptDefintion);
 		} catch (PythonNotReadyException e) {
 			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
 			LOG.error(e);
