@@ -57,6 +57,9 @@ public class GroupRow extends Composite {
     private final Label lblValue;
     private final Label lblStatus;
     private final Composite valueContainer;
+    
+    private final DisplayBlock block;
+    private final int rowIndex;
 
     /**
      * The constructor.
@@ -64,9 +67,13 @@ public class GroupRow extends Composite {
      * @param parent The parent composite
      * @param style The SWT style parameter
      * @param block The observed block
+     * @param rowIndex Index of the row in the group
      */
-    public GroupRow(Composite parent, int style, DisplayBlock block) {
+    public GroupRow(Composite parent, int style, DisplayBlock block, int rowIndex) {
         super(parent, style);
+        
+        this.block = block;
+        this.rowIndex = rowIndex;
         
         GridLayout layout = new GridLayout(NUM_ELEMENTS, false);
         layout.marginHeight = 0;
@@ -105,6 +112,7 @@ public class GroupRow extends Composite {
         FontDescriptor boldDescriptor = FontDescriptor.createFrom(lblStatus.getFont()).setStyle(SWT.BOLD);
         Font boldFont = boldDescriptor.createFont(lblStatus.getDisplay());
         lblStatus.setFont(boldFont);
+        boldFont.dispose();
         GridData gdStatus = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
         gdStatus.widthHint = VALUE_HEIGHT;
         lblStatus.setLayoutData(gdStatus);
@@ -177,6 +185,30 @@ public class GroupRow extends Composite {
         		BeanProperties.<DisplayBlock, String>value(propertyName).observe(block));
 
         return label;
+    }
+    
+    /**
+     * Returns PvState of the block that belongs to the group row.
+     * @return state of the block
+     */
+    public PvState getBlockStatus() {
+    	return block.getBlockState();
+    }
+    
+    /**
+     * Returns index of the row in the group, as supplied when creating the row using constructor.
+     * @return index of this row
+     */
+    public int getRowIndex() {
+    	return rowIndex;
+    }
+    
+    /**
+     * Returns container that holds the row's widgets.
+     * @return value container for the row
+     */
+    public Composite getValueContainer() {
+    	return valueContainer;
     }
 
 }

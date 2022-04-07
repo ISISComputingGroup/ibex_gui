@@ -1048,6 +1048,18 @@
       </value>
     </entry>
     <entry>
+      <key>Beckhoff Engineering View</key>
+      <value>
+        <type>DEBUG</type>
+        <path>twincat/twincat_engineering.opi</path>
+        <description>The OPI giving a detailed engineering view of a Beckhoff.</description>
+        <macros/>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>SCIMAG3D</key>
       <value>
         <type>SCIMAG3D</type>
@@ -1796,7 +1808,7 @@
         <macros>
           <macro>
             <name>DEFAULT_ACTIVE_TAB</name>
-            <description>The tab which is displayed when the OPI is opened (1 to 5).</description>
+            <description>The tab which is displayed when the OPI is opened (1 to 6).</description>
             <default/>
           </macro>
         </macros>
@@ -2692,6 +2704,18 @@
         </macros>
       </value>
     </entry>
+     <entry>
+      <key>WISH Jaws</key>
+      <value>
+        <type>JAWS</type>
+        <path>jaws/jaws_managers/WISH_Jaws.opi</path>
+        <description>The OPI for the WISH jaw set.</description>
+        <macros/>
+        <categories>
+          <category>Jaws and slits</category>
+        </categories>
+      </value>
+    </entry>
     <entry>
       <key>WISH Vacuum PLC</key>
       <value>
@@ -2759,6 +2783,23 @@
             <name>ROTSTIRR</name>
             <description>The ROTSTIRR PV prefix (e.g. ROTSTIRR_01)</description>
             <default>ROTSTIRR_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>DG645</key>
+      <value>
+        <categories>
+        	<category>Delay Generators</category></categories>
+        <type>DELAY_GENERATORS</type>
+        <path>DG645/dg645.opi</path>
+        <description>The OPI for the DG645</description>
+        <macros>
+          <macro>
+            <name>DG645</name>
+            <description>The DG645 PV prefix (e.g. DG645_01)</description>
+            <default>DG645_01</default>
           </macro>
         </macros>
       </value>

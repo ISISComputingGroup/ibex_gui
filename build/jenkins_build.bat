@@ -38,12 +38,12 @@ if "%EXIT%" == "YES" exit /b %build_error_level%
 REM Copy zip to installs area
 REM Delete older versions?
 REM the password for isis\IBEXbuilder is contained in the BUILDERPW system environment variable on the build server
-net use p: /d /yes
-net use p: \\isis\inst$
+REM net use p: /d /yes
+REM net use p: \\isis.cclrc.ac.uk\inst$
 
 REM Don't group these. Bat expands whole if at once, not sequentially
 if "%RELEASE%" == "YES" (
-    set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%GIT_BRANCH:~8%
+    set RELEASE_DIR=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\Releases\%GIT_BRANCH:~8%
     set RELEASE_VERSION=%GIT_BRANCH:~8%    
 ) else (
     set RELEASE_VERSION=devel-%GIT_COMMIT:~0,7%
@@ -53,9 +53,9 @@ if "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%
 
 if not "%RELEASE%" == "YES" (
     if "%IS_E4%" == "YES" (
-        set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client_E4
+        set INSTALLBASEDIR=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\Client_E4
     ) else (
-        set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
+        set INSTALLBASEDIR=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\Client
     )
 ) 
 
@@ -79,7 +79,7 @@ if "%RELEASE%" == "YES" (
     )
 )
 
-robocopy %CD%\..\%TARGET_DIR% %INSTALLDIR%\Client /MT /MIR /R:1 /NFL /NDL /NP /NS /NC /LOG:NUL
+robocopy %CD%\..\%TARGET_DIR% %INSTALLDIR%\Client /MT /MIR /R:1 /NFL /NDL /NP /NS /NC /LOG:"copy_client.log"
 if %errorlevel% geq 4 (
     if not "%INSTALLDIR%" == "" (
         @echo Removing invalid client directory %INSTALLDIR%\Client

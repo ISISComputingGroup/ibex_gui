@@ -32,13 +32,13 @@ if "%EXIT%" == "YES" exit /b %build_error_level%
 REM Copy zip to installs area
 REM Delete older versions?
 REM the password for isis\IBEXbuilder is contained in the BUILDERPW system environment variable on the build server
-net use p: /d /yes
-net use p: \\isis\inst$
+REM net use p: /d /yes
+REM net use p: \\isis.cclrc.ac.uk\inst$
 
 
 REM Don't group these. Bat expands whole if at once, not sequentially
 if "%RELEASE%" == "YES" (
-    set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\script_generator_release\%GIT_BRANCH:~19%
+    set RELEASE_DIR=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\Releases\script_generator_release\%GIT_BRANCH:~19%
     set RELEASE_VERSION=%GIT_BRANCH:~19%
 ) else (
     set RELEASE_VERSION=devel-%GIT_COMMIT:~0,7%
@@ -47,7 +47,7 @@ if "%RELEASE%" == "YES" set INSTALLBASEDIR=%RELEASE_DIR%\script_generator
 if "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%
 
 if not "%RELEASE%" == "YES" (
-        set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\script_generator
+        set INSTALLBASEDIR=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\script_generator
 ) 
 
 if not "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
