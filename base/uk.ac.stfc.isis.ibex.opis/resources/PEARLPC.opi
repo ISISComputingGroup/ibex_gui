@@ -279,7 +279,7 @@ $(pv_value)</tooltip>
           <name>Min_Pressure_Text</name>
           <precision>0</precision>
           <precision_from_pv>false</precision_from_pv>
-          <pv_name>$(PV_ROOT_PEARLPC):STATUS_ARRAY.[0]</pv_name>
+          <pv_name>$(PV_ROOT_PEARLPC):STATUS_ARRAY.[11]</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -413,7 +413,7 @@ $(pv_value)</tooltip>
           <name>Nominal_Pressure_Text</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PV_ROOT_PEARLPC):STATUS_ARRAY.[1]</pv_name>
+          <pv_name>$(PV_ROOT_PEARLPC):STATUS_ARRAY.[12]</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -661,7 +661,7 @@ $(pv_value)</tooltip>
           <name>Max_Pressure_Text</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PV_ROOT_PEARLPC):STATUS_ARRAY.[2]</pv_name>
+          <pv_name>$(PV_ROOT_PEARLPC):STATUS_ARRAY.[13]</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
