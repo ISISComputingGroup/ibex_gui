@@ -2772,6 +2772,22 @@
       </value>
     </entry>
     <entry>
+      <key>Rotating Stirrer Rack</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>rotating_stirrer_rack.opi</path>
+        <description>The OPI for the Rotating Stirrer Rack</description>
+        <macros>
+          <macro>
+            <name>ROTSTIRR</name>
+            <description>The ROTSTIRR PV prefix (e.g. ROTSTIRR_01)</description>
+            <default>ROTSTIRR_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
       <key>DG645</key>
       <value>
         <categories>
