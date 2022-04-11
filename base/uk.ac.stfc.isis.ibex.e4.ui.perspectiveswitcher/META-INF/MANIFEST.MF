@@ -28,3 +28,6 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher
+Import-Package: uk.ac.stfc.isis.ibex.epics.switching,
+ uk.ac.stfc.isis.ibex.instrument,
+ uk.ac.stfc.isis.ibex.ui

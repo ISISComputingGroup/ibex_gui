@@ -28,6 +28,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -37,6 +39,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
+import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.ExperimentSetupViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.widgets.LogMessageBox;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
 
@@ -47,58 +50,59 @@ public class RunSummary {
 	private Label runStatus;
 	private Label runNumber;
 	private Label isisCycle;
+	private Label changeIndicator;
 	private WritableObservingTextBox title;
-    private Button btnDisplayTitle;
+	private Button btnDisplayTitle;
 	private LogMessageBox messageBox;
 
 	private DaeActionButtonPanel daeButtonPanel;
-    private RunSummaryViewModel model;
+	private RunSummaryViewModel model;
 
-    private static final int FIXED_WIDTH = 825;
-    private static final int FIXED_HEIGHT = 400;
+	private static final int FIXED_WIDTH = 825;
+	private static final int FIXED_HEIGHT = 400;
 
-    /**
-     * Creates a view that shows a summary of the current run.
-     */
-    public RunSummary() {
-    	IsisLog.getLogger(getClass()).info("Creating run summary id = " + System.identityHashCode(this));
-        model = DaeUI.getDefault().viewModel().runSummary();
-    }
+	/**
+	 * Creates a view that shows a summary of the current run.
+	 */
+	public RunSummary() {
+		IsisLog.getLogger(getClass()).info("Creating run summary id = " + System.identityHashCode(this));
+		model = DaeUI.getDefault().viewModel().runSummary();
+	}
 
-    /**
-     * Instantiates this viewpart.
-     *
-     * @param parent The parent composite obtained from the eclipse context
-     */
-    @PostConstruct
-    public void createPart(Composite parent) {
+	/**
+	 * Instantiates this viewpart.
+	 *
+	 * @param parent The parent composite obtained from the eclipse context
+	 */
+	@PostConstruct
+	public void createPart(Composite parent) {
 
-        ScrolledComposite scrolled = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
-    	scrolled.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        scrolled.setExpandHorizontal(true);
-        scrolled.setExpandVertical(true);
-        scrolled.setMinSize(FIXED_WIDTH, FIXED_HEIGHT);
+		ScrolledComposite scrolled = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolled.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		scrolled.setExpandHorizontal(true);
+		scrolled.setExpandVertical(true);
+		scrolled.setMinSize(FIXED_WIDTH, FIXED_HEIGHT);
 
-    	Composite content = new Composite(scrolled, SWT.NONE);
-    	content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        scrolled.setContent(content);
+		Composite content = new Composite(scrolled, SWT.NONE);
+		content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		scrolled.setContent(content);
 
 		GridLayout gridLayout = new GridLayout(2, false);
 		gridLayout.horizontalSpacing = 0;
 		gridLayout.verticalSpacing = 0;
 		gridLayout.marginWidth = 0;
 		gridLayout.marginHeight = 0;
-        content.setLayout(gridLayout);
+		content.setLayout(gridLayout);
 
-        Composite lhsComposite = new Composite(content, SWT.NONE);
+		Composite lhsComposite = new Composite(content, SWT.NONE);
 		lhsComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        GridLayout gl = new GridLayout(1, false);
-        gl.verticalSpacing = 25;
-        lhsComposite.setLayout(gl);
+		GridLayout gl = new GridLayout(1, false);
+		gl.verticalSpacing = 25;
+		lhsComposite.setLayout(gl);
 
-        Composite infoComposite = new Composite(lhsComposite, SWT.NONE);
-        infoComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-        infoComposite.setLayout(new GridLayout(5, false));
+		Composite infoComposite = new Composite(lhsComposite, SWT.NONE);
+		infoComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		infoComposite.setLayout(new GridLayout(5, false));
 
 		Label lblInstrument = new Label(infoComposite, SWT.NONE);
 		lblInstrument.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -121,8 +125,13 @@ public class RunSummary {
 		runStatus.setLayoutData(gdRunStatus);
 		runStatus.setText("UNKNOWN");
 
-		Label spacer = new Label(infoComposite, SWT.NONE);
-		spacer.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+		changeIndicator = new Label(infoComposite, SWT.NONE);
+		changeIndicator.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
+		String defaultFont = changeIndicator.getFont().getFontData()[0].getName();
+		Font biggerFont = new Font(changeIndicator.getDisplay(), new FontData(defaultFont, 11, SWT.BOLD));
+		changeIndicator.setFont(biggerFont);
+		changeIndicator.setText("Unapplied Changes in Experiment Setup!");
+		changeIndicator.setForeground(SWTResourceManager.getColor(255, 128, 0));
 
 		Label lblRunNumber = new Label(infoComposite, SWT.NONE);
 		lblRunNumber.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -146,8 +155,8 @@ public class RunSummary {
 		isisCycle.setLayoutData(gdIsisCycle);
 		isisCycle.setText("UNKNOWN");
 
-        Label spacer2 = new Label(infoComposite, SWT.NONE);
-        spacer2.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+		Label spacer2 = new Label(infoComposite, SWT.NONE);
+		spacer2.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 
 		Label lblTitle = new Label(infoComposite, SWT.NONE);
 		lblTitle.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -159,44 +168,56 @@ public class RunSummary {
 		gdTitle.widthHint = 180;
 		title.setLayoutData(gdTitle);
 
-        new Label(infoComposite, SWT.NONE);
-        new Label(infoComposite, SWT.NONE);
+		new Label(infoComposite, SWT.NONE);
+		new Label(infoComposite, SWT.NONE);
 
-        btnDisplayTitle = new Button(infoComposite, SWT.CHECK);
-        btnDisplayTitle.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        btnDisplayTitle.setText("Show Title in Dataweb Dashboard Page");
-        btnDisplayTitle.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                super.widgetSelected(e);
-                model.displayTitle().uncheckedSetValue(btnDisplayTitle.getSelection());
-            }
-        });
+		btnDisplayTitle = new Button(infoComposite, SWT.CHECK);
+		btnDisplayTitle.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+		btnDisplayTitle.setText("Show Title in Dataweb Dashboard Page");
+		btnDisplayTitle.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				super.widgetSelected(e);
+				model.displayTitle().uncheckedSetValue(btnDisplayTitle.getSelection());
+			}
+		});
 
 		messageBox = new LogMessageBox(lhsComposite, SWT.NONE);
 		messageBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-        daeButtonPanel = new DaeActionButtonPanel(content, SWT.NONE, model.actions());
+		daeButtonPanel = new DaeActionButtonPanel(content, SWT.NONE, model.actions());
 		daeButtonPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 
-        setModel(model);
+		setModel(model);
+		bindChangeIndicator();
 	}
 
-    /**
-     * Binds run model properties to GUI elements.
-     *
-     * @param viewModel the model containing the run information
-     */
-    private void setModel(RunSummaryViewModel viewModel) {
+	private void bindChangeIndicator() {
 		DataBindingContext bindingContext = new DataBindingContext();
-		bindingContext.bindValue(WidgetProperties.text().observe(instrument), BeanProperties.value("value").observe(viewModel.instrument()));
-		bindingContext.bindValue(WidgetProperties.text().observe(runStatus), BeanProperties.value("value").observe(viewModel.runStatus()));
-		bindingContext.bindValue(WidgetProperties.text().observe(runNumber), BeanProperties.value("value").observe(viewModel.runNumber()));
-		bindingContext.bindValue(WidgetProperties.text().observe(isisCycle), BeanProperties.value("value").observe(viewModel.isisCycle()));
-        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(btnDisplayTitle),
-                BeanProperties.value("value").observe(viewModel.displayTitle().value()));
-        bindingContext.bindValue(WidgetProperties.enabled().observe(btnDisplayTitle),
-                BeanProperties.value("value").observe(viewModel.displayTitle().canSetValue()));
+		ExperimentSetupViewModel experimentSetupModel = DaeUI.getDefault().viewModel().experimentSetup();
+		bindingContext.bindValue(WidgetProperties.visible().observe(changeIndicator),
+				BeanProperties.value("isChanged").observe(experimentSetupModel));
+	}
+
+	/**
+	 * Binds run model properties to GUI elements.
+	 *
+	 * @param viewModel the model containing the run information
+	 */
+	private void setModel(RunSummaryViewModel viewModel) {
+		DataBindingContext bindingContext = new DataBindingContext();
+		bindingContext.bindValue(WidgetProperties.text().observe(instrument),
+				BeanProperties.value("value").observe(viewModel.instrument()));
+		bindingContext.bindValue(WidgetProperties.text().observe(runStatus),
+				BeanProperties.value("value").observe(viewModel.runStatus()));
+		bindingContext.bindValue(WidgetProperties.text().observe(runNumber),
+				BeanProperties.value("value").observe(viewModel.runNumber()));
+		bindingContext.bindValue(WidgetProperties.text().observe(isisCycle),
+				BeanProperties.value("value").observe(viewModel.isisCycle()));
+		bindingContext.bindValue(WidgetProperties.buttonSelection().observe(btnDisplayTitle),
+				BeanProperties.value("value").observe(viewModel.displayTitle().value()));
+		bindingContext.bindValue(WidgetProperties.enabled().observe(btnDisplayTitle),
+				BeanProperties.value("value").observe(viewModel.displayTitle().canSetValue()));
 
 		messageBox.setModel(viewModel.logMessageSource());
 	}
