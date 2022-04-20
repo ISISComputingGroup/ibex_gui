@@ -45,6 +45,7 @@ public class CopyPerspectiveSnippetProcessor {
     
     private PerspectivesProvider perspectivesProvider;
     private MPerspectiveStack perspectiveStack;
+    private SwitchableObservable<String> perspectiveSettings;
 
     private final PerspectivePreferenceSupplier preferenceSupplier = new PerspectivePreferenceSupplier();
     
@@ -54,6 +55,14 @@ public class CopyPerspectiveSnippetProcessor {
     private ObservableFactory switchingObsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
 
     private static final String PERSPECTIVE_CONFIG_PV = "CS:PERSP:SETTINGS";
+    private static final String PERSPECTIVE_CONFIG_PV_DISCONNECTED_MSG = "Remote perspective PV disconnected, using last known good value.";
+    private static final String PERSPECTIVE_CONFIG_PV_ERROR_MSG = "Remote perspective PV in error, using last known good value.";
+    
+    /* We are expecting the PV to take a while to connect after starting the client.
+     * This is to prevent excessive logging on the client startup.
+     */
+    private final long connectionCheckTimeout = 10000;
+    private boolean connectionCheck = false;
     
     /**
      * Clone each snippet that is a perspective and add the cloned perspective to
@@ -69,7 +78,7 @@ public class CopyPerspectiveSnippetProcessor {
         perspectivesProvider = new PerspectivesProvider(app, partService, modelService);
         perspectiveStack = perspectivesProvider.getTopLevelStack();
 
-        SwitchableObservable<String> perspectiveSettings = switchingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+        perspectiveSettings = switchingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
                 InstrumentUtils.addPrefix(PERSPECTIVE_CONFIG_PV));
 
         // Only do this when no other children, or the restored workspace state
@@ -105,16 +114,17 @@ public class CopyPerspectiveSnippetProcessor {
 
             @Override
             public void onError(Exception e) {
-                LOG.error("Remote perspective PV in error, using last known good value.");
+                LOG.error(PERSPECTIVE_CONFIG_PV_DISCONNECTED_MSG);
             }
 
             @Override
             public void onConnectionStatus(boolean isConnected) {
-                if (!isConnected) {
-                    LOG.error("Remote perspective PV disconnected, using last known good value.");
+                if (!isConnected && connectionCheck) {
+                    LOG.error(PERSPECTIVE_CONFIG_PV_ERROR_MSG);
                 }
             }
         });
+        setupConnectionCheckTimeout(connectionCheckTimeout);
         
         preferenceSupplier.addUseLocalPerspectivesListener(useLocal -> {
             if (useLocal) {
@@ -227,5 +237,27 @@ public class CopyPerspectiveSnippetProcessor {
         };
 
         broker.subscribe(UIEvents.UIElement.TOPIC_CONTAINERDATA, handler);
+    }
+    
+    /**
+     * Enables checking the connection of perspective PV after a variable time. After that, performs
+     * an additional connection check.
+     * @param time Time in milliseconds of how long to wait before enabling PV connection check.
+     */
+    private void setupConnectionCheckTimeout(long time) {
+        Thread connectionTimeoutThread = new Thread() {
+        	public void run() {
+        		try {
+					Thread.sleep(time);
+					connectionCheck = true;
+					if (!perspectiveSettings.isConnected()) {
+						LOG.error(PERSPECTIVE_CONFIG_PV_DISCONNECTED_MSG);
+					}
+				} catch (InterruptedException e) {
+					LOG.error("Connection timeout interrupted.");
+				}
+        	}
+        };
+        connectionTimeoutThread.start();
     }
 }
