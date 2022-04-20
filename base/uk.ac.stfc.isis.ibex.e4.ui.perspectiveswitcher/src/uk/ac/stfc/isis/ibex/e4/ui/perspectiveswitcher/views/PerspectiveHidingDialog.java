@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.layout.GridLayout;
 
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectiveInfo;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesVisibleModel;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectivesTable;
 
@@ -116,7 +117,18 @@ public class PerspectiveHidingDialog extends TitleAreaDialog {
     
     @Override
     protected void okPressed() {
-        model.saveState();
-        super.okPressed();
+        boolean perspectiveSelected = false;
+        for (PerspectiveInfo info : model.getPerspectiveInfo()) {
+        	perspectiveSelected = model.getUseLocal() ? info.getVisibleLocally() : info.getVisibleRemotely();
+        	if (perspectiveSelected) {
+        		break;
+        	}
+        }
+    	if (!perspectiveSelected) {
+    		setMessage("Cannot save - select at least one perspective to be shown", IMessageProvider.WARNING);
+    	} else {
+    		model.saveState();
+    		super.okPressed();
+    	}
     }
 }

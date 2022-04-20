@@ -154,6 +154,7 @@ public class CopyPerspectiveSnippetProcessor {
         Display.getDefault().asyncExec(new Runnable() {
             @Override
             public void run() {
+            	perspectiveStack.getChildren().forEach(c -> c.setVisible(true));
                 perspectiveStack.getChildren().forEach(c -> c.setVisible(visiblePerspectiveMap.getOrDefault(c.getElementId(), true)));
             }
         });

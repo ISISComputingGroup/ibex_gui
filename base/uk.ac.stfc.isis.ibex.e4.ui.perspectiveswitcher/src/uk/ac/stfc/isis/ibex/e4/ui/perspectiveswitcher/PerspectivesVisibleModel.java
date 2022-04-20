@@ -183,7 +183,6 @@ public class PerspectivesVisibleModel extends ModelObject {
      * The remote settings will be sent to the server whereas the local settings and which settings to use are saved to the preference supplier.
      */
     public void saveState() {
-        //TODO: test logic
         List<String> locallyVisiblePerspectiveIDs = perspectiveInfos.stream()
                 .filter(persp -> !persp.getVisibleLocally())
                 .map(persp -> persp.getId())
