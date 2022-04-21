@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>
+<img src="http://130.246.53.237/jpg/image.jpg" id="myImage" />
+<script>
+function update() {
+    var source = 'http://130.246.53.237/jpg/image.jpg',
+        timestamp = (new Date()).getTime(),
+        newUrl = source + '?_=' + timestamp;
+    document.getElementById("myImage").src = newUrl;
+    setTimeout(update, 1000);
+}
+update();
+</script>
+</body>
+</html>

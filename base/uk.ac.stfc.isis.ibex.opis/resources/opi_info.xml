@@ -1900,7 +1900,7 @@
           <category>Sample changers</category>
         </categories>
         <type>SAMPLECHANGER</type>
-        <path>tosca_sample_positioner.opi</path>
+        <path>tosca_sample_changer/tosca_sample_positioner.opi</path>
         <description>The TOSCA sample positioning system.</description>
         <macros>
           <macro>
