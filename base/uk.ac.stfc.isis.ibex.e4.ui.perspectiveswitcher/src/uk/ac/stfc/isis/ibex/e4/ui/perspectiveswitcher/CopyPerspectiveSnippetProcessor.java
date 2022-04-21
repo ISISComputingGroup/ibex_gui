@@ -101,8 +101,6 @@ public class CopyPerspectiveSnippetProcessor {
             subscribeSelectedPerspective(broker, perspective);
         }
         
-        //TODO: Test this logic, is this the best class for it?
-        
         perspectiveSettings.subscribe(new BaseObserver<String>() {
             @Override
             public void onValue(String value) {
@@ -164,8 +162,19 @@ public class CopyPerspectiveSnippetProcessor {
         Display.getDefault().asyncExec(new Runnable() {
             @Override
             public void run() {
-            	perspectiveStack.getChildren().forEach(c -> c.setVisible(true));
-                perspectiveStack.getChildren().forEach(c -> c.setVisible(visiblePerspectiveMap.getOrDefault(c.getElementId(), true)));
+            	List<MPerspective> perspectives = perspectiveStack.getChildren();
+                if (perspectives.size() > 0) {
+                	perspectives.forEach(c -> c.setVisible(true));
+                	perspectives.forEach(c -> c.setVisible(visiblePerspectiveMap.getOrDefault(c.getElementId(), true)));
+                	if (!perspectiveStack.getSelectedElement().isVisible()) {
+                		// If selected perspective is no longer visible then
+                		// find first visible perspective and set it as current
+                		perspectiveStack.setSelectedElement(perspectives.stream()
+                				.filter(c -> c.isVisible()).findFirst().orElse(perspectives.get(0)));
+                	}
+                } else {
+                	LOG.error("No perspectives available to show.");
+                }
             }
         });
     }
