@@ -33,6 +33,7 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Item;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
@@ -69,7 +70,13 @@ public class BlocksMenu extends MenuManager {
 	 */
     protected final OnCanWriteChangeListener readOnlyListener = canWrite -> Display.getDefault().asyncExec(() -> {
         if (canWrite) {
-            if (find(editBlockAction.getId()) == null) {
+        	boolean buttonPresent = false;
+			for (Item item : getMenuItems()) {
+				if (item.getText().contains(EDIT_BLOCK_PREFIX)) {
+					buttonPresent = true;
+				}
+			}
+            if (find(editBlockAction.getId()) == null && buttonPresent) {
                 appendToGroup(BLOCK_MENU_GROUP, editBlockAction);
             }
         } else {
@@ -166,7 +173,6 @@ public class BlocksMenu extends MenuManager {
 				updateAll(true);
 			}
         });
-
         String editBlockLabel = EDIT_BLOCK_PREFIX;
         if (this.block.inComponent()) {
             editBlockLabel += COMPONENT_SUFFIX;
