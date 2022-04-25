@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
 
+import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
+import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
@@ -34,6 +36,8 @@ import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
+import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views.PerspectiveSwitcherView;
 import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.Presenter;
 import uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView;
@@ -73,8 +77,10 @@ public class BlocksMenu extends MenuManager {
 		return new Action("Add to new axis") {
 			@Override
 			public void run() {
-				BlocksView.partService.switchPerspective(LOGPLOTTER_ID);
-				Presenter.pvHistoryPresenter().addToDisplay(block.blockServerAlias(), block.getName(), plotName, Optional.empty());
+				if (canAddPlot()) {
+					BlocksView.partService.switchPerspective(LOGPLOTTER_ID);
+					Presenter.pvHistoryPresenter().addToDisplay(block.blockServerAlias(), block.getName(), plotName, Optional.empty());
+				}
 			}
 		};
 	}
@@ -83,8 +89,10 @@ public class BlocksMenu extends MenuManager {
 	    return new Action("Add to " + axisName + " axis") {
             @Override
             public void run() {
-                BlocksView.partService.switchPerspective(LOGPLOTTER_ID);
-                Presenter.pvHistoryPresenter().addToDisplay(block.blockServerAlias(), block.getName(), plotName, Optional.of(axisName));
+            	if (canAddPlot()) {
+                    BlocksView.partService.switchPerspective(LOGPLOTTER_ID);
+                    Presenter.pvHistoryPresenter().addToDisplay(block.blockServerAlias(), block.getName(), plotName, Optional.of(axisName));
+            	}
             }
         };
 	}
@@ -96,6 +104,7 @@ public class BlocksMenu extends MenuManager {
      */
     public BlocksMenu(DisplayBlock displayBlock) {
 		this.block = displayBlock;
+		
 		Configurations.getInstance().server().setCurrentConfig().addOnCanWriteChangeListener(readOnlyListener);
 
         add(new GroupMarker(BLOCK_MENU_GROUP));
@@ -110,8 +119,10 @@ public class BlocksMenu extends MenuManager {
         final IAction newPlotAction = new Action("New Plot") {
 			@Override
 			public void run() {
-				BlocksView.partService.switchPerspective(LOGPLOTTER_ID);
-				Presenter.pvHistoryPresenter().newDisplay(block.blockServerAlias(), block.getName());
+				if (canAddPlot()) {
+					BlocksView.partService.switchPerspective(LOGPLOTTER_ID);
+					Presenter.pvHistoryPresenter().newDisplay(block.blockServerAlias(), block.getName());
+				}
 			}
 		};
 
@@ -147,6 +158,24 @@ public class BlocksMenu extends MenuManager {
             }
         };
 	}
+    
+    /**
+     * Helper method for determining if a plot can be added safely. Plot cannot be added if
+     * the log plotter perspective is hidden.
+     * @return true if plot can be added, otherwise false
+     */
+    private boolean canAddPlot() {
+		PerspectivesProvider perspectivesProvider = new PerspectivesProvider(
+				PerspectiveSwitcherView.app, PerspectiveSwitcherView.partService, PerspectiveSwitcherView.modelService);
+		MPerspectiveStack perspectiveStack = perspectivesProvider.getTopLevelStack();
+		for (MPerspective perspective : perspectiveStack.getChildren()) {
+			String id = perspective.getElementId();
+			if (id.equals(LOGPLOTTER_ID) && perspective.isVisible()) {
+				return true;
+			}
+		}
+		return false;
+    }
     
     @Override
     protected void finalize() {

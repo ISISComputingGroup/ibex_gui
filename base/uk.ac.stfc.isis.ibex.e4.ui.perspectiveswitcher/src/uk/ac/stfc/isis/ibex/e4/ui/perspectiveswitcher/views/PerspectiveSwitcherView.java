@@ -59,13 +59,13 @@ public class PerspectiveSwitcherView {
     public static final int MINIMISED_BUTTON_WIDTH = 30;
 
     @Inject
-    private EModelService modelService;
+    public static EModelService modelService;
 
     @Inject
-    private MApplication app;
+    public static MApplication app;
 
     @Inject
-    private EPartService partService;
+    public static EPartService partService;
 
     @Inject
     private IEventBroker broker;
