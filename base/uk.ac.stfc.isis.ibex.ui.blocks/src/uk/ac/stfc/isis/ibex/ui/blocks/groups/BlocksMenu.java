@@ -55,9 +55,13 @@ public class BlocksMenu extends MenuManager {
     private static final String EDIT_BLOCK_PREFIX = "Edit host ";
     private static final String COMPONENT_SUFFIX = "component";
     private static final String CONFIGURATION_SUFFIX = "configuration";
+    private static final String DISPLAY_BLOCK_HISTORY = "Display block history...";
 	private static final String LOGPLOTTER_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.logplotter";
 
 	private IAction editBlockAction;
+	private MenuManager logSubMenu;
+	private MenuManager noLogPlotterSubMenu;
+	
 
 	/**
 	 * This is an inner anonymous class inherited from SameTypeWriter with added functionality
@@ -108,8 +112,12 @@ public class BlocksMenu extends MenuManager {
 		Configurations.getInstance().server().setCurrentConfig().addOnCanWriteChangeListener(readOnlyListener);
 
         add(new GroupMarker(BLOCK_MENU_GROUP));
-
-        final MenuManager logSubMenu = new MenuManager("Display block history...");
+        
+        noLogPlotterSubMenu = new MenuManager(DISPLAY_BLOCK_HISTORY);
+        noLogPlotterSubMenu.add(new Action("Enable log plotter perspective to add block to log plotter") { });
+        appendToGroup(BLOCK_MENU_GROUP, noLogPlotterSubMenu);
+        
+        logSubMenu = new MenuManager(DISPLAY_BLOCK_HISTORY);
         logSubMenu.add(new Action("never shown entry") {
         	//needed if it's a submenu
         });
@@ -144,6 +152,20 @@ public class BlocksMenu extends MenuManager {
         });
 
         appendToGroup(BLOCK_MENU_GROUP, logSubMenu);
+        
+        this.addMenuListener(new IMenuListener() {
+			@Override
+			public void menuAboutToShow(IMenuManager manager) {
+				if (canAddPlot()) {
+					logSubMenu.setVisible(true);
+					noLogPlotterSubMenu.setVisible(false);
+				} else {
+					logSubMenu.setVisible(false);
+					noLogPlotterSubMenu.setVisible(true);
+				}
+				updateAll(true);
+			}
+        });
 
         String editBlockLabel = EDIT_BLOCK_PREFIX;
         if (this.block.inComponent()) {
