@@ -1908,6 +1908,11 @@
             <description>The sample positioner motor (e.g. MTR0101)</description>
             <default>MOT:MTR0101</default>
           </macro>
+          <macro>
+            <name>WEBCAMURL</name>
+            <description>The URL for the webcam page</description>
+            <default/>
+          </macro>
         </macros>
       </value>
     </entry>
