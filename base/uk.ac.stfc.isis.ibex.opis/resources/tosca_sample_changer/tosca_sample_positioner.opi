@@ -169,7 +169,7 @@
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
-      <height>373</height>
+      <height>361</height>
       <name>Web Browser</name>
       <rules />
       <scale_options>
@@ -273,7 +273,7 @@
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
         <action type="EXECUTE_PYTHONSCRIPT">
-          <path>Common Scripts/sendOne.py</path>
+          <path>../Common Scripts/sendOne.py</path>
           <scriptText></scriptText>
           <embedded>false</embedded>
           <description></description>
@@ -662,7 +662,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
         <action type="EXECUTE_PYTHONSCRIPT">
-          <path>Common Scripts/sendOne.py</path>
+          <path>../Common Scripts/sendOne.py</path>
           <scriptText></scriptText>
           <embedded>false</embedded>
           <description></description>
@@ -863,7 +863,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
         <action type="EXECUTE_PYTHONSCRIPT">
-          <path>Common Scripts/sendOne.py</path>
+          <path>../Common Scripts/sendOne.py</path>
           <scriptText></scriptText>
           <embedded>false</embedded>
           <description></description>
@@ -911,7 +911,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
         <action type="EXECUTE_PYTHONSCRIPT">
-          <path>Common Scripts/sendOne.py</path>
+          <path>../Common Scripts/sendOne.py</path>
           <scriptText></scriptText>
           <embedded>false</embedded>
           <description></description>
@@ -1122,7 +1122,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
         <action type="EXECUTE_PYTHONSCRIPT">
-          <path>Common Scripts/sendOne.py</path>
+          <path>../Common Scripts/sendOne.py</path>
           <scriptText></scriptText>
           <embedded>false</embedded>
           <description></description>
@@ -1170,7 +1170,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
         <action type="EXECUTE_PYTHONSCRIPT">
-          <path>Common Scripts/sendOne.py</path>
+          <path>../Common Scripts/sendOne.py</path>
           <scriptText></scriptText>
           <embedded>false</embedded>
           <description></description>
