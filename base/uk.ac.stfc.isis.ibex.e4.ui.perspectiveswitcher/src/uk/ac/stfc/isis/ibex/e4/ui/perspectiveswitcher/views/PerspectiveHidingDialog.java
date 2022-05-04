@@ -125,7 +125,7 @@ public class PerspectiveHidingDialog extends TitleAreaDialog {
         	}
         }
     	if (!perspectiveSelected) {
-    		setMessage("Cannot save - select at least one perspective to be shown", IMessageProvider.WARNING);
+setMessage("Cannot save - select at least one perspective to be shown", IMessageProvider.ERROR);
     	} else {
     		model.saveState();
     		super.okPressed();
