@@ -2774,14 +2774,14 @@
     <entry>
       <key>TECHNIX</key>
       <value>
-        <categories/>
         <type>UNKNOWN</type>
         <path>technix.opi</path>
-        <description>The OPI for the technix</description>
+        <description>Technix PSU</description>
         <macros>
           <macro>
-            <name>TECHNIX</name>
+            <name>IOC_NAME</name> 
             <description>The technix PV prefix (e.g. TECHNIX_01)</description>
+            <default>TECHNIX</default>
           </macro>
         </macros>
       </value>
