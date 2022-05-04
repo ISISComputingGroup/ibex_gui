@@ -50,9 +50,9 @@ public class GeneratorPython extends AbstractGenerator {
 	}
 	
 	@Override
-	public void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams) throws InterruptedException, ExecutionException {
+	public void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams, List<String> customParams) throws InterruptedException, ExecutionException {
 		try {	
-			pythonInterface.refreshAreParamsValid(scriptGenContent, globalParams, scriptDefinition);
+			pythonInterface.refreshAreParamsValid(scriptGenContent, globalParams, customParams, scriptDefinition);
 		} catch (PythonNotReadyException e) {
 			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
 			LOG.error(e);
@@ -60,7 +60,7 @@ public class GeneratorPython extends AbstractGenerator {
 	}
 
 	@Override
-	public void refreshValidityErrors(List<String> globalParams, List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefintion) throws InterruptedException, ExecutionException {
+	public void refreshValidityErrors(List<String> globalParams, List<String> customParams, List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefintion) throws InterruptedException, ExecutionException {
 		try {
 			pythonInterface.refreshValidityErrors(globalParams, scriptGenContent, scriptDefintion);
 		} catch (PythonNotReadyException e) {
@@ -78,12 +78,22 @@ public class GeneratorPython extends AbstractGenerator {
             LOG.error(e);
         }
 	}
+	
+	@Override
+    public void refreshCustomEstimation(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> customParams) throws InterruptedException, ExecutionException {
+		try {
+			pythonInterface.refreshCustomEstimation(scriptGenContent, scriptDefinition, customParams);
+		} catch (PythonNotReadyException e) {
+			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
+            LOG.error(e);
+		}
+	}
 
 	@Override
 	public Optional<Integer> refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent,
-			ScriptDefinitionWrapper scriptDefinition, String jsonContent, List<String> globalParams) throws InterruptedException, ExecutionException {
+			ScriptDefinitionWrapper scriptDefinition, String jsonContent, List<String> globalParams, List<String> customParams) throws InterruptedException, ExecutionException {
 		try {
-			return Optional.of(pythonInterface.refreshGeneratedScript(scriptGenContent, jsonContent, globalParams, scriptDefinition));
+			return Optional.of(pythonInterface.refreshGeneratedScript(scriptGenContent, jsonContent, globalParams, customParams, scriptDefinition));
 		} catch (PythonNotReadyException e) {
 			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
 			LOG.error(e);

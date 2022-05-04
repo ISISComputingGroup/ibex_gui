@@ -29,12 +29,13 @@ public abstract class AbstractGenerator extends ModelObject {
 	 * @param scriptDefinition The instrument script definition to generate the script with.
 	 * @param currentlyLoadedDataFileContent the data file that user has currently loaded to generate script
 	 * @param globalParams The global parameters to generate the script with.
+	 * @param customParams The custom parameters to generate the script with.
 	 * @return An optional ID of the script that will be generated, the ID can be used to get the generated script once generated.
 	 * @throws ExecutionException A failure to execute the call to generate a script
 	 * @throws InterruptedException The call to generate a script was interrupted
 	 * @return An ID for the generated script.
 	 */
-	public abstract Optional<Integer> refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, String currentlyLoadedDataFileContent, List<String> globalParams) throws InterruptedException, ExecutionException;
+	public abstract Optional<Integer> refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, String currentlyLoadedDataFileContent, List<String> globalParams, List<String> customParams) throws InterruptedException, ExecutionException;
 	
 	/**
 	 * Refresh the property of whether the contents of the script generator (actionsTable) are valid (bool).
@@ -42,10 +43,11 @@ public abstract class AbstractGenerator extends ModelObject {
 	 * @param scriptGenContent The contents of the script generator to validate.
 	 * @param scriptDefinition The instrument script definition to validate the script against.
 	 * @param globalParams The global parameters to check parameter validity.
+	 * @param customParams The custom parameters to check parameter validity.
 	 * @throws ExecutionException A failure to execute the call to generate a script
 	 * @throws InterruptedException The call to generate a script was interrupted
 	 */
-	public abstract void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams) throws InterruptedException, ExecutionException;
+	public abstract void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams, List<String> customParams) throws InterruptedException, ExecutionException;
 	
 	/**
 	 * Refresh the validity errors returned when checking validity (Map<Integer,String>).
@@ -53,10 +55,11 @@ public abstract class AbstractGenerator extends ModelObject {
 	 * @param scriptGenContent The contents of the script generator to check for validity errors with.
 	 * @param scriptDefinition The instrument script definition to validate the script against.
 	 * @param globalParams The global parameters to check parameter validity.
+	 * @param customParams The custom parameters to check parameter validity.
 	 * @throws ExecutionException A failure to execute the call to generate a script
 	 * @throws InterruptedException The call to generate a script was interrupted
 	 */
-	public abstract void refreshValidityErrors(List<String> globalParams, List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition) throws InterruptedException, ExecutionException;
+	public abstract void refreshValidityErrors(List<String> globalParams, List<String> customParams, List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition) throws InterruptedException, ExecutionException;
     
     /**
      * Refresh the time estimation of the specified actions (Map<Integer,Double>).
@@ -68,6 +71,17 @@ public abstract class AbstractGenerator extends ModelObject {
      * @throws InterruptedException The call to generate a script was interrupted
      */
     public abstract void refreshTimeEstimation(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams) throws InterruptedException, ExecutionException;
+    
+    /**
+     * Refresh the custom estimation of the specified actions (Map<Integer,Double>).
+     * 
+     * @param scriptGenContent The contents of the script generator
+     * @param scriptDefinition The instrument script definition
+     * @param customParams The custom(similar to global) parameters to refresh custom estimation with.
+     * @throws ExecutionException A failure to execute the call to generate a script
+     * @throws InterruptedException The call to generate a script was interrupted
+     */
+    public abstract void refreshCustomEstimation(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> customParams) throws InterruptedException, ExecutionException;
 
     /**
      * Get the generated script from the given ID.

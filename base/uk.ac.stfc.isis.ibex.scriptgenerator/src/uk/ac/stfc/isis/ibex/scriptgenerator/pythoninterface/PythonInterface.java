@@ -393,12 +393,12 @@ public class PythonInterface extends ModelObject {
 	 * @throws InterruptedException The Py4J call was interrupted
 	 * @throws PythonNotReadyException When python is not ready to accept calls.
 	 */
-	public void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, List<String> globalParams, ScriptDefinitionWrapper scriptDefinition)
+	public void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, List<String> globalParams, List<String> customParams, ScriptDefinitionWrapper scriptDefinition)
 			throws InterruptedException, ExecutionException, PythonNotReadyException {
 		if (pythonReady) {
 			CompletableFuture.supplyAsync(() -> {
 				try {
-					return scriptDefinitionsWrapper.areParamsValid(convertScriptGenContentToPython(scriptGenContent), globalParams, scriptDefinition);
+					return scriptDefinitionsWrapper.areParamsValid(convertScriptGenContentToPython(scriptGenContent), globalParams, customParams, scriptDefinition);
 				} catch (Py4JException e) {
 					LOG.error(e);
 					handlePythonReadinessChange(false);
@@ -444,6 +444,37 @@ public class PythonInterface extends ModelObject {
     }
     
     /**
+     * Use python to calculate a custom estimation defined by the scriptDefinition for the current parameters and refresh the
+     * custom estimation property.
+     * 
+     * @param scriptGenContent The script generator content
+     * @param scriptDefinition           The script definition
+     * @param customParams The custom parameters to refresh custom estimation with.
+     * @throws ExecutionException   A failure to execute the py4j call
+     * @throws InterruptedException The Py4J call was interrupted
+     * @throws PythonNotReadyException When python is not ready to accept calls.
+     */
+    public void refreshCustomEstimation(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> customParams)
+            throws InterruptedException, ExecutionException, PythonNotReadyException {
+        if (pythonReady) {
+            CompletableFuture.supplyAsync(() -> {
+                try {
+                    return scriptDefinitionsWrapper.estimateTime(convertScriptGenContentToPython(scriptGenContent), scriptDefinition, customParams);
+                } catch (Py4JException e) {
+                    LOG.error(e);
+                    handlePythonReadinessChange(false);
+                    return false;
+                }
+            }, THREAD).thenAccept(customEstimate -> 
+                firePropertyChange(ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY, null, customEstimate)
+            );
+        } else {
+            handlePythonReadinessChange(false);
+            throw new PythonNotReadyException("When getting custom estimation");
+        }
+    }
+    
+    /**
      * Only call this from a non-client thread.
      * Generate a script.
      * 
@@ -453,9 +484,9 @@ public class PythonInterface extends ModelObject {
 	 * @param globalParams The global parameters to generate the script with.
 	 * @return An optional script.
      */
-    private Optional<String> generateScript(List<ScriptGeneratorAction> scriptGenContent, String jsonContent, List<String> globalParams, ScriptDefinitionWrapper scriptDefinition) {
+    private Optional<String> generateScript(List<ScriptGeneratorAction> scriptGenContent, String jsonContent, List<String> globalParams, List<String> customParams, ScriptDefinitionWrapper scriptDefinition) {
     	try {
-			return Optional.of(scriptDefinitionsWrapper.generate(convertScriptGenContentToPython(scriptGenContent), jsonContent, globalParams, scriptDefinition));
+			return Optional.of(scriptDefinitionsWrapper.generate(convertScriptGenContentToPython(scriptGenContent), jsonContent, globalParams, customParams, scriptDefinition));
 		} catch (Py4JException e) {
 			LOG.error(e);
 			handlePythonReadinessChange(false);
@@ -475,14 +506,14 @@ public class PythonInterface extends ModelObject {
 	 * @throws PythonNotReadyException When python is not ready to accept calls.
 	 * @return An ID for the generated script.
 	 */
-	public int refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, String jsonContent, List<String> globalParams, ScriptDefinitionWrapper scriptDefinition)
+	public int refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, String jsonContent, List<String> globalParams, List<String> customParams, ScriptDefinitionWrapper scriptDefinition)
 			throws InterruptedException, ExecutionException, PythonNotReadyException {
 		lastScriptId += 1;
 		var scriptId = lastScriptId;
 		generatedScripts.put(scriptId, Optional.empty());
 		if (pythonReady) {
 			CompletableFuture.supplyAsync(() -> {
-				return generateScript(scriptGenContent, jsonContent, globalParams, scriptDefinition);
+				return generateScript(scriptGenContent, jsonContent, globalParams, customParams, scriptDefinition);
 			}, THREAD)
 				.thenAccept(generatedScript -> {
 					generatedScripts.put(scriptId, generatedScript);

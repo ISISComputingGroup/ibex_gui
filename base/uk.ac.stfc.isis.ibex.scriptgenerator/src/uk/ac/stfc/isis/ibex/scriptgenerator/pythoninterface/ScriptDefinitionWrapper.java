@@ -18,6 +18,12 @@ public interface ScriptDefinitionWrapper {
 	 */
 	List<ActionParameter> getGlobalParameters();
 	
+
+	/**
+	 * @return The custom parameter names and their values. e.g. ["param1", "val1", "param2", "val2"]
+	 */
+	List<ActionParameter> getCustomParameters();
+	
 	/**
 	 * Performs the defined action.
 	 * 
@@ -34,8 +40,16 @@ public interface ScriptDefinitionWrapper {
 	 * @return the error if the arugements are not valid.
 	 */
     String globalParamsValid(String globalParam, int index);
+    
+    /**
+	 * Checks custom params are valid.
+	 * 
+	 * @param customParam The custom param to check validity of.
+	 * @param index The index of the custom parameters to check.
+	 * @return the error if the arugements are not valid.
+	 */
+    String customParamsValid(String customParam, int index);
       
-	
 	/**
 	 * Performs the check that the arguments are valid.
 	 * 

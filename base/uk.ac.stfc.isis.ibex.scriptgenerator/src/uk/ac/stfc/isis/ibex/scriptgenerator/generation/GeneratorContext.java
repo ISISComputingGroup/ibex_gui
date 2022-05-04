@@ -82,15 +82,16 @@ public class GeneratorContext extends ModelObject {
 	 * @param generatedLanguage The language to generate the script in.
 	 * @param jsonContent Content of the JSON file.
 	 * @param globalParams The global parameters to generate the script with.
+	 * @param customParams The custom estimate parameters to generate the script with.
 	 * @return An optional ID of the script that will be generated, the ID can be used to get the generated script once generated.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
 	 */
-	public Optional<Integer> refreshGeneratedScript(List<ScriptGeneratorAction> actions, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage, String jsonContent, List<String> globalParams)
+	public Optional<Integer> refreshGeneratedScript(List<ScriptGeneratorAction> actions, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage, String jsonContent, List<String> globalParams, List<String> customParams)
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
 		AbstractGenerator generator = getGenerator(generatedLanguage);
-		return generator.refreshGeneratedScript(actions, scriptDefinition, jsonContent, globalParams);
+		return generator.refreshGeneratedScript(actions, scriptDefinition, jsonContent, globalParams, customParams);
 	}
 	
 	/**
@@ -100,14 +101,15 @@ public class GeneratorContext extends ModelObject {
 	 * @param scriptDefinition The script definition to generate the script from.
 	 * @param jsonContent The JSON content created when generating script.
 	 * @param globalParams The global parameters to generate the script with.
+	 * @param customParams The custom estimate parameters to generate the script with.
 	 * @return An optional ID of the script that will be generated, the ID can be used to get the generated script once generated.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
 	 */
-	public Optional<Integer> refreshGeneratedScript(List<ScriptGeneratorAction> actions, ScriptDefinitionWrapper scriptDefinition, String jsonContent, List<String> globalParams) 
+	public Optional<Integer> refreshGeneratedScript(List<ScriptGeneratorAction> actions, ScriptDefinitionWrapper scriptDefinition, String jsonContent, List<String> globalParams, List<String> customParams) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
-		return refreshGeneratedScript(actions, scriptDefinition, GeneratedLanguage.PYTHON, jsonContent, globalParams);
+		return refreshGeneratedScript(actions, scriptDefinition, GeneratedLanguage.PYTHON, jsonContent, globalParams, customParams);
 	}
 	
 	/**
@@ -117,14 +119,15 @@ public class GeneratorContext extends ModelObject {
 	 * @param scriptDefinition The script definition to validate the script against.
 	 * @param generatedLanguage The language that the script will be generated in.
 	 * @param globalParams The global parameters to check parameter validity with.
+	 * @param customParams The custom estimate parameters to generate the script with.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
 	 */
-	public void refreshAreParamsValid(List<ScriptGeneratorAction> actions, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage, List<String> globalParams) 
+	public void refreshAreParamsValid(List<ScriptGeneratorAction> actions, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage, List<String> globalParams, List<String> customParams) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
 		AbstractGenerator generator = getGenerator(generatedLanguage);
-		generator.refreshAreParamsValid(actions, scriptDefinition, globalParams);
+		generator.refreshAreParamsValid(actions, scriptDefinition, globalParams, customParams);
 	}
 	
 	/**
@@ -134,13 +137,14 @@ public class GeneratorContext extends ModelObject {
 	 * @param actions The contents of the script generator to validate.
 	 * @param scriptDefinition The script definition to validate the script against.
 	 * @param globalParams The global parameters to check parameter validity with.
+	 * @param customParams The custom estimate parameters to generate the script with.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
 	 */
-	public void refreshAreParamsValid(List<ScriptGeneratorAction> actions, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams) 
+	public void refreshAreParamsValid(List<ScriptGeneratorAction> actions, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams, List<String> customParams) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
-		refreshAreParamsValid(actions, scriptDefinition, GeneratedLanguage.PYTHON, globalParams);
+		refreshAreParamsValid(actions, scriptDefinition, GeneratedLanguage.PYTHON, globalParams, customParams);
 	}
 	
     /**
@@ -174,7 +178,39 @@ public class GeneratorContext extends ModelObject {
             throws UnsupportedLanguageException, InterruptedException, ExecutionException {
         refreshTimeEstimation(actions, scriptDefinition, GeneratedLanguage.PYTHON, globalParams);
     }
+    
+    /**
+     * Estimate the custom defined value related to the actions.
+     * 
+     * @param actions The contents of the script generator
+     * @param scriptDefinition The script definition
+     * @param generatedLanguage The language that the script will be generated in.
+	 * @param customParams The custom(similar to global) parameters to refresh custom estimation with.
+     * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
+     * @throws ExecutionException A failure to execute the call to generate.
+     * @throws InterruptedException The call to generate was interrupted.
+     */
+    public void refreshCustomEstimation(List<ScriptGeneratorAction> actions, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage, List<String> customParams)
+            throws UnsupportedLanguageException, InterruptedException, ExecutionException {
+        AbstractGenerator generator = getGenerator(generatedLanguage);
+        generator.refreshCustomEstimation(actions, scriptDefinition, customParams);
+    }
 	
+    /**
+     * Estimate the custom defined value related to the actions using the default language generator (Python).
+     * 
+     * @param actions The contents of the script generator
+     * @param scriptDefinition The script definition
+	 * @param customParams The custom(similar to global) parameters to refresh custom estimation with.
+     * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
+     * @throws ExecutionException A failure to execute the call to generate.
+     * @throws InterruptedException The call to generate was interrupted.
+     */
+    public void refreshCustomEstimation(List<ScriptGeneratorAction> actions, ScriptDefinitionWrapper scriptDefinition,List<String> customParams)
+            throws UnsupportedLanguageException, InterruptedException, ExecutionException {
+        refreshCustomEstimation(actions, scriptDefinition, GeneratedLanguage.PYTHON, customParams);
+    }
+    
 	/**
 	 * Refresh the validity errors returned when checking validity.
 	 * 
@@ -182,14 +218,15 @@ public class GeneratorContext extends ModelObject {
 	 * @param scriptDefinition The script definition to validate the script against.
 	 * @param generatedLanguage The language that the script will be generated in.
 	 * @param globalParams The global parameters to check validity with.
+	 * @param customParams The custom parameters to check validity with.
 	 * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
 	 */
-	public void refreshValidityErrors(List<String> globalParams, List<ScriptGeneratorAction> actions, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage) 
+	public void refreshValidityErrors(List<String> globalParams, List<String> customParams, List<ScriptGeneratorAction> actions, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
 		AbstractGenerator generator = getGenerator(generatedLanguage);
-		generator.refreshValidityErrors(globalParams, actions, scriptDefinition);
+		generator.refreshValidityErrors(globalParams, customParams, actions, scriptDefinition);
 	}
 
 	/**
@@ -198,13 +235,14 @@ public class GeneratorContext extends ModelObject {
 	 * @param actionsTable The contents of the script generator to check for validity errors with.
 	 * @param scriptDefinition The script definition to validate the script against.
 	 * @param globalParams The global parameters to check validity with.
+	 * @param customParams The custom parameters to check validity with.
 	 * @throws UnsupportedLanguageException Thrown if the default language (python) to generate the script in is not supported.
 	 * @throws ExecutionException A failure to execute the call to generate.
 	 * @throws InterruptedException The call to generate was interrupted.
 	 */
-	public void refreshValidityErrors(List<String> globalParams, List<ScriptGeneratorAction> actionsTable, ScriptDefinitionWrapper scriptDefinition) 
+	public void refreshValidityErrors(List<String> globalParams, List<String> customParams, List<ScriptGeneratorAction> actionsTable, ScriptDefinitionWrapper scriptDefinition) 
 			throws UnsupportedLanguageException, InterruptedException, ExecutionException {
-		refreshValidityErrors(globalParams, actionsTable, scriptDefinition, GeneratedLanguage.PYTHON);
+		refreshValidityErrors(globalParams, customParams, actionsTable, scriptDefinition, GeneratedLanguage.PYTHON);
 	}
 	
 	/**

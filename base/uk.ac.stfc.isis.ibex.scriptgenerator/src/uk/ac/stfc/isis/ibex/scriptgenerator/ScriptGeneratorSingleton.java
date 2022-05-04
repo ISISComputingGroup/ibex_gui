@@ -83,6 +83,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<JavaActionParameter>());
 	
 	private List<String> globalParams;
+	
+	private List<String> customParams;
 
 	/**
 	 * The loader to select and update the script definition being used.
@@ -147,6 +149,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	public ScriptGeneratorSingleton() {  
 		this.globalParams = new ArrayList<String>();
+		this.customParams = new ArrayList<String>();
 	}
 
 	/**
@@ -164,6 +167,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		this.scriptDefinitionLoader = scriptDefinitionLoader;
 		this.scriptGeneratorTable = scriptGeneratorTable;
 		this.globalParams = new ArrayList<String>();
+		this.customParams = new ArrayList<String>();
 		setUp();
 	}
 
@@ -237,8 +241,12 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		setActionParameters(scriptDefinitionLoader.getParameters());
 		try {
 			List<ActionParameter> globals = this.scriptDefinitionLoader.getScriptDefinition().getGlobalParameters();
+			List<ActionParameter> customs = this.scriptDefinitionLoader.getScriptDefinition().getCustomParameters();
 			for (ActionParameter global : globals) {
 				this.globalParams.add(global.getDefaultValue());
+			}
+			for (ActionParameter custom : customs) {
+				this.customParams.add(custom.getDefaultValue());
 			}
 		} catch (NoSuchElementException e) {
 			LOG.info("No scriptDefinition yet");
@@ -441,7 +449,6 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @param params The new value for the parameter
 	 * @param index The global parameter to be update
 	 */
-	
 	public void updateGlobalParams(String params, int index) {
 		if (this.globalParams != null) {
 			
@@ -464,10 +471,43 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
+	 * Updates the customParams.
+	 * @param params The new value for the parameter
+	 * @param index The custom parameter to be update
+	 */
+	public void updateCustomParams(String params, int index) {
+		if (this.customParams != null) {
+			
+			if (this.customParams.size() > index) {
+				this.customParams.set(index, params);			
+			} else {
+				this.customParams.add(params);
+			}
+			
+		} else {
+			this.customParams = new ArrayList<String>();
+			this.customParams.add(params);
+		}
+		try {
+			refreshParameterValidityChecking();
+			refreshTimeEstimation();
+		} catch (NoScriptDefinitionSelectedException e) {
+			return;
+		}
+	}
+	
+	/**
 	 * Remove all global parameters from the list of global parameters.
 	 */
 	public void clearGlobalParams() {
 		this.globalParams.clear();
+	}
+	
+	/**
+	 * Remove all custom parameters from the list of custom parameters.
+	 */
+	public void clearCustomParams() {
+		this.customParams.clear();
 	}
 
 	/**
@@ -496,7 +536,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	public Map<Integer, String> getGlobalParamErrors() {
 		return scriptGeneratorTable.getGlobalValidityErrors();
 	}
-
+	
 	/**
 	 * @return The action parameters used in this table.
 	 * 
@@ -591,8 +631,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException(
 						"Tried to refresh parameter validity with no script definition selected"));
 		try {
-			generator.refreshAreParamsValid(scriptGeneratorTable.getActions(), scriptDefinition, this.globalParams);
-			generator.refreshValidityErrors(this.globalParams, scriptGeneratorTable.getActions(), scriptDefinition);
+			generator.refreshAreParamsValid(scriptGeneratorTable.getActions(), scriptDefinition, this.globalParams, this.customParams);
+			generator.refreshValidityErrors(this.globalParams, this.customParams, scriptGeneratorTable.getActions(), scriptDefinition);
 			languageSupported = true;
 			threadError = false;
 		} catch (UnsupportedLanguageException e) {
@@ -617,6 +657,30 @@ public class ScriptGeneratorSingleton extends ModelObject {
                         "Tried to refresh time estimation with no script definition selected"));
 		try {
 			generator.refreshTimeEstimation(scriptGeneratorTable.getActions(), scriptDefinition, this.globalParams);
+            languageSupported = true;
+            threadError = false;
+        } catch (UnsupportedLanguageException e) {
+            firePropertyChange(ScriptGeneratorProperties.LANGUAGE_SUPPORT_PROPERTY, languageSupported, languageSupported = false);
+            LOG.error(e);
+        } catch (InterruptedException | ExecutionException e) {
+        	registerThreadError(e);
+        }
+    }
+    
+    /**
+     * Refresh the custom estimate of the parameters, or if it fails refresh the
+     * error state of the model to be listened to by the ViewModel.
+     * 
+     * @throws NoScriptDefinitionSelectedException If there is no script definition
+     *                                             selected to refresh checking
+     *                                             against.
+     */
+    public void refreshCustomEstimation() throws NoScriptDefinitionSelectedException {
+        ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
+                .orElseThrow(() -> new NoScriptDefinitionSelectedException(
+                        "Tried to refresh custom estimation with no script definition selected"));
+		try {
+			generator.refreshCustomEstimation(scriptGeneratorTable.getActions(), scriptDefinition, this.customParams);
             languageSupported = true;
             threadError = false;
         } catch (UnsupportedLanguageException e) {
@@ -704,7 +768,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		try {
 			Path filePath = getScriptDefinitionPath(scriptDefinition);
 			String jsonContent = scriptGenFileHandler.createJsonString(actions, scriptGenFileHandler.readFileContent(filePath), filePath);
-			return generator.refreshGeneratedScript(actions, scriptDefinition, jsonContent, this.globalParams);
+			return generator.refreshGeneratedScript(actions, scriptDefinition, jsonContent, this.globalParams, this.customParams);
 		} catch (InterruptedException | ExecutionException e) {
 			registerThreadError(e);
 		} catch (IOException e) {

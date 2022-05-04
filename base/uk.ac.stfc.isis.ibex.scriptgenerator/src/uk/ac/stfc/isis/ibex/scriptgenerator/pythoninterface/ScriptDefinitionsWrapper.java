@@ -40,9 +40,10 @@ public interface ScriptDefinitionsWrapper {
 	 * @param jsonString string to write to script defintion file
 	 * @param scriptDefinition The script definition to generate the script with.
 	 * @param globalParams The global parameters to generate the script with.
+	 * @param customParams The global parameters to estimate a defined value.
 	 * @return A string containing the generated script.
 	 */
-	String generate(List<Map<String, String>> scriptGenContent, String jsonString, List<String> globalParams, ScriptDefinitionWrapper scriptDefinition);
+	String generate(List<Map<String, String>> scriptGenContent, String jsonString, List<String> globalParams, List<String> customParams, ScriptDefinitionWrapper scriptDefinition);
 	
 	/**
 	 * Get a list of mappings of validity errors of the scriptGenContent against the script definition.
@@ -61,9 +62,10 @@ public interface ScriptDefinitionsWrapper {
 	 * @param scriptGenContent The list of actions to check.
 	 * @param scriptDefinition The script definition to check with.
 	 * @param globalParams The global parameters to check parameter validity with.
+	 * @param customParams The global parameters to estimate a defined value.
 	 * @return True if valid, False if not.
 	 */
-	boolean areParamsValid(List<Map<String, String>> scriptGenContent, List<String> globalParams, ScriptDefinitionWrapper scriptDefinition);
+	boolean areParamsValid(List<Map<String, String>> scriptGenContent, List<String> globalParams, List<String> customParams, ScriptDefinitionWrapper scriptDefinition);
 	
     /**
      * Estimate how long (in seconds) the current actions will take.
@@ -75,6 +77,17 @@ public interface ScriptDefinitionsWrapper {
      *      the value is the estimated time in seconds
      */
 	Map<Integer, Number> estimateTime(List<Map<String, String>> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams);
+	
+	/**
+     * A custom Estimate value for the current actions.
+     * 
+     * @param scriptGenContent The list of actions to estimate
+     * @param scriptDefinition The script definition
+     * @param customParams The global parameters to estimate a defined value.
+     * @return A map where the key is the index of the action in the list and 
+     *      the value is the estimated time in seconds
+     */
+	Map<Integer, Number> estimateCustom(List<Map<String, String>> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> customParams);
 	
 	/**
 	 * Check if Python is ready.
