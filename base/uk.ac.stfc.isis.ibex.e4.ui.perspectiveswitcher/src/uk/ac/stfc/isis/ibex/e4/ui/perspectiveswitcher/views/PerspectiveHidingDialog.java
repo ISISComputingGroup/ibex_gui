@@ -117,15 +117,14 @@ public class PerspectiveHidingDialog extends TitleAreaDialog {
     
     @Override
     protected void okPressed() {
-        boolean perspectiveSelected = false;
+        boolean perspectiveSelectedLocal = false;
+        boolean perspectiveSelectedRemote = false;
         for (PerspectiveInfo info : model.getPerspectiveInfo()) {
-        	perspectiveSelected = model.getUseLocal() ? info.getVisibleLocally() : info.getVisibleRemotely();
-        	if (perspectiveSelected) {
-        		break;
-        	}
+        	perspectiveSelectedLocal = info.getVisibleLocally() || perspectiveSelectedLocal;
+        	perspectiveSelectedRemote = info.getVisibleRemotely() || perspectiveSelectedRemote;
         }
-    	if (!perspectiveSelected) {
-setMessage("Cannot save - select at least one perspective to be shown", IMessageProvider.ERROR);
+    	if (!(perspectiveSelectedLocal && perspectiveSelectedRemote)) {
+    		setMessage("Cannot save - select at least one perspective to be shown for both settings", IMessageProvider.ERROR);
     	} else {
     		model.saveState();
     		super.okPressed();
