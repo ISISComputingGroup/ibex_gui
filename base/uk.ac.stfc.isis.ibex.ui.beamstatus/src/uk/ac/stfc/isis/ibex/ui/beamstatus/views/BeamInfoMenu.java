@@ -12,6 +12,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.beamstatus.FacilityPV;
+import uk.ac.stfc.isis.ibex.ui.blocks.groups.BlocksMenu;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.Presenter;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.NewBlockHandler;
 
@@ -55,10 +56,10 @@ public class BeamInfoMenu extends MenuManager {
 
 		add(new Action("Open in Log Plotter: " + facilityPV.pv) { // Opening log plotter window
 			public void run() {
-
-				switchToLogPlotter();
-				Presenter.pvHistoryPresenter().newDisplay(facilityPV.pv, facilityPV.pv);
-
+				if (BlocksMenu.canAddPlot()) {
+					switchToLogPlotter();
+					Presenter.pvHistoryPresenter().newDisplay(facilityPV.pv, facilityPV.pv);
+				}
 			}
 		});
 	}

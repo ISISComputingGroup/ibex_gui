@@ -192,7 +192,7 @@ public class BlocksMenu extends MenuManager {
      * the log plotter perspective is hidden.
      * @return true if plot can be added, otherwise false
      */
-    private boolean canAddPlot() {
+    public static boolean canAddPlot() {
 		PerspectivesProvider perspectivesProvider = new PerspectivesProvider(
 				PerspectiveSwitcherView.app, PerspectiveSwitcherView.partService, PerspectiveSwitcherView.modelService);
 		MPerspectiveStack perspectiveStack = perspectivesProvider.getTopLevelStack();
