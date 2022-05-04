@@ -2781,7 +2781,7 @@
           <macro>
             <name>IOC_NAME</name> 
             <description>The technix PV prefix (e.g. TECHNIX_01)</description>
-            <default>TECHNIX</default>
+            <default>TECHNIX_01</default>
           </macro>
         </macros>
       </value>
