@@ -274,7 +274,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>593</width>
       <wuid>36fc6a9b:177ff16b62a:-7fc8</wuid>
@@ -876,7 +876,7 @@ $(pv_value)</tooltip>
             <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
           </on_color>
           <on_label>ON</on_label>
-          <pv_name></pv_name>
+          <pv_name>$(PV_ROOT):HTR:MODE</pv_name>
           <pv_value />
           <rules />
           <scale_options>
@@ -5365,7 +5365,7 @@ $(pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>593</width>
       <wuid>-2b4acbd4:17863d51292:-7dd4</wuid>
@@ -6929,12 +6929,12 @@ $(pv_value)</tooltip>
     <router>0</router>
     <src_path>36fc6a9b:177ff16b62a:-7fc9_36fc6a9b:177ff16b62a:-7fc8</src_path>
     <src_term>LEFT</src_term>
-    <src_wuid>63495ba9:17821cc3c4b:-67cb</src_wuid>
+    <src_wuid>63495ba9:17821cc3c4b:-67d3</src_wuid>
     <tgt_path>36fc6a9b:177ff16b62a:-7fc9_36fc6a9b:177ff16b62a:-7fc8</tgt_path>
     <tgt_term>BOTTOM</tgt_term>
-    <tgt_wuid>63495ba9:17821cc3c4b:-7e85</tgt_wuid>
+    <tgt_wuid>63495ba9:17821cc3c4b:-7e7d</tgt_wuid>
     <widget_type>connection</widget_type>
-    <wuid>3c78172d:1784a169673:-6ed2</wuid>
+    <wuid>3c78172d:1784a169673:-6ed0</wuid>
   </connection>
   <connection typeId="org.csstudio.opibuilder.connection" version="1.0.0">
     <anti_alias>true</anti_alias>
@@ -6954,11 +6954,11 @@ $(pv_value)</tooltip>
     <router>0</router>
     <src_path>36fc6a9b:177ff16b62a:-7fc9_36fc6a9b:177ff16b62a:-7fc8</src_path>
     <src_term>LEFT</src_term>
-    <src_wuid>63495ba9:17821cc3c4b:-67d3</src_wuid>
+    <src_wuid>63495ba9:17821cc3c4b:-67cb</src_wuid>
     <tgt_path>36fc6a9b:177ff16b62a:-7fc9_36fc6a9b:177ff16b62a:-7fc8</tgt_path>
     <tgt_term>BOTTOM</tgt_term>
-    <tgt_wuid>63495ba9:17821cc3c4b:-7e7d</tgt_wuid>
+    <tgt_wuid>63495ba9:17821cc3c4b:-7e85</tgt_wuid>
     <widget_type>connection</widget_type>
-    <wuid>3c78172d:1784a169673:-6ed0</wuid>
+    <wuid>3c78172d:1784a169673:-6ed2</wuid>
   </connection>
 </display>
