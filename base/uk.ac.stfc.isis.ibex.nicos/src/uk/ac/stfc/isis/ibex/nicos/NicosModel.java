@@ -126,17 +126,17 @@ public class NicosModel extends ModelObject {
         this.session = session;
         this.connectionJob = connectionJob;
         this.lastEntryTime = initialTime;
-
-        updateStatusJob = new RepeatingJob("update script status", UPDATE_STATUS_TIME) {
-            @Override
-            protected IStatus doTask(IProgressMonitor monitor) {
-                updateScriptStatus();
-                updateLogEntries();
-                return Status.OK_STATUS;
-            }
-        };
-        updateStatusJob.setRunning(false);
-        this.connectionJob.schedule();
+//
+//        updateStatusJob = new RepeatingJob("update script status", UPDATE_STATUS_TIME) {
+//            @Override
+//            protected IStatus doTask(IProgressMonitor monitor) {
+//                updateScriptStatus();
+//                updateLogEntries();
+//                return Status.OK_STATUS;
+//            }
+//        };
+//        updateStatusJob.setRunning(false);
+//        this.connectionJob.schedule();
     }
 
     private void failConnection(String message) {
