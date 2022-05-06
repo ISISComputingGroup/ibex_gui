@@ -72,6 +72,7 @@ public abstract class ModelObject implements IModelObject {
 	 * UI thread the event is run immediately, otherwise it is queued to be run at a later time.
 	 * 
 	 * @param job the task to be run
+	 * @return A property change listener
 	 */
     private static PropertyChangeListener propertyChangeOnUiThread(final PropertyChangeListener job) {
     	return new PropertyChangeListener() {

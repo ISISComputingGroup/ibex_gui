@@ -1,7 +1,7 @@
 package uk.ac.stfc.isis.ibex.epics.observing;
 
 /**
- * Interface describing a type which can be subscribed to (e.g. obsevers,
+ * Interface describing a type which can be subscribed to (e.g. observers,
  * writers)
  *
  * @param <T>

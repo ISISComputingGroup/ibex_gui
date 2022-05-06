@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.Path;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
@@ -48,35 +49,6 @@ public class PythonInterface extends ModelObject {
 	 * The access point to python that wraps the rest of the python functionality.
 	 */
 	private ScriptDefinitionsWrapper scriptDefinitionsWrapper;
-
-	/**
-	 * The property change to fire when the validity messages are asynchronously
-	 *  received from Python.
-	 */
-	private static final String VALIDITY_ERROR_MESSAGE_PROPERTY = "validity error messages";
-	
-	/**
-	 * The property change to fire when the validity of the script generator contents is
-	 *  asynchronously received from Python.
-	 */
-	private static final String PARAM_VALIDITY_PROPERTY = "parameter validity";
-	
-    /**
-     * The property change to fire when the time estimate for the current parameters is
-     *  asynchronously received from Python.
-     */
-    private static final String TIME_ESTIMATE_PROPERTY = "time estimate";
-	
-	/**
-	 * The property change to fire when the generated script is received
-	 *  asynchronously from Python.
-	 */
-	private static final String GENERATED_SCRIPT_PROPERTY = "generated script";
-	
-	/**
-	 * A property to notify listeners when python becomes ready or not ready.
-	 */
-	private static final String PYTHON_READINESS_PROPERTY = "python ready";
 	
 	/**
 	 * Defines whether python is ready to receive Py4J calls.
@@ -110,6 +82,16 @@ public class PythonInterface extends ModelObject {
 	 */
 	private static final ExecutorService THREAD = Executors
 			.newSingleThreadExecutor(job -> new Thread(job, "Py4J scriptgenerator worker"));
+	
+	/**
+	 * The scripts with ids as keys.
+	 */
+	private Map<Integer, Optional<String>> generatedScripts = new HashMap<Integer, Optional<String>>();
+	
+	/**
+	 * The ID of the last script that's been added.
+	 */
+	private Integer lastScriptId = 0;
 
 	/**
 	 * Constructor uses default script definition loader python script location.
@@ -178,7 +160,7 @@ public class PythonInterface extends ModelObject {
 	 */
 	protected void handlePythonReadinessChange(boolean ready) {
 		boolean wasPythonReady = pythonReady;
-		firePropertyChange(PYTHON_READINESS_PROPERTY, pythonReady, pythonReady = ready);
+		firePropertyChange(ScriptGeneratorProperties.PYTHON_READINESS_PROPERTY, pythonReady, pythonReady = ready);
 		if (!ready && wasPythonReady != ready) {
 			THREAD.submit(() -> restartPython());
 		}
@@ -314,7 +296,7 @@ public class PythonInterface extends ModelObject {
 	 * @throws IOException If scriptDefinitionLoaderPythonScript not found.
 	 */
 	private void setUpPythonThread() throws IOException {
-		firePropertyChange(PYTHON_READINESS_PROPERTY, null, pythonReady);
+		firePropertyChange(ScriptGeneratorProperties.PYTHON_READINESS_PROPERTY, null, pythonReady);
 		clientServer = createClientServer();
 		pythonProcess = startPythonProcess(clientServer, python3InterpreterPath(), scriptDefinitionLoaderScript);
 		new Thread(listenToErrors).start();
@@ -376,23 +358,24 @@ public class PythonInterface extends ModelObject {
 	 * 
 	 * @param scriptGenContent The script generator content to validate.
 	 * @param scriptDefinition           The script definition to validate against.
+	 * @param globalParams The global parameters to generate the script with.
 	 * @throws ExecutionException   A failure to execute the py4j call
 	 * @throws InterruptedException The Py4J call was interrupted
 	 * @throws PythonNotReadyException When python is not ready to accept calls.
 	 */
-	public void refreshValidityErrors(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition)
+	public void refreshValidityErrors(List<String> globalParams, List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition)
 			throws InterruptedException, ExecutionException, PythonNotReadyException {
 		if (pythonReady) {
 			CompletableFuture.supplyAsync(() -> {
 				try {
-					return scriptDefinitionsWrapper.getValidityErrors(convertScriptGenContentToPython(scriptGenContent), scriptDefinition);
+					return scriptDefinitionsWrapper.getValidityErrors(globalParams, convertScriptGenContentToPython(scriptGenContent), scriptDefinition);
 				} catch (Py4JException e) {
 					LOG.error(e);
 					handlePythonReadinessChange(false);
 					return new HashMap<>();
 				}
 			}, THREAD)
-				.thenAccept(newValidityErrors -> firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, null, newValidityErrors));
+				.thenAccept(newValidityErrors -> firePropertyChange(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, null, newValidityErrors));
 		} else {
 			handlePythonReadinessChange(false);
 			throw new PythonNotReadyException("When getting validity errors");
@@ -405,23 +388,24 @@ public class PythonInterface extends ModelObject {
 	 * 
 	 * @param scriptGenContent The script generator content to validate.
 	 * @param scriptDefinition           The script definition to validate against.
+	 * @param globalParams The global parameters to check parameter validity with.
 	 * @throws ExecutionException   A failure to execute the py4j call
 	 * @throws InterruptedException The Py4J call was interrupted
 	 * @throws PythonNotReadyException When python is not ready to accept calls.
 	 */
-	public void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition)
+	public void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, List<String> globalParams, ScriptDefinitionWrapper scriptDefinition)
 			throws InterruptedException, ExecutionException, PythonNotReadyException {
 		if (pythonReady) {
 			CompletableFuture.supplyAsync(() -> {
 				try {
-					return scriptDefinitionsWrapper.areParamsValid(convertScriptGenContentToPython(scriptGenContent), scriptDefinition);
+					return scriptDefinitionsWrapper.areParamsValid(convertScriptGenContentToPython(scriptGenContent), globalParams, scriptDefinition);
 				} catch (Py4JException e) {
 					LOG.error(e);
 					handlePythonReadinessChange(false);
 					return false;
 				}
 			}, THREAD)
-				.thenAccept(paramValidity -> firePropertyChange(PARAM_VALIDITY_PROPERTY, null, paramValidity));
+				.thenAccept(paramValidity -> firePropertyChange(ScriptGeneratorProperties.PARAM_VALIDITY_PROPERTY, null, paramValidity));
 		} else {
 			handlePythonReadinessChange(false);
 			throw new PythonNotReadyException("When getting parameter validity");
@@ -434,28 +418,49 @@ public class PythonInterface extends ModelObject {
      * 
      * @param scriptGenContent The script generator content
      * @param scriptDefinition           The script definition
+     * @param globalParams The global parameters to refresh time estimation with.
      * @throws ExecutionException   A failure to execute the py4j call
      * @throws InterruptedException The Py4J call was interrupted
      * @throws PythonNotReadyException When python is not ready to accept calls.
      */
-    public void refreshTimeEstimation(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition)
+    public void refreshTimeEstimation(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams)
             throws InterruptedException, ExecutionException, PythonNotReadyException {
         if (pythonReady) {
             CompletableFuture.supplyAsync(() -> {
                 try {
-                    return scriptDefinitionsWrapper.estimateTime(convertScriptGenContentToPython(scriptGenContent), scriptDefinition);
+                    return scriptDefinitionsWrapper.estimateTime(convertScriptGenContentToPython(scriptGenContent), scriptDefinition, globalParams);
                 } catch (Py4JException e) {
                     LOG.error(e);
                     handlePythonReadinessChange(false);
                     return false;
                 }
             }, THREAD).thenAccept(timeEstimate -> 
-                firePropertyChange(TIME_ESTIMATE_PROPERTY, null, timeEstimate)
+                firePropertyChange(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, null, timeEstimate)
             );
         } else {
             handlePythonReadinessChange(false);
             throw new PythonNotReadyException("When getting time estimation");
         }
+    }
+    
+    /**
+     * Only call this from a non-client thread.
+     * Generate a script.
+     * 
+     * @param scriptGenContent The contents to generate the script with. An optional that is empty if parameters are invalid.
+	 * @param jsonContent json content that will be hexed and compressed
+	 * @param scriptDefinition           The script definition to generate the script with.
+	 * @param globalParams The global parameters to generate the script with.
+	 * @return An optional script.
+     */
+    private Optional<String> generateScript(List<ScriptGeneratorAction> scriptGenContent, String jsonContent, List<String> globalParams, ScriptDefinitionWrapper scriptDefinition) {
+    	try {
+			return Optional.of(scriptDefinitionsWrapper.generate(convertScriptGenContentToPython(scriptGenContent), jsonContent, globalParams, scriptDefinition));
+		} catch (Py4JException e) {
+			LOG.error(e);
+			handlePythonReadinessChange(false);
+			return Optional.empty();
+		}
     }
 
 	/**
@@ -464,30 +469,40 @@ public class PythonInterface extends ModelObject {
 	 * @param scriptGenContent The contents to generate the script with. An optional that is empty if parameters are invalid.
 	 * @param jsonContent json content that will be hexed and compressed
 	 * @param scriptDefinition           The script definition to generate the script with.
+	 * @param globalParams The global parameters to refresh the generated script with.
 	 * @throws ExecutionException     A failure to execute the py4j call
 	 * @throws InterruptedException   The Py4J call was interrupted
 	 * @throws PythonNotReadyException When python is not ready to accept calls.
+	 * @return An ID for the generated script.
 	 */
-
-	public void refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, String jsonContent, ScriptDefinitionWrapper scriptDefinition)
+	public int refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, String jsonContent, List<String> globalParams, ScriptDefinitionWrapper scriptDefinition)
 			throws InterruptedException, ExecutionException, PythonNotReadyException {
+		lastScriptId += 1;
+		var scriptId = lastScriptId;
+		generatedScripts.put(scriptId, Optional.empty());
 		if (pythonReady) {
 			CompletableFuture.supplyAsync(() -> {
-				try {
-					return scriptDefinitionsWrapper.generate(convertScriptGenContentToPython(scriptGenContent), jsonContent, scriptDefinition);
-				} catch (Py4JException e) {
-					LOG.error(e);
-					handlePythonReadinessChange(false);
-					return Optional.empty();
-				}
+				return generateScript(scriptGenContent, jsonContent, globalParams, scriptDefinition);
 			}, THREAD)
 				.thenAccept(generatedScript -> {
-					firePropertyChange(GENERATED_SCRIPT_PROPERTY, null, Optional.ofNullable(generatedScript));
+					generatedScripts.put(scriptId, generatedScript);
+					firePropertyChange(ScriptGeneratorProperties.GENERATED_SCRIPT_PROPERTY, null, Optional.of(scriptId));
 				});
 		} else {
 			handlePythonReadinessChange(false);
 			throw new PythonNotReadyException("When getting generated script");
 		}
+		return scriptId;
+	}
+	
+	/**
+	 * Get the script that is related to the given ID.
+	 * 
+	 * @param scriptId The ID for the script
+	 * @return The script
+	 */
+	public Optional<String> getScriptFromId(Integer scriptId) {
+		return generatedScripts.get(scriptId);
 	}
 
 	/**

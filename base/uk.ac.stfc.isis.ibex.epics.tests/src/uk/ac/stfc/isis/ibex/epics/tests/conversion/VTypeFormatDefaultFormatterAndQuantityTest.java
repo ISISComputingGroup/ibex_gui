@@ -23,6 +23,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 import org.diirt.vtype.Display;
 import org.diirt.vtype.VBoolean;
@@ -57,7 +58,6 @@ import org.diirt.util.text.NumberFormats;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.VTypeFormat;
 
 /**
@@ -73,7 +73,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_number_double_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat.defaultFormatter();
+	Function<VNumber, String> converter = VTypeFormat.defaultFormatter();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
@@ -82,7 +82,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456000 unit");
@@ -92,7 +92,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_number_double_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat.defaultFormatter();
+	Function<VNumber, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
 	Number number = Double.valueOf(123.456);
@@ -100,7 +100,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456000 ");
@@ -110,7 +110,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_number_float_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat.defaultFormatter();
+	Function<VNumber, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
 	Number number = Float.valueOf(123.456f);
@@ -118,7 +118,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456001 unit");
@@ -128,7 +128,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_number_float_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat.defaultFormatter();
+	Function<VNumber, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
 	Number number = Float.valueOf(123.456f);
@@ -136,7 +136,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456001 ");
@@ -146,7 +146,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_number_long_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat.defaultFormatter();
+	Function<VNumber, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
 	Number number = Long.valueOf(123456);
@@ -154,7 +154,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456 unit");
@@ -164,7 +164,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_number_long_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat.defaultFormatter();
+	Function<VNumber, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
 	Number number = Long.valueOf(123456);
@@ -172,7 +172,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456 ");
@@ -182,7 +182,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_number_integer_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat.defaultFormatter();
+	Function<VNumber, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
 	Number number = Integer.valueOf(123456);
@@ -190,7 +190,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456 unit");
@@ -200,7 +200,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_number_integer_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat.defaultFormatter();
+	Function<VNumber, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
 	Number number = Integer.valueOf(123456);
@@ -208,7 +208,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456 ");
@@ -218,7 +218,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_number_short_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat.defaultFormatter();
+	Function<VNumber, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
 	Number number = Short.valueOf((short) 123);
@@ -226,7 +226,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123 unit");
@@ -236,7 +236,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_number_short_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat.defaultFormatter();
+	Function<VNumber, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
 	Number number = Short.valueOf((short) 123);
@@ -244,7 +244,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123 ");
@@ -254,7 +254,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_number_byte_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat.defaultFormatter();
+	Function<VNumber, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
 	Number number = Byte.valueOf((byte) 123.456);
@@ -262,7 +262,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123 unit");
@@ -272,7 +272,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_number_byte_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat.defaultFormatter();
+	Function<VNumber, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
 	Number number = Byte.valueOf((byte) 123.456);
@@ -280,7 +280,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123 ");
@@ -289,13 +289,13 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     @Test
     public void default_convert_double_with_units() throws ConversionException {
 	// Arrange
-	Converter<VDouble, String> converter = VTypeFormat.defaultFormatter();
+	Function<VDouble, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(3), 0.0, 0.0, 0.0, 0.0, 0.0);
 	VDouble vnum = ValueFactory.newVDouble(123.456, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456 unit");
@@ -305,14 +305,14 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_double_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VDouble, String> converter = VTypeFormat.defaultFormatter();
+	Function<VDouble, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(3), 0.0, 0.0, 0.0, 0.0, 0.0);
 
 	VDouble vnum = ValueFactory.newVDouble(123.456, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456 ");
@@ -321,7 +321,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     @Test
     public void default_convert_float_with_units() throws ConversionException {
 	// Arrange
-	Converter<VFloat, String> converter = VTypeFormat.defaultFormatter();
+	Function<VFloat, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
 	Float number = Float.valueOf(123.456f);
@@ -329,7 +329,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VFloat vnum = ValueFactory.newVFloat(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456001 unit");
@@ -339,7 +339,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_float_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VFloat, String> converter = VTypeFormat.defaultFormatter();
+	Function<VFloat, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
 	Float number = Float.valueOf(123.456f);
@@ -347,7 +347,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VFloat vnum = ValueFactory.newVFloat(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456001 ");
@@ -356,7 +356,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     @Test
     public void default_convert_long_with_units() throws ConversionException {
 	// Arrange
-	Converter<VLong, String> converter = VTypeFormat.defaultFormatter();
+	Function<VLong, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
 	Long number = Long.valueOf(123456);
@@ -364,7 +364,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VLong vnum = ValueFactory.newVLong(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456 unit");
@@ -373,7 +373,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     @Test
     public void default_convert_long_without_units() throws ConversionException {
 	// Arrange
-	Converter<VLong, String> converter = VTypeFormat.defaultFormatter();
+	Function<VLong, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
 	Long number = Long.valueOf(123456);
@@ -381,7 +381,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VLong vnum = ValueFactory.newVLong(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456 ");
@@ -390,7 +390,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     @Test
     public void default_convert_integer_with_units() throws ConversionException {
 	// Arrange
-	Converter<VInt, String> converter = VTypeFormat.defaultFormatter();
+	Function<VInt, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
 	Integer number = Integer.valueOf(123456);
@@ -398,7 +398,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VInt vnum = ValueFactory.newVInt(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456 unit");
@@ -408,7 +408,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_integer_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VInt, String> converter = VTypeFormat.defaultFormatter();
+	Function<VInt, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
 	Integer number = Integer.valueOf(123456);
@@ -416,7 +416,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VInt vnum = ValueFactory.newVInt(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456 ");
@@ -425,7 +425,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     @Test
     public void default_convert_short_with_units() throws ConversionException {
 	// Arrange
-	Converter<VShort, String> converter = VTypeFormat.defaultFormatter();
+	Function<VShort, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
 	Short number = Short.valueOf((short) 123);
@@ -433,7 +433,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VShort vnum = ValueFactory.newVShort(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123 unit");
@@ -443,7 +443,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_short_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VShort, String> converter = VTypeFormat.defaultFormatter();
+	Function<VShort, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
 	Short number = Short.valueOf((short) 123);
@@ -451,7 +451,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VShort vnum = ValueFactory.newVShort(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123 ");
@@ -460,7 +460,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     @Test
     public void default_convert_byte_with_units() throws ConversionException {
 	// Arrange
-	Converter<VByte, String> converter = VTypeFormat.defaultFormatter();
+	Function<VByte, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
 	Byte number = Byte.valueOf((byte) 123.456);
@@ -468,7 +468,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VByte vnum = ValueFactory.newVByte(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123 unit");
@@ -477,7 +477,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     @Test
     public void default_convert_byte_without_units() throws ConversionException {
 	// Arrange
-	Converter<VByte, String> converter = VTypeFormat.defaultFormatter();
+	Function<VByte, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(0), 0.0, 0.0, 0.0, 0.0, 0.0);
 	Byte number = Byte.valueOf((byte) 123.456);
@@ -485,7 +485,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VByte vnum = ValueFactory.newVByte(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123 ");
@@ -494,12 +494,12 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     @Test
     public void default_convert_string() throws ConversionException {
 	// Arrange
-	Converter<VString, String> converter = VTypeFormat.defaultFormatter();
+	Function<VString, String> converter = VTypeFormat.defaultFormatter();
 	String string = "Test";
 	VString vstring = ValueFactory.newVString(string, null, null);
 
 	// Act
-	String result = converter.convert(vstring);
+	String result = converter.apply(vstring);
 
 	// Assert
 	assertEquals(result, string);
@@ -508,12 +508,12 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     @Test
     public void default_convert_boolean() throws ConversionException {
 	// Arrange
-	Converter<VBoolean, String> converter = VTypeFormat.defaultFormatter();
+	Function<VBoolean, String> converter = VTypeFormat.defaultFormatter();
 
 	VBoolean value = ValueFactory.newVBoolean(true, null, null);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "true");
@@ -522,7 +522,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     @Test
     public void default_convert_type_with_units() throws ConversionException {
 	// Arrange
-	Converter<VType, String> converter = VTypeFormat.defaultFormatter();
+	Function<VType, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
 	Number number = Double.valueOf(123.456);
@@ -530,7 +530,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VType value = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "123.456000 unit");
@@ -539,7 +539,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     @Test
     public void default_convert_type_without_units() throws ConversionException {
 	// Arrange
-	Converter<VType, String> converter = VTypeFormat.defaultFormatter();
+	Function<VType, String> converter = VTypeFormat.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
 	Number number = Double.valueOf(123.456);
@@ -547,7 +547,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VType value = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "123.456000 ");
@@ -556,7 +556,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     @Test
     public void default_convert_table() throws ConversionException {
 	// Arrange
-	Converter<VTable, String> converter = VTypeFormat.defaultFormatter();
+	Function<VTable, String> converter = VTypeFormat.defaultFormatter();
 
 	List<Class<?>> types = Arrays.asList();
 	List<String> names = Arrays.asList("Name 1", "Name 2");
@@ -565,7 +565,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VTable value = ValueFactory.newVTable(types, names, values);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "VTable[2x0, [Name 1, Name 2]]");
@@ -575,7 +575,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_statistics_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VStatistics, String> converter = VTypeFormat
+	Function<VStatistics, String> converter = VTypeFormat
 		.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(2), 0.0, 0.0, 0.0, 0.0, 0.0);
@@ -584,7 +584,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		10, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, value.toString());
@@ -594,7 +594,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_statistics_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VStatistics, String> converter = VTypeFormat
+	Function<VStatistics, String> converter = VTypeFormat
 		.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(2), 0.0, 0.0, 0.0, 0.0, 0.0);
@@ -603,7 +603,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		10, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, value.toString());
@@ -612,14 +612,14 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     @Test
     public void default_convert_image() throws ConversionException {
 	// Arrange
-	Converter<VImage, String> converter = VTypeFormat.defaultFormatter();
+	Function<VImage, String> converter = VTypeFormat.defaultFormatter();
 
 	byte[] data = new byte[] {(byte) 0 };
 
 	VImage value = ValueFactory.newVImage(1, 1, data);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, value.toString());
@@ -628,14 +628,14 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     @Test
     public void default_convert_enum() throws ConversionException {
 	// Arrange
-	Converter<VEnum, String> converter = VTypeFormat.defaultFormatter();
+	Function<VEnum, String> converter = VTypeFormat.defaultFormatter();
 	String test = "Test";
 	List<String> labels = new ArrayList<String>();
 	labels.add(test);
 	VEnum value = ValueFactory.newVEnum(0, labels, null, null);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, test);
@@ -644,7 +644,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     @Test
     public void default_convert_multi_double() throws ConversionException {
 	// Arrange
-	Converter<VMultiDouble, String> converter = VTypeFormat
+	Function<VMultiDouble, String> converter = VTypeFormat
 		.defaultFormatter();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
@@ -658,7 +658,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, value.toString());
@@ -667,7 +667,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     @Test
     public void default_convert_boolean_array() throws ConversionException {
 	// Arrange
-	Converter<VBooleanArray, String> converter = VTypeFormat
+	Function<VBooleanArray, String> converter = VTypeFormat
 		.defaultFormatter();
 
 	ListBoolean data = new ListBoolean() {
@@ -690,7 +690,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VBooleanArray value = ValueFactory.newVBooleanArray(data, null, null);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -700,7 +700,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_double_array_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VDoubleArray, String> converter = VTypeFormat
+	Function<VDoubleArray, String> converter = VTypeFormat
 		.defaultFormatter();
 
 	ListDouble data = new ListDouble() {
@@ -722,7 +722,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -732,7 +732,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_double_array_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VDoubleArray, String> converter = VTypeFormat
+	Function<VDoubleArray, String> converter = VTypeFormat
 		.defaultFormatter();
 
 	ListDouble data = new ListDouble() {
@@ -754,7 +754,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -763,7 +763,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     @Test
     public void default_convert_enum_array() throws ConversionException {
 	// Arrange
-	Converter<VEnumArray, String> converter = VTypeFormat
+	Function<VEnumArray, String> converter = VTypeFormat
 		.defaultFormatter();
 
 	ListInt indexes = new ListInt() {
@@ -783,7 +783,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		null);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -792,7 +792,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     @Test
     public void default_convert_string_array() throws ConversionException {
 	// Arrange
-	Converter<VStringArray, String> converter = VTypeFormat
+	Function<VStringArray, String> converter = VTypeFormat
 		.defaultFormatter();
 
 	List<String> data = new ArrayList<>();
@@ -800,7 +800,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VStringArray value = ValueFactory.newVStringArray(data, null, null);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[Test]");
@@ -810,7 +810,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_float_array_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VFloatArray, String> converter = VTypeFormat
+	Function<VFloatArray, String> converter = VTypeFormat
 		.defaultFormatter();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
@@ -831,7 +831,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -841,7 +841,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_float_array_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VFloatArray, String> converter = VTypeFormat
+	Function<VFloatArray, String> converter = VTypeFormat
 		.defaultFormatter();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
@@ -862,7 +862,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -872,7 +872,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_int_array_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VIntArray, String> converter = VTypeFormat.defaultFormatter();
+	Function<VIntArray, String> converter = VTypeFormat.defaultFormatter();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
@@ -892,7 +892,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		.newVIntArray(values, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -902,7 +902,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_int_array_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VIntArray, String> converter = VTypeFormat.defaultFormatter();
+	Function<VIntArray, String> converter = VTypeFormat.defaultFormatter();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
@@ -922,7 +922,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		.newVIntArray(values, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -932,7 +932,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_long_array_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VLongArray, String> converter = VTypeFormat
+	Function<VLongArray, String> converter = VTypeFormat
 		.defaultFormatter();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
@@ -953,7 +953,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -963,7 +963,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_convert_long_array_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VLongArray, String> converter = VTypeFormat
+	Function<VLongArray, String> converter = VTypeFormat
 		.defaultFormatter();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
@@ -984,7 +984,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -994,7 +994,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_number_double_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat
+	Function<VNumber, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
@@ -1004,7 +1004,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456000");
@@ -1014,7 +1014,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_number_double_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat
+	Function<VNumber, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
@@ -1024,7 +1024,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456000");
@@ -1034,7 +1034,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_number_float_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat
+	Function<VNumber, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
@@ -1044,7 +1044,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456001");
@@ -1054,7 +1054,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_number_float_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat
+	Function<VNumber, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
@@ -1064,7 +1064,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456001");
@@ -1074,7 +1074,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_number_long_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat
+	Function<VNumber, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
@@ -1084,7 +1084,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456");
@@ -1094,7 +1094,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_number_long_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat
+	Function<VNumber, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
@@ -1104,7 +1104,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456");
@@ -1114,7 +1114,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_number_integer_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat
+	Function<VNumber, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
@@ -1124,7 +1124,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456");
@@ -1134,7 +1134,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_number_integer_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat
+	Function<VNumber, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
@@ -1144,7 +1144,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456");
@@ -1154,7 +1154,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_number_short_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat
+	Function<VNumber, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
@@ -1164,7 +1164,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123");
@@ -1174,7 +1174,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_number_short_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat
+	Function<VNumber, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
@@ -1184,7 +1184,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123");
@@ -1194,7 +1194,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_number_byte_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat
+	Function<VNumber, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
@@ -1204,7 +1204,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123");
@@ -1214,7 +1214,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_number_byte_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VNumber, String> converter = VTypeFormat
+	Function<VNumber, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
@@ -1224,7 +1224,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123");
@@ -1234,14 +1234,14 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_double_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VDouble, String> converter = VTypeFormat
+	Function<VDouble, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(3), 0.0, 0.0, 0.0, 0.0, 0.0);
 	VDouble vnum = ValueFactory.newVDouble(123.456, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456");
@@ -1251,7 +1251,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_double_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VDouble, String> converter = VTypeFormat
+	Function<VDouble, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(3), 0.0, 0.0, 0.0, 0.0, 0.0);
@@ -1259,7 +1259,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VDouble vnum = ValueFactory.newVDouble(123.456, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456");
@@ -1269,7 +1269,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_float_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VFloat, String> converter = VTypeFormat
+	Function<VFloat, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
@@ -1279,7 +1279,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VFloat vnum = ValueFactory.newVFloat(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456001");
@@ -1289,7 +1289,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_float_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VFloat, String> converter = VTypeFormat
+	Function<VFloat, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
@@ -1299,7 +1299,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VFloat vnum = ValueFactory.newVFloat(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123.456001");
@@ -1309,7 +1309,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_long_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VLong, String> converter = VTypeFormat
+	Function<VLong, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
@@ -1319,7 +1319,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VLong vnum = ValueFactory.newVLong(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456");
@@ -1329,7 +1329,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_long_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VLong, String> converter = VTypeFormat
+	Function<VLong, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
@@ -1339,7 +1339,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VLong vnum = ValueFactory.newVLong(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456");
@@ -1349,7 +1349,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_integer_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VInt, String> converter = VTypeFormat
+	Function<VInt, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
@@ -1359,7 +1359,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VInt vnum = ValueFactory.newVInt(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456");
@@ -1369,7 +1369,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_integer_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VInt, String> converter = VTypeFormat
+	Function<VInt, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
@@ -1379,7 +1379,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VInt vnum = ValueFactory.newVInt(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123456");
@@ -1389,7 +1389,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_short_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VShort, String> converter = VTypeFormat
+	Function<VShort, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
@@ -1399,7 +1399,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VShort vnum = ValueFactory.newVShort(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123");
@@ -1409,7 +1409,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_short_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VShort, String> converter = VTypeFormat
+	Function<VShort, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
@@ -1419,7 +1419,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VShort vnum = ValueFactory.newVShort(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123");
@@ -1429,7 +1429,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_byte_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VByte, String> converter = VTypeFormat
+	Function<VByte, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
@@ -1439,7 +1439,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VByte vnum = ValueFactory.newVByte(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123");
@@ -1449,7 +1449,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_byte_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VByte, String> converter = VTypeFormat
+	Function<VByte, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
@@ -1459,7 +1459,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VByte vnum = ValueFactory.newVByte(number, null, null, display);
 
 	// Act
-	String result = converter.convert(vnum);
+	String result = converter.apply(vnum);
 
 	// Assert
 	assertEquals(result, "123");
@@ -1468,14 +1468,14 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     @Test
     public void default_no_units_convert_string() throws ConversionException {
 	// Arrange
-	Converter<VString, String> converter = VTypeFormat
+	Function<VString, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	String string = "Test";
 	VString vstring = ValueFactory.newVString(string, null, null);
 
 	// Act
-	String result = converter.convert(vstring);
+	String result = converter.apply(vstring);
 
 	// Assert
 	assertEquals(result, string);
@@ -1484,13 +1484,13 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     @Test
     public void default_no_units_convert_boolean() throws ConversionException {
 	// Arrange
-	Converter<VBoolean, String> converter = VTypeFormat
+	Function<VBoolean, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	VBoolean value = ValueFactory.newVBoolean(true, null, null);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "true");
@@ -1500,7 +1500,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_type_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VType, String> converter = VTypeFormat
+	Function<VType, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
@@ -1510,7 +1510,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VType value = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "123.456000");
@@ -1520,7 +1520,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_type_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VType, String> converter = VTypeFormat
+	Function<VType, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
@@ -1530,7 +1530,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VType value = ValueFactory.newVNumber(number, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "123.456000");
@@ -1539,7 +1539,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     @Test
     public void default_no_units_convert_table() throws ConversionException {
 	// Arrange
-	Converter<VTable, String> converter = VTypeFormat
+	Function<VTable, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	List<Class<?>> types = Arrays.asList();
@@ -1549,7 +1549,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VTable value = ValueFactory.newVTable(types, names, values);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "VTable[2x0, [Name 1, Name 2]]");
@@ -1559,7 +1559,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_statistics_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VStatistics, String> converter = VTypeFormat
+	Function<VStatistics, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
@@ -1569,7 +1569,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		10, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, value.toString());
@@ -1579,7 +1579,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_statistics_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VStatistics, String> converter = VTypeFormat
+	Function<VStatistics, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
@@ -1589,7 +1589,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		10, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, value.toString());
@@ -1598,7 +1598,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     @Test
     public void default_no_units_convert_image() throws ConversionException {
 	// Arrange
-	Converter<VImage, String> converter = VTypeFormat
+	Function<VImage, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	byte[] data = new byte[] {(byte) 0 };
@@ -1606,7 +1606,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VImage value = ValueFactory.newVImage(1, 1, data);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, value.toString());
@@ -1615,7 +1615,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     @Test
     public void default_no_units_convert_enum() throws ConversionException {
 	// Arrange
-	Converter<VEnum, String> converter = VTypeFormat
+	Function<VEnum, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	String test = "Test";
@@ -1624,7 +1624,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VEnum value = ValueFactory.newVEnum(0, labels, null, null);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, test);
@@ -1634,7 +1634,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_multi_double()
 	    throws ConversionException {
 	// Arrange
-	Converter<VMultiDouble, String> converter = VTypeFormat
+	Function<VMultiDouble, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
@@ -1649,7 +1649,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, value.toString());
@@ -1659,7 +1659,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_boolean_array()
 	    throws ConversionException {
 	// Arrange
-	Converter<VBooleanArray, String> converter = VTypeFormat
+	Function<VBooleanArray, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	ListBoolean data = new ListBoolean() {
@@ -1682,7 +1682,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VBooleanArray value = ValueFactory.newVBooleanArray(data, null, null);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -1692,7 +1692,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_double_array_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VDoubleArray, String> converter = VTypeFormat
+	Function<VDoubleArray, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	ListDouble data = new ListDouble() {
@@ -1714,7 +1714,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -1724,7 +1724,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_double_array_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VDoubleArray, String> converter = VTypeFormat
+	Function<VDoubleArray, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	ListDouble data = new ListDouble() {
@@ -1746,7 +1746,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -1756,7 +1756,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_enum_array()
 	    throws ConversionException {
 	// Arrange
-	Converter<VEnumArray, String> converter = VTypeFormat
+	Function<VEnumArray, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	ListInt indexes = new ListInt() {
@@ -1776,7 +1776,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		null);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -1786,7 +1786,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_string_array()
 	    throws ConversionException {
 	// Arrange
-	Converter<VStringArray, String> converter = VTypeFormat
+	Function<VStringArray, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	List<String> data = new ArrayList<>();
@@ -1794,7 +1794,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	VStringArray value = ValueFactory.newVStringArray(data, null, null);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[Test]");
@@ -1804,7 +1804,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_float_array_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VFloatArray, String> converter = VTypeFormat
+	Function<VFloatArray, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
@@ -1825,7 +1825,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -1835,7 +1835,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_float_array_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VFloatArray, String> converter = VTypeFormat
+	Function<VFloatArray, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
@@ -1856,7 +1856,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -1866,7 +1866,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_int_array_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VIntArray, String> converter = VTypeFormat
+	Function<VIntArray, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
@@ -1887,7 +1887,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		.newVIntArray(values, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -1897,7 +1897,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_int_array_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VIntArray, String> converter = VTypeFormat
+	Function<VIntArray, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
@@ -1918,7 +1918,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		.newVIntArray(values, null, null, display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -1928,7 +1928,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_long_array_with_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VLongArray, String> converter = VTypeFormat
+	Function<VLongArray, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
@@ -1949,7 +1949,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");
@@ -1959,7 +1959,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
     public void default_no_units_convert_long_array_without_units()
 	    throws ConversionException {
 	// Arrange
-	Converter<VLongArray, String> converter = VTypeFormat
+	Function<VLongArray, String> converter = VTypeFormat
 		.defaultFormatterNoUnits();
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
@@ -1980,7 +1980,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 		display);
 
 	// Act
-	String result = converter.convert(value);
+	String result = converter.apply(value);
 
 	// Assert
 	assertEquals(result, "[]");

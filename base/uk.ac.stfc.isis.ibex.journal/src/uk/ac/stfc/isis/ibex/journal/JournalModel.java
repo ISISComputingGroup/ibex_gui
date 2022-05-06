@@ -145,7 +145,7 @@ public class JournalModel extends ModelObject {
      * Searches for and updates runs from the database.
      * 
      * @param connection the SQL connection to use.
-     * @param parameters The parameters to search with.
+     * @param search The parameters to search with.
      */
     private void searchUpdateRuns(Connection connection, JournalSearch search) throws SQLException {
         long startTime = System.currentTimeMillis();
@@ -354,8 +354,7 @@ public class JournalModel extends ModelObject {
 	/**
 	 * Sets the total results number.
 	 * 
-	 * @param totalResults The number of results.
-	 * @return a CompleteableFuture
+	 * @param resultsNumber The number of results.
 	 */
 	private void setResultsNumber(int resultsNumber) {
 		firePropertyChange("resultsNumber", this.resultsNumber, this.resultsNumber = resultsNumber);	

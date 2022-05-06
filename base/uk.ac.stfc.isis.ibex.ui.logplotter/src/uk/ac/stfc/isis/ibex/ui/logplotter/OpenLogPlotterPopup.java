@@ -33,6 +33,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
+import uk.ac.stfc.isis.ibex.ui.blocks.groups.BlocksMenu;
 
 
 /** Command handler for opening Data Browser on the current selection. 
@@ -47,71 +48,73 @@ public class OpenLogPlotterPopup extends AbstractHandler {
     /** {@inheritDoc} */
     @Override
     public Object execute(final ExecutionEvent event) throws ExecutionException {
-        // Get selection first because the ApplicationContext might change.
-        ISelection selection = HandlerUtil.getActiveMenuSelection(event);
-        if (selection == null) {
-            // This works for double-clicks.
-            selection = HandlerUtil.getCurrentSelection(event);
-        }
-
-        switchToLogPlotter();
-
-        // Create new editor
-        final DataBrowserEditor editor = DataBrowserEditor.createInstance();
-        if (editor == null) {
-            return null;
-        }
-        
-        // Add received items
-        final Model model = editor.getModel();
-        model.setSaveChanges(false);
-        try {
-            if (selection instanceof IStructuredSelection
-                && ((IStructuredSelection) selection).getFirstElement() instanceof ChannelInfo) {   
-                // Received items are from search dialog
-                final Object[] channels = ((IStructuredSelection) selection).toArray();
-                for (Object channel : channels) {
-                    final ChannelInfo info = (ChannelInfo) channel;
-                    add(model, info.getProcessVariable(), info.getArchiveDataSource());
-                }
-            } else {
-                // Add received PVs with default archive data sources
-                final List<TimestampedPV> timestampedPVs = Arrays
-                        .asList(AdapterUtil.convert(selection,
-                                TimestampedPV.class));
-                if (!timestampedPVs.isEmpty()) {
-                    // Add received items, tracking their start..end time
-                    long start_ms = Long.MAX_VALUE,  end_ms = 0;
-                    for (TimestampedPV timestampedPV : timestampedPVs) {
-                        final long time = timestampedPV.getTime();
-                        if (time < start_ms) {
-                            start_ms = time;
-                        }
-                        if (time > end_ms) {
-                            end_ms = time;
-                        }
-                        final PVItem item = new PVItem(timestampedPV.getName().trim(), period);
-                        item.setAxis(model.addAxis());
-                        item.useDefaultArchiveDataSources();
-                        model.addItem(item);
-                    }
-
-                    final Instant start = Instant.ofEpochMilli(start_ms).minus(Duration.ofMinutes(30));
-                    final Instant end = Instant.ofEpochMilli(end_ms).plus(Duration.ofMinutes(30));
-                    model.enableScrolling(false);
-                    model.setTimerange(start, end);
-                } else {
-                    final ProcessVariable[] pvs = AdapterUtil.convert(
-                            selection, ProcessVariable.class);
-                    for (ProcessVariable pv : pvs) {
-                        add(model, pv, null);
-                    }
-                }
+    	if (BlocksMenu.canAddPlot()) {
+            // Get selection first because the ApplicationContext might change.
+            ISelection selection = HandlerUtil.getActiveMenuSelection(event);
+            if (selection == null) {
+                // This works for double-clicks.
+                selection = HandlerUtil.getCurrentSelection(event);
             }
-        } catch (Exception ex) {
-            MessageDialog.openError(editor.getSite().getShell(),
-                    "Error", ex.getMessage());
-        }
+
+            switchToLogPlotter();
+
+            // Create new editor
+            final DataBrowserEditor editor = DataBrowserEditor.createInstance();
+            if (editor == null) {
+                return null;
+            }
+            
+            // Add received items
+            final Model model = editor.getModel();
+            model.setSaveChanges(false);
+            try {
+                if (selection instanceof IStructuredSelection
+                    && ((IStructuredSelection) selection).getFirstElement() instanceof ChannelInfo) {   
+                    // Received items are from search dialog
+                    final Object[] channels = ((IStructuredSelection) selection).toArray();
+                    for (Object channel : channels) {
+                        final ChannelInfo info = (ChannelInfo) channel;
+                        add(model, info.getProcessVariable(), info.getArchiveDataSource());
+                    }
+                } else {
+                    // Add received PVs with default archive data sources
+                    final List<TimestampedPV> timestampedPVs = Arrays
+                            .asList(AdapterUtil.convert(selection,
+                                    TimestampedPV.class));
+                    if (!timestampedPVs.isEmpty()) {
+                        // Add received items, tracking their start..end time
+                        long start_ms = Long.MAX_VALUE,  end_ms = 0;
+                        for (TimestampedPV timestampedPV : timestampedPVs) {
+                            final long time = timestampedPV.getTime();
+                            if (time < start_ms) {
+                                start_ms = time;
+                            }
+                            if (time > end_ms) {
+                                end_ms = time;
+                            }
+                            final PVItem item = new PVItem(timestampedPV.getName().trim(), period);
+                            item.setAxis(model.addAxis());
+                            item.useDefaultArchiveDataSources();
+                            model.addItem(item);
+                        }
+
+                        final Instant start = Instant.ofEpochMilli(start_ms).minus(Duration.ofMinutes(30));
+                        final Instant end = Instant.ofEpochMilli(end_ms).plus(Duration.ofMinutes(30));
+                        model.enableScrolling(false);
+                        model.setTimerange(start, end);
+                    } else {
+                        final ProcessVariable[] pvs = AdapterUtil.convert(
+                                selection, ProcessVariable.class);
+                        for (ProcessVariable pv : pvs) {
+                            add(model, pv, null);
+                        }
+                    }
+                }
+            } catch (Exception ex) {
+                MessageDialog.openError(editor.getSite().getShell(),
+                        "Error", ex.getMessage());
+            }
+    	}
         return null;
     }
 

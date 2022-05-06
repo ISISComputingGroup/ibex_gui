@@ -180,8 +180,8 @@ public enum ComponentType {
     LSICORR,
     /** Density meter (e.g. DMA4500M) */
     DENSITY_METER,
-    /** Waveguide and aperture. **/
-    WAVEGUIDE_APERTURE,
+    /** guide and aperture. **/
+    GUIDE_APERTURE,
     /**Spin flipper.*/
     SPIN_FLIPPER,
     /** SANS2D Vacuum Tank. */
@@ -189,7 +189,11 @@ public enum ComponentType {
     /** Helium Level Gauge. */
     HE_LEVEL_GAUGE,
     /** Musr Steering Magnets. */
-    MUSR_STEERING;
+    MUSR_STEERING,
+    /** Delay generators. */
+    DELAY_GENERATORS,
+	/** Function generators */
+	FUNCTION_GENERATOR;
 
     private Target target;
 

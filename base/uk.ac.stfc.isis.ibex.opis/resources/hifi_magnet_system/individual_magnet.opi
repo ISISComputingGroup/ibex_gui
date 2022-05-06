@@ -101,7 +101,7 @@ $(pv_value)</tooltip>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
-    <enabled>true</enabled>
+    <enabled>false</enabled>
     <font>
       <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
     </font>
@@ -116,7 +116,14 @@ $(pv_value)</tooltip>
     <pv_name>$(PV_ROOT)$(MAG):SET:SP</pv_name>
     <pv_value />
     <release_action_index>0</release_action_index>
-    <rules />
+    <rules>
+      <rule name="Rule" prop_id="enabled" out_exp="false">
+        <exp bool_exp="pvInt0 == 0">
+          <value>true</value>
+        </exp>
+        <pv trig="true">$(PV_ROOT)$(MAG):SET:SP.DISP</pv>
+      </rule>
+    </rules>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
@@ -489,7 +496,25 @@ $(pv_value)</tooltip>
     <pv_name>$(PV_ROOT)$(MAG):TARGET:SP</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
-    <rules />
+    <rules>
+      <rule name="Rule" prop_id="enabled" out_exp="false">
+        <exp bool_exp="pvInt0 == 0">
+          <value>true</value>
+        </exp>
+        <exp bool_exp="pvInt0 != 0">
+          <value>false</value>
+        </exp>
+        <pv trig="true">$(PV_ROOT)$(MAG):TARGET:SP.DISP</pv>
+      </rule>
+      <rule name="Rule" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pvInt0 != 0">
+          <value>
+            <color red="192" green="192" blue="192" />
+          </value>
+        </exp>
+        <pv trig="true">$(PV_ROOT)$(MAG):TARGET:SP.DISP</pv>
+      </rule>
+    </rules>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>

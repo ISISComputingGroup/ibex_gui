@@ -119,7 +119,7 @@ public class ExperimentSetupViewModel extends ModelObject {
      *                  True if changes have been made in the experiment setup but haven't been applied.
      */
     public void setIsChanged(boolean isChanged) {
-        this.isChanged = isChanged;
+        firePropertyChange("isChanged", this.isChanged, this.isChanged = isChanged);
     }
     
     /**

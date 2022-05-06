@@ -140,7 +140,7 @@ public final class InstrumentListUtils {
      *     Optional<ArrayList<String>> = Optional.empty()  - this client is allowed to look at any instrument
      *     
      * If present, the list will always contain at least one value.
-     * @return
+     * @return A list of allowed groups
      */
     private static Optional<List<String>> loadAllowedGroups() {
         try {

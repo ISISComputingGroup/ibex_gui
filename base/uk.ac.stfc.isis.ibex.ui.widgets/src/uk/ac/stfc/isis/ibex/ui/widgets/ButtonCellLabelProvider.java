@@ -36,7 +36,7 @@ public abstract class ButtonCellLabelProvider<T> extends ControlCellLabelProvide
      * 
      * @param attributeMaps A map of the attributes that this cell will observe.
      */
-	protected ButtonCellLabelProvider(IObservableMap attributeMaps) {
+	protected ButtonCellLabelProvider(IObservableMap<T, ?>[] attributeMaps) {
 		super(attributeMaps);
 	}
 

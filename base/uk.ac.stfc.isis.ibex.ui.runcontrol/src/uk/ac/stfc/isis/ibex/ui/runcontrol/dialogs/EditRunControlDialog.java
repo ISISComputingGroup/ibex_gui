@@ -35,6 +35,7 @@ import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
+import uk.ac.stfc.isis.ibex.ui.runcontrol.commands.RunControlHandler;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
 /**
@@ -48,6 +49,7 @@ public class EditRunControlDialog extends TitleAreaDialog {
 	private final RunControlServer runControlServer;
 	private RunControlSettingsPanel editor;
 	private final RunControlViewModel viewModel;
+	private RunControlHandler handler;
 	
 	/**
 	 * Creates a dialog for configuring the run-control settings.
@@ -85,7 +87,7 @@ public class EditRunControlDialog extends TitleAreaDialog {
 	protected Control createDialogArea(Composite parent) {
         setTitle("Configure Run Control");
 		
-		editor = new RunControlSettingsPanel(parent, SWT.NONE, configServer, runControlServer, viewModel);
+		editor = new RunControlSettingsPanel(this, parent, SWT.NONE, configServer, runControlServer, viewModel);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		return editor;

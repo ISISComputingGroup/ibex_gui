@@ -36,6 +36,9 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 public abstract class RepeatingJob extends Job {
 
     private boolean running = true;
+    /**
+     * The millisecond time delay between runs of the job.
+     */
     protected long repeatDelay = 0;
     private static final Logger LOG = IsisLog.getLogger(RepeatingJob.class);
 

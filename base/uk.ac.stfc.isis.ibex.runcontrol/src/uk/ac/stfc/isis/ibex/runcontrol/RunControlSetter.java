@@ -19,16 +19,16 @@
 
 package uk.ac.stfc.isis.ibex.runcontrol;
 
-import uk.ac.stfc.isis.ibex.epics.writing.Writer;
+import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
 /**
  * This class sets the run control on the blocks within the server.
  */
 public class RunControlSetter {
-    private final Writer<Double> lowLimitSetter;
-    private final Writer<Double> highLimitSetter;
-    private final Writer<String> enabledSetter;
-    private final Writer<String> invalidSetter;
+    private final Writable<Double> lowLimitSetter;
+    private final Writable<Double> highLimitSetter;
+    private final Writable<String> enabledSetter;
+    private final Writable<String> invalidSetter;
 
     /**
      * Creates a setter for the given block. The PVs are created at this time as

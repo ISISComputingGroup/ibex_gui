@@ -19,8 +19,6 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -29,6 +27,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
@@ -40,13 +39,14 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorContext;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratorPython;
+import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingManager;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.GeneratedLanguage;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionLoader;
-
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.PythonInterface;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionsTable;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
@@ -81,6 +81,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * The table containing the script generator contents (actions).
 	 */
 	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<JavaActionParameter>());
+	
+	private List<String> globalParams;
 
 	/**
 	 * The loader to select and update the script definition being used.
@@ -94,60 +96,15 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	private PythonInterface pythonInterface;
 
 	/**
-	 * The property to listen for changes to actions in the script generator table
-	 * on.
-	 */
-	private static final String ACTIONS_PROPERTY = "actions";
-
-	/**
-	 * The property to listen for changes in the generator on, as to whether the
-	 * current selected language is supported.
-	 */
-	private static final String LANGUAGE_SUPPORT_PROPERTY = "language_supported";
-
-	/**
 	 * Whether the current used language is supported or not.
 	 */
 	public boolean languageSupported = true;
-
-	/**
-	 * The property to listen for changes in the generator on, as to whether there
-	 * has been a thread error when checking parameter validity or generating a
-	 * script.
-	 */
-	private static final String THREAD_ERROR_PROPERTY = "thread error";
 
 	/**
 	 * Whether there has been a thread error or not that affects the current state
 	 * of the script generator.
 	 */
 	private boolean threadError = false;
-
-	/**
-	 * The property to listen for changes in the generator containing the mapping
-	 * Map<Integer, String> of validity checks for each row of the script generator.
-	 */
-	private static final String VALIDITY_ERROR_MESSAGE_PROPERTY = "validity error messages";
-
-	/**
-	 * The property to listen for changes in a Generator containing whether or not
-	 * all script generator contents are valid or not (bool).
-	 */
-	private static final String PARAM_VALIDITY_PROPERTY = "parameter validity";
-	
-	private static final String TIME_ESTIMATE_PROPERTY = "time estimate";
-
-	/**
-	 * The property to listen for changes in a Generator containing the generated
-	 * script (String).
-	 */
-	private static final String GENERATED_SCRIPT_PROPERTY = "generated script";
-
-	/**
-	 * The property to listen for changes in a Generator containing the generated
-	 * script (String).
-	 */
-	private static final String GENERATED_SCRIPT_FILENAME_PROPERTY = "generated script filename";
 	
 	/**
 	 * The current state of parameter validity.
@@ -160,21 +117,6 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	private GeneratorContext generator;
 
 	/**
-	 * The time to wait before timing out from trying to connect to the manual.
-	 */
-	private static final int URL_TIMEOUT_MILLISECONDS = 3000;
-
-	/**
-	 * A property to fire a change of when there is an error generating a script.
-	 */
-	private static final String SCRIPT_GENERATION_ERROR_PROPERTY = "script generation error";
-
-	/**
-	 * A property to notify listeners when python becomes ready or not ready.
-	 */
-	private static final String PYTHON_READINESS_PROPERTY = "python ready";
-
-	/**
 	 * The date format to use when generating a script name.
 	 */
 	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -182,19 +124,9 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorSingleton.class);
 
 	/**
-	 * The string containing the last generated script.
+	 * The Integer containing the last generated script.
 	 */
-	private Optional<String> lastGeneratedScript;
-
-	/**
-	 * A response code for a get call that is good.
-	 */
-	private static final int GOOD_RESPONSE_CODE = 200;
-
-	/**
-	 * A response code for a get call that is bad.
-	 */
-	private static final int BAD_RESPONSE_CODE = 300;
+	private Optional<Integer> lastGeneratedScriptId;
 	
 	/**
 	 * JSON file handler for saving parameters
@@ -206,12 +138,15 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	private ScriptGeneratorFileHandler fileHandler = new ScriptGeneratorFileHandler();
 	
+	private Optional<DynamicScriptingManager> dynamicScriptingManager = Optional.empty();
+	
 
 	/**
 	 * The constructor, will create without a script definition loader and without loading
 	 * an initial script definition.
 	 */
-	public ScriptGeneratorSingleton() {   
+	public ScriptGeneratorSingleton() {  
+		this.globalParams = new ArrayList<String>();
 	}
 
 	/**
@@ -228,6 +163,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		this.pythonInterface = pythonInterface;
 		this.scriptDefinitionLoader = scriptDefinitionLoader;
 		this.scriptGeneratorTable = scriptGeneratorTable;
+		this.globalParams = new ArrayList<String>();
 		setUp();
 	}
 
@@ -246,40 +182,41 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		generator = new GeneratorContext(GeneratedLanguage.PYTHON, new GeneratorPython(pythonInterface));
 
 		// If the validity error message property of the generator is changed update the
-		// validity errors in the scriptGeneratorTable
-		generator.addPropertyChangeListener(VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
-			scriptGeneratorTable.setValidityErrors(convertToMap(evt.getNewValue(), Integer.class, String.class));
-			firePropertyChange(VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		// validity errors in the scriptGeneratorTable		
+		generator.addPropertyChangeListener(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
+			scriptGeneratorTable.setValidityErrors(convertToListMap(evt.getNewValue()));
+			firePropertyChange(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
         // If the time estimation message property of the generator is changed update the
         // time estimation in the scriptGeneratorTable
-        generator.addPropertyChangeListener(TIME_ESTIMATE_PROPERTY, evt -> {
+        generator.addPropertyChangeListener(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, evt -> {
             scriptGeneratorTable.setEstimatedTimes(convertToMap(evt.getNewValue(), Integer.class, Number.class));
-            firePropertyChange(TIME_ESTIMATE_PROPERTY, evt.getOldValue(), evt.getNewValue());
+            firePropertyChange(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, evt.getOldValue(), evt.getNewValue());
         });
 		// If the parameter validity property is changed update the models field that
 		// denotes
 		// whether the parameters are valid and notify any listeners
-		generator.addPropertyChangeListener(PARAM_VALIDITY_PROPERTY, evt -> {
+		generator.addPropertyChangeListener(ScriptGeneratorProperties.PARAM_VALIDITY_PROPERTY, evt -> {
 			Optional.ofNullable(evt.getNewValue()).ifPresentOrElse(
 					paramValidity -> this.paramValidity = Boolean.class.cast(paramValidity),
 					() -> this.paramValidity = false);
-			firePropertyChange(PARAM_VALIDITY_PROPERTY, evt.getOldValue(), evt.getNewValue());
+			firePropertyChange(ScriptGeneratorProperties.PARAM_VALIDITY_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
 		// Detect when the generated script is refreshed
 		// Write the script to file, send up generated script filepath
-		generator.addPropertyChangeListener(GENERATED_SCRIPT_PROPERTY, evt -> {
+		generator.addPropertyChangeListener(ScriptGeneratorProperties.GENERATED_SCRIPT_PROPERTY, evt -> {
 
-			lastGeneratedScript = (Optional<String>) evt.getNewValue();
-			lastGeneratedScript.ifPresentOrElse(script -> {
+			lastGeneratedScriptId = (Optional<Integer>) evt.getNewValue();
+			lastGeneratedScriptId.ifPresentOrElse(scriptId -> {
 				try {
 					String generatedScriptFilename = generateScriptFileName();
-					firePropertyChange(GENERATED_SCRIPT_FILENAME_PROPERTY, null, generatedScriptFilename);
+					firePropertyChange(ScriptGeneratorProperties.GENERATED_SCRIPT_FILENAME_PROPERTY, null, generatedScriptFilename);
+					firePropertyChange(ScriptGeneratorProperties.GENERATED_SCRIPT_PROPERTY, null, scriptId);
 				} catch (NoScriptDefinitionSelectedException e) {
 					LOG.error(e);
 				}
 			}, () -> {
-				firePropertyChange(SCRIPT_GENERATION_ERROR_PROPERTY, null, true);
+				firePropertyChange(ScriptGeneratorProperties.SCRIPT_GENERATION_ERROR_PROPERTY, null, true);
 			});
 			
 		});
@@ -287,7 +224,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		scriptDefinitionLoader.addPropertyChangeListener("parameters", evt -> {
 			setActionParameters(scriptDefinitionLoader.getParameters());
 		});
-		this.scriptGeneratorTable.addPropertyChangeListener(ACTIONS_PROPERTY, evt -> {
+		this.scriptGeneratorTable.addPropertyChangeListener(ScriptGeneratorProperties.ACTIONS_PROPERTY, evt -> {
 			// The table has changed so update the validity checks and time estimate
 			try {
 				refreshParameterValidityChecking();
@@ -298,41 +235,15 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		});
 
 		setActionParameters(scriptDefinitionLoader.getParameters());
-	}
+		try {
+			List<ActionParameter> globals = this.scriptDefinitionLoader.getScriptDefinition().getGlobalParameters();
+			for (ActionParameter global : globals) {
+				this.globalParams.add(global.getDefaultValue());
+			}
+		} catch (NoSuchElementException e) {
+			LOG.info("No scriptDefinition yet");
+		}
 
-	/**
-	 * SHOULD ONLY BE CALLED IN ANOTHER THREAD. Load the URL for the user manual
-	 * from preferences and attempt to connect to them. If we can connect with them
-	 * then select this as the url for the manual or an empty optional if we can't
-	 * connect to any.
-	 * 
-	 * @return An empty optional if there is no preference that we can connect to,
-	 *         or an optional containing the url.
-	 */
-	public Optional<URL> getUserManualUrl() {
-
-	    String preferenceProperty = preferenceSupplier.scriptGeneratorManualURL();
-	    
-	    // Loop through all URLs in the preference property
-	    // and return the first one reachable from the user's network
-	    for (String url : preferenceProperty.split(",")) {
-	        try {
-	            URL possibleUrl = new URL(url);
-	            HttpURLConnection connection = (HttpURLConnection) possibleUrl.openConnection();
-	            connection.setConnectTimeout(URL_TIMEOUT_MILLISECONDS);
-	            connection.setRequestMethod("GET");
-	            connection.connect();
-	            int responseCode = connection.getResponseCode();
-	            if (responseCode >= GOOD_RESPONSE_CODE && responseCode < BAD_RESPONSE_CODE) {
-	                return Optional.of(possibleUrl);
-	            }
-	        } catch (IOException ex) {
-	            LOG.debug("Invalid URL for user manual was found: " + url);
-	        }
-	    }
-	    
-	    LOG.warn("No valid URLs for the user manual were found");
-	    return Optional.empty();
 	}
 
 	/**
@@ -348,8 +259,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	public void createScriptDefinitionLoader() {
 		pythonInterface = new PythonInterface();
 		scriptDefinitionLoader = new ScriptDefinitionLoader(pythonInterface);
-		pythonInterface.addPropertyChangeListener(PYTHON_READINESS_PROPERTY, evt -> {
-			firePropertyChange(PYTHON_READINESS_PROPERTY, evt.getOldValue(), evt.getNewValue());
+		pythonInterface.addPropertyChangeListener(ScriptGeneratorProperties.PYTHON_READINESS_PROPERTY, evt -> {
+			firePropertyChange(ScriptGeneratorProperties.PYTHON_READINESS_PROPERTY, evt.getOldValue(), evt.getNewValue());
 		});
 		pythonInterface.workerSetUpPythonThread();
     }
@@ -376,10 +287,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
      * Get the last generated script.
      * 
      * @return An optional that is empty if no script has been generated successfully,
-     *   or the contents is the generated script.
+     *   or the id of the generated script.
      */
-    public Optional<String> getLastGeneratedScript() {
-    	return lastGeneratedScript;
+    public Optional<Integer> getLastGeneratedScriptId() {
+    	return lastGeneratedScriptId;
     }
 
 	/**
@@ -387,6 +298,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * String> representation. Required because of casting generics in Java.
 	 * 
 	 * @param validityMessages The validity messages to convert.
+	 * @param <T> class for keys in map.
+	 * @param <S> class for values in map.
+	 * @param keyClass The class the key entry should be cast to before placing in the generated map
+	 * @param valueClass The class the value entry should be cast to before placing in the generated map
 	 * @return The converted messages property.
 	 */
 	@SuppressWarnings("rawtypes")
@@ -403,6 +318,29 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		} catch (ClassCastException e) {
 			LOG.error(e);
 			return new HashMap<T, S>();
+		}
+	}
+	
+	/**
+	 * Convert the VALIDITY_ERROR_MESSAGE_PROPERTY return to the list<Map<Integer,
+	 * String>> representation. Required because of casting generics in Java.
+	 * 
+	 * @param validityMessages The validity messages to convert.
+	 * @return The converted messages property.
+	 */
+	@SuppressWarnings("rawtypes")
+	private static List<Map<Integer, String>> convertToListMap(Object validityMessages) {
+		try {
+			List listCastValidityMessages = List.class.cast(validityMessages);
+			List<Map<Integer, String>> castValidityMessages = new ArrayList<Map<Integer, String>>();
+			for (Object nonCastEntry : listCastValidityMessages) {
+				Map<Integer, String> castEntry = convertToMap(nonCastEntry, Integer.class, String.class);
+				castValidityMessages.add(castEntry);
+			}
+			return castValidityMessages;
+		} catch (ClassCastException e) {
+			LOG.error(e);
+			return new ArrayList<Map<Integer, String>>();
 		}
 	}
 
@@ -455,10 +393,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	/**
 	 * Removes action at position index from ActionsTable.
 	 * 
-	 * @param actionsToDeletes the actions to delete.
+	 * @param actionsToDelete the actions to delete.
 	 */
-	public void deleteAction(List<ScriptGeneratorAction> actionsToDeletes) {
-		scriptGeneratorTable.deleteAction(actionsToDeletes);
+	public void deleteAction(List<ScriptGeneratorAction> actionsToDelete) {
+		scriptGeneratorTable.deleteAction(actionsToDelete);
 	}
 
 	/**
@@ -476,7 +414,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
     /**
      * Clears all actions from the ActionsTable.
      */
-    public void clearAction() {
+    public void clearActions() {
         scriptGeneratorTable.clearAction();
     }
     
@@ -497,6 +435,40 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	public void moveActionDown(List<ScriptGeneratorAction> actionsToMove) {
 		scriptGeneratorTable.moveActionDown(actionsToMove);
 	}
+	
+	/**
+	 * Updates the globalParams.
+	 * @param params The new value for the parameter
+	 * @param index The global parameter to be update
+	 */
+	
+	public void updateGlobalParams(String params, int index) {
+		if (this.globalParams != null) {
+			
+			if (this.globalParams.size() > index) {
+				this.globalParams.set(index, params);			
+			} else {
+				this.globalParams.add(params);
+			}
+			
+		} else {
+			this.globalParams = new ArrayList<String>();
+			this.globalParams.add(params);
+		}
+		try {
+			refreshParameterValidityChecking();
+			refreshTimeEstimation();
+		} catch (NoScriptDefinitionSelectedException e) {
+			return;
+		}
+	}
+	
+	/**
+	 * Remove all global parameters from the list of global parameters.
+	 */
+	public void clearGlobalParams() {
+		this.globalParams.clear();
+	}
 
 	/**
 	 * Get the list of actions in the ActionsTable.
@@ -505,6 +477,24 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	public List<ScriptGeneratorAction> getActions() {
 		return scriptGeneratorTable.getActions();
+	}
+	
+	/**
+	 * Get the action at the corresponding index or an empty optional.
+	 * 
+	 * @return the action at the corresponding index or an empty optional.
+	 */
+	public Optional<ScriptGeneratorAction> getAction(Integer actionIndex) {
+		return scriptGeneratorTable.getAction(actionIndex);
+	}
+	
+	/**
+	 * Get the map of global parameter errors.
+	 * 
+	 * @return map of global parameter errors in the table.
+	 */
+	public Map<Integer, String> getGlobalParamErrors() {
+		return scriptGeneratorTable.getGlobalValidityErrors();
 	}
 
 	/**
@@ -558,7 +548,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	public String getFirstNLinesOfInvalidityErrors(int maxNumOfLines) {
 		if (!languageSupported) {
-			firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, true, false);
+			firePropertyChange(ScriptGeneratorProperties.LANGUAGE_SUPPORT_PROPERTY, true, false);
 		}
 		List<String> errors = scriptGeneratorTable.getInvalidityErrorLines();
 		String message = errors.stream().limit(maxNumOfLines).map((String error) -> String.format("- %s", error))
@@ -601,12 +591,12 @@ public class ScriptGeneratorSingleton extends ModelObject {
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException(
 						"Tried to refresh parameter validity with no script definition selected"));
 		try {
-			generator.refreshAreParamsValid(scriptGeneratorTable, scriptDefinition);
-			generator.refreshValidityErrors(scriptGeneratorTable, scriptDefinition);
+			generator.refreshAreParamsValid(scriptGeneratorTable.getActions(), scriptDefinition, this.globalParams);
+			generator.refreshValidityErrors(this.globalParams, scriptGeneratorTable.getActions(), scriptDefinition);
 			languageSupported = true;
 			threadError = false;
 		} catch (UnsupportedLanguageException e) {
-			firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, languageSupported, languageSupported = false);
+			firePropertyChange(ScriptGeneratorProperties.LANGUAGE_SUPPORT_PROPERTY, languageSupported, languageSupported = false);
 			LOG.error(e);
 		} catch (InterruptedException | ExecutionException e) {
 			registerThreadError(e);
@@ -625,19 +615,19 @@ public class ScriptGeneratorSingleton extends ModelObject {
         ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
                 .orElseThrow(() -> new NoScriptDefinitionSelectedException(
                         "Tried to refresh time estimation with no script definition selected"));
-        try {
-            generator.refreshTimeEstimation(scriptGeneratorTable, scriptDefinition);
+		try {
+			generator.refreshTimeEstimation(scriptGeneratorTable.getActions(), scriptDefinition, this.globalParams);
             languageSupported = true;
             threadError = false;
         } catch (UnsupportedLanguageException e) {
-            firePropertyChange(LANGUAGE_SUPPORT_PROPERTY, languageSupported, languageSupported = false);
+            firePropertyChange(ScriptGeneratorProperties.LANGUAGE_SUPPORT_PROPERTY, languageSupported, languageSupported = false);
             LOG.error(e);
         } catch (InterruptedException | ExecutionException e) {
         	registerThreadError(e);
         }
     }
 
-	/**
+    /**
 	 * Generate a script and save it to file.
 	 * 
 	 * @throws InvalidParamsException              If the parameters are invalid a
@@ -650,29 +640,81 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @throws NoScriptDefinitionSelectedException If there is no script definition
 	 *                                             selected to refresh checking
 	 *                                             against.
+	 * @return An ID for the generated script.
 	 */
-	public void refreshGeneratedScript()
+	public Optional<Integer> refreshGeneratedScript()
+			throws InvalidParamsException, UnsupportedLanguageException, NoScriptDefinitionSelectedException {
+		if (areParamsValid()) {
+			List<ScriptGeneratorAction> actions = scriptGeneratorTable.getActions();
+			return refreshGeneratedScript(actions);
+		} else {
+			throw new InvalidParamsException("Parameters are invalid, cannot generate script");
+		}
+	}
+	
+	/**
+	 * Generate a script and save it to file.
+	 * 
+	 * @param action The action to refresh the generated script with.
+	 * 
+	 * @throws InvalidParamsException              If the parameters are invalid a
+	 *                                             script cannot be generated.
+	 * @throws IOException                         If we fail to create and write to
+	 *                                             a file.
+	 * @throws UnsupportedLanguageException        If the language we are trying to
+	 *                                             generate a script in is
+	 *                                             unsupported.
+	 * @throws NoScriptDefinitionSelectedException If there is no script definition
+	 *                                             selected to refresh checking
+	 *                                             against.
+	 * @return An ID for the generated script.
+	 */
+	public Optional<Integer> refreshGeneratedScript(ScriptGeneratorAction action)
+			throws InvalidParamsException, UnsupportedLanguageException, NoScriptDefinitionSelectedException {
+		if (action.isValid()) {
+			List<ScriptGeneratorAction> actions = List.of(action);
+			return refreshGeneratedScript(actions);
+		} else {
+			throw new InvalidParamsException("Parameters are invalid, cannot generate script");
+		}
+	}
+	
+	/**
+	 * Generate a script and save it to file.
+	 * 
+	 * @param actionIndex The index of the action to refresh the generated script with.
+	 * 
+	 * @throws InvalidParamsException              If the parameters are invalid a
+	 *                                             script cannot be generated.
+	 * @throws IOException                         If we fail to create and write to
+	 *                                             a file.
+	 * @throws UnsupportedLanguageException        If the language we are trying to
+	 *                                             generate a script in is
+	 *                                             unsupported.
+	 * @throws NoScriptDefinitionSelectedException If there is no script definition
+	 *                                             selected to refresh checking
+	 *                                             against.
+	 * @return An ID for the generated script.
+	 */
+	private Optional<Integer> refreshGeneratedScript(List<ScriptGeneratorAction> actions)
 			throws InvalidParamsException, UnsupportedLanguageException, NoScriptDefinitionSelectedException {
 		ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException(
 						"Tried to generate a script with no script definition selected to generate it with"));
 		try {
-			if (areParamsValid()) {
-				Path filePath = getScriptDefinitionPath(scriptDefinition);
-				String jsonContent = scriptGenFileHandler.createJsonString(scriptGeneratorTable.getActions(), scriptGenFileHandler.readFileContent(filePath), filePath);
-				generator.refreshGeneratedScript(scriptGeneratorTable, scriptDefinition, jsonContent);
-			} else {
-				throw new InvalidParamsException("Parameters are invalid, cannot generate script");
-			}
+			Path filePath = getScriptDefinitionPath(scriptDefinition);
+			String jsonContent = scriptGenFileHandler.createJsonString(actions, scriptGenFileHandler.readFileContent(filePath), filePath);
+			return generator.refreshGeneratedScript(actions, scriptDefinition, jsonContent, this.globalParams);
 		} catch (InterruptedException | ExecutionException e) {
 			registerThreadError(e);
 		} catch (IOException e) {
 			LOG.error(e);
 		}
+		return Optional.empty();
 	}
 
 	private void registerThreadError(Exception e) {
-		firePropertyChange(THREAD_ERROR_PROPERTY, threadError, true);
+		firePropertyChange(ScriptGeneratorProperties.THREAD_ERROR_PROPERTY, threadError, true);
 		LOG.error(e);
 		threadError = true;
 	}
@@ -700,7 +742,14 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * Set the location of the repository containing script definitions.
 	 */
 	public void setRepoPath() {
-		this.scriptDefinitionsRepoPath = Paths.get(pythonInterface.getRepoPath());
+		scriptDefinitionsRepoPath = Paths.get(pythonInterface.getRepoPath());
+	}
+	
+	/**
+	 * @return the location of the repository containing script definitions.
+	 */
+	public Path getRepoPath() {
+		return scriptDefinitionsRepoPath;
 	}
 	
 	/**
@@ -741,16 +790,44 @@ public class ScriptGeneratorSingleton extends ModelObject {
 				.orElseThrow(() -> new NoScriptDefinitionSelectedException("No Configuration Selected"));
 		
 		try {
-			if (!filePath.endsWith(SCRIPT_GEN_PARAMS_EXT)) {
-				//Strip out other any pre-existing file extension and add the SGP (script generator parameters) file extension
-				filePath = filePath.substring(0, filePath.lastIndexOf('.')) + SCRIPT_GEN_PARAMS_EXT;
-			}
+			filePath = this.getParametersFileNameFromFilepath(filePath);
 			scriptGenFileHandler.saveParameters(scriptGeneratorTable.getActions(), getScriptDefinitionPath(scriptDefinition), filePath);
 		} catch (InterruptedException | ExecutionException e) {
 			registerThreadError(e);
 		}
 	}
 	
+	/**
+	 * Strip out other any pre-existing file extension and add the SGP (script generator parameters) file extension.
+	 * @param filePath The file path, with or without the parameter file extension.
+	 * @return The file path with the parameters file extension.
+	 */
+	public String getParametersFileNameFromFilepath(String filePath) {
+		return addFileExtensionToFilepath(filePath, SCRIPT_GEN_PARAMS_EXT);
+	}
+	
+	/**
+	 * Strip out other any pre-existing file extension and add the script file extension.
+	 * @param filePath The file path, with or without the script file extension.
+	 * @return The file path with the script file extension.
+	 */
+	public String getScriptFileNameFromFilepath(String filePath) {
+		return addFileExtensionToFilepath(filePath, PYTHON_EXT);
+	}
+	
+	/**
+	 * Strip out other any pre-existing file extension and add the given file extension.
+	 * @param filePath The file path, with or without the required file extension.
+	 * @return The file path with the desired file extension.
+	 */
+	private String addFileExtensionToFilepath(String filePath, String ext) {
+		try {
+			return (!filePath.endsWith(ext)) ? filePath.substring(0, filePath.lastIndexOf('.')) + ext : filePath;
+		} catch (StringIndexOutOfBoundsException e) {
+			// If path has file with no extension
+			return filePath + ext;
+		}
+	}
 	
 	/**
 	 * Get the file writer to use to write scripts to file.
@@ -809,6 +886,38 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	public void pasteActions(ArrayList<Map<JavaActionParameter, String>> listOfActions, int pasteLocation) {
 		scriptGeneratorTable.insertMultipleActions(listOfActions, pasteLocation);
+	}
+	
+	/**
+     * Get the generated script from the given ID.
+     * 
+     * @param scriptId The ID of the script to get.
+     * @return The script
+     */
+	public Optional<String> getScriptFromId(Integer scriptId) {
+		return generator.getScriptFromId(scriptId);
+	}
+	
+	/**
+	 * @param dynamicScriptingManager
+	 */
+	public void setDynamicScriptingManager(DynamicScriptingManager dynamicScriptingManager) {
+		this.dynamicScriptingManager = Optional.of(dynamicScriptingManager);
+	}
+	
+	/**
+	 * Check a given script is a dynamic script.
+	 * 
+     * @param scriptId The ID of the script to check.
+	 * @return whether the given script is dynamic.
+	 */
+	public Boolean isScriptDynamic(Integer scriptId) {
+		if (dynamicScriptingManager.isPresent()) {
+			var manager = dynamicScriptingManager.get();
+			return manager.isScriptDynamic(scriptId); 
+		} else {
+			return false;
+		}
 	}
 
 }

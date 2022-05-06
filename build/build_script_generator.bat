@@ -1,5 +1,5 @@
 REM We bundle our own JRE with the client, this is where it is
-set "JRELOCATION=\\isis\inst$\Kits$\CompGroup\ICP\ibex_client_jre"
+set "JRELOCATION=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\ibex_client_jre"
 set "LOCAL_JRE_LOCATION=%~dp0\jdk"
 set "TARGET_DIR=%2"
 if "%TARGET_DIR%" == "" (
@@ -23,6 +23,9 @@ SET "JAVA_HOME=%LOCAL_JRE_LOCATION%"
 if "%PYTHON3%" == "" (
 	set "PYTHON3=C:\Instrument\Apps\Python3\python.exe"
 )
+
+call %~dp0run_python_support_tests.bat
+if %errorlevel% neq 0 exit /b %errorlevel%
  
 %PYTHON3% .\check_build.py ..\base\
 if %errorlevel% neq 0 exit /b %errorlevel%
@@ -47,7 +50,7 @@ popd
 RMDIR /S /Q %definitions_temp_directory%
 
 REM Copy a portable git distribution with the script generator
-set "git_distribution=\\isis\inst$\Kits$\CompGroup\ICP\client_dependencies\git"
+set "git_distribution=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\client_dependencies\git"
 set git_directory=%~dp0..\base\uk.ac.stfc.isis.ibex.scriptgenerator\python_support\git
 robocopy "%git_distribution%" "%git_directory%" /MT /E /PURGE /R:2 /XF "install.log" /NFL /NDL /NP /NS /NC /LOG:NUL
 if %errorlevel% geq 4 (

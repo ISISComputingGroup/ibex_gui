@@ -22,11 +22,9 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.CellNavigationStrategy;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
@@ -63,13 +61,18 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	*/
 	private static final int CTRL_C = 0x003; 
 	private static final int CTRL_V = 0x016;
+	private static final int CTRL_A = 0x001;
+	private static final int DEL = 0x07F;
 	private static final String TAB = "\t";
 	private static final String NEW_LINE = "\r\n";
 	private final ScriptGeneratorViewModel scriptGeneratorViewModel;
-	private boolean shiftCellFocusToNewlyAddedRow = false;
 	private static final  Integer NON_EDITABLE_COLUMNS_ON_RIGHT = 2;
+	/**
+	 * The number of read only columns on the left of the table.
+	 */
 	protected static final Integer NON_EDITABLE_COLUMNS_ON_LEFT = 1;
 	private List<StringEditingSupport<ScriptGeneratorAction>> editingSupports = new ArrayList<StringEditingSupport<ScriptGeneratorAction>>();
+	
 	/**
      * Default constructor for the table. Creates all the correct columns.
      * 
@@ -102,15 +105,20 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 			public void keyPressed(KeyEvent e) {	 
 				if (e.character == CTRL_C) {	
 					 scriptGeneratorViewModel.copyActions(getSelectedTableData());
-			
 				} else if (e.character == CTRL_V) {
 					scriptGeneratorViewModel.pasteActions(table.getSelectionIndex());
+				} else if (e.character == CTRL_A) {
+					table.selectAll();
+				} else if (e.character == DEL) {
+					List<ScriptGeneratorAction> selected = selectedRows();
+					if (selected != null && !selected.isEmpty())  {
+						scriptGeneratorViewModel.deleteAction(selected);
+					}
 				}
 			}
 		});
-		
     }
-	
+		
     /**
      * Format String data such that copying and pasting into excel would work. Clipboard does not support
      * transferring/pasting data to excel so we format plain text data ourselves.
@@ -155,16 +163,15 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
  					 * last column is a non editable validity column.*/
 					int currentlyFocusedColumn = editor.getFocusCell().getColumnIndex() + 1;
 					
-					// Add new action if tab is pressed by user in the last cell of the table.
-					if (nextCell.getNeighbor(ViewerCell.BELOW, false).getElement() == null
-					        && (viewer.getTable().getColumnCount() - NON_EDITABLE_COLUMNS_ON_RIGHT == currentlyFocusedColumn)) {
+					Optional<ViewerCell> neighbour = Optional.ofNullable(nextCell.getNeighbor(ViewerCell.BELOW, false));
+					boolean noActionBelow = neighbour.isEmpty() || neighbour.get().getElement() == null;
+					if (noActionBelow
+					        && (viewer.getTable().getColumnCount() - NON_EDITABLE_COLUMNS_ON_RIGHT <= currentlyFocusedColumn)) {
 					    
                     	scriptGeneratorViewModel.addEmptyAction();
-                    	shiftCellFocusToNewlyAddedRow = true;
                     	// return false as we will handle this specific case of traversal
                     	isEditorActivationEvent = false;
                     }
-					
 					return isEditorActivationEvent;
 				} else {
 					return event.eventType == ColumnViewerEditorActivationEvent.MOUSE_CLICK_SELECTION 
@@ -223,69 +230,114 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	    editingSupports.add(editingSupport);
 	}
 	
+	private boolean validityChanged(String columnHeader, TableItem item, int column, ScriptGeneratorAction action) {
+		var validityText = item.getText(column);
+		var validityDisplay = ValidityDisplay.fromText(validityText);
+		return columnHeader.equals(ScriptGeneratorViewModel.VALIDITY_COLUMN_HEADER) && !validityDisplay.equalsAction(action);
+	}
+	
+	private boolean executingStatusChanged(String columnHeader, TableItem item, int column, ScriptGeneratorAction action) {
+		var lineNumberImage = Optional.ofNullable(item.getImage(column));
+		var statusFromLastDisplay = ExecutingStatusDisplay.fromImage(lineNumberImage);
+		return columnHeader.equals(ScriptGeneratorViewModel.ACTION_NUMBER_COLUMN_HEADER) && !ExecutingStatusDisplay.equalsAction(statusFromLastDisplay, action);
+	}
+	
+	private boolean parameterValueChanged(Optional<String> parameterValue, TableItem item, int columnNumber) {
+		return parameterValue.isPresent() && !parameterValue.get().equals(item.getText(columnNumber));
+	}
+	
+	private boolean estimatedTimeChanged(String columnHeader, TableItem item, int column, ScriptGeneratorAction action) {
+		var estimatedTimeText = item.getText(column);
+		return columnHeader.equals(ScriptGeneratorViewModel.ESTIMATED_RUN_TIME_COLUMN_HEADER) 
+				&& (
+						(action.getEstimatedTime().isEmpty() && !estimatedTimeText.equals(ScriptGeneratorViewModel.UNKNOWN_TEXT)) 
+						|| (action.getEstimatedTime().isPresent() && !estimatedTimeText.equals(ScriptGeneratorViewModel.changeSecondsToTimeFormat(action.getEstimatedTime().get().longValue())))
+				);
+	}
+	
 	/**
-	 * From the input focusColumn get the corresponding editing support column or an empty optional if out of range.
-	 * The editing support columns are a subset of the table columns (but there indexing is offset by non-editable columns).
-	 * If there are 2 non editable cells on the left of the table then column 2 of the table cells corresponds
-	 * to column 0 of the editing support columns.
-	 * If there are 2 non editable cells on the right of the table then the last 2 columns of the table do not have
-	 * corresponding columns in the editing supports.
+	 * Detect if the values displayed by the table item cells and the action parameter values are different.
 	 * 
-	 * 
-	 * @param focusColumn The table column number.
-	 * @return The corresponding editing support column or if there isn't one an empty optional.
+	 * @param item The table row to compare the action to.
+	 * @param columns The columns that identify the action parameters and table item cells.
+	 * @param action The action to check if the cells are different to.
+	 * @return true if any values differ, false if none differ.
 	 */
-	private Optional<Integer> getEditingSupportFocusColumnFromViewerTableFocusColumn(int focusColumn) {
-		// Sanitise for any columns outside of the range of the editing support columns
-		int firstEditingSupportColumn = NON_EDITABLE_COLUMNS_ON_LEFT;
-		int lastEditingSupportColumn = viewer.getTable().getColumnCount() - (1 + NON_EDITABLE_COLUMNS_ON_RIGHT);
-		if (firstEditingSupportColumn > focusColumn || lastEditingSupportColumn < focusColumn) {
-			return Optional.empty();
+	private boolean valuesDiffer(TableItem item, TableColumn[] columns, ScriptGeneratorAction action) {
+		
+		int columnNumber = 0;
+		for (TableColumn column : columns) {
+			var columnHeader = column.getText();
+			var actionParameterValues = action.getActionParameterValueMapAsStrings();
+			Optional<String> parameterValue = Optional.ofNullable(actionParameterValues.get(columnHeader));
+			if (parameterValueChanged(parameterValue, item, columnNumber) 
+					|| validityChanged(columnHeader, item, columnNumber, action) 
+					|| executingStatusChanged(columnHeader, item, columnNumber, action)
+					|| estimatedTimeChanged(columnHeader, item, columnNumber, action)) {
+				return true;
+			} 
+			columnNumber++;
+		}
+		return false;
+	}
+	
+	private boolean actionChanged(ScriptGeneratorAction tableAction, ScriptGeneratorAction newAction) {
+		return tableAction == null 
+				|| !tableAction.equals(newAction) 
+				|| tableAction.isValid() != newAction.isValid() 
+				|| tableAction.getEstimatedTime() != newAction.getEstimatedTime();
+	}
+	
+	/**
+	 * Remove any actions being displayed that are not in the newActions list.
+	 * 
+	 * @param newActions The actions that we want to display.
+	 */
+	private void removeDeletedRows(List<ScriptGeneratorAction> newActions) {
+		List<Object> elementsToRemove = new ArrayList<Object>();
+		var itemCount = viewer.getTable().getItemCount();
+		for (int i = 0; i < itemCount; i++) {
+			ScriptGeneratorAction action = (ScriptGeneratorAction) viewer.getElementAt(i);
+			if (action != null && !newActions.contains(action)) {
+				elementsToRemove.add(action);
+			}
+		}
+		viewer.remove(elementsToRemove.toArray());
+	}
+	
+	/**
+	 * Update the values of the action at the given index if they are different to the current display,
+	 *  or if the action doesn't exist add it.
+	 * 
+	 * @param action The action to update or add.
+	 * @param index The index of the action.
+	 * @param columns The columns of the table to compare the action to the current display against.
+	 */
+	private void updateAction(ScriptGeneratorAction action, int index, TableColumn[] columns) {
+		ScriptGeneratorAction tableAction = (ScriptGeneratorAction) viewer.getElementAt(index);
+		if (0 <= index && index < viewer.getTable().getItemCount()) {
+			TableItem item = viewer.getTable().getItem(index);
+			if (tableAction == null || actionChanged(tableAction, action) || valuesDiffer(item, columns, tableAction)
+					|| Integer.valueOf(index).toString() != item.getText(0)) {
+				viewer.replace(action, index);
+			}
 		} else {
-			// Offset by the amount of columns to the left of the first editable column
-			return Optional.of(focusColumn - NON_EDITABLE_COLUMNS_ON_LEFT);
+			viewer.add(action);
 		}
 	}
 	
 	/**
-	 * Sets Rows. Save where the focus was before re writing the table and set the focus back to the cell after
-	 * re writing the table.
+	 * Update the actions being displayed by this table.
+	 * 
+	 * @param newActions The actions to display.
 	 */
-	@Override
-	public void setRows(Collection<ScriptGeneratorAction> rows) {
-		if (!viewer.getTable().isDisposed()) {
-			int focusRow = getSelectionIndex();
-			ScriptGeneratorAction previousSelection = firstSelectedRow();
-			int focusColumn = 0;
-			
-			if (shiftCellFocusToNewlyAddedRow) {
-				focusRow = viewer.getTable().getSelectionIndex() + 1;
-			} else if (focusRow != -1) {
-				// When no focus is selected getFocusCell returns null
-				var focusCell = Optional.ofNullable(viewer.getColumnViewerEditor().getFocusCell());
-				if (focusCell.isPresent()) {
-					focusColumn = focusCell.get().getColumnIndex();
-				}
-			}
-			
-			viewer.setInput(new WritableList<ScriptGeneratorAction>(rows, null));
-			
-			if (selectedRows().size() == 1) {
-				// If the action on the specified row has changed then don't return focus to it
-				if (previousSelection.equals((ScriptGeneratorAction) viewer.getElementAt(focusRow)) || shiftCellFocusToNewlyAddedRow) {
-					setCellFocus(focusRow, focusColumn);
-					if (!shiftCellFocusToNewlyAddedRow) {
-					    // Fixes issue see in https://github.com/ISISComputingGroup/IBEX/issues/5708 (hopefully temporary)
-					    Optional<Integer> editingSupportFocusColumn = getEditingSupportFocusColumnFromViewerTableFocusColumn(focusColumn);
-						editingSupportFocusColumn.ifPresent(
-							offsetFocusColumn -> editingSupports.get(offsetFocusColumn).resetSelectionAfterFocus()
-						);
-					}
-					shiftCellFocusToNewlyAddedRow = false;
-				}
-			}
+	public void updateActions(List<ScriptGeneratorAction> newActions) {
+		removeDeletedRows(newActions);
+		var columns = viewer.getTable().getColumns();
+		for (int i = 0; i < newActions.size(); i++) {
+			updateAction(newActions.get(i), i, columns);
 		}
-	} 
+	}
 	
 	/**
 	 * Sets focus of cell.
@@ -293,9 +345,9 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	 * @param column column number of table
 	 */
 	public void setCellFocus(int row, int column) {
-		if (row >= 0) {
-			viewer.editElement(viewer.getElementAt(row), column);
+		var element = viewer.getElementAt(row);
+		if (row >= 0 && element != null) {
+			viewer.editElement(element, column);
 		}
 	}
-	
 }

@@ -48,7 +48,7 @@ public class InstrumentDescriptionParserTest {
 				+ "</instrument>";
 		// Act
 		try {
-			SynopticDescription testDesc = parser.convert(value);
+			SynopticDescription testDesc = parser.apply(value);
 			assertEquals(expected, testDesc.name());
 		} catch (ConversionException e) {
 			fail(e.getMessage());
@@ -63,7 +63,7 @@ public class InstrumentDescriptionParserTest {
 		String value = expected;
 		// Act
 		try {
-			parser.convert(value);
+			parser.apply(value);
 			fail("ConversionException not thrown");
 		} catch (ConversionException e) {
 			assertNotNull(e.getMessage());

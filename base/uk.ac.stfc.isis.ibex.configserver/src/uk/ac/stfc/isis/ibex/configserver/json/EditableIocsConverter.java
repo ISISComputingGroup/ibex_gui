@@ -23,22 +23,22 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.internal.IocParameters;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 /**
  * Converts a JSON representation of an editable IOC into a java object representation.
  */
-public class EditableIocsConverter extends Converter<Map<String, IocParameters>, Collection<EditableIoc>> {
+public class EditableIocsConverter implements Function<Map<String, IocParameters>, Collection<EditableIoc>> {
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Collection<EditableIoc> convert(Map<String, IocParameters> value) throws ConversionException {
+	public Collection<EditableIoc> apply(Map<String, IocParameters> value) throws ConversionException {
 		return value.entrySet().stream()
 				.map(entry -> iocFromParameters(entry.getKey(), entry.getValue()))
 				.collect(Collectors.toCollection(ArrayList::new));
