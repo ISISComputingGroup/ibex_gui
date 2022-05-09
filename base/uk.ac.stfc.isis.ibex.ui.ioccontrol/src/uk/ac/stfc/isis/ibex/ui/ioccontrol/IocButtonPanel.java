@@ -38,7 +38,10 @@ import org.eclipse.swt.widgets.Composite;
 import uk.ac.stfc.isis.ibex.configserver.IocControl;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 
-@SuppressWarnings("checkstyle:magicnumber")
+/**
+ * Class to handle start stop and restart buttons for IOCs.
+ *
+ */
 public class IocButtonPanel extends Composite {
 
 	private final Button start;
@@ -50,12 +53,20 @@ public class IocButtonPanel extends Composite {
     private IocState ioc;
 	private final IocControl control;
 	
+	private static final int LAYOUT = 3;
+	private static final int MARGIN_WIDTH = 10;
+	/**
+	 *  Constructor for the IOC Button Panel.
+	 * @param parent - The parent of this composite for the super constructor.
+	 * @param style - The style of this composite for the super constructor.
+	 * @param control - The control for the Iocs.
+	 */
 	public IocButtonPanel(Composite parent, int style, final IocControl control) {
 		super(parent, style);
 		this.control = control;
-		GridLayout gridLayout = new GridLayout(3, true);
+		GridLayout gridLayout = new GridLayout(LAYOUT, true);
 		gridLayout.verticalSpacing = 0;
-        gridLayout.marginWidth = 10;
+        gridLayout.marginWidth = MARGIN_WIDTH;
 		gridLayout.marginHeight = 0;
 		setLayout(gridLayout);
 		
@@ -95,7 +106,10 @@ public class IocButtonPanel extends Composite {
 			}
 		});
 	}
-
+	/**
+	 * Function to set the selected IOC to be called from selection listener on the view.
+	 * @param ioc - The Ioc to be selected.
+	 */
     public void setIoc(final IocState ioc) {
 		this.ioc = ioc;
 		if (ioc == null) {

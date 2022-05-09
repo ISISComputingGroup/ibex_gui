@@ -21,13 +21,14 @@ package uk.ac.stfc.isis.ibex.configserver.tests.configuration;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.util.function.Function;
+
 import org.junit.Test;
 import org.junit.Before;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.BannerButton;
 import uk.ac.stfc.isis.ibex.configserver.configuration.CustomBannerData;
 import uk.ac.stfc.isis.ibex.configserver.json.JsonConverters;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
@@ -48,7 +49,7 @@ public class BannerButtonTest {
     		"{\"buttons\": [{\"index\": 0, \"fontSize\": \"16\", \"pv\": \"%s\", \"name\": \"Button\", \"textColour\": \"#ee88ee\","
     		+ " \"buttonColour\": \"#ff00ff\", \"local\": \"false\", \"width\": \"150\", \"pvValue\": \"1\", \"height\": \"50\"}],\"items\": []}", 
     		pvName);
-    private Converter<String, CustomBannerData> conv = new JsonConverters().toBannerDescription();
+    private Function<String, CustomBannerData> conv = new JsonConverters().toBannerDescription();
     private CustomBannerData bannerLocal;
     private CustomBannerData bannerNotLocal;
     // Required for adding the pv prefix
@@ -60,8 +61,8 @@ public class BannerButtonTest {
 
 		try {
 			// Build banner and thus banner buttons from JSON
-			bannerLocal = conv.convert(bannerJsonLocal);
-		    bannerNotLocal = conv.convert(bannerJsonNotLocal);
+			bannerLocal = conv.apply(bannerJsonLocal);
+		    bannerNotLocal = conv.apply(bannerJsonNotLocal);
 		    
 		} catch(ConversionException e) {
 			fail("Check banner JSON data , should not fail to convert");

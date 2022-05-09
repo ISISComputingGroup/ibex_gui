@@ -244,7 +244,6 @@ public class Consoles extends AbstractUIPlugin {
 	 * @param perspectiveId The id for the perspective to create the console on.
 	 */
 	public void createConsole(String perspectiveId) {
-		boolean compactPlot = perspectiveId.equals(REFL_PERSPECTIVE_ID) ? true : false;
 		Display.getDefault().syncExec(new Runnable() {
 			@Override
 			public void run() {
@@ -262,7 +261,7 @@ public class Consoles extends AbstractUIPlugin {
 					// that follows the scripting console getting accidentally opened in the wrong perspective.
 					new ConsoleView();
 					
-  					GENIE_CONSOLE_FACTORY.configureAndCreateConsole(Commands.getSetInstrumentCommand(), compactPlot);
+  					GENIE_CONSOLE_FACTORY.configureAndCreateConsole(Commands.getSetInstrumentCommand());
 				}
 			}
 		});

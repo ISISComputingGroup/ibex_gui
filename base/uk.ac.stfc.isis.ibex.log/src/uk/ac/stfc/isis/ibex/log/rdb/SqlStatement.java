@@ -111,6 +111,7 @@ public class SqlStatement {
 
     /**
      * Get string representation of the SELECT list
+     * @return A string representation of the SELECT list
      */
     private String selectList() {
 	StringBuilder cols = new StringBuilder();
@@ -124,6 +125,7 @@ public class SqlStatement {
 
     /**
      * Get string representation of the Tables list
+     * @return A string representation of the Tables list
      */
     private String selectTableList() {
 	StringBuilder tables = new StringBuilder();
@@ -140,6 +142,8 @@ public class SqlStatement {
 
     /**
      * Get string representation of the list of WHERE clauses, including the
+     * date-time clauses.
+     * @return A string representation of the list of WHERE clauses, including the
      * date-time clauses.
      */
     private String whereList() {

@@ -21,9 +21,18 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.e4.ui.model.workbench,
  org.csstudio.trends.databrowser2;bundle-version="4.2.4",
  uk.ac.stfc.isis.ibex.logger,
- javax.annotation;bundle-version="1.2.0"
+ javax.annotation;bundle-version="1.2.0",
+ uk.ac.stfc.isis.ibex.ui.configserver
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: uk.ac.stfc.isis.ibex.ui.beamstatus,
  uk.ac.stfc.isis.ibex.ui.beamstatus.views
-Import-Package: org.eclipse.wb.swt
+Import-Package: org.eclipse.wb.swt,
+ uk.ac.stfc.isis.ibex.configserver.configuration,
+ uk.ac.stfc.isis.ibex.configserver.editing,
+ uk.ac.stfc.isis.ibex.ui.blocks.groups,
+ uk.ac.stfc.isis.ibex.ui.blocks.presentation,
+ uk.ac.stfc.isis.ibex.ui.configserver.dialogs,
+ uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs,
+ uk.ac.stfc.isis.ibex.ui.logplotter,
+ uk.ac.stfc.isis.ibex.validators
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.beamstatus

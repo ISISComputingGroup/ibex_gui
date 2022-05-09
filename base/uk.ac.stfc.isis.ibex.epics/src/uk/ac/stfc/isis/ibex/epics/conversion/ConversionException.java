@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.epics.conversion;
 /**
  * Thrown to indicate that there has been an error with conversion.
  */
-public class ConversionException extends Exception {
+public class ConversionException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 

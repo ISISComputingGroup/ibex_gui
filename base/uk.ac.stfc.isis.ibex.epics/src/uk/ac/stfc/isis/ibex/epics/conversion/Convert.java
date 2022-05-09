@@ -20,9 +20,9 @@
 package uk.ac.stfc.isis.ibex.epics.conversion;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Locale;
+import java.util.function.Function;
 
 /**
  * Provides a series of converters for common PV types.
@@ -34,142 +34,119 @@ public final class Convert {
     /**
      * @return A converter from a String to a zipped and hexed byte array
      */
-	public static Converter<String, byte[]> toZippedHex() {
+	public static Function<String, byte[]> toZippedHex() {
 		return asBytes()
-				.apply(compress())
-				.apply(toHex())
-				.apply(fromChars())
-				.apply(asBytes());
+				.andThen(compress())
+				.andThen(toHex())
+				.andThen(fromChars())
+				.andThen(asBytes());
 	}
 
     /**
      * @return A converter from a zipped and hexed byte array to a String
      */
-	public static Converter<byte[], String> fromZippedHex() {
+	public static Function<byte[], String> fromZippedHex() {
 		return fromBytes()
-				.apply(asChars())
-				.apply(deHex())
-				.apply(decompress())
-				.apply(fromBytes());
+				.andThen(asChars())
+				.andThen(deHex())
+				.andThen(decompress())
+				.andThen(fromBytes());
 	}
 
     /**
      * @return A converter from a String to a hexed String
      */
-	public static Converter<String, String> toHexString() {
+	public static Function<String, String> toHexString() {
 		return asBytes()
-				.apply(toHex())
-				.apply(fromChars());
+				.andThen(toHex())
+				.andThen(fromChars());
 	}
 
     /**
      * @return A converter from a hexed String to a dehexed String
      */
-	public static Converter<String, String> fromHexString() {
+	public static Function<String, String> fromHexString() {
 		return asChars()
-				.apply(deHex())
-				.apply(fromBytes());
+				.andThen(deHex())
+				.andThen(fromBytes());
 	}
 
     /**
      * @return A converter to compress a byte array
      */
-	public static Converter<byte[], byte[]> compress() {
+	public static Function<byte[], byte[]> compress() {
 		return new Compressor();
 	}
 
     /**
      * @return A converter to decompress a byte array
      */
-	public static Converter<byte[], byte[]> decompress() {
+	public static Function<byte[], byte[]> decompress() {
 		return new Decompressor();
 	}
 
     /**
      * @return A converter to hex a byte array to a char array
      */
-	public static Converter<byte[], char[]> toHex() {
+	public static Function<byte[], char[]> toHex() {
 		return new Hexer();
 	}
 
     /**
      * @return A converter to dehex a char array to a byte array
      */
-	public static Converter<char[], byte[]> deHex() {
-		return removeUnsetChars().apply(new Dehexer());
+	public static Function<char[], byte[]> deHex() {
+		return removeUnsetChars().andThen(new Dehexer());
 	}
 	
     /**
      * @return A converter to remove white space from a char array
      */
-	public static Converter<char[], char[]> removeUnsetChars() {
-		return new Converter<char[], char[]>() {	
-			@Override
-			public char[] convert(char[] value) throws ConversionException {				
-				return new String(value).trim().toCharArray();
-			}
-		};
-	}
+	public static Function<char[], char[]> removeUnsetChars() {
+	    return value -> new String(value).trim().toCharArray();
+	};
 
     /**
      * @return A converter to remove white space from a String
      */
-	public static Converter<String, String> trim() {
-		return new Converter<String, String>() {
-			@Override
-			public String convert(String value) throws ConversionException {
-				return value.trim();
-			}
-		};
+	public static Function<String, String> trim() {
+		return String::trim;
 	}
 
     /**
      * @return A converter from a byte array to a String
      */
-	public static Converter<byte[], String> fromBytes() {
-		return new Converter<byte[], String>() {
-			@Override
-			public String convert(byte[] value) throws ConversionException {
-				try {
-					return new String(value, "UTF-8");
-				} catch (UnsupportedEncodingException e) {
-					throw new ConversionException(e.getMessage());
-				}				
-			}
-		};
+	public static Function<byte[], String> fromBytes() {
+	    return value -> {
+	        try {
+	            return new String(value, "UTF-8");
+	        } catch (UnsupportedEncodingException e) {
+	            throw new ConversionException(e.getMessage());
+	        }				
+	    };
 	}	
 
     /**
      * @return A converter from a char array to a String
      */
-	public static Converter<char[], String> fromChars() {
-		return new Converter<char[], String>() {
-			@Override
-			public String convert(char[] value) {
-				return new String(value);				
-			}
-		};
+	public static Function<char[], String> fromChars() {
+		return String::new;
 	}
 
     /**
      * @return A converter from a String to an array of characters
      */
-	public static Converter<String, char[]> asChars() {
-		return new Converter<String, char[]>() {
-			@Override
-			public char[] convert(String value) {
-				return value.toCharArray();				
-			}
-		};
+	public static Function<String, char[]> asChars() {
+		return String::toCharArray;
 	}
 	
     /**
      * @return A converter from a String to a byte array
      */
-	public static Converter<String, byte[]> asBytes() {
-		return new Converter<String, byte[]>() {
+	public static Function<String, byte[]> asBytes() {
+		return new Function<String, byte[]>() {
 			@Override
-			public byte[] convert(String value) throws ConversionException {
+			public byte[] apply(String value) throws ConversionException {
 				try {
 					return value.getBytes("UTF-8");
 				} catch (UnsupportedEncodingException e) {
@@ -182,10 +159,10 @@ public final class Convert {
     /**
      * @return A converter from a String to a boolean value
      */
-	public static Converter<String, Boolean> toBoolean() {
-		return new Converter<String, Boolean>() {
+	public static Function<String, Boolean> toBoolean() {
+		return new Function<String, Boolean>() {
 			@Override
-			public Boolean convert(String value) throws ConversionException {
+			public Boolean apply(String value) throws ConversionException {
 				String val = value.toLowerCase(Locale.ENGLISH);
 				switch (val) {
 					case "yes":
@@ -200,32 +177,13 @@ public final class Convert {
 	}
 
     /**
-     * @param <T>
-     *            The array/collection type
-     * @return A converter from an array to a collection
-     */
-	public static <T> Converter<T[], Collection<T>> toCollection() {
-		return new Converter<T[], Collection<T>>() {
-			@Override
-			public Collection<T> convert(T[] value) throws ConversionException {
-				return Arrays.asList(value);
-			}
-		};
-	}
-
-    /**
      * @param arrayOfType
      *            The array to convert
      * @param <T>
      *            The array/collection type
      * @return A converter from a collection to an array
      */
-	public static <T> Converter<Collection<T>, T[]> toArray(final T[] arrayOfType) {
-		return new Converter<Collection<T>, T[]>() {
-			@Override
-			public T[] convert(Collection<T> value) throws ConversionException {
-				return value.toArray(arrayOfType);
-			}
-		};
+	public static <T> Function<Collection<T>, T[]> toArray(final T[] arrayOfType) {
+	    return value -> value.toArray(arrayOfType);
 	}
 }

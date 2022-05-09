@@ -238,6 +238,7 @@ public class JournalViewModel extends ModelObject {
 
 	/**
 	 * @param date Is the provided date the same as today's date
+	 * @return Whether the given date is the same as today's date
 	 */
 	private boolean isToday(Date date) {
 		Calendar calendar = Calendar.getInstance();

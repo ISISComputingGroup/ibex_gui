@@ -14,25 +14,45 @@ public interface ScriptDefinitionWrapper {
 	List<ActionParameter> getParameters();
 	
 	/**
+	 * @return The global parameter names and their values. e.g. ["param1", "val1", "param2", "val2"]
+	 */
+	List<ActionParameter> getGlobalParameters();
+	
+	/**
 	 * Performs the defined action.
+	 * 
 	 * @param action The action to do.
 	 * @return The error if there has been one.
 	 */
 	String doAction(Map<String, String> action);
 	
 	/**
+	 * Checks global params are valid.
+	 * 
+	 * @param globalParam The global param to check validity of.
+	 * @param index The index of the global parameters to check.
+	 * @return the error if the arugements are not valid.
+	 */
+    String globalParamsValid(String globalParam, int index);
+      
+	
+	/**
 	 * Performs the check that the arguments are valid.
+	 * 
 	 * @param action The action to check for validity.
+	 * @param global_params The global parameters to check validity with.
 	 * @return The error if the arguments are not valid.
 	 */
-	String parametersValid(Map<String, String> action);
+	String parametersValid(Map<String, String> action, List<String> global_params);
 	
     /**
      * Estimate how long the action is expected to take.
+     * 
      * @param action The action to estimate
+     * @param global_params The global parameters to refresh the time estimation with.
      * @return An estimate in seconds
      */
-    Number estimateTime(Map<String, String> action);
+    Number estimateTime(Map<String, String> action, List<String> global_params);
 	
 	/**
 	 * @return The name of this script definition.

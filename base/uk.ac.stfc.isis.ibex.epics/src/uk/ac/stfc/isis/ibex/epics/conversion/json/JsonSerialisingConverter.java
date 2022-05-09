@@ -19,13 +19,14 @@
 package uk.ac.stfc.isis.ibex.epics.conversion.json;
 
 import java.beans.PropertyChangeSupport;
+import java.lang.reflect.Type;
+import java.util.function.Function;
 
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 
 /**
  * Converter for serialising an object of type T into JSON.
@@ -33,7 +34,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
  * @param <T>
  *            The type to serialise to.
  */
-public class JsonSerialisingConverter<T> extends Converter<T, String> {
+public class JsonSerialisingConverter<T> implements Function<T, String> {
 
 	private static final ExclusionStrategy EXCLUDE_PROPERTY_CHANGE_SUPPORT = 
 			new SpecificClassExclusionStrategy(PropertyChangeSupport.class);
@@ -43,7 +44,7 @@ public class JsonSerialisingConverter<T> extends Converter<T, String> {
 			.setExclusionStrategies(EXCLUDE_PROPERTY_CHANGE_SUPPORT)
 			.create();
 
-    private final Class<? extends T> classOfT;
+    private final Type classOfT;
 
     /**
      * Constructor.
@@ -51,12 +52,12 @@ public class JsonSerialisingConverter<T> extends Converter<T, String> {
      * @param classOfT
      *            the class of T
      */
-    public JsonSerialisingConverter(Class<? extends T> classOfT) {
+    public JsonSerialisingConverter(Type classOfT) {
         this.classOfT = classOfT;
 	}
 	
 	@Override
-	public String convert(T value) throws ConversionException {
+	public String apply(T value) throws ConversionException {
 		return gson.toJson(value, classOfT);
 	}
 }

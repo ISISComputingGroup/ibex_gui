@@ -21,23 +21,33 @@
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog;
 
+import java.util.Comparator;
+
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
-import uk.ac.stfc.isis.ibex.ui.configserver.editing.AvailableIocsTable;
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.widgets.TreeItem;
 /**
  * Dialog panel for selecting a new IOC to add to a configuration.
  */
 public class AddPanel extends Composite {
-    private AvailableIocsTable availableIocsTable;
-    private static final int TABLE_HEIGHT = 300;
+	private final Button expandButton;
+	private final Button  collapseButton;
+	
+    private TreeViewer availableIocsTree;
+    private static final int TREE_HEIGHT = 300;
     private static final int SPACING = 25;
 
 
@@ -56,14 +66,41 @@ public class AddPanel extends Composite {
         GridLayout glPanel = new GridLayout(2, false);
         glPanel.verticalSpacing = SPACING;
         this.setLayout(glPanel);
-
-        // Add selection table
-        availableIocsTable = new AvailableIocsTable(this, SWT.NONE, SWT.FULL_SELECTION);
-        availableIocsTable.setRows(viewModel.getAvailableIocs());
-
+        
+      //Add Expand and Collapse Tree buttons
+  		Composite expansionComposite = new Composite(this, SWT.FILL);
+  		expansionComposite.setLayout(new GridLayout(2, true));
+  		expandButton = new Button(expansionComposite, SWT.NONE);
+  		expandButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+  		expandButton.setText("\u25BC Expand All");
+  		expandButton.addSelectionListener(new SelectionAdapter() {
+  			@Override
+  			public void widgetSelected(SelectionEvent e) {
+  				availableIocsTree.expandAll();
+  			}
+  		});
+  		
+  		collapseButton = new Button(expansionComposite, SWT.NONE);
+  		collapseButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+  		collapseButton.setText("\u25B2 Collapse All");
+  		collapseButton.addSelectionListener(new SelectionAdapter() {
+  			@Override
+  			public void widgetSelected(SelectionEvent e) {
+  				availableIocsTree.collapseAll();
+  			}
+  		});
+        
+        // Add selection tree
+        availableIocsTree = new TreeViewer(this, SWT.FULL_SELECTION);
+        availableIocsTree.setContentProvider(new IOCContentProvider());
+        availableIocsTree.setLabelProvider(new IOCLabelProvider());
+        availableIocsTree.setComparator(new IOCViewerComparator(Comparator.naturalOrder()));
+        availableIocsTree.setInput(viewModel.getAvailableIocs());
+        
         GridData gdIocTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-        gdIocTable.heightHint = TABLE_HEIGHT;
-        availableIocsTable.setLayoutData(gdIocTable);
+        gdIocTable.heightHint = TREE_HEIGHT;
+        availableIocsTree.getTree().setLayoutData(gdIocTable);
+        
 
         bind(viewModel);
     }
@@ -76,16 +113,23 @@ public class AddPanel extends Composite {
      */
     private void bind(final AddPanelViewModel viewModel) {
 
-        availableIocsTable.addSelectionChangedListener(new ISelectionChangedListener() {
-            @Override
-            public void selectionChanged(SelectionChangedEvent event) {
-                String selectedIocName = availableIocsTable.firstSelectedRow().getName();
-                viewModel.setSelectedName(selectedIocName);
+        availableIocsTree.addSelectionChangedListener(new ISelectionChangedListener() {
+           @Override
+           public void selectionChanged(SelectionChangedEvent event) {
+               TreeItem selectedIoc = availableIocsTree.getTree().getSelection()[0];
+               if (selectedIoc.getData() instanceof EditableIoc) {
+            	   viewModel.setSelectedName(selectedIoc.getText());
+            	   viewModel.setCurrentSelection(EditableIoc.class.cast(selectedIoc.getData()).getDescription());
+               } else {
+            	   viewModel.setSelectedName(null);
+            	   viewModel.setCurrentSelection(null);
+               }
+              
             }
         });
         
         // Enable selection by double click.
-        availableIocsTable.addMouseListener(new MouseAdapter() {
+        availableIocsTree.getTree().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseDoubleClick(MouseEvent e) {
                 viewModel.iocConfirmed();

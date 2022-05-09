@@ -28,7 +28,7 @@ public class PerspectivesProvider {
     private MPerspectiveStack perspectivesStack;
     private MApplication app;
     private EModelService modelService;
-
+    
     private static final String MAIN_PERSPECTIVE_STACK_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspectivestack.0";
 
     /**
@@ -50,12 +50,11 @@ public class PerspectivesProvider {
         
         perspectives = new ArrayList<>();
         for (MPerspective perspective : modelService.findElements(app, null, MPerspective.class, null)) {
-            if (perspective.isVisible()) {
-                perspectives.add(perspective);
-            }
+            perspectives.add(perspective);
         }
 
         this.perspectivesStack = modelService.findElements(app, null, MPerspectiveStack.class, null).get(0);
+        
     }
 
     /**

@@ -91,7 +91,7 @@ public class DeleteComponentsViewModel extends ModelObject {
     /**
      * Filters empty
      * @param toFilter
-     * @return
+     * @return Map of non-empty components
      */
     private Map<String, Collection<String>> filterEmpty(Map<String, Collection<String>> toFilter) {
         Map<String, Collection<String>> result = new HashMap<String, Collection<String>>();

@@ -218,7 +218,10 @@ public class BlockDetailsViewModel extends ErrorMessageProvider {
      * @return a list of the facility PVs for easy searching.
      */
     private List<String> getFacilityPVs() {
-        String facilityPVsString = Configurations.getInstance().variables().facilityInterestPVs.getValue().toString();
+        var variables = Configurations.getInstance().variables();
+        var facilityInterestPVs =  variables.facilityInterestPVs;
+        var value = facilityInterestPVs.getValue();
+        String facilityPVsString = value.toString();
         facilityPVsString = facilityPVsString.substring(1, facilityPVsString.length() - 1);
         String[] facilityPVsArray = facilityPVsString.split(", ");
         return Arrays.asList(facilityPVsArray);

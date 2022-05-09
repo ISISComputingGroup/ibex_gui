@@ -15,6 +15,7 @@ import static java.lang.Math.max;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
 
 /**
  * This class holds the script actions and their positions in the script.
@@ -27,20 +28,12 @@ public class ActionsTable extends ModelObject {
 	 */
 	private List<JavaActionParameter> actionParameters;
 	
+	private Map<Integer, String> globalValidError = Collections.emptyMap();
+	
 	/**
 	 * The actions (rows) of the table that have values for the action parameters.
 	 */
 	private List<ScriptGeneratorAction> actions = new ArrayList<ScriptGeneratorAction>();
-	
-	/**
-	 * The property to fire a change for if the actions in the table change.
-	 */
-	private static final String ACTIONS_PROPERTY = "actions";
-	
-	/**
-	 * The property of an action to listen to for changes.
-	 */
-	private static final String VALUE_PROPERTY = "value";
 	
 	/**
 	 * 
@@ -48,6 +41,32 @@ public class ActionsTable extends ModelObject {
 	 */
 	public List<ScriptGeneratorAction> getActions() {
 		return actions;
+	}
+	
+	/**
+	 * Get the action at the corresponding index or an empty optional.
+	 * 
+	 * @return the action at the corresponding index or an empty optional.
+	 */
+	public Optional<ScriptGeneratorAction> getAction(Integer actionIndex) {
+		if (actionIndexInRange(actionIndex)) {
+			var action = actions.get(actionIndex);
+			return Optional.of(action);
+		} else {
+			return Optional.empty();
+		}
+	}
+	
+	private Boolean actionIndexInRange(Integer actionIndex) {
+		return actionIndex >= 0 && actionIndex < actions.size();
+	}
+	
+	/**
+	 * 
+	 * @return The globalValidError string on this object.
+	 */
+	public Map<Integer, String> getGlobalValidityErrors() {
+		return this.globalValidError;
 	}
 
 	/**
@@ -65,7 +84,7 @@ public class ActionsTable extends ModelObject {
 	 * 		  		The list of parameters used to define each action.
 	 */
 	public void setActionParameters(List<JavaActionParameter> actionParameters) {
-		firePropertyChange("actionParameters", this.actionParameters, this.actionParameters = actionParameters);
+		firePropertyChange(ScriptGeneratorProperties.ACTION_PARAMETERS_PROPERTY, this.actionParameters, this.actionParameters = actionParameters);
 	}
 	
 	/**
@@ -90,8 +109,8 @@ public class ActionsTable extends ModelObject {
 		}
 		// Create action and attach listeners
 		ScriptGeneratorAction newAction = new ScriptGeneratorAction(newParamsMap);
-		newAction.addPropertyChangeListener(VALUE_PROPERTY, evt -> {
-			firePropertyChange(ACTIONS_PROPERTY, null, actions);
+		newAction.addPropertyChangeListener(ScriptGeneratorProperties.VALUE_PROPERTY, evt -> {
+			firePropertyChange(ScriptGeneratorProperties.ACTIONS_PROPERTY, null, actions);
 		});
 		return newAction;
 	}
@@ -166,7 +185,7 @@ public class ActionsTable extends ModelObject {
 		
 		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
 		newList.add(newAction);
-		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
+		firePropertyChange(ScriptGeneratorProperties.ACTIONS_PROPERTY, actions, actions = newList);
 	}
 	
 	/**
@@ -188,7 +207,7 @@ public class ActionsTable extends ModelObject {
 		var correctedInsertionLocation = coerceActionIndexIntoRange(insertionLocation);
 		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
 		newList.add(correctedInsertionLocation, newAction);
-		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
+		firePropertyChange(ScriptGeneratorProperties.ACTIONS_PROPERTY, actions, actions = newList);
 	}
 	
 	/**
@@ -203,7 +222,7 @@ public class ActionsTable extends ModelObject {
 			currentListOfActions.add(insertLocation, newAction);
 			insertLocation++;
 		}
-		firePropertyChange(ACTIONS_PROPERTY, actions, actions = currentListOfActions);
+		firePropertyChange(ScriptGeneratorProperties.ACTIONS_PROPERTY, actions, actions = currentListOfActions);
 	}
 
 	/**
@@ -216,13 +235,13 @@ public class ActionsTable extends ModelObject {
 
 	/**
 	 * Removes an action from the list in specified location.
-	 * @param actionsToDeletes
+	 * @param actionsToDelete
 	 * 		  	The actions to remove from the actions list.
 	 */
-	public void deleteAction(List<ScriptGeneratorAction> actionsToDeletes) {
+	public void deleteAction(List<ScriptGeneratorAction> actionsToDelete) {
 		final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>(actions);
-		newList.removeAll(actionsToDeletes);
-		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
+		newList.removeAll(actionsToDelete);
+		firePropertyChange(ScriptGeneratorProperties.ACTIONS_PROPERTY, actions, actions = newList);
 	}
 
 	/**
@@ -240,7 +259,7 @@ public class ActionsTable extends ModelObject {
 				.collect(Collectors.toList());
 		var correctedInsertionLocation = coerceActionIndexIntoRange(insertionLocation);
 		newActionsList.addAll(correctedInsertionLocation, actionsToAdd);
-		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newActionsList);
+		firePropertyChange(ScriptGeneratorProperties.ACTIONS_PROPERTY, actions, actions = newActionsList);
 	}
     
     /**
@@ -248,7 +267,7 @@ public class ActionsTable extends ModelObject {
      */
     public void clearAction() {
         final List<ScriptGeneratorAction> newList = new ArrayList<ScriptGeneratorAction>();
-        firePropertyChange(ACTIONS_PROPERTY, actions, actions = newList);
+        firePropertyChange(ScriptGeneratorProperties.ACTIONS_PROPERTY, actions, actions = newList);
     }
 	
 	/**
@@ -269,7 +288,7 @@ public class ActionsTable extends ModelObject {
 			Collections.swap(newActions, currentIndex, currentIndex + 1);
 		}
 		
-		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newActions);
+		firePropertyChange(ScriptGeneratorProperties.ACTIONS_PROPERTY, actions, actions = newActions);
 	}
 	
 	/**
@@ -288,25 +307,26 @@ public class ActionsTable extends ModelObject {
 			Collections.swap(newActions, currentIndex, currentIndex - 1);
 		}
 		
-		firePropertyChange(ACTIONS_PROPERTY, actions, actions = newActions);
+		firePropertyChange(ScriptGeneratorProperties.ACTIONS_PROPERTY, actions, actions = newActions);
 	}
 	
 	/**
 	 * Clears the list of actions.
 	 */
 	public void clearActions() {
-		firePropertyChange(ACTIONS_PROPERTY, actions, actions = new ArrayList<ScriptGeneratorAction>());
+		firePropertyChange(ScriptGeneratorProperties.ACTIONS_PROPERTY, actions, actions = new ArrayList<ScriptGeneratorAction>());
 	}
 
 	/**
 	 * Set the validity errors for each action based on the hashmap.
 	 * 
-	 * @param validityErrors The hashmap to set validity errors based on.
+	 * @param validityErrors The list of hashmaps to set validity errors based on.
 	 */
-	public void setValidityErrors(Map<Integer, String> validityErrors) {
+	public void setValidityErrors(List<Map<Integer, String>> validityErrors) {
+		this.globalValidError = validityErrors.get(0);
 		for (int i = 0; i < actions.size(); i++) {
-			if (validityErrors.containsKey(i)) {
-				actions.get(i).setInvalid(validityErrors.get(i));
+			if (validityErrors.get(1).containsKey(i)) {
+				actions.get(i).setInvalid(validityErrors.get(1).get(i));
 			} else {
 				actions.get(i).setValid();
 			}
@@ -331,9 +351,28 @@ public class ActionsTable extends ModelObject {
 	 */
 	public ArrayList<String> getInvalidityErrorLines() {
 		var errors = new ArrayList<String>();
+		if (this.globalValidError.size() > 0) {
+			String errorString = "Global Parameter Errors: \n";
+			int initialLen = errorString.length();
+			for (int i = 0; i < globalValidError.size(); i++) {
+				String reason = globalValidError.get(i);
+				if (reason != "") {
+					errorString += "Global Parameter: " + (i + 1) + ", Reason: " + "\n" + globalValidError.get(i) + "\n";
+				}
+			}
+			if (errorString.length() > initialLen) {
+				errors.addAll(Arrays.asList(errorString.split("\n")));
+			}
+				
+		}
+		boolean first = true;
 		for (int i = 0; i < actions.size(); i++) {
 			ScriptGeneratorAction action = actions.get(i);
 			if (!action.isValid()) {
+				if (first) {
+					errors.add("Action Errors:");
+					first = false;
+				}
 				String errorString = "Row: " + (i + 1) + ", Reason: " + "\n" + action.getInvalidityReason().get() + "\n";
 				
 				errors.addAll(Arrays.asList(errorString.split("\n")));
@@ -359,6 +398,6 @@ public class ActionsTable extends ModelObject {
 	 * Reload the actions by firing a property change.
 	 */
 	public void reloadActions() {
-		firePropertyChange(ACTIONS_PROPERTY, null, actions);
+		firePropertyChange(ScriptGeneratorProperties.ACTIONS_PROPERTY, null, actions);
 	}
 }

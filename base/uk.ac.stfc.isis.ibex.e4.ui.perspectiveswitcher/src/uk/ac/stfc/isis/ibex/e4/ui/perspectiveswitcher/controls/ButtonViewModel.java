@@ -25,6 +25,7 @@ public class ButtonViewModel extends ModelObject {
     protected boolean inFocus = false;
     protected String text = "";
     private boolean maximised = true;
+    protected boolean visible = true;
 
     /**
      * Initialises button focus and font, and text.
@@ -134,5 +135,21 @@ public class ButtonViewModel extends ModelObject {
      */
     public void setWidth(int newWidth) {
         firePropertyChange("width", 0, newWidth);
+    }
+    
+    /**
+     * Set whether the button is visible.
+     * @param newVisible True to make the button visible
+     */
+    public void setVisible(boolean newVisible) {
+        firePropertyChange("visible", visible, visible = newVisible);
+    }
+    
+    /**
+     * Get whether the button is visible.
+     * @return True if the button is visible
+     */
+    public boolean getVisible() {
+        return visible;
     }
 }

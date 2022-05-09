@@ -144,8 +144,9 @@ public final class PreferenceConstants {
 			{Level.ERROR.name(), Level.ERROR.name()},
 			{Level.FATAL.name(), Level.FATAL.name()},
 			{Level.OFF.name(), Level.OFF.name()}, };
-	
+
 	private static String getLogDir() {
-		return Platform.getInstanceLocation().getURL().getPath() + "logs/";
+		// Get the log directory path and remove any leading slashes.
+		return Platform.getInstanceLocation().getURL().getPath().replaceFirst("^(\\/|\\\\)+", "") + "logs/";
 	}
 }

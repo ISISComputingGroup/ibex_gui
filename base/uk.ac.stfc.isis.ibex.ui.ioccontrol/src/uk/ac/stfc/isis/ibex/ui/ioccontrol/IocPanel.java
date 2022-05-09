@@ -21,19 +21,34 @@ package uk.ac.stfc.isis.ibex.ui.ioccontrol;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.Collection;
-
+import java.util.Comparator;
+import java.util.Hashtable;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.TreePath;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.TreeItem;
+
 
 import uk.ac.stfc.isis.ibex.configserver.IocControl;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
-import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IocTable;
+import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCConfigProvider;
+import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCContentProvider;
+import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCLabelProvider;
+import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCList;
+import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCStatusProvider;
+import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCViewerComparator;
 
 /**
  * A panel that lists the available IOCs and allows you to control them.
@@ -41,10 +56,14 @@ import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IocTable;
 public class IocPanel extends Composite {
 	
 	private final Display display = Display.getDefault();
-	
-	private IocTable table;
+	private final Button expandButton;
+	private final Button  collapseButton;
+	private TreeViewer availableIocsTree;
     private IocButtonPanel buttons;
 	private IocControl control;
+	private Hashtable<String, IOCList> availableIocs;
+	
+	private static final int COLUMN_WIDTH = 70;
 	
 	private PropertyChangeListener updateTable = new PropertyChangeListener() {	
 		@Override
@@ -69,52 +88,192 @@ public class IocPanel extends Composite {
 		
 		setLayout(new GridLayout(1, false));
 		
-		table = new IocTable(this, SWT.NONE, SWT.FULL_SELECTION);
-		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		//Add Expand and Collapse Tree buttons
+		Composite expansionComposite = new Composite(this, SWT.FILL);
+		expansionComposite.setLayout(new GridLayout(2, true));
+		expandButton = new Button(expansionComposite, SWT.NONE);
+		expandButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		expandButton.setText("\u25BC Expand All");
+		expandButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				availableIocsTree.expandAll();
+			}
+		});
+		
+		collapseButton = new Button(expansionComposite, SWT.NONE);
+		collapseButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		collapseButton.setText("\u25B2 Collapse All");
+		collapseButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				availableIocsTree.collapseAll();
+			}
+		});
+		
+		// Add selection tree
+        availableIocsTree = new TreeViewer(this, SWT.FULL_SELECTION);
+        availableIocsTree.setContentProvider(new IOCContentProvider());
+        availableIocsTree.setComparator(new IOCViewerComparator(Comparator.naturalOrder()));
+        
+        TreeViewerColumn mainColumn = new TreeViewerColumn(availableIocsTree, SWT.NONE);
+        mainColumn.getColumn().setText("Ioc");
+        mainColumn.setLabelProvider(new IOCLabelProvider());
+        
+        TreeViewerColumn statusColumn = new TreeViewerColumn(availableIocsTree, SWT.NONE);
+        statusColumn.getColumn().setText("Status");
+        statusColumn.getColumn().setWidth(COLUMN_WIDTH);
+        statusColumn.getColumn().setAlignment(SWT.CENTER);
+        statusColumn.setLabelProvider(new IOCStatusProvider());
+        
+        TreeViewerColumn configColumn = new TreeViewerColumn(availableIocsTree, SWT.NONE);
+        configColumn.getColumn().setText("In Config?");
+        configColumn.getColumn().setWidth(COLUMN_WIDTH);
+        configColumn.getColumn().setAlignment(SWT.CENTER);
+        configColumn.setLabelProvider(new IOCConfigProvider());
+        
+        Collection<IocState> rows = control.iocs().getValue();
+        availableIocs = new Hashtable<String, IOCList>();
+        availableIocs = updateHashtable(rows);
+    	
+    	availableIocsTree.setInput(availableIocs);
+    	availableIocsTree.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+    	availableIocsTree.getTree().setHeaderVisible(true);
+    	availableIocsTree.getTree().setLinesVisible(true);
+    	mainColumn.getColumn().pack();
 		
 		this.control = control;
 		control.iocs().addPropertyChangeListener(updateTable, true);
 		
-		table.addSelectionChangedListener(new ISelectionChangedListener() {
+		availableIocsTree.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
-				buttons.setIoc(table.firstSelectedRow());
+				if (availableIocsTree.getTree().getSelection().length != 0) {
+					Object selection = availableIocsTree.getTree().getSelection()[0].getData();
+					if (selection instanceof IocState) {
+						buttons.setIoc(IocState.class.cast(selection));
+						return;
+					}
+				} 
+				buttons.setIoc(null);	
 			}
 		});
-
         buttons = new IocButtonPanel(this, SWT.NONE, control);
 		buttons.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 	}
+	
+
+	private Hashtable<String, IOCList> updateHashtable(Collection<IocState> rows) {
+    	String description = "";
+    	availableIocs.put("Running", new IOCList("Running"));
+    	availableIocs.put("In Config", new IOCList("In Config"));
+    	for (IocState ioc : rows) {
+    		description = ioc.getDescription();
+    		if (!availableIocs.containsKey(description)) {
+    			availableIocs.put(description, new IOCList(description));
+    		}
+    		availableIocs.get(description).add(ioc);
+    		if (ioc.getIsRunning()) {
+    			availableIocs.get("Running").add(ioc);
+    		}
+    		if (ioc.getInCurrentConfig()) {
+    			availableIocs.get("In Config").add(ioc);
+    		}
+    	}
+    	for (String key: availableIocs.keySet()) {
+    		availableIocs.get(key).sort(Comparator.naturalOrder());
+    	}
+		return availableIocs;
+	}	
+	
 	
 	@Override
 	public void dispose() {
 		super.dispose();
 		control.iocs().removePropertyChangeListener(updateTable);
 	}
-
-	private void setIocs() {		
+ 
+	
+	private void setIocs() {		 
 		if (control.iocs().isSet()) {
-            IocState selected = table.firstSelectedRow();
-			
-            Collection<IocState> rows = control.iocs().getValue();
-			if (rows != null) {
-				table.setRows(rows);
-				resetLastSelectedIoc(selected, rows);
-			}			
+			int[] selectedIndex = getCurrentSelection();
+            ArrayList<String> elementsToExpand = getElementsToExpand();
+            
+            Collection<IocState> iocs = control.iocs().getValue();
+			availableIocs.clear();
+			availableIocs = updateHashtable(iocs);
+			availableIocsTree.setInput(availableIocs);
+            
+            setElementsToExpand(elementsToExpand);
+            if (selectedIndex[0] != -1 && selectedIndex[1] != -1) {
+            	TreeItem parent = availableIocsTree.getTree().getItem(selectedIndex[0]);
+            	if (parent.getItemCount() < selectedIndex[1]) {
+            		availableIocsTree.getTree().setSelection(parent.getItem(selectedIndex[1]));	
+            	} else {
+            		availableIocsTree.getTree().setSelection(parent);
+            	}
+            }
 		}
 	}
 
-    private void resetLastSelectedIoc(IocState lastSelected, Collection<IocState> rows) {
-		if (lastSelected == null) {
-			return;
+	
+	private void setElementsToExpand(ArrayList<String> elementsToExpand) {
+		ArrayList<TreePath> paths = new ArrayList<TreePath>();
+		for (String topLevel :elementsToExpand) {
+			IOCList[] iocArray = {availableIocs.get(topLevel)};
+			paths.add(new TreePath(iocArray));
 		}
-		
-		// Preserve selection if possible
-        for (IocState row : rows) {
-			if (row.getName().equals(lastSelected.getName())) {
-                table.setSelected(row);
-				return;
+		availableIocsTree.setExpandedTreePaths(paths.toArray(new TreePath[0]));
+	}
+
+	
+	private ArrayList<String> getElementsToExpand() {
+		ArrayList<String> descriptionsToExpand = new ArrayList<String>();
+		for (Object list :availableIocsTree.getExpandedElements()) {
+			if (list instanceof ArrayList<?>) {
+		        ArrayList<?> expandedList = ArrayList.class.cast(list);
+		        IocState firstInList = IocState.class.cast(expandedList.get(0));
+		        descriptionsToExpand.add(firstInList.getDescription());
 			}
 		}
+		// These two if statements make sure that items that are only expanded in Running or In Config don't
+		// Get get expanded both there, and in their description.
+		if (availableIocsTree.getTree().getItem(0).getExpanded()) {
+			descriptionsToExpand.remove(0);
+		}
+		if (availableIocsTree.getTree().getItem(1).getExpanded()) {
+			descriptionsToExpand.remove(0);
+		}
+		descriptionsToExpand.add("Running");
+		descriptionsToExpand.add("In Config");
+		return descriptionsToExpand;
+	}
+	
+	private int[] getCurrentSelection() {
+		int[] selectedIndex = {-1, -1};
+		TreeItem selected = null;
+		
+		if (availableIocsTree.getTree().getSelection().length > 0) {
+			selected = availableIocsTree.getTree().getSelection()[0];
+		}
+
+		if (selected != null) {
+			TreeItem selectedParent = selected.getParentItem();
+			if (selectedParent != null) {
+				TreeItem[] treeItemList = availableIocsTree.getTree().getItems(); 			
+				selectedIndex[0] = treeListIndex(selectedParent, treeItemList, 0);
+				selectedIndex[1] = treeListIndex(selected, selectedParent.getItems(), 1);
+			}
+		}
+		return selectedIndex;
+	}
+
+	private int treeListIndex(TreeItem item, TreeItem[] list, int textField) {
+		for (int i = 0; i < list.length; i++) {
+			if (list[i].getText(textField).equals(item.getText(textField))) {
+				return i;
+			}
+		}
+		return 0;
 	}
 }

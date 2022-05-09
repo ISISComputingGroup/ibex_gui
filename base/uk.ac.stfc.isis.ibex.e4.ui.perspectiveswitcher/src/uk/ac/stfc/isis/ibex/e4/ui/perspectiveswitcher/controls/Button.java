@@ -24,6 +24,9 @@ import org.eclipse.wb.swt.ResourceManager;
  */
 public abstract class Button extends CLabel {
 
+    /**
+     * The view model that dictates how the button should behave.
+     */
     protected ButtonViewModel model;
     private final DataBindingContext bindingContext = new DataBindingContext();
 
@@ -91,6 +94,19 @@ public abstract class Button extends CLabel {
                 mouseExitAction();
             }
         });
+        
+        model.addPropertyChangeListener("visible", new PropertyChangeListener() {
+            
+            @Override
+            public void propertyChange(PropertyChangeEvent e) {
+                GridData data = (GridData) getLayoutData();
+                boolean nowVisible = (boolean) e.getNewValue();
+                data.exclude = !nowVisible;
+                setVisible(nowVisible);
+                parent.requestLayout();
+            }
+        });
+        
         this.model = model;
         bindingContext.bindValue(WidgetProperties.background().observe(this),
                 BeanProperties.value("color").observe(model));

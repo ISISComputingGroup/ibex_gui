@@ -543,7 +543,7 @@ public class SaveConfigDialog extends TitleAreaDialog {
     /**
      * Check if a configuration is saved as protected.
      * @param name of the configuration
-     * @return
+     * @return Whether the configuration is saved as protected
      */
     private Boolean configInProtectionMode(String name) {
     	Boolean retVal = false;

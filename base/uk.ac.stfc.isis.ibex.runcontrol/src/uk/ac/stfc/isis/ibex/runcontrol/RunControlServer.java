@@ -20,8 +20,7 @@ package uk.ac.stfc.isis.ibex.runcontrol;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
-import uk.ac.stfc.isis.ibex.epics.writing.ClosableSameTypeWriter;
-import uk.ac.stfc.isis.ibex.epics.writing.Writer;
+import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.runcontrol.internal.RunControlVariables;
 
 /**
@@ -96,8 +95,8 @@ public class RunControlServer extends Closer {
      * @param blockName the name of the block
      * @return the writable
      */
-	public Writer<Double> blockRunControlLowLimitSetter(String blockName) {
-		return registerForClose(ClosableSameTypeWriter.newInstance(variables.blockRunControlLowLimitSetter(blockName)));
+	public Writable<Double> blockRunControlLowLimitSetter(String blockName) {
+		return variables.blockRunControlLowLimitSetter(blockName);
 	}
 	
 	/**
@@ -106,8 +105,8 @@ public class RunControlServer extends Closer {
      * @param blockName the name of the block
      * @return the writable
      */
-	public Writer<Double> blockRunControlHighLimitSetter(String blockName) {
-        return registerForClose(ClosableSameTypeWriter.newInstance(variables.blockRunControlHighLimitSetter(blockName)));
+	public Writable<Double> blockRunControlHighLimitSetter(String blockName) {
+        return variables.blockRunControlHighLimitSetter(blockName);
 	}
 	
 	/**
@@ -116,8 +115,8 @@ public class RunControlServer extends Closer {
      * @param blockName the name of the block
      * @return the writable
      */
-	public Writer<String> blockRunControlEnabledSetter(String blockName) {
-		return registerForClose(ClosableSameTypeWriter.newInstance(variables.blockRunControlEnabledSetter(blockName)));
+	public Writable<String> blockRunControlEnabledSetter(String blockName) {
+		return variables.blockRunControlEnabledSetter(blockName);
 	}
 	
 
@@ -128,7 +127,7 @@ public class RunControlServer extends Closer {
      * @param blockName the name of the block
      * @return the writable
      */
-	public Writer<String> blockRunControlSuspendIfInvalidSetter(String blockName) {
-		return registerForClose(ClosableSameTypeWriter.newInstance(variables.blockRunControlSuspendIfInvalidSetter(blockName)));
+	public Writable<String> blockRunControlSuspendIfInvalidSetter(String blockName) {
+		return variables.blockRunControlSuspendIfInvalidSetter(blockName);
 	}
 }

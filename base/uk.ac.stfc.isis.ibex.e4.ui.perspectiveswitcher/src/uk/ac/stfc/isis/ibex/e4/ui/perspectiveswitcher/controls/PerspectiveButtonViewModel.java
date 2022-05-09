@@ -6,14 +6,19 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 /**
- * A model to provide easy access to the listeners for the interaction with the
- * alarm system; chiefly the number of active alarms.
+ * A model to provide the logic behind how a perspective button should be displayed.
  */
 public class PerspectiveButtonViewModel extends ButtonViewModel {
 
+    /**
+     * The colour to set the button to when it is active.
+     */
     protected static final Color ACTIVE = SWTResourceManager.getColor(120, 170, 210);
     private static final Font ACTIVE_FONT = SWTResourceManager.getFont("Arial", 12, SWT.BOLD);
 
+    /**
+     * Whether the perspective associated with this button is active or not.
+     */
     protected boolean active = false;
 
     /**

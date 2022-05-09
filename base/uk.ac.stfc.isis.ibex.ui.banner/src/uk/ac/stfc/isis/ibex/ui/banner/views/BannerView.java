@@ -122,7 +122,7 @@ public class BannerView {
     /**
      * Converts a collection of banner button objects into models
      * 
-     * @param items the banner buttons
+     * @param buttons the banner buttons
      * @return the control models
      */
     private Collection<CustomControlModel> convertBannerButtons(Collection<BannerButton> buttons) {

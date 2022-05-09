@@ -89,7 +89,11 @@ public class BlockLogSettingsPanel extends Composite {
 
         setModel(viewModel);
     }
-
+    
+    /**
+     * Sets the view model and observers for the view. 
+     * @param viewModel The logging settings view model. 
+     */
     public void setModel(BlockLogSettingsViewModel viewModel) {
         DataBindingContext bindingContext = new DataBindingContext();
 

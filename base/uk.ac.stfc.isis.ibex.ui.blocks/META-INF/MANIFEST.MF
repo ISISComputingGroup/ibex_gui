@@ -18,7 +18,8 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.epics;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.configserver;bundle-version="1.0.0",
  javax.annotation;bundle-version="1.2.0",
- javax.inject;bundle-version="1.0.0"
+ javax.inject;bundle-version="1.0.0",
+ org.eclipse.e4.ui.model.workbench
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: uk.ac.stfc.isis.ibex.ui.blocks,
@@ -29,5 +30,6 @@ Import-Package: org.eclipse.e4.ui.model.application,
  org.eclipse.e4.ui.model.application.ui.advanced,
  org.eclipse.e4.ui.workbench.modeling,
  uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher,
+ uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views,
  uk.ac.stfc.isis.ibex.ui.configserver.commands
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.blocks

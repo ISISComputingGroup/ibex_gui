@@ -127,14 +127,10 @@ public class ZMQSession {
     	}
     }
 
-    private <TSEND, TRESP> SentMessageDetails<TRESP> getServerResponse(NICOSMessage<TSEND, TRESP> sentMessage) {
-        String status = zmq.receiveString();
-
-        // NICOS protocol leaves the second package empty for future expansion
-        // so read and throw away.
-        zmq.receiveString();
-
-        String resp = zmq.receiveString();
+    private <TSEND, TRESP> SentMessageDetails<TRESP> getServerResponse(NICOSMessage<TSEND, TRESP> sentMessage) {    	
+    	sentMessage.receiveResponse(zmq);
+    	var status = sentMessage.getResponseStatus();
+    	var resp = sentMessage.getResponse();
         
         if (status == null || resp == null || Objects.equals(status, "")) {
             LOG.warn("No response from server after sending " + sentMessage.toString());

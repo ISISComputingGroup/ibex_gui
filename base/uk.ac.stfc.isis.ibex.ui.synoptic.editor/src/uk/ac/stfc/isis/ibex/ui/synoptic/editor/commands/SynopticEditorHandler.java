@@ -20,20 +20,21 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands;
 
 import java.io.IOException;
-import java.util.Collection;
 
 import org.eclipse.e4.core.di.annotations.CanExecute;
+import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.xml.sax.SAXParseException;
 
-import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
-import uk.ac.stfc.isis.ibex.synoptic.SynopticWriter;
+import uk.ac.stfc.isis.ibex.synoptic.SynopticWritable;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.EditSynopticDialog;
+import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.ViewSynopticDialog;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 
 /**
@@ -41,36 +42,32 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
  * 
  */
 public abstract class SynopticEditorHandler {
+	protected static final String PLUGIN = "uk.ac.stfc.isis.ibex.ui.synoptic";
+	protected static final String CLASS_URI = "bundleclass://uk.ac.stfc.isis.ibex.ui.synoptic.editor/uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.EditSynopticHandler";
 
     /** Synoptic model. */
     protected static final Synoptic SYNOPTIC = Synoptic.getInstance();
     
     /** Synoptic writer, to write the model to the blockserver. */
-    protected final SynopticWriter writer = SYNOPTIC.edit().saveSynoptic();
+    protected final SynopticWritable writer = SYNOPTIC.edit().saveSynoptic();
     
     /** can execute the handler */
     private boolean canExecute;
 
+    
+    
+    protected void setCanExecute(boolean canExecute) {
+    	this.canExecute = canExecute;
+    }
+    
     /**
      * Constructor.
      */
     public SynopticEditorHandler() {
-	synopticService.subscribe(SYNOPTIC.delete());
-	SYNOPTIC.delete().subscribe(synopticService);
-
-	canExecute = synopticService.canWrite();
+	SYNOPTIC.delete().addOnCanWriteChangeListener(canWriteListener);
     }
-
-    /**
-     * This is an inner anonymous class inherited from SameTypeWriter with added functionality
-     * for modifying the command if the underlying PV cannot be written to.
-     */
-    protected final SameTypeWriter<Collection<String>> synopticService = new SameTypeWriter<Collection<String>>() {
-	@Override
-	public synchronized void onCanWriteChanged(boolean canWrite) {
-	    canExecute = canWrite;
-	}
-    };
+    
+    private OnCanWriteChangeListener canWriteListener = canWrite -> {canExecute = canWrite;};
 
     /**
      * 
@@ -78,7 +75,7 @@ public abstract class SynopticEditorHandler {
      */
     @CanExecute
     public boolean canExecute() {
-	return canExecute;
+    	return canExecute;
     }
 
     /**
@@ -98,10 +95,18 @@ public abstract class SynopticEditorHandler {
     protected void openDialog(Shell shell, SynopticDescription synoptic, String title, boolean isBlank) {
 	SynopticViewModel viewModel = new SynopticViewModel(synoptic);
 	String SynopticName = (viewModel.getSynoptic().name() == null) ? "a new" : viewModel.getSynoptic().name();
-	String subtitle = "Editing " + SynopticName + " synoptic";
-	EditSynopticDialog editDialog =
-		new EditSynopticDialog(shell, title, subtitle, isBlank, viewModel);
-	if (editDialog.open() == Window.OK) {
+	String subtitle = (writer.canWrite() ? "Editing " : "Viewing ") + SynopticName + " synoptic";
+	TitleAreaDialog dialog;
+	
+	if (writer.canWrite()) {
+		dialog =
+				new EditSynopticDialog(shell, title, subtitle, isBlank, viewModel);
+	} else {
+		dialog =
+				new ViewSynopticDialog(shell, title, subtitle, isBlank, viewModel);
+	}
+	
+	if (dialog.open() == Window.OK) {
 	    try {
 		writer.write(viewModel.getSynoptic());
 	    } catch (IOException e) {
