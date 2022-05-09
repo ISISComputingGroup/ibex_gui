@@ -10,7 +10,7 @@
   <background_color>
     <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
   </background_color>
-  <boy_version>5.1.0.201707071649</boy_version>
+  <boy_version>5.1.0</boy_version>
   <foreground_color>
     <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
   </foreground_color>
@@ -383,7 +383,7 @@
     </scale_options>
     <scripts />
     <show_scrollbar>false</show_scrollbar>
-    <text>Eurotherm Temperature Controller</text>
+    <text>Biologic Potentiostat</text>
     <tooltip></tooltip>
     <transparent>false</transparent>
     <vertical_alignment>1</vertical_alignment>
