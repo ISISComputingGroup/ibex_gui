@@ -2804,5 +2804,21 @@
         </macros>
       </value>
     </entry>
+    <entry>
+      <key>Biologic SP240/SP300 Potentiostat</key>
+      <value>
+        <categories />
+        <type>UNKNOWN</type>
+        <path>biologic/SP300.opi</path>
+        <description>The OPI for the Biologic SP240/SP300</description>
+        <macros>
+          <macro>
+            <name>ECLAB</name>
+            <description>The ECLAB IOC PV prefix (e.g. ECLAB_01)</description>
+            <default>ECLAB_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
   </opis>
 </descriptions>
