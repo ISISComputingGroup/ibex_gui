@@ -115,6 +115,24 @@ class ScriptDefinitionWrapper(object):
                 list_of_globals.append(action_parameter)
 
         return ListConverter().convert(list_of_globals, gateway._gateway_client)
+
+    def getCustomParameters(self) -> List[PythonActionParameter]:
+        """
+        Gets the custom parameters and default values from the script_definition defined in this script_definition
+
+        Returns:
+            arguments: List of the parameter names (strings)
+        """
+        list_of_customs = []
+        if self.hasCustomParameters():
+            arguments = self.script_definition.custom_params_definition
+            for arg in arguments:
+                name = arg
+                default = arguments[arg][0]
+                action_parameter = PythonActionParameter(name, default, False)
+                list_of_customs.append(action_parameter)
+
+        return ListConverter().convert(list_of_customs, gateway._gateway_client)
     
     def setGlobalParameters(self, global_params):
         """
@@ -129,12 +147,32 @@ class ScriptDefinitionWrapper(object):
         defs_and_vals = zip(self.script_definition.global_params_definition.items(), global_params)
         self.script_definition.global_params = {name: type_[1](val) for (name, type_), val in defs_and_vals}
 
+    def setCustomParameters(self, custom_params):
+        """
+        Using custom_params set the custom parameters for the script definition.
+
+        Args:
+            custom_params: the values to assign to the custom parameters.
+
+        Throws:
+            ValueError: if at least one of the custom parameters cannot be cast to the correct type.
+        """
+        defs_and_vals = zip(self.script_definition.custom_params_definition.items(), custom_params)
+        self.script_definition.custom_params = {name: type_[1](val) for (name, type_), val in defs_and_vals}
+
     def hasGlobalParameters(self):
         """
         Returns:
             True if this script definition has global parameters, or False if not.
         """
         return hasattr(self.script_definition, "global_params_definition")
+
+    def hasCustomParameters(self):
+        """
+        Returns:
+            True if this script definition has custom parameters, or False if not.
+        """
+        return hasattr(self.script_definition, "custom_params_definition")
 
     def getHelp(self) -> str:
         """
@@ -181,8 +219,34 @@ class ScriptDefinitionWrapper(object):
         except IndexError:
             return 'Tried to find validity for global: "{}" but no such global was found.\n'.format(global_param)
 
+    def customParamsValid(self, custom_param, index) -> Union[None, AnyStr]:
+        """
+        checks if custom params are valid for the script definition
 
-    def parametersValid(self, action, global_params) -> Union[None, AnyStr]:
+        Args:
+            The values of the custom parameters to check for validity.
+
+        Returns:
+            None if all params are valid.
+        """
+        if not self.hasCustomParameters():
+            return
+
+        try:
+            list(self.script_definition.custom_params_definition.values())[index][1](custom_param)
+            return
+        except (TypeError, ValueError):
+            return 'Expected type: "{}" for custom: "{}" but received: "{}"\n'.format(
+                str(list(self.script_definition.custom_params_definition.values())[index][1])[8:-2],
+                list(self.script_definition.custom_params_definition.keys())[index], custom_param)
+        except GlobalParamValidationError as e:
+            return str(e)
+        # Fix for edge case where python hasn't changed the script definition yet but java thinks it has.
+        except IndexError:
+            return 'Tried to find validity for custom param: "{}" but no such custom param was found.\n'.format(custom_param)
+
+
+    def parametersValid(self, action, global_params, custom_params) -> Union[None, AnyStr]:
         """
         Checks if the parameters are valid for the script_definition
 
@@ -198,6 +262,11 @@ class ScriptDefinitionWrapper(object):
                     self.setGlobalParameters(global_params)
                 except ValueError as e:
                     return f"Global parameter value is of the wrong type.\nDetails: {e}"
+            if self.hasCustomParameters():
+                try:
+                    self.setCustomParameters(custom_params)
+                except ValueError as e:
+                    return f"Custom parameter value is of the wrong type.\nDetails: {e}"
 
             return self.script_definition.parameters_valid(**action)
         except Exception as e:
@@ -218,6 +287,25 @@ class ScriptDefinitionWrapper(object):
             if self.hasGlobalParameters():
                 self.setGlobalParameters(global_params)
             estimate = self.script_definition.estimate_time(**action)
+            return round(estimate)
+        except (ValueError, TypeError, KeyError) as ex:
+            return None
+
+    def estimateCustom(self, action, custom_params) -> Union[None, int]:
+        """
+        Returns a custom estimate of an action
+
+        Args:
+            The action to estimate
+
+        Returns:
+            An int representing the custom estimation
+            or None if the parameters are invalid or the estimate could not be calculated
+        """
+        try:
+            if self.hasCustomParameters():
+                self.setCustomParameters(custom_params)
+            estimate = self.script_definition.estimate_custom(**action)
             return round(estimate)
         except (ValueError, TypeError, KeyError) as ex:
             return None
@@ -250,7 +338,7 @@ class Generator(object):
         self.env = Environment(loader=self.loader, keep_trailing_newline=True)
         self.template = self.env.get_template('generator_template.py')
 
-    def areParamsValid(self, list_of_actions, script_definition: ScriptDefinitionWrapper, global_params) -> bool:
+    def areParamsValid(self, list_of_actions, script_definition: ScriptDefinitionWrapper, global_params, custom_params) -> bool:
         """
         Checks if a list of parameters are valid for the script_definition
 
@@ -258,16 +346,21 @@ class Generator(object):
             True if valid, False if not
         """
         for action in list_of_actions:
-            if script_definition.parametersValid(action, global_params) != None:
+            if script_definition.parametersValid(action, global_params, custom_params) != None:
                 return False
         i = 0
         for global_param in global_params:
             if script_definition.globalParamsValid(global_param, i) != None:
                 return False
             i += 1
+        i = 0
+        for custom_param in custom_params:
+            if script_definition.customParamsValid(custom_param, i) != None:
+                return False
+            i += 1
         return True
 
-    def getValidityErrors(self, global_params, list_of_actions, script_definition: ScriptDefinitionWrapper) -> List[
+    def getValidityErrors(self, global_params, custom_params, list_of_actions, script_definition: ScriptDefinitionWrapper) -> List[
                         Dict[int, AnyStr]]:
         """
         Get a map of validity errors
@@ -283,10 +376,16 @@ class Generator(object):
             if singleParamValidityCheck != None:
                 validityCheck[param_type_index][current_action_index] = singleParamValidityCheck
             current_action_index += 1
+        current_action_index = 0
+        for custom_param in custom_params:
+            singleParamValidityCheck = script_definition.customParamsValid(custom_param, current_action_index)
+            if singleParamValidityCheck != None:
+                validityCheck[param_type_index][current_action_index] = singleParamValidityCheck
+            current_action_index += 1
         param_type_index = 1
         current_action_index = 0
         for action in list_of_actions:
-            singleActionValidityCheck = script_definition.parametersValid(action, global_params)
+            singleActionValidityCheck = script_definition.parametersValid(action, global_params, custom_params)
             if singleActionValidityCheck != None:
                 validityCheck[param_type_index][current_action_index] = singleActionValidityCheck
             current_action_index += 1
@@ -303,14 +402,32 @@ class Generator(object):
         """
         time_estimates: Dict[int, int] = {}
         for current_action_index, action in enumerate(list_of_actions, 0):
-            if script_definition.parametersValid(action, global_params) is None:
+            if script_definition.parametersValid(action, global_params, null) is None:
                 time_estimate = script_definition.estimateTime(action, global_params)
                 if time_estimate != None:
                     time_estimates[current_action_index] = time_estimate
             current_action_index += 1
         return time_estimates
 
-    def generate(self, list_of_actions, jsonString, global_params,
+    def estimateCustom(self, list_of_actions, script_definition: ScriptDefinitionWrapper, custom_params) -> Dict[
+        int, int]:
+        """
+        Custom Estimates for each action.
+        Actions are only estimated if their parameters are valid.
+
+        Returns:
+            Dictionary containing line numbers as keys and estimates as values
+        """
+        custom_estimates: Dict[int, int] = {}
+        for current_action_index, action in enumerate(list_of_actions, 0):
+            if script_definition.parametersValid(action, null, custom_params) is None:
+                custom_estimate = script_definition.estimateCustom(action, custom_params)
+                if custom_estimate != None:
+                    custom_estimates[current_action_index] = custom_estimate
+            current_action_index += 1
+        return custom_estimates
+
+    def generate(self, list_of_actions, jsonString, global_params, custom_params,
                  script_definition: ScriptDefinitionWrapper) -> Union[None, AnyStr]:
         """
         Generates a script from a list of parameters and script_definition
@@ -318,7 +435,7 @@ class Generator(object):
         Returns:
            None if there is an error or parameters are invalid, otherwise a string of a generated script.
         """
-        if self.areParamsValid(list_of_actions, script_definition, global_params):
+        if self.areParamsValid(list_of_actions, script_definition, global_params, custom_params):
 
             try:
                 script_definition_file_path = "{}.py".format(script_definition.getName())
@@ -330,7 +447,8 @@ class Generator(object):
 
                 rendered_template = self.template.render(inserted_script_definition=script_definition_template,
                                                          script_generator_actions=list_of_actions,
-                                                         global_params=global_params, hexed_value=val)
+                                                         global_params=global_params,
+                                                         custom_params=custom_params, hexed_value=val)
             except Exception as e:
                 rendered_template = None
             return rendered_template
@@ -462,7 +580,19 @@ class ScriptDefinitionsWrapper(object):
             self.convert_list_of_actions_to_python(list_of_actions), script_definition, global_parameters),
             gateway._gateway_client)
 
-    def generate(self, list_of_actions, jsonString, global_params,
+    def estimateCustom(self, list_of_actions, script_definition: ScriptDefinitionWrapper, custom_parameters) -> Dict[
+        int, int]:
+        """
+        Get the custom estimated of the current actions
+
+        Returns:
+            Dictionary containing line numbers as keys and estimates as values
+        """
+        return MapConverter().convert(self.generator.estimateCustom(
+            self.convert_list_of_actions_to_python(list_of_actions), script_definition, custom_parameters),
+            gateway._gateway_client)
+
+    def generate(self, list_of_actions, jsonString, global_params, custom_params,
                  script_definition: ScriptDefinitionWrapper) -> Union[None, AnyStr]:
         """
         Generates a script from a list of parameters and script_definition
@@ -471,7 +601,7 @@ class ScriptDefinitionsWrapper(object):
            None if parameters are invalid, otherwise a string of a generated script.
         """
         return self.generator.generate(self.convert_list_of_actions_to_python(list_of_actions), jsonString,
-                                       global_params, script_definition)
+                                       global_params, custom_params, script_definition)
 
     def isPythonReady(self) -> bool:
         """

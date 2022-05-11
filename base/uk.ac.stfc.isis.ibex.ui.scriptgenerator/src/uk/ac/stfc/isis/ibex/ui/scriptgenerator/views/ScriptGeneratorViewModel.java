@@ -111,6 +111,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
     public static final String ESTIMATED_RUN_TIME_COLUMN_HEADER = "Estimated run time";
     
     /**
+     * The generic header of the custom estimate column.
+     */
+    public static final String CUSTOM_ESTIMATE_COLUMN_HEADER = "Custom estimate";
+    
+    /**
      * The string to use to denote an unknown amount of estimated time.
      */
     public static final String UNKNOWN_TEXT = "Unknown";
@@ -549,6 +554,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    this.scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
 	    this.scriptGeneratorModel.removePropertyChangeListener(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, actionChangeListener);
 	    this.scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, actionChangeListener);
+	    this.scriptGeneratorModel.removePropertyChangeListener(ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY, actionChangeListener);
+	    this.scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY, actionChangeListener);
 	    }
 	
 	    private void updateParametersFilePath(String parametersFilePath) {
@@ -1031,6 +1038,43 @@ public class ScriptGeneratorViewModel extends ModelObject {
     
         });
         timeEstimateColumn.getColumn().setAlignment(SWT.CENTER);
+        
+        // Add custom estimate column
+        TableViewerColumn customEstimateColumn = viewTable.createColumn(CUSTOM_ESTIMATE_COLUMN_HEADER,
+    		1,
+    		new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty(ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY)) {
+            @Override
+            protected String stringFromRow(ScriptGeneratorAction row) {
+            	if (!scriptGeneratorModel.languageSupported) {
+	                return "\u003F"; // A question mark to say we cannot be certain
+	            }
+            	
+            	Optional<Number> customEstimate = row.getCustomEstimate();
+	            if (customEstimate.isEmpty()) {
+	                return UNKNOWN_TEXT;
+	            }
+	            return customEstimate.get().toString();
+            }
+            
+            @Override
+            public String getToolTipText(Object element) {
+            return getScriptGenActionToolTipText(element);
+            }
+            
+            @Override
+        	public void update(ViewerCell cell) {
+            	ScriptGeneratorAction row = getRow(cell);
+        		cell.setText(stringFromRow(row));
+                cell.setImage(imageFromRow(row));
+                if (row.isValid()) {
+                	cell.setBackground(CLEAR_COLOR);
+                } else {
+                	cell.setBackground(INVALID_LIGHT_COLOR);
+                }
+        	}
+        		
+        });
+        customEstimateColumn.getColumn().setAlignment(SWT.CENTER);
     
         ColumnViewerToolTipSupport.enableFor(viewTable.viewer());
     }

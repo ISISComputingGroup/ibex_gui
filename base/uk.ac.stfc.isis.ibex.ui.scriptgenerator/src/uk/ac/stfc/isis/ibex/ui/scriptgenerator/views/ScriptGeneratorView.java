@@ -321,6 +321,13 @@ public class ScriptGeneratorView {
 	        List<Label> globalLabel = new ArrayList<Label>();
 	        List<Text> globalParamText = new ArrayList<Text>();
 	        Map<String, String> scriptDefinitionLoadErrors = scriptGeneratorViewModel.getScriptDefinitionLoadErrors();
+	        
+	        Composite customParamComposite = new Composite(mainParent, SWT.NONE);
+	        customParamComposite.setLayout(new GridLayout(24, false));
+	        customParamComposite.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 1, 5));
+	        
+	        List<Label> customLabel = new ArrayList<Label>();
+	        List<Text> customParamText = new ArrayList<Text>();
 	
 	        if (!scriptDefinitionLoadErrors.isEmpty()) {
 	            setUpScriptDefinitionLoadErrorTable(mainParent, scriptDefinitionLoadErrors);                 

@@ -29,6 +29,11 @@ public class ScriptGeneratorAction extends ModelObject {
      */
     private Optional<Number> estimatedTime = Optional.empty();
     
+    /**
+     * Contains the custom estimate of an action. Empty optional if the action is invalid
+     */
+    private Optional<Number> customEstimate = Optional.empty();
+    
     private ActionDynamicScriptingStatus dynamicScriptingStatus = ActionDynamicScriptingStatus.NO_STATUS;
 
     /**
@@ -146,6 +151,15 @@ public class ScriptGeneratorAction extends ModelObject {
 	firePropertyChange(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, estimatedTime, newEstimatedTime);
 	estimatedTime = newEstimatedTime;
     }
+    
+    /**
+     * Set the custom estimate value.
+     * @param newEstimate custom estimate number
+     */
+    public void setCustomEstimate(Optional<Number> newEstimate) {
+	firePropertyChange(ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY, customEstimate, newEstimate);
+	customEstimate = newEstimate;
+    }
 
     /**
      * Get the estimated time in seconds.
@@ -153,6 +167,14 @@ public class ScriptGeneratorAction extends ModelObject {
      */
     public Optional<Number> getEstimatedTime() {
 	return estimatedTime;
+    }
+    
+    /**
+     * Get the custom estimate number.
+     * @return custom estimate number
+     */
+    public Optional<Number> getCustomEstimate() {
+	return customEstimate;
     }
     
     public void setExecuting() {
