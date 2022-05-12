@@ -1912,18 +1912,6 @@
       </value>
     </entry>
     <entry>
-      <key>Reflectometry OPI</key>
-      <value>
-        <categories>
-          <category>Miscellaneous motion control</category>
-        </categories>
-        <type>REFLECTOMETRY</type>
-        <path>reflectometry/full_opi.opi</path>
-        <description>The OPI for the reflectometry information panel.</description>
-        <macros/>
-      </value>
-    </entry>
-    <entry>
       <key>Muon Separator PSU</key>
       <value>
         <type>POWER_SUPPLY</type>
