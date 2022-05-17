@@ -957,7 +957,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
       </on_color>
       <on_label>ON</on_label>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT_PEARLPC):SP_PRESSURE:RANGE</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -2605,7 +2605,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
       </on_color>
       <on_label>ON</on_label>
-      <pv_name>$(PV_ROOT_PEARLPC):RESET_PRESSURE</pv_name>
+      <pv_name>$(PV_ROOT_PEARLPC):RESET_PRESSURE_STATUS</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -2654,7 +2654,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
-      <text>Pistons Retracted</text>
+      <text>Reset Complete</text>
       <tooltip></tooltip>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -2711,7 +2711,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts />
       <style>1</style>
-      <text>Retract</text>
+      <text>Reset</text>
       <toggle_button>false</toggle_button>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
