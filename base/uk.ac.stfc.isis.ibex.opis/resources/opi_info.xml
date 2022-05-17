@@ -1900,13 +1900,18 @@
           <category>Sample changers</category>
         </categories>
         <type>SAMPLECHANGER</type>
-        <path>tosca_sample_positioner.opi</path>
+        <path>tosca_sample_changer/tosca_sample_positioner.opi</path>
         <description>The TOSCA sample positioning system.</description>
         <macros>
           <macro>
             <name>MM</name>
             <description>The sample positioner motor (e.g. MTR0101)</description>
             <default>MOT:MTR0101</default>
+          </macro>
+          <macro>
+            <name>WEBCAMURL</name>
+            <description>The URL for the webcam page</description>
+            <default/>
           </macro>
         </macros>
       </value>
