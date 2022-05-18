@@ -1037,14 +1037,14 @@ public class ScriptGeneratorViewModel extends ModelObject {
         ColumnViewerToolTipSupport.enableFor(viewTable.viewer());
         
         // Add selection listener to table headers, to ensure actions remain visible
-		for (int i = 0; i <  viewTable.table().getColumns().length; i++) {
-			viewTable.table().getColumn(i).addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					scriptGeneratorModel.reloadActions();
-				}
-			});
-		}
+	for (int i = 0; i <  viewTable.table().getColumns().length; i++) {
+		viewTable.table().getColumn(i).addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				scriptGeneratorModel.reloadActions();
+			}
+		});
+	}
     }
 
     /**
