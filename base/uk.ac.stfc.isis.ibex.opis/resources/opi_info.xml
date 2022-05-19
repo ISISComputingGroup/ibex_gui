@@ -2813,5 +2813,21 @@
         </macros>
       </value>
     </entry>
+    <entry>
+      <key>WEBCAM</key>
+      <value>
+        <categories />
+        <type>UNKNOWN</type>
+        <path>webcam/webcam.opi</path>
+        <description>The OPI for Webcams</description>
+        <macros>
+          <macro>
+            <name>WEBCAM</name>
+            <description>The WEBCAM IOC PV prefix (e.g. WEBCAM_01)</description>
+            <default>WEBCAM_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
   </opis>
 </descriptions>
