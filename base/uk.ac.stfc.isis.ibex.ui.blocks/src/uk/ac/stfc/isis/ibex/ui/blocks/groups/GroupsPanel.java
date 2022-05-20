@@ -55,6 +55,7 @@ public class GroupsPanel extends Composite {
 	private ScrolledComposite scrolledComposite;
 	private List<Composite> columns  = new ArrayList<>();
 	private CLabel banner;
+	private ConnectionStatus status = ConnectionStatus.EMPTY;
 	
     private static final Color RED = SWTResourceManager.getColor(SWT.COLOR_RED);
 	
@@ -102,7 +103,10 @@ public class GroupsPanel extends Composite {
 		this.addControlListener(new ControlAdapter() {
 			public void controlResized(ControlEvent e) {
 				Composite source = (Composite) e.getSource();
-				relayoutGroups(true, source.getClientArea().height);
+				GroupsPanel panel = (GroupsPanel) source;
+				if (panel.status != ConnectionStatus.DISCONNECTED && panel.status != ConnectionStatus.CONNECTED_NO_GROUPS) {
+					relayoutGroups(true, source.getClientArea().height);
+				}
 			}
 		});
 		
@@ -136,11 +140,14 @@ public class GroupsPanel extends Composite {
 		clear();
 		if (!groups.isPresent()) {
 			showBanner(ConnectionStatus.DISCONNECTED);
+			this.status = ConnectionStatus.DISCONNECTED;
 			return;
 		} else if (groups.isPresent() && groups.get().isEmpty()) {
 			showBanner(ConnectionStatus.CONNECTED_NO_GROUPS);
+			this.status = ConnectionStatus.CONNECTED_NO_GROUPS;
 			return;
 		} else {
+			this.status = ConnectionStatus.EMPTY;
 			addColumns();
 			addGroups();
 			assert (this.groups.size() == columns.size()) : "Table creation failed";
