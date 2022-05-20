@@ -219,7 +219,24 @@
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts>
+      <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
+        <scriptName>EmbeddedScript</scriptName>
+        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
+
+moreDetailsBtn = display.getWidget('Positioning')
+pv0 = pvs[0].getValue()
+pv0Str = str(pv0.value)
+if pv0Str == 'No':
+    moreDetailsBtn.setPropertyValue('visible', False)
+elif pv0Str == 'Yes':
+    moreDetailsBtn.setPropertyValue('visible', True)
+
+]]></scriptText>
+        <pv trig="true">$(P)CS:MANAGER</pv>
+      </path>
+    </scripts>
     <show_scrollbar>true</show_scrollbar>
     <tooltip></tooltip>
     <transparent>false</transparent>
