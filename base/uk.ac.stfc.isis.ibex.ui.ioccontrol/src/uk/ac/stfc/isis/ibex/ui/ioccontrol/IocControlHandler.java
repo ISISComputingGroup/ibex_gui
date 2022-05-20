@@ -69,7 +69,7 @@ public class IocControlHandler {
 	/**
 	 * Checks to see if menu item should be enabled.
 	 *
-	 * @return true - menu item is always enabled
+	 * @return true if menu can be opened, false if otherwise
 	 */
 	@CanExecute
 	public boolean isEnabled() {
