@@ -33,6 +33,9 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.widgets.Shell;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.IocControl;
+import uk.ac.stfc.isis.ibex.instrument.status.ServerStatusVariables;
+import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatus;
+import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusViewModel;
 
 /**
  * Command to display the IOC control dialog.
@@ -41,6 +44,7 @@ import uk.ac.stfc.isis.ibex.configserver.IocControl;
 public class IocControlHandler {
 	
 	private IocControl control;
+	private ServerStatusViewModel serverStatus = new ServerStatusViewModel(new ServerStatusVariables());
 	
 	/**
 	 * Instantiates a new IOC control handler.
@@ -69,7 +73,9 @@ public class IocControlHandler {
 	 */
 	@CanExecute
 	public boolean isEnabled() {
-		return true;
+		boolean psControlStatus = serverStatus.getPsControlStatus().equals(ServerStatus.UP);
+		boolean blockServerStatus = serverStatus.getBlockServerStatus().equals(ServerStatus.UP);
+		return psControlStatus && blockServerStatus;
 	}
 
 
