@@ -2588,7 +2588,7 @@ $(pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>593</width>
       <wuid>36fc6a9b:177ff16b62a:-7fc7</wuid>
@@ -2632,8 +2632,8 @@ $(pv_value)</tooltip>
         <widget_type>Grouping Container</widget_type>
         <width>591</width>
         <wuid>72fbd525:16c1eb09895:-7dbb</wuid>
-        <x>1</x>
-        <y>144</y>
+        <x>-1</x>
+        <y>174</y>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
           <actions hook="false" hook_all="false" />
           <auto_size>false</auto_size>
@@ -3184,8 +3184,8 @@ $(trace_0_y_pv_value)</tooltip>
         <widget_type>XY Graph</widget_type>
         <width>295</width>
         <wuid>72fbd525:16c1eb09895:-7afb</wuid>
-        <x>0</x>
-        <y>222</y>
+        <x>1</x>
+        <y>264</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -3225,8 +3225,8 @@ $(trace_0_y_pv_value)</tooltip>
         <widget_type>Grouping Container</widget_type>
         <width>592</width>
         <wuid>-42877ab5:1785fc67d03:-7e1f</wuid>
-        <x>0</x>
-        <y>54</y>
+        <x>-1</x>
+        <y>78</y>
         <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
           <actions hook="false" hook_all="false">
             <action type="WRITE_PV">
@@ -3641,7 +3641,7 @@ $(pv_value)</tooltip>
         <foreground_color>
           <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
         </foreground_color>
-        <height>55</height>
+        <height>73</height>
         <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -4021,8 +4021,8 @@ $(trace_0_y_pv_value)</tooltip>
         <widget_type>XY Graph</widget_type>
         <width>295</width>
         <wuid>-2b4acbd4:17863d51292:-7bff</wuid>
-        <x>294</x>
-        <y>222</y>
+        <x>295</x>
+        <y>264</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -5279,7 +5279,7 @@ $(pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>593</width>
       <wuid>-2b4acbd4:17863d51292:-7dd4</wuid>
