@@ -240,7 +240,7 @@ elif pv0Str == 'Yes':
     <show_scrollbar>true</show_scrollbar>
     <tooltip></tooltip>
     <transparent>false</transparent>
-    <visible>true</visible>
+    <visible>false</visible>
     <widget_type>Grouping Container</widget_type>
     <width>576</width>
     <wuid>4d7a784b:165b353e7d6:-70ba</wuid>
