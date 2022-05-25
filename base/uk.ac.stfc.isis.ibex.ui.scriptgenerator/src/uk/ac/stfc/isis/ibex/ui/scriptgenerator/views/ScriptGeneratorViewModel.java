@@ -721,6 +721,25 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	        if (!globalParamsComposite.isDisposed()) {
 		        globalParamsComposite.layout();
 	        }
+	        
+	        for (Label label : customLabel) {
+	        	if (!label.isDisposed()) {
+	        	label.dispose();
+	        	}
+	        }
+	        customLabel.clear();
+	        for (Text text: customParamText) {
+	        	if (!text.isDisposed()) {
+	        	text.dispose();
+	        	}
+	        }
+	        scriptGeneratorModel.clearCustomParams();
+	        currentCustoms.clear();
+	        customParamText.clear();
+	        createCustomParamsWidgets();
+	        if (!customParamsComposite.isDisposed()) {
+	        	customParamsComposite.layout();
+	        }
 		     mainParent.layout();
 	        // Display the new script definition help string
 	        if (!helpText.isDisposed()) {
@@ -772,6 +791,41 @@ public class ScriptGeneratorViewModel extends ModelObject {
       	  }
       }
 	}
+    
+    /**
+     * Create widgets for the custom parameters.
+     */
+    @SuppressWarnings("checkstyle:magicnumber")
+    public void createCustomParamsWidgets() {
+		List<ActionParameter> temp;
+		String param = "No Custom Paramaters";
+    	String paramVal = "";
+        if (getScriptDefinition().get().getCustomParameters() != null) {
+      	  temp = getScriptDefinition().get().getCustomParameters();
+      	  if (!temp.isEmpty()) {
+      		  for (ActionParameter custom : temp) {
+      			  param = custom.getName();
+      			  currentCustoms.add(custom.getName());
+      			  paramVal = custom.getDefaultValue();
+      			  if (!customParamsComposite.isDisposed()) {
+	            	  Label customLabelCurrent = new Label(customParamsComposite, SWT.NONE);
+	            	  customLabelCurrent.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+	            	  customLabelCurrent.setText(param);
+	            	  globalLabel.add(customLabelCurrent);
+	            	  Text customParamTextCurrent = new Text(customParamsComposite, SWT.NONE);
+	            	  customParamTextCurrent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
+	            	  customParamTextCurrent.setEnabled(true);
+	            	  customParamTextCurrent.addListener(SWT.Modify, e -> {
+	            		  updateCustomParams(customParamTextCurrent.getText(), customLabelCurrent.getText());
+	            	  
+	            	  	});
+	            	  customParamTextCurrent.setText(paramVal);
+	            	  globalParamText.add(customParamTextCurrent);
+      			  }
+      			  }
+      	  }
+      }
+	}
 
     /**
      * The view's current helpText element.
@@ -780,11 +834,19 @@ public class ScriptGeneratorViewModel extends ModelObject {
     
     private List<Label> globalLabel;
     
+    private List<Label> customLabel;
+    
     private List<Text> globalParamText;
+    
+    private List<Text> customParamText;
     
     private List<String> currentGlobals;
     
+    private List<String> currentCustoms;
+    
     private Composite globalParamsComposite;
+    
+    private Composite customParamsComposite;
     
     private Composite mainParent;
 
@@ -815,14 +877,16 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @param scriptDefintionComposite Composite containing the script definition selector.
      * @param mainParent A composite containing the script generator as a whole.
      */
-    protected void bindScriptDefinitionLoader(ComboViewer scriptDefinitionSelector, Text helpText, List<Label> globalLabel, List<Text> globalParamText, Composite scriptDefintionComposite, Composite mainParent) {
+    protected void bindScriptDefinitionLoader(ComboViewer scriptDefinitionSelector, Text helpText, List<Label> globalLabel, List<Label> customLabel, List<Text> globalParamText, List<Text> customParamText, Composite scriptDefintionComposite, Composite mainParent) {
 	    // Switch the composite value when script definition switched
 	    scriptDefinitionSelector.removeSelectionChangedListener(scriptDefinitionSwitchListener);
 	    scriptDefinitionSelector.addSelectionChangedListener(scriptDefinitionSwitchListener);
 	    // Display new help when script definition switch or make invisible if not help available
 	    this.helpText = helpText;
 	    this.globalLabel = globalLabel;
+	    this.customLabel = customLabel;
 	    this.globalParamText = globalParamText;
+	    this.customParamText = customParamText;
 	    this.globalParamsComposite = scriptDefintionComposite;
 	    this.mainParent = mainParent;
 	    this.currentGlobals = new ArrayList<String>();
@@ -874,6 +938,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     protected void updateValidityChecks(ActionsViewTable viewTable) {
 	    Map<Integer, String> globals = scriptGeneratorModel.getGlobalParamErrors();
+	    Map<Integer, String> customs = scriptGeneratorModel.getCustomParamErrors();
 	    for (int i = 0; i< this.globalParamText.size(); i++) {
 	    	if (globals.containsKey(i)) {
 	    		globalParamText.get(i).setBackground(INVALID_LIGHT_COLOR);
@@ -882,6 +947,16 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    	} else {
 	    		globalParamText.get(i).setBackground(CLEAR_COLOR);
 	    		globalParamText.get(i).setToolTipText(null);
+	    	}
+	    }
+	    for (int i = 0; i< this.customParamText.size(); i++) {
+	    	if (customs.containsKey(i)) {
+	    		customParamText.get(i).setBackground(INVALID_LIGHT_COLOR);
+	    		customParamText.get(i).setBackground(INVALID_DARK_COLOR);
+	    		customParamText.get(i).setToolTipText(customs.get(i));
+	    	} else {
+	    		customParamText.get(i).setBackground(CLEAR_COLOR);
+	    		customParamText.get(i).setToolTipText(null);
 	    	}
 	    }
     
@@ -1049,7 +1124,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	                return "\u003F"; // A question mark to say we cannot be certain
 	            }
             	
-            	Optional<Number> customEstimate = row.getCustomEstimate();
+            	Optional<Number> customEstimate = row.getEstimatedCustom();
 	            if (customEstimate.isEmpty()) {
 	                return UNKNOWN_TEXT;
 	            }
@@ -1143,6 +1218,22 @@ public class ScriptGeneratorViewModel extends ModelObject {
     	for (String paramName: this.currentGlobals) {
     		if (paramName.equals(toUpdate)) {
     			scriptGeneratorModel.updateGlobalParams(params, i);
+    		}
+    		i++;
+    	}
+    }
+    
+    /**
+     * Take the custom params and and the params that we need to update and instruct the model to update them.
+     * 
+     * @param params All the custom params.
+     * @param toUpdate The custom params to update.
+     */
+    public void updateCustomParams(String params, String toUpdate) {
+    	int i = 0;
+    	for (String paramName: this.currentCustoms) {
+    		if (paramName.equals(toUpdate)) {
+    			scriptGeneratorModel.updateCustomParams(params, i);
     		}
     		i++;
     	}

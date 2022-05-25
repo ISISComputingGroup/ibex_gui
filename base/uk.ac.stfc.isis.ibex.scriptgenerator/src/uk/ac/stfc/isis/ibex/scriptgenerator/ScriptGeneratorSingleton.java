@@ -538,6 +538,15 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 	
 	/**
+	 * Get the map of custom parameter errors.
+	 * 
+	 * @return map of custom parameter errors in the table.
+	 */
+	public Map<Integer, String> getCustomParamErrors() {
+		return scriptGeneratorTable.getCustomValidityErrors();
+	}
+	
+	/**
 	 * @return The action parameters used in this table.
 	 * 
 	 */

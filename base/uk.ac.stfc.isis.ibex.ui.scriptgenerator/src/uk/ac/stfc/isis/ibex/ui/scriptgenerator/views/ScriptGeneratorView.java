@@ -514,9 +514,12 @@ public class ScriptGeneratorView {
 	        bind(scriptDefinitionSelector,
 	            helpText,
 	            globalLabel,
+	            customLabel,
 	            globalParamText,
+	            customParamText,
 	            globalParamComposite);
 	        scriptGeneratorViewModel.createGlobalParamsWidgets();
+	        scriptGeneratorViewModel.createCustomParamsWidgets();
 	        
         } else {
 
@@ -608,9 +611,11 @@ public class ScriptGeneratorView {
     private void bind(ComboViewer scriptDefinitionSelector,
         Text helpText,
         List<Label> globalLabel,
+        List<Label> customLabel,
         List<Text> globalParamText,
+        List<Text> customParamText,
         Composite globalParamsComposite) {
-    scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText, globalLabel, globalParamText, globalParamsComposite, mainParent);
+    scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText, globalLabel, customLabel, globalParamText, customParamText, globalParamsComposite, mainParent);
 
     scriptGeneratorViewModel.bindActionProperties(table, generateScriptButton, generateScriptAsButton);
 

@@ -255,6 +255,15 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 				);
 	}
 	
+	private boolean estimatedCustomChanged(String columnHeader, TableItem item, int column, ScriptGeneratorAction action) {
+		var estimatedCustomText = item.getText(column);
+		return columnHeader.equals(ScriptGeneratorViewModel.CUSTOM_ESTIMATE_COLUMN_HEADER) 
+				&& (
+						(action.getEstimatedCustom().isEmpty() && !estimatedCustomText.equals(ScriptGeneratorViewModel.UNKNOWN_TEXT)) 
+						|| (action.getEstimatedCustom().isPresent() && !estimatedCustomText.equals(ScriptGeneratorViewModel.changeSecondsToTimeFormat(action.getEstimatedCustom().get().longValue())))
+				);
+	}
+	
 	/**
 	 * Detect if the values displayed by the table item cells and the action parameter values are different.
 	 * 
@@ -273,7 +282,8 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 			if (parameterValueChanged(parameterValue, item, columnNumber) 
 					|| validityChanged(columnHeader, item, columnNumber, action) 
 					|| executingStatusChanged(columnHeader, item, columnNumber, action)
-					|| estimatedTimeChanged(columnHeader, item, columnNumber, action)) {
+					|| estimatedTimeChanged(columnHeader, item, columnNumber, action)
+					|| estimatedCustomChanged(columnHeader, item, columnNumber, action)) {
 				return true;
 			} 
 			columnNumber++;
@@ -285,7 +295,8 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 		return tableAction == null 
 				|| !tableAction.equals(newAction) 
 				|| tableAction.isValid() != newAction.isValid() 
-				|| tableAction.getEstimatedTime() != newAction.getEstimatedTime();
+				|| tableAction.getEstimatedTime() != newAction.getEstimatedTime()
+				|| tableAction.getEstimatedCustom() != newAction.getEstimatedCustom();
 	}
 	
 	/**

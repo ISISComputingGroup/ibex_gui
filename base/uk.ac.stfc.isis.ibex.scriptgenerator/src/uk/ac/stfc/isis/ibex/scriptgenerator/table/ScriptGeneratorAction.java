@@ -170,10 +170,10 @@ public class ScriptGeneratorAction extends ModelObject {
     }
     
     /**
-     * Get the custom estimate number.
+     * Get the estimated custom number.
      * @return custom estimate number
      */
-    public Optional<Number> getCustomEstimate() {
+    public Optional<Number> getEstimatedCustom() {
 	return customEstimate;
     }
     

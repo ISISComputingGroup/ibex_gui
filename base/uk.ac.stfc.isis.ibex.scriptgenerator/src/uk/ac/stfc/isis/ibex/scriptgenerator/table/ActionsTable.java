@@ -30,6 +30,8 @@ public class ActionsTable extends ModelObject {
 	
 	private Map<Integer, String> globalValidError = Collections.emptyMap();
 	
+	private Map<Integer, String> customValidError = Collections.emptyMap();
+	
 	/**
 	 * The actions (rows) of the table that have values for the action parameters.
 	 */
@@ -67,6 +69,14 @@ public class ActionsTable extends ModelObject {
 	 */
 	public Map<Integer, String> getGlobalValidityErrors() {
 		return this.globalValidError;
+	}
+	
+	/**
+	 * 
+	 * @return The customValidError string on this object.
+	 */
+	public Map<Integer, String> getCustomValidityErrors() {
+		return this.customValidError;
 	}
 
 	/**
