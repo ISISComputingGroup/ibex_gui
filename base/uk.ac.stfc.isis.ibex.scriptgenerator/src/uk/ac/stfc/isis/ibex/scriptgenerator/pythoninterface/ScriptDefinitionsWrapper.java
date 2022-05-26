@@ -51,10 +51,11 @@ public interface ScriptDefinitionsWrapper {
 	 * @param scriptGenContent The list of actions to check.
 	 * @param scriptDefinition The script definition to check with.
 	 * @param globalParams The global parameters to get the validity errors with.
+	 * @param customParams The global parameters to estimate a defined value.
 	 * @return A list of maps where the key is the index of the action in the list and 
 	 * 		the value is the invalidity reason. Empty if there are no invalidity errors.
 	 */
-	List<Map<Integer, String>> getValidityErrors(List<String> globalParams, List<Map<String, String>> scriptGenContent, ScriptDefinitionWrapper scriptDefinition);
+	List<Map<Integer, String>> getValidityErrors(List<String> globalParams, List<String> customParams, List<Map<String, String>> scriptGenContent, ScriptDefinitionWrapper scriptDefinition);
 	
 	/**
 	 * Check if a list of actions are valid under the passed script definitions.

@@ -545,7 +545,7 @@ class ScriptDefinitionsWrapper(object):
         python_list_of_actions: List = ListConverter().convert(list_of_actions, gateway._gateway_client)
         return [MapConverter().convert(action, gateway._gateway_client) for action in python_list_of_actions]
 
-    def areParamsValid(self, list_of_actions, global_params, script_definition: ScriptDefinitionWrapper) -> bool:
+    def areParamsValid(self, list_of_actions, global_params, custom_params, script_definition: ScriptDefinitionWrapper) -> bool:
         """
         Checks if a list of parameters are valid for the script_definition
 
@@ -553,9 +553,9 @@ class ScriptDefinitionsWrapper(object):
             True if valid, False if not.
         """
         return self.generator.areParamsValid(self.convert_list_of_actions_to_python(list_of_actions), script_definition,
-                                             global_params)
+                                             global_params, custom_params)
 
-    def getValidityErrors(self, global_params, list_of_actions,
+    def getValidityErrors(self, global_params, custom_params, list_of_actions,
                           script_definition: ScriptDefinitionWrapper) -> Dict[int, AnyStr]:
         """
         Get the validity errors of the current actions
@@ -563,7 +563,7 @@ class ScriptDefinitionsWrapper(object):
         Returns:
             List of dictionaries containing keys of the line numbers where errors are and values of the error messages.
         """
-        errors_list = self.generator.getValidityErrors(global_params, self.convert_list_of_actions_to_python(
+        errors_list = self.generator.getValidityErrors(global_params, custom_params, self.convert_list_of_actions_to_python(
             list_of_actions), script_definition)
         converted_list = [MapConverter().convert(errors, gateway._gateway_client) for errors in errors_list]
         return ListConverter().convert(converted_list, gateway._gateway_client)

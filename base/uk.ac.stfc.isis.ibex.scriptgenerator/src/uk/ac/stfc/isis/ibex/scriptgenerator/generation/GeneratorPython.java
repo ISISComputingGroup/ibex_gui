@@ -62,7 +62,7 @@ public class GeneratorPython extends AbstractGenerator {
 	@Override
 	public void refreshValidityErrors(List<String> globalParams, List<String> customParams, List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefintion) throws InterruptedException, ExecutionException {
 		try {
-			pythonInterface.refreshValidityErrors(globalParams, scriptGenContent, scriptDefintion);
+			pythonInterface.refreshValidityErrors(globalParams, customParams, scriptGenContent, scriptDefintion);
 		} catch (PythonNotReadyException e) {
 			// ScriptGeneratorSingleton is listening to python interface readiness changes (handled there)
 			LOG.error(e);

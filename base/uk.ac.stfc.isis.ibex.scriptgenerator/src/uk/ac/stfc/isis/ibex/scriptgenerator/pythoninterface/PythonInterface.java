@@ -359,16 +359,17 @@ public class PythonInterface extends ModelObject {
 	 * @param scriptGenContent The script generator content to validate.
 	 * @param scriptDefinition           The script definition to validate against.
 	 * @param globalParams The global parameters to generate the script with.
+	 * @param customParams The custom parameters to construct a custom estimate.
 	 * @throws ExecutionException   A failure to execute the py4j call
 	 * @throws InterruptedException The Py4J call was interrupted
 	 * @throws PythonNotReadyException When python is not ready to accept calls.
 	 */
-	public void refreshValidityErrors(List<String> globalParams, List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition)
+	public void refreshValidityErrors(List<String> globalParams, List<String> customParams, List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition)
 			throws InterruptedException, ExecutionException, PythonNotReadyException {
 		if (pythonReady) {
 			CompletableFuture.supplyAsync(() -> {
 				try {
-					return scriptDefinitionsWrapper.getValidityErrors(globalParams, convertScriptGenContentToPython(scriptGenContent), scriptDefinition);
+					return scriptDefinitionsWrapper.getValidityErrors(globalParams, customParams, convertScriptGenContentToPython(scriptGenContent), scriptDefinition);
 				} catch (Py4JException e) {
 					LOG.error(e);
 					handlePythonReadinessChange(false);
@@ -389,6 +390,7 @@ public class PythonInterface extends ModelObject {
 	 * @param scriptGenContent The script generator content to validate.
 	 * @param scriptDefinition           The script definition to validate against.
 	 * @param globalParams The global parameters to check parameter validity with.
+	 * @param customParams The custom parameters to construct a custom estimate.
 	 * @throws ExecutionException   A failure to execute the py4j call
 	 * @throws InterruptedException The Py4J call was interrupted
 	 * @throws PythonNotReadyException When python is not ready to accept calls.
