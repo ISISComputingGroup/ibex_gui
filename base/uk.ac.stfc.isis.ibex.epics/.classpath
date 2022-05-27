@@ -15,7 +15,7 @@
 	<classpathentry kind="lib" path="lib/commons-codec-1.15-javadoc.jar"/>
 	<classpathentry kind="lib" path="lib/commons-codec-1.15-sources.jar"/>
 	<classpathentry kind="lib" path="lib/commons-codec-1.15.jar"/>
-	<classpathentry kind="lib" path="lib/joda-time-2.10.10.jar"/>
+	<classpathentry kind="lib" path="lib/joda-time-2.10.14.jar"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins">
 		<accessrules>
 			<accessrule kind="nonaccessible" pattern="java/xml"/>

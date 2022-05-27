@@ -13,6 +13,6 @@ Export-Package: org.apache.logging.log4j,
  org.apache.logging.log4j.core.config.plugins,
  uk.ac.stfc.isis.ibex.logger
 Bundle-ClassPath: .,
- lib/log4j-api-2.17.1.jar,
- lib/log4j-core-2.17.1.jar
+ lib/log4j-api-2.17.2.jar,
+ lib/log4j-core-2.17.2.jar
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.logger
