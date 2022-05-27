@@ -461,7 +461,7 @@ public class PythonInterface extends ModelObject {
         if (pythonReady) {
             CompletableFuture.supplyAsync(() -> {
                 try {
-                    return scriptDefinitionsWrapper.estimateTime(convertScriptGenContentToPython(scriptGenContent), scriptDefinition, customParams);
+                    return scriptDefinitionsWrapper.estimateCustom(convertScriptGenContentToPython(scriptGenContent), scriptDefinition, customParams);
                 } catch (Py4JException e) {
                     LOG.error(e);
                     handlePythonReadinessChange(false);
