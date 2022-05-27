@@ -581,7 +581,7 @@ class ScriptDefinitionsWrapper(object):
             gateway._gateway_client)
 
     def estimateCustom(self, list_of_actions, script_definition: ScriptDefinitionWrapper, custom_parameters) -> Dict[
-        int, string]:
+        int, AnyStr]:
         """
         Get the custom estimate of the current actions
 
