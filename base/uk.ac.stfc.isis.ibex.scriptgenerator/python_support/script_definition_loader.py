@@ -291,7 +291,7 @@ class ScriptDefinitionWrapper(object):
         except (ValueError, TypeError, KeyError) as ex:
             return None
 
-    def estimateCustom(self, action, custom_params) -> Union[None, int]:
+    def estimateCustom(self, action, custom_params) -> Union[None, AnyStr]:
         """
         Returns a custom estimate of an action
 
@@ -306,7 +306,7 @@ class ScriptDefinitionWrapper(object):
             if self.hasCustomParameters():
                 self.setCustomParameters(custom_params)
             estimate = self.script_definition.estimate_custom(**action)
-            return round(estimate)
+            return str(estimate)
         except (ValueError, TypeError, KeyError) as ex:
             return None
 
@@ -410,15 +410,15 @@ class Generator(object):
         return time_estimates
 
     def estimateCustom(self, list_of_actions, script_definition: ScriptDefinitionWrapper, custom_params) -> Dict[
-        int, int]:
+        int, AnyStr]:
         """
         Custom Estimates for each action.
         Actions are only estimated if their parameters are valid.
 
         Returns:
-            Dictionary containing line numbers as keys and estimates as values
+            Dictionary containing line numbers as keys and estimates as strings
         """
-        custom_estimates: Dict[int, int] = {}
+        custom_estimates: Dict[int, AnyStr] = {}
         for current_action_index, action in enumerate(list_of_actions, 0):
             if script_definition.parametersValid(action, null, custom_params) is None:
                 custom_estimate = script_definition.estimateCustom(action, custom_params)
@@ -581,12 +581,12 @@ class ScriptDefinitionsWrapper(object):
             gateway._gateway_client)
 
     def estimateCustom(self, list_of_actions, script_definition: ScriptDefinitionWrapper, custom_parameters) -> Dict[
-        int, int]:
+        int, string]:
         """
-        Get the custom estimated of the current actions
+        Get the custom estimate of the current actions
 
         Returns:
-            Dictionary containing line numbers as keys and estimates as values
+            Dictionary containing line numbers as keys and estimates as strings
         """
         return MapConverter().convert(self.generator.estimateCustom(
             self.convert_list_of_actions_to_python(list_of_actions), script_definition, custom_parameters),

@@ -1124,7 +1124,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	                return "\u003F"; // A question mark to say we cannot be certain
 	            }
             	
-            	Optional<Number> customEstimate = row.getEstimatedCustom();
+            	Optional<String> customEstimate = row.getEstimatedCustom();
 	            if (customEstimate.isEmpty()) {
 	                return UNKNOWN_TEXT;
 	            }

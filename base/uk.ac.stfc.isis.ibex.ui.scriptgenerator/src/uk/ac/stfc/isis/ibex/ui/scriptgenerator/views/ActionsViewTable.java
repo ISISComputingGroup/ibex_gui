@@ -260,7 +260,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 		return columnHeader.equals(ScriptGeneratorViewModel.CUSTOM_ESTIMATE_COLUMN_HEADER) 
 				&& (
 						(action.getEstimatedCustom().isEmpty() && !estimatedCustomText.equals(ScriptGeneratorViewModel.UNKNOWN_TEXT)) 
-						|| (action.getEstimatedCustom().isPresent() && !estimatedCustomText.equals(ScriptGeneratorViewModel.changeSecondsToTimeFormat(action.getEstimatedCustom().get().longValue())))
+						|| (action.getEstimatedCustom().isPresent() && !estimatedCustomText.equals(action.getEstimatedCustom().get().toString()))
 				);
 	}
 	

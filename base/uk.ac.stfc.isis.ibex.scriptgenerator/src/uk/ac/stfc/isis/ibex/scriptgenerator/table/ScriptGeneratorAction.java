@@ -32,7 +32,7 @@ public class ScriptGeneratorAction extends ModelObject {
     /**
      * Contains the custom estimate of an action. Empty optional if the action is invalid
      */
-    private Optional<Number> customEstimate = Optional.empty();
+    private Optional<String> customEstimate = Optional.empty();
     
     private ActionDynamicScriptingStatus dynamicScriptingStatus = ActionDynamicScriptingStatus.NO_STATUS;
 
@@ -153,10 +153,10 @@ public class ScriptGeneratorAction extends ModelObject {
     }
     
     /**
-     * Set the custom estimate value.
-     * @param newEstimate custom estimate number
+     * Set the custom estimate result.
+     * @param newEstimate custom estimate value (casted to a string)
      */
-    public void setCustomEstimate(Optional<Number> newEstimate) {
+    public void setCustomEstimate(Optional<String> newEstimate) {
 	firePropertyChange(ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY, customEstimate, newEstimate);
 	customEstimate = newEstimate;
     }
@@ -170,10 +170,10 @@ public class ScriptGeneratorAction extends ModelObject {
     }
     
     /**
-     * Get the estimated custom number.
-     * @return custom estimate number
+     * Get the estimated custom string.
+     * @return custom estimate string
      */
-    public Optional<Number> getEstimatedCustom() {
+    public Optional<String> getEstimatedCustom() {
 	return customEstimate;
     }
     

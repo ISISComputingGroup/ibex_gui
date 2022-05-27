@@ -73,9 +73,9 @@ public interface ScriptDefinitionWrapper {
      * 
      * @param action The action to estimate
      * @param custom_params The custom parameters to refresh the custom estimation with.
-     * @return An estimate number
+     * @return An estimate value as a string
      */
-    Number customEstimate(Map<String, String> action, List<String> custom_params);
+    String customEstimate(Map<String, String> action, List<String> custom_params);
 	
 	/**
 	 * @return The name of this script definition.
