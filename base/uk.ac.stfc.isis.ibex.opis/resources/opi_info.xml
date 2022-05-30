@@ -2697,7 +2697,7 @@
         </macros>
       </value>
     </entry>
-     <entry>
+    <entry>
       <key>WISH Jaws</key>
       <value>
         <type>JAWS</type>
@@ -2765,6 +2765,16 @@
       </value>
     </entry>
     <entry>
+      <key>TECHNIX</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>technix.opi</path>
+        <description>Technix PSU</description>
+        <macros>
+          <macro>
+            <name>IOC_NAME</name> 
+            <description>The technix PV prefix (e.g. TECHNIX_01)</description>
+            <default>TECHNIX_01</default>
       <key>Rotating Stirrer Rack</key>
       <value>
         <categories/>
