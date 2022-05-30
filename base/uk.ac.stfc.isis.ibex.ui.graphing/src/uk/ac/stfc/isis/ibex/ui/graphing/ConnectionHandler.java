@@ -52,16 +52,12 @@ public class ConnectionHandler {
      * @param url The URL of the plot
      * @param isPrimary Whether the plot is the primary plot
      */
-    private void openPlotInCurrentPerspective(IPerspectiveDescriptor currentPerspective, final String url, final boolean isPrimary) {
-        if (perspectivesToRefresh.contains(currentPerspective.getId())) {
-            if (currentPerspective.getId().equals(REFL_PERSPECTIVE_ID)) {
-                FixedMatplotlibOpiTargetView.displayOpi(url);
-                perspectivesToRefresh.remove(REFL_PERSPECTIVE_ID);
-            } else if (currentPerspective.getId().equals(SCRIPTING_PERSPECTIVE_ID)) {
-                MatplotlibOpiTargetView.displayOpi(url, isPrimary);
-                perspectivesToRefresh.remove(SCRIPTING_PERSPECTIVE_ID);
-            }
-        }
+	private void openPlotInCurrentPerspective(IPerspectiveDescriptor currentPerspective, final String url,
+			final boolean isPrimary) {
+		if (perspectivesToRefresh.contains(currentPerspective.getId())) {
+			MatplotlibOpiTargetView.displayOpi(url, isPrimary);
+			perspectivesToRefresh.remove(SCRIPTING_PERSPECTIVE_ID);
+		}
     }
     
     /**

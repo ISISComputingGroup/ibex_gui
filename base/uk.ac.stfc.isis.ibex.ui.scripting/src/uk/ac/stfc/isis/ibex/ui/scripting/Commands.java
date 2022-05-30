@@ -33,11 +33,6 @@ public final class Commands {
     private static final String SET_INSTRUMENT_CMD = "set_instrument('%s')\n";
 
     /**
-     * Python command to scale down matplotlib plot dimensions (hardcoded for now).
-     */
-    public static final String COMPACT_PLOT_CMD = "matplotlib.rcParams['figure.figsize'] = [5.8, 2.2] \n";
-
-    /**
      * The command to initialise genie.
      */
     public static final String GENIE_INITIALISATION_CMDS = "import matplotlib \n"
@@ -65,13 +60,9 @@ public final class Commands {
      * Creates a set of initialisation commands to run when creating the
      * genie_python console.
      * 
-     * @param compactPlot whether or not to include the compact plot python command.
      * @return initial python commands
      */
-    public static String getInitialisationCommands(boolean compactPlot) {
-        String initCommands = GENIE_INITIALISATION_CMDS;
-        initCommands += compactPlot ? COMPACT_PLOT_CMD : "";
-
-        return initCommands;
+    public static String getInitialisationCommands() {
+        return GENIE_INITIALISATION_CMDS;
     }
 }

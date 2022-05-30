@@ -32,7 +32,7 @@ public class ResetLayoutButtonModel extends ModelObject {
     }
 
     /**
-     * Reset changed to false a set the current perspective.
+     * Reset changed to false and set the current perspective.
      *
      * @param perspective
      *            The perspective that is now the current perspective.

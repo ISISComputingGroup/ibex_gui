@@ -36,6 +36,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
@@ -1033,6 +1035,16 @@ public class ScriptGeneratorViewModel extends ModelObject {
         timeEstimateColumn.getColumn().setAlignment(SWT.CENTER);
     
         ColumnViewerToolTipSupport.enableFor(viewTable.viewer());
+        
+        // Add selection listener to table headers, to ensure actions remain visible
+	for (int i = 0; i <  viewTable.table().getColumns().length; i++) {
+		viewTable.table().getColumn(i).addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				scriptGeneratorModel.reloadActions();
+			}
+		});
+	}
     }
 
     /**
