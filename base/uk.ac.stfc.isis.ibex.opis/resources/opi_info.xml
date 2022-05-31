@@ -2775,6 +2775,11 @@
             <name>IOC_NAME</name> 
             <description>The technix PV prefix (e.g. TECHNIX_01)</description>
             <default>TECHNIX_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
       <key>Rotating Stirrer Rack</key>
       <value>
         <categories/>
