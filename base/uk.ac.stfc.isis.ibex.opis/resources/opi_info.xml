@@ -2458,6 +2458,22 @@
       </value>
     </entry>
     <entry>
+      <key>FMR</key>
+      <value>
+        <type>ZERO_FIELD</type>
+        <path>fmr.opi</path>
+        <description>OPI for the Ferro Magnetic Resonance equipment</description>
+        <categories/>
+        <macros>
+          <macro>
+            <name>FMR</name>
+            <description>The FMR PV prefix (e.g. FMR_01)</description>
+            <default>FMR_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
       <key>Anton Paar DMA4500M</key>
       <value>
         <type>DENSITY_METER</type>
