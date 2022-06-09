@@ -2467,8 +2467,8 @@
         <macros>
           <macro>
             <name>FMR</name>
-            <description>The FMR PV prefix (e.g. FMR_01)</description>
-            <default>FMR_01</default>
+            <description>The FMR machine PV root (e.g. TE:NDW1805:FMR_01)</description>
+            <default>TE:NDW1805:FMR_01</default>
           </macro>
         </macros>
       </value>
