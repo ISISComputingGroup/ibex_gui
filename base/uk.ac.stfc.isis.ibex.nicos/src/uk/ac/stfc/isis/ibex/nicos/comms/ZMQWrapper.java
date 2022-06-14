@@ -114,7 +114,6 @@ public class ZMQWrapper {
      */
     public void connect(String connectionUri) throws ZMQException {
     	checkCommsLockHeld();
-    	LOG.info("Opening ZMQ connection to NICOS");
 
 		// disconnect old session first
 		disconnect();
