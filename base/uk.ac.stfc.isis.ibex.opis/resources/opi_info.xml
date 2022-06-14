@@ -2774,14 +2774,14 @@
     <entry>
       <key>B17TMAG</key>
       <value>
-        <categories/>
-        <type>UNKNOWN</type>
+        <type>B17TMAG</type>
         <path>b17tmag.opi</path>
         <description>The OPI for the B17TMag</description>
         <macros>
           <macro>
             <name>B17TMAG</name>
             <description>The B17TMag PV prefix (e.g. B17TMAG_01)</description>
+            <default>B17TMAG_01</default>
           </macro>
         </macros>
       </value>
