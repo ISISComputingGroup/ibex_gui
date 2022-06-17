@@ -1220,7 +1220,7 @@ $(pv_value)</tooltip>
       <name>Min_Pressure_Text_1</name>
       <precision>0</precision>
       <precision_from_pv>false</precision_from_pv>
-      <pv_name>$(PV_ROOT_PEARLPC):PRESSURE_DIFFERENCE_THRESHOLD</pv_name>
+      <pv_name>$(PV_ROOT_PEARLPC):PRESSURE_DIFF_THOLD</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -1275,7 +1275,7 @@ $(pv_value)</tooltip>
       <name>Application_Pressure_Rate_Text_1</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT_PEARLPC):PRESSURE_DIFFERENCE_THRESHOLD:SP</pv_name>
+      <pv_name>$(PV_ROOT_PEARLPC):PRESSURE_DIFF_THOLD:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
