@@ -202,22 +202,27 @@ $(pv_value)</tooltip>
       <color red="0" green="255" blue="0" />
     </state_color_0>
     <state_color_1>
-      <color red="100" green="100" blue="100" />
+      <color red="192" green="192" blue="192" />
     </state_color_1>
     <state_color_2>
       <color red="255" green="0" blue="0" />
     </state_color_2>
+    <state_color_3>
+      <color red="255" green="255" blue="0" />
+    </state_color_3>
     <state_color_fallback>
       <color red="100" green="100" blue="100" />
     </state_color_fallback>
-    <state_count>3</state_count>
+    <state_count>4</state_count>
     <state_label_0></state_label_0>
     <state_label_1></state_label_1>
     <state_label_2></state_label_2>
+    <state_label_3></state_label_3>
     <state_label_fallback>ERR</state_label_fallback>
     <state_value_0>0.0</state_value_0>
     <state_value_1>1.0</state_value_1>
     <state_value_2>2.0</state_value_2>
+    <state_value_3>3.0</state_value_3>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <visible>true</visible>
@@ -276,7 +281,7 @@ $(pv_value)</tooltip>
     <width>53</width>
     <wrap_words>false</wrap_words>
     <wuid>5da5fba8:1814ce0608c:-7ff9</wuid>
-    <x>12</x>
+    <x>14</x>
     <y>30</y>
   </widget>
 </display>
