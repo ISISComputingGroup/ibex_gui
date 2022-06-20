@@ -12,8 +12,9 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.preferences,
  uk.ac.stfc.isis.ibex.databases;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.epics.switching,
- com.google.gson
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+ com.google.gson,
+ uk.ac.stfc.isis.ibex.epics
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: uk.ac.stfc.isis.ibex.experimentdetails,
  uk.ac.stfc.isis.ibex.experimentdetails.database
 Bundle-ActivationPolicy: lazy
@@ -22,3 +23,4 @@ Import-Package: org.apache.logging.log4j,
  uk.ac.stfc.isis.ibex.log.preferences,
  uk.ac.stfc.isis.ibex.logger
 Bundle-ClassPath: .
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.experimentdetails

@@ -18,17 +18,22 @@
 
 package uk.ac.stfc.isis.ibex.log;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Objects;
+
 import org.eclipse.jface.preference.IPreferenceStore;
 
 import uk.ac.stfc.isis.ibex.activemq.message.IMessageConsumer;
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.preferences.PreferenceConstants;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.ui.UI;
 
 /**
  * A Counter that consumes log messages and counts how many there have been.
  */
-public class LogCounter extends ModelObject implements IMessageConsumer<LogMessage> {
+public class LogCounter extends ModelObject implements IMessageConsumer<LogMessage>, PropertyChangeListener {
 
     private static final String MAJOR = "MAJOR";
     private static final String MINOR = "MINOR";
@@ -37,6 +42,15 @@ public class LogCounter extends ModelObject implements IMessageConsumer<LogMessa
 
     private MessageCounter counter = new MessageCounter();
     private boolean running = true;
+    
+    private static final String SWITCH_TO_OR_FROM_IOC_LOG_PROPERTY = "switchToOrFromIOCLog";
+    
+    /**
+     * Create a new log constructor and add it as observed by {@link uk.ac.stfc.isis.ibex.ui.UI}.
+     */
+    public LogCounter() {
+    	UI.getDefault().addStopWaitPropertyChangeListener(this);
+    }
 
     /**
      * Starts the counter running.
@@ -55,7 +69,7 @@ public class LogCounter extends ModelObject implements IMessageConsumer<LogMessa
     /**
      * Get how many messages have been counted.
      * 
-     * @return The number of counted messsages.
+     * @return The number of counted messages.
      */
     public long getCount() {
         return counter.countsForSeverity(MAJOR) + optionalMinorCount();
@@ -100,4 +114,16 @@ public class LogCounter extends ModelObject implements IMessageConsumer<LogMessa
     public void clearMessages() {
         this.resetCount();
     }
+
+    /**
+     * Handle a switchToOrFromIOCLogProperty by calling {@link #start()}.
+     * 
+     * @param evt The property change event, only handles {@link switchToOrFromIOCLogProperty}.
+     */
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (Objects.equals(evt.getPropertyName(), SWITCH_TO_OR_FROM_IOC_LOG_PROPERTY)) {
+			start();
+		}
+	}
 }

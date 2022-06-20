@@ -19,6 +19,7 @@ public class ResetLayoutButtonViewModel extends ButtonViewModel {
      * Initiate a new reset layout button view model.
      */
     public ResetLayoutButtonViewModel() {
+        super("Reset Layout");
         ResetLayoutButtonModel.getInstance().addPropertyChangeListener("layoutModified", new PropertyChangeListener() {
 
             @Override

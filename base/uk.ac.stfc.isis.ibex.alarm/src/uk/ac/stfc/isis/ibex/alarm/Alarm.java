@@ -73,7 +73,6 @@ public class Alarm extends Plugin implements InstrumentInfoReceiver {
      */
     public Alarm() {
 		instance = this;
-        setupAlarmModel();
     }
 
     /**
@@ -113,7 +112,9 @@ public class Alarm extends Plugin implements InstrumentInfoReceiver {
     public void stop(BundleContext context) throws Exception {
         super.stop(context);
         AlarmConnectionCloser alarmConnectionCloser = releaseAlarm();
-        alarmConnectionCloser.close();
+        if (alarmConnectionCloser != null) {
+        	alarmConnectionCloser.close();
+        }
     }
 
     /**
@@ -139,12 +140,14 @@ public class Alarm extends Plugin implements InstrumentInfoReceiver {
      * connection is closed on a separate thread; give it a chance to close
      * first.
      * 
-     * @return an active MQ connection closer
+     * @return an active MQ connection closer; or null if there is no alarmModel to release.
      */
     private AlarmConnectionCloser releaseAlarm() {
-
-        AlarmConnectionCloser alarmConnectionCloser = new AlarmConnectionCloser(alarmModel);
-        alarmModel.release();
+    	AlarmConnectionCloser alarmConnectionCloser = null;
+    	if (alarmModel != null) {
+	        alarmConnectionCloser = new AlarmConnectionCloser(alarmModel);
+	        alarmModel.release();
+    	}
         alarmModel = null;
         counter.setAlarmModel(null);
 

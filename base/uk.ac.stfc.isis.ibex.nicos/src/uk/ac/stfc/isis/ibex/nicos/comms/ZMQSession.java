@@ -88,13 +88,7 @@ public class ZMQSession {
     }
 
     private String createConnectionURI(InstrumentInfo instrument) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(ZMQ_PROTO);
-        sb.append("://");
-        sb.append(instrument.hostName());
-        sb.append(":");
-        sb.append(ZMQ_PORT);
-        return sb.toString();
+        return String.format("%s://%s:%s", ZMQ_PROTO, instrument.hostName(), ZMQ_PORT);
     }
 
     private void sendMultipleMessages(List<String> messages) throws ZMQException {
@@ -133,16 +127,12 @@ public class ZMQSession {
     	}
     }
 
-    private <TSEND, TRESP> SentMessageDetails<TRESP> getServerResponse(NICOSMessage<TSEND, TRESP> sentMessage) {
-        String status = zmq.receiveString();
-
-        // NICOS protocol leaves the second package empty for future expansion
-        // so read and throw away.
-        zmq.receiveString();
-
-        String resp = zmq.receiveString();
+    private <TSEND, TRESP> SentMessageDetails<TRESP> getServerResponse(NICOSMessage<TSEND, TRESP> sentMessage) {    	
+    	sentMessage.receiveResponse(zmq);
+    	var status = sentMessage.getResponseStatus();
+    	var resp = sentMessage.getResponse();
         
-        if (status == null | resp == null | Objects.equals(status, "")) {
+        if (status == null || resp == null || Objects.equals(status, "")) {
             LOG.warn("No response from server after sending " + sentMessage.toString());
             return SentMessageDetails.createSendFail(NO_DATA_RECEIVED);
         }

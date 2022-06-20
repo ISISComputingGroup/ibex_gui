@@ -10,7 +10,7 @@
   <background_color>
     <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
   </background_color>
-  <boy_version>5.1.0.201707071649</boy_version>
+  <boy_version>5.1.0</boy_version>
   <foreground_color>
     <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
   </foreground_color>
@@ -40,7 +40,7 @@
     <axis_0_axis_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </axis_0_axis_color>
-    <axis_0_axis_title>Time of flight (μs)</axis_0_axis_title>
+    <axis_0_axis_title>Time of flight (us)</axis_0_axis_title>
     <axis_0_dash_grid_line>false</axis_0_dash_grid_line>
     <axis_0_grid_color>
       <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
@@ -63,7 +63,7 @@
     <axis_1_axis_color>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </axis_1_axis_color>
-    <axis_1_axis_title>Counts / μs</axis_1_axis_title>
+    <axis_1_axis_title>counts/us</axis_1_axis_title>
     <axis_1_dash_grid_line>false</axis_1_dash_grid_line>
     <axis_1_grid_color>
       <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
@@ -115,6 +115,8 @@
         <pv trig="true">$(SPECTRUM_PV$(NUMBER))</pv>
         <pv trig="true">$(PERIOD_PV$(NUMBER))</pv>
         <pv trig="true">$(MODE_PV$(NUMBER))</pv>
+        <pv trig="true">$(P)DAE:SPEC:1:1:X.EGU</pv>
+        <pv trig="true">$(P)DAE:SPEC:1:1:Y.EGU</pv>
       </path>
     </scripts>
     <show_legend>false</show_legend>
@@ -303,10 +305,7 @@ $(trace_0_y_pv_value)</tooltip>
       <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
     <height>32</height>
-    <items>
-      <s>counts/us</s>
-      <s>counts</s>
-    </items>
+    <items />
     <items_from_pv>false</items_from_pv>
     <name>Combo</name>
     <pv_name>$(MODE_PV$(NUMBER))</pv_name>
@@ -317,7 +316,12 @@ $(trace_0_y_pv_value)</tooltip>
       <height_scalable>false</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts>
+      <path pathString="spectra_plots_mode.py" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">$(P)DAE:SPEC:1:1:Y.EGU</pv>
+        <pv trig="false">$(MODE_PV$(NUMBER))</pv>
+      </path>
+    </scripts>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <visible>true</visible>
@@ -436,5 +440,107 @@ $(pv_value)</tooltip>
     <wuid>1a25a425:169007dc914:-7f62</wuid>
     <x>277</x>
     <y>-6</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
+    <actions hook="false" hook_all="false" />
+    <alarm_pulsing>false</alarm_pulsing>
+    <auto_size>false</auto_size>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <border_style>3</border_style>
+    <border_width>1</border_width>
+    <confirm_message></confirm_message>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="11" style="1" pixels="false">Header 3</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <format_type>1</format_type>
+    <height>20</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <limits_from_pv>false</limits_from_pv>
+    <maximum>1.7976931348623157E308</maximum>
+    <minimum>0.0</minimum>
+    <multiline_input>false</multiline_input>
+    <name>Text Input</name>
+    <precision>0</precision>
+    <precision_from_pv>true</precision_from_pv>
+    <pv_name>$(PERIOD_PV_STR$(NUMBER))</pv_name>
+    <pv_value />
+    <rotation_angle>0.0</rotation_angle>
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts>
+      <path pathString="spectra_plots_period_str.py" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">$(PERIOD_PV$(NUMBER))</pv>
+        <pv trig="true">$(PERIOD_PV_STR$(NUMBER))</pv>
+      </path>
+    </scripts>
+    <selector_type>0</selector_type>
+    <show_units>true</show_units>
+    <style>0</style>
+    <text>Current</text>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <transparent>false</transparent>
+    <visible>false</visible>
+    <widget_type>Text Input</widget_type>
+    <width>79</width>
+    <wuid>-cca040c:17a0f0bcc50:-755f</wuid>
+    <x>277</x>
+    <y>-6</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <actions hook="false" hook_all="false" />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <height>1</height>
+    <image></image>
+    <name>Dummy</name>
+    <push_action_index>0</push_action_index>
+    <pv_name></pv_name>
+    <pv_value />
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <style>1</style>
+    <text></text>
+    <toggle_button>false</toggle_button>
+    <tooltip></tooltip>
+    <visible>true</visible>
+    <widget_type>Action Button</widget_type>
+    <width>1</width>
+    <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
+    <x>198</x>
+    <y>-13</y>
   </widget>
 </display>

@@ -19,8 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.opis;
 
+import org.csstudio.opibuilder.OPIBuilderPlugin;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * The activator for the plug-in.
@@ -35,6 +37,8 @@ public class Opi implements BundleActivator {
 	private static OpiProvider opiProvider = new OpiProvider();
 	
 	private static DescriptionsProvider descProvider = new DescriptionsProvider();
+	
+	private static final java.util.logging.Logger CSS_LOGGER = OPIBuilderPlugin.getLogger();
 	
 	public Opi() {
 		instance = this;
@@ -62,6 +66,8 @@ public class Opi implements BundleActivator {
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
 		Opi.context = bundleContext;
+		
+		IsisLog.hookJavaLogger(CSS_LOGGER);
 	}
 
 	/*

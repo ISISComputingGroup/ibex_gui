@@ -9,5 +9,11 @@
             name="Matplotlib"
             restorable="true">
       </view>
+      <view
+            class="uk.ac.stfc.isis.ibex.ui.graphing.MatplotlibOpiTargetView"
+            id="uk.ac.stfc.isis.ibex.ui.graphing.BackgroundScriptOpiTargetView"
+            name="Matplotlib"
+            restorable="true">
+      </view>
    </extension>
 </plugin>

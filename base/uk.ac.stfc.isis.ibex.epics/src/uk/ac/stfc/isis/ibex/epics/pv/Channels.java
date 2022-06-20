@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.epics.pv;
 
+import java.util.function.Function;
+
 import org.diirt.vtype.VByteArray;
 import org.diirt.vtype.VDouble;
 import org.diirt.vtype.VEnum;
@@ -30,9 +32,7 @@ import org.diirt.vtype.VString;
 import org.diirt.vtype.VType;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.DateTimeFormatter;
-import uk.ac.stfc.isis.ibex.epics.conversion.DefaultStringConverter;
 import uk.ac.stfc.isis.ibex.epics.conversion.ElapsedTimeFormatter;
 import uk.ac.stfc.isis.ibex.epics.conversion.VTypeFormat;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
@@ -40,7 +40,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.pvmanager.PVManagerObservable;
 import uk.ac.stfc.isis.ibex.epics.pvmanager.PVManagerWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
-import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritable;
+import uk.ac.stfc.isis.ibex.epics.writing.TransformingWritable;
 
 /**
  * Contains all the different channel types used for communicating with PVs.
@@ -88,7 +88,7 @@ public class Channels {
          * @return the writable
          */
         public static BaseWritable<String> objectWriter(String pvAddress) {
-			return convertWritablePV(pvAddress, Object.class, new DefaultStringConverter());
+			return convertWritablePV(pvAddress, Object.class, value -> value);
 		}
 	}
 	
@@ -294,7 +294,7 @@ public class Channels {
          * @return the observable
          */
 		public static ClosableObservable<String> elapsedTimeReader(String pvAddress) {
-			return convertObservablePV(pvAddress, VInt.class, VTypeFormat.toLong().apply(new ElapsedTimeFormatter()));
+			return convertObservablePV(pvAddress, VInt.class, VTypeFormat.toLong().andThen(new ElapsedTimeFormatter()));
 		}
 		
         /**
@@ -304,7 +304,7 @@ public class Channels {
          * @return the observable
          */
 		public static ClosableObservable<String> dateTimeReader(String pvAddress) {
-			return convertObservablePV(pvAddress, VString.class, VTypeFormat.fromVString().apply(new DateTimeFormatter()));
+			return convertObservablePV(pvAddress, VString.class, VTypeFormat.fromVString().andThen(new DateTimeFormatter()));
 		}
 	}
 	
@@ -320,16 +320,6 @@ public class Channels {
          */
 		public static ClosableObservable<Number> reader(String pvAddress) {
 			return convertObservablePV(pvAddress, VNumber.class, VTypeFormat.toNumber());
-		}
-		
-        /**
-         * Creates a closable observable for a number plus units.
-         * 
-         * @param pvAddress the PV
-         * @return the observable
-         */
-		public static ClosableObservable<String> readerWithUnits(String pvAddress) {
-			return convertObservablePV(pvAddress, VNumber.class, VTypeFormat.quantityWithUnits());
 		}
 		
         /**
@@ -385,13 +375,13 @@ public class Channels {
 		}
 	}
 	
-	private static <V extends VType, T> ClosableObservable<T> convertObservablePV(String pvAddress, Class<V> pvType, Converter<V, T> converter) {
+	private static <V extends VType, T> ClosableObservable<T> convertObservablePV(String pvAddress, Class<V> pvType, Function<V, T> converter) {
 		return new ConvertingObservable<>(new PVManagerObservable<>(new PVInfo<>(pvAddress, pvType)), converter);		
 	}
 
     private static <V, T> BaseWritable<T> convertWritablePV(String pvAddress, Class<V> pvType,
-            Converter<T, V> converter) {
-        return new ForwardingWritable<>(new PVManagerWritable<>(new PVInfo<>(pvAddress, pvType)), converter);
+            Function<T, V> converter) {
+        return new TransformingWritable<>(new PVManagerWritable<>(new PVInfo<>(pvAddress, pvType)), converter);
 		
 	}
 }

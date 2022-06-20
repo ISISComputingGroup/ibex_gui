@@ -20,13 +20,15 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.pvsets;
 
 
+import java.util.Collection;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditablePVSet;
-import uk.ac.stfc.isis.ibex.ui.configserver.CheckboxLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
+import uk.ac.stfc.isis.ibex.ui.widgets.CheckboxLabelProvider;
 
 @SuppressWarnings("checkstyle:magicnumber")
 public class IocPVSetsTable extends DataboundTable<EditablePVSet> {
@@ -43,6 +45,12 @@ public class IocPVSetsTable extends DataboundTable<EditablePVSet> {
 
 		initialise();
 	}
+	
+	@Override
+    public void setRows(Collection<EditablePVSet> rows) {
+        super.setRows(rows);
+        super.refresh();
+    }
 
 	@Override
 	protected void addColumns() {
@@ -70,22 +78,26 @@ public class IocPVSetsTable extends DataboundTable<EditablePVSet> {
 	}
 	
 	private void enable() {
-		createColumn("Enabled?", 2, new CheckboxLabelProvider<EditablePVSet>(observeProperty("enabled")) {	
-			@Override
-			protected boolean checked(EditablePVSet pvset) {
-				return pvset.getEnabled();
-			}
-			
-			@Override
-			protected void setChecked(EditablePVSet pvset, boolean checked) {
-				pvset.setEnabled(checked);
-			}
-			
-			@Override
-			protected boolean isEditable(EditablePVSet pvset) {
-				return isEditable;
-			}
-		});	
+	    CheckboxLabelProvider<EditablePVSet> enableStatusLabelProvider = new CheckboxLabelProvider<EditablePVSet>(observeProperty("enabled")) {  
+            @Override
+            protected boolean checked(EditablePVSet pvset) {
+                return pvset.getEnabled();
+            }
+            
+            @Override
+            protected void setChecked(EditablePVSet pvset, boolean checked) {
+                pvset.setEnabled(checked);
+            }
+            
+            @Override
+            protected boolean isEditable(EditablePVSet pvset) {
+                return isEditable;
+            }
+        };
+        
+        setSortAction(() -> enableStatusLabelProvider.resetCheckBoxListenerUpdateFlags());
+        
+		createColumn("Enabled?", 2, enableStatusLabelProvider);
 	}
 	
 	/**

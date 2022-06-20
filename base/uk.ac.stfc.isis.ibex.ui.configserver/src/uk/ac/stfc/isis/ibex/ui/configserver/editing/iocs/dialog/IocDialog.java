@@ -24,6 +24,7 @@ import java.util.Map;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -40,19 +41,50 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
  * Dialog window for adding and editing IOCs.
  */
 public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
+	/**
+	 *  The configuration to be edited.
+	 */
     protected EditableConfiguration config;
-
+    
+	/**
+	 * Button to return to previous view.
+	 */
     protected Button btnPrev;
+    
+	/**
+	 * Button to complete adding Ioc.
+	 */
     protected Button btnOk;
+    
+    /**
+     * The composite to hold the content to display.
+     */
     protected Composite content;
+    
+    /**
+     * The panel for editing an Ioc.
+     */
     protected EditPanel editIocPanel;
+    
+    /**
+     * A temporarily editable Ioc.
+     */
     protected TempEditableIoc tempIoc;
 
     /** Error messages that are displayed. <Source, message> */
     protected Map<String, String> errorMessages = new HashMap<String, String>();
-
+    
+    /**
+     *  Whether the current Ioc is editable.
+     */
     protected final boolean readOnly;
+    
+    /**
+     * The current display.
+     */
     protected static final Display DISPLAY = Display.getCurrent();
+    private static final Point INITIAL_SIZE = new Point(1500, 670);
+    private static final Point MINIMUM_SIZE = new Point(450, 400);
 
     /**
      * Constructor for the IOC dialog.
@@ -66,9 +98,21 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
      */
     public IocDialog(Shell parent, EditableConfiguration config, EditableIoc ioc) {
         super(parent);
+        setShellStyle(getShellStyle() | SWT.RESIZE);
         this.config = config;
         this.tempIoc = new TempEditableIoc(ioc);
         this.readOnly = !ioc.isEditable();
+    }
+    
+    @Override
+    protected Point getInitialSize() {
+        return INITIAL_SIZE;
+    }
+    
+    @Override
+    protected void configureShell(Shell shell) {
+        super.configureShell(shell);
+        shell.setMinimumSize(MINIMUM_SIZE);
     }
 
     @Override

@@ -182,7 +182,7 @@
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(P)$(MOTION_SET_POINT):COORD1</pv_name>
+      <pv_name>$(P)$(MOTION_SET_POINT):COORD0</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -275,7 +275,7 @@ $(pv_value)</tooltip>
       <name>Text Update_3</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(P)$(MOTION_SET_POINT):COORD1:RBV</pv_name>
+      <pv_name>$(P)$(MOTION_SET_POINT):COORD0:RBV</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -342,13 +342,11 @@ $(pv_value)</tooltip>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
-        <action type="OPEN_DISPLAY">
-          <path>../Motor/mymotor.opi</path>
-          <macros>
-            <include_parent_macros>true</include_parent_macros>
-            <MM>$(MOTION_SET_POINT):COORD1:MTR</MM>
-          </macros>
-          <mode>0</mode>
+        <action type="EXECUTE_PYTHONSCRIPT">
+          <path>openOPI.py</path>
+          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+]]></scriptText>
+          <embedded>false</embedded>
           <description></description>
         </action>
       </actions>
@@ -370,7 +368,7 @@ $(pv_value)</tooltip>
       <image></image>
       <name>Button_1</name>
       <push_action_index>0</push_action_index>
-      <pv_name></pv_name>
+      <pv_name>$(P)$(MOTION_SET_POINT):COORD0:MTRNAME</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -518,7 +516,7 @@ $(pv_value)</tooltip>
       <name>Text Update_4</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(P)$(MOTION_SET_POINT):COORD1:NAME</pv_name>
+      <pv_name>$(P)$(MOTION_SET_POINT):COORD0:NAME</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -623,5 +621,45 @@ $(pv_value)</tooltip>
     <wuid>-62f3a4be:165d21a2268:-2f82</wuid>
     <x>6</x>
     <y>78</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <actions hook="false" hook_all="false" />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <height>1</height>
+    <image></image>
+    <name>Dummy</name>
+    <push_action_index>0</push_action_index>
+    <pv_name></pv_name>
+    <pv_value />
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <style>1</style>
+    <text></text>
+    <toggle_button>false</toggle_button>
+    <tooltip></tooltip>
+    <visible>true</visible>
+    <widget_type>Action Button</widget_type>
+    <width>1</width>
+    <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
+    <x>6</x>
+    <y>234</y>
   </widget>
 </display>

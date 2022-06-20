@@ -23,9 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
@@ -35,9 +33,6 @@ import org.eclipse.ui.PlatformUI;
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
-import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
-import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.MultipleSynopticsSelectionDialog;
 
 /**
@@ -46,15 +41,6 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs.MultipleSynopticsSelectio
 public class DeleteSynopticHandler extends SynopticEditorHandler {
 
     private static final String TITLE = "Delete Synoptics";
-
-    /**
-     * Constructor that adds a listener to disable the handler if the
-     * destination is disabled.
-     */
-    public DeleteSynopticHandler() {
-        synopticService.writeTo(SYNOPTIC.delete());
-        SYNOPTIC.delete().subscribe(synopticService);
-    }
 
     private boolean deleteConfigSynopticConfirmDialog(Collection<String> inUseSynoptics,
             Collection<String> configsUsingSynoptics) {
@@ -101,7 +87,7 @@ public class DeleteSynopticHandler extends SynopticEditorHandler {
 		}
             } else {
                 try {
-                    synopticService.write(dialog.selectedSynoptics());
+                    SYNOPTIC.delete().write(dialog.selectedSynoptics());
                 } catch (IOException e) {
                     throw new ExecutionException("Failed to write to PV", e);
                 }

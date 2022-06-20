@@ -21,15 +21,19 @@ package uk.ac.stfc.isis.ibex.epics.conversion;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.function.Function;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 
-public class Decompressor extends Converter<byte[], byte[]> {
+/**
+ * A converter to decompress a byte array.
+ */
+public class Decompressor implements Function<byte[], byte[]> {
 	
     private static final int KB_IN_BYTES = 1024;
 
     @Override
-	public byte[] convert(byte[] value) throws ConversionException {
+	public byte[] apply(byte[] value) throws ConversionException {
 		final Inflater decompressor = new Inflater();
 		try {
 			return decompress(value, decompressor);

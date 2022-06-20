@@ -28,16 +28,22 @@ import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 
+/**
+ * The workbench advisor for the application.
+ */
 public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 
     org.eclipse.ui.application.IWorkbenchConfigurer configurer;
 	
 	private static final String DIALOG_BOX_TITLE = "Close the application?";
 	private static final String DIALOG_QUESTION = "Are you sure you want to close this application?";
+
+	private ApplicationWorkbenchWindowAdvisor windowAdvisor;
 	
     @Override
     public WorkbenchWindowAdvisor createWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
-        return new ApplicationWorkbenchWindowAdvisor(configurer);
+    	windowAdvisor = new ApplicationWorkbenchWindowAdvisor(configurer);
+        return windowAdvisor;
     }
 
 	@Override
@@ -64,6 +70,9 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
         configurer.setSaveAndRestore(true);
 
 		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+		if (windowAdvisor.shutDown) {
+			return true;
+		}
 		return MessageDialog.openQuestion(shell, DIALOG_BOX_TITLE, DIALOG_QUESTION);
 	}
 }

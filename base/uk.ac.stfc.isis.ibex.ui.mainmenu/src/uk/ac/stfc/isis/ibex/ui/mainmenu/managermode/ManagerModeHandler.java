@@ -50,7 +50,6 @@ public class ManagerModeHandler {
     /**
      * Display the dialog.
      * 
-     * @return selected instrument; null for do not switch instrument
      */
     private void displayDialog() {
 

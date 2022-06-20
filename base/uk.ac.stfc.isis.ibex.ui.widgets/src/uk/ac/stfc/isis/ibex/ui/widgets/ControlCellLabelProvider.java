@@ -24,6 +24,7 @@ import java.util.Map;
 
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.jface.viewers.ViewerCell;
+import org.eclipse.jface.viewers.ViewerRow;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.widgets.Composite;
@@ -40,7 +41,7 @@ import uk.ac.stfc.isis.ibex.ui.tables.SortableObservableMapCellLabelProvider;
  */
 public abstract class ControlCellLabelProvider<T extends Control, TRow> extends SortableObservableMapCellLabelProvider<TRow> {
 	
-	private final Map<ViewerCell, T> cellControls = new HashMap<>();
+	private final Map<ViewerRow, T> cellControls = new HashMap<>();
 	private final Map<ViewerCell, TableEditor> cellEditors = new HashMap<>();
 	
 	/**
@@ -48,7 +49,7 @@ public abstract class ControlCellLabelProvider<T extends Control, TRow> extends 
 	 * 
 	 * @param attributeMaps A map of the attributes that this cell will observe.
 	 */
-	protected ControlCellLabelProvider(IObservableMap attributeMaps) {
+	protected ControlCellLabelProvider(IObservableMap<TRow, ?>[] attributeMaps) {
 		super(attributeMaps);
 	}
 	
@@ -59,7 +60,8 @@ public abstract class ControlCellLabelProvider<T extends Control, TRow> extends 
 	 * @return The control that the cell contains
 	 */
 	protected T getControl(ViewerCell cell, int style) {
-		return cellControls.containsKey(cell) ? cellControls.get(cell) : create(cell, style);
+	    return cellControls.containsKey(cell.getViewerRow()) ? cellControls.get(
+	            cell.getViewerRow()) : create(cell, style);
 	}
 	
 	/**
@@ -84,7 +86,7 @@ public abstract class ControlCellLabelProvider<T extends Control, TRow> extends 
 		T control = createControl(cell, style);
 		
 		setEditor(cell, control);
-		cellControls.put(cell, control);
+		cellControls.put(cell.getViewerRow(), control);
 		
 		return control;
 	}
@@ -104,6 +106,5 @@ public abstract class ControlCellLabelProvider<T extends Control, TRow> extends 
 	    editor.layout();
 	    
 	    cellEditors.put(cell, editor);
-		
 	}
 }

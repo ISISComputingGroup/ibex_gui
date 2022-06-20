@@ -28,8 +28,7 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
-import uk.ac.stfc.isis.ibex.epics.writing.ConfigurableWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.epics.writing.WritingSetCommand;
 
@@ -53,15 +52,15 @@ public class WritingSetCommandTest {
     }
 
     @Test
-    public void a_new_command_subscribes_to_destination_writable() {
+    public void a_new_command_adds_can_write_listener_to_destination_writable() {
         // Arrange
-        verify(mockDestination, never()).subscribe(any(ConfigurableWriter.class));
+        verify(mockDestination, never()).addOnCanWriteChangeListener(any(OnCanWriteChangeListener.class));
 
         // Act
         WritingSetCommand.forDestination(mockDestination);
 
         // Assert
-        verify(mockDestination, times(1)).subscribe(any(ConfigurableWriter.class));
+        verify(mockDestination, times(1)).addOnCanWriteChangeListener(any(OnCanWriteChangeListener.class));
     }
 
     @Test
@@ -79,26 +78,22 @@ public class WritingSetCommandTest {
     }
 
     @Test
-    public void closing_a_command_unsubscribes_from_the_destination() {
+    public void closing_a_command_removes_can_write_listener_from_the_destination() {
         // Arrange
-        Subscription mockSubscription = mock(Subscription.class);
-        when(mockDestination.subscribe(any(ConfigurableWriter.class))).thenReturn(mockSubscription);
         WritingSetCommand<String> command = WritingSetCommand.forDestination(mockDestination);
 
-        verify(mockSubscription, never()).removeObserver();
+        verify(mockDestination, never()).removeOnCanWriteChangeListener(any(OnCanWriteChangeListener.class));
 
         // Act
         command.close();
 
         // Assert
-        verify(mockSubscription, times(1)).removeObserver();
+        verify(mockDestination, times(1)).removeOnCanWriteChangeListener(any(OnCanWriteChangeListener.class));
     }
 
     @Test
     public void closing_a_command_stops_sending_values_to_destination() throws IOException {
         // Arrange
-        Subscription mockSubscription = mock(Subscription.class);
-        when(mockDestination.subscribe(any(ConfigurableWriter.class))).thenReturn(mockSubscription);
         WritingSetCommand<String> command = WritingSetCommand.forDestination(mockDestination);
 
         // Act
@@ -112,16 +107,17 @@ public class WritingSetCommandTest {
     @Test
     public void canSend_follows_destination_writable_can_write() {
         // Arrange
-        StubWritable<String> stubDestination = new StubWritable<>();
+        StubWritable<String> stubDestination = new StubWritable<String>();
+        
         WritingSetCommand<String> command = WritingSetCommand.forDestination(stubDestination);
 
         assertFalse(stubDestination.canWrite());
 
         // Act-Assert
-        stubDestination.simulateCanWriteChanged(true);
+        stubDestination.canWriteChanged(true);
         assertTrue(command.getCanSend());
 
-        stubDestination.simulateCanWriteChanged(false);
+        stubDestination.canWriteChanged(false);
         assertFalse(command.getCanSend());
     }
 }

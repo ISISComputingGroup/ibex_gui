@@ -20,8 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.dae.widgets;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Text;
@@ -35,6 +35,12 @@ public class MessageBox extends Composite {
 	private Text text;
 	private Label title;
 	
+	/**
+	 * The constructor for the message box.
+	 * 
+	 * @param parent the parent composite.
+	 * @param style the SWT style.
+	 */
 	public MessageBox(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
@@ -47,6 +53,11 @@ public class MessageBox extends Composite {
 		
 	}
 	
+	/**
+	 * Sets the title of the message box.
+	 * 
+	 * @param title the title
+	 */
 	public void setTitle(String title) {
 		this.title.setText(title);
 	}

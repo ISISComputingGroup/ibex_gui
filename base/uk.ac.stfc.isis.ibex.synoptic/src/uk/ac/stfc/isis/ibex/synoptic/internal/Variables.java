@@ -1,6 +1,6 @@
 
 /*
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2019
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -19,13 +19,16 @@
 
 package uk.ac.stfc.isis.ibex.synoptic.internal;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.function.Function;
 
+import uk.ac.stfc.isis.ibex.configserver.AlarmState;
 import uk.ac.stfc.isis.ibex.configserver.internal.ConfigEditing;
 import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
+import uk.ac.stfc.isis.ibex.epics.observing.ConcatenatingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
@@ -34,8 +37,8 @@ import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
-import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannelWithoutUnits;
+import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
@@ -54,6 +57,7 @@ public class Variables {
 
     private static final String SYNOPTIC_ADDRESS = "CS:SYNOPTICS:";
 	private static final String GET_SYNOPTIC = ":GET";
+	private static final String ALARM_FIELD = ".SEVR";
 	
     /**
      * The name associated with the "blank" synoptic from the BlockServer.
@@ -125,8 +129,8 @@ public class Variables {
         synopticSchema = readCompressed(SYNOPTIC_ADDRESS + "SCHEMA");
     }
 
-    private Converter<String, Collection<SynopticInfo>> toSynopticInfo() {
-		return new JsonDeserialisingConverter<>(SynopticInfo[].class).apply(Convert.<SynopticInfo>toCollection());
+    private Function<String, Collection<SynopticInfo>> toSynopticInfo() {
+		return new JsonDeserialisingConverter<>(SynopticInfo[].class).andThen(Arrays::asList);
 	}	
 
     /**
@@ -149,8 +153,9 @@ public class Variables {
      * @return an observable to the input PV
      */
     public ForwardingObservable<String> defaultReaderRemote(String address) {
-        // Synoptic variables are always remote
-        return closingObservableFactory.getSwitchableObservable(new DefaultChannel(), address);
+        var value = closingObservableFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(), address);
+        var units = closingObservableFactory.getSwitchableObservable(new StringChannel(), address + ".EGU");
+        return new ForwardingObservable<String>(new ConcatenatingObservable(value, units));
     }
 
     /**
@@ -162,6 +167,16 @@ public class Variables {
      */
     public ForwardingObservable<String> defaultReaderRemoteWithoutUnits(String address) {
         return closingObservableFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(), address);
+    }
+    
+    /**
+     * Provides an observable for the PV alarm state corresponding to the input address.
+     * 
+     * @param address the PV address
+     * @return an observable to the input PV alarm state
+     */
+    public ForwardingObservable<AlarmState> defaultReaderRemoteAlarm(String address) {
+        return closingObservableFactory.getSwitchableObservable(new EnumChannel<>(AlarmState.class), address + ALARM_FIELD);
     }
 
     /**
@@ -178,8 +193,8 @@ public class Variables {
         return SYNOPTIC_ADDRESS + synopticPV + GET_SYNOPTIC;
     }
 
-    private Converter<Collection<String>, String> namesToString() {
-        return Convert.toArray(new String[0]).apply(new JsonSerialisingConverter<String[]>(String[].class));
+    private Function<Collection<String>, String> namesToString() {
+        return Convert.toArray(new String[0]).andThen(new JsonSerialisingConverter<String[]>(String[].class));
     }
 
     private Writable<String> writeCompressed(String address) {

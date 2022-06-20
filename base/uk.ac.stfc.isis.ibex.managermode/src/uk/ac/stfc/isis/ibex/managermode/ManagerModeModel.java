@@ -59,7 +59,11 @@ public final class ManagerModeModel extends ModelObject {
     private Boolean inManagerMode;
 
     private ManagerModeObservable managerModePv;
+    
+    private static final int TIME_TO_WAIT_FOR_PV_CONNECTION = 500;
 
+    public static final String IN_MANAGER_MODE_STR = "inManagerMode";
+    
     /**
      * Private constructor, use ManagerModeModel.getInstance() instead.
      */
@@ -178,12 +182,12 @@ public final class ManagerModeModel extends ModelObject {
 
             @Override
             protected void setManagerMode(Boolean value) {
-                inManagerMode = value;
-            }
+                firePropertyChange(IN_MANAGER_MODE_STR, ManagerModeModel.this.inManagerMode, ManagerModeModel.this.inManagerMode = value);
+             }
 
             @Override
             protected void setUnknown() {
-                inManagerMode = null;
+                firePropertyChange(IN_MANAGER_MODE_STR, ManagerModeModel.this.inManagerMode, ManagerModeModel.this.inManagerMode = null);
             }
 
         };
@@ -208,7 +212,7 @@ public final class ManagerModeModel extends ModelObject {
             try {
                 // PV doesn't have time to connect before this is called the
                 // first time, so wait for half a second.
-                Thread.sleep(500);
+                Thread.sleep(TIME_TO_WAIT_FOR_PV_CONNECTION);
             } catch (InterruptedException e) {
                 //Do nothing.
             }

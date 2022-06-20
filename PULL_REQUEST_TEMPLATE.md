@@ -26,9 +26,10 @@
 #### Code Review
 
 - [ ] Is the code of an acceptable quality?
+- [ ] If the change is to an OPI, does the `check_opi_format.py` script in [C:\Instrument\Dev\ibex_gui\base\uk.ac.stfc.isis.ibex.opis](https://github.com/ISISComputingGroup/ibex_gui/blob/master/base/uk.ac.stfc.isis.ibex.opis/check_opi_format.py) pass?
 - [ ] Do the changes function as described and is it robust?
-- [ ] Have the changes been documented in the [release notes](https://github.com/ISISComputingGroup/IBEX/wiki/ReleaseNotes_Dev)?
+- [ ] Is there associated PR for the [release notes](https://github.com/ISISComputingGroup/IBEX/blob/master/release_notes/ReleaseNotes_Upcoming.md)?
 
 ### Final Steps
-- [ ] Reviewer has moved the [release notes](https://github.com/ISISComputingGroup/IBEX/wiki/ReleaseNotes_Dev) entry for this ticket in the "Changes merged into master" section
+- [ ] Reviewer has also merged the [release notes](https://github.com/ISISComputingGroup/IBEX/blob/master/release_notes/ReleaseNotes_Upcoming.md)
 

@@ -20,8 +20,7 @@
 package uk.ac.stfc.isis.ibex.epics.writing;
 
 import java.io.IOException;
-
-import uk.ac.stfc.isis.ibex.epics.conversion.DoNothingConverter;
+import java.util.function.Function;
 
 /**
  * A Forwarding Writable which performs an action after it has written its value
@@ -30,7 +29,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.DoNothingConverter;
  * @param <T>
  *            the type of the item to write
  */
-public class ForwardingWritableWithAction<T> extends ForwardingWritable<T, T> {
+public class ForwardingWritableWithAction<T> extends TransformingWritable<T, T> {
 
 
     private ForwardingWritableAction action;
@@ -42,7 +41,7 @@ public class ForwardingWritableWithAction<T> extends ForwardingWritable<T, T> {
      * @param destination the destination writable
      */
     public ForwardingWritableWithAction(ForwardingWritableAction action, Writable<T> destination) {
-        super(destination, new DoNothingConverter<T>());
+        super(destination, Function.identity());
         this.action = action;
 	}
 	

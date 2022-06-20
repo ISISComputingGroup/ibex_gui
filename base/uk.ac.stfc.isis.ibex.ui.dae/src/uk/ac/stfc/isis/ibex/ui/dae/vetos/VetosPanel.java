@@ -39,16 +39,16 @@ public class VetosPanel {
 	
     /**
      * The constructor for the panel.
-     * 
-     * @param parent
-     *            The parent composite that the panel belongs to.
-     * @param style
-     *            The SWT style flags for the panel.
      */
 	public VetosPanel() {
         model = DaeUI.getDefault().viewModel();
 	}
 
+    /**
+     * Creates the panel.
+     *
+     * @param parent the parent composite
+     */
     @PostConstruct
     public void createPart(Composite parent) {
         parent.setLayout(new FillLayout(SWT.HORIZONTAL));

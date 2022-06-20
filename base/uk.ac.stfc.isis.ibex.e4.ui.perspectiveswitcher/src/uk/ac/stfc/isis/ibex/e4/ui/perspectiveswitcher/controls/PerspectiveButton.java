@@ -29,7 +29,7 @@ public class PerspectiveButton extends Button {
      */
     public PerspectiveButton(Composite parent, MPerspective perspective, PerspectivesProvider perspectivesProvider,
             PerspectiveButtonViewModel model) {
-        super(parent, perspective.getIconURI(), perspective.getTooltip(), model);
+        super(parent, perspective.getIconURI(), perspective.getLabel() + ": " + perspective.getTooltip(), model);
 
         this.perspective = perspective;
         this.perspectivesProvider = perspectivesProvider;

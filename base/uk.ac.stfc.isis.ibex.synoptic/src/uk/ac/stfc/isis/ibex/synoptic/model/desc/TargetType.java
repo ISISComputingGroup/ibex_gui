@@ -19,7 +19,18 @@
 
 package uk.ac.stfc.isis.ibex.synoptic.model.desc;
 
+/**
+ * The type of the target e.g. OPI or Component.
+ */
 public enum TargetType {
+    
+    /**
+     * The target is an OPI.
+     */
 	OPI,
+	
+	/**
+	 * The target is a component.
+	 */
 	COMPONENT
 }

@@ -20,9 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.SWTObservables;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -34,6 +33,9 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * A panel in the edit block dialog editing the block's logging settings.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class BlockLogSettingsPanel extends Composite {
     private Button btnEnabled;
@@ -41,6 +43,13 @@ public class BlockLogSettingsPanel extends Composite {
     private Label lblSettings;
     private Text txtSettings;
 
+    /**
+     * Standard constructor.
+     * 
+     * @param parent The parent composite.
+     * @param style The SWT style.
+     * @param viewModel The viewModel for the block settings.
+     */
     public BlockLogSettingsPanel(Composite parent, int style, final BlockLogSettingsViewModel viewModel) {
         super(parent, style);
 
@@ -80,24 +89,28 @@ public class BlockLogSettingsPanel extends Composite {
 
         setModel(viewModel);
     }
-
+    
+    /**
+     * Sets the view model and observers for the view. 
+     * @param viewModel The logging settings view model. 
+     */
     public void setModel(BlockLogSettingsViewModel viewModel) {
         DataBindingContext bindingContext = new DataBindingContext();
 
-        bindingContext.bindValue(WidgetProperties.selection().observe(btnEnabled),
+        bindingContext.bindValue(WidgetProperties.buttonSelection().observe(btnEnabled),
                 BeanProperties.value("enabled").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(cmboType),
                 BeanProperties.value("enabled").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.enabled().observe(txtSettings),
                 BeanProperties.value("enabled").observe(viewModel));
 
-        bindingContext.bindValue(WidgetProperties.selection().observe(cmboType),
+        bindingContext.bindValue(WidgetProperties.comboSelection().observe(cmboType),
                 BeanProperties.value("comboText").observe(viewModel));
 
         bindingContext.bindValue(WidgetProperties.text().observe(lblSettings),
                 BeanProperties.value("labelText").observe(viewModel));
 
-        bindingContext.bindValue(SWTObservables.observeText(txtSettings, SWT.Modify),
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtSettings),
                 BeanProperties.value("textBoxText").observe(viewModel));
 
     }

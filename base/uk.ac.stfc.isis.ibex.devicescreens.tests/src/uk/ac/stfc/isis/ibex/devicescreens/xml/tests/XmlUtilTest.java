@@ -7,23 +7,25 @@
  * This program is distributed in the hope that it will be useful.
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution.
- * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
- * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+ * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+ * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
  * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
  *
  * You should have received a copy of the Eclipse Public License v1.0
  * along with this program; if not, you can obtain a copy from
- * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * https://www.eclipse.org/org/documents/epl-v10.php or
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
 /**
- * 
+ *
  */
 package uk.ac.stfc.isis.ibex.devicescreens.xml.tests;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -46,6 +48,8 @@ import uk.ac.stfc.isis.ibex.devicescreens.desc.PropertyDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.tests.xmldata.DeviceScreensXmlProvider;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * This class tests the loading and parsing of an xml by the XMLUtil class.
@@ -80,9 +84,9 @@ public class XmlUtilTest {
         String singleXml =
                 DeviceScreensXmlProvider.getXML(deviceName, deviceKey, deviceType, propertyKey, propertyValue);
         DeviceScreensDescriptionXmlParser converterFromXML = new DeviceScreensDescriptionXmlParser();
-        singleDeviceScreensDescription = converterFromXML.convert(singleXml);
-        multipleDeviceScreensDescription = converterFromXML.convert(xmlTextMultipleDescription);
-        
+        singleDeviceScreensDescription = converterFromXML.apply(singleXml);
+        multipleDeviceScreensDescription = converterFromXML.apply(xmlTextMultipleDescription);
+
         mockSchemaObservable = mock(Observable.class);
         when(mockSchemaObservable.getValue()).thenReturn(null);
         convertToXML = new DeviceScreenDescriptionToXmlConverter(mockSchemaObservable);
@@ -93,7 +97,7 @@ public class XmlUtilTest {
         // Assert
         assertEquals(1, singleDeviceScreensDescription.getDevices().size());
     }
-    
+
     @Test
     public void GIVEN_xml_with_single_description_WHEN_xml_is_parsed_THEN_device_name_is_correct() {
         // Assert
@@ -146,8 +150,8 @@ public class XmlUtilTest {
                     throws JAXBException, SAXException {
         try {
             // Act
-            String outputXml = convertToXML.convert(multipleDeviceScreensDescription);
-            
+            String outputXml = convertToXML.apply(multipleDeviceScreensDescription);
+
             // Assert
             assertEquals(xmlTextMultipleDescription, outputXml);
         }
@@ -172,20 +176,20 @@ public class XmlUtilTest {
 
         DeviceScreensDescription deviceScreensDescription = new DeviceScreensDescription();
         deviceScreensDescription.addDevice(deviceDescription);
-        
+
         String schemaFilePath = "/uk/ac/stfc/isis/ibex/devicescreens/xml/tests/screens_schema.xml";
         String schema = loadFile(schemaFilePath);
 
         // Act
         try {
             when(mockSchemaObservable.getValue()).thenReturn(schema);
-            String outputXml = convertToXML.convert(deviceScreensDescription);
+            String outputXml = convertToXML.apply(deviceScreensDescription);
             assertEquals(expectedXml, outputXml);
         } catch (Exception e) {
-            e.printStackTrace();
+            LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
             fail(e.getMessage());
         }
-        
+
     }
 
     private DeviceDescription firstDeviceDescription() {

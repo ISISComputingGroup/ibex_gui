@@ -1,0 +1,7 @@
+If you are an ISIS USER you should call your local instrument contact in the event of any problem first. They will help identify the issue and contact the correct person to repair/fix.
+
+To submit a bug or problem through a web form, select "Web Links" on the left of the screen, then "Submit a bug or problem".
+ 
+If, however, the problem is URGENT or will become so before the next working day:
+* call 1763 (RAL site or ZOOM phone) or 01235394488 for computing support
+* call the Main Control Room (MCR) on 6789 (RAL phone) or 01235446789 for all other matters and ask them to contact the relevant on call person.

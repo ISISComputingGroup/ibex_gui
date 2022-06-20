@@ -7,13 +7,13 @@
 * This program is distributed in the hope that it will be useful.
 * This program and the accompanying materials are made available under the
 * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
 * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
 *
 * You should have received a copy of the Eclipse Public License v1.0
 * along with this program; if not, you can obtain a copy from
-* https://www.eclipse.org/org/documents/epl-v10.php or 
+* https://www.eclipse.org/org/documents/epl-v10.php or
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
@@ -23,24 +23,70 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
+import java.nio.channels.OverlappingFileLockException;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.logging.log4j.Logger;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
+import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
+
+/**
+ * The workbench window advisor for the application.
+ */
 public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
     private static final int MIN_WINDOW_HEIGHT = 800;
     private static final int MIN_WINDOW_WIDTH = 1100;
+    
+	private static final String DIALOG_BOX_TITLE = "IBEX is already running.";
+	private static final String DIALOG_QUESTION = "It appears that IBEX client is already running. "
+			+ "Are you sure you want to open another instance?";
 	
+	private static final String TEMP_PATH = Paths.get(new PreferenceSupplier().tempFilePath(), "instance.txt").toString();
+	
+	private static final Logger LOG = IsisLog.getLogger(ApplicationWorkbenchWindowAdvisor.class);
+	
+	private static final String MULTIPLE_INSTANCES_CHECKING_ERROR = "Exception encountered while checking for multiple instances.";
+	private static final String ANOTHER_INSTANCE_LOG_INFO = "Another instance of IBEX found running.";
+	private static final String TEMPORARY_FILE_LOCKED_ERROR = "Could not access temporary file due to a lock. Another process is "
+			+ "refusing to release the lock.";
+    
+    /**
+     * Setting this flag to true allows workbench to close without prompt.
+     */
+    protected boolean shutDown = false;
+
+    /**
+     * Constructor.
+     * @param configurer the configurer
+     */
 	public ApplicationWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
 		super(configurer);
 	}
@@ -49,13 +95,13 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     public ActionBarAdvisor createActionBarAdvisor(IActionBarConfigurer configurer) {
         return new ActionBarAdvisor(configurer);
     }
-    
+
     @Override
     public void preWindowOpen() {
         IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
         configurer.setShowCoolBar(false);
     }
-    
+
     @Override
     public void postWindowCreate() {
     	super.postWindowCreate();
@@ -67,14 +113,108 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         shell.setLocation(windowLayout.windowX, windowLayout.windowY);
         shell.setSize(windowLayout.windowWidth, windowLayout.windowHeight);
         shell.setMaximized(windowLayout.windowMaximised);
+        
+        performMultipleClientsCheck();
+    }
+    
+    /**
+     * This function contains logic for checking for multiple instances running and will prompt
+     * a user to confirm opening another client if another instance is already running
+     */
+    void performMultipleClientsCheck() {
+        try {
+    		if (clearTempFile().length > 0) {
+    			LOG.info(ANOTHER_INSTANCE_LOG_INFO);
+    	        if (!MessageDialog.openQuestion(Display.getDefault().getActiveShell(), DIALOG_BOX_TITLE, DIALOG_QUESTION)) {
+    	            shutDown = true;
+    	            PlatformUI.getWorkbench().close();
+    	        }
+    		}
+    		if (!shutDown) {
+    			writeTempFile(new String[] {Long.toString(ProcessHandle.current().pid())}, true);
+    		}
+		} catch (Exception e) {
+			LOG.error(MULTIPLE_INSTANCES_CHECKING_ERROR);
+			e.printStackTrace();
+		}
+    }
+    
+    /**
+     * This function compares contents of temporary file to the list of PIDs obtained from process list
+     * and overwrites the file only with those that match.
+     * @return New contents of temporary file as a string array.
+     * @throws IOException - if any of the operations result in IOException.
+     */
+    String[] clearTempFile() throws IOException {
+    	String[] fileContents = readTempFile();
+    	
+        ArrayList<String> processPIDs = new ArrayList<String>();
+        ProcessHandle.allProcesses()
+        .forEach(process -> processPIDs.add(Long.toString(process.pid())));
+        
+        ArrayList<String> newContent = new ArrayList<String>();
+        
+        for (String line : fileContents) {
+        	for (String pid : processPIDs) {
+        		if (line.equals(pid)) {
+        			newContent.add(line);
+        			break;
+        		}
+        	}
+        }
+        String[] newContentArr = newContent.toArray(new String[newContent.size()]);
+        writeTempFile(newContentArr, false);
+        
+        return newContentArr;
+    }
+    
+    /**
+     * Helper function for writing to temporary file.
+     * @param lines Lines of text to write.
+     * @param append When true the lines will be appended. When false, the file will be
+     * Overwritten.
+     * @throws IOException - if any of the operations result in IOException.
+     */
+    void writeTempFile(String[] lines, boolean append) throws IOException, NoSuchElementException {
+    	createTempFile();
+    	String content = "";
+    	for (String line : lines) {
+    		content += line + '\n';
+    	}
+    	FileWriter writer = new FileWriter(TEMP_PATH, append);
+        writer.write(content);
+        writer.close();
+    }
+    
+    /**
+     * Helper function for getting info from temporary file.
+     * @return Lines of text in the temporary file.
+     * @throws IOException - if any of the operations result in IOException.
+     */
+    String[] readTempFile() throws IOException {
+    	createTempFile();
+		String content = Files.readString(Paths.get(TEMP_PATH));
+		String[] lines = content.split("\n");
+		return lines;
+    }
+    
+    /**
+     * Helper function for creating temporary file. Does nothing if file already exists.
+     * @throws IOException - if any of the operations result in IOException.
+     */
+    void createTempFile() throws IOException {
+    	try {
+	        Files.createDirectories(Paths.get(TEMP_PATH).getParent());
+	        Files.createFile(Paths.get(TEMP_PATH));
+    	} catch (FileAlreadyExistsException e) { }
     }
 
     /**
      * Attempts to get previous window settings, otherwise returning sensible
      * defaults.
-     * 
-     * @return An object with parameters for width, heigh, x position, y
-     *         poistion and maximised flag
+     *
+     * @return An object with parameters for width, height, x position, y
+     *         position and maximised flag
      */
     @SuppressWarnings("checkstyle:magicnumber")
     private WindowLayout getPreviousWindowSettings() {
@@ -91,7 +231,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
                 .append(new Path(".plugins"))
                 .append(new Path("org.eclipse.ui.workbench"))
                 .append("/workbench.xml");
-        
+
 
         // This pattern picks out from <window height="800" maximized="true"
         // width="1100" x="0" y="0">
@@ -107,7 +247,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
             File file = new File(workbenchXml.toOSString());
             FileReader reader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(reader);
-            
+
             boolean foundMatch = false;
 
             while (bufferedReader.ready() && !foundMatch) {
@@ -122,7 +262,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
                     windowWidth = Integer.parseInt(matchMaximised.group(3));
                     windowX = Integer.parseInt(matchMaximised.group(4));
                     windowY = Integer.parseInt(matchMaximised.group(5));
-                    
+
                     foundMatch = true;
                 } else if (matchNotMaximised.matches()) {
                     windowHeight = Integer.parseInt(matchNotMaximised.group(1));
@@ -130,15 +270,15 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
                     windowWidth = Integer.parseInt(matchNotMaximised.group(2));
                     windowX = Integer.parseInt(matchNotMaximised.group(3));
                     windowY = Integer.parseInt(matchNotMaximised.group(4));
-                    
+
                     foundMatch = true;
                 }
             }
             bufferedReader.close();
         } catch (FileNotFoundException e) {
-            System.out.println("No workbench.xml - using default initial window sizes");
+            IsisLog.getLogger(getClass()).info("No workbench.xml - using default initial window sizes");
         } catch (IOException e) {
-            e.printStackTrace();
+            LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
         }
 
         return new WindowLayout(windowHeight, windowWidth, windowX, windowY, windowMaximised);

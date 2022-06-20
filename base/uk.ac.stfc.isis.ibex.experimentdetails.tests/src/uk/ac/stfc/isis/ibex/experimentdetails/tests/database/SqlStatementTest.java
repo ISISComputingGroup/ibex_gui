@@ -187,20 +187,6 @@ public class SqlStatementTest {
 	}
 	
 	@Test
-	public void group_by_statement() {
-		//Arrange
-		SqlStatement sql = new SqlStatement();
-		ExpDataField userId = ExpDataFieldsCreator.getField(ExpDataTablesEnum.USER_TABLE, ExpDataFieldsEnum.USER_ID);
-		sql.setGroupBy(new ArrayList<ExpDataField>(Arrays.asList(userId)));
-		
-		//Act
-		String result = sql.getSelectStatement();
-		
-		//Assert
-		assertEquals("SELECT  FROM  WHERE  GROUP BY user.userID", result);
-	}
-	
-	@Test
 	public void full_sql_statement() {
 		//Arrange
 		SqlStatement sql = new SqlStatement();
@@ -226,6 +212,35 @@ public class SqlStatementTest {
         assertEquals(
                 "SELECT user.userID AS \"user.userID\", role.name AS \"role.name\" FROM exp_data.experiment, exp_data.role WHERE user.userID = experimentteams.userID AND experiment.experimentID LIKE 1234",
                 result);
+	}
+	
+	@Test
+	public void order_by_statement() {
+		//Arrange
+		SqlStatement sql = new SqlStatement();
+		ExpDataField userId = ExpDataFieldsCreator.getField(ExpDataTablesEnum.USER_TABLE, ExpDataFieldsEnum.USER_ID);
+		sql.setOrderBy(new ArrayList<ExpDataField>(Arrays.asList(userId)));
+		
+		//Act
+		String result = sql.getSelectStatement();
+		
+		//Assert
+		assertEquals("SELECT  FROM  WHERE  ORDER BY user.userID", result);
+	}
+	
+	@Test
+	public void order_by_multiple_statement() {
+		//Arrange
+		SqlStatement sql = new SqlStatement();
+		ExpDataField userId = ExpDataFieldsCreator.getField(ExpDataTablesEnum.USER_TABLE, ExpDataFieldsEnum.USER_ID);
+		ExpDataField roleName = ExpDataFieldsCreator.getField(ExpDataTablesEnum.ROLE_TABLE, ExpDataFieldsEnum.NAME);
+		sql.setOrderBy(new ArrayList<ExpDataField>(Arrays.asList(userId, roleName)));
+		
+		//Act
+		String result = sql.getSelectStatement();
+		
+		//Assert
+		assertEquals("SELECT  FROM  WHERE  ORDER BY user.userID, role.name", result);
 	}
 	
 	

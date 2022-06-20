@@ -25,19 +25,47 @@ import java.util.Set;
 import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 import uk.ac.stfc.isis.ibex.targets.Target;
 
-
+/**
+ * An interface representing a component in the synoptic.
+ */
 public interface Component {
+    
+    /**
+     * @return the name of the component
+     */
 	String name();
 
+	/**
+	 * @return the type of the component
+	 */
 	ComponentType type();
 	
+	/**
+	 * @return a set containing the component's properties
+	 */
 	Set<ComponentProperty> properties();
 	
+	/**
+	 * @return the components contained by this component.
+	 */
 	List<? extends Component> components();
 	
+	/**
+	 * @return the target to display the view of the component.
+	 */
 	Target target();
 	
+	/**
+	 * Set the target to display the view of the component.
+	 * 
+	 * @param target the target to display the view of the component.
+	 */
 	void setTarget(Target target);
 	
+	/**
+	 * Creates a copy of the component.
+	 * 
+	 * @return a copy of the component
+	 */
 	Component copy();
 }

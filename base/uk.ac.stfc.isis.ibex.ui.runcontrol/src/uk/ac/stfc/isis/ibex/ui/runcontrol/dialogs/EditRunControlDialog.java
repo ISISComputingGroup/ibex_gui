@@ -35,17 +35,30 @@ import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
+import uk.ac.stfc.isis.ibex.ui.runcontrol.commands.RunControlHandler;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
+/**
+ * A dialog for editing the run control.
+ */
 public class EditRunControlDialog extends TitleAreaDialog {
 
-	private static final Point INITIAL_SIZE = new Point(650, 500);
+	private static final Point INITIAL_SIZE = new Point(1000, 500);
 	private final String title;
 	private final ConfigServer configServer;
 	private final RunControlServer runControlServer;
-	RunControlSettingsPanel editor;
-	RunControlViewModel viewModel;
+	private RunControlSettingsPanel editor;
+	private final RunControlViewModel viewModel;
+	private RunControlHandler handler;
 	
+	/**
+	 * Creates a dialog for configuring the run-control settings.
+	 * 
+	 * @param parentShell the parent SWT Shell
+	 * @param title the title of the dialog window
+	 * @param configServer the Config Server 
+	 * @param runControlServer the Run Control server
+	 */
 	public EditRunControlDialog(Shell parentShell, String title, ConfigServer configServer, RunControlServer runControlServer) {
 		super(parentShell);
         setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE | SWT.APPLICATION_MODAL);
@@ -67,27 +80,39 @@ public class EditRunControlDialog extends TitleAreaDialog {
 		});
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected Control createDialogArea(Composite parent) {
         setTitle("Configure Run Control");
 		
-		editor = new RunControlSettingsPanel(parent, SWT.NONE, configServer, runControlServer, viewModel);
+		editor = new RunControlSettingsPanel(this, parent, SWT.NONE, configServer, runControlServer, viewModel);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		return editor;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		createButton(parent, IDialogConstants.CANCEL_ID, "Close", false);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
 		shell.setText(title);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected Point getInitialSize() {
 		return INITIAL_SIZE;

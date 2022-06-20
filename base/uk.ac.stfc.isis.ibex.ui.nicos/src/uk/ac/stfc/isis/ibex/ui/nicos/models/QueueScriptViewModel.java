@@ -1,6 +1,6 @@
  /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2016 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2019 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -250,5 +250,13 @@ public class QueueScriptViewModel extends ModelObject {
      */
     public void saveSelected(Shell shell) {
     	(new SaveScriptAction(shell, selectedScript)).execute();
+    }
+
+    /**
+     * The currently queued scripts.
+     * @return the queued scripts
+     */
+    public List<QueuedScript> getQueuedScripts() {
+        return model.getQueuedScripts();
     }
 }

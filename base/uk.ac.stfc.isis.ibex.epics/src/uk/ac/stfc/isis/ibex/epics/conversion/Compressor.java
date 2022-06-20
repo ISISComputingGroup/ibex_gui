@@ -21,14 +21,18 @@ package uk.ac.stfc.isis.ibex.epics.conversion;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.function.Function;
 import java.util.zip.Deflater;
 
-public class Compressor extends Converter<byte[], byte[]> {
+/**
+ * A converter to compress a byte array.
+ */
+public class Compressor implements Function<byte[], byte[]> {
 		
     private static final int KB_IN_BYTES = 1024;
 
     @Override
-	public byte[] convert(byte[] value) throws ConversionException {
+	public byte[] apply(byte[] value) throws ConversionException {
 		final Deflater compressor = new Deflater();
 		compressor.setInput(value);
 		compressor.finish();

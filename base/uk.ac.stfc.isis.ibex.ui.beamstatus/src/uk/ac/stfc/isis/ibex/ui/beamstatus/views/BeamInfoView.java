@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
 import javax.annotation.PostConstruct;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -31,41 +30,42 @@ import org.eclipse.swt.widgets.ExpandItem;
 /**
  * The parent composite for the beam information widgets.
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class BeamInfoView {
 
-    /**
-     * Creates the Beam Info view.
-     * 
-     * @param parent The parent container obtained via dependency injection
-     */
-    @SuppressWarnings("checkstyle:magicnumber")
+	/**
+	 * Creates the Beam Info view.
+	 * 
+	 * @param parent The parent container obtained via dependency injection
+	 */
 	@PostConstruct
-    public void createPartControl(Composite parent) {
-        parent.setLayout(new GridLayout(1, false));
+	public void createPartControl(Composite parent) {
+		parent.setLayout(new GridLayout(1, false));
 
-        ExpandBar expandBar = new ExpandBar(parent, SWT.FILL | SWT.V_SCROLL);
-        expandBar.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 1, 1));
+		ExpandBar expandBar = new ExpandBar(parent, SWT.FILL | SWT.V_SCROLL);
+		expandBar.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, true, 1, 1));
 
-        ExpandItem xpndtmSynchrotron = new ExpandItem(expandBar, SWT.NONE);
-        xpndtmSynchrotron.setExpanded(true);
-        xpndtmSynchrotron.setText("Synchrotron");
-        SynchrotronPanel sync = new SynchrotronPanel(expandBar, SWT.NONE);
-        xpndtmSynchrotron.setControl(sync);
-        xpndtmSynchrotron.setHeight(130);
+		ExpandItem xpndtmSynchrotron = new ExpandItem(expandBar, SWT.NONE);
+		xpndtmSynchrotron.setExpanded(true);
+		xpndtmSynchrotron.setText("Synchrotron");
+		SynchrotronPanel sync = new SynchrotronPanel(expandBar, SWT.NONE);
+		xpndtmSynchrotron.setControl(sync);
+		xpndtmSynchrotron.setHeight(130);
 
-        ExpandItem xpndtmTargetStation1 = new ExpandItem(expandBar, SWT.NONE);
-        xpndtmTargetStation1.setExpanded(true);
-        xpndtmTargetStation1.setText("Target Station 1");
-        TargetStationOnePanel ts1 = new TargetStationOnePanel(expandBar, SWT.NONE);
-        xpndtmTargetStation1.setControl(ts1);
-        xpndtmTargetStation1.setHeight(220);
+		ExpandItem xpndtmTargetStation1 = new ExpandItem(expandBar, SWT.NONE);
+		xpndtmTargetStation1.setExpanded(true);
+		xpndtmTargetStation1.setText("Target Station 1");
+		TargetStationOnePanel ts1 = new TargetStationOnePanel(expandBar, SWT.NONE);
+		xpndtmTargetStation1.setControl(ts1);
+		xpndtmTargetStation1.setHeight(220);
 
-        ExpandItem xpndtmTargetStation2 = new ExpandItem(expandBar, SWT.NONE);
-        xpndtmTargetStation2.setExpanded(true);
-        xpndtmTargetStation2.setText("Target Station 2");
-        TargetStationTwoPanel ts2 = new TargetStationTwoPanel(expandBar, SWT.NONE);
-        xpndtmTargetStation2.setControl(ts2);
-        xpndtmTargetStation2.setHeight(300);
-        expandBar.layout();
-    }
+		ExpandItem xpndtmTargetStation2 = new ExpandItem(expandBar, SWT.NONE);
+		xpndtmTargetStation2.setExpanded(true);
+		xpndtmTargetStation2.setText("Target Station 2");
+		TargetStationTwoPanel ts2 = new TargetStationTwoPanel(expandBar, SWT.NONE);
+		xpndtmTargetStation2.setControl(ts2);
+		xpndtmTargetStation2.setHeight(350);
+		expandBar.layout();
+	}
+
 }

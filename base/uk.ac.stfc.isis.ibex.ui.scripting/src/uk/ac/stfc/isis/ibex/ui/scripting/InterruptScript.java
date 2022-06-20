@@ -12,7 +12,10 @@ public class InterruptScript extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		ScriptConsole.getActiveScriptConsole().interrupt();
+		ScriptConsole console = ScriptConsole.getActiveScriptConsole();
+		if (console != null) {
+			console.interrupt();
+		}
 		return null;
 	}
 

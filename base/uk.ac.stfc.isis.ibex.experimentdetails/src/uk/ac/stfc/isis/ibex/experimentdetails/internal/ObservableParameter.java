@@ -64,9 +64,9 @@ public class ObservableParameter extends Parameter {
 
 		this.valueSetter = valueSetter;
 
-		name.addObserver(nameObserver);
-		units.addObserver(unitsObserver);
-		value.addObserver(valueObserver);
+		name.subscribe(nameObserver);
+		units.subscribe(unitsObserver);
+		value.subscribe(valueObserver);
 	}
 	
 	@Override

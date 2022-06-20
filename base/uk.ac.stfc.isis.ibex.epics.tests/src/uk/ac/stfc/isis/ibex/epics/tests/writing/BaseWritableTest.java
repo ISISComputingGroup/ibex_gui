@@ -19,14 +19,17 @@
 
 package uk.ac.stfc.isis.ibex.epics.tests.writing;
 
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
 
-import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
-import uk.ac.stfc.isis.ibex.epics.writing.ConfigurableWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
+import uk.ac.stfc.isis.ibex.epics.writing.OnErrorListener;
 
 @SuppressWarnings({ "unchecked", "checkstyle:methodname" })
 public class BaseWritableTest {
@@ -43,29 +46,29 @@ public class BaseWritableTest {
     }
 
     @Test
-    public void subscribing_a_writer_updates_the_writer_canWrite() {
+    public void WHEN_adding_an_OnCanWriteChangeListener_THEN_can_write_changed_called() {
         // Arrange
         writable = new TestableBaseWritable<String>();
-        ConfigurableWriter<String, String> mockWriter = mock(ConfigurableWriter.class);
+        OnCanWriteChangeListener mockListener = mock(OnCanWriteChangeListener.class);
 
         // Act
-        writable.subscribe(mockWriter);
+        writable.addOnCanWriteChangeListener(mockListener);
 
         // Assert
-        verify(mockWriter, times(1)).onCanWriteChanged(anyBoolean());
+        verify(mockListener, times(1)).onCanWriteChanged(anyBoolean());
     }
 
     @Test
-    public void subscribing_a_writer_updates_the_writer_onError() {
+    public void WHEN_adding_an_OnErrorListener_THEN_error_called() {
         // Arrange
         writable = new TestableBaseWritable<String>();
-        ConfigurableWriter<String, String> mockWriter = mock(ConfigurableWriter.class);
+        OnErrorListener mockListener = mock(OnErrorListener.class);
 
         // Act
-        writable.subscribe(mockWriter);
+        writable.addOnErrorListener(mockListener);
 
         // Assert
-        verify(mockWriter, times(1)).onError(any(Exception.class));
+        verify(mockListener, times(1)).onError(null);
     }
 
     @Test
@@ -82,14 +85,15 @@ public class BaseWritableTest {
     }
 
     @Test
-    public void all_subscribed_writers_are_notified_in_case_of_error() {
+    public void GIVEN_multiple_error_listeners_WHEN_in_error_THEN_all_listeners_are_notified() {
         // Arrange
         writable = new TestableBaseWritable<String>();
 
-        ConfigurableWriter<String, String> mockWriter1 = mock(ConfigurableWriter.class);
-        ConfigurableWriter<String, String> mockWriter2 = mock(ConfigurableWriter.class);
-        writable.subscribe(mockWriter1);
-        writable.subscribe(mockWriter2);
+        OnErrorListener mockListener1 = mock(OnErrorListener.class);
+        OnErrorListener mockListener2 = mock(OnErrorListener.class);
+        
+        writable.addOnErrorListener(mockListener1);
+        writable.addOnErrorListener(mockListener2);
 
         Exception exception = new Exception();
 
@@ -97,8 +101,8 @@ public class BaseWritableTest {
         writable.error(exception);
 
         // Assert
-        verify(mockWriter1, times(1)).onError(exception);
-        verify(mockWriter2, times(1)).onError(exception);
+        verify(mockListener1, times(1)).onError(exception);
+        verify(mockListener2, times(1)).onError(exception);
     }
 
     @Test
@@ -128,14 +132,15 @@ public class BaseWritableTest {
     }
 
     @Test
-    public void all_subscribed_writers_are_notified_of_can_write_changed() {
+    public void GIVEN_multiple_can_write_listeners_WHEN_can_write_changed_THEN_all_listeners_are_notified() {
         // Arrange
         writable = new TestableBaseWritable<String>();
 
-        ConfigurableWriter<String, String> mockWriter1 = mock(ConfigurableWriter.class);
-        ConfigurableWriter<String, String> mockWriter2 = mock(ConfigurableWriter.class);
-        writable.subscribe(mockWriter1);
-        writable.subscribe(mockWriter2);
+        OnCanWriteChangeListener mockListener1 = mock(OnCanWriteChangeListener.class);
+        OnCanWriteChangeListener mockListener2 = mock(OnCanWriteChangeListener.class);
+        
+        writable.addOnCanWriteChangeListener(mockListener1);
+        writable.addOnCanWriteChangeListener(mockListener2);
 
         boolean expected = true;
 
@@ -143,45 +148,79 @@ public class BaseWritableTest {
         writable.canWriteChanged(expected);
 
         // Assert
-        verify(mockWriter1, times(1)).onCanWriteChanged(expected);
-        verify(mockWriter2, times(1)).onCanWriteChanged(expected);
+        verify(mockListener1, times(1)).onCanWriteChanged(expected);
+        verify(mockListener2, times(1)).onCanWriteChanged(expected);
     }
 
     @Test
-    public void subscribing_a_writer_returns_an_unsubscriber_for_the_writer() {
+    public void GIVEN_error_listener_added_WHEN_same_listener_added_and_in_error_THEN_listener_called_once() {
         // Arrange
         writable = new TestableBaseWritable<String>();
 
-        ConfigurableWriter<String, String> mockWriter = mock(ConfigurableWriter.class);
-        Subscription returnedSubscription = writable.subscribe(mockWriter);
+        OnErrorListener mockListener = mock(OnErrorListener.class);
 
         Exception exception = new Exception();
 
         // Act
-        returnedSubscription.removeObserver();
+        writable.addOnErrorListener(mockListener);
+        writable.addOnErrorListener(mockListener);
+
+        writable.error(exception);
 
         // Assert
-        writable.error(exception);
-        verify(mockWriter, never()).onError(exception);
+        verify(mockListener, times(1)).onError(exception);
     }
-
+    
     @Test
-    public void a_writer_gets_subscribed_only_once() {
+    public void GIVEN_write_changed_listener_added_WHEN_same_listener_added_and_in_write_changes_THEN_listener_called_once() {
         // Arrange
         writable = new TestableBaseWritable<String>();
 
-        ConfigurableWriter<String, String> mockWriter = mock(ConfigurableWriter.class);
-
-        Exception exception = new Exception();
+        OnCanWriteChangeListener mockListener = mock(OnCanWriteChangeListener.class);
 
         // Act
-        writable.subscribe(mockWriter);
-        writable.subscribe(mockWriter);
+        writable.addOnCanWriteChangeListener(mockListener);
+        writable.addOnCanWriteChangeListener(mockListener);
 
+        writable.canWriteChanged(true);
+
+        // Assert
+        verify(mockListener, times(1)).onCanWriteChanged(true);
+    }
+
+    @Test
+    public void GIVEN_write_changed_listener_added_WHEN_write_change_listener_removed_THEN_listener_not_called() {
+        // Arrange
+        writable = new TestableBaseWritable<String>();
+
+        OnCanWriteChangeListener mockListener = mock(OnCanWriteChangeListener.class);
+
+        // Act
+        writable.addOnCanWriteChangeListener(mockListener);
+        writable.removeOnCanWriteChangeListener(mockListener);
+
+        writable.canWriteChanged(true);
+
+        // Assert
+        verify(mockListener, times(0)).onCanWriteChanged(true);
+    }
+    
+    @Test
+    public void GIVEN_on_error_listener_added_WHEN_on_error_listener_removed_THEN_listener_not_called() {
+        // Arrange
+        writable = new TestableBaseWritable<String>();
+
+        OnErrorListener mockListener = mock(OnErrorListener.class);
+
+        // Act
+        writable.addOnErrorListener(mockListener);
+        writable.removeOnErrorListener(mockListener);
+
+        Exception exception = new Exception();
         writable.error(exception);
 
         // Assert
-        verify(mockWriter, times(1)).onError(exception);
+        verify(mockListener, times(0)).onError(exception);
     }
-
+    
 }

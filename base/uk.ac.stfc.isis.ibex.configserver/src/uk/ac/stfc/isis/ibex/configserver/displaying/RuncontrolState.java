@@ -23,20 +23,39 @@ package uk.ac.stfc.isis.ibex.configserver.displaying;
  * Enum for the overall state of run-control.
  */
 public enum RuncontrolState {
+	
     /**
      * The run control is disabled.
      */
-    DISABLED,
+    DISABLED("Runcontrol is not enabled for this value."),
     /**
      * The run control is enabled and in range.
      */
-    ENABLED_IN_RANGE,
+    ENABLED_IN_RANGE("Runcontrol is enabled and the value is within the specified range."),
     /**
      * The run control is enabled but out of range.
      */
-    ENABLED_OUT_RANGE,
+    ENABLED_OUT_RANGE("Runcontrol is enabled and the value is outside the specified range."),
     /**
      * The run control is disconnected.
      */
-    DISCONNECTED
+    DISCONNECTED("Runcontrol status is unknown; there was a problem reading the status of runcontrol for this item.");
+	
+	private final String description;
+	
+	/**
+	 * Create a run control state.
+	 * @param description A description of the run control state. 
+	 */
+	RuncontrolState(String description) {
+		this.description = description;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return description;
+	}
 }

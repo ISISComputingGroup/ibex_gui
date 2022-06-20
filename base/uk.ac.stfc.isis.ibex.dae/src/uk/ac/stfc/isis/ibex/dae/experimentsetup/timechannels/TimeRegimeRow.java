@@ -21,41 +21,87 @@ package uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * A row containing time regime information.
+ */
 public class TimeRegimeRow extends ModelObject {
 	
 	private double from;
+	
 	private double to;
+	
 	private double step;
+	
 	private TimeRegimeMode mode = TimeRegimeMode.BLANK;
 	
+	/**
+	 * Gets the from value.
+	 *
+	 * @return the from value
+	 */
 	public double getFrom() {
 		return from;
 	}
 	
+	/**
+	 * Gets the to value.
+	 *
+	 * @return the to value
+	 */
 	public double getTo() {
 		return to;
 	}
 	
+	/**
+	 * Gets the step.
+	 *
+	 * @return the step
+	 */
 	public double getStep() {
 		return step;
 	}
 	
+	/**
+	 * Gets the time regime mode.
+	 *
+	 * @return the mode
+	 */
 	public TimeRegimeMode getMode() {
 		return mode;
 	}
 	
+	/**
+	 * Sets the from value.
+	 *
+	 * @param value the new from value
+	 */
 	public void setFrom(double value) {
 		firePropertyChange("from", from, from = value);
 	}
 	
+	/**
+	 * Sets the to value.
+	 *
+	 * @param value the new to value
+	 */
 	public void setTo(double value) {
 		firePropertyChange("to", to, to = value);
 	}
 	
+	/**
+	 * Sets the step.
+	 *
+	 * @param value the new step
+	 */
 	public void setStep(double value) {
 		firePropertyChange("step", step, step = value);
 	}
 	
+	/**
+	 * Sets the time regime mode.
+	 *
+	 * @param value the new mode
+	 */
 	public void setMode(TimeRegimeMode value) {
 		firePropertyChange("mode", mode, mode = value);
 	}

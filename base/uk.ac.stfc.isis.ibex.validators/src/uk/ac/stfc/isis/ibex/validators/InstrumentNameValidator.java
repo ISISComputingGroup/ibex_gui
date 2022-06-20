@@ -20,6 +20,9 @@
 package uk.ac.stfc.isis.ibex.validators;
 
 import java.util.Collection;
+import java.util.function.Supplier;
+
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
 
 /**
  * Provides validation for custom instrument names.
@@ -37,10 +40,13 @@ public class InstrumentNameValidator {
      */
     public static final String NAME_EMPTY_MSG = "Instrument Name invalid, must not be empty";
 
+    private static final String ALLOWLIST_ENABLED_MSG = "Instrument switching resticted to allowlist";
+    
     private static final String NO_ERROR_MSG = "";
 
     private String errorMessage;
     private Collection<String> knownValidNames;
+    private final Supplier<Boolean> allowlistExistsFunc;
 
     /**
      * Creates an instance of the instrument name validator, given a list of
@@ -49,8 +55,18 @@ public class InstrumentNameValidator {
      * @param knownValidNames the list of known instrument names.
      */
     public InstrumentNameValidator(Collection<String> knownValidNames) {
-        errorMessage = NO_ERROR_MSG;
+        this(knownValidNames, Instrument::allowlistExists);
+    }
+    
+    /**
+     * Called from the main constructor above but with allowlistExistsFunc object.
+     * @param knownValidNames list of known instrument names
+     * @param allowlistExistsFunc supplier object to check if allowed list exists
+     */
+    public InstrumentNameValidator(Collection<String> knownValidNames, Supplier<Boolean> allowlistExistsFunc) {
+    	errorMessage = NO_ERROR_MSG;
         this.knownValidNames = knownValidNames;
+        this.allowlistExistsFunc = allowlistExistsFunc;
     }
     
     /**
@@ -63,11 +79,13 @@ public class InstrumentNameValidator {
     public Boolean validateInstrumentName(String instrumentName) {
         boolean isValid = false;
         
-        if (instrumentName.isEmpty()) {
+        if (nameIsKnown(instrumentName)) {
+        	isValid = true;
+        	setErrorMessage(NO_ERROR_MSG);
+        } else if (allowlistExistsFunc.get()) {
+        	setErrorMessage(ALLOWLIST_ENABLED_MSG);
+        } else if (instrumentName.isEmpty()) {
             setErrorMessage(NAME_EMPTY_MSG);
-        } else if (nameIsKnown(instrumentName)) {
-            isValid = true;
-            setErrorMessage(NO_ERROR_MSG);
         } else if (!(instrumentName.matches("[a-zA-Z0-9_\\-]*$"))) {
             setErrorMessage(NAME_FORMAT_MSG);
         } else {

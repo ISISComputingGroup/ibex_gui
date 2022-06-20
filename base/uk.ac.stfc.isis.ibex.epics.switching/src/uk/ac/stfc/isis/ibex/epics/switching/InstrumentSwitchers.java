@@ -1,5 +1,9 @@
 package uk.ac.stfc.isis.ibex.epics.switching;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
@@ -18,6 +22,12 @@ public class InstrumentSwitchers implements BundleActivator {
     private ClosingSwitcher closingSwitcher = new ClosingSwitcher();
     private ObservablePrefixChangingSwitcher observablePrefixChangingSwitcher = new ObservablePrefixChangingSwitcher();
     private WritablePrefixChangingSwitcher writablePrefixChangingSwitcher = new WritablePrefixChangingSwitcher();
+    
+    /**
+     * Indicates if the singleton instance of switchers is currently in the process of switching
+     * between instruments.
+     */
+    public boolean switching = true;
 
 	static BundleContext getContext() {
 		return context;
@@ -88,9 +98,18 @@ public class InstrumentSwitchers implements BundleActivator {
     }
 
     public void setInstrument(InstrumentInfo instrument) {
+    	switching = true;
         instance.nothingSwitcher.switchInstrument(instrument);
         instance.closingSwitcher.switchInstrument(instrument);
         instance.observablePrefixChangingSwitcher.switchInstrument(instrument);
         instance.writablePrefixChangingSwitcher.switchInstrument(instrument);
+        // This is to prevent instrument from being switched too often
+        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+        executorService.schedule(new Runnable() {
+			@Override
+			public void run() {
+		        switching = false;
+			}
+        }, 1, TimeUnit.SECONDS);
     }
 }

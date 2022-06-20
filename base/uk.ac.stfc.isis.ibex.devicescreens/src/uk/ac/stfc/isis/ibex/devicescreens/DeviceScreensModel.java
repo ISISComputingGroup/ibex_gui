@@ -25,7 +25,7 @@ import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
-import uk.ac.stfc.isis.ibex.epics.writing.SameTypeWriter;
+import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
@@ -34,8 +34,10 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  */
 public class DeviceScreensModel extends ModelObject {
     private DeviceScreensDescription deviceScreensDescription;
-    private SameTypeWriter<DeviceScreensDescription> writableDeviceScreenDescriptions;
+    private Writable<DeviceScreensDescription> writableDeviceScreenDescriptions;
 
+    private OnCanWriteChangeListener canWriteListener = canWrite -> setCanWriteRemote(canWrite);
+    
     private DeviceScreensDescription localDevices;
     private boolean canWriteRemote;
 
@@ -67,19 +69,12 @@ public class DeviceScreensModel extends ModelObject {
             Writable<DeviceScreensDescription> writableDeviceScreenDescriptions) {
 
         localDevices = new DeviceScreensDescription();
+        setDeviceScreensDescription(localDevices);
 
-        this.writableDeviceScreenDescriptions = new SameTypeWriter<DeviceScreensDescription>() {
-            @Override
-            public void onCanWriteChanged(boolean canWrite) {
-                super.onCanWriteChanged(canWrite);
-                setCanWriteRemote(canWrite);
-            }
-        };
+        this.writableDeviceScreenDescriptions = writableDeviceScreenDescriptions;
+        this.writableDeviceScreenDescriptions.addOnCanWriteChangeListener(canWriteListener);
 
-        this.writableDeviceScreenDescriptions.writeTo(writableDeviceScreenDescriptions);
-        writableDeviceScreenDescriptions.subscribe(this.writableDeviceScreenDescriptions);
-
-        observableDeviceScreensDescription.addObserver(new BaseObserver<DeviceScreensDescription>() {
+        observableDeviceScreensDescription.subscribe(new BaseObserver<DeviceScreensDescription>() {
 
             @Override
             public void update(DeviceScreensDescription value, Exception error, boolean isConnected) {
@@ -112,6 +107,11 @@ public class DeviceScreensModel extends ModelObject {
         });
     }
 
+    @Override
+    protected void finalize() {
+        this.writableDeviceScreenDescriptions.removeOnCanWriteChangeListener(canWriteListener);
+    }
+    
     /**
      * Getter for the device screens description.
      * 

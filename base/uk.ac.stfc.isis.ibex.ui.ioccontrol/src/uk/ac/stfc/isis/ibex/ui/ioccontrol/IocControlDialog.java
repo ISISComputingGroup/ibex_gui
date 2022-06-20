@@ -48,10 +48,14 @@ public class IocControlDialog extends TitleAreaDialog {
 	private static final String MAIN_TITLE = "Control IOCs";
 	private static final String SUB_TITLE = "Start or stop IOCs";
 	
-	private static final Point INITIAL_SIZE = new Point(500, 600);
+	private static final Point INITIAL_SIZE = new Point(800, 600);
 	
 	private final IocControl control;
-
+	/**
+	 * Constructor for IocControlDialog.
+	 * @param parentShell - The shell used to create the dialog.
+	 * @param control - The IOC controller
+	 */
 	public IocControlDialog(Shell parentShell, IocControl control) {
 		super(parentShell);
 		this.control = control;

@@ -20,17 +20,16 @@
 package uk.ac.stfc.isis.ibex.epics.writing;
 
 import java.io.IOException;
+import java.util.function.Function;
 
 import org.apache.logging.log4j.Logger;
 
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
-
-public class LoggingForwardingWritable<T> extends ForwardingWritable<T, T> {
+public class LoggingForwardingWritable<T> extends TransformingWritable<T, T> {
 
 	private final Logger log;
 	private final String id;
 
-    public LoggingForwardingWritable(Logger log, String id, Writable<T> destination, Converter<T, T> converter) {
+    public LoggingForwardingWritable(Logger log, String id, Writable<T> destination, Function<T, T> converter) {
         super(destination, converter);
         this.log = log;
 		this.id = id;

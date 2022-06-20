@@ -27,10 +27,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-import uk.ac.stfc.isis.ibex.ui.configserver.CheckboxLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DecoratedCellLabelProvider;
+import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
+import uk.ac.stfc.isis.ibex.ui.widgets.CheckboxLabelProvider;
 
 /**
  * Table describing all the IOCs to be started with a configuration.
@@ -46,6 +47,7 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
 
     TableViewerColumn autoStart;
     TableViewerColumn autoRestart;
+    TableViewerColumn remotePvPrefix;
 
 	private final CellDecorator<EditableIoc> rowDecorator = new IocRowCellDecorator();
 	private final CellDecorator<EditableIoc> simulationDecorator = new IocSimulationCellDecorator();
@@ -86,6 +88,13 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
             return !ioc.inComponent();
         }
     };
+    
+    private DataboundCellLabelProvider<EditableIoc> remotePvPrefixLabelProvider = new DataboundCellLabelProvider<EditableIoc>(observeProperty("remotePvPrefix")) {
+		@Override
+		protected String stringFromRow(EditableIoc ioc) {
+			return ioc.getRemotePvPrefix();
+		}
+	};
 
     /**
      * Standard constructor.
@@ -99,6 +108,8 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
      */
     public EditableIocsTable(Composite parent, int style, int tableStyle) {
 		super(parent, style, tableStyle | SWT.NO_SCROLL | SWT.V_SCROLL);
+		
+        setSortAction(() -> resetCheckboxLabelProvidersUpdateFlags());
 				
         initialise();
 	}
@@ -113,6 +124,7 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
 		simLevel();
 		autostart();
 		restart();
+		remotePvPrefix();
 	}
 
     /**
@@ -154,6 +166,11 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
                     }
                 });
         simLevel.setEditingSupport(new SimLevelEditingSupport(viewer()));
+        setColumnToolTipText(simLevel,
+        		"By default, the simulation level file is set to NONE, meaning that the IOC will not run in simulation mode.\n"
+        		+ "Under normal circumstances, you should not change the default setting.\n"
+        		+ "Simulation mode is used for running the IOC without the actual physical device."
+        );
     }
 
     /**
@@ -161,6 +178,14 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
      */
 	private void autostart() {
         autoStart = createColumn("Auto-start?", 1, false, autoStartLabelProvider);
+        setColumnToolTipText(autoStart, 
+        		"If set, the IOC will be started/restarted whenever the configuration is changed.\n"
+        		+ "If not set then if the IOC is not running it will remained stopped after config change,\n" 
+        		+ "and if it is running it will remain running throughout the config change.\n"
+        		+ "\n" 
+        		+ "Warning: if not set and the IOC is running, any changes you make (e.g. a macro change)\n" 
+        		+ "will not be set on the IOC until you restart it manually."
+        );
 	}
 
     /**
@@ -168,6 +193,17 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
      */
 	private void restart() {
         autoRestart = createColumn("Auto-restart?", 1, false, autoRestartLabelProvider);
+        setColumnToolTipText(autoRestart, 
+        		"If set, the IOC will be automatically restarted if it is terminated unexpectedly.\n"
+        		+ "If the IOC is stopped from the client or writing to the appropriate PV then it will not be restarted."
+        );
+	}
+	
+	/**
+     * Creates the remote pv prefix column.
+     */
+	private void remotePvPrefix() {
+        remotePvPrefix = createColumn("Remote prefix", 1, false, remotePvPrefixLabelProvider);
 	}
 
     /**
@@ -183,10 +219,17 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
     }
 
     /**
-     * Clears old checkboxes from the table.
+     * Clears old check boxes from the table.
      */
     private void clear() {
         autoStart.setLabelProvider(autoStartLabelProvider);
         autoRestart.setLabelProvider(autoRestartLabelProvider);
+    }
+    
+    /**Resets the check box listener update flags of the autoStart and 
+     * autoRestart label providers.*/
+    private void resetCheckboxLabelProvidersUpdateFlags() {
+        autoStartLabelProvider.resetCheckBoxListenerUpdateFlags();
+        autoRestartLabelProvider.resetCheckBoxListenerUpdateFlags();
     }
 }

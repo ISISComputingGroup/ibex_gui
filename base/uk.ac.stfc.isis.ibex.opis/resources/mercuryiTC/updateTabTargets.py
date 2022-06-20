@@ -27,22 +27,29 @@ def add_macro(widget, name, value):
     widget.setPropertyValue("macros", macros)
     reload_widget(widget)
     
-def populate_tabs(count, card_type, type_count, container):
+def populate_tabs(count, card_type, type_count, container, system_tab):
     for i in range(1, 1 + type_count):
-        card_number = get_macros().get(card_type.upper() + "_NUM" + str(i))
+        if system_tab:
+            card_number = "1"
+        else:
+            card_number = get_macros().get(card_type.upper() + "_NUM" + str(i))
         if is_active_int_macro(card_number):
             tab = display.getWidget("Tab"+str(count))
             tab.setPropertyValue("opi_file", "mercuryiTC_single_" + card_type.lower() + ".opi")
             add_macro(tab, "CARD_NUM", int(card_number))
-            container.setPropertyValue("tab_" + str(count) + "_title", card_type.title() + " card " + str(card_number))
+            title_suffix = "" if system_tab else " card " + str(card_number)
+            container.setPropertyValue("tab_" + str(count) + "_title", card_type.title() + title_suffix)
             count += 1
     return count
+
 
 def main():
     count = 0
     container = display.getWidget("TabContainer")
-    count = populate_tabs(count, "temp", 4, container)
-    count = populate_tabs(count, "level", 2, container)
+    count = populate_tabs(count, "temp", 4, container, False)
+    count = populate_tabs(count, "level", 2, container, False)
+    count = populate_tabs(count, "pressure", 2, container, False)
+    count = populate_tabs(count, "system", 1, container, True)
     if count > 0:
     	container.setPropertyValue("tab_count", count)
     else:

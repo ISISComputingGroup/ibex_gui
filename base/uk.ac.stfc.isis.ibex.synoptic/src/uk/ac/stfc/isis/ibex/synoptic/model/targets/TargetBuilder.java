@@ -27,6 +27,9 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;
 import uk.ac.stfc.isis.ibex.targets.Target;
 
+/**
+ * Use to builder a target for a component.
+ */
 public class TargetBuilder {
 		
 	private final Component component;
@@ -34,10 +37,21 @@ public class TargetBuilder {
 	
 	private Target target;
 	
+	/**
+	 * Create a builder to build targets for the given component.
+	 * 
+	 * @param component The component to build the target for.
+	 */
 	public TargetBuilder(Component component) {
 		this(component, null);
 	}
 	
+	/**
+	 * Create a builder to build targets for the given component.
+	 * 
+	 * @param component The component to build the target for.
+	 * @param description The description of the target to build with.
+	 */
 	public TargetBuilder(Component component, TargetDescription description) {
 		this.component = component;
 		this.description = description;
@@ -45,6 +59,11 @@ public class TargetBuilder {
 		target = getTarget(component);
 	}
 	
+	/**
+	 * Gets the target.
+	 *
+	 * @return the target
+	 */
 	public Target target() {
 		return target;
 	}

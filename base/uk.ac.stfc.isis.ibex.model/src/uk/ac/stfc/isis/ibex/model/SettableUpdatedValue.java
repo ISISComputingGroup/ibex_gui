@@ -19,11 +19,22 @@
 
 package uk.ac.stfc.isis.ibex.model;
 
+/**
+ * @param <T> Type of the value provided
+ */
 public class SettableUpdatedValue<T> extends UpdatedValue<T> {
 	
+	/**
+	 * Initialise the settable updated value with no value.
+	 */
 	public SettableUpdatedValue() {
 	}
 	
+	/**
+     * Initialise the settable updated value with a value.
+     * 
+     * @param value to value to initialise with
+     */
 	public SettableUpdatedValue(T value) {
 		setValue(value);
 	}

@@ -21,8 +21,18 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing;
 
 import org.eclipse.jface.viewers.ViewerCell;
 
+/**
+ * An abstract class for decorators which stylise table cells.
+ * 
+ * @param <TRow>
+ */
 public abstract class CellDecorator<TRow> {
 	
+    /**
+     * Apply the decoration.
+     * 
+     * @param cell the cell to apply the decoration to
+     */
 	public abstract void applyDecoration(ViewerCell cell);
 	
 	@SuppressWarnings("unchecked")

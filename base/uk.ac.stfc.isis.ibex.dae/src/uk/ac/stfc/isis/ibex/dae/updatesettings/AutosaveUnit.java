@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import uk.ac.stfc.isis.ibex.ui.Utils;
+import uk.ac.stfc.isis.ibex.ui.UIUtils;
 
 /**
  * Enum containing the possible auto save units for the DAE.
@@ -44,7 +44,7 @@ public enum AutosaveUnit {
     /**
      * Save on every so many micro-amps.
      */
-    MICROAMPS(Utils.MU + "A");
+    MICROAMPS(UIUtils.MU + "A");
 	
 	private String text;
 

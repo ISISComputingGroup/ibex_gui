@@ -10,11 +10,19 @@ import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
 public abstract class SortableObservableMapCellLabelProvider<TRow> extends ObservableMapCellLabelProvider {
 	/**
 	 * Constructor for the observable label provider.
-	 * @param attributeMap A map of the attributes that this cell will observe.
+	 * @param attributesMap A map of the attributes that this cell will observe, the first attribute used as the text for the label.
 	 */
-	protected SortableObservableMapCellLabelProvider(IObservableMap attributeMap) {
-		super(attributeMap);
+	protected SortableObservableMapCellLabelProvider(IObservableMap<TRow, ?>[] attributesMap) {
+		super(attributesMap);
 	}
+	
+	/**
+     * Constructor for the observable label provider.
+     * @param attributeMap A map of the attribute that this cell will observe, this will be used as the text for the label.
+     */
+    protected SortableObservableMapCellLabelProvider(IObservableMap<TRow, ?> attributeMap) {
+        super(attributeMap);
+    }
 	
     /**
      * Get the text to be displayed in a cell.

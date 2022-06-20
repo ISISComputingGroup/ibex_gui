@@ -19,14 +19,28 @@
 
 package uk.ac.stfc.isis.ibex.epics.conversion;
 
-public class ConversionException extends Exception {
+/**
+ * Thrown to indicate that there has been an error with conversion.
+ */
+public class ConversionException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Constructs a new exception with the specified detail message.
+	 * 
+	 * @param message the message
+	 */
 	public ConversionException(String message) {
 		super(message);
 	}
 
+	/**
+     * Constructs a new exception with the specified detail message and cause.
+     * 
+     * @param message the detail message
+     * @param throwable the cause
+     */
     public ConversionException(String message, Throwable throwable) {
         super(message, throwable);
     }

@@ -27,11 +27,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
-import uk.ac.stfc.isis.ibex.ui.configserver.CheckboxLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DecoratedCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.BlockNameSearch;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
+import uk.ac.stfc.isis.ibex.ui.widgets.CheckboxLabelProvider;
 
 /**
  * Provides a table to display blocks. Can be shown with or without block
@@ -76,8 +76,9 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 	public BlocksTable(Composite parent, int style, int tableStyle, boolean isBlockVisibilityShown) {
 		super(parent, style, tableStyle | SWT.BORDER);
 		
+		setSortAction(() -> visibilityLabelProvider.resetCheckBoxListenerUpdateFlags());
+		
 		this.isBlockVisibilityShown = isBlockVisibilityShown;
-
 		initialise();
 		
 		search = new BlockNameSearch();

@@ -17,14 +17,19 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.ui.devicescreens;bundle-version="1.0.0",
  com.google.guava,
  uk.ac.stfc.isis.ibex.ui.configserver;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.ui.widgets
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+ uk.ac.stfc.isis.ibex.epics;bundle-version="1.0.0",
+ uk.ac.stfc.isis.ibex.logger,
+ uk.ac.stfc.isis.ibex.ui.widgets,
+ org.eclipse.e4.ui.model.workbench
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.logging.log4j,
  org.eclipse.e4.core.di.annotations,
+ org.eclipse.e4.ui.di,
  org.eclipse.wb.swt,
  uk.ac.stfc.isis.ibex.configserver.configuration,
  uk.ac.stfc.isis.ibex.epics.adapters,
  uk.ac.stfc.isis.ibex.epics.writing,
  uk.ac.stfc.isis.ibex.ui.configserver.commands
 Export-Package: uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.synoptic.editor

@@ -38,7 +38,8 @@ public class ComponentValidator extends ErrorAggregator {
 
     // Had to use the identity hash code here as the overridden one in PV
     // doesn't work
-    private Map<Integer, SynopticPvValidator> validators = new HashMap<>();
+    private Map<Integer, SynopticPvValidator> validators = new HashMap<>();    
+    private DuplicatePvValidator duplicatePVNameValidator = new DuplicatePvValidator();
     
     /**
      * Default constructor. Adds change listeners to the component.
@@ -48,16 +49,20 @@ public class ComponentValidator extends ErrorAggregator {
      */
     public ComponentValidator(ComponentDescription component) {
         this.component = component;
+        duplicatePVNameValidator.addPropertyChangeListener("error", errorListener);
         
         for (PV pv : component.pvs()) {
             addPVListener(pv);
         }
+        
+        duplicatePVNameValidator.checkForDuplicatePVs(component.pvs());
 
         component.addPropertyChangeListener("pvAdded", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 PV pv = (PV) evt.getNewValue();
                 addPVListener(pv);
+                duplicatePVNameValidator.checkForDuplicatePVs(component.pvs());
             }
         });
 
@@ -67,6 +72,7 @@ public class ComponentValidator extends ErrorAggregator {
                 int hash = System.identityHashCode(evt.getNewValue());
                 childErrors.remove(validators.get(hash));
                 validators.remove(evt.getNewValue());
+                duplicatePVNameValidator.checkForDuplicatePVs(component.pvs());
                 updateErrors();
             }
         });
@@ -82,10 +88,11 @@ public class ComponentValidator extends ErrorAggregator {
         });
         
     }
-
+    
     private void addPVListener(PV pv) {
         SynopticPvValidator pvValid = new SynopticPvValidator(pv);
         validators.put(System.identityHashCode(pv), pvValid);
+        pv.addPropertyChangeListener((PropertyChangeEvent evt) -> duplicatePVNameValidator.checkForDuplicatePVs(component.pvs()));
         pvValid.addPropertyChangeListener("error", errorListener);
     }
 

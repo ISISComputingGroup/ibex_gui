@@ -28,8 +28,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.BeanProperties;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
@@ -295,7 +295,7 @@ public class PeriodsPanel extends Composite {
         updateTypeStack(matchType(PeriodControlType.values()[model.getPeriodType()]));
         updateSourceStack(matchSource(model.getSetupSource()));
         
-	}
+    }
 	
 	
 	private void setPeriods(final List<Period> newPeriods) {

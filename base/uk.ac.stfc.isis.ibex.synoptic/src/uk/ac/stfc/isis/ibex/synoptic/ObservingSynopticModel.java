@@ -21,6 +21,8 @@ package uk.ac.stfc.isis.ibex.synoptic;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.synoptic.internal.Variables;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
@@ -28,7 +30,7 @@ import uk.ac.stfc.isis.ibex.synoptic.model.desc.SynopticDescription;
 /**
  * A class for linking the PV observables used to define the synoptic with the
  * SynopticModel.
- * 
+ *
  */
 public class ObservingSynopticModel extends ModelObject {
 
@@ -42,7 +44,7 @@ public class ObservingSynopticModel extends ModelObject {
 
         @Override
         public void onError(Exception e) {
-            e.printStackTrace();
+            LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
             model.setSynopticFromDescription(SynopticDescription.getEmptySynopticDescription());
         }
 
@@ -58,24 +60,46 @@ public class ObservingSynopticModel extends ModelObject {
 	private final Variables variables;
     private final SwitchableObservable<SynopticDescription> synopticObservable;
 
+    /**
+     * Create a link between the PV observables used to define the synoptic and the synoptic model.
+     * 
+     * @param variables Contains the PV observables.
+     * @param model The synoptic model to link to.
+     */
 	public ObservingSynopticModel(Variables variables, SynopticModel model) {
 		this.model = model;
 		this.variables = variables;
 
         synopticObservable = new SwitchableObservable<SynopticDescription>(
                 variables.getSynopticDescription(Variables.NONE_SYNOPTIC_PV));
-        synopticObservable.addObserver(descriptionObserver);
+        synopticObservable.subscribe(descriptionObserver);
 	}
 
+	/**
+	 * Change this synoptic to use the new information given and set the details 
+	 *  observable to the new description.
+	 * 
+	 * @param newSynoptic The information for the synoptic to switch to.
+	 */
 	public void switchSynoptic(SynopticInfo newSynoptic) {
         synopticInfo = newSynoptic;
         synopticObservable.setSource(variables.getSynopticDescription(newSynoptic.pv()));
 	}
 
+	/**
+	 * Get an observable description of the synoptic.
+	 * 
+	 * @return An observable description of the synoptic.
+	 */
     public SwitchableObservable<SynopticDescription> getSynopticObservable() {
         return synopticObservable;
     }
 
+    /**
+     * Get basic information about this synoptic.
+     * 
+     * @return Basic information about this synoptic.
+     */
     public SynopticInfo getSynopticInfo() {
         return synopticInfo;
     }

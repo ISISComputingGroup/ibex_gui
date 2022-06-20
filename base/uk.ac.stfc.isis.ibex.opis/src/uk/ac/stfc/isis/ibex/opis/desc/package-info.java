@@ -19,4 +19,15 @@
 /**
  * Provides the classes needed for creating the OPI descriptions.
  */
+@XmlSchema(
+    namespace = "", 
+    elementFormDefault = XmlNsForm.QUALIFIED,
+    
+	xmlns = {
+        @XmlNs(prefix = "", namespaceURI = "")
+    }) 
 package uk.ac.stfc.isis.ibex.opis.desc;
+
+import javax.xml.bind.annotation.XmlNs;
+import javax.xml.bind.annotation.XmlNsForm;
+import javax.xml.bind.annotation.XmlSchema;

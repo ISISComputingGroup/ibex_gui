@@ -13,6 +13,8 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  */
 public class ButtonViewModel extends ModelObject {
 
+    private static final String SPACING = "  ";
+    
     protected static final Color FOCUSSED = SWTResourceManager.getColor(220, 235, 245);
     protected static final Color DEFOCUSSED = SWTResourceManager.getColor(247, 245, 245);
 
@@ -22,11 +24,15 @@ public class ButtonViewModel extends ModelObject {
     protected Font font = BUTTON_FONT;
     protected boolean inFocus = false;
     protected String text = "";
+    private boolean maximised = true;
+    protected boolean visible = true;
 
     /**
-     * Initialises button focus and font.
+     * Initialises button focus and font, and text.
+     * @param buttonLabel the button label text
      */
-    public ButtonViewModel() {
+    public ButtonViewModel(String buttonLabel) {
+        setText(buttonLabel);
         setFocus(inFocus);
         setFont(font);
     }
@@ -81,12 +87,16 @@ public class ButtonViewModel extends ModelObject {
     }
 
     /**
-     * Just returns Alarm text.
+     * Returns the text for the button.
      * 
-     * @return String "Alarms ([alarm_count])"
+     * @return The text for the button.
      */
     public String getText() {
-        return text;
+        if (maximised) {
+            return SPACING + text;
+        } else {
+            return "";
+        }
     }
 
     /**
@@ -96,6 +106,50 @@ public class ButtonViewModel extends ModelObject {
      *            new label for button.
      */
     protected void setText(String newText) {
-        firePropertyChange("text", text, text = newText);
+        firePropertyChange("text", "", text = newText);
+    }
+    
+    /**
+     * Minimises the button to display the icon only.
+     * @param width the width to maximise to
+     */
+    public void minimise(int width) {
+        maximised = false;
+        firePropertyChange("text", text, "");
+        setWidth(width);
+    }
+    
+    /**
+     * Maximises the button to its full size.
+     * @param width the width to minimise to
+     */
+    public void maximise(int width) {
+        maximised = true;
+        setText(text);
+        setWidth(width);
+    }
+    
+    /**
+     * Set the button width.
+     * @param newWidth the new button width
+     */
+    public void setWidth(int newWidth) {
+        firePropertyChange("width", 0, newWidth);
+    }
+    
+    /**
+     * Set whether the button is visible.
+     * @param newVisible True to make the button visible
+     */
+    public void setVisible(boolean newVisible) {
+        firePropertyChange("visible", visible, visible = newVisible);
+    }
+    
+    /**
+     * Get whether the button is visible.
+     * @return True if the button is visible
+     */
+    public boolean getVisible() {
+        return visible;
     }
 }

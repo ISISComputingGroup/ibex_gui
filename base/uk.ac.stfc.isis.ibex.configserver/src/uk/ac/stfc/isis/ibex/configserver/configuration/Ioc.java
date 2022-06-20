@@ -21,10 +21,10 @@ package uk.ac.stfc.isis.ibex.configserver.configuration;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
+import java.util.Optional;
 import com.google.common.base.Strings;
 
-import uk.ac.stfc.isis.ibex.epics.observing.INamed;
+import uk.ac.stfc.isis.ibex.configserver.editing.INamedInComponent;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -37,7 +37,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * reflection. Therefore variable names must reflect those expected from the
  * JSON.
  */
-public class Ioc extends ModelObject implements Comparable<Ioc>, INamed {
+public class Ioc extends ModelObject implements Comparable<Ioc>, INamedInComponent {
 
 	private final String name;	
 	
@@ -54,10 +54,11 @@ public class Ioc extends ModelObject implements Comparable<Ioc>, INamed {
 	private boolean restart = true;
 
 	private SimLevel simlevel = SimLevel.NONE;
-	private Collection<PVSet> pvsets = new ArrayList<PVSet>();
-	private Collection<PVDefaultValue> pvs = new ArrayList<PVDefaultValue>();
-	private Collection<Macro> macros = new ArrayList<Macro>();
+	private Collection<PVSet> pvsets;
+	private Collection<PVDefaultValue> pvs;
+	private Collection<Macro> macros;
 	private String component;
+    private String remotePvPrefix = "";
 	
     /**
      * Create an IOC with a given name.
@@ -76,23 +77,16 @@ public class Ioc extends ModelObject implements Comparable<Ioc>, INamed {
      *            The IOC to match
      */
 	public Ioc(Ioc other) {
-		this.name = other.getName();
-		this.autostart = other.getAutostart();
-		this.simlevel = other.getSimLevel();
-		this.restart = other.getRestart();
-		this.component = other.getComponent();
+		this(other.getName());
+		this.setAutostart(other.getAutostart());
+		this.setSimLevel(other.getSimLevel());
+		this.setRestart(other.getRestart());
+		this.setComponent(other.getComponent());
+		this.setRemotePvPrefix(other.getRemotePvPrefix());
 		
-		for (PVSet set : other.getPvSets()) {
-			pvsets.add(new PVSet(set));
-		}
-		
-		for (PVDefaultValue defaultValue : other.getPvs()) {
-			pvs.add(new PVDefaultValue(defaultValue));
-		}
-		
-		for (Macro macro : other.getMacros()) {
-			macros.add(new Macro(macro));
-		}
+		this.pvsets = new ArrayList<>(other.getPvSets());
+		this.pvs = new ArrayList<>(other.getPvs());
+		this.macros = new ArrayList<>(other.getMacros());
 	}
 	
     /**
@@ -136,11 +130,7 @@ public class Ioc extends ModelObject implements Comparable<Ioc>, INamed {
      * @return Get the IOC's simulation level
      */
 	public SimLevel getSimLevel() {
-		if (simlevel == null) {
-			simlevel = SimLevel.NONE;
-		}
-		
-		return simlevel;
+		return Optional.ofNullable(simlevel).orElse(SimLevel.NONE);
 	}
 
     /**
@@ -155,33 +145,21 @@ public class Ioc extends ModelObject implements Comparable<Ioc>, INamed {
      * @return A collection of IOC macros
      */
 	public Collection<Macro> getMacros() {
-		if (macros == null) {
-			macros = new ArrayList<>();
-		}
-		
-		return macros;
+		return Optional.ofNullable(macros).orElseGet(ArrayList::new);
 	}
 	
     /**
      * @return A collection of IOC PV sets
      */
 	public Collection<PVSet> getPvSets() {
-		if (pvsets == null) {
-			pvsets = new ArrayList<>();
-		}
-		
-		return pvsets;
+		return Optional.ofNullable(pvsets).orElseGet(ArrayList::new);
 	}
 
     /**
      * @return A collection of IOC PV values
      */
 	public Collection<PVDefaultValue> getPvs() {
-		if (pvs == null) {
-			pvs = new ArrayList<>();
-		}
-		
-		return pvs;
+		return Optional.ofNullable(pvs).orElseGet(ArrayList::new);
 	}
 
     /**
@@ -252,5 +230,21 @@ public class Ioc extends ModelObject implements Comparable<Ioc>, INamed {
 	@Override
 	public int hashCode() {
 		return name.hashCode();
+	}
+	
+	/**
+	 * Gets the remote pv prefix of the machine that this IOC is running on.
+	 * @return - the remote pv prefix
+	 */
+	public String getRemotePvPrefix() {
+		return remotePvPrefix;
+	}
+	
+	/**
+	 * Sets the remote pv prefix of the machine that this IOC should be run on.
+	 * @param remotePvPrefix - the hostname
+	 */
+	public void setRemotePvPrefix(String remotePvPrefix) {
+		firePropertyChange("remotePvPrefix", this.remotePvPrefix, this.remotePvPrefix = remotePvPrefix);
 	}
 }

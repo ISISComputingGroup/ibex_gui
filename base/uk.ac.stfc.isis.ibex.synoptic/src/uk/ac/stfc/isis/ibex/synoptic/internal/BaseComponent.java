@@ -29,16 +29,29 @@ import uk.ac.stfc.isis.ibex.synoptic.model.Component;
 import uk.ac.stfc.isis.ibex.synoptic.model.ComponentProperty;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
 
+/**
+ * An abstract base class for components in the synoptic.
+ */
 public abstract class BaseComponent implements Component {
 
 	private final ComponentDescription description;
 	private Set<ComponentProperty> properties = new LinkedHashSet<>();
 	private List<Component> components = new ArrayList<>();
 	
+	/**
+	 * Constructor for a component from a component description.
+	 * 
+	 * @param description the ComponentDescription
+	 */
 	public BaseComponent(ComponentDescription description) {
 		this.description = description;
 	}
 
+	/**
+	 * Constructor to create a copy of a component.
+	 * 
+	 * @param other the other component to copy
+	 */
 	public BaseComponent(BaseComponent other) {
 		this.description = other.description;
 		this.properties = other.properties;
@@ -65,14 +78,29 @@ public abstract class BaseComponent implements Component {
 		return new ArrayList<>(components);
 	}
 
+	/**
+	 * Add the given property to the base component's properties.
+	 * 
+	 * @param property The property to add.
+	 */
 	protected void addProperty(ComponentProperty property) {
 		properties.add(property);
 	}
 
+	/**
+	 * Add a component to the base component's components.
+	 * 
+	 * @param component The component to add.
+	 */
 	protected void addComponent(Component component) {
 		components.add(component);
 	}
 	
+	/**
+	 * Get the description of this component.
+	 * 
+	 * @return The component's description.
+	 */
 	protected ComponentDescription description() {
 		return description;
 	}

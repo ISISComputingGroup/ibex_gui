@@ -1,16 +1,15 @@
 @echo off
 setlocal
-set MYDIR=%~dp0
+set "MYDIR=%~dp0"
 
-REM FILESROOT is the directory above the "Client" directory
-set FILESROOT=%1
+@echo %TIME% Building MSI Kit
 
-if exist "c:\Program Files (x86)\WiX Toolset v3.10\bin\heat.exe" {
-	set WIXBIN=c:\Program Files (x86)\WiX Toolset v3.10\bin
-}
-if exist "c:\Program Files (x86)\WiX Toolset v3.11\bin\heat.exe" {
-	set WIXBIN=c:\Program Files (x86)\WiX Toolset v3.11\bin
-}
+REM FILESROOT is the directory above the CLIENTDIR directory
+set "FILESROOT=%1"
+set "CLIENTDIR=%2"
+set "MSINAME=%3"
+
+for /D %%I in ( "c:\Program Files (x86)\WiX Toolset v3.*" ) do SET "WIXBIN=%%I\bin"
 
 set IBEXMAJOR=1
 set IBEXMINOR=0
@@ -23,38 +22,64 @@ if not "%BUILD_NUMBER%" == "" (
 set IBEXVERSIONLONG=%IBEXMAJOR%.%IBEXMINOR%.%IBEXPATCH%.%IBEXBUILD%
 set IBEXVERSIONSHORT=%IBEXMAJOR%.%IBEXMINOR%
 
-REM change directory to avoid too long path errors, use pushd as it works with UNC paths
-pushd %FILESROOT%
+for %%a in (Z Y X W V U T S R Q) do (
+   IF NOT EXIST "%%a:\" (set FreeDriveLetter=%%a&&GOTO break)
+)
+@echo No free drive letter
+exit/b 1
+:break
 
+REM change directory to avoid too long path errors
+subst %FreeDriveLetter%: %FILESROOT%
+pushd %FreeDriveLetter%:\
+
+del %MSINAME%.wxi
+del %MSINAME%.msi
+
+@echo %TIME% Running HEAT
 REM -sw5150 supresses warning about self registering DLLs
-"%WIXBIN%\heat.exe" dir .\Client -gg -scom -sreg -svb6 -sfrag -sw5150 -template feature -var var.MySource -dr INSTALLDIR -cg MyCG -t %MYDIR%wxs2wxi.xsl -out ibex_client.wxi
+"%WIXBIN%\heat.exe" dir .\%CLIENTDIR% -gg -scom -sreg -svb6 -sfrag -sw5150 -template feature -var var.MySource -dr INSTALLDIR -cg MyCG -t %MYDIR%wxs2wxi.xsl -out %MSINAME%.wxi
 if %errorlevel% neq 0 goto ERROR
+if not exist "%MSINAME%.wxi" (
+    @echo %TIME% Unable to create %MSINAME%.wxi
+	goto ERROR
+)
 
-copy %MYDIR%ibex_client_master.wxs ibex_client.wxs
-"%WIXBIN%\candle.exe" -dMySource=.\Client -dVersionLong=%IBEXVERSIONLONG% -dVersionShort=%IBEXVERSIONSHORT% ibex_client.wxs
+copy /y %MYDIR%%MSINAME%_master.wxs %MSINAME%.wxs
+@echo %TIME% Running CANDLE
+"%WIXBIN%\candle.exe" -dMySource=.\%CLIENTDIR% -dVersionLong=%IBEXVERSIONLONG% -dVersionShort=%IBEXVERSIONSHORT% %MSINAME%.wxs
 if %errorlevel% neq 0 goto ERROR
+if not exist "%MSINAME%.wixobj" (
+    @echo %TIME% Unable to create %MSINAME%.wixobj
+	goto ERROR
+)
 
+@echo %TIME% Running LIGHT
 REM -sice:ICE60 is to stop font install warnings (from JRE)
-"%WIXBIN%\light.exe" -sice:ICE60 -ext WixUIExtension ibex_client.wixobj
+"%WIXBIN%\light.exe" -sice:ICE60 -ext WixUIExtension %MSINAME%.wixobj
 if %errorlevel% neq 0 goto ERROR
+if exist "%MSINAME%.msi" (
+    @echo %TIME% Successfully created %MSINAME%.msi
+) else (
+    goto ERROR
+)
 
-@echo Successfully created ibex_client.msi
+copy /y %MSINAME%.msi %MYDIR%
 
-del ibex_client.wxs
-del ibex_client.wxi
-del ibex_client.wixobj
-del ibex_client.wixpdb
+del %MSINAME%.*
 
 popd
+subst /d %FreeDriveLetter%:
 
 goto :EOF
 
 :ERROR
 
-@echo ERROR creating ibex_client.msi
+@echo ERROR creating %MSINAME%.msi
 
-del ibex_client.*
+del %MSINAME%.*
 
 popd
+subst /d %FreeDriveLetter%:
 
 exit /b 1

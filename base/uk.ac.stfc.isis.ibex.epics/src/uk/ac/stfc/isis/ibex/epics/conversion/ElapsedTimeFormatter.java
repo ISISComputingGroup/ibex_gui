@@ -19,16 +19,21 @@
 
 package uk.ac.stfc.isis.ibex.epics.conversion;
 
+import java.util.function.Function;
+
 import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
-public class ElapsedTimeFormatter extends Converter<Long, String> {
+/**
+ * A formatter for converting from an elapsed time in seconds, to hours-minutes-seconds format.
+ */
+public class ElapsedTimeFormatter implements Function<Long, String> {
 		
     private static final int ONE_SECOND_IN_MS = 1000;
 
     @Override
-	public String convert(Long elapsedSeconds) throws ConversionException {
+	public String apply(Long elapsedSeconds) throws ConversionException {
         Period period = new Period(ONE_SECOND_IN_MS * elapsedSeconds);
 		PeriodFormatter formatter = new PeriodFormatterBuilder()
 			.appendHours().appendSuffix(" hours ")

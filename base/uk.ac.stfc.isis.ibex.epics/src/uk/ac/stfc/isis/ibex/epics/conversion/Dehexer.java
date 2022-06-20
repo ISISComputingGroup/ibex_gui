@@ -19,13 +19,19 @@
 
 package uk.ac.stfc.isis.ibex.epics.conversion;
 
+import java.util.function.Function;
+
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 
-public class Dehexer extends Converter<char[], byte[]> {
+/**
+ * Converter class that converts an array of hexed characters into an array of dehexed bytes.
+ *
+ */
+public class Dehexer implements Function<char[], byte[]> {
 	
 	@Override
-	public byte[] convert(char[] value) throws ConversionException {
+	public byte[] apply(char[] value) throws ConversionException {
 		try {			
 			return Hex.decodeHex(value);
 		} catch (DecoderException e) {

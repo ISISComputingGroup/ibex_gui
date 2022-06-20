@@ -22,55 +22,94 @@ package uk.ac.stfc.isis.ibex.configserver.internal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePV;
 import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePVSet;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 
-// NB This class holds data coming from IOCS, so it lists the properties available to be set on an IOC, rather than those actually set in a config
+/**
+ * NB This class holds data coming from IOCS, so it lists the properties 
+ * available to be set on an IOC, rather than those actually set in a config.
+ * 
+ * This class is constructed from JSON, so the constructor may never explicitly be
+ * called from our code (but it will be called by the GSON library).
+ */
 public class IocParameters {
 
 	private final boolean running;
     private final String description;
-	private List<Macro> macros = new ArrayList<Macro>();
-	private List<AvailablePV> pvs = new ArrayList<AvailablePV>();
-	private List<AvailablePVSet> pvsets = new ArrayList<AvailablePVSet>();
+	private final List<Macro> macros;
+	private final List<AvailablePV> pvs;
+	private final List<AvailablePVSet> pvsets;
+	private final String remotePvPrefix;
 
+	/**
+	 * Builds a new set of IOC parameters.
+	 * @param running - whether the IOC is running.
+	 * @param macros - The macros to use.
+	 * @param pvs - The pvs to use.
+	 * @param pvsets - The pvsets associated with this IOC.
+	 * @param description - The description of this IOC.
+	 * @param remotePvPrefix - The pv prefix of the host this IOC is running on.
+	 */
     public IocParameters(boolean running, Collection<Macro> macros, Collection<AvailablePV> pvs,
-            Collection<AvailablePVSet> pvsets, String description) {
+            Collection<AvailablePVSet> pvsets, String description, String remotePvPrefix) {
 		this.running = running;
         this.description = description;
-
-		for (Macro macro : macros) {
-			this.macros.add(macro);
-		}
+        this.remotePvPrefix = remotePvPrefix;
 		
-		for (AvailablePV pv : pvs) {
-			this.pvs.add(pv);
-		}
-		
-		for (AvailablePVSet pvset : pvsets) {
-			this.pvsets.add(pvset);
-		}
+		this.macros = new ArrayList<>(macros);
+		this.pvs = new ArrayList<>(pvs);
+		this.pvsets = new ArrayList<>(pvsets);
 	}
 	
+    /**
+     * Whether this ioc is running.
+     * @return - true if ioc is running
+     */
+    /**
+     * @return true if the IOC is running, false otherwise.
+     */
 	public boolean isRunning() {
 		return running;
 	}
 	
+	/**
+	 * The macros that are available to be set of this IOC (not necessarily actually set in a config).
+	 * @return the macros.
+	 */
 	public Collection<Macro> getMacros() {
 		return macros;
 	}
 	
+	/**
+	 * The pvs available to be set on this IOC.
+	 * @return the pvs.
+	 */
 	public Collection<AvailablePV> getPVs() {
 		return pvs;
 	}
 	
+	/**
+	 * The PV sets available to this IOC.
+	 * @return the pv sets.
+	 */
 	public Collection<AvailablePVSet> getPVSets() {
 		return pvsets;
 	}
 
+	/**
+	 * The description of this IOC.
+	 * @return the description.
+	 */
     public String getDescription() {
         return description;
+    }
+    
+    /**
+     * The pv prefix of the host which this IOC is running on.
+     * @return the remote pv prefix.
+     */
+    public String getRemotePvPrefix() {
+    	return remotePvPrefix;
     }
 }

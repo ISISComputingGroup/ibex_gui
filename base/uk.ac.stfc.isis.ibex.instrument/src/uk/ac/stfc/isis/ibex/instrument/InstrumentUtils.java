@@ -19,11 +19,12 @@
 
 package uk.ac.stfc.isis.ibex.instrument;
 
-import uk.ac.stfc.isis.ibex.epics.conversion.Converter;
+import java.util.function.Function;
+
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.epics.writing.ForwardingWritable;
+import uk.ac.stfc.isis.ibex.epics.writing.TransformingWritable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
 /**
@@ -42,6 +43,26 @@ public final class InstrumentUtils {
      *            The type to convert from.
      * @param <T>
      *            The type to convert to.
+     * @param name
+     *            name of observer for debugging
+     * @param observable
+     *            the original observable
+     * @param converter
+     *            the converter
+     * @return the new observable
+     */
+    public static <S, T> ForwardingObservable<T> convert(String name, ClosableObservable<S> observable,
+            Function<S, T> converter) {
+        return new ForwardingObservable<>(name, new ConvertingObservable<>(observable, converter));
+	}
+
+    /**
+     * Provides an observable that converts data from another observable with no name.
+     * 
+     * @param <S>
+     *            The type to convert from.
+     * @param <T>
+     *            The type to convert to.
      * @param observable
      *            the original observable
      * @param converter
@@ -49,13 +70,13 @@ public final class InstrumentUtils {
      * @return the new observable
      */
     public static <S, T> ForwardingObservable<T> convert(ClosableObservable<S> observable,
-            Converter<S, T> converter) {
+            Function<S, T> converter) {
         return new ForwardingObservable<>(new ConvertingObservable<>(observable, converter));
 	}
 
     /**
      * Provides a writable that converts data and sends to another writable.
-     * 
+     * 	
      * @param <S>
      *            The type of data to convert to
      * @param <T>
@@ -66,8 +87,8 @@ public final class InstrumentUtils {
      *            The converter
      * @return The new writable
      */
-    public static <S, T> Writable<T> convert(Writable<S> destination, Converter<T, S> converter) {
-        return new ForwardingWritable<>(destination, converter);
+    public static <S, T> Writable<T> convert(Writable<S> destination, Function<T, S> converter) {
+        return new TransformingWritable<>(destination, converter);
     }
 
     /**

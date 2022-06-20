@@ -24,6 +24,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Optional;
 
 import org.junit.Test;
 
@@ -51,10 +52,37 @@ public class BlocksTest extends EditableConfigurationTest {
         BlockFactory blockFactory = new BlockFactory(edited);
 
         // Act
-        EditableBlock block = blockFactory.createNewBlock();
+        EditableBlock block = blockFactory.createNewBlock(Optional.empty());
 
         // Assert
         assertEquals(EditableBlock.class, block.getClass());
+    }
+    
+    @Test
+    public void WHEN_new_block_is_created_with_a_starting_PV_THEN_that_PV_is_set() {
+        // Arrange
+        String testPV = "TEST:PV";
+        EditableConfiguration edited = edit(emptyConfig());
+        BlockFactory blockFactory = new BlockFactory(edited);
+
+        // Act
+        EditableBlock block = blockFactory.createNewBlock(Optional.of(testPV));
+
+        // Assert
+        assertEquals(testPV, block.getPV());
+    }
+    
+    @Test
+    public void WHEN_new_block_is_created_with_no_PV_THEN_PV_is_set_to_empty_string() {
+        // Arrange
+        EditableConfiguration edited = edit(emptyConfig());
+        BlockFactory blockFactory = new BlockFactory(edited);
+
+        // Act
+        EditableBlock block = blockFactory.createNewBlock(Optional.empty());
+
+        // Assert
+        assertEquals("", block.getPV());
     }
 
 	@Test
@@ -64,7 +92,7 @@ public class BlocksTest extends EditableConfigurationTest {
 		// Arrange
 		EditableConfiguration edited = edit(emptyConfig());
         BlockFactory blockFactory = new BlockFactory(edited);
-        EditableBlock block = blockFactory.createNewBlock();
+        EditableBlock block = blockFactory.createNewBlock(Optional.empty());
 	
 		// Act
 		edited.addNewBlock(block);
@@ -79,11 +107,11 @@ public class BlocksTest extends EditableConfigurationTest {
         // Arrange
         EditableConfiguration edited = edit(emptyConfig());
         BlockFactory blockFactory = new BlockFactory(edited);
-        EditableBlock block1 = blockFactory.createNewBlock();
+        EditableBlock block1 = blockFactory.createNewBlock(Optional.empty());
         edited.addNewBlock(block1);
 
         // Act
-        EditableBlock block2 = blockFactory.createNewBlock();
+        EditableBlock block2 = blockFactory.createNewBlock(Optional.empty());
 
         // Assert
         assertNotEquals(block1.getName(), block2.getName());
@@ -95,11 +123,11 @@ public class BlocksTest extends EditableConfigurationTest {
         // Arrange
         EditableConfiguration edited = edit(emptyConfig());
         BlockFactory blockFactory = new BlockFactory(edited);
-        EditableBlock block1 = blockFactory.createNewBlock();
+        EditableBlock block1 = blockFactory.createNewBlock(Optional.empty());
         edited.addNewBlock(block1);
 
         // Act
-        EditableBlock block2 = blockFactory.createNewBlock();
+        EditableBlock block2 = blockFactory.createNewBlock(Optional.empty());
         block2.setName(block1.getName());
 
         // Assert

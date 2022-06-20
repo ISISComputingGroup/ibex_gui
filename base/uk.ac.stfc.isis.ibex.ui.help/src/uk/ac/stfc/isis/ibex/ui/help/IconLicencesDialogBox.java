@@ -43,6 +43,7 @@ import com.google.common.io.Resources;
  * A dialog box that contains information about the IBEX client icon licences. 
  * 
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class IconLicencesDialogBox extends TitleAreaDialog {
 	
 	private static final String ICONLICENCES_FILE_PATH = "/resources/iconlicences.txt";
