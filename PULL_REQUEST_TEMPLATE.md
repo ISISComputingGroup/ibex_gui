@@ -26,6 +26,7 @@
 #### Code Review
 
 - [ ] Is the code of an acceptable quality?
+- [ ] If the change is to an OPI, does the `check_opi_format.py` script in [C:\Instrument\Dev\ibex_gui\base\uk.ac.stfc.isis.ibex.opis](https://github.com/ISISComputingGroup/ibex_gui/blob/master/base/uk.ac.stfc.isis.ibex.opis/check_opi_format.py) pass?
 - [ ] Do the changes function as described and is it robust?
 - [ ] Is there associated PR for the [release notes](https://github.com/ISISComputingGroup/IBEX/blob/master/release_notes/ReleaseNotes_Upcoming.md)?
 

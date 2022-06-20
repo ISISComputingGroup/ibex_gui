@@ -1908,11 +1908,6 @@
             <description>The sample positioner motor (e.g. MTR0101)</description>
             <default>MOT:MTR0101</default>
           </macro>
-          <macro>
-            <name>WEBCAMURL</name>
-            <description>The URL for the webcam page</description>
-            <default/>
-          </macro>
         </macros>
       </value>
     </entry>
@@ -2697,7 +2692,7 @@
         </macros>
       </value>
     </entry>
-     <entry>
+    <entry>
       <key>WISH Jaws</key>
       <value>
         <type>JAWS</type>
@@ -2760,6 +2755,21 @@
             <name>IOC_NAME</name>
             <description>The weeder PV prefix (e.g. WEEDER_01)</description>
             <default>WEEDER_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>TECHNIX</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>technix.opi</path>
+        <description>Technix PSU</description>
+        <macros>
+          <macro>
+            <name>IOC_NAME</name> 
+            <description>The technix PV prefix (e.g. TECHNIX_01)</description>
+            <default>TECHNIX_01</default>
           </macro>
         </macros>
       </value>
