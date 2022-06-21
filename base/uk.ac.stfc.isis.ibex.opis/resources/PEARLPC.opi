@@ -1912,7 +1912,7 @@ $(pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>455</width>
       <wuid>-690f79dc:17b39560202:-5653</wuid>
@@ -2386,7 +2386,7 @@ $(pv_value)</tooltip>
         <name>Min_Pressure_Text</name>
         <precision>0</precision>
         <precision_from_pv>false</precision_from_pv>
-        <pv_name>$(PV_ROOT_PEARLPC):PRESSURE_DIFFERENCE</pv_name>
+        <pv_name>$(PV_ROOT_PEARLPC):PRESSURE_DIFF</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -2606,7 +2606,7 @@ $(trace_0_y_pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>455</width>
       <wuid>3d21f8eb:18180ef5ef2:4869</wuid>
