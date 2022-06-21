@@ -2324,7 +2324,7 @@ $(pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
     <widget_type>Label</widget_type>
-    <width>415</width>
+    <width>781</width>
     <wrap_words>true</wrap_words>
     <wuid>4fdc1aa2:158de06471b:-7a02</wuid>
     <x>6</x>
@@ -2410,70 +2410,5 @@ $(pv_value)</tooltip>
     <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
     <x>6</x>
     <y>42</y>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
-    <actions hook="false" hook_all="false" />
-    <alarm_pulsing>false</alarm_pulsing>
-    <auto_size>false</auto_size>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <background_color>
-      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-    </background_color>
-    <border_alarm_sensitive>true</border_alarm_sensitive>
-    <border_color>
-      <color name="ISIS_Border" red="0" green="0" blue="0" />
-    </border_color>
-    <border_style>0</border_style>
-    <border_width>1</border_width>
-    <enabled>true</enabled>
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
-    </font>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <foreground_color>
-      <color name="Major" red="255" green="0" blue="0" />
-    </foreground_color>
-    <format_type>4</format_type>
-    <height>37</height>
-    <horizontal_alignment>0</horizontal_alignment>
-    <name></name>
-    <precision>3</precision>
-    <precision_from_pv>false</precision_from_pv>
-    <pv_name></pv_name>
-    <pv_value />
-    <rotation_angle>0.0</rotation_angle>
-    <rules>
-      <rule name="Rule" prop_id="visible" out_exp="false">
-        <exp bool_exp="pvInt0 || pvInt1 || pvInt2 || pvInt3 || pvInt4 || pvInt5 || pvInt6">
-          <value>false</value>
-        </exp>
-        <pv trig="true">$(PV_ROOT):A01:ACTIVE</pv>
-        <pv trig="true">$(PV_ROOT):A02:ACTIVE</pv>
-        <pv trig="true">$(PV_ROOT):A03:ACTIVE</pv>
-        <pv trig="true">$(PV_ROOT):A04:ACTIVE</pv>
-        <pv trig="true">$(PV_ROOT):A05:ACTIVE</pv>
-        <pv trig="true">$(PV_ROOT):A06:ACTIVE</pv>
-        <pv trig="true">$(PV_ROOT):A07:ACTIVE</pv>
-      </rule>
-    </rules>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <scripts />
-    <show_units>false</show_units>
-    <text>Warning: no sensors configured. Ensure at least one sensor is configured by passing ADDR_x macros to the IOC.</text>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <transparent>false</transparent>
-    <vertical_alignment>0</vertical_alignment>
-    <visible>true</visible>
-    <widget_type>Text Update</widget_type>
-    <width>367</width>
-    <wrap_words>true</wrap_words>
-    <wuid>3d21f8eb:18185f58657:-2285</wuid>
-    <x>420</x>
-    <y>6</y>
   </widget>
 </display>
