@@ -8,11 +8,28 @@ import org.eclipse.wb.swt.ResourceManager;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionDynamicScriptingStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
-public class ExecutingStatusDisplay {
-	
+/**
+ * Class to handle displaying images for execution status.
+ *
+ */
+public final class ExecutingStatusDisplay {
+	private ExecutingStatusDisplay() {
+	}
+	/**
+	 * Image to use to show that a script is executing.
+	 */
     public static final Image EXECUTING_IMAGE = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/play.png");
+    /**
+     * Image to use to show pausing.
+     */
     public static final Image PAUSED_BEFORE_IMAGE = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/pause.png");
+    /**
+     * Image to use to show resuming.
+     */
     public static final Image PAUSED_DURING_IMAGE = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/resume.png");
+    /**
+     * Null image for not executing.
+     */
     public static final Image NOT_EXECUTING_IMAGE = null;
 	
     /**
