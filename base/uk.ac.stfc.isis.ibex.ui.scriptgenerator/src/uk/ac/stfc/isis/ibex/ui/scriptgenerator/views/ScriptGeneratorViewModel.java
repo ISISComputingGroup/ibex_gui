@@ -863,7 +863,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     protected void updateValidityChecks(ActionsViewTable viewTable) {
 	    Map<Integer, String> globals = scriptGeneratorModel.getGlobalParamErrors();
-	    for (int i = 0; i< this.globalParamText.size(); i++) {
+	    for (int i = 0; i < this.globalParamText.size(); i++) {
 	    	if (globals.containsKey(i)) {
 	    		globalParamText.get(i).setBackground(INVALID_LIGHT_COLOR);
 	    		globalParamText.get(i).setBackground(INVALID_DARK_COLOR);

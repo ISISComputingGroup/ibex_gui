@@ -16,6 +16,7 @@ public class ExecutingStatusDisplay {
     public static final Image NOT_EXECUTING_IMAGE = null;
 	
     /**
+     * @param status The scripting status.
      * @return The mark to display whether executing or not.
      */
 	public static Image getImage(ActionDynamicScriptingStatus status) {
@@ -34,7 +35,7 @@ public class ExecutingStatusDisplay {
 	/**
 	 * Get the ValidityDisplay from it's displayed text.
 	 * 
-	 * @param text The string to generate a Validity display element from.
+	 * @param optionalImage an image to generate a Validity display element from.
 	 * @return A ValidityDisplay element generated from the given string.
 	 */
 	public static ActionDynamicScriptingStatus fromImage(Optional<Image> optionalImage) {
@@ -59,6 +60,7 @@ public class ExecutingStatusDisplay {
 	 * Whether the actions executing status equals this enum.
 	 * 
 	 * @param action The action to check the executing status of.
+	 * @param status The status to check against.
 	 * @return True if the action and this enum have the same executing status or false if not.
 	 */
 	public static boolean equalsAction(ActionDynamicScriptingStatus status, ScriptGeneratorAction action) {
