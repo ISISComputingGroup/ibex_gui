@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.Button;
  * A dialog box for selecting which perspectives to show and hide.
  *
  */
+@SuppressWarnings("magicnumber")
 public class PerspectiveHidingDialog extends TitleAreaDialog {
     private PerspectivesTable table;
     private PerspectivesVisibleModel model;

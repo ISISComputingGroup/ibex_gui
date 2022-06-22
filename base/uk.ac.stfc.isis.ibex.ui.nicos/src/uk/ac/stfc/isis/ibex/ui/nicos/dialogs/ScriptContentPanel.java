@@ -53,7 +53,6 @@ public class ScriptContentPanel extends Composite {
      * @param editableName
      *            whether the name of this script is editable
      */
-    @SuppressWarnings("unchecked")
     public ScriptContentPanel(Composite parent, int style, QueuedScript script, boolean editableName) {
 		super(parent, style);
         GridLayout gridLayout = new GridLayout(2, false);
