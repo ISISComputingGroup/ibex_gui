@@ -298,7 +298,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>792</width>
       <wuid>4fbad31a:1436c3e166f:-6faf</wuid>
@@ -1118,7 +1118,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>792</width>
       <wuid>-620d3863:17acd4438eb:-7b9f</wuid>
@@ -3382,6 +3382,15 @@ $(pv_value)</tooltip>
         <exp bool_exp="pvInt6 != 0">
           <value>false</value>
         </exp>
+        <exp bool_exp="pvInt7 != 0">
+          <value>false</value>
+        </exp>
+        <exp bool_exp="pvInt8 != 0">
+          <value>false</value>
+        </exp>
+        <exp bool_exp="pvInt9 != 0">
+          <value>false</value>
+        </exp>
         <pv trig="true">$(PV_ROOT):A01:ACTIVE</pv>
         <pv trig="true">$(PV_ROOT):A02:ACTIVE</pv>
         <pv trig="true">$(PV_ROOT):A03:ACTIVE</pv>
@@ -3389,6 +3398,9 @@ $(pv_value)</tooltip>
         <pv trig="true">$(PV_ROOT):A05:ACTIVE</pv>
         <pv trig="true">$(PV_ROOT):A06:ACTIVE</pv>
         <pv trig="true">$(PV_ROOT):A07:ACTIVE</pv>
+        <pv trig="true">$(PV_ROOT):A08:ACTIVE</pv>
+        <pv trig="true">$(PV_ROOT):A09:ACTIVE</pv>
+        <pv trig="true">$(PV_ROOT):A010:ACTIVE</pv>
       </rule>
     </rules>
     <scale_options>
