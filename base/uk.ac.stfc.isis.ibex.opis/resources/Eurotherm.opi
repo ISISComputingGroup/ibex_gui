@@ -298,7 +298,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>792</width>
       <wuid>4fbad31a:1436c3e166f:-6faf</wuid>
@@ -1118,7 +1118,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>792</width>
       <wuid>-620d3863:17acd4438eb:-7b9f</wuid>
@@ -3349,7 +3349,7 @@ $(pv_value)</tooltip>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
-    <enabled>true</enabled>
+    <enabled>false</enabled>
     <font>
       <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
     </font>
@@ -3359,38 +3359,30 @@ $(pv_value)</tooltip>
     <height>37</height>
     <horizontal_alignment>1</horizontal_alignment>
     <name>Label_2</name>
-    <rules>
-      <rule name="Rule" prop_id="visible" out_exp="false">
-        <exp bool_exp="pvInt0 != 0">
-          <value>false</value>
-        </exp>
-        <exp bool_exp="pvInt1 != 0">
-          <value>false</value>
-        </exp>
-        <exp bool_exp="pvInt2 != 0">
-          <value>false</value>
-        </exp>
-        <exp bool_exp="pvInt3 != 0">
-          <value>false</value>
-        </exp>
-        <exp bool_exp="pvInt4 != 0">
-          <value>false</value>
-        </exp>
-        <exp bool_exp="pvInt5 != 0">
-          <value>false</value>
-        </exp>
-        <exp bool_exp="pvInt6 != 0">
-          <value>false</value>
-        </exp>
-        <exp bool_exp="pvInt7 != 0">
-          <value>false</value>
-        </exp>
-        <exp bool_exp="pvInt8 != 0">
-          <value>false</value>
-        </exp>
-        <exp bool_exp="pvInt9 != 0">
-          <value>false</value>
-        </exp>
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts>
+      <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
+        <scriptName>EmbeddedScript</scriptName>
+        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+states = []
+for tab in range(10):
+    if pvArray[tab].isConnected():
+        states.append(PVUtil.getLong(pvs[tab]))
+    else:
+        # If eurotherm is entirely down then we don't want the message displayed.
+        states.append(1)
+
+if all(state == 0 for state in states):
+    widget.setPropertyValue("visible", True);
+else:
+    widget.setPropertyValue("visible", False)
+]]></scriptText>
         <pv trig="true">$(PV_ROOT):A01:ACTIVE</pv>
         <pv trig="true">$(PV_ROOT):A02:ACTIVE</pv>
         <pv trig="true">$(PV_ROOT):A03:ACTIVE</pv>
@@ -3401,20 +3393,14 @@ $(pv_value)</tooltip>
         <pv trig="true">$(PV_ROOT):A08:ACTIVE</pv>
         <pv trig="true">$(PV_ROOT):A09:ACTIVE</pv>
         <pv trig="true">$(PV_ROOT):A010:ACTIVE</pv>
-      </rule>
-    </rules>
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <scripts />
+      </path>
+    </scripts>
     <text>IOC is not configured with any eurotherm channels, check the &#xD;
 ADDR_x IOC macros are set correctly in the configuration.</text>
     <tooltip></tooltip>
     <transparent>true</transparent>
     <vertical_alignment>1</vertical_alignment>
-    <visible>true</visible>
+    <visible>false</visible>
     <widget_type>Label</widget_type>
     <width>367</width>
     <wrap_words>false</wrap_words>
