@@ -138,7 +138,7 @@ public class ExperimentSetup {
         btnSendChanges.setText("Apply Changes");
         
         /*
-         * This part tells the DEA to refresh settings (press save button) if a change came from outside (for example from a script)
+         * This part tells the DAE to update the cached values after an external change was detected
          */
         final UpdatedValue<Boolean> inSettingsChange = new UpdatedObservableAdapter<>(Dae.getInstance().observables().currentlyChangingSettings);
 		inSettingsChange.addPropertyChangeListener(new PropertyChangeListener() {
@@ -147,10 +147,9 @@ public class ExperimentSetup {
 				Boolean isUpdating = inSettingsChange.getValue();
 				if (isUpdating != null) {
 					if (!isUpdating) {
-	                	Display.getDefault().syncExec(new Runnable() {
+	                	Display.getDefault().asyncExec(new Runnable() {
 	                	    public void run() {
 	        	                try {
-	        	                    viewModel.experimentSetup().updateDae();
 	        	                    applyChangesToUI();
 	        	                } catch (Exception err) {
 	        	                    // Expected to go off on startup before the xml file is properly loaded
