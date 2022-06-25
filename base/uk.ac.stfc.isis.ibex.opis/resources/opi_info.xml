@@ -2855,5 +2855,17 @@
         </macros>
       </value>
     </entry>
+	<entry>
+      <key>GP2 Detector</key>
+      <value>
+        <type>DAE</type>
+        <path>GP2.opi</path>
+        <description>The OPI for GP2 detector</description>
+        <macros/>
+        <categories>
+          <category>Monitors</category>
+        </categories>
+      </value>
+    </entry>
   </opis>
 </descriptions>
