@@ -265,6 +265,7 @@
           <ROI>ROI1</ROI>
           <RAWIMAGE>RIMAGE1</RAWIMAGE>
           <IMAGE>IMAGE1</IMAGE>
+          <R>GP2</R>
         </macros>
         <name>Linking Container</name>
         <opi_file>areaDetector/2DView.opi</opi_file>
@@ -350,6 +351,7 @@
           <ROI>ROI2</ROI>
           <RAWIMAGE>RIMAGE2</RAWIMAGE>
           <IMAGE>IMAGE2</IMAGE>
+          <R>GP2</R>
         </macros>
         <name>Linking Container</name>
         <opi_file>areaDetector/2DView.opi</opi_file>
