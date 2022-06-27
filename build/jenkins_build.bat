@@ -105,9 +105,9 @@ if %errorlevel% neq 0 (
 
 REM Copy the install script across
 cd %BASEDIR%
-copy /Y %BASEDIR%\install_client.bat %INSTALLDIR%
+copy /Y %BASEDIR%\install_gui_and_python.bat %INSTALLDIR%
 if %errorlevel% neq 0 (
-    @echo Installl client copy failed
+    @echo Install client batch file copy failed
     exit /b %errorlevel%
 )
 
