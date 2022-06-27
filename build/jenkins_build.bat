@@ -111,6 +111,14 @@ if %errorlevel% neq 0 (
     exit /b %errorlevel%
 )
 
+REM Copy the gui only install script across
+cd %BASEDIR%
+copy /Y %BASEDIR%\install_gui_only.bat %INSTALLDIR%
+if %errorlevel% neq 0 (
+    @echo Install gui only batch file copy failed
+    exit /b %errorlevel%
+)
+
 @echo %BUILD_NUMBER%> %INSTALLDIR%\Client\BUILD_NUMBER.txt
 @echo %RELEASE_VERSION%> %INSTALLDIR%\Client\VERSION.txt
 
