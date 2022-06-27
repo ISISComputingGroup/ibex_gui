@@ -42,7 +42,6 @@ public abstract class Button extends CLabel {
      * @param model
      *            ButtonViewModel
      */
-    @SuppressWarnings("unchecked")
     public Button(Composite parent, String imageUri, String tooltip, ButtonViewModel model) {
         super(parent, SWT.SHADOW_OUT);
 

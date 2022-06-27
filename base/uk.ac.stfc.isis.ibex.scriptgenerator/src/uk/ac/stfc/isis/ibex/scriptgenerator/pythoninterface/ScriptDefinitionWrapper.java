@@ -43,6 +43,7 @@ public interface ScriptDefinitionWrapper {
 	 * @param global_params The global parameters to check validity with.
 	 * @return The error if the arguments are not valid.
 	 */
+    @SuppressWarnings("checkstyle:parametername")
 	String parametersValid(Map<String, String> action, List<String> global_params);
 	
     /**
@@ -52,6 +53,7 @@ public interface ScriptDefinitionWrapper {
      * @param global_params The global parameters to refresh the time estimation with.
      * @return An estimate in seconds
      */
+    @SuppressWarnings("checkstyle:parametername")
     Number estimateTime(Map<String, String> action, List<String> global_params);
 	
 	/**

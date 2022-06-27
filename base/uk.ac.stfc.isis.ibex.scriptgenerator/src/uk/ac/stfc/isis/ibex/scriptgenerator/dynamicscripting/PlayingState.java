@@ -113,6 +113,8 @@ public class PlayingState extends DynamicScriptingState {
 			case DynamicScriptingProperties.SCRIPT_PAUSED_PROPERTY:
 				handlePaused();
 				break;
+			default: // do nothing;
+				break;
 		}
 	}
 	

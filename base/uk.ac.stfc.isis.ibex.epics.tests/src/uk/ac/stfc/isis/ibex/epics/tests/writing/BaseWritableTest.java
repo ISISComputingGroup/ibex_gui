@@ -31,7 +31,7 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
 import uk.ac.stfc.isis.ibex.epics.writing.OnErrorListener;
 
-@SuppressWarnings({ "unchecked", "checkstyle:methodname" })
+@SuppressWarnings({ "checkstyle:methodname" })
 public class BaseWritableTest {
 
     private TestableBaseWritable<String> writable;

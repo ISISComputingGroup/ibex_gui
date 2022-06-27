@@ -3,6 +3,7 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting;
 /**
  * An exception that may occur when executing a script dynamically.
  */
+@SuppressWarnings("serial")
 public class DynamicScriptingException extends Exception {
 
 	/**

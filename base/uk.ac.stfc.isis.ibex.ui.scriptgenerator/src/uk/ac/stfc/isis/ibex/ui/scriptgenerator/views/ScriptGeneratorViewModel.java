@@ -26,7 +26,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -50,15 +49,18 @@ import org.eclipse.swt.widgets.Text;
 import org.apache.logging.log4j.Logger;
 import static java.lang.Math.min;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.*;
-import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingProperties;
+import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
+import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
+import uk.ac.stfc.isis.ibex.scriptgenerator.NoScriptDefinitionSelectedException;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptDefinitionNotMatched;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.SaveScriptGeneratorFileMessageDialog;
-import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.QueueScriptPreviewDialog;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -105,6 +107,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     public static final String VALIDITY_COLUMN_HEADER = "Validity";
     
+    /**
+     * The header of the action column.
+     */
     public static final String ACTION_NUMBER_COLUMN_HEADER = "Action";
     
     /**
@@ -256,17 +261,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	        });
 	    });
 	    return scriptGeneratorModel;
-    }
-    
-    private void previewScriptOrQueueDirectly(String generatedScript) {
-		QueueScriptPreviewDialog scriptPreview = new QueueScriptPreviewDialog(Display.getDefault().getActiveShell(), generatedScript);
-		if (scriptPreview.askIfPreviewScript()) {
-			if (scriptPreview.open() == IDialogConstants.OK_ID) {
-				firePropertyChange(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
-			}
-		} else {
-			firePropertyChange(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
-		}
     }
     
     private void saveScriptToCurrentFilepath(String generatedScript) {
@@ -869,7 +863,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     protected void updateValidityChecks(ActionsViewTable viewTable) {
 	    Map<Integer, String> globals = scriptGeneratorModel.getGlobalParamErrors();
-	    for (int i = 0; i< this.globalParamText.size(); i++) {
+	    for (int i = 0; i < this.globalParamText.size(); i++) {
 	    	if (globals.containsKey(i)) {
 	    		globalParamText.get(i).setBackground(INVALID_LIGHT_COLOR);
 	    		globalParamText.get(i).setBackground(INVALID_DARK_COLOR);

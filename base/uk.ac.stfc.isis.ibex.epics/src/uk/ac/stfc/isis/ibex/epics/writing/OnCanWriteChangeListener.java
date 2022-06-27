@@ -8,5 +8,5 @@ public interface OnCanWriteChangeListener {
      * Called when the Writable becomes (un)available.
      * @param canWrite Whether the Writable can be written to. 
      */
-    public void onCanWriteChanged(boolean canWrite);
+    void onCanWriteChanged(boolean canWrite);
 }
