@@ -1640,6 +1640,24 @@
       </value>
     </entry>
     <entry>
+      <key>Transtechnik PSU</key>
+      <value>
+        <type>POWER_SUPPLY</type>
+        <path>transtechnik.opi</path>
+        <description>Transtechnik Power Supply</description>
+        <macros>
+          <macro>
+            <name>TRANSTECHNIK</name>
+            <description>The TRANSTECHNIK PV prefix (e.g. TRANTECH_01)</description>
+            <default>TRANTECH_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Keithley 2700</key>
       <value>
         <type>KHLY2700</type>
