@@ -55,7 +55,10 @@ public abstract class SynopticEditorHandler {
     private boolean canExecute;
 
     
-    
+    /**
+     * Sets whether the handler can be executed.
+     * @param canExecute - The boolean to set.
+     */
     protected void setCanExecute(boolean canExecute) {
     	this.canExecute = canExecute;
     }
@@ -67,7 +70,8 @@ public abstract class SynopticEditorHandler {
 	SYNOPTIC.delete().addOnCanWriteChangeListener(canWriteListener);
     }
     
-    private OnCanWriteChangeListener canWriteListener = canWrite -> {canExecute = canWrite;};
+    private OnCanWriteChangeListener canWriteListener = canWrite -> {
+    	canExecute = canWrite; };
 
     /**
      * 

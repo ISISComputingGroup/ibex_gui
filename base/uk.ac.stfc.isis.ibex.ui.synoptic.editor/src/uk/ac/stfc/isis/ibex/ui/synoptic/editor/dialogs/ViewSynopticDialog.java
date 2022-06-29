@@ -19,8 +19,8 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.SynopticPreview;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.validators.SynopticValidator;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
-
-public class ViewSynopticDialog extends TitleAreaDialog{
+@SuppressWarnings("magicnumber")
+public class ViewSynopticDialog extends TitleAreaDialog {
 	private static final Point INITIAL_SIZE = new Point(950, 800);
 	    private final String title;
 	    private final String subtitle;

@@ -304,7 +304,7 @@
       <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update</name>
       <precision>0</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)PSU:BA:STOP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -454,7 +454,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <name>Text Input</name>
       <precision>0</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)PSU:BA:STOP:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -466,7 +466,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts />
       <selector_type>0</selector_type>
-      <show_units>false</show_units>
+      <show_units>true</show_units>
       <style>0</style>
       <text></text>
       <tooltip>$(pv_name)
@@ -547,7 +547,7 @@ $(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update</name>
       <precision>0</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)PSU:BA:START</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -604,7 +604,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <name>Text Input</name>
       <precision>0</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)PSU:BA:START:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -713,7 +713,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <name>Text Input</name>
       <precision>0</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)PSU:BA:POINTS:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -725,7 +725,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts />
       <selector_type>0</selector_type>
-      <show_units>false</show_units>
+      <show_units>true</show_units>
       <style>0</style>
       <text></text>
       <tooltip>$(pv_name)
@@ -770,7 +770,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <name>Text Input</name>
       <precision>0</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)PSU:TIMER:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -782,7 +782,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts />
       <selector_type>0</selector_type>
-      <show_units>false</show_units>
+      <show_units>true</show_units>
       <style>0</style>
       <text></text>
       <tooltip>$(pv_name)
@@ -904,7 +904,7 @@ $(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update</name>
       <precision>2</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)VNA:FREQ:START</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -961,7 +961,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <name>Text Input</name>
       <precision>2</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)VNA:FREQ:START:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -1054,7 +1054,7 @@ $(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update_1</name>
       <precision>2</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)VNA:FREQ:STOP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -1111,7 +1111,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <name>Text Input_1</name>
       <precision>2</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)VNA:FREQ:STOP:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -1204,7 +1204,7 @@ $(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update_2</name>
       <precision>2</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)VNA:FREQ:POINTS</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -1261,7 +1261,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <name>Text Input_2</name>
       <precision>2</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)VNA:FREQ:POINTS:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -1354,7 +1354,7 @@ $(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update_3</name>
       <precision>2</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)VNA:PORT:IN</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -1411,7 +1411,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <name>Text Input_3</name>
       <precision>2</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)VNA:PORT:IN:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -1504,7 +1504,7 @@ $(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update_4</name>
       <precision>2</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)VNA:PORT:OUT</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -1561,7 +1561,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <name>Text Input_4</name>
       <precision>2</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)VNA:PORT:OUT:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -1654,7 +1654,7 @@ $(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update_4</name>
       <precision>2</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)VNA:SWEEP:TIME</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -1711,7 +1711,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <name>Text Input_4</name>
       <precision>2</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)VNA:SWEEP:TIME:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -1845,7 +1845,7 @@ $(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update_4</name>
       <precision>2</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)VNA:WAIT</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -1902,7 +1902,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <name>Text Input_4</name>
       <precision>2</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)VNA:WAIT:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -1995,7 +1995,7 @@ $(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update_4</name>
       <precision>2</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)VNA:BANDWIDTH</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -2052,7 +2052,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <name>Text Input_4</name>
       <precision>2</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)VNA:BANDWIDTH:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -2145,7 +2145,7 @@ $(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update_4</name>
       <precision>2</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)VNA:POWER</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -2202,7 +2202,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <name>Text Input_4</name>
       <precision>2</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)VNA:POWER:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -2634,7 +2634,7 @@ $(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update</name>
       <precision>0</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)PROBE:RANGE</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -2820,7 +2820,7 @@ $(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update</name>
       <precision>0</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)PROBE:VALUE</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -3047,7 +3047,7 @@ $(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update</name>
       <precision>0</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)PSU:CURR:DIFF</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -3233,7 +3233,7 @@ $(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update</name>
       <precision>0</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)PSU:CURR</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>

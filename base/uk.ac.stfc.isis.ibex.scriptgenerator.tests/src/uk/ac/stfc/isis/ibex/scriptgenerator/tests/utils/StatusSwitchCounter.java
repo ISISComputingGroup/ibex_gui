@@ -26,6 +26,7 @@ public class StatusSwitchCounter<T extends HasStatus<K>, K> implements PropertyC
 	 * Tally up a new property changed from one status to another.
 	 * {@inheritdoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		T oldVal = (T) evt.getOldValue();

@@ -110,7 +110,6 @@ public class NicosQueueContainer {
 	 * @param parent the parent (injected by eclipse)
 	 */
 	@PostConstruct
-	@SuppressWarnings("unchecked")
 	public void createQueueContainer(Composite parent) {
 		GridData gdQueueContainer = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gdQueueContainer.heightHint = 300;

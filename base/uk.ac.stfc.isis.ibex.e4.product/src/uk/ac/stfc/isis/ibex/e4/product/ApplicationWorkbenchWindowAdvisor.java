@@ -25,18 +25,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.channels.FileChannel;
-import java.nio.channels.FileLock;
-import java.nio.channels.OverlappingFileLockException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -75,8 +68,6 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	
 	private static final String MULTIPLE_INSTANCES_CHECKING_ERROR = "Exception encountered while checking for multiple instances.";
 	private static final String ANOTHER_INSTANCE_LOG_INFO = "Another instance of IBEX found running.";
-	private static final String TEMPORARY_FILE_LOCKED_ERROR = "Could not access temporary file due to a lock. Another process is "
-			+ "refusing to release the lock.";
     
     /**
      * Setting this flag to true allows workbench to close without prompt.
