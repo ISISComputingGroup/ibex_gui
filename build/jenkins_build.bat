@@ -104,18 +104,10 @@ if %errorlevel% neq 0 (
 )
 
 REM Copy the install script across
-cd %BASEDIR%
-copy /Y %BASEDIR%\install_gui_and_python.bat %INSTALLDIR%
+cd /d %BASEDIR%
+copy /Y install_client.bat install_gui_with_builtin_python.bat %INSTALLDIR%
 if %errorlevel% neq 0 (
     @echo Install client batch file copy failed
-    exit /b %errorlevel%
-)
-
-REM Copy the gui only install script across
-cd %BASEDIR%
-copy /Y %BASEDIR%\install_gui_only.bat %INSTALLDIR%
-if %errorlevel% neq 0 (
-    @echo Install gui only batch file copy failed
     exit /b %errorlevel%
 )
 
