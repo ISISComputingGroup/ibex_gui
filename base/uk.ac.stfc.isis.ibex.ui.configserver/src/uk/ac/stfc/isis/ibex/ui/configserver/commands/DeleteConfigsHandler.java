@@ -59,8 +59,7 @@ public class DeleteConfigsHandler extends DisablingConfigHandler<Collection<Stri
                 SERVER.configsInfo().getValue(), configNamesWithFlags, false, false);
 		if (dialog.open() == Window.OK) {
 	        DeleteItemsDialogHelper helper = new DeleteItemsDialogHelper();
-	    	if(helper.deleteItemsConfirmDialog(dialog.selectedConfigs(), "Configurations"))
-	    	{
+	    	if (helper.deleteItemsConfirmDialog(dialog.selectedConfigs(), "Configurations")) {
 			    try {		        
 			        configService.write(dialog.selectedConfigs());
 		            boolean noError = true;

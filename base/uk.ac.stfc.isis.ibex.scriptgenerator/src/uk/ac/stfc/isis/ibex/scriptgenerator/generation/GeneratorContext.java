@@ -170,7 +170,7 @@ public class GeneratorContext extends ModelObject {
      * @throws ExecutionException A failure to execute the call to generate.
      * @throws InterruptedException The call to generate was interrupted.
      */
-    public void refreshTimeEstimation(List<ScriptGeneratorAction> actions, ScriptDefinitionWrapper scriptDefinition,List<String> globalParams)
+    public void refreshTimeEstimation(List<ScriptGeneratorAction> actions, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams)
             throws UnsupportedLanguageException, InterruptedException, ExecutionException {
         refreshTimeEstimation(actions, scriptDefinition, GeneratedLanguage.PYTHON, globalParams);
     }

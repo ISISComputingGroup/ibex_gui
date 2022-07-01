@@ -22,6 +22,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -98,13 +99,17 @@ public class DaeExperimentSetupText extends Text {
      * Will set a label denoting a change that has not been applied to the instrument and notifies the dae view model.
      */
     public void ifValueDifferentFromCachedValueThenChangeLabel() {
-        if (getText().equals(cachedValue)) {
-            setBackground(panelViewModel.getColour("white"));
-            panelViewModel.setIsChanged(name, false);
-        } else {
-            setBackground(panelViewModel.getColour("changedColour"));
-            panelViewModel.setIsChanged(name, true);
-        }
+    	Display.getDefault().asyncExec(new Runnable() {
+    	    public void run() {
+    	        if (getText().equals(cachedValue)) {
+    	            setBackground(panelViewModel.getColour("white"));
+    	            panelViewModel.setIsChanged(name, false);
+    	        } else {
+    	            setBackground(panelViewModel.getColour("changedColour"));
+    	            panelViewModel.setIsChanged(name, true);
+    	        }
+    	    }
+    	});
     }
     
     /**

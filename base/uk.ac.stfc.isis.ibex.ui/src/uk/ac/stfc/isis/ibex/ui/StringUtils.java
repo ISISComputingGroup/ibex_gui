@@ -10,7 +10,7 @@ public final class StringUtils {
 	/**
 	 * Private constructor for utility class.
 	 */
-	private StringUtils() {}
+	private StringUtils() { }
 	
 	/**
 	 * If a string is too long, truncate it and add an ellipsis to the end.

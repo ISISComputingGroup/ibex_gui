@@ -17,7 +17,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.configserver;
+package uk.ac.stfc.isis.ibex.ui.widgets;
 
 import java.util.Map;
 import java.util.Optional;
@@ -33,8 +33,6 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TypedListener;
-
-import uk.ac.stfc.isis.ibex.ui.widgets.ButtonCellLabelProvider;
 
 /**
  * A LabelProvider that adds a check box to a cell in a table. 
@@ -73,17 +71,30 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
             checkbox.setText(stringFromRow(model));
         }
     }
-	
+    
+    
+    /**
+     * The default constructor for the CheckboxLabelProvider.
+     * @param stateProperty The property that this label provider should be observing, 
+     *                          this property should give the checked value for the box.
+     */
+    @SuppressWarnings("unchecked")
+    public CheckboxLabelProvider(IObservableMap<T, ?> stateProperty) {
+        this(new IObservableMap[] {stateProperty});
+    }
+    
 	/**
 	 * The default constructor for the CheckboxLabelProvider.
 	 * @param stateProperties The properties that this label provider should be observing.
 	 */
-	public CheckboxLabelProvider(IObservableMap<T, ?> stateProperties) {
+	public CheckboxLabelProvider(IObservableMap<T, ?>[] stateProperties) {
 		super(stateProperties);
 		
-		stateProperties.addMapChangeListener(event -> {
-		    updateCheckboxListenerUpdateFlags(stateProperties);
-		});
+        for (IObservableMap<T, ?> attributeMap : stateProperties) {
+            attributeMap.addMapChangeListener(event -> {
+                updateCheckboxListenerUpdateFlags(attributeMap);
+            });
+        }
 	}
 
 	@SuppressWarnings("unchecked")
@@ -105,7 +116,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
          * check box.*/
         getOptionalUpdateFlag(model).ifPresent(updateFlag -> resetCheckBoxListeners(
                 updateFlag, checkBox, model));
-		
+        
 		checkBox.setEnabled(isEditable(model));
 	}
 	

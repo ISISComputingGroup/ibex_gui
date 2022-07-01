@@ -1,9 +1,14 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
-public class ScriptGeneratorProperties {
+/**
+ * Contains properties used in the script generator.
+ */
+public final class ScriptGeneratorProperties {
+	private ScriptGeneratorProperties() {
+	}
 	
 	 /**
-     * A property that denotes whether the language to generate and check validity errors in is supported,
+     * A property that denotes whether the language to generate and check validity errors in is supported.
      */
     public static final String LANGUAGE_SUPPORT_PROPERTY = "language_supported";
 

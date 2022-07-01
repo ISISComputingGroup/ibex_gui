@@ -45,7 +45,7 @@ public class ActionsTable extends ModelObject {
 	
 	/**
 	 * Get the action at the corresponding index or an empty optional.
-	 * 
+	 * @param actionIndex - The index of action to get.
 	 * @return the action at the corresponding index or an empty optional.
 	 */
 	public Optional<ScriptGeneratorAction> getAction(Integer actionIndex) {

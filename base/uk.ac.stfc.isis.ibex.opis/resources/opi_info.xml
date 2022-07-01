@@ -1900,7 +1900,7 @@
           <category>Sample changers</category>
         </categories>
         <type>SAMPLECHANGER</type>
-        <path>tosca_sample_positioner.opi</path>
+        <path>tosca_sample_changer/tosca_sample_positioner.opi</path>
         <description>The TOSCA sample positioning system.</description>
         <macros>
           <macro>
@@ -1909,18 +1909,6 @@
             <default>MOT:MTR0101</default>
           </macro>
         </macros>
-      </value>
-    </entry>
-    <entry>
-      <key>Reflectometry OPI</key>
-      <value>
-        <categories>
-          <category>Miscellaneous motion control</category>
-        </categories>
-        <type>REFLECTOMETRY</type>
-        <path>reflectometry/full_opi.opi</path>
-        <description>The OPI for the reflectometry information panel.</description>
-        <macros/>
       </value>
     </entry>
     <entry>
@@ -2470,6 +2458,22 @@
       </value>
     </entry>
     <entry>
+      <key>FMR</key>
+      <value>
+        <type>ZERO_FIELD</type>
+        <path>fmr.opi</path>
+        <description>OPI for the Ferro Magnetic Resonance equipment</description>
+        <categories/>
+        <macros>
+          <macro>
+            <name>FMR</name>
+            <description>The FMR machine PV root (e.g. TE:NDW1805:FMR_01)</description>
+            <default>TE:NDW1805:FMR_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
       <key>Anton Paar DMA4500M</key>
       <value>
         <type>DENSITY_METER</type>
@@ -2786,5 +2790,98 @@
         </macros>
       </value>
     </entry>
+    <entry>
+      <key>TECHNIX</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>technix.opi</path>
+        <description>Technix PSU</description>
+        <macros>
+          <macro>
+            <name>IOC_NAME</name> 
+            <description>The technix PV prefix (e.g. TECHNIX_01)</description>
+            <default>TECHNIX_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Rotating Stirrer Rack</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>rotating_stirrer_rack.opi</path>
+        <description>The OPI for the Rotating Stirrer Rack</description>
+        <macros>
+          <macro>
+            <name>ROTSTIRR</name>
+            <description>The ROTSTIRR PV prefix (e.g. ROTSTIRR_01)</description>
+            <default>ROTSTIRR_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>DG645</key>
+      <value>
+        <categories>
+        	<category>Delay Generators</category></categories>
+        <type>DELAY_GENERATORS</type>
+        <path>DG645/dg645.opi</path>
+        <description>The OPI for the DG645</description>
+        <macros>
+          <macro>
+            <name>DG645</name>
+            <description>The DG645 PV prefix (e.g. DG645_01)</description>
+            <default>DG645_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Biologic SP240/SP300 Potentiostat</key>
+      <value>
+        <categories />
+        <type>UNKNOWN</type>
+        <path>biologic/SP300.opi</path>
+        <description>The OPI for the Biologic SP240/SP300</description>
+        <macros>
+          <macro>
+            <name>ECLAB</name>
+            <description>The ECLAB IOC PV prefix (e.g. ECLAB_01)</description>
+            <default>ECLAB_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>WEBCAM</key>
+      <value>
+        <categories />
+        <type>UNKNOWN</type>
+        <path>webcam/webcam.opi</path>
+        <description>The OPI for Webcams</description>
+        <macros>
+          <macro>
+            <name>WEBCAM</name>
+            <description>The WEBCAM IOC PV prefix (e.g. WEBCAM_01)</description>
+            <default>WEBCAM_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+	<entry>
+      <key>GP2 Detector</key>
+      <value>
+        <type>DAE</type>
+        <path>GP2.opi</path>
+        <description>The OPI for GP2 detector</description>
+        <macros/>
+        <categories>
+          <category>Monitors</category>
+        </categories>
+      </value>
+    </entry>
+>>>>>>> origin/master
   </opis>
 </descriptions>
