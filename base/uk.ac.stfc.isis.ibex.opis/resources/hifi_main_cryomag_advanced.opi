@@ -87,7 +87,7 @@ $(pv_value)</tooltip>
     <widget_type>LED</widget_type>
     <width>25</width>
     <wuid>-42e62b4f:17863c76ae3:-7e63</wuid>
-    <x>167</x>
+    <x>222</x>
     <y>43</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -125,7 +125,7 @@ $(pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
     <widget_type>Label</widget_type>
-    <width>168</width>
+    <width>217</width>
     <wrap_words>true</wrap_words>
     <wuid>-42e62b4f:17863c76ae3:-7e62</wuid>
     <x>0</x>
@@ -186,7 +186,7 @@ $(pv_value)</tooltip>
     <widget_type>LED</widget_type>
     <width>25</width>
     <wuid>-42e62b4f:17863c76ae3:-7e57</wuid>
-    <x>167</x>
+    <x>222</x>
     <y>69</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -224,7 +224,7 @@ $(pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
     <widget_type>Label</widget_type>
-    <width>168</width>
+    <width>217</width>
     <wrap_words>true</wrap_words>
     <wuid>-42e62b4f:17863c76ae3:-7e56</wuid>
     <x>0</x>
@@ -285,7 +285,7 @@ $(pv_value)</tooltip>
     <widget_type>LED</widget_type>
     <width>25</width>
     <wuid>-42e62b4f:17863c76ae3:-7e4b</wuid>
-    <x>167</x>
+    <x>222</x>
     <y>99</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -323,7 +323,7 @@ $(pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
     <widget_type>Label</widget_type>
-    <width>168</width>
+    <width>217</width>
     <wrap_words>true</wrap_words>
     <wuid>-42e62b4f:17863c76ae3:-7e4a</wuid>
     <x>0</x>
@@ -364,7 +364,7 @@ $(pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
     <widget_type>Label</widget_type>
-    <width>168</width>
+    <width>217</width>
     <wrap_words>true</wrap_words>
     <wuid>-42e62b4f:17863c76ae3:-7e3e</wuid>
     <x>0</x>
@@ -425,7 +425,7 @@ $(pv_value)</tooltip>
     <widget_type>LED</widget_type>
     <width>25</width>
     <wuid>-42e62b4f:17863c76ae3:-7e36</wuid>
-    <x>167</x>
+    <x>222</x>
     <y>129</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
