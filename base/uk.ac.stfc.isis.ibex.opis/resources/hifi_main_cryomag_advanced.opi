@@ -88,7 +88,7 @@ $(pv_value)</tooltip>
     <width>25</width>
     <wuid>-42e62b4f:17863c76ae3:-7e63</wuid>
     <x>222</x>
-    <y>43</y>
+    <y>9</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -129,7 +129,7 @@ $(pv_value)</tooltip>
     <wrap_words>true</wrap_words>
     <wuid>-42e62b4f:17863c76ae3:-7e62</wuid>
     <x>0</x>
-    <y>46</y>
+    <y>12</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -187,7 +187,7 @@ $(pv_value)</tooltip>
     <width>25</width>
     <wuid>-42e62b4f:17863c76ae3:-7e57</wuid>
     <x>222</x>
-    <y>69</y>
+    <y>35</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -228,7 +228,7 @@ $(pv_value)</tooltip>
     <wrap_words>true</wrap_words>
     <wuid>-42e62b4f:17863c76ae3:-7e56</wuid>
     <x>0</x>
-    <y>72</y>
+    <y>38</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -286,7 +286,7 @@ $(pv_value)</tooltip>
     <width>25</width>
     <wuid>-42e62b4f:17863c76ae3:-7e4b</wuid>
     <x>222</x>
-    <y>99</y>
+    <y>65</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -327,7 +327,7 @@ $(pv_value)</tooltip>
     <wrap_words>true</wrap_words>
     <wuid>-42e62b4f:17863c76ae3:-7e4a</wuid>
     <x>0</x>
-    <y>102</y>
+    <y>68</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -368,7 +368,7 @@ $(pv_value)</tooltip>
     <wrap_words>true</wrap_words>
     <wuid>-42e62b4f:17863c76ae3:-7e3e</wuid>
     <x>0</x>
-    <y>132</y>
+    <y>98</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -426,7 +426,7 @@ $(pv_value)</tooltip>
     <width>25</width>
     <wuid>-42e62b4f:17863c76ae3:-7e36</wuid>
     <x>222</x>
-    <y>129</y>
+    <y>95</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -467,7 +467,7 @@ $(pv_value)</tooltip>
     <wrap_words>true</wrap_words>
     <wuid>-42e62b4f:17863c76ae3:-7e0d</wuid>
     <x>0</x>
-    <y>277</y>
+    <y>243</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.radioBox" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -513,7 +513,7 @@ $(pv_value)</tooltip>
     <width>100</width>
     <wuid>-42e62b4f:17863c76ae3:-7e09</wuid>
     <x>173</x>
-    <y>237</y>
+    <y>203</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -554,7 +554,7 @@ $(pv_value)</tooltip>
     <wrap_words>true</wrap_words>
     <wuid>-42e62b4f:17863c76ae3:-7dfe</wuid>
     <x>0</x>
-    <y>376</y>
+    <y>342</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.radioBox" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -600,7 +600,7 @@ $(pv_value)</tooltip>
     <width>100</width>
     <wuid>-42e62b4f:17863c76ae3:-7dfd</wuid>
     <x>173</x>
-    <y>336</y>
+    <y>302</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
     <actions hook="false" hook_all="false" />
@@ -640,7 +640,7 @@ $(pv_value)</tooltip>
     <width>1</width>
     <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
     <x>0</x>
-    <y>102</y>
+    <y>68</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.choiceButton" version="1.0.0">
     <actions hook="false" hook_all="false">
@@ -694,7 +694,7 @@ $(pv_value)</tooltip>
     <width>106</width>
     <wuid>177488ce:181af49e92c:-7efd</wuid>
     <x>182</x>
-    <y>180</y>
+    <y>146</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.choiceButton" version="1.0.0">
     <actions hook="false" hook_all="false">
@@ -748,6 +748,6 @@ $(pv_value)</tooltip>
     <width>106</width>
     <wuid>177488ce:181af49e92c:-7efc</wuid>
     <x>62</x>
-    <y>180</y>
+    <y>146</y>
   </widget>
 </display>
