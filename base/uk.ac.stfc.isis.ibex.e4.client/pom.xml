@@ -4,7 +4,7 @@
   <packaging>eclipse-plugin</packaging>
   <parent>
   	<groupId>CSS_ISIS</groupId>
-  	<version>1.0.0-SNAPSHOT</version>
+  	<version>10.0.1</version>
   	<relativePath>../uk.ac.stfc.isis.ibex.client.tycho.parent</relativePath>
   	<artifactId>uk.ac.stfc.isis.ibex.client.tycho.parent</artifactId>
   </parent>
