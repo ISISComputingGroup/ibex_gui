@@ -7,6 +7,8 @@ import java.util.concurrent.TimeUnit;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
 /**
@@ -22,6 +24,9 @@ public class InstrumentSwitchers implements BundleActivator {
     private ClosingSwitcher closingSwitcher = new ClosingSwitcher();
     private ObservablePrefixChangingSwitcher observablePrefixChangingSwitcher = new ObservablePrefixChangingSwitcher();
     private WritablePrefixChangingSwitcher writablePrefixChangingSwitcher = new WritablePrefixChangingSwitcher();
+    
+    private static final ScheduledExecutorService SWITCHER_EXECUTOR = Executors.newSingleThreadScheduledExecutor(
+			new ThreadFactoryBuilder().setNameFormat("InstrumentSwitcher-%d").build());
     
     /**
      * Indicates if the singleton instance of switchers is currently in the process of switching
@@ -104,8 +109,7 @@ public class InstrumentSwitchers implements BundleActivator {
         instance.observablePrefixChangingSwitcher.switchInstrument(instrument);
         instance.writablePrefixChangingSwitcher.switchInstrument(instrument);
         // This is to prevent instrument from being switched too often
-        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-        executorService.schedule(new Runnable() {
+        SWITCHER_EXECUTOR.schedule(new Runnable() {
 			@Override
 			public void run() {
 		        switching = false;

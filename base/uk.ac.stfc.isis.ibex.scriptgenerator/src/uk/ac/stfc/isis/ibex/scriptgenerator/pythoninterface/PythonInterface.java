@@ -299,7 +299,7 @@ public class PythonInterface extends ModelObject {
 		firePropertyChange(ScriptGeneratorProperties.PYTHON_READINESS_PROPERTY, null, pythonReady);
 		clientServer = createClientServer();
 		pythonProcess = startPythonProcess(clientServer, python3InterpreterPath(), scriptDefinitionLoaderScript);
-		new Thread(listenToErrors).start();
+		new Thread(listenToErrors, "ScriptGenerator error listener").start();
 		
 		this.scriptDefinitionsWrapper = (ScriptDefinitionsWrapper) clientServer
 				.getPythonServerEntryPoint(new Class[] {ScriptDefinitionsWrapper.class});

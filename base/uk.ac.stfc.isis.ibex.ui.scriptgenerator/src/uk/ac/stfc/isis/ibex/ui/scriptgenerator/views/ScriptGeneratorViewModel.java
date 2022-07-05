@@ -46,6 +46,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+
 import org.apache.logging.log4j.Logger;
 import static java.lang.Math.min;
 
@@ -816,7 +819,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    this.mainParent = mainParent;
 	    this.currentGlobals = new ArrayList<String>();
 	    this.finishTimer = new ScriptGeneratorExpectedFinishTimer();
-	    this.scheduler = Executors.newScheduledThreadPool(1);
+	    this.scheduler = Executors.newScheduledThreadPool(1, 
+				new ThreadFactoryBuilder().setNameFormat("ScriptGeneratorViewModel-threadpool-%d").build());
 	    this.scheduler.scheduleWithFixedDelay(finishTimer, 0, 1, TimeUnit.SECONDS);
 	    scriptGeneratorModel.getScriptDefinitionLoader().addPropertyChangeListener(ScriptGeneratorProperties.SCRIPT_DEFINITION_SWITCH_PROPERTY, scriptDefinitionSwitchHelpListener);
     }

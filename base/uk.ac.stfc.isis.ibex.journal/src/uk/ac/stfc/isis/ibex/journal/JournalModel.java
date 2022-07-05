@@ -34,6 +34,8 @@ import java.util.concurrent.Executors;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jface.preference.IPreferenceStore;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+
 import uk.ac.stfc.isis.ibex.databases.Rdb;
 import uk.ac.stfc.isis.ibex.journal.preferences.PreferenceConstants;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -63,7 +65,8 @@ public class JournalModel extends ModelObject {
     // Exact choice of number is arbitrary.
     private static final int QUERY_DURATION_WARNING_LEVEL = 2000;
     
-    private static final ExecutorService EXECUTOR = Executors.newFixedThreadPool(1);
+    private static final ExecutorService EXECUTOR = Executors.newFixedThreadPool(1, 
+			new ThreadFactoryBuilder().setNameFormat("JournalModel-threadpool-%d").build());
 
     private static final String NO_RESULTS_FOUND = "No results found with current search parameters";
     
