@@ -254,7 +254,7 @@ public class CopyPerspectiveSnippetProcessor {
      * @param time Time in milliseconds of how long to wait before enabling PV connection check.
      */
     private void setupConnectionCheckTimeout(long time) {
-        Thread connectionTimeoutThread = new Thread() {
+        Thread connectionTimeoutThread = new Thread("CopyPerspectiveSnippetProcessor timeout thread") {
         	public void run() {
         		try {
 					Thread.sleep(time);

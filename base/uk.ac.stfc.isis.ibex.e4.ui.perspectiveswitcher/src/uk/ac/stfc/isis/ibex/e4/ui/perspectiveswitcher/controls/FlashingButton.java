@@ -59,7 +59,7 @@ public class FlashingButton implements Runnable, DisposeListener {
      */
     public void start() {
         if (null == flashThread) {
-            flashThread = new Thread(this);
+            flashThread = new Thread(this, "FlashingButton thread");
             flashThread.start();
         }
     }

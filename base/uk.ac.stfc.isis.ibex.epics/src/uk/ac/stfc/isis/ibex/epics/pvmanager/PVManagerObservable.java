@@ -35,6 +35,8 @@ import org.diirt.datasource.PVReaderEvent;
 import org.diirt.datasource.PVReaderListener;
 import org.diirt.vtype.VType;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+
 import uk.ac.stfc.isis.ibex.epics.pv.ObservablePV;
 import uk.ac.stfc.isis.ibex.epics.pv.PVInfo;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -63,7 +65,8 @@ public class PVManagerObservable<R extends VType> extends ObservablePV<R> {
 	 */
 	private PVReaderListener<R> observingListener;
 	
-	private static final ExecutorService UPDATE_THREADPOOL = Executors.newCachedThreadPool();
+	private static final ExecutorService UPDATE_THREADPOOL = Executors.newCachedThreadPool(
+			new ThreadFactoryBuilder().setNameFormat("PVManagerObservable-threadpool-%d").build());
 	
     /**
      * Create a new PV manager observable.

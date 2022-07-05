@@ -344,7 +344,7 @@ public class SearchControl extends Canvas {
             }
         };
 
-        Thread searchJobThread = new Thread(searchJob);
+        Thread searchJobThread = new Thread(searchJob, "Log search thread");
 
         searchJobThread.start();
 	}
