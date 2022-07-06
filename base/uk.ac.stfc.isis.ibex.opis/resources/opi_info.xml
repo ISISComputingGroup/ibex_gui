@@ -2776,6 +2776,21 @@
       </value>
     </entry>
     <entry>
+      <key>B17TMAG</key>
+      <value>
+        <type>B17TMAG</type>
+        <path>b17tmag.opi</path>
+        <description>The OPI for the B17TMag</description>
+        <macros>
+          <macro>
+            <name>B17TMAG</name>
+            <description>The B17TMag PV prefix (e.g. B17TMAG_01)</description>
+            <default>B17TMAG_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
       <key>TECHNIX</key>
       <value>
         <type>UNKNOWN</type>
@@ -2867,5 +2882,6 @@
         </categories>
       </value>
     </entry>
+>>>>>>> origin/master
   </opis>
 </descriptions>
