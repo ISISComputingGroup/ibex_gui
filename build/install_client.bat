@@ -1,37 +1,18 @@
 setlocal enabledelayedexpansion
 REM When run will install all the client stuff (gui, genie_python, epics_utils)
-
 REM if %1 == NOINT then non-interactive mode and no pause when done
+
+REM This is a redirect for backwards compatibility with install_client.bat references
+@echo WARNING: install_client.bat (depreciated) called
+@echo calling install_gui_with_builtin_python.bat
+@echo and then installing genie python separately
 
 REM %~dp0 expands to directory where this file lives
 set BASEDIR=%~dp0
-
-if not exist "%BASEDIR%COPY_COMPLETE.txt" (
-    @echo ERROR Client copy in %BASEDIR% is not complete
-	goto ERROR
-)
-
-REM Copy the Client files across
-@echo %TIME% main ibex client install started
-set APPSDIR=C:\Instrument\Apps
-set CLIENTDIR=%APPSDIR%\Client_E4
-mkdir %CLIENTDIR%
-robocopy "%BASEDIR%Client" "%CLIENTDIR%" /MIR /R:2 /MT /NFL /NDL /NP /NC /NS /LOG:NUL
-set errcode=%errorlevel%
-if %errcode% GEQ 4 (
-    @echo ERROR %errcode% in robocopy copying ibex client
-	goto ERROR
-)
-
-REM Copy EPICS_UTILS across
-@echo %TIME% epics utils install started
-set UTILSDIR=%APPSDIR%\EPICS_UTILS
-mkdir %UTILSDIR%
-robocopy "\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\EPICS_UTILS\EPICS_UTILS" "%UTILSDIR%" /MIR /R:2 /MT /NFL /NDL /NP /NC /NS /LOG:NUL
-set errcode=%errorlevel%
-if %errcode% GEQ 4 (
-    @echo ERROR %errcode% copying EPICS UTILS
-	goto ERROR
+call %BASEDIR%install_gui_with_builtin_python.bat NOINT
+if !errorlevel! neq 0 (
+    @echo ERROR !errorlevel! installing GUI
+    goto ERROR
 )
 
 REM genie_python already has its own script
@@ -44,8 +25,8 @@ if exist "%BASEDIR%..\genie_python_3" (
     for /F %%I in ( !GENIE_PYTHON_TOP!\LATEST_BUILD.txt ) DO SET LATEST_BUILD=%%I
     call !GENIE_PYTHON_TOP!\BUILD-!LATEST_BUILD!\genie_python_install.bat
 )
-if %errorlevel% neq 0 (
-    @echo ERROR %errorlevel% copying GENIE PYTHON
+if !errorlevel! neq 0 (
+    @echo ERROR !errorlevel! copying GENIE PYTHON
     goto ERROR
 )
 
@@ -61,4 +42,3 @@ if /i not "%1" == "NOINT" (
     pause
 )
 exit /b 1
-
