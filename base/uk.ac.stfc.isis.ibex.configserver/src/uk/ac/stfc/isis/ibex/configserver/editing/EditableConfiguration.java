@@ -531,7 +531,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     	final Set<String> blockNamesInGroups = getEditableGroups().stream()
     			.map(EditableGroup::getBlocks)
     			.flatMap(Collection::stream)
-    			.collect(Collectors.toSet());
+    			.collect(Collectors.toUnmodifiableSet());
     	
 	    return allBlocks.stream()
 	    		.filter(b -> !blockNamesInGroups.contains(b.getName()))
