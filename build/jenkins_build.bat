@@ -105,7 +105,7 @@ if %errorlevel% neq 0 (
 
 REM Copy the install script across
 cd /d %BASEDIR%
-copy /Y install_client.bat install_gui_with_builtin_python.bat %INSTALLDIR%
+xcopy /Y /I install_client.bat install_gui_with_builtin_python.bat %INSTALLDIR%
 if %errorlevel% neq 0 (
     @echo Install client batch file copy failed
     exit /b %errorlevel%
