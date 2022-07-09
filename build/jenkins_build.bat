@@ -119,3 +119,5 @@ if %errorlevel% geq 4 (
 if not "%RELEASE%" == "YES" (
     @echo %BUILD_NUMBER%>%INSTALLDIR%\..\LATEST_BUILD.txt 
 )
+exit /b 0
+
