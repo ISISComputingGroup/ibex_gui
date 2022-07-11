@@ -27,3 +27,6 @@ build/ICP_Binaries_maven.log
 base/uk.ac.stfc.isis.ibex.scriptgenerator/python_support/ScriptDefinitions_repo.bundle
 base/uk.ac.stfc.isis.ibex.scriptgenerator/python_support/git
 *.log
+build/copy_client_jre.log
+build/local_copy_client.log
+build/local_copy_jre.log
