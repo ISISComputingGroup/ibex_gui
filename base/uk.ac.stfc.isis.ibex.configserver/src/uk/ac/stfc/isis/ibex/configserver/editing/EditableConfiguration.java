@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
@@ -41,6 +43,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.internal.ComponentFilteredConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.validators.GroupNamesProvider;
 import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
@@ -84,15 +87,13 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     /** All IOCs available to the instrument. */
     private Collection<EditableIoc> allIocs = new ArrayList<>();
     /** The IOCs associated with the configuration. */
-    private final List<EditableIoc> configIocs = new ArrayList<>();
+    private List<EditableIoc> configIocs = new ArrayList<>();
     /** The IOCs associated with the components. */
-    private final List<EditableIoc> componentIocs = new ArrayList<>();
+    private List<EditableIoc> componentIocs = new ArrayList<>();
     /** The groups associated with the configuration. */
     private List<EditableGroup> editableGroups = new ArrayList<>();
     /** All of the blocks associated with the configuration (including those associated with components). */
-    private final List<EditableBlock> allBlocks = new ArrayList<>();
-    /** The blocks in the configuration that are not in a group (including those associated with components). */
-    private final List<EditableBlock> otherBlocks = new ArrayList<>();
+    private List<EditableBlock> allBlocks = new ArrayList<>();
     /** The components associated with the configuration. */
     private final EditableComponents editableComponents;
     /** Dates when the configuration has been changed. */
@@ -210,9 +211,6 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	for (Block block : config.getBlocks()) {
 	    EditableBlock eb = new EditableBlock(block);
 	    allBlocks.add(eb);
-	    if (!block.inComponent()) {
-		makeBlockAvailable(eb);
-	    }
 	    addRenameListener(eb);
 	}
 
@@ -256,17 +254,41 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     }
 
     private void updateComponents() {
-	Collection<EditableIoc> iocsBeforeUpdate = new ArrayList<EditableIoc>();
-	iocsBeforeUpdate.addAll(componentIocs);
-	componentIocs.clear();
-	for (Configuration comp : editableComponents.getSelected()) {
-	    for (Ioc ioc : comp.getIocs()) {
-		EditableIoc compIoc = convertIoc(ioc);
-		compIoc.setComponent(comp.getName());
-		componentIocs.add(compIoc);
+	    var newCompIocs = new ArrayList<EditableIoc>();
+	    
+	    var newBlocks = getAllBlocks().stream()
+			.filter(Predicate.not(EditableBlock::inComponent))
+			.collect(Collectors.toList());
+	    
+	    var newGroups = editableGroups.stream()
+	    		.filter(Predicate.not(Group::hasComponent))
+	    		.map(g -> new EditableGroup(this, g))
+	    		.collect(Collectors.toSet());
+	    
+	    IsisLog.getLogger(getClass()).info("New groups before = " + newGroups);
+	
+	    for (Configuration comp : editableComponents.getSelected()) {
+	        comp.getIocs().stream()
+	            .map(this::convertIoc)
+	            .map(c -> {c.setComponent(comp.getName()); return c;})
+	            .forEach(newCompIocs::add);
+	    
+	        comp.getBlocks().stream()
+	            .map(b -> new EditableBlock(b, comp.getName()))
+	            .forEach(newBlocks::add);
+	        
+  	        comp.getGroups().stream()
+	            .map(g -> new Group(g.getName(), g.getBlocks(), comp.getName()))
+  	            .map(g -> new EditableGroup(this, g))
+  	            .forEach(newGroups::add);
+
 	    }
-	}
-	firePropertyChange("iocs", componentIocs, iocsBeforeUpdate);
+	    
+	    IsisLog.getLogger(getClass()).info("New groups after = " + newGroups);
+	
+        firePropertyChange("iocs", componentIocs, componentIocs = newCompIocs);
+        firePropertyChange("blocks", allBlocks, allBlocks = newBlocks);
+        firePropertyChange(EDITABLE_GROUPS, editableGroups, editableGroups = new ArrayList<>(DisplayUtils.removeOtherGroup(newGroups)));
     }
 
     /**
@@ -504,8 +526,8 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
     // Add available macros to IOCs that are part of the configuration.
     private void initMacros(Map<String, EditableIoc> available) {
-	for (EditableIoc selectedIoc : configIocs) {
-	    Collection<Macro> availableMacros = available.get(selectedIoc.getName()).getAvailableMacros();
+        for (EditableIoc selectedIoc : configIocs) {
+            Collection<Macro> availableMacros = available.get(selectedIoc.getName()).getAvailableMacros();
 	    selectedIoc.setAvailableMacros(availableMacros);
 	}
 
@@ -516,14 +538,21 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * @return All of the blocks associated with the configuration, including those from components.
      */
     public Collection<EditableBlock> getAllBlocks() {
-	return new ArrayList<>(allBlocks);
+        return new ArrayList<>(allBlocks);
     }
 
     /**
      * @return All of the blocks in the configuration that are not in a group
      */
-    public Collection<EditableBlock> getOtherBlocks() {
-	return new ArrayList<>(otherBlocks);
+    public Collection<EditableBlock> getBlocksOutsideGroup() {
+    	final Set<String> blockNamesInGroups = getEditableGroups().stream()
+    			.map(EditableGroup::getBlocks)
+    			.flatMap(Collection::stream)
+    			.collect(Collectors.toUnmodifiableSet());
+    	
+	    return allBlocks.stream()
+	    		.filter(b -> !blockNamesInGroups.contains(b.getName()))
+	    		.collect(Collectors.toList());
     }
 
     /**
@@ -554,7 +583,6 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	if (blockNameIsUnique(block.getName())) {
 	    Collection<Block> blocksBeforeAdd = transformBlocks();
 	    allBlocks.add(0, block);
-	    makeBlockAvailable(block);
 	    addRenameListener(block);
 	    firePropertyChange("blocks", blocksBeforeAdd, transformBlocks());
 	} else {
@@ -575,28 +603,6 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     }
 
     /**
-     * Makes a block unavailable (i.e. block is assigned to a group).
-     * 
-     * @param block
-     *            the block to make unavailable
-     */
-    public void makeBlockUnavailable(EditableBlock block) {
-	otherBlocks.remove(block);
-    }
-
-    /**
-     * Makes a block available (i.e. block can be assigned to a group).
-     * 
-     * @param block
-     *            the block to make available
-     */
-    public void makeBlockAvailable(EditableBlock block) {
-	if (!otherBlocks.contains(block)) {
-	    otherBlocks.add(0, block);
-	}
-    }
-
-    /**
      * Remove multiple blocks from the configuration.
      * 
      * @param blocks
@@ -604,10 +610,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      */
     public void removeBlocks(List<EditableBlock> blocks) {
 	Collection<Block> blocksBefore = transformBlocks();
-	for (EditableBlock block : blocks) {
-	    allBlocks.remove(block);
-	    makeBlockUnavailable(block);
-	}
+	allBlocks.removeAll(blocks);
 	firePropertyChange("blocks", blocksBefore, transformBlocks());
     }
 
