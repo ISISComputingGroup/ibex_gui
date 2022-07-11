@@ -43,6 +43,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.internal.ComponentFilteredConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.validators.GroupNamesProvider;
 import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
@@ -254,24 +255,40 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
     private void updateComponents() {
 	    var newCompIocs = new ArrayList<EditableIoc>();
+	    
 	    var newBlocks = getAllBlocks().stream()
 			.filter(Predicate.not(EditableBlock::inComponent))
 			.collect(Collectors.toList());
+	    
+	    var newGroups = editableGroups.stream()
+	    		.filter(Predicate.not(Group::hasComponent))
+	    		.map(g -> new EditableGroup(this, g))
+	    		.collect(Collectors.toSet());
+	    
+	    IsisLog.getLogger(getClass()).info("New groups before = " + newGroups);
 	
 	    for (Configuration comp : editableComponents.getSelected()) {
-	        for (Ioc ioc : comp.getIocs()) {
-		        EditableIoc compIoc = convertIoc(ioc);
-		        compIoc.setComponent(comp.getName());
-		        newCompIocs.add(compIoc);
-	        }
+	        comp.getIocs().stream()
+	            .map(this::convertIoc)
+	            .map(c -> {c.setComponent(comp.getName()); return c;})
+	            .forEach(newCompIocs::add);
 	    
 	        comp.getBlocks().stream()
 	            .map(b -> new EditableBlock(b, comp.getName()))
 	            .forEach(newBlocks::add);
+	        
+  	        comp.getGroups().stream()
+	            .map(g -> new Group(g.getName(), g.getBlocks(), comp.getName()))
+  	            .map(g -> new EditableGroup(this, g))
+  	            .forEach(newGroups::add);
+
 	    }
+	    
+	    IsisLog.getLogger(getClass()).info("New groups after = " + newGroups);
 	
         firePropertyChange("iocs", componentIocs, componentIocs = newCompIocs);
         firePropertyChange("blocks", allBlocks, allBlocks = newBlocks);
+        firePropertyChange(EDITABLE_GROUPS, editableGroups, editableGroups = new ArrayList<>(DisplayUtils.removeOtherGroup(newGroups)));
     }
 
     /**

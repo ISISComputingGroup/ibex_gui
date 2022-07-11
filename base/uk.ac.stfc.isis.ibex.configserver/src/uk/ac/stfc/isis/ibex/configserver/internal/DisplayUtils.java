@@ -20,10 +20,7 @@
 package uk.ac.stfc.isis.ibex.configserver.internal;
 
 import java.util.Collection;
-
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
+import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
 
@@ -40,11 +37,8 @@ public final class DisplayUtils {
 	}
 	
 	public static <T extends Group> Collection<T> removeOtherGroup(Collection<T> groups) {
-		return Lists.newArrayList(Iterables.filter(groups, new Predicate<T>() {
-			@Override
-			public boolean apply(T group) {
-				return !group.getName().equals(OTHER);
-			}
-		}));
+		return groups.stream()
+				.filter(g -> !g.getName().equals(OTHER))
+				.collect(Collectors.toList());
 	}
 }
