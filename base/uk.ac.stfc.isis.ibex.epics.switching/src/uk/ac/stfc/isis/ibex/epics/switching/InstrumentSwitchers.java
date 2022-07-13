@@ -34,6 +34,10 @@ public class InstrumentSwitchers implements BundleActivator {
      */
     public boolean switching = true;
 
+    /**
+     * Gets the eclipse bundle context.
+     * @return the context
+     */
 	static BundleContext getContext() {
 		return context;
 	}
@@ -56,14 +60,27 @@ public class InstrumentSwitchers implements BundleActivator {
 		InstrumentSwitchers.context = null;
 	}
 
+	/**
+	 * Gets the singleton instance of this class.
+	 * @return an InstrumentSwitcher instance
+	 */
     public static InstrumentSwitchers getDefault() {
         return instance;
     }
 
+    /**
+     * Creates the singleton instance of this class.
+     */
     public InstrumentSwitchers() {
         instance = this;
     }
 
+    /**
+     * Gets a writable switcher, whose behaviour on instrument switch
+     * is set by the switchType parameter.
+     * @param switchType action to take on instrument switch
+     * @return the switcher
+     */
     public Switcher getWritableSwitcher(OnInstrumentSwitch switchType) {
         Switcher switcher;
         switch (switchType) {
@@ -83,6 +100,12 @@ public class InstrumentSwitchers implements BundleActivator {
 
     }
 
+    /**
+     * Gets an observable switcher, whose behaviour on instrument switch
+     * is set by the switchType parameter.
+     * @param switchType action to take on instrument switch
+     * @return the switcher
+     */
     public Switcher getObservableSwitcher(OnInstrumentSwitch switchType) {
         Switcher switcher;
         switch (switchType) {
@@ -102,6 +125,10 @@ public class InstrumentSwitchers implements BundleActivator {
 
     }
 
+    /**
+     * Changes instrument to a new instrument. This updates all switchers.
+     * @param instrument the new instrument
+     */
     public void setInstrument(InstrumentInfo instrument) {
     	switching = true;
         instance.nothingSwitcher.switchInstrument(instrument);
