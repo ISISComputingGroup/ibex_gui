@@ -28,6 +28,9 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
 
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
+
 /**
  * The handler for opening the user manual via the menu.
  */
@@ -45,14 +48,14 @@ public class ManualHandler {
         try {
             url = new URL(USER_MANUAL_ADDRESS);
         } catch (MalformedURLException ex) {
-            ex.printStackTrace();
+            LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), ex.getMessage(), ex);
         }
 
         try {
             IWebBrowser browser = PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser();
             browser.openURL(url);
         } catch (PartInitException ex) {
-            ex.printStackTrace();
+        	LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), ex.getMessage(), ex);
         }              
 	}
 	
