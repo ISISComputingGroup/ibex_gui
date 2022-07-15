@@ -125,8 +125,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     			writeTempFile(new String[] {Long.toString(ProcessHandle.current().pid())}, true);
     		}
 		} catch (Exception e) {
-			LOG.error(MULTIPLE_INSTANCES_CHECKING_ERROR);
-			e.printStackTrace();
+			LoggerUtils.logErrorWithStackTrace(LOG, MULTIPLE_INSTANCES_CHECKING_ERROR, e);
 		}
     }
     
