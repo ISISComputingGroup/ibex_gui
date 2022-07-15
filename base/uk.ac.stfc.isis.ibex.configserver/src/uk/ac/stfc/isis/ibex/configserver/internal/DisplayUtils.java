@@ -32,10 +32,21 @@ public final class DisplayUtils {
     private DisplayUtils() {
     }
 
+    /**
+     * Gets the display name for a group.
+     * @param name The name of the group
+     * @return the display name of the group
+     */
 	public static String renameGroup(String name) {
 		return name.toLowerCase().equals(NONE) ? OTHER : name;
 	}
 	
+	/**
+	 * Filters the "OTHER" group out from a collection of groups.
+	 * @param <T> The collection type (e.g. Group or EditableGroup)
+	 * @param groups The collection of groups to filter
+	 * @return the filtered collection of groups
+	 */
 	public static <T extends Group> Collection<T> removeOtherGroup(Collection<T> groups) {
 		return groups.stream()
 				.filter(g -> !g.getName().equals(OTHER))

@@ -270,7 +270,10 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	    for (Configuration comp : editableComponents.getSelected()) {
 	        comp.getIocs().stream()
 	            .map(this::convertIoc)
-	            .map(c -> {c.setComponent(comp.getName()); return c;})
+	            .map(c -> {
+	            	c.setComponent(comp.getName()); 
+	            	return c;
+	            })
 	            .forEach(newCompIocs::add);
 	    
 	        comp.getBlocks().stream()
