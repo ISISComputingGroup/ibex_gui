@@ -62,9 +62,9 @@
     <height>39</height>
     <name>Image Boolean Indicator</name>
     <no_animation>false</no_animation>
-    <off_image>vacuum valve on.png</off_image>
+    <off_image>vacuum valve off.png</off_image>
     <off_label>OFF</off_label>
-    <on_image></on_image>
+    <on_image>vacuum valve on.png</on_image>
     <on_label>ON</on_label>
     <pv_name></pv_name>
     <pv_value />
@@ -84,7 +84,7 @@ $(pv_value)</tooltip>
     <widget_type>Image Boolean Indicator</widget_type>
     <width>49</width>
     <wuid>5c50f11c:18171e246e0:-7d1f</wuid>
-    <x>12</x>
-    <y>12</y>
+    <x>0</x>
+    <y>0</y>
   </widget>
 </display>
