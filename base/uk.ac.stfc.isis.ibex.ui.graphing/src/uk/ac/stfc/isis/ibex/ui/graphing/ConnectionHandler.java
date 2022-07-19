@@ -1,10 +1,12 @@
 package uk.ac.stfc.isis.ibex.ui.graphing;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IPerspectiveListener;
+import org.eclipse.ui.PerspectiveAdapter;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 
@@ -23,25 +25,16 @@ public class ConnectionHandler {
     private static final String REFL_PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.reflectometry";
     private static final String SCRIPTING_PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.ui.scripting.perspective";
     
-    private ArrayList<String> perspectivesToRefresh = new ArrayList<String>();
+    private Set<String> perspectiveIdsToRefresh = new HashSet<String>();
     
     private String url;
     private boolean isPrimary;
     
-    private IPerspectiveListener openOnSwitchingPerspective = new IPerspectiveListener() {   
-        @Override
-        public void perspectiveChanged(IWorkbenchPage page, IPerspectiveDescriptor perspective, String changeId) {
-        }
-        
+    private IPerspectiveListener openOnSwitchingPerspective = new PerspectiveAdapter() {   
         @Override
         public void perspectiveActivated(IWorkbenchPage page, IPerspectiveDescriptor perspective) {
-            if (!perspectivesToRefresh.isEmpty()) {
-                Display.getDefault().asyncExec(new Runnable() {
-                    @Override
-                    public void run() {
-                        openPlotInCurrentPerspective(perspective, url, isPrimary);
-                    }
-                });
+            if (!perspectiveIdsToRefresh.isEmpty()) {
+                Display.getDefault().asyncExec(() -> openPlotInCurrentPerspective(perspective, url, isPrimary));
             }
         }
     };
@@ -54,9 +47,8 @@ public class ConnectionHandler {
      */
 	private void openPlotInCurrentPerspective(IPerspectiveDescriptor currentPerspective, final String url,
 			final boolean isPrimary) {
-		if (perspectivesToRefresh.contains(currentPerspective.getId())) {
+		if (perspectiveIdsToRefresh.removeIf(currentPerspective.getId()::equals)) {
 			MatplotlibOpiTargetView.displayOpi(url, isPrimary);
-			perspectivesToRefresh.remove(SCRIPTING_PERSPECTIVE_ID);
 		}
     }
     
@@ -69,16 +61,13 @@ public class ConnectionHandler {
         this.url = url;
         this.isPrimary = isPrimary;
     	IsisLog.getLogger(ConnectionHandler.class).info("Opening matplotlib OPI. Primary display " + isPrimary);
-    	Display.getDefault().asyncExec(new Runnable() {
-    	    @Override
-    	    public void run() {
-    	        PlatformUI.getWorkbench().getActiveWorkbenchWindow().addPerspectiveListener(openOnSwitchingPerspective);
-        		IPerspectiveDescriptor currentPerspective = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getPerspective();    		
-        		perspectivesToRefresh.add(REFL_PERSPECTIVE_ID);
-        		perspectivesToRefresh.add(SCRIPTING_PERSPECTIVE_ID);
-        		openPlotInCurrentPerspective(currentPerspective, url, isPrimary);
-    	    }
-    	});
+    	Display.getDefault().asyncExec(() -> {
+	        PlatformUI.getWorkbench().getActiveWorkbenchWindow().addPerspectiveListener(openOnSwitchingPerspective);
+    		IPerspectiveDescriptor currentPerspective = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getPerspective();    		
+    		perspectiveIdsToRefresh.add(REFL_PERSPECTIVE_ID);
+    		perspectiveIdsToRefresh.add(SCRIPTING_PERSPECTIVE_ID);
+    		openPlotInCurrentPerspective(currentPerspective, url, isPrimary);
+	    });
     }
     
     @Override

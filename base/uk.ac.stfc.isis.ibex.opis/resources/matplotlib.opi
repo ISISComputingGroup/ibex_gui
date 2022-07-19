@@ -10,7 +10,7 @@
   <background_color>
     <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
   </background_color>
-  <boy_version>5.1.0.201707071649</boy_version>
+  <boy_version>5.1.0</boy_version>
   <foreground_color>
     <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
   </foreground_color>
@@ -135,7 +135,7 @@
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>true</keep_wh_ratio>
     </scale_options>
-    <scripts/>
+    <scripts />
     <show_scrollbar>true</show_scrollbar>
     <tooltip></tooltip>
     <transparent>false</transparent>
@@ -172,7 +172,7 @@
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts/>
+      <scripts />
       <text>The maximum number of figures is 6. If more are added, the oldest figure will be deleted.</text>
       <tooltip></tooltip>
       <transparent>true</transparent>
@@ -193,7 +193,7 @@
             <include_parent_macros>true</include_parent_macros>
           </macros>
           <mode>0</mode>
-          <description/>
+          <description></description>
         </action>
       </actions>
       <border_alarm_sensitive>false</border_alarm_sensitive>
@@ -214,7 +214,7 @@
       <image></image>
       <name>Button_1</name>
       <push_action_index>0</push_action_index>
-      <pv_name/>
+      <pv_name></pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -222,7 +222,7 @@
         <height_scalable>false</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts/>
+      <scripts />
       <style>1</style>
       <text>Force refresh</text>
       <toggle_button>false</toggle_button>
@@ -232,19 +232,19 @@ $(pv_value)</tooltip>
       <widget_type>Action Button</widget_type>
       <width>80</width>
       <wuid>3f70c361:16bf616a6a4:-7fe1</wuid>
-      <x>510</x>
+      <x>477</x>
       <y>1</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
         <action type="EXECUTE_PYTHONSCRIPT">
-          <path/>
-          <scriptText>import webbrowser
+          <path></path>
+          <scriptText><![CDATA[import webbrowser
 
 webbrowser.open("http://shadow.nd.rl.ac.uk/ibex_user_manual/Matplotlib")
-</scriptText>
+]]></scriptText>
           <embedded>true</embedded>
-          <description/>
+          <description></description>
         </action>
       </actions>
       <border_alarm_sensitive>false</border_alarm_sensitive>
@@ -265,7 +265,7 @@ webbrowser.open("http://shadow.nd.rl.ac.uk/ibex_user_manual/Matplotlib")
       <image></image>
       <name>Button</name>
       <push_action_index>0</push_action_index>
-      <pv_name/>
+      <pv_name></pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -273,7 +273,7 @@ webbrowser.open("http://shadow.nd.rl.ac.uk/ibex_user_manual/Matplotlib")
         <height_scalable>false</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts/>
+      <scripts />
       <style>1</style>
       <text>Open matplotlib help page</text>
       <toggle_button>false</toggle_button>
@@ -283,7 +283,7 @@ $(pv_value)</tooltip>
       <widget_type>Action Button</widget_type>
       <width>185</width>
       <wuid>36106c7c:164a38700fa:-7d9a</wuid>
-      <x>605</x>
+      <x>572</x>
       <y>1</y>
     </widget>
   </widget>
