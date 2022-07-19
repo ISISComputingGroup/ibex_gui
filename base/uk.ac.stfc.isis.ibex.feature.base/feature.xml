@@ -1428,12 +1428,19 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-  
+
    <plugin
          id="org.eclipse.jetty.util.ajax"
          download-size="0"
          install-size="0"
          version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.glassfish.tyrus.bundles.tyrus-standalone-client"
+         download-size="0"
+         install-size="0"
+         version="2.0.4"
          unpack="false"/>
 
 </feature>
