@@ -3047,5 +3047,11 @@
         <categories/>
       </value>
     </entry>
+    <entry>
+		<key>RIKEN Vacuum </key>
+		<value>
+			<type>RIKEN</type>
+			<path>RIKEN/RIKEN_vacuum_tpg300.opi</path></value>
+	</entry>
   </opis>
 </descriptions>
