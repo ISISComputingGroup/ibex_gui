@@ -5,8 +5,6 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -21,7 +19,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	
 	private final ScheduledExecutorService workerThread;
 	
-	private final Set<IPlotUpdateListener> updateListeners = new CopyOnWriteArraySet<IPlotUpdateListener>();
+	private final MatplotlibFigureViewModel viewModel;
 	
 	private final MatplotlibWebsocketEndpoint connection;
 	
@@ -41,7 +39,8 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 		}
 	};
 	
-	public MatplotlibWebsocketModel(String hostName, int port, int figNum) {
+	public MatplotlibWebsocketModel(MatplotlibFigureViewModel viewModel, String hostName, int port, int figNum) {
+		this.viewModel = viewModel;
 	    this.workerThread = createWorkerThread();
 	    this.connection = new MatplotlibWebsocketEndpoint(this, hostName, port, figNum);
 	    this.plotName = String.format("Figure %d", figNum);
@@ -65,7 +64,6 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	public void close() {
 		LOG.info(String.format("%s disconnecting from %s", getClass().getName(), connection));
 		setConnectionStatus(false);
-		updateListeners.clear();
 		workerThread.shutdown();
 		connection.close();
 	}
@@ -76,22 +74,6 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 */
 	public Optional<ImageData> getImageData() {
 		return imageData;
-	}
-
-	/**
-	 * Subscribes a plot update listener to this model.
-	 * @param listener the listener
-	 */
-	public void subscribe(IPlotUpdateListener listener) {
-		updateListeners.add(listener);
-	}
-
-	/**
-	 * Unsubscribes a plot update listener from this model.
-	 * @param listener the listener
-	 */
-	public void unsubscribe(IPlotUpdateListener listener) {
-		updateListeners.remove(listener);
 	}
 
 	/**
@@ -111,7 +93,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 */
 	public void setImageData(final InputStream message) {
 	    this.imageData = Optional.of(new ImageData(message));
-	    updateListeners.forEach(IPlotUpdateListener::imageUpdated);
+	    viewModel.imageUpdated();
 	}
 	
 	/**
@@ -138,7 +120,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 		}
 		LOG.info(String.format("%s server %s", isConnected ? "Connected to" : "Disconnected from", this.connection));
 		this.isConnected = isConnected;
-		updateListeners.forEach(listener -> listener.onConnectionStatus(isConnected));
+		viewModel.onConnectionStatus(isConnected);
 	}
 	
 	/**
@@ -147,7 +129,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 */
 	public void setPlotName(String newName) {
 		plotName = newName;
-		updateListeners.forEach(listener -> listener.onPlotNameChange(plotName));
+		viewModel.onPlotNameChange(newName);
 	}
 	
 	/**
@@ -172,7 +154,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	public void onConnectionClose() {
 		setConnectionStatus(false);
 		this.imageData = Optional.empty();
-		updateListeners.forEach(IPlotUpdateListener::imageUpdated);
+		viewModel.imageUpdated();
 	}
 	
 	/**

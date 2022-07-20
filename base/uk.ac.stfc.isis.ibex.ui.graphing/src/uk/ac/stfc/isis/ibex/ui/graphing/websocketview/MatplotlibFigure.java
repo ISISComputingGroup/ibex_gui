@@ -1,15 +1,23 @@
 package uk.ac.stfc.isis.ibex.ui.graphing.websocketview;
 
 import java.beans.PropertyChangeListener;
+
+import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 
 /**
@@ -17,13 +25,16 @@ import org.eclipse.swt.widgets.Label;
  * as the underlying plot canvas.
  */
 public class MatplotlibFigure extends Composite {
+	
+	private static final Logger LOG = IsisLog.getLogger(MatplotlibFigure.class);
 
 	private Canvas plotCanvas;
-	private MatplotlibRenderer imageRenderer;
 	private Label labelConnectionStatus;
 	private final MatplotlibFigureViewModel viewModel;
 	
 	private final PropertyChangeListener connectionNameListener;
+	private final PropertyChangeListener imageListener;
+	private Image image;
 
 	public MatplotlibFigure(Composite parent, int style, int figureNumber) {
 		super(parent, style);
@@ -46,17 +57,36 @@ public class MatplotlibFigure extends Composite {
 		plotCanvas = new Canvas(container, SWT.NONE);
 		plotCanvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
-		imageRenderer = new MatplotlibRenderer(plotCanvas, figureNumber, viewModel);
+
+		image = new Image(Display.getDefault(), 500, 500);
 		
 		plotCanvas.addControlListener(new ControlAdapter() {
 			@Override
 			public void controlResized(ControlEvent e) {
 				Rectangle bounds = plotCanvas.getBounds();
-				imageRenderer.canvasResized(bounds.width, bounds.height);
+				viewModel.canvasResized(bounds.width, bounds.height);
 			}
 		});
 		
-		imageRenderer.canvasResized(plotCanvas.getBounds().width, plotCanvas.getBounds().height);
+		plotCanvas.addPaintListener(event -> event.gc.drawImage(image, 0, 0));
+		
+		viewModel.canvasResized(plotCanvas.getBounds().width, plotCanvas.getBounds().height);
+		
+		imageListener = viewModel.getImage()
+				.addUiThreadPropertyChangeListener(e -> drawImage((ImageData) e.getNewValue()));
+	}
+	
+	public void drawImage(ImageData imageData) {
+		try {
+			if (!image.isDisposed()) {
+				image.dispose();
+			}
+			image = new Image(Display.getDefault(), imageData);
+			plotCanvas.redraw();
+		} catch (Exception e) {
+			LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
+			throw e;
+		}
 	}
 	
 	/**
@@ -79,9 +109,13 @@ public class MatplotlibFigure extends Composite {
 	 */
 	public void dispose() {
 		viewModel.getPlotName().removePropertyChangeListener(connectionNameListener);
+		viewModel.getImage().removePropertyChangeListener(imageListener);
 		viewModel.close();
 		
-		imageRenderer.close();
+		if (!image.isDisposed()) {
+			image.dispose();
+		}
+		
 		plotCanvas.dispose();
 		super.dispose();
 	}
