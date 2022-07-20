@@ -16,5 +16,11 @@ public class PlotUpdateAdapter implements IPlotUpdateListener {
 	 */
 	@Override
 	public void onConnectionStatus(boolean isConnected) {}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void onPlotNameChange(String newName) {}
     
 }

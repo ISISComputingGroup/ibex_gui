@@ -25,8 +25,10 @@ import jakarta.websocket.WebSocketContainer;
 
 import org.apache.logging.log4j.Logger;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 
 @ClientEndpoint
@@ -53,7 +55,11 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	 */
 	@Override
 	public String toString() {
-		return String.format("ws://%s:%s", hostName, port, figNum);
+		return getUrl();
+	}
+	
+	private String getUrl() {
+		return String.format("ws://%s:%d/%d/ws", hostName, port, figNum);
 	}
 	
 	/**
@@ -73,7 +79,7 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 						}
 					})
 					.build();
-			session = container.connectToServer(this, config, new URI(String.format("ws://%s:%s/%d/ws", hostName, port, figNum)));
+			session = container.connectToServer(this, config, new URI(getUrl()));
 		} catch (DeploymentException | URISyntaxException e) {
 			throw new IOException(e);
 		}
@@ -90,6 +96,34 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 				model.setImageData(message);
 			}
 		});
+		
+		session.addMessageHandler(new MessageHandler.Whole<String>() {
+			@Override
+			public void onMessage(String message) {
+				try {
+				    Map<String, Object> content = GSON.fromJson(message, new TypeToken<Map<String, Object>>() {}.getType());
+				    handleJsonMessage(content);
+				} catch (Exception e) {
+					LoggerUtils.logErrorWithStackTrace(LOG, "error parsing server message " + message, e);
+				}
+			}
+		});
+	}
+	
+	private void handleJsonMessage(final Map<String, Object> content) {
+		final var type = (String) content.get("type");
+
+		switch (type) {
+		    case "figure_label":
+		    	model.setPlotName((String) content.get("label"));
+		    	break;
+		    case "image_mode":
+		    case "draw":
+		    	// No action required
+		    	break;
+		    default:
+		    	break;
+		}
 	}
 	
 	/**
@@ -97,11 +131,11 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	 */
 	@Override
 	public void onClose(Session session, CloseReason closeReason) {
-		LOG.info(String.format("Websocket closing because: %s", closeReason));
-		model.onConnectionClose();
+		LOG.info(String.format("Websocket at %s closing because: %s", toString(), closeReason));
 		for (var h : session.getMessageHandlers()) {
 			session.removeMessageHandler(h);
 		}
+		model.onConnectionClose();
 	}
 	
 	private void sendProperty(Session session, String type, Map<String, Object> properties) {
@@ -118,12 +152,17 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public synchronized void close() throws IOException {
-		session.close();
+	public synchronized void close() {
+		try {
+			session.close();
+		} catch (IOException e) {
+			LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
+		}
+		model.onConnectionClose();
 	}
 	
 	private synchronized void sendImageModeParameters() {
-		// Binary protocol is more efficient and we can support it.
+		// Binary protocol is more efficient and we support it.
 		sendProperty(session, "supports_binary", Map.of("value", true));
 		
 		// We don't want images with transparency, we want full frames each time.
@@ -146,7 +185,9 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	 * @param height the new height
 	 */
 	public synchronized void canvasResized(int width, int height) {
-		sendProperty(session, "resize", Map.of("height", height, "width", width));
+		if (width > 0 && height > 0) {
+		    sendProperty(session, "resize", Map.of("height", height, "width", width));
+		}
 		forceServerRefresh();
 	}
 }

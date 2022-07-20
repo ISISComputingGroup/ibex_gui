@@ -23,8 +23,8 @@ public class MatplotlibRenderer implements Closeable {
 	
 	private final MatplotlibRendererViewModel viewModel;
 	
-	public MatplotlibRenderer(Canvas canvas, int figNum) {
-		this.viewModel = new MatplotlibRendererViewModel(this, figNum);
+	public MatplotlibRenderer(Canvas canvas, int figNum, MatplotlibFigureViewModel figureViewModel) {
+		this.viewModel = new MatplotlibRendererViewModel(this, figNum, figureViewModel.getModel());
 		
 		this.canvas = canvas;
 		image = new Image(Display.getDefault(), 500, 500);

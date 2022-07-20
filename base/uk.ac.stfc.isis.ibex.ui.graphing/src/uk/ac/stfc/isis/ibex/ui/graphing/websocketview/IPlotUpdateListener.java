@@ -16,4 +16,10 @@ public interface IPlotUpdateListener {
      */
     public void onConnectionStatus(boolean isConnected);
     
+    /**
+     * Sets the name of this plot.
+     * @param newName the new name
+     */
+    public void onPlotNameChange(String newName);
+    
 }

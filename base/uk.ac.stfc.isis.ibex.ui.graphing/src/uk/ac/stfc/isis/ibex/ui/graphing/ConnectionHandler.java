@@ -1,8 +1,10 @@
 package uk.ac.stfc.isis.ibex.ui.graphing;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import org.eclipse.swt.internal.win32.LOGBRUSH;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IPerspectiveListener;
@@ -11,6 +13,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.Activator;
 
 /**
  * Class to handle function calls from python regarding opening the plot window.
@@ -58,9 +61,6 @@ public class ConnectionHandler {
      * @param isPrimary True if this is the primary plot window; False for secondary
      */
     public void openPlot(final String url, final boolean isPrimary) {
-    	if (true) {
-    		return;
-    	}
         this.url = url;
         this.isPrimary = isPrimary;
     	IsisLog.getLogger(ConnectionHandler.class).info("Opening matplotlib OPI. Primary display " + isPrimary);
@@ -71,6 +71,14 @@ public class ConnectionHandler {
     		perspectiveIdsToRefresh.add(SCRIPTING_PERSPECTIVE_ID);
     		openPlotInCurrentPerspective(currentPerspective, url, isPrimary);
 	    });
+    }
+    
+    public void openMplRenderer(final List<Integer> figures, final String url, final boolean isPrimary) {
+    	if (isPrimary) {
+    	    Activator.setPrimaryFigures(figures);
+    	} else {
+    		Activator.setSecondaryFigures(figures);
+    	}
     }
     
     @Override

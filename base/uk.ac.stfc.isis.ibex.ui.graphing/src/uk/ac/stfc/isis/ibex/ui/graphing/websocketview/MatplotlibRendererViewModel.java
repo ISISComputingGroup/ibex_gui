@@ -61,15 +61,17 @@ public class MatplotlibRendererViewModel extends PlotUpdateAdapter implements Cl
 	
 	private final ScheduledExecutorService PERIODIC_UPDATES = 
 			Executors.newSingleThreadScheduledExecutor(
-					new ThreadFactoryBuilder().setNameFormat("MatplotlibRendererViewModel update checks %d").build());
+					new ThreadFactoryBuilder()
+					    .setNameFormat("MatplotlibRendererViewModel update checks %d")
+					    .build());
 	
 	/**
 	 * Creates a new renderer view model.
 	 * @param renderer the renderer that this viewmodel is for
 	 * @param figNum the figure number
 	 */
-	public MatplotlibRendererViewModel(MatplotlibRenderer renderer, int figNum) {
-		this.model = Activator.getModel(figNum);
+	public MatplotlibRendererViewModel(MatplotlibRenderer renderer, int figNum, MatplotlibWebsocketModel model) {
+		this.model = model;
 		this.renderer = renderer;
 		
 		PERIODIC_UPDATES.scheduleWithFixedDelay(this::redrawIfRequired, MAX_DRAW_RATE_MS, MAX_DRAW_RATE_MS, TimeUnit.MILLISECONDS);
@@ -82,7 +84,10 @@ public class MatplotlibRendererViewModel extends PlotUpdateAdapter implements Cl
 	
 	private ImageData generateBlankImage() {
 		final PaletteData palette = new PaletteData(new RGB(0xFF, 0xFF, 0xFF));
-		return new ImageData(this.canvasWidth, this.canvasHeight, 8, palette);
+		return new ImageData(
+				this.canvasWidth <= 0 ? 1 : this.canvasWidth, 
+				this.canvasHeight <= 0 ? 1 : this.canvasHeight, 
+			    8, palette);
 	}
 	
 	private void redrawIfRequired() {

@@ -1,9 +1,6 @@
 package uk.ac.stfc.isis.ibex.ui.graphing.websocketview;
 
 import java.beans.PropertyChangeListener;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
@@ -26,8 +23,6 @@ public class MatplotlibFigure extends Composite {
 	private Label labelConnectionStatus;
 	private final MatplotlibFigureViewModel viewModel;
 	
-	private final Set<PropertyChangeListener> subscriptions = new HashSet<>();
-	
 	private final PropertyChangeListener connectionNameListener;
 
 	public MatplotlibFigure(Composite parent, int style, int figureNumber) {
@@ -43,14 +38,15 @@ public class MatplotlibFigure extends Composite {
 		
 		labelConnectionStatus = new Label(container, SWT.NONE);
 		labelConnectionStatus.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+		labelConnectionStatus.setText(viewModel.getPlotName().getValue());
 		
-		connectionNameListener = viewModel.getConnectionName()
+		connectionNameListener = viewModel.getPlotName()
 				.addUiThreadPropertyChangeListener(e -> labelConnectionStatus.setText(e.getNewValue().toString()));
 		
 		plotCanvas = new Canvas(container, SWT.NONE);
 		plotCanvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
-		imageRenderer = new MatplotlibRenderer(plotCanvas, figureNumber);
+		imageRenderer = new MatplotlibRenderer(plotCanvas, figureNumber, viewModel);
 		
 		plotCanvas.addControlListener(new ControlAdapter() {
 			@Override
@@ -59,6 +55,8 @@ public class MatplotlibFigure extends Composite {
 				imageRenderer.canvasResized(bounds.width, bounds.height);
 			}
 		});
+		
+		imageRenderer.canvasResized(plotCanvas.getBounds().width, plotCanvas.getBounds().height);
 	}
 	
 	/**
@@ -80,8 +78,8 @@ public class MatplotlibFigure extends Composite {
 	 * Disposes this composite.
 	 */
 	public void dispose() {
-		subscriptions.forEach(c -> viewModel.getConnectionName().removePropertyChangeListener(connectionNameListener));
-		subscriptions.clear();
+		viewModel.getPlotName().removePropertyChangeListener(connectionNameListener);
+		viewModel.close();
 		
 		imageRenderer.close();
 		plotCanvas.dispose();

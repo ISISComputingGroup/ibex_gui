@@ -25,6 +25,8 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	
 	private final MatplotlibWebsocketEndpoint connection;
 	
+	private String plotName;
+	
 	private Optional<ImageData> imageData = Optional.empty();
 	
 	private boolean isConnected = false;
@@ -42,6 +44,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	public MatplotlibWebsocketModel(String hostName, int port, int figNum) {
 	    this.workerThread = createWorkerThread();
 	    this.connection = new MatplotlibWebsocketEndpoint(this, hostName, port, figNum);
+	    this.plotName = String.format("Figure %d", figNum);
 	    
 	    workerThread.scheduleWithFixedDelay(tryConnectTask, 0, 5, TimeUnit.SECONDS);
 	}
@@ -59,7 +62,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 * @throws IOException if the disconnection failed
 	 */
 	@Override
-	public void close() throws IOException {
+	public void close() {
 		LOG.info(String.format("%s disconnecting from %s", getClass().getName(), connection));
 		setConnectionStatus(false);
 		updateListeners.clear();
@@ -96,8 +99,10 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 * @throws IOException if could not connect
 	 */
 	public void connect() throws IOException {
-		this.connection.connect();
-		setConnectionStatus(true);
+		if (!isConnected()) {
+			this.connection.connect();
+			setConnectionStatus(true);
+		}
 	}
 
 	/**
@@ -134,6 +139,23 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 		LOG.info(String.format("%s server %s", isConnected ? "Connected to" : "Disconnected from", this.connection));
 		this.isConnected = isConnected;
 		updateListeners.forEach(listener -> listener.onConnectionStatus(isConnected));
+	}
+	
+	/**
+	 * Sets a new name for this plot.
+	 * @param newName the new name
+	 */
+	public void setPlotName(String newName) {
+		plotName = newName;
+		updateListeners.forEach(listener -> listener.onPlotNameChange(plotName));
+	}
+	
+	/**
+	 * Gets the name of this plot.
+	 * @return the new name
+	 */
+	public String getPlotName() {
+		return plotName;
 	}
 	
 	/**

@@ -1,11 +1,17 @@
 package uk.ac.stfc.isis.ibex.ui.graphing.websocketview;
 
+import java.beans.PropertyChangeListener;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 import org.apache.logging.log4j.Logger;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -14,8 +20,11 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
  * A Matplotlib View targeting all current figures.
  */
 public class MatplotlibAllFiguresView {
-	private static final Logger LOG = IsisLog.getLogger(MatplotlibSingleFigureView.class);
-	private MatplotlibFigure figure;
+	private static final Logger LOG = IsisLog.getLogger(MatplotlibAllFiguresView.class);
+	private Set<MatplotlibFigure> figures = new HashSet<>();
+	private Composite parent;
+	
+	private PropertyChangeListener primaryFiguresChangedListener;
 	
 	/**
 	 * Construct this view.
@@ -23,14 +32,30 @@ public class MatplotlibAllFiguresView {
 	 * @param part the part
 	 */
 	@PostConstruct
-	public void createComposite(Composite parent, MPart part) {
-		String figNumProp = part.getProperties().get("FigureNumber");
-		try {
-		    int figureNumber = Integer.parseInt(figNumProp);
-		    figure = new MatplotlibFigure(parent, SWT.NONE, figureNumber);
-		} catch (NumberFormatException e) {
-			LOG.info(String.format("Cannot create figure with number %s", figNumProp));
+	public void createComposite(final Composite parent, final MPart part) {
+		parent.setLayout(new GridLayout(1, true));
+		this.parent = parent;
+		recreateFigures();
+		primaryFiguresChangedListener = Activator.getPrimaryFigures()
+				.addUiThreadPropertyChangeListener(evt -> recreateFigures());
+	}
+	
+	private void disposeFigures() {
+		for (var f : figures) {
+			f.dispose();
 		}
+		figures.clear();
+	}
+	
+	private void recreateFigures() {
+		LOG.info("recreating figures");
+		disposeFigures();
+		for (int figNum : Activator.getPrimaryFigures().getValue()) {
+			var figure = new MatplotlibFigure(parent, SWT.NONE, figNum);
+			figure.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+			figures.add(figure);
+		}
+		parent.layout();
 	}
 	
 	/**
@@ -38,9 +63,7 @@ public class MatplotlibAllFiguresView {
 	 */
 	@PreDestroy
 	public void dispose() {
-		if (figure != null && !figure.isDisposed()) {
-			figure.dispose();
-		}
-		figure = null;
+		Activator.getPrimaryFigures().removePropertyChangeListener(primaryFiguresChangedListener);
+		disposeFigures();
 	}
 }
