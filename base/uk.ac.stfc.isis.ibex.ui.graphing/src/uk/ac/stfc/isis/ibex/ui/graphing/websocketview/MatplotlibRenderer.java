@@ -11,6 +11,9 @@ import org.eclipse.swt.widgets.Display;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
+/**
+ * The view for a matplotlib canvas.
+ */
 public class MatplotlibRenderer implements Closeable {
 
 	private static final Logger LOG = IsisLog.getLogger(MatplotlibRenderer.class);
@@ -31,13 +34,11 @@ public class MatplotlibRenderer implements Closeable {
 	
 	public void drawImage(ImageData imageData) {
 		try {
-			LOG.info("renderer: redrawing");
 			if (!image.isDisposed()) {
 				image.dispose();
 			}
 			image = new Image(Display.getDefault(), imageData);
 			canvas.redraw();
-			LOG.info("renderer: redrawn");
 		} catch (Exception e) {
 			LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
 			throw e;

@@ -18,6 +18,9 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 
+/**
+ * The view model for a matplotlib canvas.
+ */
 public class MatplotlibRendererViewModel extends PlotUpdateAdapter implements Closeable {
 	
 	private final MatplotlibWebsocketModel model;
@@ -36,6 +39,23 @@ public class MatplotlibRendererViewModel extends PlotUpdateAdapter implements Cl
 	 */
 	private final AtomicBoolean serverResizeRequired = new AtomicBoolean(true);
 	
+	/**
+	 * The maximum frequency at which we might draw updates to the plot if new data is available.
+	 */
+	
+	private static final int MAX_DRAW_RATE_MS = 50;
+	
+	/**
+	 * The maximum frequency at which we might send resize requests to the server.
+	 */
+	private static final int MAX_RESIZE_RATE_MS = 100;
+	
+	/**
+	 * The rate at which we ask the server to send new frames, even if no new frames have been pushed.
+	 * This is required in order to get updates to some dynamic plots.
+	 */
+	private static final int FORCED_REDRAW_RATE_MS = 2000;
+	
 	int canvasWidth = 0;
 	int canvasHeight = 0;
 	
@@ -43,16 +63,21 @@ public class MatplotlibRendererViewModel extends PlotUpdateAdapter implements Cl
 			Executors.newSingleThreadScheduledExecutor(
 					new ThreadFactoryBuilder().setNameFormat("MatplotlibRendererViewModel update checks %d").build());
 	
+	/**
+	 * Creates a new renderer view model.
+	 * @param renderer the renderer that this viewmodel is for
+	 * @param figNum the figure number
+	 */
 	public MatplotlibRendererViewModel(MatplotlibRenderer renderer, int figNum) {
 		this.model = Activator.getModel(figNum);
 		this.renderer = renderer;
 		
-		PERIODIC_UPDATES.scheduleWithFixedDelay(this::redrawIfRequired, 50, 50, TimeUnit.MILLISECONDS);
-		PERIODIC_UPDATES.scheduleWithFixedDelay(this::updateCanvasSizeIfRequired, 100, 100, TimeUnit.MILLISECONDS);
-		PERIODIC_UPDATES.scheduleWithFixedDelay(model::forceServerRedraw, 5, 5, TimeUnit.SECONDS);
+		PERIODIC_UPDATES.scheduleWithFixedDelay(this::redrawIfRequired, MAX_DRAW_RATE_MS, MAX_DRAW_RATE_MS, TimeUnit.MILLISECONDS);
+		PERIODIC_UPDATES.scheduleWithFixedDelay(this::updateCanvasSizeIfRequired, MAX_RESIZE_RATE_MS, MAX_RESIZE_RATE_MS, TimeUnit.MILLISECONDS);
+		PERIODIC_UPDATES.scheduleWithFixedDelay(model::forceServerRefresh, FORCED_REDRAW_RATE_MS, FORCED_REDRAW_RATE_MS, TimeUnit.MILLISECONDS);
 
 		model.subscribe(this);
-		model.forceServerRedraw();
+		model.forceServerRefresh();
 	}
 	
 	private ImageData generateBlankImage() {
@@ -63,25 +88,25 @@ public class MatplotlibRendererViewModel extends PlotUpdateAdapter implements Cl
 	private void redrawIfRequired() {
 		try {
 			if (clientRedrawRequired.getAndSet(false)) {
-				LOG.info("redraw was required");
-				try {
-					final ImageData imageData = model.getImageData().orElseGet(this::generateBlankImage);
-					Display.getDefault().asyncExec(() -> renderer.drawImage(imageData));
-				} catch (IllegalStateException e) {
-					LOG.info("Image not available");
-				}
+				final ImageData imageData = model.getImageData().orElseGet(this::generateBlankImage);
+				Display.getDefault().asyncExec(() -> renderer.drawImage(imageData));
 			}
 		} catch (Exception e) {
 			LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void imageUpdated() {
-		LOG.info("renderer: imageupdated");
 		clientRedrawRequired.set(true);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void close() {
 		model.unsubscribe(this);
@@ -103,10 +128,13 @@ public class MatplotlibRendererViewModel extends PlotUpdateAdapter implements Cl
 		serverResizeRequired.set(true);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void onConnectionStatus(boolean isConnected) {
 		if (isConnected) {
-			model.forceServerRedraw();
+			model.forceServerRefresh();
 		}
 		
 		// If disconnected, cancel any pending resize request to the server.

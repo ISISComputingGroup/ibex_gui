@@ -11,9 +11,9 @@ import org.eclipse.swt.widgets.Composite;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
- * A Matplotlib View targeting a single figure.
+ * A Matplotlib View targeting all current figures.
  */
-public class MatplotlibSingleFigureView {
+public class MatplotlibAllFiguresView {
 	private static final Logger LOG = IsisLog.getLogger(MatplotlibSingleFigureView.class);
 	private MatplotlibFigure figure;
 	

@@ -2,9 +2,9 @@ package uk.ac.stfc.isis.ibex.ui.graphing.websocketview;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.ByteBuffer;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +24,6 @@ import jakarta.websocket.Session;
 import jakarta.websocket.WebSocketContainer;
 
 import org.apache.logging.log4j.Logger;
-
 import com.google.gson.Gson;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -49,16 +48,21 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 		this.model = model;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		return String.format("ws://%s:%s", hostName, port, figNum);
 	}
 	
+	/**
+	 * Connect to the websocket server.
+	 * @throws IOException if could not connect
+	 */
 	public void connect() throws IOException {
 		WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-		try {
-			LOG.info("Creating connection");
-			
+		try {			
 			final ClientEndpointConfig config = ClientEndpointConfig.Builder.create()
 					.configurator(new Configurator() {
 						@Override
@@ -69,28 +73,35 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 						}
 					})
 					.build();
-			session = container.connectToServer(this, config, new URI(String.format("ws://%s:%s/%s/ws", hostName, port, figNum)));
-			
-			session.addMessageHandler(new MessageHandler.Whole<ByteBuffer>() {
-				@Override
-				public void onMessage(ByteBuffer message) {
-					model.setImageData(message);
-					LOG.info(message);
-				}
-			});
+			session = container.connectToServer(this, config, new URI(String.format("ws://%s:%s/%d/ws", hostName, port, figNum)));
 		} catch (DeploymentException | URISyntaxException e) {
 			throw new IOException(e);
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void onOpen(Session session, EndpointConfig config) {
+		session.addMessageHandler(new MessageHandler.Whole<InputStream>() {
+			@Override
+			public void onMessage(InputStream message) {
+				model.setImageData(message);
+			}
+		});
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void onClose(Session session, CloseReason closeReason) {
 		LOG.info(String.format("Websocket closing because: %s", closeReason));
 		model.onConnectionClose();
+		for (var h : session.getMessageHandlers()) {
+			session.removeMessageHandler(h);
+		}
 	}
 	
 	private void sendProperty(Session session, String type, Map<String, Object> properties) {
@@ -103,20 +114,39 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 		remote.sendText(GSON.toJson(propertiesToSend));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public void close() throws IOException {
+	public synchronized void close() throws IOException {
 		session.close();
 	}
-
-	public void forceServerRedraw() {
+	
+	private synchronized void sendImageModeParameters() {
+		// Binary protocol is more efficient and we can support it.
 		sendProperty(session, "supports_binary", Map.of("value", true));
+		
+		// We don't want images with transparency, we want full frames each time.
 		sendProperty(session, "send_image_mode", Map.of("value", "full"));
+	}
+
+	/**
+	 * Forces a server-side redraw and resending of the image over a websocket.
+	 */
+	public synchronized void forceServerRefresh() {
+		sendImageModeParameters();
+		sendProperty(session, "draw", Collections.emptyMap());
 		sendProperty(session, "refresh", Collections.emptyMap());
 	}
 	
-	public void canvasResized(int width, int height) {
+	/**
+	 * Sends a "canvas resized" event to the server. This will cause a redraw of the figure to fit into
+	 * the new canvas size.
+	 * @param width the new width
+	 * @param height the new height
+	 */
+	public synchronized void canvasResized(int width, int height) {
 		sendProperty(session, "resize", Map.of("height", height, "width", width));
-		sendProperty(session, "draw", Collections.emptyMap());
-		forceServerRedraw();
+		forceServerRefresh();
 	}
 }

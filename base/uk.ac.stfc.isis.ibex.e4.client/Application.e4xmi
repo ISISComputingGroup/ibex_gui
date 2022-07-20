@@ -425,8 +425,8 @@
           <children xsi:type="basic:Part" xmi:id="_7Zl3sIXbEeiCJ_qZ_3IIBQ" elementId="uk.ac.stfc.isis.ibex.ui.graphing.MatplotlibOpiTargetView" toBeRendered="false" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Plot" closeable="true"/>
           <children xsi:type="basic:Part" xmi:id="_fafW0FieEeqLYa1n_yUxzw" elementId="uk.ac.stfc.isis.ibex.ui.graphing.BackgroundScriptOpiTargetView" toBeRendered="false" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Background Plot"/>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="_NolFEAdPEe2gyOdJ5Pr1Ig" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.36">
-          <children xsi:type="basic:Part" xmi:id="_OD8LYAdPEe2gyOdJ5Pr1Ig" elementId="uk.ac.stfc.isis.ibex.e4.client.part.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.graphing/uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibSingleFigureView">
+        <children xsi:type="basic:PartStack" xmi:id="_NolFEAdPEe2gyOdJ5Pr1Ig" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.36" containerData="50">
+          <children xsi:type="basic:Part" xmi:id="_OD8LYAdPEe2gyOdJ5Pr1Ig" elementId="uk.ac.stfc.isis.ibex.e4.client.part.matplotlib" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.graphing/uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibSingleFigureView" label="Matplotlib">
             <properties key="FigureNumber" value="1"/>
           </children>
         </children>

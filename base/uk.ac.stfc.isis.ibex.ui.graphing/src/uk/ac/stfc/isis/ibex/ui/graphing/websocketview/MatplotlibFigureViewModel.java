@@ -18,6 +18,9 @@ public class MatplotlibFigureViewModel extends PlotUpdateAdapter {
 				String.format("[Disconnected] %s Figure %d", model.getServerName(), figureNumber));
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void onConnectionStatus(boolean isConnected) {
 		if (isConnected) {
@@ -29,6 +32,10 @@ public class MatplotlibFigureViewModel extends PlotUpdateAdapter {
 		}
 	}
 	
+	/**
+	 * Gets the connection name.
+	 * @return the connection name
+	 */
 	public UpdatedValue<String> getConnectionName() {
 		return connectionName;
 	}

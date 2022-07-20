@@ -3,7 +3,7 @@ package uk.ac.stfc.isis.ibex.ui.graphing.websocketview;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import java.io.Closeable;
 import java.io.IOException;
-import java.nio.ByteBuffer;
+import java.io.InputStream;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -13,10 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.graphics.ImageData;
-
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
-import uk.ac.stfc.isis.ibex.ui.graphing.utils.ByteBufferInputStream;
 
 public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	
@@ -71,40 +68,61 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Gets the image data.
+	 * @return the image data
 	 */
 	public Optional<ImageData> getImageData() {
 		return imageData;
 	}
 
+	/**
+	 * Subscribes a plot update listener to this model.
+	 * @param listener the listener
+	 */
 	public void subscribe(IPlotUpdateListener listener) {
 		updateListeners.add(listener);
 	}
 
+	/**
+	 * Unsubscribes a plot update listener from this model.
+	 * @param listener the listener
+	 */
 	public void unsubscribe(IPlotUpdateListener listener) {
 		updateListeners.remove(listener);
 	}
 
+	/**
+	 * Attemps to connect to the server.
+	 * @throws IOException if could not connect
+	 */
 	public void connect() throws IOException {
 		this.connection.connect();
 		setConnectionStatus(true);
 	}
 
-	public void setImageData(ByteBuffer message) {
-		try (var inputStream = new ByteBufferInputStream(message)) { 
-			LOG.info("model: setting image to " + message);
-		    this.imageData = Optional.of(new ImageData(inputStream));
-		
-		    updateListeners.forEach(IPlotUpdateListener::imageUpdated);
-		} catch (IOException e) {
-			LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
-		}
+	/**
+	 * Sets the image data received by the websocket.
+	 * @param message the message
+	 */
+	public void setImageData(final InputStream message) {
+	    this.imageData = Optional.of(new ImageData(message));
+	    updateListeners.forEach(IPlotUpdateListener::imageUpdated);
+	}
+	
+	/**
+	 * Forces the server to draw a frame and resend it.
+	 * 
+	 * @see MatplotlibWebsocketEndpoint.forceServerRefresh
+	 */
+	public void forceServerRefresh() {
+		workerThread.submit(connection::forceServerRefresh);
 	}
 
-	public void forceServerRedraw() {
-		workerThread.submit(connection::forceServerRedraw);
-	}
-
+	/**
+	 * Notifies the server that the canvas size has changed.
+	 * @param width the new width
+	 * @param height the new height
+	 */
 	public void canvasResized(int width, int height) {
 		workerThread.submit(() -> connection.canvasResized(width, height));
 	}
@@ -118,16 +136,27 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 		updateListeners.forEach(listener -> listener.onConnectionStatus(isConnected));
 	}
 	
+	/**
+	 * Whether the server is currently connected.
+	 * @return true if server is connected
+	 */
 	public boolean isConnected() {
 		return isConnected;
 	}
 	
+	/**
+	 * Handler for connection closed events.
+	 */
 	public void onConnectionClose() {
 		setConnectionStatus(false);
 		this.imageData = Optional.empty();
 		updateListeners.forEach(IPlotUpdateListener::imageUpdated);
 	}
 	
+	/**
+	 * The name of the server this model is connected to.
+	 * @return the server name
+	 */
 	public String getServerName() {
 		return connection.toString();
 	}

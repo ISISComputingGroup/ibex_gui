@@ -15,6 +15,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 
+/**
+ * Composite representing a matplotlib figure and all relevant controls/indicators, as well
+ * as the underlying plot canvas.
+ */
 public class MatplotlibFigure extends Composite {
 
 	private Canvas plotCanvas;
@@ -57,14 +61,24 @@ public class MatplotlibFigure extends Composite {
 		});
 	}
 	
+	/**
+	 * Sets the connection name.
+	 * @param text the name
+	 */
 	public void setConnectionName(String text) {
 		labelConnectionStatus.setText(text);
 	}
 	
+	/**
+	 * Sets focus on the canvas.
+	 */
 	public void focus() {
 		plotCanvas.setFocus();
 	}
 	
+	/**
+	 * Disposes this composite.
+	 */
 	public void dispose() {
 		subscriptions.forEach(c -> viewModel.getConnectionName().removePropertyChangeListener(connectionNameListener));
 		subscriptions.clear();

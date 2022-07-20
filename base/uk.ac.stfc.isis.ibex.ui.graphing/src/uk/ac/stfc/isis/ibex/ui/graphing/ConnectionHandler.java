@@ -58,6 +58,9 @@ public class ConnectionHandler {
      * @param isPrimary True if this is the primary plot window; False for secondary
      */
     public void openPlot(final String url, final boolean isPrimary) {
+    	if (true) {
+    		return;
+    	}
         this.url = url;
         this.isPrimary = isPrimary;
     	IsisLog.getLogger(ConnectionHandler.class).info("Opening matplotlib OPI. Primary display " + isPrimary);
