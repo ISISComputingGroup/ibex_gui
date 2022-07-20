@@ -74,6 +74,11 @@ public class NewBlockHandler extends AbstractHandler {
 	    return null;
     }
 	
+	@Override
+	public boolean isEnabled() {
+		return false;
+	}
+	
     /**
      * Create the dialog for creating the new block.
      * 
