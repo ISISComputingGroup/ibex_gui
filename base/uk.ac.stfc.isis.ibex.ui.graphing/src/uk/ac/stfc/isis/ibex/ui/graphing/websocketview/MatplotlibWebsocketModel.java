@@ -62,7 +62,6 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 */
 	@Override
 	public void close() {
-		LOG.info(String.format("%s disconnecting from %s", getClass().getName(), connection));
 		setConnectionStatus(false);
 		workerThread.shutdown();
 		connection.close();
@@ -118,7 +117,6 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 		if (isConnected == this.isConnected) {
 			return;
 		}
-		LOG.info(String.format("%s server %s", isConnected ? "Connected to" : "Disconnected from", this.connection));
 		this.isConnected = isConnected;
 		viewModel.onConnectionStatus(isConnected);
 	}

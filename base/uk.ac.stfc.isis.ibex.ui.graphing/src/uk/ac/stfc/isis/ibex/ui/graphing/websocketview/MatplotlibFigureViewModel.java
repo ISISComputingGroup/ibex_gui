@@ -41,13 +41,12 @@ public class MatplotlibFigureViewModel implements Closeable {
 	/**
 	 * The maximum frequency at which we might draw updates to the plot if new data is available.
 	 */
-	
-	private static final int MAX_DRAW_RATE_MS = 50;
+	private static final int MAX_DRAW_RATE_MS = 100;
 	
 	/**
 	 * The maximum frequency at which we might send resize requests to the server.
 	 */
-	private static final int MAX_RESIZE_RATE_MS = 100;
+	private static final int MAX_RESIZE_RATE_MS = 250;
 	
 	/**
 	 * The rate at which we ask the server to send new frames, even if no new frames have been pushed.
@@ -55,11 +54,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 	 */
 	private static final int FORCED_REDRAW_RATE_MS = 2000;
 	
-	private final ScheduledExecutorService PERIODIC_UPDATES = 
-			Executors.newSingleThreadScheduledExecutor(
-					new ThreadFactoryBuilder()
-					    .setNameFormat("MatplotlibRendererViewModel update checks %d")
-					    .build());
+	private final ScheduledExecutorService updateExecutor;
 	
 	int canvasWidth = 0;
 	int canvasHeight = 0;
@@ -71,10 +66,15 @@ public class MatplotlibFigureViewModel implements Closeable {
 				String.format("[Disconnected] %s", model.getPlotName(), figureNumber));
 		image = new SettableUpdatedValue<ImageData>(generateBlankImage());
 		
+		updateExecutor  = 
+				Executors.newSingleThreadScheduledExecutor(
+						new ThreadFactoryBuilder()
+						    .setNameFormat("MatplotlibFigureViewModel " + model.getServerName() + " update thread %d")
+						    .build());
 		
-		PERIODIC_UPDATES.scheduleWithFixedDelay(this::redrawIfRequired, MAX_DRAW_RATE_MS, MAX_DRAW_RATE_MS, TimeUnit.MILLISECONDS);
-		PERIODIC_UPDATES.scheduleWithFixedDelay(this::updateCanvasSizeIfRequired, MAX_RESIZE_RATE_MS, MAX_RESIZE_RATE_MS, TimeUnit.MILLISECONDS);
-		PERIODIC_UPDATES.scheduleWithFixedDelay(model::forceServerRefresh, FORCED_REDRAW_RATE_MS, FORCED_REDRAW_RATE_MS, TimeUnit.MILLISECONDS);
+		updateExecutor.scheduleWithFixedDelay(this::redrawIfRequired, MAX_DRAW_RATE_MS, MAX_DRAW_RATE_MS, TimeUnit.MILLISECONDS);
+		updateExecutor.scheduleWithFixedDelay(this::updateCanvasSizeIfRequired, MAX_RESIZE_RATE_MS, MAX_RESIZE_RATE_MS, TimeUnit.MILLISECONDS);
+		updateExecutor.scheduleWithFixedDelay(model::forceServerRefresh, FORCED_REDRAW_RATE_MS, FORCED_REDRAW_RATE_MS, TimeUnit.MILLISECONDS);
 
 		model.forceServerRefresh();
 	}
@@ -113,6 +113,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 	 */
 	@Override
 	public void close() {
+		updateExecutor.shutdown();
 		model.close();
 	}
 	

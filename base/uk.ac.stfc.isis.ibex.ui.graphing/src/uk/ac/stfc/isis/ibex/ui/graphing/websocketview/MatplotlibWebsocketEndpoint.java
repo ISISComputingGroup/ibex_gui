@@ -19,6 +19,9 @@ import jakarta.websocket.DeploymentException;
 import jakarta.websocket.Endpoint;
 import jakarta.websocket.EndpointConfig;
 import jakarta.websocket.MessageHandler;
+import jakarta.websocket.OnClose;
+import jakarta.websocket.OnError;
+import jakarta.websocket.OnOpen;
 import jakarta.websocket.RemoteEndpoint.Async;
 import jakarta.websocket.Session;
 import jakarta.websocket.WebSocketContainer;
@@ -42,6 +45,7 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	private final int port;
 	private final int figNum;
 	private final MatplotlibWebsocketModel model;
+	private boolean lastCloseWasAbnormal;
 	
 	public MatplotlibWebsocketEndpoint(MatplotlibWebsocketModel model, String hostName, int port, int figNum) {
 		this.hostName = hostName;
@@ -89,7 +93,12 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	 * {@inheritDoc}
 	 */
 	@Override
+	@OnOpen
 	public void onOpen(Session session, EndpointConfig config) {
+		if (lastCloseWasAbnormal) {
+			LOG.info(String.format("Websocket at %s reconnected after abnormal closure", toString()));
+			lastCloseWasAbnormal = false;
+		}
 		session.addMessageHandler(new MessageHandler.Whole<InputStream>() {
 			@Override
 			public void onMessage(InputStream message) {
@@ -119,9 +128,8 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 		    	break;
 		    case "image_mode":
 		    case "draw":
-		    	// No action required
-		    	break;
 		    default:
+		    	// No action required
 		    	break;
 		}
 	}
@@ -130,12 +138,22 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	 * {@inheritDoc}
 	 */
 	@Override
+	@OnClose
 	public void onClose(Session session, CloseReason closeReason) {
-		LOG.info(String.format("Websocket at %s closing because: %s", toString(), closeReason));
-		for (var h : session.getMessageHandlers()) {
-			session.removeMessageHandler(h);
+		lastCloseWasAbnormal = (closeReason.getCloseCode() != CloseReason.CloseCodes.NORMAL_CLOSURE);
+		if (lastCloseWasAbnormal) {
+		    LOG.info(String.format("Websocket at %s closing abnormally because: %s", toString(), closeReason));
 		}
 		model.onConnectionClose();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	@OnError
+	public void onError(Session session, Throwable error) {
+		LoggerUtils.logErrorWithStackTrace(LOG, error.getMessage(), error);
 	}
 	
 	private void sendProperty(Session session, String type, Map<String, Object> properties) {
@@ -152,16 +170,15 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public synchronized void close() {
+	public void close() {
 		try {
 			session.close();
 		} catch (IOException e) {
 			LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
 		}
-		model.onConnectionClose();
 	}
 	
-	private synchronized void sendImageModeParameters() {
+	private void sendImageModeParameters() {
 		// Binary protocol is more efficient and we support it.
 		sendProperty(session, "supports_binary", Map.of("value", true));
 		
@@ -172,7 +189,7 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	/**
 	 * Forces a server-side redraw and resending of the image over a websocket.
 	 */
-	public synchronized void forceServerRefresh() {
+	public void forceServerRefresh() {
 		sendImageModeParameters();
 		sendProperty(session, "draw", Collections.emptyMap());
 		sendProperty(session, "refresh", Collections.emptyMap());
@@ -184,7 +201,7 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	 * @param width the new width
 	 * @param height the new height
 	 */
-	public synchronized void canvasResized(int width, int height) {
+	public void canvasResized(int width, int height) {
 		if (width > 0 && height > 0) {
 		    sendProperty(session, "resize", Map.of("height", height, "width", width));
 		}

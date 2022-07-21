@@ -32,23 +32,25 @@ public class MatplotlibAllFiguresView {
 	 * @param part the part
 	 */
 	@PostConstruct
-	public void createComposite(final Composite parent, final MPart part) {
-		parent.setLayout(new GridLayout(1, true));
+	public synchronized void createComposite(final Composite parent, final MPart part) {
+		var layout = new GridLayout(1, true);
+		layout.marginWidth = 0;
+		layout.marginHeight = 0;
+		parent.setLayout(layout);
 		this.parent = parent;
 		recreateFigures();
 		primaryFiguresChangedListener = Activator.getPrimaryFigures()
 				.addUiThreadPropertyChangeListener(evt -> recreateFigures());
 	}
 	
-	private void disposeFigures() {
+	private synchronized void disposeFigures() {
 		for (var f : figures) {
 			f.dispose();
 		}
 		figures.clear();
 	}
 	
-	private void recreateFigures() {
-		LOG.info("recreating figures");
+	private synchronized void recreateFigures() {
 		disposeFigures();
 		for (int figNum : Activator.getPrimaryFigures().getValue()) {
 			var figure = new MatplotlibFigure(parent, SWT.NONE, figNum);

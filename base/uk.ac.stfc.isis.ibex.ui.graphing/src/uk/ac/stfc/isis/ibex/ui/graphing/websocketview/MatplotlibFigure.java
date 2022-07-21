@@ -28,8 +28,9 @@ public class MatplotlibFigure extends Composite {
 	
 	private static final Logger LOG = IsisLog.getLogger(MatplotlibFigure.class);
 
-	private Canvas plotCanvas;
-	private Label labelConnectionStatus;
+	private final Canvas plotCanvas;
+	private final Label labelConnectionStatus;
+	private final Composite container;
 	private final MatplotlibFigureViewModel viewModel;
 	
 	private final PropertyChangeListener connectionNameListener;
@@ -40,24 +41,26 @@ public class MatplotlibFigure extends Composite {
 		super(parent, style);
 		
 		viewModel = new MatplotlibFigureViewModel(figureNumber);
-		this.setLayout(new GridLayout(1, false));
+		var layout = new GridLayout(1, false);
+		layout.marginHeight = 0;
+		layout.marginWidth = 0;
+		this.setLayout(layout);
 		
-		final Composite container = new Composite(this, SWT.NONE);
+		container = new Composite(this, SWT.NONE);
 		container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
-		container.setLayout(new GridLayout(1, false));
+		var containerLayout = new GridLayout(1, false);
+		containerLayout.marginWidth = 0;
+		containerLayout.marginHeight = 0;
+		container.setLayout(containerLayout);
 		
 		labelConnectionStatus = new Label(container, SWT.NONE);
 		labelConnectionStatus.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 		labelConnectionStatus.setText(viewModel.getPlotName().getValue());
 		
-		connectionNameListener = viewModel.getPlotName()
-				.addUiThreadPropertyChangeListener(e -> labelConnectionStatus.setText(e.getNewValue().toString()));
-		
 		plotCanvas = new Canvas(container, SWT.NONE);
 		plotCanvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
-
 		image = new Image(Display.getDefault(), 500, 500);
 		
 		plotCanvas.addControlListener(new ControlAdapter() {
@@ -72,6 +75,12 @@ public class MatplotlibFigure extends Composite {
 		
 		viewModel.canvasResized(plotCanvas.getBounds().width, plotCanvas.getBounds().height);
 		
+		connectionNameListener = viewModel.getPlotName()
+				.addUiThreadPropertyChangeListener(e -> {
+					if (!labelConnectionStatus.isDisposed()) {
+					    labelConnectionStatus.setText(e.getNewValue().toString());
+					}
+				});
 		imageListener = viewModel.getImage()
 				.addUiThreadPropertyChangeListener(e -> drawImage((ImageData) e.getNewValue()));
 	}
@@ -80,9 +89,11 @@ public class MatplotlibFigure extends Composite {
 		try {
 			if (!image.isDisposed()) {
 				image.dispose();
+				image = new Image(Display.getDefault(), imageData);
 			}
-			image = new Image(Display.getDefault(), imageData);
-			plotCanvas.redraw();
+			if (!plotCanvas.isDisposed()) {
+			    plotCanvas.redraw();
+			}
 		} catch (Exception e) {
 			LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
 			throw e;
@@ -98,15 +109,9 @@ public class MatplotlibFigure extends Composite {
 	}
 	
 	/**
-	 * Sets focus on the canvas.
-	 */
-	public void focus() {
-		plotCanvas.setFocus();
-	}
-	
-	/**
 	 * Disposes this composite.
 	 */
+	@Override
 	public void dispose() {
 		viewModel.getPlotName().removePropertyChangeListener(connectionNameListener);
 		viewModel.getImage().removePropertyChangeListener(imageListener);
@@ -117,6 +122,8 @@ public class MatplotlibFigure extends Composite {
 		}
 		
 		plotCanvas.dispose();
+		labelConnectionStatus.dispose();
+		container.dispose();
 		super.dispose();
 	}
 }
