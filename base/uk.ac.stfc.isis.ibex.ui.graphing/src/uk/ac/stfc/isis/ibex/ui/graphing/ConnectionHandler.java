@@ -86,6 +86,12 @@ public class ConnectionHandler {
      * Removes the perspective listener.
      */
     public void removePerspectiveListener() {
-        PlatformUI.getWorkbench().getActiveWorkbenchWindow().removePerspectiveListener(openOnSwitchingPerspective);
+    	var workbench = PlatformUI.getWorkbench();
+    	if (workbench != null) {
+    		var activeWindow = workbench.getActiveWorkbenchWindow();
+    		if (activeWindow != null) {
+    			activeWindow.removePerspectiveListener(openOnSwitchingPerspective);
+    		}
+    	}
     }
 }

@@ -24,6 +24,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	private Optional<ImageData> imageData = Optional.empty();
 	
 	private boolean isConnected = false;
+	private boolean isDiffImage = false;
 	
 	private final Runnable tryConnectTask = () -> {
 		if (!isConnected) {
@@ -35,10 +36,25 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 		}
 	};
 	
+	/**
+	 * Constructor.
+	 */
 	public MatplotlibWebsocketModel(MatplotlibFigureViewModel viewModel, String url, int figNum) {
 		this.viewModel = viewModel;
 	    this.workerThread = createWorkerThread();
 	    this.connection = new MatplotlibWebsocketEndpoint(this, url, figNum);
+	    this.plotName = String.format("Figure %d", figNum);
+	    
+	    workerThread.scheduleWithFixedDelay(tryConnectTask, 0, 5, TimeUnit.SECONDS);
+	}
+	
+	/**
+	 * Constructor.
+	 */
+	public MatplotlibWebsocketModel(MatplotlibFigureViewModel viewModel, String url, int figNum, MatplotlibWebsocketEndpoint connection, ScheduledExecutorService workerThread) {
+		this.viewModel = viewModel;
+	    this.workerThread = workerThread;
+	    this.connection = connection;
 	    this.plotName = String.format("Figure %d", figNum);
 	    
 	    workerThread.scheduleWithFixedDelay(tryConnectTask, 0, 5, TimeUnit.SECONDS);
@@ -85,14 +101,27 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 			setConnectionStatus(true);
 		}
 	}
+	
+	/**
+	 * Sets whether the next frame received from the server will be
+	 * a diff or full frame.
+	 * @param isDiffImage whether the next frame is a diff
+	 */
+	public void setIsDiffImage(boolean isDiffImage) {
+		this.isDiffImage = isDiffImage;
+	}
 
 	/**
 	 * Sets the image data received by the websocket.
 	 * @param message the message
 	 */
 	public void setImageData(final InputStream message) {
-	    this.imageData = Optional.of(new ImageData(message));
-	    viewModel.imageUpdated();
+		// We can't handle diff frames easily, so ignore them and we'll catch up
+		// later with an explicit redraw.
+		if (!isDiffImage) {
+		    this.imageData = Optional.of(new ImageData(message));
+		    viewModel.imageUpdated();
+		}
 	}
 	
 	/**
@@ -127,7 +156,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 */
 	public void setPlotName(String newName) {
 		plotName = newName;
-		viewModel.onPlotNameChange(newName);
+		viewModel.onPlotNameChange();
 	}
 	
 	/**

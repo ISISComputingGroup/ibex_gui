@@ -65,6 +65,11 @@ public class MatplotlibFigureViewModel implements Closeable {
 	int canvasWidth = 0;
 	int canvasHeight = 0;
 
+	/**
+	 * Constructor.
+	 * @param url the url serving these plots
+	 * @param figureNumber the figure number
+	 */
 	public MatplotlibFigureViewModel(String url, int figureNumber) {
 		this.model = new MatplotlibWebsocketModel(this, url, figureNumber);
 		
@@ -78,13 +83,36 @@ public class MatplotlibFigureViewModel implements Closeable {
 						    .setNameFormat("MatplotlibFigureViewModel " + model.getServerName() + " update thread %d")
 						    .build());
 		
-		updateExecutor.scheduleWithFixedDelay(this::redrawIfRequired, MAX_DRAW_RATE_MS, MAX_DRAW_RATE_MS, TimeUnit.MILLISECONDS);
-		updateExecutor.scheduleWithFixedDelay(this::updateCanvasSizeIfRequired, MAX_RESIZE_RATE_MS, MAX_RESIZE_RATE_MS, TimeUnit.MILLISECONDS);
-		updateExecutor.scheduleWithFixedDelay(model::forceServerRefresh, FORCED_REDRAW_RATE_MS, FORCED_REDRAW_RATE_MS, TimeUnit.MILLISECONDS);
-
-		model.forceServerRefresh();
+		updateExecutor.scheduleWithFixedDelay(this::redrawIfRequired, 0, MAX_DRAW_RATE_MS, TimeUnit.MILLISECONDS);
+		updateExecutor.scheduleWithFixedDelay(this::updateCanvasSizeIfRequired, 0, MAX_RESIZE_RATE_MS, TimeUnit.MILLISECONDS);
+		updateExecutor.scheduleWithFixedDelay(model::forceServerRefresh, 0, FORCED_REDRAW_RATE_MS, TimeUnit.MILLISECONDS);
 	}
 	
+	/**
+	 * Constructor for testing.
+	 * @param url the url serving these plots
+	 * @param figureNumber the figure number
+	 * @param model the model
+	 * @param executor a threadpool
+	 */
+	public MatplotlibFigureViewModel(String url, int figureNumber, MatplotlibWebsocketModel model, ScheduledExecutorService executor) {
+		this.model = model;
+		
+		plotName = new SettableUpdatedValue<String>(
+				String.format("[Disconnected] %s", model.getPlotName(), figureNumber));
+		image = new SettableUpdatedValue<ImageData>(generateBlankImage());
+		
+		updateExecutor  = executor;
+		
+		updateExecutor.scheduleWithFixedDelay(this::redrawIfRequired, 0, MAX_DRAW_RATE_MS, TimeUnit.MILLISECONDS);
+		updateExecutor.scheduleWithFixedDelay(this::updateCanvasSizeIfRequired, 0, MAX_RESIZE_RATE_MS, TimeUnit.MILLISECONDS);
+		updateExecutor.scheduleWithFixedDelay(model::forceServerRefresh, 0, FORCED_REDRAW_RATE_MS, TimeUnit.MILLISECONDS);
+	}
+	
+	/**
+	 * Gets the model associated with this viewmodel.
+	 * @return the model
+	 */
 	public MatplotlibWebsocketModel getModel() {
 		return model;
 	}
@@ -102,7 +130,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 	 * Changes the name of this plot.
 	 * @param plotName the new name
 	 */
-	public void onPlotNameChange(String plotName) {
+	public void onPlotNameChange() {
 		updatePlotName();
 	}
 	

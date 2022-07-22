@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import jakarta.websocket.ClientEndpoint;
 import jakarta.websocket.ClientEndpointConfig;
@@ -108,6 +109,8 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 			@Override
 			public void onMessage(String message) {
 				try {
+					// Can't deserialize to Map<String, String> because some messages are of type Map<String, List>
+					// So have to deserialize to Object initially and then cast later.
 				    Map<String, Object> content = GSON.fromJson(message, new TypeToken<Map<String, Object>>() {}.getType());
 				    handleJsonMessage(content);
 				} catch (Exception e) {
@@ -125,6 +128,7 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 		    	model.setPlotName((String) content.get("label"));
 		    	break;
 		    case "image_mode":
+		    	model.setIsDiffImage(Objects.equals(content.get("mode"), "diff"));
 		    case "draw":
 		    default:
 		    	// No action required
@@ -182,7 +186,7 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 		// Binary protocol is more efficient and we support it.
 		sendProperty(session, "supports_binary", Map.of("value", true));
 		
-		// We don't want images with transparency, we want full frames each time.
+		// We don't want images with transparency, we want full frames.
 		sendProperty(session, "send_image_mode", Map.of("value", "full"));
 	}
 
