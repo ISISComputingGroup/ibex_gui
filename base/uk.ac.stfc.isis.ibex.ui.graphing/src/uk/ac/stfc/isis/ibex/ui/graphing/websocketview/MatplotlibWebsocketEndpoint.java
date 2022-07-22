@@ -41,15 +41,13 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	private Session session;
 	private static final Gson GSON = new Gson();
 	
-	private final String hostName;
-	private final int port;
+	private final String url;
 	private final int figNum;
 	private final MatplotlibWebsocketModel model;
 	private boolean lastCloseWasAbnormal;
 	
-	public MatplotlibWebsocketEndpoint(MatplotlibWebsocketModel model, String hostName, int port, int figNum) {
-		this.hostName = hostName;
-		this.port = port;
+	public MatplotlibWebsocketEndpoint(MatplotlibWebsocketModel model, String url, int figNum) {
+		this.url = url;
 		this.figNum = figNum;
 		this.model = model;
 	}
@@ -63,7 +61,7 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	}
 	
 	private String getUrl() {
-		return String.format("ws://%s:%d/%d/ws", hostName, port, figNum);
+		return String.format("ws://%s/%d/ws", url, figNum);
 	}
 	
 	/**
@@ -172,7 +170,9 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	@Override
 	public void close() {
 		try {
-			session.close();
+			if (session != null) {
+			    session.close();
+			}
 		} catch (IOException e) {
 			LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
 		}

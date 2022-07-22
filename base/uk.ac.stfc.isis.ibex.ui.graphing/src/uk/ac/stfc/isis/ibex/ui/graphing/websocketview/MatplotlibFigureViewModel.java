@@ -39,14 +39,20 @@ public class MatplotlibFigureViewModel implements Closeable {
 	private final AtomicBoolean serverResizeRequired = new AtomicBoolean(true);
 	
 	/**
-	 * The maximum frequency at which we might draw updates to the plot if new data is available.
+	 * The maximum frequency at which we might draw updates to the plot, if new data is available.
+	 * 
+	 * Setting this too fast could cause excessive CPU consumption if the image is being rapidly updated
+	 * by the server.
 	 */
-	private static final int MAX_DRAW_RATE_MS = 100;
+	private static final int MAX_DRAW_RATE_MS = 250;
 	
 	/**
 	 * The maximum frequency at which we might send resize requests to the server.
+	 * 
+	 * Every N ms, the viewmodel will check whether the size has been updated and send the server
+	 * a resize request if so.
 	 */
-	private static final int MAX_RESIZE_RATE_MS = 250;
+	private static final int MAX_RESIZE_RATE_MS = 500;
 	
 	/**
 	 * The rate at which we ask the server to send new frames, even if no new frames have been pushed.
@@ -59,8 +65,8 @@ public class MatplotlibFigureViewModel implements Closeable {
 	int canvasWidth = 0;
 	int canvasHeight = 0;
 
-	public MatplotlibFigureViewModel(int figureNumber) {
-		this.model = new MatplotlibWebsocketModel(this, "127.0.0.1", 8988, figureNumber);
+	public MatplotlibFigureViewModel(String url, int figureNumber) {
+		this.model = new MatplotlibWebsocketModel(this, url, figureNumber);
 		
 		plotName = new SettableUpdatedValue<String>(
 				String.format("[Disconnected] %s", model.getPlotName(), figureNumber));

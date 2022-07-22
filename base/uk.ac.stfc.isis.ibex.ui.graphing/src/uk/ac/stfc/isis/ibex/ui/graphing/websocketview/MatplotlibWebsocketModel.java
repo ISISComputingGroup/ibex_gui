@@ -9,13 +9,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.graphics.ImageData;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
-	
-	private static final Logger LOG = IsisLog.getLogger(MatplotlibWebsocketModel.class);
 	
 	private final ScheduledExecutorService workerThread;
 	
@@ -39,10 +35,10 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 		}
 	};
 	
-	public MatplotlibWebsocketModel(MatplotlibFigureViewModel viewModel, String hostName, int port, int figNum) {
+	public MatplotlibWebsocketModel(MatplotlibFigureViewModel viewModel, String url, int figNum) {
 		this.viewModel = viewModel;
 	    this.workerThread = createWorkerThread();
-	    this.connection = new MatplotlibWebsocketEndpoint(this, hostName, port, figNum);
+	    this.connection = new MatplotlibWebsocketEndpoint(this, url, figNum);
 	    this.plotName = String.format("Figure %d", figNum);
 	    
 	    workerThread.scheduleWithFixedDelay(tryConnectTask, 0, 5, TimeUnit.SECONDS);
@@ -53,7 +49,11 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 * @return the thread pool
 	 */
 	protected ScheduledExecutorService createWorkerThread() {
-		return Executors.newSingleThreadScheduledExecutor(new ThreadFactoryBuilder().setNameFormat("MatplotLibWebsocketModel %d").build());
+		return Executors.newSingleThreadScheduledExecutor(
+				new ThreadFactoryBuilder()
+				    .setNameFormat("MatplotLibWebsocketModel " + getServerName() + " reconnect thread %d")
+				    .build()
+				);
 	}
 	
 	/**
@@ -160,6 +160,6 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 * @return the server name
 	 */
 	public String getServerName() {
-		return connection.toString();
+		return String.format("%s", connection);
 	}
 }

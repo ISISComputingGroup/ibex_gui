@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.swt.internal.win32.LOGBRUSH;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IPerspectiveListener;
@@ -75,14 +74,18 @@ public class ConnectionHandler {
     
     public void openMplRenderer(final List<Integer> figures, final String url, final boolean isPrimary) {
     	if (isPrimary) {
+    		Activator.setPrimaryUrl(url);
     	    Activator.setPrimaryFigures(figures);
     	} else {
+    		Activator.setSecondaryUrl(url);
     		Activator.setSecondaryFigures(figures);
     	}
     }
     
-    @Override
-    protected void finalize() {
+    /**
+     * Removes the perspective listener.
+     */
+    public void removePerspectiveListener() {
         PlatformUI.getWorkbench().getActiveWorkbenchWindow().removePerspectiveListener(openOnSwitchingPerspective);
     }
 }

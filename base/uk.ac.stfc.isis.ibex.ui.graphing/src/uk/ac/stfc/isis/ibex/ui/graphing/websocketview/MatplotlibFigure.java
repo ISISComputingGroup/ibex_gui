@@ -37,10 +37,10 @@ public class MatplotlibFigure extends Composite {
 	private final PropertyChangeListener imageListener;
 	private Image image;
 
-	public MatplotlibFigure(Composite parent, int style, int figureNumber) {
+	public MatplotlibFigure(Composite parent, int style, String url, int figureNumber) {
 		super(parent, style);
 		
-		viewModel = new MatplotlibFigureViewModel(figureNumber);
+		viewModel = new MatplotlibFigureViewModel(url, figureNumber);
 		var layout = new GridLayout(1, false);
 		layout.marginHeight = 0;
 		layout.marginWidth = 0;
