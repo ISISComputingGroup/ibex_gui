@@ -2882,6 +2882,17 @@
         </categories>
       </value>
     </entry>
->>>>>>> origin/master
+	<entry>
+      <key>Nuclear Instruments Digitiser</key>
+      <value>
+        <type>DAE</type>
+        <path>NucInstDig/main.opi</path>
+        <description>The OPI for Nuclear Instruments Digitiser</description>
+        <macros/>
+        <categories>
+          <category>Monitors</category>
+        </categories>
+      </value>
+    </entry>
   </opis>
 </descriptions>
