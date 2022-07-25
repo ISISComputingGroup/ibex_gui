@@ -71,7 +71,7 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	 */
 	public void connect() throws IOException {
 		WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-		try {			
+		try {
 			final ClientEndpointConfig config = ClientEndpointConfig.Builder.create()
 					.configurator(new Configurator() {
 						@Override
@@ -80,7 +80,7 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 							headers.put("Connection", List.of("keep-alive", "Upgrade"));
 							headers.put("Pragma", List.of("no-cache"));
 						}
-					})
+					 })
 					.build();
 			session = container.connectToServer(this, config, new URI(getUrl()));
 		} catch (DeploymentException | URISyntaxException e) {
@@ -101,6 +101,7 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 		session.addMessageHandler(new MessageHandler.Whole<InputStream>() {
 			@Override
 			public void onMessage(InputStream message) {
+				LoggerUtils.logIfExtraDebug(LOG, String.format("binary message from %s", getUrl(), message));
 				model.setImageData(message);
 			}
 		});
@@ -108,6 +109,7 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 		session.addMessageHandler(new MessageHandler.Whole<String>() {
 			@Override
 			public void onMessage(String message) {
+				LoggerUtils.logIfExtraDebug(LOG, String.format("string message from %s: %s", getUrl(), message));
 				try {
 					// Can't deserialize to Map<String, String> because some messages are of type Map<String, List>
 					// So have to deserialize to Object initially and then cast later.
@@ -129,7 +131,6 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 		    	break;
 		    case "image_mode":
 		    	model.setIsDiffImage(Objects.equals(content.get("mode"), "diff"));
-		    case "draw":
 		    default:
 		    	// No action required
 		    	break;
@@ -166,6 +167,7 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	    propertiesToSend.put("figure_id", Integer.toString(figNum));
 	    
 		remote.sendText(GSON.toJson(propertiesToSend));
+		LoggerUtils.logIfExtraDebug(LOG, String.format("sent %s to %s", propertiesToSend, getUrl()));
 	}
 
 	/**
@@ -195,8 +197,8 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	 */
 	public void forceServerRefresh() {
 		sendImageModeParameters();
-		sendProperty(session, "draw", Collections.emptyMap());
 		sendProperty(session, "refresh", Collections.emptyMap());
+		sendProperty(session, "draw", Collections.emptyMap());
 	}
 	
 	/**

@@ -80,7 +80,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 		updateExecutor  = 
 				Executors.newSingleThreadScheduledExecutor(
 						new ThreadFactoryBuilder()
-						    .setNameFormat("MatplotlibFigureViewModel " + model.getServerName() + " update thread %d")
+						    .setNameFormat("MatplotlibFigureViewModel " + url + " update thread %d")
 						    .build());
 		
 		updateExecutor.scheduleWithFixedDelay(this::redrawIfRequired, 0, MAX_DRAW_RATE_MS, TimeUnit.MILLISECONDS);

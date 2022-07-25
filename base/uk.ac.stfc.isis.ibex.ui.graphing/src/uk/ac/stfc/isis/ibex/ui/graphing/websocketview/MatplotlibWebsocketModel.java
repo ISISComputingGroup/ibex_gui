@@ -1,6 +1,7 @@
 package uk.ac.stfc.isis.ibex.ui.graphing.websocketview;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,7 +42,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 */
 	public MatplotlibWebsocketModel(MatplotlibFigureViewModel viewModel, String url, int figNum) {
 		this.viewModel = viewModel;
-	    this.workerThread = createWorkerThread();
+	    this.workerThread = createWorkerThread(url);
 	    this.connection = new MatplotlibWebsocketEndpoint(this, url, figNum);
 	    this.plotName = String.format("Figure %d", figNum);
 	    
@@ -64,10 +65,10 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 * Creates the thread pool for use by this class.
 	 * @return the thread pool
 	 */
-	protected ScheduledExecutorService createWorkerThread() {
+	private ScheduledExecutorService createWorkerThread(String url) {
 		return Executors.newSingleThreadScheduledExecutor(
 				new ThreadFactoryBuilder()
-				    .setNameFormat("MatplotLibWebsocketModel " + getServerName() + " reconnect thread %d")
+				    .setNameFormat("MatplotLibWebsocketModel " + url + " reconnect thread %d")
 				    .build()
 				);
 	}
