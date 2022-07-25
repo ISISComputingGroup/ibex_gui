@@ -1445,7 +1445,7 @@ $(PV_ROOT)CURRENT</tooltip>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
-    <height>67</height>
+    <height>109</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -1466,7 +1466,7 @@ $(PV_ROOT)CURRENT</tooltip>
     <width>253</width>
     <wuid>-1d6ae919:18234675882:-7f88</wuid>
     <x>258</x>
-    <y>78</y>
+    <y>36</y>
     <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <alarm_pulsing>false</alarm_pulsing>
@@ -1522,8 +1522,8 @@ $(pv_value)</tooltip>
       <widget_type>LED</widget_type>
       <width>25</width>
       <wuid>-1d6ae919:18234675882:-7f6d</wuid>
-      <x>0</x>
-      <y>6</y>
+      <x>72</x>
+      <y>12</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -1580,14 +1580,14 @@ $(pv_value)</tooltip>
       <widget_type>LED</widget_type>
       <width>25</width>
       <wuid>-1d6ae919:18234675882:-7f61</wuid>
-      <x>84</x>
-      <y>6</y>
+      <x>186</x>
+      <y>12</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <auto_size>false</auto_size>
       <background_color>
-        <color red="255" green="255" blue="255" />
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
       <border_color>
         <color red="0" green="128" blue="255" />
@@ -1599,9 +1599,9 @@ $(pv_value)</tooltip>
         <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
       </font>
       <foreground_color>
-        <color red="0" green="0" blue="0" />
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <height>37</height>
+      <height>25</height>
       <horizontal_alignment>1</horizontal_alignment>
       <name>Overcurrent Label</name>
       <rules />
@@ -1611,7 +1611,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <scripts />
-      <text>Current</text>
+      <text>Current:</text>
       <tooltip></tooltip>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -1620,14 +1620,14 @@ $(pv_value)</tooltip>
       <width>49</width>
       <wrap_words>false</wrap_words>
       <wuid>-1d6ae919:18234675882:-7f04</wuid>
-      <x>24</x>
-      <y>0</y>
+      <x>12</x>
+      <y>12</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <auto_size>false</auto_size>
       <background_color>
-        <color red="255" green="255" blue="255" />
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
       </background_color>
       <border_color>
         <color red="0" green="128" blue="255" />
@@ -1639,9 +1639,9 @@ $(pv_value)</tooltip>
         <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
       </font>
       <foreground_color>
-        <color red="0" green="0" blue="0" />
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <height>37</height>
+      <height>25</height>
       <horizontal_alignment>1</horizontal_alignment>
       <name>Overvoltage Label</name>
       <rules />
@@ -1651,7 +1651,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <scripts />
-      <text>Voltage</text>
+      <text>Voltage:</text>
       <tooltip></tooltip>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -1660,8 +1660,8 @@ $(pv_value)</tooltip>
       <width>49</width>
       <wrap_words>false</wrap_words>
       <wuid>-1d6ae919:18234675882:-7ef4</wuid>
-      <x>108</x>
-      <y>0</y>
+      <x>120</x>
+      <y>12</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
@@ -1709,8 +1709,8 @@ $(pv_value)</tooltip>
       <widget_type>Action Button</widget_type>
       <width>61</width>
       <wuid>-1d6ae919:18234675882:-7e97</wuid>
-      <x>162</x>
-      <y>6</y>
+      <x>78</x>
+      <y>48</y>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
