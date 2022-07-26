@@ -97,7 +97,7 @@
     <foreground_color>
       <color red="0" green="0" blue="255" />
     </foreground_color>
-    <height>337</height>
+    <height>529</height>
     <name>XY Graph</name>
     <plot_area_background_color>
       <color red="255" green="255" blue="255" />
@@ -147,7 +147,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trigger_pv_value />
     <visible>true</visible>
     <widget_type>XY Graph</widget_type>
-    <width>445</width>
+    <width>661</width>
     <wuid>-9a1a20d:18218beebf7:-7f47</wuid>
     <x>12</x>
     <y>12</y>
@@ -190,7 +190,7 @@ $(trace_0_y_pv_value)</tooltip>
     <wrap_words>false</wrap_words>
     <wuid>-243772b9:18232503fe7:-7690</wuid>
     <x>18</x>
-    <y>366</y>
+    <y>561</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.spinner" version="1.0.0">
     <actions hook="false" hook_all="false">
@@ -227,8 +227,8 @@ $(trace_0_y_pv_value)</tooltip>
     <horizontal_alignment>1</horizontal_alignment>
     <horizontal_buttons_layout>false</horizontal_buttons_layout>
     <limits_from_pv>true</limits_from_pv>
-    <maximum>Infinity</maximum>
-    <minimum>-Infinity</minimum>
+    <maximum>1.7976931348623157E308</maximum>
+    <minimum>-1.7976931348623157E308</minimum>
     <name>Spinner</name>
     <page_increment>10.0</page_increment>
     <precision>3</precision>
@@ -253,6 +253,6 @@ $(pv_value)</tooltip>
     <width>85</width>
     <wuid>-243772b9:18232503fe7:-764a</wuid>
     <x>108</x>
-    <y>363</y>
+    <y>558</y>
   </widget>
 </display>
