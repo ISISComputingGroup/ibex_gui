@@ -95,10 +95,11 @@ public class AddPanel extends Composite {
   		Composite treeComposite = new Composite(this, SWT.FILL);
   		treeComposite.setLayout(new GridLayout(1, true));
         availableIocsTree = new FilteredTree(treeComposite, SWT.FULL_SELECTION, new IocPatternFilter(), true, true);
-        availableIocsTree.getViewer().setContentProvider(new IOCContentProvider());
-        availableIocsTree.getViewer().setLabelProvider(new IOCLabelProvider());
-        availableIocsTree.getViewer().setComparator(new IOCViewerComparator(Comparator.naturalOrder()));
-        availableIocsTree.getViewer().setInput(viewModel.getAvailableIocs());
+        var viewer = availableIocsTree.getViewer();
+        viewer.setContentProvider(new IOCContentProvider());
+        viewer.setLabelProvider(new IOCLabelProvider());
+        viewer.setComparator(new IOCViewerComparator(Comparator.naturalOrder()));
+        viewer.setInput(viewModel.getAvailableIocs());
         
         GridData gdIocTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
         gdIocTable.heightHint = TREE_HEIGHT;
