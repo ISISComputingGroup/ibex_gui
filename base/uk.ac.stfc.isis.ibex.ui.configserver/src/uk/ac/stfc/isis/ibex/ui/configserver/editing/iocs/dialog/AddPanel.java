@@ -117,10 +117,11 @@ public class AddPanel extends Composite {
      */
     private void bind(final AddPanelViewModel viewModel) {
 
-        availableIocsTree.getViewer().addSelectionChangedListener(new ISelectionChangedListener() {
+    	final var viewer = availableIocsTree.getViewer();
+    	viewer.addSelectionChangedListener(new ISelectionChangedListener() {
            @Override
            public void selectionChanged(SelectionChangedEvent event) {
-               TreeItem selectedIoc = availableIocsTree.getViewer().getTree().getSelection()[0];
+               TreeItem selectedIoc = viewer.getTree().getSelection()[0];
                if (selectedIoc.getData() instanceof EditableIoc) {
             	   viewModel.setSelectedName(selectedIoc.getText());
             	   viewModel.setCurrentSelection(EditableIoc.class.cast(selectedIoc.getData()).getDescription());
@@ -133,7 +134,7 @@ public class AddPanel extends Composite {
         });
         
         // Enable selection by double click.
-        availableIocsTree.getViewer().getTree().addMouseListener(new MouseAdapter() {
+    	viewer.getTree().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseDoubleClick(MouseEvent e) {
                 viewModel.iocConfirmed();
