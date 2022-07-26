@@ -65,4 +65,18 @@ public class IocPatternFilterTest {
 		
 		assertTrue(filter.isLeafMatch(null, editableIoc));
 	}
+	
+	@Test
+	public void WHEN_search_by_non_existant_name_THEN_ioc_no_match() {
+		filter.setPattern("I will not match.");
+		
+		assertFalse(filter.isLeafMatch(null, editableIoc));
+	}
+	
+	@Test
+	public void WHEN_search_by_non_existant_decription_THEN_ioc_no_match() {
+		filter.setPattern("I will not match.");
+		
+		assertFalse(filter.isLeafMatch(null, editableIoc));
+	}
 }

@@ -117,8 +117,9 @@ public class IocPanel extends Composite {
   		treeComposite.setLayout(new GridLayout(1, true));
 
         availableIocsTree = new FilteredTree(treeComposite, SWT.FULL_SELECTION, new IOCPatternFilter(), true, true);
-        availableIocsTree.getViewer().setContentProvider(new IOCContentProvider());
-        availableIocsTree.getViewer().setComparator(new IOCViewerComparator(Comparator.naturalOrder()));
+        final var viewer = availableIocsTree.getViewer();
+        viewer.setContentProvider(new IOCContentProvider());
+        viewer.setComparator(new IOCViewerComparator(Comparator.naturalOrder()));
         
         TreeViewerColumn mainColumn = new TreeViewerColumn(availableIocsTree.getViewer(), SWT.NONE);
         mainColumn.getColumn().setText("Ioc");
@@ -140,20 +141,20 @@ public class IocPanel extends Composite {
         availableIocs = new Hashtable<String, IOCList>();
         availableIocs = updateHashtable(rows);
     	
-    	availableIocsTree.getViewer().setInput(availableIocs);
-    	availableIocsTree.getViewer().getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-    	availableIocsTree.getViewer().getTree().setHeaderVisible(true);
-    	availableIocsTree.getViewer().getTree().setLinesVisible(true);
+        viewer.setInput(availableIocs);
+        viewer.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        viewer.getTree().setHeaderVisible(true);
+        viewer.getTree().setLinesVisible(true);
     	mainColumn.getColumn().pack();
 		
 		this.control = control;
 		control.iocs().addPropertyChangeListener(updateTable, true);
 		
-		availableIocsTree.getViewer().addSelectionChangedListener(new ISelectionChangedListener() {
+		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent arg0) {
-				if (availableIocsTree.getViewer().getTree().getSelection().length != 0) {
-					Object selection = availableIocsTree.getViewer().getTree().getSelection()[0].getData();
+				if (viewer.getTree().getSelection().length != 0) {
+					Object selection = viewer.getTree().getSelection()[0].getData();
 					if (selection instanceof IocState) {
 						buttons.setIoc(IocState.class.cast(selection));
 						return;

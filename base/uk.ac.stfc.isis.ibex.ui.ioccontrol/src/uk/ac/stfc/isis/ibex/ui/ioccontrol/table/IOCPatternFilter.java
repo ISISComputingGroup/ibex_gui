@@ -36,9 +36,12 @@ public class IOCPatternFilter extends PatternFilter {
     	setIncludeLeadingWildcard(true);
     }
     
+    /**
+     * Check the IocState description matches the search pattern so we can also filter by parent.
+     * Check the IOCList name to filter by parent.
+     */
     @Override
 	public boolean isLeafMatch(Viewer viewer, Object element) {
-    	// Check if description also matches search pattern for more detailed searching.
     	if (element instanceof IocState) {
     		IocState iocState = (IocState) element;
     		return super.wordMatches(iocState.getName()) || super.wordMatches(iocState.getDescription());

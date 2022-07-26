@@ -35,9 +35,11 @@ public class IocPatternFilter extends PatternFilter {
     	setIncludeLeadingWildcard(true);
     }
     
+    /**
+     * Check if the EditableIoc description matches the search pattern so we can also filter by parent.
+     */
     @Override
     public boolean isLeafMatch(Viewer viewer, Object element) {
-    	// Check if description also matches search pattern for more detailed searching.
     	if (element instanceof EditableIoc) {
     		EditableIoc editableIoc = (EditableIoc) element;
     		return super.wordMatches(editableIoc.getName()) || super.wordMatches(editableIoc.getDescription());

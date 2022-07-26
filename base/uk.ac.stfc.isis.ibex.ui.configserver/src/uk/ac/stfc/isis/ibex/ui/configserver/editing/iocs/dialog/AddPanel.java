@@ -95,7 +95,7 @@ public class AddPanel extends Composite {
   		Composite treeComposite = new Composite(this, SWT.FILL);
   		treeComposite.setLayout(new GridLayout(1, true));
         availableIocsTree = new FilteredTree(treeComposite, SWT.FULL_SELECTION, new IocPatternFilter(), true, true);
-        var viewer = availableIocsTree.getViewer();
+        final var viewer = availableIocsTree.getViewer();
         viewer.setContentProvider(new IOCContentProvider());
         viewer.setLabelProvider(new IOCLabelProvider());
         viewer.setComparator(new IOCViewerComparator(Comparator.naturalOrder()));
