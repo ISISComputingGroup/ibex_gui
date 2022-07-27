@@ -198,7 +198,7 @@ public class PreferenceSupplier {
     /**
      * The default URL for the Script Generator manual page
      */
-    private static final String DEFAULT_SCRIPT_GENERATOR_MANUAL_URL = "http://shadow.nd.rl.ac.uk/ibex_user_manual/Using-the-Script-Generator";
+    private static final String DEFAULT_SCRIPT_GENERATOR_MANUAL_URL = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Using-the-Script-Generator";
     
     /**
      * Defines the URL of the Script Generator page on the user manual
