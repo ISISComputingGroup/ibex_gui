@@ -233,7 +233,7 @@ $(pv_value)</tooltip>
       <color red="192" green="192" blue="192" />
     </foreground_color>
     <height>25</height>
-    <image_file>Check Mark.svg</image_file>
+    <image_file>../icons_for_opis/Check Mark.svg</image_file>
     <name>Image</name>
     <no_animation>false</no_animation>
     <permutation_matrix>
@@ -290,7 +290,7 @@ $(pv_value)</tooltip>
       <color red="192" green="192" blue="192" />
     </foreground_color>
     <height>25</height>
-    <image_file>Cross.svg</image_file>
+    <image_file>../icons_for_opis/Cross.svg</image_file>
     <name>Image_1</name>
     <no_animation>false</no_animation>
     <permutation_matrix>
