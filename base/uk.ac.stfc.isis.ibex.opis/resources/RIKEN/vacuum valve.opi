@@ -37,7 +37,7 @@
     <actions hook="false" hook_all="false" />
     <alarm_pulsing>false</alarm_pulsing>
     <align_to_nearest_second>false</align_to_nearest_second>
-    <auto_size>true</auto_size>
+    <auto_size>false</auto_size>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
       <color red="240" green="240" blue="240" />
@@ -62,9 +62,9 @@
     <height>39</height>
     <name>Image Boolean Indicator</name>
     <no_animation>false</no_animation>
-    <off_image>vacuum valve off.png</off_image>
+    <off_image>Valve close.svg</off_image>
     <off_label>OFF</off_label>
-    <on_image>vacuum valve on.png</on_image>
+    <on_image>Valve Open.svg</on_image>
     <on_label>ON</on_label>
     <pv_name></pv_name>
     <pv_value />
@@ -76,7 +76,7 @@
     </scale_options>
     <scripts />
     <show_boolean_label>false</show_boolean_label>
-    <stretch_to_fit>false</stretch_to_fit>
+    <stretch_to_fit>true</stretch_to_fit>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <transparency>true</transparency>
@@ -84,6 +84,114 @@ $(pv_value)</tooltip>
     <widget_type>Image Boolean Indicator</widget_type>
     <width>49</width>
     <wuid>5c50f11c:18171e246e0:-7d1f</wuid>
+    <x>0</x>
+    <y>0</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolIndicator" version="1.0.0">
+    <actions hook="false" hook_all="false" />
+    <alarm_pulsing>false</alarm_pulsing>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <auto_size>false</auto_size>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <bit>-1</bit>
+    <boolean_label_position>0</boolean_label_position>
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <data_type>0</data_type>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <height>39</height>
+    <name>Image Boolean Indicator_1</name>
+    <no_animation>false</no_animation>
+    <off_image>Valve close.svg</off_image>
+    <off_label>OFF</off_label>
+    <on_image>Valve Fault.svg</on_image>
+    <on_label>ON</on_label>
+    <pv_name></pv_name>
+    <pv_value />
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <show_boolean_label>false</show_boolean_label>
+    <stretch_to_fit>true</stretch_to_fit>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <transparency>true</transparency>
+    <visible>false</visible>
+    <widget_type>Image Boolean Indicator</widget_type>
+    <width>49</width>
+    <wuid>6ecd4efb:182395a62b1:-7feb</wuid>
+    <x>0</x>
+    <y>0</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolIndicator" version="1.0.0">
+    <actions hook="false" hook_all="false" />
+    <alarm_pulsing>false</alarm_pulsing>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <auto_size>false</auto_size>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <bit>-1</bit>
+    <boolean_label_position>0</boolean_label_position>
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <data_type>0</data_type>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <height>39</height>
+    <name>Image Boolean Indicator_2</name>
+    <no_animation>false</no_animation>
+    <off_image>Valve close.svg</off_image>
+    <off_label>OFF</off_label>
+    <on_image>Valve Sweeping.svg</on_image>
+    <on_label>ON</on_label>
+    <pv_name></pv_name>
+    <pv_value />
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <show_boolean_label>false</show_boolean_label>
+    <stretch_to_fit>true</stretch_to_fit>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <transparency>true</transparency>
+    <visible>false</visible>
+    <widget_type>Image Boolean Indicator</widget_type>
+    <width>49</width>
+    <wuid>6ecd4efb:182395a62b1:-7f65</wuid>
     <x>0</x>
     <y>0</y>
   </widget>
