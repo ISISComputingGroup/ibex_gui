@@ -73,7 +73,16 @@
     <x>0</x>
     <y>-1</y>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="true" hook_all="false">
+        <action type="OPEN_DISPLAY">
+          <path>../TPG300.opi</path>
+          <macros>
+            <include_parent_macros>true</include_parent_macros>
+          </macros>
+          <mode>0</mode>
+          <description></description>
+        </action>
+      </actions>
       <background_color>
         <color red="240" green="240" blue="240" />
       </background_color>
@@ -721,7 +730,16 @@ $(pv_value)</tooltip>
       <y>38</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false">
+        <action type="OPEN_DISPLAY">
+          <path>../TPG300.opi</path>
+          <macros>
+            <include_parent_macros>true</include_parent_macros>
+          </macros>
+          <mode>0</mode>
+          <description></description>
+        </action>
+      </actions>
       <background_color>
         <color red="240" green="240" blue="240" />
       </background_color>
