@@ -2798,7 +2798,7 @@
         <description>Technix PSU</description>
         <macros>
           <macro>
-            <name>IOC_NAME</name> 
+            <name>IOC_NAME</name>
             <description>The technix PV prefix (e.g. TECHNIX_01)</description>
             <default>TECHNIX_01</default>
           </macro>
@@ -2825,7 +2825,8 @@
       <key>DG645</key>
       <value>
         <categories>
-        	<category>Delay Generators</category></categories>
+          <category>Delay Generators</category>
+        </categories>
         <type>DELAY_GENERATORS</type>
         <path>DG645/dg645.opi</path>
         <description>The OPI for the DG645</description>
@@ -2841,7 +2842,7 @@
     <entry>
       <key>Biologic SP240/SP300 Potentiostat</key>
       <value>
-        <categories />
+        <categories/>
         <type>UNKNOWN</type>
         <path>biologic/SP300.opi</path>
         <description>The OPI for the Biologic SP240/SP300</description>
@@ -2857,7 +2858,7 @@
     <entry>
       <key>WEBCAM</key>
       <value>
-        <categories />
+        <categories/>
         <type>UNKNOWN</type>
         <path>webcam/webcam.opi</path>
         <description>The OPI for Webcams</description>
@@ -2870,7 +2871,7 @@
         </macros>
       </value>
     </entry>
-	<entry>
+    <entry>
       <key>GP2 Detector</key>
       <value>
         <type>DAE</type>
@@ -2882,7 +2883,7 @@
         </categories>
       </value>
     </entry>
-	<entry>
+    <entry>
       <key>Nuclear Instruments Digitiser</key>
       <value>
         <type>DAE</type>
@@ -2892,6 +2893,21 @@
         <categories>
           <category>Monitors</category>
         </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>TJMPER</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>tjmper.opi</path>
+        <description>The OPI for the TJMPER</description>
+        <macros>
+          <macro>
+            <name>TJMPER</name>
+            <description>The TJMPER PV prefix (e.g. TJMPER_01)</description>
+          </macro>
+        </macros>
       </value>
     </entry>
   </opis>
