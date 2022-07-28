@@ -38,6 +38,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
@@ -75,6 +76,7 @@ public class GroupsPanel extends Composite {
 	
 	private boolean showHiddenBlocks = false;
 	private boolean sortGroupsBySize = false;
+	private final IHandlerService handlerService;
 	
 	private Optional<List<DisplayGroup>> displayGroups;
 	
@@ -87,8 +89,9 @@ public class GroupsPanel extends Composite {
      * @param style
      *            The SWT style of the panel.
      */
-	public GroupsPanel(Composite parent, int style) {
+	public GroupsPanel(Composite parent, int style, IHandlerService handlerService) {
 		super(parent, SWT.NONE);
+		this.handlerService = handlerService;
 		FillLayout fLayout = new FillLayout(SWT.HORIZONTAL);
 		fLayout.marginHeight = 0;
 		fLayout.marginWidth = 0;
@@ -202,7 +205,7 @@ public class GroupsPanel extends Composite {
 	 * @return Created group widget
 	 */
 	private Group groupWidget(DisplayGroup group, Composite parent) {
-        Group groupWidget = new Group(parent, SWT.NONE, group, this);
+        Group groupWidget = new Group(parent, SWT.NONE, group, this, this.handlerService);
 		groupWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		groupWidget.pack();
         groupWidget.setMenu(contextMenu);
