@@ -24,6 +24,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
 
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.commands.NotEnabledException;
+import org.eclipse.core.commands.NotHandledException;
+import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.jface.action.Action;
@@ -34,12 +38,15 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Item;
+import org.eclipse.ui.handlers.IHandlerService;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views.PerspectiveSwitcherView;
 import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.Presenter;
 import uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.EditBlockHandler;
@@ -57,12 +64,12 @@ public class BlocksMenu extends MenuManager {
     private static final String COMPONENT_SUFFIX = "component";
     private static final String CONFIGURATION_SUFFIX = "configuration";
     private static final String DISPLAY_BLOCK_HISTORY = "Display block history...";
+    private static final String VIEW_RUN_CONTROL_SETTINGS = "View run control settings";
 	private static final String LOGPLOTTER_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.logplotter";
 
 	private IAction editBlockAction;
 	private MenuManager logSubMenu;
 	private MenuManager noLogPlotterSubMenu;
-	
 
 	/**
 	 * This is an inner anonymous class inherited from SameTypeWriter with added functionality
@@ -113,12 +120,27 @@ public class BlocksMenu extends MenuManager {
      *
      * @param displayBlock the selected block
      */
-    public BlocksMenu(DisplayBlock displayBlock) {
+    public BlocksMenu(DisplayBlock displayBlock, IHandlerService handlerService) {
 		this.block = displayBlock;
 		
 		Configurations.getInstance().server().setCurrentConfig().addOnCanWriteChangeListener(readOnlyListener);
 
         add(new GroupMarker(BLOCK_MENU_GROUP));
+          
+        final IAction viewRunControlSettingsAction = new Action(VIEW_RUN_CONTROL_SETTINGS) {
+			@Override
+			public void run() {
+				try {
+					handlerService.executeCommand("uk.ac.stfc.isis.ibex.e4.client.command.runcontrol", null);
+				} catch (ExecutionException | NotDefinedException | NotEnabledException | NotHandledException e) {
+					LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
+				}
+//				RunControlServer rcServer = RunControlActivator.getInstance().getServer();
+//				EditRunControlDialog dialog = new EditRunControlDialog(Display.getDefault().getActiveShell());
+//				dialog.open();
+			}
+		};
+		appendToGroup(BLOCK_MENU_GROUP, viewRunControlSettingsAction);
         
         noLogPlotterSubMenu = new MenuManager(DISPLAY_BLOCK_HISTORY);
         noLogPlotterSubMenu.add(new Action("Enable log plotter perspective to add block to log plotter") { });
@@ -185,6 +207,8 @@ public class BlocksMenu extends MenuManager {
                 new EditBlockHandler(block.getName()).execute(null); //TODO e4 migrate: This will be added as a command which includes a shell at that time make this correct
             }
         };
+        
+        
 	}
     
     /**
