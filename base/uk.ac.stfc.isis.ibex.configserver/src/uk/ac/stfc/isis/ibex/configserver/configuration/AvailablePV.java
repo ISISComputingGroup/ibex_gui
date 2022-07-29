@@ -28,27 +28,6 @@ public class AvailablePV {
 	private String description;
 	
 	/**
-	 * Create a new AvailablePV.
-	 * 
-	 * @param name PV name
-	 * @param description PV description
-	 */
-	public AvailablePV(String name, String description) {
-		this.name = name;
-		this.description = description;
-	}
-	
-	/**
-	 * Clone an existing AvailablePV.
-	 * 
-	 * @param other existing AvailablePV to clone
-	 */
-	public AvailablePV(AvailablePV other) {
-		this.name = other.name;
-		this.description = other.description;
-	}
-	
-	/**
 	 * 
 	 * @return PV name
 	 */

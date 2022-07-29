@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.dashboard.widgets;
 
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 /**
  * An enum for describing the colour associated with each run state.
@@ -59,17 +58,6 @@ public enum RunState {
 	
 	private final String name;
 	private final Color color;
-
-    /**
-     * Constructor.
-     * 
-     * @param name the name for the colour
-     * @param color the colour
-     */
-	RunState(String name, Color color) {
-		this.name = name;
-		this.color = color;
-	}
 	
     /**
      * Constructor.
@@ -79,17 +67,6 @@ public enum RunState {
 	RunState(Color color) {
 		this.name = this.toString();
 		this.color = color;
-	}
-	
-    /**
-     * Constructor that uses RGB values to define the colour.
-     * 
-     * @param r red component
-     * @param g green component
-     * @param b blue component
-     */
-	RunState(int r, int g, int b) {
-		this(SWTResourceManager.getColor(r, g, b));
 	}
 	
     /**

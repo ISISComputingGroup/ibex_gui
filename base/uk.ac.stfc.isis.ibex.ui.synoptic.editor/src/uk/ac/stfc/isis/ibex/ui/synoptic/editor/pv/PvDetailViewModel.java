@@ -38,10 +38,6 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.blockselector.BlockSelector;
  * This is the view model that contains the logic for the pv details panel.
  */
 public class PvDetailViewModel extends ModelObject {
-    /**
-     * The text to display when no selection has been made.
-     */
-    public static final String NO_SELECTION_TEXT = "Select a PV to view/edit details";
 
     private boolean selectionVisible;
     private String pvName = "";
@@ -172,7 +168,7 @@ public class PvDetailViewModel extends ModelObject {
      * @param mode
      *            whether it is read or write
      */
-    public void updateSelectedPV(String name, String address, IO mode) {
+    private void updateSelectedPV(String name, String address, IO mode) {
         if (selectedPv == null) {
             return;
         }
@@ -188,7 +184,7 @@ public class PvDetailViewModel extends ModelObject {
 
         model.updatePvList();
     }
-
+    
     /**
      * Open a dialog for picking a PV out of the known list.
      *
@@ -197,12 +193,12 @@ public class PvDetailViewModel extends ModelObject {
     public void openPvDialog(Shell shell) {
         PvSelector selectPV = new PvSelector();
         selectPV.safeExecute(shell);
-
+    
         if (selectPV.isConfirmed()) {
             setPvAddress(selectPV.getPvAddress());
         }
     }
-
+    
     /**
      * Open a dialog for picking a PV out of the block list.
      *
@@ -215,10 +211,12 @@ public class PvDetailViewModel extends ModelObject {
         } catch (Exception e) {
             LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
         }
-
+    
         if (selectPV.isConfirmed()) {
             setPvName(selectPV.getBlockName());
             setPvAddress(selectPV.getPvAddress());
         }
     }
+    
+
 }

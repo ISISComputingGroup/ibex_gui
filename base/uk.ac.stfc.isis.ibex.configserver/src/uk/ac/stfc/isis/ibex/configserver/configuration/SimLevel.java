@@ -41,21 +41,4 @@ public enum SimLevel {
      * Simulation level is Record.
      */
     RECSIM;
-
-    private static final List<String> ALLTOSTRING;
-    static {
-        ALLTOSTRING = new ArrayList<>();
-        for (SimLevel level : SimLevel.values()) {
-            ALLTOSTRING.add(level.toString());
-        }
-    }
-
-    /**
-     * Returns the enum keys as a list of strings.
-     * 
-     * @return The enum keys.
-     */
-    public static List<String> allToString() {
-        return Collections.unmodifiableList(ALLTOSTRING);
-    }
 }

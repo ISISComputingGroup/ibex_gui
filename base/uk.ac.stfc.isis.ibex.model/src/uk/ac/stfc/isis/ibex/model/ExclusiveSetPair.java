@@ -71,19 +71,6 @@ public class ExclusiveSetPair<T> {
 	}
 
     /**
-     * Gets the set that contains both selected and unselected items.
-     * 
-     * @return The set of all items.
-     */
-	public Set<T> all() {
-		Set<T> all = new LinkedHashSet<>();
-		all.addAll(selected);
-		all.addAll(unselected);
-		
-		return Collections.unmodifiableSet(all);
-	}
-	
-    /**
      * Moves a given item between sets.
      * 
      * @param item
@@ -114,106 +101,8 @@ public class ExclusiveSetPair<T> {
 			move(item);
 		}
 	}
-	
-    /**
-     * Get whether the item is contained in either set.
-     * 
-     * @param item
-     *            The item to check for.
-     * @return True if the item is contained in one of the sets.
-     */
-	public boolean contains(T item) {
-		return selected.contains(item) || unselected.contains(item);
-	}
-	
-    /**
-     * Removes an item from the sets.
-     * 
-     * @param item
-     *            The item to remove.
-     * @return True if the item was removed.
-     */
-	public boolean remove(T item) {
-		return selected.remove(item) || unselected.remove(item);
-	}
-	
-	private void removeAll(Set<T> items) {
-		for (T item : items) {
-			remove(item);
-		}
-	}
-	
-    /**
-     * Adds an item to the unselected set.
-     * 
-     * @param item
-     *            The item to add.
-     */
-	public void addUnselected(T item) {
-		if (contains(item)) {
-			return;
-		}
-		
-		unselected.add(item);
-	}
 
-    /**
-     * Adds an item to the selected set.
-     * 
-     * @param item
-     *            The item to add.
-     */
-	public void addSelected(T item) {
-		if (contains(item)) {
-			return;
-		}
-		
-		selected.add(item);
-	}
-
-    /**
-     * Adds the items to the unselected set if they are not already present in
-     * either set.
-     * 
-     * @param items the items to add
-     */
-	public void addAllAsUnselected(Collection<T> items) {
-		for (T item : items) {
-			addUnselected(item);
-		}
-	}
-
-    /**
-     * Adds the items to the selected set if they are not already present in
-     * either set.
-     * 
-     * @param items the items to add
-     */
-	public void addAllAsSelected(Collection<T> items) {
-		for (T item : items) {
-			addSelected(item);
-		}
-	}
-
-    /**
-     * Adds any items that are not already present to the unselected set and
-     * removes any items that are not part of the new collection.
-     * 
-     * @param items the items
-     */
-	public void synchronise(Collection<T> items) {	
-		addAllAsUnselected(items);		
-		removeAll(missing(items));
-	}
-
-	private Set<T> missing(Collection<T> items) {
-		Set<T> missing = new LinkedHashSet<>(all());
-		missing.removeAll(items);
-		
-		return missing;
-	}
-	
-	private static <T> void move(T item, Set<T> from, Set<T> to) {
+    private static <T> void move(T item, Set<T> from, Set<T> to) {
 		from.remove(item);
 		to.add(item);
 	}

@@ -33,14 +33,6 @@ public class TargetNode  {
 		this.item = item;
 	}
 	
-	public TargetNode(TargetNode other) {
-		this(other.item);
-		previous = other.previous;
-		up = other.up;
-		next = other.next;
-		down = other.down;
-	}
-	
 	public Target item() {
 		return item;
 	}

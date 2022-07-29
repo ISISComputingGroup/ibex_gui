@@ -26,6 +26,9 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreenDescriptionToXmlConverter;
@@ -36,7 +39,11 @@ import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 
 @SuppressWarnings( {"checkstyle:methodname", "unchecked"} )
+@RunWith(MockitoJUnitRunner.class)
 public class DeviceScreensDescriptionToXmlConverterTest {
+	
+	@Mock
+	private Observable<String> schema;
 
     @Test
     public void GIVEN_device_screens_description_WHEN_it_is_converted_to_xml_THEN_result_xml_is_correct() {
@@ -57,7 +64,6 @@ public class DeviceScreensDescriptionToXmlConverterTest {
         DeviceScreensDescription deviceScreensDescription = new DeviceScreensDescription();
         deviceScreensDescription.addDevice(deviceDescription);
 
-        Observable schema = mock(Observable.class);
         when(schema.getValue()).thenReturn(null);
         DeviceScreenDescriptionToXmlConverter converter = new DeviceScreenDescriptionToXmlConverter(schema);
 

@@ -25,7 +25,6 @@ import uk.ac.stfc.isis.ibex.ui.configserver.commands.NewBlockHandler;
  */
 public class BeamInfoMenu extends MenuManager {
 
-	FacilityPV facilityPV;
 	private static final String LOG_PLOTTER_PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.logplotter";
 	private static final Logger LOG = IsisLog.getLogger(BeamInfoMenu.class);
 

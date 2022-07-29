@@ -95,13 +95,4 @@ public abstract class BaseComponent implements Component {
 	protected void addComponent(Component component) {
 		components.add(component);
 	}
-	
-	/**
-	 * Get the description of this component.
-	 * 
-	 * @return The component's description.
-	 */
-	protected ComponentDescription description() {
-		return description;
-	}
 }

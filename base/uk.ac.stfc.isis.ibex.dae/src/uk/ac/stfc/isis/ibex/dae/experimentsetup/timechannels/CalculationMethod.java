@@ -54,13 +54,6 @@ public enum CalculationMethod {
 	CalculationMethod(String text) {
 		this.text = text;
 	}
-	 
-	/**
-	 * @return a list of all enum values as strings.
-	 */
-	public static List<String> allToString() {
-		return Collections.unmodifiableList(ALLTOSTRING);
-	}
 	
 	@Override
 	public String toString() {

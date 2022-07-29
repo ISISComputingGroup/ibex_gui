@@ -70,22 +70,6 @@ public class EditableGroup extends Group {
 	}
 
 	/**
-	 * Allows to make a collection of blocks easier to edit.
-	 * @param blocks
-	 *             The collection of blocks to edit.
-	 * @return
-	 *             The blocks that are now easier to edit.
-	 */
-	public Collection<EditableBlock> makeEditable(Collection<Block> blocks) {
-		List<EditableBlock> editable = new ArrayList<>();
-		for (Block block : blocks) {
-			editable.add(new EditableBlock(block));
-		}
-
-		return editable;
-	}
-
-	/**
 	 * Returns a collection of blocks that are unselected.
 	 * @return
 	 *         A collection of blocks that are unselected.

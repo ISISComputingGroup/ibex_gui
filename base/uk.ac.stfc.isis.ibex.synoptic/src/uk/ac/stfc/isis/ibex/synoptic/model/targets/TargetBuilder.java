@@ -41,15 +41,6 @@ public class TargetBuilder {
 	 * Create a builder to build targets for the given component.
 	 * 
 	 * @param component The component to build the target for.
-	 */
-	public TargetBuilder(Component component) {
-		this(component, null);
-	}
-	
-	/**
-	 * Create a builder to build targets for the given component.
-	 * 
-	 * @param component The component to build the target for.
 	 * @param description The description of the target to build with.
 	 */
 	public TargetBuilder(Component component, TargetDescription description) {

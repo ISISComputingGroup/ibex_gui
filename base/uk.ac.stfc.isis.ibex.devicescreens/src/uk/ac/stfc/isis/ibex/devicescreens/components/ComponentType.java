@@ -204,15 +204,6 @@ public enum ComponentType {
     }
 
     /**
-     * Instantiates a new component type based on a target.
-     *
-     * @param target the target
-     */
-    ComponentType(Target target) {
-	this.target = target;
-    }
-
-    /**
      * Gets the target of this component type .
      *
      * @return the target

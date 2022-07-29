@@ -45,7 +45,6 @@ public class Help extends Closer implements BundleActivator {
 
 	private Observables observables;
 	private UpdatedValue<String> serverRevision;
-	private UpdatedValue<String> date;
 	
     /**
      * Constructor that creates and registers the observables.
@@ -54,7 +53,6 @@ public class Help extends Closer implements BundleActivator {
 		instance = this;
         observables = new Observables();
 		serverRevision = registerForClose(new TextUpdatedObservableAdapter(observables.serverRevision));
-		date = registerForClose(new TextUpdatedObservableAdapter(observables.serverDate));
 	}
 	
 	/*
@@ -88,13 +86,6 @@ public class Help extends Closer implements BundleActivator {
      */
 	public UpdatedValue<String> revision() {
 		return serverRevision;
-	}
-	
-    /**
-     * @return An updating string that holds the date of the server revision.
-     */
-	public UpdatedValue<String> date() {
-		return date;
 	}
 
     /**

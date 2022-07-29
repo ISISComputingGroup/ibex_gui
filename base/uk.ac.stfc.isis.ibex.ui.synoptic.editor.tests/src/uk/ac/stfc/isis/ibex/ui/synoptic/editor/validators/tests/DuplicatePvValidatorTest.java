@@ -29,16 +29,17 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.RecordType;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.validators.DuplicatePvValidator;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.validators.SynopticPvValidator;
 
 /**
  * Tests for the DuplicatePvValidator
  */
+@RunWith(MockitoJUnitRunner.class)
 public class DuplicatePvValidatorTest {
     private DuplicatePvValidator validator;
     private PV pvOne;

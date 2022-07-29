@@ -62,16 +62,6 @@ public enum TimeRegimeMode {
 	}
 	
 	/**
-	 * Creates a TimeRegimeMode from a string representation.
-	 *
-	 * @param text the text
-	 * @return the time regime mode
-	 */
-	public static TimeRegimeMode fromString(String text) {
-		return lookup.containsKey(text) ? lookup.get(text) : BLANK;
-	}
-	
-	/**
 	 * Instantiates a new time regime mode.
 	 *
 	 * @param mode the mode

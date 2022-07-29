@@ -361,12 +361,4 @@ public class LogDisplayModel extends ModelObject
 		return isCorrect;
 	
     }
-    
-    /**
-     * return the visibility of error message.
-     * @return true if error message needs to be visible
-     */
-    public boolean geterrorVisibility() {
-    	return errorVisibility;
-    }
 }

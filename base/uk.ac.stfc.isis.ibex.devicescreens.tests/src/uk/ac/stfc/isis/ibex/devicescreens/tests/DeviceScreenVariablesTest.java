@@ -31,6 +31,9 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import uk.ac.stfc.isis.ibex.devicescreens.DeviceScreenVariables;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
@@ -49,6 +52,7 @@ import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
  * This class tests DeviceScreensVariables.
  */
 @SuppressWarnings({ "checkstyle:methodname", "unchecked" })
+@RunWith(MockitoJUnitRunner.class)
 public class DeviceScreenVariablesTest {
 
     private static final String PV_PREFIX = "PVPrefix";
@@ -66,19 +70,24 @@ public class DeviceScreenVariablesTest {
     private DeviceScreenVariables variables;
     private ObservableFactory switchingObservableFactory;
     private WritableFactory switchingWritableFactory;
-    private SwitchableObservable mockSwitchableObservable;
+    
+    @Mock
+    private SwitchableObservable<String> mockSwitchableObservable;
+    
+    @Mock
+    private SwitchableObservable<String> defaultSwitchableObservable;
+
+    @Mock
+    private Writable<String> defaultWritable;
 
     @Before
     public void set_up() {
         // Arrange
-        SwitchableObservable defaultSwitchableObservable = mock(SwitchableObservable.class);
-        mockSwitchableObservable = mock(SwitchableObservable.class);
 
         switchingObservableFactory = mock(ObservableFactory.class);
         when(switchingObservableFactory.getSwitchableObservable((ChannelType<String>) any(ChannelType.class), anyString()))
                 .thenReturn(defaultSwitchableObservable);
 
-        Writable defaultWritable = mock(Writable.class);
         switchingWritableFactory = mock(WritableFactory.class);
         when(switchingWritableFactory.getSwitchableWritable((ChannelType<String>) any(ChannelType.class), anyString()))
                 .thenReturn(defaultWritable);
@@ -137,7 +146,7 @@ public class DeviceScreenVariablesTest {
     @Test
     public void GIVEN_new_variable_WHEN_set_device_screens_THEN_PV_is_written_to() throws IOException {
         // Arrange
-        Writable expectedDestination = mock(Writable.class);
+        Writable<String> expectedDestination = mock(Writable.class);
         when(switchingWritableFactory.getSwitchableWritable((ChannelType<String>) any(ChannelType.class),
                 eq(PV_PREFIX + BLOCKSERVER_ADDRESS + SET_SCREENS_SUFFIX))).thenReturn(expectedDestination);
 

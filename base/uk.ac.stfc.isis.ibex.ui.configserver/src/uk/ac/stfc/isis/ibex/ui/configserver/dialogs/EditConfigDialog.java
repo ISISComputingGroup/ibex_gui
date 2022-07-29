@@ -191,14 +191,10 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 		return openEditBlockDialog;
 	}
 
-	public String pvName() {
-		return pvName;
-	}
-
 	/**
 	 * Binding for save and save as button.
 	 */
-	public void bind() {
+	private void bind() {
 		DataBindingContext bindingContext = new DataBindingContext();
 		if (saveButton != null) {
 			bindingContext.bindValue(WidgetProperties.enabled().observe(saveButton),

@@ -30,16 +30,6 @@ public class ServerStatus {
 	private String status;
 	
 	/**
-	 * Returns the status of the config server.
-	 * 
-	 * @return
-	 *         The status of the config server.
-	 */
-	public String status() {
-		return status;
-	}
-	
-	/**
 	 * Returns true if the config server is busy.
 	 * 
 	 * @return
@@ -49,6 +39,9 @@ public class ServerStatus {
 		return !Strings.isNullOrEmpty(status);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		return status;

@@ -196,24 +196,6 @@ public abstract class DuplicateChecker<T extends INamedInComponent> {
     }
 
     /**
-     * Finds if duplicates for a given name exist in the config to check.
-     * This method is not currently used anywhere, but is left in in case it is useful.
-     * 
-     * @param name
-     *            The item name to check for.
-     * @return The name of duplicate items.
-     */
-    public String findDuplicate(String name) {
-        addComponents(filterNative(components));
-        for (String key : allItems.keySet()) {
-            if (name.equalsIgnoreCase(key)) {
-                return key;
-            }
-        }
-        return null;
-    }
-
-    /**
      * Filters a list of components to only contain the ones that are part of
      * the currently set base configuration.
      * 

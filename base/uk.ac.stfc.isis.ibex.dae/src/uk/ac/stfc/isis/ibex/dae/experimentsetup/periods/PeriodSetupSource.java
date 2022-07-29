@@ -56,15 +56,6 @@ public enum PeriodSetupSource {
 	PeriodSetupSource(String text) {
 		this.text = text;
 	}
-	 
-	/**
-	 * Gets all of the period setup sources as a list of strings.
-	 *
-	 * @return the list
-	 */
-	public static List<String> allToString() {
-		return Collections.unmodifiableList(ALLTOSTRING);
-	}
 	
 	@Override
 	public String toString() {

@@ -21,15 +21,11 @@
  */
 package uk.ac.stfc.isis.ibex.managermode;
 
-import org.eclipse.swt.graphics.Color;
-
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
-import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
-import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 /**
  *
@@ -56,19 +52,12 @@ public abstract class ManagerModeObserver implements Closable {
         }
     };
 
-    protected final SettableUpdatedValue<String> text;
-    protected final SettableUpdatedValue<Color> color;
-    protected final SettableUpdatedValue<Boolean> availability;
-
     /**
      * Constructor for a manager mode observer.
      * @param observable the observable to use
      */
     public ManagerModeObserver(
             ForwardingObservable<Boolean> observable) {
-        text = new SettableUpdatedValue<>();
-        color = new SettableUpdatedValue<>();
-        availability = new SettableUpdatedValue<>();
         
         subscription = observable.subscribe(observer);
     }
@@ -91,29 +80,5 @@ public abstract class ManagerModeObserver implements Closable {
      * Called when the manager mode PV becomes disconnected.
      */
     protected abstract void setUnknown();
-
-    /** 
-     * The updated value for the text.
-     * @return the updated value for the text
-     */
-    public UpdatedValue<String> text() {
-        return text;
-    }
-
-    /**
-     * The updated value for the color.
-     * @return the updated value for the color
-     */
-    public UpdatedValue<Color> color() {
-        return color;
-    }
-
-    /**
-     * The updated value for the availability.
-     * @return the updated value for the availability
-     */
-    public UpdatedValue<Boolean> availability() {
-        return availability;
-    }
 
 }

@@ -42,16 +42,6 @@ public class DaeViewModel extends Closer {
 	
 	private static final String DEFAULT_TITLE = "DAE Control Program";
 	
-	
-    /** What tab is active in the DAE view. */
-    enum ActiveTab {
-        /** Detector diagnostics is active tab. */
-        DETECTOR_DIAGNOSTICS,
-
-        /** Tab which we are not interested is active. */
-        OTHER;
-    }
-	
 	private RunSummaryViewModel runSummary = registerForClose(new RunSummaryViewModel());
 	private ExperimentSetupViewModel experimentSetup = new ExperimentSetupViewModel();
 	private RunInformationViewModel runInformation = registerForClose(new RunInformationViewModel(Dae.getInstance().observables()));
@@ -147,15 +137,6 @@ public class DaeViewModel extends Closer {
      */
     public DetectorDiagnosticsViewModel detectorDiagnostics() {
         return detectorDiagnosticsViewModel;
-    }
-    
-    /**
-     * Returns the dae title.
-     * @return
-     *          The dae title.
-     */
-    public UpdatedValue<String> title() {
-    	return daeTitle;
     }
     
 }

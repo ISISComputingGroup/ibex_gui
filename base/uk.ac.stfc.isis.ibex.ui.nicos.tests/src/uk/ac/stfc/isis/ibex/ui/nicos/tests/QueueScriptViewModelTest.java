@@ -4,9 +4,11 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
@@ -17,6 +19,7 @@ import static org.mockito.Mockito.*;
 import java.util.Arrays;
 import java.util.List;
 
+@RunWith(MockitoJUnitRunner.class)
 public class QueueScriptViewModelTest {
 	
 	private NicosModel model;
@@ -26,7 +29,7 @@ public class QueueScriptViewModelTest {
 	private QueuedScript script3 = createMockedScript("ID3", "Script 3", "Code 3");
 	
 	@Captor
-    ArgumentCaptor<List> setQueueCaptor = ArgumentCaptor.forClass(List.class);
+    private ArgumentCaptor<List<String>> setQueueCaptor;
 	
 	private QueuedScript createMockedScript(String id, String name, String code) {
 		QueuedScript script = mock(QueuedScript.class);
@@ -88,7 +91,7 @@ public class QueueScriptViewModelTest {
 		vm.moveScript(true);
 		
 		// Assert
-		verify(model, times(0)).sendReorderedQueue(Mockito.anyList());
+		verify(model, times(0)).sendReorderedQueue(Mockito.anyListOf(String.class));
 	}
 	
 	@Test
@@ -101,7 +104,7 @@ public class QueueScriptViewModelTest {
 		vm.moveScript(false);
 		
 		// Assert
-		verify(model, times(0)).sendReorderedQueue(Mockito.anyList());
+		verify(model, times(0)).sendReorderedQueue(Mockito.anyListOf(String.class));
 	}
 	
 	@Test

@@ -133,20 +133,6 @@ public class ConfigInfo {
     }
     
     /**
-     * Returns just the descriptions of all ConfigInfo objects passed in excluding
-     * that of the current configuration/component.
-     * 
-     * @param infos
-     *            The list of ConfigInfos
-     * @return The list of configuration/component descriptions without the current one
-     */
-    public static List<String> descriptionsWithoutCurrent(Collection<ConfigInfo> infos) {
-        List<String> filteredDescriptions = descriptions(infos);
-        filteredDescriptions.remove(Configurations.getInstance().display().displayCurrentConfig().getValue().description());
-        return filteredDescriptions;
-    }
-    
-    /**
      * Reduces a list of ConfigInfo objects to a list of their descriptions only.
      * 
      * @param infos

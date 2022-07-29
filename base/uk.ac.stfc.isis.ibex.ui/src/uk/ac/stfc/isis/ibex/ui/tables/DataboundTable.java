@@ -116,19 +116,6 @@ public abstract class DataboundTable<TRow> extends Composite {
     viewer = createViewer(emptyRow);
     table = viewer.getTable();
     }
-    /**
-     * Instantiates a new databound table with default table style.
-     *
-     * Default table style is: vertical scroll, with border, full selection of
-     * items and selection is hidden on loss of focus
-     * 
-     * @param parent the parent
-     * @param style the style
-     * @wbp.parser.constructor
-     */
-    public DataboundTable(Composite parent, int style) {
-	this(parent, style, SWT.FULL_SELECTION | SWT.BORDER | SWT.HIDE_SELECTION, false);
-    }
 
     /**
      * Sets the data rows content.
