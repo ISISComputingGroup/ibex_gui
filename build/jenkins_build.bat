@@ -48,7 +48,7 @@ if "%RELEASE%" == "YES" (
 ) else (
     set RELEASE_VERSION=devel-%GIT_COMMIT:~0,7%
 )
-if "%RELEASE%" == "YES" set INSTALLBASEDIR=%RELEASE_DIR%\Client
+if "%RELEASE%" == "YES" set INSTALLBASEDIR=%RELEASE_DIR%\Client_E4
 if "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%
 
 if not "%RELEASE%" == "YES" (
