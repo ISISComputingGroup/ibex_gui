@@ -178,8 +178,7 @@ Stopped.png designed by ISIS Computing Group
 
 Script Generator ->uk.ac.stfc.isis.ibex.ui.scriptgenerator/icons
 
-scriptgenerator_32 designed by ISIS Computing Group
-
+scriptgenerator_24 designed by Stockio at www.flaticon.com
 
 
 
