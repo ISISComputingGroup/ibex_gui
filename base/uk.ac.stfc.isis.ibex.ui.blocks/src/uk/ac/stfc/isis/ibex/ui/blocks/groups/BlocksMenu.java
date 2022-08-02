@@ -32,14 +32,10 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Item;
-
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views.PerspectiveSwitcherView;
-import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.Presenter;
 import uk.ac.stfc.isis.ibex.ui.blocks.views.BlocksView;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.EditBlockHandler;
@@ -58,31 +54,18 @@ public class BlocksMenu extends MenuManager {
     private static final String CONFIGURATION_SUFFIX = "configuration";
     private static final String DISPLAY_BLOCK_HISTORY = "Display block history...";
 	private static final String LOGPLOTTER_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.logplotter";
+	
+	private static boolean canWrite = false;
 
 	private IAction editBlockAction;
 	private MenuManager logSubMenu;
 	private MenuManager noLogPlotterSubMenu;
 	
-
-	/**
-	 * This is an inner anonymous class inherited from SameTypeWriter with added functionality
-	 * for modifying the command if the underlying configuration PV cannot be written to.
-	 */
-    protected final OnCanWriteChangeListener readOnlyListener = canWrite -> Display.getDefault().asyncExec(() -> {
-        if (canWrite) {
-        	boolean buttonPresent = false;
-			for (Item item : getMenuItems()) {
-				if (item.getText().contains(EDIT_BLOCK_PREFIX)) {
-					buttonPresent = true;
-				}
-			}
-            if (find(editBlockAction.getId()) == null && buttonPresent) {
-                appendToGroup(BLOCK_MENU_GROUP, editBlockAction);
-            }
-        } else {
-            remove(editBlockAction.getId());
-        }
-    });
+	
+	static {
+		Configurations.getInstance().server().setCurrentConfig().addOnCanWriteChangeListener(canWrite -> BlocksMenu.canWrite = canWrite);
+	}
+	
 
 	private IAction createAddToPlotAction(String plotName) {
 		return new Action("Add to new axis") {
@@ -116,8 +99,6 @@ public class BlocksMenu extends MenuManager {
     public BlocksMenu(DisplayBlock displayBlock) {
 		this.block = displayBlock;
 		
-		Configurations.getInstance().server().setCurrentConfig().addOnCanWriteChangeListener(readOnlyListener);
-
         add(new GroupMarker(BLOCK_MENU_GROUP));
         
         noLogPlotterSubMenu = new MenuManager(DISPLAY_BLOCK_HISTORY);
@@ -160,6 +141,22 @@ public class BlocksMenu extends MenuManager {
 
         appendToGroup(BLOCK_MENU_GROUP, logSubMenu);
         
+        String editBlockLabel = EDIT_BLOCK_PREFIX;
+        if (this.block.inComponent()) {
+            editBlockLabel += COMPONENT_SUFFIX;
+        } else {
+            editBlockLabel += CONFIGURATION_SUFFIX;
+        }
+        
+        editBlockAction = new Action(editBlockLabel) {
+            @Override
+            public void run() {
+                new EditBlockHandler(block.getName()).execute(null); //TODO e4 migrate: This will be added as a command which includes a shell at that time make this correct
+            }
+        };
+        
+        appendToGroup(BLOCK_MENU_GROUP, editBlockAction);
+        
         this.addMenuListener(new IMenuListener() {
 			@Override
 			public void menuAboutToShow(IMenuManager manager) {
@@ -170,21 +167,12 @@ public class BlocksMenu extends MenuManager {
 					logSubMenu.setVisible(false);
 					noLogPlotterSubMenu.setVisible(true);
 				}
+				editBlockAction.setEnabled(canWrite);
 				updateAll(true);
 			}
         });
-        String editBlockLabel = EDIT_BLOCK_PREFIX;
-        if (this.block.inComponent()) {
-            editBlockLabel += COMPONENT_SUFFIX;
-        } else {
-            editBlockLabel += CONFIGURATION_SUFFIX;
-        }
-        editBlockAction = new Action(editBlockLabel) {
-            @Override
-            public void run() {
-                new EditBlockHandler(block.getName()).execute(null); //TODO e4 migrate: This will be added as a command which includes a shell at that time make this correct
-            }
-        };
+
+
 	}
     
     /**
@@ -203,10 +191,5 @@ public class BlocksMenu extends MenuManager {
 			}
 		}
 		return false;
-    }
-    
-    @Override
-    protected void finalize() {
-        Configurations.getInstance().server().setCurrentConfig().removeOnCanWriteChangeListener(readOnlyListener);
     }
 }
