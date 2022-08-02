@@ -61,8 +61,8 @@ public class BlocksMenu extends MenuManager {
 	private MenuManager logSubMenu;
 	private MenuManager noLogPlotterSubMenu;
 	
-	
 	static {
+		// Set a listener for the edit host configuration/component menu item based on server write access status.
 		Configurations.getInstance().server().setCurrentConfig().addOnCanWriteChangeListener(canWrite -> BlocksMenu.canWrite = canWrite);
 	}
 	
@@ -141,19 +141,7 @@ public class BlocksMenu extends MenuManager {
 
         appendToGroup(BLOCK_MENU_GROUP, logSubMenu);
         
-        String editBlockLabel = EDIT_BLOCK_PREFIX;
-        if (this.block.inComponent()) {
-            editBlockLabel += COMPONENT_SUFFIX;
-        } else {
-            editBlockLabel += CONFIGURATION_SUFFIX;
-        }
-        
-        editBlockAction = new Action(editBlockLabel) {
-            @Override
-            public void run() {
-                new EditBlockHandler(block.getName()).execute(null); //TODO e4 migrate: This will be added as a command which includes a shell at that time make this correct
-            }
-        };
+        createEditBlockLabelAndAction();
         
         appendToGroup(BLOCK_MENU_GROUP, editBlockAction);
         
@@ -173,6 +161,22 @@ public class BlocksMenu extends MenuManager {
         });
 
 
+	}
+
+	private void createEditBlockLabelAndAction() {
+		String editBlockLabel = EDIT_BLOCK_PREFIX;
+        if (this.block.inComponent()) {
+            editBlockLabel += COMPONENT_SUFFIX;
+        } else {
+            editBlockLabel += CONFIGURATION_SUFFIX;
+        }
+        
+        editBlockAction = new Action(editBlockLabel) {
+            @Override
+            public void run() {
+                new EditBlockHandler(block.getName()).execute(null); //TODO e4 migrate: This will be added as a command which includes a shell at that time make this correct
+            }
+        };
 	}
     
     /**
