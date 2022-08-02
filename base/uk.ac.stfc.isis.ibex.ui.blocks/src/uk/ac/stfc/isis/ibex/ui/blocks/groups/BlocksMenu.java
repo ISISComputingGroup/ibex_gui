@@ -57,7 +57,6 @@ public class BlocksMenu extends MenuManager {
 	
 	private static boolean canWrite = false;
 
-	private IAction editBlockAction;
 	private MenuManager logSubMenu;
 	private MenuManager noLogPlotterSubMenu;
 	
@@ -141,7 +140,7 @@ public class BlocksMenu extends MenuManager {
 
         appendToGroup(BLOCK_MENU_GROUP, logSubMenu);
         
-        createEditBlockLabelAndAction();
+        final var editBlockAction = createEditBlockLabelAndAction();
         
         appendToGroup(BLOCK_MENU_GROUP, editBlockAction);
         
@@ -159,11 +158,9 @@ public class BlocksMenu extends MenuManager {
 				updateAll(true);
 			}
         });
-
-
 	}
 
-	private void createEditBlockLabelAndAction() {
+	private IAction createEditBlockLabelAndAction() {
 		String editBlockLabel = EDIT_BLOCK_PREFIX;
         if (this.block.inComponent()) {
             editBlockLabel += COMPONENT_SUFFIX;
@@ -171,7 +168,7 @@ public class BlocksMenu extends MenuManager {
             editBlockLabel += CONFIGURATION_SUFFIX;
         }
         
-        editBlockAction = new Action(editBlockLabel) {
+        return new Action(editBlockLabel) {
             @Override
             public void run() {
                 new EditBlockHandler(block.getName()).execute(null); //TODO e4 migrate: This will be added as a command which includes a shell at that time make this correct
