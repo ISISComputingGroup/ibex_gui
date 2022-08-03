@@ -2894,5 +2894,15 @@
         </categories>
       </value>
     </entry>
+	<entry>
+      <key>Rules tests (developer)</key>
+      <value>
+        <type>DAE</type>
+        <path>rules_tests.opi</path>
+        <description>Developer system-testing OPI for rules engines</description>
+        <macros/>
+        <categories/>
+      </value>
+    </entry>
   </opis>
 </descriptions>
