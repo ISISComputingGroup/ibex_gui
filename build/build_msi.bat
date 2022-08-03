@@ -3,6 +3,7 @@ setlocal
 set "MYDIR=%~dp0"
 
 @echo MSI Kit build disabled
+type NUL >%MSINAME%.msi
 exit / b 0
 
 @echo %TIME% Building MSI Kit
