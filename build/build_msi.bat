@@ -2,10 +2,6 @@
 setlocal
 set "MYDIR=%~dp0"
 
-@echo MSI Kit build disabled
-type NUL >%MSINAME%.msi
-exit / b 0
-
 @echo %TIME% Building MSI Kit
 
 REM FILESROOT is the directory above the CLIENTDIR directory
@@ -13,7 +9,7 @@ set "FILESROOT=%1"
 set "CLIENTDIR=%2"
 set "MSINAME=%3"
 
-for /D %%I in ( "\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\Binaries\wixToolset" ) do SET "WIXBIN=%%I"
+for /D %%I in ( "c:\Program Files (x86)\WiX Toolset v3.*" ) do SET "WIXBIN=%%I\bin"
 
 set IBEXMAJOR=1
 set IBEXMINOR=0
