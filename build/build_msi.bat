@@ -1,6 +1,7 @@
 @echo off
 setlocal
 set "MYDIR=%~dp0"
+set "PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\dotnet\;C:\Program Files (x86)\dotnet"
 
 @echo %TIME% Building MSI Kit
 
