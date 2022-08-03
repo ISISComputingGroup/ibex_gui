@@ -9,7 +9,7 @@ set "FILESROOT=%1"
 set "CLIENTDIR=%2"
 set "MSINAME=%3"
 
-for /D %%I in ( "c:\Program Files (x86)\WiX Toolset v3.*" ) do SET "WIXBIN=%%I\bin"
+for /D %%I in ( "\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\Binaries\wixToolset" ) do SET "WIXBIN=%%I"
 
 set IBEXMAJOR=1
 set IBEXMINOR=0
