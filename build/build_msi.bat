@@ -2,6 +2,9 @@
 setlocal
 set "MYDIR=%~dp0"
 
+@echo MSI Kit build disabled
+exit / b 0
+
 @echo %TIME% Building MSI Kit
 
 REM FILESROOT is the directory above the CLIENTDIR directory
