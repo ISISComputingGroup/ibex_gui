@@ -1311,6 +1311,16 @@
       </value>
     </entry>
     <entry>
+      <key>Riken Magnet PSU</key>
+      <value>
+        <type>RIKEN_magnet_PSUs</type>
+        <path>RIKEN/RIKEN_magnet_PSUs.opi</path>
+        <description>The OPI for the Riken Magnet PSU Synoptic..</description>
+        <macros/>
+        <categories/>
+      </value>
+    </entry>
+    <entry>
       <key>Jaws</key>
       <value>
         <type>JAWS</type>
