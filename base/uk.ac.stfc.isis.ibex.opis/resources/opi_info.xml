@@ -2912,5 +2912,23 @@
         </categories>
       </value>
     </entry>
+    <entry>
+      <key>Temperature Jump Apparatus</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>tjmper.opi</path>
+        <description>The OPI for the TJMPER</description>
+        <macros>
+          <macro>
+            <name>TJMPER</name>
+            <description>The TJMPER PV prefix (e.g. TJMPER_01)</description>
+            <default>TJMPER_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+      </value>
+    </entry>
   </opis>
 </descriptions>
