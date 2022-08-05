@@ -19,29 +19,19 @@
 
 package uk.ac.stfc.isis.ibex.opis;
 
-import java.util.Set;
-
-import org.apache.logging.log4j.Logger;
+import java.util.Objects;
 import org.csstudio.opibuilder.OPIBuilderPlugin;
 import org.csstudio.opibuilder.script.RhinoWithFastPathScriptStore;
-import org.csstudio.opibuilder.script.ScriptStoreFactory;
 import org.csstudio.opibuilder.scriptUtil.PVUtil;
-import org.eclipse.swt.widgets.Display;
-import org.mozilla.javascript.ClassShutter;
-import org.mozilla.javascript.Context;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * The activator for the plug-in.
- *
  */
 public class Opi implements BundleActivator {
 	
-	private static final Logger LOG = IsisLog.getLogger(Opi.class);
-
 	private static BundleContext context;
 
 	private static Opi instance;
@@ -52,18 +42,33 @@ public class Opi implements BundleActivator {
 	
 	private static final java.util.logging.Logger CSS_LOGGER = OPIBuilderPlugin.getLogger();
 	
+	/**
+	 * Create the singleton instance of this class.
+	 */
 	public Opi() {
 		instance = this;
 	}
 	
+	/**
+	 * Gets the singleton instance of this class.
+	 * @return the instance
+	 */
 	public static Opi getDefault() {
 		return instance;
 	}
 	
+	/**
+	 * Get the OPI provider.
+	 * @return the provider
+	 */
 	public OpiProvider opiProvider() {
 		return opiProvider;
 	}
 	
+	/**
+	 * Get the opi descriptions provider.
+	 * @return the provider
+	 */
 	public DescriptionsProvider descriptionsProvider() {
 		return descProvider;
 	}
@@ -71,22 +76,6 @@ public class Opi implements BundleActivator {
 	static BundleContext getContext() {
 		return context;
 	}
-	
-	/**
-	 * Java packages which are allowed to be accessed from JS rules running in CSS.
-	 * 
-	 * Any java class not in this list will not be allowed to be imported from JS.
-	 */
-	private static final Set<String> ALLOWED_JS_PACKAGE_NAMES = Set.of(
-		"org.csstudio.opibuilder.scriptUtil.ColorFontUtil",
-		"org.csstudio.opibuilder.scriptUtil.ConsoleUtil",
-		"org.csstudio.opibuilder.scriptUtil.DataUtil",
-		"org.csstudio.opibuilder.scriptUtil.FileUtil",
-		"org.csstudio.opibuilder.scriptUtil.GUIUtil",
-		"org.csstudio.opibuilder.scriptUtil.PVUtil",
-		"org.csstudio.opibuilder.scriptUtil.ScriptUtil",
-		"org.csstudio.opibuilder.scriptUtil.WidgetUtil"
-	);
 
 	/*
 	 * (non-Javadoc)
@@ -97,44 +86,8 @@ public class Opi implements BundleActivator {
 		
 		IsisLog.hookJavaLogger(CSS_LOGGER);
 		
-		// Unfortunately this has to be done on the UI thread as CSS will execute all rules
-		// in GUI thread.
-		Display.getDefault().asyncExec(() -> {
-			try {
-				Context ctx = ScriptStoreFactory.getRhinoContext();
-				// -1 is interpreted mode - don't need to compile as our JS
-				// scripts are tiny.
-				ctx.setOptimizationLevel(-1);
-						
-				// We won't be attaching a debugger to a CSS rule, so no need
-				// to generate debug information
-				ctx.setGeneratingDebug(false);
-				ctx.setGeneratingSource(false);
-				
-				ctx.setClassShutter(new ClassShutter() {
-					/**
-					 * A class shutter avoids rhino trying dynamic imports of
-				     * a, then a.b, then a.b.c, then a.b.c.ActualClass while doing
-				     * a javascript import of a.b.c.ActualClass.
-				     * 
-				     * Any class not listed in ALLOWED_JS_PACKAGE_NAMES cannot be
-				     * used from within rules in javascript.
-				     * In practice all of our JS rules use default CSS behaviours,
-				     * which just use o.c.o.scriptUtil.* classes.
-				     * 
-					 * @param name the name js wants to load
-					 * @return whether it is a valid name.
-					 */
-					@Override
-					public boolean visibleToScripts(String name) {
-						return ALLOWED_JS_PACKAGE_NAMES.contains(name);
-					}
-				});
-				
-			} catch (Exception e) {
-				LoggerUtils.logErrorWithStackTrace(LOG, "rhino init failed: " + e.getMessage(), e);
-			}
-		});
+		// Change this to true to log all scripts which use the slow (JS interpreter) path
+		RhinoWithFastPathScriptStore.setLogScriptsUsingJS(false);
 		
 		addFastPathHandlers();
 	}
@@ -144,12 +97,17 @@ public class Opi implements BundleActivator {
 		// Some handlers called frequently by reflectometry OPIs.
 		RhinoWithFastPathScriptStore.addFastPathHandler("pv1==0&&pv0==0", 
 				pvs -> PVUtil.getDouble(pvs[0]) == 0.0 && PVUtil.getDouble(pvs[1]) == 0.0);
+		
 		RhinoWithFastPathScriptStore.addFastPathHandler("pv0==1 && pv1==0", 
 				pvs -> PVUtil.getDouble(pvs[0]) == 1.0 && PVUtil.getDouble(pvs[1]) == 0.0);
+		
 		RhinoWithFastPathScriptStore.addFastPathHandler("pvStr0==\"North\" || pvStr0==\"South\"", 
-				pvs -> PVUtil.getString(pvs[0]) == "North" || PVUtil.getString(pvs[0]) == "South");
+				pvs -> (Objects.equals(PVUtil.getString(pvs[0]), "North")) || 
+				       (Objects.equals(PVUtil.getString(pvs[0]), "South")));
+				
 		RhinoWithFastPathScriptStore.addFastPathHandler("pvStr0!=\"North\" && pvStr0!=\"South\"", 
-				pvs -> PVUtil.getString(pvs[0]) != "North" && PVUtil.getString(pvs[0]) != "South");
+				pvs -> (!Objects.equals(PVUtil.getString(pvs[0]), "North")) && 
+				       (!Objects.equals(PVUtil.getString(pvs[0]), "South")));
 		
 	}
 

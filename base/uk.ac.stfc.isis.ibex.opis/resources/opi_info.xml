@@ -2897,9 +2897,9 @@
 	<entry>
       <key>Rules tests (developer)</key>
       <value>
-        <type>DAE</type>
+        <type>DEBUG</type>
         <path>rules_tests.opi</path>
-        <description>Developer system-testing OPI for rules engines</description>
+        <description>Developer system-testing OPI for CS-Studio rules engines</description>
         <macros/>
         <categories/>
       </value>
