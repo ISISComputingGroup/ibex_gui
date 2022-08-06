@@ -44,6 +44,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.dae.Dae;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
@@ -147,7 +148,7 @@ public class ExperimentSetup {
 				Boolean isUpdating = inSettingsChange.getValue();
 				if (isUpdating != null) {
 					if (!isUpdating) {
-	                	Display.getDefault().asyncExec(new Runnable() {
+	                	UIThreadUtils.asyncExec(new Runnable() {
 	                	    public void run() {
 	        	                try {
 	        	                    applyChangesToUI();
@@ -203,7 +204,7 @@ public class ExperimentSetup {
         resetChangeLabelsListener = new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                Display.getDefault().asyncExec(new Runnable() {
+                UIThreadUtils.asyncExec(new Runnable() {
                     public void run() {
                         resetChangeLabels();
                     }
@@ -285,7 +286,7 @@ public class ExperimentSetup {
     }
 
     private void configureExperimentSetupForRunState(final Boolean isRunning) {
-        DISPLAY.asyncExec(new Runnable() {
+        UIThreadUtils.asyncExec(new Runnable() {
             @Override
             public void run() {
                 setChildrenEnabled(isRunning != null && !isRunning);

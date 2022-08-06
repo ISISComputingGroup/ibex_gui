@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 import uk.ac.stfc.isis.ibex.nicos.NicosErrorState;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
@@ -125,7 +126,7 @@ public class ScriptGeneratorNicosViewModel implements PropertyChangeListener {
 	}
 	
 	private void updateButtonEnablement() {
-		Display.getDefault().asyncExec(() -> {
+		UIThreadUtils.asyncExec(() -> {
 			formatButtonsBasedOnStatus(dynamicScriptingManager.getDynamicScriptingStatus());
 		});
 	}

@@ -44,6 +44,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.logger.IRecentLog;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 
 /**
  * Dialog box which contains the Console log, to be accessed from the Help menu.
@@ -100,7 +101,7 @@ public class ConsoleLogDialog extends TitleAreaDialog {
 	}
 
 	private void setText(final String str) {
-		Display.getDefault().asyncExec(() -> text.setText(str));
+		UIThreadUtils.asyncExec(() -> text.setText(str));
 	}
 
 	/**

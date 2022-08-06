@@ -34,7 +34,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
@@ -44,6 +43,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 import uk.ac.stfc.isis.ibex.epics.pv.PvState;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 
 /**
  * Provides the display of the groups, which contain the selected blocks. Allows
@@ -210,15 +210,6 @@ public class Group extends Composite {
 		glGroup.numColumns = computeNumColumns(groupHeight);
 		reorderRows();
 		hideSpacers();
-		Display.getDefault().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				if (!isDisposed() && !getParent().isDisposed()) {
-					getParent().getParent().layout();
-					getParent().getParent().pack();
-				}
-			}
-		});
 	}
 
 	/**

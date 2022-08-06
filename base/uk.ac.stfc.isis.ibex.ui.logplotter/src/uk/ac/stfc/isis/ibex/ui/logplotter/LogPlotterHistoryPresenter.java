@@ -43,7 +43,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
-
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.PVHistoryPresenter;
 
 /**
@@ -82,7 +82,7 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
      *            the editor to close
      */
     private static void closeDataBrowser(final DataBrowserEditor dataBrowser) {
-        Display.getDefault().asyncExec(
+        UIThreadUtils.asyncExec(
                 () -> dataBrowser.getEditorSite().getWorkbenchWindow().getActivePage().closeEditor(dataBrowser, false));
     }
 
@@ -180,7 +180,7 @@ public class LogPlotterHistoryPresenter implements PVHistoryPresenter {
                 if (dataCount < DATA_COUNT_LIMIT) {
                     dataCount++;
                 } else if (autoscale) {
-                    Display.getDefault().asyncExec(() -> axis.setAutoScale(false));
+                    UIThreadUtils.asyncExec(() -> axis.setAutoScale(false));
                     autoscale = false;
                 }
             }

@@ -42,6 +42,7 @@ import org.python.pydev.debug.newconsole.env.PydevIProcessFactory;
 import org.python.pydev.debug.newconsole.env.PydevIProcessFactory.PydevConsoleLaunchInfo;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
 /**
@@ -101,7 +102,7 @@ public class GeniePythonConsoleFactory extends PydevConsoleFactory {
 	@Override
 	public void createConsole(String additionalInitialComands) {
 		
-		Display.getDefault().syncExec(new Runnable() {
+		UIThreadUtils.syncExec(new Runnable() {
 		    public void run() {
 		    	IConsoleManager manager = ConsolePlugin.getDefault().getConsoleManager();
 		    	boolean continueWithNewConsole = true;

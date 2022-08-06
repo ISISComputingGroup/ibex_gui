@@ -27,6 +27,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.WorkbenchException;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 
 /**
  * Oversees perspective switching.
@@ -99,7 +100,7 @@ public class PerspectiveSwitcher {
 		return new Runnable() {
 			@Override
 			public void run() {
-				display.syncExec(runnable);
+				UIThreadUtils.syncExec(runnable);
 			}
 		};
 	}

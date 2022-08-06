@@ -36,7 +36,6 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Button;
@@ -45,6 +44,7 @@ import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.ui.UIUtils;
@@ -241,14 +241,14 @@ public class SummaryPanel extends Composite {
 
             @Override
             public void update(final Collection<SynopticInfo> value, Exception error, boolean isConnected) {
-            	Display.getDefault().asyncExec(() -> updateSynopticNamesInComboBox(value));
+            	UIThreadUtils.asyncExec(() -> updateSynopticNamesInComboBox(value));
             }
 
             @Override
             public void onValue(Collection<SynopticInfo> value) {
             	// The event comes from PV manager's threadpool but the method
             	// needs to manipulate UI elements so need to explicitly run on UI thread.
-                Display.getDefault().asyncExec(() -> updateSynopticNamesInComboBox(value));
+                UIThreadUtils.asyncExec(() -> updateSynopticNamesInComboBox(value));
             }
 
             /**

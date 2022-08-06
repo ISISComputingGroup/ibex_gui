@@ -26,6 +26,7 @@ import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;
 import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
@@ -91,7 +92,7 @@ public class MatplotlibOpiTargetView extends OpiTargetView {
 		    id = ID_SECONDARY_PLOT;
 		}
 			
-		Display.getDefault().syncExec(() -> {
+		UIThreadUtils.syncExec(() -> {
 			try {
 			    displayOpi(TARGET, id);
 			} catch (OPIViewCreationException e) {

@@ -17,6 +17,7 @@ import org.eclipse.ui.browser.IWebBrowser;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorManual;
 import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.ScriptGeneratorAboutDialogBox;
 
@@ -101,7 +102,7 @@ public class ScriptGeneratorHelpMenuItems extends SelectionAdapter {
     private void bindManualUrl() {
 	    CompletableFuture.supplyAsync(() -> ScriptGeneratorManual.getUserManualUrl())
 		    .thenAccept(url -> {
-		        Display.getDefault().asyncExec(() -> {
+		        UIThreadUtils.asyncExec(() -> {
 		        	manualUrl = url;
 		        });
 	    });

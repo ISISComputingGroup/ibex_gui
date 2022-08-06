@@ -41,13 +41,13 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.CalculationMethod;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegime;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeUnit;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.ui.UIUtils;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.DaeExperimentSetupCombo;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.DaeExperimentSetupRadioButton;
@@ -78,8 +78,6 @@ public class TimeChannelsPanel extends Composite {
     private Composite timeChannelFilePanel;
     private Composite timeUnitPanel;
     private final Map<String, PropertyChangeListener> viewModelListeners = new HashMap<>();
-
-	private static final Display DISPLAY = Display.getCurrent();
 
     private static final int TOP_MARGIN_WIDTH = 5;
     private static final int HORIZONTAL_SPACING = 100;
@@ -157,7 +155,7 @@ public class TimeChannelsPanel extends Composite {
         viewModelListeners.put("timeChannelFile", new PropertyChangeListener() {        
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                Display.getDefault().asyncExec(() -> timeChannelFileSelector.setCachedValue(timeChannelFileRB.getText()));
+                UIThreadUtils.asyncExec(() -> timeChannelFileSelector.setCachedValue(timeChannelFileRB.getText()));
             }
         });
         
@@ -183,7 +181,7 @@ public class TimeChannelsPanel extends Composite {
      * Updates time regime tables.
      */
 	private void updateTimeRegimes() {
-		DISPLAY.asyncExec(new Runnable() {
+		UIThreadUtils.asyncExec(new Runnable() {
 			@Override
 			public void run() {
 				clearExistingTimeRegimeViews();
@@ -233,7 +231,7 @@ public class TimeChannelsPanel extends Composite {
     }
     
     private void updateCalculationMethod() {
-    	Display.getDefault().asyncExec(new Runnable() {
+    	UIThreadUtils.asyncExec(new Runnable() {
     		@Override
     		public void run() {
     			

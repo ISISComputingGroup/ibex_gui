@@ -39,6 +39,7 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DeleteTableItemHelper;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog.AddIocDialog;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog.IocDialog;
@@ -200,7 +201,7 @@ public class IocOverviewPanel extends Composite {
 	}
 	
 	private void updateIocs(final Collection<EditableIoc> iocs) {
-		display.asyncExec(new Runnable() {	
+		UIThreadUtils.asyncExec(new Runnable() {	
 			@Override
 			public void run() {
 				if (!table.isDisposed()) {

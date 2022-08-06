@@ -41,6 +41,7 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 
 /**
  * The panel that shows blocks and groups in the main IBEX perspective.
@@ -381,7 +382,7 @@ public class GroupsPanel extends Composite {
 		
 		this.displayGroups = groups;
 		
-		display.syncExec(new Runnable() {
+		UIThreadUtils.syncExec(new Runnable() {
 			@Override
 			public void run() {
 				makeBanner(groups);

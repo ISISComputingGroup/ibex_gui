@@ -38,9 +38,10 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
+
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 
 /**
  * This page displays the MCR news text. The setText method is used to refresh
@@ -104,7 +105,7 @@ public class McrNewsPanel {
 
     private void updateNews() {
     	final String mcrNews = getMCRNewsText();
-        Display.getDefault().asyncExec(() -> setText(mcrNews));
+        UIThreadUtils.asyncExec(() -> setText(mcrNews));
     }
 
     /**

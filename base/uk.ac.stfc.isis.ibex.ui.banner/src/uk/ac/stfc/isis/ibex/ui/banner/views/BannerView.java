@@ -30,7 +30,6 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.banner.Banner;
@@ -39,6 +38,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.BannerItem;
 import uk.ac.stfc.isis.ibex.configserver.configuration.CustomBannerData;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.instrument.status.ServerStatusVariables;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.ui.banner.models.BannerItemModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.CustomControlModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusViewModel;
@@ -141,7 +141,7 @@ public class BannerView {
      */
     private void setBanner(final Collection<BannerItemModel> indicatorModels, final Collection<CustomControlModel> controlModels) {
         disposeBanner();
-        Display.getDefault().syncExec(new Runnable() {
+        UIThreadUtils.syncExec(new Runnable() {
             @Override
             public void run() {
                 glBannerItemPanel.numColumns = indicatorModels.size() + controlModels.size();
@@ -196,7 +196,7 @@ public class BannerView {
      */
     private void disposeBanner() {
     	// As this involves disposing items, do it using a sync exec to avoid "widget is disposed" issues.
-        Display.getDefault().syncExec(new Runnable() {
+        UIThreadUtils.syncExec(new Runnable() {
             @Override
             public void run() {
                 for (org.eclipse.swt.widgets.Control item : bannerItemPanel.getChildren()) {

@@ -14,10 +14,10 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.ScriptStatusViewModel;
@@ -49,7 +49,7 @@ public class NicosCurrentScriptContainer {
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            Display.getDefault().asyncExec(new Runnable() {
+            UIThreadUtils.asyncExec(new Runnable() {
                 @Override
                 public void run() {
                     int currentLine = model.getLineNumber();

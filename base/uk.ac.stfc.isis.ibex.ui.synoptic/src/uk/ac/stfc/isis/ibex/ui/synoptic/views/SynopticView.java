@@ -26,8 +26,7 @@ import javax.inject.Inject;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
 import uk.ac.stfc.isis.ibex.ui.synoptic.SynopticPresenter;
 import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.SynopticPanel;
@@ -44,8 +43,6 @@ public class SynopticView {
     private SynopticPanel instrument;
 	private final SynopticPresenter presenter = Activator.getDefault().presenter();
 	
-	private final Display display = Display.getCurrent();
-	
 
 	//TODO: Why couldn't we do this with postConstruct?
 	@Inject
@@ -56,7 +53,7 @@ public class SynopticView {
         presenter.addPropertyChangeListener(COMPONENTS_CHANGE, new PropertyChangeListener() {
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
-				display.asyncExec(new Runnable() {		
+				UIThreadUtils.asyncExec(new Runnable() {		
 					@Override
 					public void run() {
                         instrument.setComponents(presenter.components(), presenter.showBeam());

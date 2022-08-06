@@ -25,6 +25,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
+
 /**
  * This class controls all aspects of the application's execution.
  */
@@ -57,7 +59,7 @@ public class Application implements IApplication {
 		}
 		final IWorkbench workbench = PlatformUI.getWorkbench();
 		final Display display = workbench.getDisplay();
-		display.syncExec(new Runnable() {
+		UIThreadUtils.syncExec(new Runnable() {
 			@Override
             public void run() {
 				if (!display.isDisposed()) {

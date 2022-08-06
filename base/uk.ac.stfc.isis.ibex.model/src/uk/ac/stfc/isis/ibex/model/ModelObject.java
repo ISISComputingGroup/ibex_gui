@@ -82,7 +82,7 @@ public abstract class ModelObject implements IModelObject {
 				if (display.getThread() == Thread.currentThread()) {
 					job.propertyChange(event);
 				} else {
-					display.asyncExec(() -> job.propertyChange(event));
+					UIThreadUtils.asyncExec(() -> job.propertyChange(event));
 				}
 			}
 		};

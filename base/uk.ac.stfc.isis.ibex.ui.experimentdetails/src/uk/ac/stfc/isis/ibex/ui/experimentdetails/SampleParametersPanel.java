@@ -28,7 +28,7 @@ import javax.inject.Inject;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 
 /**
  * The panel that shows sample parameters.
@@ -68,7 +68,7 @@ public class SampleParametersPanel {
     }
 
     protected void updateSampleParameters() {
-        Display.getDefault().asyncExec(new Runnable() {
+        UIThreadUtils.asyncExec(new Runnable() {
             @Override
             public void run() {
                 sampleParameters.setRows(viewModel.model.getSampleParameters());

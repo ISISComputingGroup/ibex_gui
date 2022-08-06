@@ -34,10 +34,9 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Display;
-
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.ui.dialogs.WaitForDialog;
 
 /**
@@ -95,7 +94,7 @@ public class WaitFor {
 	 */
 	private void updateWait() {
 		boolean shouldDisplayDialog = waiters.stream().anyMatch(Waiting::isWaiting);
-		Display.getDefault().asyncExec(shouldDisplayDialog ? this::doWait : this::stopWait);
+		UIThreadUtils.asyncExec(shouldDisplayDialog ? this::doWait : this::stopWait);
 	}
 	
 	/**

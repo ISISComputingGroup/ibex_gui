@@ -25,7 +25,7 @@ import javax.annotation.PostConstruct;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 
 /**
  *	Panel for Beamline parameters.
@@ -74,7 +74,7 @@ public class BeamlineParametersPanel {
      * Update beam parameters from the model (uses the GUI thread).
      */
     protected void updateBeamParameters() {
-        Display.getDefault().asyncExec(new Runnable() {
+        UIThreadUtils.asyncExec(new Runnable() {
             @Override
             public void run() {
                 beamParameters.setRows(viewModel.model.getBeamParameters());

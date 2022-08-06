@@ -26,9 +26,8 @@ package uk.ac.stfc.isis.ibex.alarm;
 import org.csstudio.alarm.beast.client.AlarmTreePV;
 import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModel;
 import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModelListener;
-import org.eclipse.swt.widgets.Display;
-
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 
 /**
  * A model to provide listeners and events which interact with the alarm server.
@@ -97,7 +96,7 @@ public class AlarmCounter extends ModelObject {
             return;
         }
 
-		Display.getDefault().asyncExec(new Runnable() {  
+        UIThreadUtils.asyncExec(new Runnable() {  
 			@Override
             public void run() {
                 firePropertyChange("alarmCount", prevCount, newCount);

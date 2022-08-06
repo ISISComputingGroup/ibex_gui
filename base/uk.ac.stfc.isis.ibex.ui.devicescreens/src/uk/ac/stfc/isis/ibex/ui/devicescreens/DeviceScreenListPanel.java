@@ -36,11 +36,10 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.commands.ConfigureDeviceScreensHandler;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.list.DeviceScreensTable;
@@ -140,7 +139,7 @@ public class DeviceScreenListPanel extends Composite {
      */
     protected void updateDeviceScreensDescriptions(final DeviceScreensDescription deviceScreensDescription) {
 
-        Display.getDefault().asyncExec(new Runnable() {
+        UIThreadUtils.asyncExec(new Runnable() {
             @Override
             public void run() {
                 if (deviceScreenList != null && deviceScreensDescription != null) {

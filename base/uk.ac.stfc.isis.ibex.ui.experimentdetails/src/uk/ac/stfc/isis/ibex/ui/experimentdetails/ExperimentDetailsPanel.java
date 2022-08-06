@@ -34,11 +34,11 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup.RBLookupDialog;
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup.RBLookupViewModel;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
@@ -203,7 +203,7 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 	 * makes the warning label visible or not based on whether the table is 
 	 * empty or not.*/
 	private void updateUserDetails() {
-		Display.getDefault().asyncExec(() -> {
+		UIThreadUtils.asyncExec(() -> {
 		    userDetails.setRows(viewModel.model.getUserDetails());
 		});
 	}

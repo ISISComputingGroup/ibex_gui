@@ -64,14 +64,14 @@ public class ScriptGeneratorView {
 
     private static PreferenceSupplier preferences = new PreferenceSupplier();
 
-    private static final Display DISPLAY = Display.getDefault();
+    private static final Display UIThreadUtils = Display.getDefault();
 
     private final DataBindingContext bindingContext = new DataBindingContext();
 
     /**
      * A clear colour for use in other script generator table columns when a row is valid.
      */
-    private static final Color CLEAR_COLOUR = DISPLAY.getSystemColor(SWT.COLOR_WHITE);
+    private static final Color CLEAR_COLOUR = UIThreadUtils.getSystemColor(SWT.COLOR_WHITE);
 
     /**
      * The ViewModel the View is updated by.
@@ -207,10 +207,10 @@ public class ScriptGeneratorView {
 	 * Create dialog boxes asking informing the user if there are changes to the git repository.
 	 */
 	private void doGitActions() {
-		DISPLAY.asyncExec(() -> {
+		UIThreadUtils.asyncExec(() -> {
 			if (!scriptGeneratorViewModel.remoteAvailable()) {
 				// Warn user git could not be found
-				MessageDialog.openInformation(DISPLAY.getActiveShell(),
+				MessageDialog.openInformation(UIThreadUtils.getActiveShell(),
 						"Git error",
 						"Could not update script definitions, because the remote git repository could not be reached. "
 						+ "You can still continue to use the existing script definitions, but they may be out of date.");
@@ -218,7 +218,7 @@ public class ScriptGeneratorView {
 			if (scriptGeneratorViewModel.updatesAvailable()) {
 				// Display prompt if new commits are available
 				int performMerge = MessageDialog.open(MessageDialog.CONFIRM,
-						DISPLAY.getActiveShell(),
+						UIThreadUtils.getActiveShell(),
 						"Error pulling repository",
 						scriptGeneratorViewModel.getPromptMessage(),
 						0,
@@ -231,7 +231,7 @@ public class ScriptGeneratorView {
 			}
 			Optional<String> gitErrors = scriptGeneratorViewModel.getGitLoadErrors();
 			if (gitErrors.isPresent()) {
-				MessageDialog.openInformation(DISPLAY.getActiveShell(), "Git errors occurred", gitErrors.get());
+				MessageDialog.openInformation(UIThreadUtils.getActiveShell(), "Git errors occurred", gitErrors.get());
 			}
 		});
 
@@ -242,7 +242,7 @@ public class ScriptGeneratorView {
      * Display loading.
      */
     private void displayLoading() {
-    DISPLAY.asyncExec(() -> {
+    UIThreadUtils.asyncExec(() -> {
         destroyUIContents();
         Label loadingMessage = new Label(mainParent, SWT.NONE);
         loadingMessage.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, true));
@@ -264,7 +264,7 @@ public class ScriptGeneratorView {
      * Display when loaded.
      */
     private void displayLoaded() {
-    DISPLAY.asyncExec(() -> {
+    UIThreadUtils.asyncExec(() -> {
         scriptDefinitionsLoadedOnce = true;
         destroyUIContents();
         if (scriptGeneratorViewModel.scriptDefinitionsAvailable()) {
@@ -618,7 +618,7 @@ public class ScriptGeneratorView {
         BeanProperties.value("timeEstimate").observe(scriptGeneratorViewModel));
     
     scriptGeneratorViewModel.getFinishTimer().addPropertyChangeListener("finishTimeVal", e -> {
-    	DISPLAY.asyncExec(() -> {
+    	UIThreadUtils.asyncExec(() -> {
     		expectedFinishText.setText((String) e.getNewValue());
     	});
     });

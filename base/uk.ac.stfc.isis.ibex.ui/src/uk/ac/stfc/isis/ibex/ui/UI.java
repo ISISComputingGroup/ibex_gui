@@ -22,13 +22,14 @@ package uk.ac.stfc.isis.ibex.ui;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IStartup;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -97,7 +98,7 @@ public class UI extends AbstractUIPlugin implements IStartup {
      * @param perspectiveID the perspective ID to switch to
      */
     public void switchPerspective(final String perspectiveID) {
-	Display.getDefault().syncExec(new Runnable() {
+	UIThreadUtils.syncExec(new Runnable() {
 	    @Override
 	    public void run() {
 		IWorkbench workbench = PlatformUI.getWorkbench();	   

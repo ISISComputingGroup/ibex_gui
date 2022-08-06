@@ -24,12 +24,11 @@ import java.util.List;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
-import org.eclipse.swt.widgets.Display;
-
 import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.DetectorDiagnosticsModel;
 import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.IDetectorDiagnosticsViewModelBinding;
 import uk.ac.stfc.isis.ibex.dae.detectordiagnostics.SpectrumInformation;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 
 /**
  * The detector diagnostics view model. 
@@ -195,7 +194,7 @@ public class DetectorDiagnosticsViewModel extends ModelObject implements IDetect
     }
     
     private void firePropertyChangeOnGuiThread(final String key, final Object oldValue, final Object newValue) {
-        Display.getDefault().asyncExec(new Runnable() {
+        UIThreadUtils.asyncExec(new Runnable() {
             @Override
             public void run() {
                 firePropertyChange(key, oldValue, newValue);

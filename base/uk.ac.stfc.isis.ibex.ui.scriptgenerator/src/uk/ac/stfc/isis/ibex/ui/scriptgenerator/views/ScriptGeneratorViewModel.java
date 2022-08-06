@@ -69,6 +69,7 @@ import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 
 /**
  * The ViewModel for the ScriptGeneratorView.
@@ -242,7 +243,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    // Listen for generated script refreshes
 	    scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.GENERATED_SCRIPT_FILENAME_PROPERTY, evt -> {
 	        String scriptFilename = (String) evt.getNewValue();
-	        DISPLAY.asyncExec(() -> {
+	        UIThreadUtils.asyncExec(() -> {
 	        scriptGeneratorModel.getLastGeneratedScriptId().ifPresentOrElse(
 	            generatedScriptId -> {
 	            	scriptGeneratorModel.getScriptFromId(generatedScriptId).ifPresentOrElse(generatedScript -> {
@@ -326,7 +327,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Display a message dialog box that there was a threading issue when generating or checking parameter validity.
      */
     private void displayGenerationError() {
-	    DISPLAY.asyncExec(() -> {
+	    UIThreadUtils.asyncExec(() -> {
 	        MessageDialog.openError(DISPLAY.getActiveShell(), 
 	            "Error",
 	            "Error when generating a script, are your parameters valid?");
@@ -348,7 +349,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void addEmptyAction() {
 	    scriptGeneratorModel.addEmptyAction();
 	    // Make sure the table is updated with the new action before selecting it
-	    DISPLAY.asyncExec(() -> {
+	    UIThreadUtils.asyncExec(() -> {
 	    	viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
 	    });
     }
@@ -361,7 +362,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void insertEmptyAction(Integer insertionLocation) {
 	    scriptGeneratorModel.insertEmptyAction(insertionLocation);
 	    // Make sure the table is updated with the new action before selecting it
-	    DISPLAY.asyncExec(() -> {
+	    UIThreadUtils.asyncExec(() -> {
 	        viewTable.setCellFocus(insertionLocation, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
 	    });
     }
@@ -377,7 +378,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    
 	    scriptGeneratorModel.deleteAction(actionsToDelete);
 	    
-	    DISPLAY.asyncExec(() -> {
+	    UIThreadUtils.asyncExec(() -> {
 	    	viewTable.setCellFocus(toSelect, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
 	    });
     }
@@ -405,7 +406,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void duplicateAction(List<ScriptGeneratorAction> actionsToDuplicate, Integer insertionLocation) {
 	    scriptGeneratorModel.duplicateAction(actionsToDuplicate, insertionLocation);
 	    // Make sure the table is updated with the new action before selecting it
-	    DISPLAY.asyncExec(() -> {
+	    UIThreadUtils.asyncExec(() -> {
 	    	viewTable.setCellFocus(insertionLocation, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
 	    });
     }
@@ -414,7 +415,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Clears all actions from the ActionsTable.
      */
     protected void clearAction() {
-	    DISPLAY.asyncExec(() -> {
+	    UIThreadUtils.asyncExec(() -> {
 	        boolean userConfirmation = MessageDialog.openConfirm(DISPLAY.getActiveShell(),
 	            "Warning",
 	            "This will delete all actions, are you sure you want to continue?");
@@ -432,7 +433,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     protected void moveActionUp(List<ScriptGeneratorAction> actionsToMove) {
 	    scriptGeneratorModel.moveActionUp(actionsToMove);
-	    DISPLAY.asyncExec(() -> {
+	    UIThreadUtils.asyncExec(() -> {
 	    	viewTable.setSelected(actionsToMove, true); 
 	    });
     }
@@ -445,7 +446,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     protected void moveActionDown(List<ScriptGeneratorAction> actionsToMove) {
 	    scriptGeneratorModel.moveActionDown(actionsToMove);
-	    DISPLAY.asyncExec(() -> {
+	    UIThreadUtils.asyncExec(() -> {
 	    	viewTable.setSelected(actionsToMove, true);
 	    });
     }
@@ -665,7 +666,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @param btnGenerateScript Generate Script button's visibility to manipulate
      */
     private void actionChangeHandler(ActionsViewTable viewTable, Button btnGenerateScript, Button btnGenerateScriptAs, boolean rowsChanged) {
-	    DISPLAY.asyncExec(() -> {
+	    UIThreadUtils.asyncExec(() -> {
 	        if (!viewTable.isDisposed()) {
 	        	viewTable.updateActions(scriptGeneratorModel.getActions());
 	        	updateValidityChecks(viewTable);
@@ -1072,7 +1073,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     protected void addActionParamPropertyListener(ActionsViewTable viewTable) {
     	scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener("actionParameters", 
-	        e -> DISPLAY.asyncExec(() -> {
+	        e -> UIThreadUtils.asyncExec(() -> {
 	            if (!viewTable.isDisposed()) {
 	            viewTable.updateTableColumns();
 	            }

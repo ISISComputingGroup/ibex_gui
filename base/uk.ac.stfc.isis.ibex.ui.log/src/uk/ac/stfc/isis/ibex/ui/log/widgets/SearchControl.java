@@ -43,6 +43,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
 import uk.ac.stfc.isis.ibex.ui.widgets.DateTimeWithCalendar;
 
@@ -364,7 +365,7 @@ public class SearchControl extends Canvas {
 
     private void setProgressIndicatorsVisible(final boolean visible) {
 
-        getDisplay().asyncExec(new Runnable() {
+        UIThreadUtils.asyncExec(new Runnable() {
             @Override
             public void run() {
                 lblSearchText.setVisible(visible);

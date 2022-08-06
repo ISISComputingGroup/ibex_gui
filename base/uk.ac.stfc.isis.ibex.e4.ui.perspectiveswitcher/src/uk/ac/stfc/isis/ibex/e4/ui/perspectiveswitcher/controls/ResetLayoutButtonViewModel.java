@@ -4,8 +4,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
+
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 
 /**
  * A view model class for setting the right colour to the ResetLayoutButton.
@@ -24,7 +25,7 @@ public class ResetLayoutButtonViewModel extends ButtonViewModel {
 
             @Override
             public void propertyChange(final PropertyChangeEvent evt) {
-                Display.getDefault().syncExec(new Runnable() {
+                UIThreadUtils.syncExec(new Runnable() {
                     @Override
                     public void run() {
                         if ((boolean) evt.getNewValue()) {

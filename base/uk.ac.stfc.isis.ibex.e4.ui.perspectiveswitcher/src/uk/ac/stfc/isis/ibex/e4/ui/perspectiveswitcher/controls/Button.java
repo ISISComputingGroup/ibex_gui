@@ -15,8 +15,9 @@ import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.ResourceManager;
+
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 
 /**
  * Button class, for buttons.
@@ -53,7 +54,7 @@ public abstract class Button extends CLabel {
             
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                Display.getDefault().asyncExec(new Runnable() {
+                UIThreadUtils.asyncExec(new Runnable() {
                     
                     @Override
                     public void run() {

@@ -36,6 +36,7 @@ import org.eclipse.swt.widgets.Display;
 import org.mihalis.opal.breadcrumb.Breadcrumb;
 import org.mihalis.opal.breadcrumb.BreadcrumbItem;
 
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
 import uk.ac.stfc.isis.ibex.ui.synoptic.SynopticPresenter;
 
@@ -78,7 +79,7 @@ public class SynoptictBreadCrumb extends Composite {
 	}
 
 	private void updateTrail(final List<String> items) {
-		DISPLAY.asyncExec(new Runnable() {
+		UIThreadUtils.asyncExec(new Runnable() {
 			@Override
 			public void run() {
 				setComponents(items);

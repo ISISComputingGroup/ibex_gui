@@ -3,7 +3,7 @@ package uk.ac.stfc.isis.ibex.opis;
 import java.util.Collections;
 import java.util.Set;
 import java.util.WeakHashMap;
-import org.eclipse.swt.widgets.Display;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 
 /**
  * This class keeps a static reference to all the OpiView objects that have been created.
@@ -34,7 +34,7 @@ public final class OpiViewModel {
      */
     public static synchronized void refreshViews() {
     	for (OpiView view : VIEWS) {
-			Display.getDefault().asyncExec(() -> {
+			UIThreadUtils.asyncExec(() -> {
 				try {
 					view.initialiseOPI();
 				} catch (Exception e) {

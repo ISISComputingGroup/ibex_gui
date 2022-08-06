@@ -7,9 +7,9 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.menus.WorkbenchWindowControlContribution;
 import org.python.pydev.shared_interactive_console.console.ui.ScriptConsole;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 
 /**
  * Handler for button which shows the percentage of console buffer in use and clears the console on click.
@@ -67,6 +67,6 @@ public class ConsoleLengthMonitor extends WorkbenchWindowControlContribution {
 
 	private void updateButtonText() {
 		final String text = getText();
-		Display.getCurrent().asyncExec(() -> button.setText(text));
+		UIThreadUtils.asyncExec(() -> button.setText(text));
 	}
 }

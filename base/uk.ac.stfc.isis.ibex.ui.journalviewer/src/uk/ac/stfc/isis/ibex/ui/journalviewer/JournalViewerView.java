@@ -81,7 +81,7 @@ public class JournalViewerView {
 
     private final DataBindingContext bindingContext = new DataBindingContext();
     private final JournalViewModel model = JournalViewerUI.getDefault().getModel();
-    private static final Display DISPLAY = Display.getCurrent();
+    private static final Display UIThreadUtils = Display.getCurrent();
 
     private Button btnRefresh;
     private Text textPageNumber;
@@ -301,11 +301,11 @@ public class JournalViewerView {
     }
     
     private void setProgressIndicatorsVisible(final boolean visible) {
-        DISPLAY.asyncExec(() -> progressBar.setVisible(visible));
+        UIThreadUtils.asyncExec(() -> progressBar.setVisible(visible));
     }
     
     private void resetPageNumber() {
-        DISPLAY.asyncExec(() -> textPageNumber.setText("1"));
+        UIThreadUtils.asyncExec(() -> textPageNumber.setText("1"));
     }
     
     private void bind() {
@@ -397,7 +397,7 @@ public class JournalViewerView {
         });
 
         model.addPropertyChangeListener("runs", e -> 
-        DISPLAY.asyncExec(() -> {
+        UIThreadUtils.asyncExec(() -> {
                 setProgressIndicatorsVisible(true);
                 journalTable.updateTableColumns();
                 updateSortIndicator();

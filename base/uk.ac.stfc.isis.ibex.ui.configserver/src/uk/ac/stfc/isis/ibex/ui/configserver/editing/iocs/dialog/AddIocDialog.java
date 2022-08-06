@@ -48,6 +48,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateChecker;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.editing.IocDuplicateChecker;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 
 /**
  * Dialog for adding a new IOC to a config and initialising its settings.
@@ -127,7 +128,7 @@ public class AddIocDialog extends IocDialog {
      *            The panel to be displayed.
      */
     private void updateStack(final Control top) {
-        DISPLAY.asyncExec(new Runnable() {
+        UIThreadUtils.asyncExec(new Runnable() {
             @Override
             public void run() {
                 stack.topControl = top;

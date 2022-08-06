@@ -40,7 +40,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -49,6 +48,7 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.BlockPVTable;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.InterestFilters;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.PVFilter;
@@ -154,7 +154,7 @@ public class PVSelectorPanel extends Composite {
 		int pvSearchDelay = 1000; //milliseconds
 		ActionListener pvSearchTaskPerformer = new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				Display.getDefault().asyncExec(() -> blockPVTable.setSearch(pvAddress.getText()));
+				UIThreadUtils.asyncExec(() -> blockPVTable.setSearch(pvAddress.getText()));
 			}
 		};
 		

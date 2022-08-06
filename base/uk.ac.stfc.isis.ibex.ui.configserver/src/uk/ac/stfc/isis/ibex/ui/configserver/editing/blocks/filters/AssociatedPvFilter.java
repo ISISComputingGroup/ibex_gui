@@ -25,10 +25,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.jface.viewers.ViewerFilter;
-import org.eclipse.swt.widgets.Display;
-
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 
 /**
  * PV filter that creates a viewer filter that will only give PVs that belong to the specified IOCs.
@@ -51,7 +50,7 @@ public class AssociatedPvFilter extends PVFilter {
 				@Override
 				public void propertyChange(PropertyChangeEvent arg0) {
 					updateIocList(availableIocs);
-					Display.getDefault().asyncExec(() -> firePropertyChange("refresh", false, true));
+					UIThreadUtils.asyncExec(() -> firePropertyChange("refresh", false, true));
 				}
 			});
 		}

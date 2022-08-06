@@ -17,7 +17,6 @@ import org.eclipse.e4.ui.workbench.UIEvents;
 import org.eclipse.e4.ui.workbench.UIEvents.EventTags;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
-import org.eclipse.swt.widgets.Display;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
@@ -32,6 +31,7 @@ import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 
 /**
  * Copies all snippet perspectives to perspective stack called
@@ -159,7 +159,7 @@ public class CopyPerspectiveSnippetProcessor {
      * @param visiblePerspectiveMap A map of perspective ID vs true if visible, false if hidden.
      */
     private void setVisiblePerspectivesAsync(Map<String, Boolean> visiblePerspectiveMap) {
-        Display.getDefault().asyncExec(new Runnable() {
+        UIThreadUtils.asyncExec(new Runnable() {
             @Override
             public void run() {
             	List<MPerspective> perspectives = perspectiveStack.getChildren();

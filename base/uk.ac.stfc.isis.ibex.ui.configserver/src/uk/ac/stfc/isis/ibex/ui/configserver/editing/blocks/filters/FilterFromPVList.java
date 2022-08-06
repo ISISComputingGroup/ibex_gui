@@ -23,12 +23,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.jface.viewers.ViewerFilter;
-import org.eclipse.swt.widgets.Display;
-
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 
 /**
  * PV filter that creates a viewer filter that will only give PVs that are in the specified list.
@@ -41,7 +40,7 @@ public class FilterFromPVList extends PVFilter {
 		public void onValue(Collection<PV> value) {
 			if (value != null) {
 				updatePVList(value);
-				Display.getDefault().asyncExec(() -> firePropertyChange("refresh", false, true));
+				UIThreadUtils.asyncExec(() -> firePropertyChange("refresh", false, true));
 			}
 		}
 	};	

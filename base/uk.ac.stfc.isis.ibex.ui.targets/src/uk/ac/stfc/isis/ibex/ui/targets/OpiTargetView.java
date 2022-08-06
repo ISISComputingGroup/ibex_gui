@@ -27,7 +27,6 @@ import java.util.Map;
 import org.apache.logging.log4j.Logger;
 import org.csstudio.opibuilder.util.MacrosInput;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
@@ -36,6 +35,7 @@ import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.opis.OpiView;
@@ -124,7 +124,7 @@ public abstract class OpiTargetView extends OpiView {
             final IViewPart vp = iter.next();
             final IPerspectiveDescriptor descriptor = wbiter.next();
             // Must run on the GUI thread
-            Display.getDefault().asyncExec(new Runnable() {
+            UIThreadUtils.asyncExec(new Runnable() {
                 @Override
                 public void run() {
                     PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().setPerspective(descriptor);

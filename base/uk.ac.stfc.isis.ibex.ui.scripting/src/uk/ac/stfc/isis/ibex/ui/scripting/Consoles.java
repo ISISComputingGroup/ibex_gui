@@ -41,7 +41,6 @@ import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocumentListener;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -61,6 +60,7 @@ import org.python.pydev.shared_interactive_console.console.ui.ScriptConsoleManag
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.ui.graphing.GraphingConnector;
 
 /**
@@ -157,7 +157,7 @@ public class Consoles extends AbstractUIPlugin {
 	}
 	
 	private void editToolbarItems() {
-		Display.getDefault().asyncExec(new Runnable() {
+		UIThreadUtils.asyncExec(new Runnable() {
 			@Override
 			public void run() {
 				ConsoleView view = getConsoleView();	
@@ -244,7 +244,7 @@ public class Consoles extends AbstractUIPlugin {
 	 * @param perspectiveId The id for the perspective to create the console on.
 	 */
 	public void createConsole(String perspectiveId) {
-		Display.getDefault().syncExec(new Runnable() {
+		UIThreadUtils.syncExec(new Runnable() {
 			@Override
 			public void run() {
 				if (!anyActive()) {
@@ -290,7 +290,7 @@ public class Consoles extends AbstractUIPlugin {
 						LOG.info("Too much output (more than " + MAXIMUM_CHARACTERS_TO_KEEP_PER_CONSOLE + " characters). Saving & clearing the output of this console.");
 
 						writeConsoleOutputToFile(console);
-						Display.getDefault().asyncExec(console::clearConsole);
+						UIThreadUtils.asyncExec(console::clearConsole);
 					}
 					consoleLengthListeners.forEach(Runnable::run);
 				}

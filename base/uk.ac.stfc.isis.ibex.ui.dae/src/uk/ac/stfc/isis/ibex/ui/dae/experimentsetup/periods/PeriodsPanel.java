@@ -42,13 +42,13 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.Period;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodControlType;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodSetupSource;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.DaeExperimentSetupCombo;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.DaeExperimentSetupRadioButton;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.DaeExperimentSetupText;
@@ -88,8 +88,6 @@ public class PeriodsPanel extends Composite {
 
     private StackLayout stackType = new StackLayout();
     private StackLayout stackSource = new StackLayout();
-    
-	private static final Display DISPLAY = Display.getCurrent();
 	
 	private PanelViewModel panelViewModel;
 
@@ -299,7 +297,7 @@ public class PeriodsPanel extends Composite {
 	
 	
 	private void setPeriods(final List<Period> newPeriods) {
-		DISPLAY.asyncExec(new Runnable() {	
+		UIThreadUtils.asyncExec(new Runnable() {	
 			@Override
 			public void run() {
 				tblPeriods.setPeriods(newPeriods);
@@ -326,7 +324,7 @@ public class PeriodsPanel extends Composite {
     }
 
     private void updateTypeStack(final Control top) {
-        DISPLAY.asyncExec(new Runnable() {
+        UIThreadUtils.asyncExec(new Runnable() {
             @Override
             public void run() {
                 stackType.topControl = top;
@@ -336,7 +334,7 @@ public class PeriodsPanel extends Composite {
 	}
 
     private void updateSourceStack(final Control top) {
-        DISPLAY.asyncExec(new Runnable() {
+    	UIThreadUtils.asyncExec(new Runnable() {
             @Override
             public void run() {
                 stackSource.topControl = top;

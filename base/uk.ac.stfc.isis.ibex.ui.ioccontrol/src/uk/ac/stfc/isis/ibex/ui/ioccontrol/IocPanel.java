@@ -42,6 +42,7 @@ import org.eclipse.ui.dialogs.FilteredTree;
 
 import uk.ac.stfc.isis.ibex.configserver.IocControl;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCConfigProvider;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCContentProvider;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCLabelProvider;
@@ -68,7 +69,7 @@ public class IocPanel extends Composite {
 	private PropertyChangeListener updateTable = new PropertyChangeListener() {	
 		@Override
 		public void propertyChange(PropertyChangeEvent arg0) {
-			display.asyncExec(new Runnable() {
+			UIThreadUtils.asyncExec(new Runnable() {
 				@Override
 				public void run() {
 					setIocs();

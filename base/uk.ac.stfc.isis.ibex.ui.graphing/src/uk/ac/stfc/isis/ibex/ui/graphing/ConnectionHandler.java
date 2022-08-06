@@ -9,6 +9,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 
 /**
  * Class to handle function calls from python regarding opening the plot window.
@@ -69,7 +70,7 @@ public class ConnectionHandler {
         this.url = url;
         this.isPrimary = isPrimary;
     	IsisLog.getLogger(ConnectionHandler.class).info("Opening matplotlib OPI. Primary display " + isPrimary);
-    	Display.getDefault().asyncExec(new Runnable() {
+    	UIThreadUtils.asyncExec(new Runnable() {
     	    @Override
     	    public void run() {
     	        PlatformUI.getWorkbench().getActiveWorkbenchWindow().addPerspectiveListener(openOnSwitchingPerspective);

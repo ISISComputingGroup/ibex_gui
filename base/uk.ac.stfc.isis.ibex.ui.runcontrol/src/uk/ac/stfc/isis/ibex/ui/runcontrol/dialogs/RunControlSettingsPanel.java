@@ -29,13 +29,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
@@ -55,7 +54,7 @@ public class RunControlSettingsPanel extends Composite {
 	private PropertyChangeListener updateTable = new PropertyChangeListener() {
 		@Override
 		public void propertyChange(final PropertyChangeEvent arg0) {
-            Display.getDefault().asyncExec(new Runnable() {
+            UIThreadUtils.asyncExec(new Runnable() {
 				@Override
 				public void run() {
 					setBlocks();

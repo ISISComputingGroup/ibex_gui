@@ -18,12 +18,12 @@ import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.layout.GridLayout;
 
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectiveInfo;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesVisibleModel;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectivesTable;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
@@ -87,7 +87,7 @@ public class PerspectiveHidingDialog extends TitleAreaDialog {
     }
     
     private void setRemoteErrors(List<String> remoteErrors) {
-        Display.getDefault().asyncExec(() -> {  
+        UIThreadUtils.asyncExec(() -> {  
             if (model.getRemoteErrors().isEmpty()) {
                 setMessage(null, IMessageProvider.NONE);
             } else {                

@@ -4,10 +4,11 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.menus.WorkbenchWindowControlContribution;
+
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 
 /**
  * Handler for label which shows the number of active consoles.
@@ -49,10 +50,10 @@ public class ConsolesCountMonitor extends WorkbenchWindowControlContribution {
 		}
 				
 		final String text = StringUtils.rightPad(String.format(FORMAT, consolesNumber), MAX_LENGTH);
-		Display.getDefault().asyncExec(() -> label.setText(text));
+		UIThreadUtils.asyncExec(() -> label.setText(text));
 		
 		// Display count only if there are multiple active consoles
 		boolean visible = !(consolesNumber == 0 || consolesNumber == 1);
-		Display.getDefault().asyncExec(() -> label.setVisible(visible));
+		UIThreadUtils.asyncExec(() -> label.setVisible(visible));
 	}
 }

@@ -24,12 +24,12 @@ package uk.ac.stfc.isis.ibex.ui.scripting;
 
 import java.util.Objects;
 
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.python.pydev.shared_interactive_console.console.ui.ScriptConsoleManager;
 
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiverAdapter;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 
 /**
  * This closes and reopens the scripting perspective when instrument is
@@ -50,7 +50,7 @@ public class ConsoleSettings extends InstrumentInfoReceiverAdapter {
 	 */
 	@Override
 	public void postSetInstrument(InstrumentInfo instrument) {
-		Display.getDefault().syncExec(new Runnable() {
+		UIThreadUtils.syncExec(new Runnable() {
 			@Override
 			public void run() {
 				String id;

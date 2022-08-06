@@ -73,6 +73,7 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.ui.AsyncMessageModerator;
 import uk.ac.stfc.isis.ibex.ui.log.comparator.LogMessageComparator;
 import uk.ac.stfc.isis.ibex.ui.log.filter.LogMessageFilter;
@@ -213,7 +214,7 @@ public class LogDisplay extends Canvas {
      * Update the filter.
      */
 	private void updateFilter() {
-		Display.getDefault().asyncExec(new Runnable() {
+		UIThreadUtils.asyncExec(new Runnable() {
 			@Override
 			public void run() {
 				tableViewer.setFilters(filters.toArray(new ViewerFilter[] {}));
@@ -228,7 +229,7 @@ public class LogDisplay extends Canvas {
      * @param messages the messages to display
      */
     private void setMessageData(final List<LogMessage> messages) {
-		Display.getDefault().asyncExec(new Runnable() {
+		UIThreadUtils.asyncExec(new Runnable() {
 			@Override
 			public void run() {
                 if (!tableViewer.getControl().isDisposed()) {
@@ -247,7 +248,7 @@ public class LogDisplay extends Canvas {
      */
 	private void setConnectionStatus(final boolean connectionOk) {
 		if (jmsStatusLabel != null) {
-			Display.getDefault().asyncExec(new Runnable() {
+			UIThreadUtils.asyncExec(new Runnable() {
 				@Override
 				public void run() {
 					if (connectionOk) {
@@ -269,7 +270,7 @@ public class LogDisplay extends Canvas {
      * @param isSearchMode whether to show search results or live messages
      */
 	private void setDisplayMode(final boolean isSearchMode) {
-		Display.getDefault().asyncExec(new Runnable() {
+		UIThreadUtils.asyncExec(new Runnable() {
 			@Override
 			public void run() {
 				if (isSearchMode) {

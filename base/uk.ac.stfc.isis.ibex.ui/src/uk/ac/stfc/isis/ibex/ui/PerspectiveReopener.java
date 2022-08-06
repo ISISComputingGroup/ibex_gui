@@ -23,13 +23,13 @@
 package uk.ac.stfc.isis.ibex.ui;
 
 import org.apache.logging.log4j.Logger;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.WorkbenchException;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 
 /**
  * Closes and the reopens a perspective if that perspective was originally open.
@@ -111,6 +111,6 @@ public class PerspectiveReopener {
      */
     private static void runOnGuiThread(final Runnable task) {
         // Run synchronously because we must finish closing before we reopen perspectives.
-        Display.getDefault().syncExec(task);
+        UIThreadUtils.syncExec(task);
     }
 }

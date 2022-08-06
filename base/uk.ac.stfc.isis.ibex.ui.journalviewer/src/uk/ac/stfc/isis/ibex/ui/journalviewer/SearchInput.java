@@ -41,6 +41,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
 import uk.ac.stfc.isis.ibex.ui.widgets.DateTimeWithCalendar;
 
@@ -236,7 +237,7 @@ public class SearchInput extends Composite {
      * Clears all of the user input and resets the buttons.
      */
     public void clearInput() {
-        Display.getDefault().asyncExec(new Runnable() {
+        UIThreadUtils.asyncExec(new Runnable() {
             @Override
             public void run() {
                 chkNumberFrom.setSelection(false);
@@ -369,7 +370,7 @@ public class SearchInput extends Composite {
         cmbFilterType.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                DISPLAY.asyncExec(() -> {
+                UIThreadUtils.asyncExec(() -> {
                     stackSearch.topControl = cmpFilters.get(cmbFilterType.getSelectionIndex());
                     cmpSearch.layout();
 

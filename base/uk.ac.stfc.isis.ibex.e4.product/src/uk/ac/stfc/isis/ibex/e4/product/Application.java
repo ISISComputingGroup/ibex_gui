@@ -26,6 +26,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.epics.pvmanager.PVManagerSettings;
+import uk.ac.stfc.isis.ibex.model.UIThreadUtils;
 import uk.ac.stfc.isis.ibex.ui.JMXServer;
 
 /**
@@ -72,7 +73,7 @@ public class Application implements IApplication {
 		}
 		final IWorkbench workbench = PlatformUI.getWorkbench();
 		final Display display = workbench.getDisplay();
-		display.syncExec(new Runnable() {
+		UIThreadUtils.syncExec(new Runnable() {
 			@Override
             public void run() {
 				if (!display.isDisposed()) {
