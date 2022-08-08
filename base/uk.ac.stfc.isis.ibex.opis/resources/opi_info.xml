@@ -1640,6 +1640,24 @@
       </value>
     </entry>
     <entry>
+      <key>Transtechnik PSU</key>
+      <value>
+        <type>POWER_SUPPLY</type>
+        <path>transtechnik.opi</path>
+        <description>Transtechnik Power Supply</description>
+        <macros>
+          <macro>
+            <name>TRANSTECHNIK</name>
+            <description>The TRANSTECHNIK PV prefix (e.g. TRANTECH_01)</description>
+            <default>TRANTECH_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Keithley 2700</key>
       <value>
         <type>KHLY2700</type>
@@ -2882,6 +2900,45 @@
         </categories>
       </value>
     </entry>
->>>>>>> origin/master
+	<entry>
+      <key>Nuclear Instruments Digitiser</key>
+      <value>
+        <type>DAE</type>
+        <path>NucInstDig/main.opi</path>
+        <description>The OPI for Nuclear Instruments Digitiser</description>
+        <macros/>
+        <categories>
+          <category>Monitors</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Temperature Jump Apparatus</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>tjmper.opi</path>
+        <description>The OPI for the TJMPER</description>
+        <macros>
+          <macro>
+            <name>TJMPER</name>
+            <description>The TJMPER PV prefix (e.g. TJMPER_01)</description>
+            <default>TJMPER_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+      </value>
+    </entry>
+	<entry>
+      <key>Rules tests (developer)</key>
+      <value>
+        <type>DEBUG</type>
+        <path>rules_tests.opi</path>
+        <description>Developer system-testing OPI for CS-Studio rules engines</description>
+        <macros/>
+        <categories/>
+      </value>
+    </entry>
   </opis>
 </descriptions>

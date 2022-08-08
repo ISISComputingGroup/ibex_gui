@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -83,8 +84,10 @@ public class Group extends Composite {
 	 *            the group to be displayed
 	 * @param panel
 	 *            The panel that shows the groups and blocks.
+	 * @param handlerService
+	 * 			  The handler service to be passed down to BlocksMenu
 	 */
-	public Group(Composite parent, int style, DisplayGroup group, GroupsPanel panel) {
+	public Group(Composite parent, int style, DisplayGroup group, GroupsPanel panel, IHandlerService handlerService) {
 		super(parent, style | SWT.BORDER);
 
 		// Add the blocks to the list if they are visible, or if
@@ -152,7 +155,7 @@ public class Group extends Composite {
 			DisplayBlock currentBlock = blocksList.get(i);
 			GroupRow row = new GroupRow(groupBlocks, SWT.NONE, currentBlock, i);
 
-			GroupsMenu fullMenu = new GroupsMenu(panel, new BlocksMenu(currentBlock));
+			GroupsMenu fullMenu = new GroupsMenu(panel, new BlocksMenu(currentBlock, handlerService));
 			row.setMenu(fullMenu.get());
 			row.getValueContainer().addPaintListener(new PaintListener() {
 				@Override

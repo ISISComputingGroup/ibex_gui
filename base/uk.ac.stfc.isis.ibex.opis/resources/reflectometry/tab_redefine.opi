@@ -183,7 +183,7 @@
       <horizontal_alignment>1</horizontal_alignment>
       <name>Label</name>
       <rules>
-        <rule name="Visible" prop_id="visible" out_exp="true">
+        <rule name="Visible" prop_id="visible" out_exp="false">
           <exp bool_exp="pv0 != 0">
             <value>false</value>
           </exp>

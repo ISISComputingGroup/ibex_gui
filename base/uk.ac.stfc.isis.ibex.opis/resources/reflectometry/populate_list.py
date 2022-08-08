@@ -3,6 +3,13 @@ import json
 import time
 import zlib
 
+from org.csstudio.ui.util.thread import UIBundlingThread
+from java.lang import Thread, Runnable
+
+
+from org.eclipse.swt.widgets import Display
+currentDisplay = Display.getCurrent()
+
 
 def _set_opi(widget, param_type, has_cv):
     """
@@ -65,8 +72,18 @@ def populate_list(pv, widget_name_prefix, macro_prefix, has_type, max):
         else:
             target_widget.setPropertyValue("visible", False)
 
-# Widget names need to be set before trying to set properties
-time.sleep(0.2)
 
-macros = widget.getPropertyValue("macros").getMacrosMap()
-populate_list(pvs[0], macros["GROUP_KEY"], macros["MACRO_PREFIX"], bool(int(macros["HAS_TYPE"])), int(macros["MAX_NUMBER"]))
+class WorkerThread(Runnable):
+    def run(self):
+        # Widget names need to be set before trying to set properties
+        Thread.sleep(200)
+
+        class UITask(Runnable):
+            def run(self):
+                macros = widget.getPropertyValue("macros").getMacrosMap()
+                populate_list(pvs[0], macros["GROUP_KEY"], macros["MACRO_PREFIX"], bool(int(macros["HAS_TYPE"])), int(macros["MAX_NUMBER"]))
+        UIBundlingThread.getInstance().addRunnable(currentDisplay, UITask())
+        
+        
+thread = Thread(WorkerThread(), "reflectometry OPI populate_list.py worker")
+thread.start()
