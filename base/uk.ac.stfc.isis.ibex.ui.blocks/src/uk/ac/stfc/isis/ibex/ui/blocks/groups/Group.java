@@ -84,6 +84,8 @@ public class Group extends Composite {
 	 *            the group to be displayed
 	 * @param panel
 	 *            The panel that shows the groups and blocks.
+	 * @param handlerService
+	 * 			  The handler service to be passed down to BlocksMenu
 	 */
 	public Group(Composite parent, int style, DisplayGroup group, GroupsPanel panel, IHandlerService handlerService) {
 		super(parent, style | SWT.BORDER);

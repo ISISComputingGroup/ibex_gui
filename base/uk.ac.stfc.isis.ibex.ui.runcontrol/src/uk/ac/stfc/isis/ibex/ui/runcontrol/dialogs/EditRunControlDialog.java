@@ -54,8 +54,6 @@ public class EditRunControlDialog extends TitleAreaDialog {
 	 * Creates a dialog for configuring the run-control settings.
 	 * 
 	 * @param parentShell the parent SWT Shell
-	 * @param configServer the Config Server 
-	 * @param runControlServer the Run Control server
 	 */
 	public EditRunControlDialog(Shell parentShell) {
 		super(parentShell);

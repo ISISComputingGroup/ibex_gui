@@ -109,6 +109,7 @@ public class BlocksView {
 	 * @param parent parent of the blocks view
 	 * @param app The E4 application model
 	 * @param modelService The E4 service responsible for handling model elements
+	 * @param handlerService The handler service to be passed down to BlocksMenu
 	 */
     @PostConstruct
 	public void createPartControl(final Composite parent, MApplication app, EModelService modelService, IHandlerService handlerService) {

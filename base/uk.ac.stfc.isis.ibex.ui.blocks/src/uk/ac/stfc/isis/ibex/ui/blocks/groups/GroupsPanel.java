@@ -88,6 +88,8 @@ public class GroupsPanel extends Composite {
      *            The parent composite that this panel belongs to.
      * @param style
      *            The SWT style of the panel.
+     * @param handlerService
+	 * 			  The handler service to be passed down to BlocksMenu
      */
 	public GroupsPanel(Composite parent, int style, IHandlerService handlerService) {
 		super(parent, SWT.NONE);

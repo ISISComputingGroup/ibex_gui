@@ -119,6 +119,7 @@ public class BlocksMenu extends MenuManager {
      * The constructor, creates the menu for when the specific block is right-clicked on.
      *
      * @param displayBlock the selected block
+     * @param handlerService to get safe access to runcontrol command
      */
     public BlocksMenu(DisplayBlock displayBlock, IHandlerService handlerService) {
 		this.block = displayBlock;
@@ -126,8 +127,10 @@ public class BlocksMenu extends MenuManager {
 		Configurations.getInstance().server().setCurrentConfig().addOnCanWriteChangeListener(readOnlyListener);
 
         add(new GroupMarker(BLOCK_MENU_GROUP));
-          
+        
         final IAction viewRunControlSettingsAction = new Action(VIEW_RUN_CONTROL_SETTINGS) {
+        	// get run control command from handler service and execute 
+        	// i.e. call new runcontrol window 
 			@Override
 			public void run() {
 				try {
@@ -135,9 +138,6 @@ public class BlocksMenu extends MenuManager {
 				} catch (ExecutionException | NotDefinedException | NotEnabledException | NotHandledException e) {
 					LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
 				}
-//				RunControlServer rcServer = RunControlActivator.getInstance().getServer();
-//				EditRunControlDialog dialog = new EditRunControlDialog(Display.getDefault().getActiveShell());
-//				dialog.open();
 			}
 		};
 		appendToGroup(BLOCK_MENU_GROUP, viewRunControlSettingsAction);
@@ -207,8 +207,6 @@ public class BlocksMenu extends MenuManager {
                 new EditBlockHandler(block.getName()).execute(null); //TODO e4 migrate: This will be added as a command which includes a shell at that time make this correct
             }
         };
-        
-        
 	}
     
     /**
