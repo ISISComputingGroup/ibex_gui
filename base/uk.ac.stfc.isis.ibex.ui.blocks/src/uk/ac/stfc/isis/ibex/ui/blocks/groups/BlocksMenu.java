@@ -71,6 +71,26 @@ public class BlocksMenu extends MenuManager {
 	private MenuManager logSubMenu;
 	private MenuManager noLogPlotterSubMenu;
 
+	/**
+	 * This is an inner anonymous class inherited from SameTypeWriter with added functionality
+	 * for modifying the command if the underlying configuration PV cannot be written to.
+	 */
+    protected final OnCanWriteChangeListener readOnlyListener = canWrite -> Display.getDefault().asyncExec(() -> {
+        if (canWrite) {
+        	boolean buttonPresent = false;
+			for (Item item : getMenuItems()) {
+				if (item.getText().contains(EDIT_BLOCK_PREFIX)) {
+					buttonPresent = true;
+				}
+			}
+            if (find(editBlockAction.getId()) == null && buttonPresent) {
+                appendToGroup(BLOCK_MENU_GROUP, editBlockAction);
+            }
+        } else {
+            remove(editBlockAction.getId());
+        }
+    });
+
 	private IAction createAddToPlotAction(String plotName) {
 		return new Action("Add to new axis") {
 			@Override
