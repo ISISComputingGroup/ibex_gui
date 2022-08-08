@@ -102,12 +102,12 @@ public class Opi implements BundleActivator {
 				pvs -> PVUtil.getDouble(pvs[0]) == 1.0 && PVUtil.getDouble(pvs[1]) == 0.0);
 		
 		RhinoWithFastPathScriptStore.addFastPathHandler("pvStr0==\"North\" || pvStr0==\"South\"", 
-				pvs -> (Objects.equals(PVUtil.getString(pvs[0]), "North")) || 
-				       (Objects.equals(PVUtil.getString(pvs[0]), "South")));
+				pvs -> (Objects.equals(PVUtil.getString(pvs[0]), "North")) 
+						|| (Objects.equals(PVUtil.getString(pvs[0]), "South")));
 				
 		RhinoWithFastPathScriptStore.addFastPathHandler("pvStr0!=\"North\" && pvStr0!=\"South\"", 
-				pvs -> (!Objects.equals(PVUtil.getString(pvs[0]), "North")) && 
-				       (!Objects.equals(PVUtil.getString(pvs[0]), "South")));
+				pvs -> (!Objects.equals(PVUtil.getString(pvs[0]), "North")) 
+						&&  (!Objects.equals(PVUtil.getString(pvs[0]), "South")));
 		
 	}
 
