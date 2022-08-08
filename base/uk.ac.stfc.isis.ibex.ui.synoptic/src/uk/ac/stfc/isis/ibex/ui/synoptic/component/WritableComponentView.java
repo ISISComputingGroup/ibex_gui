@@ -58,17 +58,6 @@ public class WritableComponentView extends Composite {
     private final WritableComponentProperty property;
 
     /**
-     * @param parent
-     *            The parent component
-     * @param property
-     *            The property of the component that is writable
-     */
-    public WritableComponentView(Composite parent, final WritableComponentProperty property) {
-        this(parent, property, true, false);
-    }
-
-    /**
-     * @wbp.parser.constructor
      * Constructs a new instance of this class given its parent and a writable
      * property.
      * 

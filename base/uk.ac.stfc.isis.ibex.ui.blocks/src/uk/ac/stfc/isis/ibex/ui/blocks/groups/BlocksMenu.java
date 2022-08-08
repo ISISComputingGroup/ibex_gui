@@ -66,30 +66,16 @@ public class BlocksMenu extends MenuManager {
     private static final String DISPLAY_BLOCK_HISTORY = "Display block history...";
     private static final String VIEW_RUN_CONTROL_SETTINGS = "View run control settings";
 	private static final String LOGPLOTTER_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.logplotter";
+	
+	private static boolean canWrite = false;
 
-	private IAction editBlockAction;
 	private MenuManager logSubMenu;
 	private MenuManager noLogPlotterSubMenu;
-
-	/**
-	 * This is an inner anonymous class inherited from SameTypeWriter with added functionality
-	 * for modifying the command if the underlying configuration PV cannot be written to.
-	 */
-    protected final OnCanWriteChangeListener readOnlyListener = canWrite -> Display.getDefault().asyncExec(() -> {
-        if (canWrite) {
-        	boolean buttonPresent = false;
-			for (Item item : getMenuItems()) {
-				if (item.getText().contains(EDIT_BLOCK_PREFIX)) {
-					buttonPresent = true;
-				}
-			}
-            if (find(editBlockAction.getId()) == null && buttonPresent) {
-                appendToGroup(BLOCK_MENU_GROUP, editBlockAction);
-            }
-        } else {
-            remove(editBlockAction.getId());
-        }
-    });
+	
+	static {
+		// Set a listener for the edit host configuration/component menu item based on server write access status.
+		Configurations.getInstance().server().setCurrentConfig().addOnCanWriteChangeListener(canWrite -> BlocksMenu.canWrite = canWrite);
+	}
 
 	private IAction createAddToPlotAction(String plotName) {
 		return new Action("Add to new axis") {
@@ -124,8 +110,6 @@ public class BlocksMenu extends MenuManager {
     public BlocksMenu(DisplayBlock displayBlock, IHandlerService handlerService) {
 		this.block = displayBlock;
 		
-		Configurations.getInstance().server().setCurrentConfig().addOnCanWriteChangeListener(readOnlyListener);
-
         add(new GroupMarker(BLOCK_MENU_GROUP));
         
         final IAction viewRunControlSettingsAction = new Action(VIEW_RUN_CONTROL_SETTINGS) {
@@ -182,6 +166,10 @@ public class BlocksMenu extends MenuManager {
 
         appendToGroup(BLOCK_MENU_GROUP, logSubMenu);
         
+        final var editBlockAction = createEditBlockLabelAndAction();
+        
+        appendToGroup(BLOCK_MENU_GROUP, editBlockAction);
+        
         this.addMenuListener(new IMenuListener() {
 			@Override
 			public void menuAboutToShow(IMenuManager manager) {
@@ -192,16 +180,21 @@ public class BlocksMenu extends MenuManager {
 					logSubMenu.setVisible(false);
 					noLogPlotterSubMenu.setVisible(true);
 				}
+				editBlockAction.setEnabled(canWrite);
 				updateAll(true);
 			}
         });
-        String editBlockLabel = EDIT_BLOCK_PREFIX;
+	}
+
+	private IAction createEditBlockLabelAndAction() {
+		String editBlockLabel = EDIT_BLOCK_PREFIX;
         if (this.block.inComponent()) {
             editBlockLabel += COMPONENT_SUFFIX;
         } else {
             editBlockLabel += CONFIGURATION_SUFFIX;
         }
-        editBlockAction = new Action(editBlockLabel) {
+        
+        return new Action(editBlockLabel) {
             @Override
             public void run() {
                 new EditBlockHandler(block.getName()).execute(null); //TODO e4 migrate: This will be added as a command which includes a shell at that time make this correct
@@ -225,10 +218,5 @@ public class BlocksMenu extends MenuManager {
 			}
 		}
 		return false;
-    }
-    
-    @Override
-    protected void finalize() {
-        Configurations.getInstance().server().setCurrentConfig().removeOnCanWriteChangeListener(readOnlyListener);
     }
 }

@@ -26,7 +26,6 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.ComponentIcons;
-import uk.ac.stfc.isis.ibex.ui.devicescreens.tests.IconConventionsCheck;
 
 /**
  * Unit tests for the icon conventions checks
