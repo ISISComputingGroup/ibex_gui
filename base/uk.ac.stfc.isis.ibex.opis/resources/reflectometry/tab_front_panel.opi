@@ -100,7 +100,7 @@
         <include_parent_macros>true</include_parent_macros>
       </macros>
       <name>Horizontal Gaps</name>
-      <opi_file>crisp/hgaps_CRISP.opi</opi_file>
+      <opi_file>crisp/hgaps.opi</opi_file>
       <resize_behaviour>0</resize_behaviour>
       <rules />
       <scale_options>
@@ -462,7 +462,7 @@
         <include_parent_macros>true</include_parent_macros>
       </macros>
       <name>Important Params</name>
-      <opi_file>crisp/important_params_CRISP.opi</opi_file>
+      <opi_file>crisp/important_params.opi</opi_file>
       <resize_behaviour>3</resize_behaviour>
       <rules />
       <scale_options>
@@ -502,7 +502,7 @@
         <include_parent_macros>true</include_parent_macros>
       </macros>
       <name>Sample Stack</name>
-      <opi_file>crisp/sample_stack_CRISP.opi</opi_file>
+      <opi_file>crisp/sample_stack.opi</opi_file>
       <resize_behaviour>3</resize_behaviour>
       <rules />
       <scale_options>
@@ -542,7 +542,7 @@
         <include_parent_macros>true</include_parent_macros>
       </macros>
       <name>Vertical Gaps</name>
-      <opi_file>crisp/vgaps_CRISP.opi</opi_file>
+      <opi_file>crisp/vgaps.opi</opi_file>
       <resize_behaviour>3</resize_behaviour>
       <rules />
       <scale_options>

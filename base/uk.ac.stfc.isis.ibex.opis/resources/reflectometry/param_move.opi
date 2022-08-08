@@ -527,7 +527,7 @@ $(pv_value)</tooltip>
       <horizontal_alignment>1</horizontal_alignment>
       <name>Mirror_RBV</name>
       <rules>
-        <rule name="Visible" prop_id="visible" out_exp="true">
+        <rule name="Visible" prop_id="visible" out_exp="false">
           <exp bool_exp="pv0!=0">
             <value>true</value>
           </exp>

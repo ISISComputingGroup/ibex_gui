@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.ui.PartInitException;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * The Class OpiView to show an OPI.
@@ -60,9 +61,9 @@ public abstract class OpiView extends OPIView {
     public void initialiseOPI() throws OPIViewCreationException {
         try {
             final RunnerInput input = new RunnerInput(opi(), null, macros());
-            setOPIInput(input);
+            setOPIInput(input, false);
         } catch (PartInitException e) {
-            LOG.catching(e);
+        	LoggerUtils.logErrorWithStackTrace(LOG, String.format("Failed to init OPI %s: %s", opi(), e.getMessage()), e);
         }
     }
     
