@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="check_opi_info.TestOpiInfo-20220620092808" tests="1" file="check_opi_info.py" time="0.206" timestamp="2022-06-20T09:28:08" failures="0" errors="0" skipped="0">
+	<testcase classname="check_opi_info.TestOpiInfo" name="test_opi_info" time="0.206" timestamp="2022-06-20T09:28:08" file="base\uk.ac.stfc.isis.ibex.opis\check_opi_info.py" line="36"/>
+</testsuite>
