@@ -61,11 +61,8 @@ public abstract class MatplotlibAllFiguresView {
 			@Override
 	        public void perspectiveActivated(IWorkbenchPage page, IPerspectiveDescriptor activatedPerspective) {
 				Display.getDefault().asyncExec(() -> {
-					boolean relevantChange = false;
-					if (Objects.equals(thisPerspectiveId, currentPerspectiveId)
-							|| Objects.equals(thisPerspectiveId, activatedPerspective.getId())) {
-						relevantChange = true;
-					}
+					boolean relevantChange = Objects.equals(thisPerspectiveId, currentPerspectiveId)
+							|| Objects.equals(thisPerspectiveId, activatedPerspective.getId());
 					
 		            currentPerspectiveId = activatedPerspective.getId();
 		            
@@ -91,6 +88,12 @@ public abstract class MatplotlibAllFiguresView {
 		
 		// Only set up figures if we're in this perspective. Otherwise they are closed so that they don't
 		// use any resource while no-one is looking at them.
+		// 
+		// This also gets around multiple views (e.g. scripting and reflectometry) both having an active connection
+		// to the backend, which then creates issues (e.g. which view should the plots take their size from?)
+		// With this approach there is only ever one plotting view actually active at once - though from a user's perspective
+		// it is still available in both places and will automatically resize the plot to fit whichever view is currently
+		// active
 		if (Objects.equals(thisPerspectiveId, currentPerspectiveId)) {
 			for (int figNum : getFigures().getValue()) {
 				var figure = new MatplotlibFigure(parent, SWT.NONE, getConnectionUrl().getValue(), figNum);
@@ -106,6 +109,7 @@ public abstract class MatplotlibAllFiguresView {
 	 */
 	@PreDestroy
 	public void dispose() {
+		PlatformUI.getWorkbench().getActiveWorkbenchWindow().removePerspectiveListener(perspectiveSwitchListener);
 		getFigures().removePropertyChangeListener(figuresChangedListener);
 		getConnectionUrl().removePropertyChangeListener(urlListener);
 		disposeFigures();
