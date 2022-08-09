@@ -41,6 +41,18 @@ public class ConnectionHandler {
         }
     };
     
+    private static final IPerspectiveListener OPEN_MPL_RENDERER_LISTENER = new PerspectiveAdapter() {
+    	@Override
+        public void perspectiveActivated(IWorkbenchPage page, IPerspectiveDescriptor perspective) {
+	        if (!Activator.getPrimaryFigures().getValue().isEmpty()) {
+	        	Activator.unhidePlots(true);
+	        }
+	        if (!Activator.getSecondaryFigures().getValue().isEmpty()) {
+	        	Activator.unhidePlots(false);
+	        }
+    	}
+    };
+    
     /**
      * Tries to open the plot in current perspective, if it is the correct one to open it in.
      * @param currentPerspective The current perspective
@@ -80,6 +92,10 @@ public class ConnectionHandler {
     		Activator.setSecondaryUrl(url);
     		Activator.setSecondaryFigures(figures);
     	}
+    	Activator.unhidePlots(isPrimary);
+    	Display.getDefault().asyncExec(() -> {
+    	    PlatformUI.getWorkbench().getActiveWorkbenchWindow().addPerspectiveListener(OPEN_MPL_RENDERER_LISTENER);
+    	});
     }
     
     /**

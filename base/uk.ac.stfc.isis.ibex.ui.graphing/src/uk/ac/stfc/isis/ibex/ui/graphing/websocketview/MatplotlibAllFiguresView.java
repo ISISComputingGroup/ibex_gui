@@ -3,16 +3,23 @@ package uk.ac.stfc.isis.ibex.ui.graphing.websocketview;
 import java.beans.PropertyChangeListener;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IPerspectiveDescriptor;
+import org.eclipse.ui.IPerspectiveListener;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PerspectiveAdapter;
+import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
@@ -26,13 +33,17 @@ public abstract class MatplotlibAllFiguresView {
 	private PropertyChangeListener figuresChangedListener;
 	private PropertyChangeListener urlListener;
 	
+	private IPerspectiveListener perspectiveSwitchListener;
+	private String currentPerspectiveId;
+	private String thisPerspectiveId;
+	
 	/**
 	 * Construct this view.
 	 * @param parent the parent
 	 * @param part the part
 	 */
 	@PostConstruct
-	public synchronized void createComposite(final Composite parent, final MPart part) {
+	public synchronized void createComposite(final Composite parent, final MPerspective perspective) {
 		var layout = new GridLayout(1, true);
 		layout.marginWidth = 0;
 		layout.marginHeight = 0;
@@ -43,6 +54,29 @@ public abstract class MatplotlibAllFiguresView {
 				.addUiThreadPropertyChangeListener(evt -> recreateFigures());
 		urlListener = getConnectionUrl()
 				.addUiThreadPropertyChangeListener(evt -> recreateFigures());
+		
+		thisPerspectiveId = perspective.getElementId();
+		
+		perspectiveSwitchListener = new PerspectiveAdapter() {
+			@Override
+	        public void perspectiveActivated(IWorkbenchPage page, IPerspectiveDescriptor activatedPerspective) {
+				Display.getDefault().asyncExec(() -> {
+					boolean relevantChange = false;
+					if (Objects.equals(thisPerspectiveId, currentPerspectiveId)
+							|| Objects.equals(thisPerspectiveId, activatedPerspective.getId())) {
+						relevantChange = true;
+					}
+					
+		            currentPerspectiveId = activatedPerspective.getId();
+		            
+		            if (relevantChange) {
+		            	recreateFigures();
+		            }
+				});
+	        }
+		};
+		
+		PlatformUI.getWorkbench().getActiveWorkbenchWindow().addPerspectiveListener(perspectiveSwitchListener);
 	}
 	
 	private synchronized void disposeFigures() {
@@ -54,12 +88,17 @@ public abstract class MatplotlibAllFiguresView {
 	
 	private synchronized void recreateFigures() {
 		disposeFigures();
-		for (int figNum : getFigures().getValue()) {
-			var figure = new MatplotlibFigure(parent, SWT.NONE, getConnectionUrl().getValue(), figNum);
-			figure.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-			figures.add(figure);
+		
+		// Only set up figures if we're in this perspective. Otherwise they are closed so that they don't
+		// use any resource while no-one is looking at them.
+		if (Objects.equals(thisPerspectiveId, currentPerspectiveId)) {
+			for (int figNum : getFigures().getValue()) {
+				var figure = new MatplotlibFigure(parent, SWT.NONE, getConnectionUrl().getValue(), figNum);
+				figure.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+				figures.add(figure);
+			}
+			parent.layout();
 		}
-		parent.layout();
 	}
 	
 	/**
