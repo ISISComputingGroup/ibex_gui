@@ -1749,22 +1749,6 @@
       </value>
     </entry>
     <entry>
-      <key>Matplotlib viewer</key>
-      <value>
-        <type>UNKNOWN</type>
-        <path>matplotlib.opi</path>
-        <description>The OPI for displaying plots created via matplotlib</description>
-        <macros>
-          <macro>
-            <name>URL</name>
-            <description>The URL from which to retrieve the plot.</description>
-            <default>http://localhost:8988</default>
-          </macro>
-        </macros>
-        <categories/>
-      </value>
-    </entry>
-    <entry>
       <key>Julabo FP50</key>
       <value>
         <type>JULABO</type>
