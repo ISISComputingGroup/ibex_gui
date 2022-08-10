@@ -43,7 +43,10 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
 	private String pv;
 	private boolean visible;
 	private boolean local;
-	private String component;
+	/**
+	 * The name of the component that this block is part of.
+	 */
+	protected String component;
 
     private boolean runcontrol;
     private double lowlimit;

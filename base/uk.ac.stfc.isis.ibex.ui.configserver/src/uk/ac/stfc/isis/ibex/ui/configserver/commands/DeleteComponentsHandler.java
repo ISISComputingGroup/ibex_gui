@@ -65,8 +65,7 @@ public class DeleteComponentsHandler extends DisablingConfigHandler<Collection<S
         if (dialog.open() == Window.OK) {
             Collection<String> toDelete = dialog.selectedConfigs();
             DeleteItemsDialogHelper helper = new DeleteItemsDialogHelper();
-            if(helper.deleteItemsConfirmDialog(toDelete, "Components"))
-            {
+            if (helper.deleteItemsConfirmDialog(toDelete, "Components")) {
                 Map<String, Collection<String>> selectedDependencies = viewModel.filterSelected(toDelete);
                 try {
                     if (selectedDependencies.isEmpty()) {

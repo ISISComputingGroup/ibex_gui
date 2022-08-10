@@ -190,7 +190,9 @@ public enum ComponentType {
     HE_LEVEL_GAUGE,
     /** Musr Steering Magnets. */
     MUSR_STEERING,
-	/** Function generators */
+    /** Delay generators. */
+    DELAY_GENERATORS,
+	/** Function generators. */
 	FUNCTION_GENERATOR;
 
     private Target target;

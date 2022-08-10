@@ -35,6 +35,8 @@ import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -43,6 +45,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.dae.Dae;
+import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.ui.UIUtils;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
@@ -125,9 +129,37 @@ public class ExperimentSetup {
                 }
             }
         });
-        btnSendChanges.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+        GridData gdBtnSendChanges = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+        gdBtnSendChanges.heightHint = 50;
+        btnSendChanges.setLayoutData(gdBtnSendChanges);
+        String defaultFont = btnSendChanges.getFont().getFontData()[0].getName();
+        Font biggerFont = new Font(btnSendChanges.getDisplay(), new FontData(defaultFont, 14, SWT.BOLD));
+        btnSendChanges.setFont(biggerFont);
         btnSendChanges.setText("Apply Changes");
         
+        /*
+         * This part tells the DAE to update the cached values after an external change was detected
+         */
+        final UpdatedValue<Boolean> inSettingsChange = new UpdatedObservableAdapter<>(Dae.getInstance().observables().currentlyChangingSettings);
+		inSettingsChange.addPropertyChangeListener(new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				Boolean isUpdating = inSettingsChange.getValue();
+				if (isUpdating != null) {
+					if (!isUpdating) {
+	                	Display.getDefault().asyncExec(new Runnable() {
+	                	    public void run() {
+	        	                try {
+	        	                    applyChangesToUI();
+	        	                } catch (Exception err) {
+	        	                    // Expected to go off on startup before the xml file is properly loaded
+	        	                }
+	                	    }
+	                	});
+					}
+				}
+			}
+		}, true);
 		
         CTabFolder tabFolder = new CTabFolder(content, SWT.BORDER);
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));

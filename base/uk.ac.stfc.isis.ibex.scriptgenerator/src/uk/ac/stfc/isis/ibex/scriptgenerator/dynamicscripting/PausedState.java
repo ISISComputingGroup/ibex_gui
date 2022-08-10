@@ -97,6 +97,8 @@ public class PausedState extends DynamicScriptingState {
 			case DynamicScriptingProperties.SCRIPT_PAUSED_PROPERTY:
 				handlePaused();
 				break;
+			default: // do nothing;
+				break;
 		}
 	}
 	

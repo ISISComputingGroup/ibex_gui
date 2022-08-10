@@ -13,6 +13,7 @@ public class DynamicScriptName implements HasStatus<Optional<String>> {
 	
 	/**
 	 * Create a dynamic script name with the given optional name.
+	 * @param name - An optional string containing the name to set.
 	 */
 	public DynamicScriptName(Optional<String> name) {
 		this.name = name;

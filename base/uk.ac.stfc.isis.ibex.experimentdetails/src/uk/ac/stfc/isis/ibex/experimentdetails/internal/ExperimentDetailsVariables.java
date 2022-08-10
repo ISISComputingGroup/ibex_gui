@@ -63,7 +63,7 @@ public class ExperimentDetailsVariables {
     /** The writable for setting the current user details. **/
     public final Writable<UserDetails[]> userDetailsSetter;
 
-    private JsonSerialisingConverter<UserDetails[]> userDetailsSerialiser = new JsonSerialisingConverter(UserDetails[].class);
+    private JsonSerialisingConverter<UserDetails[]> userDetailsSerialiser = new JsonSerialisingConverter<UserDetails[]>(UserDetails[].class);
     
     public ExperimentDetailsVariables() {
         availableSampleParameters =

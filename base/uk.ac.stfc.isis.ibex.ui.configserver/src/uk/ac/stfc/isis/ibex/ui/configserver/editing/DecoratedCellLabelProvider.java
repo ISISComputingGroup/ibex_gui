@@ -28,12 +28,24 @@ import org.eclipse.jface.viewers.ViewerCell;
 
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 
+/**
+ * Provides decorated Cell Labels.
+ *
+ * @param <TRow> the type of the row data
+ */
 public abstract class DecoratedCellLabelProvider<TRow> extends DataboundCellLabelProvider<TRow> {
 
 	private final List<CellDecorator<TRow>> decorators = new ArrayList<>();
 			
+	 /**
+     * Instantiates a new decorated cell label provider that tracks changes to
+     * one attribute.
+     *
+     * @param attributeMap the attribute map
+     * @param decorators - decorators to add to the cell
+     */
 	public DecoratedCellLabelProvider(
-			IObservableMap attributeMap, 
+			IObservableMap<TRow, ?> attributeMap, 
 			Collection<? extends CellDecorator<TRow>> decorators) {
 		super(attributeMap);
 		

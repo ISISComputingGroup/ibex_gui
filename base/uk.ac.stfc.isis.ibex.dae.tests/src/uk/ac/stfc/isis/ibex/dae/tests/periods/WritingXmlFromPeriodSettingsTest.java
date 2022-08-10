@@ -20,7 +20,8 @@
 package uk.ac.stfc.isis.ibex.dae.tests.periods;
 
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertNotEquals;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

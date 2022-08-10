@@ -10,7 +10,7 @@
   <background_color>
     <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
   </background_color>
-  <boy_version>5.1.0.201707071649</boy_version>
+  <boy_version>5.1.0</boy_version>
   <foreground_color>
     <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
   </foreground_color>
@@ -71,7 +71,7 @@
     <width>415</width>
     <wuid>313310fd:160dfa4cc2c:-7893</wuid>
     <x>6</x>
-    <y>348</y>
+    <y>391</y>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <alarm_pulsing>false</alarm_pulsing>
@@ -973,7 +973,7 @@ $(pv_value)</tooltip>
     <width>415</width>
     <wuid>1ee7c3b8:160e4984431:-7f06</wuid>
     <x>6</x>
-    <y>246</y>
+    <y>295</y>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <alarm_pulsing>false</alarm_pulsing>
@@ -1490,7 +1490,7 @@ $(pv_value)</tooltip>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>158</height>
+    <height>218</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
       <NUMBER>2</NUMBER>

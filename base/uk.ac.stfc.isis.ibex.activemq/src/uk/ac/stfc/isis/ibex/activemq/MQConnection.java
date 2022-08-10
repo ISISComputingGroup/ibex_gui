@@ -86,7 +86,7 @@ public class MQConnection extends ModelObject implements Runnable {
         setCredentials(username, password);
         updateURL(initialHost);
 
-        thread = new Thread(this);
+        thread = new Thread(this, "ActiveMQ Connection");
         thread.start();
     }
 
