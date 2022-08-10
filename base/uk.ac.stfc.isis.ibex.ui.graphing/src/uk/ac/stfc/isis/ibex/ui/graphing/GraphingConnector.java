@@ -35,9 +35,6 @@ public final class GraphingConnector {
     }
     
     public static void stopListening() {
-    	if (handler != null) {
-    	    handler.removePerspectiveListener();
-    	}
     	if (server != null) {
     	    server.shutdown();
     	}

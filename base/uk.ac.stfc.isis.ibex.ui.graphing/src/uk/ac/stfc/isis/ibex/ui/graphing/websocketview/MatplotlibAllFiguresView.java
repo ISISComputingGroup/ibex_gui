@@ -56,6 +56,7 @@ public abstract class MatplotlibAllFiguresView {
 				.addUiThreadPropertyChangeListener(evt -> recreateFigures());
 		
 		thisPerspectiveId = perspective.getElementId();
+		currentPerspectiveId = thisPerspectiveId;
 		
 		perspectiveSwitchListener = new PerspectiveAdapter() {
 			@Override
