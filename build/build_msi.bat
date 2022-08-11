@@ -1,6 +1,7 @@
 @echo off
 setlocal
 set "MYDIR=%~dp0"
+set "PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\dotnet\;C:\Program Files (x86)\dotnet"
 
 @echo %TIME% Building MSI Kit
 
@@ -56,7 +57,8 @@ if not exist "%MSINAME%.wixobj" (
 
 @echo %TIME% Running LIGHT
 REM -sice:ICE60 is to stop font install warnings (from JRE)
-"%WIXBIN%\light.exe" -sice:ICE60 -ext WixUIExtension %MSINAME%.wixobj
+REM -sval skips all validation. Seem to have issue when ISISbuilder no longer admin
+"%WIXBIN%\light.exe" -sval -sice:ICE60 -ext WixUIExtension %MSINAME%.wixobj
 if %errorlevel% neq 0 goto ERROR
 if exist "%MSINAME%.msi" (
     @echo %TIME% Successfully created %MSINAME%.msi

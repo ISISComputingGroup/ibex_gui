@@ -99,7 +99,7 @@ public final class AlarmReloadManager implements PropertyChangeListener {
             thread.interrupt();
         }
 
-        thread = new Thread(reloadRunnable);
+        thread = new Thread(reloadRunnable, "AlarmReloadManager");
         thread.start();
     }
 

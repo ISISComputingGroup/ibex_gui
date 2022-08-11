@@ -12,8 +12,7 @@ import uk.ac.stfc.isis.ibex.instrument.Instrument;
 public class RefreshPvConnectionButton extends Button {
 
     private static final String REFRESH_PV_CONNECTION_URI = "platform:/plugin/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/icons/resetpv.png";
-    
-    private ButtonViewModel model;
+   
     
     /**
      * Constructor.
@@ -23,7 +22,6 @@ public class RefreshPvConnectionButton extends Button {
      */
 	public RefreshPvConnectionButton(Composite parent, ButtonViewModel model) {
 		super(parent, REFRESH_PV_CONNECTION_URI, "Refresh PVs: Refreshes connection to the PVs, restoring blocked connections", model);
-		this.model = model;
 	}
 	
 	/**

@@ -35,6 +35,7 @@ import java.text.ParsePosition;
  * format for doubles accounts for the number of fractional digits specified in
  * the default format.
  */
+@SuppressWarnings("serial")
 public class ExponentialOnThresholdFormat extends NumberFormat {
 
     private static final String EXPONENTIAL_PATTERN = "0.####E0";

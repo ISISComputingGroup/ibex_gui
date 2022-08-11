@@ -12,7 +12,7 @@ REM Copy the script generator files across
 set APPSDIR=C:\Instrument\Apps
 set SCRIPTGENDIR=%APPSDIR%\script_generator
 mkdir %SCRIPTGENDIR%
-robocopy "%BASEDIR%script_generator" "%SCRIPTGENDIR%" /E /R:2 /MT /NFL /NDL /NP /NC /NS /LOG:NUL
+robocopy "%BASEDIR%script_generator" "%SCRIPTGENDIR%" /MIR /R:2 /MT /NFL /NDL /NP /NC /NS /LOG:NUL
 if %errorlevel% geq 4 (
     @echo ERROR copying SCRIPT GENERATOR
 )

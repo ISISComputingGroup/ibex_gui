@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2020 Science & Technology Facilities Council.
+* Copyright (C) 2012-2021 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -20,11 +20,7 @@
 package uk.ac.stfc.isis.ibex.preferences;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -56,7 +52,7 @@ public class PreferenceSupplier {
 	
 	/**
 	 * Instantiate a new preference supplier based on a specific preferenceService.
-	 * @param preferenceService the preference serice to use
+	 * @param preferenceService the preference service to use
 	 */
 	public PreferenceSupplier(IPreferencesService preferenceService) {
 		this.preferenceService = preferenceService;
@@ -174,16 +170,6 @@ public class PreferenceSupplier {
     private static final String PREFERENCE_NODE = "uk.ac.stfc.isis.ibex.preferences";
     
     /**
-     * Defines which perspectives to hide.
-     */
-    private static final String PERSPECTIVES_TO_HIDE = "perspectives_not_shown";
-    
-    /**
-     * Defines which perspectives to hide by default.
-     */
-    private static final String DEFAULT_PERSPECTIVES_TO_HIDE = "";
-    
-    /**
      * Defines whether to show the values of blocks in an invalid alarm.
      * True means show the value, False means show N/A
      */
@@ -213,7 +199,7 @@ public class PreferenceSupplier {
     /**
      * The default URL for the Script Generator manual page
      */
-    private static final String DEFAULT_SCRIPT_GENERATOR_MANUAL_URL = "http://shadow.nd.rl.ac.uk/ibex_user_manual/Using-the-Script-Generator";
+    private static final String DEFAULT_SCRIPT_GENERATOR_MANUAL_URL = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Using-the-Script-Generator";
     
     /**
      * Defines the URL of the Script Generator page on the user manual
@@ -279,20 +265,7 @@ public class PreferenceSupplier {
 		return getString(PYTHON_INTERPRETER_PATH, DEFAULT_PYTHON_3_INTERPRETER_PATH_LINUX);
            }
 	}
-	
-    /**
-     * Gets a list of perspective IDs which should not be shown.
-     * 
-     * @return a list of perspective IDs which should not be shown (may be empty, but never null).
-     */
-	public List<String> perspectivesToHide() {
-		String preferencesString = getString(PERSPECTIVES_TO_HIDE, DEFAULT_PERSPECTIVES_TO_HIDE);
-		if (preferencesString == null || preferencesString.isEmpty()) {
-			return new ArrayList<>();
-		}
-		return Arrays.asList(preferencesString.split(",")).stream().map(String::trim).collect(Collectors.toList());
-	}
-	
+    
 	/**
      * Gets the preference setting for genie_python directory.
      * 

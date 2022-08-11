@@ -18,3 +18,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: uk.ac.stfc.isis.ibex.ui.ioccontrol
 Bundle-ClassPath: .
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.ioccontrol
+Import-Package: uk.ac.stfc.isis.ibex.instrument.status,
+ uk.ac.stfc.isis.ibex.ui.banner.models

@@ -26,11 +26,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
 import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
@@ -57,12 +55,6 @@ public class EditableGroup extends Group {
 
 		config = configuration;
 		blocksInGroup = lookupBlocksByName(config.getAllBlocks(), group.getBlocks());
-
-		for (EditableBlock block : blocksInGroup) {
-			if (!group.getName().equals("NONE")) {
-				config.makeBlockUnavailable(block);
-			}
-		}
 
 		config.addPropertyChangeListener(new PropertyChangeListener() {
 			@Override
@@ -99,7 +91,7 @@ public class EditableGroup extends Group {
 	 *         A collection of blocks that are unselected.
 	 */
 	public Collection<EditableBlock> getUnselectedBlocks() {
-		return new ArrayList<>(config.getOtherBlocks());
+		return new ArrayList<>(config.getBlocksOutsideGroup());
 	}
 
 	/**
@@ -124,10 +116,8 @@ public class EditableGroup extends Group {
 		for (EditableBlock block : blocksToToggle) {
 			if (blocksInGroup.contains(block)) {
 				blocksInGroup.remove(block);
-				config.makeBlockAvailable(block);
 			} else {
 				blocksInGroup.add(block);
-				config.makeBlockUnavailable(block);
 			}
 		}
 
@@ -203,12 +193,9 @@ public class EditableGroup extends Group {
 	}
 
 	private List<String> blockNames(Collection<? extends Block> blocks) {
-		return Lists.newArrayList(Iterables.transform(blocks, new Function<Block, String>() {
-			@Override
-			public String apply(Block block) {
-				return block.getName();
-			}
-		}));
+	    return blocks.stream()
+	    		.map(Block::getName)
+	    		.collect(Collectors.toList());
 	}
 
 	private List<EditableBlock> lookupBlocksByName(Collection<EditableBlock> blocks, final Collection<String> names) {
