@@ -635,7 +635,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts/>
       <show_scrollbar>false</show_scrollbar>
-      <text>Current Limit:</text>
+      <text>Current limit:</text>
       <tooltip/>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -1168,7 +1168,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts/>
       <show_scrollbar>false</show_scrollbar>
-      <text>Volt Limit:</text>
+      <text>Volt limit:</text>
       <tooltip/>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -2019,7 +2019,7 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <scripts/>
-      <text>Manual Reset Required:</text>
+      <text>Manual reset required:</text>
       <tooltip>This trip can only be reset from the front panel or by removing&#13;
 and reapplying the AC power.</tooltip>
       <transparent>true</transparent>
