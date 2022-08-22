@@ -3046,7 +3046,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_text>true</show_text>
-          <step_increment>500.0</step_increment>
+          <step_increment>0.5</step_increment>
           <tooltip>$(pv_name)
 $(pv_value)</tooltip>
           <transparent>false</transparent>
