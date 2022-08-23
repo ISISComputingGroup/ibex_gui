@@ -55,7 +55,7 @@ public class BlockRunControlPanel extends Composite {
         setLayout(new FillLayout(SWT.HORIZONTAL));
 
         Group grpRuncontrolSettings = new Group(this, SWT.NONE);
-        grpRuncontrolSettings.setText("Run-Control Settings");
+        grpRuncontrolSettings.setText("Default Run-Control Settings");
         grpRuncontrolSettings.setLayout(new GridLayout(4, false));
 
         Label lblLowLimit = new Label(grpRuncontrolSettings, SWT.NONE);
@@ -83,6 +83,10 @@ public class BlockRunControlPanel extends Composite {
         setModel(viewModel);
     }
 	
+    /**
+     * Sets the view model and observers for run control settings.
+     * @param viewModel The view model for run control settings. 
+     */
 	private void setModel(BlockRunControlViewModel viewModel) {
 		DataBindingContext bindingContext = new DataBindingContext();
 		

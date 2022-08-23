@@ -42,6 +42,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.List;
 
+import uk.ac.stfc.isis.ibex.ui.devicescreens.models.DeviceDescriptionWrapper;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.EditDeviceScreensDescriptionViewModel;
 
 /**
@@ -87,7 +88,7 @@ public class ConfigureDeviceScreensListPanel extends Composite {
         grpList.setLayout(new GridLayout(2, false));
 
         screensViewer = new ListViewer(grpList, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
-        screensViewer.setContentProvider(new ObservableListContentProvider());
+        screensViewer.setContentProvider(new ObservableListContentProvider<DeviceDescriptionWrapper>());
         screensViewer.setInput(BeanProperties.list("screens").observe(viewModel));
 
         viewModel.addPropertyChangeListener("name", new PropertyChangeListener() {

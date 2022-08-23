@@ -211,4 +211,26 @@ public class EditableConfigurationTest {
 		config.setIsProtected(false);
 		assertFalse(config.getIsProtected());
 	}
+	
+	@Test
+	public void GIVEN_configuration_WHEN_component_added_THEN_blocks_from_component_available() {
+
+		var component = new Configuration("comp", "desc", "", Collections.emptyList(), 
+				List.of(new Block("comp_blockname", "", false, false)), 
+				Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), false, true, false);
+		
+		var config = new Configuration("name", "description", "", iocs, blocks, groups, components, history, false, true, false);
+		var editable = new EditableConfiguration(config, Collections.emptyList(), List.of(component), Collections.emptyList());
+		
+		assertEquals(editable.getAllBlocks().size(), 0);
+		
+		editable.getEditableComponents().toggleSelection(List.of(component));
+		
+		assertEquals(editable.getAllBlocks().size(), 1);
+		assertEquals(editable.getAllBlocks().toArray(new Block[0])[0].getName(), "comp_blockname");
+		
+		editable.getEditableComponents().toggleSelection(List.of(component));
+		
+		assertEquals(editable.getAllBlocks().size(), 0);
+	}
 }

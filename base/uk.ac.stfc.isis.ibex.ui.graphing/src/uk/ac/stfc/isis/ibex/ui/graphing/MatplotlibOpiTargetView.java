@@ -39,6 +39,10 @@ public class MatplotlibOpiTargetView extends OpiTargetView {
      * Class ID.
      */
     public static final String ID_PRIMARY_PLOT = "uk.ac.stfc.isis.ibex.ui.graphing.MatplotlibOpiTargetView";
+    
+    /**
+     * Secondary class ID for background scripts.
+     */
     public static final String ID_SECONDARY_PLOT = "uk.ac.stfc.isis.ibex.ui.graphing.BackgroundScriptOpiTargetView";
     
     /**

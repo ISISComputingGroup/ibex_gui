@@ -142,7 +142,7 @@ $(pv_value)</tooltip>
       <name>bump_strip_message</name>
       <rules>
         <rule name="visible_when_tripped" prop_id="visible" out_exp="false">
-          <exp bool_exp="pv0 ==0">
+          <exp bool_exp="pv0==0">
             <value>true</value>
           </exp>
           <pv trig="true">$(P)MOT:BUMP_STOP</pv>

@@ -32,6 +32,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -57,17 +58,6 @@ public class WritableComponentView extends Composite {
     private final WritableComponentProperty property;
 
     /**
-     * @param parent
-     *            The parent component
-     * @param property
-     *            The property of the component that is writable
-     */
-    public WritableComponentView(Composite parent, final WritableComponentProperty property) {
-        this(parent, property, true, false);
-    }
-
-    /**
-     * @wbp.parser.constructor
      * Constructs a new instance of this class given its parent and a writable
      * property.
      * 
@@ -134,9 +124,16 @@ public class WritableComponentView extends Composite {
                 BeanProperties.value("pvState", PvState.class).observe(property.sourceReadableProperty()), null, borderStrategy);
     }
 
-    private void sendValue() {
-        property.writer().uncheckedWrite(text.getText());
-        parent.setFocus();
-
-    }
+	private void sendValue() {
+		try {
+			property.writer().uncheckedWrite(text.getText());
+		} catch (RuntimeException e) {
+			MessageBox errorMessage = new MessageBox(getShell(), SWT.ICON_ERROR);
+			errorMessage.setMessage("Could not write to PV - is it missing the setpoint suffix :SP?\n"
+					+ "Check the PV address in the Synoptic setup dialog.");
+	        errorMessage.setText("Error setting value");
+	        errorMessage.open();
+		}
+		parent.setFocus();
+	}
 }

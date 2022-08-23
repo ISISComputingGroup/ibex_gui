@@ -24,11 +24,11 @@ Require-Bundle: org.eclipse.ui,
  javax.annotation;bundle-version="1.2.0",
  uk.ac.stfc.isis.ibex.ui.configserver
 Bundle-RequiredExecutionEnvironment: JavaSE-11
-Export-Package: uk.ac.stfc.isis.ibex.ui.beamstatus,
- uk.ac.stfc.isis.ibex.ui.beamstatus.views
+Export-Package: uk.ac.stfc.isis.ibex.ui.beamstatus.views
 Import-Package: org.eclipse.wb.swt,
  uk.ac.stfc.isis.ibex.configserver.configuration,
  uk.ac.stfc.isis.ibex.configserver.editing,
+ uk.ac.stfc.isis.ibex.ui.blocks.groups,
  uk.ac.stfc.isis.ibex.ui.blocks.presentation,
  uk.ac.stfc.isis.ibex.ui.configserver.dialogs,
  uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs,

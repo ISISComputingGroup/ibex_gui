@@ -248,6 +248,7 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.banner.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.instrument.status</module>
 		<module>../uk.ac.stfc.isis.ibex.dae.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.ioccontrol.tests</module>
 	</modules>
 </project>
 

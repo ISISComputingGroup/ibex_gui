@@ -52,7 +52,7 @@
       <color red="192" green="192" blue="192"/>
     </border_color>
     <widget_type>Web Browser</widget_type>
-    <url>http://dataweb.isis.rl.ac.uk/IbexLinks/default.htm?&amp;instrument=$(INST)</url>
+    <url>https://dataweb.isis.rl.ac.uk/IbexLinks/default.htm?&amp;instrument=$(INST)</url>
     <background_color>
       <color red="240" green="240" blue="240"/>
     </background_color>

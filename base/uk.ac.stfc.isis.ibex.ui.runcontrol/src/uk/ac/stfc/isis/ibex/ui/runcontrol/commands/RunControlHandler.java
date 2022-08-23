@@ -34,7 +34,6 @@ import uk.ac.stfc.isis.ibex.ui.runcontrol.dialogs.EditRunControlDialog;
  */
 public class RunControlHandler {
 
-	private static final String TITLE = "Run-Control Settings";
 	private static final ConfigServer CONFIGSERVER = Configurations.getInstance().server();
 	
 	/**
@@ -43,8 +42,7 @@ public class RunControlHandler {
 	 */
 	@Execute
 	public void execute(Shell shell) {
-		RunControlServer rcServer = RunControlActivator.getInstance().getServer();
-		EditRunControlDialog dialog = new EditRunControlDialog(shell, TITLE, CONFIGSERVER, rcServer);
+		EditRunControlDialog dialog = new EditRunControlDialog(shell);
 		dialog.open();
 	}
 	

@@ -39,6 +39,10 @@ public class ScriptGeneratorNicosViewModel implements PropertyChangeListener {
 	private static final String RUN_BUTTON_TEXT = "Run";
 	private static final String RESUME_BUTTON_TEXT = "Resume";
 	
+	/**
+	 *  Constructor to create a view model using a scriptgeneratorsingleton as the model.
+	 * @param scriptGeneratorModel - The script generator singleton to be used as the model.
+	 */
 	public ScriptGeneratorNicosViewModel(ScriptGeneratorSingleton scriptGeneratorModel) {
 		var nicosAdapter = new DynamicScriptingNicosAdapter(nicosModel);
 		nicosModel.addPropertyChangeListener(nicosAdapter);
@@ -139,6 +143,8 @@ public class ScriptGeneratorNicosViewModel implements PropertyChangeListener {
 				break;
 			case ERROR:
 				formatButtonsWhenError();
+				break;
+			default: // do nothing;
 				break;
 		}
 	}

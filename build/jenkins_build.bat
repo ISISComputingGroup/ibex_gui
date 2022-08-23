@@ -38,12 +38,12 @@ if "%EXIT%" == "YES" exit /b %build_error_level%
 REM Copy zip to installs area
 REM Delete older versions?
 REM the password for isis\IBEXbuilder is contained in the BUILDERPW system environment variable on the build server
-net use p: /d /yes
-net use p: \\isis\inst$
+REM net use p: /d /yes
+REM net use p: \\isis.cclrc.ac.uk\inst$
 
 REM Don't group these. Bat expands whole if at once, not sequentially
 if "%RELEASE%" == "YES" (
-    set RELEASE_DIR=p:\Kits$\CompGroup\ICP\Releases\%GIT_BRANCH:~8%
+    set RELEASE_DIR=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\Releases\%GIT_BRANCH:~8%
     set RELEASE_VERSION=%GIT_BRANCH:~8%    
 ) else (
     set RELEASE_VERSION=devel-%GIT_COMMIT:~0,7%
@@ -53,9 +53,9 @@ if "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%
 
 if not "%RELEASE%" == "YES" (
     if "%IS_E4%" == "YES" (
-        set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client_E4
+        set INSTALLBASEDIR=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\Client_E4
     ) else (
-        set INSTALLBASEDIR=p:\Kits$\CompGroup\ICP\Client
+        set INSTALLBASEDIR=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\Client
     )
 ) 
 
@@ -79,7 +79,7 @@ if "%RELEASE%" == "YES" (
     )
 )
 
-robocopy %CD%\..\%TARGET_DIR% %INSTALLDIR%\Client /MT /MIR /R:1 /NFL /NDL /NP /NS /NC /LOG:NUL
+robocopy %CD%\..\%TARGET_DIR% %INSTALLDIR%\Client /MT /MIR /R:1 /NFL /NDL /NP /NS /NC /LOG:"copy_client.log"
 if %errorlevel% geq 4 (
     if not "%INSTALLDIR%" == "" (
         @echo Removing invalid client directory %INSTALLDIR%\Client
@@ -104,11 +104,11 @@ if %errorlevel% neq 0 (
 )
 
 REM Copy the install script across
-cd %BASEDIR%
-copy /Y %BASEDIR%\install_client.bat %INSTALLDIR%
-if %errorlevel% neq 0 (
-    @echo Installl client copy failed
-    exit /b %errorlevel%
+cd /d %BASEDIR%
+robocopy "." "%INSTALLDIR%" install_client.bat install_gui_with_builtin_python.bat install_gui_and_external_python.bat README_INSTALL.txt /R:1
+if %errorlevel% geq 4 (
+    @echo Install client batch file copy failed  %errorlevel%
+    exit /b 1
 )
 
 @echo %BUILD_NUMBER%> %INSTALLDIR%\Client\BUILD_NUMBER.txt
@@ -119,3 +119,5 @@ if %errorlevel% neq 0 (
 if not "%RELEASE%" == "YES" (
     @echo %BUILD_NUMBER%>%INSTALLDIR%\..\LATEST_BUILD.txt 
 )
+exit /b 0
+

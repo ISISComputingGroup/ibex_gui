@@ -1,6 +1,6 @@
 setlocal
 REM We bundle our own JRE with the client, this is where it is
-set "JRELOCATION=\\isis\inst$\Kits$\CompGroup\ICP\ibex_client_jre"
+set "JRELOCATION=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\ibex_client_jre"
 set "LOCAL_JRE_LOCATION=%~dp0jdk"
 
 set "TARGET_DIR=%3"
@@ -8,7 +8,7 @@ if "%TARGET_DIR%" == "" (
     set TARGET_DIR=built_client
 )
 
-robocopy "%JRELOCATION%" "%LOCAL_JRE_LOCATION%" /E /PURGE /R:2 /MT /XF "install.log" /NFL /NDL /NC /NS /NP /LOG:NUL
+robocopy "%JRELOCATION%" "%LOCAL_JRE_LOCATION%" /E /PURGE /R:2 /MT /XF "install.log" /NFL /NDL /NC /NS /NP /LOG:"local_copy_jre.log"
 
 set errcode=%ERRORLEVEL%
 
@@ -50,7 +50,7 @@ if "%~2" == "" (
 )
 set sensible_build_dir="%~dp0..\%TARGET_DIR%"
 RMDIR /S /Q %sensible_build_dir%
-robocopy "%built_client%" "%sensible_build_dir%" /MT /E /PURGE /R:2 /XF "install.log" /NFL /NDL /NP /NS /NC /LOG:NUL
+robocopy "%built_client%" "%sensible_build_dir%" /MT /E /PURGE /R:2 /XF "install.log" /NFL /NDL /NP /NS /NC /LOG:"local_copy_client.log"
 set errcode=%ERRORLEVEL%
 if %errcode% GEQ 4 (
 	@echo robocopy error
@@ -64,7 +64,7 @@ if %errcode% GEQ 4 (
 
 REM Copy the JRE across 
 @echo Copying JRE into client
-robocopy "%LOCAL_JRE_LOCATION%" "%sensible_build_dir%\jre" /MT /MIR /R:1 /XF "install.log" /NFL /NDL /NP /NS /NC /LOG:NUL
+robocopy "%LOCAL_JRE_LOCATION%" "%sensible_build_dir%\jre" /MT /MIR /R:1 /XF "install.log" /NFL /NDL /NP /NS /NC /LOG:"copy_client_jre.log"
 if %errorlevel% geq 4 (
     @echo Failed to copy JRE across
     exit /b 1

@@ -30,7 +30,6 @@ import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.ElapsedTimeChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
-import uk.ac.stfc.isis.ibex.instrument.channels.FloatArrayChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.IntegerChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.NumberChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
@@ -442,67 +441,4 @@ public class DaeObservables {
                 InstrumentUtils.addPrefix(DAE.endWith("EVENTMODEDATARATE")));
     }
 
-    /**
-     * Gets the X data for a given DAE spectrum.
-     * 
-     * @param number
-     *            The spectrum number
-     * @param period
-     *            The period number
-     * @return The X data points related to the specified spectrum
-     */
-    public ForwardingObservable<float[]> spectrumXData(int number, int period) {
-        return obsFactory.getSwitchableObservable(new FloatArrayChannel(),
-                InstrumentUtils.addPrefix(spectrumData(number, period, "X")));
-    }
-
-    /**
-     * Gets the length of the available X data for a given DAE spectrum.
-     * 
-     * @param number
-     *            The spectrum number
-     * @param period
-     *            The period number
-     * @return The number of X data points related to the specified spectrum
-     */
-    public ForwardingObservable<Integer> spectrumXDataLength(int number, int period) {
-        return obsFactory.getSwitchableObservable(new IntegerChannel(),
-                InstrumentUtils.addPrefix(spectrumDataLength(number, period, "X")));
-    }
-
-    /**
-     * Gets the Y data for a given DAE spectrum.
-     * 
-     * @param number
-     *            The spectrum number
-     * @param period
-     *            The period number
-     * @return The Y data points related to the specified spectrum
-     */
-    public ForwardingObservable<float[]> spectrumYData(int number, int period) {
-        return obsFactory.getSwitchableObservable(new FloatArrayChannel(),
-                InstrumentUtils.addPrefix(spectrumData(number, period, "Y")));
-    }
-
-    /**
-     * Gets the length of the available Y data for a given DAE spectrum.
-     * 
-     * @param number
-     *            The spectrum number
-     * @param period
-     *            The period number
-     * @return The number of Y data points related to the specified spectrum
-     */
-    public ForwardingObservable<Integer> spectrumYDataLength(int number, int period) {
-        return obsFactory.getSwitchableObservable(new IntegerChannel(),
-                InstrumentUtils.addPrefix(spectrumDataLength(number, period, "Y")));
-    }
-
-    private static String spectrumData(int spectrum, int period, String axis) {
-        return String.format("DAE:SPEC:%d:%d:%s", period, spectrum, axis);
-    }
-
-    private static String spectrumDataLength(int spectrum, int period, String axis) {
-        return spectrumData(spectrum, period, axis) + ".NORD";
-    }
 }
