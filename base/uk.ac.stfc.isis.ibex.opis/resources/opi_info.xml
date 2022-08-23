@@ -1321,6 +1321,16 @@
       </value>
     </entry>
     <entry>
+      <key>DEBIG Riken Magnet PSU</key>
+      <value>
+        <type>DEBUG_RIKEN_magnet_PSUs</type>
+        <path>RIKEN/DEBUG_RIKEN_magnet_PSUs.opi</path>
+        <description>The OPI for the DEBUG Riken Magnet PSU Synoptic..</description>
+        <macros/>
+        <categories/>
+      </value>
+    </entry>
+    <entry>
       <key>Jaws</key>
       <value>
         <type>JAWS</type>
