@@ -1215,14 +1215,14 @@
          id="org.apache.batik.util"
          download-size="0"
          install-size="0"
-         version="1.13"
+         version="1.13.0.v20200622-2037"
          unpack="false"/>
 
    <plugin
          id="org.apache.batik.constants"
          download-size="0"
          install-size="0"
-         version="1.13"
+         version="1.13.0.v20200622-2037"
          unpack="false"/>
 
    <plugin
@@ -1243,7 +1243,7 @@
          id="org.apache.batik.css"
          download-size="0"
          install-size="0"
-         version="1.13"
+         version="1.13.0.v20200622-2037"
          unpack="false"/>
 
 </feature>
