@@ -8,7 +8,10 @@ Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: javax.annotation;bundle-version="1.2.0",
  org.hamcrest;bundle-version="1.1.0",
  org.junit,
- org.mockito.mockito-core;bundle-version="4.7.0"
+ org.mockito.mockito-core;bundle-version="4.7.0",
+ net.bytebuddy.byte-buddy;bundle-version="1.12.13",
+ net.bytebuddy.byte-buddy-agent;bundle-version="1.12.13",
+ org.objenesis;bundle-version="3.2.0"
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.synoptic.tests
 Import-Package: javax.xml.bind;version="2.3.2"
 
