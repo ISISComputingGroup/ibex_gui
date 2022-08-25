@@ -46,10 +46,10 @@
 					</environments>
 					<target>
 						<artifact>
-							<groupId>${project.groupId}</groupId>
-							<artifactId>${project.artifactId}</artifactId>
-							<version>${project.version}</version>
-							<classifier>../uk.ac.stfc.isis.ibex.targetplatform/uk.ac.stfc.isis.ibex.targetplatform</classifier>
+							<groupId>CSS_ISIS</groupId>
+							<artifactId>uk.ac.stfc.isis.ibex.targetplatform</artifactId>
+							<version>1.0.0-SNAPSHOT</version>
+							<classifier>targetplatform</classifier>
 						</artifact>
 					</target>
 				</configuration>
@@ -139,6 +139,7 @@
 
 	<modules>
 
+		<module>../uk.ac.stfc.isis.ibex.targetplatform</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.about</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.widgets</module>
 		<module>../uk.ac.stfc.isis.ibex.preferences</module>
