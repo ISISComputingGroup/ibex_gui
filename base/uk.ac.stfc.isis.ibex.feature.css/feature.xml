@@ -1051,13 +1051,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.jacorb.omgapi"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.csstudio.archive.reader.channelarchiver"
          download-size="0"
          install-size="0"
@@ -1244,6 +1237,13 @@
          download-size="0"
          install-size="0"
          version="1.13.0.v20200622-2037"
+         unpack="false"/>
+
+   <plugin
+         id="wrapped.org.jacorb.jacorb-omgapi"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>

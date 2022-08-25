@@ -2,22 +2,10 @@
 <?pde version="3.8"?>
 <target name="uk.ac.stfc.isis.ibex.targetplatform" sequenceNumber="254">
 <locations>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.mockito.feature.feature.group" version="1.0.0.20150724-1352"/>
-<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/Mockito_P2/"/>
-</location>
-    <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-        <repository location="http://shadow.nd.rl.ac.uk/ICP_P2/jacorb/target/repository/"/>
-        <unit id="org.jacorb.omgapi" version="3.9.0"/>
-    </location>
     <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
         <repository location="http://download.eclipse.org/e4/snapshots/org.eclipse.e4.tools/latest"/>
         <unit id="org.eclipse.e4.tools.spies.feature.feature.group" version="0.0.0"/>
     </location>
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/Py4j_P2"/>
-		<unit id="org.py4j.feature.feature.group" version="0.10.9.2-bnd-BwsoWA"/>
-	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
          <unit id="org.eclipse.sapphire.ui.swt.gef.feature.group" version="9.1.0.201609301330"/>
          <repository location="http://download.eclipse.org/releases/2018-09"/>
@@ -197,6 +185,36 @@
 				<groupId>org.zeromq</groupId>
 				<artifactId>jeromq</artifactId>
 				<version>0.5.2</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</location>
+	<location includeDependencyDepth="infinite" includeDependencyScopes="compile,runtime,import" includeSource="true" missingManifest="generate" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-core</artifactId>
+				<version>4.7.0</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</location>
+	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>net.sf.py4j</groupId>
+				<artifactId>py4j</artifactId>
+				<version>0.10.9.7</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</location>
+	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>org.jacorb</groupId>
+				<artifactId>jacorb-omgapi</artifactId>
+				<version>3.9</version>
 				<type>jar</type>
 			</dependency>
 		</dependencies>

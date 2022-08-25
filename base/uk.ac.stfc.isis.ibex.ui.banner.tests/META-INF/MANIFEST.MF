@@ -7,4 +7,4 @@ Fragment-Host: uk.ac.stfc.isis.ibex.ui.banner;bundle-version="1.0.0"
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.banner.tests
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: org.junit;bundle-version="4.13.0",
- org.mockito;bundle-version="1.9.5"
+ org.mockito.mockito-core;bundle-version="4.7.0"

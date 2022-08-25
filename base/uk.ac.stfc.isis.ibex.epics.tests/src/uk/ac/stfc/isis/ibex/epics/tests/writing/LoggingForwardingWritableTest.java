@@ -22,7 +22,6 @@
  */
 package uk.ac.stfc.isis.ibex.epics.tests.writing;
 
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 import java.io.IOException;

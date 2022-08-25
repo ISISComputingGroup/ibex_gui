@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.alarm.tests;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import org.csstudio.alarm.beast.Preferences;
