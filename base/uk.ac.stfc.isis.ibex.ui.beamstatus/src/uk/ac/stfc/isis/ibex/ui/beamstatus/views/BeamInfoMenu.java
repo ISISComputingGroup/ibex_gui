@@ -66,7 +66,7 @@ public class BeamInfoMenu extends MenuManager {
 				} else {
 					Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
 					MessageBox messageBox = new MessageBox(shell, SWT.ICON_WARNING | SWT.OK);
-					messageBox.setText(String.format("Failed to Open \"%s\" in Log Plotter", facilityPV.pv));
+					messageBox.setText("Failed to open in Log Plotter");
 					messageBox.setMessage("Make the Log Plotter perspective visible.");
 					messageBox.open();
 				}
