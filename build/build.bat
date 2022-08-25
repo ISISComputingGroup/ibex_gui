@@ -29,16 +29,16 @@ if "%PYTHON3%" == "" (
 	set "PYTHON3=C:\Instrument\Apps\Python3\python.exe"
 )
 
-call %~dp0run_python_support_tests.bat
-if %errorlevel% neq 0 exit /b %errorlevel%
+REM call %~dp0run_python_support_tests.bat
+REM if %errorlevel% neq 0 exit /b %errorlevel%
  
-%PYTHON3% .\check_build.py ..\base\
-if %errorlevel% neq 0 exit /b %errorlevel%
+REM %PYTHON3% .\check_build.py ..\base\
+REM if %errorlevel% neq 0 exit /b %errorlevel%
 
 if "%BUILD_NUMBER%" == "" SET BUILD_NUMBER=SNAPSHOT
 
 set mvnErr=
-call mvn --settings=%~dp0..\mvn_user_settings.xml -f %~dp0..\base\uk.ac.stfc.isis.ibex.client.tycho.parent\pom.xml -DforceContextQualifier=%BUILD_NUMBER% clean verify || set mvnErr=1
+call mvn --settings=%~dp0..\mvn_user_settings.xml -f %~dp0..\base\uk.ac.stfc.isis.ibex.client.tycho.parent\pom.xml -DforceContextQualifier=%BUILD_NUMBER% -fn clean verify || set mvnErr=1
 if defined mvnErr exit /b 1
 
 REM Copy built client into a sensible directory to run it

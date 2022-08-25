@@ -6,17 +6,10 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.logger.IsisLog
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- com.google.guava
+ com.google.guava,
+ org.apache.logging.log4j.api;bundle-version="2.18.0";visibility:=reexport,
+ org.apache.logging.log4j.core;bundle-version="2.18.0";visibility:=reexport
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ActivationPolicy: lazy
-Export-Package: org.apache.logging.log4j,
- org.apache.logging.log4j.core.config.plugins,
- org.apache.logging.log4j.message,
- org.apache.logging.log4j.spi,
- org.apache.logging.log4j.status,
- org.apache.logging.log4j.util,
- uk.ac.stfc.isis.ibex.logger
-Bundle-ClassPath: .,
- lib/log4j-api-2.18.0.jar,
- lib/log4j-core-2.18.0.jar
+Export-Package: uk.ac.stfc.isis.ibex.logger
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.logger

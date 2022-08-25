@@ -42,7 +42,7 @@ public class Application implements IApplication {
 		// If you get an error here, you need to go (in Eclipse) to:
 		// window -> Preferences -> Java -> compiler
 		// and change workspace compliance to Java 11.
-		@SuppressWarnings("unused") final var java11Check = new Object(); 
+		@SuppressWarnings("unused") final var java11Check = new Object();
 		
 		// Start a JMX server for remote diagnostics.
 		JMXServer.startJMXServer();

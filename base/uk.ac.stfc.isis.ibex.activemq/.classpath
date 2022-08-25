@@ -7,6 +7,5 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry kind="lib" path="lib/activemq-all-5.17.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
