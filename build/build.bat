@@ -29,11 +29,11 @@ if "%PYTHON3%" == "" (
 	set "PYTHON3=C:\Instrument\Apps\Python3\python.exe"
 )
 
-REM call %~dp0run_python_support_tests.bat
-REM if %errorlevel% neq 0 exit /b %errorlevel%
- 
-REM %PYTHON3% .\check_build.py ..\base\
-REM if %errorlevel% neq 0 exit /b %errorlevel%
+call %~dp0run_python_support_tests.bat
+if %errorlevel% neq 0 exit /b %errorlevel%
+
+%PYTHON3% .\check_build.py ..\base\
+if %errorlevel% neq 0 exit /b %errorlevel%
 
 if "%BUILD_NUMBER%" == "" SET BUILD_NUMBER=SNAPSHOT
 

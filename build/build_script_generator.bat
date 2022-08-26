@@ -24,39 +24,39 @@ if "%PYTHON3%" == "" (
 	set "PYTHON3=C:\Instrument\Apps\Python3\python.exe"
 )
 
-REM call %~dp0run_python_support_tests.bat
-REM if %errorlevel% neq 0 exit /b %errorlevel%
-REM  
-REM %PYTHON3% .\check_build.py ..\base\
-REM if %errorlevel% neq 0 exit /b %errorlevel%
+call %~dp0run_python_support_tests.bat
+if %errorlevel% neq 0 exit /b %errorlevel%
+ 
+%PYTHON3% .\check_build.py ..\base\
+if %errorlevel% neq 0 exit /b %errorlevel%
 
 
 if "%BUILD_NUMBER%" == "" (
     set BUILD_NUMBER=SNAPSHOT
 )
 
-REM REM Create a bundle of the latest script defninitions repo, then delete temporary files
-REM pushd %~dp0
-REM set definitions_temp_directory=%~dp0..\base\uk.ac.stfc.isis.ibex.scriptgenerator\python_support\ScriptDefinitions
-REM 
-REM git clone https://github.com/ISISComputingGroup/ScriptDefinitions.git %definitions_temp_directory%
-REM cd %definitions_temp_directory%
-REM 
-REM git bundle create ScriptDefinitions_repo.bundle --all
-REM if %errorlevel% neq 0 exit /b %errorlevel%
-REM cd ..
-REM robocopy "ScriptDefinitions" "." "ScriptDefinitions_repo.bundle"
-REM popd
-REM RMDIR /S /Q %definitions_temp_directory%
-REM 
-REM REM Copy a portable git distribution with the script generator
-REM set "git_distribution=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\client_dependencies\git"
-REM set git_directory=%~dp0..\base\uk.ac.stfc.isis.ibex.scriptgenerator\python_support\git
-REM robocopy "%git_distribution%" "%git_directory%" /MT /E /PURGE /R:2 /XF "install.log" /NFL /NDL /NP /NS /NC /LOG:NUL
-REM if %errorlevel% geq 4 (
-REM     @echo Failed to copy git distribution across
-REM     exit /b 1
-REM )
+REM Create a bundle of the latest script defninitions repo, then delete temporary files
+pushd %~dp0
+set definitions_temp_directory=%~dp0..\base\uk.ac.stfc.isis.ibex.scriptgenerator\python_support\ScriptDefinitions
+
+git clone https://github.com/ISISComputingGroup/ScriptDefinitions.git %definitions_temp_directory%
+cd %definitions_temp_directory%
+
+git bundle create ScriptDefinitions_repo.bundle --all
+if %errorlevel% neq 0 exit /b %errorlevel%
+cd ..
+robocopy "ScriptDefinitions" "." "ScriptDefinitions_repo.bundle"
+popd
+RMDIR /S /Q %definitions_temp_directory%
+
+REM Copy a portable git distribution with the script generator
+set "git_distribution=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\client_dependencies\git"
+set git_directory=%~dp0..\base\uk.ac.stfc.isis.ibex.scriptgenerator\python_support\git
+robocopy "%git_distribution%" "%git_directory%" /MT /E /PURGE /R:2 /XF "install.log" /NFL /NDL /NP /NS /NC /LOG:NUL
+if %errorlevel% geq 4 (
+    @echo Failed to copy git distribution across
+    exit /b 1
+)
 
 
 set mvnErr=
