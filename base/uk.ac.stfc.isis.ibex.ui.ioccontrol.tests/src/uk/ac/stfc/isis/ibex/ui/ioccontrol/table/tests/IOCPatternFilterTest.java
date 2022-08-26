@@ -31,7 +31,7 @@ import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCPatternFilter;
 
 @SuppressWarnings("checkstyle:methodname")
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.StrictStubs.class)
 public class IOCPatternFilterTest {
 	
 	private IOCPatternFilter filter;

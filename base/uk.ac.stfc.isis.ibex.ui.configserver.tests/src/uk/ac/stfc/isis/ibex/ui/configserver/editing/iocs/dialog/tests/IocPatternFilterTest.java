@@ -30,7 +30,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog.IocPatternFilter;
 
 @SuppressWarnings("checkstyle:methodname")
-@RunWith(org.mockito.junit.MockitoJUnitRunner.class)
+@RunWith(org.mockito.junit.MockitoJUnitRunner.StrictStubs.class)
 public class IocPatternFilterTest {
 	
 	private IocPatternFilter filter;
