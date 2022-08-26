@@ -15,7 +15,7 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.ui.targets,
  uk.ac.stfc.isis.ibex.targets,
  wrapped.net.sf.py4j.py4j;bundle-version="0.10.9"
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.ui.graphing
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.graphing

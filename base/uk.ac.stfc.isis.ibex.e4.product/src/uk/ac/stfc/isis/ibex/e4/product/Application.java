@@ -39,10 +39,11 @@ public class Application implements IApplication {
 	@Override
     public Object start(IApplicationContext context) {
 		
-		// If you get an error here, you need to go (in Eclipse) to:
-		// window -> Preferences -> Java -> compiler
-		// and change workspace compliance to Java 11.
-		@SuppressWarnings("unused") final var java11Check = new Object();
+		@SuppressWarnings("unused") final var java17Check = """
+				If you get an error here, you need to go (in Eclipse) to:
+				window -> Preferences -> Java -> compiler
+				and change workspace compliance to Java 17.
+				""";
 		
 		// Start a JMX server for remote diagnostics.
 		JMXServer.startJMXServer();
