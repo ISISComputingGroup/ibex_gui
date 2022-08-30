@@ -60,7 +60,7 @@ if %errorlevel% geq 4 (
 
 
 set mvnErr=
-call mvn --settings=%~dp0..\mvn_user_settings.xml -f %~dp0..\base\uk.ac.stfc.isis.scriptgenerator.tycho.parent\pom.xml -Dtycho.testArgLine="--add-opens java.desktop/java.beans=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED" -DforceContextQualifier=%BUILD_NUMBER% clean verify || set mvnErr=1
+call mvn --settings=%~dp0..\mvn_user_settings.xml -f %~dp0..\base\uk.ac.stfc.isis.scriptgenerator.tycho.parent\pom.xml -DforceContextQualifier=%BUILD_NUMBER% clean verify || set mvnErr=1
 if defined mvnErr exit /b 1
 
 REM Copy built client into a sensible clean directory to run it

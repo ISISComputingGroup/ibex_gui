@@ -32,18 +32,22 @@ import uk.ac.stfc.isis.ibex.ui.JMXServer;
  * This class controls all aspects of the application's execution.
  */
 public class Application implements IApplication {
+	
+	/* 
+	 * If you get an error on the following declarations, you need to go (in eclipse) to:
+	 * Window -> preferences -> java -> compiler and change workspace
+	 * compliance to java 17.
+	 * Also ensure that a compatible Eclipse Adoptium JDK version 17+ is 
+	 * selected to build with.
+	 */
+	private static sealed interface Java17SealedInterface permits Java17SealedInterfaceImpl {}
+	private static final non-sealed class Java17SealedInterfaceImpl implements Java17SealedInterface {}
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.IApplicationContext)
 	 */
 	@Override
     public Object start(IApplicationContext context) {
-		
-		@SuppressWarnings("unused") final var java17Check = """
-				If you get an error here, you need to go (in Eclipse) to:
-				window -> Preferences -> Java -> compiler
-				and change workspace compliance to Java 17.
-				""";
 		
 		// Start a JMX server for remote diagnostics.
 		JMXServer.startJMXServer();
