@@ -24,9 +24,6 @@ import java.util.Collection;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import uk.ac.stfc.isis.ibex.configserver.BlockRules;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.configserver.ServerStatus;
@@ -41,7 +38,6 @@ import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.Convert;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
-import uk.ac.stfc.isis.ibex.epics.conversion.json.LowercaseEnumTypeAdapterFactory;
 import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
 
 /**
@@ -54,8 +50,7 @@ public class JsonConverters implements Converters {
 	 */
 	@Override
 	public Function<String, Configuration> toConfig() {
-		Gson gson = new GsonBuilder().registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory()).create();
-		return new JsonDeserialisingConverter<>(Configuration.class, gson).andThen(withFunction(INIT_CONFIG));
+		return new JsonDeserialisingConverter<>(Configuration.class).andThen(withFunction(INIT_CONFIG));
 	}
 
 	/**
@@ -63,8 +58,7 @@ public class JsonConverters implements Converters {
 	 */
     @Override
     public Function<String, Collection<Configuration>> toConfigList() {
-        Gson gson = new GsonBuilder().registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory()).create();
-        return new JsonDeserialisingConverter<>(Configuration[].class, gson)
+        return new JsonDeserialisingConverter<>(Configuration[].class)
                 .andThen(Arrays::asList).andThen(forEach(INIT_CONFIG));
     }
 

@@ -22,7 +22,6 @@ import java.beans.PropertyChangeSupport;
 import java.lang.reflect.Type;
 import java.util.function.Function;
 
-import com.google.gson.ExclusionStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -36,12 +35,9 @@ import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
  */
 public class JsonSerialisingConverter<T> implements Function<T, String> {
 
-	private static final ExclusionStrategy EXCLUDE_PROPERTY_CHANGE_SUPPORT = 
-			new SpecificClassExclusionStrategy(PropertyChangeSupport.class);
-	
 	private final Gson gson = new GsonBuilder()
 			.registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory())
-			.setExclusionStrategies(EXCLUDE_PROPERTY_CHANGE_SUPPORT)
+			.setExclusionStrategies(new SpecificClassExclusionStrategy(PropertyChangeSupport.class))
 			.create();
 
     private final Type classOfT;
