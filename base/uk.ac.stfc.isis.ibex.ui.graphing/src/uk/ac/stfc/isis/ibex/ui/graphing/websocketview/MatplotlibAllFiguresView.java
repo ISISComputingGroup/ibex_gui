@@ -40,7 +40,7 @@ public abstract class MatplotlibAllFiguresView {
 	/**
 	 * Construct this view.
 	 * @param parent the parent
-	 * @param part the part
+	 * @param perspective the perspective
 	 */
 	@PostConstruct
 	public synchronized void createComposite(final Composite parent, final MPerspective perspective) {
@@ -116,7 +116,16 @@ public abstract class MatplotlibAllFiguresView {
 		disposeFigures();
 	}
 	
+	/**
+	 * Gets the figure numbers shown by this view.
+	 * @return the figure numbers
+	 */
 	protected abstract UpdatedValue<List<Integer>> getFigures();
+	
+	/**
+	 * Get the connection URL of this view.
+	 * @return the url
+	 */
 	protected abstract UpdatedValue<String> getConnectionUrl();
 	
 }

@@ -17,6 +17,9 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+/**
+ * The viewmodel for a matplotlib figure.
+ */
 public class MatplotlibFigureViewModel implements Closeable {
 	
 	private static final Logger LOG = IsisLog.getLogger(MatplotlibFigureViewModel.class);
@@ -25,6 +28,8 @@ public class MatplotlibFigureViewModel implements Closeable {
 	
 	private final SettableUpdatedValue<String> plotName;
 	private final SettableUpdatedValue<ImageData> image;
+	
+	private static final int PALETTE_BIT_DEPTH = 8;
 	
 	/** 
 	 *  We use this pattern to limit the rate at which we redraw the UI - without this,
@@ -127,8 +132,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 	}
 	
 	/**
-	 * Changes the name of this plot.
-	 * @param plotName the new name
+	 * Updated the name of this plot.
 	 */
 	public void onPlotNameChange() {
 		updatePlotName();
@@ -157,7 +161,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 		return new ImageData(
 				this.canvasWidth <= 0 ? 1 : this.canvasWidth, 
 				this.canvasHeight <= 0 ? 1 : this.canvasHeight, 
-			    8, palette);
+				PALETTE_BIT_DEPTH, palette);
 	}
 	
 	/**

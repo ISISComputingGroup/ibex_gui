@@ -4,6 +4,9 @@ import java.util.List;
 
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+/**
+ * A view containing all matplotlib secondary figures.
+ */
 public class MatplotlibAllSecondaryFiguresView extends MatplotlibAllFiguresView {
 
 	/**

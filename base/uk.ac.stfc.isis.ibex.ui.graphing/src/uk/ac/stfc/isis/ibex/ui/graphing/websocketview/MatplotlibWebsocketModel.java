@@ -12,6 +12,9 @@ import java.util.concurrent.TimeUnit;
 
 import org.eclipse.swt.graphics.ImageData;
 
+/**
+ * A websocket-based matplotlib model.
+ */
 public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	
 	private final ScheduledExecutorService workerThread;
@@ -19,6 +22,8 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	private final MatplotlibFigureViewModel viewModel;
 	
 	private final MatplotlibWebsocketEndpoint connection;
+	
+	private static final int RECONNECTION_WAIT_TIME_S = 5;
 	
 	private String plotName;
 	
@@ -39,6 +44,9 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	
 	/**
 	 * Constructor.
+	 * @param viewModel the viewmodel
+	 * @param url the connection url
+	 * @param figNum the figure number
 	 */
 	public MatplotlibWebsocketModel(MatplotlibFigureViewModel viewModel, String url, int figNum) {
 		this.viewModel = viewModel;
@@ -46,11 +54,16 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	    this.connection = new MatplotlibWebsocketEndpoint(this, url, figNum);
 	    this.plotName = String.format("Figure %d", figNum);
 	    
-	    workerThread.scheduleWithFixedDelay(tryConnectTask, 0, 5, TimeUnit.SECONDS);
+	    workerThread.scheduleWithFixedDelay(tryConnectTask, 0, RECONNECTION_WAIT_TIME_S, TimeUnit.SECONDS);
 	}
 	
 	/**
 	 * Constructor.
+	 * @param viewModel the view model
+	 * @param url the connection url
+	 * @param figNum the figure number
+	 * @param connection the websocket connection
+	 * @param workerThread the worker thread
 	 */
 	public MatplotlibWebsocketModel(MatplotlibFigureViewModel viewModel, String url, int figNum, MatplotlibWebsocketEndpoint connection, ScheduledExecutorService workerThread) {
 		this.viewModel = viewModel;
@@ -58,7 +71,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	    this.connection = connection;
 	    this.plotName = String.format("Figure %d", figNum);
 	    
-	    workerThread.scheduleWithFixedDelay(tryConnectTask, 0, 5, TimeUnit.SECONDS);
+	    workerThread.scheduleWithFixedDelay(tryConnectTask, 0, RECONNECTION_WAIT_TIME_S, TimeUnit.SECONDS);
 	}
 	
 	/**
@@ -75,7 +88,6 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	
 	/**
 	 * Disconnect from the matplotlib backend.
-	 * @throws IOException if the disconnection failed
 	 */
 	@Override
 	public void close() {
@@ -127,8 +139,6 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	
 	/**
 	 * Forces the server to draw a frame and resend it.
-	 * 
-	 * @see MatplotlibWebsocketEndpoint.forceServerRefresh
 	 */
 	public void forceServerRefresh() {
 		workerThread.submit(connection::forceServerRefresh);

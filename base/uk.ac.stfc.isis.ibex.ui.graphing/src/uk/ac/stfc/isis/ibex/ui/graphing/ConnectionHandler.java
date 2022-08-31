@@ -29,6 +29,12 @@ public class ConnectionHandler {
     	}
     };
     
+    /**
+     * Opens the matplotlib renderer.
+     * @param figures the figures which are currently open.
+     * @param url the websocket URL to look at
+     * @param isPrimary whether this is the primary plot
+     */
     public void openMplRenderer(final List<Integer> figures, final String url, final boolean isPrimary) {
     	if (isPrimary) {
     		Activator.setPrimaryUrl(url);

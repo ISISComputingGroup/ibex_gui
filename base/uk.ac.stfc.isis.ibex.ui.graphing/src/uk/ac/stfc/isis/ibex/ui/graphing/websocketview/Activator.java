@@ -16,6 +16,9 @@ import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.graphing.GraphingConnector;
 
+/**
+ * Bundle activator.
+ */
 @SuppressWarnings("restriction")
 public class Activator implements BundleActivator {
 
@@ -41,33 +44,56 @@ public class Activator implements BundleActivator {
 		SECONDARY_FIGURES.setValue(Collections.emptyList());
 	}
 
+	/**
+	 * Gets the bundle context.
+	 * @return the bundle context
+	 */
 	public static BundleContext getContext() {
 		return context;
 	}
 	
+	/**
+	 * The bundle name.
+	 */
 	public static final String BUNDLE_NAME = "matplotlibrcp";
 
 	public void start(BundleContext bundleContext) {
 		Activator.context = bundleContext;
 	}
 
-	public void stop(BundleContext bundleContext){
+	public void stop(BundleContext bundleContext) {
 		Activator.context = null;
 		GraphingConnector.stopListening();
 	}
 	
+	/**
+	 * Sets the primary figures.
+	 * @param figures the figure numbers
+	 */
 	public static void setPrimaryFigures(List<Integer> figures) {
 		PRIMARY_FIGURES.setValue(figures);
 	}
 	
+	/**
+	 * Sets the secondary figures.
+	 * @param figures the figure numbers
+	 */
 	public static void setSecondaryFigures(List<Integer> figures) {
 		SECONDARY_FIGURES.setValue(figures);
 	}
 	
+	/**
+	 * Gets the primary figures.
+	 * @return the figure numbers
+	 */
 	public static UpdatedValue<List<Integer>> getPrimaryFigures() {
 		return PRIMARY_FIGURES;
 	}
 	
+	/**
+	 * Gets the secondary figures.
+	 * @return the figure numbers
+	 */
 	public static UpdatedValue<List<Integer>> getSecondaryFigures() {
 		return SECONDARY_FIGURES;
 	}

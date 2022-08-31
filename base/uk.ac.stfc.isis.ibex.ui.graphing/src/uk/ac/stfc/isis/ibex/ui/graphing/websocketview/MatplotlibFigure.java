@@ -24,6 +24,7 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
  * Composite representing a matplotlib figure and all relevant controls/indicators, as well
  * as the underlying plot canvas.
  */
+@SuppressWarnings("checkstyle:magicnumber")
 public class MatplotlibFigure extends Composite {
 	
 	private static final Logger LOG = IsisLog.getLogger(MatplotlibFigure.class);
@@ -37,6 +38,13 @@ public class MatplotlibFigure extends Composite {
 	private final PropertyChangeListener imageListener;
 	private Image image;
 
+	/**
+	 * Create the composite.
+	 * @param parent the parent
+	 * @param style the style
+	 * @param url the url
+	 * @param figureNumber the figure numbers
+	 */
 	public MatplotlibFigure(Composite parent, int style, String url, int figureNumber) {
 		super(parent, style);
 		
@@ -85,6 +93,10 @@ public class MatplotlibFigure extends Composite {
 				.addUiThreadPropertyChangeListener(e -> drawImage((ImageData) e.getNewValue()));
 	}
 	
+	/**
+	 * Draws the provided image data to screen.
+	 * @param imageData the image data
+	 */
 	public void drawImage(ImageData imageData) {
 		try {
 			if (!image.isDisposed()) {

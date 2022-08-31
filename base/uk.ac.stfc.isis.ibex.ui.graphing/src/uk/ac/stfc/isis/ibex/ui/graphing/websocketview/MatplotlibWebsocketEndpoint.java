@@ -35,6 +35,9 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 
+/**
+ * Websocket endpoint for matplotlib.
+ */
 @ClientEndpoint
 public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	
@@ -47,6 +50,12 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	private final MatplotlibWebsocketModel model;
 	private boolean lastCloseWasAbnormal;
 	
+	/**
+	 * Create a new websocket endpoint.
+	 * @param model the matplotlib model
+	 * @param url the connection url
+	 * @param figNum the figure number
+	 */
 	public MatplotlibWebsocketEndpoint(MatplotlibWebsocketModel model, String url, int figNum) {
 		this.url = url;
 		this.figNum = figNum;
@@ -113,7 +122,7 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 				try {
 					// Can't deserialize to Map<String, String> because some messages are of type Map<String, List>
 					// So have to deserialize to Object initially and then cast later.
-				    Map<String, Object> content = GSON.fromJson(message, new TypeToken<Map<String, Object>>() {}.getType());
+				    Map<String, Object> content = GSON.fromJson(message, new TypeToken<Map<String, Object>>() { }.getType());
 				    handleJsonMessage(content);
 				} catch (Exception e) {
 					LoggerUtils.logErrorWithStackTrace(LOG, "error parsing server message " + message, e);

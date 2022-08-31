@@ -34,6 +34,9 @@ public final class GraphingConnector {
 		LOG.info("Started Py4J connection listener.");
     }
     
+    /**
+     * Stops listening for incoming py4j calls.
+     */
     public static void stopListening() {
     	if (server != null) {
     	    server.shutdown();
