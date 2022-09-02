@@ -23,6 +23,7 @@ import java.util.Collection;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
@@ -30,9 +31,11 @@ import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.experimentdetails.Parameter;
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
+import uk.ac.stfc.isis.ibex.instrument.channels.BooleanChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.CharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannelWithoutUnits;
+import uk.ac.stfc.isis.ibex.instrument.channels.LongChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 
 /**
@@ -41,6 +44,7 @@ import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 public class ExperimentDetailsVariables {
     private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
     private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
+    private static final PVAddress DAE = PVAddress.startWith("DAE");
 
     /** The observable for the available sample parameters. */
     public final ForwardingObservable<Collection<String>> availableSampleParameters;
@@ -56,6 +60,11 @@ public class ExperimentDetailsVariables {
     public final ForwardingObservable<String> rbNumber;
     /** The writable for the current rb number. **/
     public final Writable<String> rbNumberSetter;
+    
+    /** The observable for title display. **/
+    public final ForwardingObservable<Boolean> displayTitle;
+    /** The writable for title display. **/
+    public final Writable<Long> displayTitleSetter;
 
     /** The observable for the current user details. **/
     public final ForwardingObservable<Collection<UserDetails>> userDetails;
@@ -78,6 +87,10 @@ public class ExperimentDetailsVariables {
         rbNumber = obsFactory.getSwitchableObservable(new StringChannel(), InstrumentUtils.addPrefix("ED:RBNUMBER"));
         rbNumberSetter = writeFactory.getSwitchableWritable(new CharWaveformChannel(),
                 InstrumentUtils.addPrefix("ED:RBNUMBER:SP"));
+        displayTitle = obsFactory.getSwitchableObservable(new BooleanChannel(),
+                InstrumentUtils.addPrefix("DAE:TITLE:DISPLAY"));
+        displayTitleSetter = writeFactory.getSwitchableWritable(new LongChannel(),
+        		InstrumentUtils.addPrefix("DAE:TITLE:DISPLAY"));
         userDetails = InstrumentUtils.convert(
                 obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
                         InstrumentUtils.addPrefix("ED:USERNAME")),
