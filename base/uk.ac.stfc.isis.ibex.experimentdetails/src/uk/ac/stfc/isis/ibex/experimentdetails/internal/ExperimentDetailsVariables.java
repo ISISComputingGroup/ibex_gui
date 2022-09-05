@@ -59,9 +59,9 @@ public class ExperimentDetailsVariables {
     /** The writable for the current rb number. **/
     public final Writable<String> rbNumberSetter;
     
-    /** The observable for title display. **/
+    /** The observable for display title status. **/
     public final ForwardingObservable<Boolean> displayTitle;
-    /** The writable for title display. **/
+    /** The writable for display title status. **/
     public final Writable<Long> displayTitleSetter;
 
     /** The observable for the current user details. **/

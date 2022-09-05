@@ -126,14 +126,14 @@ public class ObservableExperimentDetailsModel extends ModelObject {
 	}
 	
 	/**
-     * @return An observable that tracks display title
+     * @return An observable that tracks display title status
      */
     public ForwardingObservable<Boolean> displayTitle() {
 		return variables.displayTitle;
 	}
 
 	/**
-     * @return A writable for setting display title
+     * @return A writable for setting display title status
      */
 	public Writable<Long> displayTitleSetter() {
 		return variables.displayTitleSetter;
