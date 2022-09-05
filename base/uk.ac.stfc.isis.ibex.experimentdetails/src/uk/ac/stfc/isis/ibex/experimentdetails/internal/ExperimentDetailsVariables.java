@@ -23,7 +23,6 @@ import java.util.Collection;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
-import uk.ac.stfc.isis.ibex.epics.pv.PVAddress;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
@@ -44,7 +43,6 @@ import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 public class ExperimentDetailsVariables {
     private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
     private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
-    private static final PVAddress DAE = PVAddress.startWith("DAE");
 
     /** The observable for the available sample parameters. */
     public final ForwardingObservable<Collection<String>> availableSampleParameters;
