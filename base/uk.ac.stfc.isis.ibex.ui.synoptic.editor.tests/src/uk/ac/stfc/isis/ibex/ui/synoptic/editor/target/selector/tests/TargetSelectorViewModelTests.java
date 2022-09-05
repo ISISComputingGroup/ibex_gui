@@ -22,7 +22,7 @@
 package uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.selector.tests;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.anyString;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

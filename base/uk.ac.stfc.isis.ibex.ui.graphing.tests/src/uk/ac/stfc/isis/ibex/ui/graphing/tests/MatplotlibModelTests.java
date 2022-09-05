@@ -21,6 +21,7 @@
 package uk.ac.stfc.isis.ibex.ui.graphing.tests;
 
 import static org.junit.Assert.assertEquals;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Base64;
@@ -32,7 +33,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibFigureViewModel;
 import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibWebsocketEndpoint;

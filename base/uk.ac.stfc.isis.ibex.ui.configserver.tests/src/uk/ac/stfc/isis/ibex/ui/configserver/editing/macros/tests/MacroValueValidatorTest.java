@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.tests;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 import java.beans.PropertyChangeEvent;
