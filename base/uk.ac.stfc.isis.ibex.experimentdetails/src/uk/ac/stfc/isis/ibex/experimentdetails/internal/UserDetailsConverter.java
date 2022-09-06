@@ -36,7 +36,6 @@ import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
  * Converts JSON to UserDetails object.
  */
 public class UserDetailsConverter implements Function<String, Collection<UserDetails>> {
-	private final Gson gson = new GsonBuilder().registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory()).create();
 
     /**
      * An intermediate class for Gson to use when converting from JSON.
@@ -78,7 +77,7 @@ public class UserDetailsConverter implements Function<String, Collection<UserDet
 	public Collection<UserDetails> apply(String value)
 			throws ConversionException {
         Function<String, IntermediateUserDetails[]> jsonConverter = new JsonDeserialisingConverter<>(
-                IntermediateUserDetails[].class, gson);
+                IntermediateUserDetails[].class);
         // Convert to intermediate
         IntermediateUserDetails[] parsed = jsonConverter.apply(value);
 		

@@ -68,7 +68,7 @@ public class WaitForDialog extends Dialog {
 	public int open() {
 		
 		Shell parentShell = getParentShell();
-		if (parentShell != null) {
+		if (parentShell != null && !parentShell.isDisposed()) {
 			parentShell.setEnabled(false);
 		}
 		
@@ -78,7 +78,7 @@ public class WaitForDialog extends Dialog {
 	@Override
 	public boolean close() {
 		Shell parentShell = getParentShell();
-		if (parentShell != null) {
+		if (parentShell != null && !parentShell.isDisposed()) {
 			getParentShell().setEnabled(true);
 		}
 		return super.close();
@@ -93,7 +93,7 @@ public class WaitForDialog extends Dialog {
 		Cursor cursor = Display.getDefault().getSystemCursor(cursorType);
 		
 		Shell activeShell = getParentShell();
-		if (activeShell != null) {
+		if (activeShell != null && !activeShell.isDisposed() && !cursor.isDisposed()) {
 			activeShell.setCursor(cursor);
 		}
 	}

@@ -20,13 +20,19 @@
 package uk.ac.stfc.isis.ibex.alarm.tests;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.nullable;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.csstudio.alarm.beast.Preferences;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.invocation.InvocationOnMock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 
 import uk.ac.stfc.isis.ibex.alarm.AlarmSettings;
@@ -36,6 +42,7 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
  * Test the alarm settings for CSS Beast Alarm.
  *
  */
+@RunWith(MockitoJUnitRunner.StrictStubs.class)
 @SuppressWarnings("checkstyle:methodname")
 public class AlarmSettingsTest {
 
@@ -222,25 +229,28 @@ public class AlarmSettingsTest {
                 return null;
             }
         }).when(preferences).put(eq(Preferences.RDB_URL), anyString());
+        
         doAnswer(new Answer<Void>() {
             @Override
             public Void answer(InvocationOnMock invocation) throws Throwable {
-                mockJmsUrl = (String) invocation.getArguments()[1];
+            	mockJmsUrl = (String) invocation.getArguments()[1];
                 return null;
             }
         }).when(preferences).put(eq(Preferences.JMS_URL), anyString());
+        
         doAnswer(new Answer<String>() {
             @Override
             public String answer(InvocationOnMock invocation) throws Throwable {
                 return mockJmsUrl;
             }
-        }).when(preferences).get(eq(Preferences.JMS_URL), anyString());
+        }).when(preferences).get(eq(Preferences.JMS_URL), nullable(String.class));
+        
         doAnswer(new Answer<String>() {
             @Override
             public String answer(InvocationOnMock invocation) throws Throwable {
                 return mockRdbUrl;
             }
-        }).when(preferences).get(eq(Preferences.RDB_URL), anyString());
+        }).when(preferences).get(eq(Preferences.RDB_URL), nullable(String.class));
 
         alarmSettings = new AlarmSettings(preferences);
 

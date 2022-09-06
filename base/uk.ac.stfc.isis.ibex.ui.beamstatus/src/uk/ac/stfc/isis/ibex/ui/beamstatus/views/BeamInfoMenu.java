@@ -7,6 +7,9 @@ import org.apache.logging.log4j.Logger;
 import org.eclipse.jface.action.Action;
 
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IPerspectiveRegistry;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
@@ -60,6 +63,12 @@ public class BeamInfoMenu extends MenuManager {
 				if (BlocksMenu.canAddPlot()) {
 					switchToLogPlotter();
 					Presenter.pvHistoryPresenter().newDisplay(facilityPV.pv, facilityPV.pv);
+				} else {
+					Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
+					MessageBox messageBox = new MessageBox(shell, SWT.ICON_WARNING | SWT.OK);
+					messageBox.setText("Failed to open in Log Plotter");
+					messageBox.setMessage("Make the Log Plotter perspective visible.");
+					messageBox.open();
 				}
 			}
 		});

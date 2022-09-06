@@ -1,5 +1,6 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.tests.utils;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -9,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.AssumptionViolatedException;
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -157,7 +157,7 @@ public class ScriptGeneratorMockBuilder {
 				return null;
 			}
 			
-		}).when(nicosMock).sendScript(Matchers.any());
+		}).when(nicosMock).sendScript(any());
 	}
 	
 	/**

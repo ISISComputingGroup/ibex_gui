@@ -37,17 +37,17 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  */
 public class BannerItem extends ModelObject {
 
-    private int index;
+	private int index;
     private String name;
     private String pv;
     private Boolean local = true;
     private int width;
 
-    private String currentValue = null;
-    private AlarmState currentAlarmState = AlarmState.UNDEFINED;
+    private transient String currentValue = null;
+    private transient AlarmState currentAlarmState = AlarmState.UNDEFINED;
 
-    private ForwardingObservable<String> pvObservable;
-    private ForwardingObservable<AlarmState> alarmObservable;
+    private transient ForwardingObservable<String> pvObservable;
+    private transient ForwardingObservable<AlarmState> alarmObservable;
 
     /**
      * Creates an observable for the PV holding the current state of this banner

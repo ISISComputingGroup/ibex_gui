@@ -42,7 +42,7 @@ public class ReceiveBannerMessage {
     private String custom_version;
 
     private static final String VALID_SERIALISER = "json";
-    private static final Integer VALID_VERSION = 21;
+    private static final Integer VALID_VERSION = 22;
 
     /**
      * @return True if the server is using the correct serializer.
