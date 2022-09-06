@@ -8,18 +8,20 @@
   </auto_scale_widgets>
   <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
   <background_color>
-    <color red="240" green="240" blue="240" />
+    <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
   </background_color>
   <boy_version>5.1.0</boy_version>
   <foreground_color>
-    <color red="192" green="192" blue="192" />
+    <color name="ISIS_OPI_Background" red="192" green="192" blue="192" />
   </foreground_color>
   <grid_space>6</grid_space>
   <height>600</height>
   <macros>
-    <include_parent_macros>true</include_parent_macros>
+    <include_parent_macros>false</include_parent_macros>
+	<IOC_NUM>01</IOC_NUM>
+    <PV_ROOT>$(P)$(EURO)</PV_ROOT>
   </macros>
-  <name></name>
+  <name>$(NAME)</name>
   <rules />
   <scripts />
   <show_close_button>true</show_close_button>
@@ -71,7 +73,7 @@
     <wrap_words>true</wrap_words>
     <wuid>6c52603b:18311cdccfc:-6e0a</wuid>
     <x>6</x>
-    <y>-72</y>
+    <y>-60</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -112,7 +114,7 @@
     <wrap_words>true</wrap_words>
     <wuid>6c52603b:18311cdccfc:-6e09</wuid>
     <x>6</x>
-    <y>-36</y>
+    <y>-24</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
     <actions hook="false" hook_all="false" />
@@ -152,7 +154,7 @@
     <width>5</width>
     <wuid>6c52603b:18311cdccfc:-6e08</wuid>
     <x>6</x>
-    <y>-36</y>
+    <y>-24</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -222,7 +224,7 @@ ADDR_x IOC macros are set correctly in the configuration.</text>
     <wrap_words>false</wrap_words>
     <wuid>6c52603b:18311cdccfc:-6e07</wuid>
     <x>420</x>
-    <y>-72</y>
+    <y>-60</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -263,7 +265,7 @@ ADDR_x IOC macros are set correctly in the configuration.</text>
     <width>776</width>
     <wuid>6c52603b:18311cdccfc:-5b70</wuid>
     <x>6</x>
-    <y>6</y>
+    <y>18</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -311,7 +313,7 @@ ADDR_x IOC macros are set correctly in the configuration.</text>
     <width>169</width>
     <wuid>6c52603b:18311cdccfc:-5b74</wuid>
     <x>6</x>
-    <y>589</y>
+    <y>601</y>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <alarm_pulsing>false</alarm_pulsing>
