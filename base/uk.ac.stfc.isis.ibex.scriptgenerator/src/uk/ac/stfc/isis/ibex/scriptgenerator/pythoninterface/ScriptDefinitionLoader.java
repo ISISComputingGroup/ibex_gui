@@ -141,7 +141,11 @@ public class ScriptDefinitionLoader extends ModelObject {
 	public void setScriptDefinition(ScriptDefinitionWrapper scriptDefinition) {
 		try {
 			ArrayList<JavaActionParameter> parameters = scriptDefinition.getParameters().stream()
-					.map(param_details -> new JavaActionParameter(param_details.getName(), param_details.getDefaultValue(), param_details.getCopyPreviousRow()))
+					.map(param_details -> new JavaActionParameter(param_details.getName(),
+																  param_details.getDefaultValue(),
+																  param_details.getCopyPreviousRow(),
+																  param_details.getType(),
+																  param_details.getEnumMembers()))
 					.collect(Collectors.toCollection(ArrayList::new));
 			firePropertyChange(ScriptGeneratorProperties.PARAMETERS_PROPERTY, this.parameters, this.parameters = parameters);
 			selectedScriptDefinition = Optional.ofNullable(scriptDefinition);

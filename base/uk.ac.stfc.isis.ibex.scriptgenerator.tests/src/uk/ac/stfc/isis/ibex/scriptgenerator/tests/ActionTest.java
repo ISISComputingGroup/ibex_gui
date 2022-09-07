@@ -2,6 +2,7 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Collections;
 import java.util.HashMap;
 
 import org.junit.Before;
@@ -14,8 +15,8 @@ public class ActionTest {
 
 	private ScriptGeneratorAction action;
 	
-	private JavaActionParameter parameterOneName = new JavaActionParameter("parameter one", "value one", false);
-	private JavaActionParameter parameterTwoName = new JavaActionParameter("parameter two", "value two", false);
+	private JavaActionParameter parameterOneName = new JavaActionParameter("parameter one", "value one", false, "str", Collections.emptyList());
+	private JavaActionParameter parameterTwoName = new JavaActionParameter("parameter two", "value two", false, "str", Collections.emptyList());
 	
 	@Before
 	public void setUp() {

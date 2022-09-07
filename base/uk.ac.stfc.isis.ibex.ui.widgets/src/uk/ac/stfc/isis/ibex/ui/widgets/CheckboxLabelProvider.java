@@ -170,7 +170,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	 * @param checkBox The check box where we want to reset the listeners.
 	 * @param model The model that will be bound to the check box by the new listeners.
 	 */
-	private void resetCheckBoxListeners(boolean doUpdate, Button checkBox, T model) {
+	public void resetCheckBoxListeners(boolean doUpdate, Button checkBox, T model) {
 	    if (doUpdate) {
             clearCheckBoxSelectListeners(checkBox);
           

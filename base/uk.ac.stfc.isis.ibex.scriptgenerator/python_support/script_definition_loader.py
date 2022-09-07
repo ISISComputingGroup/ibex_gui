@@ -29,8 +29,10 @@ class PythonActionParameter(object):
         Initialise the name and default value of the action parameter.
         """
         self.name = name
-        self.default_value = default_value
+        self.default_value = str(default_value)
         self.copyPreviousRow = copyPreviousRow
+        self.type = type(default_value).__name__
+        self.enum_members = getattr(default_value, '_member_names_', [])
 
     def getName(self) -> str:
         """
@@ -52,6 +54,12 @@ class PythonActionParameter(object):
 
     def getCopyPreviousRow(self) -> bool:
         return self.copyPreviousRow
+
+    def getType(self) -> str:
+        return self.type
+
+    def getEnumMembers(self) -> list:
+        return ListConverter().convert(self.enum_members, gateway._gateway_client)
 
 
 class ScriptDefinitionWrapper(object):
@@ -91,9 +99,9 @@ class ScriptDefinitionWrapper(object):
                 action_parameter = PythonActionParameter(arg, arg, False)
             elif isinstance(arguments[arg].default, CopyPreviousRow):
                 # If none copy the previous row's value over
-                action_parameter = PythonActionParameter(arg, str(arguments[arg].default.value), True)
+                action_parameter = PythonActionParameter(arg, arguments[arg].default.value, True)
             else:
-                action_parameter = PythonActionParameter(arg, str(arguments[arg].default), False)
+                action_parameter = PythonActionParameter(arg, arguments[arg].default, False)
             kwargs_with_defaults.append(action_parameter)
 
         return ListConverter().convert(kwargs_with_defaults, gateway._gateway_client)

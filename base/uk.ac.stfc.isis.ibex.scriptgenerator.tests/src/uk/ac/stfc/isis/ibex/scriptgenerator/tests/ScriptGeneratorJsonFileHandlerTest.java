@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,8 +58,8 @@ public class ScriptGeneratorJsonFileHandlerTest {
 
 	@Test 
 	public void Test_GIVEN_user_parameters_THEN_read_correctly() {
-		JavaActionParameter actionParamOne = new JavaActionParameter("temperature", "", false);
-		JavaActionParameter actionParamTwo = new JavaActionParameter("field", "", false);
+		JavaActionParameter actionParamOne = new JavaActionParameter("temperature", "", false, "str", Collections.emptyList());
+		JavaActionParameter actionParamTwo = new JavaActionParameter("field", "", false, "str", Collections.emptyList());
 		ArrayList<JavaActionParameter> actionParams = new ArrayList<JavaActionParameter>(
 				Arrays.asList(actionParamOne, actionParamTwo));
 		
@@ -141,8 +142,8 @@ public class ScriptGeneratorJsonFileHandlerTest {
 		
 		ScriptGeneratorFileHandlerForTest fileHandlerTemp = new ScriptGeneratorFileHandlerForTest();
 		
-		JavaActionParameter actionParamOne = new JavaActionParameter("temperature", "10", false);
-		JavaActionParameter actionParamTwo = new JavaActionParameter("field", "10", false);
+		JavaActionParameter actionParamOne = new JavaActionParameter("temperature", "10", false, "int", Collections.emptyList());
+		JavaActionParameter actionParamTwo = new JavaActionParameter("field", "10", false, "int", Collections.emptyList());
 		
 		Map<JavaActionParameter, String> actionOne = new HashMap<JavaActionParameter, String>();
 		

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Before;
@@ -54,7 +55,7 @@ public class ConfigLoaderTest {
 		when(mockedConfig.getName()).thenReturn(configName);
 		
 		List<ActionParameter> configParams = new ArrayList<ActionParameter>();
-		configParams.add(new JavaActionParameter("param1", "val1", false));
+		configParams.add(new JavaActionParameter("param1", "val1", false, "str", Collections.emptyList()));
 		when(mockedConfig.getParameters()).thenReturn(configParams);
 		
 		return mockedConfig;
@@ -98,9 +99,9 @@ public class ConfigLoaderTest {
 		String param3name = "parameter three";
 		String param3val = "three";
 		
-		ActionParameter param1 = new JavaActionParameter(param1name, param1val, false);
-		ActionParameter param2 = new JavaActionParameter(param2name, param2val, false);
-		ActionParameter param3 = new JavaActionParameter(param3name, param3val, false);
+		ActionParameter param1 = new JavaActionParameter(param1name, param1val, false, "str", Collections.emptyList());
+		ActionParameter param2 = new JavaActionParameter(param2name, param2val, false, "str", Collections.emptyList());
+		ActionParameter param3 = new JavaActionParameter(param3name, param3val, false, "str", Collections.emptyList());
 		
 		configParams.add(param1);
 		configParams.add(param2);

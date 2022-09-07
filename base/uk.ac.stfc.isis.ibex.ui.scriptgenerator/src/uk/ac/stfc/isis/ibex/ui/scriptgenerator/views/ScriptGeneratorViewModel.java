@@ -23,7 +23,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CellLabelProvider;
+import org.eclipse.jface.viewers.CheckboxCellEditor;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -65,6 +67,8 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrap
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.SaveScriptGeneratorFileMessageDialog;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
+import uk.ac.stfc.isis.ibex.ui.widgets.CheckboxLabelProvider;
+import uk.ac.stfc.isis.ibex.ui.widgets.GenericEditingSupport;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
@@ -917,48 +921,104 @@ public class ScriptGeneratorViewModel extends ModelObject {
         // Add action parameter columns
         for (JavaActionParameter actionParameter: scriptGeneratorModel.getActionParameters()) {
             String columnName = actionParameter.getName();
-            TableViewerColumn column = viewTable.createColumn(
-                columnName, 
-                2,
-                new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty(columnName)) {
-                @Override
-                protected String stringFromRow(ScriptGeneratorAction row) {
-                    return row.getActionParameterValue(actionParameter);
-                }
-    
-                @Override
-                public String getToolTipText(Object element) {
-                    return getScriptGenActionToolTipText(element);
-                }
-                
-                @Override
-            	public void update(ViewerCell cell) {
-                	ScriptGeneratorAction row = getRow(cell);
-            		cell.setText(stringFromRow(row));
-                    cell.setImage(imageFromRow(row));
-                    if (row.isValid()) {
-                    	cell.setBackground(CLEAR_COLOR);
-                    } else {
-                    	cell.setBackground(INVALID_LIGHT_COLOR);
-                    }
-            	}
-                
-                });
-    
-            var editingSupport = new StringEditingSupport<ScriptGeneratorAction>(viewTable.viewer(), ScriptGeneratorAction.class) {          
-                @Override
-                protected String valueFromRow(ScriptGeneratorAction row) {
-                    return row.getActionParameterValue(actionParameter);
-                }
-        
-                @Override
-                protected void setValueForRow(ScriptGeneratorAction row, String value) {
-                    row.setActionParameterValue(actionParameter, value);
-                }
-            };
-            viewTable.addEditingSupport(editingSupport);
-            column.setEditingSupport(editingSupport);
+            TableViewerColumn column = null;
             
+            if (actionParameter.getType().equals("bool")) {
+            	var a = viewTable.observeProperty(columnName);
+            	CheckboxLabelProvider<ScriptGeneratorAction> checkboxLabelProvider = new CheckboxLabelProvider<ScriptGeneratorAction>(a) {
+        			@Override
+                    protected boolean checked(ScriptGeneratorAction row) {
+                        return row.getActionParameterValue(actionParameter).equals("True");
+                    }
+                    @Override
+                    protected void setChecked(ScriptGeneratorAction row, boolean checked) {
+                        if (checked) {
+                        	row.setActionParameterValue(actionParameter, "True");
+                        } else {
+                        	row.setActionParameterValue(actionParameter, "False");
+                        }
+                        @SuppressWarnings("unused")
+						String test = row.getActionParameterValue(actionParameter);
+                    }
+                    @Override
+                    protected boolean isEditable(ScriptGeneratorAction row) {
+                        return true;
+                    }
+                    @Override
+                	protected String stringFromRow(ScriptGeneratorAction row) {
+                		return checked(row) ? "True" : "False";
+                	}
+//                    @Override
+//                	public void update(ViewerCell cell) {
+//                    	ScriptGeneratorAction row = (ScriptGeneratorAction) cell.getElement();
+//                    	final Button checkBox = getControl(cell, SWT.CHECK);
+//	            		checkBox.setSelection(checked(row));	
+//                		checkBox.setText(stringFromRow(row));
+//                		
+//	                    if (row.isValid()) {
+//	                    	cell.setBackground(CLEAR_COLOR);
+//	                    } else {
+//	                    	cell.setBackground(INVALID_LIGHT_COLOR);
+//	                    }
+//	                    
+//	                    resetCheckBoxListeners(true, checkBox, row);
+//                    	
+//	                    checkBox.setEnabled(isEditable(row));
+//                	}
+        		};
+        		
+            	column = viewTable.createColumn(
+            		columnName,
+            		2,
+            		checkboxLabelProvider);
+            	
+        		column.getViewer().refresh();
+            //} else if (!actionParameter.getEnumMembers().isEmpty()) {
+            	// TODO: add me
+            } else {
+            	column = viewTable.createColumn(
+	                columnName, 
+	                2,
+	                new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty(columnName)) {
+	                @Override
+	                protected String stringFromRow(ScriptGeneratorAction row) {
+	                    return row.getActionParameterValue(actionParameter);
+	                }
+	    
+	                @Override
+	                public String getToolTipText(Object element) {
+	                    return getScriptGenActionToolTipText(element);
+	                }
+	                
+	                @Override
+	            	public void update(ViewerCell cell) {
+	                	ScriptGeneratorAction row = getRow(cell);
+	            		cell.setText(stringFromRow(row));
+	                    cell.setImage(imageFromRow(row));
+	                    if (row.isValid()) {
+	                    	cell.setBackground(CLEAR_COLOR);
+	                    } else {
+	                    	cell.setBackground(INVALID_LIGHT_COLOR);
+	                    }
+	            	}
+	                
+	                });
+	    
+	            var editingSupport = new StringEditingSupport<ScriptGeneratorAction>(viewTable.viewer(), ScriptGeneratorAction.class) {          
+	                @Override
+	                protected String valueFromRow(ScriptGeneratorAction row) {
+	                    return row.getActionParameterValue(actionParameter);
+	                }
+	        
+	                @Override
+	                protected void setValueForRow(ScriptGeneratorAction row, String value) {
+	                    row.setActionParameterValue(actionParameter, value);
+	                }
+	            };
+	            viewTable.addEditingSupport(editingSupport);
+	            column.setEditingSupport(editingSupport);
+            }
+            column.getColumn().setToolTipText(String.format("Parameter type: %s", actionParameter.getType()));
         }
         // Add validity notifier column
         TableViewerColumn validityColumn = viewTable.createColumn(VALIDITY_COLUMN_HEADER, 

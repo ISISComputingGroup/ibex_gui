@@ -1,5 +1,7 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface;
 
+import java.util.List;
+
 /**
  * An action parameter with a name and default value.
  */
@@ -26,4 +28,17 @@ public interface ActionParameter {
 	 */
 	boolean getCopyPreviousRow();
 	
+	/**
+	 * Get the type of the action parameter. Uses the default value given in the Python Script Definition.
+	 * 
+	 * @return A string name of the action parameter type.
+	 */
+	String getType();
+	
+	/**
+	 * Get the Enum members of the action parameter.
+	 * 
+	 * @return A List of Strings of the names. If the action parameter is not an Enum the list will be empty.
+	 */
+	List<String> getEnumMembers();
 }

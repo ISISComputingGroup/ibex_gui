@@ -1,5 +1,6 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.tests;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -23,9 +24,9 @@ public class ScriptGeneratorActionTest {
 	
 	@Before
 	public void setUp() {
-		var actionParam1 = new JavaActionParameter("actionParam1", "actionParam1DefaultVal", false);
-		var actionParam2 = new JavaActionParameter("actionParam2", "actionParam2DefaultVal", false);
-		var actionParam3 = new JavaActionParameter("actionParam3", "actionParam3DefaultVal", false);
+		var actionParam1 = new JavaActionParameter("actionParam1", "actionParam1DefaultVal", false, "str", Collections.emptyList());
+		var actionParam2 = new JavaActionParameter("actionParam2", "actionParam2DefaultVal", false, "str", Collections.emptyList());
+		var actionParam3 = new JavaActionParameter("actionParam3", "actionParam3DefaultVal", false, "str", Collections.emptyList());
 		
 		values = new HashMap<>();
 		values.put(actionParam1, actionParam1.getDefaultValue());
@@ -56,9 +57,9 @@ public class ScriptGeneratorActionTest {
 		
 		// Assert
 		HashMap<JavaActionParameter, String> expectedParams = new HashMap<>();
-		expectedParams.put(new JavaActionParameter("actionParam1", "actionParam1DefaultVal", false), "actionParam1DefaultVal");
-		expectedParams.put(new JavaActionParameter("actionParam2", "actionParam2DefaultVal", false), "actionParam2DefaultVal");
-		expectedParams.put(new JavaActionParameter("actionParam3", "actionParam3DefaultVal", false), "actionParam3DefaultVal");
+		expectedParams.put(new JavaActionParameter("actionParam1", "actionParam1DefaultVal", false, "str", Collections.emptyList()), "actionParam1DefaultVal");
+		expectedParams.put(new JavaActionParameter("actionParam2", "actionParam2DefaultVal", false, "str", Collections.emptyList()), "actionParam2DefaultVal");
+		expectedParams.put(new JavaActionParameter("actionParam3", "actionParam3DefaultVal", false, "str", Collections.emptyList()), "actionParam3DefaultVal");
 		
 		assertThat("Should convert action params to their name",
 				actionParamsAsStrings, equalTo(expectedParams));
