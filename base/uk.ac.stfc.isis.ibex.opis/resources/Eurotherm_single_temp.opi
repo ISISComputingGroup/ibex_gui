@@ -116,46 +116,6 @@
     <x>6</x>
     <y>-24</y>
   </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-    <actions hook="false" hook_all="false" />
-    <border_alarm_sensitive>false</border_alarm_sensitive>
-    <border_color>
-      <color name="ISIS_Border" red="0" green="0" blue="0" />
-    </border_color>
-    <border_style>0</border_style>
-    <border_width>1</border_width>
-    <enabled>true</enabled>
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
-    </font>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-    </foreground_color>
-    <height>5</height>
-    <image></image>
-    <name>Dummy</name>
-    <push_action_index>0</push_action_index>
-    <pv_name></pv_name>
-    <pv_value />
-    <rules />
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <scripts />
-    <style>1</style>
-    <text></text>
-    <toggle_button>false</toggle_button>
-    <tooltip></tooltip>
-    <visible>true</visible>
-    <widget_type>Action Button</widget_type>
-    <width>5</width>
-    <wuid>6c52603b:18311cdccfc:-6e08</wuid>
-    <x>6</x>
-    <y>-24</y>
-  </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
     <actions hook="false" hook_all="false" />
     <auto_size>false</auto_size>
@@ -186,21 +146,6 @@
     <scripts>
       <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
         <scriptName>EmbeddedScript</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
-
-states = []
-for tab in range(10):
-    if pvArray[tab].isConnected():
-        states.append(PVUtil.getLong(pvs[tab]))
-    else:
-        # If eurotherm is entirely down then we don't want the message displayed.
-        states.append(1)
-
-if all(state == 0 for state in states):
-    widget.setPropertyValue("visible", True);
-else:
-    widget.setPropertyValue("visible", False)
-]]></scriptText>
         <pv trig="true">$(PV_ROOT):A01:ACTIVE</pv>
         <pv trig="true">$(PV_ROOT):A02:ACTIVE</pv>
         <pv trig="true">$(PV_ROOT):A03:ACTIVE</pv>
