@@ -23,9 +23,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CellLabelProvider;
-import org.eclipse.jface.viewers.CheckboxCellEditor;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -34,6 +32,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
@@ -44,6 +43,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
@@ -68,7 +68,6 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.SaveScriptGeneratorFileMessageDialog;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.widgets.CheckboxLabelProvider;
-import uk.ac.stfc.isis.ibex.ui.widgets.GenericEditingSupport;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
@@ -948,7 +947,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
                 	protected String stringFromRow(ScriptGeneratorAction row) {
                 		return checked(row) ? "True" : "False";
                 	}
-//                    @Override
+//                  @Override
 //                	public void update(ViewerCell cell) {
 //                    	ScriptGeneratorAction row = (ScriptGeneratorAction) cell.getElement();
 //                    	final Button checkBox = getControl(cell, SWT.CHECK);
@@ -976,10 +975,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
             //} else if (!actionParameter.getEnumMembers().isEmpty()) {
             	// TODO: add me
             } else {
+            	var a = viewTable.observeProperty(columnName);
             	column = viewTable.createColumn(
 	                columnName, 
 	                2,
-	                new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty(columnName)) {
+	                new DataboundCellLabelProvider<ScriptGeneratorAction>(a) {
 	                @Override
 	                protected String stringFromRow(ScriptGeneratorAction row) {
 	                    return row.getActionParameterValue(actionParameter);
