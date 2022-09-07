@@ -19,22 +19,34 @@
 
 package uk.ac.stfc.isis.ibex.configserver.json;
 
+import java.beans.PropertyChangeSupport;
 import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.function.Function;
 
+import com.google.gson.ExclusionStrategy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import uk.ac.stfc.isis.ibex.configserver.internal.IocParameters;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.epics.conversion.json.LowercaseEnumTypeAdapterFactory;
+import uk.ac.stfc.isis.ibex.epics.conversion.json.SpecificClassExclusionStrategy;
 
 /**
  * Creates a map of IOC parameters for each IOC specified in the JSON.
  */
 public class IocsParametersConverter implements Function<String, Map<String, IocParameters>> {
-	private static final Gson GSON = new Gson();
+	
+	private static final ExclusionStrategy EXCLUDE_PROPERTY_CHANGE_SUPPORT = 
+			new SpecificClassExclusionStrategy(PropertyChangeSupport.class);
+	
+	private static final Gson GSON = new GsonBuilder()
+			.registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory())
+			.setExclusionStrategies(EXCLUDE_PROPERTY_CHANGE_SUPPORT)
+			.create();
 
     // CHECKSTYLE:OFF The declaration format for GSON's TypeToken upsets
     // CheckStyle.

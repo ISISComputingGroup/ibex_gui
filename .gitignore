@@ -31,3 +31,9 @@ base/uk.ac.stfc.isis.ibex.scriptgenerator/python_support/git
 build/copy_client_jre.log
 build/local_copy_client.log
 build/local_copy_jre.log
+
+# Tycho .gitignores per https://github.com/eclipse-tycho/tycho/issues/664#issuecomment-1044613456
+.polyglot.*
+.META-INF_*
+pom.tycho
+.tycho-consumer-pom.xml

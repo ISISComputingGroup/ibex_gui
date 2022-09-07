@@ -18,9 +18,11 @@
 
 package uk.ac.stfc.isis.ibex.epics.conversion.json;
 
+import java.beans.PropertyChangeSupport;
 import java.util.function.Function;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
@@ -33,7 +35,9 @@ import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
  */
 public class JsonDeserialisingConverter<T> implements Function<String, T> {
 
-	protected final Gson gson;
+
+	private final Gson gson;
+	
 	private final Class<T> classOfT;
 
     /**
@@ -60,7 +64,10 @@ public class JsonDeserialisingConverter<T> implements Function<String, T> {
      *            the output type
      */
 	public JsonDeserialisingConverter(Class<T> outputType) {
-		this(outputType, new Gson());
+		this(outputType, new GsonBuilder()
+				.registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory())
+				.setExclusionStrategies(new SpecificClassExclusionStrategy(PropertyChangeSupport.class))
+				.create());
 	}
 	
     /**

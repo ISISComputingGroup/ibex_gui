@@ -57,10 +57,18 @@ public class Activator implements BundleActivator {
 	 */
 	public static final String BUNDLE_NAME = "matplotlibrcp";
 
+	/**
+	 * Start the bundle.
+	 * @param bundleContext the bundle context
+	 */
 	public void start(BundleContext bundleContext) {
 		Activator.context = bundleContext;
 	}
 
+	/**
+	 * Stop the bundle.
+	 * @param bundleContext the bundle context
+	 */
 	public void stop(BundleContext bundleContext) {
 		Activator.context = null;
 		GraphingConnector.stopListening();

@@ -1,6 +1,6 @@
 setlocal
 REM We bundle our own JRE with the client, this is where it is
-set "JRELOCATION=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\ibex_client_jre"
+set "JRELOCATION=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\ibex_client_jdk-17.0.4.1+1"
 set "LOCAL_JRE_LOCATION=%~dp0jdk"
 
 set "TARGET_DIR=%3"
@@ -31,7 +31,7 @@ if "%PYTHON3%" == "" (
 
 call %~dp0run_python_support_tests.bat
 if %errorlevel% neq 0 exit /b %errorlevel%
- 
+
 %PYTHON3% .\check_build.py ..\base\
 if %errorlevel% neq 0 exit /b %errorlevel%
 

@@ -23,7 +23,6 @@
 package uk.ac.stfc.isis.ibex.devicescreens.tests;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.io.IOException;

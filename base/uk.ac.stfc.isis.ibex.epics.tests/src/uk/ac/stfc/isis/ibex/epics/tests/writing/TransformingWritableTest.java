@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.epics.tests.writing;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.io.IOException;
