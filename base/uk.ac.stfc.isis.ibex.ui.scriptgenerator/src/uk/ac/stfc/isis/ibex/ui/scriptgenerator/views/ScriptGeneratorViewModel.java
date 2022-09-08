@@ -973,7 +973,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
             	
         		column.getViewer().refresh();
             //} else if (!actionParameter.getEnumMembers().isEmpty()) {
-            	// TODO: add me
+            	// TODO: Add enum column creation.
             } else {
             	var a = viewTable.observeProperty(columnName);
             	column = viewTable.createColumn(

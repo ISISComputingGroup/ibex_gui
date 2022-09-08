@@ -843,7 +843,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @return true if there are updates available.
 	 */
 	public boolean updatesAvailable() {
-		return false;
+		return pythonInterface.updatesAvailable();
 	}
 
 	/**
@@ -859,7 +859,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @return true if the remote repo URL can be accessed.
 	 */
 	public boolean remoteAvailable() {
-		return false;
+		return pythonInterface.remoteAvailable();
 	}
 
 	/**
