@@ -947,23 +947,23 @@ public class ScriptGeneratorViewModel extends ModelObject {
                 	protected String stringFromRow(ScriptGeneratorAction row) {
                 		return checked(row) ? "True" : "False";
                 	}
-//                  @Override
-//                	public void update(ViewerCell cell) {
-//                    	ScriptGeneratorAction row = (ScriptGeneratorAction) cell.getElement();
-//                    	final Button checkBox = getControl(cell, SWT.CHECK);
-//	            		checkBox.setSelection(checked(row));	
-//                		checkBox.setText(stringFromRow(row));
-//                		
-//	                    if (row.isValid()) {
-//	                    	cell.setBackground(CLEAR_COLOR);
-//	                    } else {
-//	                    	cell.setBackground(INVALID_LIGHT_COLOR);
-//	                    }
-//	                    
-//	                    resetCheckBoxListeners(true, checkBox, row);
-//                    	
-//	                    checkBox.setEnabled(isEditable(row));
-//                	}
+                  @Override
+                	public void update(ViewerCell cell) {
+                    	ScriptGeneratorAction row = (ScriptGeneratorAction) cell.getElement();
+                    	final Button checkBox = getControl(cell, SWT.CHECK);
+	            		checkBox.setSelection(checked(row));	
+                		checkBox.setText(stringFromRow(row));
+                		
+	                    if (row.isValid()) {
+	                    	cell.setBackground(CLEAR_COLOR);
+	                    } else {
+	                    	cell.setBackground(INVALID_LIGHT_COLOR);
+	                    }
+	                    
+	                    resetCheckBoxListeners(true, checkBox, row);
+                    	
+	                    checkBox.setEnabled(isEditable(row));
+                	}
         		};
         		
             	column = viewTable.createColumn(
