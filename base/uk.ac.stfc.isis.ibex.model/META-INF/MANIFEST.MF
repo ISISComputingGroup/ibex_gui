@@ -6,7 +6,7 @@ Bundle-Version: 1.0.0.qualifier
 Require-Bundle: org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.logger,
  org.eclipse.ui;bundle-version="3.8.2"
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Export-Package: uk.ac.stfc.isis.ibex.model
 Bundle-ClassPath: .
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.model

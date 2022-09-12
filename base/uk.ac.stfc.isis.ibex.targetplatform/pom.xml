@@ -1,0 +1,37 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>CSS_ISIS</groupId>
+	<artifactId>uk.ac.stfc.isis.ibex.targetplatform</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<build>
+  	<pluginManagement>
+  		<plugins>
+  			  <plugin>
+			    <groupId>org.codehaus.mojo</groupId>
+			    <artifactId>build-helper-maven-plugin</artifactId>
+			    <version>3.3.0</version>
+			    <executions>
+			      <execution>
+			        <id>attach-artifacts</id>
+			        <phase>package</phase>
+			        <goals>
+			          <goal>attach-artifact</goal>
+			        </goals>
+			        <configuration>
+			          <artifacts>
+			            <artifact>
+			              <file>targetplatform</file>
+			              <type>target</type>
+			        	  <classifier>targetplatform</classifier>
+			            </artifact>
+			          </artifacts>
+			        </configuration>
+			      </execution>
+			    </executions>
+			  </plugin>
+  		</plugins>
+  	</pluginManagement>
+  </build>
+</project>

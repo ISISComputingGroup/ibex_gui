@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="resources"/>
-	<classpathentry kind="src" path="lib"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="module" value="true"/>
@@ -12,10 +11,6 @@
 			<accessrule kind="nonaccessible" pattern="java/xml"/>
 		</accessrules>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/commons-codec-1.15-javadoc.jar"/>
-	<classpathentry kind="lib" path="lib/commons-codec-1.15-sources.jar"/>
-	<classpathentry kind="lib" path="lib/commons-codec-1.15.jar"/>
-	<classpathentry kind="lib" path="lib/joda-time-2.10.10.jar"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins">
 		<accessrules>
 			<accessrule kind="nonaccessible" pattern="java/xml"/>

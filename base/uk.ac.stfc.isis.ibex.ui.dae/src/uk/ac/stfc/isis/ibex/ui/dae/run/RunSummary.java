@@ -173,7 +173,7 @@ public class RunSummary {
 
 		btnDisplayTitle = new Button(infoComposite, SWT.CHECK);
 		btnDisplayTitle.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-		btnDisplayTitle.setText("Show Title in Dataweb Dashboard Page");
+		btnDisplayTitle.setText("Show Title and Users in Dataweb Dashboard Page");
 		btnDisplayTitle.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

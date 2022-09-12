@@ -227,13 +227,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.mockito"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.junit"
          download-size="0"
          install-size="0"
@@ -255,27 +248,6 @@
 
    <plugin
          id="org.hamcrest.library"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.hamcrest.generator"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.hamcrest.integration"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.hamcrest.text"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -828,19 +800,6 @@
          unpack="false"/>
 
    <plugin
-         id="py4j-java"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="py4j-python"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
          id="org.apache.commons.lang"
          download-size="0"
          install-size="0"
@@ -924,6 +883,20 @@
 
    <plugin
          id="javax.activation-api"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="wrapped.net.sf.py4j.py4j"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.mockito.mockito-core"
          download-size="0"
          install-size="0"
          version="0.0.0"
