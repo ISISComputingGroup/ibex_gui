@@ -18,8 +18,8 @@
   <height>600</height>
   <macros>
     <include_parent_macros>false</include_parent_macros>
-    <IOC_NUM>01</IOC_NUM>
     <PV_ROOT>$(P)$(EURO)</PV_ROOT>
+	<TEMP_SENSOR>$(SENSOR)</TEMP_SENSOR>
   </macros>
   <name>$(NAME)</name>
   <rules />
@@ -146,16 +146,17 @@
     <scripts>
       <path pathString="EmbeddedPy" checkConnect="false" sfe="false" seoe="false">
         <scriptName>EmbeddedScript</scriptName>
-        <pv trig="true">$(PV_ROOT):A01:ACTIVE</pv>
-        <pv trig="true">$(PV_ROOT):A02:ACTIVE</pv>
-        <pv trig="true">$(PV_ROOT):A03:ACTIVE</pv>
-        <pv trig="true">$(PV_ROOT):A04:ACTIVE</pv>
-        <pv trig="true">$(PV_ROOT):A05:ACTIVE</pv>
-        <pv trig="true">$(PV_ROOT):A06:ACTIVE</pv>
-        <pv trig="true">$(PV_ROOT):A07:ACTIVE</pv>
-        <pv trig="true">$(PV_ROOT):A08:ACTIVE</pv>
-        <pv trig="true">$(PV_ROOT):A09:ACTIVE</pv>
-        <pv trig="true">$(PV_ROOT):A010:ACTIVE</pv>
+        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+if not pvArray[$(TEMP_SENSOR)].isConnected():
+	# If eurotherm is entirely down then we don't want the message displayed.
+    states.append(1)
+elif PVUtil.getLong(pvs[$(TEMP_SENSOR)]) == 1:
+	widget.setPropertyValue("visible", True)
+else:
+	widget.setPropertyValue("visible", False)
+]]></scriptText>
+        <pv trig="true">$(PV_ROOT):A0$(TEMP_SENSOR):ACTIVE</pv>
       </path>
     </scripts>
     <text>IOC is not configured with any eurotherm channels, check the &#xD;
@@ -192,7 +193,7 @@ ADDR_x IOC macros are set correctly in the configuration.</text>
     <height>584</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
-      <EURO_NUM>1</EURO_NUM>
+      <EURO_NUM>$(TEMP_SENSOR)</EURO_NUM>
     </macros>
     <name>Linking Container</name>
     <opi_file>Eurotherm_single.opi</opi_file>
@@ -257,8 +258,8 @@ ADDR_x IOC macros are set correctly in the configuration.</text>
     <widget_type>Grouping Container</widget_type>
     <width>253</width>
     <wuid>6c52603b:18311cdccfc:-5b74</wuid>
-    <x>6</x>
-    <y>601</y>
+    <x>781</x>
+    <y>68</y>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <alarm_pulsing>false</alarm_pulsing>
