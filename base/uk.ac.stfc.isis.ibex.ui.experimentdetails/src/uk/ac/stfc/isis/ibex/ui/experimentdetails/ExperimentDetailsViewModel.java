@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.experimentdetails;
 
+import uk.ac.stfc.isis.ibex.epics.observing.BooleanWritableObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.observing.StringWritableObservableAdapter;
 import uk.ac.stfc.isis.ibex.experimentdetails.ExperimentDetails;
 import uk.ac.stfc.isis.ibex.experimentdetails.ObservableExperimentDetailsModel;
@@ -32,10 +33,12 @@ public class ExperimentDetailsViewModel extends ModelObject {
 	
 	public final StringWritableObservableAdapter rbNumber;
 	
+	public final BooleanWritableObservableAdapter displayTitle;
+	
     public ExperimentDetailsViewModel(ObservableExperimentDetailsModel model) {
         instance = this;
         this.model = model; 
-        
+        displayTitle = new BooleanWritableObservableAdapter(model.displayTitleSetter(), model.displayTitle());
         rbNumber = new StringWritableObservableAdapter(model.rbNumberSetter(), model.rbNumber());
         model.addPropertyChangeListener("userDetails", event -> {
             setUserDetailsWarningVisible();
