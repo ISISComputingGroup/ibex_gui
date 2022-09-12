@@ -31,6 +31,7 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.experimentdetails.ObservableExperimentDetailsModel;
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.ExperimentDetailsViewModel;
@@ -49,6 +50,8 @@ public class ExperimentDetailsViewModelTest {
         
         when(model.rbNumber()).thenReturn(mock(ClosableObservable.class));
         when(model.rbNumberSetter()).thenReturn(mock(Writable.class));
+        when(model.displayTitle()).thenReturn(mock(ForwardingObservable.class));
+        when(model.displayTitleSetter()).thenReturn(mock(Writable.class));
         
         viewModel = new ExperimentDetailsViewModel(model);
     }
