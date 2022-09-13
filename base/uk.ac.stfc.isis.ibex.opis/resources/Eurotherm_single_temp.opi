@@ -156,8 +156,8 @@ else:
         <pv trig="true">$(PV_ROOT):A0$(TEMP_SENSOR):ACTIVE</pv>
       </path>
     </scripts>
-    <text>IOC is not configured with any eurotherm channels, check the &#xD;
-ADDR_x IOC macros are set correctly in the configuration.</text>
+    <text>IOC is not configured with this eurotherm channel, check the &#xD;
+ADDR_x IOC macro is set correctly in the configuration.</text>
     <tooltip></tooltip>
     <transparent>true</transparent>
     <vertical_alignment>1</vertical_alignment>
@@ -239,7 +239,7 @@ ADDR_x IOC macros are set correctly in the configuration.</text>
         <exp bool_exp="pv0==0">
           <value>false</value>
         </exp>
-        <pv trig="true">$(PV_ROOT):A01:ACTIVE</pv>
+        <pv trig="true">$(PV_ROOT):A0$(TEMP_SENSOR):ACTIVE</pv>
       </rule>
     </rules>
     <scale_options>
@@ -285,7 +285,7 @@ ADDR_x IOC macros are set correctly in the configuration.</text>
       <name>Setpoint_text</name>
       <precision>3</precision>
       <precision_from_pv>false</precision_from_pv>
-      <pv_name>$(PV_ROOT):A01:SENSOR</pv_name>
+      <pv_name>$(PV_ROOT):A0$(TEMP_SENSOR):SENSOR</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
