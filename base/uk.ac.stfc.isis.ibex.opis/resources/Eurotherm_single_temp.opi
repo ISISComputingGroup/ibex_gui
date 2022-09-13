@@ -19,7 +19,7 @@
   <macros>
     <include_parent_macros>false</include_parent_macros>
     <PV_ROOT>$(P)$(EURO)</PV_ROOT>
-	<TEMP_SENSOR>$(SENSOR)</TEMP_SENSOR>
+    <TEMP_SENSOR>$(SENSOR)</TEMP_SENSOR>
   </macros>
   <name>$(NAME)</name>
   <rules />
@@ -148,10 +148,7 @@
         <scriptName>EmbeddedScript</scriptName>
         <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
 
-if not pvArray[$(TEMP_SENSOR)].isConnected():
-	# If eurotherm is entirely down then we don't want the message displayed.
-    states.append(1)
-elif PVUtil.getLong(pvs[$(TEMP_SENSOR)]) == 1:
+if pvArray[0].isConnected() and PVUtil.getLong(pvs[0]) == 0:
 	widget.setPropertyValue("visible", True)
 else:
 	widget.setPropertyValue("visible", False)
@@ -231,7 +228,7 @@ ADDR_x IOC macros are set correctly in the configuration.</text>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
-    <height>85</height>
+    <height>46</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -256,10 +253,10 @@ ADDR_x IOC macros are set correctly in the configuration.</text>
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
-    <width>253</width>
+    <width>278</width>
     <wuid>6c52603b:18311cdccfc:-5b74</wuid>
-    <x>781</x>
-    <y>68</y>
+    <x>504</x>
+    <y>-24</y>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <alarm_pulsing>false</alarm_pulsing>
@@ -309,8 +306,8 @@ $(pv_value)</tooltip>
       <width>102</width>
       <wrap_words>false</wrap_words>
       <wuid>6c52603b:18311cdccfc:-5b71</wuid>
-      <x>12</x>
-      <y>13</y>
+      <x>0</x>
+      <y>0</y>
     </widget>
   </widget>
 </display>
