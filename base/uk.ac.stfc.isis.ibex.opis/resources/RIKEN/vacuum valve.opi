@@ -62,9 +62,9 @@
     <height>39</height>
     <name>Image Boolean Indicator</name>
     <no_animation>false</no_animation>
-    <off_image>Valve close.svg</off_image>
+    <off_image>Valve close.png</off_image>
     <off_label>OFF</off_label>
-    <on_image>Valve Open.svg</on_image>
+    <on_image>Valve Open.png</on_image>
     <on_label>ON</on_label>
     <pv_name></pv_name>
     <pv_value />
@@ -116,9 +116,9 @@ $(pv_value)</tooltip>
     <height>39</height>
     <name>Image Boolean Indicator_1</name>
     <no_animation>false</no_animation>
-    <off_image>Valve close.svg</off_image>
+    <off_image>Valve close.png</off_image>
     <off_label>OFF</off_label>
-    <on_image>Valve Fault.svg</on_image>
+    <on_image>Valve Fault.png</on_image>
     <on_label>ON</on_label>
     <pv_name></pv_name>
     <pv_value />
@@ -170,9 +170,9 @@ $(pv_value)</tooltip>
     <height>39</height>
     <name>Image Boolean Indicator_2</name>
     <no_animation>false</no_animation>
-    <off_image>Valve close.svg</off_image>
+    <off_image>Valve close.png</off_image>
     <off_label>OFF</off_label>
-    <on_image>Valve Sweeping.svg</on_image>
+    <on_image>Valve Sweeping.png</on_image>
     <on_label>ON</on_label>
     <pv_name></pv_name>
     <pv_value />
