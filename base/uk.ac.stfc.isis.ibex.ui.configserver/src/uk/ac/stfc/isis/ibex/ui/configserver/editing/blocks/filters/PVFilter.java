@@ -27,7 +27,6 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * Class to extend when creating a new filter type for the available PVs.
  */
 public class PVFilter extends ModelObject {
-	protected boolean refresh;
 	
 	/**
 	 * Get the viewer filter to apply to the viewer. 

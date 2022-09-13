@@ -31,6 +31,9 @@ import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+/**
+ * Represents messages from the DAE.
+ */
 public class MessageBox extends Composite {
 	private Text text;
 	private Label title;
@@ -62,6 +65,10 @@ public class MessageBox extends Composite {
 		this.title.setText(title);
 	}
 	
+	/**
+	 * Sets the model.
+	 * @param model the model
+	 */
 	public void setModel(UpdatedValue<String> model) {
 		DataBindingContext bindingContext = new DataBindingContext();	
 		bindingContext.bindValue(WidgetProperties.text().observe(text), BeanProperties.value("value").observe(model));

@@ -47,12 +47,15 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.SynopticSelectionDialog;
 /**
  * Handler for editing a synoptic.
  */
-public final class EditSynopticHandler extends SynopticEditorHandler {
+public class EditSynopticHandler extends SynopticEditorHandler {
     private static final String EDIT_MENU_TEXT = "Edit";
     private static final String READ_ONLY_TEXT = "View";
 	private static final String TITLE = " Synoptic";
 	
-	private EditSynopticHandler() {
+	/**
+	 * Create a new handler for editing synoptics.
+	 */
+	public EditSynopticHandler() {
 		SYNOPTIC.availableSynopticsInfo().subscribe(synopticObserver);
 	}
 	/**

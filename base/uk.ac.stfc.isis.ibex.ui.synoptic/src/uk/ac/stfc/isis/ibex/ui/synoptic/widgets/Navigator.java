@@ -43,6 +43,9 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
 import uk.ac.stfc.isis.ibex.ui.synoptic.NavigationPresenter;
 import uk.ac.stfc.isis.ibex.ui.synoptic.SynopticPresenter;
 
+/**
+ * The synoptic navigator.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class Navigator extends Composite {
 
@@ -56,6 +59,11 @@ public class Navigator extends Composite {
 	
 	private static final Color BACKGROUND = SWTResourceManager.getColor(240, 240, 240);
 	
+	/**
+	 * Creates a new synoptic navigator.
+	 * @param parent the parent composite
+	 * @param style the SWT style flags
+	 */
 	public Navigator(Composite parent, int style) {
 		super(parent, style);
 		setLayout(new GridLayout(6, false));

@@ -24,16 +24,29 @@ import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.swt.widgets.Composite;
 
+/**
+ * Editing support for integer-typed values.
+ *
+ * @param <TRow> the type of row to be edited
+ */
 public abstract class IntegerEditingSupport<TRow> extends GenericEditingSupport<TRow, Integer> {
 
+	/**
+	 * The cell editor.
+	 */
 	protected CellEditor editor;
 
+	/**
+	 * Creates new integer editing support.
+	 * @param viewer the column viewer
+	 * @param rowType the type of row to be edited
+	 */
 	public IntegerEditingSupport(ColumnViewer viewer, Class<TRow> rowType) {
 		super(viewer, rowType, Integer.class);
 		createEditor(viewer);
 	}
 	
-	protected void createEditor(ColumnViewer viewer) { 		
+	private void createEditor(ColumnViewer viewer) { 		
 	// Override TextCellEditor to handle doubles better
 		editor = new TextCellEditor((Composite) viewer.getControl()) {
 			@Override

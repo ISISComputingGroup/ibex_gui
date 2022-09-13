@@ -32,6 +32,9 @@ import uk.ac.stfc.isis.ibex.synoptic.model.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.model.targets.GroupedComponentTarget;
 import uk.ac.stfc.isis.ibex.targets.Target;
 
+/**
+ * A graph representing the structure of a beamline synoptic.
+ */
 public class InstrumentNavigationGraph {
 
 	private final Map<Component, TargetNode> targetNodes = new HashMap<>();
@@ -39,6 +42,10 @@ public class InstrumentNavigationGraph {
 	
     private TargetNode head;
 	
+    /**
+     * Creates a new navigation graph.
+     * @param instrument the synoptic
+     */
 	public InstrumentNavigationGraph(Synoptic instrument) {
 		createTargetNodes(instrument.components());
         buildGraph(instrument);
@@ -60,10 +67,18 @@ public class InstrumentNavigationGraph {
 		return head;
 	}
 
+	/**
+	 * Gets the head of this graph.
+	 * @return the head
+	 */
 	public TargetNode head() {
         return head;
 	}
 	
+	/**
+	 * Gets the target nodes of this graph.
+	 * @return the target nodes
+	 */
 	public Map<String, TargetNode> targets() {
 		return new LinkedHashMap<>(targets);
 	}

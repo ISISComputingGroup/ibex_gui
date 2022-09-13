@@ -35,6 +35,10 @@ import org.eclipse.core.runtime.Path;
  */
 public class OpiProvider extends Provider {
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Collection<String> getOpiList() {
 		Collection<String> relativeFilePaths = new ArrayList<String>();
 		Path root = pathToFileResource("/resources/");

@@ -19,16 +19,31 @@
 
 package uk.ac.stfc.isis.ibex.ui.synoptic.beamline;
 
+/**
+ * A line, used to represent the beam path in the synoptic views.
+ */
 public abstract class Line {
 
 	private final int width;
 	
+	/**
+	 * Creates a new line with the specified width.
+	 * @param width the width
+	 */
 	public Line(int width) {
 		this.width = width;
 	}
 	
+	/**
+	 * Gets the SWT style flags for the line.
+	 * @return the flags
+	 */
 	public abstract int swtLineStyle();
 	
+	/**
+	 * Gets the line width.
+	 * @return the width
+	 */
 	public int width() {
 		return width;
 	}

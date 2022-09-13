@@ -24,15 +24,27 @@ import org.osgi.framework.BundleContext;
 
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 
+/**
+ * The UI elements for the main menu.
+ */
 public class MainMenuUI extends AbstractUIPlugin {
 
+	/**
+	 * The ID of this view.
+	 */
     public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.mainmenu"; //$NON-NLS-1$
 
 	// The shared instance
 	private static MainMenuUI plugin;
 	
+	/**
+	 * The current instrument.
+	 */
 	public static final Instrument INSTRUMENT = Instrument.getInstance();
 	
+	/**
+	 * Creates the main menu.
+	 */
 	public MainMenuUI() {
 		
 	}
@@ -57,6 +69,10 @@ public class MainMenuUI extends AbstractUIPlugin {
 		super.stop(context);
 	}
 
+	/**
+	 * Returns the singleton instance of this plugin.
+	 * @return the plugin
+	 */
 	public static MainMenuUI getDefault() {
 		return plugin;
 	}

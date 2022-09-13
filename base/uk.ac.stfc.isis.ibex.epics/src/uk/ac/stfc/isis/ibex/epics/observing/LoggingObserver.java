@@ -30,9 +30,21 @@ import org.apache.logging.log4j.Logger;
  */
 public class LoggingObserver<T> extends BaseObserver<T> {
 
+	/**
+	 * The logger.
+	 */
 	protected final Logger log;
+	
+	/**
+	 * An ID printed before each log message.
+	 */
 	protected final String id;
 	
+	/**
+	 * Create a new logging observer.
+	 * @param log the log
+	 * @param id an ID printed before each message
+	 */
 	public LoggingObserver(Logger log, String id) {
 		this.log = log;
 		this.id = id;

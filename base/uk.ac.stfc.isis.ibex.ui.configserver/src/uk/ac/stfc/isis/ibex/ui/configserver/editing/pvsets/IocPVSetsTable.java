@@ -30,6 +30,9 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.widgets.CheckboxLabelProvider;
 
+/**
+ * A table displaying the "PV sets" for an IOC in the current configuration.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class IocPVSetsTable extends DataboundTable<EditablePVSet> {
 	private boolean isEditable = true;

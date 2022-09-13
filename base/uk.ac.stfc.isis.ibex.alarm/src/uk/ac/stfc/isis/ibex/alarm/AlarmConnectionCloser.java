@@ -85,7 +85,6 @@ public class AlarmConnectionCloser {
             Field connectionField = JMSCommunicationThread.class.getDeclaredField("connection");
             connectionField.setAccessible(true);
             connection = (ActiveMQConnection) connectionField.get(communicator);
-            System.out.println("connection is " + connection);
         } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
             LOG.warn("While getting reference to the connection from the communicator we had an error. ");
             LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);

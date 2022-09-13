@@ -21,6 +21,10 @@ package uk.ac.stfc.isis.ibex.model;
 
 import java.beans.PropertyChangeListener;
 
+/**
+ * Interface implemented by all "model objects"; that is, objects which have property changes
+ * which can be listened to.
+ */
 public interface IModelObject {
     /**
      * Adds a property change listener.

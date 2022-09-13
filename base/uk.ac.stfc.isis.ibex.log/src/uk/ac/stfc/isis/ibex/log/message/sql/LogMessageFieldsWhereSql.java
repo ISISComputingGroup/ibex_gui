@@ -78,6 +78,10 @@ public enum LogMessageFieldsWhereSql {
         this.tagName = tagName;
     }
 
+    /**
+     * Gets the tag name.
+     * @return the tag name
+     */
     public String getTagName() {
         return tagName;
     }

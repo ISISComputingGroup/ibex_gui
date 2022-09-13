@@ -45,6 +45,11 @@ public class LogListener implements ILogListener {
 
     private Logger log4jLogger;
    
+    /**
+     * Creates a new log listener.
+     * @param eclipseLogger the eclipse logger to listen to
+     * @param log4jLogger the log4j logger to pass messages to
+     */
     public LogListener(ILog eclipseLogger, Logger log4jLogger) {
     	this.log4jLogger = log4jLogger;
     	

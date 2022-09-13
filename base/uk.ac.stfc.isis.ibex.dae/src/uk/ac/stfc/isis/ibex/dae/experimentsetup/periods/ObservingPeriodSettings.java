@@ -26,10 +26,18 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
+/**
+ * An observable for DAE period settings.
+ */
 public class ObservingPeriodSettings extends XMLBackedPeriodSettings implements Closable {
 	
 	private final SettingsGateway gateway;
 
+	/**
+	 * Creates the observable.
+	 * @param settingsSource the source for reading the settings
+	 * @param settingsDestination the destination for writing the settings
+	 */
 	public ObservingPeriodSettings(ForwardingObservable<String> settingsSource, Writable<String> settingsDestination) {
 
 		gateway = new SettingsGateway(settingsSource, settingsDestination) {	

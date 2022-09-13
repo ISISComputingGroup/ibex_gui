@@ -36,10 +36,29 @@ public abstract class Observables extends ModelAdapter {
      */
     protected final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.NOTHING);
 
+    /**
+     * The beam current PV.
+     */
     protected static final String BEAM_CURRENT = "BEAM:CURR";
+    
+    /**
+     * The beam energy PV.
+     */
     protected static final String BEAM_ENERGY = "BEAM:ENERGY";
+    
+    /**
+     * The bunch length PV.
+     */
     protected static final String BUNCH_LENGTH = "BUNCH:LEN";
+    
+    /**
+     * The extraction delay PV.
+     */
     protected static final String EXTRACT_DELAY = "EXTRACT:DELAY";
+    
+    /**
+     * The frequency PV.
+     */
     protected static final String FREQ = "FREQ";
 
     /**

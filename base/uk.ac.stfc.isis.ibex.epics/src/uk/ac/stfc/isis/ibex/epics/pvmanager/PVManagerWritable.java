@@ -72,6 +72,10 @@ public class PVManagerWritable<T> extends WritablePV<T> {
 		}
 	};
 	
+	/**
+	 * Creates a new writable, writing to the specified PV info.
+	 * @param info the PV to write to
+	 */
 	public PVManagerWritable(PVInfo<T> info) {
 		super(info);
 		writeExpression = new WriteExpressionImpl<T>(info.address());		
@@ -81,6 +85,9 @@ public class PVManagerWritable<T> extends WritablePV<T> {
 				.async();	
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void write(T value) throws IOException {
 	    synchronized (pvLock) {
@@ -99,6 +106,9 @@ public class PVManagerWritable<T> extends WritablePV<T> {
 	    }
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void close() {
 		synchronized (pvLock) {

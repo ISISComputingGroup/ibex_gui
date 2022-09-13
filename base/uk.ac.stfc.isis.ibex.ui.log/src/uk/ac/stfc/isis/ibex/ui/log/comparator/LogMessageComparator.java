@@ -47,6 +47,9 @@ public class LogMessageComparator extends ViewerComparator implements Comparator
 	private static final int DESCENDING = 1;
 	private int direction = DESCENDING;
 	
+	/**
+	 * A comparator for sorting log messages.
+	 */
 	public LogMessageComparator() {
 		this.messageField = LogMessageFields.EVENT_TIME;
 	  	direction = DESCENDING;

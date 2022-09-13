@@ -29,10 +29,17 @@ import com.google.common.base.Strings;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 
+/**
+ * A viewer filter for searching by PV addresses.
+ */
 public class PVAddressSearch extends ViewerFilter {
 	private Pattern searchPattern = Pattern.compile(".*", Pattern.CASE_INSENSITIVE);
 	private boolean searchIsEmpty = true;
 	
+	/**
+	 * Sets the search text for this filter.
+	 * @param s the search text
+	 */
 	public void setSearchText(String s) {
 	    // ensure that the value can be used for matching
 		this.searchIsEmpty = Strings.isNullOrEmpty(s);

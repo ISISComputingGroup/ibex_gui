@@ -30,6 +30,11 @@ public final class PVInfo<T> {
 	private final String pvAddress;
 	private Class<T> type;
 
+	/**
+	 * Creates new information about a PV.
+	 * @param pvAddress the PV address
+	 * @param type the type of value read/written to this PV
+	 */
 	public PVInfo(String pvAddress, Class<T> type) {
 		this.pvAddress = pvAddress;
 		this.type = type; 
@@ -42,6 +47,9 @@ public final class PVInfo<T> {
 		return pvAddress;
 	}
 
+	/**
+	 * @return the type of this PV
+	 */
 	public Class<T> type() {
 		return type;
 	}
