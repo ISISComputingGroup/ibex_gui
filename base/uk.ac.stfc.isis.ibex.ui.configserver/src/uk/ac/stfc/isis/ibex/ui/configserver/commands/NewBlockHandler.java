@@ -76,7 +76,7 @@ public class NewBlockHandler extends AbstractHandler {
 	
 	
 	/**
-	 * Prevent adding block without permission
+	 * Prevent adding block without permission.
 	 */
 	@Override
 	public boolean isEnabled() {

@@ -28,12 +28,24 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
+/**
+ * Editing support for enum types.
+ *
+ * @param <T> the type of row which is edited
+ * @param <E> the enum type which is edited (within a cell)
+ */
 public abstract class EnumEditingSupport<T, E extends Enum<E>> extends EditingSupport {
 	private ComboBoxViewerCellEditor cellEditor;	
 	
 	private final Class<T> rowType;
 	private final Class<E> enumType;
 	
+	/**
+	 * Create new editing support for an enum type.
+	 * @param viewer the column viewer
+	 * @param rowType the type of row
+	 * @param enumType the enum type which is edited within a cell
+	 */
 	public EnumEditingSupport(ColumnViewer viewer, Class<T> rowType, Class<E> enumType) {
 		super(viewer);
 		this.rowType = rowType;
@@ -80,7 +92,17 @@ public abstract class EnumEditingSupport<T, E extends Enum<E>> extends EditingSu
 		}
 	}
 
+	/**
+	 * Gets the enum value for a given row.
+	 * @param row the row
+	 * @return the enum value
+	 */
 	protected abstract E getEnumValueForRow(T row);
 
+	/**
+	 * Sets the enum value for a given row.
+	 * @param row the row
+	 * @param value the enum value
+	 */
 	protected abstract void setEnumForRow(T row, E value);
 }

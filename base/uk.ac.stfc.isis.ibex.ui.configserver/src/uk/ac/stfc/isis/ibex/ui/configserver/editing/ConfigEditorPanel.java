@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing;
 
-import java.util.concurrent.TimeoutException;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;

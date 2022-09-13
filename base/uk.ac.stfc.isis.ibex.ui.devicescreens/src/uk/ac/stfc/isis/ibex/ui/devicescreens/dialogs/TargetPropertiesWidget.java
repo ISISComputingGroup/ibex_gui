@@ -24,7 +24,6 @@ import java.beans.PropertyChangeListener;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
-import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -118,7 +117,7 @@ public class TargetPropertiesWidget extends Composite {
     private void bind() {
         DataBindingContext bindingContext = new DataBindingContext();
 
-        bindingContext.bindValue(SWTObservables.observeText(txtDescription),
+        bindingContext.bindValue(WidgetProperties.text().observe(txtDescription),
                 BeanProperties.value("descriptionText").observe(viewModel));
 
         bindingContext.bindValue(WidgetProperties.enabled().observe(table),

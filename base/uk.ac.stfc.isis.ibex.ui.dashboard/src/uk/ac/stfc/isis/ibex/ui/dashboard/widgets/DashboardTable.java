@@ -15,6 +15,9 @@ import org.eclipse.swt.widgets.Label;
 import uk.ac.stfc.isis.ibex.dashboard.DashboardPv;
 import uk.ac.stfc.isis.ibex.ui.dashboard.models.BannerModel;
 
+/**
+ * A table of always-displayed values in the dashboard.
+ */
 public class DashboardTable extends Composite {
 	
 	private final BannerModel model;
@@ -28,6 +31,12 @@ public class DashboardTable extends Composite {
 			DashboardPv.TABLE_3_1, 
 			DashboardPv.TABLE_3_2);
 	
+	/**
+	 * Creates the table.
+	 * @param parent the parent composite
+	 * @param model the model
+	 * @param textFont the font
+	 */
 	public DashboardTable(Composite parent, BannerModel model, Font textFont) {
 		super(parent, SWT.NONE);
 		this.model = model;

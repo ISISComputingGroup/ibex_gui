@@ -66,6 +66,10 @@ public class BeamlineCompositeContainer extends BeamlineComposite {
 		// Do nothing, layout is fixed
 	}
 
+	/**
+	 * Registers a target with this beamline view.
+	 * @param target the target to add
+	 */
 	public void registerBeamlineTarget(BeamlineComposite target) {
 	    target.setIsPreview(isPreview);
 		targets.add(target);		

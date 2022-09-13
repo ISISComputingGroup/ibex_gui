@@ -41,6 +41,10 @@ public class DeviceScreensView {
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.devicescreens.devicescreensview";
 
+    /**
+     * Creates a new instance of this view.
+     * @param parent the parent composite
+     */
     @PostConstruct
     public void createPartControl(Composite parent) {
         parent.setLayout(new FillLayout(SWT.HORIZONTAL));

@@ -17,6 +17,9 @@ public abstract class AbstractRunControlViewModel extends ErrorMessageProvider i
     
     private final RunControlValidator runControlValidator = new RunControlValidator();
     
+    /**
+     * The source of runcontrol values.
+     */
     protected IRuncontrol source;
     
     /**

@@ -55,12 +55,11 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 	private boolean editBlockFirst;
 	private boolean switchConfigOnSaveAs;
 	private boolean calledSwitchConfigOnSaveAs = false;
-	private boolean openEditBlockDialog;
 	private String pvName;
 	private ConfigServer server = Configurations.getInstance().server();
 
 	/**
-	 * @wbp.parser.constructor Constructor
+	 * Constructor.
 	 * 
 	 * @param parentShell             parent shell to run dialogue
 	 * @param title                   title of dialogue
@@ -77,16 +76,32 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 		this.editBlockFirst = editBlockFirst;
 	}
 
+	/**
+	 * Creates a new edit-configuration dialog.
+	 * @param parentShell the parent shell
+	 * @param title the title
+	 * @param subTitle the subtitle
+	 * @param config the config to edit
+	 * @param isBlank whether this is a blank config
+	 * @param configurationViewModels the viewModel
+	 * @param editBlockFirst whether we need to edit a block first
+	 * @param openEditBlockDialog whether we need to open the edit block dialog
+	 * @param pvName a PV name
+	 */
 	public EditConfigDialog(Shell parentShell, String title, String subTitle, EditableConfiguration config,
 			boolean isBlank, ConfigurationViewModels configurationViewModels, boolean editBlockFirst,
 			boolean openEditBlockDialog, String pvName) {
 		super(parentShell, title, subTitle, config, isBlank, configurationViewModels);
 		this.editBlockFirst = editBlockFirst;
-		this.openEditBlockDialog = openEditBlockDialog;
 		this.pvName = pvName;
 
 	}
 
+	/**
+	 * Add a new block to this config.
+	 * @param config the editable configuration
+	 * @throws IOException on failure
+	 */
 	public void addNew(EditableConfiguration config) throws IOException {
 		BlockFactory blockFactory = new BlockFactory(config);
 		EditableBlock added = blockFactory.createNewBlock(Optional.of(pvName));
@@ -185,14 +200,6 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 	 */
 	public boolean calledSwitchConfigOnSaveAs() {
 		return calledSwitchConfigOnSaveAs;
-	}
-
-	public boolean isOpenEditBlockDialog() {
-		return openEditBlockDialog;
-	}
-
-	public String pvName() {
-		return pvName;
 	}
 
 	/**

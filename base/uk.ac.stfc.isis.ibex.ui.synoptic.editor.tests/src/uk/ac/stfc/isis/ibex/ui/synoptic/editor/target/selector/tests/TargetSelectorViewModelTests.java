@@ -33,10 +33,11 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Widget;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 import uk.ac.stfc.isis.ibex.opis.desc.MacroInfo;
@@ -50,6 +51,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.selector.TargetSelectorVie
 /**
  * Tests for the target selector view model.
  */
+@RunWith(MockitoJUnitRunner.class)
 public class TargetSelectorViewModelTests {
     
     @Captor 
@@ -91,7 +93,6 @@ public class TargetSelectorViewModelTests {
 
     @Before
     public void setup(){
-        MockitoAnnotations.initMocks(this);
         
         source = new Event();
         source.widget = Mockito.mock(Widget.class);

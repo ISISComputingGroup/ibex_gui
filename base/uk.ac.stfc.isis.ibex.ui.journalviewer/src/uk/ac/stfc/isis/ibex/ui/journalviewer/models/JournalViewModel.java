@@ -510,11 +510,11 @@ public class JournalViewModel extends ModelObject {
 		boolean enableOrDisableVal;
 		
 		// If on first page, disable Previous (and First) page buttons
-		enableOrDisableVal = (getPageNumber() == 1) ? false : true;
+		enableOrDisableVal = getPageNumber() != 1;
 		firePropertyChange("btnPrevPageEnabled", this.btnPrevPageEnabled, this.btnPrevPageEnabled = enableOrDisableVal);
 
 		// If on last page, disable Next (and Last) page buttons
-		enableOrDisableVal = (getPageNumber() == getPageMax()) ? false : true;
+		enableOrDisableVal = getPageNumber() != getPageMax();
 		firePropertyChange("btnNextPageEnabled", this.btnNextPageEnabled, this.btnNextPageEnabled = enableOrDisableVal);
 	}
 
@@ -538,7 +538,7 @@ public class JournalViewModel extends ModelObject {
 	 */
 	private void setSearchButtonEnabled() {
 
-		boolean enableOrDisableVal = (this.errorMessage != NO_ERROR) ? false : true;
+		boolean enableOrDisableVal = this.errorMessage == NO_ERROR;
 
 		firePropertyChange("searchButtonEnabled", this.searchButtonEnabled, this.searchButtonEnabled = enableOrDisableVal);
 	}

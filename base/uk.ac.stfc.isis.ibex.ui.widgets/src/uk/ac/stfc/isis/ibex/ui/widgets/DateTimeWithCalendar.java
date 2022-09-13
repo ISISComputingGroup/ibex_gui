@@ -22,6 +22,11 @@ import org.eclipse.swt.widgets.DateTime;
  */
 public class DateTimeWithCalendar extends DateTime {
 
+	/**
+	 * Creates a new DateTimeWithCalendar.
+	 * @param parent the parent composite
+	 * @param style the SWT style flags
+	 */
 	public DateTimeWithCalendar(Composite parent, int style) {
 		super(parent, style);
 	}

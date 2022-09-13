@@ -24,11 +24,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
-import uk.ac.stfc.isis.ibex.epics.conversion.json.LowercaseEnumTypeAdapterFactory;
 import uk.ac.stfc.isis.ibex.experimentdetails.Role;
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
 

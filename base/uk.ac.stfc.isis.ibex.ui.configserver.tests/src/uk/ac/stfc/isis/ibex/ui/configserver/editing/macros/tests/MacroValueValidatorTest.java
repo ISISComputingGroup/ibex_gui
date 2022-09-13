@@ -29,15 +29,17 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.swt.widgets.Label;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.MacroValueValidator;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.MacroViewModel;
 
 @SuppressWarnings("checkstyle:methodname")
+@RunWith(MockitoJUnitRunner.class)
 public class MacroValueValidatorTest {
 	
 	private static final String VALID_VALUE = "123.123";
@@ -61,7 +63,6 @@ public class MacroValueValidatorTest {
 	
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
 		
 		messageDisplayer = mock(Label.class);
 		mockNameIsValidListener = mock(PropertyChangeListener.class);

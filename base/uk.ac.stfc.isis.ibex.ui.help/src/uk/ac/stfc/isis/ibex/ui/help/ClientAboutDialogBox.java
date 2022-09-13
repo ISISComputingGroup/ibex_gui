@@ -17,10 +17,17 @@ import org.eclipse.swt.widgets.Shell;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.ui.about.AboutDialogBox;
 
+/**
+ * A dialog box showing information about the client.
+ */
 public class ClientAboutDialogBox extends AboutDialogBox {
 	Image image;
 	private static final Logger LOG = IsisLog.getLogger(ClientAboutDialogBox.class);
 
+	/**
+	 * Creates the dialog box.
+	 * @param parentShell the parent shell
+	 */
 	public ClientAboutDialogBox(Shell parentShell) {
 		super(parentShell, "IBEX");
 	}

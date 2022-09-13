@@ -73,6 +73,10 @@ public abstract class BaseWritable<T> implements Writable<T> {
 		return lastError;
 	}
 
+	/**
+	 * Handler for errors occuring during writes.
+	 * @param e the error
+	 */
 	protected synchronized void error(Exception e) {
 		lastError = e;
 		onErrorListeners.forEach(writer -> writer.onError(e));

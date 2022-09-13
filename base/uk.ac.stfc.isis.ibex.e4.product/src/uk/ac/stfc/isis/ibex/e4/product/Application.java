@@ -40,8 +40,8 @@ public class Application implements IApplication {
 	 * Also ensure that a compatible Eclipse Adoptium JDK version 17+ is 
 	 * selected to build with.
 	 */
-	private static sealed interface Java17SealedInterface permits Java17SealedInterfaceImpl {}
-	private static final non-sealed class Java17SealedInterfaceImpl implements Java17SealedInterface {}
+	private sealed interface Java17SealedInterface permits Java17SealedInterfaceImpl { }
+	private static non-sealed final class Java17SealedInterfaceImpl implements Java17SealedInterface { }
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.IApplicationContext)

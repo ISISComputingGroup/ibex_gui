@@ -231,8 +231,8 @@ public class NicosModel extends ModelObject {
     private void setError(NicosErrorState error, String additionalInformation) {
     	// Don't spam connection failures repeatedly to the log - these are expected in the case where the NICOS
     	// IOC has not been added to the configuration
-    	if (error != NicosErrorState.NO_ERROR && 
-    			!(this.error == NicosErrorState.CONNECTION_FAILED && error == NicosErrorState.CONNECTION_FAILED)) {
+    	if (error != NicosErrorState.NO_ERROR 
+    			&& !(this.error == NicosErrorState.CONNECTION_FAILED && error == NicosErrorState.CONNECTION_FAILED)) {
             LOG.error("NICOS error: " + error.toString() + ", " + Strings.nullToEmpty(additionalInformation));
     	}
     	

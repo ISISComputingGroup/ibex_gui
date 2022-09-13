@@ -115,7 +115,7 @@ public final class DetectorDiagnosticsModel extends ModelObject {
 
     private String writeToEnableDiagnosticError = "";
 
-    protected boolean errorLoggedInJob;
+    private boolean errorLoggedInJob;
     
     /**
      * Create a listener which will immediately reschedule the detector

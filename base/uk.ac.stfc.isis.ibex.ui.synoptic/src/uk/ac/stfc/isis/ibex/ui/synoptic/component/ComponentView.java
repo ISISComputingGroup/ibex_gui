@@ -33,6 +33,13 @@ public final class ComponentView {
 	
 	private ComponentView() { }
 
+	/**
+	 * Creates a BeamlineComposite.
+	 * @param parent the parent composite
+	 * @param component the component
+	 * @param isPreview whether this is a preview
+	 * @return the beamline composite
+	 */
 	public static BeamlineComposite create(BeamlineCompositeContainer parent, Component component, boolean isPreview) {
 		BeamlineComposite target = component.components().isEmpty() 
 									? createBasicComponent(parent, component, isPreview) 
