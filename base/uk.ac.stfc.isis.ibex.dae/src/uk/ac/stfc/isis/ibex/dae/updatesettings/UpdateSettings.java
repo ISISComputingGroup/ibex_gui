@@ -21,6 +21,9 @@ package uk.ac.stfc.isis.ibex.dae.updatesettings;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * Update settings for the DAE experiment setup view.
+ */
 public class UpdateSettings extends ModelObject {
 	
 	private int autosaveFrequency;

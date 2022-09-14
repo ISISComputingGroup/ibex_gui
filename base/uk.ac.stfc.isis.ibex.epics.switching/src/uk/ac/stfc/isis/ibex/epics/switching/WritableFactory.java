@@ -29,18 +29,38 @@ import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 public class WritableFactory {
     private Switcher switcher;
 
+    /**
+     * Creates a writable factory, with the specified behaviour on instrument switch.
+     * @param onSwitch the behaviour on instrument switch
+     */
     public WritableFactory(OnInstrumentSwitch onSwitch) {
         this(onSwitch, InstrumentSwitchers.getDefault());
     }
 
+    /**
+     * Creates a writable factory, with the specified behaviour on instrument switch.
+     * @param onSwitch the behaviour on instrument switch
+     * @param instrumentSwitchers the instrument switcher
+     */
     public WritableFactory(OnInstrumentSwitch onSwitch, InstrumentSwitchers instrumentSwitchers) {
         this(instrumentSwitchers.getWritableSwitcher(onSwitch));
     }
 
+    /**
+     * Creates a writable factory, using the specified switcher.
+     * @param switcher the switcher
+     */
     public WritableFactory(Switcher switcher) {
         this.switcher = switcher;
     }
 
+    /**
+     * Get a switchable writable for a provided PV address.
+     * @param <T> the type of values to be written
+     * @param channelType - the channel type
+     * @param address - the PV address
+     * @return the writable
+     */
     public <T> Writable<T> getSwitchableWritable(ChannelType<T> channelType, String address) {
         Writable<T> channelWriter = getPVWritable(channelType, address);
 
@@ -52,6 +72,13 @@ public class WritableFactory {
         return createdWritable;
     }
 
+    /**
+     * Gets a PV writable.
+     * @param <T> the type of value to be written
+     * @param channelType the channel type
+     * @param address the PV address
+     * @return the writable
+     */
     public <T> Writable<T> getPVWritable(ChannelType<T> channelType, String address) {
         return channelType.writer(address);
     }

@@ -40,10 +40,18 @@ public class TimeChannels extends ModelObject {
 	private CalculationMethod calculationMethod = CalculationMethod.SPECIFY_PARAMETERS;
 	private TimeUnit timeUnit = TimeUnit.MICROSECONDS;
 	
+	/**
+	 * Gets the time regimes.
+	 * @return the time regimes
+	 */
 	public List<TimeRegime> timeRegimes() {
 		return timeRegimes;
 	}
 
+	/**
+	 * Sets the time regimes.
+	 * @param value the time regimes
+	 */
 	public void setTimeRegimes(List<TimeRegime> value) {
 		firePropertyChange("timeRegimes", timeRegimes, timeRegimes = value);
 	}

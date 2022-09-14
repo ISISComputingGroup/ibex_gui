@@ -19,17 +19,31 @@
 
 package uk.ac.stfc.isis.ibex.epics.writing;
 
+/**
+ * Exception thrown on failure to write.
+ */
 public class WriteException extends Exception {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Initialise this exception.
+	 */
 	public WriteException() {
 	}
 	
+	/**
+	 * Initialise this exception with a message.
+	 * @param message the message
+	 */
 	public WriteException(String message) {
 		super(message);
 	}
 	
+	/**
+	 * Initialise this exception with a cause.
+	 * @param e the cause
+	 */
 	public WriteException(Exception e) {
 		super(e);
 	}

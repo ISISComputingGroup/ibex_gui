@@ -23,10 +23,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
+/**
+ * DAE period types.
+ */
 public enum PeriodType {
+	/**
+	 * Unused period.
+	 */
     UNUSED("Unused"),
+    /**
+     * DAQ period.
+     */
     DAQ("DAQ"),
+    /**
+     * Dwell period.
+     */
     DWELL("Dwell");
 
 	private String text;

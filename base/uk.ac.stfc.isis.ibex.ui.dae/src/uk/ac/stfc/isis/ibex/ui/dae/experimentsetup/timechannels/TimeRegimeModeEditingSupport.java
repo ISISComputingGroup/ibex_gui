@@ -25,8 +25,17 @@ import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegimeMode;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegimeRow;
 import uk.ac.stfc.isis.ibex.ui.widgets.EnumEditingSupport;
 
+/**
+ * Editing support for the time regime mode in the DAE setup tables.
+ */
 public class TimeRegimeModeEditingSupport extends EnumEditingSupport<TimeRegimeRow, TimeRegimeMode> {
 
+	/**
+	 * Create the editing support.
+	 * @param viewer the column viewer
+	 * @param rowType the row type
+	 * @param enumType the type of value to be edited
+	 */
 	public TimeRegimeModeEditingSupport(ColumnViewer viewer, Class<TimeRegimeRow> rowType, Class<TimeRegimeMode> enumType) {
 		super(viewer, rowType, enumType);
 	}

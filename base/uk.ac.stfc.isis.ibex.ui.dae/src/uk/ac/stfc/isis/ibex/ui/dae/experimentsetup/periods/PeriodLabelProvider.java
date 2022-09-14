@@ -25,6 +25,9 @@ import org.eclipse.swt.graphics.Image;
 
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.Period;
 
+/**
+ * A label provider for periods in the DAE tables.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class PeriodLabelProvider extends LabelProvider implements ITableLabelProvider {
 	

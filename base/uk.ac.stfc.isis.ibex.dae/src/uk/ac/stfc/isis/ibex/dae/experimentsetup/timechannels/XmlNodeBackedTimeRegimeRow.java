@@ -21,6 +21,9 @@ package uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels;
 
 import org.w3c.dom.Node;
 
+/**
+ * A time regime row as used by the DAE setup tables, which writes to XML.
+ */
 public class XmlNodeBackedTimeRegimeRow extends TimeRegimeRow {
 
 	private Node from;
@@ -28,6 +31,13 @@ public class XmlNodeBackedTimeRegimeRow extends TimeRegimeRow {
 	private Node step;
 	private Node mode;
 	
+	/**
+	 * Create a new time regime row.
+	 * @param from the "from" XML node
+	 * @param to the "to" XML node
+	 * @param step the "step" XML node
+	 * @param mode the "mode" XML node
+	 */
 	public XmlNodeBackedTimeRegimeRow(Node from, Node to, Node step, Node mode) {
 		this.from = from;
 		this.to = to;

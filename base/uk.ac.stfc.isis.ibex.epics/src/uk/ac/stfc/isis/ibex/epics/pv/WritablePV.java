@@ -30,6 +30,10 @@ public abstract class WritablePV<T> extends BaseWritable<T> implements PV<T> {
 
 	private final PVInfo<T> info;
 
+	/**
+	 * Initialises this writable PV with the provided PV information.
+	 * @param info the PV information
+	 */
 	public WritablePV(PVInfo<T> info) {
 		this.info = info;
 	}

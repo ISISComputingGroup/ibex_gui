@@ -25,13 +25,24 @@ import java.util.List;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * A wrapper class encapsulating multiple time regime rows.
+ */
 public class TimeRegime extends ModelObject {
 	private final ArrayList<TimeRegimeRow> rows = new ArrayList<>();
 	
+	/**
+	 * Create a new instance.
+	 * @param rows the rows
+	 */
 	public TimeRegime(List<TimeRegimeRow> rows) {
 		this.rows.addAll(rows);
 	}
 	
+	/**
+	 * Get the rows.
+	 * @return the rows
+	 */
 	public List<TimeRegimeRow> rows() {
 		return Collections.unmodifiableList(rows);
 	}

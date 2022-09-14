@@ -28,11 +28,19 @@ import com.google.common.collect.Lists;
 import uk.ac.stfc.isis.ibex.configserver.configuration.SimLevel;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 
+/**
+ * Filter for IOCs which have been configured.
+ */
 public final class UsedIocFilter {
 	
     private UsedIocFilter() {
     }
 
+    /**
+     * Filter the iocs.
+     * @param unfiltered the unfiltered iocs
+     * @return the filtered iocs
+     */
 	public static Collection<EditableIoc> filterIocs(Collection<EditableIoc> unfiltered) {
 		return Lists.newArrayList(Iterables.filter(unfiltered, new Predicate<EditableIoc>() {
 			@Override

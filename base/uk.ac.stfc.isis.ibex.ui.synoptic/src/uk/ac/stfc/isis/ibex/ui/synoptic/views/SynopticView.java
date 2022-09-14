@@ -38,7 +38,14 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.widgets.SynopticPanel;
  */
 public class SynopticView {
 	
+	/**
+	 * The view ID.
+	 */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticView"; //$NON-NLS-1$
+    
+    /**
+     * The property name for changing components.
+     */
     public static final String COMPONENTS_CHANGE = "components";
 
     private SynopticPanel instrument;
@@ -46,8 +53,10 @@ public class SynopticView {
 	
 	private final Display display = Display.getCurrent();
 	
-
-	//TODO: Why couldn't we do this with postConstruct?
+	/**
+	 * Create this view.
+	 * @param parent the parent composite
+	 */
 	@Inject
 	public SynopticView(Composite parent) {
         instrument = new SynopticPanel(parent, SWT.NONE, false);

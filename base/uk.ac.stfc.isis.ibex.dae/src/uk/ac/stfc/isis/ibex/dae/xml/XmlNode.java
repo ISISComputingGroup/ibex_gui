@@ -28,6 +28,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * An abstract representation of an XML node within a document.
+ *
+ * @param <T>
+ */
 public abstract class XmlNode<T> {
 
 	private final XPath xpath = XPathFactory.newInstance().newXPath();
@@ -35,18 +40,39 @@ public abstract class XmlNode<T> {
 	
 	private Node node;
 	
+	/**
+	 * Creates a new XML node, given a specified XPATH expression.
+	 * @param xPathExpression
+	 */
 	public XmlNode(String xPathExpression) {
 		expression = xPathExpression;
 	}
 	
+	/**
+	 * Sets the document.
+	 * @param doc the document
+	 * @throws XPathExpressionException if the document is incompatible with the XPATH expression
+	 */
 	public void setDoc(Document doc) throws XPathExpressionException {
 		setNode(doc);
 	}
 
+	/**
+	 * Gets the value.
+	 * @return the value
+	 */
 	public abstract T value();
 	
+	/**
+	 * Sets the value.
+	 * @param value the value
+	 */
 	public abstract void setValue(T value);
 	
+	/**
+	 * Gets the node.
+	 * @return the node
+	 */
 	protected Node node() {
 		return node;
 	}

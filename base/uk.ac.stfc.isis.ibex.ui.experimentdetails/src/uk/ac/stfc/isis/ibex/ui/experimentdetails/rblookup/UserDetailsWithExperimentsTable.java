@@ -6,8 +6,18 @@ import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.UserDetailsTable;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 
+/**
+ * A table displaying details of users for given experiments (for RB-lookup search).
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class UserDetailsWithExperimentsTable extends UserDetailsTable {	
+	
+	/**
+	 * Create the table.
+	 * @param parent the parent composite
+	 * @param style the SWT style
+	 * @param tableStyle the SWT table style
+	 */
 	public UserDetailsWithExperimentsTable(Composite parent, int style,
 			int tableStyle) {
 		super(parent, style, tableStyle);

@@ -27,10 +27,18 @@ import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 import uk.ac.stfc.isis.ibex.experimentdetails.Parameter;
 
+/**
+ * An observable for experiment parameters.
+ */
 public class ParametersObservable extends TransformingObservable<Collection<String>, Collection<Parameter>> {
 
 	private final ExperimentDetailsVariables variables;
 
+	/**
+	 * Creates the observable.
+	 * @param variables the experiment details variables
+	 * @param availableParameters the names of available parameters
+	 */
 	public ParametersObservable(
 			ExperimentDetailsVariables variables, 
 			ClosableObservable<Collection<String>> availableParameters) {
@@ -48,6 +56,11 @@ public class ParametersObservable extends TransformingObservable<Collection<Stri
 		return parameters;
 	}
 	
+	/**
+	 * Creates a new parameter.
+	 * @param address the address to use
+	 * @return the parameter
+	 */
 	protected Parameter createParameter(String address) {
 		return new ObservableParameter(
 				variables.parameterName(address),

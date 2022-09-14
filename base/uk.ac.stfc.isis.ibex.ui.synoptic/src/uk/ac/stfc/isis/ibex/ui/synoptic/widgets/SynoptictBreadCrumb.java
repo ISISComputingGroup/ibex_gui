@@ -39,6 +39,9 @@ import org.mihalis.opal.breadcrumb.BreadcrumbItem;
 import uk.ac.stfc.isis.ibex.ui.synoptic.Activator;
 import uk.ac.stfc.isis.ibex.ui.synoptic.SynopticPresenter;
 
+/**
+ * "Breadcrumb" navigation buttons for the synoptic.
+ */
 public class SynoptictBreadCrumb extends Composite {
 	
 	private static final String TWO_SPACES = "  ";
@@ -50,6 +53,11 @@ public class SynoptictBreadCrumb extends Composite {
 	
 	private final SynopticPresenter presenter;
 	
+	/**
+	 * Create this view.
+	 * @param parent the parent composite
+	 * @param style the SWT style flags
+	 */
 	public SynoptictBreadCrumb(Composite parent, int style) {
 		super(parent, style);
 		GridLayout gridLayout = new GridLayout(2, false);
@@ -90,6 +98,10 @@ public class SynoptictBreadCrumb extends Composite {
 		});
 	}
 	
+	/**
+	 * Set the component items.
+	 * @param items the items
+	 */
 	public void setComponents(List<String> items) {
 		cleanupCrumbs();
 		

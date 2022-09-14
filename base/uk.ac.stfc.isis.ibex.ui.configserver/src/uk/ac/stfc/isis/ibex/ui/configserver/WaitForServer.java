@@ -28,12 +28,18 @@ import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.Waiting;
 
+/**
+ * Viewmodel for the "wait for server" dialog.
+ */
 public class WaitForServer extends Waiting {
 
 	private final UpdatedValue<ServerStatus> serverStatus;
 	
 	private boolean isWaiting;
 	
+	/**
+	 * Create the viewmodel.
+	 */
 	public WaitForServer() {
 		serverStatus = new UpdatedObservableAdapter<>(Configurations.getInstance().server().serverStatus());
 		

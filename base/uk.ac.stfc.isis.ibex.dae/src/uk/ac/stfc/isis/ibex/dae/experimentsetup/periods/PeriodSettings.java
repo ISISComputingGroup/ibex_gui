@@ -24,6 +24,9 @@ import java.util.List;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * Model for DAE period settings.
+ */
 public class PeriodSettings extends ModelObject {
 	
 	private List<Period> periods = new ArrayList<>();

@@ -27,6 +27,9 @@ import uk.ac.stfc.isis.ibex.dae.xml.IntegerNode;
 import uk.ac.stfc.isis.ibex.dae.xml.StringNode;
 import uk.ac.stfc.isis.ibex.dae.xml.XmlNode;
 
+/**
+ * DAE periods, backed by an XML representation.
+ */
 public class XmlBackedPeriod extends Period {
 	
 	private static final String TYPE_EXPRESSION_FORMAT = "/Cluster/EW[Name='Type %d']/Val";
@@ -41,6 +44,10 @@ public class XmlBackedPeriod extends Period {
 	
 	private final List<XmlNode<?>> nodes = new ArrayList<>();
 	
+	/**
+	 * Creates a new xml-backed period.
+	 * @param number the period number to which the settings apply
+	 */
 	public XmlBackedPeriod(int number) {
 		super(number);
 		type = new EnumNode<>(String.format(TYPE_EXPRESSION_FORMAT, number), PeriodType.class);
@@ -54,10 +61,17 @@ public class XmlBackedPeriod extends Period {
 		nodes.add(label);
 	}
 	
+	/**
+	 * Get the XML nodes.
+	 * @return the xml nodes
+	 */
 	public List<XmlNode<?>> nodes() {
 		return nodes;
 	}
 	
+	/**
+	 * Initialise the values in this class from the XML nodes.
+	 */
 	public void initialiseFromNodes() {
 		super.setType(type.value());
 		super.setFrames(frames.value());
