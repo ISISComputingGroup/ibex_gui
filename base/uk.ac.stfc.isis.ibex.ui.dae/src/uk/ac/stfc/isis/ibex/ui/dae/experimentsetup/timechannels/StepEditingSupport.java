@@ -24,8 +24,16 @@ import org.eclipse.jface.viewers.ColumnViewer;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegimeRow;
 import uk.ac.stfc.isis.ibex.ui.widgets.DoubleEditingSupport;
 
+/**
+ * Editing support for the "step" column in the DAE setup tables.
+ */
 public class StepEditingSupport extends DoubleEditingSupport<TimeRegimeRow> {
 
+	/**
+	 * Initialise this editing support.
+	 * @param viewer the column viewer
+	 * @param rowType the row type
+	 */
 	public StepEditingSupport(ColumnViewer viewer, Class<TimeRegimeRow> rowType) {
 		super(viewer, rowType);
 	}

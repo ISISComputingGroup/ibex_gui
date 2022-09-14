@@ -38,6 +38,9 @@ public class RunControlForegroundColourConverter extends Converter<RuncontrolSta
     private static final Color WHITE = SWTResourceManager.getColor(SWT.COLOR_WHITE);
     private static final Color BLACK = SWTResourceManager.getColor(SWT.COLOR_BLACK);
 
+    /**
+     * Creates the converter.
+     */
     public RunControlForegroundColourConverter() {
         super(RuncontrolState.class, Color.class);
     }

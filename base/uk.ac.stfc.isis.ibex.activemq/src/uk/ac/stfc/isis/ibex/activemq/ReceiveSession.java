@@ -48,7 +48,14 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 public class ReceiveSession extends ModelObject {
     private static final Logger LOG = IsisLog.getLogger(ReceiveSession.class);
 
+    /**
+     * The activeMQ connection.
+     */
     protected MQConnection connection;
+    
+    /**
+     * The activeMQ session.
+     */
     protected Session session;
 
     /** The recipients of any parsed messages */

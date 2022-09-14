@@ -28,6 +28,9 @@ import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
+/**
+ * A gateway through which all DAE settings changes are sent.
+ */
 public abstract class SettingsGateway implements Closable {
     private Observer<String> settingsObserver = new BaseObserver<String>() {
 		@Override
@@ -40,6 +43,11 @@ public abstract class SettingsGateway implements Closable {
 
 	private final Writable<String> settingsDestination;
 
+	/**
+	 * Initialise the gateway.
+	 * @param settingsSource the source PV to use for getting the settings
+	 * @param settingsDestination the destination PV to use for writing the settings
+	 */
 	public SettingsGateway(ForwardingObservable<String> settingsSource, Writable<String> settingsDestination) {
 		sourceSubscription = settingsSource.subscribe(settingsObserver);
 		this.settingsDestination = settingsDestination;
@@ -54,8 +62,16 @@ public abstract class SettingsGateway implements Closable {
 		settingsDestination.write(asText());
 	}
 
+	/**
+	 * Get the settings as text.
+	 * @return the settings
+	 */
 	protected abstract String asText();
 	
+	/**
+	 * Set the settings from text.
+	 * @param text the text
+	 */
 	protected abstract void setFromText(String text);
 	
 	@Override

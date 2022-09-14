@@ -26,10 +26,20 @@ import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.ui.widgets.GenericEditingSupport;
 
+/**
+ * Editing support for string-type values.
+ *
+ * @param <TRow> the type of row being edited
+ */
 public abstract class StringEditingSupport<TRow> extends GenericEditingSupport<TRow, String> {
 
 	private ColumnViewer viewer;
 
+	/**
+	 * Create this editing support.
+	 * @param viewer the column viewer
+	 * @param rowType the row type
+	 */
 	public StringEditingSupport(ColumnViewer viewer, Class<TRow> rowType) {
 		super(viewer, rowType, String.class);
 		this.viewer = viewer;

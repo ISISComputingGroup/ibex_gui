@@ -35,7 +35,7 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
  */
 public abstract class Provider {
 	
-	protected static final Logger LOG = IsisLog.getLogger(OpiProvider.class);
+	private static final Logger LOG = IsisLog.getLogger(OpiProvider.class);
 	
 	/**
 	 * @return a list of OPI names

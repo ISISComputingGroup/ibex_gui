@@ -66,6 +66,9 @@ public class SpectraPlotConfiguration {
 
     }
     
+    /**
+     * Initialise the current values, and subscribe to future updates.
+     */
     public void initializeFromPreferenceStore() {
     	specNum.setInitialValueAndSubscribeToChanges();
     	specPeriod.setInitialValueAndSubscribeToChanges();

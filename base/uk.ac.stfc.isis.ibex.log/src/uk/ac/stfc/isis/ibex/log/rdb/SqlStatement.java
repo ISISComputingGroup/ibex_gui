@@ -49,6 +49,9 @@ public class SqlStatement {
     private Calendar startTime;
     private Calendar endTime;
 
+    /**
+     * Create a SQL statement.
+     */
     public SqlStatement() {
 	IPreferenceStore preferenceStore = Log.getDefault()
 		.getPreferenceStore();

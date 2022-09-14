@@ -51,10 +51,17 @@ public class RecentItems extends ContributionItem {
     
 	private static Configurations configs;
 
+	/**
+	 * Creates a new instance of this class.
+	 */
 	public RecentItems() {
 		configs = Configurations.getInstance();
 	}
 
+	/**
+	 * Creates a new instance of this class, with the given ID.
+	 * @param id the id
+	 */
 	public RecentItems(String id) {
 		super(id);
 	}

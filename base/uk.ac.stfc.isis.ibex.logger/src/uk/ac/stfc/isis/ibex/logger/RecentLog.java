@@ -39,6 +39,9 @@ import org.eclipse.jface.preference.IPreferenceStore;
 
 import uk.ac.stfc.isis.ibex.logger.preferences.PreferenceConstants;
 
+/**
+ * Represents recent GUI log messages.
+ */
 public class RecentLog implements IRecentLog {
 	@Override
 	public String getLogText() {

@@ -37,7 +37,10 @@ public class SqlWhereDateBetweenClause extends SqlWhereClause {
 	private static final ExpDataField EXP_DURATION = ExpDataFieldsCreator.getField(ExpDataTablesEnum.EXPERIMENT_TABLE, ExpDataFieldsEnum.DURATION);
 	private static final String BETWEEN_CASE = EXP_START + " AND DATE_ADD(" + EXP_START + ", INTERVAL " + EXP_DURATION + " DAY)";
 	
-	
+	/**
+	 * Create a SQL statement selecting dates in the specified range.
+	 * @param lhs the date to search
+	 */
 	public SqlWhereDateBetweenClause(GregorianCalendar lhs) {
 		super("'" + FORMATTER.format(lhs.getTime()) + "'", BETWEEN_CASE);
 	}

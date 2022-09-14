@@ -33,16 +33,42 @@ import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
  */
 public abstract class PrefixChangingSwitcher extends Switcher {
 
+	/**
+	 * The channels switched by this class.
+	 */
     protected Collection<SwitchableInformation> switchableInfoList;
 
+    /**
+     * The current PV prefix.
+     */
     protected String pvPrefix = "";
 
+    /**
+     * Information about a channel which can be switched.
+     */
     protected class SwitchableInformation {
 
+    	/**
+    	 * The switchable.
+    	 */
         public final Switchable switchable;
+        
+        /**
+         * The PV address.
+         */
         public String pvAddress;
+        
+        /**
+         * The channel type to be switched.
+         */
         public final ChannelType<?> channelType;
 
+        /**
+         * Creates new switchable information.
+         * @param switchable the switchable
+         * @param pvAddress the pv address
+         * @param channelType the channel type
+         */
         public SwitchableInformation(Switchable switchable, String pvAddress, ChannelType<?> channelType) {
             this.switchable = switchable;
             this.pvAddress = pvAddress;
@@ -50,6 +76,9 @@ public abstract class PrefixChangingSwitcher extends Switcher {
         }
     }
 
+    /**
+     * Creates a new switcher.
+     */
     public PrefixChangingSwitcher() {
         switchables = new CopyOnWriteArrayList<>();
         switchableInfoList = new CopyOnWriteArrayList<>();

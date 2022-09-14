@@ -67,6 +67,9 @@ public class SampleParametersPanel {
         });
     }
 
+    /**
+     * Updates the UI of the sample parameters table.
+     */
     protected void updateSampleParameters() {
         Display.getDefault().asyncExec(new Runnable() {
             @Override

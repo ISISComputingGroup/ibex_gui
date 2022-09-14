@@ -155,26 +155,46 @@ public class ScriptGeneratorAction extends ModelObject {
 	return estimatedTime;
     }
     
+    /**
+     * Sets this script into "executing" state.
+     */
     public void setExecuting() {
     	firePropertyChange(ScriptGeneratorProperties.VALUE_PROPERTY, dynamicScriptingStatus, dynamicScriptingStatus = ActionDynamicScriptingStatus.EXECUTING);
     }   
     
+    /**
+     * Sets this script into "paused before execution" state.
+     */
     public void setPausedBeforeExecution() {
     	firePropertyChange(ScriptGeneratorProperties.VALUE_PROPERTY, dynamicScriptingStatus, dynamicScriptingStatus = ActionDynamicScriptingStatus.PAUSED_BEFORE_EXECUTION);
     }
     
+    /**
+     * Set this script into "paused during execution" state.
+     */
     public void setPausedDuringExecution() {
     	firePropertyChange(ScriptGeneratorProperties.VALUE_PROPERTY, dynamicScriptingStatus, dynamicScriptingStatus = ActionDynamicScriptingStatus.PAUSED_DURING_EXECUTION);
     }
     
+    /**
+     * Clears a previously set dynamic scripting state.
+     */
     public void clearDynamicScriptingStatus() {
     	firePropertyChange(ScriptGeneratorProperties.VALUE_PROPERTY, dynamicScriptingStatus, dynamicScriptingStatus = ActionDynamicScriptingStatus.NO_STATUS);
     }
     
+    /**
+     * Gets the current dynamic scripting state of this script.
+     * @return the state
+     */
     public ActionDynamicScriptingStatus getDynamicScriptingStatus() {
 		return dynamicScriptingStatus;
 	}
     
+    /**
+     * Gets whether this script is paused during execution.
+     * @return true if paused during execution; false otherwise
+     */
     public Boolean wasPausedDuringExecution() {
     	return dynamicScriptingStatus.equals(ActionDynamicScriptingStatus.PAUSED_DURING_EXECUTION);
     }

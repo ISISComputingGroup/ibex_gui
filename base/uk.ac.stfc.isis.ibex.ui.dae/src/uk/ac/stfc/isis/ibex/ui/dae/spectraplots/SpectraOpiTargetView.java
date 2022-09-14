@@ -37,6 +37,9 @@ import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.opis.Opi;
 import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 
+/**
+ * An OPI target view pointing at a spectra plot.
+ */
 public class SpectraOpiTargetView extends OpiTargetView {
     /**
      * Class ID.
@@ -52,6 +55,9 @@ public class SpectraOpiTargetView extends OpiTargetView {
     
     private final Collection<SpectraPlotConfiguration> plotConfigurations;
     
+    /**
+     * Create a new instance.
+     */
     public SpectraOpiTargetView() {
         plotConfigurations = IntStream.range(0, NUMBER_OF_PLOTS)
             .mapToObj(SpectraPlotConfiguration::new)

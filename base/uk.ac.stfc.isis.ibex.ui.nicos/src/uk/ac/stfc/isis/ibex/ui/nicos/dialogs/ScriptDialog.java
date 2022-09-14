@@ -17,9 +17,24 @@ import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
  * The dialog for showing the content of a script in the script server.
  */
 public abstract class ScriptDialog extends Dialog {
+	/**
+	 * The script.
+	 */
 	protected QueuedScript script;
+	
+	/**
+	 * The viewmodel.
+	 */
 	protected QueueScriptViewModel model;
+	
+	/**
+	 * The action button.
+	 */
 	protected Button actionButton;
+	
+	/**
+	 * Whether this is a new script.
+	 */
 	protected boolean isNewScript;
 	
 	private static final Point INITIAL_SIZE = new Point(950, 800);
