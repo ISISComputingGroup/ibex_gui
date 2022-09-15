@@ -219,9 +219,15 @@
 			</dependency>
 		</dependencies>
 	</location>
-    <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/Tyrus_P2_2.0.4/target/repository/"/>
-		<unit id="org.glassfish.tyrus.bundles.tyrus-standalone-client" version="2.0.4"/>
+	<location includeDependencyDepth="none" includeSource="true" missingManifest="generate" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>org.glassfish.tyrus.bundles</groupId>
+				<artifactId>tyrus-standalone-client</artifactId>
+				<version>2.1.0</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
 	</location>
 </locations>
 <environment>

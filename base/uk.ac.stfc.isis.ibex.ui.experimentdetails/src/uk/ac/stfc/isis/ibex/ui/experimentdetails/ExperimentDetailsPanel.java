@@ -71,6 +71,7 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 	private Composite experimentTeamButtons;
 	private Button btnClearUserDetails;
 	private Button btnRemoveUserDetails;
+	private Button btnDisplayTitle;
 	
     @Inject
     public ExperimentDetailsPanel(Composite parent) {
@@ -183,20 +184,33 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 		
        // btnSetRBNumber.setText("Set");
 		//btnSetRBNumber.setLayoutData(gdDetailsButtons);
+		btnDisplayTitle = new Button(experimentTeamButtons, SWT.CHECK);
+		btnDisplayTitle.setText("Show Title and Users in Dataweb Dashboard Page");
+		btnDisplayTitle.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				super.widgetSelected(e);
+				viewModel.displayTitle.uncheckedSetValue(btnDisplayTitle.getSelection());
+			}
+		});
     }
 	
 	private void bind() {
-		//DataBindingContext bindingContext = new DataBindingContext();
-		//bindingContext.bindValue(WidgetProperties.enabled().observe(btnRBLookup), 
-		//        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
-		//bindingContext.bindValue(WidgetProperties.enabled().observe(btnAddUserDetails), 
-		//        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
-		//bindingContext.bindValue(WidgetProperties.enabled().observe(btnClearUserDetails), 
-		//        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
-		//bindingContext.bindValue(WidgetProperties.enabled().observe(btnSetRBNumber), 
-		//        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
-	    //bindingContext.bindValue(WidgetProperties.visible().observe(manualUserEntryWarning), 
-	    //        BeanProperties.value("userDetailsWarningVisible").observe(viewModel));
+		DataBindingContext bindingContext = new DataBindingContext();
+		bindingContext.bindValue(WidgetProperties.enabled().observe(btnRBLookup), 
+		        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
+		bindingContext.bindValue(WidgetProperties.enabled().observe(btnAddUserDetails), 
+		        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
+		bindingContext.bindValue(WidgetProperties.enabled().observe(btnClearUserDetails), 
+		        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
+		bindingContext.bindValue(WidgetProperties.enabled().observe(btnSetRBNumber), 
+		        BeanProperties.value("value").observe(viewModel.rbNumber.canSetText()));
+		bindingContext.bindValue(WidgetProperties.buttonSelection().observe(btnDisplayTitle),
+				BeanProperties.value("value").observe(viewModel.displayTitle.value()));
+		bindingContext.bindValue(WidgetProperties.enabled().observe(btnDisplayTitle), 
+		        BeanProperties.value("value").observe(viewModel.displayTitle.canSetValue()));
+	    bindingContext.bindValue(WidgetProperties.visible().observe(manualUserEntryWarning), 
+	            BeanProperties.value("userDetailsWarningVisible").observe(viewModel));
 	}
 	
 	/**Gets information from model and updates the user details GUI table. Also
