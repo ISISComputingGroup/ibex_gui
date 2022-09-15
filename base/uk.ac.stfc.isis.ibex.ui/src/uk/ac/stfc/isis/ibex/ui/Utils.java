@@ -69,6 +69,6 @@ public final class Utils {
      * which are currently identified by running linux. In principle, we should find a
      * more accurate way of identifying IDAAS machines and use that here instead.
      */
-    public static boolean SHOULD_HIDE_USER_INFORMATION = SystemUtils.IS_OS_LINUX;
+    public static final boolean SHOULD_HIDE_USER_INFORMATION = SystemUtils.IS_OS_LINUX;
 
 }

@@ -98,7 +98,7 @@ public class InstrumentListObservable extends ForwardingObservable<Collection<In
     /**
      * @return A forwarding observable of the instrument list PV reader.
      */
-    private static synchronized ForwardingObservable<String> readCompressed() {
+    private static ForwardingObservable<String> readCompressed() {
         return new ForwardingObservable<String>(PV_READER);
     }
 

@@ -84,13 +84,11 @@ public class InstrumentSelectionPanel extends Composite {
     }
 
     private void createInstrumentTextBox(Composite parent) {
-    	var styleFlags = SWT.BORDER;
-    	
-    	if (Utils.SHOULD_HIDE_USER_INFORMATION) {
-    		styleFlags |= SWT.READ_ONLY;
-    	}
-    	
-        txtSelectedName = new Text(parent, styleFlags);
+        txtSelectedName = new Text(parent, SWT.BORDER);
+        
+        txtSelectedName.setEditable(!Utils.SHOULD_HIDE_USER_INFORMATION);
+        txtSelectedName.setEnabled(!Utils.SHOULD_HIDE_USER_INFORMATION);
+        
         GridData gdInstrument = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
         txtSelectedName.setLayoutData(gdInstrument);
         txtSelectedName.addModifyListener(new ModifyListener() {

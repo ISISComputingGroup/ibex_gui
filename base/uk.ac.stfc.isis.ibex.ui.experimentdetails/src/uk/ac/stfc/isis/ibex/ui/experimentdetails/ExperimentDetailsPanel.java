@@ -49,7 +49,7 @@ import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
 @SuppressWarnings("checkstyle:magicnumber")
 public class ExperimentDetailsPanel extends ScrolledComposite {
 	
-    private static final String LINUX_TEXT = "The experiment details view is not available on this platform.";
+    private static final String HIDDEN_USERS_TEXT = "The experiment details view is not available on this platform.";
 
 	private static final String RB_NUM_INPUT_TIP_MESSAGE = "You can input your RB number for"
             + " your scheduled or Xpress run directly here!";
@@ -100,7 +100,7 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
     private void makeExperimentDetailsPanel(Composite parent) {
     	if (Utils.SHOULD_HIDE_USER_INFORMATION) {
     		var label = new Label(parent, SWT.NONE);
-    		label.setText(LINUX_TEXT);
+    		label.setText(HIDDEN_USERS_TEXT);
     		return;
     	}
     	
