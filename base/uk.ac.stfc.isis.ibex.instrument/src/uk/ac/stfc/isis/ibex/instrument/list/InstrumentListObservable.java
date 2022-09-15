@@ -28,7 +28,9 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
+import org.apache.commons.lang.SystemUtils;
 import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonDeserialisingConverter;
@@ -43,14 +45,29 @@ import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
  * 
  */
 public class InstrumentListObservable extends ForwardingObservable<Collection<InstrumentInfo>> {
+	
+	private static final String DEFAULT_INST_LIST = "CS:INSTLIST";
+	private static final String LINUX_INST_LIST_PATH = "/usr/local/ibex/etc/instpv.txt";
 
-    /**
-     * Reads the instrument list PV data. Note that we keep it as a variable to
-     * prevent garbage collection of the PVReader. If we don't keep a reference
-     * it gets GCed, potentially before the list has been read and we'll never
-     * get the values.
-     */
-    private static ClosableObservable<String> PV_READER = null;
+	private static final ClosableObservable<String> PV_READER = new Supplier<ClosableObservable<String>>() {
+		@Override
+		public ClosableObservable<String> get() {
+			if (SystemUtils.IS_OS_LINUX) {
+				String instPV;
+		        // on IDAaaS linux look for local definition of correct INSTLIST to use
+				try (FileReader fr = new FileReader(LINUX_INST_LIST_PATH)) {
+			        try (BufferedReader instReader = new BufferedReader(fr)) {
+			            instPV = instReader.readLine();
+			        }
+				} catch (IOException e) {
+		            instPV = DEFAULT_INST_LIST;
+		        }
+		        return new CompressedCharWaveformChannel().reader(instPV);
+			} else {
+				return new CompressedCharWaveformChannel().reader(DEFAULT_INST_LIST);
+			}
+		}
+	}.get();
 
     /**
      * Logs messages regarding the instrument list.
@@ -82,18 +99,6 @@ public class InstrumentListObservable extends ForwardingObservable<Collection<In
      * @return A forwarding observable of the instrument list PV reader.
      */
     private static synchronized ForwardingObservable<String> readCompressed() {
-        if (PV_READER == null) {
-            String instPV;
-            // on IDAaaS linux look for local definition of correct INSTLIST to use
-            try(BufferedReader instReader = new BufferedReader(new FileReader("/usr/local/ibex/etc/instpv.txt"))) {
-                instPV = instReader.readLine();
-            }
-            catch(IOException e)
-            {
-                instPV = "CS:INSTLIST";
-            }
-            PV_READER = new CompressedCharWaveformChannel().reader(instPV);
-        }
         return new ForwardingObservable<String>(PV_READER);
     }
 
