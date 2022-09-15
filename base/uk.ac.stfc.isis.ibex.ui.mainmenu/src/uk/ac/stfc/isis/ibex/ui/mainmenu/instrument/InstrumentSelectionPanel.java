@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.mainmenu.instrument;
 
 import java.util.Collection;
-
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
@@ -43,6 +42,7 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 
 /**
  * A view allowing selection of an instrument from a list of instruments.
@@ -84,7 +84,13 @@ public class InstrumentSelectionPanel extends Composite {
     }
 
     private void createInstrumentTextBox(Composite parent) {
-        txtSelectedName = new Text(parent, SWT.BORDER | SWT.READ_ONLY);
+    	var styleFlags = SWT.BORDER;
+    	
+    	if (Utils.SHOULD_HIDE_USER_INFORMATION) {
+    		styleFlags |= SWT.READ_ONLY;
+    	}
+    	
+        txtSelectedName = new Text(parent, styleFlags);
         GridData gdInstrument = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
         txtSelectedName.setLayoutData(gdInstrument);
         txtSelectedName.addModifyListener(new ModifyListener() {

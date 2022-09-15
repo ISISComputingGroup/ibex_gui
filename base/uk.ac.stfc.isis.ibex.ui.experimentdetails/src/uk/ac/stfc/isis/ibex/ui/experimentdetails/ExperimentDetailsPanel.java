@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.experimentdetails;
 
 import javax.inject.Inject;
-
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
@@ -39,6 +38,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup.RBLookupDialog;
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup.RBLookupViewModel;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
@@ -49,7 +49,9 @@ import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
 @SuppressWarnings("checkstyle:magicnumber")
 public class ExperimentDetailsPanel extends ScrolledComposite {
 	
-    private static final String RB_NUM_INPUT_TIP_MESSAGE = "You can input your RB number for"
+    private static final String LINUX_TEXT = "The experiment details view is not available on this platform.";
+
+	private static final String RB_NUM_INPUT_TIP_MESSAGE = "You can input your RB number for"
             + " your scheduled or Xpress run directly here!";
     
     private static final String MANUAL_USER_ENTRY_MESSAGE = "No users found! Please enter users "
@@ -96,94 +98,100 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
      * @param parent The root composite of the panel.
      */
     private void makeExperimentDetailsPanel(Composite parent) {
-        //lblRbNumber = new Label(parent, SWT.NONE);
-		//lblRbNumber.setText("RB Number:");
+    	if (Utils.SHOULD_HIDE_USER_INFORMATION) {
+    		var label = new Label(parent, SWT.NONE);
+    		label.setText(LINUX_TEXT);
+    		return;
+    	}
+    	
+        lblRbNumber = new Label(parent, SWT.NONE);
+		lblRbNumber.setText("RB Number:");
 		
-        //rbNumberTextBox = new WritableObservingTextBox(parent, SWT.NONE, viewModel.rbNumber);
-        //rbNumberTextBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-        //rbNumberTextBox.setToolTip(RB_NUM_INPUT_TIP_MESSAGE);
+        rbNumberTextBox = new WritableObservingTextBox(parent, SWT.NONE, viewModel.rbNumber);
+        rbNumberTextBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+        rbNumberTextBox.setToolTip(RB_NUM_INPUT_TIP_MESSAGE);
         
-        //btnRBLookup = new Button(parent, SWT.NONE);
-		//btnRBLookup.setText("Search");
+        btnRBLookup = new Button(parent, SWT.NONE);
+		btnRBLookup.setText("Search");
         
-		//btnRBLookup.addSelectionListener(new SelectionAdapter() {
-		//	@Override
-		//	public void widgetSelected(SelectionEvent e) {
-		//		RBLookupViewModel lookupViewModel = new RBLookupViewModel();
-		//		RBLookupDialog lookupDialog = new RBLookupDialog(shell, lookupViewModel);
-		//		if (lookupDialog.open() == Window.OK) {
-         //           viewModel.rbNumber.uncheckedSetText(lookupViewModel.getSelectedUser().getAssociatedExperimentID());
-		//		}
-		//	}
-		//});
+		btnRBLookup.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				RBLookupViewModel lookupViewModel = new RBLookupViewModel();
+				RBLookupDialog lookupDialog = new RBLookupDialog(shell, lookupViewModel);
+				if (lookupDialog.open() == Window.OK) {
+                    viewModel.rbNumber.uncheckedSetText(lookupViewModel.getSelectedUser().getAssociatedExperimentID());
+				}
+			}
+		});
 		
-        //lblExperimentTeam = new Label(parent, SWT.NONE);
-		//lblExperimentTeam.setText("Experiment Team:");
+        lblExperimentTeam = new Label(parent, SWT.NONE);
+		lblExperimentTeam.setText("Experiment Team:");
 		
-		//manualUserEntryWarning = new Label(parent, SWT.NONE);
-        //manualUserEntryWarning.setText(MANUAL_USER_ENTRY_MESSAGE);
-        //manualUserEntryWarning.setForeground(getDisplay().getSystemColor(SWT.COLOR_RED));
-        //manualUserEntryWarning.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1));
-        //manualUserEntryWarning.setVisible(false);
+		manualUserEntryWarning = new Label(parent, SWT.NONE);
+        manualUserEntryWarning.setText(MANUAL_USER_ENTRY_MESSAGE);
+        manualUserEntryWarning.setForeground(getDisplay().getSystemColor(SWT.COLOR_RED));
+        manualUserEntryWarning.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1));
+        manualUserEntryWarning.setVisible(false);
 		
-        //userDetails = new EditableUserDetailsTable(parent, SWT.NONE, SWT.MULTI | SWT.FULL_SELECTION | SWT.BORDER);
-        //userDetails.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+        userDetails = new EditableUserDetailsTable(parent, SWT.NONE, SWT.MULTI | SWT.FULL_SELECTION | SWT.BORDER);
+        userDetails.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		
-		//updateUserDetails();
-		//viewModel.model.addPropertyChangeListener(propertyChangeEvent -> {
-		//    updateUserDetails();					
-		//});
+		updateUserDetails();
+		viewModel.model.addPropertyChangeListener(propertyChangeEvent -> {
+		    updateUserDetails();					
+		});
 		
-        //experimentTeamButtons = new Composite(parent, SWT.NONE);
-		//experimentTeamButtons.setLayout(new GridLayout(1, false));
+        experimentTeamButtons = new Composite(parent, SWT.NONE);
+		experimentTeamButtons.setLayout(new GridLayout(1, false));
 		
-		//GridData gdDetailsButtons = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
-		//gdDetailsButtons.widthHint = 50;
+		GridData gdDetailsButtons = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
+		gdDetailsButtons.widthHint = 50;
 		
-		//btnAddUserDetails = new Button(experimentTeamButtons, SWT.NONE);
-		//btnAddUserDetails.addSelectionListener(new SelectionAdapter() {
-		//	@Override
-		//	public void widgetSelected(SelectionEvent e) {
-		//		viewModel.model.addDefaultUser();
-		//		viewModel.model.sendUserDetails();
-		//	}
-		//});
-		//btnAddUserDetails.setText("Add");
-		//btnAddUserDetails.setLayoutData(gdDetailsButtons);
+		btnAddUserDetails = new Button(experimentTeamButtons, SWT.NONE);
+		btnAddUserDetails.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				viewModel.model.addDefaultUser();
+				viewModel.model.sendUserDetails();
+			}
+		});
+		btnAddUserDetails.setText("Add");
+		btnAddUserDetails.setLayoutData(gdDetailsButtons);
 
-		//btnRemoveUserDetails = new Button(experimentTeamButtons, SWT.NONE);
-		//btnRemoveUserDetails.addSelectionListener(new SelectionAdapter() {
-		//	@Override
-		//	public void widgetSelected(SelectionEvent e) {
-		//		viewModel.model.removeUsers(userDetails.selectedRows());
-         //       viewModel.model.sendUserDetails();
-		//	}
-		//});		
-		//
-		//btnRemoveUserDetails.setText("Remove");
-		//btnRemoveUserDetails.setLayoutData(gdDetailsButtons);		
-		//
-		//btnClearUserDetails = new Button(experimentTeamButtons, SWT.NONE);
-		//btnClearUserDetails.addSelectionListener(new SelectionAdapter() {
-		//	@Override
-		//	public void widgetSelected(SelectionEvent e) {
-		//		viewModel.model.clearUserDetails();
-       //         viewModel.model.sendUserDetails();
-		//	}
-		//});
-		//btnClearUserDetails.setText("Clear");
-		//btnClearUserDetails.setLayoutData(gdDetailsButtons);		
-		//
-		//btnSetRBNumber = new Button(experimentTeamButtons, SWT.NONE);
-		//btnSetRBNumber.addSelectionListener(new SelectionAdapter() {
-		//	@Override
-		//	public void widgetSelected(SelectionEvent e) {
-        //        viewModel.model.sendUserDetails();
-		//	}
-		////});
+		btnRemoveUserDetails = new Button(experimentTeamButtons, SWT.NONE);
+		btnRemoveUserDetails.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				viewModel.model.removeUsers(userDetails.selectedRows());
+                viewModel.model.sendUserDetails();
+			}
+		});		
 		
-       // btnSetRBNumber.setText("Set");
-		//btnSetRBNumber.setLayoutData(gdDetailsButtons);
+		btnRemoveUserDetails.setText("Remove");
+		btnRemoveUserDetails.setLayoutData(gdDetailsButtons);		
+		
+		btnClearUserDetails = new Button(experimentTeamButtons, SWT.NONE);
+		btnClearUserDetails.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				viewModel.model.clearUserDetails();
+                viewModel.model.sendUserDetails();
+			}
+		});
+		btnClearUserDetails.setText("Clear");
+		btnClearUserDetails.setLayoutData(gdDetailsButtons);		
+		
+		btnSetRBNumber = new Button(experimentTeamButtons, SWT.NONE);
+		btnSetRBNumber.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+                viewModel.model.sendUserDetails();
+			}
+		});
+		
+        btnSetRBNumber.setText("Set");
+		btnSetRBNumber.setLayoutData(gdDetailsButtons);
 		btnDisplayTitle = new Button(experimentTeamButtons, SWT.CHECK);
 		btnDisplayTitle.setText("Show Title and Users in Dataweb Dashboard Page");
 		btnDisplayTitle.addSelectionListener(new SelectionAdapter() {
