@@ -22,6 +22,8 @@
  */
 package uk.ac.stfc.isis.ibex.ui;
 
+import org.apache.commons.lang.SystemUtils;
+
 /**
  * Set of general utility methods and constants used in the UI.
  */
@@ -60,5 +62,13 @@ public final class Utils {
 	}
     }
 
+    /**
+     * Whether this GUI is allowed to display information relating to current users.
+     * 
+     * Currently, we disallow viewing any user-identifying information on IDAAS systems,
+     * which are currently identified by running linux. In principle, we should find a
+     * more accurate way of identifying IDAAS machines and use that here instead.
+     */
+    public static final boolean SHOULD_HIDE_USER_INFORMATION = SystemUtils.IS_OS_LINUX;
 
 }
