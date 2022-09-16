@@ -31,6 +31,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.dashboard.models.TitlePanelModel;
 
 /**
@@ -103,14 +104,19 @@ public class TitlePanel extends Composite {
         		BeanProperties.<Object, String>value("value").observe(model.title()), 
         		null, literalAmpersands);
 		
-        UsersConverter deJsoner = new UsersConverter();
-		bindingContext.bindValue(
-				WidgetProperties.text().observe(users), 
-				BeanProperties.<Object, String>value("value").observe(model.users()), 
-				null, new UpdateValueStrategy<String, String>().setConverter(deJsoner));	
-		bindingContext.bindValue(
-				WidgetProperties.tooltipText().observe(users), 
-				BeanProperties.<Object, String>value("value").observe(model.users()), 
-				null, new UpdateValueStrategy<String, String>().setConverter(deJsoner));
+        if (Utils.SHOULD_HIDE_USER_INFORMATION) {
+        	users.setText("<Users unavailable>");
+        	users.setToolTipText("<Users unavailable>");
+        } else {
+	        UsersConverter deJsoner = new UsersConverter();
+			bindingContext.bindValue(
+					WidgetProperties.text().observe(users), 
+					BeanProperties.<Object, String>value("value").observe(model.users()), 
+					null, new UpdateValueStrategy<String, String>().setConverter(deJsoner));	
+			bindingContext.bindValue(
+					WidgetProperties.tooltipText().observe(users), 
+					BeanProperties.<Object, String>value("value").observe(model.users()), 
+					null, new UpdateValueStrategy<String, String>().setConverter(deJsoner));
+        }
 	}
 }
