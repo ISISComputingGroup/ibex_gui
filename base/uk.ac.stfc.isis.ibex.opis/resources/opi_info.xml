@@ -1315,39 +1315,8 @@
       <value>
         <type>RIKEN_magnet_PSUs</type>
         <path>RIKEN/RIKEN_magnet_PSUs.opi</path>
-        <description>The OPI for the Riken Magnet PSU Synoptic..</description>
+        <description>The OPI for the Riken Magnet PSU Synoptic</description>
         <macros/>
-        <categories/>
-      </value>
-    </entry>
-    <entry>
-      <key>DEBUG Riken Magnet PSU</key>
-      <value>
-        <type>DEBUG_RIKEN_magnet_PSUs</type>
-        <path>RIKEN/DEBUG_RIKEN_magnet_PSUs.opi</path>
-        <description>The OPI for the DEBUG Riken Magnet PSU Synoptic..</description>
-        <macros>
-          <macro>
-            <name>PORT1</name>
-            <description>RIKEN PORT 1 PV prefix (e.g. RIKEN_PORT_01)</description>
-            <default>RIKEN_PORT_01</default>
-          </macro>
-          <macro>
-            <name>PORT2</name>
-            <description>RIKEN PORT 2 PV prefix (e.g. RIKEN_PORT_02)</description>
-            <default>RIKEN_PORT_02</default>
-          </macro>
-          <macro>
-            <name>PORT3</name>
-            <description>RIKEN PORT 3 PV prefix (e.g. RIKEN_PORT_03)</description>
-            <default>RIKEN_PORT_03</default>
-          </macro>
-          <macro>
-            <name>PORT4</name>
-            <description>RIKEN PORT 4 PV prefix (e.g. RIKEN_PORT_04)</description>
-            <default>RIKEN_PORT_04</default>
-          </macro>
-        </macros>
         <categories/>
       </value>
     </entry>
