@@ -87,7 +87,6 @@ public class TargetSelectorViewModelTests {
     private TargetDescription targetDescriptionMock(String name) {
         TargetDescription mock = Mockito.mock(TargetDescription.class);
         Mockito.when(mock.name()).thenReturn(name);
-        Mockito.when(mock.getProperties()).thenReturn(Collections.<Property>emptyList());
         return mock;
     }
 
