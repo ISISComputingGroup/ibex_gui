@@ -70,9 +70,6 @@ public class ConvertingObservableTest {
 		
         convertObservable = new ConvertingObservable<>(testObservable, mockConverter);
 		convertObservable.subscribe(mockObserver);
-		
-		Function<Integer, String> mockConverterWithException = mock(Function.class);
-		when(mockConverterWithException.apply(TestHelpers.INT_VALUE)).thenThrow(new ConversionException(EXCEPTION_MESSAGE));
 	}
 	
 	@Test
