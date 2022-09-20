@@ -43,7 +43,6 @@ import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 import uk.ac.stfc.isis.ibex.opis.desc.MacroInfo;
 import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.selector.TargetSelectorViewModel;
