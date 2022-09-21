@@ -45,8 +45,7 @@ public class TextUpdatedObservableAdapter extends UpdatedObservableAdapter<Strin
     /**
      * Constructor.
      * 
-     * @param observable
-     *            the observable
+     * @param observable the observable
      */
 	public TextUpdatedObservableAdapter(ForwardingObservable<String> observable) {
 		super(observable);

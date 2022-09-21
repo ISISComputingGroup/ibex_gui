@@ -47,7 +47,7 @@ public abstract class Switcher {
     }
 
     /**
-     * Switched the instrument.
+     * Switches the instrument.
      * @param instrumentInfo the new instrument
      */
     public abstract void switchInstrument(InstrumentInfo instrumentInfo);

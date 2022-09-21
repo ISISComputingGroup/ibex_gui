@@ -35,7 +35,7 @@ public class LoggingForwardingWritable<T> extends TransformingWritable<T, T> {
 	private final String id;
 
 	/**
-	 * Creates a new loging writable.
+	 * Creates a new logging writable.
 	 * @param log the log to write messages to
 	 * @param id an ID to be printed before each log message
 	 * @param destination the destination writable

@@ -28,7 +28,7 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 /**
- * An adapter from observables to updatedvalues.
+ * An adapter from Observables to UpdatedValues.
  */
 public class ModelAdapter extends Closer {
 	
