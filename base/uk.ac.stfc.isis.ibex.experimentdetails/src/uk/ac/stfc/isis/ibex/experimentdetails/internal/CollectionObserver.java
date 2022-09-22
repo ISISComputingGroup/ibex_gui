@@ -53,5 +53,9 @@ public abstract class CollectionObserver<T> extends BaseObserver<Collection<T>> 
 		updateCollection(new ArrayList<T>());
 	}
 	
+	/**
+	 * Updates this observer with the specified collection.
+	 * @param values the new collection
+	 */
 	protected abstract void updateCollection(Collection<T> values);
 }

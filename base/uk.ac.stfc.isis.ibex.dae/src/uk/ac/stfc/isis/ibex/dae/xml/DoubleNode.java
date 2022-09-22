@@ -19,8 +19,15 @@
 
 package uk.ac.stfc.isis.ibex.dae.xml;
 
+/**
+ * An XML node containing a double-formatted number.
+ */
 public class DoubleNode extends XmlNode<Double> {
 
+	/**
+	 * Constructor.
+	 * @param xPathExpression the XPATH expression
+	 */
 	public DoubleNode(String xPathExpression) {
 		super(xPathExpression);
 	}

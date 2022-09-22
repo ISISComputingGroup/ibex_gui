@@ -19,8 +19,15 @@
 
 package uk.ac.stfc.isis.ibex.dae.xml;
 
+/**
+ * An XML node describing a string-type value.
+ */
 public class StringNode extends XmlNode<String> {
 
+	/**
+	 * Initialise this node.
+	 * @param xPathExpression the XPATH expression
+	 */
 	public StringNode(String xPathExpression) {
 		super(xPathExpression);
 	}

@@ -31,6 +31,9 @@ import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.ui.dashboard.widgets.RunState;
 
+/**
+ * Represents the state of an instrument (RUNNING/SETUP/PROCESSING etc).
+ */
 public class InstrumentState implements Closable {
 	
     private final Observer<DaeRunState> sourceObserver = new BaseObserver<DaeRunState>() {
@@ -56,16 +59,28 @@ public class InstrumentState implements Closable {
 	private final SettableUpdatedValue<String> text;
 	private final SettableUpdatedValue<Color> color;
 	
+	/**
+	 * Creates the instrument state model.
+	 * @param source the source observable
+	 */
 	public InstrumentState(ForwardingObservable<DaeRunState> source) {
 		text = new SettableUpdatedValue<>();
 		color = new SettableUpdatedValue<>();
 		sourceSubscription = source.subscribe(sourceObserver);
 	}
 
+	/**
+	 * The text of the current runstate.
+	 * @return the text
+	 */
 	public UpdatedValue<String> text() {
 		return text;
 	}
 	
+	/**
+	 * The color of the current runstate.
+	 * @return the color
+	 */
 	public UpdatedValue<Color> color() {
 		return color;
 	}

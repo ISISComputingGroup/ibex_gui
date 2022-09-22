@@ -75,6 +75,10 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 	private Button btnRemoveUserDetails;
 	private Button btnDisplayTitle;
 	
+	/**
+	 * Create an instance of this panel.
+	 * @param parent the parent composite
+	 */
     @Inject
     public ExperimentDetailsPanel(Composite parent) {
         super(parent, SWT.H_SCROLL | SWT.V_SCROLL);

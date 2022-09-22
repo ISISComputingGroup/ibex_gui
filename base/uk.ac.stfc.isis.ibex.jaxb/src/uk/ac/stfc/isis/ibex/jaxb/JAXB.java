@@ -12,7 +12,7 @@ import org.eclipse.persistence.jaxb.JAXBContextFactory;
 /**
  * Utility methods to easily acquire JAXB marshallers and unmarshallers.
  */
-public class JAXB {
+public final class JAXB {
 	
 	private JAXB() {
 		// prevents calls from subclass

@@ -72,6 +72,11 @@ public class SynopticPanel extends Composite {
 		reset();
 	}
 
+    /**
+     * Sets the components for this synoptic.
+     * @param components the components
+     * @param showBeam true to show beam; false otherwise
+     */
 	public void setComponents(List<? extends Component> components, Boolean showBeam) {
 		reset();
 		display(components, showBeam);

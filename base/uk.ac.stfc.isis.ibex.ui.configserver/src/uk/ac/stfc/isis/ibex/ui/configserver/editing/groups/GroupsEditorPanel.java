@@ -19,8 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.groups;
 
-import java.util.concurrent.TimeoutException;
-
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;

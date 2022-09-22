@@ -24,6 +24,9 @@ import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
 
+/**
+ * Utility methods for displaying groups.
+ */
 public final class DisplayUtils {
 	
 	private static final String NONE = "none"; 

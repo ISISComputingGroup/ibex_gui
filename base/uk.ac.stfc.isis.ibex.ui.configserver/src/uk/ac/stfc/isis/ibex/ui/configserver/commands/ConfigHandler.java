@@ -73,7 +73,11 @@ public abstract class ConfigHandler<T> {
 		return this.canExecute;
 	}
 
+	/**
+	 * The destination writable, to which commands executed by this class will be sent.
+	 */
 	protected final Writable<T> configService;
+	
 	private OnCanWriteChangeListener canWriteListener = canWrite -> canWriteChanged(canWrite);
 
 	/**

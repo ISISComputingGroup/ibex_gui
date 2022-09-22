@@ -19,10 +19,20 @@
 
 package uk.ac.stfc.isis.ibex.dae.xml;
 
+/**
+ * An XML node representing an Enum type.
+ *
+ * @param <E> the enum type
+ */
 public class EnumNode<E extends Enum<E>> extends XmlNode<E> {
 
 	private Class<E> enumType;
 	
+	/**
+	 * Creates a new XML node representing the provided enum type.
+	 * @param xPathExpression the XPATH expression
+	 * @param enumType the enum type
+	 */
 	public EnumNode(String xPathExpression, Class<E> enumType) {
 		super(xPathExpression);
 		this.enumType = enumType;

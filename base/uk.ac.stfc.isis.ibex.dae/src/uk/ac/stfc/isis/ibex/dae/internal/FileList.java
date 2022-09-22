@@ -29,10 +29,17 @@ import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
 
+/**
+ * A transforming observable representing a list of files.
+ */
 public class FileList extends TransformingObservable<String, Collection<String>> {
 
 	private final Gson gson = new Gson();
 	
+	/**
+	 * Creates a new observable representing a list of files.
+	 * @param files an observable listing the files
+	 */
 	public FileList(ForwardingObservable<String> files) {
 		setSource(files);
 	}

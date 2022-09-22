@@ -73,13 +73,19 @@ public class Opi implements BundleActivator {
 		return descProvider;
 	}
 	
+	/**
+	 * Gets the eclipse bundle context.
+	 * @return the context
+	 */
 	static BundleContext getContext() {
 		return context;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
+	/**
+	 * Starts this plugin.
+	 * 
+	 * @param bundleContext the eclipse bundle context
+	 * @throws Exception on failure
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
 		Opi.context = bundleContext;
@@ -111,9 +117,11 @@ public class Opi implements BundleActivator {
 		
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+	/**
+	 * Stops this plugin.
+	 * 
+	 * @param bundleContext the eclipse bundle context
+	 * @throws Exception on failure
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
 		Opi.context = null;

@@ -38,6 +38,10 @@ public class SwitchableWritable<T> extends TransformingWritable<T, T> implements
     private Switcher switcher;
     private Writable<T> source;
 
+    /**
+     * Create a new switchable writable.
+     * @param source the source writable
+     */
     public SwitchableWritable(Writable<T> source) {
         super(source, Function.identity());
         this.source = source;

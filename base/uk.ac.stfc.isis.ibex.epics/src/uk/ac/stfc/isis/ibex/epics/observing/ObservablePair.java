@@ -56,6 +56,11 @@ public class ObservablePair<T1, T2> extends ClosableObservable<Pair<T1, T2>> {
 	private final Subscription firstSubscription;
 	private final Subscription secondSubscription;
 	
+	/**
+	 * Creates a new observable combining two sources.
+	 * @param firstSource the first source observable
+	 * @param secondSource the second source observable
+	 */
 	public ObservablePair(ForwardingObservable<T1> firstSource, ForwardingObservable<T2> secondSource) {
 		firstSubscription = firstSource.subscribe(firstObserver);
 		secondSubscription = secondSource.subscribe(secondObserver);

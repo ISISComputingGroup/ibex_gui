@@ -21,6 +21,9 @@ package uk.ac.stfc.isis.ibex.experimentdetails.internal;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 
+/**
+ * An observer for experiment parameters.
+ */
 public abstract class ParameterFieldObserver extends BaseObserver<String> {
 
 	@Override
@@ -41,8 +44,16 @@ public abstract class ParameterFieldObserver extends BaseObserver<String> {
 		
 	}
 	
+	/**
+	 * Update the value of the field.
+	 * @param value the new value
+	 */
 	protected abstract void updateField(String value);
 	
+	/**
+	 * Get the default value of this field.
+	 * @return the default value
+	 */
 	protected String defaultValue() {
 		return "";
 	}

@@ -24,6 +24,9 @@ import org.eclipse.jface.viewers.ViewerCell;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 
+/**
+ * A cell decorator for runcontrol settings in a databound table.
+ */
 public class RunControlSettingCellDecorator extends CellDecorator<DisplayBlock> {
 
 	@Override

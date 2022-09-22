@@ -24,8 +24,16 @@ import org.eclipse.jface.viewers.ColumnViewer;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegimeRow;
 import uk.ac.stfc.isis.ibex.ui.widgets.DoubleEditingSupport;
 
+/**
+ * Editing support for "from" in the DAE tables.
+ */
 public class FromEditingSupport extends DoubleEditingSupport<TimeRegimeRow> {
 	
+	/**
+	 * Creates a new instance of this editing support.
+	 * @param viewer the column viewer
+	 * @param rowType the row type
+	 */
 	public FromEditingSupport(ColumnViewer viewer, Class<TimeRegimeRow> rowType) {
 		super(viewer, rowType);
 	}

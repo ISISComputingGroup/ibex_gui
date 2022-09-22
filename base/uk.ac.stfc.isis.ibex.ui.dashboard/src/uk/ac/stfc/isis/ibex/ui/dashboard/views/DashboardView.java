@@ -44,6 +44,9 @@ import uk.ac.stfc.isis.ibex.ui.dashboard.widgets.TitlePanel;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class DashboardView {
+	/**
+	 * The ID of this view.
+	 */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView"; //$NON-NLS-1$
 			
     private static final int FIXED_WIDTH = 580;
