@@ -1884,7 +1884,13 @@
         <type>STRESS_RIG</type>
         <path>stress_rig/stress_rig.opi</path>
         <description>The OPI for the Instron stress rig. No properties required.</description>
-        <macros/>
+        <macros>
+          <macro>
+            <name>INSTRON</name>
+            <description>The instron PV prefix and instrument name (e.g. IN:ENGINX:INSTRON_01).</description>
+            <default>IN:ENGINX:INSTRON_01</default>
+          </macro>
+        </macros>
         <categories>
           <category>Loading rigs</category>
         </categories>
