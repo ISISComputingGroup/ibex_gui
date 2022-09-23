@@ -94,6 +94,7 @@
     <height>32</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
+      <PSU_PREFIX>$(PSU1_PREFIX)</PSU_PREFIX>
     </macros>
     <name>PSU_1_Linking_Container</name>
     <opi_file>indiviudal_port_row.opi</opi_file>
@@ -134,6 +135,7 @@
     <height>32</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
+      <PSU_PREFIX>$(PSU2_PREFIX)</PSU_PREFIX>
     </macros>
     <name>PSU_2_Linking_Container</name>
     <opi_file>indiviudal_port_row.opi</opi_file>
@@ -174,6 +176,7 @@
     <height>32</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
+      <PSU_PREFIX>$(PSU3_PREFIX)</PSU_PREFIX>
     </macros>
     <name>PSU_3_Linking_Container</name>
     <opi_file>indiviudal_port_row.opi</opi_file>
@@ -214,6 +217,7 @@
     <height>32</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
+      <PSU_PREFIX>$(PSU4_PREFIX)</PSU_PREFIX>
     </macros>
     <name>PSU_4_Linking_Container</name>
     <opi_file>indiviudal_port_row.opi</opi_file>
@@ -1121,7 +1125,7 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <scripts />
-    <text>$(PSU1)</text>
+    <text>$(PSU1_NAME)</text>
     <tooltip></tooltip>
     <transparent>true</transparent>
     <vertical_alignment>1</vertical_alignment>
@@ -1161,7 +1165,7 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <scripts />
-    <text>$(PSU2)</text>
+    <text>$(PSU2_NAME)</text>
     <tooltip></tooltip>
     <transparent>true</transparent>
     <vertical_alignment>1</vertical_alignment>
@@ -1201,7 +1205,7 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <scripts />
-    <text>$(PSU3)</text>
+    <text>$(PSU3_NAME)</text>
     <tooltip></tooltip>
     <transparent>true</transparent>
     <vertical_alignment>1</vertical_alignment>
@@ -1241,7 +1245,7 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <scripts />
-    <text>$(PSU4)</text>
+    <text>$(PSU4_NAME)</text>
     <tooltip></tooltip>
     <transparent>true</transparent>
     <vertical_alignment>1</vertical_alignment>

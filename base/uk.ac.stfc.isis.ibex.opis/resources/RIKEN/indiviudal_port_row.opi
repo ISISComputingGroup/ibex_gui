@@ -141,7 +141,7 @@
     <name>Text Update_5</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(P)$(PSU1_PREFIX):CURR:SP.RBV</pv_name>
+    <pv_name>$(P)$(PSU_PREFIX):CURR:SP.RBV</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />
@@ -193,7 +193,7 @@ $(pv_value)</tooltip>
     <name>Text Update_6</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(P)$(PSU1_PREFIX):CURR</pv_name>
+    <pv_name>$(P)$(PSU_PREFIX):CURR</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />
@@ -245,7 +245,7 @@ $(pv_value)</tooltip>
     <name>Text Update_7</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(P)$(PSU1_PREFIX):POL</pv_name>
+    <pv_name>$(P)$(PSU_PREFIX):POL</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />
@@ -297,7 +297,7 @@ $(pv_value)</tooltip>
     <name>Text Update_8</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(P)$(PSU1_PREFIX):ILK</pv_name>
+    <pv_name>$(P)$(PSU_PREFIX):ILK</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />
@@ -349,7 +349,7 @@ $(pv_value)</tooltip>
     <name>Text Update_9</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(ALARM)</pv_name>
+    <pv_name>$(P)$(PSU_PREFIX):ALARM</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />
