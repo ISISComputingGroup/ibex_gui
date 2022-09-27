@@ -29,6 +29,7 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -106,6 +107,25 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         shell.setMaximized(windowLayout.windowMaximised);
         
         performMultipleClientsCheck();
+    }
+    
+    /**
+     * Remove the current PID from the file.
+     */
+    @Override
+    public void postWindowClose() {
+    	// Super method currently does nothing, but should still be called for future-proofing.
+    	super.postWindowClose();
+    	try {
+    		ArrayList<String> lines = new ArrayList<>(Arrays.asList(readTempFile()));
+			String currentPid = Long.toString(ProcessHandle.current().pid());
+			lines.removeIf(line -> line.equals(currentPid));
+			
+			String[] linesArr = lines.toArray(new String[lines.size()]);
+			writeTempFile(linesArr, false);
+		} catch (Exception e) {
+			LoggerUtils.logErrorWithStackTrace(LOG, MULTIPLE_INSTANCES_CHECKING_ERROR, e);
+		}
     }
     
     /**
