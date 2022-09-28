@@ -2032,7 +2032,7 @@ $(pv_value)</tooltip>
       <show_units>false</show_units>
       <text>Device is currently configured not to read&#xD;
 device setup parameters (offsets &amp; modes).&#xD;
-Change the scan rate to something other that "Passive"&#xD;
+Change the scan rate to something other than "Passive"&#xD;
 to resume scanning. </text>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
