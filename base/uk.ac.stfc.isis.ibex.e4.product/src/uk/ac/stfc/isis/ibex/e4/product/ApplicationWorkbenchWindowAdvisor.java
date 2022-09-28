@@ -25,11 +25,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -74,6 +76,9 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
      * Setting this flag to true allows workbench to close without prompt.
      */
     protected boolean shutDown = false;
+    
+    private FileChannel file = null;
+	private FileLock lock = null;
 
     /**
      * Constructor.
@@ -110,40 +115,20 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
     }
     
     /**
-     * Remove the current PID from the file.
-     */
-    @Override
-    public void postWindowClose() {
-    	// Super method currently does nothing, but should still be called for future-proofing.
-    	super.postWindowClose();
-    	try {
-    		ArrayList<String> lines = new ArrayList<>(Arrays.asList(readTempFile()));
-			String currentPid = Long.toString(ProcessHandle.current().pid());
-			lines.removeIf(line -> line.equals(currentPid));
-			
-			String[] linesArr = lines.toArray(new String[lines.size()]);
-			writeTempFile(linesArr, false);
-		} catch (Exception e) {
-			LoggerUtils.logErrorWithStackTrace(LOG, MULTIPLE_INSTANCES_CHECKING_ERROR, e);
-		}
-    }
-    
-    /**
      * This function contains logic for checking for multiple instances running and will prompt
      * a user to confirm opening another client if another instance is already running
      */
     void performMultipleClientsCheck() {
         try {
-    		if (clearTempFile().length > 0) {
-    			LOG.info(ANOTHER_INSTANCE_LOG_INFO);
-    	        if (!MessageDialog.openQuestion(Display.getDefault().getActiveShell(), DIALOG_BOX_TITLE, DIALOG_QUESTION)) {
+        	file = FileChannel.open(Paths.get(TEMP_PATH), StandardOpenOption.WRITE);
+        	lock = file.tryLock();
+        	if (lock == null) {
+        		LOG.info(ANOTHER_INSTANCE_LOG_INFO);
+        		if (!MessageDialog.openQuestion(Display.getDefault().getActiveShell(), DIALOG_BOX_TITLE, DIALOG_QUESTION)) {
     	            shutDown = true;
     	            PlatformUI.getWorkbench().close();
     	        }
-    		}
-    		if (!shutDown) {
-    			writeTempFile(new String[] {Long.toString(ProcessHandle.current().pid())}, true);
-    		}
+        	}
 		} catch (Exception e) {
 			LoggerUtils.logErrorWithStackTrace(LOG, MULTIPLE_INSTANCES_CHECKING_ERROR, e);
 		}
