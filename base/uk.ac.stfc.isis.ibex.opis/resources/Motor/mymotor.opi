@@ -1356,11 +1356,8 @@ $(pv_value)</tooltip>
       <pv_value />
       <rules>
         <rule name="Disable at limit" prop_id="enabled" out_exp="false">
-          <exp bool_exp="pv0 !=0">
+          <exp bool_exp="pv0!=0">
             <value>false</value>
-          </exp>
-          <exp bool_exp="pv0==0">
-            <value>true</value>
           </exp>
           <pv trig="true">$(P)$(MM).HLS</pv>
         </rule>

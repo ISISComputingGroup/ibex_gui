@@ -1179,7 +1179,21 @@ $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
       <pv_name>$(M).HOMR</pv_name>
       <pv_value />
-      <rules />
+      <rules>
+        <rule name="Disable at Limit" prop_id="enabled" out_exp="false">
+          <exp bool_exp="pv0!=0">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(M).LLS</pv>
+        </rule>
+        <rule name="Tooltip at Limit" prop_id="tooltip" out_exp="false">
+          <exp bool_exp="pv0!=0">
+            <value>Cannot reverse home &#xD;
+while at low limit.</value>
+          </exp>
+          <pv trig="true">$(M).LLS</pv>
+        </rule>
+      </rules>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -1228,7 +1242,21 @@ $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
       <pv_name>$(M).HOMF</pv_name>
       <pv_value />
-      <rules />
+      <rules>
+        <rule name="Disable at Limit" prop_id="enabled" out_exp="false">
+          <exp bool_exp="pv0!=0">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(M).HLS</pv>
+        </rule>
+        <rule name="Tooltip at Limit" prop_id="tooltip" out_exp="false">
+          <exp bool_exp="pv0!=0">
+            <value>Cannot forward home &#xD;
+at high Limit.</value>
+          </exp>
+          <pv trig="true">$(M).HLS</pv>
+        </rule>
+      </rules>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
