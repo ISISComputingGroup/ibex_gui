@@ -1,10 +1,16 @@
 package uk.ac.stfc.isis.ibex.ui.dae.spectraplots;
 
 import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import org.apache.logging.log4j.Logger;
+
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
@@ -25,6 +31,8 @@ public class PersistedLocalChannel<T> {
 	
 	private static final WritableFactory WRITE_FACTORY = new WritableFactory(OnInstrumentSwitch.NOTHING);
 	private static final ObservableFactory OBS_FACTORY = new ObservableFactory(OnInstrumentSwitch.NOTHING);
+	private static final ScheduledExecutorService EXECUTOR = Executors.newSingleThreadScheduledExecutor(
+            new ThreadFactoryBuilder().setNameFormat("write-to-PV-%d").build());
 	private static final Logger LOG = IsisLog.getLogger(PersistedLocalChannel.class);
 	
 	private final Observable<T> observable;
@@ -57,11 +65,7 @@ public class PersistedLocalChannel<T> {
     public void setInitialValueAndSubscribeToChanges() {
     	T initialValue = persistenceGetter.get();
     	
-    	try {
-    		writable.write(initialValue);
-    	} catch (IOException e) {
-    		LoggerUtils.logErrorWithStackTrace(LOG, String.format("Couldn't set initial value to '%s' for local PV '%s'", initialValue, address), e);
-    	}
+    	write_to_pv(initialValue);
     	
     	observable.subscribe(new BaseObserver<T>() {
     		@Override
@@ -79,5 +83,29 @@ public class PersistedLocalChannel<T> {
      */
     public String getPVAddress() {
     	return address;
+    }
+    
+    /**Attempt to write initial value to local PV. If fails (due to an existing race condition), try again until it passes.
+     * @param initialValue - value to be written to PV
+     */
+    private void write_to_pv(T initialValue) {
+    	Runnable task = new Runnable() {
+    		public void run() {
+    			int iterations = 1;
+    			
+    			try {
+    	    		writable.write(initialValue);
+	    		} catch (IOException e) {
+	    			LoggerUtils.logErrorWithStackTrace(LOG, String.format("Couldn't set initial value to '%s' for local PV '%s'. Retrying to re-write...", initialValue, address), e);
+	    			// Restrict writing re-attempts to 30 seconds
+	    			if(iterations < 30) { 
+	    				EXECUTOR.schedule(this, 1, TimeUnit.SECONDS);
+	    			}
+	    			iterations++;
+	    		}
+    		}
+    	};
+    	
+    	EXECUTOR.schedule(task, 0, TimeUnit.SECONDS);
     }
 }
