@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -32,8 +33,9 @@ public class PersistedLocalChannel<T> {
 	private static final WritableFactory WRITE_FACTORY = new WritableFactory(OnInstrumentSwitch.NOTHING);
 	private static final ObservableFactory OBS_FACTORY = new ObservableFactory(OnInstrumentSwitch.NOTHING);
 	private static final ScheduledExecutorService EXECUTOR = Executors.newSingleThreadScheduledExecutor(
-            new ThreadFactoryBuilder().setNameFormat("write-to-PV-%d").build());
+            new ThreadFactoryBuilder().setNameFormat("PersistedLocalChannel-worker-%d").build());
 	private static final Logger LOG = IsisLog.getLogger(PersistedLocalChannel.class);
+	private static final int MAX_WRITE_RETRIES = 30;
 	
 	private final Observable<T> observable;
 	private final Writable<T> writable;
@@ -65,7 +67,7 @@ public class PersistedLocalChannel<T> {
     public void setInitialValueAndSubscribeToChanges() {
     	T initialValue = persistenceGetter.get();
     	
-    	write_to_pv(initialValue);
+    	writeToPv(initialValue);
     	
     	observable.subscribe(new BaseObserver<T>() {
     		@Override
@@ -88,20 +90,23 @@ public class PersistedLocalChannel<T> {
     /**Attempt to write initial value to local PV. If fails (due to an existing race condition), try again until it passes.
      * @param initialValue - value to be written to PV
      */
-    private void write_to_pv(T initialValue) {
+    private void writeToPv(T initialValue) {
     	Runnable task = new Runnable() {
+    		private AtomicInteger iterations = new AtomicInteger(1);
+    		
+    		@Override
     		public void run() {
-    			int iterations = 1;
-    			
     			try {
     	    		writable.write(initialValue);
 	    		} catch (IOException e) {
-	    			LoggerUtils.logErrorWithStackTrace(LOG, String.format("Couldn't set initial value to '%s' for local PV '%s'. Retrying to re-write...", initialValue, address), e);
-	    			// Restrict writing re-attempts to 30 seconds
-	    			if(iterations < 30) { 
+	    			LoggerUtils.logErrorWithStackTrace(LOG, String.format("Couldn't set initial value to '%s' for local PV '%s'. Retrying to re-write (attempt %d out of %d)...", 
+	    							initialValue, address, iterations.get(), MAX_WRITE_RETRIES), e);
+	    			// Restrict writing re-attempts
+	    			if (iterations.getAndIncrement() < MAX_WRITE_RETRIES) { 
 	    				EXECUTOR.schedule(this, 1, TimeUnit.SECONDS);
+	    			} else {
+	    				LOG.info(String.format("Giving up writing to local PV '%s' after %d iterations; could not load PV intial value.", address, iterations.get()));
 	    			}
-	    			iterations++;
 	    		}
     		}
     	};
