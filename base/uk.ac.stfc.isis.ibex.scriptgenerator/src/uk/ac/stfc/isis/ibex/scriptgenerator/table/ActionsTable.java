@@ -343,6 +343,17 @@ public class ActionsTable extends ModelObject {
         	actions.get(i).setEstimatedTime(Optional.ofNullable(estimatedTimes.get(i)));
         }
     }
+    
+    /**
+     * Set the estimated customs for each action based on the hashmap.
+     * 
+     * @param estimatedCustoms The hashmap to set estimated customs based on.
+     */
+    public void setEstimatedCustom(Map<Integer, List<Number>> estimatedCustoms) {
+        for (int i = 0; i < actions.size(); i++) {
+        	actions.get(i).setCustomEstimate(Optional.ofNullable(estimatedCustoms.get(i)));
+        }
+    }
 	
 	/**
 	 * Get strings of validity errors.

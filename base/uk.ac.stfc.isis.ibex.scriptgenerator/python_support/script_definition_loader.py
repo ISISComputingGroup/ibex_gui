@@ -115,6 +115,18 @@ class ScriptDefinitionWrapper(object):
                 list_of_globals.append(action_parameter)
 
         return ListConverter().convert(list_of_globals, gateway._gateway_client)
+
+    def getCustomOutputs(self) -> List[str]:
+        """
+        Gets the custom outputs names from the script_definition defined in this script_definition
+
+        Returns:
+            arguments: List of the outputs names (strings)
+        """
+        list_of_names = []
+        if self.hasCustomOutputs():
+            list_of_names = self.script_definition.custom_outputs.keys()
+        return ListConverter().convert(list_of_names, gateway._gateway_client)
     
     def setGlobalParameters(self, global_params):
         """
@@ -135,6 +147,13 @@ class ScriptDefinitionWrapper(object):
             True if this script definition has global parameters, or False if not.
         """
         return hasattr(self.script_definition, "global_params_definition")
+
+    def hasCustomOutputs(self):
+        """
+        Returns:
+            True if this script definition has custom outputs, or False if not.
+        """
+        return hasattr(self.script_definition, "custom_outputs")
 
     def getHelp(self) -> str:
         """
@@ -181,7 +200,6 @@ class ScriptDefinitionWrapper(object):
         except IndexError:
             return 'Tried to find validity for global: "{}" but no such global was found.\n'.format(global_param)
 
-
     def parametersValid(self, action, global_params) -> Union[None, AnyStr]:
         """
         Checks if the parameters are valid for the script_definition
@@ -219,6 +237,23 @@ class ScriptDefinitionWrapper(object):
                 self.setGlobalParameters(global_params)
             estimate = self.script_definition.estimate_time(**action)
             return round(estimate)
+        except (ValueError, TypeError, KeyError) as ex:
+            return None
+
+    def estimateCustom(self, action, global_params) -> Union[None, List[int]]:
+        """
+        Returns a list of custom estimates of an action
+        Args:
+            The action to estimate
+
+        Returns:
+            A list of int representing the custom estimations
+            or None if the parameters are invalid or the estimate could not be calculated
+        """
+        try:
+            if self.hasGlobalParameters():
+                self.setGlobalParameters(global_params)
+            return ListConverter().convert(self.script_definition.estimate_custom(**action), gateway._gateway_client)
         except (ValueError, TypeError, KeyError) as ex:
             return None
 
@@ -309,6 +344,24 @@ class Generator(object):
                     time_estimates[current_action_index] = time_estimate
             current_action_index += 1
         return time_estimates
+
+    def estimateCustom(self, list_of_actions, script_definition: ScriptDefinitionWrapper, global_params) -> Dict[
+        int, List[int]]:
+        """
+        Custom Estimates for each action.
+        Actions are only estimated if their parameters are valid.
+
+        Returns:
+            Dictionary containing line numbers as keys and lists of estimates as values
+        """
+        custom_estimates: Dict[int, List[int]] = {}
+        for current_action_index, action in enumerate(list_of_actions, 0):
+            if script_definition.parametersValid(action, global_params) is None:
+                custom_estimate = script_definition.estimateCustom(action, global_params)
+                if custom_estimate != None:
+                    custom_estimates[current_action_index] = custom_estimate
+            current_action_index += 1
+        return custom_estimates
 
     def generate(self, list_of_actions, jsonString, global_params,
                  script_definition: ScriptDefinitionWrapper) -> Union[None, AnyStr]:
@@ -459,6 +512,18 @@ class ScriptDefinitionsWrapper(object):
             Dictionary containing line numbers as keys and estimates as values
         """
         return MapConverter().convert(self.generator.estimateTime(
+            self.convert_list_of_actions_to_python(list_of_actions), script_definition, global_parameters),
+            gateway._gateway_client)
+
+    def estimateCustom(self, list_of_actions, script_definition: ScriptDefinitionWrapper, global_parameters) -> Dict[
+        int, List[int]]:
+        """
+        Get the custom estimated of the current actions
+
+        Returns:
+            Dictionary containing line numbers as keys and list of estimates as values
+        """
+        return MapConverter().convert(self.generator.estimateCustom(
             self.convert_list_of_actions_to_python(list_of_actions), script_definition, global_parameters),
             gateway._gateway_client)
 

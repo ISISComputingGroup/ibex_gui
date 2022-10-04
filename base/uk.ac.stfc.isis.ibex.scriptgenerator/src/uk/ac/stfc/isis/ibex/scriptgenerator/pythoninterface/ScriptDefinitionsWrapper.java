@@ -37,7 +37,7 @@ public interface ScriptDefinitionsWrapper {
 	 * Generate a script from a list of script generator actions for the given script definition.
 	 * 
 	 * @param scriptGenContent The list of actions to generate a script for.
-	 * @param jsonString string to write to script defintion file
+	 * @param jsonString string to write to script definition file
 	 * @param scriptDefinition The script definition to generate the script with.
 	 * @param globalParams The global parameters to generate the script with.
 	 * @return A string containing the generated script.
@@ -75,6 +75,17 @@ public interface ScriptDefinitionsWrapper {
      *      the value is the estimated time in seconds
      */
 	Map<Integer, Number> estimateTime(List<Map<String, String>> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams);
+	
+	/**
+     * A custom Estimate value for the current actions.
+     * 
+     * @param scriptGenContent The list of actions to estimate
+     * @param scriptDefinition The script definition
+     * @param globalParams The global parameters to estimate the custom values with
+     * @return A map where the key is the index of the action in the list and 
+     *      the value is the estimated time in seconds
+     */
+	Map<Integer, List<Number>> estimateCustom(List<Map<String, String>> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams);
 	
 	/**
 	 * Check if Python is ready.

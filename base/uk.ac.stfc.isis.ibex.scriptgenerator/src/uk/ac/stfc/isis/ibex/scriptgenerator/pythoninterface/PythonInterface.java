@@ -358,7 +358,7 @@ public class PythonInterface extends ModelObject {
 	 * 
 	 * @param scriptGenContent The script generator content to validate.
 	 * @param scriptDefinition           The script definition to validate against.
-	 * @param globalParams The global parameters to generate the script with.
+	 * @param globalParams The global parameters to check parameter validity with.
 	 * @throws ExecutionException   A failure to execute the py4j call
 	 * @throws InterruptedException The Py4J call was interrupted
 	 * @throws PythonNotReadyException When python is not ready to accept calls.
@@ -440,6 +440,37 @@ public class PythonInterface extends ModelObject {
         } else {
             handlePythonReadinessChange(false);
             throw new PythonNotReadyException("When getting time estimation");
+        }
+    }
+    
+    /**
+     * Use python to calculate a custom estimation defined by the scriptDefinition for the current parameters and refresh the
+     * custom estimation property.
+     * 
+     * @param scriptGenContent The script generator content
+     * @param scriptDefinition The script definition
+     * @param globalParams The global parameters to refresh custom estimation with.
+     * @throws ExecutionException A failure to execute the py4j call
+     * @throws InterruptedException The Py4J call was interrupted
+     * @throws PythonNotReadyException When python is not ready to accept calls.
+     */
+    public void refreshCustomEstimation(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams)
+            throws InterruptedException, ExecutionException, PythonNotReadyException {
+        if (pythonReady) {
+            CompletableFuture.supplyAsync(() -> {
+                try {
+                    return scriptDefinitionsWrapper.estimateCustom(convertScriptGenContentToPython(scriptGenContent), scriptDefinition, globalParams);
+                } catch (Py4JException e) {
+                    LOG.error(e);
+                    handlePythonReadinessChange(false);
+                    return false;
+                }
+            }, THREAD).thenAccept(estimateCustom -> 
+                firePropertyChange(ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY, null, estimateCustom)
+            );
+        } else {
+            handlePythonReadinessChange(false);
+            throw new PythonNotReadyException("When getting custom estimation");
         }
     }
     

@@ -83,6 +83,8 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<JavaActionParameter>());
 	
 	private List<String> globalParams;
+	
+	private List<String> customOutputs;
 
 	/**
 	 * The loader to select and update the script definition being used.
@@ -147,6 +149,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	public ScriptGeneratorSingleton() {  
 		this.globalParams = new ArrayList<String>();
+		this.customOutputs = new ArrayList<String>();
 	}
 
 	/**
@@ -164,6 +167,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		this.scriptDefinitionLoader = scriptDefinitionLoader;
 		this.scriptGeneratorTable = scriptGeneratorTable;
 		this.globalParams = new ArrayList<String>();
+		this.customOutputs = new ArrayList<String>();
 		setUp();
 	}
 
@@ -193,6 +197,12 @@ public class ScriptGeneratorSingleton extends ModelObject {
             scriptGeneratorTable.setEstimatedTimes(convertToMap(evt.getNewValue(), Integer.class, Number.class));
             firePropertyChange(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, evt.getOldValue(), evt.getNewValue());
         });
+        
+        generator.addPropertyChangeListener(ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY, evt -> {
+            scriptGeneratorTable.setEstimatedCustom(convertToMap(evt.getNewValue(), Integer.class, (Class<List<Number>>) (Object) List.class));
+            firePropertyChange(ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY, evt.getOldValue(), evt.getNewValue());
+        });
+        
 		// If the parameter validity property is changed update the models field that
 		// denotes
 		// whether the parameters are valid and notify any listeners
@@ -229,6 +239,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			try {
 				refreshParameterValidityChecking();
 				refreshTimeEstimation();
+				refreshCustomEstimation();
 			} catch (NoScriptDefinitionSelectedException e) {
 				LOG.error(e);
 			}
@@ -240,6 +251,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			for (ActionParameter global : globals) {
 				this.globalParams.add(global.getDefaultValue());
 			}
+			this.customOutputs.addAll(this.scriptDefinitionLoader.getScriptDefinition().getCustomOutputs());
 		} catch (NoSuchElementException e) {
 			LOG.info("No scriptDefinition yet");
 		}
@@ -441,7 +453,6 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * @param params The new value for the parameter
 	 * @param index The global parameter to be update
 	 */
-	
 	public void updateGlobalParams(String params, int index) {
 		if (this.globalParams != null) {
 			
@@ -458,6 +469,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 		try {
 			refreshParameterValidityChecking();
 			refreshTimeEstimation();
+			refreshCustomEstimation();
 		} catch (NoScriptDefinitionSelectedException e) {
 			return;
 		}
@@ -506,7 +518,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	}
 
 	/**
-	 * Clean up resources when the plugin is destroyed.
+	 * Clean up resources when the plug-in is destroyed.
 	 */
 	public void cleanUp() {
 		scriptDefinitionLoader.cleanUp();
@@ -617,6 +629,30 @@ public class ScriptGeneratorSingleton extends ModelObject {
                         "Tried to refresh time estimation with no script definition selected"));
 		try {
 			generator.refreshTimeEstimation(scriptGeneratorTable.getActions(), scriptDefinition, this.globalParams);
+            languageSupported = true;
+            threadError = false;
+        } catch (UnsupportedLanguageException e) {
+            firePropertyChange(ScriptGeneratorProperties.LANGUAGE_SUPPORT_PROPERTY, languageSupported, languageSupported = false);
+            LOG.error(e);
+        } catch (InterruptedException | ExecutionException e) {
+        	registerThreadError(e);
+        }
+    }
+    
+    /**
+     * Refresh the custom estimate of the parameters, or if it fails refresh the
+     * error state of the model to be listened to by the ViewModel.
+     * 
+     * @throws NoScriptDefinitionSelectedException If there is no script definition
+     *                                             selected to refresh checking
+     *                                             against.
+     */
+    public void refreshCustomEstimation() throws NoScriptDefinitionSelectedException {
+        ScriptDefinitionWrapper scriptDefinition = getScriptDefinition()
+                .orElseThrow(() -> new NoScriptDefinitionSelectedException(
+                        "Tried to refresh custom estimation with no script definition selected"));
+		try {
+			generator.refreshCustomEstimation(scriptGeneratorTable.getActions(), scriptDefinition, this.globalParams);
             languageSupported = true;
             threadError = false;
         } catch (UnsupportedLanguageException e) {

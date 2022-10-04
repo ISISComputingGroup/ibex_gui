@@ -548,6 +548,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    this.scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
 	    this.scriptGeneratorModel.removePropertyChangeListener(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, actionChangeListener);
 	    this.scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, actionChangeListener);
+	    this.scriptGeneratorModel.removePropertyChangeListener(ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY, actionChangeListener);
+	    this.scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY, actionChangeListener);
 	    }
 	
 	    private void updateParametersFilePath(String parametersFilePath) {
@@ -713,7 +715,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	        if (!globalParamsComposite.isDisposed()) {
 		        globalParamsComposite.layout();
 	        }
-		     mainParent.layout();
+		    mainParent.layout();
 	        // Display the new script definition help string
 	        if (!helpText.isDisposed()) {
 	        	
@@ -1031,6 +1033,52 @@ public class ScriptGeneratorViewModel extends ModelObject {
     
         });
         timeEstimateColumn.getColumn().setAlignment(SWT.CENTER);
+        
+        // Add estimated custom columns.
+        Optional<ScriptDefinitionWrapper> scriptDefinition = scriptGeneratorModel.getScriptDefinition();
+        if (scriptDefinition.isPresent()) {
+        	List<String> customOutputs = scriptDefinition.get().getCustomOutputs();
+        	
+        	for (int i = 0; i < customOutputs.size(); ++i) {
+        		final int index = i;
+        		TableViewerColumn column = viewTable.createColumn(
+        				customOutputs.get(i),
+        				1,
+        				new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty(ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY)) {
+        					@Override
+        	                protected String stringFromRow(ScriptGeneratorAction row) {
+        						if (!scriptGeneratorModel.languageSupported) {
+        			                return "\u003F"; // A question mark to say we cannot be certain
+        			            }
+        						
+        						Optional<List<Number>> estimatedCustom = row.getEstimatedCustom();
+        			            if (estimatedCustom.isEmpty() || estimatedCustom.get().isEmpty()) {
+        			                return UNKNOWN_TEXT;
+        			            }
+        						
+        	                    return row.getEstimatedCustom().get().get(index).toString();
+        	                }
+        					
+        					@Override
+        		            public String getToolTipText(Object element) {
+        						return getScriptGenActionToolTipText(element);
+        		            }
+        					
+        					@Override
+        		        	public void update(ViewerCell cell) {
+        		            	ScriptGeneratorAction row = getRow(cell);
+        		        		cell.setText(stringFromRow(row));
+        		                cell.setImage(imageFromRow(row));
+        		                if (row.isValid()) {
+        		                	cell.setBackground(CLEAR_COLOR);
+        		                } else {
+        		                	cell.setBackground(INVALID_LIGHT_COLOR);
+        		                }
+        		        	}
+        				});
+        		column.getColumn().setAlignment(SWT.CENTER);
+        	}
+        }
     
         ColumnViewerToolTipSupport.enableFor(viewTable.viewer());
         

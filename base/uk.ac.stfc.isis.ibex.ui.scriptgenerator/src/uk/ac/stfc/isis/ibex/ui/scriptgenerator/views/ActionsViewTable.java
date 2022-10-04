@@ -66,7 +66,8 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	private static final String TAB = "\t";
 	private static final String NEW_LINE = "\r\n";
 	private final ScriptGeneratorViewModel scriptGeneratorViewModel;
-	private static final  Integer NON_EDITABLE_COLUMNS_ON_RIGHT = 2;
+	private static final  Integer FIXED_NON_EDITABLE_COLUMNS_ON_RIGHT = 2;
+	private int dynamicNonEditableColumnsOnRight;
 	/**
 	 * The number of read only columns on the left of the table.
 	 */
@@ -88,6 +89,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
     public ActionsViewTable(Composite parent, int style, int tableStyle, ScriptGeneratorViewModel scriptGeneratorViewModel) {
         super(parent, style, tableStyle | SWT.BORDER, true);
         this.scriptGeneratorViewModel = scriptGeneratorViewModel;
+        this.dynamicNonEditableColumnsOnRight = 0;
         initialise();
         scriptGeneratorViewModel.addActionParamPropertyListener(this);
 		TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(viewer,
@@ -127,7 +129,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
     public String getSelectedTableData() {
     	String data = "";
     	for (TableItem item : table.getSelection()) {
-			int size = table.getColumnCount() - NON_EDITABLE_COLUMNS_ON_LEFT - NON_EDITABLE_COLUMNS_ON_RIGHT;
+			int size = table.getColumnCount() - NON_EDITABLE_COLUMNS_ON_LEFT - (FIXED_NON_EDITABLE_COLUMNS_ON_RIGHT + dynamicNonEditableColumnsOnRight);
 			// TableItem.getText() ensure the values are in order using index.
 			for (int idx = 0; idx < size; idx++) {
 				  data += item.getText(idx + NON_EDITABLE_COLUMNS_ON_LEFT);
@@ -166,7 +168,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 					Optional<ViewerCell> neighbour = Optional.ofNullable(nextCell.getNeighbor(ViewerCell.BELOW, false));
 					boolean noActionBelow = neighbour.isEmpty() || neighbour.get().getElement() == null;
 					if (noActionBelow
-					        && (viewer.getTable().getColumnCount() - NON_EDITABLE_COLUMNS_ON_RIGHT <= currentlyFocusedColumn)) {
+					        && (viewer.getTable().getColumnCount() - (FIXED_NON_EDITABLE_COLUMNS_ON_RIGHT + dynamicNonEditableColumnsOnRight) <= currentlyFocusedColumn)) {
 					    
                     	scriptGeneratorViewModel.addEmptyAction();
                     	// return false as we will handle this specific case of traversal
@@ -255,6 +257,21 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 				);
 	}
 	
+	private boolean estimatedCustomChanged(String columnHeader, TableItem item, int column, ScriptGeneratorAction action) {
+		var estimatedCustom = action.getEstimatedCustom();
+		if (estimatedCustom.isEmpty()) {
+			return false;
+		}
+		
+		var estimatedCustomText = item.getText(column);
+		for (Number n : estimatedCustom.get()) {
+			if (n.toString().equals(estimatedCustomText)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	/**
 	 * Detect if the values displayed by the table item cells and the action parameter values are different.
 	 * 
@@ -273,7 +290,8 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 			if (parameterValueChanged(parameterValue, item, columnNumber) 
 					|| validityChanged(columnHeader, item, columnNumber, action) 
 					|| executingStatusChanged(columnHeader, item, columnNumber, action)
-					|| estimatedTimeChanged(columnHeader, item, columnNumber, action)) {
+					|| estimatedTimeChanged(columnHeader, item, columnNumber, action)
+					|| estimatedCustomChanged(columnHeader, item, columnNumber, action)) {
 				return true;
 			} 
 			columnNumber++;
@@ -285,7 +303,8 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 		return tableAction == null 
 				|| !tableAction.equals(newAction) 
 				|| tableAction.isValid() != newAction.isValid() 
-				|| tableAction.getEstimatedTime() != newAction.getEstimatedTime();
+				|| tableAction.getEstimatedTime() != newAction.getEstimatedTime()
+				|| tableAction.getEstimatedCustom() != newAction.getEstimatedCustom();
 	}
 	
 	/**
