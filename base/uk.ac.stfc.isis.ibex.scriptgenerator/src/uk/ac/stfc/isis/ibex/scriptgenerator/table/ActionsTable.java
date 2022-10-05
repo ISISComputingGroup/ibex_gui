@@ -347,7 +347,7 @@ public class ActionsTable extends ModelObject {
     /**
      * Set the estimated customs for each action based on the hashmap.
      * 
-     * @param estimatedCustoms The hashmap to set estimated customs based on.
+     * @param estimatedCustoms Hashmap key is action and value is list of custom estimates.
      */
     public void setEstimatedCustom(Map<Integer, List<Number>> estimatedCustoms) {
         for (int i = 0; i < actions.size(); i++) {

@@ -64,7 +64,7 @@ public interface ScriptDefinitionWrapper {
      * Custom estimates of an action.
      * 
      * @param action The action to estimate
-     * @param global_params The global parameters to refresh the time estimation with.
+     * @param global_params The global parameters to refresh the custom estimation with.
      * @return A list of estimate numbers
      */
     @SuppressWarnings("checkstyle:parametername")

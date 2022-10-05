@@ -254,7 +254,7 @@ class ScriptDefinitionWrapper(object):
             if self.hasGlobalParameters():
                 self.setGlobalParameters(global_params)
             return ListConverter().convert(self.script_definition.estimate_custom(**action), gateway._gateway_client)
-        except (ValueError, TypeError, KeyError) as ex:
+        except Exception as ex:
             return None
 
     def equals(self, other_script_definition) -> bool:

@@ -1037,7 +1037,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
         // Add estimated custom columns.
         Optional<ScriptDefinitionWrapper> scriptDefinition = scriptGeneratorModel.getScriptDefinition();
         if (scriptDefinition.isPresent()) {
+        	//
         	List<String> customOutputs = scriptDefinition.get().getCustomOutputs();
+        	viewTable.setDynamicNonEditableColumnsOnRight(customOutputs.size());
         	
         	for (int i = 0; i < customOutputs.size(); ++i) {
         		final int index = i;

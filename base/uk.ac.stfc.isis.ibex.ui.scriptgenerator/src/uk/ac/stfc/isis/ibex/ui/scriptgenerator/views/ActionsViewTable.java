@@ -67,7 +67,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	private static final String NEW_LINE = "\r\n";
 	private final ScriptGeneratorViewModel scriptGeneratorViewModel;
 	private static final  Integer FIXED_NON_EDITABLE_COLUMNS_ON_RIGHT = 2;
-	private int dynamicNonEditableColumnsOnRight;
+	private int dynamicNonEditableColumnsOnRight = 0;
 	/**
 	 * The number of read only columns on the left of the table.
 	 */
@@ -263,13 +263,14 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 			return false;
 		}
 		
-		var estimatedCustomText = item.getText(column);
-		for (Number n : estimatedCustom.get()) {
-			if (n.toString().equals(estimatedCustomText)) {
-				return false;
-			}
+		int estimatedCustomStartIndex = table.getColumnCount() - dynamicNonEditableColumnsOnRight;
+		if (column < estimatedCustomStartIndex) {
+			return false;
 		}
-		return true;
+		
+		String currentText = item.getText(column);
+		String newValue = estimatedCustom.get().get(column - estimatedCustomStartIndex).toString();
+		return !currentText.equals(newValue);
 	}
 	
 	/**
@@ -368,5 +369,13 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 		if (row >= 0 && element != null) {
 			viewer.editElement(element, column);
 		}
+	}
+	
+	/**
+	 * Sets the dynamic non editable columns on the right.
+	 * @param num
+	 */
+	public void setDynamicNonEditableColumnsOnRight(int num) {
+		dynamicNonEditableColumnsOnRight = num;
 	}
 }
