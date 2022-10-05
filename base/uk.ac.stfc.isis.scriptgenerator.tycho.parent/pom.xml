@@ -82,6 +82,7 @@
 				<version>3.2.0</version>
 				<executions>
 					<execution>
+                        <id>verify</id>
 						<phase>verify</phase>
 						<goals>
 							<goal>check</goal>
@@ -92,11 +93,13 @@
 					<sourceDirectories>
 						<sourceDirectory>src</sourceDirectory>
 					</sourceDirectories>
-					<!-- <consoleOutput>true</consoleOutput> -->
+					<consoleOutput>true</consoleOutput>
 					<configLocation>checkstyle.xml</configLocation>
                     <suppressionsLocation>suppressions.xml</suppressionsLocation>
-					<failOnViolation>false</failOnViolation>
-					<failsOnError>false</failsOnError>
+                    <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
+                    <violationSeverity>warning</violationSeverity>
+					<failOnViolation>true</failOnViolation>
+					<failsOnError>true</failsOnError>
 					<linkXRef>true</linkXRef>
 				</configuration>
 			</plugin>
