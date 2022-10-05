@@ -373,7 +373,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	
 	/**
 	 * Sets the dynamic non editable columns on the right.
-	 * @param num
+	 * @param num The number of custom outputs
 	 */
 	public void setDynamicNonEditableColumnsOnRight(int num) {
 		dynamicNonEditableColumnsOnRight = num;
