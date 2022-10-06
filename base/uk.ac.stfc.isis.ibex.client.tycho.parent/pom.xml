@@ -99,12 +99,13 @@
 					<sourceDirectories>
 						<sourceDirectory>src</sourceDirectory>
 					</sourceDirectories>
-					<!-- <consoleOutput>true</consoleOutput> -->
+					<consoleOutput>true</consoleOutput>
 					<configLocation>checkstyle.xml</configLocation>
                     <suppressionsLocation>suppressions.xml</suppressionsLocation>
                     <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
-					<failOnViolation>false</failOnViolation>
-					<failsOnError>false</failsOnError>
+                    <violationSeverity>warning</violationSeverity>
+					<failOnViolation>true</failOnViolation>
+					<failsOnError>true</failsOnError>
 					<linkXRef>true</linkXRef>
 				</configuration>
 			</plugin>
