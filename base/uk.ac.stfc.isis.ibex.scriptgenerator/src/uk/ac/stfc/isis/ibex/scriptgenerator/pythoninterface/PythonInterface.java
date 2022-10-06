@@ -76,12 +76,17 @@ public class PythonInterface extends ModelObject {
 	 * The time to wait before retrying restarting python in ms.
 	 */
 	private static final int TIME_TO_WAIT_BEFORE_RETRY = 1000;
+	
+	/**
+	 * The name for the script generator worker thread.
+	 */
+	private static final String THREAD_NAME = "Py4J scriptgenerator worker";
 
 	/**
 	 * The thread to execute python calls on.
 	 */
 	private static final ExecutorService THREAD = Executors
-			.newSingleThreadExecutor(job -> new Thread(job, "Py4J scriptgenerator worker"));
+			.newSingleThreadExecutor(job -> new Thread(job, THREAD_NAME));
 	
 	/**
 	 * The scripts with ids as keys.
@@ -132,11 +137,24 @@ public class PythonInterface extends ModelObject {
 	};
 	
 	/**
+	 * Asserts that a method is only ever called on the Py4J worker thread.
+	 */
+	private static void assertOnPy4jWorkerThread() {
+		if (!Thread.currentThread().getName().contains(THREAD_NAME)) {
+			final var errorMsg = String.format("Programming error: assertOnPy4jWorkerThread() called on thread that wasn't Py4J worker thread (actually called from %s)", Thread.currentThread().getName());
+			LOG.error(errorMsg);
+			throw new RuntimeException(errorMsg);
+		}
+	}
+	
+	/**
 	 * When python has become not ready handle this by trying to restart it.
 	 * MUST always be called in Py4J worker thread.
 	 * MUST never wait for a thread to complete or return in here otherwise deadlock will occur.
 	 */
 	private void restartPython() {
+		assertOnPy4jWorkerThread();
+		
 		try {
 			cleanUp();
 			setUpPythonThread();
@@ -296,6 +314,8 @@ public class PythonInterface extends ModelObject {
 	 * @throws IOException If scriptDefinitionLoaderPythonScript not found.
 	 */
 	private void setUpPythonThread() throws IOException {
+		assertOnPy4jWorkerThread();
+		
 		firePropertyChange(ScriptGeneratorProperties.PYTHON_READINESS_PROPERTY, null, pythonReady);
 		clientServer = createClientServer();
 		pythonProcess = startPythonProcess(clientServer, python3InterpreterPath(), scriptDefinitionLoaderScript);
@@ -311,6 +331,12 @@ public class PythonInterface extends ModelObject {
 				break;
 			} catch (Py4JException e) {
 				// Waiting until Python is ready (no Py4JException)
+				LOG.info("ScriptGenerator setUpPythonThread: waiting for python to start (last Py4j exception message was '" + e.getMessage() + "')");
+				try {
+					Thread.sleep(TIME_TO_WAIT_BEFORE_RETRY);
+				} catch (InterruptedException ex) {
+					continue;
+				}
 			}
 		}
 	}
