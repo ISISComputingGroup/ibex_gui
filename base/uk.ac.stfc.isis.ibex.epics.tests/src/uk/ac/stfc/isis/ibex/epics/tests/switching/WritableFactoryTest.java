@@ -31,10 +31,10 @@ import uk.ac.stfc.isis.ibex.epics.switching.ClosingSwitcher;
 import uk.ac.stfc.isis.ibex.epics.switching.InstrumentSwitchers;
 import uk.ac.stfc.isis.ibex.epics.switching.NothingSwitcher;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
+import uk.ac.stfc.isis.ibex.epics.switching.SwitchableWritable;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.WritablePrefixChangingSwitcher;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
-import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
 @SuppressWarnings("checkstyle:methodname")
@@ -80,7 +80,7 @@ public class WritableFactoryTest {
         WritableFactory wrtFactory = new WritableFactory(OnInstrumentSwitch.CLOSE, instrumentSwitchers);
 
         // Act
-        Writable<String> wrt = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
+        SwitchableWritable<String> wrt = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
 
         // Assert
         assertTrue(closingSwitcher.getSwitchables().contains(wrt));
@@ -92,7 +92,7 @@ public class WritableFactoryTest {
         WritableFactory wrtFactory = new WritableFactory(OnInstrumentSwitch.CLOSE, instrumentSwitchers);
 
         // Act
-        Writable<String> wrt = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
+        SwitchableWritable<String> wrt = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
 
         // Assert
         assertFalse(switchingSwitcher.getSwitchables().contains(wrt));
@@ -105,7 +105,7 @@ public class WritableFactoryTest {
         WritableFactory wrtFactory = new WritableFactory(OnInstrumentSwitch.NOTHING, instrumentSwitchers);
 
         // Act
-        Writable<String> wrt = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
+        SwitchableWritable<String> wrt = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
 
         // Assert
         assertTrue(nothingSwitcher.getSwitchables().contains(wrt));
@@ -117,7 +117,7 @@ public class WritableFactoryTest {
         WritableFactory wrtFactory = new WritableFactory(OnInstrumentSwitch.SWITCH, instrumentSwitchers);
 
         // Act
-        Writable<String> wrt = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
+        SwitchableWritable<String> wrt = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
 
         // Assert
         assertTrue(switchingSwitcher.getSwitchables().contains(wrt));
@@ -129,8 +129,8 @@ public class WritableFactoryTest {
         WritableFactory wrtFactory = new WritableFactory(OnInstrumentSwitch.CLOSE, instrumentSwitchers);
 
         // Act
-        Writable<String> switchable = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
-        Writable<Integer> switchable2 = wrtFactory.getSwitchableWritable(channelType2, PV_ADDRESS_2);
+        SwitchableWritable<String> switchable = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
+        SwitchableWritable<Integer> switchable2 = wrtFactory.getSwitchableWritable(channelType2, PV_ADDRESS_2);
 
         // Assert
         assertTrue(closingSwitcher.getSwitchables().contains(switchable));
@@ -143,8 +143,8 @@ public class WritableFactoryTest {
         WritableFactory wrtFactory = new WritableFactory(OnInstrumentSwitch.NOTHING, instrumentSwitchers);
 
         // Act
-        Writable<String> switchable = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
-        Writable<Integer> switchable2 = wrtFactory.getSwitchableWritable(channelType2, PV_ADDRESS_2);
+        SwitchableWritable<String> switchable = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
+        SwitchableWritable<Integer> switchable2 = wrtFactory.getSwitchableWritable(channelType2, PV_ADDRESS_2);
 
         // Assert
         assertTrue(nothingSwitcher.getSwitchables().contains(switchable));
@@ -157,8 +157,8 @@ public class WritableFactoryTest {
         WritableFactory wrtFactory = new WritableFactory(OnInstrumentSwitch.SWITCH, instrumentSwitchers);
 
         // Act
-        Writable<String> switchable = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
-        Writable<Integer> switchable2 = wrtFactory.getSwitchableWritable(channelType2, PV_ADDRESS_2);
+        SwitchableWritable<String> switchable = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
+        SwitchableWritable<Integer> switchable2 = wrtFactory.getSwitchableWritable(channelType2, PV_ADDRESS_2);
 
         // Assert
         assertTrue(switchingSwitcher.getSwitchables().contains(switchable));
