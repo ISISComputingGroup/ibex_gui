@@ -44,7 +44,8 @@ public class ExperimentDetailsViewModelTest {
     private ExperimentDetailsViewModel viewModel;
     private ObservableExperimentDetailsModel model;
 
-    @Before
+    @SuppressWarnings("unchecked")
+	@Before
     public void setUp() {
         model = mock(ObservableExperimentDetailsModel.class);
         
