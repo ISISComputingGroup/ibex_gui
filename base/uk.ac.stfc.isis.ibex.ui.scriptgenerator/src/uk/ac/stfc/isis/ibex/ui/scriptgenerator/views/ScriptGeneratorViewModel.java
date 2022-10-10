@@ -550,9 +550,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    this.scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, actionChangeListener);
 	    this.scriptGeneratorModel.removePropertyChangeListener(ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY, actionChangeListener);
 	    this.scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY, actionChangeListener);
-	    }
+	}
 	
-	    private void updateParametersFilePath(String parametersFilePath) {
+	private void updateParametersFilePath(String parametersFilePath) {
 		this.clearGenerationTime();
 		String displayFile = "Current Script: " + parametersFilePath;
 		currentParametersFilePath = parametersFilePath;		// Update the current parameter file path for Save.

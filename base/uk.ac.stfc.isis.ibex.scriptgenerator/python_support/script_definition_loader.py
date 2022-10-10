@@ -245,7 +245,8 @@ class ScriptDefinitionWrapper(object):
         """
         Returns a dict of custom estimates of an action
         Args:
-            The action to estimate
+            action: The action to estimate
+            global_params: The global parameter values to set for the estimation
 
         Returns:
             A dictionary where the keys are the names of the custom outputs

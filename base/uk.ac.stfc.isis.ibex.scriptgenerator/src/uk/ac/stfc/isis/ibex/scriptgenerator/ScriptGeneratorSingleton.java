@@ -148,7 +148,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 * an initial script definition.
 	 */
 	public ScriptGeneratorSingleton() {
-		//Empty default constructor.
+		// Empty default constructor.
 	}
 
 	/**

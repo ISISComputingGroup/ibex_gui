@@ -392,8 +392,7 @@ public class PythonInterface extends ModelObject {
 					handlePythonReadinessChange(false);
 					return new Object();
 				}
-			}, THREAD)
-				.thenAccept(newValue -> firePropertyChange(property, null, newValue));
+			}, THREAD).thenAccept(newValue -> firePropertyChange(property, null, newValue));
 		} else {
 			handlePythonReadinessChange(false);
 			throw new PythonNotReadyException(errorMsg);

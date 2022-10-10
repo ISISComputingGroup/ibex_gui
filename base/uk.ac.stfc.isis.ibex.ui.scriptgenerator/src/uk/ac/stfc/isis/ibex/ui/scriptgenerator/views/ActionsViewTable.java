@@ -295,7 +295,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 				|| !tableAction.equals(newAction) 
 				|| tableAction.isValid() != newAction.isValid() 
 				|| tableAction.getEstimatedTime() != newAction.getEstimatedTime()
-				|| Objects.equals(tableAction.getEstimatedCustom(), newAction.getEstimatedCustom());
+				|| !Objects.equals(tableAction.getEstimatedCustom(), newAction.getEstimatedCustom());
 	}
 	
 	/**
