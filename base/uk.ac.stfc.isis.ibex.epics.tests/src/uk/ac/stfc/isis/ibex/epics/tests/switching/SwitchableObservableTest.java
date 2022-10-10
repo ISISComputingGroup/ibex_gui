@@ -41,6 +41,7 @@ public class SwitchableObservableTest {
 	
     private SwitchableObservable<String> switchableObservable;
 	
+    @SuppressWarnings("unchecked")
 	@Before
 	public void setUp() {
 		// Arrange
