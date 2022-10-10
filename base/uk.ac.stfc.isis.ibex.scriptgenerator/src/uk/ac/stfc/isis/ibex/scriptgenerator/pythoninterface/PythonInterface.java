@@ -390,7 +390,7 @@ public class PythonInterface extends ModelObject {
 				} catch (Py4JException | PythonNotReadyException | InterruptedException | ExecutionException e) {
 					LOG.error(e);
 					handlePythonReadinessChange(false);
-					return new Object();
+					return null;
 				}
 			}, THREAD).thenAccept(newValue -> firePropertyChange(property, null, newValue));
 		} else {

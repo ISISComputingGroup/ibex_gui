@@ -1052,7 +1052,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     			                return UNKNOWN_TEXT;
     			            }
     						
-    	                    return row.getEstimatedCustom().get().get(param);
+    	                    return estimatedCustom.get().getOrDefault(param, UNKNOWN_TEXT);
     	                }
     					
     					@Override

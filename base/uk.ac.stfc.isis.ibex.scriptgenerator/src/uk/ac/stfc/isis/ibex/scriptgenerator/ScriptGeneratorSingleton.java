@@ -82,9 +82,9 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 */
 	private ActionsTable scriptGeneratorTable = new ActionsTable(new ArrayList<JavaActionParameter>());
 	
-	private List<String> globalParams = new ArrayList<String>();
+	private List<String> globalParams = new ArrayList<>();
 	
-	private List<String> customOutputs = new ArrayList<String>();
+	private List<String> customOutputs = new ArrayList<>();
 
 	/**
 	 * The loader to select and update the script definition being used.
@@ -615,7 +615,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
 	 *                                             against.
 	 */
 	public void refreshParameterValidityChecking() throws NoScriptDefinitionSelectedException {
-		runDefinitionRefreshRunnable((ScriptDefinitionWrapper scriptDefinition) -> {
+		runDefinitionRefreshRunnable(scriptDefinition -> {
 			generator.refreshAreParamsValid(scriptGeneratorTable.getActions(), scriptDefinition, this.globalParams);
 			generator.refreshValidityErrors(this.globalParams, scriptGeneratorTable.getActions(), scriptDefinition);
         }, "Tried to refresh parameter validity with no script definition selected");
@@ -630,7 +630,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
      *                                             against.
      */
     public void refreshTimeEstimation() throws NoScriptDefinitionSelectedException {
-    	runDefinitionRefreshRunnable((ScriptDefinitionWrapper scriptDefinition) -> {
+    	runDefinitionRefreshRunnable(scriptDefinition -> {
     		generator.refreshTimeEstimation(scriptGeneratorTable.getActions(), scriptDefinition, this.globalParams);
         }, "Tried to refresh time estimation with no script definition selected");
     }
@@ -644,7 +644,7 @@ public class ScriptGeneratorSingleton extends ModelObject {
      *                                             against.
      */
     public void refreshCustomEstimation() throws NoScriptDefinitionSelectedException {
-    	runDefinitionRefreshRunnable((ScriptDefinitionWrapper scriptDefinition) -> {
+    	runDefinitionRefreshRunnable(scriptDefinition -> {
     		generator.refreshCustomEstimation(scriptGeneratorTable.getActions(), scriptDefinition, this.globalParams);
         }, "Tried to refresh custom estimation with no script definition selected");
     }

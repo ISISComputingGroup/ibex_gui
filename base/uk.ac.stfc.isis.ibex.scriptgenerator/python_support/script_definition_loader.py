@@ -255,8 +255,8 @@ class ScriptDefinitionWrapper(object):
         try:
             if self.hasGlobalParameters():
                 self.setGlobalParameters(global_params)
-            temp = self.script_definition.estimate_custom(**action)
-            return MapConverter().convert(temp, gateway._gateway_client)
+            custom_estimates = self.script_definition.estimate_custom(**action)
+            return MapConverter().convert(custom_estimates, gateway._gateway_client)
         except Exception as ex:
             return None
 
