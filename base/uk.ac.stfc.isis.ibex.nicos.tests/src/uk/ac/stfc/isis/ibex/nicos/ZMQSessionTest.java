@@ -52,10 +52,13 @@ public class ZMQSessionTest {
     private ZMQWrapper zmq = mock(ZMQWrapper.class);
     private ZMQSession session;
 
-    private NICOSMessage mockMessage = mock(NICOSMessage.class);
+    private NICOSMessage<String, String> mockMessage;
 
-    @Before
+    @SuppressWarnings("unchecked")
+	@Before
     public void setUp() {
+    	mockMessage = mock(NICOSMessage.class);
+    	
     	Mockito.when(zmq.getLock()).thenReturn(new Object());
         session = new ZMQSession(zmq);
         Mockito.doCallRealMethod().when(mockMessage).receiveResponse(zmq);
@@ -75,7 +78,7 @@ public class ZMQSessionTest {
         assertEquals("tcp://" + hostName + ":1301", uri.getValue());
     }
 
-    private <T> SentMessageDetails<T> sendBlankMessage(int numberOfParts) {
+    private SentMessageDetails<String> sendBlankMessage(int numberOfParts) {
         ArrayList<String> parts = new ArrayList<>();
         for (int i=0; i<numberOfParts; i++) {
             parts.add("");
@@ -132,7 +135,7 @@ public class ZMQSessionTest {
     public void GIVEN_message_failing_to_send_WHEN_message_sent_THEN_fail_message_returned() {
         String failedMessage = "FAIL";
         doThrow(new ZMQException(failedMessage, 0)).when(zmq).send(anyString(), anyBoolean());
-        SentMessageDetails resp = sendBlankMessage(2);
+        SentMessageDetails<String> resp = sendBlankMessage(2);
 
         assertEquals(false, resp.isSent());
         assertEquals(failedMessage, resp.getFailureReason());
@@ -142,7 +145,7 @@ public class ZMQSessionTest {
     public void GIVEN_message_failing_to_convert_WHEN_message_sent_THEN_failed_to_convert_message_returned()
             throws ConversionException {
         doThrow(new ConversionException("")).when(mockMessage).getMulti();
-        SentMessageDetails resp = sendBlankMessage(2);
+        SentMessageDetails<String> resp = sendBlankMessage(2);
 
         assertEquals(false, resp.isSent());
         assertEquals(ZMQSession.FAILED_TO_CONVERT, resp.getFailureReason());
@@ -158,7 +161,7 @@ public class ZMQSessionTest {
     @Test
     public void GIVEN_null_responses_from_server_WHEN_message_sent_THEN_no_data_received_message() {
         when(zmq.receiveString()).thenReturn(null);
-        SentMessageDetails resp = sendBlankMessage(2);
+        SentMessageDetails<String> resp = sendBlankMessage(2);
 
         assertEquals(false, resp.isSent());
         assertEquals(ZMQSession.NO_DATA_RECEIVED, resp.getFailureReason());
@@ -167,7 +170,7 @@ public class ZMQSessionTest {
     @Test
     public void GIVEN_empty_responses_from_server_WHEN_message_sent_THEN_no_data_received_message() {
         when(zmq.receiveString()).thenReturn("");
-        SentMessageDetails resp = sendBlankMessage(2);
+        SentMessageDetails<String> resp = sendBlankMessage(2);
 
         assertEquals(false, resp.isSent());
         assertEquals(ZMQSession.NO_DATA_RECEIVED, resp.getFailureReason());
