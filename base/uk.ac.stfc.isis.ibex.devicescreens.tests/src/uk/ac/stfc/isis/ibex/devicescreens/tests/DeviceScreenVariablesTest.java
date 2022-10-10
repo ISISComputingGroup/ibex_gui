@@ -40,6 +40,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
+import uk.ac.stfc.isis.ibex.epics.switching.SwitchableWritable;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
@@ -65,19 +66,19 @@ public class DeviceScreenVariablesTest {
     private DeviceScreenVariables variables;
     private ObservableFactory switchingObservableFactory;
     private WritableFactory switchingWritableFactory;
-    private SwitchableObservable mockSwitchableObservable;
+    private SwitchableObservable<String> mockSwitchableObservable;
 
     @Before
     public void set_up() {
         // Arrange
-        SwitchableObservable defaultSwitchableObservable = mock(SwitchableObservable.class);
+        SwitchableObservable<String> defaultSwitchableObservable = mock(SwitchableObservable.class);
         mockSwitchableObservable = mock(SwitchableObservable.class);
 
         switchingObservableFactory = mock(ObservableFactory.class);
         when(switchingObservableFactory.getSwitchableObservable((ChannelType<String>) any(ChannelType.class), anyString()))
                 .thenReturn(defaultSwitchableObservable);
 
-        SwitchableWritable defaultWritable = mock(SwitchableWritable.class);
+        SwitchableWritable<String> defaultWritable = mock(SwitchableWritable.class);
         switchingWritableFactory = mock(WritableFactory.class);
         when(switchingWritableFactory.getSwitchableWritable((ChannelType<String>) any(ChannelType.class), anyString()))
                 .thenReturn(defaultWritable);
@@ -136,7 +137,7 @@ public class DeviceScreenVariablesTest {
     @Test
     public void GIVEN_new_variable_WHEN_set_device_screens_THEN_PV_is_written_to() throws IOException {
         // Arrange
-        Writable expectedDestination = mock(Writable.class);
+        SwitchableWritable<String> expectedDestination = mock(SwitchableWritable.class);
         when(switchingWritableFactory.getSwitchableWritable((ChannelType<String>) any(ChannelType.class),
                 eq(PV_PREFIX + BLOCKSERVER_ADDRESS + SET_SCREENS_SUFFIX))).thenReturn(expectedDestination);
 
