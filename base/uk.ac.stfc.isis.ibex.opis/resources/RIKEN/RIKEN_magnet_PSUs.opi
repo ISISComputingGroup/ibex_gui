@@ -184,7 +184,7 @@
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
     <height>553</height>
-    <lock_children>true</lock_children>
+    <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
@@ -313,7 +313,7 @@
         <name>Beamline_Settings_Text_Update</name>
         <precision>0</precision>
         <precision_from_pv>true</precision_from_pv>
-        <pv_name>$(PV_ROOT):PARS:USER:S0</pv_name>
+        <pv_name>$(P)PARS:USER:S0</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -1148,11 +1148,11 @@ $(pv_value)</tooltip>
         <vertical_alignment>1</vertical_alignment>
         <visible>true</visible>
         <widget_type>Label</widget_type>
-        <width>147</width>
+        <width>91</width>
         <wrap_words>false</wrap_words>
         <wuid>5da5fba8:1814ce0608c:-32a0</wuid>
-        <x>18</x>
-        <y>76</y>
+        <x>36</x>
+        <y>75</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -1354,6 +1354,64 @@ $(pv_value)</tooltip>
         <x>153</x>
         <y>46</y>
       </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <alarm_pulsing>false</alarm_pulsing>
+        <alpha>255</alpha>
+        <anti_alias>true</anti_alias>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <background_color>
+          <color red="30" green="144" blue="255" />
+        </background_color>
+        <bg_gradient_color>
+          <color red="255" green="255" blue="255" />
+        </bg_gradient_color>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>1</border_style>
+        <border_width>2</border_width>
+        <enabled>true</enabled>
+        <fg_gradient_color>
+          <color red="255" green="255" blue="255" />
+        </fg_gradient_color>
+        <fill_level>0.0</fill_level>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <foreground_color>
+          <color red="255" green="0" blue="0" />
+        </foreground_color>
+        <gradient>false</gradient>
+        <height>139</height>
+        <horizontal_fill>true</horizontal_fill>
+        <line_color>
+          <color red="128" green="0" blue="255" />
+        </line_color>
+        <line_style>0</line_style>
+        <line_width>0</line_width>
+        <name>Rectangle</name>
+        <pv_name></pv_name>
+        <pv_value />
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <transparent>true</transparent>
+        <visible>true</visible>
+        <widget_type>Rectangle</widget_type>
+        <width>247</width>
+        <wuid>3fcd850:183b1cb1611:-7be0</wuid>
+        <x>0</x>
+        <y>0</y>
+      </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -1417,6 +1475,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ20</NAME>
+          <PV>DFKPS_23</PV>
         </macros>
         <name>RQ_20_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -1431,7 +1490,7 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>73</width>
+        <width>56</width>
         <wuid>5da5fba8:1814ce0608c:-7d3d</wuid>
         <x>46</x>
         <y>0</y>
@@ -1458,6 +1517,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ19</NAME>
+          <PV>DFKPS_08</PV>
         </macros>
         <name>RQ_19_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -1472,7 +1532,7 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>73</width>
+        <width>56</width>
         <wuid>5da5fba8:1814ce0608c:-7baf</wuid>
         <x>97</x>
         <y>19</y>
@@ -1499,6 +1559,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ18</NAME>
+          <PV>DFKPS_22</PV>
         </macros>
         <name>RQ_18_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -1513,7 +1574,7 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>73</width>
+        <width>56</width>
         <wuid>5da5fba8:1814ce0608c:-7ba0</wuid>
         <x>148</x>
         <y>28</y>
@@ -1521,18 +1582,16 @@ $(pv_value)</tooltip>
       <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
         <actions hook="false" hook_all="false">
           <action type="OPEN_DISPLAY">
-            <path>indiviudal_port_table_port3.opi</path>
+            <path>indiviudal_port_table_port.opi</path>
             <macros>
               <include_parent_macros>true</include_parent_macros>
               <PORT>3</PORT>
-              <PSU1_NAME>RQ21</PSU1_NAME>
-              <PSU2_NAME>RQ22</PSU2_NAME>
-              <PSU3_NAME>RQ23</PSU3_NAME>
-              <PSU4_NAME>XFD4</PSU4_NAME>
-              <PSU1_PREFIX>DFKPS_01</PSU1_PREFIX>
-              <PSU2_PREFIX>DFKPS_02</PSU2_PREFIX>
-              <PSU3_PREFIX>DFKPS_03</PSU3_PREFIX>
-              <PSU4_PREFIX>DFKPS_04</PSU4_PREFIX>
+              <PSU1_NAME>RQ18</PSU1_NAME>
+              <PSU2_NAME>RQ19</PSU2_NAME>
+              <PSU3_NAME>RQ20</PSU3_NAME>
+              <PSU1_PREFIX>DFKPS_22</PSU1_PREFIX>
+              <PSU2_PREFIX>DFKPS_08</PSU2_PREFIX>
+              <PSU3_PREFIX>DFKPS_23</PSU3_PREFIX>
             </macros>
             <mode>1</mode>
             <description></description>
@@ -1602,7 +1661,7 @@ $(pv_value)</tooltip>
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <height>68</height>
-      <lock_children>true</lock_children>
+      <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
@@ -1645,6 +1704,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RB4</NAME>
+          <PV>DFKPS_11</PV>
         </macros>
         <name>RB_4_Linking_Container</name>
         <opi_file>psu_magnet_status_circle.opi</opi_file>
@@ -1659,7 +1719,7 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>79</width>
+        <width>62</width>
         <wuid>-71e507be:1826d738621:-758c</wuid>
         <x>0</x>
         <y>6</y>
@@ -1686,6 +1746,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ17</NAME>
+          <PV>DFKPS_19</PV>
         </macros>
         <name>RQ_17_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -1700,7 +1761,7 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>73</width>
+        <width>56</width>
         <wuid>5da5fba8:1814ce0608c:-7b05</wuid>
         <x>61</x>
         <y>0</y>
@@ -1727,6 +1788,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ16</NAME>
+          <PV>DFKPS_21</PV>
         </macros>
         <name>RQ_16_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -1741,13 +1803,13 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>73</width>
+        <width>56</width>
         <wuid>5da5fba8:1814ce0608c:-7b14</wuid>
         <x>114</x>
         <y>0</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-        <actions hook="false" hook_all="false" />
+        <actions hook="true" hook_all="false" />
         <background_color>
           <color red="240" green="240" blue="240" />
         </background_color>
@@ -1768,6 +1830,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ15</NAME>
+          <PV>DFKPS_29</PV>
         </macros>
         <name>RQ_15_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -1782,7 +1845,7 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>73</width>
+        <width>56</width>
         <wuid>5da5fba8:1814ce0608c:-7b23</wuid>
         <x>167</x>
         <y>0</y>
@@ -1806,10 +1869,13 @@ $(pv_value)</tooltip>
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <group_name></group_name>
-      <height>109</height>
+      <height>104</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <NAME>RB2</NAME>
+        <NAME1>RB2_1</NAME1>
+        <NAME2>RB2_2</NAME2>
+        <PV1>DFKPS_32</PV1>
+        <PV2>DFKPS_33</PV2>
       </macros>
       <name>RB_2_Split_Magnet_Linking_Container</name>
       <opi_file>psu_magnet_status_circle_half.opi</opi_file>
@@ -1824,7 +1890,7 @@ $(pv_value)</tooltip>
       <tooltip></tooltip>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
-      <width>127</width>
+      <width>105</width>
       <wuid>-5ebb716c:1816b761845:-7ebd</wuid>
       <x>431</x>
       <y>67</y>
@@ -1870,7 +1936,7 @@ $(pv_value)</tooltip>
       <x>543</x>
       <y>78</y>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-        <actions hook="false" hook_all="false" />
+        <actions hook="true" hook_all="false" />
         <background_color>
           <color red="240" green="240" blue="240" />
         </background_color>
@@ -1891,6 +1957,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>SY1</NAME>
+          <PV>DFKPS_30</PV>
         </macros>
         <name>SY_1_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -1905,7 +1972,7 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>73</width>
+        <width>56</width>
         <wuid>5da5fba8:1814ce0608c:-78bd</wuid>
         <x>87</x>
         <y>30</y>
@@ -1932,6 +1999,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ5</NAME>
+          <PV>DFKPS_27</PV>
         </macros>
         <name>RQ_5_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -1946,13 +2014,13 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>73</width>
+        <width>56</width>
         <wuid>5da5fba8:1814ce0608c:-78cc</wuid>
         <x>139</x>
         <y>22</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-        <actions hook="false" hook_all="false" />
+        <actions hook="true" hook_all="false" />
         <background_color>
           <color red="240" green="240" blue="240" />
         </background_color>
@@ -1973,6 +2041,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ4</NAME>
+          <PV>DFKPS_26</PV>
         </macros>
         <name>RQ_4_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -1987,13 +2056,13 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>73</width>
+        <width>56</width>
         <wuid>5da5fba8:1814ce0608c:-78db</wuid>
         <x>190</x>
         <y>10</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-        <actions hook="false" hook_all="false" />
+        <actions hook="true" hook_all="false" />
         <background_color>
           <color red="240" green="240" blue="240" />
         </background_color>
@@ -2014,6 +2083,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ3</NAME>
+          <PV>DFKPS_24</PV>
         </macros>
         <name>RQ_3_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -2028,13 +2098,23 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>73</width>
+        <width>56</width>
         <wuid>5da5fba8:1814ce0608c:-78ea</wuid>
         <x>234</x>
         <y>0</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-        <actions hook="false" hook_all="false" />
+        <actions hook="true" hook_all="false">
+          <action type="OPEN_DISPLAY">
+            <path>../danfysik.opi</path>
+            <macros>
+              <include_parent_macros>true</include_parent_macros>
+              <DFKPS>DFKPS_02</DFKPS>
+            </macros>
+            <mode>0</mode>
+            <description></description>
+          </action>
+        </actions>
         <background_color>
           <color red="240" green="240" blue="240" />
         </background_color>
@@ -2055,6 +2135,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RB1</NAME>
+          <PV>DFKPS_02</PV>
         </macros>
         <name>RB_1_Linking_Container</name>
         <opi_file>psu_magnet_status_circle.opi</opi_file>
@@ -2069,13 +2150,13 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>79</width>
+        <width>62</width>
         <wuid>5da5fba8:1814ce0608c:-7741</wuid>
         <x>326</x>
         <y>6</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-        <actions hook="false" hook_all="false" />
+        <actions hook="true" hook_all="false" />
         <background_color>
           <color red="240" green="240" blue="240" />
         </background_color>
@@ -2096,6 +2177,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>SY2</NAME>
+          <PV>DFKPS_31</PV>
         </macros>
         <name>SY_2_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -2110,7 +2192,7 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>73</width>
+        <width>56</width>
         <wuid>5da5fba8:1814ce0608c:-78ae</wuid>
         <x>6</x>
         <y>30</y>
@@ -2323,7 +2405,7 @@ $(pv_value)</tooltip>
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <height>68</height>
-      <lock_children>true</lock_children>
+      <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
@@ -2345,7 +2427,7 @@ $(pv_value)</tooltip>
       <x>853</x>
       <y>18</y>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-        <actions hook="false" hook_all="false" />
+        <actions hook="true" hook_all="false" />
         <background_color>
           <color red="240" green="240" blue="240" />
         </background_color>
@@ -2366,6 +2448,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ2</NAME>
+          <PV>DFKPS_06</PV>
         </macros>
         <name>RQ_2_Linking_Container</name>
         <opi_file>psu_magnet_status_horizontal.opi</opi_file>
@@ -2386,7 +2469,7 @@ $(pv_value)</tooltip>
         <y>30</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-        <actions hook="false" hook_all="false" />
+        <actions hook="true" hook_all="false" />
         <background_color>
           <color red="240" green="240" blue="240" />
         </background_color>
@@ -2407,6 +2490,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ1</NAME>
+          <PV>DFKPS_01</PV>
         </macros>
         <name>RQ_1_Linking_Container</name>
         <opi_file>psu_magnet_status_horizontal.opi</opi_file>
@@ -2446,7 +2530,7 @@ $(pv_value)</tooltip>
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <height>329</height>
-      <lock_children>true</lock_children>
+      <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
@@ -2489,6 +2573,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RB3</NAME>
+          <PV>DFKPS_11</PV>
         </macros>
         <name>RB_3_Linking_Container</name>
         <opi_file>psu_magnet_status_circle.opi</opi_file>
@@ -2503,7 +2588,7 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>79</width>
+        <width>62</width>
         <wuid>-71e507be:1826d738621:-7510</wuid>
         <x>79</x>
         <y>268</y>
@@ -2530,6 +2615,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ7</NAME>
+          <PV>DFKPS_04</PV>
         </macros>
         <name>RQ_7_Linking_Container</name>
         <opi_file>psu_magnet_status_horizontal.opi</opi_file>
@@ -2571,6 +2657,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ6</NAME>
+          <PV>DFKPS_25</PV>
         </macros>
         <name>RQ_6_Linking_Container</name>
         <opi_file>psu_magnet_status_horizontal.opi</opi_file>
@@ -2612,6 +2699,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ8</NAME>
+          <PV>DFKPS_28</PV>
         </macros>
         <name>RQ_8_Linking_Container</name>
         <opi_file>psu_magnet_status_horizontal.opi</opi_file>
@@ -2655,7 +2743,7 @@ $(pv_value)</tooltip>
           <NAME>SEP2</NAME>
         </macros>
         <name>SEP_2_P_Linking_Container</name>
-        <opi_file>psu_magnet_status_horizontal.opi</opi_file>
+        <opi_file>psu_magnet_status_seperator.opi</opi_file>
         <resize_behaviour>0</resize_behaviour>
         <rules />
         <scale_options>
@@ -2694,6 +2782,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>XFD2</NAME>
+          <PV>DFKPS_14</PV>
         </macros>
         <name>XFD_2_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -2708,7 +2797,7 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>73</width>
+        <width>56</width>
         <wuid>3946a239:181a545bcf0:-7b17</wuid>
         <x>122</x>
         <y>192</y>
@@ -2737,7 +2826,7 @@ $(pv_value)</tooltip>
           <NAME>SEP2</NAME>
         </macros>
         <name>SEP_2_N_Linking_Container</name>
-        <opi_file>psu_magnet_status_horizontal.opi</opi_file>
+        <opi_file>psu_magnet_status_seperator.opi</opi_file>
         <resize_behaviour>0</resize_behaviour>
         <rules />
         <scale_options>
@@ -2836,7 +2925,7 @@ $(pv_value)</tooltip>
           <NAME>SEP1</NAME>
         </macros>
         <name>SEP_1_P_Linking_Container</name>
-        <opi_file>psu_magnet_status_horizontal.opi</opi_file>
+        <opi_file>psu_magnet_status_seperator.opi</opi_file>
         <resize_behaviour>0</resize_behaviour>
         <rules />
         <scale_options>
@@ -2875,6 +2964,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>XFD1</NAME>
+          <PV>DFKPS_13</PV>
         </macros>
         <name>XFD_1_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -2889,7 +2979,7 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>73</width>
+        <width>56</width>
         <wuid>3946a239:181a545bcf0:-7ae0</wuid>
         <x>122</x>
         <y>6</y>
@@ -2918,7 +3008,7 @@ $(pv_value)</tooltip>
           <NAME>SEP1</NAME>
         </macros>
         <name>SEP_1_N_Linking_Container</name>
-        <opi_file>psu_magnet_status_horizontal.opi</opi_file>
+        <opi_file>psu_magnet_status_seperator.opi</opi_file>
         <resize_behaviour>0</resize_behaviour>
         <rules />
         <scale_options>
@@ -3140,6 +3230,7 @@ P</text>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ14</NAME>
+          <PV>DFKPS_20</PV>
         </macros>
         <name>RQ_14_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -3154,7 +3245,7 @@ P</text>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>73</width>
+        <width>56</width>
         <wuid>5da5fba8:1814ce0608c:-7926</wuid>
         <x>44</x>
         <y>36</y>
@@ -3181,6 +3272,7 @@ P</text>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ13</NAME>
+          <PV>DFKPS_12</PV>
         </macros>
         <name>RQ_13_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -3195,7 +3287,7 @@ P</text>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>73</width>
+        <width>56</width>
         <wuid>5da5fba8:1814ce0608c:-7917</wuid>
         <x>93</x>
         <y>18</y>
@@ -3222,6 +3314,7 @@ P</text>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ12</NAME>
+          <PV>DFKPS_16</PV>
         </macros>
         <name>RQ_12_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -3236,7 +3329,7 @@ P</text>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>73</width>
+        <width>56</width>
         <wuid>5da5fba8:1814ce0608c:-7908</wuid>
         <x>146</x>
         <y>0</y>
@@ -3244,18 +3337,16 @@ P</text>
       <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
         <actions hook="false" hook_all="false">
           <action type="OPEN_DISPLAY">
-            <path>indiviudal_port_table_port2.opi</path>
+            <path>indiviudal_port_table_port.opi</path>
             <macros>
               <include_parent_macros>true</include_parent_macros>
               <PORT>2</PORT>
-              <PSU1_NAME>RQ21</PSU1_NAME>
-              <PSU2_NAME>RQ22</PSU2_NAME>
-              <PSU3_NAME>RQ23</PSU3_NAME>
-              <PSU4_NAME>XFD4</PSU4_NAME>
-              <PSU1_PREFIX>DFKPS_01</PSU1_PREFIX>
-              <PSU2_PREFIX>DFKPS_02</PSU2_PREFIX>
-              <PSU3_PREFIX>DFKPS_03</PSU3_PREFIX>
-              <PSU4_PREFIX>DFKPS_04</PSU4_PREFIX>
+              <PSU1_NAME>RQ12</PSU1_NAME>
+              <PSU2_NAME>RQ13</PSU2_NAME>
+              <PSU3_NAME>RQ14</PSU3_NAME>
+              <PSU1_PREFIX>DFKPS_16</PSU1_PREFIX>
+              <PSU2_PREFIX>DFKPS_12</PSU2_PREFIX>
+              <PSU3_PREFIX>DFKPS_20</PSU3_PREFIX>
             </macros>
             <mode>1</mode>
             <description></description>
@@ -3368,6 +3459,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ9</NAME>
+          <PV>DFKPS_18</PV>
         </macros>
         <name>RQ_9_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -3382,7 +3474,7 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>73</width>
+        <width>56</width>
         <wuid>5da5fba8:1814ce0608c:-78f9</wuid>
         <x>0</x>
         <y>0</y>
@@ -3409,6 +3501,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ10</NAME>
+          <PV>DFKPS_07</PV>
         </macros>
         <name>RQ_10_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -3423,7 +3516,7 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>73</width>
+        <width>56</width>
         <wuid>5da5fba8:1814ce0608c:-7935</wuid>
         <x>43</x>
         <y>19</y>
@@ -3450,6 +3543,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ11</NAME>
+          <PV>DFKPS_17</PV>
         </macros>
         <name>RQ_11_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -3464,7 +3558,7 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>73</width>
+        <width>56</width>
         <wuid>5da5fba8:1814ce0608c:-7944</wuid>
         <x>95</x>
         <y>36</y>
@@ -3472,18 +3566,16 @@ $(pv_value)</tooltip>
       <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
         <actions hook="false" hook_all="false">
           <action type="OPEN_DISPLAY">
-            <path>indiviudal_port_table_port1.opi</path>
+            <path>indiviudal_port_table_port.opi</path>
             <macros>
               <include_parent_macros>true</include_parent_macros>
               <PORT>1</PORT>
-              <PSU1_NAME>RQ21</PSU1_NAME>
-              <PSU2_NAME>RQ22</PSU2_NAME>
-              <PSU3_NAME>RQ23</PSU3_NAME>
-              <PSU4_NAME>XFD4</PSU4_NAME>
-              <PSU1_PREFIX>DFKPS_01</PSU1_PREFIX>
-              <PSU2_PREFIX>DFKPS_02</PSU2_PREFIX>
-              <PSU3_PREFIX>DFKPS_03</PSU3_PREFIX>
-              <PSU4_PREFIX>DFKPS_04</PSU4_PREFIX>
+              <PSU1_NAME>RQ9</PSU1_NAME>
+              <PSU2_NAME>RQ10</PSU2_NAME>
+              <PSU3_NAME>RQ11</PSU3_NAME>
+              <PSU1_PREFIX>DFKPS_18</PSU1_PREFIX>
+              <PSU2_PREFIX>DFKPS_07</PSU2_PREFIX>
+              <PSU3_PREFIX>DFKPS_17</PSU3_PREFIX>
             </macros>
             <mode>1</mode>
             <description></description>
@@ -3661,14 +3753,18 @@ $(pv_value)</tooltip>
             <macros>
               <include_parent_macros>true</include_parent_macros>
               <PORT>4</PORT>
-              <PSU1_NAME>RQ21</PSU1_NAME>
-              <PSU2_NAME>RQ22</PSU2_NAME>
-              <PSU3_NAME>RQ23</PSU3_NAME>
-              <PSU4_NAME>XFD4</PSU4_NAME>
-              <PSU1_PREFIX>DFKPS_01</PSU1_PREFIX>
-              <PSU2_PREFIX>DFKPS_02</PSU2_PREFIX>
-              <PSU3_PREFIX>DFKPS_03</PSU3_PREFIX>
-              <PSU4_PREFIX>DFKPS_04</PSU4_PREFIX>
+              <PSU1_NAME>XFD3</PSU1_NAME>
+              <PSU2_NAME>SEP3 -VE</PSU2_NAME>
+              <PSU3_NAME>SEP3 +VE</PSU3_NAME>
+              <PSU4_NAME>RQ21</PSU4_NAME>
+              <PSU5_NAME>RQ22</PSU5_NAME>
+              <PSU6_NAME>RQ23</PSU6_NAME>
+              <PSU1_PREFIX>DFKPS_15</PSU1_PREFIX>
+              <PSU2_PREFIX>TECHNIX_06</PSU2_PREFIX>
+              <PSU3_PREFIX>TECHNIX_05</PSU3_PREFIX>
+              <PSU4_PREFIX>DFKPS_03</PSU4_PREFIX>
+              <PSU5_PREFIX>DFKPS_10</PSU5_PREFIX>
+              <PSU6_PREFIX>DFKPS_05</PSU6_PREFIX>
             </macros>
             <mode>1</mode>
             <description></description>
@@ -3740,6 +3836,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ23</NAME>
+          <PV>DFKPS_05</PV>
         </macros>
         <name>RQ_23_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -3754,7 +3851,7 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>73</width>
+        <width>56</width>
         <wuid>5da5fba8:1814ce0608c:-7b82</wuid>
         <x>36</x>
         <y>128</y>
@@ -3781,6 +3878,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ22</NAME>
+          <PV>DFKPS_10</PV>
         </macros>
         <name>RQ_22_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -3795,7 +3893,7 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>73</width>
+        <width>56</width>
         <wuid>5da5fba8:1814ce0608c:-7b73</wuid>
         <x>84</x>
         <y>102</y>
@@ -3822,6 +3920,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ21</NAME>
+          <PV>DFKPS_03</PV>
         </macros>
         <name>RQ_21_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -3836,7 +3935,7 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>73</width>
+        <width>56</width>
         <wuid>5da5fba8:1814ce0608c:-7b64</wuid>
         <x>134</x>
         <y>74</y>
@@ -3863,9 +3962,10 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>SEP3</NAME>
+          <PV>TECHNIX_05</PV>
         </macros>
         <name>SEP_3_P_Linking_Container</name>
-        <opi_file>psu_magnet_status_horizontal.opi</opi_file>
+        <opi_file>psu_magnet_status_seperator.opi</opi_file>
         <resize_behaviour>0</resize_behaviour>
         <rules />
         <scale_options>
@@ -3904,9 +4004,10 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>SEP3</NAME>
+          <PV>TECHNIX_06</PV>
         </macros>
         <name>SEP_3_N_Linking Container</name>
-        <opi_file>psu_magnet_status_horizontal.opi</opi_file>
+        <opi_file>psu_magnet_status_seperator.opi</opi_file>
         <resize_behaviour>0</resize_behaviour>
         <rules />
         <scale_options>
@@ -3945,6 +4046,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>XFD3</NAME>
+          <PV>DFKPS_15</PV>
         </macros>
         <name>XFD_3__LEFT_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -3959,7 +4061,7 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>73</width>
+        <width>56</width>
         <wuid>-71e507be:1826d738621:-75ce</wuid>
         <x>208</x>
         <y>2</y>
@@ -4006,64 +4108,6 @@ P</text>
         <x>91</x>
         <y>5</y>
       </widget>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
-      <actions hook="false" hook_all="false" />
-      <alarm_pulsing>false</alarm_pulsing>
-      <alpha>255</alpha>
-      <anti_alias>true</anti_alias>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <background_color>
-        <color red="30" green="144" blue="255" />
-      </background_color>
-      <bg_gradient_color>
-        <color red="255" green="255" blue="255" />
-      </bg_gradient_color>
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <border_color>
-        <color red="0" green="128" blue="255" />
-      </border_color>
-      <border_style>1</border_style>
-      <border_width>2</border_width>
-      <enabled>true</enabled>
-      <fg_gradient_color>
-        <color red="255" green="255" blue="255" />
-      </fg_gradient_color>
-      <fill_level>0.0</fill_level>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-      </font>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <foreground_color>
-        <color red="255" green="0" blue="0" />
-      </foreground_color>
-      <gradient>false</gradient>
-      <height>139</height>
-      <horizontal_fill>true</horizontal_fill>
-      <line_color>
-        <color red="128" green="0" blue="255" />
-      </line_color>
-      <line_style>0</line_style>
-      <line_width>0</line_width>
-      <name>Rectangle</name>
-      <pv_name></pv_name>
-      <pv_value />
-      <rules />
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <transparent>true</transparent>
-      <visible>true</visible>
-      <widget_type>Rectangle</widget_type>
-      <width>247</width>
-      <wuid>5da5fba8:1814ce0608c:-32bf</wuid>
-      <x>6</x>
-      <y>402</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
       <actions hook="false" hook_all="false" />
