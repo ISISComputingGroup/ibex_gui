@@ -77,7 +77,7 @@ public class DeviceScreenVariablesTest {
         when(switchingObservableFactory.getSwitchableObservable((ChannelType<String>) any(ChannelType.class), anyString()))
                 .thenReturn(defaultSwitchableObservable);
 
-        Writable defaultWritable = mock(Writable.class);
+        SwitchableWritable defaultWritable = mock(SwitchableWritable.class);
         switchingWritableFactory = mock(WritableFactory.class);
         when(switchingWritableFactory.getSwitchableWritable((ChannelType<String>) any(ChannelType.class), anyString()))
                 .thenReturn(defaultWritable);
