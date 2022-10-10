@@ -57,7 +57,7 @@ public class DeviceScreensDescriptionToXmlConverterTest {
         DeviceScreensDescription deviceScreensDescription = new DeviceScreensDescription();
         deviceScreensDescription.addDevice(deviceDescription);
 
-        Observable schema = mock(Observable.class);
+        Observable<String> schema = mock(Observable.class);
         when(schema.getValue()).thenReturn(null);
         DeviceScreenDescriptionToXmlConverter converter = new DeviceScreenDescriptionToXmlConverter(schema);
 
