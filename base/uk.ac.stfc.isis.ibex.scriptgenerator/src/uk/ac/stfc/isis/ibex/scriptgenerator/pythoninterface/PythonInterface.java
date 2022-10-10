@@ -377,6 +377,27 @@ public class PythonInterface extends ModelObject {
 		return scriptGenContent.stream()
 				.map(action -> action.getActionParameterValueMapAsStrings()).collect(Collectors.toList());
 	}
+	
+	private interface RefreshRunnable {
+		Object run() throws PythonNotReadyException, InterruptedException, ExecutionException;
+	}
+	
+	private void runRefreshRunnable(RefreshRunnable runnable, String property, String errorMsg) throws InterruptedException, ExecutionException, PythonNotReadyException {
+		if (pythonReady) {
+			CompletableFuture.supplyAsync(() -> {
+				try {
+					return runnable.run();
+				} catch (Py4JException | PythonNotReadyException | InterruptedException | ExecutionException e) {
+					LOG.error(e);
+					handlePythonReadinessChange(false);
+					return new Object();
+				}
+			}, THREAD).thenAccept(newValue -> firePropertyChange(property, null, newValue));
+		} else {
+			handlePythonReadinessChange(false);
+			throw new PythonNotReadyException(errorMsg);
+		}
+	}
 
 	/**
 	 * Use python to get validity errors of the current parameters and refresh the
@@ -391,21 +412,9 @@ public class PythonInterface extends ModelObject {
 	 */
 	public void refreshValidityErrors(List<String> globalParams, List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition)
 			throws InterruptedException, ExecutionException, PythonNotReadyException {
-		if (pythonReady) {
-			CompletableFuture.supplyAsync(() -> {
-				try {
-					return scriptDefinitionsWrapper.getValidityErrors(globalParams, convertScriptGenContentToPython(scriptGenContent), scriptDefinition);
-				} catch (Py4JException e) {
-					LOG.error(e);
-					handlePythonReadinessChange(false);
-					return new HashMap<>();
-				}
-			}, THREAD)
-				.thenAccept(newValidityErrors -> firePropertyChange(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, null, newValidityErrors));
-		} else {
-			handlePythonReadinessChange(false);
-			throw new PythonNotReadyException("When getting validity errors");
-		}
+		runRefreshRunnable(() -> {
+			return scriptDefinitionsWrapper.getValidityErrors(globalParams, convertScriptGenContentToPython(scriptGenContent), scriptDefinition);
+        }, ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, "When getting validity errors");
 	}
 
 	/**
@@ -421,21 +430,9 @@ public class PythonInterface extends ModelObject {
 	 */
 	public void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, List<String> globalParams, ScriptDefinitionWrapper scriptDefinition)
 			throws InterruptedException, ExecutionException, PythonNotReadyException {
-		if (pythonReady) {
-			CompletableFuture.supplyAsync(() -> {
-				try {
-					return scriptDefinitionsWrapper.areParamsValid(convertScriptGenContentToPython(scriptGenContent), globalParams, scriptDefinition);
-				} catch (Py4JException e) {
-					LOG.error(e);
-					handlePythonReadinessChange(false);
-					return false;
-				}
-			}, THREAD)
-				.thenAccept(paramValidity -> firePropertyChange(ScriptGeneratorProperties.PARAM_VALIDITY_PROPERTY, null, paramValidity));
-		} else {
-			handlePythonReadinessChange(false);
-			throw new PythonNotReadyException("When getting parameter validity");
-		}
+		runRefreshRunnable(() -> {
+			return scriptDefinitionsWrapper.areParamsValid(convertScriptGenContentToPython(scriptGenContent), globalParams, scriptDefinition);
+        }, ScriptGeneratorProperties.PARAM_VALIDITY_PROPERTY, "When getting parameter validity");
 	}
 	
     /**
@@ -451,22 +448,9 @@ public class PythonInterface extends ModelObject {
      */
     public void refreshTimeEstimation(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams)
             throws InterruptedException, ExecutionException, PythonNotReadyException {
-        if (pythonReady) {
-            CompletableFuture.supplyAsync(() -> {
-                try {
-                    return scriptDefinitionsWrapper.estimateTime(convertScriptGenContentToPython(scriptGenContent), scriptDefinition, globalParams);
-                } catch (Py4JException e) {
-                    LOG.error(e);
-                    handlePythonReadinessChange(false);
-                    return false;
-                }
-            }, THREAD).thenAccept(timeEstimate -> 
-                firePropertyChange(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, null, timeEstimate)
-            );
-        } else {
-            handlePythonReadinessChange(false);
-            throw new PythonNotReadyException("When getting time estimation");
-        }
+    	runRefreshRunnable(() -> {
+    		return scriptDefinitionsWrapper.estimateTime(convertScriptGenContentToPython(scriptGenContent), scriptDefinition, globalParams);
+        }, ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, "When getting time estimation");
     }
     
     /**
@@ -482,22 +466,9 @@ public class PythonInterface extends ModelObject {
      */
     public void refreshCustomEstimation(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams)
             throws InterruptedException, ExecutionException, PythonNotReadyException {
-        if (pythonReady) {
-            CompletableFuture.supplyAsync(() -> {
-                try {
-                    return scriptDefinitionsWrapper.estimateCustom(convertScriptGenContentToPython(scriptGenContent), scriptDefinition, globalParams);
-                } catch (Py4JException e) {
-                    LOG.error(e);
-                    handlePythonReadinessChange(false);
-                    return false;
-                }
-            }, THREAD).thenAccept(estimateCustom -> 
-                firePropertyChange(ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY, null, estimateCustom)
-            );
-        } else {
-            handlePythonReadinessChange(false);
-            throw new PythonNotReadyException("When getting custom estimation");
-        }
+    	runRefreshRunnable(() -> {
+    		return scriptDefinitionsWrapper.estimateCustom(convertScriptGenContentToPython(scriptGenContent), scriptDefinition, globalParams);
+        }, ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY, "When getting custom estimation");
     }
     
     /**

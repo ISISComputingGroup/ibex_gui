@@ -85,7 +85,7 @@ public interface ScriptDefinitionsWrapper {
      * @return A map where the key is the index of the action in the list and 
      *      the value is the estimated time in seconds
      */
-	Map<Integer, List<Number>> estimateCustom(List<Map<String, String>> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams);
+	Map<Integer, Map<String, String>> estimateCustom(List<Map<String, String>> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams);
 	
 	/**
 	 * Check if Python is ready.

@@ -1,10 +1,17 @@
 package uk.ac.stfc.isis.ibex.ui.dae.spectraplots;
 
 import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import org.apache.logging.log4j.Logger;
+
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.Observable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
@@ -25,7 +32,10 @@ public class PersistedLocalChannel<T> {
 	
 	private static final WritableFactory WRITE_FACTORY = new WritableFactory(OnInstrumentSwitch.NOTHING);
 	private static final ObservableFactory OBS_FACTORY = new ObservableFactory(OnInstrumentSwitch.NOTHING);
+	private static final ScheduledExecutorService EXECUTOR = Executors.newSingleThreadScheduledExecutor(
+            new ThreadFactoryBuilder().setNameFormat("PersistedLocalChannel-worker-%d").build());
 	private static final Logger LOG = IsisLog.getLogger(PersistedLocalChannel.class);
+	private static final int MAX_WRITE_RETRIES = 30;
 	
 	private final Observable<T> observable;
 	private final Writable<T> writable;
@@ -57,11 +67,7 @@ public class PersistedLocalChannel<T> {
     public void setInitialValueAndSubscribeToChanges() {
     	T initialValue = persistenceGetter.get();
     	
-    	try {
-    		writable.write(initialValue);
-    	} catch (IOException e) {
-    		LoggerUtils.logErrorWithStackTrace(LOG, String.format("Couldn't set initial value to '%s' for local PV '%s'", initialValue, address), e);
-    	}
+    	writeToPv(initialValue);
     	
     	observable.subscribe(new BaseObserver<T>() {
     		@Override
@@ -79,5 +85,32 @@ public class PersistedLocalChannel<T> {
      */
     public String getPVAddress() {
     	return address;
+    }
+    
+    /**Attempt to write initial value to local PV. If fails (due to an existing race condition), try again until it passes.
+     * @param initialValue - value to be written to PV
+     */
+    private void writeToPv(T initialValue) {
+    	Runnable task = new Runnable() {
+    		private AtomicInteger iterations = new AtomicInteger(1);
+    		
+    		@Override
+    		public void run() {
+    			try {
+    	    		writable.write(initialValue);
+	    		} catch (IOException e) {
+	    			LoggerUtils.logErrorWithStackTrace(LOG, String.format("Couldn't set initial value to '%s' for local PV '%s'. Retrying to re-write (attempt %d out of %d)...", 
+	    							initialValue, address, iterations.get(), MAX_WRITE_RETRIES), e);
+	    			// Restrict writing re-attempts
+	    			if (iterations.getAndIncrement() < MAX_WRITE_RETRIES) { 
+	    				EXECUTOR.schedule(this, 1, TimeUnit.SECONDS);
+	    			} else {
+	    				LOG.info(String.format("Giving up writing to local PV '%s' after %d iterations; could not load PV intial value.", address, iterations.get()));
+	    			}
+	    		}
+    		}
+    	};
+    	
+    	EXECUTOR.schedule(task, 0, TimeUnit.SECONDS);
     }
 }
