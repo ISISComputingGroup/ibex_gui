@@ -377,6 +377,27 @@ public class PythonInterface extends ModelObject {
 		return scriptGenContent.stream()
 				.map(action -> action.getActionParameterValueMapAsStrings()).collect(Collectors.toList());
 	}
+	
+	private interface RefreshRunnable {
+		Object run() throws PythonNotReadyException, InterruptedException, ExecutionException;
+	}
+	
+	private void runRefreshRunnable(RefreshRunnable runnable, String property, String errorMsg) throws InterruptedException, ExecutionException, PythonNotReadyException {
+		if (pythonReady) {
+			CompletableFuture.supplyAsync(() -> {
+				try {
+					return runnable.run();
+				} catch (Py4JException | PythonNotReadyException | InterruptedException | ExecutionException e) {
+					LOG.error(e);
+					handlePythonReadinessChange(false);
+					return null;
+				}
+			}, THREAD).thenAccept(newValue -> firePropertyChange(property, null, newValue));
+		} else {
+			handlePythonReadinessChange(false);
+			throw new PythonNotReadyException(errorMsg);
+		}
+	}
 
 	/**
 	 * Use python to get validity errors of the current parameters and refresh the
@@ -384,28 +405,16 @@ public class PythonInterface extends ModelObject {
 	 * 
 	 * @param scriptGenContent The script generator content to validate.
 	 * @param scriptDefinition           The script definition to validate against.
-	 * @param globalParams The global parameters to generate the script with.
+	 * @param globalParams The global parameters to check parameter validity with.
 	 * @throws ExecutionException   A failure to execute the py4j call
 	 * @throws InterruptedException The Py4J call was interrupted
 	 * @throws PythonNotReadyException When python is not ready to accept calls.
 	 */
 	public void refreshValidityErrors(List<String> globalParams, List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition)
 			throws InterruptedException, ExecutionException, PythonNotReadyException {
-		if (pythonReady) {
-			CompletableFuture.supplyAsync(() -> {
-				try {
-					return scriptDefinitionsWrapper.getValidityErrors(globalParams, convertScriptGenContentToPython(scriptGenContent), scriptDefinition);
-				} catch (Py4JException e) {
-					LOG.error(e);
-					handlePythonReadinessChange(false);
-					return new HashMap<>();
-				}
-			}, THREAD)
-				.thenAccept(newValidityErrors -> firePropertyChange(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, null, newValidityErrors));
-		} else {
-			handlePythonReadinessChange(false);
-			throw new PythonNotReadyException("When getting validity errors");
-		}
+		runRefreshRunnable(() -> {
+			return scriptDefinitionsWrapper.getValidityErrors(globalParams, convertScriptGenContentToPython(scriptGenContent), scriptDefinition);
+        }, ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, "When getting validity errors");
 	}
 
 	/**
@@ -421,21 +430,9 @@ public class PythonInterface extends ModelObject {
 	 */
 	public void refreshAreParamsValid(List<ScriptGeneratorAction> scriptGenContent, List<String> globalParams, ScriptDefinitionWrapper scriptDefinition)
 			throws InterruptedException, ExecutionException, PythonNotReadyException {
-		if (pythonReady) {
-			CompletableFuture.supplyAsync(() -> {
-				try {
-					return scriptDefinitionsWrapper.areParamsValid(convertScriptGenContentToPython(scriptGenContent), globalParams, scriptDefinition);
-				} catch (Py4JException e) {
-					LOG.error(e);
-					handlePythonReadinessChange(false);
-					return false;
-				}
-			}, THREAD)
-				.thenAccept(paramValidity -> firePropertyChange(ScriptGeneratorProperties.PARAM_VALIDITY_PROPERTY, null, paramValidity));
-		} else {
-			handlePythonReadinessChange(false);
-			throw new PythonNotReadyException("When getting parameter validity");
-		}
+		runRefreshRunnable(() -> {
+			return scriptDefinitionsWrapper.areParamsValid(convertScriptGenContentToPython(scriptGenContent), globalParams, scriptDefinition);
+        }, ScriptGeneratorProperties.PARAM_VALIDITY_PROPERTY, "When getting parameter validity");
 	}
 	
     /**
@@ -451,22 +448,27 @@ public class PythonInterface extends ModelObject {
      */
     public void refreshTimeEstimation(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams)
             throws InterruptedException, ExecutionException, PythonNotReadyException {
-        if (pythonReady) {
-            CompletableFuture.supplyAsync(() -> {
-                try {
-                    return scriptDefinitionsWrapper.estimateTime(convertScriptGenContentToPython(scriptGenContent), scriptDefinition, globalParams);
-                } catch (Py4JException e) {
-                    LOG.error(e);
-                    handlePythonReadinessChange(false);
-                    return false;
-                }
-            }, THREAD).thenAccept(timeEstimate -> 
-                firePropertyChange(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, null, timeEstimate)
-            );
-        } else {
-            handlePythonReadinessChange(false);
-            throw new PythonNotReadyException("When getting time estimation");
-        }
+    	runRefreshRunnable(() -> {
+    		return scriptDefinitionsWrapper.estimateTime(convertScriptGenContentToPython(scriptGenContent), scriptDefinition, globalParams);
+        }, ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, "When getting time estimation");
+    }
+    
+    /**
+     * Use python to calculate a custom estimation defined by the scriptDefinition for the current parameters and refresh the
+     * custom estimation property.
+     * 
+     * @param scriptGenContent The script generator content
+     * @param scriptDefinition The script definition
+     * @param globalParams The global parameters to refresh custom estimation with.
+     * @throws ExecutionException A failure to execute the py4j call
+     * @throws InterruptedException The Py4J call was interrupted
+     * @throws PythonNotReadyException When python is not ready to accept calls.
+     */
+    public void refreshCustomEstimation(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams)
+            throws InterruptedException, ExecutionException, PythonNotReadyException {
+    	runRefreshRunnable(() -> {
+    		return scriptDefinitionsWrapper.estimateCustom(convertScriptGenContentToPython(scriptGenContent), scriptDefinition, globalParams);
+        }, ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY, "When getting custom estimation");
     }
     
     /**

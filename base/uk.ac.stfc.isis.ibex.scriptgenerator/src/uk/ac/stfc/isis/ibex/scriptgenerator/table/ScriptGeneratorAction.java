@@ -25,9 +25,14 @@ public class ScriptGeneratorAction extends ModelObject {
     private Optional<String> invalidityReason = Optional.empty();
 
     /**
-     * Contains the estimated time to complete the action. Empty optional if the action is invalid
+     * Contains the estimated time to complete the action. Empty optional if the action is invalid.
      */
     private Optional<Number> estimatedTime = Optional.empty();
+    
+    /**
+     * Contains the custom estimates of an action. Empty optional if the action is invalid.
+     */
+    private Optional<Map<String, String>> customEstimates = Optional.empty();
     
     private ActionDynamicScriptingStatus dynamicScriptingStatus = ActionDynamicScriptingStatus.NO_STATUS;
 
@@ -37,7 +42,7 @@ public class ScriptGeneratorAction extends ModelObject {
      * 			The user-set value (string) for the specified ActionParameter.
      */
     public ScriptGeneratorAction(Map<JavaActionParameter, String> paremetersMap) {
-	this.actionParameterValues = paremetersMap;
+    	this.actionParameterValues = paremetersMap;
     }
 
     /**
@@ -46,11 +51,11 @@ public class ScriptGeneratorAction extends ModelObject {
      * 			The action to copy.
      */
     public ScriptGeneratorAction(ScriptGeneratorAction actionToCopy) {
-	this.actionParameterValues = new HashMap<JavaActionParameter, String>();
-	// Add all Parameter/value pairs to the hash map
-	for (Map.Entry<JavaActionParameter, String> entry: actionToCopy.getActionParameterValueMap().entrySet()) {
-	    setActionParameterValue(entry.getKey(), entry.getValue());
-	}
+    	this.actionParameterValues = new HashMap<JavaActionParameter, String>();
+    	// Add all Parameter/value pairs to the hash map
+    	for (Map.Entry<JavaActionParameter, String> entry: actionToCopy.getActionParameterValueMap().entrySet()) {
+    		setActionParameterValue(entry.getKey(), entry.getValue());
+    	}
     }
 
     /**
@@ -61,10 +66,10 @@ public class ScriptGeneratorAction extends ModelObject {
      * 			The new value to set the parameter to.
      */
     public void setActionParameterValue(JavaActionParameter actionParameter, String value) {
-	String oldValue = actionParameterValues.get(actionParameter); 
-	actionParameterValues.put(actionParameter, value);
-	firePropertyChange(actionParameter.getName(), oldValue, value);
-	firePropertyChange(ScriptGeneratorProperties.VALUE_PROPERTY, oldValue, value);
+    	String oldValue = actionParameterValues.get(actionParameter); 
+    	actionParameterValues.put(actionParameter, value);
+    	firePropertyChange(actionParameter.getName(), oldValue, value);
+    	firePropertyChange(ScriptGeneratorProperties.VALUE_PROPERTY, oldValue, value);
     }
 
     /**
@@ -75,7 +80,7 @@ public class ScriptGeneratorAction extends ModelObject {
      * 			The value of the parameter.
      */
     public String getActionParameterValue(JavaActionParameter parameter) {
-	return actionParameterValues.get(parameter);
+    	return actionParameterValues.get(parameter);
     }
 
     /**
@@ -84,7 +89,7 @@ public class ScriptGeneratorAction extends ModelObject {
      * 			Map of parameter, value pairs.
      */
     public Map<JavaActionParameter, String> getActionParameterValueMap() {
-	return actionParameterValues;
+    	return actionParameterValues;
     }
 
     /**
@@ -93,21 +98,20 @@ public class ScriptGeneratorAction extends ModelObject {
      * 			Map of parameter, value pairs.
      */
     public Map<String, String> getActionParameterValueMapAsStrings() {
-	Map<String, String> actionParametersAsString = new HashMap<>();
+    	Map<String, String> actionParametersAsString = new HashMap<>();
 
-	for (Map.Entry<JavaActionParameter, String> actionParam : actionParameterValues.entrySet()) {
-
-	    actionParametersAsString.put(actionParam.getKey().getName(), actionParam.getValue());
-	}
-	return actionParametersAsString;
+    	for (Map.Entry<JavaActionParameter, String> actionParam : actionParameterValues.entrySet()) {
+    		actionParametersAsString.put(actionParam.getKey().getName(), actionParam.getValue());
+    	}
+    	return actionParametersAsString;
     }
 
     /**
      * Set this action as valid.
      */
     public void setValid() {
-	firePropertyChange(ScriptGeneratorProperties.VALIDITY_PROPERTY, isValid(), true);
-	invalidityReason = Optional.empty();
+    	firePropertyChange(ScriptGeneratorProperties.VALIDITY_PROPERTY, isValid(), true);
+		invalidityReason = Optional.empty();
     }
 
     /**
@@ -116,8 +120,8 @@ public class ScriptGeneratorAction extends ModelObject {
      * @param reason The reason for this being invalid.
      */
     public void setInvalid(String reason) {
-	firePropertyChange(ScriptGeneratorProperties.VALIDITY_PROPERTY, isValid(), false);
-	invalidityReason = Optional.of(reason);
+    	firePropertyChange(ScriptGeneratorProperties.VALIDITY_PROPERTY, isValid(), false);
+    	invalidityReason = Optional.of(reason);
     }
 
     /**
@@ -126,7 +130,7 @@ public class ScriptGeneratorAction extends ModelObject {
      * @return True if the action is valid, false if not.
      */
     public boolean isValid() {
-	return invalidityReason.isEmpty();
+    	return invalidityReason.isEmpty();
     }
 
     /**
@@ -135,7 +139,7 @@ public class ScriptGeneratorAction extends ModelObject {
      * @return Optional string of reason if invalid. Null if valid.
      */
     public Optional<String> getInvalidityReason() {
-	return invalidityReason;
+    	return invalidityReason;
     }
 
     /**
@@ -143,8 +147,17 @@ public class ScriptGeneratorAction extends ModelObject {
      * @param newEstimatedTime estimated time
      */
     public void setEstimatedTime(Optional<Number> newEstimatedTime) {
-	firePropertyChange(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, estimatedTime, newEstimatedTime);
-	estimatedTime = newEstimatedTime;
+    	firePropertyChange(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, estimatedTime, newEstimatedTime);
+    	estimatedTime = newEstimatedTime;
+    }
+    
+    /**
+     * Set the custom estimate value.
+     * @param newEstimates custom estimates numbers
+     */
+    public void setCustomEstimate(Optional<Map<String, String>> newEstimates) {
+    	firePropertyChange(ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY, customEstimates, newEstimates);
+    	customEstimates = newEstimates;
     }
 
     /**
@@ -152,7 +165,15 @@ public class ScriptGeneratorAction extends ModelObject {
      * @return estimated time in seconds
      */
     public Optional<Number> getEstimatedTime() {
-	return estimatedTime;
+    	return estimatedTime;
+    }
+    
+    /**
+     * Get the estimated custom numbers.
+     * @return custom estimates numbers
+     */
+    public Optional<Map<String, String>> getEstimatedCustom() {
+    	return customEstimates;
     }
     
     /**
