@@ -70,8 +70,10 @@
 				<artifactId>tycho-compiler-plugin</artifactId>
 				<version>${tycho.version}</version>
 				<configuration>
-					<compilerArgument>-err:-forbidden</compilerArgument>
 					<excludeResources>${basedir}/../uk.ac.stfc.isis.ibex.preferences/resources</excludeResources>
+					<failOnWarning>true</failOnWarning>
+					<showWarnings>true</showWarnings>
+					<useProjectSettings>false</useProjectSettings>
 				</configuration>
 			</plugin>
 
