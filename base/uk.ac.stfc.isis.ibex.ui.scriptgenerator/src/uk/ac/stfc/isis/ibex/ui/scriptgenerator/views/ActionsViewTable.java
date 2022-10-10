@@ -23,6 +23,7 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.eclipse.jface.viewers.CellLabelProvider;
@@ -259,18 +260,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	
 	private boolean estimatedCustomChanged(String columnHeader, TableItem item, int column, ScriptGeneratorAction action) {
 		var estimatedCustom = action.getEstimatedCustom();
-		if (estimatedCustom.isEmpty()) {
-			return false;
-		}
-		
-		int estimatedCustomStartIndex = table.getColumnCount() - dynamicNonEditableColumnsOnRight;
-		if (column < estimatedCustomStartIndex) {
-			return false;
-		}
-		
-		String currentText = item.getText(column);
-		String newValue = estimatedCustom.get().get(column - estimatedCustomStartIndex).toString();
-		return !currentText.equals(newValue);
+		return estimatedCustom.isPresent() && !Objects.equals(item.getText(column), estimatedCustom.get().get(columnHeader));
 	}
 	
 	/**
@@ -305,7 +295,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 				|| !tableAction.equals(newAction) 
 				|| tableAction.isValid() != newAction.isValid() 
 				|| tableAction.getEstimatedTime() != newAction.getEstimatedTime()
-				|| tableAction.getEstimatedCustom() != newAction.getEstimatedCustom();
+				|| Objects.equals(tableAction.getEstimatedCustom(), newAction.getEstimatedCustom());
 	}
 	
 	/**

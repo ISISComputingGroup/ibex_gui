@@ -1,7 +1,6 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.table;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -33,7 +32,7 @@ public class ScriptGeneratorAction extends ModelObject {
     /**
      * Contains the custom estimates of an action. Empty optional if the action is invalid.
      */
-    private Optional<List<Number>> customEstimates = Optional.empty();
+    private Optional<Map<String, String>> customEstimates = Optional.empty();
     
     private ActionDynamicScriptingStatus dynamicScriptingStatus = ActionDynamicScriptingStatus.NO_STATUS;
 
@@ -156,7 +155,7 @@ public class ScriptGeneratorAction extends ModelObject {
      * Set the custom estimate value.
      * @param newEstimates custom estimates numbers
      */
-    public void setCustomEstimate(Optional<List<Number>> newEstimates) {
+    public void setCustomEstimate(Optional<Map<String, String>> newEstimates) {
     	firePropertyChange(ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY, customEstimates, newEstimates);
     	customEstimates = newEstimates;
     }
@@ -173,7 +172,7 @@ public class ScriptGeneratorAction extends ModelObject {
      * Get the estimated custom numbers.
      * @return custom estimates numbers
      */
-    public Optional<List<Number>> getEstimatedCustom() {
+    public Optional<Map<String, String>> getEstimatedCustom() {
     	return customEstimates;
     }
     

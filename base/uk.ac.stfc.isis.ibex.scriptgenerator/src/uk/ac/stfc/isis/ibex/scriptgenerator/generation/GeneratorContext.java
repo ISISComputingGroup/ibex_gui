@@ -26,6 +26,12 @@ public class GeneratorContext extends ModelObject {
 	private Map<GeneratedLanguage, AbstractGenerator> generatorStrategies = new HashMap<>();
 	
 	
+	private void addListenerHelper(String property, AbstractGenerator generator) {
+	    generator.addPropertyChangeListener(property, evt -> {
+	    	firePropertyChange(property, evt.getOldValue(), evt.getNewValue());
+	    });
+	}
+	
 	/**
 	 * Add a generator to use (will replace the languages generator with a new one if it matches).
 	 * Listen to changes in the generators validity checking and script generation.
@@ -34,21 +40,11 @@ public class GeneratorContext extends ModelObject {
 	 * @param generator The generator to use.
 	 */
 	public void putGenerator(GeneratedLanguage generatedLanguage, AbstractGenerator generator) {
-		generator.addPropertyChangeListener(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
-			firePropertyChange(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
-		});
-		generator.addPropertyChangeListener(ScriptGeneratorProperties.PARAM_VALIDITY_PROPERTY, evt -> {
-			firePropertyChange(ScriptGeneratorProperties.PARAM_VALIDITY_PROPERTY, evt.getOldValue(), evt.getNewValue());
-		});
-        generator.addPropertyChangeListener(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, evt -> {
-            firePropertyChange(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, evt.getOldValue(), evt.getNewValue());
-        });
-        generator.addPropertyChangeListener(ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY, evt -> {
-            firePropertyChange(ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY, evt.getOldValue(), evt.getNewValue());
-        });
-		generator.addPropertyChangeListener(ScriptGeneratorProperties.GENERATED_SCRIPT_PROPERTY, evt -> {
-			firePropertyChange(ScriptGeneratorProperties.GENERATED_SCRIPT_PROPERTY, null, evt.getNewValue());
-		});
+		addListenerHelper(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, generator);
+		addListenerHelper(ScriptGeneratorProperties.PARAM_VALIDITY_PROPERTY, generator);
+		addListenerHelper(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, generator);
+		addListenerHelper(ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY, generator);
+		addListenerHelper(ScriptGeneratorProperties.GENERATED_SCRIPT_PROPERTY, generator);
 		generatorStrategies.put(generatedLanguage, generator);
 	}
 	

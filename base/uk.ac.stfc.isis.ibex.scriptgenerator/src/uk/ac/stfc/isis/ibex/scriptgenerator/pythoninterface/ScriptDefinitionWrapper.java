@@ -21,7 +21,7 @@ public interface ScriptDefinitionWrapper {
 	/**
 	 * @return The custom parameter names e.g. ["param1", "param2"]
 	 */
-	List<String> getCustomOutputs();
+	List<String> getCustomOutputNames();
 	
 	/**
 	 * Performs the defined action.
@@ -68,7 +68,7 @@ public interface ScriptDefinitionWrapper {
      * @return A list of estimate numbers
      */
     @SuppressWarnings("checkstyle:parametername")
-    List<Number> estimateCustom(Map<String, String> action, List<String> global_params);
+    Map<String, String> estimateCustom(Map<String, String> action, List<String> global_params);
 	
 	/**
 	 * @return The name of this script definition.
