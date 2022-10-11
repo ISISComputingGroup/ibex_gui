@@ -76,8 +76,10 @@
 				<artifactId>tycho-compiler-plugin</artifactId>
 				<version>${tycho.version}</version>
 				<configuration>
-					<compilerArgument>-err:-forbidden</compilerArgument>
-					
+					<failOnWarning>true</failOnWarning>
+					<showWarnings>true</showWarnings>
+					<useProjectSettings>false</useProjectSettings>
+					<compilerArgument>-warn:-warningToken</compilerArgument>
 				</configuration>
 			</plugin>
 

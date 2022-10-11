@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.groups;
 
-import org.apache.logging.log4j.Logger;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
@@ -49,8 +48,6 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableGroup;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DoubleListEditor;
 import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
@@ -63,9 +60,6 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
  */
 @SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
 public class GroupsEditorPanel extends Composite {
-
-	private static final Logger LOG = IsisLog.getLogger(GroupsEditorPanel.class);
-
     /** Editor for blocks, those available and those unavailable. */
 	private final DoubleListEditor<EditableBlock> blocksEditor;
 
@@ -85,7 +79,7 @@ public class GroupsEditorPanel extends Composite {
 	private DataBindingContext bindingContext = new DataBindingContext();
 
     /** Strategy for updating values. */
-    private UpdateValueStrategy strategy = new UpdateValueStrategy();
+    private UpdateValueStrategy<String, String> strategy = new UpdateValueStrategy<>();
 
 
     /**
@@ -111,7 +105,7 @@ public class GroupsEditorPanel extends Composite {
         grpGroups.setLayout(new GridLayout(3, false));
 
         groupsViewer = new ListViewer(grpGroups, SWT.BORDER | SWT.V_SCROLL | SWT.SINGLE);
-        ObservableListContentProvider contentProvider = new ObservableListContentProvider();
+        ObservableListContentProvider<String> contentProvider = new ObservableListContentProvider<>();
         groupsViewer.setContentProvider(contentProvider);
 
         groupsViewer.setInput(BeanProperties.list(EditableConfiguration.EDITABLE_GROUPS)
@@ -206,7 +200,7 @@ public class GroupsEditorPanel extends Composite {
         strategy.setBeforeSetValidator(groupNamesValidator);
         bindingContext.bindValue(
                 WidgetProperties.text(SWT.Modify).observe(name), ViewerProperties.singleSelection()
-                        .value(BeanProperties.value("name", EditableGroup.class)).observe(groupsViewer),
+                .value(BeanProperties.value("name", String.class)).observe(groupsViewer),
                 strategy, null);
 
 		name.addModifyListener(e -> groupsViewer.refresh());

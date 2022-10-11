@@ -52,8 +52,6 @@ public class BannerButtonTest {
     private Function<String, CustomBannerData> conv = new JsonConverters().toBannerDescription();
     private CustomBannerData bannerLocal;
     private CustomBannerData bannerNotLocal;
-    // Required for adding the pv prefix
-    private Instrument mockInst = new Instrument();
 
 	
 	@Before

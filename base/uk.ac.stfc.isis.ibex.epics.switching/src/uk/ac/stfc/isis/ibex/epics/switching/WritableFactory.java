@@ -61,7 +61,7 @@ public class WritableFactory {
      * @param address - the PV address
      * @return the writable
      */
-    public <T> Writable<T> getSwitchableWritable(ChannelType<T> channelType, String address) {
+    public <T> SwitchableWritable<T> getSwitchableWritable(ChannelType<T> channelType, String address) {
         Writable<T> channelWriter = getPVWritable(channelType, address);
 
         SwitchableWritable<T> createdWritable = new SwitchableWritable<>(channelWriter);
