@@ -28,7 +28,10 @@ import java.beans.PropertyChangeListener;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
@@ -39,20 +42,23 @@ import uk.ac.stfc.isis.ibex.ui.experimentdetails.ExperimentDetailsViewModel;
 /**
  * Unit tests for the DeviceScreensDescriptionViewModel class.
  */
+@RunWith(MockitoJUnitRunner.Strict.class)
 public class ExperimentDetailsViewModelTest {
 
     private ExperimentDetailsViewModel viewModel;
-    private ObservableExperimentDetailsModel model;
+    @Mock private ObservableExperimentDetailsModel model;
+    
+    @Mock private ClosableObservable<String> rbNumberGetter;
+    @Mock private Writable<String> rbNumberSetter;
+    @Mock private ForwardingObservable<Boolean> titleGetter;
+    @Mock private Writable<Long> titleSetter;
 
-    @SuppressWarnings("unchecked")
 	@Before
-    public void setUp() {
-        model = mock(ObservableExperimentDetailsModel.class);
-        
-        when(model.rbNumber()).thenReturn(mock(ClosableObservable.class));
-        when(model.rbNumberSetter()).thenReturn(mock(Writable.class));
-        when(model.displayTitle()).thenReturn(mock(ForwardingObservable.class));
-        when(model.displayTitleSetter()).thenReturn(mock(Writable.class));
+    public void setUp() {        
+        when(model.rbNumber()).thenReturn(rbNumberGetter);
+        when(model.rbNumberSetter()).thenReturn(rbNumberSetter);
+        when(model.displayTitle()).thenReturn(titleGetter);
+        when(model.displayTitleSetter()).thenReturn(titleSetter);
         
         viewModel = new ExperimentDetailsViewModel(model);
     }

@@ -36,8 +36,11 @@ import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.zeromq.ZMQException;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
@@ -47,18 +50,16 @@ import uk.ac.stfc.isis.ibex.nicos.comms.ZMQWrapper;
 import uk.ac.stfc.isis.ibex.nicos.messages.NICOSMessage;
 import uk.ac.stfc.isis.ibex.nicos.messages.SentMessageDetails;
 
+@RunWith(MockitoJUnitRunner.Strict.class)
 public class ZMQSessionTest {
 
     private ZMQWrapper zmq = mock(ZMQWrapper.class);
     private ZMQSession session;
 
-    private NICOSMessage<String, String> mockMessage;
+    @Mock private NICOSMessage<String, String> mockMessage;
 
-    @SuppressWarnings("unchecked")
 	@Before
-    public void setUp() {
-    	mockMessage = mock(NICOSMessage.class);
-    	
+    public void setUp() {    	
     	Mockito.when(zmq.getLock()).thenReturn(new Object());
         session = new ZMQSession(zmq);
         Mockito.doCallRealMethod().when(mockMessage).receiveResponse(zmq);
