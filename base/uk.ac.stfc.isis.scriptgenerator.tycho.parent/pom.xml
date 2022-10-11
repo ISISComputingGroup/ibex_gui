@@ -74,6 +74,7 @@
 					<failOnWarning>true</failOnWarning>
 					<showWarnings>true</showWarnings>
 					<useProjectSettings>false</useProjectSettings>
+					<compilerArgument>-warn:-warningToken</compilerArgument>
 				</configuration>
 			</plugin>
 
