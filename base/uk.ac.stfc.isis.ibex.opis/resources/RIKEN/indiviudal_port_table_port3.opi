@@ -91,12 +91,12 @@
       <color red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>400</height>
+    <height>291</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
     <name>PSU_Shared_Linking_Container</name>
-    <opi_file>rb2_2port_shared.opi</opi_file>
+    <opi_file>rb2_1port_shared.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -171,8 +171,8 @@
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
-    <height>68</height>
-    <lock_children>true</lock_children>
+    <height>69</height>
+    <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
@@ -186,13 +186,13 @@
     <scripts />
     <show_scrollbar>false</show_scrollbar>
     <tooltip></tooltip>
-    <transparent>false</transparent>
+    <transparent>true</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
-    <width>560</width>
-    <wuid>-12e71780:183cb0a5e3b:-6f24</wuid>
-    <x>15</x>
-    <y>382</y>
+    <width>566</width>
+    <wuid>-12e71780:183cb0a5e3b:-7a02</wuid>
+    <x>9</x>
+    <y>275</y>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
@@ -231,7 +231,7 @@
       <widget_type>Linking Container</widget_type>
       <width>507</width>
       <wuid>7b80fe81:1818c09dd00:-48cb</wuid>
-      <x>53</x>
+      <x>59</x>
       <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -272,7 +272,7 @@
       <widget_type>Linking Container</widget_type>
       <width>507</width>
       <wuid>7b80fe81:1818c09dd00:-487b</wuid>
-      <x>53</x>
+      <x>59</x>
       <y>18</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -313,48 +313,8 @@
       <widget_type>Linking Container</widget_type>
       <width>507</width>
       <wuid>7b80fe81:1818c09dd00:-4890</wuid>
-      <x>53</x>
+      <x>59</x>
       <y>36</y>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-      <actions hook="false" hook_all="false" />
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <border_style>0</border_style>
-      <border_width>1</border_width>
-      <enabled>true</enabled>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
-      </font>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <height>1</height>
-      <image></image>
-      <name>Dummy</name>
-      <push_action_index>0</push_action_index>
-      <pv_name></pv_name>
-      <pv_value />
-      <rules />
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <style>1</style>
-      <text></text>
-      <toggle_button>false</toggle_button>
-      <tooltip></tooltip>
-      <visible>false</visible>
-      <widget_type>Action Button</widget_type>
-      <width>1</width>
-      <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
-      <x>150</x>
-      <y>56</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -411,8 +371,8 @@ $(pv_value)</tooltip>
       <widget_type>Rectangle</widget_type>
       <width>60</width>
       <wuid>-5f5eacd5:181a9bd2cda:-6d48</wuid>
-      <x>0</x>
-      <y>1</y>
+      <x>6</x>
+      <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -469,7 +429,7 @@ $(pv_value)</tooltip>
       <widget_type>Rectangle</widget_type>
       <width>60</width>
       <wuid>-5f5eacd5:181a9bd2cda:-6d3b</wuid>
-      <x>0</x>
+      <x>6</x>
       <y>18</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
@@ -527,7 +487,7 @@ $(pv_value)</tooltip>
       <widget_type>Rectangle</widget_type>
       <width>60</width>
       <wuid>-5f5eacd5:181a9bd2cda:-6d40</wuid>
-      <x>0</x>
+      <x>6</x>
       <y>36</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -567,7 +527,7 @@ $(pv_value)</tooltip>
       <width>60</width>
       <wrap_words>false</wrap_words>
       <wuid>-5f5eacd5:181a9bd2cda:-6d33</wuid>
-      <x>0</x>
+      <x>6</x>
       <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -607,8 +567,8 @@ $(pv_value)</tooltip>
       <width>60</width>
       <wrap_words>false</wrap_words>
       <wuid>-5f5eacd5:181a9bd2cda:-6d21</wuid>
-      <x>0</x>
-      <y>17</y>
+      <x>6</x>
+      <y>18</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -647,8 +607,48 @@ $(pv_value)</tooltip>
       <width>60</width>
       <wrap_words>false</wrap_words>
       <wuid>-5f5eacd5:181a9bd2cda:-6d26</wuid>
-      <x>0</x>
-      <y>35</y>
+      <x>6</x>
+      <y>36</y>
     </widget>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <actions hook="false" hook_all="false" />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <height>1</height>
+    <image></image>
+    <name>Dummy</name>
+    <push_action_index>0</push_action_index>
+    <pv_name></pv_name>
+    <pv_value />
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <style>1</style>
+    <text></text>
+    <toggle_button>false</toggle_button>
+    <tooltip></tooltip>
+    <visible>false</visible>
+    <widget_type>Action Button</widget_type>
+    <width>1</width>
+    <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
+    <x>166</x>
+    <y>344</y>
   </widget>
 </display>

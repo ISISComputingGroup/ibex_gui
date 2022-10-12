@@ -249,15 +249,15 @@ $(pv_value)</tooltip>
     <border_width>1</border_width>
     <enabled>true</enabled>
     <font>
-      <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">Default Bold</opifont.name>
+      <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
     </font>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <foreground_color>
       <color red="0" green="0" blue="0" />
     </foreground_color>
     <format_type>0</format_type>
-    <height>19</height>
-    <horizontal_alignment>0</horizontal_alignment>
+    <height>20</height>
+    <horizontal_alignment>1</horizontal_alignment>
     <name>Magnet Name </name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
@@ -279,11 +279,11 @@ $(pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
     <widget_type>Text Update</widget_type>
-    <width>53</width>
+    <width>25</width>
     <wrap_words>false</wrap_words>
     <wuid>5da5fba8:1814ce0608c:-7ff9</wuid>
-    <x>27</x>
-    <y>13</y>
+    <x>30</x>
+    <y>12</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
     <actions hook="false" hook_all="false" />

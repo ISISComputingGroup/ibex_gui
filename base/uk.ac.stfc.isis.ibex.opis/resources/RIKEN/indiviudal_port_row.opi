@@ -141,7 +141,7 @@
     <name>Text Update_5</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(P)$(PSU_PREFIX):FIELD:SP:RBV</pv_name>
+    <pv_name>$(P)$(PSU_PREFIX):CURR:SP:RBV</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />
@@ -193,7 +193,7 @@ $(pv_value)</tooltip>
     <name>Text Update_6</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(P)$(PSU_PREFIX):FIELD</pv_name>
+    <pv_name>$(P)$(PSU_PREFIX):CURR:RBV</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />

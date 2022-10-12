@@ -81,7 +81,7 @@
   <width>800</width>
   <wuid>450885f3:157944e4d4b:-797d</wuid>
   <x>-1</x>
-  <y>-1</y>
+  <y>0</y>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
     <actions hook="false" hook_all="false" />
     <auto_size>false</auto_size>
@@ -335,7 +335,7 @@ $(pv_value)</tooltip>
         <wrap_words>false</wrap_words>
         <wuid>-5591b96:1815daeea16:-7cef</wuid>
         <x>128</x>
-        <y>6</y>
+        <y>2</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -1582,7 +1582,7 @@ $(pv_value)</tooltip>
       <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
         <actions hook="false" hook_all="false">
           <action type="OPEN_DISPLAY">
-            <path>indiviudal_port_table_port.opi</path>
+            <path>indiviudal_port_table_port3.opi</path>
             <macros>
               <include_parent_macros>true</include_parent_macros>
               <PORT>3</PORT>
@@ -2424,7 +2424,7 @@ $(pv_value)</tooltip>
       <widget_type>Grouping Container</widget_type>
       <width>75</width>
       <wuid>-71e507be:1826d738621:-7529</wuid>
-      <x>853</x>
+      <x>850</x>
       <y>18</y>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="true" hook_all="false" />

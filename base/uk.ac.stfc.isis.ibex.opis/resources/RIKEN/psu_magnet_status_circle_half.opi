@@ -33,18 +33,7 @@
   <x>-1</x>
   <y>-1</y>
   <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolIndicator" version="1.0.0">
-    <actions hook="true" hook_all="false">
-      <action type="OPEN_DISPLAY">
-        <path>../danfysik.opi</path>
-        <macros>
-          <include_parent_macros>true</include_parent_macros>
-          <DFKPS>DFKPS_33</DFKPS>
-          <NAME>$(NAME2)</NAME>
-        </macros>
-        <mode>0</mode>
-        <description></description>
-      </action>
-    </actions>
+    <actions hook="true" hook_all="false" />
     <alarm_pulsing>false</alarm_pulsing>
     <align_to_nearest_second>false</align_to_nearest_second>
     <auto_size>true</auto_size>
@@ -98,18 +87,7 @@ $(pv_value)</tooltip>
     <y>35</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolIndicator" version="1.0.0">
-    <actions hook="true" hook_all="false">
-      <action type="OPEN_DISPLAY">
-        <path>../danfysik.opi</path>
-        <macros>
-          <include_parent_macros>true</include_parent_macros>
-          <DFKPS>DFKPS_32</DFKPS>
-          <NAME>$(NAME1)</NAME>
-        </macros>
-        <mode>0</mode>
-        <description></description>
-      </action>
-    </actions>
+    <actions hook="true" hook_all="false" />
     <alarm_pulsing>false</alarm_pulsing>
     <align_to_nearest_second>false</align_to_nearest_second>
     <auto_size>true</auto_size>
@@ -240,7 +218,7 @@ $(pv_value)</tooltip>
       <color red="255" green="255" blue="0" />
     </on_color>
     <on_label>I</on_label>
-    <pv_name></pv_name>
+    <pv_name>$(P)$(PV1):ILK</pv_name>
     <pv_value />
     <rules />
     <scale_options>
@@ -396,7 +374,7 @@ $(pv_value)</tooltip>
       <color red="255" green="255" blue="0" />
     </on_color>
     <on_label>I</on_label>
-    <pv_name></pv_name>
+    <pv_name>$(P)$(PV2):ILK</pv_name>
     <pv_value />
     <rules />
     <scale_options>
@@ -515,7 +493,18 @@ $(pv_value)</tooltip>
     <y>-11</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>../danfysik.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <DFKPS>DFKPS_32</DFKPS>
+          <NAME>$(NAME1)</NAME>
+        </macros>
+        <mode>0</mode>
+        <description></description>
+      </action>
+    </actions>
     <auto_size>false</auto_size>
     <background_color>
       <color red="255" green="255" blue="255" />
@@ -555,7 +544,18 @@ $(pv_value)</tooltip>
     <y>35</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>../danfysik.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <DFKPS>DFKPS_33</DFKPS>
+          <NAME>$(NAME2)</NAME>
+        </macros>
+        <mode>0</mode>
+        <description></description>
+      </action>
+    </actions>
     <auto_size>false</auto_size>
     <background_color>
       <color red="255" green="255" blue="255" />
