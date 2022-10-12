@@ -3051,7 +3051,7 @@
       <key>RIKEN Vacuum </key>
 	  <value>
 	    <type>RIKEN</type>
-	    <path>RIKEN/RIKEN_vacuum_tpg300.opi</path>
+	    <path>RIKEN/RIKEN_vacuum_synoptic.opi</path>
 	    <macros>
           <macro>
             <name>SCHNDR</name>
