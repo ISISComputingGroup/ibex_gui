@@ -140,7 +140,7 @@ public class IocPanel extends Composite {
         
         if (IocPanelHandler.getDisplayRunMode()) {
         	TreeViewerColumn runModeColumn = new TreeViewerColumn(viewer, SWT.NONE);
-        	runModeColumn.getColumn().setText("Run Mode");
+        	runModeColumn.getColumn().setText("Mode");
         	runModeColumn.getColumn().setWidth(COLUMN_WIDTH);
         	runModeColumn.getColumn().setAlignment(SWT.CENTER);
         	runModeColumn.setLabelProvider(new IOCRunModeProvider());

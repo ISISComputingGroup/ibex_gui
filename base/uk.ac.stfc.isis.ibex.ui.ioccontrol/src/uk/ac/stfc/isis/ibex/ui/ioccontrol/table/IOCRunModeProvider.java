@@ -35,6 +35,7 @@ import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.swt.graphics.Image;
 
 import uk.ac.stfc.isis.ibex.configserver.IocState;
+import uk.ac.stfc.isis.ibex.configserver.configuration.SimLevel;
 
 /**
  * Provides labels for the IOC simulation level.
@@ -51,7 +52,14 @@ public class IOCRunModeProvider extends ColumnLabelProvider {
 			return null;
 		}
 		
-		return IocState.class.cast(element).getSimLevel().toString();
+		var mode = IocState.class.cast(element).getSimLevel();
+		if (mode.equals(SimLevel.DEVSIM)) {
+			return "D";
+		} else if (mode.equals(SimLevel.RECSIM)) {
+			return "R";
+		} else {
+			return "";
+		}
 	}
 
 	@Override
