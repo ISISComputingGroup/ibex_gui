@@ -47,6 +47,7 @@ import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCContentProvider;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCList;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCPatternFilter;
+import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCRunModeProvider;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCStatusProvider;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCViewerComparator;
 
@@ -136,6 +137,14 @@ public class IocPanel extends Composite {
         configColumn.getColumn().setWidth(COLUMN_WIDTH);
         configColumn.getColumn().setAlignment(SWT.CENTER);
         configColumn.setLabelProvider(new IOCConfigProvider());
+        
+        if (IocPanelHandler.getDisplayRunMode()) {
+        	TreeViewerColumn runModeColumn = new TreeViewerColumn(viewer, SWT.NONE);
+        	runModeColumn.getColumn().setText("Run Mode");
+        	runModeColumn.getColumn().setWidth(COLUMN_WIDTH);
+        	runModeColumn.getColumn().setAlignment(SWT.CENTER);
+        	runModeColumn.setLabelProvider(new IOCRunModeProvider());
+        }
         
         Collection<IocState> rows = control.iocs().getValue();
         availableIocs = new Hashtable<String, IOCList>();

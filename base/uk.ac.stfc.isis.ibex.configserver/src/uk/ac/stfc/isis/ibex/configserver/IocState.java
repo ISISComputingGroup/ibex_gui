@@ -35,6 +35,7 @@ import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
+import uk.ac.stfc.isis.ibex.configserver.configuration.SimLevel;
 import uk.ac.stfc.isis.ibex.epics.observing.INamed;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
@@ -125,6 +126,23 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
             }
         });
         return configIocs.stream().anyMatch(ioc -> Objects.equals(ioc.getName(), name));
+    }
+    
+    /**
+     * Gets the current simulation level of the IOC.
+     * 
+     * @return the simulation level of the IOC
+     */
+    public SimLevel getSimLevel() {
+    	Configuration currentConfig = configServer.currentConfig().getValue();
+    	Collection<Ioc> configIocs = currentConfig.getIocs();
+    	
+    	for (var ioc : configIocs) {
+    		if (ioc.getName().equals(name)) {
+    			return ioc.getSimLevel();
+    		}
+    	}
+    	return SimLevel.NONE;
     }
 
     /**
