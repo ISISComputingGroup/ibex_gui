@@ -32,8 +32,7 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.ui.model.application.ui.menu.MHandledMenuItem;
 
 /**
- * Command to display the IOC control dialog.
- *
+ * Handler for the "display run mode" menu item.
  */
 public class IocPanelHandler {
 	
