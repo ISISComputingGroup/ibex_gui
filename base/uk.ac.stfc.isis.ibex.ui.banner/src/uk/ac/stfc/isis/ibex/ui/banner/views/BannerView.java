@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.banner.views;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -63,6 +64,8 @@ public class BannerView {
 
     private Composite bannerItemPanel;
     private GridLayout glBannerItemPanel;
+
+	private Collection<CustomControlModel> activeModels = Collections.emptyList();
     
     /**
      * Create the controls for the part.
@@ -141,6 +144,11 @@ public class BannerView {
      */
     private void setBanner(final Collection<BannerItemModel> indicatorModels, final Collection<CustomControlModel> controlModels) {
         disposeBanner();
+        
+        // Ensure that previous models get closed.
+        activeModels.forEach(CustomControlModel::close);
+        activeModels = controlModels;
+        
         Display.getDefault().syncExec(new Runnable() {
             @Override
             public void run() {

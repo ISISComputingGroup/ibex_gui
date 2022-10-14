@@ -11,6 +11,7 @@
 <module name="Checker">
   <property name="severity" value="warning"/>
   <module name="TreeWalker">
+    <module name="NoFinalizer"/>
     <module name="SuppressWarningsHolder"/>
     <module name="ConstantName"/>
     <module name="JavadocMethod">
