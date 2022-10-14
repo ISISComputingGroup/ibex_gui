@@ -6781,7 +6781,7 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
-      <width>48</width>
+      <width>92</width>
       <wrap_words>false</wrap_words>
       <wuid>23c53e07:183d636a910:-7ebd</wuid>
       <x>142</x>
