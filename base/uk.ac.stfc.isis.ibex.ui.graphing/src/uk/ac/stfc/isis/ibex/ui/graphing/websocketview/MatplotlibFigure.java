@@ -7,6 +7,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseMoveListener;
+import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
@@ -17,7 +19,6 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
@@ -42,6 +43,8 @@ public class MatplotlibFigure extends Composite {
 	private final PropertyChangeListener plotMessageListener;
 	private Image image;
 	private final MouseTrackListener mouseTrackListener;
+	private final MouseMoveListener mouseMoveListener;
+	private static final int NUM_COLUMNS = 2;
 
 	/**
 	 * Create the composite.
@@ -62,7 +65,7 @@ public class MatplotlibFigure extends Composite {
 		container = new Composite(this, SWT.NONE);
 		container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
-		var containerLayout = new GridLayout(2, false);
+		var containerLayout = new GridLayout(NUM_COLUMNS, false);
 		containerLayout.marginWidth = 0;
 		containerLayout.marginHeight = 0;
 		container.setLayout(containerLayout);
@@ -76,7 +79,7 @@ public class MatplotlibFigure extends Composite {
 		plotMessage.setText("");
 		
 		plotCanvas = new Canvas(container, SWT.NONE);
-		plotCanvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		plotCanvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, NUM_COLUMNS, 1));
 		
 		image = new Image(Display.getDefault(), 500, 500);
 		
@@ -92,12 +95,7 @@ public class MatplotlibFigure extends Composite {
 		
 		viewModel.canvasResized(plotCanvas.getBounds().width, plotCanvas.getBounds().height);
 		
-		mouseTrackListener = new MouseTrackListener() {
-			@Override
-			public void mouseHover(MouseEvent e) {
-				viewModel.setCursorPosition(new MatplotlibCursorPosition(e.x, e.y, true));
-			}
-			
+		mouseTrackListener = new MouseTrackAdapter() {
 			@Override
 			public void mouseExit(MouseEvent e) {
 				viewModel.setCursorPosition(MatplotlibCursorPosition.OUTSIDE_CANVAS);
@@ -108,8 +106,16 @@ public class MatplotlibFigure extends Composite {
 				viewModel.setCursorPosition(new MatplotlibCursorPosition(e.x, e.y, true));
 			}
 		};
+
+		mouseMoveListener = new MouseMoveListener() {
+			@Override
+			public void mouseMove(MouseEvent e) {
+				viewModel.setCursorPosition(new MatplotlibCursorPosition(e.x, e.y, true));
+			}
+		};
 		
 		plotCanvas.addMouseTrackListener(mouseTrackListener);
+		plotCanvas.addMouseMoveListener(mouseMoveListener);
 		
 		connectionNameListener = viewModel.getPlotName()
 				.addUiThreadPropertyChangeListener(e -> {
@@ -168,6 +174,7 @@ public class MatplotlibFigure extends Composite {
 			image.dispose();
 		}
 		plotCanvas.removeMouseTrackListener(mouseTrackListener);
+		plotCanvas.removeMouseMoveListener(mouseMoveListener);
 		plotCanvas.dispose();
 		labelConnectionStatus.dispose();
 		plotMessage.dispose();
