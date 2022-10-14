@@ -35,6 +35,7 @@ import org.mockito.Captor;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibCursorPosition;
 import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibFigureViewModel;
 import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibWebsocketEndpoint;
 import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibWebsocketModel;
@@ -121,9 +122,26 @@ public class MatplotlibModelTests {
     }
     
     @Test
+    public void WHEN_cursor_position_changed_THEN_websocket_notified() {
+    	var newCursorPosition = new MatplotlibCursorPosition(1, 2, true);
+    	model.cursorPositionChanged(newCursorPosition);
+    	Mockito.verify(workerThread, Mockito.times(1)).submit(runnableCaptor.capture());
+    	
+    	runnableCaptor.getValue().run();
+    	Mockito.verify(websocket, Mockito.times(1)).cursorPositionChanged(newCursorPosition);
+    	
+    }
+    
+    @Test
     public void WHEN_plot_name_set_THEN_plot_name_can_be_read() {
     	model.setPlotName("my_plot_name");
     	assertEquals(model.getPlotName(), "my_plot_name");
+    }
+    
+    @Test
+    public void WHEN_plot_message_set_THEN_plot_message_can_be_read() {
+    	model.setPlotMessage("my_plot_message");
+    	assertEquals(model.getPlotMessage(), "my_plot_message");
     }
     
     @Test
