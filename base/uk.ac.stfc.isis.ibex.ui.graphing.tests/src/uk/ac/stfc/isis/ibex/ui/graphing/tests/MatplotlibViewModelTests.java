@@ -36,6 +36,7 @@ import org.mockito.Captor;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibCursorPosition;
 import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibFigureViewModel;
 import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibWebsocketModel;
 
@@ -76,13 +77,13 @@ public class MatplotlibViewModelTests {
 
     @Test
     public void WHEN_canvas_resized_THEN_resize_request_sent_to_model() {
-    	Mockito.verify(workerThread, Mockito.times(3)).scheduleWithFixedDelay(runnableCaptor.capture(), Mockito.anyLong(), Mockito.anyLong(), Mockito.any());
+    	Mockito.verify(workerThread, Mockito.times(4)).scheduleWithFixedDelay(runnableCaptor.capture(), Mockito.anyLong(), Mockito.anyLong(), Mockito.any());
     	viewModel.canvasResized(11, 22);
     	
-    	// index 0 = redraw, 1 = canvas size, 2 = force refresh
+    	// index 0 = redraw, 1 = canvas size, 2 = cursor position, 3 = force refresh
     	Runnable updateCanvasSizeIfRequired = runnableCaptor.getAllValues().get(1);
     	
-    	// index 0 = redraw, 1 = canvas size, 2 = force refresh
+    	// index 0 = redraw, 1 = canvas size, 2 = cursor position, 3 = force refresh
     	updateCanvasSizeIfRequired.run();
     	Mockito.verify(model, Mockito.times(1)).canvasResized(11, 22);
     	
@@ -100,16 +101,16 @@ public class MatplotlibViewModelTests {
 
     @Test
     public void viewmodel_periodically_forces_plot_refresh() {
-    	Mockito.verify(workerThread, Mockito.times(3)).scheduleWithFixedDelay(runnableCaptor.capture(), Mockito.anyLong(), Mockito.anyLong(), Mockito.any());
+    	Mockito.verify(workerThread, Mockito.times(4)).scheduleWithFixedDelay(runnableCaptor.capture(), Mockito.anyLong(), Mockito.anyLong(), Mockito.any());
     	
-    	// index 0 = redraw, 1 = canvas size, 2 = force refresh
-    	runnableCaptor.getAllValues().get(2).run();
+    	// index 0 = redraw, 1 = canvas size, 2 = cursor position, 3 = force refresh
+    	runnableCaptor.getAllValues().get(3).run();
     	Mockito.verify(model, Mockito.times(1)).forceServerRefresh();
     }
     
     @Test
     public void WHEN_redraw_required_THEN_image_updated() {
-    	Mockito.verify(workerThread, Mockito.times(3)).scheduleWithFixedDelay(runnableCaptor.capture(), Mockito.anyLong(), Mockito.anyLong(), Mockito.any());
+    	Mockito.verify(workerThread, Mockito.times(4)).scheduleWithFixedDelay(runnableCaptor.capture(), Mockito.anyLong(), Mockito.anyLong(), Mockito.any());
     	
     	Mockito.when(model.getImageData()).thenReturn(
     			Optional.of(new ImageData(new ByteArrayInputStream(MatplotlibModelTests.FAKE_IMAGE_BYTES))));
@@ -118,11 +119,23 @@ public class MatplotlibViewModelTests {
     	viewModel.getImage().addPropertyChangeListener(mockListener);
     	viewModel.imageUpdated();
     	
-    	// index 0 = redraw, 1 = canvas size, 2 = force refresh
+    	// index 0 = redraw, 1 = canvas size, 2 = cursor position, 3 = force refresh
     	runnableCaptor.getAllValues().get(0).run();
     	Mockito.verify(model, Mockito.times(1)).getImageData();
     	// Assert that our listener gets a property change event for the new image.
     	Mockito.verify(mockListener, Mockito.times(1)).propertyChange(Mockito.any());
+    }
+    
+    @Test
+    public void WHEN_cursor_position_change_required_THEN_cursor_change_sent_to_model() {
+    	Mockito.verify(workerThread, Mockito.times(4)).scheduleWithFixedDelay(runnableCaptor.capture(), Mockito.anyLong(), Mockito.anyLong(), Mockito.any());
+    	
+    	var newCursorPos = new MatplotlibCursorPosition(1, 2, true);
+    	viewModel.setCursorPosition(newCursorPos);
+    	
+    	// index 0 = redraw, 1 = canvas size, 2 = cursor position, 3 = force refresh
+    	runnableCaptor.getAllValues().get(2).run();
+    	Mockito.verify(model, Mockito.times(1)).cursorPositionChanged(newCursorPos);
     }
     
 }

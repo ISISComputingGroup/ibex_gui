@@ -26,6 +26,8 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	private static final int RECONNECTION_WAIT_TIME_S = 5;
 	
 	private String plotName;
+	private String plotMessage;
+	private MatplotlibCursorPosition cursorPosition = MatplotlibCursorPosition.OUTSIDE_CANVAS;
 	
 	private Optional<ImageData> imageData = Optional.empty();
 	
@@ -53,6 +55,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	    this.workerThread = createWorkerThread(url);
 	    this.connection = new MatplotlibWebsocketEndpoint(this, url, figNum);
 	    this.plotName = String.format("Figure %d", figNum);
+	    this.plotMessage = "";
 	    
 	    workerThread.scheduleWithFixedDelay(tryConnectTask, 0, RECONNECTION_WAIT_TIME_S, TimeUnit.SECONDS);
 	}
@@ -70,6 +73,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	    this.workerThread = workerThread;
 	    this.connection = connection;
 	    this.plotName = String.format("Figure %d", figNum);
+	    this.plotMessage = "";
 	    
 	    workerThread.scheduleWithFixedDelay(tryConnectTask, 0, RECONNECTION_WAIT_TIME_S, TimeUnit.SECONDS);
 	}
@@ -141,7 +145,10 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 * Forces the server to draw a frame and resend it.
 	 */
 	public void forceServerRefresh() {
-		workerThread.submit(connection::forceServerRefresh);
+		workerThread.submit(() -> {
+			connection.forceServerRefresh();
+			connection.cursorPositionChanged(cursorPosition);
+		});
 	}
 
 	/**
@@ -151,6 +158,15 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 */
 	public void canvasResized(int width, int height) {
 		workerThread.submit(() -> connection.canvasResized(width, height));
+	}
+
+	/**
+	 * Notifies the server that the cursor position has changed.
+	 * @param position the cursor position
+	 */
+	public void cursorPositionChanged(final MatplotlibCursorPosition position) {
+		this.cursorPosition = position;
+		workerThread.submit(() -> connection.cursorPositionChanged(position));
 	}
 	
 	private void setConnectionStatus(final boolean isConnected) {
@@ -167,7 +183,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 */
 	public void setPlotName(String newName) {
 		plotName = newName;
-		viewModel.onPlotNameChange();
+		viewModel.updatePlotName();
 	}
 	
 	/**
@@ -176,6 +192,23 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 */
 	public String getPlotName() {
 		return plotName;
+	}
+	
+	/**
+	 * Sets a new message for this plot.
+	 * @param newMessage the new name
+	 */
+	public void setPlotMessage(String newMessage) {
+		plotMessage = newMessage;
+		viewModel.updatePlotMessage();
+	}
+	
+	/**
+	 * Gets the message of this plot.
+	 * @return the new name
+	 */
+	public String getPlotMessage() {
+		return plotMessage;
 	}
 	
 	/**

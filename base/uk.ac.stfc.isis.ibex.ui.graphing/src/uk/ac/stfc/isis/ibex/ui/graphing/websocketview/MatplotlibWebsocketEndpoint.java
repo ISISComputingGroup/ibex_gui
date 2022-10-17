@@ -136,10 +136,14 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 
 		switch (type) {
 		    case "figure_label":
-		    	model.setPlotName((String) content.get("label"));
+		    	model.setPlotName((String) content.getOrDefault("label", ""));
 		    	break;
 		    case "image_mode":
 		    	model.setIsDiffImage(Objects.equals(content.get("mode"), "diff"));
+		    	break;
+		    case "message":
+		    	model.setPlotMessage((String) content.getOrDefault("message", ""));
+		    	break;
 		    default:
 		    	// No action required
 		    	break;
@@ -169,14 +173,21 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	}
 	
 	private void sendProperty(Session session, String type, Map<String, Object> properties) {
-		Async remote = session.getAsyncRemote();
-		
-	    Map<String, Object> propertiesToSend = new HashMap<>(properties);
-	    propertiesToSend.put("type", type);
-	    propertiesToSend.put("figure_id", Integer.toString(figNum));
-	    
-		remote.sendText(GSON.toJson(propertiesToSend));
-		LoggerUtils.logIfExtraDebug(LOG, String.format("sent %s to %s", propertiesToSend, getUrl()));
+		if (!session.isOpen()) {
+			return;
+		}
+		try {
+			Async remote = session.getAsyncRemote();
+			
+		    Map<String, Object> propertiesToSend = new HashMap<>(properties);
+		    propertiesToSend.put("type", type);
+		    propertiesToSend.put("figure_id", Integer.toString(figNum));
+		    
+			remote.sendText(GSON.toJson(propertiesToSend));
+			LoggerUtils.logIfExtraDebug(LOG, String.format("sent %s to %s", propertiesToSend, getUrl()));
+		} catch (RuntimeException e) {
+			LoggerUtils.logErrorWithStackTrace(LOG, "Failed to send property to websocket: " + e.getMessage(), e);
+		}
 	}
 
 	/**
@@ -221,5 +232,19 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 		    sendProperty(session, "resize", Map.of("height", height, "width", width));
 		}
 		forceServerRefresh();
+	}
+	
+	/**
+	 * Sends a cursor event to the server.
+	 * @param position the cursor position
+	 */
+	public void cursorPositionChanged(final MatplotlibCursorPosition position) {
+		final Map<String, Object> event = Map.of("x", position.x(), "y", position.y(), "button", 0, "guiEvent", new HashMap<>());
+		if (position.inPlot()) {
+		    sendProperty(session, "figure_enter", event);
+			sendProperty(session, "motion_notify", event);
+		} else {
+			sendProperty(session, "figure_leave", event);
+		}
 	}
 }

@@ -27,6 +27,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 	private final MatplotlibWebsocketModel model;
 	
 	private final SettableUpdatedValue<String> plotName;
+	private final SettableUpdatedValue<String> plotMessage;
 	private final SettableUpdatedValue<ImageData> image;
 	
 	private static final int PALETTE_BIT_DEPTH = 8;
@@ -42,6 +43,12 @@ public class MatplotlibFigureViewModel implements Closeable {
 	 *  pixel changed.
 	 */
 	private final AtomicBoolean serverResizeRequired = new AtomicBoolean(true);
+	
+	/** 
+	 *  Similar to above - we want to avoid sending cursor events to the backend every single time we
+	 *  hover over the graph.
+	 */
+	private final AtomicBoolean cursorPositionChanged = new AtomicBoolean(true);
 	
 	/**
 	 * The maximum frequency at which we might draw updates to the plot, if new data is available.
@@ -60,10 +67,17 @@ public class MatplotlibFigureViewModel implements Closeable {
 	private static final int MAX_RESIZE_RATE_MS = 500;
 	
 	/**
+	 * The maximum frequency at which we might send metadata (e.g. cursor position) to the server.
+	 */
+	private static final int MAX_METADATA_EVENT_RATE = 50;
+	
+	/**
 	 * The rate at which we ask the server to send new frames, even if no new frames have been pushed.
 	 * This is required in order to get updates to some dynamic plots.
 	 */
 	private static final int FORCED_REDRAW_RATE_MS = 2000;
+	
+	private MatplotlibCursorPosition cursorPosition = MatplotlibCursorPosition.OUTSIDE_CANVAS;
 	
 	private final ScheduledExecutorService updateExecutor;
 	
@@ -81,6 +95,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 		plotName = new SettableUpdatedValue<String>(
 				String.format("[Disconnected] %s", model.getPlotName(), figureNumber));
 		image = new SettableUpdatedValue<ImageData>(generateBlankImage());
+		plotMessage = new SettableUpdatedValue<String>("");
 		
 		updateExecutor  = 
 				Executors.newSingleThreadScheduledExecutor(
@@ -88,9 +103,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 						    .setNameFormat("MatplotlibFigureViewModel " + url + " update thread %d")
 						    .build());
 		
-		updateExecutor.scheduleWithFixedDelay(this::redrawIfRequired, 0, MAX_DRAW_RATE_MS, TimeUnit.MILLISECONDS);
-		updateExecutor.scheduleWithFixedDelay(this::updateCanvasSizeIfRequired, 0, MAX_RESIZE_RATE_MS, TimeUnit.MILLISECONDS);
-		updateExecutor.scheduleWithFixedDelay(model::forceServerRefresh, 0, FORCED_REDRAW_RATE_MS, TimeUnit.MILLISECONDS);
+		scheduleUpdates();
 	}
 	
 	/**
@@ -106,11 +119,17 @@ public class MatplotlibFigureViewModel implements Closeable {
 		plotName = new SettableUpdatedValue<String>(
 				String.format("[Disconnected] %s", model.getPlotName(), figureNumber));
 		image = new SettableUpdatedValue<ImageData>(generateBlankImage());
+		plotMessage = new SettableUpdatedValue<String>("");
 		
 		updateExecutor  = executor;
 		
+		scheduleUpdates();
+	}
+	
+	private void scheduleUpdates() {
 		updateExecutor.scheduleWithFixedDelay(this::redrawIfRequired, 0, MAX_DRAW_RATE_MS, TimeUnit.MILLISECONDS);
 		updateExecutor.scheduleWithFixedDelay(this::updateCanvasSizeIfRequired, 0, MAX_RESIZE_RATE_MS, TimeUnit.MILLISECONDS);
+		updateExecutor.scheduleWithFixedDelay(this::updateCursorPositionIfRequired, 0, MAX_METADATA_EVENT_RATE, TimeUnit.MILLISECONDS);
 		updateExecutor.scheduleWithFixedDelay(model::forceServerRefresh, 0, FORCED_REDRAW_RATE_MS, TimeUnit.MILLISECONDS);
 	}
 	
@@ -122,7 +141,10 @@ public class MatplotlibFigureViewModel implements Closeable {
 		return model;
 	}
 	
-	private void updatePlotName() {
+	/**
+	 * Updates the plot name from the model.
+	 */
+	public void updatePlotName() {
 		if (model.isConnected()) {
 			plotName.setValue(model.getPlotName());
 		} else {
@@ -132,18 +154,31 @@ public class MatplotlibFigureViewModel implements Closeable {
 	}
 	
 	/**
-	 * Updated the name of this plot.
-	 */
-	public void onPlotNameChange() {
-		updatePlotName();
-	}
-	
-	/**
 	 * Gets the connection name.
 	 * @return the connection name
 	 */
 	public UpdatedValue<String> getPlotName() {
 		return plotName;
+	}
+	
+	/**
+	 * Updates the plot message from the model.
+	 */
+	public void updatePlotMessage() {
+		if (model.isConnected()) {
+			final var message = model.getPlotMessage();
+			plotMessage.setValue(message);
+		} else {
+			plotMessage.setValue("");
+		}
+	}
+	
+	/**
+	 * Gets the message.
+	 * @return the message
+	 */
+	public UpdatedValue<String> getPlotMessage() {
+		return plotMessage;
 	}
 
 	/**
@@ -182,6 +217,16 @@ public class MatplotlibFigureViewModel implements Closeable {
 			LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
 		}
 	}
+	
+	private void updateCursorPositionIfRequired() {
+		try {
+			if (cursorPositionChanged.getAndSet(false)) {
+				model.cursorPositionChanged(cursorPosition);
+			}
+		} catch (Exception e) {
+			LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
+		}
+	}
 
 	/**
 	 * Notifies this viewmodel that a new image is available.
@@ -191,8 +236,12 @@ public class MatplotlibFigureViewModel implements Closeable {
 	}
 	
 	private void updateCanvasSizeIfRequired() {
-		if (serverResizeRequired.getAndSet(false)) {
-			model.canvasResized(canvasWidth, canvasHeight);
+		try {
+			if (serverResizeRequired.getAndSet(false)) {
+				model.canvasResized(canvasWidth, canvasHeight);
+			}
+		} catch (Exception e) {
+			LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
 		}
 	}
 
@@ -217,6 +266,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 	 */
 	public void onConnectionStatus(boolean isConnected) {
 		updatePlotName();
+		updatePlotMessage();
 		if (isConnected) {
 			model.forceServerRefresh();
 		}
@@ -224,5 +274,14 @@ public class MatplotlibFigureViewModel implements Closeable {
 		// If disconnected, cancel any pending resize request to the server.
 		// If connected, send resize request to server to ensure it in sync with local size.
 		serverResizeRequired.set(isConnected);
+	}
+	
+	/**
+	 * Sets a new cursor position.
+	 * @param cursorPosition the new cursor position
+	 */
+	public void setCursorPosition(final MatplotlibCursorPosition cursorPosition) {
+		this.cursorPosition = cursorPosition;
+		cursorPositionChanged.set(true);
 	}
 }
