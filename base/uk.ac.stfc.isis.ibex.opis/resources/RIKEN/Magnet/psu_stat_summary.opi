@@ -5718,8 +5718,8 @@ $(pv_value)</tooltip>
     <widget_type>Grouping Container</widget_type>
     <width>390</width>
     <wuid>-132c2257:183e514448e:-6ba9</wuid>
-    <x>406</x>
-    <y>83</y>
+    <x>405</x>
+    <y>80</y>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
@@ -6334,8 +6334,8 @@ $(pv_value)</tooltip>
     <width>62</width>
     <wrap_words>false</wrap_words>
     <wuid>-132c2257:183e514448e:-6ba1</wuid>
-    <x>406</x>
-    <y>140</y>
+    <x>405</x>
+    <y>137</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -6370,8 +6370,8 @@ $(pv_value)</tooltip>
     <line_width>1</line_width>
     <name>PORT_2_Polyline</name>
     <points>
-      <point x="795" y="149" />
-      <point x="448" y="149" />
+      <point x="794" y="146" />
+      <point x="447" y="146" />
     </points>
     <pv_name></pv_name>
     <pv_value />
@@ -6390,8 +6390,8 @@ $(pv_value)</tooltip>
     <widget_type>Polyline</widget_type>
     <width>348</width>
     <wuid>-132c2257:183e514448e:-6b99</wuid>
-    <x>448</x>
-    <y>149</y>
+    <x>447</x>
+    <y>146</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -6431,8 +6431,8 @@ $(pv_value)</tooltip>
     <widget_type>Grouping Container</widget_type>
     <width>390</width>
     <wuid>-132c2257:183e514448e:-6b01</wuid>
-    <x>406</x>
-    <y>159</y>
+    <x>405</x>
+    <y>156</y>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
@@ -7047,8 +7047,8 @@ $(pv_value)</tooltip>
     <width>62</width>
     <wrap_words>false</wrap_words>
     <wuid>-132c2257:183e514448e:-6a74</wuid>
-    <x>406</x>
-    <y>216</y>
+    <x>405</x>
+    <y>213</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -7083,8 +7083,8 @@ $(pv_value)</tooltip>
     <line_width>1</line_width>
     <name>PORT_3_Polyline</name>
     <points>
-      <point x="795" y="225" />
-      <point x="448" y="225" />
+      <point x="794" y="222" />
+      <point x="447" y="222" />
     </points>
     <pv_name></pv_name>
     <pv_value />
@@ -7103,8 +7103,8 @@ $(pv_value)</tooltip>
     <widget_type>Polyline</widget_type>
     <width>348</width>
     <wuid>-132c2257:183e514448e:-6a73</wuid>
-    <x>448</x>
-    <y>225</y>
+    <x>447</x>
+    <y>222</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -7144,8 +7144,8 @@ $(pv_value)</tooltip>
     <widget_type>Grouping Container</widget_type>
     <width>390</width>
     <wuid>-132c2257:183e514448e:-681c</wuid>
-    <x>406</x>
-    <y>235</y>
+    <x>405</x>
+    <y>232</y>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
@@ -7760,8 +7760,8 @@ $(pv_value)</tooltip>
     <width>62</width>
     <wrap_words>false</wrap_words>
     <wuid>-132c2257:183e514448e:-67cc</wuid>
-    <x>406</x>
-    <y>292</y>
+    <x>405</x>
+    <y>289</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -7796,8 +7796,8 @@ $(pv_value)</tooltip>
     <line_width>1</line_width>
     <name>PORT_4_Polyline</name>
     <points>
-      <point x="795" y="301" />
-      <point x="448" y="301" />
+      <point x="794" y="298" />
+      <point x="447" y="298" />
     </points>
     <pv_name></pv_name>
     <pv_value />
@@ -7816,8 +7816,8 @@ $(pv_value)</tooltip>
     <widget_type>Polyline</widget_type>
     <width>348</width>
     <wuid>-132c2257:183e514448e:-67cb</wuid>
-    <x>448</x>
-    <y>301</y>
+    <x>447</x>
+    <y>298</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -7857,8 +7857,8 @@ $(pv_value)</tooltip>
     <widget_type>Grouping Container</widget_type>
     <width>390</width>
     <wuid>-132c2257:183e514448e:-663d</wuid>
-    <x>406</x>
-    <y>311</y>
+    <x>405</x>
+    <y>308</y>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
