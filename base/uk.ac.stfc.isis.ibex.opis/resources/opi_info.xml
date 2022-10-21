@@ -1399,6 +1399,16 @@
       </value>
     </entry>
     <entry>
+      <key>Riken Kicker and Separator HV settings</key>
+      <value>
+        <type>RIKEN_magnet_PSUs</type>
+        <path>RIKEN/kickers_and_seperators.opi</path>
+        <description>The OPI for Kicker and Separator HV Settings</description>
+        <macros/>
+        <categories/>
+      </value>
+    </entry>
+    <entry>
       <key>Jaws</key>
       <value>
         <type>JAWS</type>
