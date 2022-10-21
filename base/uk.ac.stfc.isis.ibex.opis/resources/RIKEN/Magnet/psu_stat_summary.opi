@@ -122,7 +122,7 @@
       <anti_alias>true</anti_alias>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="0" green="128" blue="192" />
+        <color name="Header Background" red="94" green="151" blue="230" />
       </background_color>
       <bg_gradient_color>
         <color red="255" green="255" blue="255" />
@@ -220,7 +220,7 @@ $(pv_value)</tooltip>
       <anti_alias>true</anti_alias>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="0" green="128" blue="192" />
+        <color name="Header Background" red="94" green="151" blue="230" />
       </background_color>
       <bg_gradient_color>
         <color red="255" green="255" blue="255" />
@@ -318,7 +318,7 @@ $(pv_value)</tooltip>
       <anti_alias>true</anti_alias>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="0" green="128" blue="192" />
+        <color name="Header Background" red="94" green="151" blue="230" />
       </background_color>
       <bg_gradient_color>
         <color red="255" green="255" blue="255" />
@@ -416,7 +416,7 @@ $(pv_value)</tooltip>
       <anti_alias>true</anti_alias>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="0" green="128" blue="192" />
+        <color name="Header Background" red="94" green="151" blue="230" />
       </background_color>
       <bg_gradient_color>
         <color red="255" green="255" blue="255" />
@@ -514,7 +514,7 @@ $(pv_value)</tooltip>
       <anti_alias>true</anti_alias>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="0" green="128" blue="192" />
+        <color name="Header Background" red="94" green="151" blue="230" />
       </background_color>
       <bg_gradient_color>
         <color red="255" green="255" blue="255" />
@@ -565,6 +565,46 @@ $(pv_value)</tooltip>
       <x>251</x>
       <y>0</y>
     </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <auto_size>false</auto_size>
+      <background_color>
+        <color red="255" green="255" blue="255" />
+      </background_color>
+      <border_color>
+        <color name="MEDM_COLOR_14" red="0" green="0" blue="0" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Header4_NEW</opifont.name>
+      </font>
+      <foreground_color>
+        <color red="255" green="255" blue="255" />
+      </foreground_color>
+      <height>20</height>
+      <horizontal_alignment>1</horizontal_alignment>
+      <name>Flow_Label</name>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <text>Flow (l/m)</text>
+      <tooltip></tooltip>
+      <transparent>true</transparent>
+      <vertical_alignment>1</vertical_alignment>
+      <visible>true</visible>
+      <widget_type>Label</widget_type>
+      <width>70</width>
+      <wrap_words>false</wrap_words>
+      <wuid>388d24f9:183cc905eee:-78f2</wuid>
+      <x>251</x>
+      <y>0</y>
+    </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <alarm_pulsing>false</alarm_pulsing>
@@ -572,7 +612,7 @@ $(pv_value)</tooltip>
       <anti_alias>true</anti_alias>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="0" green="128" blue="192" />
+        <color name="Header Background" red="94" green="151" blue="230" />
       </background_color>
       <bg_gradient_color>
         <color red="255" green="255" blue="255" />
@@ -661,46 +701,6 @@ $(pv_value)</tooltip>
       <wrap_words>false</wrap_words>
       <wuid>-132c2257:183e514448e:-790f</wuid>
       <x>320</x>
-      <y>0</y>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-      <actions hook="false" hook_all="false" />
-      <auto_size>false</auto_size>
-      <background_color>
-        <color red="255" green="255" blue="255" />
-      </background_color>
-      <border_color>
-        <color name="MEDM_COLOR_14" red="0" green="0" blue="0" />
-      </border_color>
-      <border_style>0</border_style>
-      <border_width>1</border_width>
-      <enabled>true</enabled>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Header4_NEW</opifont.name>
-      </font>
-      <foreground_color>
-        <color red="255" green="255" blue="255" />
-      </foreground_color>
-      <height>20</height>
-      <horizontal_alignment>1</horizontal_alignment>
-      <name>Flow_Label</name>
-      <rules />
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <text>Flow (l/m)</text>
-      <tooltip></tooltip>
-      <transparent>true</transparent>
-      <vertical_alignment>1</vertical_alignment>
-      <visible>true</visible>
-      <widget_type>Label</widget_type>
-      <width>70</width>
-      <wrap_words>false</wrap_words>
-      <wuid>388d24f9:183cc905eee:-78f2</wuid>
-      <x>251</x>
       <y>0</y>
     </widget>
   </widget>
@@ -5546,7 +5546,7 @@ $(pv_value)</tooltip>
       <anti_alias>true</anti_alias>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="0" green="128" blue="192" />
+        <color name="Header Background" red="94" green="151" blue="230" />
       </background_color>
       <bg_gradient_color>
         <color red="255" green="255" blue="255" />
@@ -5644,7 +5644,7 @@ $(pv_value)</tooltip>
       <anti_alias>true</anti_alias>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="0" green="128" blue="192" />
+        <color name="Header Background" red="94" green="151" blue="230" />
       </background_color>
       <bg_gradient_color>
         <color red="255" green="255" blue="255" />
@@ -5702,7 +5702,7 @@ $(pv_value)</tooltip>
       <anti_alias>true</anti_alias>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="0" green="128" blue="192" />
+        <color name="Header Background" red="94" green="151" blue="230" />
       </background_color>
       <bg_gradient_color>
         <color red="255" green="255" blue="255" />
@@ -5800,7 +5800,7 @@ $(pv_value)</tooltip>
       <anti_alias>true</anti_alias>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="0" green="128" blue="192" />
+        <color name="Header Background" red="94" green="151" blue="230" />
       </background_color>
       <bg_gradient_color>
         <color red="255" green="255" blue="255" />
@@ -5858,7 +5858,7 @@ $(pv_value)</tooltip>
       <anti_alias>true</anti_alias>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="0" green="128" blue="192" />
+        <color name="Header Background" red="94" green="151" blue="230" />
       </background_color>
       <bg_gradient_color>
         <color red="255" green="255" blue="255" />
@@ -5956,7 +5956,7 @@ $(pv_value)</tooltip>
       <anti_alias>true</anti_alias>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="0" green="128" blue="192" />
+        <color name="Header Background" red="94" green="151" blue="230" />
       </background_color>
       <bg_gradient_color>
         <color red="255" green="255" blue="255" />
