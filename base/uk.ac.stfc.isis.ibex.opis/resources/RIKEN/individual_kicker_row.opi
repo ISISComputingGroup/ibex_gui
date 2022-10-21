@@ -38,9 +38,9 @@
     <auto_size>false</auto_size>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color red="255" green="255" blue="255" />
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
     <border_color>
       <color name="MEDM_COLOR_14" red="0" green="0" blue="0" />
     </border_color>
@@ -67,12 +67,12 @@
       <rule name="Rule" prop_id="background_color" out_exp="false">
         <exp bool_exp="pv0 == 0">
           <value>
-            <color name="Major" red="255" green="0" blue="0" />
+            <color name="Green" red="0" green="255" blue="0" />
           </value>
         </exp>
         <exp bool_exp="pv0 == 1">
           <value>
-            <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+            <color name="Minor" red="255" green="128" blue="0" />
           </value>
         </exp>
         <pv trig="true">$(PLC_ROOT):$(KICKER):CONTROL_MODE:STAT</pv>
@@ -104,9 +104,9 @@ $(pv_value)</tooltip>
     <auto_size>false</auto_size>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color red="255" green="255" blue="255" />
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
     <border_color>
       <color name="MEDM_COLOR_14" red="0" green="0" blue="0" />
     </border_color>
@@ -131,12 +131,12 @@ $(pv_value)</tooltip>
     <rotation_angle>0.0</rotation_angle>
     <rules>
       <rule name="Rule" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0 == 0">
+        <exp bool_exp="pv0 == 1">
           <value>
-            <color name="Major" red="255" green="0" blue="0" />
+            <color name="Minor" red="255" green="128" blue="0" />
           </value>
         </exp>
-        <exp bool_exp="pv0 == 1">
+        <exp bool_exp="pv0 == 2">
           <value>
             <color name="Green" red="0" green="255" blue="0" />
           </value>
@@ -170,9 +170,9 @@ $(pv_value)</tooltip>
     <auto_size>false</auto_size>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color red="255" green="255" blue="255" />
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
     <border_color>
       <color name="MEDM_COLOR_14" red="0" green="0" blue="0" />
     </border_color>
@@ -236,9 +236,9 @@ $(pv_value)</tooltip>
     <auto_size>false</auto_size>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color red="255" green="255" blue="255" />
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
     <border_color>
       <color name="MEDM_COLOR_14" red="0" green="0" blue="0" />
     </border_color>
@@ -265,12 +265,12 @@ $(pv_value)</tooltip>
       <rule name="Rule" prop_id="background_color" out_exp="false">
         <exp bool_exp="pv0 == 0">
           <value>
-            <color name="Major" red="255" green="0" blue="0" />
+            <color name="Green" red="0" green="255" blue="0" />
           </value>
         </exp>
         <exp bool_exp="pv0 == 1">
           <value>
-            <color name="Green" red="0" green="255" blue="0" />
+            <color name="Minor" red="255" green="128" blue="0" />
           </value>
         </exp>
         <pv trig="true">$(PLC_ROOT):$(KICKER):PSU_ON:STAT</pv>
@@ -302,9 +302,9 @@ $(pv_value)</tooltip>
     <auto_size>false</auto_size>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color red="255" green="255" blue="255" />
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
     <border_color>
       <color name="MEDM_COLOR_14" red="0" green="0" blue="0" />
     </border_color>
@@ -339,7 +339,7 @@ $(pv_value)</tooltip>
             <color name="Green" red="0" green="255" blue="0" />
           </value>
         </exp>
-        <pv trig="true">$(PLC_ROOT)$(KICKER):PSU_HV_ON:STAT</pv>
+        <pv trig="true">$(PLC_ROOT):$(KICKER):PSU_HV_ON:STAT</pv>
       </rule>
     </rules>
     <scale_options>
@@ -368,9 +368,9 @@ $(pv_value)</tooltip>
     <auto_size>false</auto_size>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color red="255" green="255" blue="255" />
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
     <border_color>
       <color name="MEDM_COLOR_14" red="0" green="0" blue="0" />
     </border_color>
@@ -390,7 +390,7 @@ $(pv_value)</tooltip>
     <name>Voltage_kV_Text Update</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(PLC_ROOT):$(KICKER):VOLTAGE</pv_name>
+    <pv_name>$(PLC_ROOT):$(KICKER):VOLT</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />
@@ -420,9 +420,9 @@ $(pv_value)</tooltip>
     <auto_size>false</auto_size>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color red="255" green="255" blue="255" />
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
     <border_color>
       <color name="MEDM_COLOR_14" red="0" green="0" blue="0" />
     </border_color>
@@ -442,7 +442,7 @@ $(pv_value)</tooltip>
     <name>Current_kA_Text Update</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(PLC_ROOT):$(KICKER):CURRENT</pv_name>
+    <pv_name>$(PLC_ROOT):$(KICKER):CURR</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />
