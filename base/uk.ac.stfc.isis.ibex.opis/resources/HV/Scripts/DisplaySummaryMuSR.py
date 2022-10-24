@@ -27,4 +27,4 @@ def create_channels_summary(this_display, this_pvs, group_container_name, opi_na
         group.addChildToBottom(create_channel_widget_model(chan, opi_name))
 
 #The function that is called by CSS.
-create_channels_summary(display, pvs, "group", "HVChannelMonitorSummary.opi")
+create_channels_summary(display, pvs, "group", "HVChannelMonitorDetails.opi")
