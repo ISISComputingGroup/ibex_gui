@@ -496,7 +496,7 @@ $(pv_value)</tooltip>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <KICKER>K3</KICKER>
+        <KICKER>KICKER3</KICKER>
       </macros>
       <name>K3 Grouping Container</name>
       <rules />
@@ -676,7 +676,7 @@ $(pv_value)</tooltip>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <KICKER>K4</KICKER>
+        <KICKER>KICKER4</KICKER>
       </macros>
       <name>K4 Grouping Container</name>
       <rules />
@@ -1737,7 +1737,7 @@ $(pv_value)</tooltip>
         <color red="0" green="255" blue="0" />
       </on_color>
       <on_label>ON</on_label>
-      <pv_name>$(PLC_ROOT):KICKER:WATER:ILK:STAT</pv_name>
+      <pv_name>$(PLC_ROOT):KICKERS:WATER:ILK:STAT</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -1777,7 +1777,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <height>14</height>
       <horizontal_alignment>1</horizontal_alignment>
-      <name>Voltage_Label</name>
+      <name>Status_Label</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -2026,7 +2026,7 @@ $(pv_value)</tooltip>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
         <scripts />
-        <text>Seperator (UP)</text>
+        <text>Seperator UP</text>
         <tooltip></tooltip>
         <transparent>true</transparent>
         <vertical_alignment>1</vertical_alignment>
@@ -2207,7 +2207,7 @@ $(pv_value)</tooltip>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
         <scripts />
-        <text>Seperator (DOWN)</text>
+        <text>Seperator DOWN</text>
         <tooltip></tooltip>
         <transparent>true</transparent>
         <vertical_alignment>1</vertical_alignment>
@@ -2388,7 +2388,7 @@ $(pv_value)</tooltip>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
         <scripts />
-        <text>Seperator (PORT 4)</text>
+        <text>Seperator PORT 4</text>
         <tooltip></tooltip>
         <transparent>true</transparent>
         <vertical_alignment>1</vertical_alignment>
