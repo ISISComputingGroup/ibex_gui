@@ -1314,9 +1314,15 @@
       <key>Riken Magnet PSU</key>
       <value>
         <type>RIKEN_magnet_PSUs</type>
-        <path>RIKEN/RIKEN_magnet_PSUs.opi</path>
+        <path>RIKEN/Magnet/RIKEN_magnet_PSUs.opi</path>
         <description>The OPI for the Riken Magnet PSU Synoptic</description>
-        <macros/>
+        <macros>
+          <macro>
+            <name>SCHNDR</name>
+            <description>The SCHNDR PV prefix (e.g. SCHNDR_01)</description>
+            <default>SCHNDR_01</default>
+          </macro>
+        </macros>
         <categories/>
       </value>
     </entry>

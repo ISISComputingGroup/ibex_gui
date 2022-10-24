@@ -91,7 +91,7 @@
       <color red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>400</height>
+    <height>418</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
@@ -192,7 +192,7 @@
     <width>560</width>
     <wuid>-12e71780:183cb0a5e3b:-6f24</wuid>
     <x>15</x>
-    <y>382</y>
+    <y>400</y>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>

@@ -35,7 +35,7 @@
   <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
     <actions hook="true" hook_all="false">
       <action type="OPEN_DISPLAY">
-        <path>../danfysik.opi</path>
+        <path>../../danfysik.opi</path>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <DFKPS>$(PV)</DFKPS>
@@ -83,10 +83,18 @@
     <pv_name>$(P)$(PV):POWER</pv_name>
     <pv_value />
     <rules>
-      <rule name="Rule" prop_id="off_color" out_exp="false">
+      <rule name="Handle Interlock Off" prop_id="off_color" out_exp="false">
         <exp bool_exp="pv0==1">
           <value>
-            <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
+            <color name="ISIS_Red_LED_Off" red="102" green="0" blue="0" />
+          </value>
+        </exp>
+        <pv trig="true">$(P)$(PV):ILK</pv>
+      </rule>
+      <rule name="Handle Interlock On" prop_id="on_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="ISIS_Yellow" red="255" green="255" blue="0" />
           </value>
         </exp>
         <pv trig="true">$(P)$(PV):ILK</pv>

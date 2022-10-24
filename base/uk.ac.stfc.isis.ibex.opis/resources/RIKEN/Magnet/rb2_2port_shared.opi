@@ -91,7 +91,7 @@
       <color red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>203</height>
+    <height>221</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
       <PSU_PREFIX>DFKPS_01</PSU_PREFIX>
@@ -193,7 +193,7 @@
     <width>566</width>
     <wuid>-12e71780:183cb0a5e3b:-7862</wuid>
     <x>9</x>
-    <y>186</y>
+    <y>204</y>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
@@ -256,10 +256,10 @@
       <height>32</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <PSU_PREFIX>DFKPS_13</PSU_PREFIX>
+        <PSU_PREFIX>TRANTECH_01</PSU_PREFIX>
       </macros>
       <name>PSU_3_Linking_Container</name>
-      <opi_file>indiviudal_port_row.opi</opi_file>
+      <opi_file>indiviudal_port_row_transtechnik.opi</opi_file>
       <resize_behaviour>1</resize_behaviour>
       <rules />
       <scale_options>
@@ -297,7 +297,8 @@
       <height>32</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <PSU_PREFIX>DFKPS_24</PSU_PREFIX>
+        <PSU_PREFIX>TECHNIX_02</PSU_PREFIX>
+        <POLARITY>-</POLARITY>
       </macros>
       <name>PSU_4_Linking_Container</name>
       <opi_file>indiviudal_port_row_technix.opi</opi_file>
@@ -338,7 +339,8 @@
       <height>32</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <PSU_PREFIX>DFKPS_26</PSU_PREFIX>
+        <PSU_PREFIX>TECHNIX_01</PSU_PREFIX>
+        <POLARITY>+</POLARITY>
       </macros>
       <name>PSU_5_Linking_Container</name>
       <opi_file>indiviudal_port_row_technix.opi</opi_file>
@@ -502,10 +504,10 @@
       <height>32</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <PSU_PREFIX>DFKPS_14</PSU_PREFIX>
+        <PSU_PREFIX>TRANTECH_02</PSU_PREFIX>
       </macros>
       <name>PSU_9_Linking_Container</name>
-      <opi_file>indiviudal_port_row.opi</opi_file>
+      <opi_file>indiviudal_port_row_transtechnik.opi</opi_file>
       <resize_behaviour>1</resize_behaviour>
       <rules />
       <scale_options>
@@ -543,7 +545,8 @@
       <height>32</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <PSU_PREFIX>DFKPS_24</PSU_PREFIX>
+        <PSU_PREFIX>TECHNIX_04</PSU_PREFIX>
+        <POLARITY>-</POLARITY>
       </macros>
       <name>PSU_10_Linking_Container</name>
       <opi_file>indiviudal_port_row_technix.opi</opi_file>
@@ -584,7 +587,8 @@
       <height>32</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <PSU_PREFIX>DFKPS_26</PSU_PREFIX>
+        <PSU_PREFIX>TECHNIX_03</PSU_PREFIX>
+        <POLARITY>+</POLARITY>
       </macros>
       <name>PSU_11_Linking_Container</name>
       <opi_file>indiviudal_port_row_technix.opi</opi_file>
