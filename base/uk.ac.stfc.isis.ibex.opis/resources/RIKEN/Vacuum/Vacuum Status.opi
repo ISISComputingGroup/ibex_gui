@@ -35,7 +35,7 @@
   <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
     <actions hook="true" hook_all="false">
       <action type="OPEN_DISPLAY">
-        <path>../TPG300.opi</path>
+        <path>../../TPG300.opi</path>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <TPG300>TPG300_$(TPG)</TPG300>
