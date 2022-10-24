@@ -51,7 +51,7 @@
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
-    <height>505</height>
+    <height>503</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -72,7 +72,7 @@
     <width>800</width>
     <wuid>-4805f29c:1579922e8d6:-7f64</wuid>
     <x>0</x>
-    <y>98</y>
+    <y>97</y>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
@@ -1905,7 +1905,7 @@ $(pv_value)</tooltip>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <height>36</height>
-        <image_file>solenoid kickers off.png</image_file>
+        <image_file>../solenoid kickers off.png</image_file>
         <name>Kicker</name>
         <no_animation>false</no_animation>
         <permutation_matrix>
@@ -2130,7 +2130,7 @@ $(pv_value)</tooltip>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <height>36</height>
-        <image_file>solenoid kickers off.png</image_file>
+        <image_file>../solenoid kickers off.png</image_file>
         <name>Solenoid</name>
         <no_animation>false</no_animation>
         <permutation_matrix>
@@ -2689,7 +2689,7 @@ $(pv_value)</tooltip>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
       <tooltip></tooltip>
-      <transparent>false</transparent>
+      <transparent>true</transparent>
       <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>200</width>
@@ -3035,7 +3035,7 @@ $(pv_value)</tooltip>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
       <tooltip></tooltip>
-      <transparent>false</transparent>
+      <transparent>true</transparent>
       <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>127</width>
