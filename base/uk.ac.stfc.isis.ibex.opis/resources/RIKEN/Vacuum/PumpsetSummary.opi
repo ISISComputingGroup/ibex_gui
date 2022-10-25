@@ -30,8 +30,8 @@
   <widget_type>Display</widget_type>
   <width>800</width>
   <wuid>-3acad3bf:1823454b352:-7f81</wuid>
-  <x>-1</x>
-  <y>-1</y>
+  <x>0</x>
+  <y>0</y>
   <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
     <actions hook="false" hook_all="true" />
     <alarm_pulsing>false</alarm_pulsing>
@@ -128,9 +128,9 @@ $(pv_value)</tooltip>
     <height>37</height>
     <name>Image Boolean Indicator</name>
     <no_animation>false</no_animation>
-    <off_image>../icons_for_opis/Cross.png</off_image>
+    <off_image>../../icons_for_opis/Cross.png</off_image>
     <off_label>OFF</off_label>
-    <on_image>../icons_for_opis/Check Mark.png</on_image>
+    <on_image>../../icons_for_opis/Check Mark.png</on_image>
     <on_label>ON</on_label>
     <pv_name>$(PV_ROOT)PUMPSET:$(NUM):STAT</pv_name>
     <pv_value />

@@ -140,10 +140,10 @@ $(pv_value)</tooltip>
     <height>36</height>
     <name>Image Boolean Indicator</name>
     <no_animation>false</no_animation>
-    <off_image>../icons_for_opis/Cross.png</off_image>
+    <off_image>../../icons_for_opis/Cross.png</off_image>
     <off_label>OFF</off_label>
     <off_state>Fault</off_state>
-    <on_image>../icons_for_opis/Check Mark.png</on_image>
+    <on_image>../../icons_for_opis/Check Mark.png</on_image>
     <on_label>ON</on_label>
     <on_state>Running</on_state>
     <pv_name>$(PV_ROOT)$(PV)</pv_name>
