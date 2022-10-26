@@ -1,6 +1,24 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
 <descriptions>
   <opis>
+	<entry>
+      <key>Aeroflex</key>
+      <value>
+        <type>FUNCTION_GENERATOR</type>
+        <path>aeroflex/aeroflex.opi</path>
+        <description>The OPI for the Aeroflex signal generator.</description>
+        <macros>
+          <macro>
+            <name>AERO</name>
+            <description>The Aeroflex PV prefix (e.g. AEROFLEX_01).</description>
+            <default>AEROFLEX_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+      </value>
+    </entry>
     <entry>
       <key>Motion Set Point</key>
       <value>
@@ -2946,21 +2964,6 @@
         <description>Developer system-testing OPI for CS-Studio rules engines</description>
         <macros/>
         <categories/>
-      </value>
-    </entry>
-    <entry>
-      <key>AEROFLEX</key>
-      <value>
-        <categories/>
-        <type>UNKNOWN</type>
-        <path>aeroflex.opi</path>
-        <description>The OPI for the Aeroflex</description>
-        <macros>
-          <macro>
-            <name>AEROFLEX</name>
-            <description>The Aeroflex PV prefix (e.g. AEROFLEX_01)</description>
-          </macro>
-        </macros>
       </value>
     </entry>
   </opis>
