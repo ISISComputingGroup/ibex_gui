@@ -118,6 +118,7 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 		session.addMessageHandler(new MessageHandler.Whole<String>() {
 			@Override
 			public void onMessage(String message) {
+				System.out.println(message);
 				LoggerUtils.logIfExtraDebug(LOG, String.format("string message from %s: %s", getUrl(), message));
 				try {
 					// Can't deserialize to Map<String, String> because some messages are of type Map<String, List>
@@ -143,6 +144,13 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 		    	break;
 		    case "message":
 		    	model.setPlotMessage((String) content.getOrDefault("message", ""));
+		    	break;
+		    case "history_buttons":
+		    	model.setBackEnabled((Boolean) content.getOrDefault("Back", ""));
+		    	model.setForwardEnabled((Boolean) content.getOrDefault("Forward", ""));
+		    	break;
+		    case "navigate_mode":
+		    	model.toggleZoomAndPan((String) content.getOrDefault("mode", ""));
 		    	break;
 		    default:
 		    	// No action required
@@ -247,4 +255,24 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 			sendProperty(session, "figure_leave", event);
 		}
 	}
+	
+	/**
+	 * Sends a reset to home event to the server.
+	 */
+	public void navigatePlot(String name) {
+		final Map<String, Object> event = Map.of("name", name);
+		sendProperty(session, "toolbar_button", event);
+	}
+	
+	/**
+	 * Sends a "mouse button pressed" (on the canvas) event to the server. 
+	 * @param position
+	 * @param pressType
+	 */
+	public void notifyButtonPress(final MatplotlibCursorPosition position, String pressType) {
+	  final Map<String, Object> event = Map.of("x", position.x(), "y",
+	  position.y(), "button", 0, "guiEvent", new HashMap<>());
+	  sendProperty(session, pressType, event);
+	}
+	
 }

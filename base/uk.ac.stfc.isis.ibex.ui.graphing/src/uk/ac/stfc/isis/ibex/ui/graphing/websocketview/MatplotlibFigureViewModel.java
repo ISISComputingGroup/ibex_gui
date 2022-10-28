@@ -30,6 +30,10 @@ public class MatplotlibFigureViewModel implements Closeable {
 	private final SettableUpdatedValue<String> plotMessage;
 	private final SettableUpdatedValue<ImageData> image;
 	
+	private final SettableUpdatedValue<Boolean> backEnabled;
+	private final SettableUpdatedValue<Boolean> forwardEnabled;
+	private final SettableUpdatedValue<String> navMode;
+	
 	private static final int PALETTE_BIT_DEPTH = 8;
 	
 	/** 
@@ -96,6 +100,9 @@ public class MatplotlibFigureViewModel implements Closeable {
 				String.format("[Disconnected] %s", model.getPlotName(), figureNumber));
 		image = new SettableUpdatedValue<ImageData>(generateBlankImage());
 		plotMessage = new SettableUpdatedValue<String>("");
+		backEnabled = new SettableUpdatedValue<Boolean>(false);
+		forwardEnabled = new SettableUpdatedValue<Boolean>(false);
+		navMode = new SettableUpdatedValue<String>("NONE");
 		
 		updateExecutor  = 
 				Executors.newSingleThreadScheduledExecutor(
@@ -120,6 +127,9 @@ public class MatplotlibFigureViewModel implements Closeable {
 				String.format("[Disconnected] %s", model.getPlotName(), figureNumber));
 		image = new SettableUpdatedValue<ImageData>(generateBlankImage());
 		plotMessage = new SettableUpdatedValue<String>("");
+		backEnabled = new SettableUpdatedValue<Boolean>(false);
+		forwardEnabled = new SettableUpdatedValue<Boolean>(false);
+		navMode = new SettableUpdatedValue<String>("NONE");
 		
 		updateExecutor  = executor;
 		
@@ -139,6 +149,14 @@ public class MatplotlibFigureViewModel implements Closeable {
 	 */
 	public MatplotlibWebsocketModel getModel() {
 		return model;
+	}
+
+	/**
+	 * Gets an UpdatedValue which contains the image data to be drawn.
+	 * @return the image
+	 */
+	public UpdatedValue<ImageData> getImage() {
+		return image;
 	}
 	
 	/**
@@ -172,7 +190,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 			plotMessage.setValue("");
 		}
 	}
-	
+
 	/**
 	 * Gets the message.
 	 * @return the message
@@ -180,6 +198,63 @@ public class MatplotlibFigureViewModel implements Closeable {
 	public UpdatedValue<String> getPlotMessage() {
 		return plotMessage;
 	}
+	
+	/**
+	 * Updates whether 'back' is enabled
+	 */
+	public void updateBackEnabled() {
+		if (model.isConnected()) { 
+			  backEnabled.setValue(model.getBackEnabled()); 
+		} else { 
+			  backEnabled.setValue(false); 
+		}
+	}
+	
+	/**
+	 * @return whether 'back' is enabled
+	 */
+	public UpdatedValue<Boolean> getBackEnabled() {
+		return backEnabled;
+	}
+	
+	/**
+	 * Updates whether 'forward' is enabled
+	 */
+	public void updateForwardEnabled() {
+		if (model.isConnected()) { 
+			forwardEnabled.setValue(model.getForwardEnabled()); 
+		} else { 
+			forwardEnabled.setValue(false); 
+		}
+	}
+	 
+	/**
+	 * @return whether 'forward' is enabled
+	 */
+	public UpdatedValue<Boolean> getForwardEnabled() { 
+		return forwardEnabled;
+	}
+	
+	/**
+	 * Updates which navigation mode the plot is 
+	 * currently in (ZOOM or PAN)
+	 */
+	public void updateNavMode() {
+		if (model.isConnected()) { 
+			navMode.setValue(model.getNavMode()); 
+		} else { 
+			navMode.setValue("NONE"); 
+		}
+	}
+	
+	/**
+	 * @return the navigation mode (ZOOM or PAN)
+	 */
+	public UpdatedValue<String> getNavMode(){
+		return navMode;
+	}
+	
+	
 
 	/**
 	 * {@inheritDoc}
@@ -199,13 +274,6 @@ public class MatplotlibFigureViewModel implements Closeable {
 				PALETTE_BIT_DEPTH, palette);
 	}
 	
-	/**
-	 * Gets an UpdatedValue which contains the image data to be drawn.
-	 * @return the image
-	 */
-	public UpdatedValue<ImageData> getImage() {
-		return image;
-	}
 	
 	private void redrawIfRequired() {
 		try {
@@ -227,13 +295,6 @@ public class MatplotlibFigureViewModel implements Closeable {
 			LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
 		}
 	}
-
-	/**
-	 * Notifies this viewmodel that a new image is available.
-	 */
-	public void imageUpdated() {
-		clientRedrawRequired.set(true);
-	}
 	
 	private void updateCanvasSizeIfRequired() {
 		try {
@@ -243,6 +304,15 @@ public class MatplotlibFigureViewModel implements Closeable {
 		} catch (Exception e) {
 			LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
 		}
+	}
+	
+	
+
+	/**
+	 * Notifies this viewmodel that a new image is available.
+	 */
+	public void imageUpdated() {
+		clientRedrawRequired.set(true);
 	}
 
 	/**
@@ -284,4 +354,23 @@ public class MatplotlibFigureViewModel implements Closeable {
 		this.cursorPosition = cursorPosition;
 		cursorPositionChanged.set(true);
 	}
+	
+	/**
+	 * Notifies the websocket model that a mouse button as been pressed/released over the figure 
+	 * @param pressType
+	 */
+	public void notifyButtonPressed(String pressType) {
+		model.notifyButtonPress(cursorPosition, pressType);
+	}
+	
+	/**
+	 * Navigates the matplotlib graph depending on which navigation 
+	 * button is selected
+	 * @param navType
+	 */
+	public void navigatePlot(String navType) {
+		model.navigatePlot(navType);
+	}
+
+
 }

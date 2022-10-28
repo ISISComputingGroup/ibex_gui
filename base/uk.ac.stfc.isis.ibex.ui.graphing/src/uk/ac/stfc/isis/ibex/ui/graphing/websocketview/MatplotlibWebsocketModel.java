@@ -27,7 +27,10 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	
 	private String plotName;
 	private String plotMessage;
+	private String navMode;
 	private MatplotlibCursorPosition cursorPosition = MatplotlibCursorPosition.OUTSIDE_CANVAS;
+	private boolean backEnabled;
+	private boolean forwardEnabled;
 	
 	private Optional<ImageData> imageData = Optional.empty();
 	
@@ -178,6 +181,26 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	}
 	
 	/**
+	 * Notifies the server that the plot is to be navigated, force refresh
+	 * the server 
+	 * @param name the button's navigation type
+	 */
+	public void navigatePlot(String name) {
+		workerThread.submit(() -> connection.navigatePlot(name));
+		workerThread.submit(() -> connection.forceServerRefresh());
+	}
+	
+	/**
+	 * Notifies the server that a mouse button as been pressed/released over the figure 
+	 * @param position the cursor position
+	 * @param pressType the button event type
+	 */
+	public void notifyButtonPress(final MatplotlibCursorPosition position, String pressType) {
+		workerThread.submit(() -> connection.notifyButtonPress(position, pressType));
+		workerThread.submit(() -> connection.forceServerRefresh());
+	}
+	
+	/**
 	 * Sets a new name for this plot.
 	 * @param newName the new name
 	 */
@@ -209,6 +232,57 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 */
 	public String getPlotMessage() {
 		return plotMessage;
+	}
+	
+	/**
+	 * Sets the new value for whether the back
+	 * button is enabled (or not)
+	 * @param backEnabled
+	 */
+	public void setBackEnabled(boolean backEnabled) {
+		this.backEnabled = backEnabled;
+		viewModel.updateBackEnabled();
+	}
+	
+	/**
+	 * @return whether 'back' is enabled
+	 */
+	public boolean getBackEnabled() {
+		return backEnabled;
+	}
+	
+	/**
+	 * Sets the new value for whether the forwards
+	 * button is enabled (or not)
+	 * @param forwardEnabled
+	 */
+	public void setForwardEnabled(boolean forwardEnabled) { 
+		this.forwardEnabled = forwardEnabled; 
+		viewModel.updateForwardEnabled(); 
+	}
+	
+	/**
+	 * @return whether 'forwards' is enabled
+	 */
+	public boolean getForwardEnabled() {
+		return forwardEnabled;
+	}
+	
+	/**
+	 * Sets the new value for which navigation
+	 * mode the plot is in (NONE/ZOOM/PAN)
+	 * @param navMode
+	 */
+	public void toggleZoomAndPan(String navMode) {
+		this.navMode = navMode;
+		viewModel.updateNavMode();
+	}
+	
+	/**
+	 * @return the current navigation mode
+	 */
+	public String getNavMode() {
+		return navMode;
 	}
 	
 	/**

@@ -1,15 +1,20 @@
 package uk.ac.stfc.isis.ibex.ui.graphing.websocketview;
 
 import java.beans.PropertyChangeListener;
+import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.events.MouseTrackListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Rectangle;
@@ -19,6 +24,10 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.wb.swt.ResourceManager;
+
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
@@ -31,20 +40,29 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 public class MatplotlibFigure extends Composite {
 	
 	private static final Logger LOG = IsisLog.getLogger(MatplotlibFigure.class);
+	
+	private final Composite container;
+	private final MatplotlibFigureViewModel viewModel;
 
 	private final Canvas plotCanvas;
 	private final Label labelConnectionStatus;
 	private final Label plotMessage;
-	private final Composite container;
-	private final MatplotlibFigureViewModel viewModel;
+	private Image plotImage;
+	private MatplotlibToolbar toolBar;
 	
 	private final PropertyChangeListener connectionNameListener;
 	private final PropertyChangeListener imageListener;
+	private final PropertyChangeListener backListener;
+	private final PropertyChangeListener forwardListener;
 	private final PropertyChangeListener plotMessageListener;
-	private Image image;
+	private final PropertyChangeListener navModeListener;
 	private final MouseTrackListener mouseTrackListener;
 	private final MouseMoveListener mouseMoveListener;
+	private final MouseListener mouseListener;
+
 	private static final int NUM_COLUMNS = 2;
+	private final String ICON_INACTIVE = "inactive";
+	private final String ICON_ACTIVE = "active";
 
 	/**
 	 * Create the composite.
@@ -81,7 +99,9 @@ public class MatplotlibFigure extends Composite {
 		plotCanvas = new Canvas(container, SWT.NONE);
 		plotCanvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, NUM_COLUMNS, 1));
 		
-		image = new Image(Display.getDefault(), 500, 500);
+		plotImage = new Image(Display.getDefault(), 500, 500);
+		
+		toolBar = new MatplotlibToolbar(viewModel, container);
 		
 		plotCanvas.addControlListener(new ControlAdapter() {
 			@Override
@@ -91,7 +111,7 @@ public class MatplotlibFigure extends Composite {
 			}
 		});
 		
-		plotCanvas.addPaintListener(event -> event.gc.drawImage(image, 0, 0));
+		plotCanvas.addPaintListener(event -> event.gc.drawImage(plotImage, 0, 0));
 		
 		viewModel.canvasResized(plotCanvas.getBounds().width, plotCanvas.getBounds().height);
 		
@@ -114,8 +134,20 @@ public class MatplotlibFigure extends Composite {
 			}
 		};
 		
+		mouseListener = new MouseAdapter() {@Override
+			public void mouseDown(MouseEvent e) {
+				viewModel.notifyButtonPressed("button_press");
+			}
+			
+			@Override
+			public void mouseUp(MouseEvent e) {
+				viewModel.notifyButtonPressed("button_release");
+			}
+		};
+		
 		plotCanvas.addMouseTrackListener(mouseTrackListener);
 		plotCanvas.addMouseMoveListener(mouseMoveListener);
+		plotCanvas.addMouseListener(mouseListener);
 		
 		connectionNameListener = viewModel.getPlotName()
 				.addUiThreadPropertyChangeListener(e -> {
@@ -131,6 +163,42 @@ public class MatplotlibFigure extends Composite {
 				});
 		imageListener = viewModel.getImage()
 				.addUiThreadPropertyChangeListener(e -> drawImage((ImageData) e.getNewValue()));
+		
+		backListener = viewModel.getBackEnabled()
+				.addUiThreadPropertyChangeListener(e -> {
+					if (!backButton.isDisposed()) {
+						backButton.setEnabled((Boolean) e.getNewValue());
+					}
+				});
+		
+		forwardListener = viewModel.getForwardEnabled()
+				.addUiThreadPropertyChangeListener(e -> {
+					if (!forwardButtonisDisposed()) {
+						forwardButton.setEnabled((Boolean) e.getNewValue());
+					}
+				});
+		
+		navModeListener = viewModel.getNavMode()
+				.addUiThreadPropertyChangeListener(e -> {
+					if (!toolBar.panButton.button.isDisposed() || !toolBar.zoomButton.button.isDisposed()) {
+						switch(e.getNewValue().toString()) {
+							case "NONE":
+								zoomButton.setIcon(MatplotlibToolbar.ICON_INACTIVE);
+								panButton.setIcon(MatplotlibToolbar.ICON_ACTIVE);
+								break;
+							case "ZOOM":
+								zoomButton.setIcon(MatplotlibToolbar.ICON_ACTIVE);
+								panButton.setIcon(MatplotlibToolbar.ICON_INACTIVE);
+								break;
+							case "PAN":
+								zoomButton.setIcon(MatplotlibToolbar.ICON_INACTIVE);
+								panButton.setIcon(MatplotlibToolbar.ICON_ACTIVE);
+								break;
+							default:
+								break;
+						}
+					}
+				});
 	}
 	
 	/**
@@ -139,9 +207,9 @@ public class MatplotlibFigure extends Composite {
 	 */
 	public void drawImage(ImageData imageData) {
 		try {
-			if (!image.isDisposed()) {
-				image.dispose();
-				image = new Image(Display.getDefault(), imageData);
+			if (!plotImage.isDisposed()) {
+				plotImage.dispose();
+				plotImage = new Image(Display.getDefault(), imageData);
 			}
 			if (!plotCanvas.isDisposed()) {
 			    plotCanvas.redraw();
@@ -168,15 +236,23 @@ public class MatplotlibFigure extends Composite {
 		viewModel.getPlotName().removePropertyChangeListener(connectionNameListener);
 		viewModel.getImage().removePropertyChangeListener(imageListener);
 		viewModel.getPlotMessage().removePropertyChangeListener(plotMessageListener);
+		viewModel.getBackEnabled().removePropertyChangeListener(backListener);
+		viewModel.getForwardEnabled().removePropertyChangeListener(forwardListener);
+		viewModel.getNavMode().removePropertyChangeListener(navModeListener);
 		viewModel.close();
 		
-		if (!image.isDisposed()) {
-			image.dispose();
+		if (!plotImage.isDisposed()) {
+			plotImage.dispose();
 		}
+		
 		plotCanvas.removeMouseTrackListener(mouseTrackListener);
 		plotCanvas.removeMouseMoveListener(mouseMoveListener);
+		plotCanvas.removeMouseListener(mouseListener);
 		plotCanvas.dispose();
 		labelConnectionStatus.dispose();
+		
+		toolBar.dispose();
+		
 		plotMessage.dispose();
 		container.dispose();
 		super.dispose();
