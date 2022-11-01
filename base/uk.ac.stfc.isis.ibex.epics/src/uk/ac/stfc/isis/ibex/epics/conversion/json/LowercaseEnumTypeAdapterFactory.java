@@ -77,7 +77,6 @@ public class LowercaseEnumTypeAdapterFactory implements TypeAdapterFactory {
 	    		} else {
 	    			for (var entry : jsonToEnumConstant.entrySet()) {
 	    				if (Objects.equals(entry.getValue(), value)) {
-	    					System.out.println(String.format("entry %s value %s", entry, value));
 	    					out.value(entry.getKey());
 	    					return;
 	    				}
