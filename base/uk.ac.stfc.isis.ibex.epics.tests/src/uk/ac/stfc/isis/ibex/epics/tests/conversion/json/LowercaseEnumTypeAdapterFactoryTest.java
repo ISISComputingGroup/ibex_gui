@@ -32,7 +32,7 @@ public class LowercaseEnumTypeAdapterFactoryTest {
 	}
 	
 	@Test
-    public void convert_enum() throws ConversionException {
+    public void convert_enum_read() throws ConversionException {
 	    Gson gson = new GsonBuilder()
 				.registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory())
 				.create();
@@ -45,5 +45,23 @@ public class LowercaseEnumTypeAdapterFactoryTest {
 
 	    assertEquals(TestEnumMixed.MIXED_ONE, gson.fromJson("\"mixed_one\"", TestEnumMixed.class));
 	    assertEquals(TestEnumMixed.MIXED_TWO, gson.fromJson("\"explicit_name\"", TestEnumMixed.class));
+    }
+	
+
+	
+	@Test
+    public void convert_enum_write() throws ConversionException {
+	    Gson gson = new GsonBuilder()
+				.registerTypeAdapterFactory(new LowercaseEnumTypeAdapterFactory())
+				.create();
+	    
+	    assertEquals(gson.toJson(TestEnum.IMPLICIT_ONE), "\"implicit_one\"");
+	    assertEquals(gson.toJson(TestEnum.IMPLICIT_TWO), "\"implicit_two\"");
+	    
+	    assertEquals(gson.toJson(TestEnumWithSerializedName.EXPLICIT_ONE), "\"name1\"");
+	    assertEquals(gson.toJson(TestEnumWithSerializedName.EXPLICIT_TWO), "\"name2\"");
+	    
+	    assertEquals(gson.toJson(TestEnumMixed.MIXED_ONE), "\"mixed_one\"");
+	    assertEquals(gson.toJson(TestEnumMixed.MIXED_TWO), "\"explicit_name\"");
     }
 }
