@@ -169,7 +169,10 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 */
 	public void cursorPositionChanged(final MatplotlibCursorPosition position) {
 		this.cursorPosition = position;
-		workerThread.submit(() -> connection.cursorPositionChanged(position));
+		workerThread.submit(() -> {
+			connection.cursorPositionChanged(position);
+			connection.forceServerRefresh();
+		});
 	}
 	
 	private void setConnectionStatus(final boolean isConnected) {

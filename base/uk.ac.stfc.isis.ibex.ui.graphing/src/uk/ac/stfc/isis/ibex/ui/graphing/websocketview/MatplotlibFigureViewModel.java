@@ -58,6 +58,8 @@ public class MatplotlibFigureViewModel implements Closeable {
 	 */
 	private final AtomicBoolean cursorPositionChanged = new AtomicBoolean(true);
 	
+	private final AtomicBoolean allowImmediateRedraw = new AtomicBoolean(false);
+	
 	/**
 	 * The maximum frequency at which we might draw updates to the plot, if new data is available.
 	 * 
@@ -328,6 +330,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 	private void updateCursorPositionIfRequired() {
 		try {
 			if (cursorPositionChanged.getAndSet(false)) {
+				allowImmediateRedraw.set(true);
 				model.cursorPositionChanged(cursorPosition);
 			}
 		} catch (Exception e) {
@@ -351,6 +354,9 @@ public class MatplotlibFigureViewModel implements Closeable {
 	 */
 	public void imageUpdated() {
 		clientRedrawRequired.set(true);
+		if (allowImmediateRedraw.getAndSet(false)) {
+			updateExecutor.execute(this::redrawIfRequired);
+		}
 	}
 
 	/**
@@ -403,6 +409,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 	 * @param pressType
 	 */
 	public void notifyButtonPressed(MatplotlibCursorPosition position, MatplotlibPressType pressType) {
+		allowImmediateRedraw.set(true);
 		model.notifyButtonPress(position, pressType);
 	}
 	
@@ -412,6 +419,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 	 * @param navType
 	 */
 	public void navigatePlot(MatplotlibButtonType navType) {
+		allowImmediateRedraw.set(true);
 		model.navigatePlot(navType);
 	}
 
