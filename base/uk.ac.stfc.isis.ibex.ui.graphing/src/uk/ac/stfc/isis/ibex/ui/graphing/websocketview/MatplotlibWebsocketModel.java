@@ -29,8 +29,8 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	private String plotMessage;
 	private MatplotlibNavigationType navMode;
 	private MatplotlibCursorPosition cursorPosition = MatplotlibCursorPosition.OUTSIDE_CANVAS;
-	private boolean backEnabled;
-	private boolean forwardEnabled;
+	private boolean backState;
+	private boolean forwardState;
 	
 	private Optional<ImageData> imageData = Optional.empty();
 	
@@ -243,16 +243,16 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 * button is enabled (or not)
 	 * @param backEnabled
 	 */
-	public void setBackEnabled(boolean backEnabled) {
-		this.backEnabled = backEnabled;
+	public void setBackState(boolean backEnabled) {
+		this.backState = backEnabled;
 		viewModel.updateBackState();
 	}
 	
 	/**
 	 * @return whether 'back' is enabled
 	 */
-	public boolean getBackEnabled() {
-		return backEnabled;
+	public boolean getBackState() {
+		return backState;
 	}
 	
 	/**
@@ -260,16 +260,16 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 * button is enabled (or not)
 	 * @param forwardEnabled
 	 */
-	public void setForwardEnabled(boolean forwardEnabled) { 
-		this.forwardEnabled = forwardEnabled; 
+	public void setForwardState(boolean forwardEnabled) { 
+		this.forwardState = forwardEnabled; 
 		viewModel.updateForwardState(); 
 	}
 	
 	/**
 	 * @return whether 'forwards' is enabled
 	 */
-	public boolean getForwardEnabled() {
-		return forwardEnabled;
+	public boolean getForwardState() {
+		return forwardState;
 	}
 	
 	/**
@@ -325,4 +325,5 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	public String getServerName() {
 		return String.format("%s", connection);
 	}
+
 }

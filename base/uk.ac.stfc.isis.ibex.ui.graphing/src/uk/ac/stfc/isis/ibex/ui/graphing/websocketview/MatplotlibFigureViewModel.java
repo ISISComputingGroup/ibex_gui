@@ -30,8 +30,8 @@ public class MatplotlibFigureViewModel implements Closeable {
 	private final SettableUpdatedValue<String> plotName;
 	private final SettableUpdatedValue<String> plotMessage;
 	private final SettableUpdatedValue<ImageData> image;
-	private final SettableUpdatedValue<MatplotlibButtonState> homeState;
 	
+	private final SettableUpdatedValue<MatplotlibButtonState> homeState;
 	private final SettableUpdatedValue<MatplotlibButtonState> backState;
 	private final SettableUpdatedValue<MatplotlibButtonState> forwardState;
 	private final SettableUpdatedValue<MatplotlibButtonState> zoomState;
@@ -214,7 +214,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 	 */
 	public void updateBackState() {
 		if (model.isConnected()) { 
-			backState.setValue(model.getBackEnabled() ? MatplotlibButtonState.ENABLED_INACTIVE:MatplotlibButtonState.DISABLED);
+			backState.setValue(model.getBackState() ? MatplotlibButtonState.ENABLED_INACTIVE:MatplotlibButtonState.DISABLED);
 		} else { 
 			backState.setValue(MatplotlibButtonState.DISABLED); 
 		}
@@ -232,7 +232,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 	 */
 	public void updateForwardState() {
 		if (model.isConnected()) { 
-			forwardState.setValue(model.getForwardEnabled() ? MatplotlibButtonState.ENABLED_INACTIVE:MatplotlibButtonState.DISABLED);
+			forwardState.setValue(model.getForwardState() ? MatplotlibButtonState.ENABLED_INACTIVE:MatplotlibButtonState.DISABLED);
 		} else { 
 			forwardState.setValue(MatplotlibButtonState.DISABLED); 
 		}
@@ -268,28 +268,28 @@ public class MatplotlibFigureViewModel implements Closeable {
 	}
 	
 	/**
-	 * @return the navigation mode (ZOOM or PAN)
+	 * @return navigation mode (ZOOM or PAN)
 	 */
 	public UpdatedValue<MatplotlibNavigationType> getNavMode(){
 		return navMode;
 	}
 	
 	/**
-	 * @return whether pan is enabled or not
+	 * @return pan enabled state
 	 */
 	public UpdatedValue<MatplotlibButtonState> getPanButtonState(){
 		return panState;
 	}
 	
 	/**
-	 * @return whether zoom is enabled or not
+	 * @return zoom enabled state
 	 */
 	public UpdatedValue<MatplotlibButtonState> getZoomButtonState(){
 		return zoomState;
 	}
 
 	/**
-	 * @return whether home is enabled or not
+	 * @return home enabled state
 	 */
 	public UpdatedValue<MatplotlibButtonState> getHomeButtonState() {
 		return homeState;
@@ -402,8 +402,8 @@ public class MatplotlibFigureViewModel implements Closeable {
 	 * Notifies the websocket model that a mouse button as been pressed/released over the figure 
 	 * @param pressType
 	 */
-	public void notifyButtonPressed(MatplotlibPressType pressType) {
-		model.notifyButtonPress(cursorPosition, pressType);
+	public void notifyButtonPressed(MatplotlibCursorPosition position, MatplotlibPressType pressType) {
+		model.notifyButtonPress(position, pressType);
 	}
 	
 	/**

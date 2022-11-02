@@ -127,13 +127,13 @@ public class MatplotlibFigure extends Composite {
 		mouseListener = new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent e) {
-				viewModel.notifyButtonPressed(MatplotlibPressType.BUTTON_PRESS);
+				viewModel.notifyButtonPressed(new MatplotlibCursorPosition(e.x, e.y, true), MatplotlibPressType.BUTTON_PRESS);
 
 			}
 			
 			@Override
 			public void mouseUp(MouseEvent e) {
-				viewModel.notifyButtonPressed(MatplotlibPressType.BUTTON_RELEASE);
+				viewModel.notifyButtonPressed(new MatplotlibCursorPosition(e.x, e.y, true), MatplotlibPressType.BUTTON_RELEASE);
 
 			}
 		};

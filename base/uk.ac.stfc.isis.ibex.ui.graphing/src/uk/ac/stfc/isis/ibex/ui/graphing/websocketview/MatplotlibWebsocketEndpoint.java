@@ -146,8 +146,8 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 		    	model.setPlotMessage((String) content.getOrDefault("message", ""));
 		    	break;
 		    case "history_buttons":
-		    	model.setBackEnabled((Boolean) content.getOrDefault("Back", "false"));
-		    	model.setForwardEnabled((Boolean) content.getOrDefault("Forward", "false"));
+		    	model.setBackState((Boolean) content.getOrDefault("Back", "false"));
+		    	model.setForwardState((Boolean) content.getOrDefault("Forward", "false"));
 		    	break;
 		    case "navigate_mode":
 		    	model.toggleZoomAndPan((String) content.getOrDefault("mode", ""));
