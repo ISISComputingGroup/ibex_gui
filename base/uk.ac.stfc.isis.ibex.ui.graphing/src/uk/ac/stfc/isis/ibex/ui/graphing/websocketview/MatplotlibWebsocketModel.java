@@ -27,7 +27,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	
 	private String plotName;
 	private String plotMessage;
-	private String navMode;
+	private MatplotlibNavigationType navMode;
 	private MatplotlibCursorPosition cursorPosition = MatplotlibCursorPosition.OUTSIDE_CANVAS;
 	private boolean backEnabled;
 	private boolean forwardEnabled;
@@ -183,11 +183,13 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	/**
 	 * Notifies the server that the plot is to be navigated, force refresh
 	 * the server 
-	 * @param name the button's navigation type
+	 * @param navType the button's navigation type
 	 */
-	public void navigatePlot(String name) {
-		workerThread.submit(() -> connection.navigatePlot(name));
-		workerThread.submit(() -> connection.forceServerRefresh());
+	public void navigatePlot(MatplotlibButtonType navType) {
+		workerThread.submit(() -> {
+			connection.navigatePlot(navType);
+		    connection.forceServerRefresh();
+		});
 	}
 	
 	/**
@@ -195,9 +197,11 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 * @param position the cursor position
 	 * @param pressType the button event type
 	 */
-	public void notifyButtonPress(final MatplotlibCursorPosition position, String pressType) {
-		workerThread.submit(() -> connection.notifyButtonPress(position, pressType));
-		workerThread.submit(() -> connection.forceServerRefresh());
+	public void notifyButtonPress(final MatplotlibCursorPosition position, MatplotlibPressType pressType) {
+		workerThread.submit(() -> {
+		    connection.notifyButtonPress(position, pressType);
+		    connection.forceServerRefresh();
+		});
 	}
 	
 	/**
@@ -241,7 +245,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 */
 	public void setBackEnabled(boolean backEnabled) {
 		this.backEnabled = backEnabled;
-		viewModel.updateBackEnabled();
+		viewModel.updateBackState();
 	}
 	
 	/**
@@ -258,7 +262,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 */
 	public void setForwardEnabled(boolean forwardEnabled) { 
 		this.forwardEnabled = forwardEnabled; 
-		viewModel.updateForwardEnabled(); 
+		viewModel.updateForwardState(); 
 	}
 	
 	/**
@@ -274,14 +278,26 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 * @param navMode
 	 */
 	public void toggleZoomAndPan(String navMode) {
-		this.navMode = navMode;
+		switch(navMode) {
+			case "ZOOM":
+				this.navMode = MatplotlibNavigationType.ZOOM;
+				break;
+			case "PAN":
+				this.navMode = MatplotlibNavigationType.PAN;
+				break;
+			case "NONE":
+				this.navMode = MatplotlibNavigationType.NONE;
+				break;
+			default:
+				break;
+		}
 		viewModel.updateNavMode();
 	}
 	
 	/**
 	 * @return the current navigation mode
 	 */
-	public String getNavMode() {
+	public MatplotlibNavigationType getNavMode() {
 		return navMode;
 	}
 	

@@ -146,8 +146,8 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 		    	model.setPlotMessage((String) content.getOrDefault("message", ""));
 		    	break;
 		    case "history_buttons":
-		    	model.setBackEnabled((Boolean) content.getOrDefault("Back", ""));
-		    	model.setForwardEnabled((Boolean) content.getOrDefault("Forward", ""));
+		    	model.setBackEnabled((Boolean) content.getOrDefault("Back", "false"));
+		    	model.setForwardEnabled((Boolean) content.getOrDefault("Forward", "false"));
 		    	break;
 		    case "navigate_mode":
 		    	model.toggleZoomAndPan((String) content.getOrDefault("mode", ""));
@@ -257,10 +257,11 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	}
 	
 	/**
-	 * Sends a reset to home event to the server.
+	 * Sends a navigation event to the server 
+	 * @param navType
 	 */
-	public void navigatePlot(String name) {
-		final Map<String, Object> event = Map.of("name", name);
+	public void navigatePlot(MatplotlibButtonType navType) {
+		final Map<String, Object> event = Map.of("name", navType.getWebsocketString());
 		sendProperty(session, "toolbar_button", event);
 	}
 	
@@ -269,10 +270,10 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	 * @param position
 	 * @param pressType
 	 */
-	public void notifyButtonPress(final MatplotlibCursorPosition position, String pressType) {
+	public void notifyButtonPress(final MatplotlibCursorPosition position, MatplotlibPressType pressType) {
 	  final Map<String, Object> event = Map.of("x", position.x(), "y",
 	  position.y(), "button", 0, "guiEvent", new HashMap<>());
-	  sendProperty(session, pressType, event);
+	  sendProperty(session, pressType.getWebsocketString(), event);
 	}
 	
 }

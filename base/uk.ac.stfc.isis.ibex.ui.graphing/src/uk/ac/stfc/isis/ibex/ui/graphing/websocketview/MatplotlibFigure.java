@@ -1,7 +1,6 @@
 package uk.ac.stfc.isis.ibex.ui.graphing.websocketview;
 
 import java.beans.PropertyChangeListener;
-import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
@@ -13,8 +12,6 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.events.MouseTrackListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Rectangle;
@@ -24,9 +21,6 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
@@ -52,17 +46,12 @@ public class MatplotlibFigure extends Composite {
 	
 	private final PropertyChangeListener connectionNameListener;
 	private final PropertyChangeListener imageListener;
-	private final PropertyChangeListener backListener;
-	private final PropertyChangeListener forwardListener;
 	private final PropertyChangeListener plotMessageListener;
-	private final PropertyChangeListener navModeListener;
 	private final MouseTrackListener mouseTrackListener;
 	private final MouseMoveListener mouseMoveListener;
 	private final MouseListener mouseListener;
 
 	private static final int NUM_COLUMNS = 2;
-	private final String ICON_INACTIVE = "inactive";
-	private final String ICON_ACTIVE = "active";
 
 	/**
 	 * Create the composite.
@@ -131,17 +120,21 @@ public class MatplotlibFigure extends Composite {
 			@Override
 			public void mouseMove(MouseEvent e) {
 				viewModel.setCursorPosition(new MatplotlibCursorPosition(e.x, e.y, true));
+
 			}
 		};
 		
-		mouseListener = new MouseAdapter() {@Override
+		mouseListener = new MouseAdapter() {
+			@Override
 			public void mouseDown(MouseEvent e) {
-				viewModel.notifyButtonPressed("button_press");
+				viewModel.notifyButtonPressed(MatplotlibPressType.BUTTON_PRESS);
+
 			}
 			
 			@Override
 			public void mouseUp(MouseEvent e) {
-				viewModel.notifyButtonPressed("button_release");
+				viewModel.notifyButtonPressed(MatplotlibPressType.BUTTON_RELEASE);
+
 			}
 		};
 		
@@ -164,41 +157,7 @@ public class MatplotlibFigure extends Composite {
 		imageListener = viewModel.getImage()
 				.addUiThreadPropertyChangeListener(e -> drawImage((ImageData) e.getNewValue()));
 		
-		backListener = viewModel.getBackEnabled()
-				.addUiThreadPropertyChangeListener(e -> {
-					if (!backButton.isDisposed()) {
-						backButton.setEnabled((Boolean) e.getNewValue());
-					}
-				});
 		
-		forwardListener = viewModel.getForwardEnabled()
-				.addUiThreadPropertyChangeListener(e -> {
-					if (!forwardButtonisDisposed()) {
-						forwardButton.setEnabled((Boolean) e.getNewValue());
-					}
-				});
-		
-		navModeListener = viewModel.getNavMode()
-				.addUiThreadPropertyChangeListener(e -> {
-					if (!toolBar.panButton.button.isDisposed() || !toolBar.zoomButton.button.isDisposed()) {
-						switch(e.getNewValue().toString()) {
-							case "NONE":
-								zoomButton.setIcon(MatplotlibToolbar.ICON_INACTIVE);
-								panButton.setIcon(MatplotlibToolbar.ICON_ACTIVE);
-								break;
-							case "ZOOM":
-								zoomButton.setIcon(MatplotlibToolbar.ICON_ACTIVE);
-								panButton.setIcon(MatplotlibToolbar.ICON_INACTIVE);
-								break;
-							case "PAN":
-								zoomButton.setIcon(MatplotlibToolbar.ICON_INACTIVE);
-								panButton.setIcon(MatplotlibToolbar.ICON_ACTIVE);
-								break;
-							default:
-								break;
-						}
-					}
-				});
 	}
 	
 	/**
@@ -236,9 +195,6 @@ public class MatplotlibFigure extends Composite {
 		viewModel.getPlotName().removePropertyChangeListener(connectionNameListener);
 		viewModel.getImage().removePropertyChangeListener(imageListener);
 		viewModel.getPlotMessage().removePropertyChangeListener(plotMessageListener);
-		viewModel.getBackEnabled().removePropertyChangeListener(backListener);
-		viewModel.getForwardEnabled().removePropertyChangeListener(forwardListener);
-		viewModel.getNavMode().removePropertyChangeListener(navModeListener);
 		viewModel.close();
 		
 		if (!plotImage.isDisposed()) {

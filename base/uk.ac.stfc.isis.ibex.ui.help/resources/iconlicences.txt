@@ -90,7 +90,7 @@ lower_limit designed by Picol at www.flaticon.com
 upper_limit_minimal designed by Picol at www.flaticon.com
 upper_limit designed by Picol at www.flaticon.com
 
-Reflectometry plotting -> uk.ac.stfc.isis.ibex.ui.graphing/resources
+Matplotlib -> uk.ac.stfc.isis.ibex.ui.graphing/resources
 
 home designed by Pixel Perfect at www.flaticon.com
 left-arrow  designed by Pixel Perfect at www.flaticon.com
