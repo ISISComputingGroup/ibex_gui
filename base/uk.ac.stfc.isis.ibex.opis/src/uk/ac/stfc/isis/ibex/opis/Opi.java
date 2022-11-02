@@ -19,13 +19,19 @@
 
 package uk.ac.stfc.isis.ibex.opis;
 
+import java.io.IOException;
 import java.util.Objects;
+
+import org.apache.logging.log4j.Logger;
 import org.csstudio.opibuilder.OPIBuilderPlugin;
 import org.csstudio.opibuilder.script.RhinoWithFastPathScriptStore;
 import org.csstudio.opibuilder.scriptUtil.PVUtil;
+import org.eclipse.core.runtime.FileLocator;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * The activator for the plug-in.
@@ -41,6 +47,19 @@ public class Opi implements BundleActivator {
 	private static DescriptionsProvider descProvider = new DescriptionsProvider();
 	
 	private static final java.util.logging.Logger CSS_LOGGER = OPIBuilderPlugin.getLogger();
+	private static final Logger LOG = IsisLog.getLogger(Opi.class);
+	
+	static {
+		try {
+			// Set a java system property pointing to the root of the opi /resources folder. This is used
+			// in some CSS scripts to dynamically add imports directories, as __file__ doesn't work in jython.
+			final var resourcesPath = FileLocator.resolve(Opi.class.getResource("/resources")).getPath();
+			System.setProperty("ibex.opis.resources_directory", resourcesPath);
+			LOG.info("Loading OPIs from: " + resourcesPath);
+		} catch (IOException e) {
+			LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
+		}
+	}
 	
 	/**
 	 * Create the singleton instance of this class.
