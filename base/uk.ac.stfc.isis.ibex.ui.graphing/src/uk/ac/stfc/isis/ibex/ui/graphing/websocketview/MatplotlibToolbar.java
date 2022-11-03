@@ -84,7 +84,7 @@ public class MatplotlibToolbar {
 	/**
 	 * Private inner class for the toolbar buttons.
 	 */
-	class MatplotlibButton {
+	private static class MatplotlibButton {
 		private ToolItem button;
 		private Image activeIcon;
 		private Image inactiveIcon;
