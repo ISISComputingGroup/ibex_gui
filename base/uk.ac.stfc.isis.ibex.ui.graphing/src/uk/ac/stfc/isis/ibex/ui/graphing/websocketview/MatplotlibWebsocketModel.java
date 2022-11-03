@@ -5,6 +5,7 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -169,7 +170,16 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 */
 	public void cursorPositionChanged(final MatplotlibCursorPosition position) {
 		this.cursorPosition = position;
-		workerThread.submit(() -> connection.cursorPositionChanged(position));
+        workerThread.submit(() -> {
+            connection.cursorPositionChanged(position);
+            if (Objects.equals(navMode, MatplotlibNavigationType.PAN)) {
+                // Only force the server to redraw the plot if we are in the middle of a PAN
+                // operation and the cursor position is changing (so that we get reasonably quick
+                // updates to the plot while panning). In other modes, changing cursor position does
+                // not change the plot itself so no need to refresh there.
+                connection.forceServerRefresh();
+            }
+        });
 	}
 	
 	private void setConnectionStatus(final boolean isConnected) {
@@ -182,7 +192,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	
 	/**
 	 * Notifies the server that the plot is to be navigated, force refresh
-	 * the server 
+	 * the server.
 	 * @param navType the button's navigation type
 	 */
 	public void navigatePlot(MatplotlibButtonType navType) {
@@ -193,7 +203,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	}
 	
 	/**
-	 * Notifies the server that a mouse button as been pressed/released over the figure 
+	 * Notifies the server that a mouse button as been pressed/released over the figure.
 	 * @param position the cursor position
 	 * @param pressType the button event type
 	 */
@@ -240,7 +250,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	
 	/**
 	 * Sets the new value for whether the back
-	 * button is enabled (or not)
+	 * button is enabled (or not).
 	 * @param backEnabled
 	 */
 	public void setBackState(boolean backEnabled) {
@@ -257,7 +267,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	
 	/**
 	 * Sets the new value for whether the forwards
-	 * button is enabled (or not)
+	 * button is enabled (or not).
 	 * @param forwardEnabled
 	 */
 	public void setForwardState(boolean forwardEnabled) { 
@@ -274,11 +284,11 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	
 	/**
 	 * Sets the new value for which navigation
-	 * mode the plot is in (NONE/ZOOM/PAN)
+	 * mode the plot is in (NONE/ZOOM/PAN).
 	 * @param navMode
 	 */
 	public void toggleZoomAndPan(String navMode) {
-		switch(navMode) {
+		switch (navMode) {
 			case "ZOOM":
 				this.navMode = MatplotlibNavigationType.ZOOM;
 				break;

@@ -36,8 +36,12 @@ import org.mockito.Captor;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibButtonState;
+import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibButtonType;
 import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibCursorPosition;
 import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibFigureViewModel;
+import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibNavigationType;
+import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibPressType;
 import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibWebsocketModel;
 
 /**
@@ -74,7 +78,72 @@ public class MatplotlibViewModelTests {
     	viewModel.onConnectionStatus(false);
     	assertEquals(viewModel.getPlotName().getValue(), "[Disconnected] test_plot_name");
     }
+    
+    @Test
+    public void WHEN_server_connected_and_pan_set_THEN_button_states_are_updated() {
+    	Mockito.when(model.getNavMode()).thenReturn(MatplotlibNavigationType.PAN);
+    	Mockito.when(model.isConnected()).thenReturn(true);
+    	viewModel.updateNavMode();
+    	assertEquals(viewModel.getPanButtonState().getValue(), MatplotlibButtonState.ENABLED_ACTIVE);
+    	assertEquals(viewModel.getZoomButtonState().getValue(), MatplotlibButtonState.ENABLED_INACTIVE);
+    }
+    
+    @Test
+    public void WHEN_server_connected_and_zoom_set_THEN_button_states_are_updated() {
+    	Mockito.when(model.getNavMode()).thenReturn(MatplotlibNavigationType.ZOOM);
+    	Mockito.when(model.isConnected()).thenReturn(true);
+    	viewModel.updateNavMode();
+    	assertEquals(viewModel.getPanButtonState().getValue(), MatplotlibButtonState.ENABLED_INACTIVE);
+    	assertEquals(viewModel.getZoomButtonState().getValue(), MatplotlibButtonState.ENABLED_ACTIVE);
+    }
 
+    @Test
+    public void WHEN_server_connected_and_no_zoom_or_pan_set_THEN_button_states_are_updated() {
+    	Mockito.when(model.getNavMode()).thenReturn(MatplotlibNavigationType.NONE);
+    	Mockito.when(model.isConnected()).thenReturn(true);
+    	viewModel.updateNavMode();
+    	assertEquals(viewModel.getPanButtonState().getValue(), MatplotlibButtonState.ENABLED_INACTIVE);
+    	assertEquals(viewModel.getZoomButtonState().getValue(), MatplotlibButtonState.ENABLED_INACTIVE);
+    }
+    
+    @Test
+    public void WHEN_server_disconnected_THEN_nav_button_states_are_updated() {
+    	Mockito.when(model.isConnected()).thenReturn(false);
+    	viewModel.updateNavMode();
+    	assertEquals(viewModel.getPanButtonState().getValue(), MatplotlibButtonState.DISABLED);
+    	assertEquals(viewModel.getZoomButtonState().getValue(), MatplotlibButtonState.DISABLED);
+    }
+    
+    @Test
+    public void WHEN_server_connected_and_back_state_set_THEN_button_state_is_correct() {
+    	Mockito.when(model.getBackState()).thenReturn(true);
+    	Mockito.when(model.isConnected()).thenReturn(true);
+    	viewModel.updateBackState();
+    	assertEquals(viewModel.getBackButtonState().getValue(), MatplotlibButtonState.ENABLED_INACTIVE);
+    }
+    
+    @Test
+    public void WHEN_server_disconnected_and_back_state_set_THEN_button_state_is_correct() {
+    	Mockito.when(model.isConnected()).thenReturn(false);
+    	viewModel.updateBackState();
+    	assertEquals(viewModel.getBackButtonState().getValue(), MatplotlibButtonState.DISABLED);
+    }
+    
+    @Test
+    public void WHEN_server_connected_and_forward_state_set_THEN_button_state_is_correct() {
+    	Mockito.when(model.getForwardState()).thenReturn(true);
+    	Mockito.when(model.isConnected()).thenReturn(true);
+    	viewModel.updateForwardState();
+    	assertEquals(viewModel.getForwardButtonState().getValue(), MatplotlibButtonState.ENABLED_INACTIVE);
+    }
+    
+    @Test
+    public void WHEN_server_disconnected_and_forward_state_set_THEN_button_state_is_correct() {
+    	Mockito.when(model.isConnected()).thenReturn(false);
+    	viewModel.updateForwardState();
+    	assertEquals(viewModel.getForwardButtonState().getValue(), MatplotlibButtonState.DISABLED);
+    }
+    
     @Test
     public void WHEN_canvas_resized_THEN_resize_request_sent_to_model() {
     	Mockito.verify(workerThread, Mockito.times(4)).scheduleWithFixedDelay(runnableCaptor.capture(), Mockito.anyLong(), Mockito.anyLong(), Mockito.any());
@@ -137,5 +206,46 @@ public class MatplotlibViewModelTests {
     	runnableCaptor.getAllValues().get(2).run();
     	Mockito.verify(model, Mockito.times(1)).cursorPositionChanged(newCursorPos);
     }
+    
+    @Test
+    public void WHEN_mouse_event_occurs_THEN_mouse_event_sent_to_model() {
+    	Mockito.verify(workerThread, Mockito.times(4)).scheduleWithFixedDelay(runnableCaptor.capture(), Mockito.anyLong(), Mockito.anyLong(), Mockito.any());
+    	
+    	var cursorPos = new MatplotlibCursorPosition(1, 2, true);
+    	var newPressType = MatplotlibPressType.BUTTON_PRESS;
+    	viewModel.notifyButtonPressed(cursorPos, newPressType);
+    	
+    	Mockito.verify(model, Mockito.times(1)).notifyButtonPress(cursorPos, newPressType);
+    }
+    
+    @Test
+    public void WHEN_toolbar_nav_button_pressed_THEN_button_pressed_sent_to_model() {
+    	Mockito.verify(workerThread, Mockito.times(4)).scheduleWithFixedDelay(runnableCaptor.capture(), Mockito.anyLong(), Mockito.anyLong(), Mockito.any());
+    	
+    	var navType = MatplotlibButtonType.HOME;
+    	viewModel.navigatePlot(navType);
+    	
+    	Mockito.verify(model, Mockito.times(1)).navigatePlot(navType);
+    }
+    
+    @Test
+    public void WHEN_server_disconnected_THEN_all_nav_buttons_disabled() {
+    	Mockito.when(model.isConnected()).thenReturn(false);
+    	viewModel.onConnectionStatus(false);
+    	
+    	assertEquals(viewModel.getHomeButtonState().getValue(), MatplotlibButtonState.DISABLED);
+    	assertEquals(viewModel.getBackButtonState().getValue(), MatplotlibButtonState.DISABLED);
+    	assertEquals(viewModel.getForwardButtonState().getValue(), MatplotlibButtonState.DISABLED);
+    	assertEquals(viewModel.getPanButtonState().getValue(), MatplotlibButtonState.DISABLED);
+    	assertEquals(viewModel.getZoomButtonState().getValue(), MatplotlibButtonState.DISABLED);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     
 }

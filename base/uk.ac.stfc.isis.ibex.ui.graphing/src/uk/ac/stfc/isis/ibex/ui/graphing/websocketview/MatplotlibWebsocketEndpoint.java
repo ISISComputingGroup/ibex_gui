@@ -118,7 +118,6 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 		session.addMessageHandler(new MessageHandler.Whole<String>() {
 			@Override
 			public void onMessage(String message) {
-				System.out.println(message);
 				LoggerUtils.logIfExtraDebug(LOG, String.format("string message from %s: %s", getUrl(), message));
 				try {
 					// Can't deserialize to Map<String, String> because some messages are of type Map<String, List>
@@ -257,7 +256,7 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	}
 	
 	/**
-	 * Sends a navigation event to the server 
+	 * Sends a navigation event to the server.
 	 * @param navType
 	 */
 	public void navigatePlot(MatplotlibButtonType navType) {

@@ -16,30 +16,35 @@ import org.eclipse.wb.swt.ResourceManager;
 import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+/**
+ * A class to contain and manage the plot navigation buttons.
+ */
 public class MatplotlibToolbar {
+	
 	private final ToolBar toolBar;
 	
-	public final MatplotlibButton homeButton;
-	public final MatplotlibButton backButton;
-	public final MatplotlibButton forwardButton;
-	public final MatplotlibButton panButton;
-	public final MatplotlibButton zoomButton;
+	private final MatplotlibButton homeButton;
+	private final MatplotlibButton backButton;
+	private final MatplotlibButton forwardButton;
+	private final MatplotlibButton panButton;
+	private final MatplotlibButton zoomButton;
 	
 	private final MatplotlibFigureViewModel viewModel;
 
-	private final String SYMBOLIC_PATH = "uk.ac.stfc.isis.ibex.ui.graphing";
-	private final String HOME_ICON = "/resources/home.png";
-	private final String BACK_ICON = "/resources/left-arrow.png";
-	private final String FORWARD_ICON = "/resources/right-arrow.png";
-	private final String ZOOM_ACTIVE = "/resources/zoom_active.png";
-	private final String ZOOM_INACTIVE = "/resources/zoom_inactive.png";
-	private final String PAN_ACTIVE = "/resources/pan_active.png";
-	private final String PAN_INACTIVE = "/resources/pan_inactive.png";
+	private static final String SYMBOLIC_PATH = "uk.ac.stfc.isis.ibex.ui.graphing";
+	private static final String HOME_ICON = "/resources/home.png";
+	private static final String BACK_ICON = "/resources/left-arrow.png";
+	private static final String FORWARD_ICON = "/resources/right-arrow.png";
+	private static final String ZOOM_ACTIVE = "/resources/zoom_active.png";
+	private static final String ZOOM_INACTIVE = "/resources/zoom_inactive.png";
+	private static final String PAN_ACTIVE = "/resources/pan_active.png";
+	private static final String PAN_INACTIVE = "/resources/pan_inactive.png";
 	
-	public static String ICON_INACTIVE = "inactive";
-	public static String ICON_ACTIVE = "active";
-	
-	
+	/**
+	 * Constructor for the toolbar.
+	 * @param viewModel 
+	 * @param container the container for buttons to be added to
+	 */
 	public MatplotlibToolbar(MatplotlibFigureViewModel viewModel, Composite container) {
 		toolBar = new ToolBar(container, SWT.PUSH);
 		toolBar.setLayoutData(new GridData(SWT.TOP, SWT.TOP, true, false));
@@ -52,6 +57,8 @@ public class MatplotlibToolbar {
 		
 		forwardButton = new MatplotlibButton(viewModel.getForwardButtonState(), toolBar, MatplotlibButtonType.FORWARD, FORWARD_ICON);
 		
+		// This is used, but only to be added to the toolbar.
+		@SuppressWarnings("unused")
 		var separator = new ToolItem(toolBar, SWT.SEPARATOR);
 		
 		panButton = new MatplotlibButton(viewModel.getPanButtonState(), toolBar, MatplotlibButtonType.PAN, PAN_ACTIVE, PAN_INACTIVE);
@@ -59,34 +66,61 @@ public class MatplotlibToolbar {
 		zoomButton = new MatplotlibButton(viewModel.getZoomButtonState(), toolBar, MatplotlibButtonType.ZOOM, ZOOM_ACTIVE, ZOOM_INACTIVE);
 	}
 	
+	/**
+	 * Disposes this button.
+	 */
 	public void dispose() {
+		viewModel.close();
+		
 		homeButton.dispose();
 		backButton.dispose();
 		forwardButton.dispose();
 		panButton.dispose();
 		zoomButton.dispose();
+		
+		toolBar.dispose();
 	}
 	
+	/**
+	 * Private inner class for the toolbar buttons.
+	 */
 	class MatplotlibButton {
 		private ToolItem button;
-		private final SettableUpdatedValue<MatplotlibButtonState> buttonState;
-		private final PropertyChangeListener buttonListener;
-		
-		private final MatplotlibButtonType navType;
 		private Image activeIcon;
 		private Image inactiveIcon;
 		
-		public MatplotlibButton(UpdatedValue<MatplotlibButtonState> state, ToolBar toolBar, MatplotlibButtonType navType, String iconFilePath) {
+		private final PropertyChangeListener buttonListener;
+		private final MatplotlibButtonType navType;
+		
+		private SettableUpdatedValue<MatplotlibButtonState> buttonState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
+		private UpdatedValue<MatplotlibButtonState> viewModelState;
+		
+		/**
+		 * Constructor for buttons with one icon.
+		 * @param state
+		 * @param toolBar
+		 * @param navType
+		 * @param iconFilePath
+		 */
+		MatplotlibButton(UpdatedValue<MatplotlibButtonState> state, ToolBar toolBar, MatplotlibButtonType navType, String iconFilePath) {
 			this(state, toolBar, navType, iconFilePath, iconFilePath);
 		}
-
-		public MatplotlibButton(UpdatedValue<MatplotlibButtonState> state, ToolBar toolBar, MatplotlibButtonType type, String activeIconFilePath, String inactiveIconFilePath) {
+		
+		/**
+		 * Constructor for buttons with two icons.
+		 * @param viewModelState
+		 * @param toolBar
+		 * @param type
+		 * @param activeIconFilePath
+		 * @param inactiveIconFilePath
+		 */
+		MatplotlibButton(UpdatedValue<MatplotlibButtonState> viewModelState, ToolBar toolBar, MatplotlibButtonType type, String activeIconFilePath, String inactiveIconFilePath) {
 			this.navType = type;
 			this.activeIcon = ResourceManager.getPluginImage(SYMBOLIC_PATH, activeIconFilePath);
 			this.inactiveIcon = ResourceManager.getPluginImage(SYMBOLIC_PATH, inactiveIconFilePath);
-			this.buttonState =  new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
-			this.buttonState.setValue(state.getValue());
+			this.viewModelState = viewModelState;
 			
+			this.buttonState.setValue(viewModelState.getValue());
 			button = new ToolItem(toolBar, SWT.PUSH);
 			button.setImage(inactiveIcon);
 			button.addSelectionListener(new SelectionAdapter() {
@@ -97,7 +131,7 @@ public class MatplotlibToolbar {
 			});
 			this.setState(buttonState.getValue());
 			
-			buttonListener = state
+			buttonListener = viewModelState
 					.addUiThreadPropertyChangeListener(e -> {
 						if (!this.isDisposed()) {
 							this.setState((MatplotlibButtonState) e.getNewValue());
@@ -105,15 +139,13 @@ public class MatplotlibToolbar {
 					});
 		}
 		
+		/**
+		 * Dispose of this button.
+		 */
 		public void dispose() {
-			if (!activeIcon.isDisposed()) {
-				activeIcon.dispose();
-			}
-			if (!inactiveIcon.isDisposed()) {
-				inactiveIcon.dispose();
-			}
+			// don't need to dispose of icons here as they are handled by the ResourceManager class
 			
-			buttonState.removePropertyChangeListener(buttonListener);
+			viewModelState.removePropertyChangeListener(buttonListener);
 			button.dispose();
 		}
 		

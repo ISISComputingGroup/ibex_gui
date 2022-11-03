@@ -201,10 +201,12 @@ public class MatplotlibFigure extends Composite {
 			plotImage.dispose();
 		}
 		
-		plotCanvas.removeMouseTrackListener(mouseTrackListener);
-		plotCanvas.removeMouseMoveListener(mouseMoveListener);
-		plotCanvas.removeMouseListener(mouseListener);
-		plotCanvas.dispose();
+		if (!plotCanvas.isDisposed()) {
+			plotCanvas.removeMouseTrackListener(mouseTrackListener);
+			plotCanvas.removeMouseMoveListener(mouseMoveListener);
+			plotCanvas.removeMouseListener(mouseListener);
+			plotCanvas.dispose();
+		}
 		labelConnectionStatus.dispose();
 		
 		toolBar.dispose();
