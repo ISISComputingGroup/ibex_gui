@@ -58,7 +58,14 @@
       <include_parent_macros>true</include_parent_macros>
     </macros>
     <name>Grouping Container</name>
-    <rules />
+    <rules>
+      <rule name="Rule" prop_id="visible" out_exp="false">
+        <exp bool_exp="pv0==0">
+          <value>false</value>
+        </exp>
+        <pv trig="true">$(P)CS:MANAGER</pv>
+      </rule>
+    </rules>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
@@ -70,65 +77,111 @@
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
-    <width>343</width>
+    <width>445</width>
     <wuid>-16c8e940:165f1448c04:-7e27</wuid>
     <x>0</x>
     <y>0</y>
-    <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
-      <actions hook="false" hook_all="false" />
-      <alarm_pulsing>false</alarm_pulsing>
-      <auto_size>false</auto_size>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <background_color>
-        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-      </background_color>
+    <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>1</value>
+          <timeout>10</timeout>
+          <confirm_message></confirm_message>
+          <description></description>
+        </action>
+      </actions>
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
-      <border_style>3</border_style>
+      <border_style>0</border_style>
       <border_width>1</border_width>
-      <confirm_message></confirm_message>
       <enabled>true</enabled>
       <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
       </font>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <format_type>0</format_type>
       <height>20</height>
-      <horizontal_alignment>0</horizontal_alignment>
-      <limits_from_pv>false</limits_from_pv>
-      <maximum>1.7976931348623157E308</maximum>
-      <minimum>-1.7976931348623157E308</minimum>
-      <multiline_input>false</multiline_input>
-      <name>Text Input</name>
-      <precision>0</precision>
-      <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT)$(PREFIXED_PV):SP</pv_name>
+      <image></image>
+      <name>Button_1</name>
+      <push_action_index>0</push_action_index>
+      <pv_name>$(PV_ROOT)$(PREFIXED_PV):DEFINE_POS_ACTION</pv_name>
       <pv_value />
-      <rotation_angle>0.0</rotation_angle>
-      <rules />
+      <rules>
+        <rule name="visible" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0==1">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):DEFINE_POS_ACTION.DISP</pv>
+        </rule>
+      </rules>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <scripts />
-      <selector_type>0</selector_type>
-      <show_units>true</show_units>
-      <style>0</style>
-      <text>0.0</text>
-      <tooltip>Move to this set point $(pv_name)&#xD;
-$(pv_value)</tooltip>
-      <transparent>false</transparent>
+      <style>1</style>
+      <text>Define</text>
+      <toggle_button>false</toggle_button>
+      <tooltip>Define the value of the current position.</tooltip>
       <visible>true</visible>
-      <widget_type>Text Input</widget_type>
-      <width>60</width>
-      <wuid>-e03d447:166346877c1:-7bdc</wuid>
-      <x>276</x>
+      <widget_type>Action Button</widget_type>
+      <width>55</width>
+      <wuid>-74158a83:184332fcbf3:-6cb4</wuid>
+      <x>204</x>
+      <y>4</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <auto_size>false</auto_size>
+      <background_color>
+        <color red="255" green="255" blue="255" />
+      </background_color>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <foreground_color>
+        <color red="0" green="0" blue="0" />
+      </foreground_color>
+      <height>20</height>
+      <horizontal_alignment>1</horizontal_alignment>
+      <name>Out_label</name>
+      <rules>
+        <rule name="Visible" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0==1 &amp;&amp; pv1==0">
+            <value>true</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):ACTION.DISP</pv>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):SP_NO_ACTION.DISP</pv>
+        </rule>
+      </rules>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <text>Out</text>
+      <tooltip>Cannot move axis - component is set to be parked out of beam</tooltip>
+      <transparent>true</transparent>
+      <vertical_alignment>1</vertical_alignment>
+      <visible>false</visible>
+      <widget_type>Label</widget_type>
+      <width>56</width>
+      <wrap_words>false</wrap_words>
+      <wuid>-74158a83:184332fcbf3:-714d</wuid>
+      <x>384</x>
       <y>4</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -189,7 +242,7 @@ $(pv_value)  (current position)</tooltip>
       <width>50</width>
       <wrap_words>false</wrap_words>
       <wuid>-5cc9c870:167650cec59:-7fdd</wuid>
-      <x>216</x>
+      <x>264</x>
       <y>4</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -265,10 +318,42 @@ $(pv_value)  (current position)</tooltip>
       <name>Text Input</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT)$(PREFIXED_PV):DEFINE_POSITION_AS</pv_name>
+      <pv_name>$(PV_ROOT)$(PREFIXED_PV):SP_NO_ACTION</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
-      <rules />
+      <rules>
+        <rule name="Highlight_ParamChanged" prop_id="background_color" out_exp="false">
+          <exp bool_exp="pv0==0">
+            <value>
+              <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
+            </value>
+          </exp>
+          <exp bool_exp="pv0==1">
+            <value>
+              <color name="ISIS_Yellow" red="255" green="255" blue="0" />
+            </value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):CHANGED</pv>
+        </rule>
+        <rule name="Enabled" prop_id="enabled" out_exp="false">
+          <exp bool_exp="pv0==1">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):SP_NO_ACTION.DISP</pv>
+        </rule>
+        <rule name="Enabledbg" prop_id="transparent" out_exp="false">
+          <exp bool_exp="pv0==1">
+            <value>true</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):SP_NO_ACTION.DISP</pv>
+        </rule>
+        <rule name="Visible" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0==1">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):SP_NO_ACTION.DISP</pv>
+        </rule>
+      </rules>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -279,14 +364,252 @@ $(pv_value)  (current position)</tooltip>
       <show_units>true</show_units>
       <style>0</style>
       <text>0.0</text>
-      <tooltip>$(pv_name)
+      <tooltip>Parameter set point $(pv_name)&#xD;
 $(pv_value)</tooltip>
       <transparent>false</transparent>
       <visible>true</visible>
       <widget_type>Text Input</widget_type>
       <width>60</width>
-      <wuid>1749b20a:16e12d5448a:-7b36</wuid>
-      <x>144</x>
+      <wuid>-74158a83:184332fcbf3:-714f</wuid>
+      <x>318</x>
+      <y>4</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
+      <actions hook="false" hook_all="false" />
+      <alarm_pulsing>false</alarm_pulsing>
+      <auto_size>false</auto_size>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
+      </background_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <border_style>3</border_style>
+      <border_width>1</border_width>
+      <confirm_message></confirm_message>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
+      </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <format_type>0</format_type>
+      <height>20</height>
+      <horizontal_alignment>0</horizontal_alignment>
+      <limits_from_pv>false</limits_from_pv>
+      <maximum>1.7976931348623157E308</maximum>
+      <minimum>-1.7976931348623157E308</minimum>
+      <multiline_input>false</multiline_input>
+      <name>Text Input</name>
+      <precision>0</precision>
+      <precision_from_pv>true</precision_from_pv>
+      <pv_name>$(PV_ROOT)$(PREFIXED_PV):DEFINE_POS_SET_AND_NO_ACTION</pv_name>
+      <pv_value />
+      <rotation_angle>0.0</rotation_angle>
+      <rules>
+        <rule name="Highlight_ParamChanged" prop_id="background_color" out_exp="false">
+          <exp bool_exp="pv0==0">
+            <value>
+              <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
+            </value>
+          </exp>
+          <exp bool_exp="pv0==1">
+            <value>
+              <color name="ISIS_Yellow" red="255" green="255" blue="0" />
+            </value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):DEFINE_POS_CHANGED</pv>
+        </rule>
+        <rule name="Enabled" prop_id="enabled" out_exp="false">
+          <exp bool_exp="pv0==1">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):DEFINE_POS_SET_AND_NO_ACTION.DISP</pv>
+        </rule>
+        <rule name="Enabledbg" prop_id="transparent" out_exp="false">
+          <exp bool_exp="pv0==1">
+            <value>true</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):DEFINE_POS_SET_AND_NO_ACTION.DISP</pv>
+        </rule>
+        <rule name="Visible" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0==1">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):DEFINE_POS_SET_AND_NO_ACTION.DISP</pv>
+        </rule>
+      </rules>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <selector_type>0</selector_type>
+      <show_units>true</show_units>
+      <style>0</style>
+      <text>0.0</text>
+      <tooltip>Parameter set point $(pv_name)&#xD;
+$(pv_value)</tooltip>
+      <transparent>false</transparent>
+      <visible>true</visible>
+      <widget_type>Text Input</widget_type>
+      <width>60</width>
+      <wuid>-74158a83:184332fcbf3:-6cbc</wuid>
+      <x>138</x>
+      <y>4</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <auto_size>false</auto_size>
+      <background_color>
+        <color red="255" green="255" blue="255" />
+      </background_color>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <foreground_color>
+        <color red="0" green="0" blue="0" />
+      </foreground_color>
+      <height>20</height>
+      <horizontal_alignment>1</horizontal_alignment>
+      <name>Mirror_RBV</name>
+      <rules>
+        <rule name="Visible" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0!=0">
+            <value>true</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):SP_NO_ACTION.DISP</pv>
+        </rule>
+      </rules>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <text>Mirrors RBV</text>
+      <tooltip>Set point will take the value of the read back on move</tooltip>
+      <transparent>true</transparent>
+      <vertical_alignment>1</vertical_alignment>
+      <visible>false</visible>
+      <widget_type>Label</widget_type>
+      <width>60</width>
+      <wrap_words>false</wrap_words>
+      <wuid>-74158a83:184332fcbf3:-714e</wuid>
+      <x>318</x>
+      <y>4</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <auto_size>false</auto_size>
+      <background_color>
+        <color red="255" green="255" blue="255" />
+      </background_color>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <foreground_color>
+        <color red="0" green="0" blue="0" />
+      </foreground_color>
+      <height>20</height>
+      <horizontal_alignment>1</horizontal_alignment>
+      <name>Mirror_RBV</name>
+      <rules>
+        <rule name="Visible" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0!=0">
+            <value>true</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):DEFINE_POS_SET_AND_NO_ACTION.DISP</pv>
+        </rule>
+      </rules>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <text>Mirrors RBV</text>
+      <tooltip>Set point will take the value of the read back on move</tooltip>
+      <transparent>true</transparent>
+      <vertical_alignment>1</vertical_alignment>
+      <visible>false</visible>
+      <widget_type>Label</widget_type>
+      <width>60</width>
+      <wrap_words>false</wrap_words>
+      <wuid>-74158a83:184332fcbf3:-6c97</wuid>
+      <x>138</x>
+      <y>4</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>1</value>
+          <timeout>10</timeout>
+          <confirm_message></confirm_message>
+          <description></description>
+        </action>
+      </actions>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+      </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <height>20</height>
+      <image></image>
+      <name>Button_1</name>
+      <push_action_index>0</push_action_index>
+      <pv_name>$(PV_ROOT)$(PREFIXED_PV):ACTION</pv_name>
+      <pv_value />
+      <rules>
+        <rule name="visible" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0==1">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):ACTION.DISP</pv>
+        </rule>
+      </rules>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <style>1</style>
+      <text>Move</text>
+      <toggle_button>false</toggle_button>
+      <tooltip>Move to this parameter setpoint value (Also move other parameters in the mode if this parameter is in the mode)</tooltip>
+      <visible>true</visible>
+      <widget_type>Action Button</widget_type>
+      <width>55</width>
+      <wuid>-74158a83:184332fcbf3:-7150</wuid>
+      <x>384</x>
       <y>4</y>
     </widget>
   </widget>
