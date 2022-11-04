@@ -41,7 +41,7 @@
           <children xsi:type="menu:HandledMenuItem" xmi:id="_lr4aUGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.colours.alternative" label="Alternative colour scheme 1" tooltip="Switch to alternative colour scheme 1" type="Radio" command="_aKnSYKkFEeeR15ll_ruI0A"/>
         </children>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_HiUXAN2tEeuW2_9QCiQ-XA" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.selectvisibleperspectives" label="Select visible perspectives" tooltip="Select which perspectives are visible" command="_4hYR8N2tEeuW2_9QCiQ-XA"/>
-        <children xsi:type="menu:HandledMenuItem" xmi:id="_PqKmgEukEe2ohpbV1rm5iA" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.displayrunmode" label="Display IOC run mode in Start/stop IOCs" type="Check" command="_ZG6_YEulEe2ohpbV1rm5iA"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_PqKmgEukEe2ohpbV1rm5iA" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.displayrunmode" label="Display IOC run mode" type="Check" command="_ZG6_YEulEe2ohpbV1rm5iA"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_EQzKoGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.help" label="Help" mnemonics="">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_n7iv0GcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.about" label="About" tooltip="All about IBEX" command="_hj--kKkDEeeNUPQOsQF40g"/>
@@ -638,7 +638,7 @@
   </commands>
   <commands xmi:id="_oZBHMLs4EeiDDI01_3WoHA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.iconlicence" commandName="Icon Licence" description="View IBEX gui icon licences"/>
   <commands xmi:id="_4hYR8N2tEeuW2_9QCiQ-XA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.selectperspectives" commandName="Select visible perspectives" description="Selects the perspectives which are visible"/>
-  <commands xmi:id="_ZG6_YEulEe2ohpbV1rm5iA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.displayrunmode" commandName="Display IOC run mode in Start/stop IOCs" category="_MKzh4KkAEeelm7I_usJ7RQ"/>
+  <commands xmi:id="_ZG6_YEulEe2ohpbV1rm5iA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.displayrunmode" commandName="Display IOC run mode" category="_MKzh4KkAEeelm7I_usJ7RQ"/>
   <addons xmi:id="_2jV5MWGNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_2jV5MmGNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_2jV5M2GNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
