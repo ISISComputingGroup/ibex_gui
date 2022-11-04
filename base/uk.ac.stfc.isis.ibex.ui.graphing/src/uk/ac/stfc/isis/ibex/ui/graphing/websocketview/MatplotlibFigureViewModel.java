@@ -1,6 +1,7 @@
 package uk.ac.stfc.isis.ibex.ui.graphing.websocketview;
 
 import java.io.Closeable;
+import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -30,6 +31,13 @@ public class MatplotlibFigureViewModel implements Closeable {
 	private final SettableUpdatedValue<String> plotMessage;
 	private final SettableUpdatedValue<ImageData> image;
 	
+	private final SettableUpdatedValue<MatplotlibButtonState> homeState;
+	private final SettableUpdatedValue<MatplotlibButtonState> backState;
+	private final SettableUpdatedValue<MatplotlibButtonState> forwardState;
+	private final SettableUpdatedValue<MatplotlibButtonState> zoomState;
+	private final SettableUpdatedValue<MatplotlibButtonState> panState;
+	private final SettableUpdatedValue<MatplotlibNavigationType> navMode;
+	
 	private static final int PALETTE_BIT_DEPTH = 8;
 	
 	/** 
@@ -50,6 +58,11 @@ public class MatplotlibFigureViewModel implements Closeable {
 	 */
 	private final AtomicBoolean cursorPositionChanged = new AtomicBoolean(true);
 	
+	/**
+	 * We use this when a user event (panning) causes a redraw that needs to be immediately shown.
+	 */
+	private final AtomicBoolean allowImmediateRedraw = new AtomicBoolean(false);
+
 	/**
 	 * The maximum frequency at which we might draw updates to the plot, if new data is available.
 	 * 
@@ -96,6 +109,12 @@ public class MatplotlibFigureViewModel implements Closeable {
 				String.format("[Disconnected] %s", model.getPlotName(), figureNumber));
 		image = new SettableUpdatedValue<ImageData>(generateBlankImage());
 		plotMessage = new SettableUpdatedValue<String>("");
+		backState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
+		forwardState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
+		homeState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
+		zoomState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
+		panState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
+		navMode = new SettableUpdatedValue<MatplotlibNavigationType>(MatplotlibNavigationType.NONE);
 		
 		updateExecutor  = 
 				Executors.newSingleThreadScheduledExecutor(
@@ -120,6 +139,12 @@ public class MatplotlibFigureViewModel implements Closeable {
 				String.format("[Disconnected] %s", model.getPlotName(), figureNumber));
 		image = new SettableUpdatedValue<ImageData>(generateBlankImage());
 		plotMessage = new SettableUpdatedValue<String>("");
+		backState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
+		forwardState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
+		homeState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
+		zoomState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
+		panState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
+		navMode = new SettableUpdatedValue<MatplotlibNavigationType>(MatplotlibNavigationType.NONE);
 		
 		updateExecutor  = executor;
 		
@@ -139,6 +164,14 @@ public class MatplotlibFigureViewModel implements Closeable {
 	 */
 	public MatplotlibWebsocketModel getModel() {
 		return model;
+	}
+
+	/**
+	 * Gets an UpdatedValue which contains the image data to be drawn.
+	 * @return the image
+	 */
+	public UpdatedValue<ImageData> getImage() {
+		return image;
 	}
 	
 	/**
@@ -172,13 +205,99 @@ public class MatplotlibFigureViewModel implements Closeable {
 			plotMessage.setValue("");
 		}
 	}
-	
+
 	/**
 	 * Gets the message.
 	 * @return the message
 	 */
 	public UpdatedValue<String> getPlotMessage() {
 		return plotMessage;
+	}
+	
+	/**
+	 * Updates whether 'back' is enabled.
+	 */
+	public void updateBackState() {
+		if (model.isConnected()) { 
+			backState.setValue(model.getBackState() ? MatplotlibButtonState.ENABLED_INACTIVE : MatplotlibButtonState.DISABLED);
+		} else { 
+			backState.setValue(MatplotlibButtonState.DISABLED); 
+		}
+	}
+	
+	/**
+	 * @return whether 'back' is enabled
+	 */
+	public UpdatedValue<MatplotlibButtonState> getBackButtonState() {
+		return backState;
+	}
+	
+	/**
+	 * Updates whether 'forward' is enabled.
+	 */
+	public void updateForwardState() {
+		if (model.isConnected()) { 
+			forwardState.setValue(model.getForwardState() ? MatplotlibButtonState.ENABLED_INACTIVE : MatplotlibButtonState.DISABLED);
+		} else { 
+			forwardState.setValue(MatplotlibButtonState.DISABLED); 
+		}
+	}
+	 
+	/**
+	 * @return whether 'forward' is enabled
+	 */
+	public UpdatedValue<MatplotlibButtonState> getForwardButtonState() { 
+		return forwardState;
+	}
+	
+	/**
+	 * Updates which navigation mode the plot is 
+	 * currently in (ZOOM/PAN/NONE).
+	 */
+	public void updateNavMode() {
+		if (model.isConnected()) { 
+			if (Objects.equals(MatplotlibNavigationType.PAN, model.getNavMode())) {
+				panState.setValue(MatplotlibButtonState.ENABLED_ACTIVE);
+				zoomState.setValue(MatplotlibButtonState.ENABLED_INACTIVE);
+			} else if (Objects.equals(MatplotlibNavigationType.ZOOM, model.getNavMode())) {
+				panState.setValue(MatplotlibButtonState.ENABLED_INACTIVE);
+				zoomState.setValue(MatplotlibButtonState.ENABLED_ACTIVE);
+			} else {
+				panState.setValue(MatplotlibButtonState.ENABLED_INACTIVE);
+				zoomState.setValue(MatplotlibButtonState.ENABLED_INACTIVE);
+			}
+		} else { 
+			panState.setValue(MatplotlibButtonState.DISABLED); 
+			zoomState.setValue(MatplotlibButtonState.DISABLED); 
+		}
+	}
+	
+	/**
+	 * @return navigation mode (ZOOM or PAN)
+	 */
+	public UpdatedValue<MatplotlibNavigationType> getNavMode() {
+		return navMode;
+	}
+	
+	/**
+	 * @return pan enabled state
+	 */
+	public UpdatedValue<MatplotlibButtonState> getPanButtonState() {
+		return panState;
+	}
+	
+	/**
+	 * @return zoom enabled state
+	 */
+	public UpdatedValue<MatplotlibButtonState> getZoomButtonState() {
+		return zoomState;
+	}
+
+	/**
+	 * @return home enabled state
+	 */
+	public UpdatedValue<MatplotlibButtonState> getHomeButtonState() {
+		return homeState;
 	}
 
 	/**
@@ -199,13 +318,6 @@ public class MatplotlibFigureViewModel implements Closeable {
 				PALETTE_BIT_DEPTH, palette);
 	}
 	
-	/**
-	 * Gets an UpdatedValue which contains the image data to be drawn.
-	 * @return the image
-	 */
-	public UpdatedValue<ImageData> getImage() {
-		return image;
-	}
 	
 	private void redrawIfRequired() {
 		try {
@@ -221,18 +333,12 @@ public class MatplotlibFigureViewModel implements Closeable {
 	private void updateCursorPositionIfRequired() {
 		try {
 			if (cursorPositionChanged.getAndSet(false)) {
+				allowImmediateRedraw.set(true);
 				model.cursorPositionChanged(cursorPosition);
 			}
 		} catch (Exception e) {
 			LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
 		}
-	}
-
-	/**
-	 * Notifies this viewmodel that a new image is available.
-	 */
-	public void imageUpdated() {
-		clientRedrawRequired.set(true);
 	}
 	
 	private void updateCanvasSizeIfRequired() {
@@ -242,6 +348,17 @@ public class MatplotlibFigureViewModel implements Closeable {
 			}
 		} catch (Exception e) {
 			LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
+		}
+	}
+	
+
+	/**
+	 * Notifies this viewmodel that a new image is available.
+	 */
+	public void imageUpdated() {
+		clientRedrawRequired.set(true);
+		if (allowImmediateRedraw.getAndSet(false) && !updateExecutor.isShutdown()) {
+			updateExecutor.execute(this::redrawIfRequired);
 		}
 	}
 
@@ -267,6 +384,10 @@ public class MatplotlibFigureViewModel implements Closeable {
 	public void onConnectionStatus(boolean isConnected) {
 		updatePlotName();
 		updatePlotMessage();
+		updateForwardState();
+		updateBackState();
+		updateNavMode();
+		
 		if (isConnected) {
 			model.forceServerRefresh();
 		}
@@ -274,6 +395,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 		// If disconnected, cancel any pending resize request to the server.
 		// If connected, send resize request to server to ensure it in sync with local size.
 		serverResizeRequired.set(isConnected);
+		homeState.setValue(isConnected ? MatplotlibButtonState.ENABLED_INACTIVE : MatplotlibButtonState.DISABLED);
 	}
 	
 	/**
@@ -284,4 +406,26 @@ public class MatplotlibFigureViewModel implements Closeable {
 		this.cursorPosition = cursorPosition;
 		cursorPositionChanged.set(true);
 	}
+	
+	/**
+	 * Notifies the websocket model that a mouse button as been pressed/released over the figure.
+	 * @param position the cursor position
+	 * @param pressType the type of mouse event
+	 */
+	public void notifyButtonPressed(MatplotlibCursorPosition position, MatplotlibPressType pressType) {
+		allowImmediateRedraw.set(true);
+		model.notifyButtonPress(position, pressType);
+	}
+	
+	/**
+	 * Navigates the matplotlib graph depending on which navigation 
+	 * button is selected.
+	 * @param navType
+	 */
+	public void navigatePlot(MatplotlibButtonType navType) {
+		allowImmediateRedraw.set(true);
+		model.navigatePlot(navType);
+	}
+
+
 }

@@ -35,8 +35,11 @@ import org.mockito.Captor;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibButtonType;
 import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibCursorPosition;
 import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibFigureViewModel;
+import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibNavigationType;
+import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibPressType;
 import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibWebsocketEndpoint;
 import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibWebsocketModel;
 
@@ -131,6 +134,29 @@ public class MatplotlibModelTests {
     	Mockito.verify(websocket, Mockito.times(1)).cursorPositionChanged(newCursorPosition);
     	
     }
+
+    @Test
+    public void WHEN_button_click_event_THEN_websocket_notified() {
+    	var newCursorPosition = new MatplotlibCursorPosition(1, 2, true);
+    	var newPressType = MatplotlibPressType.BUTTON_PRESS;
+    	
+    	model.notifyButtonPress(newCursorPosition, newPressType);
+    	Mockito.verify(workerThread, Mockito.times(1)).submit(runnableCaptor.capture());
+    	
+    	runnableCaptor.getValue().run();
+    	Mockito.verify(websocket, Mockito.times(1)).notifyButtonPress(newCursorPosition, newPressType);
+    }
+    
+    @Test
+    public void WHEN_toolbar_nav_button_pressed_THEN_websocket_notified() {
+    	var newNavType = MatplotlibButtonType.HOME;
+    	
+    	model.navigatePlot(newNavType);
+    	Mockito.verify(workerThread, Mockito.times(1)).submit(runnableCaptor.capture());
+    	
+    	runnableCaptor.getValue().run();
+    	Mockito.verify(websocket, Mockito.times(1)).navigatePlot(newNavType);
+    }
     
     @Test
     public void WHEN_plot_name_set_THEN_plot_name_can_be_read() {
@@ -142,6 +168,24 @@ public class MatplotlibModelTests {
     public void WHEN_plot_message_set_THEN_plot_message_can_be_read() {
     	model.setPlotMessage("my_plot_message");
     	assertEquals(model.getPlotMessage(), "my_plot_message");
+    }
+    
+    @Test
+    public void WHEN_forward_state_set_THEN_forward_state_can_be_read() {
+    	model.setForwardState(true);
+    	assertEquals(model.getForwardState(), true);
+    }
+    
+    @Test
+    public void WHEN_back_state_set_THEN_back_state_can_be_read() {
+    	model.setBackState(true);
+    	assertEquals(model.getBackState(), true);
+    }
+    
+    @Test
+    public void WHEN_nav_type_set_THEN_type_sent_to_view_model() {
+    	model.toggleZoomAndPan("ZOOM");
+    	assertEquals(model.getNavMode(), MatplotlibNavigationType.ZOOM);
     }
     
     @Test
@@ -175,4 +219,5 @@ public class MatplotlibModelTests {
     public void WHEN_no_plot_name_has_been_set_THEN_has_sensible_default() throws IOException {
     	assertEquals(model.getPlotName(), "Figure 1");
     }
+    
 }

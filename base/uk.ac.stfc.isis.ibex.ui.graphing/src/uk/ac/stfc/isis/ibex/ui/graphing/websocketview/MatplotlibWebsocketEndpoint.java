@@ -144,6 +144,13 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 		    case "message":
 		    	model.setPlotMessage((String) content.getOrDefault("message", ""));
 		    	break;
+		    case "history_buttons":
+		    	model.setBackState((Boolean) content.getOrDefault("Back", "false"));
+		    	model.setForwardState((Boolean) content.getOrDefault("Forward", "false"));
+		    	break;
+		    case "navigate_mode":
+		    	model.toggleZoomAndPan((String) content.getOrDefault("mode", ""));
+		    	break;
 		    default:
 		    	// No action required
 		    	break;
@@ -247,4 +254,25 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 			sendProperty(session, "figure_leave", event);
 		}
 	}
+	
+	/**
+	 * Sends a navigation event to the server.
+	 * @param navType
+	 */
+	public void navigatePlot(MatplotlibButtonType navType) {
+		final Map<String, Object> event = Map.of("name", navType.getWebsocketString());
+		sendProperty(session, "toolbar_button", event);
+	}
+	
+	/**
+	 * Sends a "mouse button pressed" (on the canvas) event to the server. 
+	 * @param position
+	 * @param pressType
+	 */
+	public void notifyButtonPress(final MatplotlibCursorPosition position, MatplotlibPressType pressType) {
+	  final Map<String, Object> event = Map.of("x", position.x(), "y",
+	  position.y(), "button", 0, "guiEvent", new HashMap<>());
+	  sendProperty(session, pressType.getWebsocketString(), event);
+	}
+	
 }
