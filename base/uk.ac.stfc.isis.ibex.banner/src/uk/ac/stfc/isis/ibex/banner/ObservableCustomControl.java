@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.banner;
 
+import java.io.Closeable;
+
 import uk.ac.stfc.isis.ibex.epics.adapters.ModelAdapter;
 import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
@@ -28,7 +30,7 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 /**
  * An observable used to control custom behaviour such as motors.
  */
-public class ObservableCustomControl extends ModelAdapter {
+public class ObservableCustomControl extends ModelAdapter implements Closeable {
 
     private Long valueToWrite;
     
@@ -74,7 +76,7 @@ public class ObservableCustomControl extends ModelAdapter {
     }
 
     @Override
-    protected void finalize() {
+    public void close() {
         act.removeOnCanWriteChangeListener(canWriteListener);
     }
     

@@ -820,6 +820,35 @@
         </categories>
       </value>
     </entry>
+    
+    <entry>
+      <key>Caen HV (MuSR)</key>
+      <value>
+        <type>CAEN</type>
+        <path>HV/HVMonitorSummaryDisplay_MuSR.opi</path>
+        <description>Summary display for Caens - MuSR. No properties required.</description>
+        <macros>
+          <macro>
+            <name>MAX_CRATES</name>
+            <description>The maximum number of crates to display (default: 2, max: 15)</description>
+            <default/>
+          </macro>
+          <macro>
+            <name>MAX_SLOTS</name>
+            <description>The maximum number of slots to display per crate (default: 5)</description>
+            <default/>
+          </macro>
+          <macro>
+            <name>MAX_CHANNELS</name>
+            <description>The maximum number of channels per slot per crate to display (default: 25)</description>
+            <default/>
+          </macro>
+        </macros>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+      </value>
+    </entry>
     <entry>
       <key>Cryo valve</key>
       <value>
