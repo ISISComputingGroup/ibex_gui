@@ -220,5 +220,4 @@ public class MatplotlibModelTests {
     	assertEquals(model.getPlotName(), "Figure 1");
     }
     
-    
 }

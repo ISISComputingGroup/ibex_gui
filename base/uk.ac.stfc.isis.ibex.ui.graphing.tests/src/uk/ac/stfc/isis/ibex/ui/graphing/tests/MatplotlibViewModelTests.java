@@ -240,12 +240,4 @@ public class MatplotlibViewModelTests {
     	assertEquals(viewModel.getZoomButtonState().getValue(), MatplotlibButtonState.DISABLED);
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
 }

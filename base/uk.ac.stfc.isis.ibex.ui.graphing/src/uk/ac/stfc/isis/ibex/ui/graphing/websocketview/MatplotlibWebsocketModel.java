@@ -113,7 +113,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	}
 
 	/**
-	 * Attemps to connect to the server.
+	 * Attempts to connect to the server.
 	 * @throws IOException if could not connect
 	 */
 	public void connect() throws IOException {
