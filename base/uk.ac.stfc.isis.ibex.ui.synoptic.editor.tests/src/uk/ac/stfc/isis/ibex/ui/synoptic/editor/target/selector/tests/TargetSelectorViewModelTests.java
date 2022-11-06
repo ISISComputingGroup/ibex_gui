@@ -33,16 +33,16 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Widget;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import uk.ac.stfc.isis.ibex.devicescreens.components.ComponentType;
 import uk.ac.stfc.isis.ibex.opis.desc.MacroInfo;
 import uk.ac.stfc.isis.ibex.opis.desc.OpiDescription;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.ComponentDescription;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.Property;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.TargetDescription;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.selector.TargetSelectorViewModel;
@@ -50,6 +50,7 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.target.selector.TargetSelectorVie
 /**
  * Tests for the target selector view model.
  */
+@RunWith(MockitoJUnitRunner.class)
 public class TargetSelectorViewModelTests {
     
     @Captor 
@@ -85,13 +86,11 @@ public class TargetSelectorViewModelTests {
     private TargetDescription targetDescriptionMock(String name) {
         TargetDescription mock = Mockito.mock(TargetDescription.class);
         Mockito.when(mock.name()).thenReturn(name);
-        Mockito.when(mock.getProperties()).thenReturn(Collections.<Property>emptyList());
         return mock;
     }
 
     @Before
     public void setup(){
-        MockitoAnnotations.initMocks(this);
         
         source = new Event();
         source.widget = Mockito.mock(Widget.class);

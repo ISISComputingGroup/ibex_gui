@@ -25,8 +25,6 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
-import uk.ac.stfc.isis.ibex.runcontrol.RunControlActivator;
-import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.dialogs.EditRunControlDialog;
 
 /**

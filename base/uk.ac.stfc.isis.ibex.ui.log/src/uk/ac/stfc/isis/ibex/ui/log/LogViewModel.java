@@ -32,13 +32,24 @@ package uk.ac.stfc.isis.ibex.ui.log;
 import uk.ac.stfc.isis.ibex.log.ILogMessageProducer;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
+/**
+ * The view model for IOC log messages.
+ */
 public class LogViewModel extends ModelObject {
 	private ILogMessageProducer producer;
 	
+	/**
+	 * Gets the message producer.
+	 * @return the message producer
+	 */
 	public ILogMessageProducer getMessageProducer() {
 		return producer;
 	}
 
+	/**
+	 * Sets the message producer.
+	 * @param producer the producer
+	 */
 	public void bind(ILogMessageProducer producer) {
 		this.producer = producer;
 	}

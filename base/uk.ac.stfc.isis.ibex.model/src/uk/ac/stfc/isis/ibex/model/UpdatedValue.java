@@ -47,6 +47,11 @@ public class UpdatedValue<T> extends ModelObject {
 		return isSet;
 	}
 	
+	/**
+	 * Adds a property change listener.
+	 * @param listener the listener to be notified on value changes
+	 * @param executeIfAlreadySet true if listener should be notified of the initial value; false otherwise
+	 */
 	public void addPropertyChangeListener(PropertyChangeListener listener, boolean executeIfAlreadySet) {
 		super.addPropertyChangeListener(listener);
 

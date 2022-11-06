@@ -137,7 +137,7 @@ public class IocPVDetailsPanel extends Composite {
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(name), BeanProperties.value("name", String.class).observe(pv), strategy, null); 
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(value), BeanProperties.value("value").observe(pv));
 		bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(name), BeanProperties.value("filter").observe(availablePVTable), 
-				new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE), new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER));
+				new UpdateValueStrategy<Object, String>(UpdateValueStrategy.POLICY_UPDATE), new UpdateValueStrategy<Object, String>(UpdateValueStrategy.POLICY_NEVER));
 		
 		updateAvailablePVs();
 	}

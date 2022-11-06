@@ -23,6 +23,7 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.eclipse.jface.viewers.CellLabelProvider;
@@ -66,7 +67,8 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	private static final String TAB = "\t";
 	private static final String NEW_LINE = "\r\n";
 	private final ScriptGeneratorViewModel scriptGeneratorViewModel;
-	private static final  Integer NON_EDITABLE_COLUMNS_ON_RIGHT = 2;
+	private static final  Integer FIXED_NON_EDITABLE_COLUMNS_ON_RIGHT = 2;
+	private int dynamicNonEditableColumnsOnRight = 0;
 	/**
 	 * The number of read only columns on the left of the table.
 	 */
@@ -88,6 +90,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
     public ActionsViewTable(Composite parent, int style, int tableStyle, ScriptGeneratorViewModel scriptGeneratorViewModel) {
         super(parent, style, tableStyle | SWT.BORDER, true);
         this.scriptGeneratorViewModel = scriptGeneratorViewModel;
+        this.dynamicNonEditableColumnsOnRight = 0;
         initialise();
         scriptGeneratorViewModel.addActionParamPropertyListener(this);
 		TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(viewer,
@@ -127,7 +130,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
     public String getSelectedTableData() {
     	String data = "";
     	for (TableItem item : table.getSelection()) {
-			int size = table.getColumnCount() - NON_EDITABLE_COLUMNS_ON_LEFT - NON_EDITABLE_COLUMNS_ON_RIGHT;
+			int size = table.getColumnCount() - NON_EDITABLE_COLUMNS_ON_LEFT - (FIXED_NON_EDITABLE_COLUMNS_ON_RIGHT + dynamicNonEditableColumnsOnRight);
 			// TableItem.getText() ensure the values are in order using index.
 			for (int idx = 0; idx < size; idx++) {
 				  data += item.getText(idx + NON_EDITABLE_COLUMNS_ON_LEFT);
@@ -166,7 +169,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 					Optional<ViewerCell> neighbour = Optional.ofNullable(nextCell.getNeighbor(ViewerCell.BELOW, false));
 					boolean noActionBelow = neighbour.isEmpty() || neighbour.get().getElement() == null;
 					if (noActionBelow
-					        && (viewer.getTable().getColumnCount() - NON_EDITABLE_COLUMNS_ON_RIGHT <= currentlyFocusedColumn)) {
+					        && (viewer.getTable().getColumnCount() - (FIXED_NON_EDITABLE_COLUMNS_ON_RIGHT + dynamicNonEditableColumnsOnRight) <= currentlyFocusedColumn)) {
 					    
                     	scriptGeneratorViewModel.addEmptyAction();
                     	// return false as we will handle this specific case of traversal
@@ -255,6 +258,11 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 				);
 	}
 	
+	private boolean estimatedCustomChanged(String columnHeader, TableItem item, int column, ScriptGeneratorAction action) {
+		var estimatedCustom = action.getEstimatedCustom();
+		return estimatedCustom.isPresent() && !Objects.equals(item.getText(column), estimatedCustom.get().get(columnHeader));
+	}
+	
 	/**
 	 * Detect if the values displayed by the table item cells and the action parameter values are different.
 	 * 
@@ -273,7 +281,8 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 			if (parameterValueChanged(parameterValue, item, columnNumber) 
 					|| validityChanged(columnHeader, item, columnNumber, action) 
 					|| executingStatusChanged(columnHeader, item, columnNumber, action)
-					|| estimatedTimeChanged(columnHeader, item, columnNumber, action)) {
+					|| estimatedTimeChanged(columnHeader, item, columnNumber, action)
+					|| estimatedCustomChanged(columnHeader, item, columnNumber, action)) {
 				return true;
 			} 
 			columnNumber++;
@@ -285,7 +294,8 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 		return tableAction == null 
 				|| !tableAction.equals(newAction) 
 				|| tableAction.isValid() != newAction.isValid() 
-				|| tableAction.getEstimatedTime() != newAction.getEstimatedTime();
+				|| tableAction.getEstimatedTime() != newAction.getEstimatedTime()
+				|| !Objects.equals(tableAction.getEstimatedCustom(), newAction.getEstimatedCustom());
 	}
 	
 	/**
@@ -349,5 +359,13 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 		if (row >= 0 && element != null) {
 			viewer.editElement(element, column);
 		}
+	}
+	
+	/**
+	 * Sets the dynamic non editable columns on the right.
+	 * @param num The number of custom outputs
+	 */
+	public void setDynamicNonEditableColumnsOnRight(int num) {
+		dynamicNonEditableColumnsOnRight = num;
 	}
 }

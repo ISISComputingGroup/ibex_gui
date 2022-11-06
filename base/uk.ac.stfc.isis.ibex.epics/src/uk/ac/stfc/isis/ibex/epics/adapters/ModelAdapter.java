@@ -27,12 +27,29 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+/**
+ * An adapter from Observables to UpdatedValues.
+ */
 public class ModelAdapter extends Closer {
+	
+	/**
+	 * Converts a forwarding observable of type T to one of type String.
+	 * @param <T> the type of the underlying value
+	 * @param observable the underlying observable
+	 * @param converter the converter
+	 * @return the converted observable
+	 */
 	protected <T> ForwardingObservable<String> convert(ForwardingObservable<T> observable, Function<T, String> converter) {
 		ConvertingObservable<T, String> converted = new ConvertingObservable<>(observable, converter);
 		return registerForClose(new ForwardingObservable<>(converted));
 	}
 	
+	/**
+	 * Adapt an observable to an updated value.
+	 * @param <T> the type of value
+	 * @param observable the observable
+	 * @return the updated value
+	 */
 	protected <T> UpdatedValue<T> adapt(ForwardingObservable<T> observable) {
 		UpdatedObservableAdapter<T> adapted = new UpdatedObservableAdapter<>(observable);
 		return registerForClose(adapted);

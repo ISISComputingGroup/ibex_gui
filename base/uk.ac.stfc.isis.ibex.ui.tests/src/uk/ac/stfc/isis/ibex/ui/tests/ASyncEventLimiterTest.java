@@ -27,8 +27,6 @@ import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import uk.ac.stfc.isis.ibex.ui.AsyncMessageModerator;
 import uk.ac.stfc.isis.ibex.ui.AsyncMessageModeratorTask;
@@ -37,12 +35,11 @@ import uk.ac.stfc.isis.ibex.ui.AsyncMessageModeratorTask;
 public class ASyncEventLimiterTest {
 
     private AsyncMessageModerator underTest;
-    @Mock
     private AsyncMessageModeratorTask rerunTask;
 
     @Before
     public void SetUp() {
-        MockitoAnnotations.initMocks(this);
+    	rerunTask = mock(AsyncMessageModeratorTask.class);
         underTest = new AsyncMessageModerator(rerunTask);
     }
 

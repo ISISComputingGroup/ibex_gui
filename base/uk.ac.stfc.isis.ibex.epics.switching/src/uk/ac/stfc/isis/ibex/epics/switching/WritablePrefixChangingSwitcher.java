@@ -29,10 +29,6 @@ import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
  */
 public class WritablePrefixChangingSwitcher extends PrefixChangingSwitcher {
 
-    public WritablePrefixChangingSwitcher() {
-        super();
-    }
-
     @Override
     public void switchInstrument(InstrumentInfo instrumentInfo) {
         for (SwitchableInformation switchableInfo : switchableInfoList) {

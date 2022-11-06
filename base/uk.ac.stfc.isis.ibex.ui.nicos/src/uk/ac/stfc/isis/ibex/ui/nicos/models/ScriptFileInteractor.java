@@ -18,8 +18,15 @@ public abstract class ScriptFileInteractor {
 	private final Shell shell;
 	private final String action;
 	private final int fileStyle;
+	
+	/**
+	 * The script.
+	 */
 	protected final QueuedScript script;
 
+	/**
+	 * The system line separator.
+	 */
 	protected static final String LINE_SEP = System.lineSeparator();
 	private static final String DEFAULT_SCRIPT_DIRECTORY = "c:\\scripts";
 	private static final String[] ALLOWED_SCRIPT_NAMES = {"Python Scripts (*.py)"};

@@ -21,6 +21,12 @@ package uk.ac.stfc.isis.ibex.epics.observing;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * An unsubscriber, which will remove an observer from an observable when it's
+ * cancelSubscription method is called.
+ *
+ * @param <T> the type of values being subscribed to
+ */
 public class Unsubscriber<T> implements Subscription {
 
 	private Subscribable<T> subscribable;

@@ -56,8 +56,19 @@ public abstract class ManagerModeObserver implements Closable {
         }
     };
 
+    /**
+     * The text describing the manager mode status.
+     */
     protected final SettableUpdatedValue<String> text;
+    
+    /**
+     * The colour of the manager mode status.
+     */
     protected final SettableUpdatedValue<Color> color;
+    
+    /**
+     * Whether the manager mode PV is available.
+     */
     protected final SettableUpdatedValue<Boolean> availability;
 
     /**

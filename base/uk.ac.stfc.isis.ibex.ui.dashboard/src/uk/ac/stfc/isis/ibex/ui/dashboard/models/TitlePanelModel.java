@@ -25,21 +25,36 @@ import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
+/**
+ * The model for title & users in the dashboard.
+ */
 public class TitlePanelModel extends Closer {
 	
 	private final UpdatedObservableAdapter<String> title;
 	private final UpdatedObservableAdapter<String> users;
 	
-	
+	/**
+	 * Create the model.
+	 * @param title an observable on the title
+	 * @param users an observable on the users
+	 */
 	public TitlePanelModel(ForwardingObservable<String> title, ForwardingObservable<String> users) {
 		this.title = registerForClose(new TextUpdatedObservableAdapter(title));
 		this.users = registerForClose(new TextUpdatedObservableAdapter(users));
 	}
 
+	/**
+	 * Gets the title.
+	 * @return the title
+	 */
 	public UpdatedValue<String> title() {
 		return title;
 	}
 
+	/**
+	 * Gets the users.
+	 * @return the users
+	 */
 	public UpdatedValue<String> users() {
 		return users;
 	}

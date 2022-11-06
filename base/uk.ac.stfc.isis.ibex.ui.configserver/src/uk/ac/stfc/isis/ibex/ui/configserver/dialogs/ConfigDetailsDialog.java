@@ -51,10 +51,24 @@ public class ConfigDetailsDialog extends TitleAreaDialog implements
     /** Error messages that are displayed. <Source, message> */
 	private Map<String, String> errorMessages = new HashMap<String, String>();
 
+	/**
+	 * The configuration being edited.
+	 */
 	protected EditableConfiguration config;
 
+	/**
+	 * The editor panel.
+	 */
     protected ConfigEditorPanel editor;
+    
+    /**
+     * Whether this is a component or a config.
+     */
 	protected boolean doAsComponent = false;
+	
+	/**
+	 * Whether this was created as a blank config/component.
+	 */
 	protected boolean isBlank;
 
     private ConfigurationViewModels configurationViewModels;

@@ -24,6 +24,9 @@ import com.google.common.base.Strings;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 
+/**
+ * An adapter from String-type observables to UpdatedValue.
+ */
 public class TextUpdatedObservableAdapter extends UpdatedObservableAdapter<String> {
 
 	private static final String UNKNOWN = "Unknown";
@@ -39,6 +42,11 @@ public class TextUpdatedObservableAdapter extends UpdatedObservableAdapter<Strin
 		super(new ForwardingObservable<>(observable));
 	}
 	
+    /**
+     * Constructor.
+     * 
+     * @param observable the observable
+     */
 	public TextUpdatedObservableAdapter(ForwardingObservable<String> observable) {
 		super(observable);
 	}

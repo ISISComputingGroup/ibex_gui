@@ -24,9 +24,16 @@ import org.eclipse.jface.viewers.ColumnViewer;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegimeRow;
 import uk.ac.stfc.isis.ibex.ui.widgets.DoubleEditingSupport;
 
+/**
+ * Editing support for the "to" column in the DAE time regime tables.
+ */
 public class ToEditingSupport extends DoubleEditingSupport<TimeRegimeRow> {
 
-
+	/**
+	 * Create the editing support.
+	 * @param viewer the column viewer
+	 * @param rowType the row type
+	 */
 	public ToEditingSupport(ColumnViewer viewer, Class<TimeRegimeRow> rowType) {
 		super(viewer, rowType);
 	}

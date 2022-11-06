@@ -25,5 +25,9 @@ package uk.ac.stfc.isis.ibex.epics.pv;
  * @param <T> the PV type
  */
 public interface PV<T> {
+	/**
+	 * Gets the details of this PV.
+	 * @return the details
+	 */
 	PVInfo<T> details();
 }

@@ -48,6 +48,9 @@ import org.xml.sax.SAXException;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
+/**
+ * Time channels, backed by an XML representation.
+ */
 public class XmlBackedTimeChannels extends TimeChannels {
     private final XPath xpath = XPathFactory.newInstance().newXPath();
 	private Document doc;
@@ -66,6 +69,10 @@ public class XmlBackedTimeChannels extends TimeChannels {
 	private Node timeUnit;
 	private Node calculationMethod;
 
+	/**
+	 * Sets the values of this class from XML.
+	 * @param xml the xml as a string
+	 */
 	public void setXml(String xml) {
 		try {
 			buildDocument(xml);
@@ -77,6 +84,10 @@ public class XmlBackedTimeChannels extends TimeChannels {
 		}
 	}
 
+	/**
+	 * Gets the values in this class as XML.
+	 * @return the xml as a string
+	 */
 	public String xml() {
 		if (doc == null) {
 			return "";

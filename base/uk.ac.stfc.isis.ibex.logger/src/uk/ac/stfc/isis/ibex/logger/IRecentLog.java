@@ -29,6 +29,9 @@
  */
 package uk.ac.stfc.isis.ibex.logger;
 
+/**
+ * Interface implemented by classes providing recent log messages.
+ */
 public interface IRecentLog {
     /**
      * @return the log text from file

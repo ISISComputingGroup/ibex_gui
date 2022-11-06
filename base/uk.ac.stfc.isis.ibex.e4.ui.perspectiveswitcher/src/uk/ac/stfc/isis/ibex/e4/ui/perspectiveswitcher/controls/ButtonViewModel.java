@@ -15,16 +15,45 @@ public class ButtonViewModel extends ModelObject {
 
     private static final String SPACING = "  ";
     
+    /**
+     * Colour for focused buttons.
+     */
     protected static final Color FOCUSSED = SWTResourceManager.getColor(220, 235, 245);
+    
+    /**
+     * Colour for unfocused buttons.
+     */
     protected static final Color DEFOCUSSED = SWTResourceManager.getColor(247, 245, 245);
 
+    /**
+     * Font for buttons.
+     */
     protected static final Font BUTTON_FONT = SWTResourceManager.getFont("Arial", 12, SWT.NORMAL);
 
+    /**
+     * The current button colour.
+     */
     protected Color color = DEFOCUSSED;
+    
+    /**
+     * The current button font.
+     */
     protected Font font = BUTTON_FONT;
+    
+    /**
+     * Whether this button is in focus.
+     */
     protected boolean inFocus = false;
+    
+    /**
+     * The text on this button.
+     */
     protected String text = "";
     private boolean maximised = true;
+    
+    /**
+     * Whether this button is visible.
+     */
     protected boolean visible = true;
 
     /**

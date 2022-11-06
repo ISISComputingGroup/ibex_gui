@@ -24,8 +24,16 @@ import org.eclipse.jface.viewers.ColumnViewer;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.Period;
 import uk.ac.stfc.isis.ibex.ui.dae.widgets.StringEditingSupport;
 
+/**
+ * Editing support for period labels in the DAE view.
+ */
 public class LabelEditingSupport extends StringEditingSupport<Period> {
 
+	/**
+	 * Create a new label editing support.
+	 * @param viewer the column viewer
+	 * @param rowType the row type
+	 */
 	public LabelEditingSupport(ColumnViewer viewer, Class<Period> rowType) {
 		super(viewer, rowType);
 	}

@@ -24,9 +24,10 @@ import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ConcatenatingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
@@ -34,6 +35,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 
 // A lot of unchecked type conversions for mocking purposes
 @SuppressWarnings({ "unchecked", "checkstyle:methodname" })
+@RunWith(MockitoJUnitRunner.class)
 /**
  * Test for SwitchingObservable. See InitialisOnSubscribeObservableTest for more test touching
  * the higher observable classes.
@@ -55,9 +57,6 @@ public class ConcatenatingObservableTest {
 	
 	@Before
 	public void setUp() {
-		// This is to initialise the captor
-		MockitoAnnotations.initMocks(this);
-		
         mockObserver = mock(Observer.class);
 		
         initFirstObservable = new ForwardingObservable<>(testableFirstObservable);

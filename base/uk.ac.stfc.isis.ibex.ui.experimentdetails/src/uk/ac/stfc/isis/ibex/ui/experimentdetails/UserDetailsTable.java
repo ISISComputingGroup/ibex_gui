@@ -34,8 +34,19 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 @SuppressWarnings("checkstyle:magicnumber")
 public abstract class UserDetailsTable extends DataboundTable<UserDetails> {
 
+	/**
+	 * The "name" column.
+	 */
 	protected TableViewerColumn name;
+	
+	/**
+	 * The "institute" column.
+	 */
 	protected TableViewerColumn institute;
+	
+	/**
+	 * The "role" column.
+	 */
 	protected TableViewerColumn role;
 	
 	/**

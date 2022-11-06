@@ -19,6 +19,15 @@
 
 package uk.ac.stfc.isis.ibex.model;
 
+/**
+ * Interface describing a value which can be written to.
+ *
+ * @param <T> the type of value to be written
+ */
 public interface WritableValue<T> {
+	/**
+	 * Sets the value.
+	 * @param value the value
+	 */
 	void set(T value); 
 }

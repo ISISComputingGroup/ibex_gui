@@ -44,6 +44,12 @@ public class LineDecoration {
 		}
 	};
 	
+	/**
+	 * Creates a new line decoration instance.
+	 * @param parent the parent control
+	 * @param line the line to draw
+	 * @param verticalOffset the vertical offset at which to draw the line
+	 */
 	public LineDecoration(Control parent, Line line, int verticalOffset) {
 		this.parent = parent;
 		this.line = line;

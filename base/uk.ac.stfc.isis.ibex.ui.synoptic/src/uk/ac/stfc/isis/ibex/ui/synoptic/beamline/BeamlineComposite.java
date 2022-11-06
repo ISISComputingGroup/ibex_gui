@@ -37,7 +37,11 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.SynopticPresenter;
  */
 public abstract class BeamlineComposite extends Composite  {
 
-    protected Target target;
+    private Target target;
+    
+    /**
+     * The label displaying the name of this composite.
+     */
     protected CLabel nameLabel;
     private SynopticPresenter presenter = Activator.getDefault().presenter();
     private final Cursor handCursor = SWTResourceManager.getCursor(SWT.CURSOR_HAND);

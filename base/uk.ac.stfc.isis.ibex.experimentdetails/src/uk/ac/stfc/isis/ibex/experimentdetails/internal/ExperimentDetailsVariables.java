@@ -72,6 +72,9 @@ public class ExperimentDetailsVariables {
 
     private JsonSerialisingConverter<UserDetails[]> userDetailsSerialiser = new JsonSerialisingConverter<UserDetails[]>(UserDetails[].class);
     
+    /**
+     * Creates the variables.
+     */
     public ExperimentDetailsVariables() {
         availableSampleParameters =
                 InstrumentUtils.convert(obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),

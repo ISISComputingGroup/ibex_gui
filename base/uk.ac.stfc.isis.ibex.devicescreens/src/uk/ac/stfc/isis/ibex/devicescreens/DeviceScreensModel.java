@@ -21,6 +21,8 @@
  */
 package uk.ac.stfc.isis.ibex.devicescreens;
 
+import java.io.Closeable;
+
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
@@ -32,7 +34,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 /**
  * The backend model for the device screens.
  */
-public class DeviceScreensModel extends ModelObject {
+public class DeviceScreensModel extends ModelObject implements Closeable {
     private DeviceScreensDescription deviceScreensDescription;
     private Writable<DeviceScreensDescription> writableDeviceScreenDescriptions;
 
@@ -108,7 +110,7 @@ public class DeviceScreensModel extends ModelObject {
     }
 
     @Override
-    protected void finalize() {
+    public void close() {
         this.writableDeviceScreenDescriptions.removeOnCanWriteChangeListener(canWriteListener);
     }
     
