@@ -55,7 +55,7 @@
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
-    <height>145</height>
+    <height>151</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -73,7 +73,7 @@
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
-    <width>409</width>
+    <width>427</width>
     <wuid>-1688a0b0:1836078a2e4:-7f1a</wuid>
     <x>6</x>
     <y>6</y>
@@ -163,13 +163,6 @@ $(pv_value)</tooltip>
       <actions hook="false" hook_all="true">
         <action type="WRITE_PV">
           <pv_name>$(PV_ROOT_AERO):SEND_CAR_FREQ_PARAMS.PROC</pv_name>
-          <value>1</value>
-          <timeout>10</timeout>
-          <confirm_message></confirm_message>
-          <description></description>
-        </action>
-        <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT_AERO):SAVE_CAR_FREQ_UNIT.PROC</pv_name>
           <value>1</value>
           <timeout>10</timeout>
           <confirm_message></confirm_message>
@@ -416,14 +409,7 @@ $(pv_value)</tooltip>
         <color red="0" green="0" blue="0" />
       </foreground_color>
       <height>23</height>
-      <items>
-        <s>AM</s>
-        <s>FM</s>
-        <s>PM</s>
-        <s>AM,FM</s>
-        <s>AM.PM</s>
-      </items>
-      <items_from_pv>false</items_from_pv>
+      <items_from_pv>true</items_from_pv>
       <name>Set_modulation</name>
       <pv_name>$(PV_ROOT_AERO):MODE:SP_NO_ACTION</pv_name>
       <pv_value />
@@ -576,7 +562,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <name>Set_carrier_frequency_val</name>
       <precision>5</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT_AERO):CARRIER_FREQ:SP_NO_ACTION</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -633,7 +619,7 @@ $(pv_value)</tooltip>
       <multiline_input>false</multiline_input>
       <name>Set_RF_level_val</name>
       <precision>5</precision>
-      <precision_from_pv>false</precision_from_pv>
+      <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT_AERO):RF_LEVEL:SP_NO_ACTION</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -677,7 +663,7 @@ $(pv_value)</tooltip>
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
-    <height>145</height>
+    <height>151</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -695,9 +681,9 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
-    <width>259</width>
+    <width>355</width>
     <wuid>-1688a0b0:1836078a2e4:-7eca</wuid>
-    <x>426</x>
+    <x>444</x>
     <y>6</y>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -733,7 +719,7 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>117</width>
+      <width>133</width>
       <wrap_words>false</wrap_words>
       <wuid>-1688a0b0:1836078a2e4:-7ec7</wuid>
       <x>0</x>
@@ -773,7 +759,7 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>117</width>
+      <width>133</width>
       <wrap_words>false</wrap_words>
       <wuid>-1688a0b0:1836078a2e4:-7ec4</wuid>
       <x>0</x>
@@ -813,7 +799,7 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>117</width>
+      <width>133</width>
       <wrap_words>false</wrap_words>
       <wuid>-1688a0b0:1836078a2e4:-7ec1</wuid>
       <x>0</x>
@@ -870,10 +856,10 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
-      <width>100</width>
+      <width>91</width>
       <wrap_words>false</wrap_words>
       <wuid>-1688a0b0:1836078a2e4:-7ebe</wuid>
-      <x>126</x>
+      <x>144</x>
       <y>24</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -922,10 +908,10 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
-      <width>100</width>
+      <width>91</width>
       <wrap_words>false</wrap_words>
       <wuid>-1688a0b0:1836078a2e4:-7eb3</wuid>
-      <x>126</x>
+      <x>144</x>
       <y>48</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -974,11 +960,53 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Text Update</widget_type>
-      <width>100</width>
+      <width>91</width>
       <wrap_words>false</wrap_words>
       <wuid>-1688a0b0:1836078a2e4:-7eae</wuid>
-      <x>126</x>
+      <x>144</x>
       <y>72</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.combo" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <alarm_pulsing>false</alarm_pulsing>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color red="255" green="255" blue="255" />
+      </background_color>
+      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color red="0" green="0" blue="0" />
+      </foreground_color>
+      <height>23</height>
+      <items_from_pv>true</items_from_pv>
+      <name>Set_carrier_frequency_units</name>
+      <pv_name>$(PV_ROOT_AERO):CARRIER_FREQ_UNITS</pv_name>
+      <pv_value />
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>false</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <visible>true</visible>
+      <widget_type>Combo</widget_type>
+      <width>85</width>
+      <wuid>-7b79d3b5:1840aa94206:-7fe0</wuid>
+      <x>240</x>
+      <y>21</y>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -1027,7 +1055,7 @@ $(pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
     <widget_type>Text Update</widget_type>
-    <width>505</width>
+    <width>619</width>
     <wrap_words>false</wrap_words>
     <wuid>-1688a0b0:1836078a2e4:-7e97</wuid>
     <x>180</x>
