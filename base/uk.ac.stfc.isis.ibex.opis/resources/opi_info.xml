@@ -2972,6 +2972,22 @@
         </categories>
       </value>
     </entry>
+    <entry>
+      <key>TJMPAP</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>tjmpap.opi</path>
+        <description>The OPI for the TJMPAP</description>
+        <macros>
+          <macro>
+            <name>TJMPAP</name>
+            <description>The TJMPAP PV prefix (e.g. TJMPAP_01)</description>
+            <default>TJMPAP_01</default>
+          </macro>
+        </macros>
+      </value>
+  </entry>
 	<entry>
       <key>Rules tests (developer)</key>
       <value>
