@@ -5,7 +5,7 @@
       <key>Aeroflex</key>
       <value>
         <type>FUNCTION_GENERATOR</type>
-        <path>aeroflex/aeroflex.opi</path>
+        <path>aeroflex.opi</path>
         <description>The OPI for the Aeroflex signal generator.</description>
         <macros>
           <macro>
