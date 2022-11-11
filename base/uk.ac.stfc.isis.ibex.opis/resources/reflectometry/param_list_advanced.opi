@@ -67,7 +67,7 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-5572</wuid>
     <x>0</x>
     <y>486</y>
@@ -107,9 +107,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-5563</wuid>
-    <x>450</x>
+    <x>510</x>
     <y>36</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -147,9 +147,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-5554</wuid>
-    <x>450</x>
+    <x>510</x>
     <y>66</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -187,9 +187,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-5545</wuid>
-    <x>450</x>
+    <x>510</x>
     <y>96</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -227,9 +227,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-5536</wuid>
-    <x>450</x>
+    <x>510</x>
     <y>126</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -267,9 +267,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-5527</wuid>
-    <x>450</x>
+    <x>510</x>
     <y>156</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -307,9 +307,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-5518</wuid>
-    <x>450</x>
+    <x>510</x>
     <y>186</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -347,9 +347,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-5509</wuid>
-    <x>450</x>
+    <x>510</x>
     <y>216</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -387,9 +387,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-54fa</wuid>
-    <x>450</x>
+    <x>510</x>
     <y>246</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -427,9 +427,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-54eb</wuid>
-    <x>450</x>
+    <x>510</x>
     <y>276</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -467,9 +467,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-54dc</wuid>
-    <x>450</x>
+    <x>510</x>
     <y>306</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -507,9 +507,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-54cd</wuid>
-    <x>450</x>
+    <x>510</x>
     <y>336</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -547,9 +547,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-54be</wuid>
-    <x>450</x>
+    <x>510</x>
     <y>366</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -587,9 +587,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-54af</wuid>
-    <x>450</x>
+    <x>510</x>
     <y>396</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -627,9 +627,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-54a0</wuid>
-    <x>450</x>
+    <x>510</x>
     <y>426</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -671,7 +671,7 @@
     <width>130</width>
     <wrap_words>true</wrap_words>
     <wuid>-72a790dc:173e7cce652:-5491</wuid>
-    <x>450</x>
+    <x>510</x>
     <y>6</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -715,7 +715,7 @@
     <width>61</width>
     <wrap_words>true</wrap_words>
     <wuid>-72a790dc:173e7cce652:-5490</wuid>
-    <x>588</x>
+    <x>648</x>
     <y>6</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -757,7 +757,7 @@
     <width>55</width>
     <wrap_words>true</wrap_words>
     <wuid>-72a790dc:173e7cce652:-548f</wuid>
-    <x>708</x>
+    <x>768</x>
     <y>6</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -799,7 +799,7 @@
     <width>61</width>
     <wrap_words>true</wrap_words>
     <wuid>-72a790dc:173e7cce652:-548e</wuid>
-    <x>768</x>
+    <x>828</x>
     <y>6</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -837,7 +837,7 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-527f</wuid>
     <x>0</x>
     <y>36</y>
@@ -877,7 +877,7 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-5270</wuid>
     <x>0</x>
     <y>66</y>
@@ -1087,7 +1087,7 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-525d</wuid>
     <x>0</x>
     <y>96</y>
@@ -1127,7 +1127,7 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-524e</wuid>
     <x>0</x>
     <y>126</y>
@@ -1167,7 +1167,7 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-523f</wuid>
     <x>0</x>
     <y>156</y>
@@ -1207,7 +1207,7 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-5230</wuid>
     <x>0</x>
     <y>186</y>
@@ -1247,7 +1247,7 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-5221</wuid>
     <x>0</x>
     <y>216</y>
@@ -1287,7 +1287,7 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-5212</wuid>
     <x>0</x>
     <y>246</y>
@@ -1327,7 +1327,7 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-5203</wuid>
     <x>0</x>
     <y>276</y>
@@ -1367,7 +1367,7 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-51f4</wuid>
     <x>0</x>
     <y>306</y>
@@ -1407,7 +1407,7 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-51e5</wuid>
     <x>0</x>
     <y>336</y>
@@ -1447,7 +1447,7 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-51d6</wuid>
     <x>0</x>
     <y>366</y>
@@ -1487,7 +1487,7 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-51c7</wuid>
     <x>0</x>
     <y>396</y>
@@ -1527,7 +1527,7 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-51b8</wuid>
     <x>0</x>
     <y>426</y>
@@ -1567,7 +1567,7 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-51a9</wuid>
     <x>0</x>
     <y>456</y>
@@ -1607,9 +1607,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-5152</wuid>
-    <x>450</x>
+    <x>510</x>
     <y>456</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -1647,9 +1647,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-513a</wuid>
-    <x>450</x>
+    <x>510</x>
     <y>486</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -1691,7 +1691,7 @@
     <width>133</width>
     <wrap_words>true</wrap_words>
     <wuid>-72a790dc:173e7cce652:-5083</wuid>
-    <x>900</x>
+    <x>1014</x>
     <y>6</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -1735,7 +1735,7 @@
     <width>61</width>
     <wrap_words>true</wrap_words>
     <wuid>-72a790dc:173e7cce652:-5082</wuid>
-    <x>1041</x>
+    <x>1155</x>
     <y>6</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -1777,7 +1777,7 @@
     <width>55</width>
     <wrap_words>true</wrap_words>
     <wuid>-72a790dc:173e7cce652:-5081</wuid>
-    <x>1158</x>
+    <x>1272</x>
     <y>6</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -1819,7 +1819,7 @@
     <width>61</width>
     <wrap_words>true</wrap_words>
     <wuid>-72a790dc:173e7cce652:-5080</wuid>
-    <x>1218</x>
+    <x>1332</x>
     <y>6</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -1857,9 +1857,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-50a1</wuid>
-    <x>900</x>
+    <x>1020</x>
     <y>36</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -1897,9 +1897,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-5092</wuid>
-    <x>900</x>
+    <x>1020</x>
     <y>66</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -1937,9 +1937,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-507f</wuid>
-    <x>900</x>
+    <x>1020</x>
     <y>96</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -1977,9 +1977,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-5070</wuid>
-    <x>900</x>
+    <x>1020</x>
     <y>126</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2017,9 +2017,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-5061</wuid>
-    <x>900</x>
+    <x>1020</x>
     <y>156</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2057,9 +2057,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-5052</wuid>
-    <x>900</x>
+    <x>1020</x>
     <y>186</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2097,9 +2097,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-5043</wuid>
-    <x>900</x>
+    <x>1020</x>
     <y>216</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2137,9 +2137,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-5034</wuid>
-    <x>900</x>
+    <x>1020</x>
     <y>246</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2177,9 +2177,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-5025</wuid>
-    <x>900</x>
+    <x>1020</x>
     <y>276</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2217,9 +2217,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-5016</wuid>
-    <x>900</x>
+    <x>1020</x>
     <y>306</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2257,9 +2257,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-5007</wuid>
-    <x>900</x>
+    <x>1020</x>
     <y>336</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2297,9 +2297,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-4ff8</wuid>
-    <x>900</x>
+    <x>1020</x>
     <y>366</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2337,9 +2337,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-4fe9</wuid>
-    <x>900</x>
+    <x>1020</x>
     <y>396</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2377,9 +2377,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-4fda</wuid>
-    <x>900</x>
+    <x>1020</x>
     <y>426</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2417,9 +2417,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-4fcb</wuid>
-    <x>900</x>
+    <x>1020</x>
     <y>456</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2457,9 +2457,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-50b0</wuid>
-    <x>900</x>
+    <x>1020</x>
     <y>486</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -2501,7 +2501,7 @@
     <width>133</width>
     <wrap_words>true</wrap_words>
     <wuid>-72a790dc:173e7cce652:-4dae</wuid>
-    <x>1350</x>
+    <x>1530</x>
     <y>6</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -2545,7 +2545,7 @@
     <width>61</width>
     <wrap_words>true</wrap_words>
     <wuid>-72a790dc:173e7cce652:-4dad</wuid>
-    <x>1491</x>
+    <x>1671</x>
     <y>6</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -2587,7 +2587,7 @@
     <width>55</width>
     <wrap_words>true</wrap_words>
     <wuid>-72a790dc:173e7cce652:-4dac</wuid>
-    <x>1608</x>
+    <x>1788</x>
     <y>6</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -2629,7 +2629,7 @@
     <width>61</width>
     <wrap_words>true</wrap_words>
     <wuid>-72a790dc:173e7cce652:-4dab</wuid>
-    <x>1668</x>
+    <x>1848</x>
     <y>6</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2667,9 +2667,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-4daa</wuid>
-    <x>1350</x>
+    <x>1530</x>
     <y>36</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2707,9 +2707,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-4d9b</wuid>
-    <x>1350</x>
+    <x>1530</x>
     <y>66</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2747,9 +2747,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-4d8c</wuid>
-    <x>1350</x>
+    <x>1530</x>
     <y>96</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2787,9 +2787,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-4d7d</wuid>
-    <x>1350</x>
+    <x>1530</x>
     <y>126</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2827,9 +2827,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-4d6e</wuid>
-    <x>1350</x>
+    <x>1530</x>
     <y>156</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2867,9 +2867,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-4d5f</wuid>
-    <x>1350</x>
+    <x>1530</x>
     <y>186</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2907,9 +2907,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-4d50</wuid>
-    <x>1350</x>
+    <x>1530</x>
     <y>216</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2947,9 +2947,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-4d41</wuid>
-    <x>1350</x>
+    <x>1530</x>
     <y>246</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2987,9 +2987,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-4d32</wuid>
-    <x>1350</x>
+    <x>1530</x>
     <y>276</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -3027,9 +3027,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-4d23</wuid>
-    <x>1350</x>
+    <x>1530</x>
     <y>306</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -3067,9 +3067,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-4d14</wuid>
-    <x>1350</x>
+    <x>1530</x>
     <y>336</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -3107,9 +3107,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-4d05</wuid>
-    <x>1350</x>
+    <x>1530</x>
     <y>366</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -3147,9 +3147,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-4cf6</wuid>
-    <x>1350</x>
+    <x>1530</x>
     <y>396</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -3187,9 +3187,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-4ce7</wuid>
-    <x>1350</x>
+    <x>1530</x>
     <y>426</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -3227,9 +3227,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-4cd8</wuid>
-    <x>1350</x>
+    <x>1530</x>
     <y>456</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -3267,9 +3267,9 @@
     <tooltip></tooltip>
     <visible>false</visible>
     <widget_type>Linking Container</widget_type>
-    <width>445</width>
+    <width>505</width>
     <wuid>-72a790dc:173e7cce652:-4cc9</wuid>
-    <x>1350</x>
+    <x>1530</x>
     <y>486</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">

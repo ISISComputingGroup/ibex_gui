@@ -140,7 +140,7 @@
         <MAX_NUMBER>64</MAX_NUMBER>
       </macros>
       <name>Linking Container</name>
-      <opi_file>param_list_redefine.opi</opi_file>
+      <opi_file>param_list_advanced.opi</opi_file>
       <resize_behaviour>3</resize_behaviour>
       <rules />
       <scale_options>
@@ -212,7 +212,7 @@ DO NOT do this unless you are sure what you are doing.</text>
     <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0.0">
       <actions hook="true" hook_all="false">
         <action type="OPEN_WEBPAGE">
-          <hyperlink>https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Reflectometry-View#redefine-motors</hyperlink>
+          <hyperlink>https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Reflectometry-View#advanced</hyperlink>
           <description>Reflectometry view help page</description>
         </action>
       </actions>
