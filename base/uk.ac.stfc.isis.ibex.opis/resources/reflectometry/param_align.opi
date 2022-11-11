@@ -116,7 +116,7 @@
           <exp bool_exp="pv0==1">
             <value>false</value>
           </exp>
-          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):DEFINE_POS_ACTION.DISP</pv>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):CHANGING</pv>
         </rule>
       </rules>
       <scale_options>
@@ -610,6 +610,53 @@ $(pv_value)</tooltip>
       <width>55</width>
       <wuid>-74158a83:184332fcbf3:-7150</wuid>
       <x>384</x>
+      <y>4</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <auto_size>false</auto_size>
+      <background_color>
+        <color red="255" green="255" blue="255" />
+      </background_color>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <foreground_color>
+        <color red="0" green="0" blue="0" />
+      </foreground_color>
+      <height>20</height>
+      <horizontal_alignment>1</horizontal_alignment>
+      <name>Moving_label</name>
+      <rules>
+        <rule name="Visible" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0==1">
+            <value>true</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):CHANGING</pv>
+        </rule>
+      </rules>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <text>Moving</text>
+      <tooltip>Cannot define position - component is currently moving</tooltip>
+      <transparent>true</transparent>
+      <vertical_alignment>1</vertical_alignment>
+      <visible>false</visible>
+      <widget_type>Label</widget_type>
+      <width>56</width>
+      <wrap_words>false</wrap_words>
+      <wuid>-5d660590:1845bd2a77f:-7289</wuid>
+      <x>204</x>
       <y>4</y>
     </widget>
   </widget>
