@@ -814,7 +814,7 @@ $(pv_value)</tooltip>
       <height>23</height>
       <items_from_pv>true</items_from_pv>
       <name>Set_carrier_frequency_units</name>
-      <pv_name>$(PV_ROOT_AERO):CARRIER_FREQ_UNITS</pv_name>
+      <pv_name>$(PV_ROOT_AERO):CAR_FREQ_READOUT_UNITS</pv_name>
       <pv_value />
       <rules />
       <scale_options>
