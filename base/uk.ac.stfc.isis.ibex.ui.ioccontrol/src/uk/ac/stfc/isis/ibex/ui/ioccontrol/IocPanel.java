@@ -174,6 +174,12 @@ public class IocPanel extends Composite {
 		});
         buttons = new IocButtonPanel(this, SWT.NONE, control);
 		buttons.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		
+		
+		// Expand "Running" and "In Config" when the dialog is first opened.
+		final var tree = viewer.getTree();
+		tree.getItem(0).setExpanded(true);
+		tree.getItem(1).setExpanded(true);
 	}
 	
 
@@ -210,25 +216,23 @@ public class IocPanel extends Composite {
 	
 	private void setIocs() {		 
 		if (control.iocs().isSet()) {
+			final var viewer = availableIocsTree.getViewer();
+			
+			// Save values of interest.
 			int[] selectedIndex = getCurrentSelection();
             ArrayList<String> elementsToExpand = getElementsToExpand();
-            
+            int[] topIndex = getTopItem();
+
+            // Update.
             Collection<IocState> iocs = control.iocs().getValue();
 			availableIocs.clear();
 			availableIocs = updateHashtable(iocs);
-			final var viewer = availableIocsTree.getViewer();
 			viewer.setInput(availableIocs);
-            
+			
+			//Restore saved values.
             setElementsToExpand(elementsToExpand);
-            final var tree = viewer.getTree();
-            if (selectedIndex[0] != -1 && selectedIndex[1] != -1) {
-            	TreeItem parent = tree.getItem(selectedIndex[0]);
-            	if (parent.getItemCount() < selectedIndex[1]) {
-            		tree.setSelection(parent.getItem(selectedIndex[1]));	
-            	} else {
-            		tree.setSelection(parent);
-            	}
-            }
+            setCurrentSelection(selectedIndex);
+            setTopItem(topIndex);
 		}
 	}
 
@@ -244,26 +248,14 @@ public class IocPanel extends Composite {
 
 	
 	private ArrayList<String> getElementsToExpand() {
-		ArrayList<String> descriptionsToExpand = new ArrayList<String>();
-		for (Object list :availableIocsTree.getViewer().getExpandedElements()) {
+		ArrayList<String> itemsToExpand = new ArrayList<String>();
+		for (Object list : availableIocsTree.getViewer().getExpandedElements()) {
 			if (list instanceof ArrayList<?>) {
-		        ArrayList<?> expandedList = ArrayList.class.cast(list);
-		        IocState firstInList = IocState.class.cast(expandedList.get(0));
-		        descriptionsToExpand.add(firstInList.getDescription());
+				IOCList iocList = (IOCList) list;
+				itemsToExpand.add(iocList.name);
 			}
 		}
-		// These two if statements make sure that items that are only expanded in Running or In Config don't
-		// Get get expanded both there, and in their description.
-		final var tree = availableIocsTree.getViewer().getTree();
-		if (tree.getItem(0).getExpanded()) {
-			descriptionsToExpand.remove(0);
-		}
-		if (tree.getItem(1).getExpanded()) {
-			descriptionsToExpand.remove(0);
-		}
-		descriptionsToExpand.add("Running");
-		descriptionsToExpand.add("In Config");
-		return descriptionsToExpand;
+		return itemsToExpand;
 	}
 	
 	private int[] getCurrentSelection() {
@@ -278,20 +270,78 @@ public class IocPanel extends Composite {
 		if (selected != null) {
 			TreeItem selectedParent = selected.getParentItem();
 			if (selectedParent != null) {
-				TreeItem[] treeItemList = tree.getItems(); 			
-				selectedIndex[0] = treeListIndex(selectedParent, treeItemList, 0);
-				selectedIndex[1] = treeListIndex(selected, selectedParent.getItems(), 1);
+				// IOC selected.
+				selectedIndex[0] = tree.indexOf(selectedParent);
+				selectedIndex[1] = selectedParent.indexOf(selected);
+				
+			} else {
+				// Group selected.
+				selectedIndex[0] = tree.indexOf(selected);
 			}
 		}
 		return selectedIndex;
 	}
+	
+	private void setCurrentSelection(int[] selectedIndex) {
+		final var tree = availableIocsTree.getViewer().getTree();
+		
+		if (selectedIndex[0] != -1) {
+			TreeItem parent = tree.getItem(selectedIndex[0]);
+        	if (selectedIndex[1] != -1) {
+        		// If an IOC is selected.
+        		if (parent.getItemCount() > selectedIndex[1]) {
+        			// Select the IOC.
+            		tree.setSelection(parent.getItem(selectedIndex[1]));	
+            	} else {
+            		// If the IOC is gone select the group.
+            		// This can happen if an IOC in "Running" is selected, the IOC stops
+            		// and when the table is refreshed the IOC is no longer in that group.
+            		tree.setSelection(parent);
+            	}
+        	} else {
+        		// If a group is selected.
+        		tree.setSelection(parent);
+        	}
+        }
+	}
+	
+	private int[] getTopItem() {
+		int[] topIndex = {-1, -1};
+		
+		final var tree = availableIocsTree.getViewer().getTree();
+		TreeItem top = tree.getTopItem();
 
-	private int treeListIndex(TreeItem item, TreeItem[] list, int textField) {
-		for (int i = 0; i < list.length; i++) {
-			if (list[i].getText(textField).equals(item.getText(textField))) {
-				return i;
-			}
+		TreeItem topParent = top.getParentItem();
+		if (topParent != null) {
+			// IOC is on top.
+			topIndex[0] = tree.indexOf(topParent);
+			topIndex[1] = topParent.indexOf(top);
+			
+		} else {
+			// Group is on top.
+			topIndex[0] = tree.indexOf(top);
 		}
-		return 0;
+		return topIndex;
+	}
+	
+	private void setTopItem(int[] topIndex) {
+		final var tree = availableIocsTree.getViewer().getTree();
+		
+    	TreeItem parent = tree.getItem(topIndex[0]);
+    	if (topIndex[1] != -1) {
+    		// If an IOC is on top.
+    		if (parent.getItemCount() > topIndex[1]) {
+    			// Put the IOC on top.
+        		tree.setTopItem(parent.getItem(topIndex[1]));	
+        	} else {
+        		// If the IOC is gone put the group on top.
+        		// This can happen if an IOC in "Running" is on top, the IOC stops
+        		// and when the table is refreshed the IOC is no longer in that group.
+        		tree.setTopItem(parent);
+        	}
+    	} else {
+    		// If a group is on top.
+    		tree.setTopItem(parent);
+    	}
 	}
 }
