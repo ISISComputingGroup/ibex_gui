@@ -217,11 +217,19 @@ public class IocPanel extends Composite {
 	private void setIocs() {		 
 		if (control.iocs().isSet()) {
 			final var viewer = availableIocsTree.getViewer();
-			
+			final var tree = viewer.getTree();
+
 			// Save values of interest.
-			int[] selectedIndex = getCurrentSelection();
-            ArrayList<String> elementsToExpand = getElementsToExpand();
-            int[] topIndex = getTopItem();
+			// Expanded elements.
+			ArrayList<String> elementsToExpand = getElementsToExpand();
+			// Selected element.
+			int[] selectedIndices = {-1, -1};
+			var selectedItems = tree.getSelection();
+			if (selectedItems.length > 0) {
+				selectedIndices = getIndices(selectedItems[0]);
+			}
+			// Top element. Used for restoring scroll position.
+            int[] topIndices = getIndices(tree.getTopItem());
 
             // Update.
             Collection<IocState> iocs = control.iocs().getValue();
@@ -229,10 +237,20 @@ public class IocPanel extends Composite {
 			availableIocs = updateHashtable(iocs);
 			viewer.setInput(availableIocs);
 			
-			//Restore saved values.
+			// Restore saved values.
             setElementsToExpand(elementsToExpand);
-            setCurrentSelection(selectedIndex);
-            setTopItem(topIndex);
+            var selectedItem = getItem(selectedIndices);
+        	if (selectedItem != null) {
+        		tree.setSelection(selectedItem);
+        		var data = selectedItem.getData();
+        		if (data instanceof IocState) {
+					buttons.setIoc(IocState.class.cast(data));
+				}
+        	}
+            var topItem = getItem(topIndices);
+            if (topItem != null) {
+            	tree.setTopItem(topItem);
+            }
 		}
 	}
 
@@ -258,90 +276,37 @@ public class IocPanel extends Composite {
 		return itemsToExpand;
 	}
 	
-	private int[] getCurrentSelection() {
-		int[] selectedIndex = {-1, -1};
-		TreeItem selected = null;
-		
+	private TreeItem getItem(int[] index) {
 		final var tree = availableIocsTree.getViewer().getTree();
-		if (tree.getSelection().length > 0) {
-			selected = tree.getSelection()[0];
-		}
-
-		if (selected != null) {
-			TreeItem selectedParent = selected.getParentItem();
-			if (selectedParent != null) {
-				// IOC selected.
-				selectedIndex[0] = tree.indexOf(selectedParent);
-				selectedIndex[1] = selectedParent.indexOf(selected);
-				
-			} else {
-				// Group selected.
-				selectedIndex[0] = tree.indexOf(selected);
+		
+		TreeItem item = null;
+		if (index[0] != -1) {
+			item = tree.getItem(index[0]);
+			
+			if (index[1] != -1) {
+				item = item.getItem(index[1]);
 			}
 		}
-		return selectedIndex;
+		return item;
 	}
 	
-	private void setCurrentSelection(int[] selectedIndex) {
-		final var tree = availableIocsTree.getViewer().getTree();
+	private int[] getIndices(final TreeItem item) {
+		// First index is Description, second is IOC.
+		int[] index = {-1, -1};
 		
-		if (selectedIndex[0] != -1) {
-			TreeItem parent = tree.getItem(selectedIndex[0]);
-        	if (selectedIndex[1] != -1) {
-        		// If an IOC is selected.
-        		if (parent.getItemCount() > selectedIndex[1]) {
-        			// Select the IOC.
-            		tree.setSelection(parent.getItem(selectedIndex[1]));	
-            	} else {
-            		// If the IOC is gone select the group.
-            		// This can happen if an IOC in "Running" is selected, the IOC stops
-            		// and when the table is refreshed the IOC is no longer in that group.
-            		tree.setSelection(parent);
-            	}
-        	} else {
-        		// If a group is selected.
-        		tree.setSelection(parent);
-        	}
-        }
-	}
-	
-	private int[] getTopItem() {
-		int[] topIndex = {-1, -1};
-		
-		final var tree = availableIocsTree.getViewer().getTree();
-		TreeItem top = tree.getTopItem();
-
-		TreeItem topParent = top.getParentItem();
-		if (topParent != null) {
-			// IOC is on top.
-			topIndex[0] = tree.indexOf(topParent);
-			topIndex[1] = topParent.indexOf(top);
-			
-		} else {
-			// Group is on top.
-			topIndex[0] = tree.indexOf(top);
+		if (item == null) {
+			return index;
 		}
-		return topIndex;
-	}
-	
-	private void setTopItem(int[] topIndex) {
-		final var tree = availableIocsTree.getViewer().getTree();
 		
-    	TreeItem parent = tree.getItem(topIndex[0]);
-    	if (topIndex[1] != -1) {
-    		// If an IOC is on top.
-    		if (parent.getItemCount() > topIndex[1]) {
-    			// Put the IOC on top.
-        		tree.setTopItem(parent.getItem(topIndex[1]));	
-        	} else {
-        		// If the IOC is gone put the group on top.
-        		// This can happen if an IOC in "Running" is on top, the IOC stops
-        		// and when the table is refreshed the IOC is no longer in that group.
-        		tree.setTopItem(parent);
-        	}
-    	} else {
-    		// If a group is on top.
-    		tree.setTopItem(parent);
-    	}
+		final var tree = availableIocsTree.getViewer().getTree();
+		TreeItem parent = item.getParentItem();
+		// If parent is not null the item is an IOC.
+		if (parent != null) {
+			index[0] = tree.indexOf(parent);
+			index[1] = parent.indexOf(item);
+		} else {
+			index[0] = tree.indexOf(item);
+		}
+		return index;
 	}
 }
