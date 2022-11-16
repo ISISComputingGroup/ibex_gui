@@ -276,15 +276,15 @@ public class IocPanel extends Composite {
 		return itemsToExpand;
 	}
 	
-	private TreeItem getItem(int[] index) {
+	private TreeItem getItem(int[] indices) {
 		final var tree = availableIocsTree.getViewer().getTree();
 		
 		TreeItem item = null;
-		if (index[0] != -1) {
-			item = tree.getItem(index[0]);
+		if (indices[0] != -1) {
+			item = tree.getItem(indices[0]);
 			
-			if (index[1] != -1) {
-				item = item.getItem(index[1]);
+			if (indices[1] != -1) {
+				item = item.getItem(indices[1]);
 			}
 		}
 		return item;
@@ -292,21 +292,21 @@ public class IocPanel extends Composite {
 	
 	private int[] getIndices(final TreeItem item) {
 		// First index is Description, second is IOC.
-		int[] index = {-1, -1};
+		int[] indices = {-1, -1};
 		
 		if (item == null) {
-			return index;
+			return indices;
 		}
 		
 		final var tree = availableIocsTree.getViewer().getTree();
 		TreeItem parent = item.getParentItem();
 		// If parent is not null the item is an IOC.
 		if (parent != null) {
-			index[0] = tree.indexOf(parent);
-			index[1] = parent.indexOf(item);
+			indices[0] = tree.indexOf(parent);
+			indices[1] = parent.indexOf(item);
 		} else {
-			index[0] = tree.indexOf(item);
+			indices[0] = tree.indexOf(item);
 		}
-		return index;
+		return indices;
 	}
 }
