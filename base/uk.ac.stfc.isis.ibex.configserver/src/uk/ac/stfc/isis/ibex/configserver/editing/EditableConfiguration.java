@@ -750,6 +750,26 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 		.map(Group::getName)
 		.collect(Collectors.toCollection(ArrayList::new));
     }
+    
+    /**
+     * Get the current list of groups in the configuration.
+     * Excluding groups from components.
+     * 
+     * @return the list of configuration group names
+     */
+    public List<String> getConfigGroupNames() {
+    	var allGroups = getGroupNames();
+    	
+    	var componentGroups = new ArrayList<String>();
+    	for (Configuration comp : editableComponents.getSelected()) {
+    		for (Group group : comp.getGroups()) {
+    			componentGroups.add(group.getName());
+    		}
+    	}
+    	
+    	allGroups.removeAll(componentGroups);
+    	return allGroups;
+    }
 
     /**
      * Sets whether this configuration is a component or not.
