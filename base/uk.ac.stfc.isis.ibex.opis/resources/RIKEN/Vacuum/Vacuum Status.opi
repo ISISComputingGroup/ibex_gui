@@ -33,17 +33,7 @@
   <x>-1</x>
   <y>-1</y>
   <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
-    <actions hook="true" hook_all="false">
-      <action type="OPEN_DISPLAY">
-        <path>../../TPG300.opi</path>
-        <macros>
-          <include_parent_macros>true</include_parent_macros>
-          <TPG300>TPG300_$(TPG)</TPG300>
-        </macros>
-        <mode>0</mode>
-        <description></description>
-      </action>
-    </actions>
+    <actions hook="true" hook_all="false" />
     <alarm_pulsing>false</alarm_pulsing>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
