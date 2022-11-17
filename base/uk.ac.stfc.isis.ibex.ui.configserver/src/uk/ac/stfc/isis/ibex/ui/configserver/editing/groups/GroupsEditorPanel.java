@@ -51,7 +51,6 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DoubleListEditor;
 import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
@@ -75,15 +74,9 @@ public class GroupsEditorPanel extends Composite {
 
     /** The groups viewer. */
 	private ListViewer groupsViewer;
-	
-	/** The read-only groups viewer. */
-	private ListViewer readOnlyGroupsViewer;
 
     /** The group list. */
 	private List groupList;
-	
-	/** The read-only group list. */
-	private List readOnlyGroupList;
 
     /** binding context. */
 	private DataBindingContext bindingContext = new DataBindingContext();
@@ -107,38 +100,7 @@ public class GroupsEditorPanel extends Composite {
 
         final GroupEditorViewModel groupEditorViewModel = configurationViewModels.groupEditorViewModel();
 
-        setLayout(new GridLayout(3, false));
-        
-        
-        Group grpReadOnlyGroups = new Group(this, SWT.NONE);
-        grpReadOnlyGroups.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-        grpReadOnlyGroups.setText("Component Groups");
-        grpReadOnlyGroups.setLayout(new GridLayout(1, false));
-        
-        readOnlyGroupsViewer = new ListViewer(grpReadOnlyGroups, SWT.BORDER | SWT.V_SCROLL | SWT.SINGLE);
-        ObservableListContentProvider<String> readOnlycontentProvider = new ObservableListContentProvider<>();
-        readOnlyGroupsViewer.setContentProvider(readOnlycontentProvider);
-
-        readOnlyGroupsViewer.setInput(BeanProperties.list(EditableConfiguration.READ_ONLY_GROUPS)
-                .observe(configurationViewModels.getConfigModel().getValue()));
-
-        configurationViewModels.getConfigModel().getValue().addPropertyChangeListener(EditableConfiguration.READ_ONLY_GROUPS, new PropertyChangeListener() {
-
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				// TODO Auto-generated method stub
-				IsisLog.getLogger(getClass()).info("!!!! " + evt.getNewValue());
-			}
-        	
-        });
-        
-        readOnlyGroupList = readOnlyGroupsViewer.getList();
-
-		GridData readOnly_gd_viewer = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 4);
-		readOnly_gd_viewer.widthHint = 125;
-		readOnlyGroupList.setLayoutData(readOnly_gd_viewer);
-
-		
+        setLayout(new GridLayout(2, false));
 		
 		Group grpGroups = new Group(this, SWT.NONE);
         grpGroups.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
@@ -151,16 +113,6 @@ public class GroupsEditorPanel extends Composite {
 
         groupsViewer.setInput(BeanProperties.list(EditableConfiguration.EDITABLE_GROUPS)
                 .observe(configurationViewModels.getConfigModel().getValue()));
-        
-        configurationViewModels.getConfigModel().getValue().addPropertyChangeListener(EditableConfiguration.EDITABLE_GROUPS, new PropertyChangeListener() {
-
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				// TODO Auto-generated method stub
-				IsisLog.getLogger(getClass()).info("44444444444 " + evt.getNewValue());
-			}
-        	
-        });
 
 		groupList = groupsViewer.getList();
 
