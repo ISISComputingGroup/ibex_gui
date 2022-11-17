@@ -110,7 +110,7 @@ public class BlockGroupViewModel extends ErrorMessageProvider {
      * @return an array containing the group names
      */
     public String[] getGroups() {
-    	List<String> names = this.editingConfig.getConfigGroupNames();
+    	List<String> names = this.editingConfig.getGroupNames();
     	String[] ret = new String[names.size()];
     	return names.toArray(ret);
     }

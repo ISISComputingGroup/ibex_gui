@@ -43,7 +43,7 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 public class ConfigDetailsDialog extends TitleAreaDialog implements
 		MessageDisplayer {
 
-	private static final Point INITIAL_SIZE = new Point(650, 750);
+	private static final Point INITIAL_SIZE = new Point(850, 750);
     private static final Point MINIMUM_SIZE = new Point(450, 700);
 	private final String title;
 	private final String subTitle;
