@@ -184,7 +184,7 @@
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
     <height>512</height>
-    <lock_children>true</lock_children>
+    <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
@@ -1914,7 +1914,7 @@ $(pv_value)</tooltip>
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <height>106</height>
-      <lock_children>true</lock_children>
+      <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
@@ -2220,14 +2220,14 @@ $(pv_value)</tooltip>
         <off_label>OFF</off_label>
         <on_image>../solenoid_kickers_on.png</on_image>
         <on_label>ON</on_label>
-        <pv_name>$(P)$(SCHNDR):KICKER:SUMMARY</pv_name>
+        <pv_name>$(P)$(SCHNDR):KICKERS:SUMMARY:STAT</pv_name>
         <pv_value />
         <rules>
           <rule name="Handle Interlocks" prop_id="on_image" out_exp="false">
             <exp bool_exp="pv==4">
               <value>../solenoid_kickers_fault.png</value>
             </exp>
-            <pv trig="true">$(P)$(SCHNDR):KICKER:SUMMARY</pv>
+            <pv trig="true">$(P)$(SCHNDR):KICKERS:SUMMARY:STAT</pv>
           </rule>
         </rules>
         <scale_options>
