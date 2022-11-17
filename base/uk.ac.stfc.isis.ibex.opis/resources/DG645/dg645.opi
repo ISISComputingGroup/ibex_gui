@@ -673,6 +673,12 @@ $(pv_value)</tooltip>
               </exp>
               <pv trig="true">$(PV_ROOT)TriggerSourceMI</pv>
             </rule>
+            <rule name="Rule" prop_id="transparent" out_exp="false">
+              <exp bool_exp="pv0!=0">
+                <value>true</value>
+              </exp>
+              <pv trig="true">$(PV_ROOT)TriggerSourceMI</pv>
+            </rule>
           </rules>
           <scale_options>
             <width_scalable>true</width_scalable>
@@ -734,6 +740,12 @@ $(pv_value)</tooltip>
             <rule name="Rule" prop_id="enabled" out_exp="false">
               <exp bool_exp="pv0==0">
                 <value>false</value>
+              </exp>
+              <pv trig="true">$(PV_ROOT)TriggerSourceMI</pv>
+            </rule>
+            <rule name="Rule" prop_id="transparent" out_exp="false">
+              <exp bool_exp="pv0==0">
+                <value>true</value>
               </exp>
               <pv trig="true">$(PV_ROOT)TriggerSourceMI</pv>
             </rule>
@@ -2073,7 +2085,7 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>461</width>
+        <width>566</width>
         <wuid>231c343d:183cb33d8b8:-4b6c</wuid>
         <x>12</x>
         <y>12</y>
@@ -2115,7 +2127,7 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>461</width>
+        <width>566</width>
         <wuid>231c343d:183cb33d8b8:-46fc</wuid>
         <x>12</x>
         <y>92</y>
@@ -2157,7 +2169,7 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>461</width>
+        <width>566</width>
         <wuid>231c343d:183cb33d8b8:-46d5</wuid>
         <x>12</x>
         <y>172</y>
@@ -2199,7 +2211,7 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>461</width>
+        <width>566</width>
         <wuid>231c343d:183cb33d8b8:-46ae</wuid>
         <x>12</x>
         <y>252</y>
@@ -2241,7 +2253,7 @@ $(pv_value)</tooltip>
         <tooltip></tooltip>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
-        <width>461</width>
+        <width>566</width>
         <wuid>231c343d:183cb33d8b8:-4687</wuid>
         <x>12</x>
         <y>332</y>
