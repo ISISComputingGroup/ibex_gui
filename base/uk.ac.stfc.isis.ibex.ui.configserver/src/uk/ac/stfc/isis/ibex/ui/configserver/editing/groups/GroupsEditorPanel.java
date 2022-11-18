@@ -293,10 +293,11 @@ public class GroupsEditorPanel extends Composite {
                 .observe(configurationViewModels.getConfigModel().getValue()));
 
         readOnlyGroupList = readOnlyGroupsViewer.getList();
-
+        
 		GridData gd_readOnlyViewer = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 4);
 		gd_readOnlyViewer.widthHint = 125;
 		readOnlyGroupList.setLayoutData(gd_readOnlyViewer);
+		readOnlyGroupList.setToolTipText("Component groups are read-only.");
 		
 		
 		// Selected group blocks.
@@ -304,12 +305,13 @@ public class GroupsEditorPanel extends Composite {
 		grpSelectedReadOnlyGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		grpSelectedReadOnlyGroup.setText("Blocks");
 		grpSelectedReadOnlyGroup.setLayout(new GridLayout(1, false));
-		
+		grpSelectedReadOnlyGroup.setToolTipText("Component blocks are read-only.");
 		
 		final List readOnlyBlocksList = new List(grpSelectedReadOnlyGroup, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL);
 		GridData gd_readOnlyBlocksList = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 4);
 		gd_readOnlyBlocksList.widthHint = 125;
 		readOnlyBlocksList.setLayoutData(gd_readOnlyBlocksList);
+		readOnlyBlocksList.setEnabled(false);
 		
 		readOnlyGroupsViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
