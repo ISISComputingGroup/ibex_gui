@@ -289,12 +289,10 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	    }
 	    
 	    IsisLog.getLogger(getClass()).info("New read only groups = " + newReadOnlyGroups);
-	
-	    readOnlyGroups = new ArrayList<>(DisplayUtils.removeOtherGroup(newReadOnlyGroups));
 	    
         firePropertyChange("iocs", componentIocs, componentIocs = newCompIocs);
         firePropertyChange("blocks", allBlocks, allBlocks = newBlocks);
-        firePropertyChange(READ_ONLY_GROUPS, null, readOnlyGroups);
+        firePropertyChange(READ_ONLY_GROUPS, readOnlyGroups, readOnlyGroups = new ArrayList<>(DisplayUtils.removeOtherGroup(newReadOnlyGroups)));
     }
 
     /**
@@ -559,6 +557,13 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	    return allBlocks.stream()
 	    		.filter(b -> !blockNamesInGroups.contains(b.getName()))
 	    		.collect(Collectors.toList());
+    }
+    
+    /**
+     * @return The read-only groups associated with the configuration
+     */
+    public Collection<Group> getReadOnlyGroups() {
+    	return new ArrayList<>(readOnlyGroups);
     }
 
     /**

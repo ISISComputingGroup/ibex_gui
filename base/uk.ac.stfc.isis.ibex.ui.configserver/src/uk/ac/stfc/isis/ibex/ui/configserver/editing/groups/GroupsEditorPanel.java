@@ -19,9 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.groups;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
@@ -74,9 +71,15 @@ public class GroupsEditorPanel extends Composite {
 
     /** The groups viewer. */
 	private ListViewer groupsViewer;
+	
+	/** The read-only groups viewer. */
+	private ListViewer readOnlyGroupsViewer;
 
     /** The group list. */
 	private List groupList;
+	
+	/** The read-only group list. */
+	private List readOnlyGroupList;
 
     /** binding context. */
 	private DataBindingContext bindingContext = new DataBindingContext();
@@ -101,7 +104,7 @@ public class GroupsEditorPanel extends Composite {
         final GroupEditorViewModel groupEditorViewModel = configurationViewModels.groupEditorViewModel();
 
         setLayout(new GridLayout(2, false));
-		
+        
 		Group grpGroups = new Group(this, SWT.NONE);
         grpGroups.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
         grpGroups.setText("Groups");
@@ -274,5 +277,52 @@ public class GroupsEditorPanel extends Composite {
 		});
 
 		blocksEditor.bind(unselectedBlocks, selectedBlocks);
+		
+		
+		// Read-only group selection.
+		Group grpReadOnlyGroups = new Group(this, SWT.NONE);
+		grpReadOnlyGroups.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		grpReadOnlyGroups.setText("Component Groups");
+		grpReadOnlyGroups.setLayout(new GridLayout(3, false));
+
+        readOnlyGroupsViewer = new ListViewer(grpReadOnlyGroups, SWT.BORDER | SWT.V_SCROLL | SWT.SINGLE);
+        ObservableListContentProvider<String> readOnlycontentProvider = new ObservableListContentProvider<>();
+        readOnlyGroupsViewer.setContentProvider(readOnlycontentProvider);
+
+        readOnlyGroupsViewer.setInput(BeanProperties.list(EditableConfiguration.READ_ONLY_GROUPS)
+                .observe(configurationViewModels.getConfigModel().getValue()));
+
+        readOnlyGroupList = readOnlyGroupsViewer.getList();
+
+		GridData gd_readOnlyViewer = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 4);
+		gd_readOnlyViewer.widthHint = 125;
+		readOnlyGroupList.setLayoutData(gd_readOnlyViewer);
+		
+		
+		// Selected group blocks.
+		Group grpSelectedReadOnlyGroup = new Group(this, SWT.NONE);
+		grpSelectedReadOnlyGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		grpSelectedReadOnlyGroup.setText("Blocks");
+		grpSelectedReadOnlyGroup.setLayout(new GridLayout(1, false));
+		
+		
+		final List readOnlyBlocksList = new List(grpSelectedReadOnlyGroup, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL);
+		GridData gd_readOnlyBlocksList = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 4);
+		gd_readOnlyBlocksList.widthHint = 125;
+		readOnlyBlocksList.setLayoutData(gd_readOnlyBlocksList);
+		
+		readOnlyGroupsViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+
+            @Override
+			public void selectionChanged(SelectionChangedEvent arg0) {
+                var selection = readOnlyGroupList.getSelection();
+                var groups = configurationViewModels.getConfigModel().getValue().getReadOnlyGroups();
+                for (var group : groups) {
+                	if (group.getName().equals(selection[0])) {
+                		readOnlyBlocksList.setItems(group.getBlocks().toArray(String[]::new));
+                	}
+                }
+			}
+		});
 	}
 }
