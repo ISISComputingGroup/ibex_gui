@@ -233,4 +233,27 @@ public class EditableConfigurationTest {
 		
 		assertEquals(editable.getAllBlocks().size(), 0);
 	}
+	
+	@Test
+	public void GIVEN_component_with_group_WHEN_component_added_THEN_group_from_component_read_only() {
+		var group = new Group("comp_group", Collections.emptyList(), "comp");
+		var component = new Configuration("comp", "desc", "", Collections.emptyList(), Collections.emptyList(),
+				List.of(group), Collections.emptyList(), Collections.emptyList(), false, true, false);
+		var editable = new EditableConfiguration(emptyConfig(), Collections.emptyList(), List.of(component), Collections.emptyList());
+		
+		assertEquals(editable.getEditableGroups().size(), 0);
+		assertEquals(editable.getReadOnlyGroups().size(), 0);
+
+		editable.getEditableComponents().toggleSelection(List.of(component));
+		
+		assertEquals(editable.getEditableGroups().size(), 0);
+		assertEquals(editable.getReadOnlyGroups().size(), 1);
+		assertEquals(editable.getReadOnlyGroups().toArray(new Group[0])[0].getName(), "comp_group");
+		assertEquals(editable.getReadOnlyGroups().toArray(new Group[0])[0].getComponent(), "comp");
+		
+		editable.getEditableComponents().toggleSelection(List.of(component));
+		
+		assertEquals(editable.getEditableGroups().size(), 0);
+		assertEquals(editable.getReadOnlyGroups().size(), 0);
+	}
 }
