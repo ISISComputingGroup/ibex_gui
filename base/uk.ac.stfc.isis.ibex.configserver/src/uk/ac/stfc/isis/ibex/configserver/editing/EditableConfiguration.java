@@ -284,6 +284,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	            .forEach(newBlocks::add);
 	        
   	        comp.getGroups().stream()
+  	        	.filter(g -> DisplayUtils.filterNoneGroup(g.getName()))
 	            .map(g -> new Group(g.getName(), g.getBlocks(), comp.getName()))
   	            .forEach(newReadOnlyGroups::add);
 	    }
@@ -292,7 +293,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	    
         firePropertyChange("iocs", componentIocs, componentIocs = newCompIocs);
         firePropertyChange("blocks", allBlocks, allBlocks = newBlocks);
-        firePropertyChange(READ_ONLY_GROUPS, readOnlyGroups, readOnlyGroups = new ArrayList<>(DisplayUtils.removeOtherGroup(newReadOnlyGroups)));
+        firePropertyChange(READ_ONLY_GROUPS, readOnlyGroups, readOnlyGroups = newReadOnlyGroups);
     }
 
     /**
@@ -555,6 +556,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     			.collect(Collectors.toUnmodifiableSet());
     	
 	    return allBlocks.stream()
+	    		.filter(b -> !b.inComponent())
 	    		.filter(b -> !blockNamesInGroups.contains(b.getName()))
 	    		.collect(Collectors.toList());
     }

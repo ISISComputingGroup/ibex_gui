@@ -256,4 +256,26 @@ public class EditableConfigurationTest {
 		assertEquals(editable.getEditableGroups().size(), 0);
 		assertEquals(editable.getReadOnlyGroups().size(), 0);
 	}
+	
+	@Test
+	public void GIVEN_component_with_block_not_in_group_WHEN_component_added_THEN_block_from_component() {
+		var block = new Block("block", "PV", true, true);
+		var component = new Configuration("comp", "desc", "", Collections.emptyList(), List.of(block), Collections.emptyList(),
+				Collections.emptyList(), Collections.emptyList(), false, true, false);
+		var editable = new EditableConfiguration(emptyConfig(), Collections.emptyList(), List.of(component), Collections.emptyList());
+		
+		assertEquals(editable.getBlocksOutsideGroup().size(), 0);
+		assertEquals(editable.getAllBlocks().size(), 0);
+
+		editable.getEditableComponents().toggleSelection(List.of(component));
+		
+		assertEquals(editable.getBlocksOutsideGroup().size(), 0);
+		assertEquals(editable.getAllBlocks().size(), 1);
+		assertEquals(editable.getAllBlocks().toArray(new Block[0])[0].getName(), "block");
+
+		editable.getEditableComponents().toggleSelection(List.of(component));
+		
+		assertEquals(editable.getBlocksOutsideGroup().size(), 0);
+		assertEquals(editable.getAllBlocks().size(), 0);
+	}
 }
