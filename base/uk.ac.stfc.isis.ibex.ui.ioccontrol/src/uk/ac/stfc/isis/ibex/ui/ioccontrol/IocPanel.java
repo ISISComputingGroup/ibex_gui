@@ -24,7 +24,9 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Optional;
+
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreePath;
@@ -62,7 +64,7 @@ public class IocPanel extends Composite {
 	private FilteredTree availableIocsTree;
     private IocButtonPanel buttons;
 	private IocControl control;
-	private Hashtable<String, IOCList> availableIocs;
+	private HashMap<String, IOCList> availableIocs;
 	
 	private static final int COLUMN_WIDTH = 70;
 	
@@ -77,6 +79,8 @@ public class IocPanel extends Composite {
 			});
 		}
 	};
+	
+	private static record Indices(Optional<Integer> description, Optional<Integer> ioc, Optional<String> text) { };
 	
 	/**
 	 * The constructor for the panel.
@@ -147,8 +151,8 @@ public class IocPanel extends Composite {
         }
         
         Collection<IocState> rows = control.iocs().getValue();
-        availableIocs = new Hashtable<String, IOCList>();
-        availableIocs = updateHashtable(rows);
+        availableIocs = new HashMap<String, IOCList>();
+        availableIocs = updateHashMap(rows);
     	
         viewer.setInput(availableIocs);
         viewer.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -178,12 +182,14 @@ public class IocPanel extends Composite {
 		
 		// Expand "Running" and "In Config" when the dialog is first opened.
 		final var tree = viewer.getTree();
-		tree.getItem(0).setExpanded(true);
-		tree.getItem(1).setExpanded(true);
+		final int runninIocsIndex = 0;
+		final int inConfigIocsIndex = 1;
+		tree.getItem(runninIocsIndex).setExpanded(true);
+		tree.getItem(inConfigIocsIndex).setExpanded(true);
 	}
 	
 
-	private Hashtable<String, IOCList> updateHashtable(Collection<IocState> rows) {
+	private HashMap<String, IOCList> updateHashMap(Collection<IocState> rows) {
     	String description = "";
     	availableIocs.put("Running", new IOCList("Running"));
     	availableIocs.put("In Config", new IOCList("In Config"));
@@ -223,34 +229,37 @@ public class IocPanel extends Composite {
 			// Expanded elements.
 			ArrayList<String> elementsToExpand = getElementsToExpand();
 			// Selected element.
-			int[] selectedIndices = {-1, -1};
+			Indices selectedIndices = new Indices(Optional.empty(), Optional.empty(), Optional.empty());
 			var selectedItems = tree.getSelection();
 			if (selectedItems.length > 0) {
 				selectedIndices = getIndices(selectedItems[0]);
 			}
 			// Top element. Used for restoring scroll position.
-            int[] topIndices = getIndices(tree.getTopItem());
+            Indices topIndices = getIndices(tree.getTopItem());
 
             // Update.
             Collection<IocState> iocs = control.iocs().getValue();
 			availableIocs.clear();
-			availableIocs = updateHashtable(iocs);
+			availableIocs = updateHashMap(iocs);
+			tree.setVisible(false);
 			viewer.setInput(availableIocs);
 			
 			// Restore saved values.
             setElementsToExpand(elementsToExpand);
             var selectedItem = getItem(selectedIndices);
-        	if (selectedItem != null) {
-        		tree.setSelection(selectedItem);
-        		var data = selectedItem.getData();
+        	if (selectedItem.isPresent()) {
+        		tree.setSelection(selectedItem.get());
+        		var data = selectedItem.get().getData();
         		if (data instanceof IocState) {
 					buttons.setIoc(IocState.class.cast(data));
 				}
         	}
             var topItem = getItem(topIndices);
-            if (topItem != null) {
-            	tree.setTopItem(topItem);
+            if (topItem.isPresent()) {
+            	tree.setTopItem(topItem.get());
             }
+            
+            tree.setVisible(true);
 		}
 	}
 
@@ -268,7 +277,7 @@ public class IocPanel extends Composite {
 	private ArrayList<String> getElementsToExpand() {
 		ArrayList<String> itemsToExpand = new ArrayList<String>();
 		for (Object list : availableIocsTree.getViewer().getExpandedElements()) {
-			if (list instanceof ArrayList<?>) {
+			if (list instanceof IOCList) {
 				IOCList iocList = (IOCList) list;
 				itemsToExpand.add(iocList.name);
 			}
@@ -276,37 +285,52 @@ public class IocPanel extends Composite {
 		return itemsToExpand;
 	}
 	
-	private TreeItem getItem(int[] indices) {
+	private Optional<TreeItem> getItem(Indices indices) {
 		final var tree = availableIocsTree.getViewer().getTree();
 		
-		TreeItem item = null;
-		if (indices[0] != -1) {
-			item = tree.getItem(indices[0]);
+		// Item to get is a description.
+		if (indices.description.isPresent() && indices.ioc.isEmpty()) {
+			return Optional.ofNullable(tree.getItem(indices.description.get()));
+		}
+		
+		// Item to get is an IOC.
+		if (indices.description.isPresent() && indices.ioc.isPresent()) {
+			TreeItem parent = tree.getItem(indices.description.get());
+			TreeItem item = null;
 			
-			if (indices[1] != -1) {
-				item = item.getItem(indices[1]);
+			// Check for index out of bounds.
+			if (parent.getItemCount() > indices.ioc.get()) {
+				item = parent.getItem(indices.ioc.get());
+			}
+			
+			// Check if IOC to get has moved due to a state change.
+			if (item != null && item.getText().equals(indices.text.get())) {
+				return Optional.ofNullable(item);
+			} else {
+				for (var each : parent.getItems()) {
+					if (each.getText().equals(indices.text.get())) {
+						return Optional.ofNullable(each);
+					}
+				}
 			}
 		}
-		return item;
+		
+		return Optional.empty();
 	}
 	
-	private int[] getIndices(final TreeItem item) {
-		// First index is Description, second is IOC.
-		int[] indices = {-1, -1};
-		
-		if (item == null) {
-			return indices;
-		}
-		
+	private Indices getIndices(final TreeItem item) {
 		final var tree = availableIocsTree.getViewer().getTree();
 		TreeItem parent = item.getParentItem();
-		// If parent is not null the item is an IOC.
-		if (parent != null) {
-			indices[0] = tree.indexOf(parent);
-			indices[1] = parent.indexOf(item);
+		
+		// If parent is not null the item is a description, otherwise the item is an IOC.
+		if (parent == null) {
+			var desription = Optional.ofNullable(tree.indexOf(item));
+			return new Indices(desription, Optional.empty(), Optional.empty());
 		} else {
-			indices[0] = tree.indexOf(item);
+			var desription = Optional.ofNullable(tree.indexOf(parent));
+			var ioc = Optional.ofNullable(parent.indexOf(item));
+			var text = Optional.ofNullable(item.getText());
+			return new Indices(desription, ioc, text);
 		}
-		return indices;
 	}
 }
