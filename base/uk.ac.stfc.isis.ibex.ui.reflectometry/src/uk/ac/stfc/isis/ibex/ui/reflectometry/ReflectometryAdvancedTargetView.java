@@ -23,13 +23,13 @@
 package uk.ac.stfc.isis.ibex.ui.reflectometry;
 
 /**
- * A standalone view for the Reflectometry Redefine Motors Panel OPI.
+ * A standalone view for the Reflectometry Advanced Panel OPI.
  */
-public class ReflectometryRedefineMotorsTargetView extends ReflectometryOpiTargetView {
+public class ReflectometryAdvancedTargetView extends ReflectometryOpiTargetView {
 	/**
 	 * Class ID.
 	 */
-	public static final String ID = "uk.ac.stfc.isis.ibex.ui.ReflectometryRedefineMotorsTargetView";
+	public static final String ID = "uk.ac.stfc.isis.ibex.ui.ReflectometryAdvancedTargetView";
 
 	/**
 	 * File name of the reflectometry OPI.
@@ -37,7 +37,7 @@ public class ReflectometryRedefineMotorsTargetView extends ReflectometryOpiTarge
 	 * @return the OPI file name
 	 */
 	protected String getOpiName() {
-		return "reflectometry/tab_redefine.opi";
+		return "reflectometry/tab_advanced.opi";
 	}
 
 	/**
@@ -46,6 +46,6 @@ public class ReflectometryRedefineMotorsTargetView extends ReflectometryOpiTarge
 	 * @return the OPI title
 	 */
 	protected String getOpiTitle() {
-		return "Redefine Motors";
+		return "Advanced";
 	}
 }
