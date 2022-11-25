@@ -1100,6 +1100,24 @@
       </value>
     </entry>
     <entry>
+      <key>Galil General I/O</key>
+      <value>
+        <type>DEBUG</type>
+        <path>galil/general_io_standalone.opi</path>
+        <description>The OPI giving a view of the general inputs/outputs on a galil controller.</description>
+        <macros>
+          <macro>
+            <name>M</name>
+            <description>The galil prefix. E.g. the galil at MOT:MTR0304 would be 03</description>
+            <default>01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Beckhoff Engineering View</key>
       <value>
         <type>DEBUG</type>
