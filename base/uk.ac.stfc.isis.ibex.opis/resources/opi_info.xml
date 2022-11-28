@@ -1254,6 +1254,26 @@
             <description>The Danfysik PV prefix (e.g. DFKPS_01).</description>
             <default>DFKPS_01</default>
           </macro>
+          <macro>
+            <name>External_Interlock_0</name>
+            <description>The name to use for the first external interlock</description>
+            <default>External Interlock 0</default>
+          </macro>
+          <macro>
+            <name>External_Interlock_1</name>
+            <description>The name to use for the second external interlock</description>
+            <default>External Interlock 1</default>
+          </macro>
+          <macro>
+            <name>External_Interlock_2</name>
+            <description>The name to use for the third external interlock</description>
+            <default>External Interlock 2</default>
+          </macro>
+          <macro>
+            <name>External_Interlock_3</name>
+            <description>The name to use for the fourth external interlock</description>
+            <default>External Interlock 3</default>
+          </macro>
         </macros>
         <categories>
           <category>Power supplies</category>
