@@ -67,10 +67,10 @@
     </off_color>
     <off_label>I</off_label>
     <on_color>
-      <color red="255" green="255" blue="0" />
+      <color name="ISIS_Emergency_Button_Background" red="255" green="0" blue="0" />
     </on_color>
     <on_label>I</on_label>
-    <pv_name>$(P)$(PV):ILK</pv_name>
+    <pv_name>$(P)$(PV):ILK:SUMMARY</pv_name>
     <pv_value />
     <rules />
     <scale_options>
@@ -125,10 +125,10 @@ $(pv_value)</tooltip>
     </off_color>
     <off_label>A</off_label>
     <on_color>
-      <color name="Major" red="255" green="0" blue="0" />
+      <color name="ISIS_Yellow" red="255" green="255" blue="0" />
     </on_color>
     <on_label>A</on_label>
-    <pv_name></pv_name>
+    <pv_name>$(P)$(PV):WARNING:SUMMARY</pv_name>
     <pv_value />
     <rules />
     <scale_options>
@@ -199,21 +199,23 @@ $(pv_value)</tooltip>
     <pv_name>$(P)$(PV):POWER</pv_name>
     <pv_value />
     <rules>
-      <rule name="Rule" prop_id="off_color" out_exp="false">
-        <exp bool_exp="pv0==1">
+      <rule name="Handle Interlock Off/Fault" prop_id="off_color" out_exp="false">
+        <exp bool_exp="pv0==1 || pv1==1">
           <value>
             <color name="ISIS_Red_LED_Off" red="102" green="0" blue="0" />
           </value>
         </exp>
-        <pv trig="true">$(P)$(PV):ILK</pv>
+        <pv trig="true">$(P)$(PV):ILK:SUMMARY</pv>
+        <pv trig="true">$(P)$(PV):ERROR:SUMMARY</pv>
       </rule>
-      <rule name="Rule" prop_id="on_color" out_exp="false">
-        <exp bool_exp="pv0==1">
+      <rule name="Handle Interlocks On/Warnings" prop_id="on_color" out_exp="false">
+        <exp bool_exp="pv0==1 || pv1==1">
           <value>
-            <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
+            <color name="ISIS_Yellow" red="255" green="255" blue="0" />
           </value>
         </exp>
         <pv trig="true">$(P)$(PV):ILK</pv>
+        <pv trig="true">$(P)$(PV):WARNING:SUMMARY</pv>
       </rule>
     </rules>
     <scale_options>

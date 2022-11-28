@@ -379,16 +379,7 @@ $(pv_value)</tooltip>
       <x>6</x>
       <y>373</y>
       <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
-        <actions hook="true" hook_all="false">
-          <action type="OPEN_DISPLAY">
-            <path>../danfysik.opi</path>
-            <macros>
-              <include_parent_macros>true</include_parent_macros>
-            </macros>
-            <mode>0</mode>
-            <description></description>
-          </action>
-        </actions>
+        <actions hook="true" hook_all="false" />
         <alarm_pulsing>false</alarm_pulsing>
         <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
         <background_color>
@@ -574,16 +565,7 @@ $(pv_value)</tooltip>
         <y>28</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
-        <actions hook="true" hook_all="false">
-          <action type="OPEN_DISPLAY">
-            <path>../danfysik.opi</path>
-            <macros>
-              <include_parent_macros>true</include_parent_macros>
-            </macros>
-            <mode>0</mode>
-            <description></description>
-          </action>
-        </actions>
+        <actions hook="true" hook_all="false" />
         <alarm_pulsing>false</alarm_pulsing>
         <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
         <background_color>
@@ -641,16 +623,7 @@ $(pv_value)</tooltip>
         <y>53</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
-        <actions hook="true" hook_all="false">
-          <action type="OPEN_DISPLAY">
-            <path>../danfysik.opi</path>
-            <macros>
-              <include_parent_macros>true</include_parent_macros>
-            </macros>
-            <mode>0</mode>
-            <description></description>
-          </action>
-        </actions>
+        <actions hook="true" hook_all="false" />
         <alarm_pulsing>false</alarm_pulsing>
         <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
         <background_color>
@@ -956,16 +929,7 @@ $(pv_value)</tooltip>
         <y>10</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
-        <actions hook="true" hook_all="false">
-          <action type="OPEN_DISPLAY">
-            <path>../danfysik.opi</path>
-            <macros>
-              <include_parent_macros>true</include_parent_macros>
-            </macros>
-            <mode>0</mode>
-            <description></description>
-          </action>
-        </actions>
+        <actions hook="true" hook_all="false" />
         <alarm_pulsing>false</alarm_pulsing>
         <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
         <background_color>
@@ -2213,68 +2177,7 @@ $(pv_value)</tooltip>
         <foreground_color>
           <color red="0" green="0" blue="0" />
         </foreground_color>
-        <height>40</height>
-        <name>Kickers_Image_Boolean_Indicator</name>
-        <no_animation>false</no_animation>
-        <off_image>../solenoid_kickers_off.png</off_image>
-        <off_label>OFF</off_label>
-        <on_image>../solenoid_kickers_on.png</on_image>
-        <on_label>ON</on_label>
-        <pv_name>$(P)$(SCHNDR):KICKERS:SUMMARY:STAT</pv_name>
-        <pv_value />
-        <rules>
-          <rule name="Handle Interlocks" prop_id="on_image" out_exp="false">
-            <exp bool_exp="pv==4">
-              <value>../solenoid_kickers_fault.png</value>
-            </exp>
-            <pv trig="true">$(P)$(SCHNDR):KICKERS:SUMMARY:STAT</pv>
-          </rule>
-        </rules>
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <show_boolean_label>false</show_boolean_label>
-        <stretch_to_fit>false</stretch_to_fit>
-        <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-        <transparency>false</transparency>
-        <visible>true</visible>
-        <widget_type>Image Boolean Indicator</widget_type>
-        <width>21</width>
-        <wuid>5e541948:181aa8cffdf:-7c64</wuid>
-        <x>37</x>
-        <y>44</y>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolIndicator" version="1.0.0">
-        <actions hook="false" hook_all="false" />
-        <alarm_pulsing>false</alarm_pulsing>
-        <align_to_nearest_second>false</align_to_nearest_second>
-        <auto_size>true</auto_size>
-        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-        <background_color>
-          <color red="240" green="240" blue="240" />
-        </background_color>
-        <bit>-1</bit>
-        <boolean_label_position>0</boolean_label_position>
-        <border_alarm_sensitive>true</border_alarm_sensitive>
-        <border_color>
-          <color red="0" green="128" blue="255" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <data_type>0</data_type>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-        </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <foreground_color>
-          <color red="0" green="0" blue="0" />
-        </foreground_color>
-        <height>40</height>
+        <height>42</height>
         <name>Solenoid_Image_Boolean_Indicator</name>
         <no_animation>false</no_animation>
         <off_image>../solenoid_kickers_off.png</off_image>
@@ -2297,7 +2200,7 @@ $(pv_value)</tooltip>
         <transparency>false</transparency>
         <visible>true</visible>
         <widget_type>Image Boolean Indicator</widget_type>
-        <width>21</width>
+        <width>22</width>
         <wuid>5e541948:181aa8cffdf:-7bd3</wuid>
         <x>202</x>
         <y>14</y>
@@ -2381,6 +2284,82 @@ $(pv_value)</tooltip>
         <wuid>4c716581:18331f520b6:-7bea</wuid>
         <x>31</x>
         <y>83</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <align_to_nearest_second>false</align_to_nearest_second>
+        <auto_size>false</auto_size>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <crop_bottom>0</crop_bottom>
+        <crop_left>0</crop_left>
+        <crop_right>0</crop_right>
+        <crop_top>0</crop_top>
+        <degree>0</degree>
+        <enabled>true</enabled>
+        <flip_horizontal>false</flip_horizontal>
+        <flip_vertical>false</flip_vertical>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <height>42</height>
+        <image_file>../solenoid_kickers_off.png</image_file>
+        <name>Image</name>
+        <no_animation>false</no_animation>
+        <permutation_matrix>
+          <row>
+            <col>1.0</col>
+            <col>0.0</col>
+          </row>
+          <row>
+            <col>0.0</col>
+            <col>1.0</col>
+          </row>
+        </permutation_matrix>
+        <rules>
+          <rule name="Handle State" prop_id="image_file" out_exp="false">
+            <exp bool_exp="pv0==0">
+              <value>../solenoid_kickers_Disconnected.png</value>
+            </exp>
+            <exp bool_exp="pv0==1">
+              <value>../solenoid_kickers_off.png</value>
+            </exp>
+            <exp bool_exp="pv0==2">
+              <value>../solenoid_kickers_on.png</value>
+            </exp>
+            <exp bool_exp="pv0==3">
+              <value>../solenoid_kickers_on_off.png</value>
+            </exp>
+            <exp bool_exp="pv0==4">
+              <value>../solenoid_kickers_fault.png</value>
+            </exp>
+            <pv trig="true">TE:NDLT1540:SCHNDR_01:KICKERS:SUMMARY:STAT</pv>
+          </rule>
+        </rules>
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <stretch_to_fit>false</stretch_to_fit>
+        <tooltip></tooltip>
+        <transparency>false</transparency>
+        <visible>true</visible>
+        <widget_type>Image</widget_type>
+        <width>22</width>
+        <wuid>-3e5df576:184bd9da0c8:-7e56</wuid>
+        <x>39</x>
+        <y>44</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
