@@ -55,4 +55,13 @@ public final class DisplayUtils {
 				.filter(g -> !g.getName().equals(OTHER))
 				.collect(Collectors.toList());
 	}
+	
+	/**
+	 * Filter function for the NONE group.
+	 * @param name The name of the group.
+	 * @return True if the group is not named NONE.
+	 */
+	public static boolean filterNoneGroup(String name) {
+		return !name.toLowerCase().equals(NONE);
+	}
 }

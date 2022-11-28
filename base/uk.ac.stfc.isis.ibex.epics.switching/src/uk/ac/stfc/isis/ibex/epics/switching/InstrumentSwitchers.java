@@ -65,7 +65,10 @@ public class InstrumentSwitchers implements BundleActivator {
 	 * @return an InstrumentSwitcher instance
 	 */
     public static InstrumentSwitchers getDefault() {
-        return instance;
+    	if (instance == null) {
+    		instance = new InstrumentSwitchers();
+    	}
+    	return instance;
     }
 
     /**
