@@ -2315,8 +2315,7 @@ $(pv_value)</tooltip>
       <scripts />
       <show_boolean_label>false</show_boolean_label>
       <square_led>false</square_led>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
+      <tooltip>Negative jog active</tooltip>
       <visible>true</visible>
       <widget_type>LED</widget_type>
       <width>25</width>
@@ -2373,8 +2372,7 @@ $(pv_value)</tooltip>
       <scripts />
       <show_boolean_label>false</show_boolean_label>
       <square_led>false</square_led>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
+      <tooltip>Positive jog active</tooltip>
       <visible>true</visible>
       <widget_type>LED</widget_type>
       <width>25</width>
