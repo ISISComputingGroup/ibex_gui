@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.ioccontrol;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +46,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.dialogs.FilteredTree;
 
 import uk.ac.stfc.isis.ibex.configserver.IocState;
-import uk.ac.stfc.isis.ibex.ui.ioccontrol.IocControlViewModel.Index;
+import uk.ac.stfc.isis.ibex.ui.ioccontrol.IocControlViewModel.Item;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCConfigProvider;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCContentProvider;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCLabelProvider;
@@ -53,6 +54,7 @@ import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCList;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCPatternFilter;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCRunModeProvider;
 import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCStatusProvider;
+import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCViewerComparator;
 
 /**
  * The Start/Stop IOC viewer.
@@ -117,6 +119,7 @@ public class IocControlView extends Composite {
         availableIocsTree = new FilteredTree(treeComposite, SWT.FULL_SELECTION, new IOCPatternFilter(), true, true);
         final var viewer = availableIocsTree.getViewer();
         viewer.setContentProvider(new IOCContentProvider());
+        viewer.setComparator(new IOCViewerComparator(Comparator.naturalOrder()));
         
         TreeViewerColumn mainColumn = new TreeViewerColumn(viewer, SWT.NONE);
         mainColumn.getColumn().setText("Ioc");
@@ -236,11 +239,7 @@ public class IocControlView extends Composite {
 			@Override
 			public void treeExpanded(TreeEvent e) {
 				TreeItem item = (TreeItem) e.item;
-				var data = item.getData();
-				if (data instanceof IOCList) {
-					model.addExpanded(((IOCList) data).name);
-				}
-				
+				model.addExpanded(item.getText());		
 			}
     	});
 		
@@ -280,19 +279,25 @@ public class IocControlView extends Composite {
     	model.addPropertyChangeListener("selected", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
-				Optional<Index> indexOp = (Optional<Index>) evt.getNewValue();
-				if (indexOp.isPresent()) {
-					var index = indexOp.get();
+				if (evt.getNewValue() instanceof Item) {
+					var item = (Item) evt.getNewValue();
 					
-					if (index.description().isPresent() && index.ioc().isPresent()) {
-						var parent = tree.getItem(index.description().get());
-						var item = parent.getItem(index.ioc().get());
-						tree.setSelection(item);
+					if (item.description().isPresent()) {
+						var descriptionTreeItem = getDescriptionItem(item.description().get());
 						
-						model.setIoc((IocState) item.getData());
-					} else if (index.description().isPresent()) {
-						var item = tree.getItem(index.description().get());
-						tree.setSelection(item);
+						if (descriptionTreeItem.isPresent()) {
+							// Set description as selected item.
+							if (item.ioc().isEmpty()) {
+								tree.setSelection(descriptionTreeItem.get());
+							// Set IOC as selected item.
+							} else {
+								var iocTreeItem = getIocItem(descriptionTreeItem.get(), item.ioc().get());
+								if (iocTreeItem.isPresent()) {
+									tree.setSelection(iocTreeItem.get());
+									model.setIoc((IocState) iocTreeItem.get().getData());
+								}
+							}
+						}
 					}
 				}
 			}
@@ -302,15 +307,19 @@ public class IocControlView extends Composite {
     	model.addPropertyChangeListener("expanded", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
-				ArrayList<TreePath> paths = new ArrayList<TreePath>();
-				
-				List<IOCList> test = (List<IOCList>) evt.getNewValue();
-				for (var each : test) {
-					IOCList[] iocArray = {each};
-					paths.add(new TreePath(iocArray));
+				if (evt.getNewValue() instanceof List<?>) {
+					ArrayList<TreePath> paths = new ArrayList<TreePath>();
+
+					List<?> test = (List<?>) evt.getNewValue();
+					for (var each : test) {
+						IOCList[] iocArray = {(IOCList) each};
+						paths.add(new TreePath(iocArray));
+					}
+					
+					availableIocsTree.getViewer().setExpandedTreePaths(paths.toArray(new TreePath[0]));
 				}
 				
-				availableIocsTree.getViewer().setExpandedTreePaths(paths.toArray(new TreePath[0]));
+				
 			}
     	});
 
@@ -318,20 +327,49 @@ public class IocControlView extends Composite {
     	model.addPropertyChangeListener("top", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
-				Optional<Index> indexOp = (Optional<Index>) evt.getNewValue();
-				if (indexOp.isPresent()) {
-					var index = indexOp.get();
+				if (evt.getNewValue() instanceof Item) {
+					var item = (Item) evt.getNewValue();
 					
-					if (index.description().isPresent() && index.ioc().isPresent()) {
-						var parent = tree.getItem(index.description().get());
-						var item = parent.getItem(index.ioc().get());
-						tree.setTopItem(item);
-					} else if (index.description().isPresent()) {
-						var item = tree.getItem(index.description().get());
-						tree.setTopItem(item);
+					if (item.description().isPresent()) {
+						var descriptionTreeItem = getDescriptionItem(item.description().get());
+						
+						if (descriptionTreeItem.isPresent()) {
+							// Set description as top item.
+							if (item.ioc().isEmpty()) {
+								tree.setTopItem(descriptionTreeItem.get());
+							// Set IOC as top item.
+							} else {
+								var iocTreeItem = getIocItem(descriptionTreeItem.get(), item.ioc().get());
+								if (iocTreeItem.isPresent()) {
+									tree.setTopItem(iocTreeItem.get());
+								}
+							}
+						}
 					}
 				}
 			}
     	});
+	}
+	
+	private Optional<TreeItem> getDescriptionItem(final String description) {
+		final var tree = availableIocsTree.getViewer().getTree();
+		
+		for (var parent : tree.getItems()) {
+			if (parent.getText().equals(description)) {
+				return Optional.of(parent);
+			}
+		}
+		
+		return Optional.empty();
+	}
+	
+	private Optional<TreeItem> getIocItem(final TreeItem parent, final String ioc) {
+		for (var child : parent.getItems()) {
+			if (child.getText().equals(ioc)) {
+				return Optional.of(child);
+			}
+		}
+		
+		return Optional.empty();
 	}
 }

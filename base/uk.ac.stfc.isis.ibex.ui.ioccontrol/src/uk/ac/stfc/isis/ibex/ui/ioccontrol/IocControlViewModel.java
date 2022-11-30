@@ -22,11 +22,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import org.eclipse.swt.widgets.Display;
@@ -42,16 +41,15 @@ import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCList;
 public class IocControlViewModel extends ModelObject {
 	
 	/**
-	 * Represents an item in the tree view using its index.
+	 * Represents an IOC in the tree view using its description and name.
+	 * If the item is a description, 'ioc' will be empty.
 	 */
-	public static record Index(Optional<Integer> description, Optional<Integer> ioc) { };
-	
-	private static record Item(Optional<String> description, Optional<String> ioc) { };
+	public static record Item(Optional<String> description, Optional<String> ioc) { };
 	
 	private final Display display = Display.getDefault();
 	private IocState ioc;
 	private final IocControl control;
-	private TreeMap<String, IOCList> availableIocs = new TreeMap<String, IOCList>();
+	private HashMap<String, IOCList> availableIocs = new HashMap<String, IOCList>();
 	
 	private boolean startEnabled = false;
 	private boolean stopEnabled = false;
@@ -118,8 +116,8 @@ public class IocControlViewModel extends ModelObject {
 		});
 	}
 	
-	private TreeMap<String, IOCList> createHashMap() {
-		TreeMap<String, IOCList> iocHashMap = new TreeMap<String, IOCList>(new IocControlComparator());
+	private HashMap<String, IOCList> createHashMap() {
+		HashMap<String, IOCList> iocHashMap = new HashMap<String, IOCList>();
 		
 		Collection<IocState> rows = control.iocs().getValue();
     	String description = "";
@@ -139,10 +137,6 @@ public class IocControlViewModel extends ModelObject {
     		}
     	}
     	
-    	for (var each : iocHashMap.values()) {
-    		Collections.sort(each);
-    	}
-    	
 		return iocHashMap;
 	}
 	
@@ -150,7 +144,7 @@ public class IocControlViewModel extends ModelObject {
 	 * The map has a custom comparator that puts the "Running" and "In Config" IOCs on the top of the tree view.
 	 * @return Sorted map with the key being a description and the value being a list of IOCs.
 	 */
-	public TreeMap<String, IOCList> getAvailableIocs() {
+	public HashMap<String, IOCList> getAvailableIocs() {
 		return availableIocs;
 	}
 	
@@ -241,10 +235,10 @@ public class IocControlViewModel extends ModelObject {
 	}
 	
 	/**
-	 * @return The optional index of the previously selected Description or IOC.
+	 * @return Item representing the previously selected Description or IOC.
 	 */
-	public Optional<Index> getSelected() {
-		return getItem(selected);
+	public Item getSelected() {
+		return selected;
 	}
 	
 	/**
@@ -283,36 +277,10 @@ public class IocControlViewModel extends ModelObject {
 	
 	/**
 	 * This is used for restoring the scroll position of the IOC table.
-	 * @return The optional index of the previous Description or IOC that was on top.
+	 * @return Item representing the previous Description or IOC that was on top.
 	 */
-	public Optional<Index> getTop() {
-		return getItem(top);
-	}
-	
-	private Optional<Index> getItem(final Item item) {
-		var description = item.description();
-		var ioc = item.ioc();
-		
-		if (description.isPresent()) {
-			var keyArray = availableIocs.keySet().toArray(new String[0]);
-			for (int i = 0; i < keyArray.length; ++i) {
-				if (keyArray[i].equals(description.get())) {
-					
-					if (ioc.isPresent()) {
-						var iocList = availableIocs.get(keyArray[i]);
-						for (int j = 0; j < iocList.size(); ++j) {
-							if (iocList.get(j).getName().equals(ioc.get())) {
-								return Optional.ofNullable(new Index(Optional.ofNullable(i), Optional.ofNullable(j)));
-							}
-						}
-					} else {
-						return Optional.ofNullable(new Index(Optional.ofNullable(i), Optional.empty()));
-					}
-				}
-			}
-		}
-		
-		return Optional.empty();
+	public Item getTop() {
+		return top;
 	}
 	
 	/**

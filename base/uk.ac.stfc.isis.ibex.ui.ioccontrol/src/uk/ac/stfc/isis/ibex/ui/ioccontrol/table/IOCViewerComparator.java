@@ -29,47 +29,60 @@
  */
 package uk.ac.stfc.isis.ibex.ui.ioccontrol.table;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Comparator;
 
-import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.ContentViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerComparator;
+import uk.ac.stfc.isis.ibex.configserver.IocState;
 
 /**
- * Presents the Instrument and its descendant components in a form that can be
- * used by the ComponentTreeView.
+ * Provides labels for components within the ioc editor.
  */
-public class IOCContentProvider implements ITreeContentProvider {
-	@Override
-	public void dispose() {
+public class IOCViewerComparator extends ViewerComparator {
+	/**
+	 * @param comparator The comparator to use for sorting.
+	 */	
+	public IOCViewerComparator(Comparator<? super String> comparator) {
+		super(comparator);
 	}
-
+	
 	@Override
-	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-	}
-
-	@Override
-	public Object[] getElements(Object inputElement) {
-		return HashMap.class.cast(inputElement).values().toArray();
-	}
-
-	@Override
-	public Object[] getChildren(Object parentElement) {
-		if (parentElement instanceof IOCList) {
-			return ArrayList.class.cast(parentElement).toArray();
-		} else {
-			Object[] empty = {};
-			return empty;
+	public int compare(Viewer viewer, Object e1, Object e2) {
+		String name1 = this.getLabel(viewer, e1);
+		String name2 = this.getLabel(viewer, e2);
+		if (name1 == "Running") {
+			return -1;
 		}
+		if (name2 == "Running") {
+			return 1;
+		}
+		if (name1 == "In Config") {
+			return -1;
+		}
+		if (name2 == "In Config") {
+			return 1;
+		}
+		// use the comparator to compare the strings
+		return getComparator().compare(name1.toLowerCase(), name2.toLowerCase());
 	}
-
-	@Override
-	public Object getParent(Object element) {
-		return null;
+	
+	private String getLabel(Viewer viewer, Object e1) {
+		String name1;
+		if (viewer == null || !(viewer instanceof ContentViewer)) {
+			name1 = e1.toString();
+		} else {
+			if (e1 instanceof IOCList) {
+				name1 = IOCList.class.cast(e1).name;
+				
+			} else {
+				name1 = IocState.class.cast(e1).getName();
+			}
+		}
+		if (name1 == null) {
+			name1 = "";
+		}
+		return name1;
 	}
-
-	@Override
-	public boolean hasChildren(Object element) {
-		return this.getChildren(element).length > 0;
-	}
+	
 }
