@@ -1556,6 +1556,18 @@
       </value>
     </entry>
     <entry>
+      <key>SANDALS jaw set</key>
+      <value>
+        <type>JAWS</type>
+        <path>jaws/jaws_managers/sandals_manager.opi</path>
+        <description>The OPI for the SANDALS jaw set. No properties required.</description>
+        <macros/>
+        <categories>
+          <category>Jaws and slits</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Muon Front End Overview</key>
       <value>
         <type>MUON_FRONT_END</type>
