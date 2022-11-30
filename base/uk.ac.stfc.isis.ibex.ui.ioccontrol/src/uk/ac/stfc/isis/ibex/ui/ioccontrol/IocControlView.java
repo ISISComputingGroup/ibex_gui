@@ -228,21 +228,6 @@ public class IocControlView extends Composite {
 			}
 		});
 		
-		// Tree expand and collapse listener.
-		tree.addTreeListener(new TreeListener() {
-			@Override
-			public void treeCollapsed(TreeEvent e) {
-				TreeItem item = (TreeItem) e.item;
-				model.removeExpanded(item.getText());
-			}
-
-			@Override
-			public void treeExpanded(TreeEvent e) {
-				TreeItem item = (TreeItem) e.item;
-				model.addExpanded(item.getText());		
-			}
-    	});
-		
 		// Tree top item listener.
     	tree.getVerticalBar().addSelectionListener(new SelectionListener() {
 			@Override
@@ -261,7 +246,22 @@ public class IocControlView extends Composite {
 				widgetSelected(e);
 			}
     	});
-    	
+		
+		// Tree expand and collapse listener.
+		tree.addTreeListener(new TreeListener() {
+			@Override
+			public void treeCollapsed(TreeEvent e) {
+				TreeItem item = (TreeItem) e.item;
+				model.removeExpanded(item.getText());
+			}
+
+			@Override
+			public void treeExpanded(TreeEvent e) {
+				TreeItem item = (TreeItem) e.item;
+				model.addExpanded(item.getText());		
+			}
+    	});
+		
     	// Tree input change listener.
     	model.addPropertyChangeListener("availableIocs", new PropertyChangeListener() {
 			@Override
@@ -303,26 +303,6 @@ public class IocControlView extends Composite {
 			}
     	});
     	
-    	// Expanded items restore listener.
-    	model.addPropertyChangeListener("expanded", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				if (evt.getNewValue() instanceof List<?>) {
-					ArrayList<TreePath> paths = new ArrayList<TreePath>();
-
-					List<?> test = (List<?>) evt.getNewValue();
-					for (var each : test) {
-						IOCList[] iocArray = {(IOCList) each};
-						paths.add(new TreePath(iocArray));
-					}
-					
-					availableIocsTree.getViewer().setExpandedTreePaths(paths.toArray(new TreePath[0]));
-				}
-				
-				
-			}
-    	});
-
     	// Top item restore listener. This restores the scroll position.
     	model.addPropertyChangeListener("top", new PropertyChangeListener() {
 			@Override
@@ -347,6 +327,26 @@ public class IocControlView extends Composite {
 						}
 					}
 				}
+			}
+    	});
+    	
+    	// Expanded items restore listener.
+    	model.addPropertyChangeListener("expanded", new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (evt.getNewValue() instanceof List<?>) {
+					ArrayList<TreePath> paths = new ArrayList<TreePath>();
+
+					List<?> test = (List<?>) evt.getNewValue();
+					for (var each : test) {
+						IOCList[] iocArray = {(IOCList) each};
+						paths.add(new TreePath(iocArray));
+					}
+					
+					availableIocsTree.getViewer().setExpandedTreePaths(paths.toArray(new TreePath[0]));
+				}
+				
+				
 			}
     	});
 	}

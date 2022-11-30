@@ -242,6 +242,23 @@ public class IocControlViewModel extends ModelObject {
 	}
 	
 	/**
+	 * Set the current top tree item. This is used for restoring the scroll position of the IOC table.
+	 * @param description The IOCs description.
+	 * @param ioc The IOC name.
+	 */
+	public void setTop(String description, String ioc) {
+		top = new Item(Optional.ofNullable(description), Optional.ofNullable(ioc));
+	}
+	
+	/**
+	 * This is used for restoring the scroll position of the IOC table.
+	 * @return Item representing the previous Description or IOC that was on top.
+	 */
+	public Item getTop() {
+		return top;
+	}
+	
+	/**
 	 * Add a currently expanded tree item. This can only be a description.
 	 * @param description The IOCs description.
 	 */
@@ -264,23 +281,6 @@ public class IocControlViewModel extends ModelObject {
 		return expanded.stream()
 					   .map(desc -> availableIocs.get(desc))
 					   .collect(Collectors.toList());
-	}
-	
-	/**
-	 * Set the current top tree item. This is used for restoring the scroll position of the IOC table.
-	 * @param description The IOCs description.
-	 * @param ioc The IOC name.
-	 */
-	public void setTop(String description, String ioc) {
-		top = new Item(Optional.ofNullable(description), Optional.ofNullable(ioc));
-	}
-	
-	/**
-	 * This is used for restoring the scroll position of the IOC table.
-	 * @return Item representing the previous Description or IOC that was on top.
-	 */
-	public Item getTop() {
-		return top;
 	}
 	
 	/**
