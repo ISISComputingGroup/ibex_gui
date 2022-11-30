@@ -31,6 +31,7 @@ package uk.ac.stfc.isis.ibex.ui.ioccontrol.table;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -50,7 +51,7 @@ public class IOCContentProvider implements ITreeContentProvider {
 
 	@Override
 	public Object[] getElements(Object inputElement) {
-		return HashMap.class.cast(inputElement).values().toArray();
+		return TreeMap.class.cast(inputElement).values().toArray();
 	}
 
 	@Override
