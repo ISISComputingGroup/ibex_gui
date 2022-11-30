@@ -63,7 +63,7 @@ public class IocControlViewModel extends ModelObject {
 	 * Constructor. Creates a new instance of the IocControlViewModel object.
 	 * @param control The IOC control class.
 	 */
-	IocControlViewModel(IocControl control) {
+	public IocControlViewModel(IocControl control) {
 		this.control = control;
         availableIocs = createHashMap();
 
