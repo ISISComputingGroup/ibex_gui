@@ -137,7 +137,7 @@ public class IocControlView extends Composite {
         configColumn.getColumn().setAlignment(SWT.CENTER);
         configColumn.setLabelProvider(new IOCConfigProvider());
         
-        if (IocPanelHandler.getDisplayRunMode()) {
+        if (IocModePreferenceHandler.getDisplayRunMode()) {
         	TreeViewerColumn runModeColumn = new TreeViewerColumn(viewer, SWT.NONE);
         	runModeColumn.getColumn().setText("Mode");
         	runModeColumn.getColumn().setWidth(COLUMN_WIDTH);

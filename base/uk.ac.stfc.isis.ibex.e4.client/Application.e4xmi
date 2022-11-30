@@ -119,7 +119,7 @@
   <handlers xmi:id="_7P65YJZlEeilnu5vNzjU3w" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.resetperspectives" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.commands.ResetPerspective" command="_NufGcJZmEeilnu5vNzjU3w"/>
   <handlers xmi:id="_1OjPMLs4EeiDDI01_3WoHA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.iconlicence" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.help/uk.ac.stfc.isis.ibex.ui.help.IconLicencesHandler" command="_oZBHMLs4EeiDDI01_3WoHA"/>
   <handlers xmi:id="_u6Iq4N2tEeuW2_9QCiQ-XA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.selectperspectives" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.commands.SelectVisiblePerspectives" command="_4hYR8N2tEeuW2_9QCiQ-XA"/>
-  <handlers xmi:id="_xSTawEukEe2ohpbV1rm5iA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.displayrunmode" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.ioccontrol/uk.ac.stfc.isis.ibex.ui.ioccontrol.IocPanelHandler" command="_ZG6_YEulEe2ohpbV1rm5iA"/>
+  <handlers xmi:id="_xSTawEukEe2ohpbV1rm5iA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.displayrunmode" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.ioccontrol/uk.ac.stfc.isis.ibex.ui.ioccontrol.IocModePreferenceHandler" command="_ZG6_YEulEe2ohpbV1rm5iA"/>
   <bindingTables xmi:id="_5WjMoIOQEeizju06Crxm-g" elementId="IBEX_key_scheme" bindingContext="_no3QoIOVEeizju06Crxm-g">
     <tags>type:user</tags>
     <bindings xmi:id="_5zdyIIOQEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+A" command="_UJcx8IOSEeizju06Crxm-g">
