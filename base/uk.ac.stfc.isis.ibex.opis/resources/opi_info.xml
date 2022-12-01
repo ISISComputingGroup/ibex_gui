@@ -1399,21 +1399,9 @@
       </value>
     </entry>
     <entry>
-<<<<<<< HEAD
-=======
-      <key>Riken Magnet PSU</key>
-      <value>
-        <type>RIKEN_magnet_PSUs</type>
-        <path>RIKEN/RIKEN_magnet_PSUs.opi</path>
-        <description>The OPI for the Riken Magnet PSU Synoptic</description>
-        <macros/>
-        <categories/>
-      </value>
-    </entry>
-    <entry>
       <key>Riken PSU Status Summary</key>
       <value>
-        <type>psu_stat_summary</type>
+        <type>psu_status_summary</type>
         <path>RIKEN\Magnet\psu_stat_summary.opi</path>
         <description>The OPI for the status summary of Riken Magnet PSUs</description>
         <macros/>
@@ -1421,7 +1409,6 @@
       </value>
     </entry>
     <entry>
->>>>>>> a0327fc8d (Restructure, fix styling and some PVs)
       <key>Jaws</key>
       <value>
         <type>JAWS</type>
