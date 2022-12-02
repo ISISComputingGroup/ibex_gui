@@ -59,6 +59,16 @@ public class IocControlViewModel extends ModelObject {
 	private Item selected = new Item(Optional.empty(), Optional.empty());
 	private Item top = new Item(Optional.empty(), Optional.empty());
 	
+	private PropertyChangeListener enabledListener = new PropertyChangeListener() {
+        @Override
+        public void propertyChange(PropertyChangeEvent event) {
+        	boolean isRunning = (boolean) event.getNewValue();
+        	firePropertyChange("startEnabled", startEnabled, startEnabled = control.startIoc().getCanSend() && !isRunning);
+        	firePropertyChange("stopEnabled", stopEnabled, stopEnabled = control.stopIoc().getCanSend() && isRunning);
+        	firePropertyChange("restartEnabled", restartEnabled, restartEnabled = control.restartIoc().getCanSend() && isRunning);
+        }
+    };
+	
 	/**
 	 * Constructor. Creates a new instance of the IocControlViewModel object.
 	 * @param control The IOC control class.
@@ -154,23 +164,19 @@ public class IocControlViewModel extends ModelObject {
 	 * @param ioc The selected IOC.
 	 */
 	public void setIoc(final IocState ioc) {
+		if (this.ioc != null) {
+			this.ioc.removePropertyChangeListener(enabledListener);
+		}
 		this.ioc = ioc;
-		if (ioc == null) {
+		
+		if (this.ioc == null) {
 			firePropertyChange("startEnabled", startEnabled, startEnabled = false);
         	firePropertyChange("stopEnabled", stopEnabled, stopEnabled = false);
         	firePropertyChange("restartEnabled", restartEnabled, restartEnabled = false);
 		} else {
-			ioc.addPropertyChangeListener("isRunning", new PropertyChangeListener() {
-	            @Override
-	            public void propertyChange(PropertyChangeEvent event) {
-	            	boolean isRunning = (boolean) event.getNewValue();
-	            	firePropertyChange("startEnabled", startEnabled, startEnabled = control.startIoc().getCanSend() && !isRunning);
-	            	firePropertyChange("stopEnabled", stopEnabled, stopEnabled = control.stopIoc().getCanSend() && isRunning);
-	            	firePropertyChange("restartEnabled", restartEnabled, restartEnabled = control.restartIoc().getCanSend() && isRunning);
-	            }
-	        });
+			this.ioc.addPropertyChangeListener("isRunning", enabledListener);
 			
-			boolean isRunning = ioc.getIsRunning();
+			boolean isRunning = this.ioc.getIsRunning();
         	firePropertyChange("startEnabled", startEnabled, startEnabled = control.startIoc().getCanSend() && !isRunning);
         	firePropertyChange("stopEnabled", stopEnabled, stopEnabled = control.stopIoc().getCanSend() && isRunning);
         	firePropertyChange("restartEnabled", restartEnabled, restartEnabled = control.restartIoc().getCanSend() && isRunning);
