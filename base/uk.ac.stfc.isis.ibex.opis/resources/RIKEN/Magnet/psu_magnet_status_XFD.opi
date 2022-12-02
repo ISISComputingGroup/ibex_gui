@@ -67,7 +67,7 @@
     </off_color>
     <off_label>I</off_label>
     <on_color>
-      <color name="ISIS_Emergency_Button_Background" red="255" green="0" blue="0" />
+      <color name="ISIS_Yellow" red="255" green="255" blue="0" />
     </on_color>
     <on_label>I</on_label>
     <pv_name>$(P)$(PV):ILK:SUMMARY</pv_name>
@@ -125,10 +125,10 @@ $(pv_value)</tooltip>
     </off_color>
     <off_label>A</off_label>
     <on_color>
-      <color name="ISIS_Yellow" red="255" green="255" blue="0" />
+      <color name="ISIS_Red" red="255" green="0" blue="0" />
     </on_color>
     <on_label>A</on_label>
-    <pv_name>$(P)$(PV):WARNING:SUMMARY</pv_name>
+    <pv_name>$(P)$(PV):LIMIT</pv_name>
     <pv_value />
     <rules />
     <scale_options>

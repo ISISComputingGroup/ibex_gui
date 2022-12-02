@@ -91,12 +91,12 @@
       <color red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>310</height>
+    <height>418</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
     <name>PSU_Shared_Linking_Container</name>
-    <opi_file>rb2_1port_shared.opi</opi_file>
+    <opi_file>rb2_2port_shared.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>
@@ -172,7 +172,7 @@
       <color red="192" green="192" blue="192" />
     </foreground_color>
     <height>69</height>
-    <lock_children>false</lock_children>
+    <lock_children>true</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
