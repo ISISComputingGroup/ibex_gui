@@ -23,6 +23,9 @@ import java.util.Calendar;
 
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 
+/**
+ * Interface implemented by classes searching IOC log messages.
+ */
 public interface ISearchModel {
     
     /**

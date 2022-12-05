@@ -139,7 +139,7 @@ public class RBLookupViewModel extends ModelObject {
      * @param newUser the selected user
      */
 	public void setSelectedUser(UserDetails newUser) {
-		setOkEnabled(newUser == null ? false : true);
+		setOkEnabled(newUser != null);
 		firePropertyChange("selectedUser", selectedUser, selectedUser = newUser);
 	}
 	

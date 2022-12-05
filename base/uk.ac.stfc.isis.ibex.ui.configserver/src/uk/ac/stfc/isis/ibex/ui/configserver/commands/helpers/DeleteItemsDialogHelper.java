@@ -5,6 +5,9 @@ import java.util.Collection;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.PlatformUI;
 
+/**
+ * A dialog to confirm deleting items.
+ */
 public class DeleteItemsDialogHelper {
 	/**
 	 * Opens dialog to confirm deleting items.

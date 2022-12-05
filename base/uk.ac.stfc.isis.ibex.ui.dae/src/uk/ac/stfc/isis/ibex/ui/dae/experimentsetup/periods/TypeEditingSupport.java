@@ -25,8 +25,17 @@ import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.Period;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.PeriodType;
 import uk.ac.stfc.isis.ibex.ui.widgets.EnumEditingSupport;
 
+/**
+ * Editing support for DAE period types.
+ */
 public class TypeEditingSupport extends EnumEditingSupport<Period, PeriodType> {
 
+	/**
+	 * Create the editing support.
+	 * @param viewer the column viewer
+	 * @param rowType the row type to be edited
+	 * @param enumType the enum type (cell type) to be edited
+	 */
 	public TypeEditingSupport(ColumnViewer viewer, Class<Period> rowType, Class<PeriodType> enumType) {
 		super(viewer, rowType, enumType);
 	}

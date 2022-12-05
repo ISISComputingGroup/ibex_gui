@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.ui.banner.models;
 
+import java.io.Closeable;
+
 import org.eclipse.swt.graphics.RGB;
 
 import uk.ac.stfc.isis.ibex.banner.ObservableCustomControl;
@@ -30,7 +32,7 @@ import uk.ac.stfc.isis.ibex.ui.Utils;
 /**
  * The model for custom buttons in the banner.
  */
-public class CustomControlModel extends ModelObject {
+public class CustomControlModel extends ModelObject implements Closeable {
 
     private final int index;
     private final ObservableCustomControl control;
@@ -126,6 +128,11 @@ public class CustomControlModel extends ModelObject {
      */
     public int height() {
 		return Utils.constrainIntToRange(height, MIN_HEIGHT, MAX_HEIGHT);
+    }
+    
+    @Override
+    public void close() {
+    	control.close();
     }
 
 }

@@ -25,6 +25,9 @@ import org.python.pydev.ast.interpreter_managers.IInterpreterProvider;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 
+/**
+ * An interpreter provider for pydev.
+ */
 public class PythonInterpreterProviderFactory extends AbstractInterpreterProviderFactory {
 
 	private static final String INTERPRETER_PROVIDER_ID = "IPC python";

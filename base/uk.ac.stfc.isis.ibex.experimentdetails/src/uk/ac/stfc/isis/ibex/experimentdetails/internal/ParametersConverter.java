@@ -26,6 +26,9 @@ import java.util.function.Function;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 
+/**
+ * A converter for experiment parameters.
+ */
 public class ParametersConverter implements Function<String, Collection<String>> {
 
 	@Override

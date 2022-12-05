@@ -127,6 +127,10 @@ public class PerspectivePreferenceSupplier {
         }
     }
     
+    /**
+     * Adds a listener to be notified when hidden perspectives change.
+     * @param listener the listener
+     */
     public void addHiddenPerspectivesListener(Consumer<List<String>> listener) {
         writablePreferences.addPreferenceChangeListener(event -> {
             if (event.getKey().equals(PERSPECTIVES_TO_HIDE)) {
@@ -135,6 +139,10 @@ public class PerspectivePreferenceSupplier {
         });
     }
     
+    /**
+     * Whether the local perspectives should be used.
+     * @return true if using local perspectives; false otherwise
+     */
     public Boolean getUseLocalPerspectives() {
         writablePreferences.addPreferenceChangeListener(event -> {
             System.out.println(event);
@@ -142,6 +150,10 @@ public class PerspectivePreferenceSupplier {
         return getBoolean(USE_LOCAL_PERSPECTIVES, false);
     }
     
+    /**
+     * Set whether the local perspectives should be used.
+     * @param useLocal if using local perspectives; false otherwise
+     */
     public void setUseLocalPerspectives(Boolean useLocal) {
         writablePreferences.put(USE_LOCAL_PERSPECTIVES, useLocal.toString());
         try {
@@ -151,6 +163,10 @@ public class PerspectivePreferenceSupplier {
         }
     }
     
+    /**
+     * Adds a listener to be notified when the preference to use local perspectives changes.
+     * @param listener the listener
+     */
     public void addUseLocalPerspectivesListener(Consumer<Boolean> listener) {
         writablePreferences.addPreferenceChangeListener(event -> {
             if (event.getKey().equals(USE_LOCAL_PERSPECTIVES)) {

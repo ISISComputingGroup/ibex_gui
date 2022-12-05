@@ -56,6 +56,13 @@ public class ObservableParameter extends Parameter {
 
 	private final Writable<String> valueSetter;
 	
+	/**
+	 * Creates a new observable parameter.
+	 * @param name an observable for the name
+	 * @param units an observable for the units
+	 * @param value an observable for the value
+	 * @param valueSetter a writable for setting the value
+	 */
 	public ObservableParameter(
 			ForwardingObservable<String> name,
 			ForwardingObservable<String> units,

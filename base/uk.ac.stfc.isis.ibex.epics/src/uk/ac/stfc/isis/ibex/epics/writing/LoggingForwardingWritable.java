@@ -24,11 +24,23 @@ import java.util.function.Function;
 
 import org.apache.logging.log4j.Logger;
 
+/**
+ * A writable which logs it's values to the logfile.
+ * 
+ * @param <T> the type of values to write
+ */
 public class LoggingForwardingWritable<T> extends TransformingWritable<T, T> {
 
 	private final Logger log;
 	private final String id;
 
+	/**
+	 * Creates a new logging writable.
+	 * @param log the log to write messages to
+	 * @param id an ID to be printed before each log message
+	 * @param destination the destination writable
+	 * @param converter a conversion function
+	 */
     public LoggingForwardingWritable(Logger log, String id, Writable<T> destination, Function<T, T> converter) {
         super(destination, converter);
         this.log = log;

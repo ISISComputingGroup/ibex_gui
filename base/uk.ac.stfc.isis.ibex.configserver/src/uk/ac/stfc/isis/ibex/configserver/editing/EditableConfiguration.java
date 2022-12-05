@@ -61,6 +61,8 @@ import uk.ac.stfc.isis.ibex.managermode.ManagerModeObserver;
  */
 public class EditableConfiguration extends ModelObject implements GroupNamesProvider, Closable {
 
+	/** The property change identifier associated with read-only groups. */
+	public static final String READ_ONLY_GROUPS = "readOnlyGroups";
     /** The property change identifier associated with editing groups. */
     public static final String EDITABLE_GROUPS = "editableGroups";
 
@@ -90,7 +92,9 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     private List<EditableIoc> configIocs = new ArrayList<>();
     /** The IOCs associated with the components. */
     private List<EditableIoc> componentIocs = new ArrayList<>();
-    /** The groups associated with the configuration. */
+    /** The read-only groups associated with the configuration. */
+    private List<Group> readOnlyGroups = new ArrayList<>();
+    /** The editable groups associated with the configuration. */
     private List<EditableGroup> editableGroups = new ArrayList<>();
     /** All of the blocks associated with the configuration (including those associated with components). */
     private List<EditableBlock> allBlocks = new ArrayList<>();
@@ -215,9 +219,11 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	}
 
 	for (Group group : config.getGroups()) {
-	    editableGroups.add(new EditableGroup(this, group));
+		if (!group.hasComponent()) {
+			editableGroups.add(new EditableGroup(this, group));
+		}
 	}
-
+	
 	editableGroups = new ArrayList<>(DisplayUtils.removeOtherGroup(editableGroups));
 
 	for (EditableIoc ioc : allIocs) {
@@ -260,12 +266,9 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 			.filter(Predicate.not(EditableBlock::inComponent))
 			.collect(Collectors.toList());
 	    
-	    var newGroups = editableGroups.stream()
-	    		.filter(Predicate.not(Group::hasComponent))
-	    		.map(g -> new EditableGroup(this, g))
-	    		.collect(Collectors.toSet());
+	    var newReadOnlyGroups = new ArrayList<Group>();
 	    
-	    IsisLog.getLogger(getClass()).info("New groups before = " + newGroups);
+	    IsisLog.getLogger(getClass()).info("Read only groups before = " + readOnlyGroups);
 	
 	    for (Configuration comp : editableComponents.getSelected()) {
 	        comp.getIocs().stream()
@@ -281,17 +284,16 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	            .forEach(newBlocks::add);
 	        
   	        comp.getGroups().stream()
+  	        	.filter(g -> DisplayUtils.filterNoneGroup(g.getName()))
 	            .map(g -> new Group(g.getName(), g.getBlocks(), comp.getName()))
-  	            .map(g -> new EditableGroup(this, g))
-  	            .forEach(newGroups::add);
-
+  	            .forEach(newReadOnlyGroups::add);
 	    }
 	    
-	    IsisLog.getLogger(getClass()).info("New groups after = " + newGroups);
-	
+	    IsisLog.getLogger(getClass()).info("New read only groups = " + newReadOnlyGroups);
+	    
         firePropertyChange("iocs", componentIocs, componentIocs = newCompIocs);
         firePropertyChange("blocks", allBlocks, allBlocks = newBlocks);
-        firePropertyChange(EDITABLE_GROUPS, editableGroups, editableGroups = new ArrayList<>(DisplayUtils.removeOtherGroup(newGroups)));
+        firePropertyChange(READ_ONLY_GROUPS, readOnlyGroups, readOnlyGroups = newReadOnlyGroups);
     }
 
     /**
@@ -554,8 +556,16 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     			.collect(Collectors.toUnmodifiableSet());
     	
 	    return allBlocks.stream()
+	    		.filter(b -> !b.inComponent())
 	    		.filter(b -> !blockNamesInGroups.contains(b.getName()))
 	    		.collect(Collectors.toList());
+    }
+    
+    /**
+     * @return The read-only groups associated with the configuration
+     */
+    public Collection<Group> getReadOnlyGroups() {
+    	return new ArrayList<>(readOnlyGroups);
     }
 
     /**

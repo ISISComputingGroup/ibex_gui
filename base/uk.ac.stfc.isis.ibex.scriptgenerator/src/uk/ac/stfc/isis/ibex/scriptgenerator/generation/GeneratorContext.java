@@ -26,6 +26,12 @@ public class GeneratorContext extends ModelObject {
 	private Map<GeneratedLanguage, AbstractGenerator> generatorStrategies = new HashMap<>();
 	
 	
+	private void addListenerHelper(String property, AbstractGenerator generator) {
+	    generator.addPropertyChangeListener(property, evt -> {
+	    	firePropertyChange(property, evt.getOldValue(), evt.getNewValue());
+	    });
+	}
+	
 	/**
 	 * Add a generator to use (will replace the languages generator with a new one if it matches).
 	 * Listen to changes in the generators validity checking and script generation.
@@ -34,18 +40,11 @@ public class GeneratorContext extends ModelObject {
 	 * @param generator The generator to use.
 	 */
 	public void putGenerator(GeneratedLanguage generatedLanguage, AbstractGenerator generator) {
-		generator.addPropertyChangeListener(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, evt -> {
-			firePropertyChange(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, evt.getOldValue(), evt.getNewValue());
-		});
-		generator.addPropertyChangeListener(ScriptGeneratorProperties.PARAM_VALIDITY_PROPERTY, evt -> {
-			firePropertyChange(ScriptGeneratorProperties.PARAM_VALIDITY_PROPERTY, evt.getOldValue(), evt.getNewValue());
-		});
-        generator.addPropertyChangeListener(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, evt -> {
-            firePropertyChange(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, evt.getOldValue(), evt.getNewValue());
-        });
-		generator.addPropertyChangeListener(ScriptGeneratorProperties.GENERATED_SCRIPT_PROPERTY, evt -> {
-			firePropertyChange(ScriptGeneratorProperties.GENERATED_SCRIPT_PROPERTY, null, evt.getNewValue());
-		});
+		addListenerHelper(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, generator);
+		addListenerHelper(ScriptGeneratorProperties.PARAM_VALIDITY_PROPERTY, generator);
+		addListenerHelper(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, generator);
+		addListenerHelper(ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY, generator);
+		addListenerHelper(ScriptGeneratorProperties.GENERATED_SCRIPT_PROPERTY, generator);
 		generatorStrategies.put(generatedLanguage, generator);
 	}
 	
@@ -173,6 +172,38 @@ public class GeneratorContext extends ModelObject {
     public void refreshTimeEstimation(List<ScriptGeneratorAction> actions, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams)
             throws UnsupportedLanguageException, InterruptedException, ExecutionException {
         refreshTimeEstimation(actions, scriptDefinition, GeneratedLanguage.PYTHON, globalParams);
+    }
+    
+    /**
+     * Estimate the custom defined values related to the actions.
+     * 
+     * @param actions The contents of the script generator
+     * @param scriptDefinition The script definition
+     * @param generatedLanguage The language that the script will be generated in.
+     * @param globalParams The global parameters to refresh the custom estimation with.
+     * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
+     * @throws ExecutionException A failure to execute the call to generate.
+     * @throws InterruptedException The call to generate was interrupted.
+     */
+    public void refreshCustomEstimation(List<ScriptGeneratorAction> actions, ScriptDefinitionWrapper scriptDefinition, GeneratedLanguage generatedLanguage, List<String> globalParams)
+            throws UnsupportedLanguageException, InterruptedException, ExecutionException {
+        AbstractGenerator generator = getGenerator(generatedLanguage);
+        generator.refreshCustomEstimation(actions, scriptDefinition, globalParams);
+    }
+
+    /**
+     * Estimate the custom defined values related to the actions using the default language generator (Python).
+     * 
+     * @param actions The contents of the script generator
+     * @param scriptDefinition The script definition
+     * @param globalParams The global parameters to refresh the custom estimation with.
+     * @throws UnsupportedLanguageException Thrown if the language to generate the script in is not supported.
+     * @throws ExecutionException A failure to execute the call to generate.
+     * @throws InterruptedException The call to generate was interrupted.
+     */
+    public void refreshCustomEstimation(List<ScriptGeneratorAction> actions, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams)
+            throws UnsupportedLanguageException, InterruptedException, ExecutionException {
+        refreshCustomEstimation(actions, scriptDefinition, GeneratedLanguage.PYTHON, globalParams);
     }
 	
 	/**

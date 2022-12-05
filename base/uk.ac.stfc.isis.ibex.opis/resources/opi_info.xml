@@ -1,6 +1,24 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
 <descriptions>
   <opis>
+	<entry>
+      <key>Aeroflex</key>
+      <value>
+        <type>FUNCTION_GENERATOR</type>
+        <path>aeroflex.opi</path>
+        <description>The OPI for the Aeroflex signal generator.</description>
+        <macros>
+          <macro>
+            <name>AERO</name>
+            <description>The Aeroflex PV prefix (e.g. AEROFLEX_01).</description>
+            <default>AEROFLEX_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Signal Generators</category>
+        </categories>
+      </value>
+    </entry>
     <entry>
       <key>Motion Set Point</key>
       <value>
@@ -527,6 +545,29 @@
       </value>
     </entry>
     <entry>
+      <key>Eurotherm Single Temp Sensor</key>
+      <value>
+        <type>EUROTHERM</type>
+        <path>Eurotherm_single_temp.opi</path>
+        <description>The OPI for the Eurotherm crate connected to a single Eurotherm temperature controller.</description>
+        <macros>
+          <macro>
+            <name>EURO</name>
+            <description>The Eurotherm PV prefix (e.g. EUROTHRM_01).</description>
+            <default>EUROTHRM_01</default>
+          </macro>
+          <macro>
+            <name>SENSOR</name>
+            <description>The temperature sensor number (e.g. 1).</description>
+            <default>1</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Mercury iTC</key>
       <value>
         <type>MERCURY</type>
@@ -797,6 +838,35 @@
         </categories>
       </value>
     </entry>
+    
+    <entry>
+      <key>Caen HV (MuSR)</key>
+      <value>
+        <type>CAEN</type>
+        <path>HV/HVMonitorSummaryDisplay_MuSR.opi</path>
+        <description>Summary display for Caens - MuSR. No properties required.</description>
+        <macros>
+          <macro>
+            <name>MAX_CRATES</name>
+            <description>The maximum number of crates to display (default: 2, max: 15)</description>
+            <default/>
+          </macro>
+          <macro>
+            <name>MAX_SLOTS</name>
+            <description>The maximum number of slots to display per crate (default: 5)</description>
+            <default/>
+          </macro>
+          <macro>
+            <name>MAX_CHANNELS</name>
+            <description>The maximum number of channels per slot per crate to display (default: 25)</description>
+            <default/>
+          </macro>
+        </macros>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+      </value>
+    </entry>
     <entry>
       <key>Cryo valve</key>
       <value>
@@ -1039,6 +1109,24 @@
           <macro>
             <name>M</name>
             <description>The galil number to view. E.g. the galil at MOT:MTR0304 would be 03</description>
+            <default>01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Galil General I/O</key>
+      <value>
+        <type>DEBUG</type>
+        <path>galil/general_io_standalone.opi</path>
+        <description>The OPI giving a view of the general inputs/outputs on a galil controller.</description>
+        <macros>
+          <macro>
+            <name>M</name>
+            <description>The galil prefix. E.g. the galil at MOT:MTR0304 would be 03</description>
             <default>01</default>
           </macro>
         </macros>
@@ -1504,6 +1592,18 @@
       </value>
     </entry>
     <entry>
+      <key>SANDALS jaw set</key>
+      <value>
+        <type>JAWS</type>
+        <path>jaws/jaws_managers/sandals_manager.opi</path>
+        <description>The OPI for the SANDALS jaw set. No properties required.</description>
+        <macros/>
+        <categories>
+          <category>Jaws and slits</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Muon Front End Overview</key>
       <value>
         <type>MUON_FRONT_END</type>
@@ -1897,7 +1997,13 @@
         <type>STRESS_RIG</type>
         <path>stress_rig/stress_rig.opi</path>
         <description>The OPI for the Instron stress rig. No properties required.</description>
-        <macros/>
+        <macros>
+          <macro>
+            <name>INSTRON</name>
+            <description>The instron PV prefix and instrument name (e.g. IN:ENGINX:INSTRON_01).</description>
+            <default>IN:ENGINX:INSTRON_01</default>
+          </macro>
+        </macros>
         <categories>
           <category>Loading rigs</category>
         </categories>
@@ -2836,7 +2942,7 @@
         <description>Technix PSU</description>
         <macros>
           <macro>
-            <name>IOC_NAME</name> 
+            <name>IOC_NAME</name>
             <description>The technix PV prefix (e.g. TECHNIX_01)</description>
             <default>TECHNIX_01</default>
           </macro>
@@ -2863,7 +2969,8 @@
       <key>DG645</key>
       <value>
         <categories>
-        	<category>Delay Generators</category></categories>
+          <category>Delay Generators</category>
+        </categories>
         <type>DELAY_GENERATORS</type>
         <path>DG645/dg645.opi</path>
         <description>The OPI for the DG645</description>
@@ -2879,7 +2986,7 @@
     <entry>
       <key>Biologic SP240/SP300 Potentiostat</key>
       <value>
-        <categories />
+        <categories/>
         <type>UNKNOWN</type>
         <path>biologic/SP300.opi</path>
         <description>The OPI for the Biologic SP240/SP300</description>
@@ -2895,7 +3002,7 @@
     <entry>
       <key>WEBCAM</key>
       <value>
-        <categories />
+        <categories/>
         <type>UNKNOWN</type>
         <path>webcam/webcam.opi</path>
         <description>The OPI for Webcams</description>
@@ -2908,7 +3015,7 @@
         </macros>
       </value>
     </entry>
-	<entry>
+    <entry>
       <key>GP2 Detector</key>
       <value>
         <type>DAE</type>
@@ -2920,7 +3027,7 @@
         </categories>
       </value>
     </entry>
-	<entry>
+    <entry>
       <key>Nuclear Instruments Digitiser</key>
       <value>
         <type>DAE</type>
@@ -2950,6 +3057,22 @@
         </categories>
       </value>
     </entry>
+    <entry>
+      <key>TJMPAP</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>tjmpap.opi</path>
+        <description>The OPI for the TJMPAP</description>
+        <macros>
+          <macro>
+            <name>TJMPAP</name>
+            <description>The TJMPAP PV prefix (e.g. TJMPAP_01)</description>
+            <default>TJMPAP_01</default>
+          </macro>
+        </macros>
+      </value>
+  </entry>
 	<entry>
       <key>Rules tests (developer)</key>
       <value>

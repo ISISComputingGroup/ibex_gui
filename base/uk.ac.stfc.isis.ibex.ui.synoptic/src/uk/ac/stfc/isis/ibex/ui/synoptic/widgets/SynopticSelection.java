@@ -45,6 +45,12 @@ public class SynopticSelection extends Composite {
 	
     private Button refreshButton;
 
+    /**
+     * Create this view.
+     * @param parent the parent composite
+     * @param style the SWT style flags
+     * @param model the synoptic model
+     */
 	public SynopticSelection(Composite parent, int style, final SynopticSelectionViewModel model) {
 		super(parent, style);
 		GridLayout gridLayout = new GridLayout(3, false);

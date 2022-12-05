@@ -35,6 +35,11 @@ public abstract class CellDecorator<TRow> {
      */
 	public abstract void applyDecoration(ViewerCell cell);
 	
+	/**
+	 * Gets the row corresponding to a cell.
+	 * @param cell the cell
+	 * @return the row
+	 */
 	@SuppressWarnings("unchecked")
 	protected TRow getRow(ViewerCell cell) {
 		return (TRow) cell.getElement();

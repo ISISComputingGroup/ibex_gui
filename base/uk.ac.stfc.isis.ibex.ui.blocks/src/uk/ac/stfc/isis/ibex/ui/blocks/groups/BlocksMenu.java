@@ -36,15 +36,12 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Item;
 import org.eclipse.ui.handlers.IHandlerService;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.views.PerspectiveSwitcherView;
-import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.ui.blocks.presentation.Presenter;

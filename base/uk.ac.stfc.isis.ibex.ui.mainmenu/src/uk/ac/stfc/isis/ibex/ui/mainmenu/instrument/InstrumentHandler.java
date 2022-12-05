@@ -36,6 +36,10 @@ import uk.ac.stfc.isis.ibex.ui.scripting.Consoles;
  */
 public class InstrumentHandler {
 
+	/**
+	 * Handles the execution of this command.
+	 * @return null, always.
+	 */
     @Execute
     public Object execute() {
         InstrumentInfo selected = getUserSelectedInstrument();

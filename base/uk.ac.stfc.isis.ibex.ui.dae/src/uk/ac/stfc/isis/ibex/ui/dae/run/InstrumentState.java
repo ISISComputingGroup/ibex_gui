@@ -23,8 +23,15 @@ import uk.ac.stfc.isis.ibex.dae.DaeRunState;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.TransformingObservable;
 
+/**
+ * A transforming observable describing the instrument state (RUNNING/SETUP/PAUSED etc).
+ */
 public class InstrumentState extends TransformingObservable<DaeRunState, String> {
 	
+	/**
+	 * Creates a new observable.
+	 * @param runStatus the source observable
+	 */
 	public InstrumentState(ForwardingObservable<DaeRunState> runStatus) {
 		setSource(runStatus);
 	}

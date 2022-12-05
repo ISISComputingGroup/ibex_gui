@@ -1179,7 +1179,28 @@ $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
       <pv_name>$(M).HOMR</pv_name>
       <pv_value />
-      <rules />
+      <rules>
+        <rule name="Disable at Limit" prop_id="enabled" out_exp="false">
+          <exp bool_exp="pv0!=0">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(M).LLS</pv>
+        </rule>
+        <rule name="Tooltip at Limit" prop_id="tooltip" out_exp="false">
+          <exp bool_exp="pv0!=0">
+            <value>Cannot reverse home &#xD;
+while at low limit.</value>
+          </exp>
+          <pv trig="true">$(M).LLS</pv>
+        </rule>
+        <rule name="Disableifhomf" prop_id="enabled" out_exp="false">
+          <exp bool_exp="pv1 == 1">
+            <value>false</value>
+          </exp>
+          <pv trig="true">=1</pv>
+          <pv trig="true">$(M).HOMF</pv>
+        </rule>
+      </rules>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -1228,7 +1249,28 @@ $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
       <pv_name>$(M).HOMF</pv_name>
       <pv_value />
-      <rules />
+      <rules>
+        <rule name="Disable at Limit" prop_id="enabled" out_exp="false">
+          <exp bool_exp="pv0!=0">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(M).HLS</pv>
+        </rule>
+        <rule name="Tooltip at Limit" prop_id="tooltip" out_exp="false">
+          <exp bool_exp="pv0!=0">
+            <value>Cannot forward home &#xD;
+at high Limit.</value>
+          </exp>
+          <pv trig="true">$(M).HLS</pv>
+        </rule>
+        <rule name="Disableifhomr" prop_id="enabled" out_exp="false">
+          <exp bool_exp="pv1 == 1">
+            <value>false</value>
+          </exp>
+          <pv trig="true">=1</pv>
+          <pv trig="true">$(M).HOMR</pv>
+        </rule>
+      </rules>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -1246,120 +1288,6 @@ $(pv_value)</tooltip>
       <wuid>45daa9ef:164b19eb78b:-7aa4</wuid>
       <x>255</x>
       <y>160</y>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-      <actions hook="false" hook_all="false">
-        <action type="WRITE_PV">
-          <pv_name>$(pv_name)</pv_name>
-          <value>0</value>
-          <timeout>10</timeout>
-          <confirm_message></confirm_message>
-          <description></description>
-        </action>
-        <action type="WRITE_PV">
-          <pv_name>$(pv_name)</pv_name>
-          <value>1</value>
-          <timeout>10</timeout>
-          <confirm_message></confirm_message>
-          <description></description>
-        </action>
-      </actions>
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <border_style>0</border_style>
-      <border_width>1</border_width>
-      <enabled>true</enabled>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
-      </font>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <height>20</height>
-      <image></image>
-      <name>JogReverseButton</name>
-      <push_action_index>1</push_action_index>
-      <pv_name>$(M).JOGR</pv_name>
-      <pv_value />
-      <release_action_index>0</release_action_index>
-      <rules />
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <style>1</style>
-      <text>&lt;</text>
-      <toggle_button>true</toggle_button>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <visible>true</visible>
-      <widget_type>Action Button</widget_type>
-      <width>20</width>
-      <wuid>45daa9ef:164b19eb78b:-7a92</wuid>
-      <x>233</x>
-      <y>128</y>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-      <actions hook="false" hook_all="false">
-        <action type="WRITE_PV">
-          <pv_name>$(pv_name)</pv_name>
-          <value>0</value>
-          <timeout>10</timeout>
-          <confirm_message></confirm_message>
-          <description></description>
-        </action>
-        <action type="WRITE_PV">
-          <pv_name>$(pv_name)</pv_name>
-          <value>1</value>
-          <timeout>10</timeout>
-          <confirm_message></confirm_message>
-          <description></description>
-        </action>
-      </actions>
-      <border_alarm_sensitive>false</border_alarm_sensitive>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <border_style>0</border_style>
-      <border_width>1</border_width>
-      <enabled>true</enabled>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
-      </font>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <height>20</height>
-      <image></image>
-      <name>JogForwardsButton</name>
-      <push_action_index>1</push_action_index>
-      <pv_name>$(M).JOGF</pv_name>
-      <pv_value />
-      <release_action_index>0</release_action_index>
-      <rules />
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <style>1</style>
-      <text>&gt;</text>
-      <toggle_button>true</toggle_button>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <visible>true</visible>
-      <widget_type>Action Button</widget_type>
-      <width>20</width>
-      <wuid>45daa9ef:164b19eb78b:-7a80</wuid>
-      <x>255</x>
-      <y>128</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -1399,7 +1327,7 @@ $(pv_value)</tooltip>
       <width>31</width>
       <wrap_words>true</wrap_words>
       <wuid>45daa9ef:164b19eb78b:-7a5b</wuid>
-      <x>185</x>
+      <x>168</x>
       <y>128</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -1887,7 +1815,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
         <action type="WRITE_PV">
-          <pv_name>$(P)$(MM).STOP</pv_name>
+          <pv_name>$(M).STOP</pv_name>
           <value>1</value>
           <timeout>10</timeout>
           <confirm_message></confirm_message>
@@ -2207,6 +2135,250 @@ $(pv_value)</tooltip>
       <wuid>11bd0e52:17641f744c9:-7e9a</wuid>
       <x>0</x>
       <y>216</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>0</value>
+          <timeout>10</timeout>
+          <confirm_message></confirm_message>
+          <description></description>
+        </action>
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>1</value>
+          <timeout>10</timeout>
+          <confirm_message></confirm_message>
+          <description></description>
+        </action>
+      </actions>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+      </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <height>20</height>
+      <image></image>
+      <name>JogReverseButton</name>
+      <push_action_index>1</push_action_index>
+      <pv_name>$(P)$(MM).JOGR</pv_name>
+      <pv_value />
+      <release_action_index>0</release_action_index>
+      <rules>
+        <rule name="Rule" prop_id="enabled" out_exp="false">
+          <exp bool_exp="pv0 == 1">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(P)$(MM).JOGF</pv>
+          <pv trig="true">=1</pv>
+        </rule>
+      </rules>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <style>1</style>
+      <text>&lt;</text>
+      <toggle_button>true</toggle_button>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <visible>true</visible>
+      <widget_type>Action Button</widget_type>
+      <width>20</width>
+      <wuid>4b055715:184ae204269:-7da1</wuid>
+      <x>215</x>
+      <y>128</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>0</value>
+          <timeout>10</timeout>
+          <confirm_message></confirm_message>
+          <description></description>
+        </action>
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>1</value>
+          <timeout>10</timeout>
+          <confirm_message></confirm_message>
+          <description></description>
+        </action>
+      </actions>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+      </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <height>20</height>
+      <image></image>
+      <name>JogForwardsButton</name>
+      <push_action_index>1</push_action_index>
+      <pv_name>$(P)$(MM).JOGF</pv_name>
+      <pv_value />
+      <release_action_index>0</release_action_index>
+      <rules>
+        <rule name="Rule" prop_id="enabled" out_exp="false">
+          <exp bool_exp="pv0 == 1">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(P)$(MM).JOGR</pv>
+          <pv trig="true">=1</pv>
+        </rule>
+      </rules>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <style>1</style>
+      <text>&gt;</text>
+      <toggle_button>true</toggle_button>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <visible>true</visible>
+      <widget_type>Action Button</widget_type>
+      <width>20</width>
+      <wuid>4b055715:184ae204269:-7da0</wuid>
+      <x>237</x>
+      <y>128</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <alarm_pulsing>false</alarm_pulsing>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <bit>-1</bit>
+      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <bulb_border>3</bulb_border>
+      <bulb_border_color>
+        <color red="150" green="150" blue="150" />
+      </bulb_border_color>
+      <data_type>0</data_type>
+      <effect_3d>true</effect_3d>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <height>25</height>
+      <name>JogRLED</name>
+      <off_color>
+        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
+      </off_color>
+      <off_label>OFF</off_label>
+      <on_color>
+        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+      </on_color>
+      <on_label>ON</on_label>
+      <pv_name>$(P)$(MM).JOGR</pv_name>
+      <pv_value />
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>true</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_boolean_label>false</show_boolean_label>
+      <square_led>false</square_led>
+      <tooltip>Negative jog active</tooltip>
+      <visible>true</visible>
+      <widget_type>LED</widget_type>
+      <width>25</width>
+      <wuid>4b055715:184ae204269:-7d9f</wuid>
+      <x>191</x>
+      <y>125</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <alarm_pulsing>false</alarm_pulsing>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <bit>-1</bit>
+      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <bulb_border>3</bulb_border>
+      <bulb_border_color>
+        <color red="150" green="150" blue="150" />
+      </bulb_border_color>
+      <data_type>0</data_type>
+      <effect_3d>true</effect_3d>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <height>25</height>
+      <name>AtHomeLED</name>
+      <off_color>
+        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0" />
+      </off_color>
+      <off_label>OFF</off_label>
+      <on_color>
+        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+      </on_color>
+      <on_label>ON</on_label>
+      <pv_name>$(P)$(MM).JOGF</pv_name>
+      <pv_value />
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>true</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_boolean_label>false</show_boolean_label>
+      <square_led>false</square_led>
+      <tooltip>Positive jog active</tooltip>
+      <visible>true</visible>
+      <widget_type>LED</widget_type>
+      <width>25</width>
+      <wuid>4b055715:184ae204269:-7d9e</wuid>
+      <x>258</x>
+      <y>125</y>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
@@ -5332,7 +5504,7 @@ $(pv_value)</tooltip>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
-    <height>378</height>
+    <height>415</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -6665,6 +6837,99 @@ $(pv_value)</tooltip>
       <wuid>45daa9ef:164b19eb78b:-64b1</wuid>
       <x>140</x>
       <y>21</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <auto_size>false</auto_size>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <height>20</height>
+      <horizontal_alignment>0</horizontal_alignment>
+      <name>Label_20</name>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_scrollbar>false</show_scrollbar>
+      <text>IOC:</text>
+      <tooltip></tooltip>
+      <transparent>false</transparent>
+      <vertical_alignment>1</vertical_alignment>
+      <visible>true</visible>
+      <widget_type>Label</widget_type>
+      <width>65</width>
+      <wrap_words>true</wrap_words>
+      <wuid>23c53e07:183d636a910:-7ebe</wuid>
+      <x>0</x>
+      <y>348</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <alarm_pulsing>false</alarm_pulsing>
+      <auto_size>false</auto_size>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
+      </font>
+      <forecolor_alarm_sensitive>true</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <format_type>0</format_type>
+      <height>20</height>
+      <horizontal_alignment>0</horizontal_alignment>
+      <name>Text Update_10</name>
+      <precision>0</precision>
+      <precision_from_pv>true</precision_from_pv>
+      <pv_name>$(M)_IOCNAME</pv_name>
+      <pv_value />
+      <rotation_angle>0.0</rotation_angle>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_units>false</show_units>
+      <text>######</text>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <transparent>true</transparent>
+      <vertical_alignment>1</vertical_alignment>
+      <visible>true</visible>
+      <widget_type>Text Update</widget_type>
+      <width>92</width>
+      <wrap_words>false</wrap_words>
+      <wuid>23c53e07:183d636a910:-7ebd</wuid>
+      <x>142</x>
+      <y>348</y>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">

@@ -56,6 +56,7 @@ import uk.ac.stfc.isis.ibex.journal.JournalSort;
 import uk.ac.stfc.isis.ibex.journal.SearchNumber;
 import uk.ac.stfc.isis.ibex.journal.SearchString;
 import uk.ac.stfc.isis.ibex.journal.SearchTime;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.journalviewer.models.JournalViewModel;
 import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
@@ -69,7 +70,9 @@ import uk.ac.stfc.isis.ibex.validators.NumbersOnlyListener;
 @SuppressWarnings("checkstyle:magicnumber")
 public class JournalViewerView {
 
-    /**
+    private static final String JOURNAL_VIEWER_UNAVAILABLE = "The journal viewer is not available on this platform.";
+
+	/**
      * The view ID.
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.journalviewer.JournalViewerView"; //$NON-NLS-1$
@@ -108,6 +111,11 @@ public class JournalViewerView {
      */
     @PostConstruct
     public void createPartControl(final Composite parent) {
+    	if (Utils.SHOULD_HIDE_USER_INFORMATION) {
+    		var label = new Label(parent, SWT.NONE);
+    		label.setText(JOURNAL_VIEWER_UNAVAILABLE);
+    		return;
+    	}
         parent.setLayout(new GridLayout(1, false));
         GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true);
         parent.setLayoutData(gd);

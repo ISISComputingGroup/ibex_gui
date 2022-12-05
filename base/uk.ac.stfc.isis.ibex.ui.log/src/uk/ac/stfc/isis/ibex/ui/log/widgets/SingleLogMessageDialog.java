@@ -41,6 +41,9 @@ import org.eclipse.swt.widgets.Text;
 import uk.ac.stfc.isis.ibex.log.message.LogMessage;
 import uk.ac.stfc.isis.ibex.log.message.LogMessageFields;
 
+/**
+ * Dialog displaying details of a single IOC log message.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class SingleLogMessageDialog extends Dialog {
 	/**
@@ -54,21 +57,37 @@ public class SingleLogMessageDialog extends Dialog {
 
 	private LogMessage message;
 
+	/**
+	 * Create the dialog.
+	 * @param parent the parent shell
+	 */
 	public SingleLogMessageDialog(Shell parent) {
 		// Pass the default styles here
 		this(parent, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
 	}
 
+	/**
+	 * Create the dialog, with a specified style.
+	 * @param parent the parent shell
+	 * @param style the SWT style flags
+	 */
 	public SingleLogMessageDialog(Shell parent, int style) {
 		// Let users override the default styles
 		super(parent, style);
 		setText("Log Message Detail");
 	}
 
+	/**
+	 * Sets the log message displayed by this dialog.
+	 * @param message the log message
+	 */
 	public void setLogMessage(LogMessage message) {
 		this.message = message;
 	}
 
+	/**
+	 * Opens the dialog.
+	 */
 	public void open() {
 		// Create the dialog window
 		Shell shell = new Shell(getParent(), getStyle());

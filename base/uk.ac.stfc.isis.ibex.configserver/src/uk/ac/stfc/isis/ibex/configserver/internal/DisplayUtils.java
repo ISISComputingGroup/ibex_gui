@@ -24,6 +24,9 @@ import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
 
+/**
+ * Utility methods for displaying groups.
+ */
 public final class DisplayUtils {
 	
 	private static final String NONE = "none"; 
@@ -51,5 +54,14 @@ public final class DisplayUtils {
 		return groups.stream()
 				.filter(g -> !g.getName().equals(OTHER))
 				.collect(Collectors.toList());
+	}
+	
+	/**
+	 * Filter function for the NONE group.
+	 * @param name The name of the group.
+	 * @return True if the group is not named NONE.
+	 */
+	public static boolean filterNoneGroup(String name) {
+		return !name.toLowerCase().equals(NONE);
 	}
 }

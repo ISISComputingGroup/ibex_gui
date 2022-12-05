@@ -42,7 +42,14 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
  * 
  */
 public abstract class SynopticEditorHandler {
+	/**
+	 * The plugin ID.
+	 */
 	protected static final String PLUGIN = "uk.ac.stfc.isis.ibex.ui.synoptic";
+	
+	/**
+	 * The class URI.
+	 */
 	protected static final String CLASS_URI = "bundleclass://uk.ac.stfc.isis.ibex.ui.synoptic.editor/uk.ac.stfc.isis.ibex.ui.synoptic.editor.commands.EditSynopticHandler";
 
     /** Synoptic model. */

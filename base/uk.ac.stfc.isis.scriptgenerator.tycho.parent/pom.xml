@@ -70,8 +70,11 @@
 				<artifactId>tycho-compiler-plugin</artifactId>
 				<version>${tycho.version}</version>
 				<configuration>
-					<compilerArgument>-err:-forbidden</compilerArgument>
 					<excludeResources>${basedir}/../uk.ac.stfc.isis.ibex.preferences/resources</excludeResources>
+					<failOnWarning>true</failOnWarning>
+					<showWarnings>true</showWarnings>
+					<useProjectSettings>false</useProjectSettings>
+					<compilerArgument>-warn:-warningToken</compilerArgument>
 				</configuration>
 			</plugin>
 
@@ -82,6 +85,7 @@
 				<version>3.2.0</version>
 				<executions>
 					<execution>
+                        <id>verify</id>
 						<phase>verify</phase>
 						<goals>
 							<goal>check</goal>
@@ -92,11 +96,13 @@
 					<sourceDirectories>
 						<sourceDirectory>src</sourceDirectory>
 					</sourceDirectories>
-					<!-- <consoleOutput>true</consoleOutput> -->
+					<consoleOutput>true</consoleOutput>
 					<configLocation>checkstyle.xml</configLocation>
                     <suppressionsLocation>suppressions.xml</suppressionsLocation>
-					<failOnViolation>false</failOnViolation>
-					<failsOnError>false</failsOnError>
+                    <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
+                    <violationSeverity>warning</violationSeverity>
+					<failOnViolation>true</failOnViolation>
+					<failsOnError>true</failsOnError>
 					<linkXRef>true</linkXRef>
 				</configuration>
 			</plugin>

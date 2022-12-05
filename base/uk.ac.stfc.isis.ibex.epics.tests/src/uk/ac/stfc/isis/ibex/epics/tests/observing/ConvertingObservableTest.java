@@ -26,9 +26,10 @@ import java.util.function.Function;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.observing.ConvertingObservable;
@@ -36,6 +37,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 
 // A lot of unchecked type conversions for mocking purposes
 @SuppressWarnings({ "unchecked", "checkstyle:methodname" })
+@RunWith(MockitoJUnitRunner.class)
 public class ConvertingObservableTest {
 	
 	private static final Integer INT_THROWS_EXCEPTION_VALUE = 666;
@@ -55,8 +57,6 @@ public class ConvertingObservableTest {
 	
 	@Before
 	public void setUp() throws ConversionException {
-		// This is to initialise the exceptionCaptor
-		MockitoAnnotations.initMocks(this);
 		
 		// Arrange		
         mockObserver = mock(Observer.class);
@@ -70,9 +70,6 @@ public class ConvertingObservableTest {
 		
         convertObservable = new ConvertingObservable<>(testObservable, mockConverter);
 		convertObservable.subscribe(mockObserver);
-		
-		Function<Integer, String> mockConverterWithException = mock(Function.class);
-		when(mockConverterWithException.apply(TestHelpers.INT_VALUE)).thenThrow(new ConversionException(EXCEPTION_MESSAGE));
 	}
 	
 	@Test

@@ -149,7 +149,7 @@ public class ScriptGeneratorMockBuilder {
 	 * Arrange nicos model to fail to send a script.
 	 */
 	public void arrangeNicosSendScriptFail() {
-		Mockito.doAnswer(new Answer() {
+		Mockito.doAnswer(new Answer<Object>() {
 
 			@Override
 			public Object answer(InvocationOnMock invocation) throws Throwable {

@@ -33,7 +33,6 @@ import org.eclipse.e4.core.contexts.Active;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.modeling.IPartListener;
-import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -244,7 +243,7 @@ public class DetectorDiagnosticsPanel {
         bindingContext.bindValue(WidgetProperties.enabled().observe(spinnerMaximumFrames),
                 BeanProperties.value("diagnosticsEnabled").observe(model));
 
-        bindingContext.bindValue(SWTObservables.observeText(errorLabel),
+        bindingContext.bindValue(WidgetProperties.text().observe(errorLabel),
                 BeanProperties.value("writeToEnableDiagnosticError").observe(model));
 
     }

@@ -37,24 +37,43 @@ public class RunControlActivator extends Closer implements BundleActivator {
 	private final RunControlVariables variables;
 	private final RunControlServer server;
 	
+	/**
+	 * Creates this plugin.
+	 */
 	public RunControlActivator() {
 		instance = this;
         variables = new RunControlVariables();
 		server = registerForClose(new RunControlServer(variables));
 	}
 
+	/**
+	 * Gets the eclipse bundle context.
+	 * @return the context
+	 */
 	static BundleContext getContext() {
 		return context;
 	}
 	
+	/**
+	 * Gets the singleton instance of this class.
+	 * @return the instance
+	 */
 	public static RunControlActivator getInstance() {
 		return instance;
 	}
 	
+	/**
+	 * Gets the singleton instance of the runcontrol variables.
+	 * @return the instance
+	 */
 	public RunControlVariables getVariables() {
 		return variables;
 	}
 	
+	/**
+	 * Gets the singleton instance of the runcontrol server.
+	 * @return the instance
+	 */
 	public RunControlServer getServer() {
 		return server;
 	}

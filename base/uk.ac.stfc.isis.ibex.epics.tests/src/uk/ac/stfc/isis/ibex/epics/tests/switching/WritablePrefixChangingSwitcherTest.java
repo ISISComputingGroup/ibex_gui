@@ -36,7 +36,6 @@ import uk.ac.stfc.isis.ibex.epics.switching.SwitchableWritable;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.WritablePrefixChangingSwitcher;
 import uk.ac.stfc.isis.ibex.epics.writing.BaseWritable;
-import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 
@@ -103,7 +102,7 @@ public class WritablePrefixChangingSwitcherTest {
     @Test
     public void writable_factory_registers_pv_with_switcher() {
         // Act
-        Writable<String> switchable = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
+    	SwitchableWritable<String> switchable = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
 
         // Assert
         assertTrue(writablePrefixChangingSwitcher.getSwitchables().contains(switchable));
@@ -119,10 +118,10 @@ public class WritablePrefixChangingSwitcherTest {
         verify(writable, times(1)).close();
     }
 
-    @Test
+	@Test
     public void switching_does_not_unregister_writable_from_switcher() {
         // Act
-        Writable<String> observable = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
+        SwitchableWritable<String> observable = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
         writablePrefixChangingSwitcher.switchInstrument(instrumentInfo);
 
         // Assert
@@ -132,8 +131,8 @@ public class WritablePrefixChangingSwitcherTest {
     @Test
     public void switching_does_not_unregister_multiple_observables_from_switcher() {
         // Act
-        Writable<String> observable = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
-        Writable<String> observable2 = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS_2);
+    	SwitchableWritable<String> observable = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
+    	SwitchableWritable<String> observable2 = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS_2);
         writablePrefixChangingSwitcher.switchInstrument(instrumentInfo);
 
         // Assert
@@ -145,8 +144,7 @@ public class WritablePrefixChangingSwitcherTest {
     public void switching_instrument_creates_new_observable_for_new_pv() {
         // Act
         writablePrefixChangingSwitcher.switchInstrument(instrumentInfo);
-        SwitchableWritable<String> switchableWritable = (SwitchableWritable<String>) wrtFactory
-                .getSwitchableWritable(channelType, PV_ADDRESS);
+        SwitchableWritable<String> switchableWritable = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
         writablePrefixChangingSwitcher.switchInstrument(instrumentInfo2);
 
         // Assert
@@ -156,8 +154,7 @@ public class WritablePrefixChangingSwitcherTest {
     @Test
     public void switching_twice_correctly_switches_observable_twice() {
         // Act
-        SwitchableWritable<String> switchableWritable = (SwitchableWritable<String>) wrtFactory
-                .getSwitchableWritable(channelType, PV_ADDRESS);
+        SwitchableWritable<String> switchableWritable = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
         writablePrefixChangingSwitcher.switchInstrument(instrumentInfo2);
         writablePrefixChangingSwitcher.switchInstrument(instrumentInfo);
 
@@ -168,8 +165,7 @@ public class WritablePrefixChangingSwitcherTest {
     @Test
     public void switching_twice_to_third_instrument_correctly_switches_observable_twice() {
         // Act
-        SwitchableWritable<String> switchableWritable = (SwitchableWritable<String>) wrtFactory
-                .getSwitchableWritable(channelType, PV_ADDRESS);
+        SwitchableWritable<String> switchableWritable = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
         writablePrefixChangingSwitcher.switchInstrument(instrumentInfo2);
         assertEquals(writable2, switchableWritable.getSource());
         writablePrefixChangingSwitcher.switchInstrument(instrumentInfo3);
@@ -184,8 +180,7 @@ public class WritablePrefixChangingSwitcherTest {
         wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
         writablePrefixChangingSwitcher.switchInstrument(instrumentInfo2);
 
-        SwitchableWritable<String> switchableWritable = (SwitchableWritable<String>) wrtFactory
-                .getSwitchableWritable(channelType, PV_ADDRESS_2);
+        SwitchableWritable<String> switchableWritable = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS_2);
         writablePrefixChangingSwitcher.switchInstrument(instrumentInfo);
 
         // Assert
@@ -195,8 +190,8 @@ public class WritablePrefixChangingSwitcherTest {
     @Test
     public void closing_observable_manually_unregisters_observable_from_switcher() {
         // Act
-        Writable<String> switchable = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
-        Writable<String> switchable2 = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS_2);
+        SwitchableWritable<String> switchable = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
+        SwitchableWritable<String> switchable2 = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS_2);
 
         switchable.close();
 
@@ -208,8 +203,8 @@ public class WritablePrefixChangingSwitcherTest {
     @Test
     public void closing_observable_manually_twice_does_nothing() {
         // Act
-        Writable<String> switchable = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
-        Writable<String> switchable2 = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS_2);
+    	SwitchableWritable<String> switchable = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS);
+    	SwitchableWritable<String> switchable2 = wrtFactory.getSwitchableWritable(channelType, PV_ADDRESS_2);
 
         switchable.close();
         switchable.close();

@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.experimentdetails;
 
 import javax.inject.Inject;
-
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
@@ -39,6 +38,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup.RBLookupDialog;
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup.RBLookupViewModel;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
@@ -49,7 +49,9 @@ import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
 @SuppressWarnings("checkstyle:magicnumber")
 public class ExperimentDetailsPanel extends ScrolledComposite {
 	
-    private static final String RB_NUM_INPUT_TIP_MESSAGE = "You can input your RB number for"
+    private static final String HIDDEN_USERS_TEXT = "The experiment details view is not available on this platform.";
+
+	private static final String RB_NUM_INPUT_TIP_MESSAGE = "You can input your RB number for"
             + " your scheduled or Xpress run directly here!";
     
     private static final String MANUAL_USER_ENTRY_MESSAGE = "No users found! Please enter users "
@@ -73,6 +75,10 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 	private Button btnRemoveUserDetails;
 	private Button btnDisplayTitle;
 	
+	/**
+	 * Create an instance of this panel.
+	 * @param parent the parent composite
+	 */
     @Inject
     public ExperimentDetailsPanel(Composite parent) {
         super(parent, SWT.H_SCROLL | SWT.V_SCROLL);
@@ -96,6 +102,12 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
      * @param parent The root composite of the panel.
      */
     private void makeExperimentDetailsPanel(Composite parent) {
+    	if (Utils.SHOULD_HIDE_USER_INFORMATION) {
+    		var label = new Label(parent, SWT.NONE);
+    		label.setText(HIDDEN_USERS_TEXT);
+    		return;
+    	}
+    	
         lblRbNumber = new Label(parent, SWT.NONE);
 		lblRbNumber.setText("RB Number:");
 		

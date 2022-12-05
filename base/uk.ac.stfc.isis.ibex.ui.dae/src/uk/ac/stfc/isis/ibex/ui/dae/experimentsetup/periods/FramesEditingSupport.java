@@ -24,8 +24,16 @@ import org.eclipse.jface.viewers.ColumnViewer;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.periods.Period;
 import uk.ac.stfc.isis.ibex.ui.widgets.IntegerEditingSupport;
 
+/**
+ * Editing support for frames in the DAE tables.
+ */
 public class FramesEditingSupport extends IntegerEditingSupport<Period> {
 
+	/**
+	 * Creates new editing support for frames in the DAE tables.
+	 * @param viewer the column viewer
+	 * @param rowType the row type
+	 */
 	public FramesEditingSupport(ColumnViewer viewer, Class<Period> rowType) {
 		super(viewer, rowType);
 	}

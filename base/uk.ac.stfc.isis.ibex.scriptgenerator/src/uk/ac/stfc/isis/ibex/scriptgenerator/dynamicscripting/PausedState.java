@@ -25,6 +25,7 @@ public class PausedState extends DynamicScriptingState {
 	 * @param modelAdapter The script generator model dependency to use to interact with actions.
      * @param currentlyExecutingAction The action that the script is paused on.
 	 * @param dynamicScriptIdsToAction Script ids and their associated actions that are used in dynamic scripting.
+	 * @param pauseComplete Whether the pause is complete.
 	 */
 	public PausedState(DynamicScriptingNicosAdapter nicosAdapter, DynamicScriptingModelAdapter modelAdapter, Optional<ScriptGeneratorAction> currentlyExecutingAction, HashMap<Integer, ScriptGeneratorAction> dynamicScriptIdsToAction, Boolean pauseComplete) {
 		super(dynamicScriptIdsToAction);

@@ -43,6 +43,9 @@ import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.ExperimentSetupViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.widgets.LogMessageBox;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
 
+/**
+ * Creates a view that shows a summary of the current run.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class RunSummary {
 

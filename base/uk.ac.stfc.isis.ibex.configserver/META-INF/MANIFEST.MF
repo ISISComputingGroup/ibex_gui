@@ -18,6 +18,7 @@ Require-Bundle: org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.alarm,
  org.diirt.vtype;bundle-version="3.1.5",
  com.google.guava,
+ com.google.gson,
  uk.ac.stfc.isis.ibex.managermode,
  uk.ac.stfc.isis.ibex.validators;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-17

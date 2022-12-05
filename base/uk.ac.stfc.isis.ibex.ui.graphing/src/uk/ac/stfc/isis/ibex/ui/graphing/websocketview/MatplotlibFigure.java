@@ -6,6 +6,12 @@ import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseMoveListener;
+import org.eclipse.swt.events.MouseTrackAdapter;
+import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Rectangle;
@@ -28,15 +34,24 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 public class MatplotlibFigure extends Composite {
 	
 	private static final Logger LOG = IsisLog.getLogger(MatplotlibFigure.class);
+	
+	private final Composite container;
+	private final MatplotlibFigureViewModel viewModel;
 
 	private final Canvas plotCanvas;
 	private final Label labelConnectionStatus;
-	private final Composite container;
-	private final MatplotlibFigureViewModel viewModel;
+	private final Label plotMessage;
+	private Image plotImage;
+	private MatplotlibToolbar toolBar;
 	
 	private final PropertyChangeListener connectionNameListener;
 	private final PropertyChangeListener imageListener;
-	private Image image;
+	private final PropertyChangeListener plotMessageListener;
+	private final MouseTrackListener mouseTrackListener;
+	private final MouseMoveListener mouseMoveListener;
+	private final MouseListener mouseListener;
+
+	private static final int NUM_COLUMNS = 2;
 
 	/**
 	 * Create the composite.
@@ -57,7 +72,7 @@ public class MatplotlibFigure extends Composite {
 		container = new Composite(this, SWT.NONE);
 		container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
-		var containerLayout = new GridLayout(1, false);
+		var containerLayout = new GridLayout(NUM_COLUMNS, false);
 		containerLayout.marginWidth = 0;
 		containerLayout.marginHeight = 0;
 		container.setLayout(containerLayout);
@@ -66,10 +81,16 @@ public class MatplotlibFigure extends Composite {
 		labelConnectionStatus.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 		labelConnectionStatus.setText(viewModel.getPlotName().getValue());
 		
-		plotCanvas = new Canvas(container, SWT.NONE);
-		plotCanvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		plotMessage = new Label(container, SWT.NONE);
+		plotMessage.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+		plotMessage.setText("");
 		
-		image = new Image(Display.getDefault(), 500, 500);
+		plotCanvas = new Canvas(container, SWT.NONE);
+		plotCanvas.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, NUM_COLUMNS, 1));
+		
+		plotImage = new Image(Display.getDefault(), 500, 500);
+		
+		toolBar = new MatplotlibToolbar(viewModel, container);
 		
 		plotCanvas.addControlListener(new ControlAdapter() {
 			@Override
@@ -79,9 +100,47 @@ public class MatplotlibFigure extends Composite {
 			}
 		});
 		
-		plotCanvas.addPaintListener(event -> event.gc.drawImage(image, 0, 0));
+		plotCanvas.addPaintListener(event -> event.gc.drawImage(plotImage, 0, 0));
 		
 		viewModel.canvasResized(plotCanvas.getBounds().width, plotCanvas.getBounds().height);
+		
+		mouseTrackListener = new MouseTrackAdapter() {
+			@Override
+			public void mouseExit(MouseEvent e) {
+				viewModel.setCursorPosition(MatplotlibCursorPosition.OUTSIDE_CANVAS);
+			}
+			
+			@Override
+			public void mouseEnter(MouseEvent e) {
+				viewModel.setCursorPosition(new MatplotlibCursorPosition(e.x, e.y, true));
+			}
+		};
+
+		mouseMoveListener = new MouseMoveListener() {
+			@Override
+			public void mouseMove(MouseEvent e) {
+				viewModel.setCursorPosition(new MatplotlibCursorPosition(e.x, e.y, true));
+
+			}
+		};
+		
+		mouseListener = new MouseAdapter() {
+			@Override
+			public void mouseDown(MouseEvent e) {
+				viewModel.notifyButtonPressed(new MatplotlibCursorPosition(e.x, e.y, true), MatplotlibPressType.BUTTON_PRESS);
+
+			}
+			
+			@Override
+			public void mouseUp(MouseEvent e) {
+				viewModel.notifyButtonPressed(new MatplotlibCursorPosition(e.x, e.y, true), MatplotlibPressType.BUTTON_RELEASE);
+
+			}
+		};
+		
+		plotCanvas.addMouseTrackListener(mouseTrackListener);
+		plotCanvas.addMouseMoveListener(mouseMoveListener);
+		plotCanvas.addMouseListener(mouseListener);
 		
 		connectionNameListener = viewModel.getPlotName()
 				.addUiThreadPropertyChangeListener(e -> {
@@ -89,8 +148,16 @@ public class MatplotlibFigure extends Composite {
 					    labelConnectionStatus.setText(e.getNewValue().toString());
 					}
 				});
+		plotMessageListener = viewModel.getPlotMessage()
+				.addUiThreadPropertyChangeListener(e -> {
+					if (!plotMessage.isDisposed()) {
+					    plotMessage.setText(e.getNewValue().toString());
+					}
+				});
 		imageListener = viewModel.getImage()
 				.addUiThreadPropertyChangeListener(e -> drawImage((ImageData) e.getNewValue()));
+		
+		
 	}
 	
 	/**
@@ -99,9 +166,9 @@ public class MatplotlibFigure extends Composite {
 	 */
 	public void drawImage(ImageData imageData) {
 		try {
-			if (!image.isDisposed()) {
-				image.dispose();
-				image = new Image(Display.getDefault(), imageData);
+			if (!plotImage.isDisposed()) {
+				plotImage.dispose();
+				plotImage = new Image(Display.getDefault(), imageData);
 			}
 			if (!plotCanvas.isDisposed()) {
 			    plotCanvas.redraw();
@@ -127,14 +194,24 @@ public class MatplotlibFigure extends Composite {
 	public void dispose() {
 		viewModel.getPlotName().removePropertyChangeListener(connectionNameListener);
 		viewModel.getImage().removePropertyChangeListener(imageListener);
+		viewModel.getPlotMessage().removePropertyChangeListener(plotMessageListener);
 		viewModel.close();
 		
-		if (!image.isDisposed()) {
-			image.dispose();
+		if (!plotImage.isDisposed()) {
+			plotImage.dispose();
 		}
 		
-		plotCanvas.dispose();
+		if (!plotCanvas.isDisposed()) {
+			plotCanvas.removeMouseTrackListener(mouseTrackListener);
+			plotCanvas.removeMouseMoveListener(mouseMoveListener);
+			plotCanvas.removeMouseListener(mouseListener);
+			plotCanvas.dispose();
+		}
 		labelConnectionStatus.dispose();
+		
+		toolBar.dispose();
+		
+		plotMessage.dispose();
 		container.dispose();
 		super.dispose();
 	}
