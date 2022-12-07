@@ -34,7 +34,7 @@ import org.eclipse.e4.ui.model.application.ui.menu.MHandledMenuItem;
 /**
  * Handler for the "display run mode" menu item.
  */
-public class IocPanelHandler {
+public class IocModePreferenceHandler {
 	
 	private static boolean displayRunMode = false;
 
