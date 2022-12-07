@@ -263,7 +263,7 @@ public class IocControlView extends Composite {
     	});
 		
     	// Tree input change listener.
-    	model.addPropertyChangeListener("availableIocs", new PropertyChangeListener() {
+    	model.addUiThreadPropertyChangeListener("availableIocs", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				tree.setVisible(false);
