@@ -285,7 +285,7 @@ public class IocControlView extends Composite {
     	});
 
     	// Selection restore listener.
-    	model.addPropertyChangeListener("selected", new PropertyChangeListener() {
+    	model.addUiThreadPropertyChangeListener("selected", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (!(evt.getNewValue() instanceof Item)) {
@@ -318,7 +318,7 @@ public class IocControlView extends Composite {
     	});
     	
     	// Top item restore listener. This restores the scroll position.
-    	model.addPropertyChangeListener("top", new PropertyChangeListener() {
+    	model.addUiThreadPropertyChangeListener("top", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (!(evt.getNewValue() instanceof Item)) {
@@ -350,7 +350,7 @@ public class IocControlView extends Composite {
     	});
     	
     	// Expanded items restore listener.
-    	model.addPropertyChangeListener("expanded", new PropertyChangeListener() {
+    	model.addUiThreadPropertyChangeListener("expanded", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (evt.getNewValue() instanceof List<?>) {

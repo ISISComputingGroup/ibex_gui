@@ -60,7 +60,7 @@ public class IocControlViewModel extends ModelObject {
 	private Item top = new Item(Optional.empty(), Optional.empty());
 	
 	
-	private PropertyChangeListener uiListener;
+	private PropertyChangeListener availableIocsListener;
 	private PropertyChangeListener enabledListener = new PropertyChangeListener() {
         @Override
         public void propertyChange(PropertyChangeEvent event) {
@@ -115,12 +115,14 @@ public class IocControlViewModel extends ModelObject {
 		this.control = control;
         availableIocs = createHashMap();
 
-        uiListener = control.iocs().addUiThreadPropertyChangeListener(new PropertyChangeListener() {	
+        availableIocsListener = new PropertyChangeListener() {	
     		@Override
-    		public void propertyChange(PropertyChangeEvent arg0) {
+    		public void propertyChange(PropertyChangeEvent evt) {
     			firePropertyChange("availableIocs", availableIocs, availableIocs = createHashMap());
     		}
-    	});
+    	};
+        
+        control.iocs().addPropertyChangeListener(availableIocsListener);
         control.startIoc().addPropertyChangeListener("canSend", canSendStartListener);
         control.stopIoc().addPropertyChangeListener("canSend", canSendStopListener);
         control.restartIoc().addPropertyChangeListener("canSend", canSendRestartListener);
@@ -307,7 +309,7 @@ public class IocControlViewModel extends ModelObject {
 	 * Remove all listeners that are not automatically disposed.
 	 */
 	public void removeListeners() {
-		control.iocs().removePropertyChangeListener(uiListener);
+		control.iocs().removePropertyChangeListener(availableIocsListener);
 		control.startIoc().removePropertyChangeListener("canSend", canSendStartListener);
         control.stopIoc().removePropertyChangeListener("canSend", canSendStopListener);
         control.restartIoc().removePropertyChangeListener("canSend", canSendRestartListener);
