@@ -63,6 +63,7 @@ public class IocControlViewModelTest {
 	@Test
 	public void GIVEN_ioc_running_WHEN_ioc_selected_THEN_commands_states_set_correctly() {
 		Mockito.when(ioc.getIsRunning()).thenReturn(true);
+		// Return 'true' when the start, stop, and restart commands are checked for sending ability in 'setIoc'.
 		Mockito.when(command.getCanSend()).thenReturn(true).thenReturn(true).thenReturn(true);
 		viewModel.setIoc(ioc);
 		
@@ -74,6 +75,7 @@ public class IocControlViewModelTest {
 	@Test
 	public void GIVEN_ioc_stopped_WHEN_ioc_selected_THEN_commands_states_set_correctly() {
 		Mockito.when(ioc.getIsRunning()).thenReturn(false);
+		// Return 'true' when the start, stop, and restart commands are checked for sending ability in 'setIoc'.
 		Mockito.when(command.getCanSend()).thenReturn(true).thenReturn(true).thenReturn(true);
 		viewModel.setIoc(ioc);
 		

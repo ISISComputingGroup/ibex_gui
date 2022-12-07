@@ -33,6 +33,8 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -193,8 +195,15 @@ public class IocControlView extends Composite {
 			}
 		});
 		bindingContext.bindValue(WidgetProperties.enabled().observe(restart), BeanProperties.value("restartEnabled", Boolean.class).observe(model));
-    	
 		
+		// Dispose listener.
+		parent.addDisposeListener(new DisposeListener() {
+			@Override
+			public void widgetDisposed(DisposeEvent e) {
+				model.removeListeners();
+			}
+		});
+    	
 		addListeners();
     	model.refresh();
 	}
@@ -264,41 +273,46 @@ public class IocControlView extends Composite {
 		
     	// Tree input change listener.
     	model.addUiThreadPropertyChangeListener("availableIocs", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				tree.setVisible(false);
-				
-				viewer.setInput(evt.getNewValue());
-				model.refresh();
+    		@Override
+    		public void propertyChange(PropertyChangeEvent evt) {
+    			tree.setVisible(false);
+    			
+    			viewer.setInput(evt.getNewValue());
+    			model.refresh();
 
-	            tree.setVisible(true);
-			}
+                tree.setVisible(true);
+    		}
     	});
 
     	// Selection restore listener.
     	model.addPropertyChangeListener("selected", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
-				if (evt.getNewValue() instanceof Item) {
-					var item = (Item) evt.getNewValue();
-					
-					if (item.description().isPresent()) {
-						var descriptionTreeItem = getDescriptionItem(item.description().get());
-						
-						if (descriptionTreeItem.isPresent()) {
-							// Set description as selected item.
-							if (item.ioc().isEmpty()) {
-								tree.setSelection(descriptionTreeItem.get());
-							// Set IOC as selected item.
-							} else {
-								var iocTreeItem = getIocItem(descriptionTreeItem.get(), item.ioc().get());
-								if (iocTreeItem.isPresent()) {
-									tree.setSelection(iocTreeItem.get());
-									model.setIoc((IocState) iocTreeItem.get().getData());
-								}
-							}
-						}
+				if (!(evt.getNewValue() instanceof Item)) {
+					return;
+				}
+				
+				var item = (Item) evt.getNewValue();
+				if (item.description().isEmpty()) {
+					return;
+				}
+				
+				var descriptionTreeItem = getDescriptionItem(item.description().get());
+				if (descriptionTreeItem.isEmpty()) {
+					return;
+				}
+				
+				// Set description as selected item.
+				if (item.ioc().isEmpty()) {
+					tree.setSelection(descriptionTreeItem.get());
+				// Set IOC as selected item.
+				} else {
+					var iocTreeItem = getIocItem(descriptionTreeItem.get(), item.ioc().get());
+					if (iocTreeItem.isEmpty()) {
+						return;
 					}
+					tree.setSelection(iocTreeItem.get());
+					model.setIoc((IocState) iocTreeItem.get().getData());
 				}
 			}
     	});
@@ -307,25 +321,30 @@ public class IocControlView extends Composite {
     	model.addPropertyChangeListener("top", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
-				if (evt.getNewValue() instanceof Item) {
-					var item = (Item) evt.getNewValue();
-					
-					if (item.description().isPresent()) {
-						var descriptionTreeItem = getDescriptionItem(item.description().get());
-						
-						if (descriptionTreeItem.isPresent()) {
-							// Set description as top item.
-							if (item.ioc().isEmpty()) {
-								tree.setTopItem(descriptionTreeItem.get());
-							// Set IOC as top item.
-							} else {
-								var iocTreeItem = getIocItem(descriptionTreeItem.get(), item.ioc().get());
-								if (iocTreeItem.isPresent()) {
-									tree.setTopItem(iocTreeItem.get());
-								}
-							}
-						}
+				if (!(evt.getNewValue() instanceof Item)) {
+					return;
+				}
+				
+				var item = (Item) evt.getNewValue();
+				if (item.description().isEmpty()) {
+					return;
+				}
+				
+				var descriptionTreeItem = getDescriptionItem(item.description().get());
+				if (descriptionTreeItem.isEmpty()) {
+					return;
+				}
+				
+				// Set description as top item.
+				if (item.ioc().isEmpty()) {
+					tree.setTopItem(descriptionTreeItem.get());
+				// Set IOC as top item.
+				} else {
+					var iocTreeItem = getIocItem(descriptionTreeItem.get(), item.ioc().get());
+					if (iocTreeItem.isEmpty()) {
+						return;
 					}
+					tree.setTopItem(iocTreeItem.get());
 				}
 			}
     	});
@@ -369,7 +388,7 @@ public class IocControlView extends Composite {
 				return Optional.of(child);
 			}
 		}
-		
+
 		return Optional.empty();
 	}
 }

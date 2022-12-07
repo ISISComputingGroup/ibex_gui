@@ -28,8 +28,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.eclipse.swt.widgets.Display;
-
 import uk.ac.stfc.isis.ibex.configserver.IocControl;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -40,13 +38,15 @@ import uk.ac.stfc.isis.ibex.ui.ioccontrol.table.IOCList;
  */
 public class IocControlViewModel extends ModelObject {
 	
+	private static final String RUNNING_DESCRIPTION = "Running";
+	private static final String INCONFIG_DESCRIPTION = "In Config";
+	
 	/**
 	 * Represents an IOC in the tree view using its description and name.
 	 * If the item is a description, 'ioc' will be empty.
 	 */
 	public static record Item(Optional<String> description, Optional<String> ioc) { };
 	
-	private final Display display = Display.getDefault();
 	private IocState ioc;
 	private final IocControl control;
 	private HashMap<String, IOCList> availableIocs = new HashMap<String, IOCList>();
@@ -55,10 +55,12 @@ public class IocControlViewModel extends ModelObject {
 	private boolean stopEnabled = false;
 	private boolean restartEnabled = false;
 	
-	private HashSet<String> expanded = new HashSet<String>(Arrays.asList("Running", "In Config"));
+	private HashSet<String> expanded = new HashSet<String>(Arrays.asList(RUNNING_DESCRIPTION, INCONFIG_DESCRIPTION));
 	private Item selected = new Item(Optional.empty(), Optional.empty());
 	private Item top = new Item(Optional.empty(), Optional.empty());
 	
+	
+	private PropertyChangeListener uiListener;
 	private PropertyChangeListener enabledListener = new PropertyChangeListener() {
         @Override
         public void propertyChange(PropertyChangeEvent event) {
@@ -68,6 +70,42 @@ public class IocControlViewModel extends ModelObject {
         	firePropertyChange("restartEnabled", restartEnabled, restartEnabled = control.restartIoc().getCanSend() && isRunning);
         }
     };
+    
+	private PropertyChangeListener canSendStartListener = new PropertyChangeListener() {	
+		@Override
+		public void propertyChange(PropertyChangeEvent event) {
+			if (ioc != null) {
+				boolean canSend = (boolean) event.getNewValue();
+				firePropertyChange("startEnabled", startEnabled, startEnabled = canSend && !ioc.getIsRunning());
+			} else {
+				firePropertyChange("startEnabled", startEnabled, startEnabled = false);
+			}
+		}
+	};
+	
+	private PropertyChangeListener canSendStopListener = new PropertyChangeListener() {
+		@Override
+		public void propertyChange(PropertyChangeEvent event) {
+			if (ioc != null) {
+				boolean canSend = (boolean) event.getNewValue();
+				firePropertyChange("stopEnabled", stopEnabled, stopEnabled = canSend && ioc.getIsRunning());
+			} else {
+				firePropertyChange("stopEnabled", stopEnabled, stopEnabled = false);
+			}
+		}
+	};
+	
+	private PropertyChangeListener canSendRestartListener = new PropertyChangeListener() {
+		@Override
+		public void propertyChange(PropertyChangeEvent event) {
+			if (ioc != null) {
+				boolean canSend = (boolean) event.getNewValue();
+				firePropertyChange("restartEnabled", restartEnabled, restartEnabled = canSend && !ioc.getIsRunning());
+			} else {
+				firePropertyChange("restartEnabled", restartEnabled, restartEnabled = false);
+			}
+		}
+	};
 	
 	/**
 	 * Constructor. Creates a new instance of the IocControlViewModel object.
@@ -77,62 +115,29 @@ public class IocControlViewModel extends ModelObject {
 		this.control = control;
         availableIocs = createHashMap();
 
-        control.iocs().addPropertyChangeListener(new PropertyChangeListener() {	
+        uiListener = control.iocs().addUiThreadPropertyChangeListener(new PropertyChangeListener() {	
     		@Override
     		public void propertyChange(PropertyChangeEvent arg0) {
-    			display.asyncExec(new Runnable() {
-    				@Override
-    				public void run() {
-    					firePropertyChange("availableIocs", availableIocs, availableIocs = createHashMap());
-    				}
-    			});
+    			firePropertyChange("availableIocs", availableIocs, availableIocs = createHashMap());
     		}
-    	}, true);
-        
-        control.startIoc().addPropertyChangeListener("canSend", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent event) {
-				if (ioc != null) {
-					boolean canSend = (boolean) event.getNewValue();
-					firePropertyChange("startEnabled", startEnabled, startEnabled = canSend && !ioc.getIsRunning());
-				} else {
-					firePropertyChange("startEnabled", startEnabled, startEnabled = false);
-				}
-			}
-		});
-        
-        control.stopIoc().addPropertyChangeListener("canSend", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent event) {
-				if (ioc != null) {
-					boolean canSend = (boolean) event.getNewValue();
-					firePropertyChange("stopEnabled", stopEnabled, stopEnabled = canSend && ioc.getIsRunning());
-				} else {
-					firePropertyChange("stopEnabled", stopEnabled, stopEnabled = false);
-				}
-			}
-		});
-        
-        control.restartIoc().addPropertyChangeListener("canSend", new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent event) {
-				if (ioc != null) {
-					boolean canSend = (boolean) event.getNewValue();
-					firePropertyChange("restartEnabled", restartEnabled, restartEnabled = canSend && !ioc.getIsRunning());
-				} else {
-					firePropertyChange("restartEnabled", restartEnabled, restartEnabled = false);
-				}
-			}
-		});
+    	});
+        control.startIoc().addPropertyChangeListener("canSend", canSendStartListener);
+        control.stopIoc().addPropertyChangeListener("canSend", canSendStopListener);
+        control.restartIoc().addPropertyChangeListener("canSend", canSendRestartListener);
 	}
 	
 	private HashMap<String, IOCList> createHashMap() {
 		HashMap<String, IOCList> iocHashMap = new HashMap<String, IOCList>();
 		
 		Collection<IocState> rows = control.iocs().getValue();
+		if (rows == null) {
+			return iocHashMap;
+		}
+		
     	String description = "";
-    	iocHashMap.put("Running", new IOCList("Running"));
-    	iocHashMap.put("In Config", new IOCList("In Config"));
+    	iocHashMap.put(RUNNING_DESCRIPTION, new IOCList(RUNNING_DESCRIPTION));
+    	iocHashMap.put(INCONFIG_DESCRIPTION, new IOCList(INCONFIG_DESCRIPTION));
+    	
     	for (IocState ioc : rows) {
     		description = ioc.getDescription();
     		if (!iocHashMap.containsKey(description)) {
@@ -140,10 +145,10 @@ public class IocControlViewModel extends ModelObject {
     		}
     		iocHashMap.get(description).add(ioc);
     		if (ioc.getIsRunning()) {
-    			iocHashMap.get("Running").add(ioc);
+    			iocHashMap.get(RUNNING_DESCRIPTION).add(ioc);
     		}
     		if (ioc.getInCurrentConfig()) {
-    			iocHashMap.get("In Config").add(ioc);
+    			iocHashMap.get(INCONFIG_DESCRIPTION).add(ioc);
     		}
     	}
     	
@@ -296,5 +301,15 @@ public class IocControlViewModel extends ModelObject {
 		firePropertyChange("expanded", null, getExpanded());
 		firePropertyChange("selected", null, getSelected());
 		firePropertyChange("top", null, getTop());
+	}
+	
+	/**
+	 * Remove all listeners that are not automatically disposed.
+	 */
+	public void removeListeners() {
+		control.iocs().removePropertyChangeListener(uiListener);
+		control.startIoc().removePropertyChangeListener("canSend", canSendStartListener);
+        control.stopIoc().removePropertyChangeListener("canSend", canSendStopListener);
+        control.restartIoc().removePropertyChangeListener("canSend", canSendRestartListener);
 	}
 }
