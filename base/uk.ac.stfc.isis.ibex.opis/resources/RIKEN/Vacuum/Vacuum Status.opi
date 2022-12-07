@@ -77,7 +77,7 @@
       <color name="Disconnected" red="255" green="0" blue="255" />
     </state_color_0>
     <state_color_1>
-      <color name="ISIS_Gray_2" red="158" green="158" blue="158" />
+      <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
     </state_color_1>
     <state_color_2>
       <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
@@ -145,12 +145,12 @@ $(pv_value)</tooltip>
     <off_state>Fault</off_state>
     <on_image>../../icons_for_opis/Check Mark.png</on_image>
     <on_label>ON</on_label>
-    <on_state>Healthy</on_state>
+    <on_state>Vac Good</on_state>
     <pv_name>$(PV_ROOT)$(PV)</pv_name>
     <pv_value />
     <rules>
       <rule name="Rule" prop_id="visible" out_exp="false">
-        <exp bool_exp="pv0==2 or p0==4">
+        <exp bool_exp="pv0==2 or p0==4 or pv0 ==1">
           <value>true</value>
         </exp>
         <pv trig="true">$(PV_ROOT)$(PV)</pv>
