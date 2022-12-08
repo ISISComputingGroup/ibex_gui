@@ -3305,7 +3305,7 @@ $(pv_value)</tooltip>
         <wrap_words>false</wrap_words>
         <wuid>-17b29473:183cbe5c456:-7e46</wuid>
         <x>92</x>
-        <y>26</y>
+        <y>25</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -3345,7 +3345,7 @@ $(pv_value)</tooltip>
         <wrap_words>false</wrap_words>
         <wuid>-17b29473:183cbe5c456:-7e45</wuid>
         <x>52</x>
-        <y>62</y>
+        <y>61</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -4302,8 +4302,8 @@ and Port 4</text>
         <width>67</width>
         <wrap_words>false</wrap_words>
         <wuid>-6aff6739:1821a763793:-78d5</wuid>
-        <x>102</x>
-        <y>55</y>
+        <x>104</x>
+        <y>54</y>
       </widget>
     </widget>
   </widget>

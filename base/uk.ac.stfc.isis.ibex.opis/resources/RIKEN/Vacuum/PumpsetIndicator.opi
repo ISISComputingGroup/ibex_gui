@@ -86,7 +86,7 @@
       <color name="ISIS_Yellow" red="255" green="255" blue="0" />
     </state_color_3>
     <state_color_4>
-      <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
+      <color name="ISIS_Red" red="255" green="0" blue="0" />
     </state_color_4>
     <state_color_fallback>
       <color name="Disconnected" red="255" green="0" blue="255" />
@@ -121,6 +121,7 @@ $(pv_value)</tooltip>
     <background_color>
       <color red="240" green="240" blue="240" />
     </background_color>
+    <bit>1</bit>
     <boolean_label_position>0</boolean_label_position>
     <border_alarm_sensitive>true</border_alarm_sensitive>
     <border_color>
@@ -128,7 +129,7 @@ $(pv_value)</tooltip>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
-    <data_type>1</data_type>
+    <data_type>0</data_type>
     <enabled>true</enabled>
     <font>
       <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
@@ -142,15 +143,16 @@ $(pv_value)</tooltip>
     <no_animation>false</no_animation>
     <off_image>../../icons_for_opis/Cross.png</off_image>
     <off_label>OFF</off_label>
-    <off_state>Fault</off_state>
     <on_image>../../icons_for_opis/Check Mark.png</on_image>
     <on_label>ON</on_label>
-    <on_state>Running</on_state>
     <pv_name>$(PV_ROOT)$(PV)</pv_name>
     <pv_value />
     <rules>
       <rule name="visible rule" prop_id="visible" out_exp="false">
-        <exp bool_exp="pv0==2 or pv0==4">
+        <exp bool_exp="pv0==2">
+          <value>true</value>
+        </exp>
+        <exp bool_exp="pv0==4">
           <value>true</value>
         </exp>
         <pv trig="true">$(PV_ROOT)$(PV)</pv>
