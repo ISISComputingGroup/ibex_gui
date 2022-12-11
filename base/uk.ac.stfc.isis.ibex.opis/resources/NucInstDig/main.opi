@@ -26,7 +26,7 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <PVROOT>$(P)NCINDG_01:</PVROOT>
+    <PVROOT>$(P)$(NCINDG):</PVROOT>
   </macros>
   <name>$(PVROOT)START</name>
   <rules />

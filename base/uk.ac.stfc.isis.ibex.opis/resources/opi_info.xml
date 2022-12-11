@@ -2997,7 +2997,13 @@
         <type>DAE</type>
         <path>NucInstDig/main.opi</path>
         <description>The OPI for Nuclear Instruments Digitiser</description>
-        <macros/>
+        <macros>
+          <macro>
+            <name>NCINDG</name>
+            <description>The Digitiser PV prefix (e.g. NCINDG_01)</description>
+            <default>NCINDG_01</default>
+          </macro>
+        </macros>
         <categories>
           <category>Monitors</category>
         </categories>
