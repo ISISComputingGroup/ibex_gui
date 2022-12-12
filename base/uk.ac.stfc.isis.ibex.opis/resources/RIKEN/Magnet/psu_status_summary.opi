@@ -19,7 +19,7 @@
   <macros>
     <include_parent_macros>true</include_parent_macros>
     <IOC_ROOT>$(P)$(PSU_IOC)</IOC_ROOT>
-    <PLC_ROOT>IN:RIKENFE:SCHNDR_01:$(PSU_NAME)</PLC_ROOT>
+    <PLC_ROOT>$(P)SCHNDR_01:$(PSU_NAME)</PLC_ROOT>
   </macros>
   <name></name>
   <rules />
