@@ -18,7 +18,7 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <PLC_ROOT>IN:RIKENFE:SCHNDR_01</PLC_ROOT>
+    <PLC_ROOT>$(P)SCHNDR_01</PLC_ROOT>
   </macros>
   <name></name>
   <rules />
