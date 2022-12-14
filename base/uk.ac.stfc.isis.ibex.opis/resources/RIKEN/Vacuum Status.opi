@@ -29,11 +29,21 @@
   <snap_to_geometry>true</snap_to_geometry>
   <widget_type>Display</widget_type>
   <width>800</width>
-  <wuid>-3acad3bf:1823454b352:-7f81</wuid>
+  <wuid>-147fba4c:1839cbbb752:-7f48</wuid>
   <x>-1</x>
   <y>-1</y>
   <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="true" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>../TPG300.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <TPG300>TPG300_$(TPG)</TPG300>
+        </macros>
+        <mode>0</mode>
+        <description></description>
+      </action>
+    </actions>
     <alarm_pulsing>false</alarm_pulsing>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
@@ -60,7 +70,7 @@
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
-    <height>36</height>
+    <height>25</height>
     <name>LED</name>
     <pv_name>$(PV_ROOT)$(PV)</pv_name>
     <pv_value />
@@ -72,7 +82,7 @@
     </scale_options>
     <scripts />
     <show_boolean_label>false</show_boolean_label>
-    <square_led>false</square_led>
+    <square_led>true</square_led>
     <state_color_0>
       <color name="Disconnected" red="255" green="0" blue="255" />
     </state_color_0>
@@ -92,11 +102,11 @@
       <color name="Disconnected" red="255" green="0" blue="255" />
     </state_color_fallback>
     <state_count>5</state_count>
-    <state_label_0>Communication Loss</state_label_0>
-    <state_label_1>Off</state_label_1>
-    <state_label_2>Running</state_label_2>
+    <state_label_0>Communications Loss</state_label_0>
+    <state_label_1>Unused</state_label_1>
+    <state_label_2>Vacuum Good</state_label_2>
     <state_label_3>Warning</state_label_3>
-    <state_label_4>Fault</state_label_4>
+    <state_label_4>Vacuum Bad</state_label_4>
     <state_label_fallback>ERR</state_label_fallback>
     <state_value_0>0.0</state_value_0>
     <state_value_1>1.0</state_value_1>
@@ -108,12 +118,12 @@ $(pv_value)</tooltip>
     <visible>true</visible>
     <widget_type>LED</widget_type>
     <width>36</width>
-    <wuid>-3acad3bf:1823454b352:-7f7c</wuid>
+    <wuid>-147fba4c:1839cbbb752:-79ce</wuid>
     <x>0</x>
     <y>0</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolIndicator" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="true" hook_all="false" />
     <alarm_pulsing>false</alarm_pulsing>
     <align_to_nearest_second>false</align_to_nearest_second>
     <auto_size>true</auto_size>
@@ -137,7 +147,7 @@ $(pv_value)</tooltip>
     <foreground_color>
       <color red="0" green="0" blue="0" />
     </foreground_color>
-    <height>36</height>
+    <height>24</height>
     <name>Image Boolean Indicator</name>
     <no_animation>false</no_animation>
     <off_image>../icons_for_opis/Cross.png</off_image>
@@ -145,12 +155,12 @@ $(pv_value)</tooltip>
     <off_state>Fault</off_state>
     <on_image>../icons_for_opis/Check Mark.png</on_image>
     <on_label>ON</on_label>
-    <on_state>Running</on_state>
+    <on_state>Healthy</on_state>
     <pv_name>$(PV_ROOT)$(PV)</pv_name>
     <pv_value />
     <rules>
-      <rule name="visible rule" prop_id="visible" out_exp="false">
-        <exp bool_exp="pv0==2 or pv0==4">
+      <rule name="Rule" prop_id="visible" out_exp="false">
+        <exp bool_exp="pv0==2 or p0==4">
           <value>true</value>
         </exp>
         <pv trig="true">$(PV_ROOT)$(PV)</pv>
@@ -169,9 +179,9 @@ $(pv_value)</tooltip>
     <transparency>true</transparency>
     <visible>false</visible>
     <widget_type>Image Boolean Indicator</widget_type>
-    <width>36</width>
-    <wuid>-147fba4c:1839cbbb752:-76b4</wuid>
-    <x>0</x>
+    <width>24</width>
+    <wuid>-147fba4c:1839cbbb752:-769b</wuid>
+    <x>6</x>
     <y>0</y>
   </widget>
 </display>

@@ -3048,10 +3048,18 @@
       </value>
     </entry>
     <entry>
-		<key>RIKEN Vacuum </key>
-		<value>
-			<type>RIKEN</type>
-			<path>RIKEN/RIKEN_vacuum_tpg300.opi</path></value>
-	</entry>
+      <key>RIKEN Vacuum </key>
+	  <value>
+	    <type>RIKEN</type>
+	    <path>RIKEN/RIKEN_vacuum_tpg300.opi</path>
+	    <macros>
+          <macro>
+            <name>SCHNDR</name>
+            <description>The SCHNDR PV prefix (e.g. SCHNDR_01)</description>
+            <default>SCHNDR_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
   </opis>
 </descriptions>

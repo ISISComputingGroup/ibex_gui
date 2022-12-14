@@ -33,14 +33,14 @@
   <x>-1</x>
   <y>-1</y>
   <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="true" />
     <alarm_pulsing>false</alarm_pulsing>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
       <color red="240" green="240" blue="240" />
     </background_color>
     <bit>-1</bit>
-    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
@@ -60,9 +60,17 @@
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
-    <height>36</height>
-    <name>LED</name>
-    <pv_name>$(PV_ROOT)$(PV)</pv_name>
+    <height>37</height>
+    <name>$(NAME)</name>
+    <off_color>
+      <color name="ISIS_Red_LED_Off" red="102" green="0" blue="0" />
+    </off_color>
+    <off_label>OFF</off_label>
+    <on_color>
+      <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+    </on_color>
+    <on_label>ON</on_label>
+    <pv_name>$(PV_ROOT)PUMPSET:$(NUM):STAT</pv_name>
     <pv_value />
     <rules />
     <scale_options>
@@ -73,47 +81,26 @@
     <scripts />
     <show_boolean_label>false</show_boolean_label>
     <square_led>false</square_led>
-    <state_color_0>
-      <color name="Disconnected" red="255" green="0" blue="255" />
-    </state_color_0>
-    <state_color_1>
-      <color name="ISIS_Gray_2" red="158" green="158" blue="158" />
-    </state_color_1>
-    <state_color_2>
-      <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
-    </state_color_2>
-    <state_color_3>
-      <color name="ISIS_Yellow" red="255" green="255" blue="0" />
-    </state_color_3>
-    <state_color_4>
-      <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
-    </state_color_4>
-    <state_color_fallback>
-      <color name="Disconnected" red="255" green="0" blue="255" />
-    </state_color_fallback>
-    <state_count>5</state_count>
-    <state_label_0>Communication Loss</state_label_0>
-    <state_label_1>Off</state_label_1>
-    <state_label_2>Running</state_label_2>
-    <state_label_3>Warning</state_label_3>
-    <state_label_4>Fault</state_label_4>
-    <state_label_fallback>ERR</state_label_fallback>
-    <state_value_0>0.0</state_value_0>
-    <state_value_1>1.0</state_value_1>
-    <state_value_2>2.0</state_value_2>
-    <state_value_3>3.0</state_value_3>
-    <state_value_4>4.0</state_value_4>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <visible>true</visible>
     <widget_type>LED</widget_type>
-    <width>36</width>
-    <wuid>-3acad3bf:1823454b352:-7f7c</wuid>
+    <width>37</width>
+    <wuid>60ac58b6:1838377201a:-7e8d</wuid>
     <x>0</x>
     <y>0</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolIndicator" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="true">
+      <action type="OPEN_DISPLAY">
+        <path>RIKEN_Vacuum_Pumpset.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <mode>1</mode>
+        <description></description>
+      </action>
+    </actions>
     <alarm_pulsing>false</alarm_pulsing>
     <align_to_nearest_second>false</align_to_nearest_second>
     <auto_size>true</auto_size>
@@ -121,14 +108,15 @@ $(pv_value)</tooltip>
     <background_color>
       <color red="240" green="240" blue="240" />
     </background_color>
+    <bit>-1</bit>
     <boolean_label_position>0</boolean_label_position>
-    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
-    <data_type>1</data_type>
+    <data_type>0</data_type>
     <enabled>true</enabled>
     <font>
       <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
@@ -137,25 +125,16 @@ $(pv_value)</tooltip>
     <foreground_color>
       <color red="0" green="0" blue="0" />
     </foreground_color>
-    <height>36</height>
+    <height>37</height>
     <name>Image Boolean Indicator</name>
     <no_animation>false</no_animation>
     <off_image>../icons_for_opis/Cross.png</off_image>
     <off_label>OFF</off_label>
-    <off_state>Fault</off_state>
     <on_image>../icons_for_opis/Check Mark.png</on_image>
     <on_label>ON</on_label>
-    <on_state>Running</on_state>
-    <pv_name>$(PV_ROOT)$(PV)</pv_name>
+    <pv_name>$(PV_ROOT)PUMPSET:$(NUM):STAT</pv_name>
     <pv_value />
-    <rules>
-      <rule name="visible rule" prop_id="visible" out_exp="false">
-        <exp bool_exp="pv0==2 or pv0==4">
-          <value>true</value>
-        </exp>
-        <pv trig="true">$(PV_ROOT)$(PV)</pv>
-      </rule>
-    </rules>
+    <rules />
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
@@ -167,10 +146,10 @@ $(pv_value)</tooltip>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <transparency>true</transparency>
-    <visible>false</visible>
+    <visible>true</visible>
     <widget_type>Image Boolean Indicator</widget_type>
-    <width>36</width>
-    <wuid>-147fba4c:1839cbbb752:-76b4</wuid>
+    <width>37</width>
+    <wuid>-147fba4c:1839cbbb752:-76d8</wuid>
     <x>0</x>
     <y>0</y>
   </widget>
