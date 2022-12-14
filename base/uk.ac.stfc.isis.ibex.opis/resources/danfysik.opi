@@ -5629,7 +5629,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
-      <text>$(External_Interlock_2)</text>
+      <text>$(External_Interlock_3)</text>
       <tooltip></tooltip>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -6264,7 +6264,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
-      <text>$(External_Interlock_0)</text>
+      <text>$(External_Interlock_1)</text>
       <tooltip></tooltip>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -6421,7 +6421,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
-      <text>$(External_Interlock_1)</text>
+      <text>$(External_Interlock_2)</text>
       <tooltip></tooltip>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -6677,7 +6677,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
-      <text>$(External_Interlock_3)</text>
+      <text>$(External_Interlock_4)</text>
       <tooltip></tooltip>
       <transparent>false</transparent>
       <vertical_alignment>0</vertical_alignment>
