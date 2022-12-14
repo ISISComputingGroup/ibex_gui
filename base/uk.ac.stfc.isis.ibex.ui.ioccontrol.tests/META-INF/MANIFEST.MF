@@ -11,3 +11,4 @@ Require-Bundle: org.junit;bundle-version="4.13.0",
  net.bytebuddy.byte-buddy;bundle-version="1.12.13",
  net.bytebuddy.byte-buddy-agent;bundle-version="1.12.13",
  org.objenesis;bundle-version="3.2.0"
+Import-Package: uk.ac.stfc.isis.ibex.epics.observing
