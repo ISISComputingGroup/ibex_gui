@@ -1044,7 +1044,9 @@
         <path>omron_plc.opi</path>
         <description>The OPI for a PLC. No properties required.</description>
         <macros/>
-        <categories/>
+        <categories>
+          <category>PLCs</category>
+        </categories>
       </value>
     </entry>
     <entry>
@@ -1342,6 +1344,26 @@
             <description>The Danfysik PV prefix (e.g. DFKPS_01).</description>
             <default>DFKPS_01</default>
           </macro>
+          <macro>
+            <name>EXTERNAL_INTERLOCK_1</name>
+            <description>The name to use for the first external interlock</description>
+            <default>External Interlock 0</default>
+          </macro>
+          <macro>
+            <name>EXTERNAL_INTERLOCK_2</name>
+            <description>The name to use for the second external interlock</description>
+            <default>External Interlock 1</default>
+          </macro>
+          <macro>
+            <name>EXTERNAL_INTERLOCK_3</name>
+            <description>The name to use for the third external interlock</description>
+            <default>External Interlock 2</default>
+          </macro>
+          <macro>
+            <name>EXTERNAL_INTERLOCK_4</name>
+            <description>The name to use for the fourth external interlock</description>
+            <default>External Interlock 3</default>
+          </macro>
         </macros>
         <categories>
           <category>Power supplies</category>
@@ -1396,6 +1418,18 @@
         <description>The OPI for the Riken front end. No properties required.</description>
         <macros/>
         <categories/>
+      </value>
+    </entry>
+    <entry>
+      <key>Riken Magnet PSU</key>
+      <value>
+        <type>MUON_FRONT_END</type>
+        <path>RIKEN/Magnet/RIKEN_magnet_PSUs.opi</path>
+        <description>The OPI for the Riken Magnet PSU Synoptic</description>
+        <macros></macros>
+        <categories>
+          <category>PLCs</category>
+        </categories>
       </value>
     </entry>
     <entry>
@@ -1855,7 +1889,9 @@
             <default/>
           </macro>
         </macros>
-        <categories/>
+        <categories>
+          <category>PLCs</category>
+        </categories>
       </value>
     </entry>
     <entry>
@@ -2845,6 +2881,9 @@
         <path>wish_vacuum_plc.opi</path>
         <description>WISH Vacuum PLC</description>
         <macros/>
+        <categories>
+          <category>PLCs</category>
+        </categories>
       </value>
     </entry>
     <entry>
