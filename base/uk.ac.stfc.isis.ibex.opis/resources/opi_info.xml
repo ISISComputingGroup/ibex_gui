@@ -1728,6 +1728,24 @@
       </value>
     </entry>
     <entry>
+      <key>Keithley 2290</key>
+      <value>
+        <type>KHLY2290</type>
+        <path>Keithley2290/Keithley2290.opi</path>
+        <description>The OPI for the Keithley 2290 High Voltage Power Supply.</description>
+        <macros>
+          <macro>
+            <name>KHLY2290</name>
+            <description>The Keithley 2290 PV name (e.g. KHLY2290_01).</description>
+            <default>KHLY2290_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Multimeters</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Superlogics</key>
       <value>
         <type>MERCURY</type>
