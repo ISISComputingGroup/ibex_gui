@@ -1959,6 +1959,36 @@
             <description>The tab which is displayed when the OPI is opened (1 to 6).</description>
             <default/>
           </macro>
+          <macro>
+            <name>TYPE_01</name>
+            <description>The chopper type (DISC or FERMI).</description>
+            <default>DISC</default>
+          </macro>
+          <macro>
+            <name>TYPE_02</name>
+            <description>The chopper type (DISC or FERMI).</description>
+            <default>DISC</default>
+          </macro>
+          <macro>
+            <name>TYPE_03</name>
+            <description>The chopper type (DISC or FERMI).</description>
+            <default>DISC</default>
+          </macro>
+          <macro>
+            <name>TYPE_04</name>
+            <description>The chopper type (DISC or FERMI).</description>
+            <default>DISC</default>
+          </macro>
+          <macro>
+            <name>TYPE_05</name>
+            <description>The chopper type (DISC or FERMI).</description>
+            <default>DISC</default>
+          </macro>
+          <macro>
+            <name>TYPE_06</name>
+            <description>The chopper type (DISC or FERMI).</description>
+            <default>DISC</default>
+          </macro>
         </macros>
         <categories>
           <category>Choppers</category>
