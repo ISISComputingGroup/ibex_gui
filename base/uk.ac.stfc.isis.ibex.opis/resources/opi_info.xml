@@ -1401,11 +1401,13 @@
     <entry>
       <key>Riken Kicker and Separator HV settings</key>
       <value>
-        <type>RIKEN_magnet_PSUs</type>
+        <type>MUON_FRONT_END</type>
         <path>RIKEN/kickers_and_seperators.opi</path>
         <description>The OPI for Kicker and Separator HV Settings</description>
         <macros/>
-        <categories/>
+        <categories>
+          <category>PLCs</category>
+        </categories>
       </value>
     </entry>
     <entry>
