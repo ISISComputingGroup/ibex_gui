@@ -1044,7 +1044,9 @@
         <path>omron_plc.opi</path>
         <description>The OPI for a PLC. No properties required.</description>
         <macros/>
-        <categories/>
+        <categories>
+          <category>PLCs</category>
+        </categories>
       </value>
     </entry>
     <entry>
@@ -1342,6 +1344,26 @@
             <description>The Danfysik PV prefix (e.g. DFKPS_01).</description>
             <default>DFKPS_01</default>
           </macro>
+          <macro>
+            <name>EXTERNAL_INTERLOCK_1</name>
+            <description>The name to use for the first external interlock</description>
+            <default>External Interlock 0</default>
+          </macro>
+          <macro>
+            <name>EXTERNAL_INTERLOCK_2</name>
+            <description>The name to use for the second external interlock</description>
+            <default>External Interlock 1</default>
+          </macro>
+          <macro>
+            <name>EXTERNAL_INTERLOCK_3</name>
+            <description>The name to use for the third external interlock</description>
+            <default>External Interlock 2</default>
+          </macro>
+          <macro>
+            <name>EXTERNAL_INTERLOCK_4</name>
+            <description>The name to use for the fourth external interlock</description>
+            <default>External Interlock 3</default>
+          </macro>
         </macros>
         <categories>
           <category>Power supplies</category>
@@ -1399,6 +1421,15 @@
       </value>
     </entry>
     <entry>
+      <key>Riken Magnet PSU</key>
+      <value>
+        <type>MUON_FRONT_END</type>
+        <path>RIKEN/Magnet/RIKEN_magnet_PSUs.opi</path>
+        <description>The OPI for the Riken Magnet PSU Synoptic</description>
+        <macros></macros>
+       </value>
+    </entry>
+    <entry>
       <key>Riken Kicker and Separator HV settings</key>
       <value>
         <type>MUON_FRONT_END</type>
@@ -1408,6 +1439,16 @@
         <categories>
           <category>PLCs</category>
         </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Riken PSU Status Summary</key>
+      <value>
+        <type>psu_status_summary</type>
+        <path>RIKEN/Magnet/psu_status_summary.opi</path>
+        <description>The OPI for the status summary of Riken Magnet PSUs</description>
+        <macros/>
+        <categories/>
       </value>
     </entry>
     <entry>
@@ -1857,7 +1898,9 @@
             <default/>
           </macro>
         </macros>
-        <categories/>
+        <categories>
+          <category>PLCs</category>
+        </categories>
       </value>
     </entry>
     <entry>
@@ -1924,6 +1967,36 @@
             <name>DEFAULT_ACTIVE_TAB</name>
             <description>The tab which is displayed when the OPI is opened (1 to 6).</description>
             <default/>
+          </macro>
+          <macro>
+            <name>TYPE_01</name>
+            <description>The chopper type (DISC or FERMI).</description>
+            <default>DISC</default>
+          </macro>
+          <macro>
+            <name>TYPE_02</name>
+            <description>The chopper type (DISC or FERMI).</description>
+            <default>DISC</default>
+          </macro>
+          <macro>
+            <name>TYPE_03</name>
+            <description>The chopper type (DISC or FERMI).</description>
+            <default>DISC</default>
+          </macro>
+          <macro>
+            <name>TYPE_04</name>
+            <description>The chopper type (DISC or FERMI).</description>
+            <default>DISC</default>
+          </macro>
+          <macro>
+            <name>TYPE_05</name>
+            <description>The chopper type (DISC or FERMI).</description>
+            <default>DISC</default>
+          </macro>
+          <macro>
+            <name>TYPE_06</name>
+            <description>The chopper type (DISC or FERMI).</description>
+            <default>DISC</default>
           </macro>
         </macros>
         <categories>
@@ -2847,6 +2920,9 @@
         <path>wish_vacuum_plc.opi</path>
         <description>WISH Vacuum PLC</description>
         <macros/>
+        <categories>
+          <category>PLCs</category>
+        </categories>
       </value>
     </entry>
     <entry>
@@ -3009,7 +3085,13 @@
         <type>DAE</type>
         <path>NucInstDig/main.opi</path>
         <description>The OPI for Nuclear Instruments Digitiser</description>
-        <macros/>
+        <macros>
+          <macro>
+            <name>NCINDG</name>
+            <description>The Digitiser PV prefix (e.g. NCINDG_01)</description>
+            <default>NCINDG_01</default>
+          </macro>
+        </macros>
         <categories>
           <category>Monitors</category>
         </categories>

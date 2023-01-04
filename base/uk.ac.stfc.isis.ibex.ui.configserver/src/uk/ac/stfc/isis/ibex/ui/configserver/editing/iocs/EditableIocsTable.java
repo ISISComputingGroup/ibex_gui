@@ -29,7 +29,7 @@ import org.eclipse.swt.widgets.Composite;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.CellDecorator;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DecoratedCellLabelProvider;
-import uk.ac.stfc.isis.ibex.ui.ioccontrol.IocPanelHandler;
+import uk.ac.stfc.isis.ibex.ui.ioccontrol.IocModePreferenceHandler;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.widgets.CheckboxLabelProvider;
@@ -122,7 +122,7 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
 	protected void addColumns() {
 		name();
 		description();
-		if (IocPanelHandler.getDisplayRunMode()) {
+		if (IocModePreferenceHandler.getDisplayRunMode()) {
 			simLevel();
 		}
 		autostart();
