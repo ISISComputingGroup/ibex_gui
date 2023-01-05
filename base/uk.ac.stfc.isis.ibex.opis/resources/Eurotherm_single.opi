@@ -3103,7 +3103,7 @@ $(pv_value)</tooltip>
       <border_style>3</border_style>
       <border_width>1</border_width>
       <confirm_message></confirm_message>
-      <enabled>false</enabled>
+      <enabled>true</enabled>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
       </font>
