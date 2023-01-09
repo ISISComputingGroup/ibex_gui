@@ -1,6 +1,8 @@
 package uk.ac.stfc.isis.ibex.ui.graphing.websocketview;
 
 import java.io.Closeable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -8,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.logging.log4j.Logger;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
@@ -37,6 +40,11 @@ public class MatplotlibFigureViewModel implements Closeable {
 	private final SettableUpdatedValue<MatplotlibButtonState> zoomState;
 	private final SettableUpdatedValue<MatplotlibButtonState> panState;
 	private final SettableUpdatedValue<MatplotlibNavigationType> navMode;
+	
+	private final SettableUpdatedValue<MatplotlibCursorPosition> startPos;
+	private final SettableUpdatedValue<MatplotlibCursorPosition> endPos;
+	private final SettableUpdatedValue<Boolean> dragState;
+	
 	
 	private static final int PALETTE_BIT_DEPTH = 8;
 	
@@ -109,12 +117,17 @@ public class MatplotlibFigureViewModel implements Closeable {
 				String.format("[Disconnected] %s", model.getPlotName(), figureNumber));
 		image = new SettableUpdatedValue<ImageData>(generateBlankImage());
 		plotMessage = new SettableUpdatedValue<String>("");
+		
 		backState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
 		forwardState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
 		homeState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
 		zoomState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
 		panState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
 		navMode = new SettableUpdatedValue<MatplotlibNavigationType>(MatplotlibNavigationType.NONE);
+		
+		startPos = new SettableUpdatedValue<MatplotlibCursorPosition>(new MatplotlibCursorPosition(0, 0, true));
+		endPos = new SettableUpdatedValue<MatplotlibCursorPosition>(new MatplotlibCursorPosition(0, 0, true));
+		dragState = new SettableUpdatedValue<Boolean>(false);
 		
 		updateExecutor  = 
 				Executors.newSingleThreadScheduledExecutor(
@@ -145,6 +158,10 @@ public class MatplotlibFigureViewModel implements Closeable {
 		zoomState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
 		panState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
 		navMode = new SettableUpdatedValue<MatplotlibNavigationType>(MatplotlibNavigationType.NONE);
+
+		startPos = new SettableUpdatedValue<MatplotlibCursorPosition>(new MatplotlibCursorPosition(0, 0, true));
+		endPos = new SettableUpdatedValue<MatplotlibCursorPosition>(new MatplotlibCursorPosition(0, 0, true));
+		dragState = new SettableUpdatedValue<Boolean>(false);
 		
 		updateExecutor  = executor;
 		
@@ -205,6 +222,10 @@ public class MatplotlibFigureViewModel implements Closeable {
 			plotMessage.setValue("");
 		}
 	}
+	
+	/**
+	 * Sets the plot message 
+	 */
 
 	/**
 	 * Gets the message.
@@ -298,6 +319,13 @@ public class MatplotlibFigureViewModel implements Closeable {
 	 */
 	public UpdatedValue<MatplotlibButtonState> getHomeButtonState() {
 		return homeState;
+	}
+	
+	/**
+	 * @return drag selection state
+	 */
+	public UpdatedValue<Boolean> getDragState() {
+		return dragState;
 	}
 
 	/**
@@ -405,16 +433,35 @@ public class MatplotlibFigureViewModel implements Closeable {
 	public void setCursorPosition(final MatplotlibCursorPosition cursorPosition) {
 		this.cursorPosition = cursorPosition;
 		cursorPositionChanged.set(true);
+		
+		// if zoom and drag are enabled manage drag selection
+		if (zoomState.getValue() == MatplotlibButtonState.ENABLED_ACTIVE && dragState.getValue()) {
+			setSelectionBounds(MatplotlibDragSelectionType.DRAG_UPDATE, cursorPosition);
+		}
 	}
 	
 	/**
 	 * Notifies the websocket model that a mouse button as been pressed/released over the figure.
-	 * @param position the cursor position
+	 * @param cursorPosition the cursor position
 	 * @param pressType the type of mouse event
 	 */
-	public void notifyButtonPressed(MatplotlibCursorPosition position, MatplotlibPressType pressType) {
+	public void notifyButtonPressed(MatplotlibCursorPosition cursorPosition, MatplotlibPressType pressType) {
 		allowImmediateRedraw.set(true);
-		model.notifyButtonPress(position, pressType);
+		model.notifyButtonPress(cursorPosition, pressType);
+		
+		// if zoom is enabled manage drag selection
+		if (zoomState.getValue() == MatplotlibButtonState.ENABLED_ACTIVE) {
+			switch (pressType) {
+				case BUTTON_PRESS:
+					setSelectionBounds(MatplotlibDragSelectionType.DRAG_START, cursorPosition);
+					break;
+				case BUTTON_RELEASE:
+					setSelectionBounds(MatplotlibDragSelectionType.DRAG_END, cursorPosition);
+					break;
+				default:
+					break;
+			}
+		}
 	}
 	
 	/**
@@ -427,5 +474,47 @@ public class MatplotlibFigureViewModel implements Closeable {
 		model.navigatePlot(navType);
 	}
 
+	/**
+	 * Sets the bounds of the zoom drag selection box.
+	 * @param dragType
+	 * @param cursorPosition
+	 */
+	public void setSelectionBounds(MatplotlibDragSelectionType dragType, MatplotlibCursorPosition cursorPosition) {
+		if (dragType == MatplotlibDragSelectionType.DRAG_START) {
+			startPos.setValue(cursorPosition);
+			endPos.setValue(cursorPosition);
+			dragState.setValue(true);
+		} else if (dragType == MatplotlibDragSelectionType.DRAG_UPDATE) {
+			endPos.setValue(cursorPosition);
+			dragState.setValue(true);
+		} else {
+			endPos.setValue(cursorPosition);
+			dragState.setValue(false);
+		}
+	}
+	
+	/**
+	 * Gets the bounds of the zoom selection box.
+	 * @return map of: min x and y distances, width, height
+	 */
+	public Map<String, Integer> getSelectionBounds() {
+		 int minX = Math.min(startPos.getValue().x(), endPos.getValue().x());
+         int minY = Math.min(startPos.getValue().y(), endPos.getValue().y());
+
+         int maxX = Math.max(startPos.getValue().x(), endPos.getValue().x());
+         int maxY = Math.max(startPos.getValue().y(), endPos.getValue().y());
+
+         int width = maxX - minX;
+         int height = maxY - minY;
+          
+         Map<String, Integer> bounds = new HashMap<>();
+         
+         bounds.put("minX", minX);
+         bounds.put("minY", minY);
+         bounds.put("width", width);
+         bounds.put("height", height);
+         
+         return bounds;
+	}
 
 }

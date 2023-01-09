@@ -119,6 +119,7 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 			@Override
 			public void onMessage(String message) {
 				LoggerUtils.logIfExtraDebug(LOG, String.format("string message from %s: %s", getUrl(), message));
+				System.out.println(message);
 				try {
 					// Can't deserialize to Map<String, String> because some messages are of type Map<String, List>
 					// So have to deserialize to Object initially and then cast later.
@@ -190,8 +191,10 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 		    propertiesToSend.put("type", type);
 		    propertiesToSend.put("figure_id", Integer.toString(figNum));
 		    
+		    
 			remote.sendText(GSON.toJson(propertiesToSend));
 			LoggerUtils.logIfExtraDebug(LOG, String.format("sent %s to %s", propertiesToSend, getUrl()));
+			System.out.println(String.format("sent %s to %s", propertiesToSend, getUrl()));
 		} catch (RuntimeException e) {
 			LoggerUtils.logErrorWithStackTrace(LOG, "Failed to send property to websocket: " + e.getMessage(), e);
 		}

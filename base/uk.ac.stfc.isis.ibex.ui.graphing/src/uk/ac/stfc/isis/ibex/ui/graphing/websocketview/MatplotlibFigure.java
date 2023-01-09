@@ -1,6 +1,7 @@
 package uk.ac.stfc.isis.ibex.ui.graphing.websocketview;
 
 import java.beans.PropertyChangeListener;
+import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
@@ -12,8 +13,11 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.events.MouseTrackListener;
+import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -21,6 +25,8 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Tracker;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
@@ -120,7 +126,10 @@ public class MatplotlibFigure extends Composite {
 			@Override
 			public void mouseMove(MouseEvent e) {
 				viewModel.setCursorPosition(new MatplotlibCursorPosition(e.x, e.y, true));
-
+				
+				if (viewModel.getDragState().getValue()) {
+					plotCanvas.redraw();
+				}
 			}
 		};
 		
@@ -128,19 +137,35 @@ public class MatplotlibFigure extends Composite {
 			@Override
 			public void mouseDown(MouseEvent e) {
 				viewModel.notifyButtonPressed(new MatplotlibCursorPosition(e.x, e.y, true), MatplotlibPressType.BUTTON_PRESS);
-
 			}
 			
 			@Override
 			public void mouseUp(MouseEvent e) {
 				viewModel.notifyButtonPressed(new MatplotlibCursorPosition(e.x, e.y, true), MatplotlibPressType.BUTTON_RELEASE);
-
+				
+				if (viewModel.getDragState().getValue()) {
+					plotCanvas.redraw();
+				}
 			}
 		};
 		
 		plotCanvas.addMouseTrackListener(mouseTrackListener);
 		plotCanvas.addMouseMoveListener(mouseMoveListener);
 		plotCanvas.addMouseListener(mouseListener);
+		
+		plotCanvas.addListener(SWT.Paint, e -> {
+            if (viewModel.getDragState().getValue()) {
+                GC gc = e.gc;
+                gc.setLineStyle(SWT.LINE_DASH);
+
+                //gc.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_BLACK));
+                gc.setAlpha(128);
+
+                Map<String, Integer> bounds = viewModel.getSelectionBounds();
+                
+                gc.drawRectangle(bounds.get("minX"), bounds.get("minY"), bounds.get("width"), bounds.get("height"));
+            }
+        });
 		
 		connectionNameListener = viewModel.getPlotName()
 				.addUiThreadPropertyChangeListener(e -> {
@@ -156,8 +181,6 @@ public class MatplotlibFigure extends Composite {
 				});
 		imageListener = viewModel.getImage()
 				.addUiThreadPropertyChangeListener(e -> drawImage((ImageData) e.getNewValue()));
-		
-		
 	}
 	
 	/**

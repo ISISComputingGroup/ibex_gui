@@ -4,6 +4,9 @@ import java.beans.PropertyChangeListener;
 import java.util.Objects;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseTrackAdapter;
+import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
@@ -53,23 +56,24 @@ public class MatplotlibToolbar {
 		
 		
 		homeButton = new MatplotlibButton(viewModel.getHomeButtonState(), toolBar, 
-				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.HOME)), HOME_ICON);
+				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.HOME)), HOME_ICON, "Reset original view");
 
 		backButton = new MatplotlibButton(viewModel.getBackButtonState(), toolBar, 
-				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.BACK)), BACK_ICON);
+				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.BACK)), BACK_ICON, "Back to previous view");
 		
 		forwardButton = new MatplotlibButton(viewModel.getForwardButtonState(), toolBar, 
-				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.FORWARD)), FORWARD_ICON);
+				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.FORWARD)), FORWARD_ICON, "Forward to next view");
 		
 		// This is used, but only to be added to the toolbar.
 		@SuppressWarnings("unused")
 		var separator = new ToolItem(toolBar, SWT.SEPARATOR);
 		
 		panButton = new MatplotlibButton(viewModel.getPanButtonState(), toolBar, 
-				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.PAN)), PAN_ACTIVE, PAN_INACTIVE);
+				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.PAN)), PAN_ACTIVE, PAN_INACTIVE, "Pan");
 		
 		zoomButton = new MatplotlibButton(viewModel.getZoomButtonState(), toolBar, 
-				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.ZOOM)), ZOOM_ACTIVE, ZOOM_INACTIVE);
+				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.ZOOM)), ZOOM_ACTIVE, ZOOM_INACTIVE, "Zoom");
+
 	}
 	
 	/**
@@ -94,6 +98,7 @@ public class MatplotlibToolbar {
 		private ToolItem button;
 		private Image activeIcon;
 		private Image inactiveIcon;
+		private String description;
 		
 		private final PropertyChangeListener buttonListener;
 		
@@ -107,8 +112,8 @@ public class MatplotlibToolbar {
 		 * @param selectionListener
 		 * @param iconFilePath
 		 */
-		MatplotlibButton(UpdatedValue<MatplotlibButtonState> state, ToolBar toolBar, SelectionListener selectionListener, String iconFilePath) {
-			this(state, toolBar, selectionListener, iconFilePath, iconFilePath);
+		MatplotlibButton(UpdatedValue<MatplotlibButtonState> state, ToolBar toolBar, SelectionListener selectionListener, String iconFilePath, String description) {
+			this(state, toolBar, selectionListener, iconFilePath, iconFilePath, description);
 		}
 		
 		/**
@@ -119,10 +124,11 @@ public class MatplotlibToolbar {
 		 * @param activeIconFilePath
 		 * @param inactiveIconFilePath
 		 */
-		MatplotlibButton(UpdatedValue<MatplotlibButtonState> viewModelState, ToolBar toolBar, SelectionListener selectionListener, String activeIconFilePath, String inactiveIconFilePath) {
+		MatplotlibButton(UpdatedValue<MatplotlibButtonState> viewModelState, ToolBar toolBar, SelectionListener selectionListener, String activeIconFilePath, String inactiveIconFilePath, String description) {
 			this.activeIcon = ResourceManager.getPluginImage(SYMBOLIC_PATH, activeIconFilePath);
 			this.inactiveIcon = ResourceManager.getPluginImage(SYMBOLIC_PATH, inactiveIconFilePath);
 			this.viewModelState = viewModelState;
+			this.description = description;
 			
 			this.buttonState.setValue(viewModelState.getValue());
 			button = new ToolItem(toolBar, SWT.PUSH);
@@ -136,6 +142,12 @@ public class MatplotlibToolbar {
 							this.setState((MatplotlibButtonState) e.getNewValue());
 						}
 					});
+			/*
+			 * button.addListener(SWT.MouseHover, new Listener() {
+			 * 
+			 * @Override public void handleEvent(Event e) { // why isn't this working? :(
+			 * viewModel.getModel().setPlotMessage(description); } });
+			 */
 		}
 		
 		/**
