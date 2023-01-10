@@ -220,7 +220,7 @@ public class ServerStatusViewModel extends ModelObject {
 	 * @return The ISIS DAE status status
 	 */
 	public ServerStatus getIsisDaeStatus() {
-		return runControlStatus;
+		return isisDaeRunning;
 	}
 
 	/**
