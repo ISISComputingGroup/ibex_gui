@@ -1823,7 +1823,7 @@
       <key>Superlogics</key>
       <value>
         <type>MERCURY</type>
-        <path>superlogics.opi</path>
+        <path>superlogics/superlogics.opi</path>
         <description>The OPI for the Superlogics data acquisition system.</description>
         <macros>
           <macro>
