@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.logging.log4j.Logger;
-import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
@@ -41,8 +40,8 @@ public class MatplotlibFigureViewModel implements Closeable {
 	private final SettableUpdatedValue<MatplotlibButtonState> panState;
 	private final SettableUpdatedValue<MatplotlibNavigationType> navMode;
 	
-	private final SettableUpdatedValue<MatplotlibCursorPosition> startPos;
-	private final SettableUpdatedValue<MatplotlibCursorPosition> endPos;
+	private final SettableUpdatedValue<MatplotlibCursorPosition> dragStartPos;
+	private final SettableUpdatedValue<MatplotlibCursorPosition> dragEndPos;
 	private final SettableUpdatedValue<Boolean> dragState;
 	
 	
@@ -125,8 +124,8 @@ public class MatplotlibFigureViewModel implements Closeable {
 		panState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
 		navMode = new SettableUpdatedValue<MatplotlibNavigationType>(MatplotlibNavigationType.NONE);
 		
-		startPos = new SettableUpdatedValue<MatplotlibCursorPosition>(new MatplotlibCursorPosition(0, 0, true));
-		endPos = new SettableUpdatedValue<MatplotlibCursorPosition>(new MatplotlibCursorPosition(0, 0, true));
+		dragStartPos = new SettableUpdatedValue<MatplotlibCursorPosition>(new MatplotlibCursorPosition(0, 0, true));
+		dragEndPos = new SettableUpdatedValue<MatplotlibCursorPosition>(new MatplotlibCursorPosition(0, 0, true));
 		dragState = new SettableUpdatedValue<Boolean>(false);
 		
 		updateExecutor  = 
@@ -159,8 +158,8 @@ public class MatplotlibFigureViewModel implements Closeable {
 		panState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
 		navMode = new SettableUpdatedValue<MatplotlibNavigationType>(MatplotlibNavigationType.NONE);
 
-		startPos = new SettableUpdatedValue<MatplotlibCursorPosition>(new MatplotlibCursorPosition(0, 0, true));
-		endPos = new SettableUpdatedValue<MatplotlibCursorPosition>(new MatplotlibCursorPosition(0, 0, true));
+		dragStartPos = new SettableUpdatedValue<MatplotlibCursorPosition>(new MatplotlibCursorPosition(0, 0, true));
+		dragEndPos = new SettableUpdatedValue<MatplotlibCursorPosition>(new MatplotlibCursorPosition(0, 0, true));
 		dragState = new SettableUpdatedValue<Boolean>(false);
 		
 		updateExecutor  = executor;
@@ -481,14 +480,14 @@ public class MatplotlibFigureViewModel implements Closeable {
 	 */
 	public void setSelectionBounds(MatplotlibDragSelectionType dragType, MatplotlibCursorPosition cursorPosition) {
 		if (dragType == MatplotlibDragSelectionType.DRAG_START) {
-			startPos.setValue(cursorPosition);
-			endPos.setValue(cursorPosition);
+			dragStartPos.setValue(cursorPosition);
+			dragEndPos.setValue(cursorPosition);
 			dragState.setValue(true);
 		} else if (dragType == MatplotlibDragSelectionType.DRAG_UPDATE) {
-			endPos.setValue(cursorPosition);
+			dragEndPos.setValue(cursorPosition);
 			dragState.setValue(true);
 		} else {
-			endPos.setValue(cursorPosition);
+			dragEndPos.setValue(cursorPosition);
 			dragState.setValue(false);
 		}
 	}
@@ -498,11 +497,11 @@ public class MatplotlibFigureViewModel implements Closeable {
 	 * @return map of: min x and y distances, width, height
 	 */
 	public Map<String, Integer> getSelectionBounds() {
-		 int minX = Math.min(startPos.getValue().x(), endPos.getValue().x());
-         int minY = Math.min(startPos.getValue().y(), endPos.getValue().y());
+		 int minX = Math.min(dragStartPos.getValue().x(), dragEndPos.getValue().x());
+         int minY = Math.min(dragStartPos.getValue().y(), dragEndPos.getValue().y());
 
-         int maxX = Math.max(startPos.getValue().x(), endPos.getValue().x());
-         int maxY = Math.max(startPos.getValue().y(), endPos.getValue().y());
+         int maxX = Math.max(dragStartPos.getValue().x(), dragEndPos.getValue().x());
+         int maxY = Math.max(dragStartPos.getValue().y(), dragEndPos.getValue().y());
 
          int width = maxX - minX;
          int height = maxY - minY;

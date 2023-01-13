@@ -13,11 +13,9 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.events.MouseTrackListener;
-import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -25,8 +23,6 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Tracker;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
@@ -156,13 +152,10 @@ public class MatplotlibFigure extends Composite {
 		plotCanvas.addListener(SWT.Paint, e -> {
             if (viewModel.getDragState().getValue()) {
                 GC gc = e.gc;
-                gc.setLineStyle(SWT.LINE_DASH);
-
-                //gc.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_BLACK));
-                gc.setAlpha(128);
-
+                
                 Map<String, Integer> bounds = viewModel.getSelectionBounds();
                 
+                gc.setLineStyle(SWT.LINE_DASH);
                 gc.drawRectangle(bounds.get("minX"), bounds.get("minY"), bounds.get("width"), bounds.get("height"));
             }
         });
