@@ -102,7 +102,7 @@ public class MatplotlibFigure extends Composite {
 			}
 		});
 		
-		plotCanvas.addPaintListener(event -> event.gc.drawImage(plotImage, 0, 0));
+		//plotCanvas.addPaintListener(event -> event.gc.drawImage(plotImage, 0, 0));
 		
 		viewModel.canvasResized(plotCanvas.getBounds().width, plotCanvas.getBounds().height);
 		
@@ -149,7 +149,9 @@ public class MatplotlibFigure extends Composite {
 		plotCanvas.addMouseMoveListener(mouseMoveListener);
 		plotCanvas.addMouseListener(mouseListener);
 		
-		plotCanvas.addListener(SWT.Paint, e -> {
+		plotCanvas.addPaintListener(e -> {
+			e.gc.drawImage(plotImage, 0, 0);
+			
             if (viewModel.getDragState().getValue()) {
                 GC gc = e.gc;
                 
