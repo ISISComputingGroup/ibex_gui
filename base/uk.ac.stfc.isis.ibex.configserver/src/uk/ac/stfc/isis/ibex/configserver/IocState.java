@@ -134,14 +134,25 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
      * @return the simulation level of the IOC
      */
     public SimLevel getSimLevel() {
-    	Configuration currentConfig = configServer.currentConfig().getValue();
-    	Collection<Ioc> configIocs = currentConfig.getIocs();
+    	Configuration currentConfiguration = configServer.currentConfig().getValue();
     	
-    	for (var ioc : configIocs) {
+    	for (var ioc : currentConfiguration.getIocs()) {
     		if (ioc.getName().equals(name)) {
     			return ioc.getSimLevel();
     		}
     	}
+    	
+    	for (var availableComponent : configServer.componentDetails().getValue()) {
+    		for (var configComponent : currentConfiguration.getComponents()) {
+    			if (availableComponent.name().equals(configComponent.getName())) {
+    				
+    				for (var ioc : availableComponent.getIocs()) {
+    					return ioc.getSimLevel();
+    				}
+    			}
+    		}
+    	}
+    	    	
     	return SimLevel.NONE;
     }
 
