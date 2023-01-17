@@ -147,7 +147,9 @@ public class IocState extends ModelObject implements Comparable<IocState>, IName
     			if (availableComponent.name().equals(configComponent.getName())) {
     				
     				for (var ioc : availableComponent.getIocs()) {
-    					return ioc.getSimLevel();
+    					if (ioc.getName().equals(name)) {
+    		    			return ioc.getSimLevel();
+    		    		}
     				}
     			}
     		}
