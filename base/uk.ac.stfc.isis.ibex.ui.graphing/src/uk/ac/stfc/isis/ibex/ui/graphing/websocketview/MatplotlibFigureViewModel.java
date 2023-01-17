@@ -31,7 +31,6 @@ public class MatplotlibFigureViewModel implements Closeable {
 	
 	private final SettableUpdatedValue<String> plotName;
 	private final SettableUpdatedValue<String> plotMessage;
-	private final SettableUpdatedValue<ImageData> image;
 	private final SettableUpdatedValue<MatplotlibCursorType> cursorType;
 	
 	private final SettableUpdatedValue<MatplotlibButtonState> homeState;
@@ -116,7 +115,6 @@ public class MatplotlibFigureViewModel implements Closeable {
 		
 		plotName = new SettableUpdatedValue<String>(
 				String.format("[Disconnected] %s", model.getPlotName(), figureNumber));
-		image = new SettableUpdatedValue<ImageData>(generateBlankImage());
 		plotMessage = new SettableUpdatedValue<String>("");
 		cursorType = new SettableUpdatedValue<MatplotlibCursorType>(MatplotlibCursorType.DEFAULT);
 		
@@ -130,7 +128,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 		dragStartPos = new SettableUpdatedValue<MatplotlibCursorPosition>(new MatplotlibCursorPosition(0, 0, true));
 		dragEndPos = new SettableUpdatedValue<MatplotlibCursorPosition>(new MatplotlibCursorPosition(0, 0, true));
 		dragState = new SettableUpdatedValue<Boolean>(false);
-		canvasData = new SettableUpdatedValue<MatplotlibCanvasData>(new MatplotlibCanvasData(image.getValue(), calculateZoomSelectionBounds()));
+		canvasData = new SettableUpdatedValue<MatplotlibCanvasData>(new MatplotlibCanvasData(generateBlankImage(), calculateZoomSelectionBounds()));
 		
 		updateExecutor  = 
 				Executors.newSingleThreadScheduledExecutor(
@@ -153,7 +151,6 @@ public class MatplotlibFigureViewModel implements Closeable {
 		
 		plotName = new SettableUpdatedValue<String>(
 				String.format("[Disconnected] %s", model.getPlotName(), figureNumber));
-		image = new SettableUpdatedValue<ImageData>(generateBlankImage());
 		plotMessage = new SettableUpdatedValue<String>("");
 		cursorType = new SettableUpdatedValue<MatplotlibCursorType>(MatplotlibCursorType.DEFAULT);
 		
@@ -167,7 +164,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 		dragStartPos = new SettableUpdatedValue<MatplotlibCursorPosition>(new MatplotlibCursorPosition(0, 0, true));
 		dragEndPos = new SettableUpdatedValue<MatplotlibCursorPosition>(new MatplotlibCursorPosition(0, 0, true));
 		dragState = new SettableUpdatedValue<Boolean>(false);
-		canvasData = new SettableUpdatedValue<MatplotlibCanvasData>(new MatplotlibCanvasData(image.getValue(), calculateZoomSelectionBounds()));
+		canvasData = new SettableUpdatedValue<MatplotlibCanvasData>(new MatplotlibCanvasData(generateBlankImage(), calculateZoomSelectionBounds()));
 		
 		updateExecutor  = executor;
 		
@@ -189,14 +186,6 @@ public class MatplotlibFigureViewModel implements Closeable {
 		return model;
 	}
 
-	/**
-	 * Gets an UpdatedValue which contains the image data to be drawn.
-	 * @return the image
-	 */
-	public UpdatedValue<ImageData> getImage() {
-		return image;
-	}
-	
 	/**
 	 * Updates the plot name from the model.
 	 */
@@ -311,12 +300,16 @@ public class MatplotlibFigureViewModel implements Closeable {
 	 */
 	public void updateCursorType() {
 		if (model.isConnected()) { 
-			cursorType.setValue(model.getCursorType());
+			final var type = model.getCursorType();
+			cursorType.setValue(type);
 		} else { 
 			cursorType.setValue(MatplotlibCursorType.DEFAULT);
 		}
 	}
 	
+	/**
+	 * @return current cursor type
+	 */
 	public SettableUpdatedValue<MatplotlibCursorType> getCursorType() {
 		return cursorType;
 	}
@@ -350,8 +343,9 @@ public class MatplotlibFigureViewModel implements Closeable {
 	}
 	
 	/**
-	 * 
-	 * @return current canvas data (image and zoom selection bounds)
+	 * @return current canvas data; 
+	 * 		image - an UpdatedValue which contains the image data to be drawn.
+	 *      zoomSelectionArea - a Map<String, Integer> of the selection area bounds (min x/y distances, width, height) to be drawn
 	 */
 	public UpdatedValue<MatplotlibCanvasData> getCanvasData() {
 		return canvasData;
@@ -380,8 +374,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 		try {
 			if (clientRedrawRequired.getAndSet(false)) {
 				final ImageData imageData = model.getImageData().orElseGet(this::generateBlankImage);
-				image.setValue(imageData);
-				canvasData.setValue(new MatplotlibCanvasData(image.getValue(), calculateZoomSelectionBounds()));
+				canvasData.setValue(new MatplotlibCanvasData(imageData, calculateZoomSelectionBounds()));
 			}
 		} catch (Exception e) {
 			LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);

@@ -185,7 +185,7 @@ public class MatplotlibViewModelTests {
     			Optional.of(new ImageData(new ByteArrayInputStream(MatplotlibModelTests.FAKE_IMAGE_BYTES))));
     	
     	var mockListener = Mockito.mock(PropertyChangeListener.class);
-    	viewModel.getImage().addPropertyChangeListener(mockListener);
+    	viewModel.getCanvasData().addPropertyChangeListener(mockListener);
     	viewModel.imageUpdated();
     	
     	// index 0 = redraw, 1 = canvas size, 2 = cursor position, 3 = force refresh

@@ -193,7 +193,9 @@ public class MatplotlibFigure extends Composite {
 					}
 				});
 		canvasListener = viewModel.getCanvasData()
-				.addUiThreadPropertyChangeListener(e -> drawImage(viewModel.getImage().getValue()));
+				.addUiThreadPropertyChangeListener(e -> {
+					drawImage(viewModel.getCanvasData().getValue().image());
+				});
 	}
 	
 	/**
