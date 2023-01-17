@@ -13,6 +13,7 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.events.MouseTrackListener;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Rectangle;
@@ -45,9 +46,14 @@ public class MatplotlibFigure extends Composite {
 	private Image plotImage;
 	private MatplotlibToolbar toolBar;
 	
+	private final Cursor defaultCursor;
+	private final Cursor zoomCursor;
+	private final Cursor panCursor;
+	
 	private final PropertyChangeListener connectionNameListener;
 	private final PropertyChangeListener canvasListener;
 	private final PropertyChangeListener plotMessageListener;
+	private final PropertyChangeListener cursorTypeListener;
 	private final MouseTrackListener mouseTrackListener;
 	private final MouseMoveListener mouseMoveListener;
 	private final MouseListener mouseListener;
@@ -77,6 +83,10 @@ public class MatplotlibFigure extends Composite {
 		containerLayout.marginWidth = 0;
 		containerLayout.marginHeight = 0;
 		container.setLayout(containerLayout);
+		
+		defaultCursor = new Cursor(container.getDisplay(), SWT.CURSOR_ARROW);
+		zoomCursor = new Cursor(container.getDisplay(), SWT.CURSOR_CROSS);
+		panCursor = new Cursor(container.getDisplay(), SWT.CURSOR_HAND);
 		
 		labelConnectionStatus = new Label(container, SWT.NONE);
 		labelConnectionStatus.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
@@ -169,6 +179,19 @@ public class MatplotlibFigure extends Composite {
 					    plotMessage.setText(e.getNewValue().toString());
 					}
 				});
+		cursorTypeListener = viewModel.getCursorType()
+				.addUiThreadPropertyChangeListener(e -> {
+					if (!plotMessage.isDisposed()) {
+					    if (viewModel.getCursorType().getValue() == MatplotlibCursorType.CROSSHAIR) {
+					    	container.setCursor(zoomCursor);
+					    } else if (viewModel.getCursorType().getValue() == MatplotlibCursorType.HAND) {
+					    	container.setCursor(panCursor);
+					    } else {
+					    	container.setCursor(defaultCursor);
+					    }
+				
+					}
+				});
 		canvasListener = viewModel.getCanvasData()
 				.addUiThreadPropertyChangeListener(e -> drawImage(viewModel.getImage().getValue()));
 	}
@@ -207,6 +230,7 @@ public class MatplotlibFigure extends Composite {
 	public void dispose() {
 		viewModel.getPlotName().removePropertyChangeListener(connectionNameListener);
 		viewModel.getPlotMessage().removePropertyChangeListener(plotMessageListener);
+		viewModel.getCursorType().removePropertyChangeListener(cursorTypeListener);
 		viewModel.getCanvasData().removePropertyChangeListener(canvasListener);
 		viewModel.close();
 		

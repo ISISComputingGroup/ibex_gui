@@ -33,6 +33,8 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	private boolean backState;
 	private boolean forwardState;
 	
+	private MatplotlibCursorType cursorType;
+	
 	private Optional<ImageData> imageData = Optional.empty();
 	
 	private boolean isConnected = false;
@@ -309,6 +311,34 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 */
 	public MatplotlibNavigationType getNavMode() {
 		return navMode;
+	}
+	
+	/**
+	 * Sets the cursor appearance.
+	 * @param cursorType
+	 */
+	public void setCursor(String cursorType) {
+		switch (cursorType) {
+			case "default":
+				this.cursorType = MatplotlibCursorType.DEFAULT;
+				break;
+			case "crosshair":
+				this.cursorType = MatplotlibCursorType.CROSSHAIR;
+				break;
+			case "move":
+				this.cursorType = MatplotlibCursorType.HAND;
+				break;
+			default:
+				break;
+		}
+		viewModel.updateCursorType();
+	}
+	
+	/**
+	 * @return the current cursor type
+	 */
+	public MatplotlibCursorType getCursorType() {
+		return cursorType;
 	}
 	
 	/**

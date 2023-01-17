@@ -32,6 +32,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 	private final SettableUpdatedValue<String> plotName;
 	private final SettableUpdatedValue<String> plotMessage;
 	private final SettableUpdatedValue<ImageData> image;
+	private final SettableUpdatedValue<MatplotlibCursorType> cursorType;
 	
 	private final SettableUpdatedValue<MatplotlibButtonState> homeState;
 	private final SettableUpdatedValue<MatplotlibButtonState> backState;
@@ -117,6 +118,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 				String.format("[Disconnected] %s", model.getPlotName(), figureNumber));
 		image = new SettableUpdatedValue<ImageData>(generateBlankImage());
 		plotMessage = new SettableUpdatedValue<String>("");
+		cursorType = new SettableUpdatedValue<MatplotlibCursorType>(MatplotlibCursorType.DEFAULT);
 		
 		backState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
 		forwardState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
@@ -153,6 +155,8 @@ public class MatplotlibFigureViewModel implements Closeable {
 				String.format("[Disconnected] %s", model.getPlotName(), figureNumber));
 		image = new SettableUpdatedValue<ImageData>(generateBlankImage());
 		plotMessage = new SettableUpdatedValue<String>("");
+		cursorType = new SettableUpdatedValue<MatplotlibCursorType>(MatplotlibCursorType.DEFAULT);
+		
 		backState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
 		forwardState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
 		homeState = new SettableUpdatedValue<MatplotlibButtonState>(MatplotlibButtonState.DISABLED);
@@ -303,6 +307,21 @@ public class MatplotlibFigureViewModel implements Closeable {
 	}
 	
 	/**
+	 * Updates the cursor appearance from the model. 
+	 */
+	public void updateCursorType() {
+		if (model.isConnected()) { 
+			cursorType.setValue(model.getCursorType());
+		} else { 
+			cursorType.setValue(MatplotlibCursorType.DEFAULT);
+		}
+	}
+	
+	public SettableUpdatedValue<MatplotlibCursorType> getCursorType() {
+		return cursorType;
+	}
+	
+	/**
 	 * @return pan enabled state
 	 */
 	public UpdatedValue<MatplotlibButtonState> getPanButtonState() {
@@ -422,6 +441,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 	public void onConnectionStatus(boolean isConnected) {
 		updatePlotName();
 		updatePlotMessage();
+		updateCursorType();
 		updateForwardState();
 		updateBackState();
 		updateNavMode();
