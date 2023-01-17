@@ -43,7 +43,8 @@ public class MatplotlibFigureViewModel implements Closeable {
 	private final SettableUpdatedValue<MatplotlibCursorPosition> dragStartPos;
 	private final SettableUpdatedValue<MatplotlibCursorPosition> dragEndPos;
 	private final SettableUpdatedValue<Boolean> dragState;
-	
+
+	private final SettableUpdatedValue<MatplotlibCanvasData> canvasData;
 	
 	private static final int PALETTE_BIT_DEPTH = 8;
 	
@@ -76,7 +77,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 	 * Setting this too fast could cause excessive CPU consumption if the image is being rapidly updated
 	 * by the server.
 	 */
-	private static final int MAX_DRAW_RATE_MS = 250;
+	private static final int MAX_DRAW_RATE_MS = 100;
 	
 	/**
 	 * The maximum frequency at which we might send resize requests to the server.
@@ -127,6 +128,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 		dragStartPos = new SettableUpdatedValue<MatplotlibCursorPosition>(new MatplotlibCursorPosition(0, 0, true));
 		dragEndPos = new SettableUpdatedValue<MatplotlibCursorPosition>(new MatplotlibCursorPosition(0, 0, true));
 		dragState = new SettableUpdatedValue<Boolean>(false);
+		canvasData = new SettableUpdatedValue<MatplotlibCanvasData>(new MatplotlibCanvasData(image.getValue(), calculateZoomSelectionBounds()));
 		
 		updateExecutor  = 
 				Executors.newSingleThreadScheduledExecutor(
@@ -161,6 +163,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 		dragStartPos = new SettableUpdatedValue<MatplotlibCursorPosition>(new MatplotlibCursorPosition(0, 0, true));
 		dragEndPos = new SettableUpdatedValue<MatplotlibCursorPosition>(new MatplotlibCursorPosition(0, 0, true));
 		dragState = new SettableUpdatedValue<Boolean>(false);
+		canvasData = new SettableUpdatedValue<MatplotlibCanvasData>(new MatplotlibCanvasData(image.getValue(), calculateZoomSelectionBounds()));
 		
 		updateExecutor  = executor;
 		
@@ -326,6 +329,14 @@ public class MatplotlibFigureViewModel implements Closeable {
 	public UpdatedValue<Boolean> getDragState() {
 		return dragState;
 	}
+	
+	/**
+	 * 
+	 * @return current canvas data (image and zoom selection bounds)
+	 */
+	public UpdatedValue<MatplotlibCanvasData> getCanvasData() {
+		return canvasData;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -351,6 +362,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 			if (clientRedrawRequired.getAndSet(false)) {
 				final ImageData imageData = model.getImageData().orElseGet(this::generateBlankImage);
 				image.setValue(imageData);
+				canvasData.setValue(new MatplotlibCanvasData(image.getValue(), calculateZoomSelectionBounds()));
 			}
 		} catch (Exception e) {
 			LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
@@ -378,7 +390,6 @@ public class MatplotlibFigureViewModel implements Closeable {
 		}
 	}
 	
-
 	/**
 	 * Notifies this viewmodel that a new image is available.
 	 */
@@ -423,6 +434,13 @@ public class MatplotlibFigureViewModel implements Closeable {
 		// If connected, send resize request to server to ensure it in sync with local size.
 		serverResizeRequired.set(isConnected);
 		homeState.setValue(isConnected ? MatplotlibButtonState.ENABLED_INACTIVE : MatplotlibButtonState.DISABLED);
+	}
+	
+	/**
+	 * Notify the client that the plot requires re-drawing.
+	 */
+	public void notifyClientRedrawRequired() {
+		clientRedrawRequired.set(true);
 	}
 	
 	/**
@@ -496,7 +514,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 	 * Gets the bounds of the zoom selection box.
 	 * @return map of: min x and y distances, width, height
 	 */
-	public Map<String, Integer> getSelectionBounds() {
+	private Map<String, Integer> calculateZoomSelectionBounds() {
 		 int minX = Math.min(dragStartPos.getValue().x(), dragEndPos.getValue().x());
          int minY = Math.min(dragStartPos.getValue().y(), dragEndPos.getValue().y());
 

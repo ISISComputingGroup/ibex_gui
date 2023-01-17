@@ -13,7 +13,6 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.events.MouseTrackListener;
-import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Rectangle;
@@ -47,7 +46,7 @@ public class MatplotlibFigure extends Composite {
 	private MatplotlibToolbar toolBar;
 	
 	private final PropertyChangeListener connectionNameListener;
-	private final PropertyChangeListener imageListener;
+	private final PropertyChangeListener canvasListener;
 	private final PropertyChangeListener plotMessageListener;
 	private final MouseTrackListener mouseTrackListener;
 	private final MouseMoveListener mouseMoveListener;
@@ -102,8 +101,6 @@ public class MatplotlibFigure extends Composite {
 			}
 		});
 		
-		//plotCanvas.addPaintListener(event -> event.gc.drawImage(plotImage, 0, 0));
-		
 		viewModel.canvasResized(plotCanvas.getBounds().width, plotCanvas.getBounds().height);
 		
 		mouseTrackListener = new MouseTrackAdapter() {
@@ -124,7 +121,7 @@ public class MatplotlibFigure extends Composite {
 				viewModel.setCursorPosition(new MatplotlibCursorPosition(e.x, e.y, true));
 				
 				if (viewModel.getDragState().getValue()) {
-					plotCanvas.redraw();
+					viewModel.notifyClientRedrawRequired();
 				}
 			}
 		};
@@ -140,7 +137,7 @@ public class MatplotlibFigure extends Composite {
 				viewModel.notifyButtonPressed(new MatplotlibCursorPosition(e.x, e.y, true), MatplotlibPressType.BUTTON_RELEASE);
 				
 				if (viewModel.getDragState().getValue()) {
-					plotCanvas.redraw();
+					viewModel.notifyClientRedrawRequired();
 				}
 			}
 		};
@@ -153,12 +150,10 @@ public class MatplotlibFigure extends Composite {
 			e.gc.drawImage(plotImage, 0, 0);
 			
             if (viewModel.getDragState().getValue()) {
-                GC gc = e.gc;
+                Map<String, Integer> bounds = viewModel.getCanvasData().getValue().zoomSelectionArea();
                 
-                Map<String, Integer> bounds = viewModel.getSelectionBounds();
-                
-                gc.setLineStyle(SWT.LINE_DASH);
-                gc.drawRectangle(bounds.get("minX"), bounds.get("minY"), bounds.get("width"), bounds.get("height"));
+                e.gc.setLineStyle(SWT.LINE_DASH);
+                e.gc.drawRectangle(bounds.get("minX"), bounds.get("minY"), bounds.get("width"), bounds.get("height"));
             }
         });
 		
@@ -174,8 +169,8 @@ public class MatplotlibFigure extends Composite {
 					    plotMessage.setText(e.getNewValue().toString());
 					}
 				});
-		imageListener = viewModel.getImage()
-				.addUiThreadPropertyChangeListener(e -> drawImage((ImageData) e.getNewValue()));
+		canvasListener = viewModel.getCanvasData()
+				.addUiThreadPropertyChangeListener(e -> drawImage(viewModel.getImage().getValue()));
 	}
 	
 	/**
@@ -211,8 +206,8 @@ public class MatplotlibFigure extends Composite {
 	@Override
 	public void dispose() {
 		viewModel.getPlotName().removePropertyChangeListener(connectionNameListener);
-		viewModel.getImage().removePropertyChangeListener(imageListener);
 		viewModel.getPlotMessage().removePropertyChangeListener(plotMessageListener);
+		viewModel.getCanvasData().removePropertyChangeListener(canvasListener);
 		viewModel.close();
 		
 		if (!plotImage.isDisposed()) {
