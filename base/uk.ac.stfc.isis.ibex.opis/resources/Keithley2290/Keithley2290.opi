@@ -296,7 +296,7 @@ $(pv_value)</tooltip>
       <y>60</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-      <actions hook="false" hook_all="false">
+      <actions hook="false" hook_all="true">
         <action type="WRITE_PV">
           <pv_name>$(pv_name)</pv_name>
           <value>1</value>
@@ -305,7 +305,35 @@ $(pv_value)</tooltip>
           <description></description>
         </action>
         <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT):STATUS.PROC</pv_name>
+          <pv_name>$(PV_ROOT):VOLT_TRIPPED_LATCHED</pv_name>
+          <value>0</value>
+          <timeout>10</timeout>
+          <confirm_message></confirm_message>
+          <description></description>
+        </action>
+        <action type="WRITE_PV">
+          <pv_name>$(PV_ROOT):CURR_TRIPPED_LATCHED</pv_name>
+          <value>0</value>
+          <timeout>10</timeout>
+          <confirm_message></confirm_message>
+          <description></description>
+        </action>
+        <action type="WRITE_PV">
+          <pv_name>$(PV_ROOT):VOLT_TRIPPED</pv_name>
+          <value>0</value>
+          <timeout>10</timeout>
+          <confirm_message></confirm_message>
+          <description></description>
+        </action>
+        <action type="WRITE_PV">
+          <pv_name>$(PV_ROOT):CURR_TRIPPED</pv_name>
+          <value>0</value>
+          <timeout>10</timeout>
+          <confirm_message></confirm_message>
+          <description></description>
+        </action>
+        <action type="WRITE_PV">
+          <pv_name>$(PV_ROOT):VOLT_ON:SP.PROC</pv_name>
           <value>1</value>
           <timeout>10</timeout>
           <confirm_message></confirm_message>
@@ -1291,7 +1319,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
       </on_color>
       <on_label>ON</on_label>
-      <pv_name>$(PV_ROOT):VOLT_ON</pv_name>
+      <pv_name>$(PV_ROOT):VOLT_STABLE</pv_name>
       <pv_value />
       <rules />
       <scale_options>
