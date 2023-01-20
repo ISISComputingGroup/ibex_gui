@@ -525,7 +525,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 	
 	/**
 	 * Gets the bounds of the zoom selection box.
-	 * @return map of: min x and y distances, width, height
+	 * @return map of: min x and y distances, width & height
 	 */
 	private Map<String, Integer> calculateZoomSelectionBounds() {
 		 int minX = Math.min(dragStartPos.getValue().x(), dragEndPos.getValue().x());

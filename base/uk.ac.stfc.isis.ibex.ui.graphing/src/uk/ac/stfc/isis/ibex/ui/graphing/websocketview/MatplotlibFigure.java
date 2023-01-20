@@ -110,6 +110,17 @@ public class MatplotlibFigure extends Composite {
 				viewModel.canvasResized(bounds.width, bounds.height);
 			}
 		});
+
+		plotCanvas.addPaintListener(e -> {
+			e.gc.drawImage(plotImage, 0, 0);
+			
+            if (viewModel.getDragState().getValue()) {
+                Map<String, Integer> bounds = viewModel.getCanvasData().getValue().zoomSelectionArea();
+                
+                e.gc.setLineStyle(SWT.LINE_DASH);
+                e.gc.drawRectangle(bounds.get("minX"), bounds.get("minY"), bounds.get("width"), bounds.get("height"));
+            }
+        });
 		
 		viewModel.canvasResized(plotCanvas.getBounds().width, plotCanvas.getBounds().height);
 		
@@ -155,17 +166,6 @@ public class MatplotlibFigure extends Composite {
 		plotCanvas.addMouseTrackListener(mouseTrackListener);
 		plotCanvas.addMouseMoveListener(mouseMoveListener);
 		plotCanvas.addMouseListener(mouseListener);
-		
-		plotCanvas.addPaintListener(e -> {
-			e.gc.drawImage(plotImage, 0, 0);
-			
-            if (viewModel.getDragState().getValue()) {
-                Map<String, Integer> bounds = viewModel.getCanvasData().getValue().zoomSelectionArea();
-                
-                e.gc.setLineStyle(SWT.LINE_DASH);
-                e.gc.drawRectangle(bounds.get("minX"), bounds.get("minY"), bounds.get("width"), bounds.get("height"));
-            }
-        });
 		
 		connectionNameListener = viewModel.getPlotName()
 				.addUiThreadPropertyChangeListener(e -> {

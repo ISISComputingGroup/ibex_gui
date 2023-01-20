@@ -1,7 +1,6 @@
 package uk.ac.stfc.isis.ibex.ui.graphing.websocketview;
 import java.util.Map;
 import org.eclipse.swt.graphics.ImageData;
-import uk.ac.stfc.isis.ibex.model.SettableUpdatedValue;
 
 /**
  * Record to encapsulate all the data belonging to the matplotlib plot canvas.
