@@ -4,9 +4,6 @@ import java.beans.PropertyChangeListener;
 import java.util.Objects;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseTrackAdapter;
-import org.eclipse.swt.events.MouseTrackListener;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
@@ -53,16 +50,17 @@ public class MatplotlibToolbar {
 		
 		this.viewModel = viewModel;
 		
-		
-		
 		homeButton = new MatplotlibButton(viewModel.getHomeButtonState(), toolBar, 
 				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.HOME)), HOME_ICON, "Reset original view");
-
+		homeButton.getButton().setToolTipText(homeButton.getDescription());
+		
 		backButton = new MatplotlibButton(viewModel.getBackButtonState(), toolBar, 
 				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.BACK)), BACK_ICON, "Back to previous view");
+		backButton.getButton().setToolTipText(backButton.getDescription());
 		
 		forwardButton = new MatplotlibButton(viewModel.getForwardButtonState(), toolBar, 
 				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.FORWARD)), FORWARD_ICON, "Forward to next view");
+		forwardButton.getButton().setToolTipText(forwardButton.getDescription());
 		
 		// This is used, but only to be added to the toolbar.
 		@SuppressWarnings("unused")
@@ -70,10 +68,11 @@ public class MatplotlibToolbar {
 		
 		panButton = new MatplotlibButton(viewModel.getPanButtonState(), toolBar, 
 				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.PAN)), PAN_ACTIVE, PAN_INACTIVE, "Pan");
+		panButton.getButton().setToolTipText(panButton.getDescription());
 		
 		zoomButton = new MatplotlibButton(viewModel.getZoomButtonState(), toolBar, 
 				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.ZOOM)), ZOOM_ACTIVE, ZOOM_INACTIVE, "Zoom");
-
+		zoomButton.getButton().setToolTipText(zoomButton.getDescription());
 	}
 	
 	/**
@@ -142,12 +141,20 @@ public class MatplotlibToolbar {
 							this.setState((MatplotlibButtonState) e.getNewValue());
 						}
 					});
-			/*
-			 * button.addListener(SWT.MouseHover, new Listener() {
-			 * 
-			 * @Override public void handleEvent(Event e) { // why isn't this working? :(
-			 * viewModel.getModel().setPlotMessage(description); } });
-			 */
+		}
+		
+		/**
+		 * @return the button's embedded ToolItem object
+		 */
+		public ToolItem getButton() {
+			return button;
+		}
+		
+		/**
+		 * @return the button's description
+		 */
+		public String getDescription() {
+			return description;
 		}
 		
 		/**
