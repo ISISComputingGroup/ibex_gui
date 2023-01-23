@@ -761,7 +761,7 @@ $(pv_value)</tooltip>
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT)IDN</pv_name>
+      <pv_name>$(PV_ROOT)IDN {"longString":true}</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
