@@ -3132,5 +3132,19 @@
         <categories/>
       </value>
     </entry>
+    <entry>
+      <key>RIKEN Vacuum </key>
+	  <value>
+	    <type>RIKEN</type>
+	    <path>RIKEN/Vacuum/RIKEN_vacuum_synoptic.opi</path>
+	    <macros>
+          <macro>
+            <name>SCHNDR</name>
+            <description>The SCHNDR PV prefix (e.g. SCHNDR_01)</description>
+            <default>SCHNDR_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
   </opis>
 </descriptions>
