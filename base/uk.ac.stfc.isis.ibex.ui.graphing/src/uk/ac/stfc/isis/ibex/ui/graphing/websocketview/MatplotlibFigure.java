@@ -181,10 +181,10 @@ public class MatplotlibFigure extends Composite {
 				});
 		cursorTypeListener = viewModel.getCursorType()
 				.addUiThreadPropertyChangeListener(e -> {
-					if (!plotMessage.isDisposed()) {
-					    if (viewModel.getCursorType().getValue() == MatplotlibCursorType.CROSSHAIR) {
+					if (!container.isDisposed()) {
+					    if (viewModel.getCursorType().getValue().equals(MatplotlibCursorType.CROSSHAIR)) {
 					    	container.setCursor(zoomCursor);
-					    } else if (viewModel.getCursorType().getValue() == MatplotlibCursorType.HAND) {
+					    } else if (viewModel.getCursorType().getValue().equals(MatplotlibCursorType.HAND)) {
 					    	container.setCursor(panCursor);
 					    } else {
 					    	container.setCursor(defaultCursor);
@@ -247,6 +247,10 @@ public class MatplotlibFigure extends Composite {
 			plotCanvas.dispose();
 		}
 		labelConnectionStatus.dispose();
+		
+		defaultCursor.dispose();
+		zoomCursor.dispose();
+		panCursor.dispose();
 		
 		toolBar.dispose();
 		
