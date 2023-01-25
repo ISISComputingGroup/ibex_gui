@@ -2917,6 +2917,16 @@
       </value>
     </entry>
     <entry>
+      <key>WISH Automatic Needle Valve</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>wish_automatic_needle_valve.opi</path>
+        <description>WISH Automatic Needle Valve</description>
+        <macros/>
+        <categories/>
+      </value>
+    </entry>
+    <entry>
       <key>Tektronix AFG3000</key>
       <value>
         <type>FUNCTION_GENERATOR</type>
