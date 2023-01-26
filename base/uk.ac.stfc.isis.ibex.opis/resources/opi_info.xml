@@ -2163,6 +2163,24 @@
       </value>
     </entry>
     <entry>
+      <key>Keithley 2000</key>
+      <value>
+        <categories>
+          <category>Multimeters</category>
+        </categories>
+        <type>KEITHLEY</type>
+        <path>keithley_2000.opi</path>
+        <description>The OPI for the Keithley 2000 multimeter.</description>
+        <macros>
+          <macro>
+            <name>KHLY2000</name>
+            <description>The Keithley 2000 PV prefix (e.g. KHLY2000_01).</description>
+            <default>KHLY2000_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
       <key>DH-2000 Light source shutter</key>
       <value>
         <type>DH2000</type>
