@@ -18,8 +18,10 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.commands;
 
+import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MessageBox;
@@ -28,6 +30,8 @@ import org.eclipse.swt.widgets.Shell;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.json.JsonConverters;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.ImportVariables;
@@ -73,11 +77,14 @@ public class ImportComponentHandler extends DisablingConfigHandler<Configuration
         	blank.setIsComponent(true);
         	EditConfigDialog editDialog = new EditConfigDialog(shell, EDIT_TITLE, EDIT_SUB_TITLE, blank, true, configurationViewModels, false);
         	if (editDialog.open() == Window.OK) {
-        	    if (editDialog.doAsComponent()) {
-        	    	SERVER.saveAsComponent().uncheckedWrite(editDialog.getComponent());
-        	    } else {
-        	    	SERVER.saveAs().uncheckedWrite(editDialog.getConfig());
-        	    }
+        		try {
+        			SERVER.saveAsComponent().write(editDialog.getComponent());
+				} catch (IOException e) {
+					LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
+					new MessageDialog(shell, "Error", null,
+							"Failed to save import component '%s'.".formatted(editDialog.getComponent().getName()),
+							MessageDialog.ERROR, new String[] {"OK"}, 0).open();
+				}
         	}
     		
         }

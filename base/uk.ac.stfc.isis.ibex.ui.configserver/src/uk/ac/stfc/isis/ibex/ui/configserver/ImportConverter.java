@@ -96,10 +96,9 @@ public final class ImportConverter {
 			try {
 				destination.addNewBlock(editableBlock);
 			} catch (DuplicateBlockNameException e) {
-				MessageDialog error = new MessageDialog(Display.getCurrent().getActiveShell(), "Error", null,
+				new MessageDialog(Display.getCurrent().getActiveShell(), "Error", null,
 	                    "Failed to add block " + block.getName() + ":\nBlock with this name already exists.",
-	                    MessageDialog.ERROR, new String[] {"OK"}, 0);
-	            error.open();
+	                    MessageDialog.ERROR, new String[] {"OK"}, 0).open();
 			}
     	}
 	}
