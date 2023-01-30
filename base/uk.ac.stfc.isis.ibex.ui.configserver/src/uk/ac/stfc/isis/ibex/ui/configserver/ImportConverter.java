@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Display;
+
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVDefaultValue;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVSet;
@@ -93,7 +96,10 @@ public final class ImportConverter {
 			try {
 				destination.addNewBlock(editableBlock);
 			} catch (DuplicateBlockNameException e) {
-				
+				MessageDialog error = new MessageDialog(Display.getCurrent().getActiveShell(), "Error", null,
+	                    "Failed to add block " + block.getName() + ":\nBlock with this name already exists.",
+	                    MessageDialog.ERROR, new String[] {"OK"}, 0);
+	            error.open();
 			}
     	}
 	}
