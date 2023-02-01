@@ -68,6 +68,13 @@ public class ImportVariables extends ModelObject {
 	 * @param remotePrefix The remote instrument PV prefix.
 	 */
 	public void selectInstrument(String remotePrefix) {
+		if (remoteConfigVersionObservable != null) {
+			remoteConfigVersionObservable.close();
+		}
+		if (componentsObservable != null) {
+			componentsObservable.close();
+		}
+		
 		this.remotePrefix = remotePrefix;
 		
 		remoteConfigVersionObservable = new StringChannel().reader(remotePrefix.concat(VERSION_ADDRESS));

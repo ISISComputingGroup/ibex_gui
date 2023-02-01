@@ -86,7 +86,6 @@ public class ImportComponentHandler extends DisablingConfigHandler<Configuration
 							MessageDialog.ERROR, new String[] {"OK"}, 0).open();
 				}
         	}
-    		
         }
     }
     
