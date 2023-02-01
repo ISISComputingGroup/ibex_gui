@@ -182,9 +182,9 @@ public class MatplotlibFigure extends Composite {
 		cursorTypeListener = viewModel.getCursorType()
 				.addUiThreadPropertyChangeListener(e -> {
 					if (!container.isDisposed()) {
-					    if (viewModel.getCursorType().getValue().equals(MatplotlibCursorType.CROSSHAIR)) {
+					    if (MatplotlibCursorType.CROSSHAIR.equals(viewModel.getCursorType().getValue())) {
 					    	container.setCursor(zoomCursor);
-					    } else if (viewModel.getCursorType().getValue().equals(MatplotlibCursorType.HAND)) {
+					    } else if (MatplotlibCursorType.HAND.equals(viewModel.getCursorType().getValue())) {
 					    	container.setCursor(panCursor);
 					    } else {
 					    	container.setCursor(defaultCursor);

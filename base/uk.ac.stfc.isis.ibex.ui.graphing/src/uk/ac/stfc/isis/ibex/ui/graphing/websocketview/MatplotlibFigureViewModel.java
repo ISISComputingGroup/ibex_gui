@@ -465,7 +465,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 		cursorPositionChanged.set(true);
 		
 		// if zoom and drag are enabled manage drag selection
-		if (zoomState.getValue().equals(MatplotlibButtonState.ENABLED_ACTIVE) && dragState.getValue()) {
+		if (MatplotlibButtonState.ENABLED_ACTIVE.equals(zoomState.getValue()) && dragState.getValue()) {
 			setSelectionBounds(MatplotlibDragSelectionType.DRAG_UPDATE, cursorPosition);
 		}
 	}
@@ -480,7 +480,7 @@ public class MatplotlibFigureViewModel implements Closeable {
 		model.notifyButtonPress(cursorPosition, pressType);
 		
 		// if zoom is enabled manage drag selection
-		if (zoomState.getValue().equals(MatplotlibButtonState.ENABLED_ACTIVE)) {
+		if (MatplotlibButtonState.ENABLED_ACTIVE.equals(zoomState.getValue())) {
 			switch (pressType) {
 				case BUTTON_PRESS:
 					setSelectionBounds(MatplotlibDragSelectionType.DRAG_START, cursorPosition);
@@ -510,11 +510,11 @@ public class MatplotlibFigureViewModel implements Closeable {
 	 * @param cursorPosition
 	 */
 	public void setSelectionBounds(MatplotlibDragSelectionType dragType, MatplotlibCursorPosition cursorPosition) {
-		if (dragType.equals(MatplotlibDragSelectionType.DRAG_START)) {
+		if (MatplotlibDragSelectionType.DRAG_START.equals(dragType)) {
 			dragStartPos.setValue(cursorPosition);
 			dragEndPos.setValue(cursorPosition);
 			dragState.setValue(true);
-		} else if (dragType.equals(MatplotlibDragSelectionType.DRAG_UPDATE)) {
+		} else if (MatplotlibDragSelectionType.DRAG_UPDATE.equals(dragType)) {
 			dragEndPos.setValue(cursorPosition);
 			dragState.setValue(true);
 		} else {
