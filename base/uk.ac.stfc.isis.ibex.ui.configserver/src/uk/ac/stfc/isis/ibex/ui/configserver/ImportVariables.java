@@ -81,7 +81,10 @@ public class ImportVariables extends ModelObject {
 		remoteConfigVersionObservable.subscribe(new BaseObserver<String>() {
 			@Override
 		    public void onValue(String value) {
-				firePropertyChange("status", versionMatch, versionMatch = value.equals(localConfigVersionObservable.getValue()));
+				var localVersion = localConfigVersionObservable.getValue();
+				// Always allow copying if either block server is on a development version.
+				var match = value.equals(localVersion) || value.startsWith("0.0.0") || localVersion.startsWith("0.0.0");
+				firePropertyChange("status", versionMatch, versionMatch = match);
 		    }
 		});
 		
