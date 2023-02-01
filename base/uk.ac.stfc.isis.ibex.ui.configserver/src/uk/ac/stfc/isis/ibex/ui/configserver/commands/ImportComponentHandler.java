@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
+import uk.ac.stfc.isis.ibex.configserver.internal.ImportConverter;
 import uk.ac.stfc.isis.ibex.configserver.json.JsonConverters;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -35,7 +36,6 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationServerUI;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.ImportVariables;
-import uk.ac.stfc.isis.ibex.ui.configserver.ImportConverter;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ImportComponentDialog;
 

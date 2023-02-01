@@ -16,7 +16,7 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.ui.configserver;
+package uk.ac.stfc.isis.ibex.configserver.internal;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,6 +33,8 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.configserver.internal.DisplayUtils;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * Handles the changes to be done when importing a component from another instrument.
@@ -96,6 +98,7 @@ public final class ImportConverter {
 			try {
 				destination.addNewBlock(editableBlock);
 			} catch (DuplicateBlockNameException e) {
+				LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(ImportConverter.class), e.getMessage(), e);
 				new MessageDialog(Display.getCurrent().getActiveShell(), "Error", null,
 	                    "Failed to add block " + block.getName() + ":\nBlock with this name already exists.",
 	                    MessageDialog.ERROR, new String[] {"OK"}, 0).open();

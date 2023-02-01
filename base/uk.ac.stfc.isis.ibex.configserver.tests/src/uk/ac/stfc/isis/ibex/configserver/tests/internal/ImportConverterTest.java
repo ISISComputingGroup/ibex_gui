@@ -16,7 +16,7 @@
 * http://opensource.org/licenses/eclipse-1.0.php
 */
 
-package uk.ac.stfc.isis.ibex.ui.configserver.tests;
+package uk.ac.stfc.isis.ibex.configserver.tests.internal;
 
 import static org.junit.Assert.assertTrue;
 
@@ -38,7 +38,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.PVDefaultValue;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PVSet;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-import uk.ac.stfc.isis.ibex.ui.configserver.ImportConverter;
+import uk.ac.stfc.isis.ibex.configserver.internal.ImportConverter;
 
 public class ImportConverterTest {
 	
