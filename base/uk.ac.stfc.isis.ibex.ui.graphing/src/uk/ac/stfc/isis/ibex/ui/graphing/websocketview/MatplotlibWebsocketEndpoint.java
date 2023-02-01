@@ -151,6 +151,9 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 		    case "navigate_mode":
 		    	model.toggleZoomAndPan((String) content.getOrDefault("mode", ""));
 		    	break;
+		    case "cursor":
+		    	model.setCursor((String) content.getOrDefault("cursor", "default"));
+		    	break;
 		    default:
 		    	// No action required
 		    	break;
@@ -189,6 +192,7 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 		    Map<String, Object> propertiesToSend = new HashMap<>(properties);
 		    propertiesToSend.put("type", type);
 		    propertiesToSend.put("figure_id", Integer.toString(figNum));
+		    
 		    
 			remote.sendText(GSON.toJson(propertiesToSend));
 			LoggerUtils.logIfExtraDebug(LOG, String.format("sent %s to %s", propertiesToSend, getUrl()));

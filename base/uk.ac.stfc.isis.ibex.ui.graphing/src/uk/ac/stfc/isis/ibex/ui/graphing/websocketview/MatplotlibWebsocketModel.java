@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.swt.graphics.ImageData;
 
@@ -26,12 +27,20 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	
 	private static final int RECONNECTION_WAIT_TIME_S = 5;
 	
+	/**
+	 * We use this to limit the rate at which redraws can be requested from the server: without this, 
+	 * we may get large queues of refresh requests which can hinder panning performance.
+	 */
+	private final AtomicBoolean serverImageReceived = new AtomicBoolean(false);
+	
 	private String plotName;
 	private String plotMessage;
 	private MatplotlibNavigationType navMode;
 	private MatplotlibCursorPosition cursorPosition = MatplotlibCursorPosition.OUTSIDE_CANVAS;
 	private boolean backState;
 	private boolean forwardState;
+	
+	private MatplotlibCursorType cursorType;
 	
 	private Optional<ImageData> imageData = Optional.empty();
 	
@@ -142,17 +151,21 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 		if (!isDiffImage) {
 		    this.imageData = Optional.of(new ImageData(message));
 		    viewModel.imageUpdated();
+		    serverImageReceived.set(true);
 		}
 	}
 	
 	/**
-	 * Forces the server to draw a frame and resend it.
+	 * Forces the server to draw a frame and resend it; only executes if an image from 
+	 * the server has been recently received.
 	 */
 	public void forceServerRefresh() {
-		workerThread.submit(() -> {
-			connection.forceServerRefresh();
-			connection.cursorPositionChanged(cursorPosition);
-		});
+		if (serverImageReceived.getAndSet(false)) {
+			workerThread.submit(() -> {
+				connection.forceServerRefresh();
+				connection.cursorPositionChanged(cursorPosition);
+			});
+		}
 	}
 
 	/**
@@ -177,7 +190,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
                 // operation and the cursor position is changing (so that we get reasonably quick
                 // updates to the plot while panning). In other modes, changing cursor position does
                 // not change the plot itself so no need to refresh there.
-                connection.forceServerRefresh();
+            	forceServerRefresh();
             }
         });
 	}
@@ -198,7 +211,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	public void navigatePlot(MatplotlibButtonType navType) {
 		workerThread.submit(() -> {
 			connection.navigatePlot(navType);
-		    connection.forceServerRefresh();
+			forceServerRefresh();
 		});
 	}
 	
@@ -210,7 +223,7 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	public void notifyButtonPress(final MatplotlibCursorPosition position, MatplotlibPressType pressType) {
 		workerThread.submit(() -> {
 		    connection.notifyButtonPress(position, pressType);
-		    connection.forceServerRefresh();
+		    forceServerRefresh();
 		});
 	}
 	
@@ -309,6 +322,34 @@ public class MatplotlibWebsocketModel implements Closeable, AutoCloseable {
 	 */
 	public MatplotlibNavigationType getNavMode() {
 		return navMode;
+	}
+	
+	/**
+	 * Sets the cursor appearance.
+	 * @param cursorType
+	 */
+	public void setCursor(String cursorType) {
+		switch (cursorType) {
+			case "default":
+				this.cursorType = MatplotlibCursorType.DEFAULT;
+				break;
+			case "crosshair":
+				this.cursorType = MatplotlibCursorType.CROSSHAIR;
+				break;
+			case "move":
+				this.cursorType = MatplotlibCursorType.HAND;
+				break;
+			default:
+				break;
+		}
+		viewModel.updateCursorType();
+	}
+	
+	/**
+	 * @return the current cursor type
+	 */
+	public MatplotlibCursorType getCursorType() {
+		return cursorType;
 	}
 	
 	/**
