@@ -23,8 +23,6 @@ import java.util.concurrent.TimeoutException;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -67,8 +65,6 @@ public class ImportComponentHandler extends DisablingConfigHandler<Configuration
     	ImportVariables importVariables = new ImportVariables(new JsonConverters());
     	ImportComponentDialog importConfigDialog = new ImportComponentDialog(shell, TITLE, SUB_TITLE, importVariables);
     	if (importConfigDialog.open() == Window.OK && importConfigDialog.getSelectedComponent() != null) {
-    		openWarningMessageBox(shell);
-    		
     		ConfigurationViewModels configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
         	var blank = configurationViewModels.getBlankConfig();
         	var editableIocs = SERVER.iocs().getValue();
@@ -82,25 +78,10 @@ public class ImportComponentHandler extends DisablingConfigHandler<Configuration
 				} catch (IOException e) {
 					LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
 					new MessageDialog(shell, "Error", null,
-							"Failed to save import component '%s'.".formatted(editDialog.getComponent().getName()),
-							MessageDialog.ERROR, new String[] {"OK"}, 0).open();
+						"Failed to save import component '%s'.".formatted(editDialog.getComponent().getName()),
+						MessageDialog.ERROR, new String[] {"OK"}, 0).open();
 				}
         	}
         }
-    }
-    
-    private void openWarningMessageBox(Shell shell) {
-    	MessageBox messageBox = new MessageBox(shell, SWT.ICON_WARNING | SWT.OK);
-        messageBox.setText("Warning: Importing a component from a different instrument!");
-        
-        String warningString = String.join("\n\n",
-        	"When editing the component check the following:",
-        	"- Communication settings for IOCs. (COM port, IP address, etc.)",
-        	"- Remote IOCs.",
-        	"- IOCs that rely on autosave values or settings area items.",
-        	"- Instrument prefix of non-local blocks.");
-        
-        messageBox.setMessage(warningString);
-        messageBox.open();
     }
 }

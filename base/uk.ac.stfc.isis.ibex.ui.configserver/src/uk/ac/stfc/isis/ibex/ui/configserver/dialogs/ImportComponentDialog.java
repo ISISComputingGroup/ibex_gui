@@ -40,10 +40,10 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
+import uk.ac.stfc.isis.ibex.ui.LinkWrapper;
 import uk.ac.stfc.isis.ibex.ui.configserver.ImportVariables;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.components.ComponentTable;
 import uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.InstrumentTable;
@@ -55,6 +55,7 @@ public class ImportComponentDialog extends TitleAreaDialog  {
 	
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 800;
+	private static final String HELP_LINK = "https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Create-and-Manage-Components#id3";
 	
 	private final String title;
 	private final String subTitle;
@@ -98,6 +99,9 @@ public class ImportComponentDialog extends TitleAreaDialog  {
 		Composite container = new Composite(parent, SWT.FILL);
 		container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		container.setLayout(new GridLayout(2, true));
+		
+		LinkWrapper link = new LinkWrapper(container, "Help", HELP_LINK);
+	    link.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1));
 		
 		createIntrumentGroup(container);
 		createComponentGroup(container);
