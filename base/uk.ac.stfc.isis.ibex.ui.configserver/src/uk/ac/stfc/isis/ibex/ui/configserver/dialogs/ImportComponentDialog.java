@@ -113,14 +113,7 @@ public class ImportComponentDialog extends TitleAreaDialog  {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				componentTable.enabled(importVariables.connected() && importVariables.versionMatch());
-				
-				if (!importVariables.connected()) {
-					setErrorMessage("Selected instrument's Block Server is offline.");
-				} else if (!importVariables.versionMatch()) {
-					setErrorMessage("Selected instrument is on a different version.");
-				} else {
-					setErrorMessage(null);
-				}
+				setErrorMessage(importVariables.getErrorMessage());
 			}
 		});
 		

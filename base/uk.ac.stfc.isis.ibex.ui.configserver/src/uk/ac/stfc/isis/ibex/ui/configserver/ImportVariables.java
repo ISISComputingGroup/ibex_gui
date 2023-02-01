@@ -133,4 +133,17 @@ public class ImportVariables extends ModelObject {
 	public Collection<Configuration> getComponents() {
 		return components;
 	}
+	
+	/**
+	 * @return String depending on the status or null if no error.
+	 */
+	public String getErrorMessage() {
+		if (!connected()) {
+			return "Selected instrument's Block Server is offline.";
+		} else if (!versionMatch()) {
+			return "Selected instrument is on a different version.";
+		} else {
+			return null;
+		}
+	}
 }
