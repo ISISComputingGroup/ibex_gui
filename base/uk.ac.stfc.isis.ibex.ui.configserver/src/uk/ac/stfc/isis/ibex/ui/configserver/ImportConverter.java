@@ -104,27 +104,32 @@ public final class ImportConverter {
 	}
 	
 	private static void convertGroups(Configuration source, EditableConfiguration destination) {
-		var blocks = destination.getAllBlocks();
-		var groups = source.getGroups()
-						   .stream()
-						   .filter(g -> DisplayUtils.filterNoneGroup(g.getName()))
-						   .collect(Collectors.toList());
+		// After blocks have been added to the destination configuration, add them to their respective groups.
+		// We need to use the newly added Editable Blocks when we toggle the selection for each new Editable Group.
 		
-		for (var group : groups) {
+		var destinationBlocks = destination.getAllBlocks();
+		var sourceGroups = source.getGroups()
+						   		 .stream()
+						   		 .filter(g -> DisplayUtils.filterNoneGroup(g.getName()))
+						   		 .collect(Collectors.toList());
+		
+		// Create the destination groups.
+		for (var sourceGroup : sourceGroups) {
     		var newGroup = destination.addNewGroup();
-    		newGroup.setName(group.getName());
+    		newGroup.setName(sourceGroup.getName());
     		
-    		var blocksAdd = new ArrayList<EditableBlock>();
-    		for (var blockName : group.getBlocks()) {
-    			for (var block : blocks) {
-    				if (block.getName().equals(blockName)) {
-    					blocksAdd.add(block);
+    		// Get the toggled blocks.
+    		var blocksToToggle = new ArrayList<EditableBlock>();
+    		for (var sourceBlockName : sourceGroup.getBlocks()) {
+    			for (var destinationBlock : destinationBlocks) {
+    				if (destinationBlock.getName().equals(sourceBlockName)) {
+    					blocksToToggle.add(destinationBlock);
     					break;
     				}
     			}
     		}
 
-    		newGroup.toggleSelection(blocksAdd);
+    		newGroup.toggleSelection(blocksToToggle);
     	}
 	}
 }
