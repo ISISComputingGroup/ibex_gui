@@ -36,8 +36,10 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -102,9 +104,10 @@ public class ImportComponentDialog extends TitleAreaDialog  {
 		
 		LinkWrapper link = new LinkWrapper(container, "Help", HELP_LINK);
 	    link.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1));
-		
+	    
 		createIntrumentGroup(container);
 		createComponentGroup(container);
+		createCustomGroup(container);
 		
 		importVariables.addUiThreadPropertyChangeListener("components", new PropertyChangeListener() {
 			@Override
@@ -149,12 +152,11 @@ public class ImportComponentDialog extends TitleAreaDialog  {
 				instrumentTable.setSearch(searchText.getText());
 			}
 		});
-		
+
 		var currentInstrumentName = Instrument.getInstance().name().getValue();
 		var instruments = Instrument.getInstance().getInstruments().stream().filter(i -> !i.name().equals(currentInstrumentName)).collect(Collectors.toList());
 		instrumentTable = new InstrumentTable(group, SWT.NONE, SWT.FULL_SELECTION, instruments);
-        GridData gdInstrumentTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-        instrumentTable.setLayoutData(gdInstrumentTable);
+        instrumentTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
         instrumentTable.addSelectionChangedListener(new ISelectionChangedListener() {
             @Override
             public void selectionChanged(SelectionChangedEvent event) {
@@ -185,10 +187,9 @@ public class ImportComponentDialog extends TitleAreaDialog  {
 				componentTable.setSearch(searchText.getText());
 			}
 		});
-		
+
 		componentTable = new ComponentTable(group, SWT.NONE, SWT.FULL_SELECTION);
-        GridData gdComponentTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-        componentTable.setLayoutData(gdComponentTable);
+        componentTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
         componentTable.addSelectionChangedListener(new ISelectionChangedListener() {
             @Override
             public void selectionChanged(SelectionChangedEvent event) {
@@ -201,6 +202,31 @@ public class ImportComponentDialog extends TitleAreaDialog  {
 				}
             }
         });
+	}
+	
+	private void createCustomGroup(Composite parent) {
+		final int columns = 3;
+		Group group = new Group(parent, SWT.NONE);
+		group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1));
+		group.setText("Custom Instrument Selection");
+		group.setLayout(new GridLayout(columns, false));
+		
+		Label label = new Label(group, SWT.RIGHT);
+		label.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+		label.setText("PV Prefix:");
+		
+		Text text = new Text(group, SWT.BORDER);
+		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		Button button = new Button(group, SWT.NONE);
+		button.setText("Select");
+		button.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+		button.addListener(SWT.Selection, new Listener() {
+			@Override
+			public void handleEvent(Event event) {
+				importVariables.selectInstrument(text.getText());
+			}
+		});
 	}
 	
 	/**

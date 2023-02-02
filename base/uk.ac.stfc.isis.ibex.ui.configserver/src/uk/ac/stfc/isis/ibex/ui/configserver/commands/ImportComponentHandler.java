@@ -42,8 +42,8 @@ import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.ImportComponentDialog;
  */
 public class ImportComponentHandler extends DisablingConfigHandler<Configuration> {
 	
-	private static final String TITLE = "Select Instrument";
-    private static final String SUB_TITLE = "Select Instrument to Import Component From";
+	private static final String TITLE = "Component Selector";
+    private static final String SUB_TITLE = "Select Instrument and Component to Import";
 	private static final String EDIT_TITLE = "Import Component";
     private static final String EDIT_SUB_TITLE = "Editing an Import Component";
 	
