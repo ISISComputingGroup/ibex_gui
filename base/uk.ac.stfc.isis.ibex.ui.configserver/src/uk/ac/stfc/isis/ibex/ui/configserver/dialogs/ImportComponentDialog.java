@@ -211,6 +211,11 @@ public class ImportComponentDialog extends TitleAreaDialog  {
 		group.setText("Custom Instrument Selection");
 		group.setLayout(new GridLayout(columns, false));
 		
+		String warningString = "Configure a PV prefix for an unknown instrument. (e.g. \"IN:NAME:\")";
+        Label warning = new Label(group, SWT.LEFT);
+        warning.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, columns, 1));
+        warning.setText(warningString);
+		
 		Label label = new Label(group, SWT.RIGHT);
 		label.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 		label.setText("PV Prefix:");
