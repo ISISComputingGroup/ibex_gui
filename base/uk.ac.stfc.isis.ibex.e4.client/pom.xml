@@ -8,5 +8,5 @@
   	<relativePath>../uk.ac.stfc.isis.ibex.client.tycho.parent</relativePath>
   	<artifactId>uk.ac.stfc.isis.ibex.client.tycho.parent</artifactId>
   </parent>
-  <version>12.0.1</version>
+  <version>12.0.2</version>
 </project>
