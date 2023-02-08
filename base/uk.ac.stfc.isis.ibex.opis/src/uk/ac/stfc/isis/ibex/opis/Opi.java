@@ -117,6 +117,7 @@ public class Opi implements BundleActivator {
 		addFastPathHandlers();
 	}
 	
+	@SuppressWarnings("checkstyle:magicnumber")
 	private static void addFastPathHandlers() {
 		
 		// Some handlers called frequently by reflectometry OPIs.
@@ -143,10 +144,6 @@ public class Opi implements BundleActivator {
 		
 		RhinoWithFastPathScriptStore.addFastPathHandler("pv0==4",
 				pvs -> PVUtil.getDouble(pvs[0]) == 4.0);
-		
-		RhinoWithFastPathScriptStore.addFastPathHandler("pv1==0&&pv0==0", 
-				pvs -> PVUtil.getDouble(pvs[0]) == 7.0 && PVUtil.getDouble(pvs[1]) == 0.0);
-		
 		
 	}
 
