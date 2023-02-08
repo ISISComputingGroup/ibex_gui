@@ -2255,7 +2255,16 @@ $(pv_value)</tooltip>
         <y>60</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-        <actions hook="false" hook_all="false" />
+        <actions hook="true" hook_all="false">
+          <action type="OPEN_DISPLAY">
+            <path>Kickers/kickers_and_seperators.opi</path>
+            <macros>
+              <include_parent_macros>true</include_parent_macros>
+            </macros>
+            <mode>3</mode>
+            <description></description>
+          </action>
+        </actions>
         <auto_size>false</auto_size>
         <background_color>
           <color red="255" green="255" blue="255" />
@@ -2290,12 +2299,21 @@ $(pv_value)</tooltip>
         <widget_type>Label</widget_type>
         <width>40</width>
         <wrap_words>false</wrap_words>
-        <wuid>4c716581:18331f520b6:-7bea</wuid>
+        <wuid>543167db:18630abdf1a:-7940</wuid>
         <x>31</x>
         <y>83</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0.0">
-        <actions hook="false" hook_all="false" />
+        <actions hook="true" hook_all="false">
+          <action type="OPEN_DISPLAY">
+            <path>Kickers/kickers_and_seperators.opi</path>
+            <macros>
+              <include_parent_macros>true</include_parent_macros>
+            </macros>
+            <mode>3</mode>
+            <description></description>
+          </action>
+        </actions>
         <align_to_nearest_second>false</align_to_nearest_second>
         <auto_size>false</auto_size>
         <background_color>

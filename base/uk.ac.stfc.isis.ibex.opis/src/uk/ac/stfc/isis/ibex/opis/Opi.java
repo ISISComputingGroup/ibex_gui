@@ -117,6 +117,7 @@ public class Opi implements BundleActivator {
 		addFastPathHandlers();
 	}
 	
+	@SuppressWarnings("checkstyle:magicnumber")
 	private static void addFastPathHandlers() {
 		
 		// Some handlers called frequently by reflectometry OPIs.
@@ -133,6 +134,16 @@ public class Opi implements BundleActivator {
 		RhinoWithFastPathScriptStore.addFastPathHandler("pvStr0!=\"North\" && pvStr0!=\"South\"", 
 				pvs -> (!Objects.equals(PVUtil.getString(pvs[0]), "North")) 
 						&&  (!Objects.equals(PVUtil.getString(pvs[0]), "South")));
+		
+		// Some handlers used frequently by RIKEN OPIs.
+		RhinoWithFastPathScriptStore.addFastPathHandler("pv0==1 || pv0==3",
+				pvs -> PVUtil.getDouble(pvs[0]) == 1.0 || PVUtil.getDouble(pvs[0]) == 3.0);
+		
+		RhinoWithFastPathScriptStore.addFastPathHandler("pv0==2",
+				pvs -> PVUtil.getDouble(pvs[0]) == 2.0);
+		
+		RhinoWithFastPathScriptStore.addFastPathHandler("pv0==4",
+				pvs -> PVUtil.getDouble(pvs[0]) == 4.0);
 		
 	}
 

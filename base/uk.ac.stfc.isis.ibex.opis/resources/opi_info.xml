@@ -1427,6 +1427,15 @@
         <path>RIKEN/Magnet/RIKEN_magnet_PSUs.opi</path>
         <description>The OPI for the Riken Magnet PSU Synoptic</description>
         <macros></macros>
+       </value>
+    </entry>
+    <entry>
+      <key>Riken Kicker and Separator HV settings</key>
+      <value>
+        <type>MUON_FRONT_END</type>
+        <path>RIKEN/Magnet/Kickers/kickers_and_seperators.opi</path>
+        <description>The OPI for Kicker and Separator HV Settings</description>
+        <macros/>
         <categories>
           <category>PLCs</category>
         </categories>
