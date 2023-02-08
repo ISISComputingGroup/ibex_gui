@@ -36,11 +36,11 @@
     <actions hook="false" hook_all="false" />
     <alarm_pulsing>false</alarm_pulsing>
     <auto_size>false</auto_size>
-    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_alarm_sensitive>true</border_alarm_sensitive>
     <border_color>
       <color name="MEDM_COLOR_14" red="0" green="0" blue="0" />
     </border_color>
@@ -65,9 +65,24 @@
     <rotation_angle>0.0</rotation_angle>
     <rules>
       <rule name="Rule" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0 == 2">
+        <exp bool_exp="pv0==0">
+          <value>
+            <color name="Invalid" red="255" green="0" blue="255" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==1 || pv0==3">
+          <value>
+            <color name="Minor" red="255" green="128" blue="0" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==2">
           <value>
             <color name="Green" red="0" green="255" blue="0" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==4">
+          <value>
+            <color name="Major" red="255" green="0" blue="0" />
           </value>
         </exp>
         <pv trig="true">$(PLC_ROOT):$(KICKER):CONTROL_MODE:STAT</pv>
@@ -97,11 +112,11 @@ $(pv_value)</tooltip>
     <actions hook="false" hook_all="false" />
     <alarm_pulsing>false</alarm_pulsing>
     <auto_size>false</auto_size>
-    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_alarm_sensitive>true</border_alarm_sensitive>
     <border_color>
       <color name="MEDM_COLOR_14" red="0" green="0" blue="0" />
     </border_color>
@@ -126,9 +141,24 @@ $(pv_value)</tooltip>
     <rotation_angle>0.0</rotation_angle>
     <rules>
       <rule name="Rule" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0 == 2">
+        <exp bool_exp="pv0==0">
+          <value>
+            <color name="Invalid" red="255" green="0" blue="255" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==1 || pv0==3">
+          <value>
+            <color name="Minor" red="255" green="128" blue="0" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==2">
           <value>
             <color name="Green" red="0" green="255" blue="0" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==4">
+          <value>
+            <color name="Major" red="255" green="0" blue="0" />
           </value>
         </exp>
         <pv trig="true">$(PLC_ROOT):$(KICKER):STATE:STAT</pv>
@@ -158,11 +188,11 @@ $(pv_value)</tooltip>
     <actions hook="false" hook_all="false" />
     <alarm_pulsing>false</alarm_pulsing>
     <auto_size>false</auto_size>
-    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_alarm_sensitive>true</border_alarm_sensitive>
     <border_color>
       <color name="MEDM_COLOR_14" red="0" green="0" blue="0" />
     </border_color>
@@ -187,9 +217,24 @@ $(pv_value)</tooltip>
     <rotation_angle>0.0</rotation_angle>
     <rules>
       <rule name="Rule" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0 == 2">
+        <exp bool_exp="pv0==0">
+          <value>
+            <color name="Invalid" red="255" green="0" blue="255" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==1 || pv0==3">
+          <value>
+            <color name="Minor" red="255" green="128" blue="0" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==2">
           <value>
             <color name="Green" red="0" green="255" blue="0" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==4">
+          <value>
+            <color name="Major" red="255" green="0" blue="0" />
           </value>
         </exp>
         <pv trig="true">$(PLC_ROOT):$(KICKER):READY:STAT</pv>
@@ -219,11 +264,11 @@ $(pv_value)</tooltip>
     <actions hook="false" hook_all="false" />
     <alarm_pulsing>false</alarm_pulsing>
     <auto_size>false</auto_size>
-    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_alarm_sensitive>true</border_alarm_sensitive>
     <border_color>
       <color name="MEDM_COLOR_14" red="0" green="0" blue="0" />
     </border_color>
@@ -248,9 +293,24 @@ $(pv_value)</tooltip>
     <rotation_angle>0.0</rotation_angle>
     <rules>
       <rule name="Rule" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0 == 2">
+        <exp bool_exp="pv0==0">
+          <value>
+            <color name="Invalid" red="255" green="0" blue="255" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==1 || pv0==3">
+          <value>
+            <color name="Minor" red="255" green="128" blue="0" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==2">
           <value>
             <color name="Green" red="0" green="255" blue="0" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==4">
+          <value>
+            <color name="Major" red="255" green="0" blue="0" />
           </value>
         </exp>
         <pv trig="true">$(PLC_ROOT):$(KICKER):PSU_ON:STAT</pv>
@@ -280,11 +340,11 @@ $(pv_value)</tooltip>
     <actions hook="false" hook_all="false" />
     <alarm_pulsing>false</alarm_pulsing>
     <auto_size>false</auto_size>
-    <backcolor_alarm_sensitive>true</backcolor_alarm_sensitive>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
     </background_color>
-    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_alarm_sensitive>true</border_alarm_sensitive>
     <border_color>
       <color name="MEDM_COLOR_14" red="0" green="0" blue="0" />
     </border_color>
@@ -309,9 +369,24 @@ $(pv_value)</tooltip>
     <rotation_angle>0.0</rotation_angle>
     <rules>
       <rule name="Rule" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pv0 == 2">
+        <exp bool_exp="pv0==0">
+          <value>
+            <color name="Invalid" red="255" green="0" blue="255" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==1 || pv0==3">
+          <value>
+            <color name="Minor" red="255" green="128" blue="0" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==2">
           <value>
             <color name="Green" red="0" green="255" blue="0" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==4">
+          <value>
+            <color name="Major" red="255" green="0" blue="0" />
           </value>
         </exp>
         <pv trig="true">$(PLC_ROOT):$(KICKER):PSU_HV_ON:STAT</pv>

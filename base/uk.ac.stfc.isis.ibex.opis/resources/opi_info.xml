@@ -1433,7 +1433,7 @@
       <key>Riken Kicker and Separator HV settings</key>
       <value>
         <type>MUON_FRONT_END</type>
-        <path>RIKEN/kickers_and_seperators.opi</path>
+        <path>RIKEN/Magnet/Kickers/kickers_and_seperators.opi</path>
         <description>The OPI for Kicker and Separator HV Settings</description>
         <macros/>
         <categories>
