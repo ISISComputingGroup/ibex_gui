@@ -7833,13 +7833,15 @@ ioc_name = PVUtil.getString(pvs[0])
 motor_name = ioc_name.split("_")[0]
 macros = display.getPropertyValue("macros").getMacrosMap()
 p = macros.get("P")
-motor_controller_num = macros.get("M")[-4:-2]
+m = macros.get("M")
 
 if motor_name == "GALIL" or motor_name == "GALILMUL":
+    motor_controller_num = m[-4:-2]
     pv = p + "MOT:DMC" + motor_controller_num + ":ERROR_MON"
     widget.setPropertyValue("pv_name", pv)
 elif motor_name == "TC":
-    pv = p + ioc_name + ":ASTAXES_" + motor_controller_num[1:] + ":STSTATUS-NERRORID"
+    axis = m[-2:].lstrip("0")
+    pv = p + ioc_name + ":ASTAXES_" + axis + ":STSTATUS-NERRORID"
     widget.setPropertyValue("pv_name", pv)
 else:
     widget.setPropertyValue("text", "UNKNOWN")
@@ -7931,9 +7933,9 @@ ioc_name = PVUtil.getString(widget.getPV())
 motor_name = ioc_name.split("_")[0]
 macros = display.getPropertyValue("macros").getMacrosMap()
 p = macros.get("P")
-motor_controller_num = macros.get("M")[-4:-2]
+axis = macros.get("M")[-2:].lstrip("0")
 
-pv = p + ioc_name + ":ASTAXES_" + motor_controller_num[1:] + ":STCONTROL-BENABLE"
+pv = p + ioc_name + ":ASTAXES_" + axis + ":STCONTROL-BENABLE"
 PVUtil.writePV(pv, 1)
 ]]></scriptText>
           <embedded>true</embedded>
