@@ -26,8 +26,10 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.logger,
  uk.ac.stfc.isis.ibex.managermode,
  org.csstudio.csdata;bundle-version="3.2.0",
- org.csstudio.ui.util;bundle-version="4.0.2"
+ org.csstudio.ui.util;bundle-version="4.0.2",
+ uk.ac.stfc.isis.ibex.instrument
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.configserver
-Import-Package: uk.ac.stfc.isis.ibex.ui.ioccontrol
+Import-Package: uk.ac.stfc.isis.ibex.ui.ioccontrol,
+ uk.ac.stfc.isis.ibex.ui.mainmenu.instrument

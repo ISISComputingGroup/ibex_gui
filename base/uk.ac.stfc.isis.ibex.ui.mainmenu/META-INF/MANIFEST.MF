@@ -29,3 +29,4 @@ Import-Package: uk.ac.stfc.isis.ibex.epics.switching,
  uk.ac.stfc.isis.ibex.model,
  uk.ac.stfc.isis.ibex.ui.alarm
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.mainmenu
+Export-Package: uk.ac.stfc.isis.ibex.ui.mainmenu.instrument

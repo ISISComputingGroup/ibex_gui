@@ -41,6 +41,7 @@ Export-Package: uk.ac.stfc.isis.ibex.configserver;
    uk.ac.stfc.isis.ibex.configserver,
    uk.ac.stfc.isis.ibex.configserver.configuration,
    uk.ac.stfc.isis.ibex.epics.observing",
- uk.ac.stfc.isis.ibex.configserver.internal
+ uk.ac.stfc.isis.ibex.configserver.internal,
+ uk.ac.stfc.isis.ibex.configserver.json
 Import-Package: org.eclipse.wb.swt
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.configserver
