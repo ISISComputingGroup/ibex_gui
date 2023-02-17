@@ -1369,20 +1369,6 @@
          unpack="false"/>
 
    <plugin
-         id="com.mysql.cj"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="com.mysql.cj.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="joda-time"
          download-size="0"
          install-size="0"
@@ -1552,6 +1538,20 @@
 
    <plugin
          id="org.eclipse.jetty.util.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.mysql.cj"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="com.mysql.cj.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
