@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
 <descriptions>
   <opis>
-	<entry>
+    <entry>
       <key>Aeroflex</key>
       <value>
         <type>FUNCTION_GENERATOR</type>
@@ -838,7 +838,6 @@
         </categories>
       </value>
     </entry>
-    
     <entry>
       <key>Caen HV (MuSR)</key>
       <value>
@@ -1426,7 +1425,7 @@
         <type>MUON_FRONT_END</type>
         <path>RIKEN/Magnet/RIKEN_magnet_PSUs.opi</path>
         <description>The OPI for the Riken Magnet PSU Synoptic</description>
-        <macros></macros>
+        <macros/>
         <categories>
           <category>PLCs</category>
         </categories>
@@ -3091,8 +3090,8 @@
           </macro>
         </macros>
       </value>
-  </entry>
-	<entry>
+    </entry>
+    <entry>
       <key>Rules tests (developer)</key>
       <value>
         <type>DEBUG</type>
@@ -3100,6 +3099,21 @@
         <description>Developer system-testing OPI for CS-Studio rules engines</description>
         <macros/>
         <categories/>
+      </value>
+    </entry>
+    <entry>
+      <key>CATFLWR</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>catflwr.opi</path>
+        <description>The OPI for the CATFLWR</description>
+        <macros>
+          <macro>
+            <name>CATFLWR</name>
+            <description>The CATFLWR PV prefix (e.g. CATFLWR_01)</description>
+          </macro>
+        </macros>
       </value>
     </entry>
   </opis>
