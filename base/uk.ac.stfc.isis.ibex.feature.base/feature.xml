@@ -1020,13 +1020,6 @@
          unpack="false"/>
 
    <plugin
-         id="javax.mail.glassfish"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="javax.xml.soap"
          download-size="0"
          install-size="0"
@@ -1348,13 +1341,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.apache.logging.log4j.api.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="wrapped.org.apache.activemq.activemq-all"
          download-size="0"
          install-size="0"
@@ -1552,6 +1538,27 @@
 
    <plugin
          id="com.mysql.cj.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="jakarta.mail-api"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="jakarta.mail-api.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="wrapped.org.apache.logging.log4j.log4j-api"
          download-size="0"
          install-size="0"
          version="0.0.0"
