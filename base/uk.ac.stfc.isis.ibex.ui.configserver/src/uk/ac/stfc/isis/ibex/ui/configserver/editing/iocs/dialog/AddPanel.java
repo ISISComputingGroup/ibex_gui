@@ -36,6 +36,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
+import uk.ac.stfc.isis.ibex.ui.widgets.HelpButton;
 
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.dialogs.FilteredTree;
@@ -51,6 +52,8 @@ public class AddPanel extends Composite {
     private static final int TREE_HEIGHT = 300;
     private static final int SPACING = 25;
 
+    private static final String HELP_LINK = "https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Create-And-Manage-Configurations#iocs-tab";
+	private HelpButton helpButton;
 
     /**
      * Constructor for the Add IOC panel.
@@ -90,7 +93,7 @@ public class AddPanel extends Composite {
   				availableIocsTree.getViewer().collapseAll();
   			}
   		});
-        
+
         // Add selection tree
   		Composite treeComposite = new Composite(this, SWT.FILL);
   		treeComposite.setLayout(new GridLayout(1, true));
@@ -105,6 +108,7 @@ public class AddPanel extends Composite {
         gdIocTable.heightHint = TREE_HEIGHT;
         treeComposite.setLayoutData(gdIocTable);
         
+        helpButton = new HelpButton(treeComposite, HELP_LINK);
 
         bind(viewModel);
     }

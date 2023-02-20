@@ -40,6 +40,7 @@ import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.SynopticPreview;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.validators.SynopticValidator;
+import uk.ac.stfc.isis.ibex.ui.widgets.HelpButton;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
 /**
@@ -49,9 +50,12 @@ import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class EditSynopticDialog extends TitleAreaDialog {
-    private static final Point INITIAL_SIZE = new Point(950, 800);
+    private static final Point INITIAL_SIZE = new Point(950, 840);
     private final String title;
     private final String subtitle;
+    
+    private static final String HELP_LINK = "https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Create-and-Manage-Synoptics";
+	private HelpButton helpButton;
 
     private EditorPanel editor;
     private boolean isBlank;
@@ -90,10 +94,13 @@ public class EditSynopticDialog extends TitleAreaDialog {
 
     @Override
     protected Control createDialogArea(Composite parent) {
-	editor = new EditorPanel(parent, SWT.NONE, synopticViewModel);
-	editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	setTitle(subtitle);
-	return editor;
+    	editor = new EditorPanel(parent, SWT.NONE, synopticViewModel);
+    	editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+    	setTitle(subtitle);
+    	
+    	helpButton = new HelpButton(parent, HELP_LINK);
+    	
+    	return editor;	
     }
 
 

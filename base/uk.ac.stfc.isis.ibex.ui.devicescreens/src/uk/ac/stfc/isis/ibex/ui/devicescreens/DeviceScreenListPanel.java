@@ -45,6 +45,7 @@ import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.commands.ConfigureDeviceScreensHandler;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.list.DeviceScreensTable;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.ViewDeviceScreensDescriptionViewModel;
+import uk.ac.stfc.isis.ibex.ui.widgets.HelpButton;
 
 /**
  * A UI Panel for the devices screens.
@@ -58,6 +59,9 @@ public class DeviceScreenListPanel extends Composite {
 
     private Button configureDevScreensButton;
 
+    private static final String HELP_LINK = "https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Create-and-Manage-Device-Screens";
+	private HelpButton helpButton;
+	
     private DeviceScreensTable deviceScreenList;
 
     private ConfigureDeviceScreensHandler configureDeviceScreensHandler = new ConfigureDeviceScreensHandler();
@@ -118,6 +122,8 @@ public class DeviceScreenListPanel extends Composite {
 
             }
         });
+        
+        helpButton = new HelpButton(this, HELP_LINK);
 
         viewModel.addPropertyChangeListener(new PropertyChangeListener() {
             @Override

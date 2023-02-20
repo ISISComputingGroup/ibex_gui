@@ -35,6 +35,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.ConfigEditorPanel;
+import uk.ac.stfc.isis.ibex.ui.widgets.HelpButton;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
@@ -47,6 +48,11 @@ public class ConfigDetailsDialog extends TitleAreaDialog implements
     private static final Point MINIMUM_SIZE = new Point(450, 700);
 	private final String title;
 	private final String subTitle;
+	
+	private static final String CONFIG_HELP_LINK = "https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Create-And-Manage-Configurations";
+	private static final String COMPONENT_HELP_LINK = "https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Create-and-Manage-Components";
+	private HelpButton helpButton;
+	
 
     /** Error messages that are displayed. <Source, message> */
 	private Map<String, String> errorMessages = new HashMap<String, String>();
@@ -99,6 +105,14 @@ public class ConfigDetailsDialog extends TitleAreaDialog implements
         editor = new ConfigEditorPanel(parent, SWT.NONE, this, config, configurationViewModels);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		setTitle(subTitle);
+		
+		// Set link according to whether this is a component or a config.
+		if (!doAsComponent) {
+			helpButton = new HelpButton(parent, CONFIG_HELP_LINK);
+		} else {
+			helpButton = new HelpButton(parent, COMPONENT_HELP_LINK);
+		}
+		
 		return editor;
 	}
 	

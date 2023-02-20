@@ -29,5 +29,6 @@ Import-Package: com.google.common.base,
  org.eclipse.e4.ui.model.application.ui.advanced,
  org.eclipse.e4.ui.workbench.modeling,
  uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher,
- uk.ac.stfc.isis.ibex.ui.blocks.groups
+ uk.ac.stfc.isis.ibex.ui.blocks.groups,
+ uk.ac.stfc.isis.ibex.ui.widgets
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.logplotter
