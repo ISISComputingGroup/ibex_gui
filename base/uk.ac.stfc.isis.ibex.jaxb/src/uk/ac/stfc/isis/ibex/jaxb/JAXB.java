@@ -2,12 +2,13 @@ package uk.ac.stfc.isis.ibex.jaxb;
 
 import java.io.IOException;
 import java.util.Collections;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.Unmarshaller;
 
-import org.eclipse.persistence.jaxb.JAXBContextFactory;
+// import org.eclipse.persistence.jaxb.JAXBContextFactory; //original import
+import jakarta.xml.bind.JAXBContextFactory; //new one that expects it to not be static and takes slightly different arguments
 
 /**
  * Utility methods to easily acquire JAXB marshallers and unmarshallers.
@@ -19,7 +20,7 @@ public final class JAXB {
 	}
 	
 	static {
-		System.setProperty("javax.xml.bind.context.factory", JAXBContextFactory.class.getName());
+		System.setProperty("jakarta.xml.bind.context.factory", JAXBContextFactory.class.getName());
 	}
 	
     private static <T> JAXBContext getJaxbContext(Class<T> clazz) throws JAXBException {
