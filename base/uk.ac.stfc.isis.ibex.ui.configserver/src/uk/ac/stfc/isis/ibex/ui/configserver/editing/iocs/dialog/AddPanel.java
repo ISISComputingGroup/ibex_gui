@@ -52,9 +52,6 @@ public class AddPanel extends Composite {
     private static final int TREE_HEIGHT = 300;
     private static final int SPACING = 25;
 
-    private static final String HELP_LINK = "https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Create-And-Manage-Configurations#iocs-tab";
-	private HelpButton helpButton;
-
     /**
      * Constructor for the Add IOC panel.
      * 
@@ -107,8 +104,6 @@ public class AddPanel extends Composite {
         GridData gdIocTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
         gdIocTable.heightHint = TREE_HEIGHT;
         treeComposite.setLayoutData(gdIocTable);
-        
-        helpButton = new HelpButton(treeComposite, HELP_LINK);
 
         bind(viewModel);
     }

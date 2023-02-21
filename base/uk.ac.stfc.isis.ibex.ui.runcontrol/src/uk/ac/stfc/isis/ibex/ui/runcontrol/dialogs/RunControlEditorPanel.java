@@ -66,7 +66,6 @@ public class RunControlEditorPanel extends Composite {
 	private final Button btnSend;
     private final Button btnRestoreSingle;
     private Button btnRestoreAll;
-	private final Button btnShowManual;
 	private final Button btnDisplayBlockInfo;
     private final Label spacerLabel;
     private final Label spacerLabel2;
@@ -196,19 +195,6 @@ public class RunControlEditorPanel extends Composite {
         grpAdditionalSection.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
         grpAdditionalSection.setLayout(new GridLayout(2, false));
         
-		btnShowManual = new Button(grpAdditionalSection,  SWT.WRAP | SWT.PUSH);
-		GridData gdBtnManual = new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1);
-		gdBtnManual.widthHint = 100;
-		btnShowManual.setLayoutData(gdBtnManual);
-		btnShowManual.setText("Show User Manual \n Run Control");
-		btnShowManual.addSelectionListener(new SelectionAdapter() {
-	        @Override
-	        public void widgetSelected(SelectionEvent e) {
-	        		openLink("https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Menu-Bar#run-control-menu");
-	            }
-	        }
-		);
-		
 		btnDisplayBlockInfo = new Button(grpAdditionalSection,  SWT.WRAP | SWT.PUSH);
 		GridData gdBtnBlockInfo = new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1);
 		gdBtnBlockInfo.widthHint = 100;

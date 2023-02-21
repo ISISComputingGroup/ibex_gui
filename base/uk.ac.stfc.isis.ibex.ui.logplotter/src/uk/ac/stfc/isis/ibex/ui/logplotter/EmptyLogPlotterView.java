@@ -23,8 +23,12 @@ public class EmptyLogPlotterView extends ViewPart {
      */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.logplotter.EmptyLogPlotterView";
     
+    private static final String TITLE = "Log Plotter View";
+    
     private static final String HELP_LINK = "https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Plot-a-Block-Graph";
-	private HelpButton helpButton;
+	
+    @SuppressWarnings("unused")
+    private HelpButton helpButton;
 	
     /**
      * {@inheritDoc}
@@ -35,13 +39,13 @@ public class EmptyLogPlotterView extends ViewPart {
 		
 		Label lblTitle = new Label(parent, SWT.NONE);
 		lblTitle.setFont(SWTResourceManager.getFont("Segoe UI", 16, SWT.BOLD));
-		lblTitle.setText("Log Plotter View");
+		lblTitle.setText(TITLE);
 		
 		Label lblDescription = new Label(parent, SWT.NONE);
 		lblDescription.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		lblDescription.setText("This can be populated with graphs displaying block history.\r\nTo display a graph right click on a block in the blocks view above and click Display Block History.\r\nAlternatively a graph can be displayed by right clicking on a PV in an OPI and selecting Process Variable -> Log Plotter.");
 
-		helpButton = new HelpButton(parent, HELP_LINK);
+		helpButton = new HelpButton(parent, HELP_LINK, TITLE);
 	}
 
 	/**

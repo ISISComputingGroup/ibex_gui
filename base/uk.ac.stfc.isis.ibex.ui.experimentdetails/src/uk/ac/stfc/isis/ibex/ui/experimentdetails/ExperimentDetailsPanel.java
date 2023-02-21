@@ -77,6 +77,9 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 	private Button btnDisplayTitle;
 	
 	private static final String HELP_LINK = "https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Experiment-Details";
+	private static final String DESCRIPTION = "Experiment Details View";
+	
+	@SuppressWarnings("unused")
 	private HelpButton helpButton;
 	
 	/**
@@ -210,7 +213,7 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 			}
 		});
 		
-		helpButton = new HelpButton(parent, HELP_LINK);
+		helpButton = new HelpButton(parent, HELP_LINK, DESCRIPTION);
     }
 	
 	private void bind() {

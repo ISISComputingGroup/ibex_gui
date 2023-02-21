@@ -23,30 +23,40 @@ public class HelpButton {
 	
 	private static final String SYMBOLIC_PATH = "uk.ac.stfc.isis.ibex.ui.widgets";
 	private static final String HELP_ICON2 = "/resources/helpIcon.png";
-	private static final String TOOLTIP_TEXT = "Open wiki link in browser for help on this subject";
+	private static final String TOOLTIP_TEXT = "Open user manual link in browser for help with '%s': \n%s";
 	
-	private final String WIKI_LINK;
+	private final String tooltipDesc; 
+	
+	@SuppressWarnings("unused")
+	private final String wikiLink;
+	
+	@SuppressWarnings("unused")
+	private final String description;
+	
 	private Button helpButton;
 	
 	/**
 	 * Creates the help button which links to appropriate part of the wiki.
 	 * 
-	 * @param parent 	Parent element
-	 * @param wikiLink 	Link string to wiki
+	 * @param parent 		Parent element
+	 * @param wikiLink 		Link string to wiki
+	 * @param description	Description of help for tooltip
 	 */
-	public HelpButton(Composite parent, String wikiLink) {
-		this.WIKI_LINK = wikiLink;
+	public HelpButton(Composite parent, String wikiLink, String description) {
+		this.wikiLink = wikiLink;
+		this.description = description;
+		this.tooltipDesc = String.format(TOOLTIP_TEXT, description, wikiLink);
 		
 		//create button
 		helpButton = new Button(parent, SWT.PUSH);
 		helpButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 		helpButton.setImage(ResourceManager.getPluginImage(SYMBOLIC_PATH, HELP_ICON2));
-		helpButton.setToolTipText(TOOLTIP_TEXT);
+		helpButton.setToolTipText(tooltipDesc);
 		
 		helpButton.addSelectionListener(new SelectionAdapter() {
 			  public void widgetSelected(SelectionEvent e) {
 				  try {
-					PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser().openURL(new URL(WIKI_LINK));
+					PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser().openURL(new URL(wikiLink));
 				  } catch (PartInitException | MalformedURLException ex) {
 						LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), ex.getMessage(), ex);
 				  }

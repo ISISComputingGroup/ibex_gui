@@ -43,6 +43,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.EditBlockDialog;
+import uk.ac.stfc.isis.ibex.ui.widgets.HelpButton;
 
 /**
  * Dialog for editing a configuration (top dialogue that contains save and save
@@ -57,6 +58,13 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 	private boolean calledSwitchConfigOnSaveAs = false;
 	private String pvName;
 	private ConfigServer server = Configurations.getInstance().server();
+	
+	private static final String CONFIG_HELP_LINK = "https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Create-And-Manage-Configurations";
+	private static final String COMPONENT_HELP_LINK = "https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Create-and-Manage-Components";
+	private final String description;
+	
+	@SuppressWarnings("unused")
+	private HelpButton helpButton;
 
 	/**
 	 * Constructor.
@@ -74,6 +82,7 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 			boolean isBlank, ConfigurationViewModels configurationViewModels, boolean editBlockFirst) {
 		super(parentShell, title, subTitle, config, isBlank, configurationViewModels);
 		this.editBlockFirst = editBlockFirst;
+		this.description = title;
 	}
 
 	/**
@@ -94,6 +103,7 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 		super(parentShell, title, subTitle, config, isBlank, configurationViewModels);
 		this.editBlockFirst = editBlockFirst;
 		this.pvName = pvName;
+		this.description = title;
 
 	}
 
@@ -116,6 +126,14 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 		if (editBlockFirst) {
 			selectBlocksTab();
 		}
+		
+		// Set link according to whether this is a component or a config.
+		if (!config.getIsComponent()) {
+			helpButton = new HelpButton(parent, CONFIG_HELP_LINK, description);
+		} else {
+			helpButton = new HelpButton(parent, COMPONENT_HELP_LINK, description);
+		}
+		
 		return control;
 	}
 

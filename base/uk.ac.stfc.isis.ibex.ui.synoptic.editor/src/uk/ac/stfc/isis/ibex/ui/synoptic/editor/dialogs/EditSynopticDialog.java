@@ -55,7 +55,9 @@ public class EditSynopticDialog extends TitleAreaDialog {
     private final String subtitle;
     
     private static final String HELP_LINK = "https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Create-and-Manage-Synoptics";
-	private HelpButton helpButton;
+	
+    @SuppressWarnings("unused")
+    private HelpButton helpButton;
 
     private EditorPanel editor;
     private boolean isBlank;
@@ -98,7 +100,7 @@ public class EditSynopticDialog extends TitleAreaDialog {
     	editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
     	setTitle(subtitle);
     	
-    	helpButton = new HelpButton(parent, HELP_LINK);
+    	helpButton = new HelpButton(parent, HELP_LINK, title);
     	
     	return editor;	
     }

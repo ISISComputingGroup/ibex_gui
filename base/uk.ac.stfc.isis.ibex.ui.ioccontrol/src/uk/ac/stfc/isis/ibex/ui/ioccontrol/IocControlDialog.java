@@ -52,6 +52,8 @@ public class IocControlDialog extends TitleAreaDialog {
 	private static final Point INITIAL_SIZE = new Point(800, 600);
 	
 	private static final String HELP_LINK = "https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Start-and-Stop-IOCs";
+	
+	@SuppressWarnings("unused")
 	private HelpButton helpButton;
 	
 	private final IocControl control;
@@ -80,7 +82,7 @@ public class IocControlDialog extends TitleAreaDialog {
 		IocControlView iocControlView = new IocControlView(parent, SWT.NONE, iocControlViewModel);
 		iocControlView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		helpButton = new HelpButton(parent, HELP_LINK);
+		helpButton = new HelpButton(parent, HELP_LINK, SUB_TITLE);
 		
 		return iocControlView;
 	}

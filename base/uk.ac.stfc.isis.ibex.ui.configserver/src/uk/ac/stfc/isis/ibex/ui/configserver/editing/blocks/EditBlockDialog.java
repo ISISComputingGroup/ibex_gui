@@ -46,6 +46,9 @@ public class EditBlockDialog extends TitleAreaDialog {
 	Button okButton;
 	
 	private static final String HELP_LINK = "https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Create-And-Manage-Configurations#blocks-tab";
+	private static final String DESCRIPTION = "Configure Block Dialog";
+	
+	@SuppressWarnings("unused")
 	private HelpButton helpButton;
 	
 	private final List<ErrorMessageProvider> viewModels;
@@ -120,7 +123,7 @@ public class EditBlockDialog extends TitleAreaDialog {
         		blockGroupViewModel);
         blockGroupPanel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
-		helpButton = new HelpButton(parent, HELP_LINK);
+		helpButton = new HelpButton(parent, HELP_LINK, DESCRIPTION);
 		
         return blockDetailsPanel;
     }
