@@ -35,20 +35,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.browser.IWebBrowser;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.EditBlockHandler;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
-
-import java.net.MalformedURLException;
-import java.net.URL;
 
 /**
  * A panel to edit the run control settings for the selected block.
@@ -272,21 +265,4 @@ public class RunControlEditorPanel extends Composite {
             }
         }
     };
-    
-    /**
-     * Helper method for opening links from a url presented as string
-     * 
-     * @param url
-     * 			the string that represents url to be opened in a browser.
-     */
-    private void openLink(String url) {
-        try {
-        	IWebBrowser browser = PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser();
-			browser.openURL(new URL(url));
-        } catch (PartInitException ex) {
-		    LoggerUtils.logErrorWithStackTrace(LOG, "Failed to open URL in browser: " + url, ex);
-		} catch (MalformedURLException ex) {
-			LoggerUtils.logErrorWithStackTrace(LOG, "Failed to open URL in browser: " + url, ex);
-		}
-    }
 }

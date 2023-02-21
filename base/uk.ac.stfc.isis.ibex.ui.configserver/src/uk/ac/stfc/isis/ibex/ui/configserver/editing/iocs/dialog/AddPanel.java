@@ -36,7 +36,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-import uk.ac.stfc.isis.ibex.ui.widgets.HelpButton;
 
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.dialogs.FilteredTree;

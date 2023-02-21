@@ -22,11 +22,10 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 public class HelpButton {
 	
 	private static final String SYMBOLIC_PATH = "uk.ac.stfc.isis.ibex.ui.widgets";
-	private static final String HELP_ICON2 = "/resources/helpIcon.png";
+	private static final String HELP_ICON2 = "/icons/helpIcon.png";
 	private static final String TOOLTIP_TEXT = "Open user manual link in browser for help with '%s': \n%s";
 	
 	private final String tooltipDesc; 
-	
 	@SuppressWarnings("unused")
 	private final String wikiLink;
 	
@@ -58,7 +57,7 @@ public class HelpButton {
 				  try {
 					PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser().openURL(new URL(wikiLink));
 				  } catch (PartInitException | MalformedURLException ex) {
-						LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), ex.getMessage(), ex);
+						LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), "Failed to open URL in browser: " + wikiLink, ex);
 				  }
 			  }
 		});
