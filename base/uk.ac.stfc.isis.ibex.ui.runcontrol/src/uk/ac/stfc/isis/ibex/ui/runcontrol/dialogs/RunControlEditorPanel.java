@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.runcontrol.dialogs;
 
-import org.apache.logging.log4j.Logger;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
@@ -39,7 +38,6 @@ import org.eclipse.swt.widgets.Text;
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.ui.configserver.commands.EditBlockHandler;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
 
@@ -69,8 +67,6 @@ public class RunControlEditorPanel extends Composite {
     private DisplayBlock currentBlock;
 
     private final RunControlViewModel viewModel;
-    
-    private static final Logger LOG = IsisLog.getLogger(RunControlEditorPanel.class);
 	
 	private OnCanWriteChangeListener canWriteListener = canWrite -> {
         canSend = canWrite;
