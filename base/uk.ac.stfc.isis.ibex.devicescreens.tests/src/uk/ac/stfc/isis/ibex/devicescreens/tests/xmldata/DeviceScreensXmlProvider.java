@@ -30,7 +30,7 @@ public class DeviceScreensXmlProvider {
     /**
      * The Device Screens XML header.
      */
-    public static final String HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+    public static final String HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
             + "<devices xmlns=\"http://epics.isis.rl.ac.uk/schema/screens/1.0/\">";
     
     /**

@@ -40,7 +40,7 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
  * Note any changes here will require corresponding changes to
  * EPICS/schema/configurations/screens.xsd.
  */
-@XmlRootElement(name = "devices", namespace = "")
+@XmlRootElement(name = "devices")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DeviceScreensDescription {
 

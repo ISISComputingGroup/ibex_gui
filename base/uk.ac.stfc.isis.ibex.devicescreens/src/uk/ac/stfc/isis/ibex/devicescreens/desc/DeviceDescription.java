@@ -43,7 +43,7 @@ import uk.ac.stfc.isis.ibex.targets.OpiTarget;
  * Note: the constructor of this class is NOT called! Instead, this class is
  * instantiated via reflection.
  */
-@XmlRootElement(name = "device", namespace = "")
+@XmlRootElement(name = "device")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DeviceDescription extends ModelObject {
 
