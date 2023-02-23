@@ -3840,7 +3840,14 @@ $(pv_value)</tooltip>
           <height>20</height>
           <horizontal_alignment>2</horizontal_alignment>
           <name>Label_10</name>
-          <rules />
+          <rules>
+            <rule name="Show indicator &amp; label only when heater ON" prop_id="visible" out_exp="false">
+              <exp bool_exp="pv0 != 1">
+                <value>false</value>
+              </exp>
+              <pv trig="true">$(PV_ROOT):HEATER:STATUS</pv>
+            </rule>
+          </rules>
           <scale_options>
             <width_scalable>true</width_scalable>
             <height_scalable>true</height_scalable>
@@ -3900,7 +3907,14 @@ $(pv_value)</tooltip>
           <on_label>ON</on_label>
           <pv_name>$(PV_ROOT):HEATER:ONTIME_OK</pv_name>
           <pv_value />
-          <rules />
+          <rules>
+            <rule name="Show indicator &amp; label only when heater ON" prop_id="visible" out_exp="false">
+              <exp bool_exp="pv0 != 1">
+                <value>false</value>
+              </exp>
+              <pv trig="true">$(PV_ROOT):HEATER:STATUS</pv>
+            </rule>
+          </rules>
           <scale_options>
             <width_scalable>true</width_scalable>
             <height_scalable>true</height_scalable>
