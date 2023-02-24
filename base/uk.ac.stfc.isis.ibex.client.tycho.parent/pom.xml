@@ -241,6 +241,7 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.graphing</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.widgets.epics</module>
 		<module>../uk.ac.stfc.isis.ibex.jaxb</module>
+		<module>../uk.ac.stfc.isis.ibex.javafx</module>
 		<module>../uk.ac.stfc.isis.ibex.alarm.tests</module>
 	    <module>../uk.ac.stfc.isis.ibex.ui.experimentdetails.tests</module>
         <module>../uk.ac.stfc.isis.ibex.scriptgenerator.tests</module>

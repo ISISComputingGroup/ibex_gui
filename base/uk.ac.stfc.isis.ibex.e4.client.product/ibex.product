@@ -19,8 +19,15 @@
 -Xmx1024m
 -Dpython.console.encoding=UTF-8
 -Dpython.import.site=false
+-Dorg.osgi.framework.bundle.parent=ext
+
+-Dosgi.framework.extensions=org.eclipse.fx.osgi
+-Dorg.eclipse.update.reconcile=false
+-Declipse.p2.unsignedPolicy=allow
 -XX:+CreateCoredumpOnCrash
 -Dlog4j2.formatMsgNoLookups=true
+-Defxclipse.java-modules.dir=C:\Instrument\dev\ibex_gui\base\uk.ac.stfc.isis.ibex.javafx\lib
+--module-path=C:\Instrument\dev\ibex_gui\base\uk.ac.stfc.isis.ibex.javafx\lib
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>
@@ -28,12 +35,14 @@
 
    <windowImages i16="platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web16.gif" i32="platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web32.gif" i48="platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web48.gif" i64="platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web64.gif"/>
 
+
    <launcher name="ibex-client">
       <win useIco="true">
          <ico path="../uk.ac.stfc.isis.ibex.e4.client.product/icons/ibex.ico"/>
          <bmp/>
       </win>
    </launcher>
+
 
    <vm>
       <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17</windows>
@@ -46,6 +55,7 @@
       <feature id="uk.ac.stfc.isis.ibex.feature.base" version="1.0.0.qualifier"/>
       <feature id="uk.ac.stfc.isis.ibex.feature.css"/>
       <feature id="org.python.pydev.feature"/>
+      <feature id="org.eclipse.fx.runtime.feature" installMode="root"/>
    </features>
 
    <configurations>
@@ -56,6 +66,7 @@
       <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.event" autoStart="false" startLevel="2" />
       <plugin id="org.eclipse.osgi" autoStart="true" startLevel="0" />
+      <plugin id="org.w3c.css.sac" autoStart="false" startLevel="2" />
       <plugin id="uk.ac.stfc.isis.ibex.activemq" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.alarm" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.banner" autoStart="false" startLevel="0" />
@@ -75,6 +86,7 @@
       <plugin id="uk.ac.stfc.isis.ibex.help" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.instrument" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.instrument.status" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.javafx" autoStart="true" startLevel="2" />
       <plugin id="uk.ac.stfc.isis.ibex.log" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.logger" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.managermode" autoStart="false" startLevel="0" />
@@ -123,7 +135,6 @@
    </preferencesInfo>
 
    <cssInfo>
-      <file path="/uk.ac.stfc.isis.ibex.e4.client/default.css"/>
    </cssInfo>
 
 </product>

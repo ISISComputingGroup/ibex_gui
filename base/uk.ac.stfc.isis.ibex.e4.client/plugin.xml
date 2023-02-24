@@ -13,10 +13,6 @@
           name="windowImages"
             value="platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web16.gif,platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web32.gif,platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web48.gif,platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web64.gif">   
       </property>
-      <property
-          name="applicationCSS"
-          value="platform:/plugin/uk.ac.stfc.isis.ibex.e4.client/default.css">
-    </property>
   </product>
 </extension>
 </plugin>

@@ -65,14 +65,6 @@
 		<unit id="org.python.pydev.feature.source.feature.group" version="8.3.0.202302061416"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="http://download.eclipse.org/efxclipse/runtime-released/3.9.0/site/"/>
-		<unit id="org.eclipse.fx.core.feature.feature.group" version="3.9.0.202210170008"/>
-		<unit id="org.eclipse.fx.nl.feature.feature.group" version="3.9.0.202210170008"/>
-		<unit id="org.eclipse.fx.runtime.feature.feature.group" version="3.9.0.202210170008"/>
-		<unit id="org.eclipse.fx.runtime.min.feature.feature.group" version="3.9.0.202210162353"/>
-		<unit id="org.eclipse.fx.slf4j.target.feature.feature.group" version="3.9.0.202209211359"/>
-	</location>
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="https://download.eclipse.org/eclipse/updates/4.26/"/>
 		<unit id="org.eclipse.platform.ide" version="4.26.0.I20221123-1800"/>
 		<unit id="org.eclipse.rcp.feature.group" version="4.26.0.v20221123-2302"/>
@@ -109,6 +101,13 @@
 		<unit id="org.hamcrest.library" version="1.3.0.v20180524-2246"/>
 		<unit id="org.hamcrest.library.source" version="1.3.0.v20180524-2246"/>
 		<unit id="org.hamcrest.source" version="2.2.0.v20210711-0821"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="https://download.eclipse.org/efxclipse/runtime-released/3.9.0/site/"/>
+		<unit id="org.eclipse.fx.core.feature.feature.group" version="3.9.0.202210170008"/>
+		<unit id="org.eclipse.fx.runtime.feature.feature.group" version="3.9.0.202210170008"/>
+		<unit id="org.eclipse.fx.runtime.min.feature.feature.group" version="3.9.0.202210162353"/>
+		<unit id="org.eclipse.fx.target.rcp4.feature.feature.group" version="3.9.0.202210170008"/>
 	</location>
 	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
 		<dependencies>
@@ -270,12 +269,72 @@
 			</dependency>
 		</dependencies>
 	</location>
-	<location includeDependencyDepth="none" includeSource="true" missingManifest="generate" type="Maven">
+	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
 		<dependencies>
 			<dependency>
 				<groupId>javax.activation</groupId>
 				<artifactId>activation</artifactId>
 				<version>1.1.1</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</location>
+	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>org.openjfx</groupId>
+				<artifactId>javafx</artifactId>
+				<version>19.0.2.1</version>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</location>
+	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>org.openjfx</groupId>
+				<artifactId>javafx-controls</artifactId>
+				<version>19.0.2.1</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</location>
+	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>org.openjfx</groupId>
+				<artifactId>javafx-graphics</artifactId>
+				<version>19.0.2.1</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</location>
+	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>org.openjfx</groupId>
+				<artifactId>javafx-base</artifactId>
+				<version>19.0.2.1</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</location>
+	<location includeDependencyDepth="infinite" includeDependencyScopes="compile,runtime" includeSource="true" missingManifest="generate" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>org.phoebus</groupId>
+				<artifactId>app-alarm-model</artifactId>
+				<version>4.7.1</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</location>
+	<location includeDependencyDepth="infinite" includeDependencyScopes="compile,runtime" includeSource="true" missingManifest="generate" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>org.phoebus</groupId>
+				<artifactId>app-alarm-ui</artifactId>
+				<version>4.7.1</version>
 				<type>jar</type>
 			</dependency>
 		</dependencies>

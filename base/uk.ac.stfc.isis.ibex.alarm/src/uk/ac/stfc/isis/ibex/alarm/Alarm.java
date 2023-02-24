@@ -18,15 +18,9 @@
 
 package uk.ac.stfc.isis.ibex.alarm;
 
-import org.apache.logging.log4j.Logger;
-import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModel;
 import org.eclipse.core.runtime.Plugin;
-import org.osgi.framework.BundleContext;
-
-import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfoReceiver;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 /**
  * Class which provides an interaction between the perspective switcher and the
@@ -34,179 +28,194 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
  */
 public class Alarm extends Plugin implements InstrumentInfoReceiver {
 
-	private static final Logger LOG = IsisLog.getLogger(Alarm.class);
-	
-	private static BundleContext context;
-	private static Alarm instance;
-
-    /** The alarmModel is a singleton so have a single copy. */
-    private static AlarmClientModel alarmModel = null;
-
-    /**
-     * Alarm counter is based on the alarmModle so there is a single copy this.
-     */
-    private static AlarmCounter counter = new AlarmCounter(null);
-    private AlarmSettings alarmSettings = new AlarmSettings();
-    private AlarmConnectionCloser alarmConnectionCloser = null;
-	
-    /**
-     * @return the instance of this singleton.
-     */
-	public static Alarm getInstance() {
-        if (instance == null) {
-            throw new RuntimeException(
-                    "Alarms view gets created by eclipse but getInstance was called before it was created.");
-        }
-		return instance;
-    }
-
-    /**
-     * @return the default alarm instance
-     */
-	public static Alarm getDefault() {
-        return getInstance();
+	@Override
+	public void setInstrument(InstrumentInfo instrument) {
+		// noop
 	}
 
-    /**
-     * The default constructor for this singleton, sets up the backend model and
-     * counter to monitor the alarms.
-     */
-    public Alarm() {
-		instance = this;
-    }
-
-    /**
-     * Reloads the information in the alarm tree view.
-     */
-    public void reload() {
-        try {
-            // Passing null reloads everything.
-            alarmModel.readConfig(null);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * If there is no alarm model then setup a new alarm model and counter.
-     */
-    private void setupAlarmModel() {
-        try {
-            if (alarmModel == null) {
-                alarmModel = AlarmClientModel.getInstance();
-                counter.setAlarmModel(alarmModel);
-            }
-            
-		} catch (Exception e) {
-			LOG.info("Alarm Client Model not found");
-		}
-    }
-
-    /**
-     * Stop the bundle releasing all the resources.
-     * 
-     * @param context context of the bundle
-     * @throws Exception if something goes wrong
-     */
-    @Override
-    public void stop(BundleContext context) throws Exception {
-        super.stop(context);
-        AlarmConnectionCloser alarmConnectionCloser = releaseAlarm();
-        if (alarmConnectionCloser != null) {
-        	alarmConnectionCloser.close();
-        }
-    }
-
-    /**
-     * Gets the context for the bundle.
-     *
-     * @return the context
-     */
-	static BundleContext getContext() {
-		return context;
-	}
-	
-	/**
-	 * @return the counter being used
-	 */
-	public AlarmCounter getCounter() {
-		return counter;
-	}
-	
-    /**
-     * This should be called after closing the alarm view, else the instance of
-     * the alarm model will be held on to by BEAST. This returns a connection
-     * closer which should be closed as late as possible because the rest of the
-     * connection is closed on a separate thread; give it a chance to close
-     * first.
-     * 
-     * @return an active MQ connection closer; or null if there is no alarmModel to release.
-     */
-    private AlarmConnectionCloser releaseAlarm() {
-    	AlarmConnectionCloser alarmConnectionCloser = null;
-    	if (alarmModel != null) {
-	        alarmConnectionCloser = new AlarmConnectionCloser(alarmModel);
-	        alarmModel.release();
-    	}
-        alarmModel = null;
-        counter.setAlarmModel(null);
-
-        return alarmConnectionCloser;
-    }
-
-	/**
-	 * Set up alarm messages for the current instrument. Called when view is
-	 * being instantiated to avoid delay in displaying the alarms.
-	 */
-	public void initInstrument() {
-		setInstrument(Instrument.getInstance().currentInstrument());
-	}
-    
-    /**
-     * Set up the alarm model default value and create the new alarm model.
-     * 
-     * @param instrument that is being changed to
-     */
-    @Override
-    public void setInstrument(InstrumentInfo instrument) {
-        alarmSettings.setInstrument(instrument);
-        setupAlarmModel();
-        forceRefresh();
-    }
-
-	/**
-	 * This forces BEAST to reinitialise the communicator when the URLs have
-	 * changed.
-	 */
-	private void forceRefresh() {
-		if (alarmModel != null) {
-			alarmModel.setConfigurationName("Annunciator", null);
-			alarmModel.setConfigurationName("Instrument", null);
-		}
+	@Override
+	public void preSetInstrument(InstrumentInfo instrument) {
+		// noop
 	}
 
-    /**
-     * Close the current alarm model.
-     * 
-     * @param instrument that is being changed to
-     */
-    @Override
-    public void preSetInstrument(InstrumentInfo instrument) {
-        alarmConnectionCloser = releaseAlarm();
-    }
+	@Override
+	public void postSetInstrument(InstrumentInfo instrument) {
+		// noop
+	}
 
-    /**
-     * Clean up for the active MQ.
-     * 
-     * @param instrument that has been changed to
-     */
-    @Override
-    public void postSetInstrument(InstrumentInfo instrument) {
-        // close the active MQ as late as possible
-        if (alarmConnectionCloser != null) {
-            alarmConnectionCloser.close();
-            alarmConnectionCloser = null;
-        }
-    }
+//	private static final Logger LOG = IsisLog.getLogger(Alarm.class);
+//	
+//	private static BundleContext context;
+//	private static Alarm instance;
+//
+//    /** The alarmModel is a singleton so have a single copy. */
+//    private static AlarmClient alarmModel = null;
+//
+//    /**
+//     * Alarm counter is based on the alarmModle so there is a single copy this.
+//     */
+//    private static AlarmCounter counter = new AlarmCounter(null);
+//    private AlarmSettings alarmSettings = new AlarmSettings();
+//    private AlarmConnectionCloser alarmConnectionCloser = null;
+//	
+//    /**
+//     * @return the instance of this singleton.
+//     */
+//	public static Alarm getInstance() {
+//        if (instance == null) {
+//            throw new RuntimeException(
+//                    "Alarms view gets created by eclipse but getInstance was called before it was created.");
+//        }
+//		return instance;
+//    }
+//
+//    /**
+//     * @return the default alarm instance
+//     */
+//	public static Alarm getDefault() {
+//        return getInstance();
+//	}
+//
+//    /**
+//     * The default constructor for this singleton, sets up the backend model and
+//     * counter to monitor the alarms.
+//     */
+//    public Alarm() {
+//		instance = this;
+//    }
+//
+//    /**
+//     * Reloads the information in the alarm tree view.
+//     */
+//    public void reload() {
+//        try {
+//            // Passing null reloads everything.
+//            alarmModel.readConfig(null);
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+//
+//    /**
+//     * If there is no alarm model then setup a new alarm model and counter.
+//     */
+//    private void setupAlarmModel() {
+//        try {
+//            if (alarmModel == null) {
+//                alarmModel = AlarmClientModel.getInstance();
+//                counter.setAlarmModel(alarmModel);
+//            }
+//            
+//		} catch (Exception e) {
+//			LOG.info("Alarm Client Model not found");
+//		}
+//    }
+//
+//    /**
+//     * Stop the bundle releasing all the resources.
+//     * 
+//     * @param context context of the bundle
+//     * @throws Exception if something goes wrong
+//     */
+//    @Override
+//    public void stop(BundleContext context) throws Exception {
+//        super.stop(context);
+//        AlarmConnectionCloser alarmConnectionCloser = releaseAlarm();
+//        if (alarmConnectionCloser != null) {
+//        	alarmConnectionCloser.close();
+//        }
+//    }
+//
+//    /**
+//     * Gets the context for the bundle.
+//     *
+//     * @return the context
+//     */
+//	static BundleContext getContext() {
+//		return context;
+//	}
+//	
+//	/**
+//	 * @return the counter being used
+//	 */
+//	public AlarmCounter getCounter() {
+//		return counter;
+//	}
+//	
+//    /**
+//     * This should be called after closing the alarm view, else the instance of
+//     * the alarm model will be held on to by BEAST. This returns a connection
+//     * closer which should be closed as late as possible because the rest of the
+//     * connection is closed on a separate thread; give it a chance to close
+//     * first.
+//     * 
+//     * @return an active MQ connection closer; or null if there is no alarmModel to release.
+//     */
+//    private AlarmConnectionCloser releaseAlarm() {
+//    	AlarmConnectionCloser alarmConnectionCloser = null;
+//    	if (alarmModel != null) {
+//	        alarmConnectionCloser = new AlarmConnectionCloser(alarmModel);
+//	        alarmModel.release();
+//    	}
+//        alarmModel = null;
+//        counter.setAlarmModel(null);
+//
+//        return alarmConnectionCloser;
+//    }
+//
+//	/**
+//	 * Set up alarm messages for the current instrument. Called when view is
+//	 * being instantiated to avoid delay in displaying the alarms.
+//	 */
+//	public void initInstrument() {
+//		setInstrument(Instrument.getInstance().currentInstrument());
+//	}
+//    
+//    /**
+//     * Set up the alarm model default value and create the new alarm model.
+//     * 
+//     * @param instrument that is being changed to
+//     */
+//    @Override
+//    public void setInstrument(InstrumentInfo instrument) {
+//        alarmSettings.setInstrument(instrument);
+//        setupAlarmModel();
+//        forceRefresh();
+//    }
+//
+//	/**
+//	 * This forces BEAST to reinitialise the communicator when the URLs have
+//	 * changed.
+//	 */
+//	private void forceRefresh() {
+//		if (alarmModel != null) {
+//			alarmModel.setConfigurationName("Annunciator", null);
+//			alarmModel.setConfigurationName("Instrument", null);
+//		}
+//	}
+//
+//    /**
+//     * Close the current alarm model.
+//     * 
+//     * @param instrument that is being changed to
+//     */
+//    @Override
+//    public void preSetInstrument(InstrumentInfo instrument) {
+//        alarmConnectionCloser = releaseAlarm();
+//    }
+//
+//    /**
+//     * Clean up for the active MQ.
+//     * 
+//     * @param instrument that has been changed to
+//     */
+//    @Override
+//    public void postSetInstrument(InstrumentInfo instrument) {
+//        // close the active MQ as late as possible
+//        if (alarmConnectionCloser != null) {
+//            alarmConnectionCloser.close();
+//            alarmConnectionCloser = null;
+//        }
+//    }
 
 }

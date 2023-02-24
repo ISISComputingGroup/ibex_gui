@@ -23,7 +23,6 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.function.Function;
 
-import uk.ac.stfc.isis.ibex.alarm.AlarmReloadManager;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
@@ -52,7 +51,7 @@ public class ConfigServer extends Closer {
     private final ForwardingWritableAction updateAlarmManager = new ForwardingWritableAction() {
         @Override
         public void action() {
-            AlarmReloadManager.getInstance().queueDelayedUpdate();
+            // AlarmReloadManager.getInstance().queueDelayedUpdate();
         }
     };
 

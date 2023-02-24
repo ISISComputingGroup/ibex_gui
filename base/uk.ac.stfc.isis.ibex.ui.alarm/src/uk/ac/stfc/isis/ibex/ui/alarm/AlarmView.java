@@ -19,13 +19,15 @@
 
 package uk.ac.stfc.isis.ibex.ui.alarm;
 
-import org.csstudio.alarm.beast.ui.alarmtree.GUI;
-import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModel;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.part.ViewPart;
+import org.phoebus.applications.alarm.client.AlarmClient;
+import org.phoebus.applications.alarm.ui.tree.AlarmTreeView;
 
-import uk.ac.stfc.isis.ibex.alarm.Alarm;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import javafx.embed.swt.FXCanvas;
 
 
 /**
@@ -38,38 +40,43 @@ public class AlarmView extends ViewPart {
 	 */
     public static final String ID = "uk.ac.stfc.isis.ibex.ui.alarm"; //$NON-NLS-1$
 
-    private AlarmClientModel model;
-    private GUI gui;
-
+//    private AlarmClientModel model;
+//    private GUI gui;
+//
     @Override
     public void createPartControl(final Composite parent) {
-		Alarm.getInstance().initInstrument();
-        try {
-			model = AlarmClientModel.getInstance();
-		} catch (Exception e) {
-            IsisLog.getLogger(getClass()).error("Cannot load alarm model", e); //$NON-NLS-1$
-		}
-
-        gui = new GUI(parent, model, getViewSite());
-
-        // There's nothing on the default menu we currently want
-        gui.getTreeViewer().getTree().setMenu(null);
-
-        // Lots of other controls available (see AlarmTreeView). For now they're just clutter
-        getViewSite().getActionBars().getToolBarManager().add(new RefreshAction());
+//		Alarm.getInstance().initInstrument();
+//        try {
+//			model = AlarmClientModel.getInstance();
+//		} catch (Exception e) {
+//            IsisLog.getLogger(getClass()).error("Cannot load alarm model", e); //$NON-NLS-1$
+//		}
+//
+//        gui = new GUI(parent, model, getViewSite());
+//
+//        // There's nothing on the default menu we currently want
+//        gui.getTreeViewer().getTree().setMenu(null);
+//
+//        // Lots of other controls available (see AlarmTreeView). For now they're just clutter
+//        getViewSite().getActionBars().getToolBarManager().add(new RefreshAction());
+    	
+    	FXCanvas fxCanvas = new FXCanvas(new Shell(Display.getDefault()), SWT.NONE);
+    	new AlarmTreeView(new AlarmClient("", "", ""));
+    	
+    	
     }
-
+//
     @Override
     public void setFocus() {
-    	gui.setFocus();
+    	// noop
     }
-
-    @Override
-    public void dispose() {
-    	super.dispose();
-    	if (model != null) {
-    		model.release();
-    	}
-        model = null;
-    }
+//
+//    @Override
+//    public void dispose() {
+//    	super.dispose();
+//    	if (model != null) {
+//    		model.release();
+//    	}
+//        model = null;
+//    }
 }
