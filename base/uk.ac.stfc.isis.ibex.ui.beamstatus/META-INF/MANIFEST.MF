@@ -21,8 +21,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.e4.ui.model.workbench,
  org.csstudio.trends.databrowser2;bundle-version="4.2.4",
  uk.ac.stfc.isis.ibex.logger,
- javax.annotation;bundle-version="1.2.0",
- uk.ac.stfc.isis.ibex.ui.configserver
+ uk.ac.stfc.isis.ibex.ui.configserver,
+ jakarta.annotation-api;bundle-version="2.1.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Export-Package: uk.ac.stfc.isis.ibex.ui.beamstatus.views
 Import-Package: org.eclipse.wb.swt,

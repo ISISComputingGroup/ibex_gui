@@ -22,7 +22,7 @@
  */
 package uk.ac.stfc.isis.ibex.ui.devicescreens;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;

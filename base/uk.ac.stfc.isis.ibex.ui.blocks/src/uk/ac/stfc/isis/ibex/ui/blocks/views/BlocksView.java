@@ -22,8 +22,8 @@ package uk.ac.stfc.isis.ibex.ui.blocks.views;
 import java.util.List;
 import java.util.Optional;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import javax.inject.Inject;
 
 import org.eclipse.e4.ui.model.application.MApplication;
