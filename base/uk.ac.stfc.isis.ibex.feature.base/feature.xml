@@ -1000,13 +1000,6 @@
          unpack="false"/>
 
    <plugin
-         id="javax.xml"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="javax.xml.soap"
          download-size="0"
          install-size="0"
@@ -1209,13 +1202,6 @@
 
    <plugin
          id="uk.ac.stfc.isis.ibex.jaxb"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="javax.xml.stream"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -1601,6 +1587,20 @@
 
    <plugin
          id="com.sun.xml.bind.jaxb-impl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="jakarta.annotation-api"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="jakarta.inject.jakarta.inject-api"
          download-size="0"
          install-size="0"
          version="0.0.0"
