@@ -963,13 +963,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.apache.lucene.core.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.core.net"
          download-size="0"
          install-size="0"
@@ -1179,20 +1172,6 @@
 
    <plugin
          id="org.w3c.dom.smil.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.w3c.dom.svg"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.w3c.dom.svg.source"
          download-size="0"
          install-size="0"
          version="0.0.0"

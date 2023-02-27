@@ -521,13 +521,6 @@
          unpack="false"/>
 
    <plugin
-         id="javax.activation"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.csstudio.opibuilder"
          download-size="0"
          install-size="0"
@@ -1184,13 +1177,6 @@
          unpack="false"/>
 
    <plugin
-         id="javax.activation-api"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="com.sun.istack.commons-runtime"
          download-size="0"
          install-size="0"
@@ -1409,6 +1395,20 @@
 
    <plugin
          id="wrapped.org.phoebus.core-vtype.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="wrapped.javax.activation.activation"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="wrapped.javax.activation.activation.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
