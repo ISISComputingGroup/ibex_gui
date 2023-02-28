@@ -899,13 +899,24 @@ $(pv_value)</tooltip>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts>
+        <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
+          <scriptName>VisibleScript</scriptName>
+          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+macros = display.getPropertyValue("macros").getMacrosMap()
+p = macros.get("P")
+
+widget.setPropertyValue("visible", True)]]></scriptText>
+          <pv trig="true">$(PV_ROOT)COLLIM_MOVING</pv>
+        </path>
+      </scripts>
       <show_scrollbar>false</show_scrollbar>
       <text>Actual mode:</text>
       <tooltip></tooltip>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Label</widget_type>
       <width>121</width>
       <wrap_words>true</wrap_words>
@@ -941,7 +952,7 @@ $(pv_value)</tooltip>
       <name>ActualModeRBV</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT)MOVING</pv_name>
+      <pv_name></pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -950,14 +961,27 @@ $(pv_value)</tooltip>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts>
+        <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
+          <scriptName>VisibleScript</scriptName>
+          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+macros = display.getPropertyValue("macros").getMacrosMap()
+p = macros.get("P")
+
+widget.setPropertyValue("pv_name", "$(PV_ROOT)COLLIM_MOVING")
+widget.setPropertyValue("visible", True)
+]]></scriptText>
+          <pv trig="true">$(PV_ROOT)COLLIM_MOVING</pv>
+        </path>
+      </scripts>
       <show_units>true</show_units>
       <text>######</text>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Text Update</widget_type>
       <width>85</width>
       <wrap_words>false</wrap_words>
