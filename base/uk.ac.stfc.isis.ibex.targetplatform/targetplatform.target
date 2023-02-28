@@ -56,11 +56,6 @@
 		<unit id="javax.xml.soap" version="1.3.0.v201105210645"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/Pydev/features/org.python.pydev.p2-repo/target/repository/"/>
-		<unit id="org.python.pydev.feature.feature.group" version="8.3.0.202302061416"/>
-		<unit id="org.python.pydev.feature.source.feature.group" version="8.3.0.202302061416"/>
-	</location>
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="https://download.eclipse.org/eclipse/updates/4.26/"/>
 		<unit id="org.eclipse.platform.ide" version="4.26.0.I20221123-1800"/>
 		<unit id="org.eclipse.rcp.feature.group" version="4.26.0.v20221123-2302"/>
@@ -82,6 +77,11 @@
 		<unit id="org.hamcrest.library" version="1.3.0.v20180524-2246"/>
 		<unit id="org.hamcrest.library.source" version="1.3.0.v20180524-2246"/>
 		<unit id="org.hamcrest.source" version="2.2.0.v20210711-0821"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/Pydev_10_1_3/features/org.python.pydev.p2-repo/target/repository/"/>
+		<unit id="org.python.pydev.feature.feature.group" version="10.1.3.202302240955"/>
+		<unit id="org.python.pydev.feature.source.feature.group" version="10.1.3.202302240955"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="https://download.eclipse.org/efxclipse/runtime-released/3.9.0/site/"/>
