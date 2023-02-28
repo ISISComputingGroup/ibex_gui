@@ -1566,7 +1566,7 @@ $(pv_value)</tooltip>
               <PSU2_PREFIX>DFKPS_08</PSU2_PREFIX>
               <PSU3_PREFIX>DFKPS_23</PSU3_PREFIX>
             </macros>
-            <mode>1</mode>
+            <mode>3</mode>
             <description></description>
           </action>
         </actions>
@@ -2654,7 +2654,7 @@ $(pv_value)</tooltip>
               <PSU5_PREFIX>DFKPS_10</PSU5_PREFIX>
               <PSU6_PREFIX>DFKPS_05</PSU6_PREFIX>
             </macros>
-            <mode>1</mode>
+            <mode>3</mode>
             <description></description>
           </action>
         </actions>
@@ -4019,7 +4019,7 @@ P</text>
               <PSU2_PREFIX>DFKPS_12</PSU2_PREFIX>
               <PSU3_PREFIX>DFKPS_20</PSU3_PREFIX>
             </macros>
-            <mode>1</mode>
+            <mode>3</mode>
             <description></description>
           </action>
         </actions>
@@ -4248,7 +4248,7 @@ $(pv_value)</tooltip>
               <PSU2_PREFIX>DFKPS_07</PSU2_PREFIX>
               <PSU3_PREFIX>DFKPS_17</PSU3_PREFIX>
             </macros>
-            <mode>1</mode>
+            <mode>3</mode>
             <description></description>
           </action>
         </actions>
