@@ -875,20 +875,6 @@
          unpack="false"/>
 
    <plugin
-         id="javax.activation"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="javax.activation-api"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="wrapped.net.sf.py4j.py4j"
          download-size="0"
          install-size="0"

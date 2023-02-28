@@ -318,27 +318,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.w3c.dom.events"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.w3c.dom.smil"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.w3c.dom.svg"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.equinox.registry"
          download-size="0"
          install-size="0"
@@ -1177,13 +1156,6 @@
          unpack="false"/>
 
    <plugin
-         id="com.sun.istack.commons-runtime"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.apache.batik.util"
          download-size="0"
          install-size="0"
@@ -1401,14 +1373,14 @@
          unpack="false"/>
 
    <plugin
-         id="wrapped.javax.activation.activation"
+         id="jakarta.activation-api"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="wrapped.javax.activation.activation.source"
+         id="jakarta.activation-api.source"
          download-size="0"
          install-size="0"
          version="0.0.0"

@@ -37,10 +37,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.fx.runtime.feature"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.fx.runtime.min.feature"
          version="0.0.0"/>
 
@@ -1150,34 +1146,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.w3c.dom.events"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.w3c.dom.events.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.w3c.dom.smil"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.w3c.dom.smil.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="uk.ac.stfc.isis.ibex.ui.widgets.epics"
          download-size="0"
          install-size="0"
@@ -1570,13 +1538,6 @@
          unpack="false"/>
 
    <plugin
-         id="com.sun.istack.commons-runtime"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="com.sun.xml.bind.jaxb-impl"
          download-size="0"
          install-size="0"
@@ -1708,6 +1669,20 @@
          install-size="0"
          version="0.0.0"
          fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="jakarta.activation-api"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="jakarta.activation-api.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>

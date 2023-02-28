@@ -43,6 +43,8 @@ public class AlarmView extends ViewPart {
 //    private AlarmClientModel model;
 //    private GUI gui;
 //
+
+	@SuppressWarnings("unused") 
     @Override
     public void createPartControl(final Composite parent) {
 //		Alarm.getInstance().initInstrument();
@@ -59,7 +61,6 @@ public class AlarmView extends ViewPart {
 //
 //        // Lots of other controls available (see AlarmTreeView). For now they're just clutter
 //        getViewSite().getActionBars().getToolBarManager().add(new RefreshAction());
-    	
     	FXCanvas fxCanvas = new FXCanvas(new Shell(Display.getDefault()), SWT.NONE);
     	new AlarmTreeView(new AlarmClient("", "", ""));
     	

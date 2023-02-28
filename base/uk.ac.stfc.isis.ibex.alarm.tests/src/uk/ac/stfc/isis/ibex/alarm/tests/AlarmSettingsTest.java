@@ -1,50 +1,34 @@
-//
-///**
-// * This file is part of the ISIS IBEX application.
-// * Copyright (C) 2012-2015 Science & Technology Facilities Council.
-// * All rights reserved.
-// *
-// * This program is distributed in the hope that it will be useful.
-// * This program and the accompanying materials are made available under the
-// * terms of the Eclipse Public License v1.0 which accompanies this distribution.
-// * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
-// * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
-// * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
-// *
-// * You should have received a copy of the Eclipse Public License v1.0
-// * along with this program; if not, you can obtain a copy from
-// * https://www.eclipse.org/org/documents/epl-v10.php or 
-// * http://opensource.org/licenses/eclipse-1.0.php
-// */
-//
-//package uk.ac.stfc.isis.ibex.alarm.tests;
-//
-//import static org.junit.Assert.assertEquals;
-//import static org.mockito.ArgumentMatchers.anyString;
-//import static org.mockito.ArgumentMatchers.eq;
-//import static org.mockito.ArgumentMatchers.nullable;
-//import static org.mockito.Mockito.doAnswer;
-//import static org.mockito.Mockito.mock;
-//import static org.mockito.Mockito.when;
-//
-//import org.csstudio.alarm.beast.Preferences;
-//import org.junit.Before;
-//import org.junit.Test;
-//import org.junit.runner.RunWith;
-//import org.mockito.invocation.InvocationOnMock;
-//import org.mockito.junit.MockitoJUnitRunner;
-//import org.mockito.stubbing.Answer;
-//
-//import uk.ac.stfc.isis.ibex.alarm.AlarmSettings;
-//import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-//
-///**
-// * Test the alarm settings for CSS Beast Alarm.
-// *
-// */
-//@RunWith(MockitoJUnitRunner.StrictStubs.class)
-//@SuppressWarnings("checkstyle:methodname")
-//public class AlarmSettingsTest {
+
+/**
+ * This file is part of the ISIS IBEX application.
+ * Copyright (C) 2012-2015 Science & Technology Facilities Council.
+ * All rights reserved.
+ *
+ * This program is distributed in the hope that it will be useful.
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution.
+ * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+ * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+ * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+ *
+ * You should have received a copy of the Eclipse Public License v1.0
+ * along with this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * http://opensource.org/licenses/eclipse-1.0.php
+ */
+
+package uk.ac.stfc.isis.ibex.alarm.tests;
+
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
+
+/**
+ * Test the alarm settings for CSS Beast Alarm.
+ *
+ */
+@RunWith(MockitoJUnitRunner.StrictStubs.class)
+@SuppressWarnings("checkstyle:methodname")
+public class AlarmSettingsTest {
 //
 //    /**
 //     * Localhost instrument name.
@@ -573,4 +557,4 @@
 //        // Assert
 //        assertEquals(expectedUrl, preferences.get(Preferences.JMS_URL, null));
 //    }
-//}
+}
