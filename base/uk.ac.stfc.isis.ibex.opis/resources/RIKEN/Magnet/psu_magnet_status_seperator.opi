@@ -156,7 +156,7 @@ $(pv_value)</tooltip>
           <include_parent_macros>true</include_parent_macros>
           <IOC_NAME>$(PV)</IOC_NAME>
         </macros>
-        <mode>0</mode>
+        <mode>3</mode>
         <description></description>
       </action>
     </actions>
