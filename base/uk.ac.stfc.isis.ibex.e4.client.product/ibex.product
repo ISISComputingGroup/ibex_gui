@@ -26,8 +26,6 @@
 -Declipse.p2.unsignedPolicy=allow
 -XX:+CreateCoredumpOnCrash
 -Dlog4j2.formatMsgNoLookups=true
--Defxclipse.java-modules.dir=C:\Instrument\dev\ibex_gui\base\uk.ac.stfc.isis.ibex.javafx\lib
---module-path=C:\Instrument\dev\ibex_gui\base\uk.ac.stfc.isis.ibex.javafx\lib
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>

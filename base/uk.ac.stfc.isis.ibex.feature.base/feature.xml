@@ -33,10 +33,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.persistence.moxy"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.fx.runtime.min.feature"
          version="0.0.0"/>
 

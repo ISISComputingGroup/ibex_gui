@@ -12,11 +12,10 @@ Require-Bundle: jakarta.xml.bind-api;bundle-version="4.0.0";visibility:=reexport
  org.eclipse.ui;bundle-version="3.115.0",
  org.eclipse.persistence.asm;bundle-version="7.2.0",
  org.eclipse.persistence.moxy;bundle-version="2.7.6",
- com.sun.xml.bind.jaxb-impl;bundle-version="2.3.3";visibility:=reexport,
  org.glassfish.jaxb.runtime;bundle-version="4.0.2";visibility:=reexport,
- jaxb-api;bundle-version="2.3.1";visibility:=reexport,
  org.glassfish.jaxb.core;bundle-version="4.0.2";visibility:=reexport,
- wrapped.org.glassfish.jaxb.txw2;bundle-version="4.0.2";visibility:=reexport
+ wrapped.org.glassfish.jaxb.txw2;bundle-version="4.0.2";visibility:=reexport,
+ com.sun.istack.commons-runtime;bundle-version="4.1.1"
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.jaxb
 Import-Package: javax.persistence,
  javax.xml.stream
