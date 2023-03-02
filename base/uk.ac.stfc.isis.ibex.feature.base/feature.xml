@@ -729,20 +729,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.jdom"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.python.jython"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.python.pydev"
          download-size="0"
          install-size="0"
@@ -853,13 +839,6 @@
          unpack="false"/>
 
    <plugin
-         id="com.sun.jersey.bundle"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="com.fasterxml.jackson.core.jackson-annotations"
          download-size="0"
          install-size="0"
@@ -881,21 +860,7 @@
          unpack="false"/>
 
    <plugin
-         id="com.fasterxml.jackson.dataformat.jackson-dataformat-smile"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.help.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.tallison.jmatio"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -987,13 +952,6 @@
 
    <plugin
          id="org.eclipse.gef"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="com.fasterxml.jackson.module.jackson-module-jaxb-annotations"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -1118,13 +1076,6 @@
 
    <plugin
          id="org.eclipse.equinox.http.servlet"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.epics.caj"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -1566,13 +1517,6 @@
 
    <plugin
          id="org.glassfish.jaxb.runtime"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="jaxb-api"
          download-size="0"
          install-size="0"
          version="0.0.0"

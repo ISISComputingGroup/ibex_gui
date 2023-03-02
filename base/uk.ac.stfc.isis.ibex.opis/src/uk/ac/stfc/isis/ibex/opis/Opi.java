@@ -20,8 +20,6 @@
 package uk.ac.stfc.isis.ibex.opis;
 
 import java.io.IOException;
-import java.util.Objects;
-
 import org.apache.logging.log4j.Logger;
 //import org.csstudio.opibuilder.OPIBuilderPlugin;
 //import org.csstudio.opibuilder.script.RhinoWithFastPathScriptStore;
@@ -108,43 +106,6 @@ public class Opi implements BundleActivator {
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
 		Opi.context = bundleContext;
-		
-//		IsisLog.hookJavaLogger(CSS_LOGGER);
-		
-		// Change this to true to log all scripts which use the slow (JS interpreter) path
-//		RhinoWithFastPathScriptStore.setLogScriptsUsingJS(false);
-		
-		addFastPathHandlers();
-	}
-	
-	@SuppressWarnings("checkstyle:magicnumber")
-	private static void addFastPathHandlers() {
-		
-		// Some handlers called frequently by reflectometry OPIs.
-//		RhinoWithFastPathScriptStore.addFastPathHandler("pv1==0&&pv0==0", 
-//				pvs -> PVUtil.getDouble(pvs[0]) == 0.0 && PVUtil.getDouble(pvs[1]) == 0.0);
-//		
-//		RhinoWithFastPathScriptStore.addFastPathHandler("pv0==1 && pv1==0", 
-//				pvs -> PVUtil.getDouble(pvs[0]) == 1.0 && PVUtil.getDouble(pvs[1]) == 0.0);
-//		
-//		RhinoWithFastPathScriptStore.addFastPathHandler("pvStr0==\"North\" || pvStr0==\"South\"", 
-//				pvs -> (Objects.equals(PVUtil.getString(pvs[0]), "North")) 
-//						|| (Objects.equals(PVUtil.getString(pvs[0]), "South")));
-//				
-//		RhinoWithFastPathScriptStore.addFastPathHandler("pvStr0!=\"North\" && pvStr0!=\"South\"", 
-//				pvs -> (!Objects.equals(PVUtil.getString(pvs[0]), "North")) 
-//						&&  (!Objects.equals(PVUtil.getString(pvs[0]), "South")));
-//		
-//		// Some handlers used frequently by RIKEN OPIs.
-//		RhinoWithFastPathScriptStore.addFastPathHandler("pv0==1 || pv0==3",
-//				pvs -> PVUtil.getDouble(pvs[0]) == 1.0 || PVUtil.getDouble(pvs[0]) == 3.0);
-//		
-//		RhinoWithFastPathScriptStore.addFastPathHandler("pv0==2",
-//				pvs -> PVUtil.getDouble(pvs[0]) == 2.0);
-//		
-//		RhinoWithFastPathScriptStore.addFastPathHandler("pv0==4",
-//				pvs -> PVUtil.getDouble(pvs[0]) == 4.0);
-		
 	}
 
 	/**
