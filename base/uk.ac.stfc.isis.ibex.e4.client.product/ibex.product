@@ -21,10 +21,7 @@
 -Dpython.import.site=false
 -Dorg.osgi.framework.bundle.parent=ext
 -Dosgi.framework.extensions=org.eclipse.fx.osgi
--Dorg.eclipse.update.reconcile=false
 -Declipse.p2.unsignedPolicy=allow
--Defxclipse.java-modules.dir=C:\Instrument\dev\ibex_gui\base\uk.ac.stfc.isis.ibex.javafx\lib
---module-path=C:\Instrument\dev\ibex_gui\base\uk.ac.stfc.isis.ibex.javafx\lib
 -XX:+CreateCoredumpOnCrash
 -Dlog4j2.formatMsgNoLookups=true
       </vmArgs>
