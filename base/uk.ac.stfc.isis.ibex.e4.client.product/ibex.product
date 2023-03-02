@@ -19,6 +19,12 @@
 -Xmx1024m
 -Dpython.console.encoding=UTF-8
 -Dpython.import.site=false
+-Dorg.osgi.framework.bundle.parent=ext
+-Dosgi.framework.extensions=org.eclipse.fx.osgi
+-Dorg.eclipse.update.reconcile=false
+-Declipse.p2.unsignedPolicy=allow
+-Defxclipse.java-modules.dir=C:\Instrument\dev\ibex_gui\base\uk.ac.stfc.isis.ibex.javafx\lib
+--module-path=C:\Instrument\dev\ibex_gui\base\uk.ac.stfc.isis.ibex.javafx\lib
 -XX:+CreateCoredumpOnCrash
 -Dlog4j2.formatMsgNoLookups=true
       </vmArgs>
@@ -34,6 +40,7 @@
          <bmp/>
       </win>
    </launcher>
+
 
    <vm>
       <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17</windows>
@@ -123,7 +130,6 @@
    </preferencesInfo>
 
    <cssInfo>
-      <file path="/uk.ac.stfc.isis.ibex.e4.client/default.css"/>
    </cssInfo>
 
 </product>

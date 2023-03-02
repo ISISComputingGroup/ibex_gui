@@ -13,6 +13,6 @@ public class InstrumentSwitcher extends InstrumentInfoReceiverAdapter {
 	 */
 	@Override
 	public void setInstrument(InstrumentInfo instrument) {
-		OpiViewModel.refreshViews();
+//		OpiViewModel.refreshViews();
 	}
 }

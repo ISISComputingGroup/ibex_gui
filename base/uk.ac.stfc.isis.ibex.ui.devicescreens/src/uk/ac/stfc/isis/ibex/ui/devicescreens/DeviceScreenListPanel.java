@@ -108,12 +108,12 @@ public class DeviceScreenListPanel extends Composite {
 
                 for (DeviceDescription deviceScreeen : deviceScreenList.selectedRows()) {
                     LOG.info("Open opi target " + deviceScreeen.getName());
-                    try {
-                        DevicesOpiTargetView.displayOpi(deviceScreeen.getOPITarget());
-                    } catch (OPIViewCreationException e) {
-                        LOG.catching(e);
-                        MessageDialog.openError(parent.getShell(), "Error displaying OPI", e.getMessage());
-                    }
+//                    try {
+//                        DevicesOpiTargetView.displayOpi(deviceScreeen.getOPITarget());
+//                    } catch (OPIViewCreationException e) {
+//                        LOG.catching(e);
+//                        MessageDialog.openError(parent.getShell(), "Error displaying OPI", e.getMessage());
+//                    }
                 }
 
             }

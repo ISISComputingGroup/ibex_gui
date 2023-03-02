@@ -153,19 +153,19 @@ public class MinimalMotorView extends Composite {
 	 * @param motor The motor to show
 	 */
 	private static void openMotorView(Motor motor) {
-		try {
-    		// Display OPI motor view
-			String description = motor.getDescription();
-			String secondaryID = Strings.isNullOrEmpty(description) ? motor.name() : description;
-			secondaryID = secondaryID.replace(":", "");
-
-			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-			IViewPart view = page.showView(MotorOPIView.ID, secondaryID, IWorkbenchPage.VIEW_ACTIVATE);
-
-			((MotorOPIView) view).displayOpi(secondaryID, motor.motorAddress());
-
-		} catch (PartInitException e) {
-			LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(TableOfMotorsView.class), e.getMessage(), e);
-		}
+//		try {
+//    		// Display OPI motor view
+//			String description = motor.getDescription();
+//			String secondaryID = Strings.isNullOrEmpty(description) ? motor.name() : description;
+//			secondaryID = secondaryID.replace(":", "");
+//
+//			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+//			IViewPart view = page.showView(MotorOPIView.ID, secondaryID, IWorkbenchPage.VIEW_ACTIVATE);
+//
+//			((MotorOPIView) view).displayOpi(secondaryID, motor.motorAddress());
+//
+//		} catch (PartInitException e) {
+//			LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(TableOfMotorsView.class), e.getMessage(), e);
+//		}
 	}
 }

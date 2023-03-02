@@ -6,16 +6,14 @@ Bundle-SymbolicName: uk.ac.stfc.isis.ibex.opis;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.opis.Opi
 Require-Bundle: uk.ac.stfc.isis.ibex.epics;bundle-version="1.0.0",
- org.csstudio.opibuilder;bundle-version="5.1.0";visibility:=reexport,
  org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.logger,
  org.eclipse.ui;bundle-version="3.8.2",
- org.apache.commons.io,
  uk.ac.stfc.isis.ibex.instrument,
  commonj.sdo;bundle-version="2.1.1",
  uk.ac.stfc.isis.ibex.jaxb;bundle-version="1.0.0",
- org.csstudio.simplepv;bundle-version="1.0.0",
- org.eclipse.gef;bundle-version="3.11.0"
+ org.eclipse.gef;bundle-version="3.11.0",
+ org.apache.commons.commons-io;bundle-version="2.11.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.opis,

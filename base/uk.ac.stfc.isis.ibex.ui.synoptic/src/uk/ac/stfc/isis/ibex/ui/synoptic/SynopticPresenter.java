@@ -44,7 +44,6 @@ import uk.ac.stfc.isis.ibex.synoptic.model.targets.GroupedComponentTarget;
 import uk.ac.stfc.isis.ibex.synoptic.navigation.TargetNode;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;
 import uk.ac.stfc.isis.ibex.targets.Target;
-import uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticOpiTargetView;
 import uk.ac.stfc.isis.ibex.ui.synoptic.views.SynopticView;
 
 /**
@@ -197,11 +196,11 @@ public class SynopticPresenter extends ModelObject {
 
         if (target instanceof OpiTarget) {
             // Opi targets don't update the navigator.
-            try {
-                SynopticOpiTargetView.displayOpi((OpiTarget) target);
-            } catch (OPIViewCreationException e) {
-                LOG.error(e);
-            }
+//            try {
+//                SynopticOpiTargetView.displayOpi((OpiTarget) target);
+//            } catch (OPIViewCreationException e) {
+//                LOG.error(e);
+//            }
             return;
         }
 
@@ -243,11 +242,11 @@ public class SynopticPresenter extends ModelObject {
             displayGroupTarget((GroupedComponentTarget) currentTarget);
 		}
 		if (currentTarget instanceof OpiTarget) {
-            try {
-                SynopticOpiTargetView.displayOpi((OpiTarget) currentTarget);
-            } catch (OPIViewCreationException e) {
-                LOG.catching(e);
-            }
+//            try {
+//                SynopticOpiTargetView.displayOpi((OpiTarget) currentTarget);
+//            } catch (OPIViewCreationException e) {
+//                LOG.catching(e);
+//            }
 		}
 	}
 
@@ -303,6 +302,6 @@ public class SynopticPresenter extends ModelObject {
      * Closes any OPIs that have been opened on the synoptic.
      */
     public void closeAllOPIs() {
-        SynopticOpiTargetView.closeAllOPIs();
+//        SynopticOpiTargetView.closeAllOPIs();
     }
 }

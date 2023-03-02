@@ -15,9 +15,9 @@ Require-Bundle: org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.logger,
  org.eclipse.core.databinding.observable,
  uk.ac.stfc.isis.ibex.logger,
- org.csstudio.platform.libs.jdbc,
  com.ibm.icu,
- com.google.guava
+ com.google.guava,
+ com.mysql.cj;bundle-version="8.0.32"
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.journal

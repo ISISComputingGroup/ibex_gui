@@ -6,9 +6,9 @@ Bundle-Version: 1.0.0.qualifier
 Fragment-Host: uk.ac.stfc.isis.ibex.ui.ioccontrol;bundle-version="1.0.0"
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.ioccontrol.tests
 Bundle-RequiredExecutionEnvironment: JavaSE-17
-Require-Bundle: org.junit;bundle-version="4.13.0",
- org.mockito.mockito-core;bundle-version="4.7.0",
+Require-Bundle: org.mockito.mockito-core;bundle-version="4.7.0",
  net.bytebuddy.byte-buddy;bundle-version="1.12.13",
  net.bytebuddy.byte-buddy-agent;bundle-version="1.12.13",
- org.objenesis;bundle-version="3.2.0"
+ org.objenesis;bundle-version="3.2.0",
+ wrapped.junit.junit;bundle-version="4.13.2"
 Import-Package: uk.ac.stfc.isis.ibex.epics.observing

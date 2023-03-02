@@ -25,9 +25,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeoutException;
 
-import org.csstudio.csdata.ProcessVariable;
-import org.csstudio.csdata.TimestampedPV;
-import org.csstudio.ui.util.AdapterUtil;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -122,21 +119,21 @@ public class NewBlockHandler extends AbstractHandler {
             selection = HandlerUtil.getCurrentSelection(event);
         }
 
-        // Add received PVs with default archive data sources
-        final List<TimestampedPV> timestampedPVs = Arrays
-                .asList(AdapterUtil.convert(selection,
-                        TimestampedPV.class));
-        if (!timestampedPVs.isEmpty()) {
-            pvAddress = timestampedPVs.get(0).getName();
-        } else {
-            final List<ProcessVariable> pvs = Arrays.asList(AdapterUtil.convert(
-                    selection, ProcessVariable.class));
-            if (!pvs.isEmpty()) {
-                pvAddress = pvs.get(0).getName();
-            } else {
-                throw new Exception("No PV found for selection");
-            }
-        }
+//        // Add received PVs with default archive data sources
+//        final List<TimestampedPV> timestampedPVs = Arrays
+//                .asList(AdapterUtil.convert(selection,
+//                        TimestampedPV.class));
+//        if (!timestampedPVs.isEmpty()) {
+//            pvAddress = timestampedPVs.get(0).getName();
+//        } else {
+//            final List<ProcessVariable> pvs = Arrays.asList(AdapterUtil.convert(
+//                    selection, ProcessVariable.class));
+//            if (!pvs.isEmpty()) {
+//                pvAddress = pvs.get(0).getName();
+//            } else {
+//                throw new Exception("No PV found for selection");
+//            }
+//        }
         
         return pvAddress;
     }

@@ -27,7 +27,6 @@ import org.osgi.service.event.EventHandler;
 
 import uk.ac.stfc.isis.ibex.alarm.Alarm;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesProvider;
-import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.AlarmButtonViewModel;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.ButtonViewModel;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.CollapseSidebarButton;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectiveButton;
@@ -142,13 +141,13 @@ public class PerspectiveSwitcherView {
 
         for (final MPerspective perspective : perspectives) {
             final PerspectiveButtonViewModel model;
-            if (perspective.getLabel().equals("Alarms")) {
-                model = new AlarmButtonViewModel(Alarm.getInstance().getCounter(), perspective.getLabel());
-            } else if (perspective.getLabel().equals("Script Server")) {
-                model = new ScriptServerButtonViewModel(Nicos.getDefault().getModel(), perspective.getLabel());
-            } else {
+//            if (perspective.getLabel().equals("Alarms")) {
+//                model = new AlarmButtonViewModel(Alarm.getInstance().getCounter(), perspective.getLabel());
+//            } else if (perspective.getLabel().equals("Script Server")) {
+//                model = new ScriptServerButtonViewModel(Nicos.getDefault().getModel(), perspective.getLabel());
+//            } else {
                 model = new PerspectiveButtonViewModel(perspective.getLabel());
-            }
+//            }
             buttonModels.add(model);
             new PerspectiveButton(parent, perspective, perspectivesProvider, model);
             broker.subscribe(UIEvents.ElementContainer.TOPIC_SELECTEDELEMENT, new EventHandler() {

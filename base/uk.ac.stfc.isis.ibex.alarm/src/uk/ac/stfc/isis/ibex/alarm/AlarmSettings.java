@@ -22,67 +22,61 @@
  */
 package uk.ac.stfc.isis.ibex.alarm;
 
-import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.osgi.service.prefs.Preferences;
-
-import uk.ac.stfc.isis.ibex.activemq.ActiveMQ;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
-
 /**
  * Class to manage the alarm settings for CSS Beast Alarm.
  */
 public class AlarmSettings {
-
-    /**
-     * The plugin activator ID for beast.
-     */
-    private static final String PREF_QUALIFIER_ID = org.csstudio.alarm.beast.Activator.ID;
-
-    private Preferences preferences;
-
-
-    /**
-     * Instantiates a new alarm settings with default preferences store.
-     */
-    public AlarmSettings() {
-        this(InstanceScope.INSTANCE.getNode(PREF_QUALIFIER_ID));
-    }
-
-
-    /**
-     * Instantiates a new alarm settings with desired preferences.
-     *
-     * @param preferences The preferences to use
-     */
-    public AlarmSettings(Preferences preferences) {
-        this.preferences = preferences;
-    }
-
-    /**
-     * Update the alarm settings to reflect the new instrument.
-     * 
-     * @param instrument the instrument to use
-     */
-    public void setInstrument(InstrumentInfo instrument) {
-        String hostName = instrument.hostName();
-        preferences.put(org.csstudio.alarm.beast.Preferences.RDB_URL, buildRdbUrl(hostName));
-        preferences.put(org.csstudio.alarm.beast.Preferences.JMS_URL, buildJmsUrl(hostName));
-    }
-
-    /**
-     * @param hostName The instrument name
-     * @return The archive settings string corresponding to the given
-     *         instrument.
-     */
-    private static String buildRdbUrl(String hostName) {
-        return "jdbc:mysql://" + hostName + "/ALARM?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true";
-    }
-
-    /**
-     * @param hostName The instrument name
-     * @return The URLs settings string corresponding to the given instrument.
-     */
-    private static String buildJmsUrl(String hostName) {
-        return "failover:(tcp://" + hostName + ":" + ActiveMQ.JMS_PORT + ")";
-    }
+//
+//    /**
+//     * The plugin activator ID for beast.
+//     */
+//    private static final String PREF_QUALIFIER_ID = org.csstudio.alarm.beast.Activator.ID;
+//
+//    private Preferences preferences;
+//
+//
+//    /**
+//     * Instantiates a new alarm settings with default preferences store.
+//     */
+//    public AlarmSettings() {
+//        this(InstanceScope.INSTANCE.getNode(PREF_QUALIFIER_ID));
+//    }
+//
+//
+//    /**
+//     * Instantiates a new alarm settings with desired preferences.
+//     *
+//     * @param preferences The preferences to use
+//     */
+//    public AlarmSettings(Preferences preferences) {
+//        this.preferences = preferences;
+//    }
+//
+//    /**
+//     * Update the alarm settings to reflect the new instrument.
+//     * 
+//     * @param instrument the instrument to use
+//     */
+//    public void setInstrument(InstrumentInfo instrument) {
+//        String hostName = instrument.hostName();
+//        preferences.put(org.csstudio.alarm.beast.Preferences.RDB_URL, buildRdbUrl(hostName));
+//        preferences.put(org.csstudio.alarm.beast.Preferences.JMS_URL, buildJmsUrl(hostName));
+//    }
+//
+//    /**
+//     * @param hostName The instrument name
+//     * @return The archive settings string corresponding to the given
+//     *         instrument.
+//     */
+//    private static String buildRdbUrl(String hostName) {
+//        return "jdbc:mysql://" + hostName + "/ALARM?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true";
+//    }
+//
+//    /**
+//     * @param hostName The instrument name
+//     * @return The URLs settings string corresponding to the given instrument.
+//     */
+//    private static String buildJmsUrl(String hostName) {
+//        return "failover:(tcp://" + hostName + ":" + ActiveMQ.JMS_PORT + ")";
+//    }
 }

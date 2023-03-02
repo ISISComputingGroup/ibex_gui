@@ -101,7 +101,7 @@
                visible="true">
          </separator>
       </menuContribution>
-      <menuContribution
+      <!--<menuContribution
             allPopups="false"
             locationURI="popup:org.eclipse.ui.popup.any?after=css">
          <menu
@@ -135,7 +135,7 @@
                   name="main">
             </separator>
          </menu>
-      </menuContribution>
+      </menuContribution>-->
    </extension>
    <extension point="uk.ac.stfc.isis.ibex.instrument.info">
       <InstrumentInfoReceiver

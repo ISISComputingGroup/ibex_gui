@@ -23,9 +23,9 @@ import java.io.IOException;
 import java.util.Objects;
 
 import org.apache.logging.log4j.Logger;
-import org.csstudio.opibuilder.OPIBuilderPlugin;
-import org.csstudio.opibuilder.script.RhinoWithFastPathScriptStore;
-import org.csstudio.opibuilder.scriptUtil.PVUtil;
+//import org.csstudio.opibuilder.OPIBuilderPlugin;
+//import org.csstudio.opibuilder.script.RhinoWithFastPathScriptStore;
+//import org.csstudio.opibuilder.scriptUtil.PVUtil;
 import org.eclipse.core.runtime.FileLocator;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -46,7 +46,7 @@ public class Opi implements BundleActivator {
 	
 	private static DescriptionsProvider descProvider = new DescriptionsProvider();
 	
-	private static final java.util.logging.Logger CSS_LOGGER = OPIBuilderPlugin.getLogger();
+//	private static final java.util.logging.Logger CSS_LOGGER = OPIBuilderPlugin.getLogger();
 	private static final Logger LOG = IsisLog.getLogger(Opi.class);
 	
 	static {
@@ -109,10 +109,10 @@ public class Opi implements BundleActivator {
 	public void start(BundleContext bundleContext) throws Exception {
 		Opi.context = bundleContext;
 		
-		IsisLog.hookJavaLogger(CSS_LOGGER);
+//		IsisLog.hookJavaLogger(CSS_LOGGER);
 		
 		// Change this to true to log all scripts which use the slow (JS interpreter) path
-		RhinoWithFastPathScriptStore.setLogScriptsUsingJS(false);
+//		RhinoWithFastPathScriptStore.setLogScriptsUsingJS(false);
 		
 		addFastPathHandlers();
 	}
@@ -121,29 +121,29 @@ public class Opi implements BundleActivator {
 	private static void addFastPathHandlers() {
 		
 		// Some handlers called frequently by reflectometry OPIs.
-		RhinoWithFastPathScriptStore.addFastPathHandler("pv1==0&&pv0==0", 
-				pvs -> PVUtil.getDouble(pvs[0]) == 0.0 && PVUtil.getDouble(pvs[1]) == 0.0);
-		
-		RhinoWithFastPathScriptStore.addFastPathHandler("pv0==1 && pv1==0", 
-				pvs -> PVUtil.getDouble(pvs[0]) == 1.0 && PVUtil.getDouble(pvs[1]) == 0.0);
-		
-		RhinoWithFastPathScriptStore.addFastPathHandler("pvStr0==\"North\" || pvStr0==\"South\"", 
-				pvs -> (Objects.equals(PVUtil.getString(pvs[0]), "North")) 
-						|| (Objects.equals(PVUtil.getString(pvs[0]), "South")));
-				
-		RhinoWithFastPathScriptStore.addFastPathHandler("pvStr0!=\"North\" && pvStr0!=\"South\"", 
-				pvs -> (!Objects.equals(PVUtil.getString(pvs[0]), "North")) 
-						&&  (!Objects.equals(PVUtil.getString(pvs[0]), "South")));
-		
-		// Some handlers used frequently by RIKEN OPIs.
-		RhinoWithFastPathScriptStore.addFastPathHandler("pv0==1 || pv0==3",
-				pvs -> PVUtil.getDouble(pvs[0]) == 1.0 || PVUtil.getDouble(pvs[0]) == 3.0);
-		
-		RhinoWithFastPathScriptStore.addFastPathHandler("pv0==2",
-				pvs -> PVUtil.getDouble(pvs[0]) == 2.0);
-		
-		RhinoWithFastPathScriptStore.addFastPathHandler("pv0==4",
-				pvs -> PVUtil.getDouble(pvs[0]) == 4.0);
+//		RhinoWithFastPathScriptStore.addFastPathHandler("pv1==0&&pv0==0", 
+//				pvs -> PVUtil.getDouble(pvs[0]) == 0.0 && PVUtil.getDouble(pvs[1]) == 0.0);
+//		
+//		RhinoWithFastPathScriptStore.addFastPathHandler("pv0==1 && pv1==0", 
+//				pvs -> PVUtil.getDouble(pvs[0]) == 1.0 && PVUtil.getDouble(pvs[1]) == 0.0);
+//		
+//		RhinoWithFastPathScriptStore.addFastPathHandler("pvStr0==\"North\" || pvStr0==\"South\"", 
+//				pvs -> (Objects.equals(PVUtil.getString(pvs[0]), "North")) 
+//						|| (Objects.equals(PVUtil.getString(pvs[0]), "South")));
+//				
+//		RhinoWithFastPathScriptStore.addFastPathHandler("pvStr0!=\"North\" && pvStr0!=\"South\"", 
+//				pvs -> (!Objects.equals(PVUtil.getString(pvs[0]), "North")) 
+//						&&  (!Objects.equals(PVUtil.getString(pvs[0]), "South")));
+//		
+//		// Some handlers used frequently by RIKEN OPIs.
+//		RhinoWithFastPathScriptStore.addFastPathHandler("pv0==1 || pv0==3",
+//				pvs -> PVUtil.getDouble(pvs[0]) == 1.0 || PVUtil.getDouble(pvs[0]) == 3.0);
+//		
+//		RhinoWithFastPathScriptStore.addFastPathHandler("pv0==2",
+//				pvs -> PVUtil.getDouble(pvs[0]) == 2.0);
+//		
+//		RhinoWithFastPathScriptStore.addFastPathHandler("pv0==4",
+//				pvs -> PVUtil.getDouble(pvs[0]) == 4.0);
 		
 	}
 
