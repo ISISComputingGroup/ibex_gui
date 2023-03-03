@@ -379,9 +379,9 @@
         <graph_area_height>333</graph_area_height>
         <graph_area_width>524</graph_area_width>
         <height>379</height>
-        <horizon_profile_x_pv_name>loc://hpx</horizon_profile_x_pv_name>
+        <horizon_profile_x_pv_name>loc://$(DID)lvhpx</horizon_profile_x_pv_name>
         <horizon_profile_x_pv_value />
-        <horizon_profile_y_pv_name>loc://hpy</horizon_profile_y_pv_name>
+        <horizon_profile_y_pv_name>loc://$(DID)lvhpy</horizon_profile_y_pv_name>
         <horizon_profile_y_pv_value />
         <maximum>255.0</maximum>
         <minimum>0.0</minimum>
@@ -462,8 +462,8 @@
         <tooltip>$(pv_name)</tooltip>
         <vertial_profile_x_pv_value />
         <vertial_profile_y_pv_value />
-        <vertical_profile_x_pv_name>loc://vpx</vertical_profile_x_pv_name>
-        <vertical_profile_y_pv_name>loc://vpy</vertical_profile_y_pv_name>
+        <vertical_profile_x_pv_name>loc://$(DID)lvvpx</vertical_profile_x_pv_name>
+        <vertical_profile_y_pv_name>loc://$(DID)lvvpy</vertical_profile_y_pv_name>
         <visible>true</visible>
         <widget_type>Intensity Graph</widget_type>
         <width>619</width>
@@ -635,10 +635,10 @@ $(pv_value)</tooltip>
         <trace_0_update_mode>0</trace_0_update_mode>
         <trace_0_visible>true</trace_0_visible>
         <trace_0_x_axis_index>0</trace_0_x_axis_index>
-        <trace_0_x_pv>loc://hpx</trace_0_x_pv>
+        <trace_0_x_pv>loc://$(DID)lvhpx</trace_0_x_pv>
         <trace_0_x_pv_value />
         <trace_0_y_axis_index>1</trace_0_y_axis_index>
-        <trace_0_y_pv>loc://hpy</trace_0_y_pv>
+        <trace_0_y_pv>loc://$(DID)lvhpy</trace_0_y_pv>
         <trace_0_y_pv_value />
         <trace_count>1</trace_count>
         <transparent>false</transparent>
@@ -785,10 +785,10 @@ $(pv_value)</tooltip>
         <trace_0_update_mode>0</trace_0_update_mode>
         <trace_0_visible>true</trace_0_visible>
         <trace_0_x_axis_index>0</trace_0_x_axis_index>
-        <trace_0_x_pv>loc://vpy</trace_0_x_pv>
+        <trace_0_x_pv>loc://$(DID)lvvpy</trace_0_x_pv>
         <trace_0_x_pv_value />
         <trace_0_y_axis_index>1</trace_0_y_axis_index>
-        <trace_0_y_pv>loc://vpx</trace_0_y_pv>
+        <trace_0_y_pv>loc://$(DID)lvvpx</trace_0_y_pv>
         <trace_0_y_pv_value />
         <trace_count>1</trace_count>
         <transparent>false</transparent>

@@ -72,10 +72,11 @@ public class IocControlDialog extends TitleAreaDialog {
 	protected Control createDialogArea(Composite parent) {
 		setTitle(SUB_TITLE);
 
-		IocPanel iocPanel = new IocPanel(parent, control, SWT.NONE);
-		iocPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		IocControlViewModel iocControlViewModel = new IocControlViewModel(control);
+		IocControlView iocControlView = new IocControlView(parent, SWT.NONE, iocControlViewModel);
+		iocControlView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		return iocPanel;
+		return iocControlView;
 	}
 	
 	@Override

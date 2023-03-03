@@ -25,6 +25,7 @@ import java.util.List;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.experimentdetails.internal.CollectionObserver;
 import uk.ac.stfc.isis.ibex.experimentdetails.internal.ExperimentDetailsVariables;
@@ -122,6 +123,20 @@ public class ObservableExperimentDetailsModel extends ModelObject {
      */
 	public Writable<String> rbNumberSetter() {
 		return variables.rbNumberSetter;
+	}
+	
+	/**
+     * @return An observable that tracks display title status
+     */
+    public ForwardingObservable<Boolean> displayTitle() {
+		return variables.displayTitle;
+	}
+
+	/**
+     * @return A writable for setting display title status
+     */
+	public Writable<Long> displayTitleSetter() {
+		return variables.displayTitleSetter;
 	}
 
 	/**

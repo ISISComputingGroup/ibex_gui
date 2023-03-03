@@ -57,6 +57,14 @@ public class AddBlockToComponentHandler extends AbstractHandler {
 
 		return null;
 	}
+	
+	/**
+	 * Prevent adding block without permission.
+	 */
+	@Override
+	public boolean isEnabled() {
+		return SERVER.setCurrentConfig().canWrite();
+	}
 
 	/**
 	 * Create dialog to select component, open edit component and add new block

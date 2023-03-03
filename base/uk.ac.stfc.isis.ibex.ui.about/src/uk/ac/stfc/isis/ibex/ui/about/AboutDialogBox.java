@@ -19,17 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.ui.about;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -49,7 +41,6 @@ public class AboutDialogBox extends TitleAreaDialog {
 	private static final int HEIGHT = 400;
 	/** Name of the application */
 	private String applicationName;
-	private Image image;
 
 	/**
 	 * Construct a new about Ibex dialog box.

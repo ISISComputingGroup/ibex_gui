@@ -58,7 +58,7 @@ public abstract class MessageParser<T extends IMessage> implements Runnable {
     	}
         running = run;
         if (running && (thread == null || !thread.isAlive())) {
-        	thread = new Thread(this);
+        	thread = new Thread(this, "ActiveMQ MessageParser");
             thread.start();
         }
     }

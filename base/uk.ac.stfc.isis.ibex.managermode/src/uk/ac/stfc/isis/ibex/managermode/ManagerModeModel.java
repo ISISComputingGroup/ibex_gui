@@ -62,6 +62,9 @@ public final class ManagerModeModel extends ModelObject {
     
     private static final int TIME_TO_WAIT_FOR_PV_CONNECTION = 500;
 
+    /**
+     * Property change key for listening to events fired on change of manager mode.
+     */
     public static final String IN_MANAGER_MODE_STR = "inManagerMode";
     
     /**

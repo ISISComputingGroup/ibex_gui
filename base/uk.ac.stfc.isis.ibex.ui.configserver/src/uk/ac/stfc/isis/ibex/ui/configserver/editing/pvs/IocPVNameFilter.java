@@ -24,6 +24,9 @@ import org.eclipse.jface.viewers.ViewerFilter;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.AvailablePV;
 
+/**
+ * A filter for PV names.
+ */
 public class IocPVNameFilter extends ViewerFilter {
 	private String searchString = ".*";
 	

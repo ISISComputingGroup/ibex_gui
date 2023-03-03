@@ -22,12 +22,24 @@ package uk.ac.stfc.isis.ibex.ui.widgets;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.EditingSupport;
 
+/**
+ * Generic editing support for table viewers.
+ *
+ * @param <TRow> the type of row to be edited
+ * @param <T> the type of value to be edited
+ */
 public abstract class GenericEditingSupport<TRow, T> extends EditingSupport {
 
 	private final ColumnViewer viewer;
 	private final Class<TRow> rowType;
 	private final Class<T> valueType;
 	
+	/**
+	 * Creates new generic editing support.
+	 * @param viewer the column viewer
+	 * @param rowType the type of row to be edited
+	 * @param valueType the type of value to be edited
+	 */
 	public GenericEditingSupport(ColumnViewer viewer, Class<TRow> rowType, Class<T> valueType) {
 		super(viewer);
 		this.viewer = viewer;
@@ -79,10 +91,25 @@ public abstract class GenericEditingSupport<TRow, T> extends EditingSupport {
 		viewer.update(element, null);
 	}
 	
+	/**
+	 * Converts a string value to the type needed for this cell (<T>).
+	 * @param value the value as a string
+	 * @return the value as type parameter <T>
+	 */
 	protected abstract T valueFromString(String value);
 
+	/**
+	 * Gets the value as type <T> from the given row.
+	 * @param row the row
+	 * @return the value
+	 */
 	protected abstract T valueFromRow(TRow row);
 
+	/**
+	 * Sets the provided value on a row.
+	 * @param row the row
+	 * @param value the value
+	 */
 	protected abstract void setValueForRow(TRow row, T value);
 
 }

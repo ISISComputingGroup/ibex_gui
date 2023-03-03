@@ -80,6 +80,12 @@ public abstract class ControlCellLabelProvider<T extends Control, TRow> extends 
 		cellControls.clear();
 	}
 	
+	/**
+	 * Creates  the control for a cell.
+	 * @param cell The cell to add the control to
+	 * @param style The style to create the new control with
+	 * @return The control created
+	 */
     protected abstract T createControl(ViewerCell cell, int style);
 	
 	private T create(final ViewerCell cell, int style) {
@@ -91,10 +97,20 @@ public abstract class ControlCellLabelProvider<T extends Control, TRow> extends 
 		return control;
 	}
 	
+	/**
+	 * Get the control from a cell as a composite.
+	 * @param cell - The cell to get the control of
+	 * @return The control as a composite.
+	 */
 	protected Composite composite(ViewerCell cell) {
 		return (Composite) cell.getControl();
 	}
 	
+	/**
+	 * Set the editor for a cell.
+	 * @param cell - The cell to edit.
+	 * @param control - The control for the cell.
+	 */
 	protected void setEditor(ViewerCell cell, Control control) {
 		TableItem item = (TableItem) cell.getItem();
 		TableEditor editor = new TableEditor(item.getParent());

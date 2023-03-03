@@ -39,7 +39,6 @@ import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
-import uk.ac.stfc.isis.ibex.ui.runcontrol.commands.RunControlHandler;
 
 /**
  * UI elements for editing run control settings, as used by run control dialog.

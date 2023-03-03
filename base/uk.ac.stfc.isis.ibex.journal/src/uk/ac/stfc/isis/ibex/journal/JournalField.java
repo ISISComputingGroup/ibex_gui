@@ -189,11 +189,11 @@ public enum JournalField {
     private final IJournalFormatter formatter;
     private final JournalSortDirection sortDirection;
 
-    private JournalField(String friendlyName, String sqlFieldName, JournalSortDirection sortDirection) {
+    JournalField(String friendlyName, String sqlFieldName, JournalSortDirection sortDirection) {
         this(friendlyName, sqlFieldName, new NoopJournalFormatter(), sortDirection);
     }
     
-    private JournalField(String friendlyName, String sqlFieldName, IJournalFormatter formatter, JournalSortDirection sortDirection) {
+    JournalField(String friendlyName, String sqlFieldName, IJournalFormatter formatter, JournalSortDirection sortDirection) {
         this.friendlyName = friendlyName;
         this.sqlFieldName = sqlFieldName;
         this.formatter = formatter;

@@ -1,9 +1,14 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
-public class ScriptGeneratorProperties {
+/**
+ * Contains properties used in the script generator.
+ */
+public final class ScriptGeneratorProperties {
+	private ScriptGeneratorProperties() {
+	}
 	
 	 /**
-     * A property that denotes whether the language to generate and check validity errors in is supported,
+     * A property that denotes whether the language to generate and check validity errors in is supported.
      */
     public static final String LANGUAGE_SUPPORT_PROPERTY = "language_supported";
 
@@ -27,6 +32,11 @@ public class ScriptGeneratorProperties {
      * A property that carries the time estimation to listen for in order to update table rows.
      */
     public static final String TIME_ESTIMATE_PROPERTY = "time estimate";
+    
+    /**
+     * A property that carries the custom estimation to listen for in order to update table rows.
+     */
+    public static final String CUSTOM_ESTIMATE_PROPERTY = "custom estimate";
     
     /**
 	 * The property to listen for changes in a Generator containing the generated

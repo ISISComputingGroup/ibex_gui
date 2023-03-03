@@ -32,7 +32,6 @@ public abstract class AbstractGenerator extends ModelObject {
 	 * @return An optional ID of the script that will be generated, the ID can be used to get the generated script once generated.
 	 * @throws ExecutionException A failure to execute the call to generate a script
 	 * @throws InterruptedException The call to generate a script was interrupted
-	 * @return An ID for the generated script.
 	 */
 	public abstract Optional<Integer> refreshGeneratedScript(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, String currentlyLoadedDataFileContent, List<String> globalParams) throws InterruptedException, ExecutionException;
 	
@@ -69,6 +68,17 @@ public abstract class AbstractGenerator extends ModelObject {
      */
     public abstract void refreshTimeEstimation(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams) throws InterruptedException, ExecutionException;
 
+    /**
+     * Refresh the custom estimation of the specified actions (Map<Integer,Double>).
+     * 
+     * @param scriptGenContent The contents of the script generator
+     * @param scriptDefinition The instrument script definition
+     * @param globalParams The global parameters to refresh the custom estimation with.
+     * @throws ExecutionException A failure to execute the call to generate a script
+     * @throws InterruptedException The call to generate a script was interrupted
+     */
+    public abstract void refreshCustomEstimation(List<ScriptGeneratorAction> scriptGenContent, ScriptDefinitionWrapper scriptDefinition, List<String> globalParams) throws InterruptedException, ExecutionException;
+    
     /**
      * Get the generated script from the given ID.
      * 

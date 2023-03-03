@@ -45,6 +45,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
+import uk.ac.stfc.isis.ibex.dae.Dae;
+import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.ui.UIUtils;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
@@ -135,6 +137,29 @@ public class ExperimentSetup {
         btnSendChanges.setFont(biggerFont);
         btnSendChanges.setText("Apply Changes");
         
+        /*
+         * This part tells the DAE to update the cached values after an external change was detected
+         */
+        final UpdatedValue<Boolean> inSettingsChange = new UpdatedObservableAdapter<>(Dae.getInstance().observables().currentlyChangingSettings);
+		inSettingsChange.addPropertyChangeListener(new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				Boolean isUpdating = inSettingsChange.getValue();
+				if (isUpdating != null) {
+					if (!isUpdating) {
+	                	Display.getDefault().asyncExec(new Runnable() {
+	                	    public void run() {
+	        	                try {
+	        	                    applyChangesToUI();
+	        	                } catch (Exception err) {
+	        	                    // Expected to go off on startup before the xml file is properly loaded
+	        	                }
+	                	    }
+	                	});
+					}
+				}
+			}
+		}, true);
 		
         CTabFolder tabFolder = new CTabFolder(content, SWT.BORDER);
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));

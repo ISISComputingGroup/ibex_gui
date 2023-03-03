@@ -4,7 +4,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Preferences
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.preferences;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Export-Package: uk.ac.stfc.isis.ibex.preferences
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,

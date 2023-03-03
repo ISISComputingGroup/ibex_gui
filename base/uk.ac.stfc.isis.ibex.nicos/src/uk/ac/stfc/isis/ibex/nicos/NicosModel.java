@@ -23,7 +23,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -140,8 +139,7 @@ public class NicosModel extends ModelObject {
     }
 
     private void failConnection(String message) {
-        setError(NicosErrorState.CONNECTION_FAILED);
-        LOG.error(message);
+        setError(NicosErrorState.CONNECTION_FAILED, message);
         connectionJob.setRunning(true);
         updateStatusJob.setRunning(false);
     }
@@ -182,6 +180,7 @@ public class NicosModel extends ModelObject {
         	setError(NicosErrorState.FAILED_LOGIN, loginSentMessageDetails.getFailureReason());
             return;
         } else {
+        	LOG.info(String.format("Successfully connected to NICOS on %s (%s)", instrument.name(), instrument.hostName()));
         	setError(NicosErrorState.NO_ERROR);
         }
         connectionJob.setRunning(false);
@@ -230,10 +229,14 @@ public class NicosModel extends ModelObject {
     }
 
     private void setError(NicosErrorState error, String additionalInformation) {
-    	firePropertyChange("error", this.error, this.error = error);
-    	if (!Objects.equals(error, NicosErrorState.NO_ERROR)) {
+    	// Don't spam connection failures repeatedly to the log - these are expected in the case where the NICOS
+    	// IOC has not been added to the configuration
+    	if (error != NicosErrorState.NO_ERROR 
+    			&& !(this.error == NicosErrorState.CONNECTION_FAILED && error == NicosErrorState.CONNECTION_FAILED)) {
             LOG.error("NICOS error: " + error.toString() + ", " + Strings.nullToEmpty(additionalInformation));
     	}
+    	
+    	firePropertyChange("error", this.error, this.error = error);
     }
 
     /**

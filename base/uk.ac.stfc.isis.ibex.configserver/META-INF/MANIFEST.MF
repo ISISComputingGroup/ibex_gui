@@ -18,8 +18,10 @@ Require-Bundle: org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.alarm,
  org.diirt.vtype;bundle-version="3.1.5",
  com.google.guava,
- uk.ac.stfc.isis.ibex.managermode
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+ com.google.gson,
+ uk.ac.stfc.isis.ibex.managermode,
+ uk.ac.stfc.isis.ibex.validators;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.configserver;
   uses:="uk.ac.stfc.isis.ibex.epics.pv,
@@ -39,8 +41,7 @@ Export-Package: uk.ac.stfc.isis.ibex.configserver;
    uk.ac.stfc.isis.ibex.configserver,
    uk.ac.stfc.isis.ibex.configserver.configuration,
    uk.ac.stfc.isis.ibex.epics.observing",
- uk.ac.stfc.isis.ibex.configserver.internal
-Import-Package: org.eclipse.wb.swt,
- uk.ac.stfc.isis.ibex.instrument,
- uk.ac.stfc.isis.ibex.validators
+ uk.ac.stfc.isis.ibex.configserver.internal,
+ uk.ac.stfc.isis.ibex.configserver.json
+Import-Package: org.eclipse.wb.swt
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.configserver

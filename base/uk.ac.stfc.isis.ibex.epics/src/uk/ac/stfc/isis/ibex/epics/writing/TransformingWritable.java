@@ -39,6 +39,9 @@ public class TransformingWritable<TIn, TOut> extends BaseWritable<TIn> {
     private OnErrorListener onErrorListener = e -> error(e);
     private final Function<TIn, TOut> converter;
     
+    /**
+     * The destination writable.
+     */
     protected Optional<Writable<TOut>> destination = Optional.empty();
 
     /**

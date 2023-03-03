@@ -36,7 +36,9 @@ public final class Commands {
      * The command to initialise genie.
      */
     public static final String GENIE_INITIALISATION_CMDS = "import matplotlib \n"
-            + "matplotlib.use('module://genie_python.matplotlib_backend.ibex_web_backend') \n"
+            + "matplotlib.use('module://genie_python.matplotlib_backend.ibex_websocket_backend') \n"
+            + "import genie_python.matplotlib_backend.ibex_websocket_backend as _mpl_backend\n"
+            + "_mpl_backend.set_up_plot_default(is_primary=True, should_open_ibex_window_on_show=True, max_figures=3)\n"
             + "from genie_python.genie_startup import * \n" 
             + "import os \n"
             + "os.environ[\"FROM_IBEX\"] = str(True) \n";

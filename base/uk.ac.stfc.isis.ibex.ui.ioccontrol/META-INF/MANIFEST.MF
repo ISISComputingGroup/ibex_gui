@@ -14,7 +14,10 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.databinding.property;bundle-version="1.4.100",
  uk.ac.stfc.isis.ibex.configserver;bundle-version="1.0.0",
  org.eclipse.e4.core.di.annotations
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Export-Package: uk.ac.stfc.isis.ibex.ui.ioccontrol
 Bundle-ClassPath: .
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.ioccontrol
+Import-Package: org.eclipse.e4.ui.model.application.ui.menu,
+ uk.ac.stfc.isis.ibex.instrument.status,
+ uk.ac.stfc.isis.ibex.ui.banner.models

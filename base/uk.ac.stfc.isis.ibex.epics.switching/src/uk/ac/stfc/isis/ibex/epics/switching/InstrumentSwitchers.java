@@ -7,6 +7,8 @@ import java.util.concurrent.TimeUnit;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 
 /**
@@ -23,12 +25,19 @@ public class InstrumentSwitchers implements BundleActivator {
     private ObservablePrefixChangingSwitcher observablePrefixChangingSwitcher = new ObservablePrefixChangingSwitcher();
     private WritablePrefixChangingSwitcher writablePrefixChangingSwitcher = new WritablePrefixChangingSwitcher();
     
+    private static final ScheduledExecutorService SWITCHER_EXECUTOR = Executors.newSingleThreadScheduledExecutor(
+			new ThreadFactoryBuilder().setNameFormat("InstrumentSwitcher-%d").build());
+    
     /**
      * Indicates if the singleton instance of switchers is currently in the process of switching
      * between instruments.
      */
     public boolean switching = true;
 
+    /**
+     * Gets the eclipse bundle context.
+     * @return the context
+     */
 	static BundleContext getContext() {
 		return context;
 	}
@@ -51,14 +60,30 @@ public class InstrumentSwitchers implements BundleActivator {
 		InstrumentSwitchers.context = null;
 	}
 
+	/**
+	 * Gets the singleton instance of this class.
+	 * @return an InstrumentSwitcher instance
+	 */
     public static InstrumentSwitchers getDefault() {
-        return instance;
+    	if (instance == null) {
+    		instance = new InstrumentSwitchers();
+    	}
+    	return instance;
     }
 
+    /**
+     * Creates the singleton instance of this class.
+     */
     public InstrumentSwitchers() {
         instance = this;
     }
 
+    /**
+     * Gets a writable switcher, whose behaviour on instrument switch
+     * is set by the switchType parameter.
+     * @param switchType action to take on instrument switch
+     * @return the switcher
+     */
     public Switcher getWritableSwitcher(OnInstrumentSwitch switchType) {
         Switcher switcher;
         switch (switchType) {
@@ -78,6 +103,12 @@ public class InstrumentSwitchers implements BundleActivator {
 
     }
 
+    /**
+     * Gets an observable switcher, whose behaviour on instrument switch
+     * is set by the switchType parameter.
+     * @param switchType action to take on instrument switch
+     * @return the switcher
+     */
     public Switcher getObservableSwitcher(OnInstrumentSwitch switchType) {
         Switcher switcher;
         switch (switchType) {
@@ -97,6 +128,10 @@ public class InstrumentSwitchers implements BundleActivator {
 
     }
 
+    /**
+     * Changes instrument to a new instrument. This updates all switchers.
+     * @param instrument the new instrument
+     */
     public void setInstrument(InstrumentInfo instrument) {
     	switching = true;
         instance.nothingSwitcher.switchInstrument(instrument);
@@ -104,8 +139,7 @@ public class InstrumentSwitchers implements BundleActivator {
         instance.observablePrefixChangingSwitcher.switchInstrument(instrument);
         instance.writablePrefixChangingSwitcher.switchInstrument(instrument);
         // This is to prevent instrument from being switched too often
-        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-        executorService.schedule(new Runnable() {
+        SWITCHER_EXECUTOR.schedule(new Runnable() {
 			@Override
 			public void run() {
 		        switching = false;

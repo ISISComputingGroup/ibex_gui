@@ -3,7 +3,6 @@ package uk.ac.stfc.isis.ibex.ui.banner.tests;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -97,5 +96,22 @@ public class ServerStatusViewModelTest {
 
         // Assert
         assertEquals(expected, actual);
+    }
+    
+    @Test 
+    public void GIVEN_individual_variables_WHEN_changing_and_reading_individual_status_THEN_individual_status_is_correct() {
+    	for (ServerStatus statusToSet: ServerStatus.values()) {
+    		setAll(statusToSet);
+	    	assertEquals(statusToSet, viewModel.getAlarmServerStatus());
+	    	assertEquals(statusToSet, viewModel.getBlockGatewayStatus());
+	    	assertEquals(statusToSet, viewModel.getBlockServerStatus());
+	    	assertEquals(statusToSet, viewModel.getDbServerStatus());
+	    	assertEquals(statusToSet, viewModel.getInstetcStatus());
+	    	assertEquals(statusToSet, viewModel.getIsisDaeStatus());
+	    	assertEquals(statusToSet, viewModel.getPsControlStatus());
+	    	assertEquals(statusToSet, viewModel.getRunControlStatus());
+    	}
+    	
+    	
     }
 }

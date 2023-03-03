@@ -43,7 +43,7 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 public class ConfigDetailsDialog extends TitleAreaDialog implements
 		MessageDisplayer {
 
-	private static final Point INITIAL_SIZE = new Point(650, 750);
+	private static final Point INITIAL_SIZE = new Point(650, 950);
     private static final Point MINIMUM_SIZE = new Point(450, 700);
 	private final String title;
 	private final String subTitle;
@@ -51,10 +51,24 @@ public class ConfigDetailsDialog extends TitleAreaDialog implements
     /** Error messages that are displayed. <Source, message> */
 	private Map<String, String> errorMessages = new HashMap<String, String>();
 
+	/**
+	 * The configuration being edited.
+	 */
 	protected EditableConfiguration config;
 
+	/**
+	 * The editor panel.
+	 */
     protected ConfigEditorPanel editor;
+    
+    /**
+     * Whether this is a component or a config.
+     */
 	protected boolean doAsComponent = false;
+	
+	/**
+	 * Whether this was created as a blank config/component.
+	 */
 	protected boolean isBlank;
 
     private ConfigurationViewModels configurationViewModels;

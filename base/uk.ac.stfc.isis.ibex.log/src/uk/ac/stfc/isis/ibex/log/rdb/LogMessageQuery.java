@@ -47,6 +47,11 @@ public class LogMessageQuery {
 
     private final SqlStatement sqlStatement;
 
+    /**
+     * Create a new logMessage query.
+     * @param rdb the database connection
+     * @throws Exception on failure
+     */
     public LogMessageQuery(Rdb rdb) throws Exception {
 		this.rdb = rdb;
 		this.sqlStatement = new SqlStatement();

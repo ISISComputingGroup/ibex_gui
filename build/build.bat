@@ -1,6 +1,6 @@
 setlocal
 REM We bundle our own JRE with the client, this is where it is
-set "JRELOCATION=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\ibex_client_jre"
+set "JRELOCATION=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\ibex_client_jdk-17.0.4.1+1"
 set "LOCAL_JRE_LOCATION=%~dp0jdk"
 
 set "TARGET_DIR=%3"
@@ -31,14 +31,14 @@ if "%PYTHON3%" == "" (
 
 call %~dp0run_python_support_tests.bat
 if %errorlevel% neq 0 exit /b %errorlevel%
- 
+
 %PYTHON3% .\check_build.py ..\base\
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 if "%BUILD_NUMBER%" == "" SET BUILD_NUMBER=SNAPSHOT
 
 set mvnErr=
-call mvn --settings=%~dp0..\mvn_user_settings.xml -f %~dp0..\base\uk.ac.stfc.isis.ibex.client.tycho.parent\pom.xml -DforceContextQualifier=%BUILD_NUMBER% clean verify || set mvnErr=1
+call mvn --settings=%~dp0..\mvn_user_settings.xml -f %~dp0..\base\uk.ac.stfc.isis.ibex.client.tycho.parent\pom.xml -DforceContextQualifier=%BUILD_NUMBER% -Dmaven.repo.local=%~dp0\.m2 clean verify || set mvnErr=1
 if defined mvnErr exit /b 1
 
 REM Copy built client into a sensible directory to run it

@@ -19,6 +19,11 @@ public interface ScriptDefinitionWrapper {
 	List<ActionParameter> getGlobalParameters();
 	
 	/**
+	 * @return The custom parameter names e.g. ["param1", "param2"]
+	 */
+	List<String> getCustomOutputNames();
+	
+	/**
 	 * Performs the defined action.
 	 * 
 	 * @param action The action to do.
@@ -31,10 +36,9 @@ public interface ScriptDefinitionWrapper {
 	 * 
 	 * @param globalParam The global param to check validity of.
 	 * @param index The index of the global parameters to check.
-	 * @return the error if the arugements are not valid.
+	 * @return the error if the arguments are not valid.
 	 */
     String globalParamsValid(String globalParam, int index);
-      
 	
 	/**
 	 * Performs the check that the arguments are valid.
@@ -43,6 +47,7 @@ public interface ScriptDefinitionWrapper {
 	 * @param global_params The global parameters to check validity with.
 	 * @return The error if the arguments are not valid.
 	 */
+    @SuppressWarnings("checkstyle:parametername")
 	String parametersValid(Map<String, String> action, List<String> global_params);
 	
     /**
@@ -52,7 +57,18 @@ public interface ScriptDefinitionWrapper {
      * @param global_params The global parameters to refresh the time estimation with.
      * @return An estimate in seconds
      */
+    @SuppressWarnings("checkstyle:parametername")
     Number estimateTime(Map<String, String> action, List<String> global_params);
+    
+    /**
+     * Custom estimates of an action.
+     * 
+     * @param action The action to estimate
+     * @param global_params The global parameters to refresh the custom estimation with.
+     * @return A list of estimate numbers
+     */
+    @SuppressWarnings("checkstyle:parametername")
+    Map<String, String> estimateCustom(Map<String, String> action, List<String> global_params);
 	
 	/**
 	 * @return The name of this script definition.

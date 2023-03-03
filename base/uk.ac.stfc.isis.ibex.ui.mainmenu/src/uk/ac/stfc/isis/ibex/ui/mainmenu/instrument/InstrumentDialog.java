@@ -55,6 +55,10 @@ public class InstrumentDialog extends TitleAreaDialog {
     private PropertyChangeListener errorListener;
     private Button okButton;
 
+    /**
+     * Creates the dialog.
+     * @param parentShell the parent shell
+     */
 	protected InstrumentDialog(Shell parentShell) {
 		super(parentShell);
 
@@ -63,6 +67,10 @@ public class InstrumentDialog extends TitleAreaDialog {
         selectorViewModel.addPropertyChangeListener("error", errorListener);
 	}
 	
+	/**
+	 * Gets the selected instrument.
+	 * @return the selected instrument
+	 */
     public InstrumentInfo selectedInstrument() {
         return selectedInstrument;
     }

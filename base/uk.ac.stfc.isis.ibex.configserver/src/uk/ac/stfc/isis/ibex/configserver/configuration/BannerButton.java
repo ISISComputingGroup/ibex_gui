@@ -45,7 +45,7 @@ public class BannerButton extends ModelObject {
     private int width;
     private int height;
     
-    private Writable<Long> pvWritable;
+    private transient Writable<Long> pvWritable;
     
     /**
      * Creates a writable for the PV that this button writes to.

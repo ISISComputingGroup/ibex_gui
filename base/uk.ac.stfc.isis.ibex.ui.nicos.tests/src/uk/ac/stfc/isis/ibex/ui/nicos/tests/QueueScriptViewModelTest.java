@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mockito;
@@ -12,11 +13,18 @@ import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.nicos.messages.scriptstatus.QueuedScript;
 import uk.ac.stfc.isis.ibex.ui.nicos.models.QueueScriptViewModel;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Arrays;
 import java.util.List;
 
+@RunWith(MockitoJUnitRunner.StrictStubs.class)
 public class QueueScriptViewModelTest {
 	
 	private NicosModel model;
@@ -26,12 +34,10 @@ public class QueueScriptViewModelTest {
 	private QueuedScript script3 = createMockedScript("ID3", "Script 3", "Code 3");
 	
 	@Captor
-    ArgumentCaptor<List> setQueueCaptor = ArgumentCaptor.forClass(List.class);
+    private ArgumentCaptor<List<String>> setQueueCaptor;
 	
 	private QueuedScript createMockedScript(String id, String name, String code) {
 		QueuedScript script = mock(QueuedScript.class);
-		when(script.getCode()).thenReturn(code);
-		when(script.getName()).thenReturn(name);
 		script.reqid = id;
 		return script;
 	}
@@ -101,7 +107,7 @@ public class QueueScriptViewModelTest {
 		vm.moveScript(false);
 		
 		// Assert
-		verify(model, times(0)).sendReorderedQueue(Mockito.anyList());
+		verify(model, times(0)).sendReorderedQueue(anyList());
 	}
 	
 	@Test

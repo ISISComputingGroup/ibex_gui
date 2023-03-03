@@ -25,6 +25,7 @@ import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * Converts the source data to a specific type via a converter.
@@ -64,6 +65,10 @@ public class ConvertingObservable<R, T> extends TransformingObservable<R, T> {
 				try {
 					newValue = formatter.apply(value);
 				} catch (ConversionException e) {
+					setError(e);
+				} catch (Exception e) {
+					LoggerUtils.logErrorWithStackTrace(LOG, "unexpected error type in conversion: " + e.getMessage(), e);
+					LOG.info("Note: value to be converted on next line: \n" + value.toString());
 					setError(e);
 				}
 			} else if (value == null) {

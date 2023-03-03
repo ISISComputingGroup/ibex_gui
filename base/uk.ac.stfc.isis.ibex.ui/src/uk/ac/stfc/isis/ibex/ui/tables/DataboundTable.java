@@ -185,6 +185,7 @@ public abstract class DataboundTable<TRow> extends Composite {
      * Sets the selected rows based on multiple rows.
      *
      * @param selected the newly selected rows
+     * @param reveal whether or not the row is revealed
      */
     public void setSelected(List<TRow> selected, boolean reveal) {
        viewer.setSelection(new StructuredSelection(selected), reveal);

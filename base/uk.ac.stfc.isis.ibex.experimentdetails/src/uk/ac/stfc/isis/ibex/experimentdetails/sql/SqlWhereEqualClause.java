@@ -27,10 +27,20 @@ import uk.ac.stfc.isis.ibex.experimentdetails.database.ExpDataField;
  */
 public class SqlWhereEqualClause extends SqlWhereClause {
 	
+	/**
+	 * Create a SQL WHERE clause where the given fields are equal to each other.
+	 * @param lhs the first item to compare
+	 * @param rhs the second item to compare
+	 */
 	public SqlWhereEqualClause(ExpDataField lhs, ExpDataField rhs) {
 		super(lhs.toString(), rhs.toString());
 	}
 
+	/**
+	 * Create a SQL WHERE clause where the given fields are equal to each other.
+	 * @param lhs the first item to compare
+	 * @param rhs the second item to compare
+	 */
 	public SqlWhereEqualClause(ExpDataField lhs, Role rhs) {
 		super(lhs.toString(), "'" + rhs.name() + "'");
 	}	

@@ -61,6 +61,10 @@ public class UpdatedObservableAdapter<T> extends SettableUpdatedValue<T> impleme
 		subscribeTo(observable);
 	}
 
+	/**
+	 * Action to take on error (no-op).
+	 * @param e the error
+	 */
 	protected void error(Exception e) {
 	}
 

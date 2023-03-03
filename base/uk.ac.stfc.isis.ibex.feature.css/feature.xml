@@ -177,13 +177,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.equinox.p2.engine"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.equinox.p2.metadata"
          download-size="0"
          install-size="0"
@@ -438,13 +431,6 @@
 
    <plugin
          id="org.eclipse.ant.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="javax.servlet"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -1065,13 +1051,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.jacorb.omgapi"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.csstudio.archive.reader.channelarchiver"
          download-size="0"
          install-size="0"
@@ -1229,6 +1208,27 @@
          id="org.apache.batik.util"
          download-size="0"
          install-size="0"
+         version="1.13.0.v20200622-2037"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.batik.constants"
+         download-size="0"
+         install-size="0"
+         version="1.13.0.v20200622-2037"
+         unpack="false"/>
+
+   <plugin
+         id="javax.servlet"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.equinox.p2.engine"
+         download-size="0"
+         install-size="0"
          version="0.0.0"
          unpack="false"/>
 
@@ -1236,11 +1236,11 @@
          id="org.apache.batik.css"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="1.13.0.v20200622-2037"
          unpack="false"/>
 
    <plugin
-         id="org.apache.batik.constants"
+         id="wrapped.org.jacorb.jacorb-omgapi"
          download-size="0"
          install-size="0"
          version="0.0.0"

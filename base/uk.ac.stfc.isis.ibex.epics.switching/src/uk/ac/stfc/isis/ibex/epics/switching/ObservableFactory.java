@@ -30,14 +30,29 @@ import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
 public class ObservableFactory {
     private Switcher switcher;
 
+    /**
+     * Creates a new observable factory, with the specified behaviour on instrument switch.
+     * @param onSwitch the behaviour on instrument switch
+     */
     public ObservableFactory(OnInstrumentSwitch onSwitch) {
         this(onSwitch, InstrumentSwitchers.getDefault());
     }
 
+    /**
+     * Creates a new observable factory, with the specified behaviour on instrument switch and
+     * a specified InstrumentSwitcher instance.
+     * @param onSwitch the behaviour on instrument switch
+     * @param instrumentSwitchers the InstrumentSwitcher instance to use
+     */
     public ObservableFactory(OnInstrumentSwitch onSwitch, InstrumentSwitchers instrumentSwitchers) {
         this(instrumentSwitchers.getObservableSwitcher(onSwitch));
     }
 
+    /**
+     * Creates a new observable factory which uses the provided Switcher as it's behaviour on
+     * instrument switch.
+     * @param switcher the switcher to use
+     */
     public ObservableFactory(Switcher switcher) {
         this.switcher = switcher;
     }
@@ -88,6 +103,17 @@ public class ObservableFactory {
         return new ForwardingObservable<>(getPVObservable(channelType, address));
     }
 
+    /**
+     * Create and return a closeable PV observable of the correct type.
+     * 
+     * @param <T>
+     *            the type of the channel's values
+     * @param channelType
+     *            the type of the channel
+     * @param address
+     *            the PV address
+     * @return the PV observable
+     */
     public <T> ClosableObservable<T> getPVObservable(ChannelType<T> channelType, String address) {
         return channelType.reader(address);
     }

@@ -30,9 +30,11 @@ import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.experimentdetails.Parameter;
 import uk.ac.stfc.isis.ibex.experimentdetails.UserDetails;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
+import uk.ac.stfc.isis.ibex.instrument.channels.BooleanChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.CharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannelWithoutUnits;
+import uk.ac.stfc.isis.ibex.instrument.channels.LongChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 
 /**
@@ -56,6 +58,11 @@ public class ExperimentDetailsVariables {
     public final ForwardingObservable<String> rbNumber;
     /** The writable for the current rb number. **/
     public final Writable<String> rbNumberSetter;
+    
+    /** The observable for display title status. **/
+    public final ForwardingObservable<Boolean> displayTitle;
+    /** The writable for display title status. **/
+    public final Writable<Long> displayTitleSetter;
 
     /** The observable for the current user details. **/
     public final ForwardingObservable<Collection<UserDetails>> userDetails;
@@ -63,8 +70,11 @@ public class ExperimentDetailsVariables {
     /** The writable for setting the current user details. **/
     public final Writable<UserDetails[]> userDetailsSetter;
 
-    private JsonSerialisingConverter<UserDetails[]> userDetailsSerialiser = new JsonSerialisingConverter(UserDetails[].class);
+    private JsonSerialisingConverter<UserDetails[]> userDetailsSerialiser = new JsonSerialisingConverter<UserDetails[]>(UserDetails[].class);
     
+    /**
+     * Creates the variables.
+     */
     public ExperimentDetailsVariables() {
         availableSampleParameters =
                 InstrumentUtils.convert(obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
@@ -78,6 +88,10 @@ public class ExperimentDetailsVariables {
         rbNumber = obsFactory.getSwitchableObservable(new StringChannel(), InstrumentUtils.addPrefix("ED:RBNUMBER"));
         rbNumberSetter = writeFactory.getSwitchableWritable(new CharWaveformChannel(),
                 InstrumentUtils.addPrefix("ED:RBNUMBER:SP"));
+        displayTitle = obsFactory.getSwitchableObservable(new BooleanChannel(),
+                InstrumentUtils.addPrefix("DAE:TITLE:DISPLAY"));
+        displayTitleSetter = writeFactory.getSwitchableWritable(new LongChannel(),
+        		InstrumentUtils.addPrefix("DAE:TITLE:DISPLAY"));
         userDetails = InstrumentUtils.convert(
                 obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
                         InstrumentUtils.addPrefix("ED:USERNAME")),

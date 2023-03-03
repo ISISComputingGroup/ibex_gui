@@ -7,10 +7,10 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<tycho.version>2.3.0</tycho.version>
+		<tycho.version>2.7.4</tycho.version>
 		<tycho-repo.url>https://oss.sonatype.org/content/groups/public/</tycho-repo.url>
-		<photon-repo.url>http://download.eclipse.org/releases/2021-03</photon-repo.url>
-		<photon-updates-repo.url>http://download.eclipse.org/eclipse/updates/4.19</photon-updates-repo.url>
+		<photon-repo.url>http://download.eclipse.org/releases/2022-06</photon-repo.url>
+		<photon-updates-repo.url>http://download.eclipse.org/eclipse/updates/4.24</photon-updates-repo.url>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -52,10 +52,10 @@
 					</environments>
 					<target>
 						<artifact>
-							<groupId>${project.groupId}</groupId>
-							<artifactId>${project.artifactId}</artifactId>
-							<version>${project.version}</version>
-							<classifier>../uk.ac.stfc.isis.ibex.targetplatform/uk.ac.stfc.isis.ibex.targetplatform</classifier>
+							<groupId>CSS_ISIS</groupId>
+							<artifactId>uk.ac.stfc.isis.ibex.targetplatform</artifactId>
+							<version>1.0.0-SNAPSHOT</version>
+							<classifier>targetplatform</classifier>
 						</artifact>
 					</target>
 				</configuration>
@@ -76,8 +76,10 @@
 				<artifactId>tycho-compiler-plugin</artifactId>
 				<version>${tycho.version}</version>
 				<configuration>
-					<compilerArgument>-err:-forbidden</compilerArgument>
-					
+					<failOnWarning>true</failOnWarning>
+					<showWarnings>true</showWarnings>
+					<useProjectSettings>false</useProjectSettings>
+					<compilerArgument>-warn:-warningToken</compilerArgument>
 				</configuration>
 			</plugin>
 
@@ -85,7 +87,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>3.1.1</version>
+				<version>3.2.0</version>
 				<executions>
 					<execution>
                         <id>verify</id>
@@ -99,12 +101,13 @@
 					<sourceDirectories>
 						<sourceDirectory>src</sourceDirectory>
 					</sourceDirectories>
-					<!-- <consoleOutput>true</consoleOutput> -->
+					<consoleOutput>true</consoleOutput>
 					<configLocation>checkstyle.xml</configLocation>
                     <suppressionsLocation>suppressions.xml</suppressionsLocation>
                     <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
-					<failOnViolation>false</failOnViolation>
-					<failsOnError>false</failsOnError>
+                    <violationSeverity>warning</violationSeverity>
+					<failOnViolation>true</failOnViolation>
+					<failsOnError>true</failsOnError>
 					<linkXRef>true</linkXRef>
 				</configuration>
 			</plugin>
@@ -146,6 +149,7 @@
 	</build>
 
 	<modules>
+		<module>../uk.ac.stfc.isis.ibex.targetplatform</module>
 		<module>../uk.ac.stfc.isis.ibex.e4.client.product</module>
 		<module>../uk.ac.stfc.isis.ibex.e4.client</module>
 		<module>../uk.ac.stfc.isis.ibex.feature.base</module>
@@ -248,6 +252,10 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.banner.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.instrument.status</module>
 		<module>../uk.ac.stfc.isis.ibex.dae.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.ioccontrol.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.graphing.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.model.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.logger.tests</module>
 	</modules>
 </project>
 

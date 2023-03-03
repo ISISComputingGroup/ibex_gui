@@ -32,9 +32,7 @@ import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.IO;
 import uk.ac.stfc.isis.ibex.synoptic.model.desc.PV;
-import uk.ac.stfc.isis.ibex.synoptic.model.desc.RecordType;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.validators.DuplicatePvValidator;
-import uk.ac.stfc.isis.ibex.ui.synoptic.editor.validators.SynopticPvValidator;
 
 /**
  * Tests for the DuplicatePvValidator

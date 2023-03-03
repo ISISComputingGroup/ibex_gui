@@ -19,13 +19,14 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing;
 
-import org.eclipse.core.databinding.beans.BeansObservables;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.core.databinding.observable.list.IListChangeListener;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.list.ListChangeEvent;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider;
-import org.eclipse.jface.databinding.viewers.ViewerProperties;
+import org.eclipse.jface.databinding.viewers.typed.ViewerProperties;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionListener;
@@ -122,8 +123,8 @@ public class DoubleListEditor<T> extends Composite {
 		btnDown.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png"));
 		btnDown.setEnabled(false);
 		
-		selectedItems = ViewerProperties.multipleSelection().observe(selectedViewer);
-		unselectedItems = ViewerProperties.multipleSelection().observe(unselectedViewer);
+		selectedItems = ViewerProperties.<ISelectionProvider, T>multipleSelection().observe(selectedViewer);
+		unselectedItems = ViewerProperties.<ISelectionProvider, T>multipleSelection().observe(unselectedViewer);
 
         selectedList.addListener(SWT.MouseDoubleClick, e -> listDoubleClick(unselect));
         unselectedList.addListener(SWT.MouseDoubleClick, e -> listDoubleClick(select));
@@ -264,10 +265,10 @@ public class DoubleListEditor<T> extends Composite {
 	}
 	
 	private void configureViewer(ListViewer viewer, String observedProperty) {
-		ObservableListContentProvider contentProvider = new ObservableListContentProvider();
+		ObservableListContentProvider<T> contentProvider = new ObservableListContentProvider<>();
 		viewer.setContentProvider(contentProvider);
 		viewer.setLabelProvider(
-				new ObservableMapLabelProvider(BeansObservables.observeMaps(contentProvider.getKnownElements(), new String[] {observedProperty})));
+				new ObservableMapLabelProvider(BeanProperties.value(observedProperty).observeDetail(contentProvider.getKnownElements())));
 	}
 	
     /**

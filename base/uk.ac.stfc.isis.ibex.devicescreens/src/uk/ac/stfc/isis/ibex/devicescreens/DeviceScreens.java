@@ -49,6 +49,10 @@ public class DeviceScreens implements BundleActivator {
      * Creates a new instance of the DevicesScreens class.
      */
     public DeviceScreens() {
+    	
+    	if (model != null) {
+    		throw new RuntimeException("Can only create one DeviceScreensModel() instance at a time.");
+    	}
 
         instance = this;
 
@@ -111,6 +115,8 @@ public class DeviceScreens implements BundleActivator {
     @Override
     public void stop(BundleContext context) throws Exception {
         DeviceScreens.context = null;
+        model.close();
+        model = null;
     }
 
     /**

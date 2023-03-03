@@ -74,6 +74,15 @@ public class NewBlockHandler extends AbstractHandler {
 	    return null;
     }
 	
+	
+	/**
+	 * Prevent adding block without permission.
+	 */
+	@Override
+	public boolean isEnabled() {
+		return SERVER.setCurrentConfig().canWrite();
+	}
+	
     /**
      * Create the dialog for creating the new block.
      * 

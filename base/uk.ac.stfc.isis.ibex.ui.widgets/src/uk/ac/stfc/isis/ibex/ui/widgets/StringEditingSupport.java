@@ -24,16 +24,30 @@ import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.widgets.Composite;
 
+/**
+ * Editing support for string-type values.
+ *
+ * @param <TRow> the type of row being edited
+ */
 public abstract class StringEditingSupport<TRow> extends GenericEditingSupport<TRow, String> {
 
 	private final ResetSelectionTextCellEditor editor;
 	private boolean canEdit = true;
 
+	/**
+	 * Create this editing support.
+	 * @param viewer the column viewer
+	 * @param rowType the row type
+	 */
 	public StringEditingSupport(ColumnViewer viewer, Class<TRow> rowType) {
 		super(viewer, rowType, String.class);
 		editor = createTextCellEditor(viewer);
 	}
 	
+	/**
+	 * Sets whether this editor is enabled.
+	 * @param enabled true to enable; false otherwise
+	 */
 	public void setEnabled(boolean enabled) {
 		canEdit = enabled;
 	}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="IBEX" uid="ibex.product" id="uk.ac.stfc.isis.ibex.e4.client.IBEX_E4" application="uk.ac.stfc.isis.ibex.e4.product.application" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="IBEX" uid="ibex.product" id="uk.ac.stfc.isis.ibex.e4.client.IBEX_E4" application="uk.ac.stfc.isis.ibex.e4.product.application" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true" autoIncludeRequirements="true">
 
    <aboutInfo>
       <image path="/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web64.gif"/>
@@ -28,6 +28,7 @@
 
    <windowImages i16="platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web16.gif" i32="platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web32.gif" i48="platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web48.gif" i64="platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web64.gif"/>
 
+
    <launcher name="ibex-client">
       <win useIco="true">
          <ico path="../uk.ac.stfc.isis.ibex.e4.client.product/icons/ibex.ico"/>
@@ -35,9 +36,11 @@
       </win>
    </launcher>
 
+
    <vm>
-      <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11</windows>
+      <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17</windows>
    </vm>
+
 
    <plugins>
    </plugins>
@@ -50,6 +53,8 @@
 
    <configurations>
       <plugin id="org.apache.felix.scr" autoStart="true" startLevel="2" />
+      <plugin id="org.apache.logging.log4j.api" autoStart="true" startLevel="1" />
+      <plugin id="org.apache.logging.log4j.core" autoStart="true" startLevel="1" />
       <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.event" autoStart="false" startLevel="2" />

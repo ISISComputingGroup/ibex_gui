@@ -28,6 +28,9 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IPerspectiveRegistry;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
@@ -114,6 +117,12 @@ public class OpenLogPlotterPopup extends AbstractHandler {
                 MessageDialog.openError(editor.getSite().getShell(),
                         "Error", ex.getMessage());
             }
+    	} else {
+    		Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
+			MessageBox messageBox = new MessageBox(shell, SWT.ICON_WARNING | SWT.OK);
+			messageBox.setText("Failed to open in Log Plotter");
+			messageBox.setMessage("Make the Log Plotter perspective visible.");
+			messageBox.open();
     	}
         return null;
     }

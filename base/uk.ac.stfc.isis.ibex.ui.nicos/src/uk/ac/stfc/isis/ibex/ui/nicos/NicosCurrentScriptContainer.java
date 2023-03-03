@@ -29,7 +29,6 @@ import uk.ac.stfc.isis.ibex.ui.widgets.NumberedStyledText;
 @SuppressWarnings("checkstyle:magicnumber")
 public class NicosCurrentScriptContainer {
 
-    private Label lblCurrentScriptStatus;
     private StyledText txtCurrentScript;
     private final NicosModel model;
     private final DataBindingContext bindingContext;
@@ -71,7 +70,6 @@ public class NicosCurrentScriptContainer {
      * @param parent injected by eclipse
      */
 	@PostConstruct
-	@SuppressWarnings("unchecked")
     public void createCurrentScriptContainer(Composite parent) {
         parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         parent.setLayout(new GridLayout(1, false));

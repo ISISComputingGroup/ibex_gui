@@ -271,7 +271,7 @@ public class Instrument implements BundleActivator {
             public void run() {
                 updateExtendingPlugins(finalSelectedInstrument);
             }
-        }).start();
+        }, "SetInstrument thread").start();
 
         logNumberOfChannels();
     }

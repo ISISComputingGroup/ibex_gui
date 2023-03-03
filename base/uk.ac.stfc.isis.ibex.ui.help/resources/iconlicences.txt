@@ -90,6 +90,15 @@ lower_limit designed by Picol at www.flaticon.com
 upper_limit_minimal designed by Picol at www.flaticon.com
 upper_limit designed by Picol at www.flaticon.com
 
+Matplotlib -> uk.ac.stfc.isis.ibex.ui.graphing/resources
+
+home designed by Pixel Perfect at www.flaticon.com
+left-arrow  designed by Pixel Perfect at www.flaticon.com
+right-arrow designed by Pixel Perfect at www.flaticon.com
+pan_active designed by Pixel Perfect at www.flaticon.com
+pan_inactive designed by Pixel Perfect at www.flaticon.com
+zoom_active designed by Pixel Perfect at www.flaticon.com
+zoom_inactive designed by Pixel Perfect at www.flaticon.com
 
 
 NICOS ->uk.ac.stfc.isis.ibex.ui.nicos/icons
@@ -178,8 +187,7 @@ Stopped.png designed by ISIS Computing Group
 
 Script Generator ->uk.ac.stfc.isis.ibex.ui.scriptgenerator/icons
 
-scriptgenerator_32 designed by ISIS Computing Group
-
+scriptgenerator_24 designed by Stockio at www.flaticon.com
 
 
 

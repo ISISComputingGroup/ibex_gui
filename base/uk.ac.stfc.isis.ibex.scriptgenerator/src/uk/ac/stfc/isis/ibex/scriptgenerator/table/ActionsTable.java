@@ -45,7 +45,7 @@ public class ActionsTable extends ModelObject {
 	
 	/**
 	 * Get the action at the corresponding index or an empty optional.
-	 * 
+	 * @param actionIndex - The index of action to get.
 	 * @return the action at the corresponding index or an empty optional.
 	 */
 	public Optional<ScriptGeneratorAction> getAction(Integer actionIndex) {
@@ -341,6 +341,17 @@ public class ActionsTable extends ModelObject {
     public void setEstimatedTimes(Map<Integer, Number> estimatedTimes) {
         for (int i = 0; i < actions.size(); i++) {
         	actions.get(i).setEstimatedTime(Optional.ofNullable(estimatedTimes.get(i)));
+        }
+    }
+    
+    /**
+     * Set the estimated customs for each action based on the hashmap.
+     * 
+     * @param estimatedCustoms Hashmap key is action and value is list of custom estimates.
+     */
+    public void setEstimatedCustom(Map<Integer, Map<String, String>> estimatedCustoms) {
+        for (int i = 0; i < actions.size(); i++) {
+        	actions.get(i).setCustomEstimate(Optional.ofNullable(estimatedCustoms.get(i)));
         }
     }
 	

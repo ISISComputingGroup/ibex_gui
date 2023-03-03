@@ -34,7 +34,7 @@ public class DynamicScript {
 			String id = idWithWhitespace.strip();
 			try {
 				return Integer.parseInt(id);
-			} catch(NumberFormatException e) {
+			} catch (NumberFormatException e) {
 				throw new DynamicScriptNameFormatException("Format should be like 'Script Generator: <Integer ID>'");
 			}
 		} else {

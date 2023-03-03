@@ -1,6 +1,24 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
 <descriptions>
   <opis>
+	<entry>
+      <key>Aeroflex</key>
+      <value>
+        <type>FUNCTION_GENERATOR</type>
+        <path>aeroflex.opi</path>
+        <description>The OPI for the Aeroflex signal generator.</description>
+        <macros>
+          <macro>
+            <name>AERO</name>
+            <description>The Aeroflex PV prefix (e.g. AEROFLEX_01).</description>
+            <default>AEROFLEX_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Signal Generators</category>
+        </categories>
+      </value>
+    </entry>
     <entry>
       <key>Motion Set Point</key>
       <value>
@@ -527,6 +545,29 @@
       </value>
     </entry>
     <entry>
+      <key>Eurotherm Single Temp Sensor</key>
+      <value>
+        <type>EUROTHERM</type>
+        <path>Eurotherm_single_temp.opi</path>
+        <description>The OPI for the Eurotherm crate connected to a single Eurotherm temperature controller.</description>
+        <macros>
+          <macro>
+            <name>EURO</name>
+            <description>The Eurotherm PV prefix (e.g. EUROTHRM_01).</description>
+            <default>EUROTHRM_01</default>
+          </macro>
+          <macro>
+            <name>SENSOR</name>
+            <description>The temperature sensor number (e.g. 1).</description>
+            <default>1</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Mercury iTC</key>
       <value>
         <type>MERCURY</type>
@@ -797,6 +838,35 @@
         </categories>
       </value>
     </entry>
+    
+    <entry>
+      <key>Caen HV (MuSR)</key>
+      <value>
+        <type>CAEN</type>
+        <path>HV/HVMonitorSummaryDisplay_MuSR.opi</path>
+        <description>Summary display for Caens - MuSR. No properties required.</description>
+        <macros>
+          <macro>
+            <name>MAX_CRATES</name>
+            <description>The maximum number of crates to display (default: 2, max: 15)</description>
+            <default/>
+          </macro>
+          <macro>
+            <name>MAX_SLOTS</name>
+            <description>The maximum number of slots to display per crate (default: 5)</description>
+            <default/>
+          </macro>
+          <macro>
+            <name>MAX_CHANNELS</name>
+            <description>The maximum number of channels per slot per crate to display (default: 25)</description>
+            <default/>
+          </macro>
+        </macros>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+      </value>
+    </entry>
     <entry>
       <key>Cryo valve</key>
       <value>
@@ -974,7 +1044,9 @@
         <path>omron_plc.opi</path>
         <description>The OPI for a PLC. No properties required.</description>
         <macros/>
-        <categories/>
+        <categories>
+          <category>PLCs</category>
+        </categories>
       </value>
     </entry>
     <entry>
@@ -1039,6 +1111,24 @@
           <macro>
             <name>M</name>
             <description>The galil number to view. E.g. the galil at MOT:MTR0304 would be 03</description>
+            <default>01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Galil General I/O</key>
+      <value>
+        <type>DEBUG</type>
+        <path>galil/general_io_standalone.opi</path>
+        <description>The OPI giving a view of the general inputs/outputs on a galil controller.</description>
+        <macros>
+          <macro>
+            <name>M</name>
+            <description>The galil prefix. E.g. the galil at MOT:MTR0304 would be 03</description>
             <default>01</default>
           </macro>
         </macros>
@@ -1254,6 +1344,26 @@
             <description>The Danfysik PV prefix (e.g. DFKPS_01).</description>
             <default>DFKPS_01</default>
           </macro>
+          <macro>
+            <name>EXTERNAL_INTERLOCK_1</name>
+            <description>The name to use for the first external interlock</description>
+            <default>External Interlock 0</default>
+          </macro>
+          <macro>
+            <name>EXTERNAL_INTERLOCK_2</name>
+            <description>The name to use for the second external interlock</description>
+            <default>External Interlock 1</default>
+          </macro>
+          <macro>
+            <name>EXTERNAL_INTERLOCK_3</name>
+            <description>The name to use for the third external interlock</description>
+            <default>External Interlock 2</default>
+          </macro>
+          <macro>
+            <name>EXTERNAL_INTERLOCK_4</name>
+            <description>The name to use for the fourth external interlock</description>
+            <default>External Interlock 3</default>
+          </macro>
         </macros>
         <categories>
           <category>Power supplies</category>
@@ -1306,6 +1416,37 @@
         <type>MUON_FRONT_END</type>
         <path>muon_overviews/riken_front_end_overview.opi</path>
         <description>The OPI for the Riken front end. No properties required.</description>
+        <macros/>
+        <categories/>
+      </value>
+    </entry>
+    <entry>
+      <key>Riken Magnet PSU</key>
+      <value>
+        <type>MUON_FRONT_END</type>
+        <path>RIKEN/Magnet/RIKEN_magnet_PSUs.opi</path>
+        <description>The OPI for the Riken Magnet PSU Synoptic</description>
+        <macros></macros>
+       </value>
+    </entry>
+    <entry>
+      <key>Riken Kicker and Separator HV settings</key>
+      <value>
+        <type>MUON_FRONT_END</type>
+        <path>RIKEN/Magnet/Kickers/kickers_and_seperators.opi</path>
+        <description>The OPI for Kicker and Separator HV Settings</description>
+        <macros/>
+        <categories>
+          <category>PLCs</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Riken PSU Status Summary</key>
+      <value>
+        <type>psu_status_summary</type>
+        <path>RIKEN/Magnet/psu_status_summary.opi</path>
+        <description>The OPI for the status summary of Riken Magnet PSUs</description>
         <macros/>
         <categories/>
       </value>
@@ -1461,6 +1602,18 @@
         <type>JAWS</type>
         <path>jaws/jaws_managers/gem_manager.opi</path>
         <description>The OPI for the Gem jaw set. No properties required.</description>
+        <macros/>
+        <categories>
+          <category>Jaws and slits</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>SANDALS jaw set</key>
+      <value>
+        <type>JAWS</type>
+        <path>jaws/jaws_managers/sandals_manager.opi</path>
+        <description>The OPI for the SANDALS jaw set. No properties required.</description>
         <macros/>
         <categories>
           <category>Jaws and slits</category>
@@ -1640,6 +1793,24 @@
       </value>
     </entry>
     <entry>
+      <key>Transtechnik PSU</key>
+      <value>
+        <type>POWER_SUPPLY</type>
+        <path>transtechnik.opi</path>
+        <description>Transtechnik Power Supply</description>
+        <macros>
+          <macro>
+            <name>TRANSTECHNIK</name>
+            <description>The TRANSTECHNIK PV prefix (e.g. TRANTECH_01)</description>
+            <default>TRANTECH_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Keithley 2700</key>
       <value>
         <type>KHLY2700</type>
@@ -1658,10 +1829,28 @@
       </value>
     </entry>
     <entry>
+      <key>Keithley 2290</key>
+      <value>
+        <type>KHLY2290</type>
+        <path>Keithley2290/Keithley2290.opi</path>
+        <description>The OPI for the Keithley 2290 High Voltage Power Supply.</description>
+        <macros>
+          <macro>
+            <name>KHLY2290</name>
+            <description>The Keithley 2290 PV name (e.g. KHLY2290_01).</description>
+            <default>KHLY2290_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Superlogics</key>
       <value>
         <type>MERCURY</type>
-        <path>superlogics.opi</path>
+        <path>superlogics/superlogics.opi</path>
         <description>The OPI for the Superlogics data acquisition system.</description>
         <macros>
           <macro>
@@ -1727,23 +1916,9 @@
             <default/>
           </macro>
         </macros>
-        <categories/>
-      </value>
-    </entry>
-    <entry>
-      <key>Matplotlib viewer</key>
-      <value>
-        <type>UNKNOWN</type>
-        <path>matplotlib.opi</path>
-        <description>The OPI for displaying plots created via matplotlib</description>
-        <macros>
-          <macro>
-            <name>URL</name>
-            <description>The URL from which to retrieve the plot.</description>
-            <default>http://localhost:8988</default>
-          </macro>
-        </macros>
-        <categories/>
+        <categories>
+          <category>PLCs</category>
+        </categories>
       </value>
     </entry>
     <entry>
@@ -1811,6 +1986,36 @@
             <description>The tab which is displayed when the OPI is opened (1 to 6).</description>
             <default/>
           </macro>
+          <macro>
+            <name>TYPE_01</name>
+            <description>The chopper type (DISC or FERMI).</description>
+            <default>DISC</default>
+          </macro>
+          <macro>
+            <name>TYPE_02</name>
+            <description>The chopper type (DISC or FERMI).</description>
+            <default>DISC</default>
+          </macro>
+          <macro>
+            <name>TYPE_03</name>
+            <description>The chopper type (DISC or FERMI).</description>
+            <default>DISC</default>
+          </macro>
+          <macro>
+            <name>TYPE_04</name>
+            <description>The chopper type (DISC or FERMI).</description>
+            <default>DISC</default>
+          </macro>
+          <macro>
+            <name>TYPE_05</name>
+            <description>The chopper type (DISC or FERMI).</description>
+            <default>DISC</default>
+          </macro>
+          <macro>
+            <name>TYPE_06</name>
+            <description>The chopper type (DISC or FERMI).</description>
+            <default>DISC</default>
+          </macro>
         </macros>
         <categories>
           <category>Choppers</category>
@@ -1859,7 +2064,13 @@
         <type>STRESS_RIG</type>
         <path>stress_rig/stress_rig.opi</path>
         <description>The OPI for the Instron stress rig. No properties required.</description>
-        <macros/>
+        <macros>
+          <macro>
+            <name>INSTRON</name>
+            <description>The instron PV prefix and instrument name (e.g. IN:ENGINX:INSTRON_01).</description>
+            <default>IN:ENGINX:INSTRON_01</default>
+          </macro>
+        </macros>
         <categories>
           <category>Loading rigs</category>
         </categories>
@@ -1900,7 +2111,7 @@
           <category>Sample changers</category>
         </categories>
         <type>SAMPLECHANGER</type>
-        <path>tosca_sample_positioner.opi</path>
+        <path>tosca_sample_changer/tosca_sample_positioner.opi</path>
         <description>The TOSCA sample positioning system.</description>
         <macros>
           <macro>
@@ -1909,18 +2120,6 @@
             <default>MOT:MTR0101</default>
           </macro>
         </macros>
-      </value>
-    </entry>
-    <entry>
-      <key>Reflectometry OPI</key>
-      <value>
-        <categories>
-          <category>Miscellaneous motion control</category>
-        </categories>
-        <type>REFLECTOMETRY</type>
-        <path>reflectometry/full_opi.opi</path>
-        <description>The OPI for the reflectometry information panel.</description>
-        <macros/>
       </value>
     </entry>
     <entry>
@@ -1986,6 +2185,24 @@
             <name>KHLY2001</name>
             <description>The Keithley 2001 PV prefix (e.g. KHLY2001_01).</description>
             <default>KHLY2001_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Keithley 2000</key>
+      <value>
+        <categories>
+          <category>Multimeters</category>
+        </categories>
+        <type>KEITHLEY</type>
+        <path>keithley_2000.opi</path>
+        <description>The OPI for the Keithley 2000 multimeter.</description>
+        <macros>
+          <macro>
+            <name>KHLY2000</name>
+            <description>The Keithley 2000 PV prefix (e.g. KHLY2000_01).</description>
+            <default>KHLY2000_01</default>
           </macro>
         </macros>
       </value>
@@ -2488,6 +2705,22 @@
       </value>
     </entry>
     <entry>
+      <key>FMR</key>
+      <value>
+        <type>ZERO_FIELD</type>
+        <path>fmr.opi</path>
+        <description>OPI for the Ferro Magnetic Resonance equipment</description>
+        <categories/>
+        <macros>
+          <macro>
+            <name>FMR</name>
+            <description>The FMR machine PV root (e.g. TE:NDW1805:FMR_01)</description>
+            <default>TE:NDW1805:FMR_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
       <key>Anton Paar DMA4500M</key>
       <value>
         <type>DENSITY_METER</type>
@@ -2722,7 +2955,7 @@
         </macros>
       </value>
     </entry>
-     <entry>
+    <entry>
       <key>WISH Jaws</key>
       <value>
         <type>JAWS</type>
@@ -2741,6 +2974,9 @@
         <path>wish_vacuum_plc.opi</path>
         <description>WISH Vacuum PLC</description>
         <macros/>
+        <categories>
+          <category>PLCs</category>
+        </categories>
       </value>
     </entry>
     <entry>
@@ -2790,6 +3026,36 @@
       </value>
     </entry>
     <entry>
+      <key>B17TMAG</key>
+      <value>
+        <type>B17TMAG</type>
+        <path>b17tmag.opi</path>
+        <description>The OPI for the B17TMag</description>
+        <macros>
+          <macro>
+            <name>B17TMAG</name>
+            <description>The B17TMag PV prefix (e.g. B17TMAG_01)</description>
+            <default>B17TMAG_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>TECHNIX</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>technix.opi</path>
+        <description>Technix PSU</description>
+        <macros>
+          <macro>
+            <name>IOC_NAME</name>
+            <description>The technix PV prefix (e.g. TECHNIX_01)</description>
+            <default>TECHNIX_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
       <key>Rotating Stirrer Rack</key>
       <value>
         <categories/>
@@ -2809,7 +3075,8 @@
       <key>DG645</key>
       <value>
         <categories>
-        	<category>Delay Generators</category></categories>
+          <category>Delay Generators</category>
+        </categories>
         <type>DELAY_GENERATORS</type>
         <path>DG645/dg645.opi</path>
         <description>The OPI for the DG645</description>
@@ -2825,7 +3092,7 @@
     <entry>
       <key>Biologic SP240/SP300 Potentiostat</key>
       <value>
-        <categories />
+        <categories/>
         <type>UNKNOWN</type>
         <path>biologic/SP300.opi</path>
         <description>The OPI for the Biologic SP240/SP300</description>
@@ -2834,6 +3101,110 @@
             <name>ECLAB</name>
             <description>The ECLAB IOC PV prefix (e.g. ECLAB_01)</description>
             <default>ECLAB_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>WEBCAM</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>webcam/webcam.opi</path>
+        <description>The OPI for Webcams</description>
+        <macros>
+          <macro>
+            <name>WEBCAM</name>
+            <description>The WEBCAM IOC PV prefix (e.g. WEBCAM_01)</description>
+            <default>WEBCAM_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>GP2 Detector</key>
+      <value>
+        <type>DAE</type>
+        <path>GP2.opi</path>
+        <description>The OPI for GP2 detector</description>
+        <macros/>
+        <categories>
+          <category>Monitors</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Nuclear Instruments Digitiser</key>
+      <value>
+        <type>DAE</type>
+        <path>NucInstDig/main.opi</path>
+        <description>The OPI for Nuclear Instruments Digitiser</description>
+        <macros>
+          <macro>
+            <name>NCINDG</name>
+            <description>The Digitiser PV prefix (e.g. NCINDG_01)</description>
+            <default>NCINDG_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Monitors</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Temperature Jump Apparatus</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>tjmper.opi</path>
+        <description>The OPI for the TJMPER</description>
+        <macros>
+          <macro>
+            <name>TJMPER</name>
+            <description>The TJMPER PV prefix (e.g. TJMPER_01)</description>
+            <default>TJMPER_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>TJMPAP</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>tjmpap.opi</path>
+        <description>The OPI for the TJMPAP</description>
+        <macros>
+          <macro>
+            <name>TJMPAP</name>
+            <description>The TJMPAP PV prefix (e.g. TJMPAP_01)</description>
+            <default>TJMPAP_01</default>
+          </macro>
+        </macros>
+      </value>
+  </entry>
+	<entry>
+      <key>Rules tests (developer)</key>
+      <value>
+        <type>DEBUG</type>
+        <path>rules_tests.opi</path>
+        <description>Developer system-testing OPI for CS-Studio rules engines</description>
+        <macros/>
+        <categories/>
+      </value>
+    </entry>
+    <entry>
+      <key>RIKEN Vacuum</key>
+	  <value>
+	    <type>RIKEN</type>
+	    <path>RIKEN/Vacuum/RIKEN_vacuum_synoptic.opi</path>
+	    <macros>
+          <macro>
+            <name>SCHNDR</name>
+            <description>The SCHNDR PV prefix (e.g. SCHNDR_01)</description>
+            <default>SCHNDR_01</default>
           </macro>
         </macros>
       </value>

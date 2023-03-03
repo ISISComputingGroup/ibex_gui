@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.epics.tests.writing;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -31,7 +31,7 @@ import org.junit.Test;
 import uk.ac.stfc.isis.ibex.epics.writing.OnCanWriteChangeListener;
 import uk.ac.stfc.isis.ibex.epics.writing.OnErrorListener;
 
-@SuppressWarnings({ "unchecked", "checkstyle:methodname" })
+@SuppressWarnings({ "checkstyle:methodname" })
 public class BaseWritableTest {
 
     private TestableBaseWritable<String> writable;

@@ -43,6 +43,9 @@ import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.ExperimentSetupViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.widgets.LogMessageBox;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
 
+/**
+ * Creates a view that shows a summary of the current run.
+ */
 @SuppressWarnings("checkstyle:magicnumber")
 public class RunSummary {
 
@@ -173,7 +176,7 @@ public class RunSummary {
 
 		btnDisplayTitle = new Button(infoComposite, SWT.CHECK);
 		btnDisplayTitle.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-		btnDisplayTitle.setText("Show Title in Dataweb Dashboard Page");
+		btnDisplayTitle.setText("Show Title and Users in Dataweb Dashboard Page");
 		btnDisplayTitle.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

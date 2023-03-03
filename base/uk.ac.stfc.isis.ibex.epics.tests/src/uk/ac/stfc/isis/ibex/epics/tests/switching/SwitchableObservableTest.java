@@ -19,22 +19,24 @@
 package uk.ac.stfc.isis.ibex.epics.tests.switching;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
 import uk.ac.stfc.isis.ibex.epics.observing.Observer;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
 import uk.ac.stfc.isis.ibex.epics.tests.observing.TestHelpers;
 
-// A lot of unchecked type conversions for mocking purposes
+@RunWith(MockitoJUnitRunner.Strict.class)
 public class SwitchableObservableTest {
 
-    private Observer<String> mockObserver;
+    @Mock private Observer<String> mockObserver;
 	
 	private ClosableObservable<String> mockObservableReturnsValue;
 	private ClosableObservable<String> mockObservableReturnsNewValue;
@@ -44,9 +46,7 @@ public class SwitchableObservableTest {
 	
 	@Before
 	public void setUp() {
-		// Arrange
-        mockObserver = mock(Observer.class);
-		
+		// Arrange		
         mockObservableReturnsValue = TestHelpers.getClosableCachingObservable(TestHelpers.STRING_VALUE);
         mockObservableReturnsNewValue = TestHelpers.getClosableCachingObservable(TestHelpers.NEW_STRING_VALUE);
         mockObservableReturnsNull = TestHelpers.getClosableCachingObservable(null);

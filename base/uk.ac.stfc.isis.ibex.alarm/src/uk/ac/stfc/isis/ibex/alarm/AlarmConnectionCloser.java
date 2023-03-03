@@ -33,6 +33,7 @@ import org.csstudio.alarm.beast.JMSCommunicationThread;
 import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModel;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * Class to help close the connection in the css alarm system. CSS will not
@@ -84,13 +85,9 @@ public class AlarmConnectionCloser {
             Field connectionField = JMSCommunicationThread.class.getDeclaredField("connection");
             connectionField.setAccessible(true);
             connection = (ActiveMQConnection) connectionField.get(communicator);
-
-        } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException
-                | LinkageError e) {
-            // TODO: Catching a LinkageError was added during E4 migration and
-            // is almost certainly not the right behaviour.
+        } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
             LOG.warn("While getting reference to the connection from the communicator we had an error. ");
-            LOG.catching(Level.WARN, e);
+            LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
             return;
         }
     }

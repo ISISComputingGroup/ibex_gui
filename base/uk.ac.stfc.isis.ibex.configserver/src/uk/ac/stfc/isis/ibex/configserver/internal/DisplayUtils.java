@@ -20,13 +20,13 @@
 package uk.ac.stfc.isis.ibex.configserver.internal;
 
 import java.util.Collection;
-
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
+import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
 
+/**
+ * Utility methods for displaying groups.
+ */
 public final class DisplayUtils {
 	
 	private static final String NONE = "none"; 
@@ -35,16 +35,33 @@ public final class DisplayUtils {
     private DisplayUtils() {
     }
 
+    /**
+     * Gets the display name for a group.
+     * @param name The name of the group
+     * @return the display name of the group
+     */
 	public static String renameGroup(String name) {
 		return name.toLowerCase().equals(NONE) ? OTHER : name;
 	}
 	
+	/**
+	 * Filters the "OTHER" group out from a collection of groups.
+	 * @param <T> The collection type (e.g. Group or EditableGroup)
+	 * @param groups The collection of groups to filter
+	 * @return the filtered collection of groups
+	 */
 	public static <T extends Group> Collection<T> removeOtherGroup(Collection<T> groups) {
-		return Lists.newArrayList(Iterables.filter(groups, new Predicate<T>() {
-			@Override
-			public boolean apply(T group) {
-				return !group.getName().equals(OTHER);
-			}
-		}));
+		return groups.stream()
+				.filter(g -> !g.getName().equals(OTHER))
+				.collect(Collectors.toList());
+	}
+	
+	/**
+	 * Filter function for the NONE group.
+	 * @param name The name of the group.
+	 * @return True if the group is not named NONE.
+	 */
+	public static boolean filterNoneGroup(String name) {
+		return !name.toLowerCase().equals(NONE);
 	}
 }

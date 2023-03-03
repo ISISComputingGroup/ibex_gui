@@ -81,7 +81,6 @@ public class NicosControlButtonPanel extends Composite {
         bind();
     }
 
-    @SuppressWarnings("unchecked")
     private void bind() {
         bindingContext.bindValue(WidgetProperties.text().observe(btnTogglePause),
                 BeanProperties.value("toggleButtonText").observe(statusModel));

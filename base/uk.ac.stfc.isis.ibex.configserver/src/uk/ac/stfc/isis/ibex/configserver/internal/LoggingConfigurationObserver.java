@@ -26,8 +26,16 @@ import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 import uk.ac.stfc.isis.ibex.epics.conversion.json.JsonSerialisingConverter;
 import uk.ac.stfc.isis.ibex.epics.observing.LoggingObserver;
 
+/**
+ * A configuration observer which logs it's values to the logfile.
+ */
 public class LoggingConfigurationObserver extends LoggingObserver<Configuration> {
 
+	/**
+	 * Creates the observer.
+	 * @param log the log to write values to
+	 * @param id an id printed before each message
+	 */
 	public LoggingConfigurationObserver(Logger log, String id) {
 		super(log, id);
 	}

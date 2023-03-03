@@ -23,20 +23,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
-import java.nio.channels.OverlappingFileLockException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -75,13 +68,17 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	
 	private static final String MULTIPLE_INSTANCES_CHECKING_ERROR = "Exception encountered while checking for multiple instances.";
 	private static final String ANOTHER_INSTANCE_LOG_INFO = "Another instance of IBEX found running.";
-	private static final String TEMPORARY_FILE_LOCKED_ERROR = "Could not access temporary file due to a lock. Another process is "
-			+ "refusing to release the lock.";
     
     /**
      * Setting this flag to true allows workbench to close without prompt.
      */
     protected boolean shutDown = false;
+    
+    /**
+     * Used in detecting multiple client instances.
+     */
+    private FileChannel file = null;
+	private FileLock lock = null;
 
     /**
      * Constructor.
@@ -123,79 +120,19 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
      */
     void performMultipleClientsCheck() {
         try {
-    		if (clearTempFile().length > 0) {
-    			LOG.info(ANOTHER_INSTANCE_LOG_INFO);
-    	        if (!MessageDialog.openQuestion(Display.getDefault().getActiveShell(), DIALOG_BOX_TITLE, DIALOG_QUESTION)) {
+        	createTempFile();
+        	file = FileChannel.open(Paths.get(TEMP_PATH), StandardOpenOption.WRITE);
+        	lock = file.tryLock();
+        	if (lock == null) {
+        		LOG.info(ANOTHER_INSTANCE_LOG_INFO);
+        		if (!MessageDialog.openQuestion(Display.getDefault().getActiveShell(), DIALOG_BOX_TITLE, DIALOG_QUESTION)) {
     	            shutDown = true;
     	            PlatformUI.getWorkbench().close();
     	        }
-    		}
-    		if (!shutDown) {
-    			writeTempFile(new String[] {Long.toString(ProcessHandle.current().pid())}, true);
-    		}
-		} catch (Exception e) {
-			LOG.error(MULTIPLE_INSTANCES_CHECKING_ERROR);
-			e.printStackTrace();
-		}
-    }
-    
-    /**
-     * This function compares contents of temporary file to the list of PIDs obtained from process list
-     * and overwrites the file only with those that match.
-     * @return New contents of temporary file as a string array.
-     * @throws IOException - if any of the operations result in IOException.
-     */
-    String[] clearTempFile() throws IOException {
-    	String[] fileContents = readTempFile();
-    	
-        ArrayList<String> processPIDs = new ArrayList<String>();
-        ProcessHandle.allProcesses()
-        .forEach(process -> processPIDs.add(Long.toString(process.pid())));
-        
-        ArrayList<String> newContent = new ArrayList<String>();
-        
-        for (String line : fileContents) {
-        	for (String pid : processPIDs) {
-        		if (line.equals(pid)) {
-        			newContent.add(line);
-        			break;
-        		}
         	}
-        }
-        String[] newContentArr = newContent.toArray(new String[newContent.size()]);
-        writeTempFile(newContentArr, false);
-        
-        return newContentArr;
-    }
-    
-    /**
-     * Helper function for writing to temporary file.
-     * @param lines Lines of text to write.
-     * @param append When true the lines will be appended. When false, the file will be
-     * Overwritten.
-     * @throws IOException - if any of the operations result in IOException.
-     */
-    void writeTempFile(String[] lines, boolean append) throws IOException, NoSuchElementException {
-    	createTempFile();
-    	String content = "";
-    	for (String line : lines) {
-    		content += line + '\n';
-    	}
-    	FileWriter writer = new FileWriter(TEMP_PATH, append);
-        writer.write(content);
-        writer.close();
-    }
-    
-    /**
-     * Helper function for getting info from temporary file.
-     * @return Lines of text in the temporary file.
-     * @throws IOException - if any of the operations result in IOException.
-     */
-    String[] readTempFile() throws IOException {
-    	createTempFile();
-		String content = Files.readString(Paths.get(TEMP_PATH));
-		String[] lines = content.split("\n");
-		return lines;
+		} catch (Exception e) {
+			LoggerUtils.logErrorWithStackTrace(LOG, MULTIPLE_INSTANCES_CHECKING_ERROR, e);
+		}
     }
     
     /**

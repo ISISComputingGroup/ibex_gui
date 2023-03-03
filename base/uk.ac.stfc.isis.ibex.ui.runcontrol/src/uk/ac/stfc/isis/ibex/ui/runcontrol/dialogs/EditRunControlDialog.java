@@ -33,9 +33,9 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
+import uk.ac.stfc.isis.ibex.runcontrol.RunControlActivator;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
-import uk.ac.stfc.isis.ibex.ui.runcontrol.commands.RunControlHandler;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
 /**
@@ -44,27 +44,22 @@ import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 public class EditRunControlDialog extends TitleAreaDialog {
 
 	private static final Point INITIAL_SIZE = new Point(1000, 500);
-	private final String title;
 	private final ConfigServer configServer;
 	private final RunControlServer runControlServer;
 	private RunControlSettingsPanel editor;
 	private final RunControlViewModel viewModel;
-	private RunControlHandler handler;
+	private static final String TITLE = "Run-Control Settings";
 	
 	/**
 	 * Creates a dialog for configuring the run-control settings.
 	 * 
 	 * @param parentShell the parent SWT Shell
-	 * @param title the title of the dialog window
-	 * @param configServer the Config Server 
-	 * @param runControlServer the Run Control server
 	 */
-	public EditRunControlDialog(Shell parentShell, String title, ConfigServer configServer, RunControlServer runControlServer) {
+	public EditRunControlDialog(Shell parentShell) {
 		super(parentShell);
         setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE | SWT.APPLICATION_MODAL);
-		this.title = title;
-		this.configServer = configServer;
-		this.runControlServer = runControlServer;
+		this.configServer = Configurations.getInstance().server();
+		this.runControlServer = RunControlActivator.getInstance().getServer();
         this.viewModel =
                 new RunControlViewModel(Configurations.getInstance().display().getDisplayBlocks(), runControlServer);
 		viewModel.addPropertyChangeListener("error", new PropertyChangeListener() {
@@ -107,7 +102,7 @@ public class EditRunControlDialog extends TitleAreaDialog {
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
-		shell.setText(title);
+		shell.setText(TITLE);
 	}
 	
 	/**

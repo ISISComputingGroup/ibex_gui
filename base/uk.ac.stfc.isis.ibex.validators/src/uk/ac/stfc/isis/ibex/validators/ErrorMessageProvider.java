@@ -25,7 +25,14 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  *
  */
 public abstract class ErrorMessageProvider extends ModelObject {
+	/**
+	 * The error.
+	 */
     protected ErrorMessage error = new ErrorMessage();
+    
+    /**
+     * The warning.
+     */
     protected WarningMessage warning = new WarningMessage();
     
     /**

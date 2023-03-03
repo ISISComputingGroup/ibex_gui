@@ -19,8 +19,15 @@
 
 package uk.ac.stfc.isis.ibex.dae.xml;
 
+/**
+ * An XML node encapsulating an integer-typed value.
+ */
 public class IntegerNode extends XmlNode<Integer> {
 
+	/**
+	 * Creates the XML node.
+	 * @param xPathExpression the XPATH expression
+	 */
 	public IntegerNode(String xPathExpression) {
 		super(xPathExpression);
 	}

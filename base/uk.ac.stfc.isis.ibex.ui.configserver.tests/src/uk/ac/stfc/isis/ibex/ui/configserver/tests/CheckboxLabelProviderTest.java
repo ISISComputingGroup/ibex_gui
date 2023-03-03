@@ -23,7 +23,6 @@ package uk.ac.stfc.isis.ibex.ui.configserver.tests;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 import java.util.List;
@@ -39,8 +38,6 @@ import org.eclipse.swt.widgets.TypedListener;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import uk.ac.stfc.isis.ibex.ui.widgets.CheckboxLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.widgets.CheckboxLabelProvider.CheckboxSelectionAdapter;
@@ -58,12 +55,11 @@ public class CheckboxLabelProviderTest {
     
     private Button checkBox;
     
-    @Mock
     private Realm mockRealm;
     
     @Before
     public void prepareForTest() {
-        MockitoAnnotations.initMocks(this);
+    	mockRealm = mock(Realm.class);
         when(mockRealm.isCurrent()).thenReturn(true);
         
         tableContents = new WritableMap<>(mockRealm);

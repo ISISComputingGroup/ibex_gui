@@ -38,6 +38,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
@@ -55,6 +56,7 @@ public class GroupsPanel extends Composite {
 	private ScrolledComposite scrolledComposite;
 	private List<Composite> columns  = new ArrayList<>();
 	private CLabel banner;
+	private ConnectionStatus status = ConnectionStatus.EMPTY;
 	
     private static final Color RED = SWTResourceManager.getColor(SWT.COLOR_RED);
 	
@@ -74,6 +76,7 @@ public class GroupsPanel extends Composite {
 	
 	private boolean showHiddenBlocks = false;
 	private boolean sortGroupsBySize = false;
+	private final IHandlerService handlerService;
 	
 	private Optional<List<DisplayGroup>> displayGroups;
 	
@@ -85,9 +88,12 @@ public class GroupsPanel extends Composite {
      *            The parent composite that this panel belongs to.
      * @param style
      *            The SWT style of the panel.
+     * @param handlerService
+	 * 			  The handler service to be passed down to BlocksMenu
      */
-	public GroupsPanel(Composite parent, int style) {
+	public GroupsPanel(Composite parent, int style, IHandlerService handlerService) {
 		super(parent, SWT.NONE);
+		this.handlerService = handlerService;
 		FillLayout fLayout = new FillLayout(SWT.HORIZONTAL);
 		fLayout.marginHeight = 0;
 		fLayout.marginWidth = 0;
@@ -102,7 +108,10 @@ public class GroupsPanel extends Composite {
 		this.addControlListener(new ControlAdapter() {
 			public void controlResized(ControlEvent e) {
 				Composite source = (Composite) e.getSource();
-				relayoutGroups(true, source.getClientArea().height);
+				GroupsPanel panel = (GroupsPanel) source;
+				if (panel.status != ConnectionStatus.DISCONNECTED && panel.status != ConnectionStatus.CONNECTED_NO_GROUPS) {
+					relayoutGroups(true, source.getClientArea().height);
+				}
 			}
 		});
 		
@@ -136,11 +145,14 @@ public class GroupsPanel extends Composite {
 		clear();
 		if (!groups.isPresent()) {
 			showBanner(ConnectionStatus.DISCONNECTED);
+			this.status = ConnectionStatus.DISCONNECTED;
 			return;
 		} else if (groups.isPresent() && groups.get().isEmpty()) {
 			showBanner(ConnectionStatus.CONNECTED_NO_GROUPS);
+			this.status = ConnectionStatus.CONNECTED_NO_GROUPS;
 			return;
 		} else {
+			this.status = ConnectionStatus.EMPTY;
 			addColumns();
 			addGroups();
 			assert (this.groups.size() == columns.size()) : "Table creation failed";
@@ -195,7 +207,7 @@ public class GroupsPanel extends Composite {
 	 * @return Created group widget
 	 */
 	private Group groupWidget(DisplayGroup group, Composite parent) {
-        Group groupWidget = new Group(parent, SWT.NONE, group, this);
+        Group groupWidget = new Group(parent, SWT.NONE, group, this, this.handlerService);
 		groupWidget.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		groupWidget.pack();
         groupWidget.setMenu(contextMenu);

@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?>
+<target name="uk.ac.stfc.isis.ibex.targetplatform" sequenceNumber="254">
+<locations>
+    <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+        <repository location="http://download.eclipse.org/e4/snapshots/org.eclipse.e4.tools/latest"/>
+        <unit id="org.eclipse.e4.tools.spies.feature.feature.group" version="0.0.0"/>
+    </location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+         <unit id="org.eclipse.sapphire.ui.swt.gef.feature.group" version="9.1.0.201609301330"/>
+         <repository location="http://download.eclipse.org/releases/2018-09"/>
+     </location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/css_gui_dependencies/p2repo/"/>
+		<unit id="org.epics.jca" version="0.0.0"/>
+		<unit id="com.fasterxml.jackson.core.jackson-annotations" version="0.0.0"/>
+		<unit id="com.fasterxml.jackson.core.jackson-core" version="0.0.0"/>
+		<unit id="com.fasterxml.jackson.core.jackson-databind" version="0.0.0"/>
+		<unit id="com.fasterxml.jackson.dataformat.jackson-dataformat-smile" version="0.0.0"/>
+		<unit id="com.fasterxml.jackson.jaxrs.jackson-jaxrs-base" version="0.0.0"/>
+		<unit id="com.fasterxml.jackson.jaxrs.jackson-jaxrs-json-provider" version="0.0.0"/>
+		<unit id="com.fasterxml.jackson.module.jackson-module-jaxb-annotations" version="0.0.0"/>
+		<unit id="org.csstudio.alarm.beast.tools.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.alarm.beast.ui.alarmtable.opiwidget.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.alarm.beast.ui.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.alarm.diirt.datasource.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.applications.opibuilder.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.applications.opibuilder.widgets.detailpanel.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.applications.pvmanager.diag.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.applications.utility.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.archive.reader.rdb.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.core.base.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.core.base.feature.source.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.core.diirt.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.core.platform.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.core.platform.feature.source.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.core.utility.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.core.utility.feature.source.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.thirdparty.all.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.thirdparty.all.feature.source.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.trends.databrowser2.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.trends.databrowser2.opiwidget.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.utilities.feature.feature.group" version="0.0.0"/>
+		<unit id="org.epics.caj" version="0.0.0"/>
+		<unit id="org.epics.channelfinder.cf-client-api" version="0.0.0"/>
+		<unit id="org.epics.jca.source" version="0.0.0"/>
+		<unit id="org.epics.pvaccess.source" version="0.0.0"/>
+		<unit id="org.epics.pvdata.source" version="0.0.0"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="http://download.eclipse.org/efxclipse/runtime-released/3.7.0/site/"/>
+		<unit id="org.eclipse.fx.core.feature.feature.group" version="3.7.0.202010120723"/>
+		<unit id="org.eclipse.fx.nl.feature.feature.group" version="3.7.0.202010120723"/>
+		<unit id="org.eclipse.fx.runtime.feature.feature.group" version="3.7.0.202010120723"/>
+		<unit id="org.eclipse.fx.runtime.min.feature.feature.group" version="3.7.0.202010120720"/>
+		<unit id="org.eclipse.fx.slf4j.target.feature.feature.group" version="3.7.0.202006221030"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="https://download.eclipse.org/rt/eclipselink/updates/"/>
+		<unit id="org.eclipse.persistence.sdk.feature.group" version="2.7.10.v20211216-fe64cd39c3"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="https://download.eclipse.org/nebula/releases/2.5.0/"/>
+		<unit id="org.eclipse.nebula.visualization.feature.feature.group" version="2.1.0.202106201019"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="https://download.eclipse.org/releases/2022-06/"/>
+		<unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
+		<unit id="org.eclipse.gef.cloudio.sdk.feature.group" version="0.0.0"/>
+		<unit id="org.eclipse.gef.cloudio.user.feature.group" version="0.0.0"/>
+		<unit id="org.eclipse.gef.common.sdk.feature.group" version="0.0.0"/>
+		<unit id="org.eclipse.gef.dot.sdk.feature.group" version="0.0.0"/>
+		<unit id="org.eclipse.gef.dot.user.feature.group" version="0.0.0"/>
+		<unit id="org.eclipse.gef.fx.sdk.feature.group" version="0.0.0"/>
+		<unit id="org.eclipse.gef.geometry.sdk.feature.group" version="0.0.0"/>
+		<unit id="org.eclipse.gef.graph.sdk.feature.group" version="0.0.0"/>
+		<unit id="org.eclipse.gef.layout.sdk.feature.group" version="0.0.0"/>
+		<unit id="org.eclipse.gef.mvc.sdk.feature.group" version="0.0.0"/>
+		<unit id="org.eclipse.gef.zest.sdk.feature.group" version="0.0.0"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="https://download.eclipse.org/eclipse/updates/4.24/"/>
+		<unit id="org.eclipse.platform.ide" version="4.24.0.I20220607-0700"/>
+		<unit id="org.eclipse.rcp.feature.group" version="4.24.0.v20220607-0700"/>
+		<unit id="org.eclipse.rcp.source.feature.group" version="4.24.0.v20220607-0700"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20220531185310/repository/"/>
+		<unit id="jakarta.servlet" version="5.0.0.v20210105-0527"/>
+		<unit id="com.google.guava" version="30.1.0.v20210127-2300"/>
+		<unit id="com.google.guava.source" version="30.1.0.v20210127-2300"/>
+		<unit id="jakarta.servlet.jsp.source" version="3.0.0.v20210105-0527"/>
+		<unit id="jakarta.xml.bind" version="2.3.3.v20201118-1818"/>
+		<unit id="jakarta.xml.bind.source" version="2.3.3.v20201118-1818"/>
+		<unit id="javax.activation" version="2.0.0.v20201118-1818"/>
+		<unit id="javax.activation.source" version="2.0.0.v20201118-1818"/>
+		<unit id="org.hamcrest" version="2.2.0.v20210711-0821"/>
+		<unit id="org.hamcrest.core" version="1.3.0.v20180420-1519"/>
+		<unit id="org.hamcrest.core.source" version="1.3.0.v20180420-1519"/>
+		<unit id="org.hamcrest.library" version="1.3.0.v20180524-2246"/>
+		<unit id="org.hamcrest.library.source" version="1.3.0.v20180524-2246"/>
+		<unit id="org.hamcrest.source" version="2.2.0.v20210711-0821"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20220302172233/repository/"/>
+		<unit id="javax.mail.glassfish" version="1.4.1.v201108011116"/>
+		<unit id="javax.xml.bind" version="2.2.0.v201105210648"/>
+		<unit id="javax.xml.stream" version="1.0.1.v201004272200"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20210223232630/repository/"/>
+		<unit id="javax.xml.soap" version="1.3.0.v201105210645"/>
+	</location>
+	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-core</artifactId>
+				<version>2.18.0</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</location>
+	<location includeDependencyDepth="infinite" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-api</artifactId>
+				<version>2.18.0</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</location>
+	<location includeDependencyDepth="infinite" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>org.apache.activemq</groupId>
+				<artifactId>activemq-all</artifactId>
+				<version>5.17.1</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</location>
+	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>8.0.30</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</location>
+	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>1.15</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</location>
+	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time</artifactId>
+				<version>2.11.0</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</location>
+	<location includeDependencyDepth="infinite" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>org.zeromq</groupId>
+				<artifactId>jeromq</artifactId>
+				<version>0.5.2</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</location>
+	<location includeDependencyDepth="infinite" includeDependencyScopes="compile,runtime,import" includeSource="true" missingManifest="generate" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-core</artifactId>
+				<version>4.7.0</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</location>
+	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>net.sf.py4j</groupId>
+				<artifactId>py4j</artifactId>
+				<version>0.10.9.7</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</location>
+	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>org.jacorb</groupId>
+				<artifactId>jacorb-omgapi</artifactId>
+				<version>3.9</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</location>
+	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>org.glassfish.tyrus.bundles</groupId>
+				<artifactId>tyrus-standalone-client</artifactId>
+				<version>2.1.0</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</location>
+	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
+		<dependencies>
+			<dependency>
+				<groupId>com.google.code.gson</groupId>
+				<artifactId>gson</artifactId>
+				<version>2.9.1</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/Pydev/features/org.python.pydev.p2-repo/target/repository/"/>
+		<unit id="org.python.pydev.feature.feature.group" version="8.3.0.202302061416"/>
+		<unit id="org.python.pydev.feature.source.feature.group" version="8.3.0.202302061416"/>
+	</location>
+</locations>
+<environment>
+<os>linux</os>
+<ws>gtk</ws>
+<arch>x86_64</arch>
+<nl>en_GB</nl>
+</environment>
+<!-- Note: eclipse target platform editor will default to the last specified environment, so specify linux first and then windows. Maven is happy building both. -->
+<environment>
+<os>win32</os>
+<ws>win32</ws>
+<arch>x86_64</arch>
+<nl>en_GB</nl>
+</environment>
+</target>

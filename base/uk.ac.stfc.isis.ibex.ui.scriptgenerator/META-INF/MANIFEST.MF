@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Scriptgenerator
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.scriptgenerator;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Require-Bundle: uk.ac.stfc.isis.ibex.scriptgenerator,
  org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -20,7 +20,8 @@ Require-Bundle: uk.ac.stfc.isis.ibex.scriptgenerator,
  uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.preferences;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.about;bundle-version="1.0.0",
- uk.ac.stfc.isis.ibex.nicos;bundle-version="1.0.0"
+ uk.ac.stfc.isis.ibex.nicos;bundle-version="1.0.0",
+ com.google.guava
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.scriptgenerator
 Import-Package: uk.ac.stfc.isis.ibex.ui.widgets
 Bundle-ActivationPolicy: lazy

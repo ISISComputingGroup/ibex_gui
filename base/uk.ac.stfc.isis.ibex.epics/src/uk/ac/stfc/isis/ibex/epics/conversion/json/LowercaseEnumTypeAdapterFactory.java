@@ -23,10 +23,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
+import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
@@ -48,9 +50,23 @@ public class LowercaseEnumTypeAdapterFactory implements TypeAdapterFactory {
 			return null;
 		}
 
-	    final Map<String, T> lowercaseToConstant = new HashMap<String, T>();
-	    for (T constant : rawType.getEnumConstants()) {
-	    	lowercaseToConstant.put(toLowercase(constant), constant);
+	    final Map<String, T> jsonToEnumConstant = new HashMap<String, T>();
+	    for (var constant : rawType.getEnumConstants()) {
+			String name = ((Enum<?>) constant).name();
+	    	
+	    	try {
+	    		// Try to get an @SerializedName annotation.
+	    		// If the SerializedName annotation is present on the enum member, 
+	    		// always use it in preference to the lowercase rule.
+				var annotation = rawType.getField(name).getAnnotation(SerializedName.class);
+				if (annotation != null) {
+					jsonToEnumConstant.put(annotation.value(), constant);
+				} else {
+					jsonToEnumConstant.put(toLowercase(constant), constant);
+				}
+			} catch (NoSuchFieldException | SecurityException e) {
+				throw new RuntimeException(e);
+			}
 	    }
 
 	    return new TypeAdapter<T>() {
@@ -59,7 +75,13 @@ public class LowercaseEnumTypeAdapterFactory implements TypeAdapterFactory {
 	    		if (value == null) {
 	    			out.nullValue();
 	    		} else {
-	    			out.value(toLowercase(value));
+	    			for (var entry : jsonToEnumConstant.entrySet()) {
+	    				if (Objects.equals(entry.getValue(), value)) {
+	    					out.value(entry.getKey());
+	    					return;
+	    				}
+	    			}
+	    			throw new RuntimeException("Invalid enum constant " + value + " provided to TypeAdapter write(). Allowed values: " + jsonToEnumConstant);
 	    		}
 	      }
 	
@@ -69,7 +91,7 @@ public class LowercaseEnumTypeAdapterFactory implements TypeAdapterFactory {
 	    		  reader.nextNull();
 	    		  return null;
 	    	  } else {
-	    		  return lowercaseToConstant.get(reader.nextString());
+	    		  return jsonToEnumConstant.get(reader.nextString());
 	    	  }
 	      }
 	    };

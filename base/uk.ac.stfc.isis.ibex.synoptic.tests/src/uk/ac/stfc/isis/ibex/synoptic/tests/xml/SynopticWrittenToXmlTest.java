@@ -20,7 +20,8 @@
 package uk.ac.stfc.isis.ibex.synoptic.tests.xml;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

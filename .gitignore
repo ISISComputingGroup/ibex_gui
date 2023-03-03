@@ -23,6 +23,17 @@ build/Output
 .vscode
 __pycache__
 build/maven
+build/.m2
 build/ICP_Binaries_maven.log
 base/uk.ac.stfc.isis.ibex.scriptgenerator/python_support/ScriptDefinitions_repo.bundle
 base/uk.ac.stfc.isis.ibex.scriptgenerator/python_support/git
+*.log
+build/copy_client_jre.log
+build/local_copy_client.log
+build/local_copy_jre.log
+
+# Tycho .gitignores per https://github.com/eclipse-tycho/tycho/issues/664#issuecomment-1044613456
+.polyglot.*
+.META-INF_*
+pom.tycho
+.tycho-consumer-pom.xml

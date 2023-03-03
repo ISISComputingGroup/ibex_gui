@@ -4,15 +4,15 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Instrument
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.instrument;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.epics,
  org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.logger,
  com.google.guava,
- org.diirt.datasource;bundle-version="3.1.5",
- uk.ac.stfc.isis.ibex.jaxb;bundle-version="1.0.0"
+ uk.ac.stfc.isis.ibex.jaxb;bundle-version="1.0.0",
+ org.apache.commons.lang
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.instrument,
  uk.ac.stfc.isis.ibex.instrument.channels,

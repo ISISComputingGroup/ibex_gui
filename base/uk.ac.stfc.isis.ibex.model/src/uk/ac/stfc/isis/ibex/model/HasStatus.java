@@ -12,6 +12,6 @@ public interface HasStatus<T> {
 	 * 
 	 * @return the status.
 	 */
-	public T getStatus();
+	T getStatus();
 
 }

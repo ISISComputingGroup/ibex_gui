@@ -87,6 +87,23 @@ public abstract class ModelObject implements IModelObject {
 			}
 		};
     }
+    
+    /**
+     * Adds a property change listener which always executes on the UI thread.
+     * 
+     * This is useful in cases where the UI needs to react to events in ways which 
+     * are too complex for databinding.
+     *
+     * @param listener
+     *            the listener
+     * 
+     * @return the added listener
+     */
+    public PropertyChangeListener addUiThreadPropertyChangeListener(PropertyChangeListener listener) {
+    	final PropertyChangeListener uiThreadListener = propertyChangeOnUiThread(listener);
+		addPropertyChangeListener(uiThreadListener);
+		return uiThreadListener;
+	}
 	
 	/**
      * Adds a property change listener which always executes on the UI thread.

@@ -31,8 +31,14 @@ import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
  */
 public abstract class Switcher {
 
+	/**
+	 * The collection of switchables (observables & writables) switched by this class.
+	 */
     protected Collection<Switchable> switchables;
 
+    /**
+     * Creates a new switcher.
+     */
     public Switcher() {
         /**
          * CopyOnWriteArrayList avoids concurrent access problems.
@@ -40,12 +46,27 @@ public abstract class Switcher {
         switchables = new CopyOnWriteArrayList<>();
     }
 
+    /**
+     * Switches the instrument.
+     * @param instrumentInfo the new instrument
+     */
     public abstract void switchInstrument(InstrumentInfo instrumentInfo);
 
+    /**
+     * Register a switchable with this switcher.
+     * @param <T> the type of the switchable
+     * @param switchable the switchable
+     * @param pvAddress the PV address
+     * @param channelType the channel type
+     */
     public <T> void registerSwitchable(Switchable switchable, String pvAddress, ChannelType<T> channelType) {
         switchables.add(switchable);
     }
 
+    /**
+     * Removes a switchable from this switcher.
+     * @param switchableInitialiseOnSubscribeObservable the switchable to remove
+     */
     public void unregsiterSwitchable(Switchable switchableInitialiseOnSubscribeObservable) {
         switchables.remove(switchableInitialiseOnSubscribeObservable);
     }

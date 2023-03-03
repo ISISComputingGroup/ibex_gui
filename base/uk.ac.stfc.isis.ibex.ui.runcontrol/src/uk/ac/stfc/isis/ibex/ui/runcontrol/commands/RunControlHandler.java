@@ -25,8 +25,6 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
-import uk.ac.stfc.isis.ibex.runcontrol.RunControlActivator;
-import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.dialogs.EditRunControlDialog;
 
 /**
@@ -34,7 +32,6 @@ import uk.ac.stfc.isis.ibex.ui.runcontrol.dialogs.EditRunControlDialog;
  */
 public class RunControlHandler {
 
-	private static final String TITLE = "Run-Control Settings";
 	private static final ConfigServer CONFIGSERVER = Configurations.getInstance().server();
 	
 	/**
@@ -43,8 +40,7 @@ public class RunControlHandler {
 	 */
 	@Execute
 	public void execute(Shell shell) {
-		RunControlServer rcServer = RunControlActivator.getInstance().getServer();
-		EditRunControlDialog dialog = new EditRunControlDialog(shell, TITLE, CONFIGSERVER, rcServer);
+		EditRunControlDialog dialog = new EditRunControlDialog(shell);
 		dialog.open();
 	}
 	

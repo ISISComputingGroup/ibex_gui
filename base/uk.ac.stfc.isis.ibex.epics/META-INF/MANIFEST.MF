@@ -4,13 +4,8 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Epics
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.epics
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ClassPath: .,
- lib/joda-time-2.10.10.jar,
- lib/commons-codec-1.15-javadoc.jar,
- lib/commons-codec-1.15-sources.jar,
- lib/commons-codec-1.15.jar,
- .,
  resources/
 Require-Bundle: uk.ac.stfc.isis.ibex.jaxb;bundle-version="1.0.0",
  javax.activation;bundle-version="1.1.0";visibility:=reexport,
@@ -19,13 +14,15 @@ Require-Bundle: uk.ac.stfc.isis.ibex.jaxb;bundle-version="1.0.0",
  org.eclipse.ui;bundle-version="3.8.2",
  uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
  com.google.gson;visibility:=reexport,
- org.diirt.vtype;bundle-version="3.1.5",
- org.diirt.util;bundle-version="3.1.5",
+ org.diirt.vtype;bundle-version="3.1.5";visibility:=reexport,
+ org.diirt.util;bundle-version="3.1.5";visibility:=reexport,
  com.google.guava,
- org.diirt.datasource,
+ org.diirt.datasource;visibility:=reexport,
  org.csstudio.platform.libs.jdbc,
  uk.ac.stfc.isis.ibex.e4.ui,
- org.eclipse.equinox.registry
+ org.eclipse.equinox.registry,
+ org.apache.commons.commons-codec;bundle-version="1.15.0";visibility:=reexport,
+ joda-time;bundle-version="2.11.0";visibility:=reexport
 Export-Package: uk.ac.stfc.isis.ibex.epics.adapters,
  uk.ac.stfc.isis.ibex.epics.conversion,
  uk.ac.stfc.isis.ibex.epics.conversion.json,

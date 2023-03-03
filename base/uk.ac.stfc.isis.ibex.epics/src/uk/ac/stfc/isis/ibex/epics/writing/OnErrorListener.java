@@ -8,5 +8,5 @@ public interface OnErrorListener {
      * Called when the Writable is in error.
      * @param e The error of the Writable.
      */
-    public void onError(Exception e);
+    void onError(Exception e);
 }

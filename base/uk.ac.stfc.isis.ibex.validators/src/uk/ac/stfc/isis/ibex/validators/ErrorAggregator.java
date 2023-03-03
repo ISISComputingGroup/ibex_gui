@@ -32,8 +32,14 @@ import java.util.Map;
  * Aggregates a number of error message providers into one.
  */
 public abstract class ErrorAggregator extends ErrorMessageProvider {
+	/**
+	 * Map of error providers to error messages.
+	 */
     protected Map<ErrorMessageProvider, ErrorMessage> childErrors = new HashMap<>();
 
+    /**
+     * Property change listener to add provider to child errors.
+     */
     protected PropertyChangeListener errorListener = new PropertyChangeListener() {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {

@@ -3,7 +3,9 @@ package uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting;
 /**
  * Contains the properties used in dynamic scripting.
  */
-public class DynamicScriptingProperties {
+public final class DynamicScriptingProperties {
+	private DynamicScriptingProperties() {
+	}
 	
 	/**
 	 * A property to listen for when the status of the script in nicos has changed.

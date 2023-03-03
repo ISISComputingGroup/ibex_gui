@@ -33,6 +33,16 @@ public class EditableBlock extends Block {
 	public EditableBlock(Block other) {
 		super(other);
 	}
+	
+	/**
+	 * Create a block that may be editable from a read-only one which is part of a component.
+	 * @param other The original block.
+	 * @param componentName The name of the component that this block is part of.
+	 */
+	public EditableBlock(Block other, String componentName) {
+		super(other);
+		this.component = componentName;
+	}
 
 	/**
 	 * Get whether the block is editable.

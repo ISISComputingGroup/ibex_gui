@@ -192,7 +192,7 @@ public enum ComponentType {
     MUSR_STEERING,
     /** Delay generators. */
     DELAY_GENERATORS,
-	/** Function generators */
+	/** Function generators. */
 	FUNCTION_GENERATOR;
 
     private Target target;

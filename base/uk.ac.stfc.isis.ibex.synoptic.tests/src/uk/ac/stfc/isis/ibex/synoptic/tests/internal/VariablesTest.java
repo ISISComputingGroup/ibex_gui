@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.synoptic.tests.internal;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.io.IOException;
@@ -29,14 +28,13 @@ import java.util.Collection;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.stubbing.OngoingStubbing;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
+import uk.ac.stfc.isis.ibex.epics.switching.SwitchableWritable;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.channels.ChannelType;
-import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannelWithoutUnits;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
@@ -67,10 +65,10 @@ public class VariablesTest {
     private ObservableFactory closingObservableFactory;
     private ObservableFactory switchingObservableFactory;
 
-    private Writable defaultWritable = mock(Writable.class);
-    private Writable mockWritable;
-    private SwitchableObservable defaultSwitchableObservable = mock(SwitchableObservable.class);
-    private SwitchableObservable mockSwitchableObservable;
+    private SwitchableWritable<String> defaultWritable = mock(SwitchableWritable.class);
+    private SwitchableWritable<String> mockWritable;
+    private SwitchableObservable<String> defaultSwitchableObservable = mock(SwitchableObservable.class);
+    private SwitchableObservable<String> mockSwitchableObservable;
 
     /**
      * Code to generate the required components.
@@ -78,7 +76,7 @@ public class VariablesTest {
     @Before
     public void set_up() {
         // Arrange
-        mockWritable = mock(Writable.class);
+        mockWritable = mock(SwitchableWritable.class);
         mockSwitchableObservable = mock(SwitchableObservable.class);
 
         closingWritableFactory = mock(WritableFactory.class);
@@ -106,7 +104,7 @@ public class VariablesTest {
     @Test
     public void WHEN_variables_is_initalised_THEN_synopticSetter_points_at_correct_pv() {
         // Arrange
-        Writable expectedResult = mock(Writable.class);
+        SwitchableWritable<String> expectedResult = mock(SwitchableWritable.class);
         when(switchingWritableFactory.getSwitchableWritable((ChannelType<String>) any(ChannelType.class),
                 eq(pvPrefix + SYNOPTIC_ADDRESS + SET_DETAILS))).thenReturn(expectedResult);
 
@@ -122,7 +120,7 @@ public class VariablesTest {
     public void
             WHEN_variables_is_initialised_THEN_synopticsDeleter_is_a_writable_converting_string_collection_to_json_string_on_correct_pv() throws IOException {
         // Arrange
-        Writable expectedDestination = mock(Writable.class);
+        SwitchableWritable<String> expectedDestination = mock(SwitchableWritable.class);
         when(switchingWritableFactory.getSwitchableWritable((ChannelType<String>) any(ChannelType.class),
                 eq(pvPrefix + SYNOPTIC_ADDRESS + DELETE))).thenReturn(expectedDestination);
 
@@ -135,7 +133,7 @@ public class VariablesTest {
         variables = createVariables();
 
         // Assert
-        Writable deleter = variables.synopticsDeleter;
+        Writable<Collection<String>>  deleter = variables.synopticsDeleter;
         verify(expectedDestination, never()).write(any());
         deleter.write(inputValue);
         verify(expectedDestination, times(1)).write(convertedValue);
@@ -270,7 +268,7 @@ public class VariablesTest {
         variables = createVariables();
 
         // Act
-        Writable result = variables.defaultWritableRemote(address);
+        Writable<String> result = variables.defaultWritableRemote(address);
 
         // Assert
         assertSame(mockWritable, result);

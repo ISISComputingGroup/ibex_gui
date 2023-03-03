@@ -104,11 +104,11 @@ if %errorlevel% neq 0 (
 )
 
 REM Copy the install script across
-cd %BASEDIR%
-copy /Y %BASEDIR%\install_client.bat %INSTALLDIR%
-if %errorlevel% neq 0 (
-    @echo Installl client copy failed
-    exit /b %errorlevel%
+cd /d %BASEDIR%
+robocopy "." "%INSTALLDIR%" install_client.bat install_gui_with_builtin_python.bat install_gui_and_external_python.bat README_INSTALL.txt /R:1
+if %errorlevel% geq 4 (
+    @echo Install client batch file copy failed  %errorlevel%
+    exit /b 1
 )
 
 @echo %BUILD_NUMBER%> %INSTALLDIR%\Client\BUILD_NUMBER.txt
@@ -119,3 +119,5 @@ if %errorlevel% neq 0 (
 if not "%RELEASE%" == "YES" (
     @echo %BUILD_NUMBER%>%INSTALLDIR%\..\LATEST_BUILD.txt 
 )
+exit /b 0
+

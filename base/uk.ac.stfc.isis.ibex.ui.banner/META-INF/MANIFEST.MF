@@ -16,9 +16,10 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.configserver,
  uk.ac.stfc.isis.ibex.instrument.status;bundle-version="1.0.0",
  javax.annotation;bundle-version="1.2.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ActivationPolicy: lazy
-Export-Package: uk.ac.stfc.isis.ibex.ui.banner.views;uses:="org.eclipse.ui,org.eclipse.ui.part,org.eclipse.swt.widgets"
+Export-Package: uk.ac.stfc.isis.ibex.ui.banner.models,
+ uk.ac.stfc.isis.ibex.ui.banner.views;uses:="org.eclipse.ui,org.eclipse.ui.part,org.eclipse.swt.widgets"
 Import-Package: com.google.common.base,
  uk.ac.stfc.isis.ibex.configserver.configuration,
  uk.ac.stfc.isis.ibex.epics.switching,

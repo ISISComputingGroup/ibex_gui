@@ -20,6 +20,7 @@
         </children>
         <children xsi:type="menu:Menu" xmi:id="_W44gEGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.components" label="Components" mnemonics="p">
           <children xsi:type="menu:HandledMenuItem" xmi:id="_bjqNIGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.component.new" label="New" tooltip="Create a new component" mnemonics="N" command="_jpCRYHtiEeeIzM7lvAxMoQ"/>
+          <children xsi:type="menu:HandledMenuItem" xmi:id="_KHTXoH-pEe2cVZ02cKzrYw" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.component.import" label="Import" tooltip="Import a component from an instrument" mnemonics="I" command="_zZZcUH-oEe2cVZ02cKzrYw"/>
           <children xsi:type="menu:DynamicMenuContribution" xmi:id="_dRsXgJDeEem0bruZliKGOw" elementId="uk.ac.stfc.isis.ibex.e4.client.dynamicmenucontribution.2" label="View or Edit Component (set by menu item)" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.EditComponentHandler"/>
           <children xsi:type="menu:HandledMenuItem" xmi:id="_cpZGIGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.component.delete" label="Delete" tooltip="Delete an existing component" mnemonics="D" command="_keEb8HtiEeeIzM7lvAxMoQ"/>
         </children>
@@ -41,6 +42,7 @@
           <children xsi:type="menu:HandledMenuItem" xmi:id="_lr4aUGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.colours.alternative" label="Alternative colour scheme 1" tooltip="Switch to alternative colour scheme 1" type="Radio" command="_aKnSYKkFEeeR15ll_ruI0A"/>
         </children>
         <children xsi:type="menu:HandledMenuItem" xmi:id="_HiUXAN2tEeuW2_9QCiQ-XA" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.selectvisibleperspectives" label="Select visible perspectives" tooltip="Select which perspectives are visible" command="_4hYR8N2tEeuW2_9QCiQ-XA"/>
+        <children xsi:type="menu:HandledMenuItem" xmi:id="_PqKmgEukEe2ohpbV1rm5iA" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.displayrunmode" label="Display IOC run mode" type="Check" command="_ZG6_YEulEe2ohpbV1rm5iA"/>
       </children>
       <children xsi:type="menu:Menu" xmi:id="_EQzKoGcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.menu.help" label="Help" mnemonics="">
         <children xsi:type="menu:HandledMenuItem" xmi:id="_n7iv0GcTEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handledmenuitem.about" label="About" tooltip="All about IBEX" command="_hj--kKkDEeeNUPQOsQF40g"/>
@@ -97,6 +99,7 @@
   <handlers xmi:id="_Nm2tQHtaEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.configuration.edit" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.EditConfigHandler" command="_FgXuUHtaEeeIzM7lvAxMoQ"/>
   <handlers xmi:id="_vbnBMHtaEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.configuration.delete" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.DeleteConfigsHandler" command="_kcuRwHtaEeeIzM7lvAxMoQ"/>
   <handlers xmi:id="_gHbWYHtjEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.component.new" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.NewComponentHandler" command="_jpCRYHtiEeeIzM7lvAxMoQ"/>
+  <handlers xmi:id="_km9iwH-oEe2cVZ02cKzrYw" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.component.import" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.ImportComponentHandler" command="_zZZcUH-oEe2cVZ02cKzrYw"/>
   <handlers xmi:id="_lXgI4HtjEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.component.edit" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.EditComponentHandler" command="_kNSN8HtiEeeIzM7lvAxMoQ"/>
   <handlers xmi:id="_lxEfcHtjEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.component.delete" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.DeleteComponentsHandler" command="_keEb8HtiEeeIzM7lvAxMoQ"/>
   <handlers xmi:id="_TJHrkJCyEeiuzpdmZmmjoA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.configuration.recent" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.configserver/uk.ac.stfc.isis.ibex.ui.configserver.commands.RecentConfigsHandler" command="_A3_dkJCyEeiuzpdmZmmjoA"/>
@@ -118,6 +121,7 @@
   <handlers xmi:id="_7P65YJZlEeilnu5vNzjU3w" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.resetperspectives" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.commands.ResetPerspective" command="_NufGcJZmEeilnu5vNzjU3w"/>
   <handlers xmi:id="_1OjPMLs4EeiDDI01_3WoHA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.iconlicence" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.help/uk.ac.stfc.isis.ibex.ui.help.IconLicencesHandler" command="_oZBHMLs4EeiDDI01_3WoHA"/>
   <handlers xmi:id="_u6Iq4N2tEeuW2_9QCiQ-XA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.selectperspectives" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher/uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.commands.SelectVisiblePerspectives" command="_4hYR8N2tEeuW2_9QCiQ-XA"/>
+  <handlers xmi:id="_xSTawEukEe2ohpbV1rm5iA" elementId="uk.ac.stfc.isis.ibex.e4.client.handler.displayrunmode" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.ioccontrol/uk.ac.stfc.isis.ibex.ui.ioccontrol.IocModePreferenceHandler" command="_ZG6_YEulEe2ohpbV1rm5iA"/>
   <bindingTables xmi:id="_5WjMoIOQEeizju06Crxm-g" elementId="IBEX_key_scheme" bindingContext="_no3QoIOVEeizju06Crxm-g">
     <tags>type:user</tags>
     <bindings xmi:id="_5zdyIIOQEeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+A" command="_UJcx8IOSEeizju06Crxm-g">
@@ -425,6 +429,14 @@
           <children xsi:type="basic:Part" xmi:id="_7Zl3sIXbEeiCJ_qZ_3IIBQ" elementId="uk.ac.stfc.isis.ibex.ui.graphing.MatplotlibOpiTargetView" toBeRendered="false" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Plot" closeable="true"/>
           <children xsi:type="basic:Part" xmi:id="_fafW0FieEeqLYa1n_yUxzw" elementId="uk.ac.stfc.isis.ibex.ui.graphing.BackgroundScriptOpiTargetView" toBeRendered="false" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Background Plot"/>
         </children>
+        <children xsi:type="basic:PartStack" xmi:id="_NolFEAdPEe2gyOdJ5Pr1Ig" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.36" toBeRendered="false" containerData="50">
+          <children xsi:type="basic:Part" xmi:id="_OD8LYAdPEe2gyOdJ5Pr1Ig" elementId="uk.ac.stfc.isis.ibex.e4.client.part.scripting.matplotlib" toBeRendered="false" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.graphing/uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibAllPrimaryFiguresView" label="Matplotlib Primary Figures" closeable="true">
+            <properties key="FigureNumber" value="1"/>
+          </children>
+          <children xsi:type="basic:Part" xmi:id="_4CDWgAjYEe2gyOdJ5Pr1Ig" elementId="uk.ac.stfc.isis.ibex.e4.client.part.scripting.matplotlib_secondary" toBeRendered="false" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.graphing/uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibAllSecondaryFiguresView" label="Matplotlib Secondary Figures" closeable="true">
+            <properties key="FigureNumber" value="1"/>
+          </children>
+        </children>
       </children>
     </children>
   </snippets>
@@ -502,7 +514,7 @@
       </children>
     </children>
   </snippets>
-  <snippets xsi:type="advanced:Perspective" xmi:id="_lb95kKj_EeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.scriptGenerator" label="Script Generator" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.scriptgenerator/icons/scriptgenerator_32.png" tooltip="A helper for building instrument control scripts">
+  <snippets xsi:type="advanced:Perspective" xmi:id="_lb95kKj_EeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.scriptGenerator" label="Script Generator" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.scriptgenerator/icons/scriptgenerator_24.png" tooltip="A helper for building instrument control scripts">
     <children xsi:type="basic:PartSashContainer" xmi:id="_tTn84KkAEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.7">
       <children xsi:type="basic:PartSashContainer" xmi:id="_u05iYKkAEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.9" containerData="30" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_xLzvYKkAEeeauN8XvomWPw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.11" containerData="35">
@@ -586,8 +598,11 @@
           <children xsi:type="basic:Part" xmi:id="_uXG6EC5YEeuStKh7k5qgyA" elementId="uk.ac.stfc.isis.ibex.ui.reflectometry.ReflectometryCorrectionsTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Driver Corrections" iconURI=""/>
           <children xsi:type="basic:Part" xmi:id="_uaT_EC5YEeuStKh7k5qgyA" elementId="uk.ac.stfc.isis.ibex.ui.reflectometry.ReflectometryConstantsTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Constants" iconURI=""/>
           <children xsi:type="basic:Part" xmi:id="_udq1EC5YEeuStKh7k5qgyA" elementId="uk.ac.stfc.isis.ibex.ui.reflectometry.ReflectometryErrorLogTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Error Log" iconURI=""/>
-          <children xsi:type="basic:Part" xmi:id="_ug4hIC5YEeuStKh7k5qgyA" elementId="uk.ac.stfc.isis.ibex.ui.reflectometry.ReflectometryRedefineMotorsTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Redefine Motors" iconURI=""/>
+          <children xsi:type="basic:Part" xmi:id="_ug4hIC5YEeuStKh7k5qgyA" elementId="uk.ac.stfc.isis.ibex.ui.reflectometry.ReflectometryAdvancedTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Advanced" iconURI=""/>
           <children xsi:type="basic:Part" xmi:id="_lJqaEKEjEeyLWIXw40pQJA" elementId="uk.ac.stfc.isis.ibex.ui.graphing.MatplotlibOpiTargetView" toBeRendered="false" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Plot"/>
+          <children xsi:type="basic:Part" xmi:id="_9INzsBetEe2mo6MOq2bl6g" elementId="uk.ac.stfc.isis.ibex.e4.client.part.reflectometry.matplotlib" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.graphing/uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibAllPrimaryFiguresView" label="Matplotlib Primary Figures" closeable="true">
+            <properties key="FigureNumber" value="1"/>
+          </children>
         </children>
       </children>
     </children>
@@ -599,6 +614,7 @@
   <commands xmi:id="_FgXuUHtaEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.edit" commandName="Edit or View configuration" description="Select and edit an existing configuration" category="_La_dMHtbEeeIzM7lvAxMoQ"/>
   <commands xmi:id="_kcuRwHtaEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.delete" commandName="Delete configuration" description="Delete an existing configuration" category="_La_dMHtbEeeIzM7lvAxMoQ"/>
   <commands xmi:id="_jpCRYHtiEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.component.new" commandName="New component" description="Create a new component" category="_DlkfcHtjEeeIzM7lvAxMoQ"/>
+  <commands xmi:id="_zZZcUH-oEe2cVZ02cKzrYw" elementId="uk.ac.stfc.isis.ibex.e4.client.component.import" commandName="Import component" description="Import a component from another instrument" category="_DlkfcHtjEeeIzM7lvAxMoQ"/>
   <commands xmi:id="_kNSN8HtiEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.component.edit" commandName="Edit or View component" description="Select and edit an existing component" category="_DlkfcHtjEeeIzM7lvAxMoQ"/>
   <commands xmi:id="_keEb8HtiEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.component.delete" commandName="Delete component" description="Delete an existing component" category="_DlkfcHtjEeeIzM7lvAxMoQ"/>
   <commands xmi:id="_bjIjUHz5EeeSXZfE9ugy5A" elementId="uk.ac.stfc.isis.ibex.e4.client.command.waitfor" commandName="Wait for Instrument" description="Command indicating that the client is waiting for the instrument"/>
@@ -625,6 +641,7 @@
   </commands>
   <commands xmi:id="_oZBHMLs4EeiDDI01_3WoHA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.iconlicence" commandName="Icon Licence" description="View IBEX gui icon licences"/>
   <commands xmi:id="_4hYR8N2tEeuW2_9QCiQ-XA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.selectperspectives" commandName="Select visible perspectives" description="Selects the perspectives which are visible"/>
+  <commands xmi:id="_ZG6_YEulEe2ohpbV1rm5iA" elementId="uk.ac.stfc.isis.ibex.e4.client.command.displayrunmode" commandName="Display IOC run mode" category="_MKzh4KkAEeelm7I_usJ7RQ"/>
   <addons xmi:id="_2jV5MWGNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_2jV5MmGNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_2jV5M2GNEeeR5ozUwT3tEw" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

@@ -33,6 +33,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.handlers.IHandlerService;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
@@ -108,9 +109,10 @@ public class BlocksView {
 	 * @param parent parent of the blocks view
 	 * @param app The E4 application model
 	 * @param modelService The E4 service responsible for handling model elements
+	 * @param handlerService The handler service to be passed down to BlocksMenu
 	 */
     @PostConstruct
-	public void createPartControl(final Composite parent, MApplication app, EModelService modelService) {
+	public void createPartControl(final Composite parent, MApplication app, EModelService modelService, IHandlerService handlerService) {
 		GridLayout glParent = new GridLayout(1, false);
 		glParent.verticalSpacing = 2;
 		glParent.marginWidth = 0;
@@ -122,7 +124,7 @@ public class BlocksView {
 			configSubscription.cancelSubscription();
 		}
 		
-		groups = new GroupsPanel(parent, SWT.NONE);
+		groups = new GroupsPanel(parent, SWT.NONE, handlerService);
 		groups.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		configSubscription = CONFIG.subscribe(configObserver);

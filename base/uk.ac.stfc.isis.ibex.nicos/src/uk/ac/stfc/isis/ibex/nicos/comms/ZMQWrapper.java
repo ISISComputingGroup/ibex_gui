@@ -34,6 +34,7 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 /**
  * A class that wraps the specific ZMQ library to aid in testing.
  */
+@SuppressWarnings("checkstyle:FinalClass")  // needs not to be final so that it can be mocked in tests
 public class ZMQWrapper {
 
 	private static final Logger LOG = IsisLog.getLogger(ZMQWrapper.class);
@@ -114,7 +115,6 @@ public class ZMQWrapper {
      */
     public void connect(String connectionUri) throws ZMQException {
     	checkCommsLockHeld();
-    	LOG.info("Opening ZMQ connection to NICOS");
 
 		// disconnect old session first
 		disconnect();

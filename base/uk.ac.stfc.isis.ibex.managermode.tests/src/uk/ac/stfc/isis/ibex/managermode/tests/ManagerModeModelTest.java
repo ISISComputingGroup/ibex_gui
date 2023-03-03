@@ -21,6 +21,8 @@
  */
 package uk.ac.stfc.isis.ibex.managermode.tests;
 
+import static org.mockito.ArgumentMatchers.anyString;
+
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -30,7 +32,6 @@ import javax.security.auth.login.FailedLoginException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
@@ -69,8 +70,8 @@ public class ManagerModeModelTest {
         Mockito.when(mockWritable.canWrite()).thenReturn(true);
         Mockito.when(mockObservable.getValue()).thenReturn(true);
 
-        Mockito.when(correctPasswordHasherMock.isCorrectPassword(Matchers.anyString())).thenReturn(true);
-        Mockito.when(incorrectPasswordHasherMock.isCorrectPassword(Matchers.anyString())).thenReturn(false);
+        Mockito.when(correctPasswordHasherMock.isCorrectPassword(anyString())).thenReturn(true);
+        Mockito.when(incorrectPasswordHasherMock.isCorrectPassword(anyString())).thenReturn(false);
 
     }
 
@@ -153,7 +154,7 @@ public class ManagerModeModelTest {
         }
 
         // Assert
-        Mockito.verify(mockWritable, Mockito.times(0)).write(Matchers.anyString());
+        Mockito.verify(mockWritable, Mockito.times(0)).write(anyString());
     }
 
 }

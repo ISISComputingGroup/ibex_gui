@@ -11,10 +11,11 @@
 <module name="Checker">
   <property name="severity" value="warning"/>
   <module name="TreeWalker">
+    <module name="NoFinalizer"/>
     <module name="SuppressWarningsHolder"/>
     <module name="ConstantName"/>
     <module name="JavadocMethod">
-      <property name="scope" value="protected"/>
+      <property name="accessModifiers" value="public,protected,package"/>
     </module>
     <module name="JavadocType">
       <property name="scope" value="protected"/>

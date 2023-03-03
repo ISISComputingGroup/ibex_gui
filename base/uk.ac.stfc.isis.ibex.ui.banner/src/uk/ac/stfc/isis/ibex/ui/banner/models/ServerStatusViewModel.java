@@ -1,7 +1,7 @@
 package uk.ac.stfc.isis.ibex.ui.banner.models;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.instrument.status.ServerStatusVariables;
@@ -21,8 +21,6 @@ public class ServerStatusViewModel extends ModelObject {
 	private ServerStatus psControlStatus = ServerStatus.UNKNOWN;
 	private ServerStatus alarmServerStatus = ServerStatus.UNKNOWN;
 	private ServerStatus overallStatus = ServerStatus.UNKNOWN;
-	
-	private List<ServerStatus> individualStatus = new ArrayList<ServerStatus>();
 	
 	/**
 	 * The constructor.
@@ -222,7 +220,7 @@ public class ServerStatusViewModel extends ModelObject {
 	 * @return The ISIS DAE status status
 	 */
 	public ServerStatus getIsisDaeStatus() {
-		return runControlStatus;
+		return isisDaeRunning;
 	}
 
 	/**
@@ -259,18 +257,19 @@ public class ServerStatusViewModel extends ModelObject {
 	public void refreshOverallStatus() {
 		ServerStatus statusToSet = ServerStatus.PARTIAL;
 		
-		individualStatus.clear();
-		individualStatus.add(runControlStatus);
-		individualStatus.add(blockServerStatus);
-		individualStatus.add(blockGatewayStatus);
-		individualStatus.add(isisDaeRunning);
-		individualStatus.add(instetcStatus);
-		individualStatus.add(dbServerStatus);
-		individualStatus.add(psControlStatus);
-		individualStatus.add(alarmServerStatus);
-		if (individualStatus.stream().allMatch(t -> t.equals(ServerStatus.UP))) {
+		final var individualStatus = List.of(
+				runControlStatus, 
+				blockServerStatus, 
+				blockGatewayStatus, 
+				isisDaeRunning, 
+				instetcStatus, 
+				dbServerStatus, 
+				psControlStatus, 
+				alarmServerStatus);
+
+		if (individualStatus.stream().allMatch(t -> Objects.equals(t, ServerStatus.UP))) {
 			statusToSet = ServerStatus.UP;
-		} else if (individualStatus.stream().allMatch(t -> t.equals(ServerStatus.DOWN) || t.equals(ServerStatus.UNKNOWN))) {
+		} else if (individualStatus.stream().allMatch(t -> Objects.equals(t, ServerStatus.DOWN) || Objects.equals(t, ServerStatus.UNKNOWN))) {
 			statusToSet = ServerStatus.DOWN;
 		} else {
 			statusToSet = ServerStatus.PARTIAL;

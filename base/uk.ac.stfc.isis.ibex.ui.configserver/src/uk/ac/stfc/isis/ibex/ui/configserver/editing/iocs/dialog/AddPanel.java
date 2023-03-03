@@ -37,8 +37,9 @@ import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.dialogs.FilteredTree;
+
 /**
  * Dialog panel for selecting a new IOC to add to a configuration.
  */
@@ -46,7 +47,7 @@ public class AddPanel extends Composite {
 	private final Button expandButton;
 	private final Button  collapseButton;
 	
-    private TreeViewer availableIocsTree;
+    private FilteredTree availableIocsTree;
     private static final int TREE_HEIGHT = 300;
     private static final int SPACING = 25;
 
@@ -76,7 +77,7 @@ public class AddPanel extends Composite {
   		expandButton.addSelectionListener(new SelectionAdapter() {
   			@Override
   			public void widgetSelected(SelectionEvent e) {
-  				availableIocsTree.expandAll();
+  				availableIocsTree.getViewer().expandAll();
   			}
   		});
   		
@@ -86,20 +87,23 @@ public class AddPanel extends Composite {
   		collapseButton.addSelectionListener(new SelectionAdapter() {
   			@Override
   			public void widgetSelected(SelectionEvent e) {
-  				availableIocsTree.collapseAll();
+  				availableIocsTree.getViewer().collapseAll();
   			}
   		});
         
         // Add selection tree
-        availableIocsTree = new TreeViewer(this, SWT.FULL_SELECTION);
-        availableIocsTree.setContentProvider(new IOCContentProvider());
-        availableIocsTree.setLabelProvider(new IOCLabelProvider());
-        availableIocsTree.setComparator(new IOCViewerComparator(Comparator.naturalOrder()));
-        availableIocsTree.setInput(viewModel.getAvailableIocs());
+  		Composite treeComposite = new Composite(this, SWT.FILL);
+  		treeComposite.setLayout(new GridLayout(1, true));
+        availableIocsTree = new FilteredTree(treeComposite, SWT.FULL_SELECTION, new IocPatternFilter(), true, true);
+        final var viewer = availableIocsTree.getViewer();
+        viewer.setContentProvider(new IOCContentProvider());
+        viewer.setLabelProvider(new IOCLabelProvider());
+        viewer.setComparator(new IOCViewerComparator(Comparator.naturalOrder()));
+        viewer.setInput(viewModel.getAvailableIocs());
         
         GridData gdIocTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
         gdIocTable.heightHint = TREE_HEIGHT;
-        availableIocsTree.getTree().setLayoutData(gdIocTable);
+        treeComposite.setLayoutData(gdIocTable);
         
 
         bind(viewModel);
@@ -113,10 +117,11 @@ public class AddPanel extends Composite {
      */
     private void bind(final AddPanelViewModel viewModel) {
 
-        availableIocsTree.addSelectionChangedListener(new ISelectionChangedListener() {
+    	final var viewer = availableIocsTree.getViewer();
+    	viewer.addSelectionChangedListener(new ISelectionChangedListener() {
            @Override
            public void selectionChanged(SelectionChangedEvent event) {
-               TreeItem selectedIoc = availableIocsTree.getTree().getSelection()[0];
+               TreeItem selectedIoc = viewer.getTree().getSelection()[0];
                if (selectedIoc.getData() instanceof EditableIoc) {
             	   viewModel.setSelectedName(selectedIoc.getText());
             	   viewModel.setCurrentSelection(EditableIoc.class.cast(selectedIoc.getData()).getDescription());
@@ -129,7 +134,7 @@ public class AddPanel extends Composite {
         });
         
         // Enable selection by double click.
-        availableIocsTree.getTree().addMouseListener(new MouseAdapter() {
+    	viewer.getTree().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseDoubleClick(MouseEvent e) {
                 viewModel.iocConfirmed();

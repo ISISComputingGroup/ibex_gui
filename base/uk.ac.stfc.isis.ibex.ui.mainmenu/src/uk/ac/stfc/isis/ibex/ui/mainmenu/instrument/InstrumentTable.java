@@ -50,6 +50,13 @@ public class InstrumentTable extends Composite {
     private TableColumnLayout tableColumnLayout;
     private InstrumentNameSearch search;
 
+    /**
+     * Creates the table.
+     * @param parent the parent composite
+     * @param style the SWT style flags
+     * @param tableStyle the SWT style flags for the underlying table
+     * @param instruments the instruments to be displayed
+     */
     public InstrumentTable(Composite parent, int style, int tableStyle, Collection<InstrumentInfo> instruments) {
         super(parent, SWT.NONE);
 

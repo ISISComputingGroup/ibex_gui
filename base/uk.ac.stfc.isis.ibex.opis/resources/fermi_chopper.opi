@@ -4162,7 +4162,7 @@ $(pv_value)</tooltip>
               <path/>
               <scriptText>import webbrowser
 
-webbrowser.open("http://shadow.nd.rl.ac.uk/ibex_user_manual/FZJ-Fermi-Chopper")
+webbrowser.open("https://shadow.nd.rl.ac.uk/ibex_user_manual/FZJ-Fermi-Chopper")
 </scriptText>
               <embedded>true</embedded>
               <description/>

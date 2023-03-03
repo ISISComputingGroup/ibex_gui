@@ -26,7 +26,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -36,6 +35,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
@@ -45,18 +46,24 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+
 import org.apache.logging.log4j.Logger;
 import static java.lang.Math.min;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.*;
-import uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting.DynamicScriptingProperties;
+import uk.ac.stfc.isis.ibex.scriptgenerator.Activator;
+import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
+import uk.ac.stfc.isis.ibex.scriptgenerator.NoScriptDefinitionSelectedException;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptDefinitionNotMatched;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.SaveScriptGeneratorFileMessageDialog;
-import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.QueueScriptPreviewDialog;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -103,6 +110,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     public static final String VALIDITY_COLUMN_HEADER = "Validity";
     
+    /**
+     * The header of the action column.
+     */
     public static final String ACTION_NUMBER_COLUMN_HEADER = "Action";
     
     /**
@@ -254,17 +264,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	        });
 	    });
 	    return scriptGeneratorModel;
-    }
-    
-    private void previewScriptOrQueueDirectly(String generatedScript) {
-		QueueScriptPreviewDialog scriptPreview = new QueueScriptPreviewDialog(Display.getDefault().getActiveShell(), generatedScript);
-		if (scriptPreview.askIfPreviewScript()) {
-			if (scriptPreview.open() == IDialogConstants.OK_ID) {
-				firePropertyChange(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
-			}
-		} else {
-			firePropertyChange(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, null, generatedScript);
-		}
     }
     
     private void saveScriptToCurrentFilepath(String generatedScript) {
@@ -549,9 +548,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    this.scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, actionChangeListener);
 	    this.scriptGeneratorModel.removePropertyChangeListener(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, actionChangeListener);
 	    this.scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY, actionChangeListener);
-	    }
+	    this.scriptGeneratorModel.removePropertyChangeListener(ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY, actionChangeListener);
+	    this.scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY, actionChangeListener);
+	}
 	
-	    private void updateParametersFilePath(String parametersFilePath) {
+	private void updateParametersFilePath(String parametersFilePath) {
 		this.clearGenerationTime();
 		String displayFile = "Current Script: " + parametersFilePath;
 		currentParametersFilePath = parametersFilePath;		// Update the current parameter file path for Save.
@@ -714,7 +715,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	        if (!globalParamsComposite.isDisposed()) {
 		        globalParamsComposite.layout();
 	        }
-		     mainParent.layout();
+		    mainParent.layout();
 	        // Display the new script definition help string
 	        if (!helpText.isDisposed()) {
 	        	
@@ -820,7 +821,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    this.mainParent = mainParent;
 	    this.currentGlobals = new ArrayList<String>();
 	    this.finishTimer = new ScriptGeneratorExpectedFinishTimer();
-	    this.scheduler = Executors.newScheduledThreadPool(1);
+	    this.scheduler = Executors.newScheduledThreadPool(1, 
+				new ThreadFactoryBuilder().setNameFormat("ScriptGeneratorViewModel-threadpool-%d").build());
 	    this.scheduler.scheduleWithFixedDelay(finishTimer, 0, 1, TimeUnit.SECONDS);
 	    scriptGeneratorModel.getScriptDefinitionLoader().addPropertyChangeListener(ScriptGeneratorProperties.SCRIPT_DEFINITION_SWITCH_PROPERTY, scriptDefinitionSwitchHelpListener);
     }
@@ -867,7 +869,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     protected void updateValidityChecks(ActionsViewTable viewTable) {
 	    Map<Integer, String> globals = scriptGeneratorModel.getGlobalParamErrors();
-	    for (int i = 0; i< this.globalParamText.size(); i++) {
+	    for (int i = 0; i < this.globalParamText.size(); i++) {
 	    	if (globals.containsKey(i)) {
 	    		globalParamText.get(i).setBackground(INVALID_LIGHT_COLOR);
 	    		globalParamText.get(i).setBackground(INVALID_DARK_COLOR);
@@ -879,70 +881,65 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    }
     
     }
-
-    /**
-     * Adds a parameter to this actions table.
-     * 
-     * @param viewTable The table view to add columns to.
-     */
-    protected void addColumns(ActionsViewTable viewTable) {  
-        // Add line numbers
-        TableViewerColumn lineNumberColumn = viewTable.createColumn(ACTION_NUMBER_COLUMN_HEADER, 0, 
-                new CellLabelProvider() {
-                    @Override
-                    public void update(ViewerCell cell) {
-                    	ScriptGeneratorAction action = (ScriptGeneratorAction) cell.getElement();
-                    	if (action.isValid()) {
-                    		cell.setBackground(CLEAR_COLOR);
-                        } else {
-                        	cell.setBackground(INVALID_LIGHT_COLOR);
-                        }
-                        for (int i = 0; i < viewTable.table().getItemCount(); i++) {
-                            if (action.equals(viewTable.viewer().getElementAt(i))) {
-                            	String lineNumber = String.valueOf(i + 1);
-                                cell.setText(lineNumber);
-                                Image image = ExecutingStatusDisplay.getImage(action.getDynamicScriptingStatus());
-                                cell.setImage(image);
-                                break;
-                            }
-                        }
-                    }
-        
-                    @Override
-                    public String getToolTipText(Object element) {
-                        return getScriptGenActionToolTipText(element);
-                    }
-        });
+    
+    private void addLineNumberColumn(ActionsViewTable viewTable) {
+    	TableViewerColumn lineNumberColumn = viewTable.createColumn(ACTION_NUMBER_COLUMN_HEADER, 0, 
+	        new CellLabelProvider() {
+	            @Override
+	            public void update(ViewerCell cell) {
+	            	ScriptGeneratorAction action = (ScriptGeneratorAction) cell.getElement();
+	            	if (action.isValid()) {
+	            		cell.setBackground(CLEAR_COLOR);
+	                } else {
+	                	cell.setBackground(INVALID_LIGHT_COLOR);
+	                }
+	                for (int i = 0; i < viewTable.table().getItemCount(); i++) {
+	                    if (action.equals(viewTable.viewer().getElementAt(i))) {
+	                    	String lineNumber = String.valueOf(i + 1);
+	                        cell.setText(lineNumber);
+	                        Image image = ExecutingStatusDisplay.getImage(action.getDynamicScriptingStatus());
+	                        cell.setImage(image);
+	                        break;
+	                    }
+	                }
+	            }
+	
+	            @Override
+	            public String getToolTipText(Object element) {
+	                return getScriptGenActionToolTipText(element);
+	            }
+        	});
     	lineNumberColumn.getColumn().setAlignment(SWT.CENTER);
-        // Add action parameter columns
-        for (JavaActionParameter actionParameter: scriptGeneratorModel.getActionParameters()) {
+    }
+    
+    private void addActionParameterColumns(ActionsViewTable viewTable) {
+    	for (JavaActionParameter actionParameter: scriptGeneratorModel.getActionParameters()) {
             String columnName = actionParameter.getName();
             TableViewerColumn column = viewTable.createColumn(
                 columnName, 
                 2,
                 new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty(columnName)) {
-                @Override
-                protected String stringFromRow(ScriptGeneratorAction row) {
-                    return row.getActionParameterValue(actionParameter);
-                }
-    
-                @Override
-                public String getToolTipText(Object element) {
-                    return getScriptGenActionToolTipText(element);
-                }
-                
-                @Override
-            	public void update(ViewerCell cell) {
-                	ScriptGeneratorAction row = getRow(cell);
-            		cell.setText(stringFromRow(row));
-                    cell.setImage(imageFromRow(row));
-                    if (row.isValid()) {
-                    	cell.setBackground(CLEAR_COLOR);
-                    } else {
-                    	cell.setBackground(INVALID_LIGHT_COLOR);
-                    }
-            	}
-                
+	                @Override
+	                protected String stringFromRow(ScriptGeneratorAction row) {
+	                    return row.getActionParameterValue(actionParameter);
+	                }
+	    
+	                @Override
+	                public String getToolTipText(Object element) {
+	                    return getScriptGenActionToolTipText(element);
+	                }
+	                
+	                @Override
+	            	public void update(ViewerCell cell) {
+	                	ScriptGeneratorAction row = getRow(cell);
+	            		cell.setText(stringFromRow(row));
+	                    cell.setImage(imageFromRow(row));
+	                    if (row.isValid()) {
+	                    	cell.setBackground(CLEAR_COLOR);
+	                    } else {
+	                    	cell.setBackground(INVALID_LIGHT_COLOR);
+	                    }
+	            	}
                 });
     
             var editingSupport = new StringEditingSupport<ScriptGeneratorAction>(viewTable.viewer(), ScriptGeneratorAction.class) {          
@@ -958,81 +955,151 @@ public class ScriptGeneratorViewModel extends ModelObject {
             };
             viewTable.addEditingSupport(editingSupport);
             column.setEditingSupport(editingSupport);
-            
         }
-        // Add validity notifier column
-        TableViewerColumn validityColumn = viewTable.createColumn(VALIDITY_COLUMN_HEADER, 
+    }
+    
+    private void addValidityColumn(ActionsViewTable viewTable) {
+    	TableViewerColumn validityColumn = viewTable.createColumn(VALIDITY_COLUMN_HEADER, 
             1, 
             new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty("validity")) {
-            @Override
-            protected String stringFromRow(ScriptGeneratorAction row) {
-            if (!scriptGeneratorModel.languageSupported) {
-                return ValidityDisplay.UNCERTAIN.getText();
-            }
-            if (row.isValid()) {
-                return ValidityDisplay.VALID.getText();
-            }
-            return ValidityDisplay.INVALID.getText();
-            }
-    
-            @Override
-            public String getToolTipText(Object element) {
-            return getScriptGenActionToolTipText(element);
-            }
-            
-            @Override
-        	public void update(ViewerCell cell) {
-            	ScriptGeneratorAction row = getRow(cell);
-        		cell.setText(stringFromRow(row));
-                cell.setImage(imageFromRow(row));
-                if (row.isValid()) {
-                	cell.setBackground(VALID_COLOR);
-                } else {
-                	cell.setBackground(INVALID_DARK_COLOR);
-                }
-        	}
-    
-        });
-        validityColumn.getColumn().setAlignment(SWT.CENTER);
-    
-        // Add estimated time column
-        TableViewerColumn timeEstimateColumn = viewTable.createColumn(ESTIMATED_RUN_TIME_COLUMN_HEADER, 
-            1, 
-            new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY)) {
-            @Override
-            protected String stringFromRow(ScriptGeneratorAction row) {
+	            @Override
+	            protected String stringFromRow(ScriptGeneratorAction row) {
 	            if (!scriptGeneratorModel.languageSupported) {
-	                return "\u003F"; // A question mark to say we cannot be certain
+	                return ValidityDisplay.UNCERTAIN.getText();
+	            }
+	            if (row.isValid()) {
+	                return ValidityDisplay.VALID.getText();
+	            }
+	            return ValidityDisplay.INVALID.getText();
 	            }
 	    
-	            Optional<Number> estimatedTime = row.getEstimatedTime();
-	            if (estimatedTime.isEmpty()) {
-	                return UNKNOWN_TEXT;
+	            @Override
+	            public String getToolTipText(Object element) {
+	            return getScriptGenActionToolTipText(element);
 	            }
-	            return changeSecondsToTimeFormat(estimatedTime.get().longValue());
-            }
+	            
+	            @Override
+	        	public void update(ViewerCell cell) {
+	            	ScriptGeneratorAction row = getRow(cell);
+	        		cell.setText(stringFromRow(row));
+	                cell.setImage(imageFromRow(row));
+	                if (row.isValid()) {
+	                	cell.setBackground(VALID_COLOR);
+	                } else {
+	                	cell.setBackground(INVALID_DARK_COLOR);
+	                }
+	        	}
+        	});
+    	validityColumn.getColumn().setAlignment(SWT.CENTER);
+    }
     
-            @Override
-            public String getToolTipText(Object element) {
-            return getScriptGenActionToolTipText(element);
-            }
-            
-            @Override
-        	public void update(ViewerCell cell) {
-            	ScriptGeneratorAction row = getRow(cell);
-        		cell.setText(stringFromRow(row));
-                cell.setImage(imageFromRow(row));
-                if (row.isValid()) {
-                	cell.setBackground(CLEAR_COLOR);
-                } else {
-                	cell.setBackground(INVALID_LIGHT_COLOR);
-                }
+    private void addTimeEstimateColumn(ActionsViewTable viewTable) {
+    	TableViewerColumn timeEstimateColumn = viewTable.createColumn(ESTIMATED_RUN_TIME_COLUMN_HEADER, 
+            1, 
+            new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY)) {
+	            @Override
+	            protected String stringFromRow(ScriptGeneratorAction row) {
+		            if (!scriptGeneratorModel.languageSupported) {
+		                return "\u003F"; // A question mark to say we cannot be certain
+		            }
+		    
+		            Optional<Number> estimatedTime = row.getEstimatedTime();
+		            if (estimatedTime.isEmpty()) {
+		                return UNKNOWN_TEXT;
+		            }
+		            return changeSecondsToTimeFormat(estimatedTime.get().longValue());
+	            }
+	    
+	            @Override
+	            public String getToolTipText(Object element) {
+	            return getScriptGenActionToolTipText(element);
+	            }
+	            
+	            @Override
+	        	public void update(ViewerCell cell) {
+	            	ScriptGeneratorAction row = getRow(cell);
+	        		cell.setText(stringFromRow(row));
+	                cell.setImage(imageFromRow(row));
+	                if (row.isValid()) {
+	                	cell.setBackground(CLEAR_COLOR);
+	                } else {
+	                	cell.setBackground(INVALID_LIGHT_COLOR);
+	                }
+	        	}
+        	});
+    	timeEstimateColumn.getColumn().setAlignment(SWT.CENTER);
+    }
+    
+    private void addCustomEstimateColumns(ActionsViewTable viewTable) {
+    	Optional<ScriptDefinitionWrapper> scriptDefinition = scriptGeneratorModel.getScriptDefinition();
+        if (scriptDefinition.isPresent()) {
+        	List<String> customOutputs = scriptDefinition.get().getCustomOutputNames();
+        	viewTable.setDynamicNonEditableColumnsOnRight(customOutputs.size());
+        	
+        	for (String param : customOutputs) {
+        		TableViewerColumn column = viewTable.createColumn(
+    				param,
+    				1,
+    				new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty(ScriptGeneratorProperties.CUSTOM_ESTIMATE_PROPERTY)) {
+    					@Override
+    	                protected String stringFromRow(ScriptGeneratorAction row) {
+    						if (!scriptGeneratorModel.languageSupported) {
+    			                return "\u003F"; // A question mark to say we cannot be certain
+    			            }
+    						
+    						Optional<Map<String, String>> estimatedCustom = row.getEstimatedCustom();
+    			            if (estimatedCustom.isEmpty() || estimatedCustom.get().isEmpty()) {
+    			                return UNKNOWN_TEXT;
+    			            }
+    						
+    	                    return estimatedCustom.get().getOrDefault(param, UNKNOWN_TEXT);
+    	                }
+    					
+    					@Override
+    		            public String getToolTipText(Object element) {
+    						return getScriptGenActionToolTipText(element);
+    		            }
+    					
+    					@Override
+    		        	public void update(ViewerCell cell) {
+    		            	ScriptGeneratorAction row = getRow(cell);
+    		        		cell.setText(stringFromRow(row));
+    		                cell.setImage(imageFromRow(row));
+    		                if (row.isValid()) {
+    		                	cell.setBackground(CLEAR_COLOR);
+    		                } else {
+    		                	cell.setBackground(INVALID_LIGHT_COLOR);
+    		                }
+    		        	}
+    				});
+        		column.getColumn().setAlignment(SWT.CENTER);
         	}
-    
-        });
-        timeEstimateColumn.getColumn().setAlignment(SWT.CENTER);
-    
+        }
+    }
+
+    /**
+     * Adds a parameter to this actions table.
+     * 
+     * @param viewTable The table view to add columns to.
+     */
+    protected void addColumns(ActionsViewTable viewTable) {  
+    	addLineNumberColumn(viewTable);
+    	addActionParameterColumns(viewTable);
+    	addValidityColumn(viewTable);
+    	addTimeEstimateColumn(viewTable);
+    	addCustomEstimateColumns(viewTable);
+
         ColumnViewerToolTipSupport.enableFor(viewTable.viewer());
+        
+        // Add selection listener to table headers, to ensure actions remain visible
+		for (int i = 0; i <  viewTable.table().getColumns().length; i++) {
+			viewTable.table().getColumn(i).addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					scriptGeneratorModel.reloadActions();
+				}
+			});
+		}
     }
 
     /**

@@ -21,7 +21,6 @@
 package uk.ac.stfc.isis.ibex.ui.experimentdetails.tests;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 import java.beans.PropertyChangeEvent;
@@ -29,9 +28,13 @@ import java.beans.PropertyChangeListener;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ClosableObservable;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.experimentdetails.ObservableExperimentDetailsModel;
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.ExperimentDetailsViewModel;
@@ -39,17 +42,23 @@ import uk.ac.stfc.isis.ibex.ui.experimentdetails.ExperimentDetailsViewModel;
 /**
  * Unit tests for the DeviceScreensDescriptionViewModel class.
  */
+@RunWith(MockitoJUnitRunner.Strict.class)
 public class ExperimentDetailsViewModelTest {
 
     private ExperimentDetailsViewModel viewModel;
-    private ObservableExperimentDetailsModel model;
+    @Mock private ObservableExperimentDetailsModel model;
+    
+    @Mock private ClosableObservable<String> rbNumberGetter;
+    @Mock private Writable<String> rbNumberSetter;
+    @Mock private ForwardingObservable<Boolean> titleGetter;
+    @Mock private Writable<Long> titleSetter;
 
-    @Before
-    public void setUp() {
-        model = mock(ObservableExperimentDetailsModel.class);
-        
-        when(model.rbNumber()).thenReturn(mock(ClosableObservable.class));
-        when(model.rbNumberSetter()).thenReturn(mock(Writable.class));
+	@Before
+    public void setUp() {        
+        when(model.rbNumber()).thenReturn(rbNumberGetter);
+        when(model.rbNumberSetter()).thenReturn(rbNumberSetter);
+        when(model.displayTitle()).thenReturn(titleGetter);
+        when(model.displayTitleSetter()).thenReturn(titleSetter);
         
         viewModel = new ExperimentDetailsViewModel(model);
     }

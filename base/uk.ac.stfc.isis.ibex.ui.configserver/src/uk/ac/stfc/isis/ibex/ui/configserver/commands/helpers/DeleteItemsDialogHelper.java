@@ -5,12 +5,15 @@ import java.util.Collection;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.PlatformUI;
 
+/**
+ * A dialog to confirm deleting items.
+ */
 public class DeleteItemsDialogHelper {
 	/**
-	 * Opens dialog to confirm deleting items
+	 * Opens dialog to confirm deleting items.
 	 * @param selectedItems Items that will be displayed in confirmation
 	 * @param itemsType The type of items (eg. Configurations) to be deleted
-	 * @return
+	 * @return The open dialog.
 	 */
     public boolean deleteItemsConfirmDialog(Collection<String> selectedItems, String itemsType) {
         return MessageDialog.openQuestion(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), "Confirm Delete " + itemsType,

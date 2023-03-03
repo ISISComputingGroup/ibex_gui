@@ -10,13 +10,13 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
  uk.ac.stfc.isis.ibex.ui,
  org.eclipse.ui.workbench,
- py4j-java;bundle-version="0.10.8",
  uk.ac.stfc.isis.ibex.logger,
  uk.ac.stfc.isis.ibex.preferences,
  uk.ac.stfc.isis.ibex.scriptgenerator,
  com.google.gson,
- uk.ac.stfc.isis.ibex.nicos;bundle-version="1.0.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+ uk.ac.stfc.isis.ibex.nicos;bundle-version="1.0.0",
+ wrapped.net.sf.py4j.py4j;bundle-version="0.10.9"
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.scriptgenerator,
  uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting,

@@ -31,14 +31,22 @@ import org.eclipse.jface.viewers.TextCellEditor;
  */
 public abstract class DoubleEditingSupport<TRow> extends GenericEditingSupport<TRow, Double> {
 
+	/**
+	 * The cell editor.
+	 */
 	protected CellEditor editor;
 	
+	/**
+	 * Create a new instance of this class.
+	 * @param viewer the column viewer
+	 * @param rowType the row type
+	 */
 	public DoubleEditingSupport(ColumnViewer viewer, Class<TRow> rowType) {
 		super(viewer, rowType, Double.class);
 		createEditor(viewer);
 	}
 	
-	protected void createEditor(ColumnViewer viewer) { 		
+	private void createEditor(ColumnViewer viewer) { 		
 	// Override TextCellEditor to handle doubles better
 		editor = new TextCellEditor((Composite) viewer.getControl()) {
 			@Override

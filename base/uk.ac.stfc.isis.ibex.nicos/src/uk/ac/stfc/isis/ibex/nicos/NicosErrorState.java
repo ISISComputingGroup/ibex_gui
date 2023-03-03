@@ -36,7 +36,8 @@ public enum NicosErrorState {
     /**
      * Error for when the connection to nicos throws an exception.
      */
-    CONNECTION_FAILED("The connection to the script server failed"),
+    CONNECTION_FAILED("The connection to the script server failed. "
+    		+ "Check that the NICOSDAEMON IOC has been added to the current configuration and is running."),
     
     /**
      * Error for when a response was expected but none was received.
