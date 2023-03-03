@@ -3209,5 +3209,22 @@
         </macros>
       </value>
     </entry>
+    <entry>
+      <key>Razorbill RP100 Strain Cell PSU</key>
+	  <value>
+	    <type>POWER_SUPPLY</type>
+	    <path>Razorbill_RP100.opi</path>
+	    <macros>
+          <macro>
+            <name>RZBRP100</name>
+            <description>The RZBRP100 PV prefix (e.g. RZBRP100_01)</description>
+            <default>RZBRP100_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+      </value>
+    </entry>
   </opis>
 </descriptions>
