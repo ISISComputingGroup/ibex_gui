@@ -56,7 +56,7 @@
     <foreground_color>
       <color red="192" green="192" blue="192" />
     </foreground_color>
-    <height>583</height>
+    <height>601</height>
     <horizontal_tabs>true</horizontal_tabs>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -130,14 +130,38 @@
     </tab_4_foreground_color>
     <tab_4_icon_path></tab_4_icon_path>
     <tab_4_title>DC Spectrum</tab_4_title>
-    <tab_count>5</tab_count>
+    <tab_5_background_color>
+      <color red="255" green="255" blue="255" />
+    </tab_5_background_color>
+    <tab_5_enabled>true</tab_5_enabled>
+    <tab_5_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+    </tab_5_font>
+    <tab_5_foreground_color>
+      <color red="0" green="0" blue="0" />
+    </tab_5_foreground_color>
+    <tab_5_icon_path></tab_5_icon_path>
+    <tab_5_title>AD DC Spectra</tab_5_title>
+    <tab_6_background_color>
+      <color red="255" green="255" blue="255" />
+    </tab_6_background_color>
+    <tab_6_enabled>true</tab_6_enabled>
+    <tab_6_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+    </tab_6_font>
+    <tab_6_foreground_color>
+      <color red="0" green="0" blue="0" />
+    </tab_6_foreground_color>
+    <tab_6_icon_path></tab_6_icon_path>
+    <tab_6_title>AD Traces</tab_6_title>
+    <tab_count>7</tab_count>
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Tabbed Container</widget_type>
-    <width>766</width>
+    <width>805</width>
     <wuid>-243772b9:18232503fe7:-7aa8</wuid>
-    <x>18</x>
-    <y>12</y>
+    <x>0</x>
+    <y>0</y>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
@@ -156,7 +180,7 @@
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
-      <height>554</height>
+      <height>572</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -174,7 +198,7 @@
       <transparent>true</transparent>
       <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>764</width>
+      <width>803</width>
       <wuid>-243772b9:18232503fe7:-7aa7</wuid>
       <x>1</x>
       <y>1</y>
@@ -451,8 +475,8 @@ $(pv_value)</tooltip>
         <height>25</height>
         <horizontal_alignment>0</horizontal_alignment>
         <limits_from_pv>false</limits_from_pv>
-        <maximum>Infinity</maximum>
-        <minimum>-Infinity</minimum>
+        <maximum>1.7976931348623157E308</maximum>
+        <minimum>-1.7976931348623157E308</minimum>
         <multiline_input>false</multiline_input>
         <name>Text Input</name>
         <precision>0</precision>
@@ -646,7 +670,7 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
-      <height>554</height>
+      <height>572</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -664,7 +688,7 @@ $(pv_value)</tooltip>
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>764</width>
+      <width>803</width>
       <wuid>-243772b9:18232503fe7:-7a9e</wuid>
       <x>1</x>
       <y>1</y>
@@ -851,7 +875,7 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
-      <height>554</height>
+      <height>572</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -869,7 +893,7 @@ $(pv_value)</tooltip>
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>764</width>
+      <width>803</width>
       <wuid>-243772b9:18232503fe7:-7560</wuid>
       <x>1</x>
       <y>1</y>
@@ -1056,7 +1080,7 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
-      <height>554</height>
+      <height>572</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -1074,7 +1098,7 @@ $(pv_value)</tooltip>
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>764</width>
+      <width>803</width>
       <wuid>529aa7a9:1823559b2da:-7fca</wuid>
       <x>1</x>
       <y>1</y>
@@ -1138,7 +1162,7 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color red="192" green="192" blue="192" />
       </foreground_color>
-      <height>554</height>
+      <height>572</height>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -1156,7 +1180,7 @@ $(pv_value)</tooltip>
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>764</width>
+      <width>803</width>
       <wuid>529aa7a9:1823559b2da:-7fb3</wuid>
       <x>1</x>
       <y>1</y>
@@ -1200,6 +1224,178 @@ $(pv_value)</tooltip>
         <wuid>529aa7a9:1823559b2da:-7fab</wuid>
         <x>12</x>
         <y>12</y>
+      </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <fc>false</fc>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <foreground_color>
+        <color red="192" green="192" blue="192" />
+      </foreground_color>
+      <height>572</height>
+      <lock_children>false</lock_children>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <name>AD DC Spectra</name>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_scrollbar>true</show_scrollbar>
+      <tooltip></tooltip>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <widget_type>Grouping Container</widget_type>
+      <width>803</width>
+      <wuid>15ed4163:186b23fd834:-7a12</wuid>
+      <x>1</x>
+      <y>1</y>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>3</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <group_name></group_name>
+        <height>565</height>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <STATS>STATS1</STATS>
+          <ROI>ROI1</ROI>
+          <RAWIMAGE>RAWIMAGE1</RAWIMAGE>
+          <IMAGE>IMAGE1</IMAGE>
+          <R>$(NCINDG):AD1</R>
+        </macros>
+        <name>Linking Container</name>
+        <opi_file>../areaDetector/2DView.opi</opi_file>
+        <resize_behaviour>0</resize_behaviour>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <tooltip></tooltip>
+        <visible>true</visible>
+        <widget_type>Linking Container</widget_type>
+        <width>793</width>
+        <wuid>15ed4163:186b23fd834:-7a0d</wuid>
+        <x>6</x>
+        <y>6</y>
+      </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <fc>false</fc>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <foreground_color>
+        <color red="192" green="192" blue="192" />
+      </foreground_color>
+      <height>572</height>
+      <lock_children>false</lock_children>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <name>AD Traces</name>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_scrollbar>true</show_scrollbar>
+      <tooltip></tooltip>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <widget_type>Grouping Container</widget_type>
+      <width>803</width>
+      <wuid>15ed4163:186b23fd834:-7a11</wuid>
+      <x>1</x>
+      <y>1</y>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>3</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <group_name></group_name>
+        <height>565</height>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <STATS>STATS1</STATS>
+          <ROI>ROI1</ROI>
+          <RAWIMAGE>RAWIMAGE1</RAWIMAGE>
+          <IMAGE>IMAGE1</IMAGE>
+          <R>$(NCINDG):AD2</R>
+        </macros>
+        <name>Linking Container</name>
+        <opi_file>../areaDetector/2DView.opi</opi_file>
+        <resize_behaviour>0</resize_behaviour>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <tooltip></tooltip>
+        <visible>true</visible>
+        <widget_type>Linking Container</widget_type>
+        <width>799</width>
+        <wuid>15ed4163:186b23fd834:-7a09</wuid>
+        <x>0</x>
+        <y>6</y>
       </widget>
     </widget>
   </widget>
