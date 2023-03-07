@@ -2613,7 +2613,7 @@ $(pv_value)</tooltip>
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <height>199</height>
-      <lock_children>true</lock_children>
+      <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
@@ -2847,7 +2847,7 @@ $(pv_value)</tooltip>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <height>75</height>
-        <lock_children>true</lock_children>
+        <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
         </macros>
@@ -2889,7 +2889,7 @@ $(pv_value)</tooltip>
           <height>32</height>
           <macros>
             <include_parent_macros>true</include_parent_macros>
-            <NAME>SEP3</NAME>
+            <NAME>SEP3 Positive</NAME>
             <PV>TECHNIX_05</PV>
           </macros>
           <name>SEP_3_P_Linking_Container</name>
@@ -2931,7 +2931,7 @@ $(pv_value)</tooltip>
           <height>32</height>
           <macros>
             <include_parent_macros>true</include_parent_macros>
-            <NAME>SEP3</NAME>
+            <NAME>SEP3 Negative</NAME>
             <PV>TECHNIX_06</PV>
           </macros>
           <name>SEP_3_N_Linking Container</name>
@@ -3115,7 +3115,7 @@ $(pv_value)</tooltip>
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <height>305</height>
-      <lock_children>true</lock_children>
+      <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
@@ -3365,7 +3365,7 @@ $(pv_value)</tooltip>
           <height>32</height>
           <macros>
             <include_parent_macros>true</include_parent_macros>
-            <NAME>SEP1</NAME>
+            <NAME>SEP1 Positive</NAME>
             <PV>TECHNIX_01</PV>
           </macros>
           <name>SEP_1_P_Linking_Container</name>
@@ -3449,7 +3449,7 @@ $(pv_value)</tooltip>
           <height>32</height>
           <macros>
             <include_parent_macros>true</include_parent_macros>
-            <NAME>SEP1</NAME>
+            <NAME>SEP1 Negative</NAME>
             <PV>TECHNIX_02</PV>
           </macros>
           <name>SEP_1_N_Linking_Container</name>
@@ -3590,7 +3590,7 @@ $(pv_value)</tooltip>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <height>75</height>
-        <lock_children>true</lock_children>
+        <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
         </macros>
@@ -3632,7 +3632,7 @@ $(pv_value)</tooltip>
           <height>32</height>
           <macros>
             <include_parent_macros>true</include_parent_macros>
-            <NAME>SEP2</NAME>
+            <NAME>SEP2 Positive</NAME>
             <PV>TECHNIX_03</PV>
           </macros>
           <name>SEP_2_P_Linking_Container</name>
@@ -3716,7 +3716,7 @@ $(pv_value)</tooltip>
           <height>32</height>
           <macros>
             <include_parent_macros>true</include_parent_macros>
-            <NAME>SEP2</NAME>
+            <NAME>SEP2 Negative</NAME>
             <PV>TECHNIX_04</PV>
           </macros>
           <name>SEP_2_N_Linking_Container</name>
