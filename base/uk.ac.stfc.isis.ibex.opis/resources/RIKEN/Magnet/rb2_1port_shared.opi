@@ -381,7 +381,7 @@ $(pv_value)</tooltip>
               <NAME>$(PSU_NAME)</NAME>
               <DFKPS>$(PSU_PREFIX)</DFKPS>
             </macros>
-            <mode>0</mode>
+            <mode>3</mode>
             <description></description>
           </action>
         </actions>
@@ -1151,7 +1151,7 @@ $(pv_value)</tooltip>
               <NAME>$(PSU_NAME)</NAME>
               <DFKPS>$(PSU_PREFIX)</DFKPS>
             </macros>
-            <mode>0</mode>
+            <mode>3</mode>
             <description></description>
           </action>
         </actions>
@@ -1343,7 +1343,7 @@ $(pv_value)</tooltip>
               <NAME>$(PSU_NAME)</NAME>
               <DFKPS>$(PSU_PREFIX)</DFKPS>
             </macros>
-            <mode>0</mode>
+            <mode>3</mode>
             <description></description>
           </action>
         </actions>
@@ -1535,7 +1535,7 @@ $(pv_value)</tooltip>
               <NAME>$(PSU_NAME)</NAME>
               <DFKPS>$(PSU_PREFIX)</DFKPS>
             </macros>
-            <mode>0</mode>
+            <mode>3</mode>
             <description></description>
           </action>
         </actions>
@@ -2305,7 +2305,7 @@ $(pv_value)</tooltip>
               <NAME>$(PSU_NAME)</NAME>
               <DFKPS>$(PSU_PREFIX)</DFKPS>
             </macros>
-            <mode>0</mode>
+            <mode>3</mode>
             <description></description>
           </action>
         </actions>
