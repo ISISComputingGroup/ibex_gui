@@ -18,7 +18,7 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <PV_ROOT>$(P)RZBRP100_01</PV_ROOT>
+    <PV_ROOT>$(P)$(RZBRP100)</PV_ROOT>
   </macros>
   <name>$(NAME)</name>
   <rules />
