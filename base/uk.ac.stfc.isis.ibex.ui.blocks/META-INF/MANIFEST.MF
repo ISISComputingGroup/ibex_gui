@@ -21,8 +21,7 @@ Require-Bundle: uk.ac.stfc.isis.ibex.logger,
  javax.inject;bundle-version="1.0.0",
  org.eclipse.e4.ui.model.workbench,
  uk.ac.stfc.isis.ibex.runcontrol,
- uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;bundle-version="1.0.0",
- jakarta.annotation-api;bundle-version="2.1.1"
+ uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Export-Package: uk.ac.stfc.isis.ibex.ui.blocks,

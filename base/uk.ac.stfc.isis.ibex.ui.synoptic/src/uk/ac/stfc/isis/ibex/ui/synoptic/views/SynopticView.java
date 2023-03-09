@@ -22,7 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.views;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import jakarta.inject.Inject;
+import javax.inject.Inject;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;

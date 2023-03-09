@@ -23,8 +23,8 @@ import java.time.Instant;
 import java.util.Arrays;
 import java.util.Optional;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 import org.csstudio.swt.rtplot.RTTimePlot;
 import org.csstudio.trends.databrowser2.model.ArchiveRescale;

@@ -19,7 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
-import jakarta.annotation.PostConstruct;
+import javax.annotation.PostConstruct;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
