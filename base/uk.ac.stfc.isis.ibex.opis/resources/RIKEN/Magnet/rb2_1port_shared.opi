@@ -638,7 +638,7 @@ $(pv_value)</tooltip>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <PSU_NAME>SEP1 (-VE)</PSU_NAME>
+        <PSU_NAME>SEP1 -VE</PSU_NAME>
         <PSU_PREFIX>TECHNIX_02</PSU_PREFIX>
         <POLARITY>-</POLARITY>
       </macros>
@@ -831,7 +831,7 @@ $(pv_value)</tooltip>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <PSU_NAME>SEP1 (+VE)</PSU_NAME>
+        <PSU_NAME>SEP1 +VE</PSU_NAME>
         <PSU_PREFIX>TECHNIX_01</PSU_PREFIX>
         <POLARITY>+</POLARITY>
       </macros>
@@ -1792,7 +1792,7 @@ $(pv_value)</tooltip>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <PSU_NAME>SEP2 (-VE)</PSU_NAME>
+        <PSU_NAME>SEP2 -VE</PSU_NAME>
         <PSU_PREFIX>TECHNIX_04</PSU_PREFIX>
         <POLARITY>-</POLARITY>
       </macros>
@@ -1985,7 +1985,7 @@ $(pv_value)</tooltip>
       <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <PSU_NAME>SEP2 (+VE)</PSU_NAME>
+        <PSU_NAME>SEP2 +VE</PSU_NAME>
         <PSU_PREFIX>TECHNIX_03</PSU_PREFIX>
         <POLARITY>+</POLARITY>
       </macros>

@@ -2475,7 +2475,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <IOC>TECHNIX_01</IOC>
-        <SEP_NAME>Separator UP +VE</SEP_NAME>
+        <SEP_NAME>Separator 1 +VE</SEP_NAME>
       </macros>
       <name>SepUP_POS</name>
       <rules />
@@ -2678,7 +2678,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <IOC>TECHNIX_02</IOC>
-        <SEP_NAME>Separator UP -VE</SEP_NAME>
+        <SEP_NAME>Separator 1 -VE</SEP_NAME>
       </macros>
       <name>SepUP_NEG</name>
       <rules />
@@ -2870,7 +2870,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <IOC>TECHNIX_03</IOC>
-        <SEP_NAME>Separator DOWN +VE</SEP_NAME>
+        <SEP_NAME>Separator 2 +VE</SEP_NAME>
       </macros>
       <name>SepDOWN_POS</name>
       <rules />
@@ -3073,7 +3073,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <IOC>TECHNIX_04</IOC>
-        <SEP_NAME>Separator DOWN -VE</SEP_NAME>
+        <SEP_NAME>Separator 2 -VE</SEP_NAME>
       </macros>
       <name>SepDOWN_NEG</name>
       <rules />
@@ -3265,7 +3265,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <IOC>TECHNIX_05</IOC>
-        <SEP_NAME>Separator PORT 4 +VE</SEP_NAME>
+        <SEP_NAME>Separator 3 +VE</SEP_NAME>
       </macros>
       <name>SepPORT4_POS</name>
       <rules />
@@ -3468,7 +3468,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
         <IOC>TECHNIX_06</IOC>
-        <SEP_NAME>Separator PORT 4 -VE</SEP_NAME>
+        <SEP_NAME>Separator 3 -VE</SEP_NAME>
       </macros>
       <name>SepPORT4_NEG</name>
       <rules />
