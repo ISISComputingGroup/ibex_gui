@@ -40,7 +40,7 @@
           <include_parent_macros>true</include_parent_macros>
           <TPG300>TPG300_$(TPG)</TPG300>
         </macros>
-        <mode>0</mode>
+        <mode>3</mode>
         <description></description>
       </action>
     </actions>
