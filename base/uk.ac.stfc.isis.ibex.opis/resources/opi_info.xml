@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
 <descriptions>
   <opis>
-	<entry>
+    <entry>
       <key>Aeroflex</key>
       <value>
         <type>FUNCTION_GENERATOR</type>
@@ -838,7 +838,6 @@
         </categories>
       </value>
     </entry>
-    
     <entry>
       <key>Caen HV (MuSR)</key>
       <value>
@@ -1426,8 +1425,8 @@
         <type>MUON_FRONT_END</type>
         <path>RIKEN/Magnet/RIKEN_magnet_PSUs.opi</path>
         <description>The OPI for the Riken Magnet PSU Synoptic</description>
-        <macros></macros>
-       </value>
+        <macros/>
+      </value>
     </entry>
     <entry>
       <key>Riken Kicker and Separator HV settings</key>
@@ -3166,8 +3165,8 @@
           </macro>
         </macros>
       </value>
-  </entry>
-	<entry>
+    </entry>
+    <entry>
       <key>Rules tests (developer)</key>
       <value>
         <type>DEBUG</type>
@@ -3179,14 +3178,29 @@
     </entry>
     <entry>
       <key>RIKEN Vacuum</key>
-	  <value>
-	    <type>RIKEN</type>
-	    <path>RIKEN/Vacuum/RIKEN_vacuum_synoptic.opi</path>
-	    <macros>
+      <value>
+        <type>RIKEN</type>
+        <path>RIKEN/Vacuum/RIKEN_vacuum_synoptic.opi</path>
+        <macros>
           <macro>
             <name>SCHNDR</name>
             <description>The SCHNDR PV prefix (e.g. SCHNDR_01)</description>
             <default>SCHNDR_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>KSE4980</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>kse4980.opi</path>
+        <description>The OPI for the KSE4980</description>
+        <macros>
+          <macro>
+            <name>KSE4980</name>
+            <description>The KSE4980 PV prefix (e.g. KSE4980_01)</description>
           </macro>
         </macros>
       </value>
