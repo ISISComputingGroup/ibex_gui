@@ -18,7 +18,7 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <PV_ROOT>$(P)EUROTHRM_01:A01:</PV_ROOT>
+    <PV_ROOT>$(P)$(EURO):A0$(SENSOR):</PV_ROOT>
   </macros>
   <name></name>
   <rules />
@@ -248,60 +248,6 @@ $(pv_value)</tooltip>
       <x>144</x>
       <y>9</y>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.choiceButton" version="1.0.0">
-      <actions hook="true" hook_all="false">
-        <action type="WRITE_PV">
-          <pv_name>$(PV_ROOT)FLOW_SP_MODE_SELECT</pv_name>
-          <value></value>
-          <timeout>10</timeout>
-          <confirm_message></confirm_message>
-          <description></description>
-        </action>
-      </actions>
-      <alarm_pulsing>false</alarm_pulsing>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <background_color>
-        <color red="240" green="240" blue="240" />
-      </background_color>
-      <border_alarm_sensitive>true</border_alarm_sensitive>
-      <border_color>
-        <color red="0" green="128" blue="255" />
-      </border_color>
-      <border_style>0</border_style>
-      <border_width>1</border_width>
-      <enabled>true</enabled>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-      </font>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <foreground_color>
-        <color red="0" green="0" blue="0" />
-      </foreground_color>
-      <height>25</height>
-      <horizontal>true</horizontal>
-      <items_from_pv>true</items_from_pv>
-      <name>Flow_setpoint_mode_Choice_Button</name>
-      <pv_name>$(PV_ROOT)FLOW_SP_MODE_SELECT</pv_name>
-      <pv_value />
-      <rules />
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <selected_color>
-        <color red="255" green="255" blue="255" />
-      </selected_color>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <visible>true</visible>
-      <widget_type>Choice Button</widget_type>
-      <width>194</width>
-      <wuid>-6c70a930:185e92885a4:-7d14</wuid>
-      <x>144</x>
-      <y>36</y>
-    </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <auto_size>false</auto_size>
@@ -442,6 +388,60 @@ $(pv_value)</tooltip>
       <x>156</x>
       <y>74</y>
     </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.choiceButton" version="1.0.0">
+      <actions hook="true" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(PV_ROOT)FLOW_SP_MODE_SELECT</pv_name>
+          <value></value>
+          <timeout>10</timeout>
+          <confirm_message></confirm_message>
+          <description></description>
+        </action>
+      </actions>
+      <alarm_pulsing>false</alarm_pulsing>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color red="0" green="0" blue="0" />
+      </foreground_color>
+      <height>25</height>
+      <horizontal>true</horizontal>
+      <items_from_pv>true</items_from_pv>
+      <name>Flow_setpoint_mode_Choice_Button</name>
+      <pv_name>$(PV_ROOT)FLOW_SP_MODE_SELECT:SP</pv_name>
+      <pv_value />
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <selected_color>
+        <color red="255" green="255" blue="255" />
+      </selected_color>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <visible>true</visible>
+      <widget_type>Choice Button</widget_type>
+      <width>194</width>
+      <wuid>-6c70a930:185e92885a4:-7d14</wuid>
+      <x>144</x>
+      <y>36</y>
+    </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -461,7 +461,7 @@ $(pv_value)</tooltip>
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
-    <height>277</height>
+    <height>319</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -1267,7 +1267,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <height>20</height>
       <horizontal_alignment>2</horizontal_alignment>
-      <name>Temp_Label</name>
+      <name>Temp_SP_Label</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -1276,7 +1276,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
-      <text>Temperature:</text>
+      <text>Temp Setpoint:</text>
       <tooltip></tooltip>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -1370,7 +1370,7 @@ $(pv_value)</tooltip>
       <maximum>1.7976931348623157E308</maximum>
       <minimum>-1.7976931348623157E308</minimum>
       <multiline_input>false</multiline_input>
-      <name>Manual_flow_Text_Input</name>
+      <name>Temp_SP_Text_Input</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)TEMP:SP</pv_name>
@@ -1405,47 +1405,6 @@ $(pv_value)</tooltip>
       <x>227</x>
       <y>210</y>
     </widget>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-    <actions hook="false" hook_all="false" />
-    <background_color>
-      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
-    </background_color>
-    <border_color>
-      <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255" />
-    </border_color>
-    <border_style>13</border_style>
-    <border_width>1</border_width>
-    <enabled>true</enabled>
-    <fc>false</fc>
-    <font>
-      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_GroupBox_NEW</opifont.name>
-    </font>
-    <foreground_color>
-      <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
-    </foreground_color>
-    <height>79</height>
-    <lock_children>false</lock_children>
-    <macros>
-      <include_parent_macros>true</include_parent_macros>
-    </macros>
-    <name>IP Addresses</name>
-    <rules />
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <scripts />
-    <show_scrollbar>true</show_scrollbar>
-    <tooltip></tooltip>
-    <transparent>false</transparent>
-    <visible>true</visible>
-    <widget_type>Grouping Container</widget_type>
-    <width>372</width>
-    <wuid>-6c70a930:185e92885a4:-7b9b</wuid>
-    <x>7</x>
-    <y>510</y>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <auto_size>false</auto_size>
@@ -1466,7 +1425,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <height>20</height>
       <horizontal_alignment>2</horizontal_alignment>
-      <name>IP_addr_Label</name>
+      <name>Temp_Label</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -1475,17 +1434,17 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
-      <text>Engineering Port IP Address:</text>
+      <text>Temperature:</text>
       <tooltip></tooltip>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>157</width>
+      <width>96</width>
       <wrap_words>true</wrap_words>
-      <wuid>-6c70a930:185e92885a4:-7b9a</wuid>
-      <x>12</x>
-      <y>12</y>
+      <wuid>-632252ef:186bb56c0bf:-3516</wuid>
+      <x>18</x>
+      <y>240</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -1512,10 +1471,10 @@ $(pv_value)</tooltip>
       <format_type>0</format_type>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
-      <name>IP_address_Text_Update</name>
+      <name>Temp_Text_Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT)TEMP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -1535,9 +1494,9 @@ $(pv_value)</tooltip>
       <widget_type>Text Update</widget_type>
       <width>85</width>
       <wrap_words>false</wrap_words>
-      <wuid>-6c70a930:185e92885a4:-7b99</wuid>
-      <x>180</x>
-      <y>12</y>
+      <wuid>-632252ef:186bb56c0bf:-3515</wuid>
+      <x>132</x>
+      <y>240</y>
     </widget>
   </widget>
 </display>

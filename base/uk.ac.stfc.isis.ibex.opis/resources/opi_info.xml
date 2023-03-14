@@ -2922,7 +2922,18 @@
         <type>UNKNOWN</type>
         <path>wish_automatic_needle_valve.opi</path>
         <description>WISH Automatic Needle Valve</description>
-        <macros/>
+        <macros>
+          <macro>
+            <name>EURO</name>
+            <description>The Eurotherm PV prefix (e.g. EUROTHRM_01).</description>
+            <default>EUROTHRM_01</default>
+          </macro>
+          <macro>
+            <name>SENSOR</name>
+            <description>The temperature sensor number (e.g. 1).</description>
+            <default>1</default>
+          </macro>
+        </macros>
         <categories/>
       </value>
     </entry>
