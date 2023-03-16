@@ -191,7 +191,7 @@
     <width>566</width>
     <wuid>-12e71780:183cb0a5e3b:-7a02</wuid>
     <x>9</x>
-    <y>293</y>
+    <y>295</y>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>

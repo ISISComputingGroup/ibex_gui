@@ -130,7 +130,7 @@
       <color red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>310</height>
+    <height>311</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
@@ -191,7 +191,7 @@
     <width>566</width>
     <wuid>-12e71780:183cb0a5e3b:-7929</wuid>
     <x>9</x>
-    <y>293</y>
+    <y>295</y>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false" />
       <border_alarm_sensitive>false</border_alarm_sensitive>
@@ -311,7 +311,7 @@
         <width>507</width>
         <wuid>7b80fe81:1818c09dd00:-48cb</wuid>
         <x>53</x>
-        <y>1</y>
+        <y>0</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -503,7 +503,7 @@ $(pv_value)</tooltip>
         <width>507</width>
         <wuid>7b80fe81:1818c09dd00:-487b</wuid>
         <x>53</x>
-        <y>1</y>
+        <y>0</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -561,7 +561,7 @@ $(pv_value)</tooltip>
         <width>60</width>
         <wuid>-5f5eacd5:181a9bd2cda:-6d3b</wuid>
         <x>0</x>
-        <y>1</y>
+        <y>0</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="true" hook_all="false">
@@ -695,7 +695,7 @@ $(pv_value)</tooltip>
         <width>507</width>
         <wuid>7b80fe81:1818c09dd00:-4890</wuid>
         <x>53</x>
-        <y>1</y>
+        <y>0</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -753,7 +753,7 @@ $(pv_value)</tooltip>
         <width>60</width>
         <wuid>-5f5eacd5:181a9bd2cda:-6d40</wuid>
         <x>0</x>
-        <y>1</y>
+        <y>0</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="true" hook_all="false">
@@ -886,7 +886,7 @@ $(pv_value)</tooltip>
         <width>507</width>
         <wuid>7b80fe81:1818c09dd00:-48a5</wuid>
         <x>53</x>
-        <y>1</y>
+        <y>0</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -944,7 +944,7 @@ $(pv_value)</tooltip>
         <width>60</width>
         <wuid>-5f5eacd5:181a9bd2cda:-6d36</wuid>
         <x>0</x>
-        <y>1</y>
+        <y>0</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="true" hook_all="false">
@@ -1077,7 +1077,7 @@ $(pv_value)</tooltip>
         <width>507</width>
         <wuid>307461d3:183c0e98bed:-774c</wuid>
         <x>53</x>
-        <y>1</y>
+        <y>0</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -1135,7 +1135,7 @@ $(pv_value)</tooltip>
         <width>60</width>
         <wuid>307461d3:183c0e98bed:-76d3</wuid>
         <x>0</x>
-        <y>1</y>
+        <y>0</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="true" hook_all="false">
@@ -1268,7 +1268,7 @@ $(pv_value)</tooltip>
         <width>507</width>
         <wuid>307461d3:183c0e98bed:-7732</wuid>
         <x>53</x>
-        <y>1</y>
+        <y>0</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -1326,7 +1326,7 @@ $(pv_value)</tooltip>
         <width>60</width>
         <wuid>307461d3:183c0e98bed:-76c2</wuid>
         <x>0</x>
-        <y>1</y>
+        <y>0</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="true" hook_all="false">

@@ -820,7 +820,7 @@ $(pv_value)</tooltip>
       <width>507</width>
       <wuid>-250e8012:186975904a4:-411a</wuid>
       <x>53</x>
-      <y>1</y>
+      <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -1012,7 +1012,7 @@ $(pv_value)</tooltip>
       <width>507</width>
       <wuid>7b80fe81:1818c09dd00:-487b</wuid>
       <x>53</x>
-      <y>1</y>
+      <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -1204,7 +1204,7 @@ $(pv_value)</tooltip>
       <width>507</width>
       <wuid>7b80fe81:1818c09dd00:-4890</wuid>
       <x>53</x>
-      <y>1</y>
+      <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -1396,7 +1396,7 @@ $(pv_value)</tooltip>
       <width>507</width>
       <wuid>-250e8012:186975904a4:-40dd</wuid>
       <x>53</x>
-      <y>1</y>
+      <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -1588,7 +1588,7 @@ $(pv_value)</tooltip>
       <width>507</width>
       <wuid>-3f64f1ba:183c63d5e6e:-7e2a</wuid>
       <x>53</x>
-      <y>1</y>
+      <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -1780,7 +1780,7 @@ $(pv_value)</tooltip>
       <width>507</width>
       <wuid>-3f64f1ba:183c63d5e6e:-7df8</wuid>
       <x>53</x>
-      <y>1</y>
+      <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -1972,7 +1972,7 @@ $(pv_value)</tooltip>
       <width>507</width>
       <wuid>-3f64f1ba:183c63d5e6e:-7ddb</wuid>
       <x>53</x>
-      <y>1</y>
+      <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
       <actions hook="false" hook_all="false" />
