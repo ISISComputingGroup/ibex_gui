@@ -683,7 +683,7 @@ $(pv_value)</tooltip>
         <transparent>true</transparent>
         <visible>true</visible>
         <widget_type>Grouping Container</widget_type>
-        <width>100</width>
+        <width>128</width>
         <wuid>-17b29473:183cbe5c456:-7e3b</wuid>
         <x>245</x>
         <y>54</y>
@@ -904,15 +904,11 @@ $(pv_value)</tooltip>
           <x>0</x>
           <y>18</y>
         </widget>
-        <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+        <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
           <actions hook="false" hook_all="false" />
-          <alarm_pulsing>false</alarm_pulsing>
-          <auto_size>false</auto_size>
-          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
           <background_color>
-            <color red="255" green="255" blue="255" />
+            <color red="240" green="240" blue="240" />
           </background_color>
-          <border_alarm_sensitive>true</border_alarm_sensitive>
           <border_color>
             <color red="0" green="128" blue="255" />
           </border_color>
@@ -922,19 +918,18 @@ $(pv_value)</tooltip>
           <font>
             <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
           </font>
-          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
           <foreground_color>
-            <color red="0" green="0" blue="0" />
+            <color red="192" green="192" blue="192" />
           </foreground_color>
-          <format_type>0</format_type>
+          <group_name></group_name>
           <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
-          <name>A1 Pressure_Text Update</name>
-          <precision>0</precision>
-          <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(P)TPG300_$(TPG):PRESSURE_A1</pv_name>
-          <pv_value />
-          <rotation_angle>0.0</rotation_angle>
+          <macros>
+            <include_parent_macros>true</include_parent_macros>
+            <SENSOR>A1</SENSOR>
+          </macros>
+          <name>Linking Container</name>
+          <opi_file>vacuum_TPG_pressure.opi</opi_file>
+          <resize_behaviour>2</resize_behaviour>
           <rules />
           <scale_options>
             <width_scalable>true</width_scalable>
@@ -942,16 +937,11 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <scripts />
-          <show_units>true</show_units>
-          <text>######</text>
-          <tooltip>$(pv_name)$(pv_value)</tooltip>
-          <transparent>false</transparent>
-          <vertical_alignment>1</vertical_alignment>
+          <tooltip></tooltip>
           <visible>true</visible>
-          <widget_type>Text Update</widget_type>
-          <width>60</width>
-          <wrap_words>false</wrap_words>
-          <wuid>-632252ef:186bb56c0bf:-4ddf</wuid>
+          <widget_type>Linking Container</widget_type>
+          <width>80</width>
+          <wuid>2cad3757:186e08b90f4:-74e0</wuid>
           <x>44</x>
           <y>35</y>
         </widget>
@@ -1491,7 +1481,7 @@ $(pv_value)</tooltip>
       <transparent>true</transparent>
       <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>187</width>
+      <width>205</width>
       <wuid>-17b29473:183cbe5c456:-7e37</wuid>
       <x>564</x>
       <y>61</y>
@@ -1856,8 +1846,8 @@ $(pv_value)</tooltip>
         <widget_type>Linking Container</widget_type>
         <width>37</width>
         <wuid>-1078de5d:1838d539333:-7810</wuid>
-        <x>77</x>
-        <y>2</y>
+        <x>70</x>
+        <y>11</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -1896,8 +1886,8 @@ $(pv_value)</tooltip>
         <width>44</width>
         <wrap_words>false</wrap_words>
         <wuid>-6aff6739:1821a763793:-7b9d</wuid>
-        <x>121</x>
-        <y>2</y>
+        <x>114</x>
+        <y>11</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -1926,18 +1916,18 @@ $(pv_value)</tooltip>
         <foreground_color>
           <color red="255" green="0" blue="0" />
         </foreground_color>
-        <height>48</height>
+        <height>40</height>
         <horizontal_fill>true</horizontal_fill>
         <line_style>0</line_style>
         <line_width>1</line_width>
         <name>Polyline</name>
         <points>
-          <point x="93" y="40" />
-          <point x="93" y="56" />
-          <point x="143" y="56" />
-          <point x="143" y="87" />
-          <point x="143" y="87" />
-          <point x="143" y="87" />
+          <point x="92" y="47" />
+          <point x="92" y="60" />
+          <point x="155" y="60" />
+          <point x="155" y="86" />
+          <point x="155" y="86" />
+          <point x="155" y="86" />
         </points>
         <pv_name></pv_name>
         <pv_value />
@@ -1954,20 +1944,16 @@ $(pv_value)</tooltip>
         <transparent>false</transparent>
         <visible>true</visible>
         <widget_type>Polyline</widget_type>
-        <width>51</width>
+        <width>64</width>
         <wuid>-632252ef:186bb56c0bf:-48af</wuid>
-        <x>93</x>
-        <y>40</y>
+        <x>92</x>
+        <y>47</y>
       </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
-        <alarm_pulsing>false</alarm_pulsing>
-        <auto_size>false</auto_size>
-        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
         <background_color>
-          <color red="255" green="255" blue="255" />
+          <color red="240" green="240" blue="240" />
         </background_color>
-        <border_alarm_sensitive>true</border_alarm_sensitive>
         <border_color>
           <color red="0" green="128" blue="255" />
         </border_color>
@@ -1977,19 +1963,18 @@ $(pv_value)</tooltip>
         <font>
           <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
         </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
         <foreground_color>
-          <color red="0" green="0" blue="0" />
+          <color red="192" green="192" blue="192" />
         </foreground_color>
-        <format_type>0</format_type>
+        <group_name></group_name>
         <height>20</height>
-        <horizontal_alignment>0</horizontal_alignment>
-        <name>A1 Pressure_Text Update_1</name>
-        <precision>0</precision>
-        <precision_from_pv>true</precision_from_pv>
-        <pv_name>$(P)TPG300_$(TPG):PRESSURE_A1</pv_name>
-        <pv_value />
-        <rotation_angle>0.0</rotation_angle>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <SENSOR>A1</SENSOR>
+        </macros>
+        <name>Linking Container</name>
+        <opi_file>vacuum_TPG_pressure.opi</opi_file>
+        <resize_behaviour>2</resize_behaviour>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -1997,18 +1982,13 @@ $(pv_value)</tooltip>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
         <scripts />
-        <show_units>true</show_units>
-        <text>######</text>
-        <tooltip>$(pv_name)$(pv_value)</tooltip>
-        <transparent>false</transparent>
-        <vertical_alignment>1</vertical_alignment>
+        <tooltip></tooltip>
         <visible>true</visible>
-        <widget_type>Text Update</widget_type>
-        <width>60</width>
-        <wrap_words>false</wrap_words>
-        <wuid>-632252ef:186bb56c0bf:-4638</wuid>
-        <x>121</x>
-        <y>21</y>
+        <widget_type>Linking Container</widget_type>
+        <width>80</width>
+        <wuid>2cad3757:186e08b90f4:-74b9</wuid>
+        <x>114</x>
+        <y>30</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -2050,7 +2030,7 @@ $(pv_value)</tooltip>
       <transparent>true</transparent>
       <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>256</width>
+      <width>281</width>
       <wuid>-17b29473:183cbe5c456:-7e35</wuid>
       <x>380</x>
       <y>6</y>
@@ -2347,7 +2327,7 @@ $(pv_value)</tooltip>
         <width>38</width>
         <wrap_words>false</wrap_words>
         <wuid>-6aff6739:1821a763793:-7bb5</wuid>
-        <x>85</x>
+        <x>83</x>
         <y>88</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2434,8 +2414,8 @@ $(pv_value)</tooltip>
         <width>52</width>
         <wrap_words>false</wrap_words>
         <wuid>6b33bdaf:1823ec783ef:-7e81</wuid>
-        <x>71</x>
-        <y>141</y>
+        <x>78</x>
+        <y>135</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -2475,8 +2455,8 @@ $(pv_value)</tooltip>
         <widget_type>Linking Container</widget_type>
         <width>35</width>
         <wuid>-256e6580:182107f5149:-76ef</wuid>
-        <x>79</x>
-        <y>156</y>
+        <x>86</x>
+        <y>150</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -2532,7 +2512,7 @@ $(pv_value)</tooltip>
         <widget_type>Image</widget_type>
         <width>15</width>
         <wuid>-19138732:18215bd6f23:-7e94</wuid>
-        <x>155</x>
+        <x>165</x>
         <y>143</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
@@ -2579,7 +2559,7 @@ $(pv_value)</tooltip>
         <widget_type>Linking Container</widget_type>
         <width>37</width>
         <wuid>-1078de5d:1838d539333:-7800</wuid>
-        <x>144</x>
+        <x>154</x>
         <y>11</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -2619,110 +2599,8 @@ $(pv_value)</tooltip>
         <width>50</width>
         <wrap_words>false</wrap_words>
         <wuid>-6aff6739:1821a763793:-7ba9</wuid>
-        <x>188</x>
+        <x>198</x>
         <y>11</y>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
-        <actions hook="false" hook_all="false" />
-        <alarm_pulsing>false</alarm_pulsing>
-        <auto_size>false</auto_size>
-        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-        <background_color>
-          <color red="255" green="255" blue="255" />
-        </background_color>
-        <border_alarm_sensitive>true</border_alarm_sensitive>
-        <border_color>
-          <color red="0" green="128" blue="255" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-        </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <foreground_color>
-          <color red="0" green="0" blue="0" />
-        </foreground_color>
-        <format_type>0</format_type>
-        <height>20</height>
-        <horizontal_alignment>0</horizontal_alignment>
-        <name>A1 Pressure_Text Update</name>
-        <precision>0</precision>
-        <precision_from_pv>true</precision_from_pv>
-        <pv_name>$(P)TPG300_$(RB2_TPG):PRESSURE_A1</pv_name>
-        <pv_value />
-        <rotation_angle>0.0</rotation_angle>
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <show_units>true</show_units>
-        <text>######</text>
-        <tooltip>$(pv_name)$(pv_value)</tooltip>
-        <transparent>false</transparent>
-        <vertical_alignment>1</vertical_alignment>
-        <visible>true</visible>
-        <widget_type>Text Update</widget_type>
-        <width>60</width>
-        <wrap_words>false</wrap_words>
-        <wuid>-632252ef:186bb56c0bf:-4dd7</wuid>
-        <x>45</x>
-        <y>30</y>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
-        <actions hook="false" hook_all="false" />
-        <alarm_pulsing>false</alarm_pulsing>
-        <auto_size>false</auto_size>
-        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-        <background_color>
-          <color red="255" green="255" blue="255" />
-        </background_color>
-        <border_alarm_sensitive>true</border_alarm_sensitive>
-        <border_color>
-          <color red="0" green="128" blue="255" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-        </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <foreground_color>
-          <color red="0" green="0" blue="0" />
-        </foreground_color>
-        <format_type>0</format_type>
-        <height>20</height>
-        <horizontal_alignment>0</horizontal_alignment>
-        <name>A1 Pressure_Text Update</name>
-        <precision>0</precision>
-        <precision_from_pv>true</precision_from_pv>
-        <pv_name>$(P)TPG300_$(SOLENOID_TPG):PRESSURE_A1</pv_name>
-        <pv_value />
-        <rotation_angle>0.0</rotation_angle>
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <show_units>true</show_units>
-        <text>######</text>
-        <tooltip>$(pv_name)$(pv_value)</tooltip>
-        <transparent>false</transparent>
-        <vertical_alignment>1</vertical_alignment>
-        <visible>true</visible>
-        <widget_type>Text Update</widget_type>
-        <width>60</width>
-        <wrap_words>false</wrap_words>
-        <wuid>-632252ef:186bb56c0bf:-4af7</wuid>
-        <x>188</x>
-        <y>30</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -2757,10 +2635,10 @@ $(pv_value)</tooltip>
         <line_width>1</line_width>
         <name>Polyline</name>
         <points>
-          <point x="162" y="147" />
-          <point x="162" y="47" />
-          <point x="162" y="47" />
-          <point x="162" y="47" />
+          <point x="172" y="147" />
+          <point x="172" y="47" />
+          <point x="172" y="47" />
+          <point x="172" y="47" />
         </points>
         <pv_name></pv_name>
         <pv_value />
@@ -2779,18 +2657,14 @@ $(pv_value)</tooltip>
         <widget_type>Polyline</widget_type>
         <width>1</width>
         <wuid>-632252ef:186bb56c0bf:-49fa</wuid>
-        <x>162</x>
+        <x>172</x>
         <y>47</y>
       </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
-        <alarm_pulsing>false</alarm_pulsing>
-        <auto_size>false</auto_size>
-        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
         <background_color>
-          <color red="255" green="255" blue="255" />
+          <color red="240" green="240" blue="240" />
         </background_color>
-        <border_alarm_sensitive>true</border_alarm_sensitive>
         <border_color>
           <color red="0" green="128" blue="255" />
         </border_color>
@@ -2800,19 +2674,19 @@ $(pv_value)</tooltip>
         <font>
           <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
         </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
         <foreground_color>
-          <color red="0" green="0" blue="0" />
+          <color red="192" green="192" blue="192" />
         </foreground_color>
-        <format_type>0</format_type>
+        <group_name></group_name>
         <height>20</height>
-        <horizontal_alignment>0</horizontal_alignment>
-        <name>A1 Pressure_Text Update</name>
-        <precision>0</precision>
-        <precision_from_pv>true</precision_from_pv>
-        <pv_name>$(P)TPG300_$(KICKER_TPG):PRESSURE_A1</pv_name>
-        <pv_value />
-        <rotation_angle>0.0</rotation_angle>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <SENSOR>A1</SENSOR>
+          <TPG>$(RB2_TPG)</TPG>
+        </macros>
+        <name>Linking Container</name>
+        <opi_file>vacuum_TPG_pressure.opi</opi_file>
+        <resize_behaviour>2</resize_behaviour>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -2820,18 +2694,97 @@ $(pv_value)</tooltip>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
         <scripts />
-        <show_units>true</show_units>
-        <text>######</text>
-        <tooltip>$(pv_name)$(pv_value)</tooltip>
-        <transparent>false</transparent>
-        <vertical_alignment>1</vertical_alignment>
+        <tooltip></tooltip>
         <visible>true</visible>
-        <widget_type>Text Update</widget_type>
-        <width>60</width>
-        <wrap_words>false</wrap_words>
-        <wuid>-632252ef:186bb56c0bf:-4897</wuid>
-        <x>85</x>
+        <widget_type>Linking Container</widget_type>
+        <width>80</width>
+        <wuid>2cad3757:186e08b90f4:-74d4</wuid>
+        <x>45</x>
+        <y>30</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <group_name></group_name>
+        <height>20</height>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <SENSOR>A1</SENSOR>
+          <TPG>$(KICKER_TPG)</TPG>
+        </macros>
+        <name>Linking Container</name>
+        <opi_file>vacuum_TPG_pressure.opi</opi_file>
+        <resize_behaviour>2</resize_behaviour>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <tooltip></tooltip>
+        <visible>true</visible>
+        <widget_type>Linking Container</widget_type>
+        <width>80</width>
+        <wuid>2cad3757:186e08b90f4:-74cb</wuid>
+        <x>83</x>
         <y>107</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <group_name></group_name>
+        <height>20</height>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <SENSOR>A1</SENSOR>
+          <TPG>$(SOLENOID_TPG)</TPG>
+        </macros>
+        <name>Linking Container</name>
+        <opi_file>vacuum_TPG_pressure.opi</opi_file>
+        <resize_behaviour>2</resize_behaviour>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <tooltip></tooltip>
+        <visible>true</visible>
+        <widget_type>Linking Container</widget_type>
+        <width>80</width>
+        <wuid>2cad3757:186e08b90f4:-74c2</wuid>
+        <x>198</x>
+        <y>30</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -2877,7 +2830,7 @@ $(pv_value)</tooltip>
       <transparent>true</transparent>
       <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>256</width>
+      <width>275</width>
       <wuid>-17b29473:183cbe5c456:-7e41</wuid>
       <x>320</x>
       <y>224</y>
@@ -3098,15 +3051,11 @@ $(pv_value)</tooltip>
         <x>181</x>
         <y>17</y>
       </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
-        <alarm_pulsing>false</alarm_pulsing>
-        <auto_size>false</auto_size>
-        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
         <background_color>
-          <color red="255" green="255" blue="255" />
+          <color red="240" green="240" blue="240" />
         </background_color>
-        <border_alarm_sensitive>true</border_alarm_sensitive>
         <border_color>
           <color red="0" green="128" blue="255" />
         </border_color>
@@ -3116,19 +3065,18 @@ $(pv_value)</tooltip>
         <font>
           <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
         </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
         <foreground_color>
-          <color red="0" green="0" blue="0" />
+          <color red="192" green="192" blue="192" />
         </foreground_color>
-        <format_type>0</format_type>
+        <group_name></group_name>
         <height>20</height>
-        <horizontal_alignment>0</horizontal_alignment>
-        <name>A1 Pressure_Text Update</name>
-        <precision>0</precision>
-        <precision_from_pv>true</precision_from_pv>
-        <pv_name>$(P)TPG300_$(TPG):PRESSURE_A1</pv_name>
-        <pv_value />
-        <rotation_angle>0.0</rotation_angle>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <SENSOR>A1</SENSOR>
+        </macros>
+        <name>Linking Container</name>
+        <opi_file>vacuum_TPG_pressure.opi</opi_file>
+        <resize_behaviour>2</resize_behaviour>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -3136,18 +3084,13 @@ $(pv_value)</tooltip>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
         <scripts />
-        <show_units>true</show_units>
-        <text>######</text>
-        <tooltip>$(pv_name)$(pv_value)</tooltip>
-        <transparent>false</transparent>
-        <vertical_alignment>1</vertical_alignment>
+        <tooltip></tooltip>
         <visible>true</visible>
-        <widget_type>Text Update</widget_type>
-        <width>60</width>
-        <wrap_words>false</wrap_words>
-        <wuid>-632252ef:186bb56c0bf:-4f97</wuid>
+        <widget_type>Linking Container</widget_type>
+        <width>80</width>
+        <wuid>2cad3757:186e08b90f4:-749e</wuid>
         <x>181</x>
-        <y>35</y>
+        <y>36</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -3193,7 +3136,7 @@ $(pv_value)</tooltip>
       <transparent>true</transparent>
       <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>212</width>
+      <width>223</width>
       <wuid>-632252ef:186bb56c0bf:-4637</wuid>
       <x>372</x>
       <y>290</y>
@@ -3277,57 +3220,6 @@ $(pv_value)</tooltip>
         <x>129</x>
         <y>0</y>
       </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
-        <actions hook="false" hook_all="false" />
-        <alarm_pulsing>false</alarm_pulsing>
-        <auto_size>false</auto_size>
-        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-        <background_color>
-          <color red="255" green="255" blue="255" />
-        </background_color>
-        <border_alarm_sensitive>true</border_alarm_sensitive>
-        <border_color>
-          <color red="0" green="128" blue="255" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-        </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <foreground_color>
-          <color red="0" green="0" blue="0" />
-        </foreground_color>
-        <format_type>0</format_type>
-        <height>20</height>
-        <horizontal_alignment>0</horizontal_alignment>
-        <name>A1 Pressure_Text Update</name>
-        <precision>0</precision>
-        <precision_from_pv>true</precision_from_pv>
-        <pv_name>$(P)TPG300_$(TPG):PRESSURE_A1</pv_name>
-        <pv_value />
-        <rotation_angle>0.0</rotation_angle>
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <show_units>true</show_units>
-        <text>######</text>
-        <tooltip>$(pv_name)$(pv_value)</tooltip>
-        <transparent>false</transparent>
-        <vertical_alignment>1</vertical_alignment>
-        <visible>true</visible>
-        <widget_type>Text Update</widget_type>
-        <width>60</width>
-        <wrap_words>false</wrap_words>
-        <wuid>-632252ef:186bb56c0bf:-4632</wuid>
-        <x>129</x>
-        <y>19</y>
-      </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.polyline" version="1.0.0">
         <actions hook="false" hook_all="false" />
         <alarm_pulsing>false</alarm_pulsing>
@@ -3388,6 +3280,47 @@ $(pv_value)</tooltip>
         <x>-2</x>
         <y>0</y>
       </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <group_name></group_name>
+        <height>20</height>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <SENSOR>A1</SENSOR>
+        </macros>
+        <name>Linking Container</name>
+        <opi_file>vacuum_TPG_pressure.opi</opi_file>
+        <resize_behaviour>2</resize_behaviour>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <tooltip></tooltip>
+        <visible>true</visible>
+        <widget_type>Linking Container</widget_type>
+        <width>80</width>
+        <wuid>2cad3757:186e08b90f4:-7495</wuid>
+        <x>129</x>
+        <y>19</y>
+      </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -3432,7 +3365,7 @@ $(pv_value)</tooltip>
       <transparent>true</transparent>
       <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>244</width>
+      <width>268</width>
       <wuid>-17b29473:183cbe5c456:-7e2d</wuid>
       <x>393</x>
       <y>334</y>
@@ -3734,15 +3667,11 @@ $(pv_value)</tooltip>
         <x>130</x>
         <y>60</y>
       </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
-        <alarm_pulsing>false</alarm_pulsing>
-        <auto_size>false</auto_size>
-        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
         <background_color>
-          <color red="255" green="255" blue="255" />
+          <color red="240" green="240" blue="240" />
         </background_color>
-        <border_alarm_sensitive>true</border_alarm_sensitive>
         <border_color>
           <color red="0" green="128" blue="255" />
         </border_color>
@@ -3752,19 +3681,18 @@ $(pv_value)</tooltip>
         <font>
           <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
         </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
         <foreground_color>
-          <color red="0" green="0" blue="0" />
+          <color red="192" green="192" blue="192" />
         </foreground_color>
-        <format_type>0</format_type>
+        <group_name></group_name>
         <height>20</height>
-        <horizontal_alignment>0</horizontal_alignment>
-        <name>A1 Pressure_Text Update</name>
-        <precision>0</precision>
-        <precision_from_pv>true</precision_from_pv>
-        <pv_name>$(P)TPG300_$(TPG):PRESSURE_A1</pv_name>
-        <pv_value />
-        <rotation_angle>0.0</rotation_angle>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <SENSOR>A1</SENSOR>
+        </macros>
+        <name>Linking Container</name>
+        <opi_file>vacuum_TPG_pressure.opi</opi_file>
+        <resize_behaviour>2</resize_behaviour>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -3772,16 +3700,11 @@ $(pv_value)</tooltip>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
         <scripts />
-        <show_units>true</show_units>
-        <text>######</text>
-        <tooltip>$(pv_name)$(pv_value)</tooltip>
-        <transparent>false</transparent>
-        <vertical_alignment>1</vertical_alignment>
+        <tooltip></tooltip>
         <visible>true</visible>
-        <widget_type>Text Update</widget_type>
-        <width>60</width>
-        <wrap_words>false</wrap_words>
-        <wuid>-632252ef:186bb56c0bf:-5cb9</wuid>
+        <widget_type>Linking Container</widget_type>
+        <width>80</width>
+        <wuid>2cad3757:186e08b90f4:-748c</wuid>
         <x>177</x>
         <y>76</y>
       </widget>
@@ -4035,57 +3958,6 @@ $(pv_value)</tooltip>
         <x>15</x>
         <y>19</y>
       </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
-        <actions hook="false" hook_all="false" />
-        <alarm_pulsing>false</alarm_pulsing>
-        <auto_size>false</auto_size>
-        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-        <background_color>
-          <color red="255" green="255" blue="255" />
-        </background_color>
-        <border_alarm_sensitive>true</border_alarm_sensitive>
-        <border_color>
-          <color red="0" green="128" blue="255" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-        </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <foreground_color>
-          <color red="0" green="0" blue="0" />
-        </foreground_color>
-        <format_type>0</format_type>
-        <height>20</height>
-        <horizontal_alignment>0</horizontal_alignment>
-        <name>A1 Pressure_Text Update</name>
-        <precision>0</precision>
-        <precision_from_pv>true</precision_from_pv>
-        <pv_name>$(P)TPG300_$(TPG):PRESSURE_A1</pv_name>
-        <pv_value />
-        <rotation_angle>0.0</rotation_angle>
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <show_units>true</show_units>
-        <text>######</text>
-        <tooltip>$(pv_name)$(pv_value)</tooltip>
-        <transparent>false</transparent>
-        <vertical_alignment>1</vertical_alignment>
-        <visible>true</visible>
-        <widget_type>Text Update</widget_type>
-        <width>60</width>
-        <wrap_words>false</wrap_words>
-        <wuid>-632252ef:186bb56c0bf:-5c61</wuid>
-        <x>59</x>
-        <y>36</y>
-      </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
         <auto_size>false</auto_size>
@@ -4125,6 +3997,47 @@ $(pv_value)</tooltip>
         <wuid>-632252ef:186bb56c0bf:-5c5e</wuid>
         <x>59</x>
         <y>19</y>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <group_name></group_name>
+        <height>20</height>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <SENSOR>A1</SENSOR>
+        </macros>
+        <name>Linking Container</name>
+        <opi_file>vacuum_TPG_pressure.opi</opi_file>
+        <resize_behaviour>2</resize_behaviour>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <tooltip></tooltip>
+        <visible>true</visible>
+        <widget_type>Linking Container</widget_type>
+        <width>80</width>
+        <wuid>2cad3757:186e08b90f4:-7483</wuid>
+        <x>59</x>
+        <y>38</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -4170,7 +4083,7 @@ $(pv_value)</tooltip>
       <transparent>true</transparent>
       <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
-      <width>110</width>
+      <width>137</width>
       <wuid>-17b29473:183cbe5c456:-7e3d</wuid>
       <x>128</x>
       <y>25</y>
@@ -4472,15 +4385,11 @@ $(pv_value)</tooltip>
         <x>58</x>
         <y>106</y>
       </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
-        <alarm_pulsing>false</alarm_pulsing>
-        <auto_size>false</auto_size>
-        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
         <background_color>
-          <color red="255" green="255" blue="255" />
+          <color red="240" green="240" blue="240" />
         </background_color>
-        <border_alarm_sensitive>true</border_alarm_sensitive>
         <border_color>
           <color red="0" green="128" blue="255" />
         </border_color>
@@ -4490,19 +4399,18 @@ $(pv_value)</tooltip>
         <font>
           <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
         </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
         <foreground_color>
-          <color red="0" green="0" blue="0" />
+          <color red="192" green="192" blue="192" />
         </foreground_color>
-        <format_type>0</format_type>
+        <group_name></group_name>
         <height>20</height>
-        <horizontal_alignment>0</horizontal_alignment>
-        <name>A1 Pressure_Text Update</name>
-        <precision>0</precision>
-        <precision_from_pv>true</precision_from_pv>
-        <pv_name>$(P)TPG300_$(TPG):PRESSURE_A1</pv_name>
-        <pv_value />
-        <rotation_angle>0.0</rotation_angle>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <SENSOR>A1</SENSOR>
+        </macros>
+        <name>Linking Container</name>
+        <opi_file>vacuum_TPG_pressure.opi</opi_file>
+        <resize_behaviour>2</resize_behaviour>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -4510,16 +4418,11 @@ $(pv_value)</tooltip>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
         <scripts />
-        <show_units>true</show_units>
-        <text>######</text>
-        <tooltip>$(pv_name)$(pv_value)</tooltip>
-        <transparent>false</transparent>
-        <vertical_alignment>1</vertical_alignment>
+        <tooltip></tooltip>
         <visible>true</visible>
-        <widget_type>Text Update</widget_type>
-        <width>60</width>
-        <wrap_words>false</wrap_words>
-        <wuid>-632252ef:186bb56c0bf:-4de7</wuid>
+        <widget_type>Linking Container</widget_type>
+        <width>80</width>
+        <wuid>2cad3757:186e08b90f4:-74eb</wuid>
         <x>42</x>
         <y>19</y>
       </widget>
@@ -4870,15 +4773,11 @@ Port 4</text>
         <x>108</x>
         <y>54</y>
       </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
-        <alarm_pulsing>false</alarm_pulsing>
-        <auto_size>false</auto_size>
-        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
         <background_color>
-          <color red="255" green="255" blue="255" />
+          <color red="240" green="240" blue="240" />
         </background_color>
-        <border_alarm_sensitive>true</border_alarm_sensitive>
         <border_color>
           <color red="0" green="128" blue="255" />
         </border_color>
@@ -4888,19 +4787,18 @@ Port 4</text>
         <font>
           <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
         </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
         <foreground_color>
-          <color red="0" green="0" blue="0" />
+          <color red="192" green="192" blue="192" />
         </foreground_color>
-        <format_type>0</format_type>
+        <group_name></group_name>
         <height>20</height>
-        <horizontal_alignment>0</horizontal_alignment>
-        <name>A1 Pressure_Text Update</name>
-        <precision>0</precision>
-        <precision_from_pv>true</precision_from_pv>
-        <pv_name>$(P)TPG300_$(TPG):PRESSURE_A1</pv_name>
-        <pv_value />
-        <rotation_angle>0.0</rotation_angle>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <SENSOR>A1</SENSOR>
+        </macros>
+        <name>Linking Container</name>
+        <opi_file>vacuum_TPG_pressure.opi</opi_file>
+        <resize_behaviour>2</resize_behaviour>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -4908,16 +4806,11 @@ Port 4</text>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
         <scripts />
-        <show_units>true</show_units>
-        <text>######</text>
-        <tooltip>$(pv_name)$(pv_value)</tooltip>
-        <transparent>false</transparent>
-        <vertical_alignment>1</vertical_alignment>
+        <tooltip></tooltip>
         <visible>true</visible>
-        <widget_type>Text Update</widget_type>
-        <width>60</width>
-        <wrap_words>false</wrap_words>
-        <wuid>-632252ef:186bb56c0bf:-4def</wuid>
+        <widget_type>Linking Container</widget_type>
+        <width>80</width>
+        <wuid>2cad3757:186e08b90f4:-747a</wuid>
         <x>108</x>
         <y>90</y>
       </widget>
