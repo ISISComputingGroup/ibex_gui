@@ -62,7 +62,7 @@
     </scale_options>
     <scripts />
     <show_scrollbar>false</show_scrollbar>
-    <text>RIKEN Kicker and Seperator HV Settings</text>
+    <text>RIKEN Kicker and Separator HV Settings</text>
     <tooltip></tooltip>
     <transparent>false</transparent>
     <vertical_alignment>1</vertical_alignment>
@@ -71,7 +71,7 @@
     <width>601</width>
     <wrap_words>true</wrap_words>
     <wuid>-250e8012:186975904a4:-6c53</wuid>
-    <x>18</x>
+    <x>12</x>
     <y>18</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -112,7 +112,7 @@
     <width>775</width>
     <wrap_words>true</wrap_words>
     <wuid>-250e8012:186975904a4:-6c54</wuid>
-    <x>18</x>
+    <x>12</x>
     <y>54</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -2070,13 +2070,13 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <scripts />
-      <text>Kicker Mol Status</text>
+      <text>Kicker MOL Status</text>
       <tooltip></tooltip>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>115</width>
+      <width>109</width>
       <wrap_words>false</wrap_words>
       <wuid>3c57bd82:18576e91b80:-7f18</wuid>
       <x>516</x>
@@ -2202,8 +2202,8 @@ $(pv_value)</tooltip>
     <widget_type>Grouping Container</widget_type>
     <width>325</width>
     <wuid>-250e8012:186975904a4:-766d</wuid>
-    <x>18</x>
-    <y>306</y>
+    <x>12</x>
+    <y>312</y>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
       <background_color>
@@ -2477,7 +2477,7 @@ $(pv_value)</tooltip>
         <IOC>TECHNIX_01</IOC>
         <SEP_NAME>Separator 1 +VE</SEP_NAME>
       </macros>
-      <name>SepUP_POS</name>
+      <name>Sep1_POS</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -2532,7 +2532,7 @@ $(pv_value)</tooltip>
         </line_color>
         <line_style>0</line_style>
         <line_width>0</line_width>
-        <name>SepUP_POS_Rect</name>
+        <name>Sep1_POS_Rect</name>
         <pv_name></pv_name>
         <pv_value />
         <rules />
@@ -2583,7 +2583,7 @@ $(pv_value)</tooltip>
         </foreground_color>
         <height>20</height>
         <horizontal_alignment>1</horizontal_alignment>
-        <name>SepUP_POS_Label</name>
+        <name>Sep1_POS_Label</name>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -2680,7 +2680,7 @@ $(pv_value)</tooltip>
         <IOC>TECHNIX_02</IOC>
         <SEP_NAME>Separator 1 -VE</SEP_NAME>
       </macros>
-      <name>SepUP_NEG</name>
+      <name>Sep1_NEG</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -2735,7 +2735,7 @@ $(pv_value)</tooltip>
         </line_color>
         <line_style>0</line_style>
         <line_width>0</line_width>
-        <name>SepUP_NEG_Rect</name>
+        <name>Sep1_NEG_Rect</name>
         <pv_name></pv_name>
         <pv_value />
         <rules />
@@ -2756,7 +2756,18 @@ $(pv_value)</tooltip>
         <y>0</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-        <actions hook="false" hook_all="false" />
+        <actions hook="true" hook_all="false">
+          <action type="OPEN_DISPLAY">
+            <path>../../../technix.opi</path>
+            <macros>
+              <include_parent_macros>true</include_parent_macros>
+              <IOC_NAME>$(IOC)</IOC_NAME>
+              <NAME>$(SEP_NAME)</NAME>
+            </macros>
+            <mode>3</mode>
+            <description></description>
+          </action>
+        </actions>
         <auto_size>false</auto_size>
         <background_color>
           <color red="255" green="255" blue="255" />
@@ -2775,7 +2786,7 @@ $(pv_value)</tooltip>
         </foreground_color>
         <height>20</height>
         <horizontal_alignment>1</horizontal_alignment>
-        <name>SepUP_NEG_Label</name>
+        <name>Sep1_NEG_Label</name>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -2872,7 +2883,7 @@ $(pv_value)</tooltip>
         <IOC>TECHNIX_03</IOC>
         <SEP_NAME>Separator 2 +VE</SEP_NAME>
       </macros>
-      <name>SepDOWN_POS</name>
+      <name>Sep2_POS</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -2927,7 +2938,7 @@ $(pv_value)</tooltip>
         </line_color>
         <line_style>0</line_style>
         <line_width>0</line_width>
-        <name>SepDOWN_POS_Rect</name>
+        <name>Sep2_POS_Rect</name>
         <pv_name></pv_name>
         <pv_value />
         <rules />
@@ -2978,7 +2989,7 @@ $(pv_value)</tooltip>
         </foreground_color>
         <height>20</height>
         <horizontal_alignment>1</horizontal_alignment>
-        <name>SepDOWN_POS_Label</name>
+        <name>Sep2_POS_Label</name>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -3075,7 +3086,7 @@ $(pv_value)</tooltip>
         <IOC>TECHNIX_04</IOC>
         <SEP_NAME>Separator 2 -VE</SEP_NAME>
       </macros>
-      <name>SepDOWN_NEG</name>
+      <name>Sep2_NEG</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -3130,7 +3141,7 @@ $(pv_value)</tooltip>
         </line_color>
         <line_style>0</line_style>
         <line_width>0</line_width>
-        <name>SepDOWN_NEG_Label</name>
+        <name>Sep2_NEG_Label</name>
         <pv_name></pv_name>
         <pv_value />
         <rules />
@@ -3151,7 +3162,18 @@ $(pv_value)</tooltip>
         <y>0</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-        <actions hook="false" hook_all="false" />
+        <actions hook="true" hook_all="false">
+          <action type="OPEN_DISPLAY">
+            <path>../../../technix.opi</path>
+            <macros>
+              <include_parent_macros>true</include_parent_macros>
+              <IOC_NAME>$(IOC)</IOC_NAME>
+              <NAME>$(SEP_NAME)</NAME>
+            </macros>
+            <mode>3</mode>
+            <description></description>
+          </action>
+        </actions>
         <auto_size>false</auto_size>
         <background_color>
           <color red="255" green="255" blue="255" />
@@ -3170,7 +3192,7 @@ $(pv_value)</tooltip>
         </foreground_color>
         <height>20</height>
         <horizontal_alignment>1</horizontal_alignment>
-        <name>SepDOWN_NEG_Label_1</name>
+        <name>Sep2_NEG_Label</name>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -3267,7 +3289,7 @@ $(pv_value)</tooltip>
         <IOC>TECHNIX_05</IOC>
         <SEP_NAME>Separator 3 +VE</SEP_NAME>
       </macros>
-      <name>SepPORT4_POS</name>
+      <name>Sep3_POS</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -3373,7 +3395,7 @@ $(pv_value)</tooltip>
         </foreground_color>
         <height>20</height>
         <horizontal_alignment>1</horizontal_alignment>
-        <name>SepPORT4_POS_Label</name>
+        <name>Sep3_POS_Label</name>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -3470,7 +3492,7 @@ $(pv_value)</tooltip>
         <IOC>TECHNIX_06</IOC>
         <SEP_NAME>Separator 3 -VE</SEP_NAME>
       </macros>
-      <name>SepPORT4_NEG</name>
+      <name>Sep3_NEG</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -3546,7 +3568,18 @@ $(pv_value)</tooltip>
         <y>0</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-        <actions hook="false" hook_all="false" />
+        <actions hook="true" hook_all="false">
+          <action type="OPEN_DISPLAY">
+            <path>../../../technix.opi</path>
+            <macros>
+              <include_parent_macros>true</include_parent_macros>
+              <IOC_NAME>$(IOC)</IOC_NAME>
+              <NAME>$(SEP_NAME)</NAME>
+            </macros>
+            <mode>3</mode>
+            <description></description>
+          </action>
+        </actions>
         <auto_size>false</auto_size>
         <background_color>
           <color red="255" green="255" blue="255" />
@@ -3565,7 +3598,7 @@ $(pv_value)</tooltip>
         </foreground_color>
         <height>20</height>
         <horizontal_alignment>1</horizontal_alignment>
-        <name>SepPORT4_NEG_Label</name>
+        <name>Sep3_NEG_Label</name>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>

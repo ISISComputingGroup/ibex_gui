@@ -1411,30 +1411,30 @@
       </value>
     </entry>
     <entry>
-      <key>Riken Front End Overview</key>
+      <key>RIKEN Front End Overview</key>
       <value>
         <type>MUON_FRONT_END</type>
         <path>muon_overviews/riken_front_end_overview.opi</path>
-        <description>The OPI for the Riken front end. No properties required.</description>
+        <description>The OPI for the RIKEN front end. No properties required.</description>
         <macros/>
         <categories/>
       </value>
     </entry>
     <entry>
-      <key>Riken Magnet PSU</key>
+      <key>RIKEN Magnet PSU</key>
       <value>
         <type>MUON_FRONT_END</type>
         <path>RIKEN/Magnet/RIKEN_magnet_PSUs.opi</path>
-        <description>The OPI for the Riken Magnet PSU Synoptic</description>
+        <description>The OPI for the RIKEN Magnet PSU overview</description>
         <macros></macros>
        </value>
     </entry>
     <entry>
-      <key>Riken Kicker and Separator HV settings</key>
+      <key>RIKEN Kicker and Separator HV settings</key>
       <value>
         <type>MUON_FRONT_END</type>
-        <path>RIKEN/Magnet/Kickers/kickers_and_seperators.opi</path>
-        <description>The OPI for Kicker and Separator HV Settings</description>
+        <path>RIKEN/Magnet/Kickers/kickers_and_separators.opi</path>
+        <description>The OPI for the Kicker and Separator HV Settings</description>
         <macros/>
         <categories>
           <category>PLCs</category>
@@ -1442,13 +1442,27 @@
       </value>
     </entry>
     <entry>
-      <key>Riken PSU Status Summary</key>
+      <key>RIKEN PSU Status Summary</key>
       <value>
         <type>psu_status_summary</type>
         <path>RIKEN/Magnet/psu_status_summary.opi</path>
-        <description>The OPI for the status summary of Riken Magnet PSUs</description>
+        <description>The OPI for the status summary of RIKEN Magnet PSUs</description>
         <macros/>
         <categories/>
+      </value>
+    </entry>
+    <entry>
+      <key>RIKEN Vacuum</key>
+	  <value>
+	    <type>RIKEN</type>
+	    <path>RIKEN/Vacuum/RIKEN_vacuum_synoptic.opi</path>
+	    <macros>
+          <macro>
+            <name>SCHNDR</name>
+            <description>The SCHNDR PV prefix (e.g. SCHNDR_01)</description>
+            <default>SCHNDR_01</default>
+          </macro>
+        </macros>
       </value>
     </entry>
     <entry>
@@ -3175,20 +3189,6 @@
         <description>Developer system-testing OPI for CS-Studio rules engines</description>
         <macros/>
         <categories/>
-      </value>
-    </entry>
-    <entry>
-      <key>RIKEN Vacuum</key>
-	  <value>
-	    <type>RIKEN</type>
-	    <path>RIKEN/Vacuum/RIKEN_vacuum_synoptic.opi</path>
-	    <macros>
-          <macro>
-            <name>SCHNDR</name>
-            <description>The SCHNDR PV prefix (e.g. SCHNDR_01)</description>
-            <default>SCHNDR_01</default>
-          </macro>
-        </macros>
       </value>
     </entry>
   </opis>
