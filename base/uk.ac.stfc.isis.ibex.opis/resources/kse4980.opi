@@ -184,7 +184,7 @@
       </scale_options>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
-      <text>A setpoint value:</text>
+      <text>Function:</text>
       <tooltip></tooltip>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -224,7 +224,7 @@
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT)FUNC</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -281,7 +281,7 @@ $(pv_value)</tooltip>
       <name>Text Input</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT)FUNC:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -304,6 +304,49 @@ $(pv_value)</tooltip>
       <wuid>42a4e86d:1871324cf3d:-7f4b</wuid>
       <x>216</x>
       <y>6</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <auto_size>false</auto_size>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <height>127</height>
+      <horizontal_alignment>1</horizontal_alignment>
+      <name>Label_2</name>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_scrollbar>false</show_scrollbar>
+      <text>Allowed: &#xD;
+{CPD|CPQ|CPG|CPRP|CSD|CSQ|CSRS|LPD|LPQ|LPG|LPRP|LPRD|LSD|LSQ|LSRS&#xD;
+|LSRD|RX|ZTD|ZTR|GB|YTD|YTR|VDID}</text>
+      <tooltip></tooltip>
+      <transparent>false</transparent>
+      <vertical_alignment>1</vertical_alignment>
+      <visible>true</visible>
+      <widget_type>Label</widget_type>
+      <width>247</width>
+      <wrap_words>true</wrap_words>
+      <wuid>42a4e86d:1871324cf3d:-7d8c</wuid>
+      <x>36</x>
+      <y>42</y>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -837,12 +880,12 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <format_type>2</format_type>
+      <format_type>0</format_type>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update</name>
       <precision>4</precision>
-      <precision_from_pv>true</precision_from_pv>
+      <precision_from_pv>false</precision_from_pv>
       <pv_name>$(PV_ROOT)PRIMARY</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -930,12 +973,12 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <format_type>2</format_type>
+      <format_type>0</format_type>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
       <name>Text Update</name>
       <precision>4</precision>
-      <precision_from_pv>true</precision_from_pv>
+      <precision_from_pv>false</precision_from_pv>
       <pv_name>$(PV_ROOT)SECONDARY</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
@@ -1936,5 +1979,79 @@ $(pv_value)</tooltip>
       <x>144</x>
       <y>72</y>
     </widget>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.symbol.multistate.MultistateMonitorWidget" version="1.0.0">
+    <actions hook="false" hook_all="false" />
+    <alarm_pulsing>false</alarm_pulsing>
+    <align_to_nearest_second>false</align_to_nearest_second>
+    <auto_size>true</auto_size>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <boolean_label_position>0</boolean_label_position>
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <crop_bottom>0</crop_bottom>
+    <crop_left>0</crop_left>
+    <crop_right>0</crop_right>
+    <crop_top>0</crop_top>
+    <degree>0</degree>
+    <enabled>true</enabled>
+    <flip_horizontal>false</flip_horizontal>
+    <flip_vertical>false</flip_vertical>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <height>100</height>
+    <image_file></image_file>
+    <items />
+    <items_from_pv>true</items_from_pv>
+    <name>Multistate Symbol Monitor</name>
+    <no_animation>false</no_animation>
+    <off_color>
+      <color red="255" green="0" blue="0" />
+    </off_color>
+    <on_color>
+      <color red="0" green="255" blue="0" />
+    </on_color>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <pv_name></pv_name>
+    <pv_value />
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <show_boolean_label>false</show_boolean_label>
+    <stretch_to_fit>false</stretch_to_fit>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <transparency>false</transparency>
+    <visible>true</visible>
+    <widget_type>Multistate Symbol Monitor</widget_type>
+    <width>100</width>
+    <wuid>42a4e86d:1871324cf3d:-7c49</wuid>
+    <x>433</x>
+    <y>638</y>
   </widget>
 </display>
