@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
-  <actions hook="false" hook_all="false" />
+  <actions hook="false" hook_all="false"/>
   <auto_scale_widgets>
     <auto_scale_widgets>false</auto_scale_widgets>
     <min_width>-1</min_width>
@@ -8,11 +8,11 @@
   </auto_scale_widgets>
   <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
   <background_color>
-    <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    <color name="ISIS_OPI_Background" red="240" green="240" blue="240"/>
   </background_color>
   <boy_version>5.1.0</boy_version>
   <foreground_color>
-    <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+    <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192"/>
   </foreground_color>
   <grid_space>6</grid_space>
   <height>600</height>
@@ -20,8 +20,8 @@
     <include_parent_macros>true</include_parent_macros>
   </macros>
   <name>$(NAME)</name>
-  <rules />
-  <scripts />
+  <rules/>
+  <scripts/>
   <show_close_button>true</show_close_button>
   <show_edit_range>true</show_edit_range>
   <show_grid>true</show_grid>
@@ -33,10 +33,10 @@
   <x>-1</x>
   <y>-1</y>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <border_color>
-      <color name="ISIS_Border" red="0" green="0" blue="0" />
+      <color name="ISIS_Border" red="0" green="0" blue="0"/>
     </border_color>
     <border_style>1</border_style>
     <border_width>3</border_width>
@@ -46,25 +46,25 @@
     </font>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
     </foreground_color>
     <height>1</height>
-    <image></image>
+    <image/>
     <name>Dummy</name>
     <push_action_index>0</push_action_index>
-    <pv_name></pv_name>
-    <pv_value />
-    <rules />
+    <pv_name/>
+    <pv_value/>
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <style>1</style>
-    <text></text>
+    <text/>
     <toggle_button>false</toggle_button>
-    <tooltip></tooltip>
+    <tooltip/>
     <visible>true</visible>
     <widget_type>Action Button</widget_type>
     <width>1</width>
@@ -73,10 +73,10 @@
     <y>40</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <border_color>
-      <color name="ISIS_Border" red="0" green="0" blue="0" />
+      <color name="ISIS_Border" red="0" green="0" blue="0"/>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
@@ -86,25 +86,25 @@
     </font>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
     </foreground_color>
     <height>1</height>
-    <image></image>
+    <image/>
     <name>Dummy</name>
     <push_action_index>0</push_action_index>
-    <pv_name></pv_name>
-    <pv_value />
-    <rules />
+    <pv_name/>
+    <pv_value/>
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <style>1</style>
-    <text></text>
+    <text/>
     <toggle_button>false</toggle_button>
-    <tooltip></tooltip>
+    <tooltip/>
     <visible>true</visible>
     <widget_type>Action Button</widget_type>
     <width>1</width>
@@ -113,10 +113,10 @@
     <y>121</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <border_color>
-      <color name="ISIS_Border" red="0" green="0" blue="0" />
+      <color name="ISIS_Border" red="0" green="0" blue="0"/>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
@@ -126,25 +126,25 @@
     </font>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
     </foreground_color>
     <height>1</height>
-    <image></image>
+    <image/>
     <name>Dummy</name>
     <push_action_index>0</push_action_index>
-    <pv_name></pv_name>
-    <pv_value />
-    <rules />
+    <pv_name/>
+    <pv_value/>
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <style>1</style>
-    <text></text>
+    <text/>
     <toggle_button>false</toggle_button>
-    <tooltip></tooltip>
+    <tooltip/>
     <visible>true</visible>
     <widget_type>Action Button</widget_type>
     <width>1</width>
@@ -153,26 +153,26 @@
     <y>102</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <alarm_pulsing>false</alarm_pulsing>
     <alpha>255</alpha>
     <anti_alias>true</anti_alias>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </background_color>
     <bg_gradient_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </bg_gradient_color>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <border_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </border_color>
     <border_style>1</border_style>
     <border_width>1</border_width>
     <enabled>true</enabled>
     <fg_gradient_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </fg_gradient_color>
     <fill_level>0.0</fill_level>
     <font>
@@ -180,26 +180,26 @@
     </font>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <foreground_color>
-      <color red="255" green="0" blue="0" />
+      <color red="255" green="0" blue="0"/>
     </foreground_color>
     <gradient>false</gradient>
     <height>24</height>
     <horizontal_fill>true</horizontal_fill>
     <line_color>
-      <color red="128" green="0" blue="255" />
+      <color red="128" green="0" blue="255"/>
     </line_color>
     <line_style>0</line_style>
     <line_width>0</line_width>
     <name>Port_Rectangle</name>
-    <pv_name></pv_name>
-    <pv_value />
-    <rules />
+    <pv_name/>
+    <pv_value/>
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <transparent>false</transparent>
@@ -211,35 +211,35 @@ $(pv_value)</tooltip>
     <y>23</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <auto_size>false</auto_size>
     <background_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </background_color>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
     <enabled>true</enabled>
     <font>
-      <fontdata fontName="Segoe UI" height="9" style="1" pixels="false" />
+      <fontdata fontName="Segoe UI" height="9" style="1" pixels="false"/>
     </font>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <height>20</height>
     <horizontal_alignment>0</horizontal_alignment>
     <name>Port_Label</name>
-    <rules />
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <text>Port $(PORT) PSU Overview</text>
-    <tooltip></tooltip>
+    <tooltip/>
     <transparent>true</transparent>
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
@@ -251,26 +251,26 @@ $(pv_value)</tooltip>
     <y>25</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <alarm_pulsing>false</alarm_pulsing>
     <alpha>255</alpha>
     <anti_alias>true</anti_alias>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color name="Header Background" red="94" green="151" blue="230" />
+      <color name="Header Background" red="94" green="151" blue="230"/>
     </background_color>
     <bg_gradient_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </bg_gradient_color>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <border_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </border_color>
     <border_style>1</border_style>
     <border_width>1</border_width>
     <enabled>true</enabled>
     <fg_gradient_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </fg_gradient_color>
     <fill_level>0.0</fill_level>
     <font>
@@ -278,26 +278,26 @@ $(pv_value)</tooltip>
     </font>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <foreground_color>
-      <color red="255" green="0" blue="0" />
+      <color red="255" green="0" blue="0"/>
     </foreground_color>
     <gradient>false</gradient>
     <height>22</height>
     <horizontal_fill>true</horizontal_fill>
     <line_color>
-      <color red="128" green="0" blue="255" />
+      <color red="128" green="0" blue="255"/>
     </line_color>
     <line_style>0</line_style>
     <line_width>0</line_width>
     <name>Setpoint_Rectangle</name>
-    <pv_name></pv_name>
-    <pv_value />
-    <rules />
+    <pv_name/>
+    <pv_value/>
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <transparent>false</transparent>
@@ -309,26 +309,26 @@ $(pv_value)</tooltip>
     <y>46</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <alarm_pulsing>false</alarm_pulsing>
     <alpha>255</alpha>
     <anti_alias>true</anti_alias>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color name="Header Background" red="94" green="151" blue="230" />
+      <color name="Header Background" red="94" green="151" blue="230"/>
     </background_color>
     <bg_gradient_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </bg_gradient_color>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <border_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </border_color>
     <border_style>1</border_style>
     <border_width>1</border_width>
     <enabled>true</enabled>
     <fg_gradient_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </fg_gradient_color>
     <fill_level>0.0</fill_level>
     <font>
@@ -336,26 +336,26 @@ $(pv_value)</tooltip>
     </font>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <foreground_color>
-      <color red="255" green="0" blue="0" />
+      <color red="255" green="0" blue="0"/>
     </foreground_color>
     <gradient>false</gradient>
     <height>22</height>
     <horizontal_fill>true</horizontal_fill>
     <line_color>
-      <color red="128" green="0" blue="255" />
+      <color red="128" green="0" blue="255"/>
     </line_color>
     <line_style>0</line_style>
     <line_width>0</line_width>
     <name>Readback_Rectangle</name>
-    <pv_name></pv_name>
-    <pv_value />
-    <rules />
+    <pv_name/>
+    <pv_value/>
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <transparent>false</transparent>
@@ -367,26 +367,26 @@ $(pv_value)</tooltip>
     <y>46</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <alarm_pulsing>false</alarm_pulsing>
     <alpha>255</alpha>
     <anti_alias>true</anti_alias>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color name="Header Background" red="94" green="151" blue="230" />
+      <color name="Header Background" red="94" green="151" blue="230"/>
     </background_color>
     <bg_gradient_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </bg_gradient_color>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <border_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </border_color>
     <border_style>1</border_style>
     <border_width>1</border_width>
     <enabled>true</enabled>
     <fg_gradient_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </fg_gradient_color>
     <fill_level>0.0</fill_level>
     <font>
@@ -394,26 +394,26 @@ $(pv_value)</tooltip>
     </font>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <foreground_color>
-      <color red="255" green="0" blue="0" />
+      <color red="255" green="0" blue="0"/>
     </foreground_color>
     <gradient>false</gradient>
     <height>22</height>
     <horizontal_fill>true</horizontal_fill>
     <line_color>
-      <color red="128" green="0" blue="255" />
+      <color red="128" green="0" blue="255"/>
     </line_color>
     <line_style>0</line_style>
     <line_width>0</line_width>
     <name>Polarity_Rectangle</name>
-    <pv_name></pv_name>
-    <pv_value />
-    <rules />
+    <pv_name/>
+    <pv_value/>
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <transparent>false</transparent>
@@ -425,26 +425,26 @@ $(pv_value)</tooltip>
     <y>46</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <alarm_pulsing>false</alarm_pulsing>
     <alpha>255</alpha>
     <anti_alias>true</anti_alias>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color name="Header Background" red="94" green="151" blue="230" />
+      <color name="Header Background" red="94" green="151" blue="230"/>
     </background_color>
     <bg_gradient_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </bg_gradient_color>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <border_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </border_color>
     <border_style>1</border_style>
     <border_width>1</border_width>
     <enabled>true</enabled>
     <fg_gradient_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </fg_gradient_color>
     <fill_level>0.0</fill_level>
     <font>
@@ -452,26 +452,26 @@ $(pv_value)</tooltip>
     </font>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <foreground_color>
-      <color red="255" green="0" blue="0" />
+      <color red="255" green="0" blue="0"/>
     </foreground_color>
     <gradient>false</gradient>
     <height>22</height>
     <horizontal_fill>true</horizontal_fill>
     <line_color>
-      <color red="128" green="0" blue="255" />
+      <color red="128" green="0" blue="255"/>
     </line_color>
     <line_style>0</line_style>
     <line_width>0</line_width>
     <name>Interlock_Rectangle</name>
-    <pv_name></pv_name>
-    <pv_value />
-    <rules />
+    <pv_name/>
+    <pv_value/>
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <transparent>false</transparent>
@@ -483,26 +483,26 @@ $(pv_value)</tooltip>
     <y>46</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <alarm_pulsing>false</alarm_pulsing>
     <alpha>255</alpha>
     <anti_alias>true</anti_alias>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color name="Header Background" red="94" green="151" blue="230" />
+      <color name="Header Background" red="94" green="151" blue="230"/>
     </background_color>
     <bg_gradient_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </bg_gradient_color>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <border_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </border_color>
     <border_style>1</border_style>
     <border_width>1</border_width>
     <enabled>true</enabled>
     <fg_gradient_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </fg_gradient_color>
     <fill_level>0.0</fill_level>
     <font>
@@ -510,26 +510,26 @@ $(pv_value)</tooltip>
     </font>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <foreground_color>
-      <color red="255" green="0" blue="0" />
+      <color red="255" green="0" blue="0"/>
     </foreground_color>
     <gradient>false</gradient>
     <height>22</height>
     <horizontal_fill>true</horizontal_fill>
     <line_color>
-      <color red="128" green="0" blue="255" />
+      <color red="128" green="0" blue="255"/>
     </line_color>
     <line_style>0</line_style>
     <line_width>0</line_width>
     <name>Alarm_Rectangle</name>
-    <pv_name></pv_name>
-    <pv_value />
-    <rules />
+    <pv_name/>
+    <pv_value/>
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <transparent>false</transparent>
@@ -541,13 +541,13 @@ $(pv_value)</tooltip>
     <y>46</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <auto_size>false</auto_size>
     <background_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </background_color>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
@@ -556,20 +556,20 @@ $(pv_value)</tooltip>
       <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">Default Bold</opifont.name>
     </font>
     <foreground_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </foreground_color>
     <height>43</height>
     <horizontal_alignment>1</horizontal_alignment>
     <name>Setpoint_Label</name>
-    <rules />
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <text>Setpoint</text>
-    <tooltip></tooltip>
+    <tooltip/>
     <transparent>true</transparent>
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
@@ -581,13 +581,13 @@ $(pv_value)</tooltip>
     <y>35</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <auto_size>false</auto_size>
     <background_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </background_color>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
@@ -596,20 +596,20 @@ $(pv_value)</tooltip>
       <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">Default Bold</opifont.name>
     </font>
     <foreground_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </foreground_color>
     <height>43</height>
     <horizontal_alignment>1</horizontal_alignment>
     <name>Readback_Label</name>
-    <rules />
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <text>Readback</text>
-    <tooltip></tooltip>
+    <tooltip/>
     <transparent>true</transparent>
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
@@ -621,13 +621,13 @@ $(pv_value)</tooltip>
     <y>35</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <auto_size>false</auto_size>
     <background_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </background_color>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
@@ -636,20 +636,20 @@ $(pv_value)</tooltip>
       <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">Default Bold</opifont.name>
     </font>
     <foreground_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </foreground_color>
     <height>43</height>
     <horizontal_alignment>1</horizontal_alignment>
     <name>Polarity_Label</name>
-    <rules />
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <text>Polarity</text>
-    <tooltip></tooltip>
+    <tooltip/>
     <transparent>true</transparent>
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
@@ -661,13 +661,13 @@ $(pv_value)</tooltip>
     <y>35</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <auto_size>false</auto_size>
     <background_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </background_color>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
@@ -676,20 +676,20 @@ $(pv_value)</tooltip>
       <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">Default Bold</opifont.name>
     </font>
     <foreground_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </foreground_color>
     <height>43</height>
     <horizontal_alignment>1</horizontal_alignment>
     <name>Interlock_Label</name>
-    <rules />
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <text>Interlock</text>
-    <tooltip></tooltip>
+    <tooltip/>
     <transparent>true</transparent>
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
@@ -701,13 +701,13 @@ $(pv_value)</tooltip>
     <y>35</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <auto_size>false</auto_size>
     <background_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </background_color>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
@@ -716,20 +716,20 @@ $(pv_value)</tooltip>
       <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">Default Bold</opifont.name>
     </font>
     <foreground_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </foreground_color>
     <height>43</height>
     <horizontal_alignment>1</horizontal_alignment>
     <name>Alarm_Label</name>
-    <rules />
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <text>Alarm</text>
-    <tooltip></tooltip>
+    <tooltip/>
     <transparent>true</transparent>
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
@@ -741,12 +741,12 @@ $(pv_value)</tooltip>
     <y>35</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
@@ -756,7 +756,7 @@ $(pv_value)</tooltip>
       <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
     </font>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
     <height>33</height>
     <lock_children>false</lock_children>
@@ -766,15 +766,15 @@ $(pv_value)</tooltip>
       <PSU_PREFIX>DFKPS_01</PSU_PREFIX>
     </macros>
     <name>PSU_1</name>
-    <rules />
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <show_scrollbar>false</show_scrollbar>
-    <tooltip></tooltip>
+    <tooltip/>
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
@@ -783,12 +783,12 @@ $(pv_value)</tooltip>
     <x>0</x>
     <y>67</y>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <background_color>
-        <color red="240" green="240" blue="240" />
+        <color red="240" green="240" blue="240"/>
       </background_color>
       <border_color>
-        <color red="0" green="128" blue="255" />
+        <color red="0" green="128" blue="255"/>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
@@ -797,9 +797,9 @@ $(pv_value)</tooltip>
         <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
       </font>
       <foreground_color>
-        <color red="192" green="192" blue="192" />
+        <color red="192" green="192" blue="192"/>
       </foreground_color>
-      <group_name></group_name>
+      <group_name/>
       <height>32</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -807,14 +807,14 @@ $(pv_value)</tooltip>
       <name>PSU_1_Linking_Container</name>
       <opi_file>indiviudal_port_row.opi</opi_file>
       <resize_behaviour>1</resize_behaviour>
-      <rules />
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
-      <tooltip></tooltip>
+      <scripts/>
+      <tooltip/>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
       <width>507</width>
@@ -823,26 +823,26 @@ $(pv_value)</tooltip>
       <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <alarm_pulsing>false</alarm_pulsing>
       <alpha>255</alpha>
       <anti_alias>true</anti_alias>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="192" green="192" blue="192" />
+        <color red="192" green="192" blue="192"/>
       </background_color>
       <bg_gradient_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </bg_gradient_color>
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <border_color>
-        <color red="0" green="0" blue="0" />
+        <color red="0" green="0" blue="0"/>
       </border_color>
       <border_style>1</border_style>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <fg_gradient_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </fg_gradient_color>
       <fill_level>0.0</fill_level>
       <font>
@@ -850,26 +850,26 @@ $(pv_value)</tooltip>
       </font>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
-        <color red="255" green="0" blue="0" />
+        <color red="255" green="0" blue="0"/>
       </foreground_color>
       <gradient>false</gradient>
       <height>20</height>
       <horizontal_fill>true</horizontal_fill>
       <line_color>
-        <color red="128" green="0" blue="255" />
+        <color red="128" green="0" blue="255"/>
       </line_color>
       <line_style>0</line_style>
       <line_width>0</line_width>
       <name>PSU_1_Rectangle</name>
-      <pv_name></pv_name>
-      <pv_value />
-      <rules />
+      <pv_name/>
+      <pv_value/>
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts/>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <transparent>false</transparent>
@@ -890,37 +890,37 @@ $(pv_value)</tooltip>
             <NAME>$(PSU_NAME)</NAME>
           </macros>
           <mode>3</mode>
-          <description></description>
+          <description/>
         </action>
       </actions>
       <auto_size>false</auto_size>
       <background_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </background_color>
       <border_color>
-        <color red="0" green="128" blue="255" />
+        <color red="0" green="128" blue="255"/>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <fontdata fontName="Segoe UI Semibold" height="9" style="0" pixels="false" />
+        <fontdata fontName="Segoe UI Semibold" height="9" style="0" pixels="false"/>
       </font>
       <foreground_color>
-        <color red="0" green="0" blue="0" />
+        <color red="0" green="0" blue="0"/>
       </foreground_color>
       <height>20</height>
       <horizontal_alignment>1</horizontal_alignment>
       <name>PSU_1_Label</name>
-      <rules />
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts/>
       <text>$(PSU_NAME)</text>
-      <tooltip></tooltip>
+      <tooltip/>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
@@ -933,12 +933,12 @@ $(pv_value)</tooltip>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
@@ -948,7 +948,7 @@ $(pv_value)</tooltip>
       <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
     </font>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
     <height>20</height>
     <lock_children>false</lock_children>
@@ -958,15 +958,15 @@ $(pv_value)</tooltip>
       <PSU_PREFIX>DFKPS_06</PSU_PREFIX>
     </macros>
     <name>PSU_2</name>
-    <rules />
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <show_scrollbar>false</show_scrollbar>
-    <tooltip></tooltip>
+    <tooltip/>
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
@@ -975,12 +975,12 @@ $(pv_value)</tooltip>
     <x>0</x>
     <y>84</y>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <background_color>
-        <color red="240" green="240" blue="240" />
+        <color red="240" green="240" blue="240"/>
       </background_color>
       <border_color>
-        <color red="0" green="128" blue="255" />
+        <color red="0" green="128" blue="255"/>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
@@ -989,9 +989,9 @@ $(pv_value)</tooltip>
         <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
       </font>
       <foreground_color>
-        <color red="192" green="192" blue="192" />
+        <color red="192" green="192" blue="192"/>
       </foreground_color>
-      <group_name></group_name>
+      <group_name/>
       <height>32</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -999,14 +999,14 @@ $(pv_value)</tooltip>
       <name>PSU_2_Linking_Container</name>
       <opi_file>indiviudal_port_row.opi</opi_file>
       <resize_behaviour>1</resize_behaviour>
-      <rules />
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
-      <tooltip></tooltip>
+      <scripts/>
+      <tooltip/>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
       <width>507</width>
@@ -1015,26 +1015,26 @@ $(pv_value)</tooltip>
       <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <alarm_pulsing>false</alarm_pulsing>
       <alpha>255</alpha>
       <anti_alias>true</anti_alias>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="192" green="192" blue="192" />
+        <color red="192" green="192" blue="192"/>
       </background_color>
       <bg_gradient_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </bg_gradient_color>
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <border_color>
-        <color red="0" green="0" blue="0" />
+        <color red="0" green="0" blue="0"/>
       </border_color>
       <border_style>1</border_style>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <fg_gradient_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </fg_gradient_color>
       <fill_level>0.0</fill_level>
       <font>
@@ -1042,26 +1042,26 @@ $(pv_value)</tooltip>
       </font>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
-        <color red="255" green="0" blue="0" />
+        <color red="255" green="0" blue="0"/>
       </foreground_color>
       <gradient>false</gradient>
       <height>20</height>
       <horizontal_fill>true</horizontal_fill>
       <line_color>
-        <color red="128" green="0" blue="255" />
+        <color red="128" green="0" blue="255"/>
       </line_color>
       <line_style>0</line_style>
       <line_width>0</line_width>
       <name>PSU_2_Rectangle</name>
-      <pv_name></pv_name>
-      <pv_value />
-      <rules />
+      <pv_name/>
+      <pv_value/>
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts/>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <transparent>false</transparent>
@@ -1082,37 +1082,37 @@ $(pv_value)</tooltip>
             <NAME>$(PSU_NAME)</NAME>
           </macros>
           <mode>3</mode>
-          <description></description>
+          <description/>
         </action>
       </actions>
       <auto_size>false</auto_size>
       <background_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </background_color>
       <border_color>
-        <color red="0" green="128" blue="255" />
+        <color red="0" green="128" blue="255"/>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <fontdata fontName="Segoe UI Semibold" height="9" style="0" pixels="false" />
+        <fontdata fontName="Segoe UI Semibold" height="9" style="0" pixels="false"/>
       </font>
       <foreground_color>
-        <color red="0" green="0" blue="0" />
+        <color red="0" green="0" blue="0"/>
       </foreground_color>
       <height>20</height>
       <horizontal_alignment>1</horizontal_alignment>
       <name>PSU_2_Label</name>
-      <rules />
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts/>
       <text>$(PSU_NAME)</text>
-      <tooltip></tooltip>
+      <tooltip/>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
@@ -1125,12 +1125,12 @@ $(pv_value)</tooltip>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
@@ -1140,7 +1140,7 @@ $(pv_value)</tooltip>
       <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
     </font>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
     <height>33</height>
     <lock_children>false</lock_children>
@@ -1150,15 +1150,15 @@ $(pv_value)</tooltip>
       <PSU_PREFIX>DFKPS_02</PSU_PREFIX>
     </macros>
     <name>PSU_3</name>
-    <rules />
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <show_scrollbar>false</show_scrollbar>
-    <tooltip></tooltip>
+    <tooltip/>
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
@@ -1167,12 +1167,12 @@ $(pv_value)</tooltip>
     <x>0</x>
     <y>102</y>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <background_color>
-        <color red="240" green="240" blue="240" />
+        <color red="240" green="240" blue="240"/>
       </background_color>
       <border_color>
-        <color red="0" green="128" blue="255" />
+        <color red="0" green="128" blue="255"/>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
@@ -1181,9 +1181,9 @@ $(pv_value)</tooltip>
         <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
       </font>
       <foreground_color>
-        <color red="192" green="192" blue="192" />
+        <color red="192" green="192" blue="192"/>
       </foreground_color>
-      <group_name></group_name>
+      <group_name/>
       <height>32</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -1191,14 +1191,14 @@ $(pv_value)</tooltip>
       <name>PSU_3_Linking_Container</name>
       <opi_file>indiviudal_port_row.opi</opi_file>
       <resize_behaviour>1</resize_behaviour>
-      <rules />
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
-      <tooltip></tooltip>
+      <scripts/>
+      <tooltip/>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
       <width>507</width>
@@ -1207,26 +1207,26 @@ $(pv_value)</tooltip>
       <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <alarm_pulsing>false</alarm_pulsing>
       <alpha>255</alpha>
       <anti_alias>true</anti_alias>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="192" green="192" blue="192" />
+        <color red="192" green="192" blue="192"/>
       </background_color>
       <bg_gradient_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </bg_gradient_color>
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <border_color>
-        <color red="0" green="0" blue="0" />
+        <color red="0" green="0" blue="0"/>
       </border_color>
       <border_style>1</border_style>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <fg_gradient_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </fg_gradient_color>
       <fill_level>0.0</fill_level>
       <font>
@@ -1234,26 +1234,26 @@ $(pv_value)</tooltip>
       </font>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
-        <color red="255" green="0" blue="0" />
+        <color red="255" green="0" blue="0"/>
       </foreground_color>
       <gradient>false</gradient>
       <height>20</height>
       <horizontal_fill>true</horizontal_fill>
       <line_color>
-        <color red="128" green="0" blue="255" />
+        <color red="128" green="0" blue="255"/>
       </line_color>
       <line_style>0</line_style>
       <line_width>0</line_width>
       <name>PSU_3_Rectangle</name>
-      <pv_name></pv_name>
-      <pv_value />
-      <rules />
+      <pv_name/>
+      <pv_value/>
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts/>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <transparent>false</transparent>
@@ -1274,37 +1274,37 @@ $(pv_value)</tooltip>
             <NAME>$(PSU_NAME)</NAME>
           </macros>
           <mode>3</mode>
-          <description></description>
+          <description/>
         </action>
       </actions>
       <auto_size>false</auto_size>
       <background_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </background_color>
       <border_color>
-        <color red="0" green="128" blue="255" />
+        <color red="0" green="128" blue="255"/>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <fontdata fontName="Segoe UI Semibold" height="9" style="0" pixels="false" />
+        <fontdata fontName="Segoe UI Semibold" height="9" style="0" pixels="false"/>
       </font>
       <foreground_color>
-        <color red="0" green="0" blue="0" />
+        <color red="0" green="0" blue="0"/>
       </foreground_color>
       <height>20</height>
       <horizontal_alignment>1</horizontal_alignment>
       <name>PSU_3_Label</name>
-      <rules />
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts/>
       <text>$(PSU_NAME)</text>
-      <tooltip></tooltip>
+      <tooltip/>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
@@ -1317,12 +1317,12 @@ $(pv_value)</tooltip>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
@@ -1332,7 +1332,7 @@ $(pv_value)</tooltip>
       <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
     </font>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
     <height>33</height>
     <lock_children>false</lock_children>
@@ -1342,15 +1342,15 @@ $(pv_value)</tooltip>
       <PSU_PREFIX>DFKPS_21</PSU_PREFIX>
     </macros>
     <name>PSU_4</name>
-    <rules />
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <show_scrollbar>false</show_scrollbar>
-    <tooltip></tooltip>
+    <tooltip/>
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
@@ -1359,12 +1359,12 @@ $(pv_value)</tooltip>
     <x>0</x>
     <y>120</y>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <background_color>
-        <color red="240" green="240" blue="240" />
+        <color red="240" green="240" blue="240"/>
       </background_color>
       <border_color>
-        <color red="0" green="128" blue="255" />
+        <color red="0" green="128" blue="255"/>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
@@ -1373,9 +1373,9 @@ $(pv_value)</tooltip>
         <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
       </font>
       <foreground_color>
-        <color red="192" green="192" blue="192" />
+        <color red="192" green="192" blue="192"/>
       </foreground_color>
-      <group_name></group_name>
+      <group_name/>
       <height>32</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -1383,14 +1383,14 @@ $(pv_value)</tooltip>
       <name>PSU_4_Linking_Container</name>
       <opi_file>indiviudal_port_row.opi</opi_file>
       <resize_behaviour>1</resize_behaviour>
-      <rules />
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
-      <tooltip></tooltip>
+      <scripts/>
+      <tooltip/>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
       <width>507</width>
@@ -1399,26 +1399,26 @@ $(pv_value)</tooltip>
       <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <alarm_pulsing>false</alarm_pulsing>
       <alpha>255</alpha>
       <anti_alias>true</anti_alias>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="192" green="192" blue="192" />
+        <color red="192" green="192" blue="192"/>
       </background_color>
       <bg_gradient_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </bg_gradient_color>
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <border_color>
-        <color red="0" green="0" blue="0" />
+        <color red="0" green="0" blue="0"/>
       </border_color>
       <border_style>1</border_style>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <fg_gradient_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </fg_gradient_color>
       <fill_level>0.0</fill_level>
       <font>
@@ -1426,26 +1426,26 @@ $(pv_value)</tooltip>
       </font>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
-        <color red="255" green="0" blue="0" />
+        <color red="255" green="0" blue="0"/>
       </foreground_color>
       <gradient>false</gradient>
       <height>20</height>
       <horizontal_fill>true</horizontal_fill>
       <line_color>
-        <color red="128" green="0" blue="255" />
+        <color red="128" green="0" blue="255"/>
       </line_color>
       <line_style>0</line_style>
       <line_width>0</line_width>
       <name>PSU_4_Rectangle</name>
-      <pv_name></pv_name>
-      <pv_value />
-      <rules />
+      <pv_name/>
+      <pv_value/>
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts/>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <transparent>false</transparent>
@@ -1466,37 +1466,37 @@ $(pv_value)</tooltip>
             <NAME>$(PSU_NAME)</NAME>
           </macros>
           <mode>3</mode>
-          <description></description>
+          <description/>
         </action>
       </actions>
       <auto_size>false</auto_size>
       <background_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </background_color>
       <border_color>
-        <color red="0" green="128" blue="255" />
+        <color red="0" green="128" blue="255"/>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <fontdata fontName="Segoe UI Semibold" height="9" style="0" pixels="false" />
+        <fontdata fontName="Segoe UI Semibold" height="9" style="0" pixels="false"/>
       </font>
       <foreground_color>
-        <color red="0" green="0" blue="0" />
+        <color red="0" green="0" blue="0"/>
       </foreground_color>
       <height>20</height>
       <horizontal_alignment>1</horizontal_alignment>
       <name>PSU_4_Label</name>
-      <rules />
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts/>
       <text>$(PSU_NAME)</text>
-      <tooltip></tooltip>
+      <tooltip/>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
@@ -1509,12 +1509,12 @@ $(pv_value)</tooltip>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
@@ -1524,7 +1524,7 @@ $(pv_value)</tooltip>
       <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
     </font>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
     <height>33</height>
     <lock_children>false</lock_children>
@@ -1534,15 +1534,15 @@ $(pv_value)</tooltip>
       <PSU_PREFIX>DFKPS_23</PSU_PREFIX>
     </macros>
     <name>PSU_5</name>
-    <rules />
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <show_scrollbar>false</show_scrollbar>
-    <tooltip></tooltip>
+    <tooltip/>
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
@@ -1551,12 +1551,12 @@ $(pv_value)</tooltip>
     <x>0</x>
     <y>138</y>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <background_color>
-        <color red="240" green="240" blue="240" />
+        <color red="240" green="240" blue="240"/>
       </background_color>
       <border_color>
-        <color red="0" green="128" blue="255" />
+        <color red="0" green="128" blue="255"/>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
@@ -1565,9 +1565,9 @@ $(pv_value)</tooltip>
         <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
       </font>
       <foreground_color>
-        <color red="192" green="192" blue="192" />
+        <color red="192" green="192" blue="192"/>
       </foreground_color>
-      <group_name></group_name>
+      <group_name/>
       <height>32</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -1575,14 +1575,14 @@ $(pv_value)</tooltip>
       <name>PSU_5_Linking_Container</name>
       <opi_file>indiviudal_port_row.opi</opi_file>
       <resize_behaviour>1</resize_behaviour>
-      <rules />
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
-      <tooltip></tooltip>
+      <scripts/>
+      <tooltip/>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
       <width>507</width>
@@ -1591,26 +1591,26 @@ $(pv_value)</tooltip>
       <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <alarm_pulsing>false</alarm_pulsing>
       <alpha>255</alpha>
       <anti_alias>true</anti_alias>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="192" green="192" blue="192" />
+        <color red="192" green="192" blue="192"/>
       </background_color>
       <bg_gradient_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </bg_gradient_color>
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <border_color>
-        <color red="0" green="0" blue="0" />
+        <color red="0" green="0" blue="0"/>
       </border_color>
       <border_style>1</border_style>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <fg_gradient_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </fg_gradient_color>
       <fill_level>0.0</fill_level>
       <font>
@@ -1618,26 +1618,26 @@ $(pv_value)</tooltip>
       </font>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
-        <color red="255" green="0" blue="0" />
+        <color red="255" green="0" blue="0"/>
       </foreground_color>
       <gradient>false</gradient>
       <height>20</height>
       <horizontal_fill>true</horizontal_fill>
       <line_color>
-        <color red="128" green="0" blue="255" />
+        <color red="128" green="0" blue="255"/>
       </line_color>
       <line_style>0</line_style>
       <line_width>0</line_width>
       <name>PSU_5_Rectangle</name>
-      <pv_name></pv_name>
-      <pv_value />
-      <rules />
+      <pv_name/>
+      <pv_value/>
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts/>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <transparent>false</transparent>
@@ -1658,37 +1658,37 @@ $(pv_value)</tooltip>
             <NAME>$(PSU_NAME)</NAME>
           </macros>
           <mode>3</mode>
-          <description></description>
+          <description/>
         </action>
       </actions>
       <auto_size>false</auto_size>
       <background_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </background_color>
       <border_color>
-        <color red="0" green="128" blue="255" />
+        <color red="0" green="128" blue="255"/>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <fontdata fontName="Segoe UI Semibold" height="9" style="0" pixels="false" />
+        <fontdata fontName="Segoe UI Semibold" height="9" style="0" pixels="false"/>
       </font>
       <foreground_color>
-        <color red="0" green="0" blue="0" />
+        <color red="0" green="0" blue="0"/>
       </foreground_color>
       <height>20</height>
       <horizontal_alignment>1</horizontal_alignment>
       <name>PSU_5_Label</name>
-      <rules />
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts/>
       <text>$(PSU_NAME)</text>
-      <tooltip></tooltip>
+      <tooltip/>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
@@ -1701,12 +1701,12 @@ $(pv_value)</tooltip>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
@@ -1716,7 +1716,7 @@ $(pv_value)</tooltip>
       <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
     </font>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
     <height>33</height>
     <lock_children>false</lock_children>
@@ -1726,15 +1726,15 @@ $(pv_value)</tooltip>
       <PSU_PREFIX>DFKPS_24</PSU_PREFIX>
     </macros>
     <name>PSU_6</name>
-    <rules />
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <show_scrollbar>false</show_scrollbar>
-    <tooltip></tooltip>
+    <tooltip/>
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
@@ -1743,12 +1743,12 @@ $(pv_value)</tooltip>
     <x>0</x>
     <y>156</y>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <background_color>
-        <color red="240" green="240" blue="240" />
+        <color red="240" green="240" blue="240"/>
       </background_color>
       <border_color>
-        <color red="0" green="128" blue="255" />
+        <color red="0" green="128" blue="255"/>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
@@ -1757,9 +1757,9 @@ $(pv_value)</tooltip>
         <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
       </font>
       <foreground_color>
-        <color red="192" green="192" blue="192" />
+        <color red="192" green="192" blue="192"/>
       </foreground_color>
-      <group_name></group_name>
+      <group_name/>
       <height>32</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -1767,14 +1767,14 @@ $(pv_value)</tooltip>
       <name>PSU_6_Linking_Container</name>
       <opi_file>indiviudal_port_row.opi</opi_file>
       <resize_behaviour>1</resize_behaviour>
-      <rules />
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
-      <tooltip></tooltip>
+      <scripts/>
+      <tooltip/>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
       <width>507</width>
@@ -1783,26 +1783,26 @@ $(pv_value)</tooltip>
       <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <alarm_pulsing>false</alarm_pulsing>
       <alpha>255</alpha>
       <anti_alias>true</anti_alias>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="192" green="192" blue="192" />
+        <color red="192" green="192" blue="192"/>
       </background_color>
       <bg_gradient_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </bg_gradient_color>
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <border_color>
-        <color red="0" green="0" blue="0" />
+        <color red="0" green="0" blue="0"/>
       </border_color>
       <border_style>1</border_style>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <fg_gradient_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </fg_gradient_color>
       <fill_level>0.0</fill_level>
       <font>
@@ -1810,26 +1810,26 @@ $(pv_value)</tooltip>
       </font>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
-        <color red="255" green="0" blue="0" />
+        <color red="255" green="0" blue="0"/>
       </foreground_color>
       <gradient>false</gradient>
       <height>20</height>
       <horizontal_fill>true</horizontal_fill>
       <line_color>
-        <color red="128" green="0" blue="255" />
+        <color red="128" green="0" blue="255"/>
       </line_color>
       <line_style>0</line_style>
       <line_width>0</line_width>
       <name>PSU_6_Rectangle</name>
-      <pv_name></pv_name>
-      <pv_value />
-      <rules />
+      <pv_name/>
+      <pv_value/>
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts/>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <transparent>false</transparent>
@@ -1850,37 +1850,37 @@ $(pv_value)</tooltip>
             <NAME>$(PSU_NAME)</NAME>
           </macros>
           <mode>3</mode>
-          <description></description>
+          <description/>
         </action>
       </actions>
       <auto_size>false</auto_size>
       <background_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </background_color>
       <border_color>
-        <color red="0" green="128" blue="255" />
+        <color red="0" green="128" blue="255"/>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <fontdata fontName="Segoe UI Semibold" height="9" style="0" pixels="false" />
+        <fontdata fontName="Segoe UI Semibold" height="9" style="0" pixels="false"/>
       </font>
       <foreground_color>
-        <color red="0" green="0" blue="0" />
+        <color red="0" green="0" blue="0"/>
       </foreground_color>
       <height>20</height>
       <horizontal_alignment>1</horizontal_alignment>
       <name>PSU_6_Label</name>
-      <rules />
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts/>
       <text>$(PSU_NAME)</text>
-      <tooltip></tooltip>
+      <tooltip/>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
@@ -1893,12 +1893,12 @@ $(pv_value)</tooltip>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
@@ -1908,7 +1908,7 @@ $(pv_value)</tooltip>
       <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
     </font>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
     <height>33</height>
     <lock_children>false</lock_children>
@@ -1918,15 +1918,15 @@ $(pv_value)</tooltip>
       <PSU_PREFIX>DFKPS_27</PSU_PREFIX>
     </macros>
     <name>PSU_7</name>
-    <rules />
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <show_scrollbar>false</show_scrollbar>
-    <tooltip></tooltip>
+    <tooltip/>
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
@@ -1935,12 +1935,12 @@ $(pv_value)</tooltip>
     <x>0</x>
     <y>174</y>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <background_color>
-        <color red="240" green="240" blue="240" />
+        <color red="240" green="240" blue="240"/>
       </background_color>
       <border_color>
-        <color red="0" green="128" blue="255" />
+        <color red="0" green="128" blue="255"/>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
@@ -1949,9 +1949,9 @@ $(pv_value)</tooltip>
         <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
       </font>
       <foreground_color>
-        <color red="192" green="192" blue="192" />
+        <color red="192" green="192" blue="192"/>
       </foreground_color>
-      <group_name></group_name>
+      <group_name/>
       <height>32</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -1959,14 +1959,14 @@ $(pv_value)</tooltip>
       <name>PSU_7_Linking_Container</name>
       <opi_file>indiviudal_port_row.opi</opi_file>
       <resize_behaviour>1</resize_behaviour>
-      <rules />
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
-      <tooltip></tooltip>
+      <scripts/>
+      <tooltip/>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
       <width>507</width>
@@ -1975,26 +1975,26 @@ $(pv_value)</tooltip>
       <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <alarm_pulsing>false</alarm_pulsing>
       <alpha>255</alpha>
       <anti_alias>true</anti_alias>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="192" green="192" blue="192" />
+        <color red="192" green="192" blue="192"/>
       </background_color>
       <bg_gradient_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </bg_gradient_color>
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <border_color>
-        <color red="0" green="0" blue="0" />
+        <color red="0" green="0" blue="0"/>
       </border_color>
       <border_style>1</border_style>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <fg_gradient_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </fg_gradient_color>
       <fill_level>0.0</fill_level>
       <font>
@@ -2002,26 +2002,26 @@ $(pv_value)</tooltip>
       </font>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
-        <color red="255" green="0" blue="0" />
+        <color red="255" green="0" blue="0"/>
       </foreground_color>
       <gradient>false</gradient>
       <height>20</height>
       <horizontal_fill>true</horizontal_fill>
       <line_color>
-        <color red="128" green="0" blue="255" />
+        <color red="128" green="0" blue="255"/>
       </line_color>
       <line_style>0</line_style>
       <line_width>0</line_width>
       <name>PSU_7_Rectangle</name>
-      <pv_name></pv_name>
-      <pv_value />
-      <rules />
+      <pv_name/>
+      <pv_value/>
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts/>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <transparent>false</transparent>
@@ -2042,37 +2042,37 @@ $(pv_value)</tooltip>
             <NAME>$(PSU_NAME)</NAME>
           </macros>
           <mode>3</mode>
-          <description></description>
+          <description/>
         </action>
       </actions>
       <auto_size>false</auto_size>
       <background_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </background_color>
       <border_color>
-        <color red="0" green="128" blue="255" />
+        <color red="0" green="128" blue="255"/>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <fontdata fontName="Segoe UI Semibold" height="9" style="0" pixels="false" />
+        <fontdata fontName="Segoe UI Semibold" height="9" style="0" pixels="false"/>
       </font>
       <foreground_color>
-        <color red="0" green="0" blue="0" />
+        <color red="0" green="0" blue="0"/>
       </foreground_color>
       <height>20</height>
       <horizontal_alignment>1</horizontal_alignment>
       <name>PSU_7_Label</name>
-      <rules />
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts/>
       <text>$(PSU_NAME)</text>
-      <tooltip></tooltip>
+      <tooltip/>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
@@ -2085,12 +2085,12 @@ $(pv_value)</tooltip>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
@@ -2100,7 +2100,7 @@ $(pv_value)</tooltip>
       <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
     </font>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
     <height>32</height>
     <lock_children>false</lock_children>
@@ -2109,15 +2109,15 @@ $(pv_value)</tooltip>
       <PSU_NAME>Kicker</PSU_NAME>
     </macros>
     <name>PSU_8</name>
-    <rules />
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <show_scrollbar>false</show_scrollbar>
-    <tooltip></tooltip>
+    <tooltip/>
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
@@ -2126,12 +2126,12 @@ $(pv_value)</tooltip>
     <x>0</x>
     <y>192</y>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <background_color>
-        <color red="240" green="240" blue="240" />
+        <color red="240" green="240" blue="240"/>
       </background_color>
       <border_color>
-        <color red="0" green="128" blue="255" />
+        <color red="0" green="128" blue="255"/>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
@@ -2140,9 +2140,9 @@ $(pv_value)</tooltip>
         <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
       </font>
       <foreground_color>
-        <color red="192" green="192" blue="192" />
+        <color red="192" green="192" blue="192"/>
       </foreground_color>
-      <group_name></group_name>
+      <group_name/>
       <height>32</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -2150,14 +2150,14 @@ $(pv_value)</tooltip>
       <name>PSU_8_Linking_Container</name>
       <opi_file>indiviudal_port_row_kicker.opi</opi_file>
       <resize_behaviour>1</resize_behaviour>
-      <rules />
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
-      <tooltip></tooltip>
+      <scripts/>
+      <tooltip/>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
       <width>507</width>
@@ -2166,26 +2166,26 @@ $(pv_value)</tooltip>
       <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <alarm_pulsing>false</alarm_pulsing>
       <alpha>255</alpha>
       <anti_alias>true</anti_alias>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="192" green="192" blue="192" />
+        <color red="192" green="192" blue="192"/>
       </background_color>
       <bg_gradient_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </bg_gradient_color>
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <border_color>
-        <color red="0" green="0" blue="0" />
+        <color red="0" green="0" blue="0"/>
       </border_color>
       <border_style>1</border_style>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <fg_gradient_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </fg_gradient_color>
       <fill_level>0.0</fill_level>
       <font>
@@ -2193,26 +2193,26 @@ $(pv_value)</tooltip>
       </font>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
-        <color red="255" green="0" blue="0" />
+        <color red="255" green="0" blue="0"/>
       </foreground_color>
       <gradient>false</gradient>
       <height>20</height>
       <horizontal_fill>true</horizontal_fill>
       <line_color>
-        <color red="128" green="0" blue="255" />
+        <color red="128" green="0" blue="255"/>
       </line_color>
       <line_style>0</line_style>
       <line_width>0</line_width>
       <name>PSU_8_Rectangle</name>
-      <pv_name></pv_name>
-      <pv_value />
-      <rules />
+      <pv_name/>
+      <pv_value/>
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts/>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <transparent>false</transparent>
@@ -2224,35 +2224,35 @@ $(pv_value)</tooltip>
       <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <auto_size>false</auto_size>
       <background_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </background_color>
       <border_color>
-        <color red="0" green="128" blue="255" />
+        <color red="0" green="128" blue="255"/>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <fontdata fontName="Segoe UI Semibold" height="9" style="0" pixels="false" />
+        <fontdata fontName="Segoe UI Semibold" height="9" style="0" pixels="false"/>
       </font>
       <foreground_color>
-        <color red="0" green="0" blue="0" />
+        <color red="0" green="0" blue="0"/>
       </foreground_color>
       <height>20</height>
       <horizontal_alignment>1</horizontal_alignment>
       <name>PSU_8_Label</name>
-      <rules />
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts/>
       <text>$(PSU_NAME)</text>
-      <tooltip></tooltip>
+      <tooltip/>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
@@ -2265,12 +2265,12 @@ $(pv_value)</tooltip>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
@@ -2280,7 +2280,7 @@ $(pv_value)</tooltip>
       <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
     </font>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
     <height>32</height>
     <lock_children>false</lock_children>
@@ -2290,15 +2290,15 @@ $(pv_value)</tooltip>
       <PSU_PREFIX>DFKPS_28</PSU_PREFIX>
     </macros>
     <name>PSU_9</name>
-    <rules />
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <show_scrollbar>false</show_scrollbar>
-    <tooltip></tooltip>
+    <tooltip/>
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
@@ -2307,12 +2307,12 @@ $(pv_value)</tooltip>
     <x>0</x>
     <y>210</y>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <background_color>
-        <color red="240" green="240" blue="240" />
+        <color red="240" green="240" blue="240"/>
       </background_color>
       <border_color>
-        <color red="0" green="128" blue="255" />
+        <color red="0" green="128" blue="255"/>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
@@ -2321,9 +2321,9 @@ $(pv_value)</tooltip>
         <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
       </font>
       <foreground_color>
-        <color red="192" green="192" blue="192" />
+        <color red="192" green="192" blue="192"/>
       </foreground_color>
-      <group_name></group_name>
+      <group_name/>
       <height>32</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
@@ -2331,14 +2331,14 @@ $(pv_value)</tooltip>
       <name>PSU_9_Linking_Container</name>
       <opi_file>indiviudal_port_row.opi</opi_file>
       <resize_behaviour>1</resize_behaviour>
-      <rules />
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
-      <tooltip></tooltip>
+      <scripts/>
+      <tooltip/>
       <visible>true</visible>
       <widget_type>Linking Container</widget_type>
       <width>507</width>
@@ -2347,26 +2347,26 @@ $(pv_value)</tooltip>
       <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <alarm_pulsing>false</alarm_pulsing>
       <alpha>255</alpha>
       <anti_alias>true</anti_alias>
       <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
       <background_color>
-        <color red="192" green="192" blue="192" />
+        <color red="192" green="192" blue="192"/>
       </background_color>
       <bg_gradient_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </bg_gradient_color>
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <border_color>
-        <color red="0" green="0" blue="0" />
+        <color red="0" green="0" blue="0"/>
       </border_color>
       <border_style>1</border_style>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <fg_gradient_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </fg_gradient_color>
       <fill_level>0.0</fill_level>
       <font>
@@ -2374,26 +2374,26 @@ $(pv_value)</tooltip>
       </font>
       <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
       <foreground_color>
-        <color red="255" green="0" blue="0" />
+        <color red="255" green="0" blue="0"/>
       </foreground_color>
       <gradient>false</gradient>
       <height>20</height>
       <horizontal_fill>true</horizontal_fill>
       <line_color>
-        <color red="128" green="0" blue="255" />
+        <color red="128" green="0" blue="255"/>
       </line_color>
       <line_style>0</line_style>
       <line_width>0</line_width>
       <name>PSU_9_Rectangle</name>
-      <pv_name></pv_name>
-      <pv_value />
-      <rules />
+      <pv_name/>
+      <pv_value/>
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts/>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <transparent>false</transparent>
@@ -2414,37 +2414,37 @@ $(pv_value)</tooltip>
             <NAME>$(PSU_NAME)</NAME>
           </macros>
           <mode>3</mode>
-          <description></description>
+          <description/>
         </action>
       </actions>
       <auto_size>false</auto_size>
       <background_color>
-        <color red="255" green="255" blue="255" />
+        <color red="255" green="255" blue="255"/>
       </background_color>
       <border_color>
-        <color red="0" green="128" blue="255" />
+        <color red="0" green="128" blue="255"/>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
       <enabled>true</enabled>
       <font>
-        <fontdata fontName="Segoe UI Semibold" height="9" style="0" pixels="false" />
+        <fontdata fontName="Segoe UI Semibold" height="9" style="0" pixels="false"/>
       </font>
       <foreground_color>
-        <color red="0" green="0" blue="0" />
+        <color red="0" green="0" blue="0"/>
       </foreground_color>
       <height>20</height>
       <horizontal_alignment>1</horizontal_alignment>
       <name>PSU_9_Label</name>
-      <rules />
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts/>
       <text>$(PSU_NAME)</text>
-      <tooltip></tooltip>
+      <tooltip/>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
@@ -2455,5 +2455,45 @@ $(pv_value)</tooltip>
       <x>0</x>
       <y>0</y>
     </widget>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <actions hook="false" hook_all="false"/>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0"/>
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
+    </foreground_color>
+    <height>1</height>
+    <image/>
+    <name>Dummy</name>
+    <push_action_index>0</push_action_index>
+    <pv_name/>
+    <pv_value/>
+    <rules/>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts/>
+    <style>1</style>
+    <text/>
+    <toggle_button>false</toggle_button>
+    <tooltip/>
+    <visible>true</visible>
+    <widget_type>Action Button</widget_type>
+    <width>1</width>
+    <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
+    <x>-15</x>
+    <y>102</y>
   </widget>
 </display>

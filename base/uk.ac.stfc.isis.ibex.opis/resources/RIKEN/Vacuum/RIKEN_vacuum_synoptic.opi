@@ -4845,7 +4845,7 @@ Port 4</text>
     </scale_options>
     <scripts />
     <show_scrollbar>false</show_scrollbar>
-    <text>RIKEN Beamline - Vacuum System&#xD;
+    <text>RIKEN Beamlines - Vacuum System&#xD;
 </text>
     <tooltip></tooltip>
     <transparent>false</transparent>
@@ -4975,7 +4975,7 @@ Port 4</text>
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
-    <width>133</width>
+    <width>139</width>
     <wuid>-632252ef:186bb56c0bf:-6398</wuid>
     <x>6</x>
     <y>402</y>
@@ -5007,7 +5007,7 @@ Port 4</text>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <scripts />
-      <text>Valve</text>
+      <text>Valve State Key</text>
       <tooltip></tooltip>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -5016,7 +5016,7 @@ Port 4</text>
       <width>97</width>
       <wrap_words>false</wrap_words>
       <wuid>-632252ef:186bb56c0bf:-6130</wuid>
-      <x>12</x>
+      <x>17</x>
       <y>6</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolIndicator" version="1.0.0">
@@ -5048,9 +5048,9 @@ Port 4</text>
       <height>30</height>
       <name>Closed_img</name>
       <no_animation>false</no_animation>
-      <off_image>Valve close.png</off_image>
+      <off_image>Valve Closed.png</off_image>
       <off_label>OFF</off_label>
-      <on_image>Valve close.png</on_image>
+      <on_image>Valve Closed.png</on_image>
       <on_label>ON</on_label>
       <pv_name></pv_name>
       <pv_value />
@@ -5140,11 +5140,11 @@ $(pv_value)</tooltip>
         <color red="0" green="0" blue="0" />
       </foreground_color>
       <height>30</height>
-      <name>Disconnect_img</name>
+      <name>Disconnected_img</name>
       <no_animation>false</no_animation>
-      <off_image>Valve Disconect.png</off_image>
+      <off_image>Valve Disconnected.png</off_image>
       <off_label>OFF</off_label>
-      <on_image>Valve Disconect.png</on_image>
+      <on_image>Valve Disconnected.png</on_image>
       <on_label>ON</on_label>
       <pv_name></pv_name>
       <pv_value />
@@ -5187,7 +5187,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <height>20</height>
       <horizontal_alignment>1</horizontal_alignment>
-      <name>Disconnect_Label</name>
+      <name>Disconnected_Label</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -5195,13 +5195,13 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <scripts />
-      <text>Disconnect</text>
+      <text>Disconnected</text>
       <tooltip></tooltip>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>63</width>
+      <width>76</width>
       <wrap_words>false</wrap_words>
       <wuid>-632252ef:186bb56c0bf:-6120</wuid>
       <x>51</x>
@@ -5489,5 +5489,45 @@ $(pv_value)</tooltip>
       <x>50</x>
       <y>156</y>
     </widget>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <actions hook="false" hook_all="false" />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <height>1</height>
+    <image></image>
+    <name>Dummy</name>
+    <push_action_index>0</push_action_index>
+    <pv_name></pv_name>
+    <pv_value />
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <style>1</style>
+    <text></text>
+    <toggle_button>false</toggle_button>
+    <tooltip></tooltip>
+    <visible>true</visible>
+    <widget_type>Action Button</widget_type>
+    <width>1</width>
+    <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
+    <x>0</x>
+    <y>402</y>
   </widget>
 </display>
