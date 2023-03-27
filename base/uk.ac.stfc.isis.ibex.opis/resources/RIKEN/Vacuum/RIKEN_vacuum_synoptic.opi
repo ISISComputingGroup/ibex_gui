@@ -3794,8 +3794,8 @@ $(pv_value)</tooltip>
         <widget_type>Linking Container</widget_type>
         <width>35</width>
         <wuid>-632252ef:186bb56c0bf:-5c5c</wuid>
-        <x>156</x>
-        <y>42</y>
+        <x>168</x>
+        <y>38</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -3875,8 +3875,8 @@ $(pv_value)</tooltip>
         <width>35</width>
         <wrap_words>false</wrap_words>
         <wuid>-632252ef:186bb56c0bf:-5c55</wuid>
-        <x>156</x>
-        <y>27</y>
+        <x>168</x>
+        <y>19</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -4962,7 +4962,7 @@ Port 4</text>
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
-    <name>MAG_and_ALARM_LED_KEY_Grouping_Container</name>
+    <name>Valve_State_Key_Grouping_Container</name>
     <rules />
     <scale_options>
       <width_scalable>true</width_scalable>

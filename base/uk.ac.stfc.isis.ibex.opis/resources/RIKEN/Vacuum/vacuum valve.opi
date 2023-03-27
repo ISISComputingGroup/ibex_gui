@@ -79,7 +79,7 @@
           <value>Valve Open.png</value>
         </exp>
         <exp bool_exp="pv0==2">
-          <value>Valve close.png</value>
+          <value>Valve Closed.png</value>
         </exp>
         <exp bool_exp="pv0==3">
           <value>Valve Sweeping.png</value>
@@ -88,7 +88,7 @@
           <value>Valve Fault.png</value>
         </exp>
         <exp bool_exp="pv0==0">
-          <value>Valve Disconect.png</value>
+          <value>Valve Disconnected.png</value>
         </exp>
         <pv trig="true">$(PV_ROOT)$(VALVE):STAT</pv>
       </rule>
