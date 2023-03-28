@@ -59,7 +59,7 @@ public class DeviceScreenListPanel extends Composite {
 
     private Button configureDevScreensButton;
 
-    private static final String HELP_LINK = "https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Create-and-Manage-Device-Screens";
+    private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Create-and-Manage-Device-Screens";
 	private static final String DESCRIPTION = "Device Screens View";
     
 	@SuppressWarnings("unused")

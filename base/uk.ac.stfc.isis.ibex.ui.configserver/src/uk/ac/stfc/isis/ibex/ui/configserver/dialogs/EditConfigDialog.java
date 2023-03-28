@@ -59,8 +59,8 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 	private String pvName;
 	private ConfigServer server = Configurations.getInstance().server();
 	
-	private static final String CONFIG_HELP_LINK = "https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Create-And-Manage-Configurations";
-	private static final String COMPONENT_HELP_LINK = "https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Create-and-Manage-Components";
+	private static final String CONFIG_HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Create-And-Manage-Configurations";
+	private static final String COMPONENT_HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Create-and-Manage-Components";
 	private final String description;
 	
 	@SuppressWarnings("unused")

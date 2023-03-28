@@ -54,7 +54,7 @@ public class EditSynopticDialog extends TitleAreaDialog {
     private final String title;
     private final String subtitle;
     
-    private static final String HELP_LINK = "https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Create-and-Manage-Synoptics";
+    private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Create-and-Manage-Synoptics";
 	
     @SuppressWarnings("unused")
     private HelpButton helpButton;
