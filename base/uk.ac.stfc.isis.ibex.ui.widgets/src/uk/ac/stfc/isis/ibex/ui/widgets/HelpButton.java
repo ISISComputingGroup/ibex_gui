@@ -24,16 +24,7 @@ public class HelpButton {
 	private static final String SYMBOLIC_PATH = "uk.ac.stfc.isis.ibex.ui.widgets";
 	private static final String HELP_ICON2 = "/icons/helpIcon.png";
 	private static final String TOOLTIP_TEXT = "Open user manual link in browser for help with '%s': \n%s";
-	
-	private final String tooltipDesc; 
-	@SuppressWarnings("unused")
-	private final String wikiLink;
-	
-	@SuppressWarnings("unused")
-	private final String description;
-	
-	private Button helpButton;
-	
+
 	/**
 	 * Creates the help button which links to appropriate part of the wiki.
 	 * 
@@ -42,11 +33,10 @@ public class HelpButton {
 	 * @param description	Description of help for tooltip
 	 */
 	public HelpButton(Composite parent, String wikiLink, String description) {
-		this.wikiLink = wikiLink;
-		this.description = description;
-		this.tooltipDesc = String.format(TOOLTIP_TEXT, description, wikiLink);
+		String tooltipDesc = String.format(TOOLTIP_TEXT, description, wikiLink);
 		
 		//create button
+		Button helpButton = new Button(parent, SWT.PUSH);
 		helpButton = new Button(parent, SWT.PUSH);
 		helpButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 		helpButton.setImage(ResourceManager.getPluginImage(SYMBOLIC_PATH, HELP_ICON2));
