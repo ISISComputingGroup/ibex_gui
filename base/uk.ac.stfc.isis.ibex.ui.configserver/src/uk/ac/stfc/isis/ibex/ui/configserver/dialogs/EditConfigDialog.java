@@ -63,9 +63,6 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 	private static final String COMPONENT_HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Create-and-Manage-Components";
 	private final String description;
 	
-	@SuppressWarnings("unused")
-	private HelpButton helpButton;
-
 	/**
 	 * Constructor.
 	 * 
@@ -129,9 +126,9 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 		
 		// Set link according to whether this is a component or a config.
 		if (!config.getIsComponent()) {
-			helpButton = new HelpButton(parent, CONFIG_HELP_LINK, description);
+			new HelpButton(parent, CONFIG_HELP_LINK, description);
 		} else {
-			helpButton = new HelpButton(parent, COMPONENT_HELP_LINK, description);
+			new HelpButton(parent, COMPONENT_HELP_LINK, description);
 		}
 		
 		return control;

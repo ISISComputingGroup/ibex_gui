@@ -53,9 +53,6 @@ public class IocControlDialog extends TitleAreaDialog {
 	
 	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Start-and-Stop-IOCs";
 	
-	@SuppressWarnings("unused")
-	private HelpButton helpButton;
-	
 	private final IocControl control;
 	/**
 	 * Constructor for IocControlDialog.
@@ -82,7 +79,7 @@ public class IocControlDialog extends TitleAreaDialog {
 		IocControlView iocControlView = new IocControlView(parent, SWT.NONE, iocControlViewModel);
 		iocControlView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		helpButton = new HelpButton(parent, HELP_LINK, SUB_TITLE);
+		new HelpButton(parent, HELP_LINK, SUB_TITLE);
 		
 		return iocControlView;
 	}

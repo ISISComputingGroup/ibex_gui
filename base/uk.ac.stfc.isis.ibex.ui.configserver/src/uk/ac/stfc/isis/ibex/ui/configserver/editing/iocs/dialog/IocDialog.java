@@ -83,9 +83,6 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
     private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Create-And-Manage-Configurations#iocs-tab";
     private static final String DESCRIPTION = "Add/Edit IOC dialog";
     
-    @SuppressWarnings("unused")
-    private HelpButton helpButton;
-	
     /**
      * The current display.
      */
@@ -148,7 +145,7 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
 
         content.layout();
         
-        helpButton = new HelpButton(parent, HELP_LINK, DESCRIPTION);
+        new HelpButton(parent, HELP_LINK, DESCRIPTION);
 
         return editIocPanel;
     }

@@ -62,9 +62,6 @@ public class DeviceScreenListPanel extends Composite {
     private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Create-and-Manage-Device-Screens";
 	private static final String DESCRIPTION = "Device Screens View";
     
-	@SuppressWarnings("unused")
-    private HelpButton helpButton;
-	
     private DeviceScreensTable deviceScreenList;
 
     private ConfigureDeviceScreensHandler configureDeviceScreensHandler = new ConfigureDeviceScreensHandler();
@@ -126,7 +123,7 @@ public class DeviceScreenListPanel extends Composite {
             }
         });
         
-        helpButton = new HelpButton(this, HELP_LINK, DESCRIPTION);
+        new HelpButton(this, HELP_LINK, DESCRIPTION);
 
         viewModel.addPropertyChangeListener(new PropertyChangeListener() {
             @Override

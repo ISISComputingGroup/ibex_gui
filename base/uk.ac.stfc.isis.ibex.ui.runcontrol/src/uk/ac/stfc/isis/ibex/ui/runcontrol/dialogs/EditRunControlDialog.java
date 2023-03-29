@@ -53,9 +53,6 @@ public class EditRunControlDialog extends TitleAreaDialog {
 	
 	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Menu-Bar#run-control-menu";
 	
-	@SuppressWarnings("unused")
-	private HelpButton helpButton;
-	
 	/**
 	 * Creates a dialog for configuring the run-control settings.
 	 * 
@@ -91,7 +88,7 @@ public class EditRunControlDialog extends TitleAreaDialog {
         editor = new RunControlSettingsPanel(this, parent, SWT.NONE, configServer, runControlServer, viewModel);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		helpButton = new HelpButton(parent, HELP_LINK, TITLE);
+		new HelpButton(parent, HELP_LINK, TITLE);
 
 		return editor;
 	}
