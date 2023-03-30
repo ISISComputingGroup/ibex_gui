@@ -3210,20 +3210,6 @@
       </value>
     </entry>
     <entry>
-      <key>KSE4980</key>
-      <value>
-        <categories/>
-        <type>UNKNOWN</type>
-        <path>kse4980.opi</path>
-        <description>The OPI for the KSE4980</description>
-        <macros>
-          <macro>
-            <name>KSE4980</name>
-            <description>The KSE4980 PV prefix (e.g. KSE4980_01)</description>
-          </macro>
-        </macros>
-    </entry>
-    <entry>
       <key>Razorbill RP100 Strain Cell PSU</key>
       <value>
         <type>POWER_SUPPLY</type>
