@@ -192,7 +192,7 @@
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <height>26</height>
-      <lock_children>true</lock_children>
+      <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
@@ -1405,7 +1405,7 @@ $(pv_value)</tooltip>
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <height>107</height>
-      <lock_children>true</lock_children>
+      <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
@@ -1448,7 +1448,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ20</NAME>
-          <PV>DFKPS_23</PV>
+          <PV>DFKPS_20</PV>
         </macros>
         <name>RQ_20_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -1532,7 +1532,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ18</NAME>
-          <PV>DFKPS_22</PV>
+          <PV>DFKPS_19</PV>
         </macros>
         <name>RQ_18_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -1562,11 +1562,11 @@ $(pv_value)</tooltip>
               <PSU1_NAME>RQ18</PSU1_NAME>
               <PSU2_NAME>RQ19</PSU2_NAME>
               <PSU3_NAME>RQ20</PSU3_NAME>
-              <PSU1_PREFIX>DFKPS_22</PSU1_PREFIX>
+              <PSU1_PREFIX>DFKPS_19</PSU1_PREFIX>
               <PSU2_PREFIX>DFKPS_08</PSU2_PREFIX>
-              <PSU3_PREFIX>DFKPS_23</PSU3_PREFIX>
+              <PSU3_PREFIX>DFKPS_20</PSU3_PREFIX>
             </macros>
-            <mode>1</mode>
+            <mode>3</mode>
             <description></description>
           </action>
         </actions>
@@ -1634,7 +1634,7 @@ $(pv_value)</tooltip>
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <height>76</height>
-      <lock_children>true</lock_children>
+      <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
@@ -1719,7 +1719,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ17</NAME>
-          <PV>DFKPS_19</PV>
+          <PV>DFKPS_16</PV>
         </macros>
         <name>RQ_17_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -1761,7 +1761,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ16</NAME>
-          <PV>DFKPS_21</PV>
+          <PV>DFKPS_18</PV>
         </macros>
         <name>RQ_16_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -1803,7 +1803,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ15</NAME>
-          <PV>DFKPS_29</PV>
+          <PV>DFKPS_26</PV>
         </macros>
         <name>RQ_15_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -1844,11 +1844,11 @@ $(pv_value)</tooltip>
       <group_name></group_name>
       <height>59</height>
       <macros>
-        <include_parent_macros>true</include_parent_macros>
+        <include_parent_macros>false</include_parent_macros>
         <NAME1>RB2_2</NAME1>
         <NAME2>RB2_1</NAME2>
-        <PV1>DFKPS_33</PV1>
-        <PV2>DFKPS_32</PV2>
+        <PV1>DFKPS_34</PV1>
+        <PV2>DFKPS_33</PV2>
       </macros>
       <name>RB_2_Split_Magnet_Linking_Container</name>
       <opi_file>psu_magnet_status_circle_half.opi</opi_file>
@@ -1930,7 +1930,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>SY1</NAME>
-          <PV>DFKPS_30</PV>
+          <PV>DFKPS_27</PV>
         </macros>
         <name>SY_1_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -1972,7 +1972,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ5</NAME>
-          <PV>DFKPS_27</PV>
+          <PV>DFKPS_24</PV>
         </macros>
         <name>RQ_5_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -2014,7 +2014,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ4</NAME>
-          <PV>DFKPS_26</PV>
+          <PV>DFKPS_23</PV>
         </macros>
         <name>RQ_4_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -2056,7 +2056,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ3</NAME>
-          <PV>DFKPS_24</PV>
+          <PV>DFKPS_21</PV>
         </macros>
         <name>RQ_3_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -2140,7 +2140,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>SY2</NAME>
-          <PV>DFKPS_31</PV>
+          <PV>DFKPS_28</PV>
         </macros>
         <name>SY_2_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -2257,7 +2257,7 @@ $(pv_value)</tooltip>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="true" hook_all="false">
           <action type="OPEN_DISPLAY">
-            <path>Kickers/kickers_and_seperators.opi</path>
+            <path>Kickers/kickers_and_separators.opi</path>
             <macros>
               <include_parent_macros>true</include_parent_macros>
             </macros>
@@ -2306,7 +2306,7 @@ $(pv_value)</tooltip>
       <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0.0">
         <actions hook="true" hook_all="false">
           <action type="OPEN_DISPLAY">
-            <path>Kickers/kickers_and_seperators.opi</path>
+            <path>Kickers/kickers_and_separators.opi</path>
             <macros>
               <include_parent_macros>true</include_parent_macros>
             </macros>
@@ -2408,7 +2408,7 @@ $(pv_value)</tooltip>
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <height>68</height>
-      <lock_children>true</lock_children>
+      <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
@@ -2613,7 +2613,7 @@ $(pv_value)</tooltip>
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <height>199</height>
-      <lock_children>true</lock_children>
+      <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
@@ -2654,7 +2654,7 @@ $(pv_value)</tooltip>
               <PSU5_PREFIX>DFKPS_10</PSU5_PREFIX>
               <PSU6_PREFIX>DFKPS_05</PSU6_PREFIX>
             </macros>
-            <mode>1</mode>
+            <mode>3</mode>
             <description></description>
           </action>
         </actions>
@@ -2847,7 +2847,7 @@ $(pv_value)</tooltip>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <height>75</height>
-        <lock_children>true</lock_children>
+        <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
         </macros>
@@ -2891,9 +2891,10 @@ $(pv_value)</tooltip>
             <include_parent_macros>true</include_parent_macros>
             <NAME>SEP3</NAME>
             <PV>TECHNIX_05</PV>
+            <POL>Positive</POL>
           </macros>
           <name>SEP_3_P_Linking_Container</name>
-          <opi_file>psu_magnet_status_seperator.opi</opi_file>
+          <opi_file>psu_magnet_status_separator.opi</opi_file>
           <resize_behaviour>1</resize_behaviour>
           <rules />
           <scale_options>
@@ -2933,9 +2934,10 @@ $(pv_value)</tooltip>
             <include_parent_macros>true</include_parent_macros>
             <NAME>SEP3</NAME>
             <PV>TECHNIX_06</PV>
+            <POL>Negative</POL>
           </macros>
           <name>SEP_3_N_Linking Container</name>
-          <opi_file>psu_magnet_status_seperator.opi</opi_file>
+          <opi_file>psu_magnet_status_separator.opi</opi_file>
           <resize_behaviour>1</resize_behaviour>
           <rules />
           <scale_options>
@@ -3115,7 +3117,7 @@ $(pv_value)</tooltip>
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <height>305</height>
-      <lock_children>true</lock_children>
+      <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
@@ -3158,7 +3160,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RB3</NAME>
-          <PV>DFKPS_11</PV>
+          <PV>DFKPS_09</PV>
         </macros>
         <name>RB_3_Linking_Container</name>
         <opi_file>psu_magnet_status_circle.opi</opi_file>
@@ -3242,7 +3244,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ6</NAME>
-          <PV>DFKPS_25</PV>
+          <PV>DFKPS_22</PV>
         </macros>
         <name>RQ_6_Linking_Container</name>
         <opi_file>psu_magnet_status_horizontal.opi</opi_file>
@@ -3284,7 +3286,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ8</NAME>
-          <PV>DFKPS_28</PV>
+          <PV>DFKPS_25</PV>
         </macros>
         <name>RQ_8_Linking_Container</name>
         <opi_file>psu_magnet_status_horizontal.opi</opi_file>
@@ -3323,7 +3325,7 @@ $(pv_value)</tooltip>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <height>72</height>
-        <lock_children>true</lock_children>
+        <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
         </macros>
@@ -3367,9 +3369,10 @@ $(pv_value)</tooltip>
             <include_parent_macros>true</include_parent_macros>
             <NAME>SEP1</NAME>
             <PV>TECHNIX_01</PV>
+            <POL>Positive</POL>
           </macros>
           <name>SEP_1_P_Linking_Container</name>
-          <opi_file>psu_magnet_status_seperator.opi</opi_file>
+          <opi_file>psu_magnet_status_separator.opi</opi_file>
           <resize_behaviour>1</resize_behaviour>
           <rules />
           <scale_options>
@@ -3451,9 +3454,10 @@ $(pv_value)</tooltip>
             <include_parent_macros>true</include_parent_macros>
             <NAME>SEP1</NAME>
             <PV>TECHNIX_02</PV>
+            <POL>Negative</POL>
           </macros>
           <name>SEP_1_N_Linking_Container</name>
-          <opi_file>psu_magnet_status_seperator.opi</opi_file>
+          <opi_file>psu_magnet_status_separator.opi</opi_file>
           <resize_behaviour>1</resize_behaviour>
           <rules />
           <scale_options>
@@ -3590,7 +3594,7 @@ $(pv_value)</tooltip>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <height>75</height>
-        <lock_children>true</lock_children>
+        <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
         </macros>
@@ -3634,9 +3638,10 @@ $(pv_value)</tooltip>
             <include_parent_macros>true</include_parent_macros>
             <NAME>SEP2</NAME>
             <PV>TECHNIX_03</PV>
+            <POL>Positive</POL>
           </macros>
           <name>SEP_2_P_Linking_Container</name>
-          <opi_file>psu_magnet_status_seperator.opi</opi_file>
+          <opi_file>psu_magnet_status_separator.opi</opi_file>
           <resize_behaviour>1</resize_behaviour>
           <rules />
           <scale_options>
@@ -3718,9 +3723,10 @@ $(pv_value)</tooltip>
             <include_parent_macros>true</include_parent_macros>
             <NAME>SEP2</NAME>
             <PV>TECHNIX_04</PV>
+            <POL>Negative</POL>
           </macros>
           <name>SEP_2_N_Linking_Container</name>
-          <opi_file>psu_magnet_status_seperator.opi</opi_file>
+          <opi_file>psu_magnet_status_separator.opi</opi_file>
           <resize_behaviour>1</resize_behaviour>
           <rules />
           <scale_options>
@@ -3858,7 +3864,7 @@ P</text>
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <height>104</height>
-      <lock_children>true</lock_children>
+      <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
@@ -3901,7 +3907,7 @@ P</text>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ14</NAME>
-          <PV>DFKPS_20</PV>
+          <PV>DFKPS_17</PV>
         </macros>
         <name>RQ_14_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -3985,7 +3991,7 @@ P</text>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ12</NAME>
-          <PV>DFKPS_16</PV>
+          <PV>DFKPS_13</PV>
         </macros>
         <name>RQ_12_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -4015,11 +4021,11 @@ P</text>
               <PSU1_NAME>RQ12</PSU1_NAME>
               <PSU2_NAME>RQ13</PSU2_NAME>
               <PSU3_NAME>RQ14</PSU3_NAME>
-              <PSU1_PREFIX>DFKPS_16</PSU1_PREFIX>
+              <PSU1_PREFIX>DFKPS_13</PSU1_PREFIX>
               <PSU2_PREFIX>DFKPS_12</PSU2_PREFIX>
-              <PSU3_PREFIX>DFKPS_20</PSU3_PREFIX>
+              <PSU3_PREFIX>DFKPS_17</PSU3_PREFIX>
             </macros>
-            <mode>1</mode>
+            <mode>3</mode>
             <description></description>
           </action>
         </actions>
@@ -4087,7 +4093,7 @@ $(pv_value)</tooltip>
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <height>104</height>
-      <lock_children>true</lock_children>
+      <lock_children>false</lock_children>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
@@ -4130,7 +4136,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ9</NAME>
-          <PV>DFKPS_18</PV>
+          <PV>DFKPS_15</PV>
         </macros>
         <name>RQ_9_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -4214,7 +4220,7 @@ $(pv_value)</tooltip>
         <macros>
           <include_parent_macros>true</include_parent_macros>
           <NAME>RQ11</NAME>
-          <PV>DFKPS_17</PV>
+          <PV>DFKPS_14</PV>
         </macros>
         <name>RQ_11_Linking_Container</name>
         <opi_file>psu_magnet_status_vertical.opi</opi_file>
@@ -4244,11 +4250,11 @@ $(pv_value)</tooltip>
               <PSU1_NAME>RQ9</PSU1_NAME>
               <PSU2_NAME>RQ10</PSU2_NAME>
               <PSU3_NAME>RQ11</PSU3_NAME>
-              <PSU1_PREFIX>DFKPS_18</PSU1_PREFIX>
+              <PSU1_PREFIX>DFKPS_15</PSU1_PREFIX>
               <PSU2_PREFIX>DFKPS_07</PSU2_PREFIX>
-              <PSU3_PREFIX>DFKPS_17</PSU3_PREFIX>
+              <PSU3_PREFIX>DFKPS_14</PSU3_PREFIX>
             </macros>
-            <mode>1</mode>
+            <mode>3</mode>
             <description></description>
           </action>
         </actions>
