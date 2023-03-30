@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
 <descriptions>
   <opis>
-	<entry>
+    <entry>
       <key>Aeroflex</key>
       <value>
         <type>FUNCTION_GENERATOR</type>
@@ -3181,7 +3181,7 @@
         </macros>
       </value>
   </entry>
-	<entry>
+    <entry>
       <key>Rules tests (developer)</key>
       <value>
         <type>DEBUG</type>
@@ -3189,6 +3189,23 @@
         <description>Developer system-testing OPI for CS-Studio rules engines</description>
         <macros/>
         <categories/>
+      </value>
+    </entry>
+    <entry>
+      <key>Razorbill RP100 Strain Cell PSU</key>
+      <value>
+        <type>POWER_SUPPLY</type>
+        <path>Razorbill_RP100.opi</path>
+        <macros>
+          <macro>
+            <name>RZBRP100</name>
+            <description>The RZBRP100 PV prefix (e.g. RZBRP100_01)</description>
+            <default>RZBRP100_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
       </value>
     </entry>
   </opis>

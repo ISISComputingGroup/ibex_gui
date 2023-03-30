@@ -67,7 +67,7 @@ public class EditPanel extends Composite {
     private IocPVSetsEditorPanel pvSets;
 	private Label remotePvPrefixLbl;
 	private Text remotePvPrefixTxt;
-
+	
     /**
      * Constructor for the Edit IOC panel.
      * 

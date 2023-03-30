@@ -7948,7 +7948,7 @@ macros = display.getPropertyValue("macros").getMacrosMap()
 p = macros.get("P")
 axis = PVUtil.getString(display.getWidget("AxisUpdate").getPV())
 
-pv = p + ioc_name + ":ASTAXES_" + axis + ":STCONTROL-BENABLE"
+pv = p + ioc_name + ":ASTAXES_" + axis + ":STCONTROL-BRESET"
 PVUtil.writePV(pv, 1)
 ]]></scriptText>
           <embedded>true</embedded>
