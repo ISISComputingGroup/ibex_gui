@@ -51,7 +51,6 @@ public class AddPanel extends Composite {
     private static final int TREE_HEIGHT = 300;
     private static final int SPACING = 25;
 
-
     /**
      * Constructor for the Add IOC panel.
      * 
@@ -90,7 +89,7 @@ public class AddPanel extends Composite {
   				availableIocsTree.getViewer().collapseAll();
   			}
   		});
-        
+
         // Add selection tree
   		Composite treeComposite = new Composite(this, SWT.FILL);
   		treeComposite.setLayout(new GridLayout(1, true));
@@ -104,7 +103,6 @@ public class AddPanel extends Composite {
         GridData gdIocTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
         gdIocTable.heightHint = TREE_HEIGHT;
         treeComposite.setLayoutData(gdIocTable);
-        
 
         bind(viewModel);
     }

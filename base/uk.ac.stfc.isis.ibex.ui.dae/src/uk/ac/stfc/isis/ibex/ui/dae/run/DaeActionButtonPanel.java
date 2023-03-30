@@ -29,6 +29,7 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.dae.actions.DaeActions;
 import uk.ac.stfc.isis.ibex.model.Action;
+import uk.ac.stfc.isis.ibex.ui.widgets.HelpButton;
 
 /**
  * Pane which contains the action buttons in the DAE perspective in the "Run Summary" tab.
@@ -37,7 +38,10 @@ import uk.ac.stfc.isis.ibex.model.Action;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class DaeActionButtonPanel extends Composite {
-
+	
+	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Manage-the-DAE";
+	private static final String DESCRIPTION = "DAE View";
+	
     /**
      * Create the panel with all the buttons inside.
      * 
@@ -70,6 +74,8 @@ public class DaeActionButtonPanel extends Composite {
 		
 		Label bottomSpacer = new Label(this, SWT.NONE);
 		bottomSpacer.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1));
+		
+		new HelpButton(parent, HELP_LINK, DESCRIPTION);
 	}
 
 	private void addActionButton(String text, String imageFileName, final Action action) {

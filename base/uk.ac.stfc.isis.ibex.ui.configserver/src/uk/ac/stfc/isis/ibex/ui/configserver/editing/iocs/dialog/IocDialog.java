@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
+import uk.ac.stfc.isis.ibex.ui.widgets.HelpButton;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
@@ -78,6 +79,9 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
      *  Whether the current Ioc is editable.
      */
     protected final boolean readOnly;
+    
+    private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Create-And-Manage-Configurations#iocs-tab";
+    private static final String DESCRIPTION = "Add/Edit IOC dialog";
     
     /**
      * The current display.
@@ -140,6 +144,8 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
         this.setTitle(titlePrefix + " IOC: " + tempIoc.getName());
 
         content.layout();
+        
+        new HelpButton(parent, HELP_LINK, DESCRIPTION);
 
         return editIocPanel;
     }
