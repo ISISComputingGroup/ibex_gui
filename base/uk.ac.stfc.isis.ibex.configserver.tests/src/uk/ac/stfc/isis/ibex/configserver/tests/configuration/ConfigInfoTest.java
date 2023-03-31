@@ -23,6 +23,7 @@
 package uk.ac.stfc.isis.ibex.configserver.tests.configuration;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,15 +32,38 @@ import java.util.Collections;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
+import uk.ac.stfc.isis.ibex.configserver.Displaying;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
+import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 
 @SuppressWarnings("checkstyle:methodname")
+@RunWith(MockitoJUnitRunner.class)
 public class ConfigInfoTest {
 
 	private static final String NAME = "name";
 	private static final String DESCRIPTION = "description";
+	
+	@Mock private Configurations configurations;
+	@Mock private Displaying displaying;
+	@Mock private ForwardingObservable<DisplayConfiguration> observableDisplayConfiguration;
+	@Mock private DisplayConfiguration displayConfiguration;
+	
+	@Before
+	public void setUp() {
+		Mockito.when(configurations.display()).thenReturn(displaying);
+		Mockito.when(displaying.displayCurrentConfig()).thenReturn(observableDisplayConfiguration);
+		Mockito.when(observableDisplayConfiguration.getValue()).thenReturn(displayConfiguration);
+		Mockito.when(displayConfiguration.name()).thenReturn("");
+	}
 	
     @Test
     public void GIVEN_no_items_WHEN_get_names_THEN_return_empty_list() {
@@ -184,5 +208,25 @@ public class ConfigInfoTest {
 
          // Assert
      	assertEquals(expected, result);
+    }
+
+    @Test
+    public void GIVEN_null_components_WHEN_get_infos_without_current_THEN_return_empty_collection() {
+    	try (var mockedConfigurations = Mockito.mockStatic(Configurations.class)) {
+    		mockedConfigurations.when(Configurations::getInstance).thenReturn(configurations);
+    		
+        	var contents = ConfigInfo.namesAndDescriptionsWithoutCurrent(null);
+        	assertTrue(contents.isEmpty());
+    	}
+    }
+    
+    @Test
+    public void GIVEN_empty_components_WHEN_get_infos_without_current_THEN_return_empty_collection() {
+    	try (var mockedConfigurations = Mockito.mockStatic(Configurations.class)) {
+    		mockedConfigurations.when(Configurations::getInstance).thenReturn(configurations);
+    		
+        	var contents = ConfigInfo.namesAndDescriptionsWithoutCurrent(Collections.emptyList());
+        	assertTrue(contents.isEmpty());
+    	}
     }
 }

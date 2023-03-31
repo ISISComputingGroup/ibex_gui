@@ -186,7 +186,9 @@ public class ConfigInfo {
      */
     public static SortedMap<String, String> namesAndDescriptions(Collection<ConfigInfo> infos) {
     	if (infos == null || infos.isEmpty()) {
-    		return Collections.emptySortedMap();
+    		// note: this map needs to be mutable as we remove from it above.
+    		// do not replace with Collections.emptySortedMap();
+    		return new TreeMap<String, String>();
     	}
     	
     	SortedMap<String, String> result = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER);

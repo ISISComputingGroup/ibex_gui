@@ -1564,4 +1564,11 @@
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="wrapped.org.mockito.mockito-inline"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
 </feature>
