@@ -36,8 +36,8 @@ public class DeferredPropertyChangeListener implements PropertyChangeListener, C
 					    .setNameFormat("DeferredPropertyChangeListener worker %d")
 					    .build());
 	
-	private static record PropertyChangeEventProperties(Object source, String propertyName) {};
-	private static record BatchedPropertyChangeEvent(Object oldValue, Object newValue) {};
+	private static record PropertyChangeEventProperties(Object source, String propertyName) { };
+	private static record BatchedPropertyChangeEvent(Object oldValue, Object newValue) { };
 
 	private final PropertyChangeListener listener;
 	private final ScheduledFuture<?> scheduledFuture;
