@@ -71,6 +71,7 @@ public class PyDevAdditionalInterpreterSettings extends InterpreterNewCustomEntr
 		entriesToAdd.add(pvPrefix());
 		entriesToAdd.add(extraPaths());
 		entriesToAdd.add("IPYTHONENABLE=True"); //Required so that we can hook into autocomplete for load_script
+		entriesToAdd.add("PYDEVD_DISABLE_FILE_VALIDATION=1");  // Required to disable warning about Py3.11+ frozen modules.
 		addEpicsEnvironment(entriesToAdd);
 
 		return entriesToAdd;

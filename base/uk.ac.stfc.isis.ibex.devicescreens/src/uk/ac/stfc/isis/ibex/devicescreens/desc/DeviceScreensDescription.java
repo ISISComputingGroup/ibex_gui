@@ -23,10 +23,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import org.apache.logging.log4j.Logger;
 
@@ -40,7 +40,7 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
  * Note any changes here will require corresponding changes to
  * EPICS/schema/configurations/screens.xsd.
  */
-@XmlRootElement(name = "devices", namespace = "")
+@XmlRootElement(name = "devices")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DeviceScreensDescription {
 

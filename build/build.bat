@@ -1,6 +1,6 @@
 setlocal
 REM We bundle our own JRE with the client, this is where it is
-set "JRELOCATION=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\ibex_client_jdk-17.0.4.1+1"
+set "JRELOCATION=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\ibex_client_jdk-17.0.6+10"
 set "LOCAL_JRE_LOCATION=%~dp0jdk"
 
 set "TARGET_DIR=%3"

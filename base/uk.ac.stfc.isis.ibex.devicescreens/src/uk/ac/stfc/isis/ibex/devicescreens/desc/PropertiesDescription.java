@@ -25,8 +25,8 @@ package uk.ac.stfc.isis.ibex.devicescreens.desc;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 /**
  * This class describes the properties element of the device screens xml format.
