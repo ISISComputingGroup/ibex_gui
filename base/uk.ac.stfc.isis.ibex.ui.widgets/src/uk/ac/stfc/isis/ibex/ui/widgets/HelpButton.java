@@ -37,7 +37,6 @@ public class HelpButton {
 		
 		//create button
 		Button helpButton = new Button(parent, SWT.PUSH);
-		helpButton = new Button(parent, SWT.PUSH);
 		helpButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 		helpButton.setImage(ResourceManager.getPluginImage(SYMBOLIC_PATH, HELP_ICON2));
 		helpButton.setToolTipText(tooltipDesc);
