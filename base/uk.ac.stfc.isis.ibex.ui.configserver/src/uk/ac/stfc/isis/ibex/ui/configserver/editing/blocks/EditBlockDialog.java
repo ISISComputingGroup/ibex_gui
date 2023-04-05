@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.Shell;
 import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateBlockNameException;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.ui.widgets.HelpButton;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
 /**
@@ -43,6 +44,9 @@ public class EditBlockDialog extends TitleAreaDialog {
     BlockGroupViewModel blockGroupViewModel;
 	
 	Button okButton;
+	
+	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Create-And-Manage-Configurations#blocks-tab";
+	private static final String DESCRIPTION = "Configure Block Dialog";
 	
 	private final List<ErrorMessageProvider> viewModels;
 	
@@ -116,7 +120,8 @@ public class EditBlockDialog extends TitleAreaDialog {
         		blockGroupViewModel);
         blockGroupPanel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
-
+		new HelpButton(parent, HELP_LINK, DESCRIPTION);
+		
         return blockDetailsPanel;
     }
 	
@@ -143,6 +148,7 @@ public class EditBlockDialog extends TitleAreaDialog {
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
 		newShell.setText("Block Configuration");
+		
 	}
 	
 	@Override

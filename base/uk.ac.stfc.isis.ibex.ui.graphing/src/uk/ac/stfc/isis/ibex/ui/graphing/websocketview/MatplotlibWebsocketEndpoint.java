@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -250,7 +251,14 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	 * @param position the cursor position
 	 */
 	public void cursorPositionChanged(final MatplotlibCursorPosition position) {
-		final Map<String, Object> event = Map.of("x", position.x(), "y", position.y(), "button", 0, "guiEvent", new HashMap<>());
+		final Map<String, Object> event = Map.of(
+				"x", position.x(), 
+				"y", position.y(), 
+				"button", 0, 
+				"guiEvent", new HashMap<>(), 
+				"modifiers", new ArrayList<>()
+		);
+		
 		if (position.inPlot()) {
 		    sendProperty(session, "figure_enter", event);
 			sendProperty(session, "motion_notify", event);
@@ -274,8 +282,14 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	 * @param pressType
 	 */
 	public void notifyButtonPress(final MatplotlibCursorPosition position, MatplotlibPressType pressType) {
-	  final Map<String, Object> event = Map.of("x", position.x(), "y",
-	  position.y(), "button", 0, "guiEvent", new HashMap<>());
+	  final Map<String, Object> event = Map.of(
+			  "x", position.x(), 
+			  "y", position.y(), 
+			  "button", 0, 
+			  "guiEvent", new HashMap<>(), 
+			  "modifiers", new ArrayList<>()
+	  );
+	  
 	  sendProperty(session, pressType.getWebsocketString(), event);
 	}
 	

@@ -160,7 +160,7 @@ $(pv_value)</tooltip>
           <External_Interlock_2>Magnet Waterflow</External_Interlock_2>
           <External_Interlock_3>Magnet Temperature (Klixon)</External_Interlock_3>
         </macros>
-        <mode>0</mode>
+        <mode>3</mode>
         <description></description>
       </action>
     </actions>
