@@ -2917,11 +2917,11 @@
       </value>
     </entry>
     <entry>
-      <key>WISH Automatic Needle Valve</key>
+      <key>Automatic Needle Valve Controller</key>
       <value>
         <type>UNKNOWN</type>
-        <path>wish_automatic_needle_valve.opi</path>
-        <description>WISH Automatic Needle Valve</description>
+        <path>automatic_needle_valve.opi</path>
+        <description>Automatic Needle Valve Controller</description>
         <macros>
           <macro>
             <name>EURO</name>
