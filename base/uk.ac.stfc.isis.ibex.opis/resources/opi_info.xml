@@ -838,7 +838,6 @@
         </categories>
       </value>
     </entry>
-    
     <entry>
       <key>Caen HV (MuSR)</key>
       <value>
@@ -2221,6 +2220,24 @@
         </macros>
       </value>
     </entry>
+	<entry>
+      <key>Keysight E4980AL</key>
+      <value>
+        <categories>
+          <category>Multimeters</category>
+        </categories>
+        <type>KSE4980</type>
+        <path>kse4980.opi</path>
+        <description>The OPI for the Keysight E4980AL LCR meter.</description>
+        <macros>
+          <macro>
+            <name>KSE4980</name>
+            <description>The KSE4980 PV prefix (e.g. KSE4980_01).</description>
+            <default>KSE4980_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
     <entry>
       <key>DH-2000 Light source shutter</key>
       <value>
@@ -3180,7 +3197,7 @@
           </macro>
         </macros>
       </value>
-  </entry>
+    </entry>
     <entry>
       <key>Rules tests (developer)</key>
       <value>
