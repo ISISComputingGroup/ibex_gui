@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <instrument xmlns="http://www.isis.stfc.ac.uk//instrument">
 	<name>Larmor</name>
 	<components>

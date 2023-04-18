@@ -9,7 +9,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.preferences;bundle-version="1.0.0",
- com.mysql.cj;bundle-version="8.0.30"
+ com.mysql.cj;bundle-version="8.0.32"
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Export-Package: uk.ac.stfc.isis.ibex.databases,
  uk.ac.stfc.isis.ibex.databases.preferences

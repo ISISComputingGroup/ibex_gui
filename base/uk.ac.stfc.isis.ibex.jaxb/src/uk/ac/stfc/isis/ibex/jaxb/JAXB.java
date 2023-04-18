@@ -2,12 +2,13 @@ package uk.ac.stfc.isis.ibex.jaxb;
 
 import java.io.IOException;
 import java.util.Collections;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 
-import org.eclipse.persistence.jaxb.JAXBContextFactory;
+import org.glassfish.jaxb.runtime.v2.JAXBContextFactory;
+
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.Unmarshaller;
 
 /**
  * Utility methods to easily acquire JAXB marshallers and unmarshallers.
@@ -19,17 +20,12 @@ public final class JAXB {
 	}
 	
 	static {
-		System.setProperty("javax.xml.bind.context.factory", JAXBContextFactory.class.getName());
+		System.setProperty("jakarta.xml.bind.context.factory", JAXBContextFactory.class.getName());
 	}
 	
     private static <T> JAXBContext getJaxbContext(Class<T> clazz) throws JAXBException {
-    	try {
-    		// For running the full GUI
-    	    return JAXBContextFactory.createContext(new Class[] {clazz}, Collections.emptyMap(), JAXBContextFactory.class.getClassLoader());
-    	} catch (Exception | LinkageError e) {
-    		// For unit tests
-    		return JAXBContext.newInstance(clazz.getPackageName(), clazz.getClassLoader());
-    	}
+		var factory = new JAXBContextFactory();
+		return factory.createContext(new Class[] {clazz}, Collections.emptyMap());
     }
     
     /**

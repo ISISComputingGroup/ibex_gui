@@ -158,7 +158,7 @@ public class ZMQWrapper {
     public void disconnect() {
     	checkCommsLockHeld();
 
-    	socket.ifPresent(context::destroySocket);
+    	socket.ifPresent(s -> s.close());
         socket = Optional.empty();
     }
     
