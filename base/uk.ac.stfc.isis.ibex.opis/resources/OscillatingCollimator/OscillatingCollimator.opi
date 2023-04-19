@@ -2452,7 +2452,7 @@ $(pv_value)</tooltip>
           <exp bool_exp="pv0==1">
             <value>true</value>
           </exp>
-          <pv trig="true">TE:NDW1798:MOT:OSCCOL:USES_LSR</pv>
+          <pv trig="true">$(PV_ROOT)USES_LSR</pv>
         </rule>
       </rules>
       <scale_options>
