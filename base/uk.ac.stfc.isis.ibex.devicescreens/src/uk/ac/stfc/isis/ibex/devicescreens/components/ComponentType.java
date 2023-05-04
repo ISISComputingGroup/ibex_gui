@@ -86,6 +86,10 @@ public enum ComponentType {
     EUROTHERM,
     /** Pinhole selector component type. */
     PINHOLESELECTOR,
+    /** Single aperture component type. */
+    SINGLE_APERTURE,
+    /** Vertical aperture component type. */
+    VERTICAL_APERTURE_STRIP,
     /** Goniometer component type. */
     GONIOMETER,
     /** Single stage component type. */

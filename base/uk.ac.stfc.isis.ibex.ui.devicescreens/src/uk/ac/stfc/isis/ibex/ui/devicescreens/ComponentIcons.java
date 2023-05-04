@@ -127,6 +127,10 @@ public final class ComponentIcons {
                 return "euro";
             case PINHOLESELECTOR:
                 return "pinhole_selector";
+            case SINGLE_APERTURE: 
+            	return "single_aperture";
+            case VERTICAL_APERTURE_STRIP:
+            	return "vertical_aperture";
             case SINGLESTAGE:
                 return "single_stage";
             case LINKAM95:
