@@ -1844,7 +1844,7 @@ $(pv_value)</tooltip>
       <group_name></group_name>
       <height>59</height>
       <macros>
-        <include_parent_macros>false</include_parent_macros>
+        <include_parent_macros>true</include_parent_macros>
         <NAME1>RB2_2</NAME1>
         <NAME2>RB2_1</NAME2>
         <PV1>DFKPS_34</PV1>

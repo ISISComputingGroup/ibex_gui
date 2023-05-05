@@ -3527,7 +3527,7 @@ $(pv_value)</tooltip>
         <height>31</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
-          <VALVE>BB3</VALVE>
+          <VALVE>LV3</VALVE>
         </macros>
         <name>Linking Container LV3</name>
         <opi_file>vacuum valve.opi</opi_file>
@@ -3607,7 +3607,7 @@ $(pv_value)</tooltip>
         </foreground_color>
         <height>20</height>
         <horizontal_alignment>1</horizontal_alignment>
-        <name>BB3</name>
+        <name>LV3</name>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -3615,7 +3615,7 @@ $(pv_value)</tooltip>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
         <scripts />
-        <text>BB3</text>
+        <text>LV3</text>
         <tooltip></tooltip>
         <transparent>true</transparent>
         <vertical_alignment>1</vertical_alignment>

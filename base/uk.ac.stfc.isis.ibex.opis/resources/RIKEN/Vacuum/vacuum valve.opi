@@ -76,10 +76,10 @@
     <rules>
       <rule name="Image Rule" prop_id="image_file" out_exp="false">
         <exp bool_exp="pv0==1">
-          <value>Valve Open.png</value>
+          <value>Valve Closed.png</value>
         </exp>
         <exp bool_exp="pv0==2">
-          <value>Valve Closed.png</value>
+          <value>Valve Open.png</value>
         </exp>
         <exp bool_exp="pv0==3">
           <value>Valve Sweeping.png</value>
