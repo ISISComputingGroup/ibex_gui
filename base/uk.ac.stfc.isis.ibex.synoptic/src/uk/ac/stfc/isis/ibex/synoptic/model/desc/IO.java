@@ -19,8 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.synoptic.model.desc;
 
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlEnum;
+import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * Enum for the IO mode of a PV in the synoptic view.
