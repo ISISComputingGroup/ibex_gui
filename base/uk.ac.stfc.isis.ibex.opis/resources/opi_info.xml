@@ -347,6 +347,52 @@
       </value>
     </entry>
     <entry>
+      <key>Single Aperture</key>
+      <value>
+        <type>SINGLE_APERTURE</type>
+        <path>stage/inout_motion_setpoints.opi</path>
+        <description>The OPI for motion setpoints for one to three setpoints.</description>
+        <macros>
+          <macro>
+            <name>SA</name>
+            <description>The name of the device, as defined in the positions look-up file (e.g. PINHOLE)</description>
+            <default/>
+          </macro>
+          <macro>
+            <name>MM</name>
+            <description>The motor PV to point at, as defined in the motionsetpoints file (e.g. MOT:MTR0605)</description>
+            <default>MOT:MTR0101</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Vertical Aperture Strip</key>
+      <value>
+        <type>VERTICAL_APERTURE_STRIP</type>
+        <path>stage/motion_setpoint.opi</path>
+        <description>The OPI for motion setpoints.</description>
+        <macros>
+          <macro>
+            <name>VA</name>
+            <description>The name of the device, as defined in the positions look-up file (e.g. PINHOLE)</description>
+            <default/>
+          </macro>
+          <macro>
+            <name>MM</name>
+            <description>The motor PV to point at, as defined in the motionsetpoints file (e.g. MOT:MTR0605)</description>
+            <default>MOT:MTR0101</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Slit motors</key>
       <value>
         <type>JAWS</type>
