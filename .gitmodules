@@ -1,0 +1,5 @@
+[submodule "script_definitions"]
+    path = "script_definitions"
+    url = https://github.com/ISISComputingGroup/ScriptDefinitions.git
+    branch = master
+
