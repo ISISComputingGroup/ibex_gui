@@ -143,7 +143,26 @@
     <pv_name></pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
-    <rules />
+    <rules>
+      <rule name="Power Rule" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="ISIS_Red" red="255" green="0" blue="0" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==2">
+          <value>
+            <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==3">
+          <value>
+            <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
+          </value>
+        </exp>
+        <pv trig="true">$(P)SCHNDR_01:KICKERS:SUMMARY:POWER</pv>
+      </rule>
+    </rules>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
@@ -194,7 +213,26 @@
     <pv_name>$(P)SCHNDR_01:KICKERS:CURRENT:TOTAL</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
-    <rules />
+    <rules>
+      <rule name="Power Rule" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="ISIS_Red" red="255" green="0" blue="0" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==2">
+          <value>
+            <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==3">
+          <value>
+            <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
+          </value>
+        </exp>
+        <pv trig="true">$(P)SCHNDR_01:KICKERS:SUMMARY:POWER</pv>
+      </rule>
+    </rules>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
@@ -246,7 +284,26 @@ $(pv_value)</tooltip>
     <pv_name></pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
-    <rules />
+    <rules>
+      <rule name="Power Rule" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="ISIS_Red" red="255" green="0" blue="0" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==2">
+          <value>
+            <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==3">
+          <value>
+            <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
+          </value>
+        </exp>
+        <pv trig="true">$(P)SCHNDR_01:KICKERS:SUMMARY:POWER</pv>
+      </rule>
+    </rules>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
@@ -298,7 +355,26 @@ $(pv_value)</tooltip>
     <pv_name>$(P)SCHNDR_01:KICKERS:SUMMARY:ENUM</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
-    <rules />
+    <rules>
+      <rule name="Power Rule" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="ISIS_Red" red="255" green="0" blue="0" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==2">
+          <value>
+            <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==3">
+          <value>
+            <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
+          </value>
+        </exp>
+        <pv trig="true">$(P)SCHNDR_01:KICKERS:SUMMARY:POWER</pv>
+      </rule>
+    </rules>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
@@ -350,7 +426,26 @@ $(pv_value)</tooltip>
     <pv_name></pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
-    <rules />
+    <rules>
+      <rule name="Power Rule" prop_id="background_color" out_exp="false">
+        <exp bool_exp="pv0==1">
+          <value>
+            <color name="ISIS_Red" red="255" green="0" blue="0" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==2">
+          <value>
+            <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
+          </value>
+        </exp>
+        <exp bool_exp="pv0==3">
+          <value>
+            <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
+          </value>
+        </exp>
+        <pv trig="true">$(P)SCHNDR_01:KICKERS:SUMMARY:POWER</pv>
+      </rule>
+    </rules>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
