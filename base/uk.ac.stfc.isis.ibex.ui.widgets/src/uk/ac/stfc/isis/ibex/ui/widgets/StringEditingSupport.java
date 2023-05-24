@@ -32,7 +32,7 @@ import org.eclipse.swt.widgets.Composite;
 public abstract class StringEditingSupport<TRow> extends GenericEditingSupport<TRow, String> {
 
 	private final ResetSelectionTextCellEditor editor;
-	private boolean canEdit = true;
+	protected boolean canEdit = true;
 
 	/**
 	 * Create this editing support.
