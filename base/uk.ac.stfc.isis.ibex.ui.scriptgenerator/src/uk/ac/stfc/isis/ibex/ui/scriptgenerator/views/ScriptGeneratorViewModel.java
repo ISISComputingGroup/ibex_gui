@@ -942,17 +942,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	            	}
                 });
     
-            var editingSupport = new StringEditingSupport<ScriptGeneratorAction>(viewTable.viewer(), ScriptGeneratorAction.class) {          
-                @Override
-                protected String valueFromRow(ScriptGeneratorAction row) {
-                    return row.getActionParameterValue(actionParameter);
-                }
-        
-                @Override
-                protected void setValueForRow(ScriptGeneratorAction row, String value) {
-                    row.setActionParameterValue(actionParameter, value);
-                }
-            };
+            var editingSupport = new ScriptGeneratorEditingSupport(viewTable.viewer(), ScriptGeneratorAction.class, actionParameter);
             viewTable.addEditingSupport(editingSupport);
             column.setEditingSupport(editingSupport);
         }
