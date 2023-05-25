@@ -9,14 +9,15 @@ INCORRECT_ARGS = 1
 NO_BUILD_PROPERTIES = 2
 ICONS_NOT_INCLUDED = 3
 ICON_LOCATION_POINTER_WRONG = 4
-TEST_CLASSES_NOT_RUNNING = 5
+TEST_FILES_NAMED_INCORRECTLY = 5
 
 exceptions = ["ibex.client.product", "ibex.example", "uk.ac.stfc.isis.ibex.e4.client.product", "uk.ac.stfc.isis.scriptgenerator.client.product"]
 icon_location = "platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web16.gif," \
                 "platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web32.gif," \
                 "platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web48.gif," \
                 "platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web64.gif"
-
+test_files_named_wrong = [] #global list to contain test files not following name conventions, 
+                            #signal an exit code to be sent, after searching every test dir 
 
 def check_in_exceptions(root):
     for exp in exceptions:
@@ -41,10 +42,7 @@ def check_icon_location_pointer_correct(root):
 
 # Checks that Test files are following the correct naming convention in ibex_gui\base\
 def check_test_file_format(root):
-    file_named_wrong = False
-    test_files_all = []
-    test_files_failing = []
-    test_exts = ("*Test.java", "Test*.java", "*Tests.java", "*TestCase*.java", "package-info.java")
+    test_exceptions = ("*Test.java", "Test*.java", "*Tests.java", "*TestCase*.java", "package-info.java")
 
     #recursively search through the base\ directory for all .java files
     entries = glob.glob("**/*.java", root_dir=root, recursive=True)
@@ -53,19 +51,17 @@ def check_test_file_format(root):
         _, b = os.path.split(e)
         e_flag = False
 
-        for ext in test_exts: 
-            if fnmatch.fnmatch(b, ext):
+        for exc in test_exceptions: 
+            #if the file matches one of the exceptions, ignore
+            if fnmatch.fnmatch(b, exc):
                 e_flag = True
 
         if not e_flag:
             file_path = os.path.join(root, e)
+            #search within the file and check for the "@Test" decorator
             if search_str(file_path, "@Test"):
-                file_named_wrong = True
-                test_files_failing.append(e)
-
-    if file_named_wrong: 
-        print("The following Test file does not follow correct naming convention: ")
-        print(test_files_failing)
+                if not (test_files_named_wrong.__contains__(e)):
+                    test_files_named_wrong.append(e)
 
 
 #Searches a file for a string, returns True if found
@@ -85,7 +81,7 @@ def main(build_root_path):
         return INCORRECT_ARGS
     
     for name in os.listdir(build_root_path):
-        if name.endswith("test") or name.endswith("tests"):
+        if name.endswith("tests"):
             check_test_file_format(os.path.join(build_root_path, name))
         if os.path.isdir(os.path.join(build_root_path, name, "icons")):
             if check_in_exceptions(name):
@@ -100,7 +96,13 @@ def main(build_root_path):
             if not check_icon_location_pointer_correct(os.path.join(build_root_path, name)):
                 print("RED SQUARE ERROR: ICON LOCATION INCORRECT IN {}".format(os.path.join(name, "plugin.xml")))
                 return ICON_LOCATION_POINTER_WRONG
-    return SUCCESS
+            
+    if len(test_files_named_wrong) > 0:
+        print("TEST FILES NAMED INCORRECTLY AT ")
+        print(test_files_named_wrong)
+        return TEST_FILES_NAMED_INCORRECTLY
+    else:
+        return SUCCESS
 
 
 if __name__ == '__main__':
