@@ -99,9 +99,11 @@ def main(build_root_path):
             
     if len(test_files_named_wrong) > 0:
         print("TEST FILES NAMED INCORRECTLY AT ")
-        print(test_files_named_wrong)
+        for test_path in test_files_named_wrong:
+            print(test_path)
         return TEST_FILES_NAMED_INCORRECTLY
     else:
+        print("check_build: Build correct")
         return SUCCESS
 
 
@@ -111,7 +113,6 @@ if __name__ == '__main__':
         print("Incorrect arguments, expected path to build base directory")
         success = INCORRECT_ARGS
     else:
-        print("check_build: Build correct")
         success = main(sys.argv[1])
 
     sys.exit(success)
