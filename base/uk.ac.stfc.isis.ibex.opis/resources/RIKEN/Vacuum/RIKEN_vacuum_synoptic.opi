@@ -764,9 +764,9 @@ $(pv_value)</tooltip>
           <height>31</height>
           <macros>
             <include_parent_macros>true</include_parent_macros>
-            <VALVE>LV6</VALVE>
+            <VALVE>LV5</VALVE>
           </macros>
-          <name>Linking Container LV6</name>
+          <name>Linking Container LV5</name>
           <opi_file>vacuum valve.opi</opi_file>
           <resize_behaviour>0</resize_behaviour>
           <rules />
@@ -804,7 +804,7 @@ $(pv_value)</tooltip>
           </foreground_color>
           <height>20</height>
           <horizontal_alignment>1</horizontal_alignment>
-          <name>LV6</name>
+          <name>LV5</name>
           <rules />
           <scale_options>
             <width_scalable>true</width_scalable>
@@ -812,7 +812,7 @@ $(pv_value)</tooltip>
             <keep_wh_ratio>false</keep_wh_ratio>
           </scale_options>
           <scripts />
-          <text>LV6</text>
+          <text>LV5</text>
           <tooltip></tooltip>
           <transparent>true</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -4204,9 +4204,9 @@ $(pv_value)</tooltip>
         <height>31</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
-          <VALVE>LV5</VALVE>
+          <VALVE>LV6</VALVE>
         </macros>
-        <name>Linking Container LV5</name>
+        <name>Linking Container LV6</name>
         <opi_file>vacuum valve.opi</opi_file>
         <resize_behaviour>0</resize_behaviour>
         <rules />
@@ -4325,7 +4325,7 @@ $(pv_value)</tooltip>
         </foreground_color>
         <height>20</height>
         <horizontal_alignment>1</horizontal_alignment>
-        <name>LV5</name>
+        <name>LV6</name>
         <rules />
         <scale_options>
           <width_scalable>true</width_scalable>
@@ -4333,7 +4333,7 @@ $(pv_value)</tooltip>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
         <scripts />
-        <text>LV5</text>
+        <text>LV6</text>
         <tooltip></tooltip>
         <transparent>true</transparent>
         <vertical_alignment>1</vertical_alignment>
@@ -5165,7 +5165,7 @@ $(pv_value)</tooltip>
       <width>30</width>
       <wuid>-632252ef:186bb56c0bf:-60ff</wuid>
       <x>12</x>
-      <y>61</y>
+      <y>151</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -5205,7 +5205,7 @@ $(pv_value)</tooltip>
       <wrap_words>false</wrap_words>
       <wuid>-632252ef:186bb56c0bf:-6120</wuid>
       <x>51</x>
-      <y>66</y>
+      <y>156</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolIndicator" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -5259,7 +5259,7 @@ $(pv_value)</tooltip>
       <width>30</width>
       <wuid>-632252ef:186bb56c0bf:-60f7</wuid>
       <x>12</x>
-      <y>91</y>
+      <y>121</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -5298,6 +5298,100 @@ $(pv_value)</tooltip>
       <width>63</width>
       <wrap_words>false</wrap_words>
       <wuid>-632252ef:186bb56c0bf:-611b</wuid>
+      <x>51</x>
+      <y>126</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolIndicator" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <alarm_pulsing>false</alarm_pulsing>
+      <align_to_nearest_second>false</align_to_nearest_second>
+      <auto_size>true</auto_size>
+      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <bit>-1</bit>
+      <boolean_label_position>0</boolean_label_position>
+      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <data_type>0</data_type>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color red="0" green="0" blue="0" />
+      </foreground_color>
+      <height>30</height>
+      <name>Sweeping_img</name>
+      <no_animation>false</no_animation>
+      <off_image>Valve Sweeping.png</off_image>
+      <off_label>OFF</off_label>
+      <on_image>Valve Sweeping.png</on_image>
+      <on_label>ON</on_label>
+      <pv_name></pv_name>
+      <pv_value />
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_boolean_label>false</show_boolean_label>
+      <stretch_to_fit>true</stretch_to_fit>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <transparency>false</transparency>
+      <visible>true</visible>
+      <widget_type>Image Boolean Indicator</widget_type>
+      <width>30</width>
+      <wuid>-632252ef:186bb56c0bf:-60e3</wuid>
+      <x>13</x>
+      <y>91</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <auto_size>false</auto_size>
+      <background_color>
+        <color red="255" green="255" blue="255" />
+      </background_color>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <foreground_color>
+        <color red="0" green="0" blue="0" />
+      </foreground_color>
+      <height>20</height>
+      <horizontal_alignment>1</horizontal_alignment>
+      <name>Sweeping_Label</name>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <text>Sweeping</text>
+      <tooltip></tooltip>
+      <transparent>true</transparent>
+      <vertical_alignment>1</vertical_alignment>
+      <visible>true</visible>
+      <widget_type>Label</widget_type>
+      <width>63</width>
+      <wrap_words>false</wrap_words>
+      <wuid>-632252ef:186bb56c0bf:-60e4</wuid>
       <x>51</x>
       <y>96</y>
     </widget>
@@ -5352,8 +5446,8 @@ $(pv_value)</tooltip>
       <widget_type>Image Boolean Indicator</widget_type>
       <width>30</width>
       <wuid>-632252ef:186bb56c0bf:-60ef</wuid>
-      <x>12</x>
-      <y>121</y>
+      <x>13</x>
+      <y>61</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -5392,102 +5486,8 @@ $(pv_value)</tooltip>
       <width>63</width>
       <wrap_words>false</wrap_words>
       <wuid>-632252ef:186bb56c0bf:-6116</wuid>
-      <x>50</x>
-      <y>126</y>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.ImageBoolIndicator" version="1.0.0">
-      <actions hook="false" hook_all="false" />
-      <alarm_pulsing>false</alarm_pulsing>
-      <align_to_nearest_second>false</align_to_nearest_second>
-      <auto_size>true</auto_size>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <background_color>
-        <color red="240" green="240" blue="240" />
-      </background_color>
-      <bit>-1</bit>
-      <boolean_label_position>0</boolean_label_position>
-      <border_alarm_sensitive>true</border_alarm_sensitive>
-      <border_color>
-        <color red="0" green="128" blue="255" />
-      </border_color>
-      <border_style>0</border_style>
-      <border_width>1</border_width>
-      <data_type>0</data_type>
-      <enabled>true</enabled>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-      </font>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <foreground_color>
-        <color red="0" green="0" blue="0" />
-      </foreground_color>
-      <height>30</height>
-      <name>Sweeping_img</name>
-      <no_animation>false</no_animation>
-      <off_image>Valve Sweeping.png</off_image>
-      <off_label>OFF</off_label>
-      <on_image>Valve Sweeping.png</on_image>
-      <on_label>ON</on_label>
-      <pv_name></pv_name>
-      <pv_value />
-      <rules />
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <show_boolean_label>false</show_boolean_label>
-      <stretch_to_fit>true</stretch_to_fit>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <transparency>false</transparency>
-      <visible>true</visible>
-      <widget_type>Image Boolean Indicator</widget_type>
-      <width>30</width>
-      <wuid>-632252ef:186bb56c0bf:-60e3</wuid>
-      <x>12</x>
-      <y>151</y>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-      <actions hook="false" hook_all="false" />
-      <auto_size>false</auto_size>
-      <background_color>
-        <color red="255" green="255" blue="255" />
-      </background_color>
-      <border_color>
-        <color red="0" green="128" blue="255" />
-      </border_color>
-      <border_style>0</border_style>
-      <border_width>1</border_width>
-      <enabled>true</enabled>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-      </font>
-      <foreground_color>
-        <color red="0" green="0" blue="0" />
-      </foreground_color>
-      <height>20</height>
-      <horizontal_alignment>1</horizontal_alignment>
-      <name>Sweeping_Label</name>
-      <rules />
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <text>Sweeping</text>
-      <tooltip></tooltip>
-      <transparent>true</transparent>
-      <vertical_alignment>1</vertical_alignment>
-      <visible>true</visible>
-      <widget_type>Label</widget_type>
-      <width>63</width>
-      <wrap_words>false</wrap_words>
-      <wuid>-632252ef:186bb56c0bf:-60e4</wuid>
-      <x>50</x>
-      <y>156</y>
+      <x>51</x>
+      <y>66</y>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
