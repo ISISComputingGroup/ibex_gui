@@ -60,7 +60,7 @@ def check_test_file_format(root):
             file_path = os.path.join(root, e)
             #search within the file and check for the "@Test" decorator
             if search_str(file_path, "@Test"):
-                if not (test_files_named_wrong.__contains__(e)):
+                if e not in test_files_named_wrong:
                     test_files_named_wrong.append(e)
 
 
