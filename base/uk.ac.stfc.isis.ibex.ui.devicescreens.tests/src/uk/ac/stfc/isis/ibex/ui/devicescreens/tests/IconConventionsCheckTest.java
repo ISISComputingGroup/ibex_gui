@@ -93,7 +93,7 @@ public class IconConventionsCheckTest {
 		String expected = "lakeshore.png";
 		
 		// Act
-		String result = IconConventionsCheck.typeNameToFileName(type, "icon");
+		String result = IconConventionsTest.typeNameToFileName(type, "icon");
 		
 		// Assert
 		assertEquals(expected, result);
@@ -106,7 +106,7 @@ public class IconConventionsCheckTest {
 		String expected = "cog.png";
 		
 		// Act
-		String result = IconConventionsCheck.typeNameToFileName(type, "icon");
+		String result = IconConventionsTest.typeNameToFileName(type, "icon");
 		
 		// Assert
 		assertEquals(expected, result);
@@ -119,7 +119,7 @@ public class IconConventionsCheckTest {
 		String expected = "lakeshore_tb.png";
 		
 		// Act
-		String result = IconConventionsCheck.typeNameToFileName(type, "thumbnail");
+		String result = IconConventionsTest.typeNameToFileName(type, "thumbnail");
 		
 		// Assert
 		assertEquals(expected, result);
@@ -132,7 +132,7 @@ public class IconConventionsCheckTest {
 		String expected = "cog_tb.png";
 		
 		// Act
-		String result = IconConventionsCheck.typeNameToFileName(type, "thumbnail");
+		String result = IconConventionsTest.typeNameToFileName(type, "thumbnail");
 		
 		// Assert
 		assertEquals(expected, result);

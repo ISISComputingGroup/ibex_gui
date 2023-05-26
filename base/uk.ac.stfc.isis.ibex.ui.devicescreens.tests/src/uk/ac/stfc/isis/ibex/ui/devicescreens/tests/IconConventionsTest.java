@@ -53,7 +53,7 @@ import uk.ac.stfc.isis.ibex.ui.devicescreens.ComponentIcons;
  * due to the {@link ComponentType} and {@link ComponentIcons} dependencies,
  * in order to get the component type list and the icon files corresponding to each type.
  */
-public class IconConventionsCheck {
+public class IconConventionsTest {
 	
 	private static final String ICONS_PATH = Paths.get(System.getProperty("user.dir"), "..", "uk.ac.stfc.isis.ibex.ui.devicescreens", "icons", "components").toString();
 	private static final String THUMBS_PATH = Paths.get(ICONS_PATH, "thumbs").toString();
