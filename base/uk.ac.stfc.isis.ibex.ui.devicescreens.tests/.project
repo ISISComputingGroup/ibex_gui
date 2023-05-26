@@ -31,4 +31,11 @@
 		<nature>org.eclipse.pde.PluginNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/uk/ac/stfc/isis/ibex/ui/devicescreens/tests/IconConventionsTest.java</name>
+			<type>1</type>
+			<location>C:/Instrument/Dev/ibex_gui/base/uk.ac.stfc.isis.ibex.ui.devicescreens.tests/src/uk/ac/stfc/isis/ibex/ui/devicescreens/tests/IconConventionsTest.java</location>
+		</link>
+	</linkedResources>
 </projectDescription>

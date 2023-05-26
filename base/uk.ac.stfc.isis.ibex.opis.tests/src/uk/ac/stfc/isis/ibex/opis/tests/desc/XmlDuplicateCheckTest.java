@@ -26,7 +26,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
  * a map and we need to check all keys in the OPI list. 
  *
  */
-public class XmlDuplicateCheck {
+public class XmlDuplicateCheckTest {
 	
 	@XmlAccessorType(XmlAccessType.FIELD)
 	private static class OpiEntry {
