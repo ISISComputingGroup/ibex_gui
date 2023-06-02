@@ -1443,7 +1443,7 @@
     <entry>
       <key>RIKEN PSU Status Summary</key>
       <value>
-        <type>psu_status_summary</type>
+        <type>PSU_STATUS_SUMMARY</type>
         <path>RIKEN/Magnet/psu_status_summary.opi</path>
         <description>The OPI for the status summary of RIKEN Magnet PSUs</description>
         <macros/>
