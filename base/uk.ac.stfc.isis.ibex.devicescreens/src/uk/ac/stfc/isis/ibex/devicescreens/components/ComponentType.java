@@ -130,6 +130,24 @@ public enum ComponentType {
     KHLY2400,
     /** Keithley 2700 source meter. */
     KHLY2700,
+    /** Keithley 2290. **/
+    KHLY2290,
+    /** Keysight E4980AL. **/
+    KSE4980,
+    /** RIKEN Vacuum. **/
+    RIKEN,
+    /** RIKEN PSU Status Summary. **/
+    PSU_STATUS_SUMMARY,
+    /** HTS Magnet. **/
+    HTS_MAGNET,
+    /** B17TMAG. **/
+    B17TMAG,
+    /** HRPD In Situ DSC. **/
+    DSC,
+    /** PEARLPC. **/
+    PEARLPC,
+    /** NMR Teslameter PT2025. **/
+    TESLAMETER,
     /** Omron PLC. */
     PLC,
     /** Zoom sample stack. */
