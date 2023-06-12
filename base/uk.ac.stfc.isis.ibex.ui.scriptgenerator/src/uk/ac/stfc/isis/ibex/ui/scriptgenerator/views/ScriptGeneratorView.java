@@ -112,7 +112,6 @@ public class ScriptGeneratorView {
     private boolean scriptDefinitionsLoadedOnce = false;
 
     private ActionsViewTable table;
-    private Button btnDeleteAction;
     private Button btnMoveActionUp;
     private Button btnMoveActionDown;
     private Button btnAddAction;
@@ -127,7 +126,6 @@ public class ScriptGeneratorView {
 
     private Button generateScriptButton;
     private Button generateScriptAsButton;
-    private Button btnDuplicateAction;
     private ScriptGeneratorHelpMenu helpMenu;
 
     /**
@@ -372,17 +370,7 @@ public class ScriptGeneratorView {
 	        ugLayout.marginHeight = 10;
 	        ugLayout.marginWidth = 10;
 	        utilitiesGrp.setLayout(ugLayout);
-	        
-	        final Button copy = new Button(utilitiesGrp, SWT.NONE);
-	        copy.setText("Copy selected actions");
-	        copy.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	        copy.addListener(SWT.Selection, e -> scriptGeneratorViewModel.copyActions(table.getSelectedTableData()));
-	        
-	        final Button paste = new Button(utilitiesGrp, SWT.NONE);
-	        paste.setText("Paste actions");
-	        paste.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	        paste.addListener(SWT.Selection, e -> scriptGeneratorViewModel.pasteActions(table.getSelectionIndex()));
-	        
+	        	        
 	        // Composite for the row containing  total estimated run time
 	        Composite scriptTimeGrp = new Composite(scriptInfoGrp, SWT.RIGHT);
 	        scriptTimeGrp.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, true, false, 1, 2));
@@ -409,7 +397,7 @@ public class ScriptGeneratorView {
 	        // Composite for laying out new/delete/duplicate action buttons
 	        Composite actionsControlsGrp = new Composite(mainParent, SWT.NONE);
 	        actionsControlsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-	        GridLayout ssgLayout = new GridLayout(5, true);
+	        GridLayout ssgLayout = new GridLayout(3, true);
 	        ssgLayout.marginHeight = 10;
 	        ssgLayout.marginWidth = 10;
 	        actionsControlsGrp.setLayout(ssgLayout);
@@ -424,18 +412,6 @@ public class ScriptGeneratorView {
 	        btnInsertAction.setText("Insert Action Below");
 	        btnInsertAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 	        btnInsertAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.insertEmptyAction(table.getSelectionIndex() + 1));
-	
-	        btnDuplicateAction = new Button(actionsControlsGrp, SWT.NONE);
-	        btnDuplicateAction.setText("Duplicate Selected Actions Below");
-	        btnDuplicateAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	        btnDuplicateAction.addListener(SWT.Selection, e -> 
-	        scriptGeneratorViewModel.duplicateAction(table.selectedRows(), table.getSelectionIndex() + 1));
-	        
-	        btnDeleteAction = new Button(actionsControlsGrp, SWT.NONE);
-	        btnDeleteAction.setText("Delete Selected Actions");
-	        btnDeleteAction.setToolTipText("Delete a single or multiple actions.\nTo select multiple actions, use Ctrl+Click or Shift+Click.");
-	        btnDeleteAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	        btnDeleteAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.deleteAction(table.selectedRows()));
 	
 	        final Button btnClearAction = new Button(actionsControlsGrp, SWT.NONE);
 	        btnClearAction.setText("Clear All Actions");
@@ -623,10 +599,8 @@ public class ScriptGeneratorView {
     	});
     });
 
-    bindToHasSelected(btnDeleteAction);
     bindToHasSelected(btnMoveActionUp);
     bindToHasSelected(btnMoveActionDown);
-    bindToHasSelected(btnDuplicateAction);
     }
 
 }
