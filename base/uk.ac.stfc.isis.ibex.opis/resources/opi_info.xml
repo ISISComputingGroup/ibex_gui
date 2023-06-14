@@ -3271,5 +3271,23 @@
         </categories>
       </value>
     </entry>
+    <entry>
+      <key>CAENHEXAGON</key>
+      <value>
+        <type>MONITOR</type>
+        <path>CAENHexagon/CAEN_hexagon.opi</path>
+        <description>CAEN Hexagon</description>
+        <macros>
+          <macro>
+            <name>HEXAGON</name>
+            <description>The CAEN Hexagon prefix (e.g. HEX0)</description>
+            <default>HEX0</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Monitors</category>
+        </categories>
+      </value>
+    </entry>
   </opis>
 </descriptions>
