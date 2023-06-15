@@ -37,6 +37,7 @@ public class TargetSelectorViewModel extends ModelObject {
     
     private final SynopticViewModel synopticViewModel;
     private boolean enabled;
+    private boolean iconIsDefault = true;
     private String name;
     private String opi = NONE_OPI;
     private int icon;
@@ -162,7 +163,11 @@ public class TargetSelectorViewModel extends ModelObject {
         int iconSelectionIndexForCurrentlySelectedOpi = componentTypesList.indexOf(currentlySelectedOpiType);        
         boolean isIconDefault = getIconSelectionIndex() == 0 || iconSelectionIndexForCurrentlySelectedOpi == getIconSelectionIndex();
         
-        setOpi(opi, isIconDefault);
+        if (isIconDefault == false) {
+        	this.iconIsDefault = false;
+        }
+        
+        setOpi(opi, this.iconIsDefault);
     }
     
     /**
