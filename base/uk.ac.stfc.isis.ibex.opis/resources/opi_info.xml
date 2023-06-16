@@ -1471,8 +1471,8 @@
         <type>MUON_FRONT_END</type>
         <path>RIKEN/Magnet/RIKEN_magnet_PSUs.opi</path>
         <description>The OPI for the RIKEN Magnet PSU overview</description>
-        <macros></macros>
-       </value>
+        <macros/>
+      </value>
     </entry>
     <entry>
       <key>RIKEN Kicker and Separator HV settings</key>
@@ -1498,10 +1498,10 @@
     </entry>
     <entry>
       <key>RIKEN Vacuum</key>
-	  <value>
-	    <type>RIKEN</type>
-	    <path>RIKEN/Vacuum/RIKEN_vacuum_synoptic.opi</path>
-	    <macros>
+      <value>
+        <type>RIKEN</type>
+        <path>RIKEN/Vacuum/RIKEN_vacuum_synoptic.opi</path>
+        <macros>
           <macro>
             <name>SCHNDR</name>
             <description>The SCHNDR PV prefix (e.g. SCHNDR_01)</description>
@@ -2266,7 +2266,7 @@
         </macros>
       </value>
     </entry>
-	<entry>
+    <entry>
       <key>Keysight E4980AL</key>
       <value>
         <categories>
@@ -3287,6 +3287,21 @@
         <categories>
           <category>Monitors</category>
         </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>PRE4500</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>pre4500.opi</path>
+        <description>The OPI for the PRE4500</description>
+        <macros>
+          <macro>
+            <name>PRE4500</name>
+            <description>The PRE4500 PV prefix (e.g. PRE4500_01)</description>
+          </macro>
+        </macros>
       </value>
     </entry>
   </opis>
