@@ -8197,7 +8197,8 @@ if ioc_name == "TC":
     </scale_options>
     <scripts>
       <path pathString="checkOnOffPresent.py" checkConnect="false" sfe="false" seoe="false">
-        <pv trig="true">$(M)HMRNAM</pv>
+        <pv trig="false">$(M)HMRNAM</pv>
+        <pv trig="true">$(M).STAT</pv>
       </path>
     </scripts>
     <show_scrollbar>true</show_scrollbar>
