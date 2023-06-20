@@ -65,7 +65,6 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrap
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.SaveScriptGeneratorFileMessageDialog;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
-import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -942,17 +941,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	            	}
                 });
     
-            var editingSupport = new StringEditingSupport<ScriptGeneratorAction>(viewTable.viewer(), ScriptGeneratorAction.class) {          
-                @Override
-                protected String valueFromRow(ScriptGeneratorAction row) {
-                    return row.getActionParameterValue(actionParameter);
-                }
-        
-                @Override
-                protected void setValueForRow(ScriptGeneratorAction row, String value) {
-                    row.setActionParameterValue(actionParameter, value);
-                }
-            };
+            var editingSupport = new ScriptGeneratorEditingSupport(viewTable.viewer(), ScriptGeneratorAction.class, actionParameter);
             viewTable.addEditingSupport(editingSupport);
             column.setEditingSupport(editingSupport);
         }
