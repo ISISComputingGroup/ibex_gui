@@ -32,7 +32,7 @@ exit/b 1
 
 REM change directory to avoid too long path errors
 net use %FreeDriveLetter%: /d 
-subst %FreeDriveLetter%: /d
+subst /d %FreeDriveLetter%:
 subst %FreeDriveLetter%: %FILESROOT%
 pushd %FreeDriveLetter%:\
 
