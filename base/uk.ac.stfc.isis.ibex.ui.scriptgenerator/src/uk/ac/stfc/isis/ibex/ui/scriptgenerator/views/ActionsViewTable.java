@@ -25,7 +25,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.CellNavigationStrategy;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
@@ -69,6 +73,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	private final ScriptGeneratorViewModel scriptGeneratorViewModel;
 	private static final  Integer FIXED_NON_EDITABLE_COLUMNS_ON_RIGHT = 2;
 	private int dynamicNonEditableColumnsOnRight = 0;
+	
 	/**
 	 * The number of read only columns on the left of the table.
 	 */
@@ -102,6 +107,78 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 				| ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR
 				| ColumnViewerEditor.TABBING_CYCLE_IN_VIEWER
 				| ColumnViewerEditor.TABBING_VERTICAL);
+		MenuManager manager = new MenuManager();
+		viewer.getControl().setMenu(manager.createContextMenu(viewer.getControl()));
+		Action copyAction = new Action("Copy Selected Actions") {
+		    @Override
+		    public void run() {
+		    	scriptGeneratorViewModel.copyActions(getSelectedTableData());
+		    }
+		    
+		};
+		manager.add(copyAction);
+		Action pasteAction = new Action("Paste Actions") {
+		    @Override
+		    public void run() {
+		    	scriptGeneratorViewModel.pasteActions(table.getSelectionIndex());
+		    }
+		};
+		manager.add(pasteAction);
+		Action clearClipboard = new Action("Clear Clipboard") {
+		    @Override
+		    public void run() {
+		    	scriptGeneratorViewModel.clearClipboard();
+		    }
+		};
+		manager.add(clearClipboard);
+		manager.add(new Separator("Clipboard Section")); 
+		Action deleteAction = new Action("Delete Selected Actions") {
+		    @Override
+		    public void run() {
+		    	List<ScriptGeneratorAction> selected = selectedRows();
+				if (selected != null && !selected.isEmpty())  {
+					scriptGeneratorViewModel.deleteAction(selected);
+				}
+		    }
+		};
+		manager.add(deleteAction);
+		manager.add(new Separator("Select Section")); 
+		manager.add(new Action("Select All Actions") {
+		    @Override
+		    public void run() {
+		    	table.selectAll();
+		    }
+		});
+		manager.add(new Separator("Duplicate Section")); 
+		Action dupeAction = new Action("Duplicate Selected Actions Below") {
+		    @Override
+		    public void run() {
+		    	scriptGeneratorViewModel.copyActions(getSelectedTableData());
+		    	scriptGeneratorViewModel.pasteActions(table.getSelectionIndex() + 1);
+		    }
+		};
+		manager.add(dupeAction);
+		manager.addMenuListener(new IMenuListener() {
+			public void menuAboutToShow(IMenuManager manager) {
+				if (table.getSelection().length == 0) {
+					copyAction.setEnabled(false);
+					deleteAction.setEnabled(false);
+					dupeAction.setEnabled(false);
+				} else {
+					copyAction.setEnabled(true);
+					deleteAction.setEnabled(true);
+					dupeAction.setEnabled(true);
+				}
+				if (scriptGeneratorViewModel.checkClipboard()) {
+					pasteAction.setEnabled(true);
+					clearClipboard.setEnabled(true);
+				} else {
+					pasteAction.setEnabled(false);
+					clearClipboard.setEnabled(false);
+				}
+				manager.update();
+			}
+		});
 		
 		table.addKeyListener(new KeyAdapter() {
 			@Override

@@ -1357,6 +1357,25 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	}
 	
 	/**
+	 * Checks if the clipboard has contents.
+	 * @return True if the clipboard has content, false otherwise.
+	 */
+	public boolean checkClipboard() {
+		String copiedActions = (String) clipboard.getContents(TextTransfer.getInstance());
+		if (copiedActions == null) {
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Clears the clipboard has contents.
+	 */
+	public void clearClipboard() {
+		clipboard.clearContents();
+	}
+	
+	/**
 	 * Copies actions to clipboard.
 	 * @param actions copied actions
 	 */
