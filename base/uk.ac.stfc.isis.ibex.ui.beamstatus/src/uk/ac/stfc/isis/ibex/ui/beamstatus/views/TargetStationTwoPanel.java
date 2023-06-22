@@ -45,6 +45,9 @@ public class TargetStationTwoPanel extends BeamInfoComposite {
 	private final Label decoupledModeratorRuntimeLimit;
 	private final Label decoupledModeratorAnnealPressure;
 	private final Label decoupledModeratoruAhBeam;
+	private final Label decoupledModeratorBeamLimit;
+	private final Label decoupledModeratorChargeChangeTime;
+
 
 	/**
 	 * The constructor.
@@ -134,6 +137,18 @@ public class TargetStationTwoPanel extends BeamInfoComposite {
 
 		decoupledModeratoruAhBeam = new Label(this, SWT.BORDER | SWT.RIGHT);
 		decoupledModeratoruAhBeam.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		Label lbdecoupledModeratorBeamLimit = new Label(this, SWT.NONE);
+		lbdecoupledModeratorBeamLimit.setText("Decoupled Moderator Beam Limit");
+
+		decoupledModeratorBeamLimit = new Label(this, SWT.BORDER | SWT.RIGHT);
+		decoupledModeratorBeamLimit.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+		Label lbdecoupledModeratorChargeChangeTime = new Label(this, SWT.NONE);
+		lbdecoupledModeratorChargeChangeTime.setText("Decoupled Moderator Charge Change Time");
+
+		decoupledModeratorChargeChangeTime = new Label(this, SWT.BORDER | SWT.RIGHT);
+		decoupledModeratorChargeChangeTime.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		if (BeamStatus.getInstance() != null) {
 			bind(BeamStatus.getInstance().ts2());
@@ -160,6 +175,8 @@ public class TargetStationTwoPanel extends BeamInfoComposite {
 		bindAndAddMenu(ts.decoupledModeratorRuntimeLimit, decoupledModeratorRuntimeLimit, this);
 		bindAndAddMenu(ts.decoupledModeratorAnnealPressure, decoupledModeratorAnnealPressure, this);
 		bindAndAddMenu(ts.decoupledModeratorUAHBeam, decoupledModeratoruAhBeam, this);
+		bindAndAddMenu(ts.decoupledModeratorBeamLimit, decoupledModeratorBeamLimit, this);
+		bindAndAddMenu(ts.decoupledModeratorChargeChangeTime, decoupledModeratorChargeChangeTime, this);
 
 	}
 
