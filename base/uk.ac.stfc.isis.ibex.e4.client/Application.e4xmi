@@ -607,6 +607,25 @@
       </children>
     </children>
   </snippets>
+  <snippets xsi:type="advanced:Perspective" xmi:id="_yx0hUBTJEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.moxas" accessibilityPhrase="Moxas" label="Moxas" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.moxaperspective/icons/status_24x24.png" tooltip="The front panel for viewing Moxa mappings">
+    <children xsi:type="basic:PartSashContainer" xmi:id="_oBKlsBTKEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.30">
+      <children xsi:type="basic:PartSashContainer" xmi:id="_r2gDEBTLEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.19" containerData="30" horizontal="true">
+        <children xsi:type="basic:PartStack" xmi:id="_r2gDERTLEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.30" containerData="35">
+          <children xsi:type="advanced:Placeholder" xmi:id="_r2gDEhTLEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.6" ref="_RgW1RIjKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
+        </children>
+        <children xsi:type="basic:PartStack" xmi:id="_r2gDExTLEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.31" containerData="65">
+          <children xsi:type="advanced:Placeholder" xmi:id="_r2gDFBTLEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.12" ref="_RgW1RojKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
+        </children>
+      </children>
+      <children xsi:type="basic:PartStack" xmi:id="_szUGEBTKEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.38" containerData="70">
+        <children xsi:type="basic:Part" xmi:id="_XXUCEBTLEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.moxaperspective/uk.ac.stfc.isis.ibex.ui.moxaperspective.moxatableview"/>
+      </children>
+    </children>
+  </snippets>
   <commands xmi:id="_y3b1QGbJEeeM7uzkT_ViHQ" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.current" commandName="Edit or View current configuration" description="Edit or view current configuration depending on permissions"/>
   <commands xmi:id="_A3_dkJCyEeiuzpdmZmmjoA" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.recent" commandName="Load a recent configuration" description="Select and load one of the last 5 configurations used"/>
   <commands xmi:id="_dBXa0HtXEeeIzM7lvAxMoQ" elementId="uk.ac.stfc.isis.ibex.e4.client.configuration.new" commandName="New configuration" description="Create a new configuration" category="_La_dMHtbEeeIzM7lvAxMoQ"/>
