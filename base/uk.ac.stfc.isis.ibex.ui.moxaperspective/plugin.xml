@@ -11,7 +11,7 @@
             name="Moxa table"
             icon="icons/sample.gif"
             category="uk.ac.stfc.isis.ibex.ui.moxaperspective"
-            class="uk.ac.stfc.isis.ibex.ui.moxaperspective.views.MoxaTableView"
+            class="uk.ac.stfc.isis.ibex.ui.moxaperspective.views.MoxasView"
             id="uk.ac.stfc.isis.ibex.ui.moxaperspective.MoxaTableView">
       </view>
    </extension>

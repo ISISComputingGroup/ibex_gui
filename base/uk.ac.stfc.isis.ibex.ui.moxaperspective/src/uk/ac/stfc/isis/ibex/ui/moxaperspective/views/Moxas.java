@@ -13,7 +13,7 @@ public class Moxas extends AbstractUIPlugin {
     /**
      * The plug-in ID.
      */
-    public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.moxaperspective"; // $NON-NLS-1$
+    public static final String PLUGIN_ID = "uk.ac.stfc.isis.ibex.ui.moxaperspective.views"; // $NON-NLS-1$
 
     /** The shared instance. */
 	private static Moxas plugin;

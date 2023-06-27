@@ -1,56 +1,103 @@
 package uk.ac.stfc.isis.ibex.ui.moxaperspective.views;
 
+import java.util.Comparator;
+
+import javax.annotation.PostConstruct;
+
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.ui.dialogs.FilteredTree;
+import org.eclipse.ui.dialogs.PatternFilter;
+
 
 public class MoxaInfoPanel  extends Composite {
-	private final Label beamCurrent;
-	private final Label beamFrequency;
-	private final Label beamEnergy;
-	private final Label bunchLength;
-	private final Label extractDelay;
+	private final Button expandButton;
+	private final Button  collapseButton;
+	private final Button refreshButton;
+	private FilteredTree moxasTree;
 
+
+	private DataBindingContext bindingContext = new DataBindingContext();
+	private static final int COLUMN_WIDTH = 80;
+	private static final int LAYOUT = 3;
+	private static final int MARGIN_WIDTH = 10;
 	/**
 	 * The constructor.
 	 * 
 	 * @param parent the parent
 	 * @param style  the SWT style
 	 */
-	public MoxaInfoPanel(Composite parent, int style) {
+	public MoxaInfoPanel(Composite parent, int style, MoxasViewModel model) {
 		super(parent, style);
-		setLayout(new GridLayout(2, false));
+		setLayout(new GridLayout(1, false));
+		
+		// Add selection tree.
+		Composite treeComposite = new Composite(this, SWT.FILL);
+  		treeComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+  		treeComposite.setLayout(new GridLayout(1, true));
+  		
+  		moxasTree = new FilteredTree(treeComposite, SWT.FULL_SELECTION, new PatternFilter(), true, true);		
+  		final var viewer = moxasTree.getViewer();
+  		
+  		 TreeViewerColumn moxaPortColumn = new TreeViewerColumn(viewer, SWT.NONE);
+         moxaPortColumn.getColumn().setText("MOXA port");
+         moxaPortColumn.getColumn().setWidth(COLUMN_WIDTH);
+         moxaPortColumn.getColumn().setAlignment(SWT.CENTER);
+//         mainColumn.setLabelProvider(new IOCLabelProvider());
+         
+         TreeViewerColumn comPortColumn = new TreeViewerColumn(viewer, SWT.NONE);
+         comPortColumn.getColumn().setText("COM port");
+         comPortColumn.getColumn().setWidth(COLUMN_WIDTH);
+         comPortColumn.getColumn().setAlignment(SWT.CENTER);
+//         statusColumn.setLabelProvider(new IOCStatusProvider());
+        viewer.setContentProvider(new MoxaTableContentProvider());
+//        viewer.setComparator(new IOCViewerComparator(Comparator.naturalOrder()));
+      	
+      	viewer.setInput(model.getMoxaPorts());
+      	
+         viewer.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+         viewer.getTree().setHeaderVisible(true);
+         viewer.getTree().setLinesVisible(true);
+     	moxaPortColumn.getColumn().pack();
 
-		beamCurrent = createRow("Beam Current");
-		beamFrequency = createRow("Beam Frequency");
-		beamEnergy = createRow("Beam Energy");
-		bunchLength = createRow("Bunch Length");
-		extractDelay = createRow("Extract Delay");
+		
+		Composite expansionComposite = new Composite(this, SWT.FILL);
+		expansionComposite.setLayout(new GridLayout(3, true));
+		expandButton = new Button(expansionComposite, SWT.NONE);
+		expandButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		expandButton.setText("\u25BC Expand All");
+		expandButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				moxasTree.getViewer().expandAll();
+			}
+		});
+		
+		collapseButton = new Button(expansionComposite, SWT.NONE);
+		collapseButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		collapseButton.setText("\u25B2 Collapse All");
+		collapseButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				moxasTree.getViewer().collapseAll();
+			}
+		});
+		
+  		refreshButton = new Button(expansionComposite, SWT.NONE);
+		refreshButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		refreshButton.setText("\u27F3 Refresh mappings");
+
+	
 
 	}
-
-	private Label createRow(String name) {
-		new Label(this, SWT.NONE).setText(name);
-
-		Label display = new Label(this, SWT.BORDER | SWT.RIGHT);
-		display.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		return display;
-	}
-
-	/**
-	 * Binding observable facilityPV with the Label
-	 * 
-	 * @param ts
-	 */
-//	private void bind(SynchrotronObservables sync) {
-//		bindAndAddMenu(sync.beamCurrent, beamCurrent, this);
-//		bindAndAddMenu(sync.beamFrequency, beamFrequency, this);
-//		bindAndAddMenu(sync.beamEnergy, beamEnergy, this);
-//		bindAndAddMenu(sync.bunchLength, bunchLength, this);
-//		bindAndAddMenu(sync.extractDelay, extractDelay, this);
-//
-//	}
 
 }
