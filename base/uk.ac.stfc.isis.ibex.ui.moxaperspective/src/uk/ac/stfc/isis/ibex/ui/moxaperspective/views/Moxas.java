@@ -1,4 +1,4 @@
-package uk.ac.stfc.isis.ibex.ui.moxaperspective;
+package uk.ac.stfc.isis.ibex.ui.moxaperspective.views;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;

@@ -622,7 +622,7 @@
         </children>
       </children>
       <children xsi:type="basic:PartStack" xmi:id="_szUGEBTKEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.38" containerData="70">
-        <children xsi:type="basic:Part" xmi:id="_XXUCEBTLEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.0" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.moxaperspective/uk.ac.stfc.isis.ibex.ui.moxaperspective.moxatableview"/>
+        <children xsi:type="basic:Part" xmi:id="_XXUCEBTLEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.moxaportmappings" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.moxaperspective/uk.ac.stfc.isis.ibex.ui.moxaperspective.views.MoxaTableView" label="Moxa Port Mappings"/>
       </children>
     </children>
   </snippets>
