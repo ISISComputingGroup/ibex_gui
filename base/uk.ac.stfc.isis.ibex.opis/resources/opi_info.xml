@@ -3300,6 +3300,7 @@
           <macro>
             <name>PACE5000</name>
             <description>The PACE5000 PV prefix (e.g. PACE5000_01)</description>
+            <default>PACE5000_01</default>
           </macro>
         </macros>
       </value>
