@@ -22,9 +22,11 @@ package uk.ac.stfc.isis.ibex.configserver.json;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import uk.ac.stfc.isis.ibex.configserver.MoxaMappings;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 
@@ -38,9 +40,13 @@ public class MoxaMappingsConverter implements Function<String[][], MoxaMappings>
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Collection<PV> apply(String[][] value) throws ConversionException {
-		return Arrays.stream(value)
-				.map(info -> new MoxaMappings(info[0], info[1], info[2], info[3]))
-				.collect(Collectors.toCollection(ArrayList::new));
+	public MoxaMappings apply(String[][] value) throws ConversionException {
+		
+		 HashMap<String, String> namesToIps = new HashMap<String, String>(); 
+		 HashMap<String, HashMap<String, String>> namesToPorts = new HashMap<String, HashMap<String,String>>();
+		return new MoxaMappings(namesToIps, namesToPorts);
+//		return Arrays.stream(value)
+//				.map(info -> new MoxaMappings(info[0], info[1], info[2], info[3]))
+//				.collect(Collectors.toCollection(ArrayList::new));
 	}
 }
