@@ -118,6 +118,9 @@ public class ConfigServerVariables extends Closer {
 	public final ForwardingObservable<Collection<String>> protectedIocs;
 	/** Provides the description for the spangle banner. */
     public final ForwardingObservable<CustomBannerData> bannerDescription;
+    /** Provides the details for the Moxa port mappings. */
+    public final ForwardingObservable<MoxaMappings> moxaMappings;
+    public final Writable<String> refreshMappings;
 
     /**
      * Default Constructor.
@@ -201,6 +204,9 @@ public class ConfigServerVariables extends Closer {
         bannerDescription = 
                 InstrumentUtils.convert(readCompressed(blockServerAddresses.bannerDescription()),
                         converters.toBannerDescription());
+        moxaMappings = InstrumentUtils.convert(readCompressed(blockServerAddresses.moxaMappings()), converters.toMoxaMappings());
+        
+        refreshMappings = InstrumentUtils.convert(writeCompressed(blockServerAddresses.updateMoxaMappings()), converters.updateMoxaMappings());   
 	}
 
     /**

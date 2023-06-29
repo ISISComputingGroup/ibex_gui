@@ -44,6 +44,11 @@ public class MoxasViewModel extends ModelObject {
 		//return moxaPorts;
 	};
 	
+	public void refreshMappings() {
+		System.out.println("mappings refreshed");
+		
+	}
+	
 //	private IocState ioc;
 //	private final IocControl control;
 //	private HashMap<String, IOCList> availableIocs = new HashMap<String, IOCList>();

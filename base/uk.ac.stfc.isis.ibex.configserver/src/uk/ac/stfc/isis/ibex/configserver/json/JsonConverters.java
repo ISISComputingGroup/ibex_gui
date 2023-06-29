@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.configserver.BlockRules;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
+import uk.ac.stfc.isis.ibex.configserver.MoxaMappings;
 import uk.ac.stfc.isis.ibex.configserver.ServerStatus;
 import uk.ac.stfc.isis.ibex.configserver.configuration.CustomBannerData;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
@@ -176,6 +177,8 @@ public class JsonConverters implements Converters {
 	private static final Function<Configuration, Configuration> INIT_CONFIG = uninitialized -> new Configuration(uninitialized);
 
 	private static final Function<ComponentInfo, ComponentInfo> INIT_COMP = uninitialized -> new ComponentInfo(uninitialized);
+	
+	private static final Function<MoxaMappings, MoxaMappings> INIT_MM = uninitialized -> new MoxaMappings(uninitialized);
 
 	/**
 	 * {@inheritDoc}
@@ -184,4 +187,10 @@ public class JsonConverters implements Converters {
 	public Function<String, CustomBannerData> toBannerDescription() {
         return new JsonDeserialisingConverter<>(CustomBannerData.class);
     }
+	
+	@Override 
+	public Function<String, MoxaMappings> toMoxaMappings() {
+		return new JsonDeserialisingConverter<>(String[][].class).andThen(new MoxaMappingsConverter());
+		
+	}
 }

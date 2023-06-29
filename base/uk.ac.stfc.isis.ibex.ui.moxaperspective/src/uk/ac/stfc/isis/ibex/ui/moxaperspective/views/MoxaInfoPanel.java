@@ -33,7 +33,7 @@ public class MoxaInfoPanel  extends Composite {
 
 
 	private DataBindingContext bindingContext = new DataBindingContext();
-	private static final int COLUMN_WIDTH = 80;
+	private static final int COLUMN_WIDTH = 200;
 	private static final int LAYOUT = 3;
 	private static final int MARGIN_WIDTH = 10;
 	/**
@@ -126,7 +126,12 @@ public class MoxaInfoPanel  extends Composite {
   		refreshButton = new Button(expansionComposite, SWT.NONE);
 		refreshButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		refreshButton.setText("\u27F3 Refresh mappings");
-		
+		refreshButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				model.refreshMappings();
+				viewer.setInput(model.getMoxaPorts());;
+			}
+		});
 
 	}
 

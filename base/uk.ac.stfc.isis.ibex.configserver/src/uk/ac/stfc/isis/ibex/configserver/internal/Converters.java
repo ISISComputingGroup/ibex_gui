@@ -20,10 +20,12 @@
 package uk.ac.stfc.isis.ibex.configserver.internal;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.function.Function;
 
 import uk.ac.stfc.isis.ibex.configserver.BlockRules;
 import uk.ac.stfc.isis.ibex.configserver.IocState;
+import uk.ac.stfc.isis.ibex.configserver.MoxaMappings;
 import uk.ac.stfc.isis.ibex.configserver.ServerStatus;
 import uk.ac.stfc.isis.ibex.configserver.configuration.CustomBannerData;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
@@ -112,5 +114,8 @@ public interface Converters {
      * @return converter for the banner description
      */
     Function<String, CustomBannerData> toBannerDescription();
-
+    
+    Function<String, String> toMoxaMappings();
+    
+    Function<String, String> updateMoxaMappings();
 }
