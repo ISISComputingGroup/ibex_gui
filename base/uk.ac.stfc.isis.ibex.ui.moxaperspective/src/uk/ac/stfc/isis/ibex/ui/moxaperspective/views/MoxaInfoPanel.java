@@ -1,10 +1,16 @@
 package uk.ac.stfc.isis.ibex.ui.moxaperspective.views;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -52,21 +58,46 @@ public class MoxaInfoPanel  extends Composite {
          moxaPortColumn.getColumn().setText("MOXA port");
          moxaPortColumn.getColumn().setWidth(COLUMN_WIDTH);
          moxaPortColumn.getColumn().setAlignment(SWT.CENTER);
-//         mainColumn.setLabelProvider(new IOCLabelProvider());
+
+         moxaPortColumn.setLabelProvider(new ColumnLabelProvider() {
+      	    @Override
+      	    public String getText(Object element) {
+      	    if (element instanceof MoxaList) {
+     				MoxaList list = MoxaList.class.cast(element);
+     				String name = list.name;
+     				return name;
+     			}
+     	    	else {
+      	        MoxaModelObject p = (MoxaModelObject) element;
+      	        return p.getPhysPort();
+     	    	}
+      	    }
+      	});
+
          
          TreeViewerColumn comPortColumn = new TreeViewerColumn(viewer, SWT.NONE);
          comPortColumn.getColumn().setText("COM port");
          comPortColumn.getColumn().setWidth(COLUMN_WIDTH);
          comPortColumn.getColumn().setAlignment(SWT.CENTER);
-//         statusColumn.setLabelProvider(new IOCStatusProvider());
+         
+         comPortColumn.setLabelProvider(new ColumnLabelProvider() {
+     	    @Override
+     	    public String getText(Object element) {
+     	    	if (element instanceof ArrayList<?>) {
+     				return null;
+     			}
+     	        MoxaModelObject p = (MoxaModelObject) element;
+     	        return p.getComPort();
+     	    }
+     	});
+         
         viewer.setContentProvider(new MoxaTableContentProvider());
-//        viewer.setComparator(new IOCViewerComparator(Comparator.naturalOrder()));
       	
       	viewer.setInput(model.getMoxaPorts());
       	
-         viewer.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-         viewer.getTree().setHeaderVisible(true);
-         viewer.getTree().setLinesVisible(true);
+        viewer.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        viewer.getTree().setHeaderVisible(true);
+        viewer.getTree().setLinesVisible(true);
      	moxaPortColumn.getColumn().pack();
 
 		
@@ -95,8 +126,7 @@ public class MoxaInfoPanel  extends Composite {
   		refreshButton = new Button(expansionComposite, SWT.NONE);
 		refreshButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		refreshButton.setText("\u27F3 Refresh mappings");
-
-	
+		
 
 	}
 

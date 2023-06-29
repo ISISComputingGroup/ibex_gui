@@ -21,16 +21,27 @@ public class MoxasViewModel extends ModelObject {
 	
 	private static final String RUNNING_DESCRIPTION = "Running";
 	private static final String INCONFIG_DESCRIPTION = "In Config";
-	private HashMap<String, ArrayList<HashMap<String, String>>> moxaPorts = new HashMap<String, ArrayList<HashMap<String, String>>>();
+	private HashMap<String, MoxaList> moxaPorts = new HashMap<String, MoxaList>();
 	
 	/**
 	 * Represents an IOC in the tree view using its description and name.
 	 * If the item is a description, 'ioc' will be empty.
 	 */
-	public static record Item(Optional<String> description, Optional<String> ioc) { }
+//	public static record Item(Optional<String> description, Optional<String> ioc) { }
 
-	public HashMap<String, ArrayList<HashMap<String, String>>> getMoxaPorts() {
-		return moxaPorts;
+	public HashMap<String, MoxaList> getMoxaPorts() {
+		HashMap<String, MoxaList> map = new HashMap<String, MoxaList>();
+		
+		String nameAndIp = "130.246.55.58 MOXA_ARGUS_UPSTAIRS";
+		
+		MoxaList list1 = new MoxaList(nameAndIp);
+		list1.add(new MoxaModelObject("1", "COM5"));
+		list1.add(new MoxaModelObject("2", "COM6"));
+		list1.add(new MoxaModelObject("3", "COM7"));
+		
+		map.put(nameAndIp, list1);
+		return map;
+		//return moxaPorts;
 	};
 	
 //	private IocState ioc;

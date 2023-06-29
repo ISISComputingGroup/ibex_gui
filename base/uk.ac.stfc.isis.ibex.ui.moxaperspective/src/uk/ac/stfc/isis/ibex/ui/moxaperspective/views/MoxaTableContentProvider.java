@@ -2,6 +2,8 @@ package uk.ac.stfc.isis.ibex.ui.moxaperspective.views;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Arrays;
+
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -23,12 +25,13 @@ public class MoxaTableContentProvider implements ITreeContentProvider {
 
 	@Override
 	public Object[] getChildren(Object parentElement) {
-//		if (parentElement instanceof ArrayList<HashMap<String, String>>) {
-//			return ArrayList.class.cast(parentElement).toArray();
-//		} else {
+		if (parentElement instanceof MoxaList) {
+			return ArrayList.class.cast(parentElement).toArray();
+		} else {
 			Object[] empty = {};
 			return empty;
-		//}
+		}
+		
 	}
 
 	@Override
