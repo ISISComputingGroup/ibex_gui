@@ -5729,7 +5729,7 @@ $(pv_value)</tooltip>
       <image></image>
       <name>TweakForwardsButton</name>
       <push_action_index>0</push_action_index>
-      <pv_name>$(M).STUP</pv_name>
+      <pv_name>$(M):SAFE_STUP.PROC</pv_name>
       <pv_value />
       <rules />
       <scale_options>
