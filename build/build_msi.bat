@@ -31,6 +31,8 @@ exit/b 1
 :break
 
 REM change directory to avoid too long path errors
+net use %FreeDriveLetter%: /d 
+subst /d %FreeDriveLetter%:
 subst %FreeDriveLetter%: %FILESROOT%
 pushd %FreeDriveLetter%:\
 
