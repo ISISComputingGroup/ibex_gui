@@ -11,7 +11,7 @@
             name="Moxa table"
             icon="icons/sample.gif"
             category="uk.ac.stfc.isis.ibex.ui.moxaperspective"
-            class="uk.ac.stfc.isis.ibex.ui.moxaperspective.views.MoxasView"
+            class="uk.ac.stfc.isis.ibex.ui.moxas.views.MoxasView"
             id="uk.ac.stfc.isis.ibex.ui.moxaperspective.MoxaTableView">
       </view>
    </extension>
@@ -19,7 +19,7 @@
          name="Moxas"
          point="org.eclipse.ui.perspectives">
       <perspective
-            class="uk.ac.stfc.isis.ibex.ui.moxaperspective.views.Perspective"
+            class="uk.ac.stfc.isis.ibex.ui.moxas.views.Perspective"
             id="uk.ac.stfc.isis.ibex.ui.moxaperspective.perspective"
             name="Beam Status">
       </perspective>

@@ -1,4 +1,4 @@
-package uk.ac.stfc.isis.ibex.ui.moxaperspective.views;
+package uk.ac.stfc.isis.ibex.ui.moxas.views;
 
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;

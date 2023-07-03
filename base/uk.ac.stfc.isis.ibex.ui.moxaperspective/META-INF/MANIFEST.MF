@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Moxaperspective
-Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.moxaperspective;singleton:=true
+Bundle-Name: Moxas
+Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.moxas;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.moxaperspective
+Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.moxas
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Require-Bundle: org.eclipse.ui;bundle-version="3.201.200",
  org.eclipse.core.databinding;bundle-version="1.4.1",
@@ -17,4 +17,4 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.201.200",
  org.hamcrest.library;bundle-version="1.3.0",
  uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.epics;bundle-version="1.0.0"
-Export-Package: uk.ac.stfc.isis.ibex.ui.moxaperspective.views
+Export-Package: uk.ac.stfc.isis.ibex.ui.moxas.views

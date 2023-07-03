@@ -607,7 +607,7 @@
       </children>
     </children>
   </snippets>
-  <snippets xsi:type="advanced:Perspective" xmi:id="_yx0hUBTJEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.moxas" accessibilityPhrase="Moxas" label="Moxas" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.moxaperspective/icons/moxa_24x24.png" tooltip="The front panel for viewing Moxa mappings">
+  <snippets xsi:type="advanced:Perspective" xmi:id="_yx0hUBTJEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.moxas" accessibilityPhrase="Moxas" label="Moxas" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.moxas/icons/moxa_24x24.png" tooltip="The front panel for viewing Moxa mappings">
     <children xsi:type="basic:PartSashContainer" xmi:id="_oBKlsBTKEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.30">
       <children xsi:type="basic:PartSashContainer" xmi:id="_r2gDEBTLEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.19" containerData="30" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_r2gDERTLEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.30" containerData="35">
@@ -622,7 +622,7 @@
         </children>
       </children>
       <children xsi:type="basic:PartStack" xmi:id="_szUGEBTKEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.38" containerData="70">
-        <children xsi:type="basic:Part" xmi:id="_XXUCEBTLEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.moxaportmappings" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.moxaperspective/uk.ac.stfc.isis.ibex.ui.moxaperspective.views.MoxasView" label="Moxa Port Mappings"/>
+        <children xsi:type="basic:Part" xmi:id="_XXUCEBTLEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.moxaportmappings" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.moxas/uk.ac.stfc.isis.ibex.ui.moxas.views.MoxasView" label="Moxa Port Mappings"/>
       </children>
     </children>
   </snippets>

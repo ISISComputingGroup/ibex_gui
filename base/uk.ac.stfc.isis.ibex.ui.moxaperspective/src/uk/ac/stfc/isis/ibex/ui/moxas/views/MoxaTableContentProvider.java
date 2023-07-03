@@ -1,4 +1,4 @@
-package uk.ac.stfc.isis.ibex.ui.moxaperspective.views;
+package uk.ac.stfc.isis.ibex.ui.moxas.views;
 
 import java.util.ArrayList;
 import java.util.HashMap;

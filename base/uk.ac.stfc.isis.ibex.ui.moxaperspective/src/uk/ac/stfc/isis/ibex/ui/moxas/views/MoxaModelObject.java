@@ -26,7 +26,7 @@
  * either expressed or implied, including but not limited to the implied
  * warranties of merchantability and/or fitness for a particular purpose.
  */
-package uk.ac.stfc.isis.ibex.ui.moxaperspective.views;
+package uk.ac.stfc.isis.ibex.ui.moxas.views;
 
 import java.util.Collection;
 import java.util.HashMap;
