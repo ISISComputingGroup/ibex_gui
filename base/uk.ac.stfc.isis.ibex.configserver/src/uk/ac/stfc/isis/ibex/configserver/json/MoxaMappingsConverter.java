@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.MoxaMappings;
 import uk.ac.stfc.isis.ibex.configserver.configuration.PV;
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
@@ -41,10 +42,16 @@ public class MoxaMappingsConverter implements Function<String[][], MoxaMappings>
 	 */
 	@Override
 	public MoxaMappings apply(String[][] value) throws ConversionException {
+		//TODO actually parse this 
 		
 		 HashMap<String, String> namesToIps = new HashMap<String, String>(); 
+		 namesToIps.put("testname", "testip");
 		 HashMap<String, HashMap<String, String>> namesToPorts = new HashMap<String, HashMap<String,String>>();
-		return new MoxaMappings(namesToIps, namesToPorts);
+		 HashMap<String, String> map1 = new HashMap<String, String>();
+		 map1.put("COM12", "22");
+		 map1.put("COM13", "23");
+		 namesToPorts.put("testname", map1);
+		return new MoxaMappings(Configurations.getInstance().server(), namesToIps, namesToPorts);
 //		return Arrays.stream(value)
 //				.map(info -> new MoxaMappings(info[0], info[1], info[2], info[3]))
 //				.collect(Collectors.toCollection(ArrayList::new));

@@ -198,7 +198,7 @@ public class ConfigServerVariables extends Closer {
         restartIoc = InstrumentUtils.convert(writeCompressed(blockServerAddresses.restartIocs()),
                 converters.namesToString());
 
-        iocStates = InstrumentUtils.convert(readCompressed(blockServerAddresses.iocs()), converters.toIocStates());
+		iocStates = InstrumentUtils.convert(readCompressed(blockServerAddresses.iocs()), converters.toIocStates());
         protectedIocs =
                 InstrumentUtils.convert(readCompressed(blockServerAddresses.iocsNotToStop()), converters.toNames());
         bannerDescription = 

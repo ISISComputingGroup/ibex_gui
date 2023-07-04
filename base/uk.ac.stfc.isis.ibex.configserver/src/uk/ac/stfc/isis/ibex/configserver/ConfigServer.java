@@ -343,6 +343,10 @@ public class ConfigServer extends Closer {
 		return FilteredCollectionObservable.createFilteredByNameObservable(variables.iocStates,
 				variables.protectedIocs);
 	}
+	
+	public ForwardingObservable<MoxaMappings> moxaMappings() { 
+		return variables.moxaMappings;
+	}
 
 	/**
 	 * Returns a {@link SetCommand} object that can be used to start any ioc. <br>
