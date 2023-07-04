@@ -3292,8 +3292,7 @@
     <entry>
       <key>PACE5000</key>
       <value>
-        <categories/>
-        <type>UNKNOWN</type>
+        <type>PRESSURE_GAUGE</type>
         <path>pace5000.opi</path>
         <description>The OPI for the PACE5000</description>
         <macros>
@@ -3303,6 +3302,9 @@
             <default>PACE5000_01</default>
           </macro>
         </macros>
+        <categories>
+          <category>Pressure control handling systems</category>
+        </categories>
       </value>
     </entry>
   </opis>
