@@ -3289,5 +3289,38 @@
         </categories>
       </value>
     </entry>
+    <entry>
+      <key>Separator Tuning</key>
+      <value>
+        <type>MUON_FRONT_END</type>
+        <path>separator_tuning.opi</path>
+        <description>The OPI for the remotely tuning a separator with control of the PSU output and feedback from the vacuum system.</description>
+        <macros>
+          <macro>
+            <name>PSU_POSITIVE</name>
+            <description>The IOC prefix for the positive PSU (e.g. TECHNIX_01).</description>
+            <default>TECHNIX_01</default>
+          </macro>
+          <macro>
+            <name>PSU_NEGATIVE</name>
+            <description>The IOC prefix for the negative PSU (e.g. TECHNIX_02).</description>
+            <default>TECHNIX_02</default>
+          </macro>
+          <macro>
+            <name>TPG300</name>
+            <description>The IOC prefix for the TPG300 Pressure controller (e.g. TPG300_01).</description>
+            <default>TPG300_01</default>
+          </macro>
+          <macro>
+            <name>TPG300_CHANNEL</name>
+            <description>The pressure channel to tune (eg. A1, A2, B1, B2).</description>
+            <default>A1</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Pressure control handling systems</category>
+        </categories>
+      </value>
+    </entry>
   </opis>
 </descriptions>
