@@ -21,4 +21,12 @@ public class MoxaMappings {
 		this.namesToIps = namesToIps;
 		this.namesToPorts = namesToPorts;
 	}
+	public MoxaMappings(ConfigServer server) {
+		this.moxas = new UpdatedObservableAdapter<>(server.moxaMappings());
+		
+		
+		this.namesToIps = new HashMap<String, String>();
+		this.namesToPorts = new HashMap<String, HashMap<String,String>>();
+		//this.namesToPorts = server.moxaMappings();
+	}
 }

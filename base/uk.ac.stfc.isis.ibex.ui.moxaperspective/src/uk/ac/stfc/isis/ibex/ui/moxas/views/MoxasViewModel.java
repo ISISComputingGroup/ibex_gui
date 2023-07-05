@@ -7,10 +7,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import uk.ac.stfc.isis.ibex.configserver.MoxaMappings;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 
@@ -22,6 +24,7 @@ public class MoxasViewModel extends ModelObject {
 	private static final String RUNNING_DESCRIPTION = "Running";
 	private static final String INCONFIG_DESCRIPTION = "In Config";
 	private HashMap<String, MoxaList> moxaPorts = new HashMap<String, MoxaList>();
+	private final MoxaMappings control; 
 	
 	/**
 	 * Represents an IOC in the tree view using its description and name.
@@ -30,18 +33,32 @@ public class MoxasViewModel extends ModelObject {
 //	public static record Item(Optional<String> description, Optional<String> ioc) { }
 
 	public HashMap<String, MoxaList> getMoxaPorts() {
+//		HashMap<String, MoxaList> map = new HashMap<String, MoxaList>();
+//		
+//		String nameAndIp = "130.246.55.58 MOXA_ARGUS_UPSTAIRS";
+//		
+//		MoxaList list1 = new MoxaList(nameAndIp);
+//		list1.add(new MoxaModelObject("1", "COM5"));
+//		list1.add(new MoxaModelObject("2", "COM6"));
+//		list1.add(new MoxaModelObject("3", "COM7"));
+//		
+//		map.put(nameAndIp, list1);
+//		return map;
+//		//return moxaPorts;
+		
+		HashMap<String, HashMap<String, String>> ret = control.getMappings();
 		HashMap<String, MoxaList> map = new HashMap<String, MoxaList>();
+		ret.forEach((key, value) -> {
+			
+			MoxaList list = new MoxaList(key);
+			value.forEach((k, v) -> {
+				list.add(new MoxaModelObject(k,v));
+			});
+			map.put(key, list);
+			
+		});
 		
-		String nameAndIp = "130.246.55.58 MOXA_ARGUS_UPSTAIRS";
-		
-		MoxaList list1 = new MoxaList(nameAndIp);
-		list1.add(new MoxaModelObject("1", "COM5"));
-		list1.add(new MoxaModelObject("2", "COM6"));
-		list1.add(new MoxaModelObject("3", "COM7"));
-		
-		map.put(nameAndIp, list1);
 		return map;
-		//return moxaPorts;
 	};
 	
 	public void refreshMappings() {
@@ -113,10 +130,10 @@ public class MoxasViewModel extends ModelObject {
 //	 * Constructor. Creates a new instance of the IocControlViewModel object.
 //	 * @param control The IOC control class.
 //	 */
-//	public IocControlViewModel(IocControl control) {
-//		this.control = control;
-//        availableIocs = createHashMap();
-//
+	public MoxasViewModel(MoxaMappings control) {
+		this.control = control;
+        moxaPorts = getMoxaPorts();
+
 //        availableIocsListener = new PropertyChangeListener() {	
 //    		@Override
 //    		public void propertyChange(PropertyChangeEvent evt) {
@@ -128,7 +145,7 @@ public class MoxasViewModel extends ModelObject {
 //        control.startIoc().addPropertyChangeListener("canSend", canSendStartListener);
 //        control.stopIoc().addPropertyChangeListener("canSend", canSendStopListener);
 //        control.restartIoc().addPropertyChangeListener("canSend", canSendRestartListener);
-//	}
+	}
 //	
 //	private HashMap<String, IOCList> createHashMap() {
 //		HashMap<String, IOCList> iocHashMap = new HashMap<String, IOCList>();

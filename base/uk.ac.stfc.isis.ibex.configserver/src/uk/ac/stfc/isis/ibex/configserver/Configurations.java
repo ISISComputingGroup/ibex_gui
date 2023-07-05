@@ -54,6 +54,7 @@ public class Configurations extends Closer implements BundleActivator {
 	private final Displaying displaying;
 	private final Editing editing;
 	private final IocControl iocControl;
+	private final MoxaMappings moxaMappings;
 	private final RecentConfigList recent;
 
 	private final ConfigServerVariables variables;
@@ -76,6 +77,7 @@ public class Configurations extends Closer implements BundleActivator {
 		editing = registerForClose(new ConfigEditing(server));
 
 		iocControl = new IocControl(server);
+		moxaMappings = new MoxaMappings(server);
 		addLogging();
 	}
 	
@@ -127,7 +129,10 @@ public class Configurations extends Closer implements BundleActivator {
 	public IocControl iocControl() {
 		return iocControl;
 	}
-
+	
+	public MoxaMappings moxaMappings() { 
+		return moxaMappings;
+	}
 	/**
      * Returns the names of recently used configurations without that of the current configuration.
      * 
