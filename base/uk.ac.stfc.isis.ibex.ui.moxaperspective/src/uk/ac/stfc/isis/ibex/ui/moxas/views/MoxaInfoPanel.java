@@ -10,7 +10,9 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -29,10 +31,11 @@ public class MoxaInfoPanel  extends Composite {
 	private final Button expandButton;
 	private final Button  collapseButton;
 	private final Button refreshButton;
-	private FilteredTree moxasTree;
+//	private Tree moxasTree;
 
 
 	private DataBindingContext bindingContext = new DataBindingContext();
+	private TreeViewer viewer;
 	private static final int COLUMN_WIDTH = 200;
 	private static final int LAYOUT = 3;
 	private static final int MARGIN_WIDTH = 10;
@@ -50,10 +53,7 @@ public class MoxaInfoPanel  extends Composite {
 		Composite treeComposite = new Composite(this, SWT.FILL);
   		treeComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
   		treeComposite.setLayout(new GridLayout(1, true));
-  		
-  		moxasTree = new FilteredTree(treeComposite, SWT.FULL_SELECTION, new PatternFilter(), true, true);		
-  		final var viewer = moxasTree.getViewer();
-  		
+  		final var viewer = new TreeViewer(treeComposite, SWT.FULL_SELECTION);
   		 TreeViewerColumn moxaPortColumn = new TreeViewerColumn(viewer, SWT.NONE);
          moxaPortColumn.getColumn().setText("MOXA port");
          moxaPortColumn.getColumn().setWidth(COLUMN_WIDTH);
@@ -73,8 +73,6 @@ public class MoxaInfoPanel  extends Composite {
      	    	}
       	    }
       	});
-
-         
          TreeViewerColumn comPortColumn = new TreeViewerColumn(viewer, SWT.NONE);
          comPortColumn.getColumn().setText("COM port");
          comPortColumn.getColumn().setWidth(COLUMN_WIDTH);
@@ -90,7 +88,6 @@ public class MoxaInfoPanel  extends Composite {
      	        return p.getComPort();
      	    }
      	});
-         
         viewer.setContentProvider(new MoxaTableContentProvider());
       	
       	viewer.setInput(model.getMoxaPorts());
@@ -99,6 +96,9 @@ public class MoxaInfoPanel  extends Composite {
         viewer.getTree().setHeaderVisible(true);
         viewer.getTree().setLinesVisible(true);
      	moxaPortColumn.getColumn().pack();
+     	
+        GridLayoutFactory.fillDefaults().generateLayout(parent);
+
 
 		
 		Composite expansionComposite = new Composite(this, SWT.FILL);
@@ -109,7 +109,7 @@ public class MoxaInfoPanel  extends Composite {
 		expandButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				moxasTree.getViewer().expandAll();
+				viewer.expandAll();
 			}
 		});
 		
@@ -119,7 +119,7 @@ public class MoxaInfoPanel  extends Composite {
 		collapseButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				moxasTree.getViewer().collapseAll();
+				viewer.collapseAll();
 			}
 		});
 		
@@ -129,7 +129,7 @@ public class MoxaInfoPanel  extends Composite {
 		refreshButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				model.refreshMappings();
-				viewer.setInput(model.getMoxaPorts());;
+				viewer.setInput(model.getMoxaPorts());
 			}
 		});
 
