@@ -115,7 +115,7 @@ public interface Converters {
      */
     Function<String, CustomBannerData> toBannerDescription();
     
-    Function<String, MoxaMappings> toMoxaMappings();
+    Function<String, HashMap<String, HashMap<String, String>>> toMoxaMappings();
     
     //Function<String, String> updateMoxaMappings();
 }

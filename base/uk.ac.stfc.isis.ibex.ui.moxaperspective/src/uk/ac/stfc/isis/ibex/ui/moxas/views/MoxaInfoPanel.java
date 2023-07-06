@@ -1,5 +1,7 @@
 package uk.ac.stfc.isis.ibex.ui.moxas.views;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -132,6 +134,17 @@ public class MoxaInfoPanel  extends Composite {
 				viewer.setInput(model.getMoxaPorts());
 			}
 		});
+		
+		
+		model.addUiThreadPropertyChangeListener("moxaMappings", new PropertyChangeListener() {
+    		@Override
+    		public void propertyChange(PropertyChangeEvent evt) {
+    			viewer.getTree().setVisible(false);
+    			
+    			viewer.setInput(evt.getNewValue());
+    			viewer.getTree().setVisible(true);
+    		}
+    	});
 
 	}
 

@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -35,23 +36,23 @@ import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
  * Converts a JSON representation of a PV into a java object representation.
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class MoxaMappingsConverter implements Function<String[][], MoxaMappings> {
+public class MoxaMappingsConverter implements Function<Map, HashMap<String, HashMap<String, String>>> {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public MoxaMappings apply(String[][] value) throws ConversionException {
+	public HashMap<String, HashMap<String, String>> apply(Map value) throws ConversionException {
 		//TODO actually parse this 
 		
-		 HashMap<String, String> namesToIps = new HashMap<String, String>(); 
-		 namesToIps.put("testname", "testip");
+//		 HashMap<String, String> namesToIps = new HashMap<String, String>(); 
+//		 namesToIps.put("testname", "testip");
 		 HashMap<String, HashMap<String, String>> namesToPorts = new HashMap<String, HashMap<String,String>>();
 		 HashMap<String, String> map1 = new HashMap<String, String>();
 		 map1.put("COM12", "22");
 		 map1.put("COM13", "23");
-		 namesToPorts.put("testname", map1);
-		return new MoxaMappings(Configurations.getInstance().server(), namesToIps, namesToPorts);
+		 namesToPorts.put("testname testip", map1);
+		 return namesToPorts;
 //		return Arrays.stream(value)
 //				.map(info -> new MoxaMappings(info[0], info[1], info[2], info[3]))
 //				.collect(Collectors.toCollection(ArrayList::new));

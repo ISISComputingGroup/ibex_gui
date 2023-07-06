@@ -20,6 +20,8 @@
 package uk.ac.stfc.isis.ibex.configserver.json;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Collection;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -178,7 +180,7 @@ public class JsonConverters implements Converters {
 
 	private static final Function<ComponentInfo, ComponentInfo> INIT_COMP = uninitialized -> new ComponentInfo(uninitialized);
 	
-	private static final Function<MoxaMappings, MoxaMappings> INIT_MM = uninitialized -> new MoxaMappings(uninitialized);
+	//private static final Function<String, HashMap<String, HashMap<String, String>>> INIT_MM = uninitialized -> new MoxaMappings(uninitialized);
 
 	/**
 	 * {@inheritDoc}
@@ -189,8 +191,8 @@ public class JsonConverters implements Converters {
     }
 	
 	@Override 
-	public Function<String, MoxaMappings> toMoxaMappings() {
-		return new JsonDeserialisingConverter<>(String[][].class).andThen(new MoxaMappingsConverter());
+	public Function<String, HashMap<String, HashMap<String, String>>> toMoxaMappings() {
+		return new JsonDeserialisingConverter<>(Map.class).andThen(new MoxaMappingsConverter());
 		
 	}
 }

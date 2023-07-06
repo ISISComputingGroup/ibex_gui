@@ -44,10 +44,11 @@ public class MoxasViewModel extends ModelObject {
 //		
 //		map.put(nameAndIp, list1);
 //		return map;
-//		//return moxaPorts;
-		
-		HashMap<String, HashMap<String, String>> ret = control.getMappings();
+		//return moxaPorts;
 		HashMap<String, MoxaList> map = new HashMap<String, MoxaList>();
+		
+		HashMap<String, HashMap<String, String>> ret = control.getMappings().getValue();
+		if (ret != null) {
 		ret.forEach((key, value) -> {
 			
 			MoxaList list = new MoxaList(key);
@@ -57,6 +58,7 @@ public class MoxasViewModel extends ModelObject {
 			map.put(key, list);
 			
 		});
+		}
 		
 		return map;
 	};
@@ -65,7 +67,7 @@ public class MoxasViewModel extends ModelObject {
 		System.out.println("mappings refreshed");
 		
 	}
-	
+		
 //	private IocState ioc;
 //	private final IocControl control;
 //	private HashMap<String, IOCList> availableIocs = new HashMap<String, IOCList>();
@@ -79,7 +81,7 @@ public class MoxasViewModel extends ModelObject {
 //	private Item top = new Item(Optional.empty(), Optional.empty());
 //	
 //	
-//	private PropertyChangeListener availableIocsListener;
+	private PropertyChangeListener moxasListener;
 //	private PropertyChangeListener enabledListener = new PropertyChangeListener() {
 //        @Override
 //        public void propertyChange(PropertyChangeEvent event) {
@@ -134,12 +136,14 @@ public class MoxasViewModel extends ModelObject {
 		this.control = control;
         moxaPorts = getMoxaPorts();
 
-//        availableIocsListener = new PropertyChangeListener() {	
-//    		@Override
-//    		public void propertyChange(PropertyChangeEvent evt) {
-//    			firePropertyChange("availableIocs", availableIocs, availableIocs = createHashMap());
-//    		}
-//    	};
+        moxasListener = new PropertyChangeListener() {	
+    		@Override
+    		public void propertyChange(PropertyChangeEvent evt) {
+    			firePropertyChange("moxaMappings", moxaPorts, moxaPorts = getMoxaPorts());
+    		}
+    	};
+    	
+    	control.getMappings().addPropertyChangeListener(moxasListener);
 //        
 //        control.iocs().addPropertyChangeListener(availableIocsListener);
 //        control.startIoc().addPropertyChangeListener("canSend", canSendStartListener);
@@ -327,10 +331,10 @@ public class MoxasViewModel extends ModelObject {
 //	/**
 //	 * Remove all listeners that are not automatically disposed.
 //	 */
-//	public void removeListeners() {
-//		control.iocs().removePropertyChangeListener(availableIocsListener);
+	public void removeListeners() {
+		control.getMappings().removePropertyChangeListener(moxasListener);
 //		control.startIoc().removePropertyChangeListener("canSend", canSendStartListener);
 //        control.stopIoc().removePropertyChangeListener("canSend", canSendStopListener);
 //        control.restartIoc().removePropertyChangeListener("canSend", canSendRestartListener);
-//	}
+	}
 }

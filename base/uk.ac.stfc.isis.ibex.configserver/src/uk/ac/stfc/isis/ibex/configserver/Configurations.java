@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.configserver;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.logging.log4j.Logger;
@@ -202,5 +203,6 @@ public class Configurations extends Closer implements BundleActivator {
 	private void addLogging() {
 		loggingSubscriptions.add(variables.currentConfig.subscribe(new LoggingConfigurationObserver(LOG, "Current config")));
 		loggingSubscriptions.add(variables.serverStatus.subscribe(new LoggingObserver<ServerStatus>(LOG, "Server status")));
+		loggingSubscriptions.add(variables.moxaMappings.subscribe(new LoggingObserver<HashMap<String, HashMap<String, String>>>(LOG, "Moxa status")));
 	}
 }
