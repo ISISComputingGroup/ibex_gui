@@ -130,7 +130,7 @@
     </axis_0_grid_color>
     <axis_0_log_scale>false</axis_0_log_scale>
     <axis_0_maximum>120.0</axis_0_maximum>
-    <axis_0_minimum>0.0</axis_0_minimum>
+    <axis_0_minimum>-5.0</axis_0_minimum>
     <axis_0_scale_font>
       <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_GraphScale_NEW</opifont.name>
     </axis_0_scale_font>
@@ -153,7 +153,7 @@
     </axis_1_grid_color>
     <axis_1_log_scale>false</axis_1_log_scale>
     <axis_1_maximum>50.0</axis_1_maximum>
-    <axis_1_minimum>0.0</axis_1_minimum>
+    <axis_1_minimum>-5.0</axis_1_minimum>
     <axis_1_scale_font>
       <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_GraphScale_NEW</opifont.name>
     </axis_1_scale_font>
@@ -216,7 +216,7 @@ $(trace_0_y_pv_value)</tooltip>
     </trace_0_trace_color>
     <trace_0_trace_type>0</trace_0_trace_type>
     <trace_0_update_delay>100</trace_0_update_delay>
-    <trace_0_update_mode>1</trace_0_update_mode>
+    <trace_0_update_mode>4</trace_0_update_mode>
     <trace_0_visible>true</trace_0_visible>
     <trace_0_x_axis_index>0</trace_0_x_axis_index>
     <trace_0_x_pv></trace_0_x_pv>
@@ -237,7 +237,7 @@ $(trace_0_y_pv_value)</tooltip>
     </trace_1_trace_color>
     <trace_1_trace_type>0</trace_1_trace_type>
     <trace_1_update_delay>100</trace_1_update_delay>
-    <trace_1_update_mode>1</trace_1_update_mode>
+    <trace_1_update_mode>4</trace_1_update_mode>
     <trace_1_visible>true</trace_1_visible>
     <trace_1_x_axis_index>0</trace_1_x_axis_index>
     <trace_1_x_pv></trace_1_x_pv>
@@ -1504,7 +1504,7 @@ $(pv_value)</tooltip>
 from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
 
 limit = 10
-no_error = "0, \"No error\""
+no_error = "0, No error"
 error = PVUtil.getString(pvs[0])
 text = widget.getPropertyValue("text")
 
