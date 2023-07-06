@@ -47,14 +47,22 @@ public class MoxasViewModel extends ModelObject {
 		//return moxaPorts;
 		HashMap<String, MoxaList> map = new HashMap<String, MoxaList>();
 		
-		HashMap<String, HashMap<String, String>> ret = control.getMappings().getValue();
+		HashMap<String, ArrayList<ArrayList<String>>> ret = control.getMappings().getValue();
 		if (ret != null) {
 		ret.forEach((key, value) -> {
 			
+			
 			MoxaList list = new MoxaList(key);
-			value.forEach((k, v) -> {
-				list.add(new MoxaModelObject(k,v));
-			});
+			
+			for (ArrayList<String> item : value) {
+				list.add(new MoxaModelObject(item.get(0), item.get(1)));	
+			}
+			
+			
+			
+//			value.forEach((k, v) -> {
+//				list.add(new MoxaModelObject(k,v));
+//			});
 			map.put(key, list);
 			
 		});

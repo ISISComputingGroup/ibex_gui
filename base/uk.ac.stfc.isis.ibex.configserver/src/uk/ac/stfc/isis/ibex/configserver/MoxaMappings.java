@@ -1,5 +1,6 @@
 package uk.ac.stfc.isis.ibex.configserver;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
@@ -8,9 +9,9 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 public class MoxaMappings {
 //	private HashMap<String, String> namesToIps; 
 //	private HashMap<String, HashMap<String, String>> namesToPorts;
-	private UpdatedObservableAdapter<HashMap<String, HashMap<String, String>>> moxas;
+	private UpdatedObservableAdapter<HashMap<String, ArrayList<ArrayList<String>>>> moxas;
 	
-	public UpdatedValue<HashMap<String, HashMap<String, String>>> getMappings() {
+	public UpdatedValue<HashMap<String, ArrayList<ArrayList<String>>>> getMappings() {
 		return moxas;
 	}
 //	public MoxaMappings(MoxaMappings other) {

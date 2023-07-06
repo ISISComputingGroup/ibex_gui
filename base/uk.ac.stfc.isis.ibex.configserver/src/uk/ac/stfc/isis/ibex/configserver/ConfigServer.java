@@ -19,6 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.configserver;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -345,7 +346,7 @@ public class ConfigServer extends Closer {
 				variables.protectedIocs);
 	}
 	
-	public ForwardingObservable<HashMap<String, HashMap<String, String>>> moxaMappings() { 
+	public ForwardingObservable<HashMap<String, ArrayList<ArrayList<String>>>> moxaMappings() { 
 		return variables.moxaMappings;
 	}
 
