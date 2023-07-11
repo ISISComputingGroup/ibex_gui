@@ -1029,6 +1029,26 @@
       </value>
     </entry>
     <entry>
+      <key>MEASM905</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>MEASM905/measm905.opi</path>
+        <description>The pressure transducer for PEARL</description>
+        <macros>
+          <macro>
+            <name>MEASM905</name>
+            <include_parent_macros>true</include_parent_macros>
+            <PV_ROOT>$P(MEASM905)</PV_ROOT>
+            <description>The MEASM905 PV prefix (e.g. MEASM905_01).</description>
+            <default>MEASM905_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Pressure sensors</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>TDS 3000 Trace</key>
       <value>
         <type>OSCILLOSCOPE</type>
@@ -3292,16 +3312,21 @@
     <entry>
       <key>MEASM905</key>
       <value>
-        <categories/>
-        <type>UNKNOWN</type>
-        <path>measm905.opi</path>
-        <description>The OPI for the MEASM905</description>
+        <type>PRESSURE_GAUGE</type>
+        <path>MEASM905/measm905.opi</path>
+        <description>The pressure transducer for PEARL</description>
         <macros>
           <macro>
             <name>MEASM905</name>
-            <description>The MEASM905 PV prefix (e.g. MEASM905_01)</description>
+            <include_parent_macros>true</include_parent_macros>
+            <PV_ROOT>$P(MEASM905)</PV_ROOT>
+            <description>The MEASM905 PV prefix (e.g. MEASM905_01).</description>
+            <default>MEASM905_01</default>
           </macro>
         </macros>
+        <categories>
+          <category>Pressure sensors</category>
+        </categories>
       </value>
     </entry>
   </opis>
