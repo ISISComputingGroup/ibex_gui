@@ -2919,7 +2919,7 @@
     <entry>
       <key>Automatic Needle Valve Controller</key>
       <value>
-        <type>UNKNOWN</type>
+        <type>EUROTHERM</type>
         <path>automatic_needle_valve.opi</path>
         <description>Automatic Needle Valve Controller</description>
         <macros>
