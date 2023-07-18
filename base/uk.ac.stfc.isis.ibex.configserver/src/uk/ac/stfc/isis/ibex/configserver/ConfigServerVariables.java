@@ -122,7 +122,6 @@ public class ConfigServerVariables extends Closer {
     public final ForwardingObservable<CustomBannerData> bannerDescription;
     /** Provides the details for the Moxa port mappings. */
     public final ForwardingObservable<HashMap<String, ArrayList<ArrayList<String>>>> moxaMappings;
-    //public final Writable<String> refreshMappings;
 
     /**
      * Default Constructor.
@@ -207,9 +206,7 @@ public class ConfigServerVariables extends Closer {
                 InstrumentUtils.convert(readCompressed(blockServerAddresses.bannerDescription()),
                         converters.toBannerDescription());
         moxaMappings = InstrumentUtils.convert(readCompressed(blockServerAddresses.moxaMappings()), converters.toMoxaMappings());
-        
-        //refreshMappings = InstrumentUtils.convert(writeCompressed(blockServerAddresses.updateMoxaMappings()), converters.updateMoxaMappings());   
-	}
+        }
 
     /**
      * Provides a monitor on the specified configuration.

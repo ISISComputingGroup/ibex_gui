@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 /**
  * 
- * Extension of Arraylist to be able to hold the label to use on the tree, usually the description of the first
- * element but sometimes Running or In Config.
+ * Extension of Arraylist to be able to hold the label to use on the tree, usually the name and IP address
+ * of the Moxa.
  *
  */
 @SuppressWarnings("serial")
 public class MoxaList extends ArrayList<MoxaModelObject> {
 	/**
-	 *  The name of the list of Iocs for use in the Tree.
+	 *  The name and IP of the moxa for use in the Tree.
 	 */
 	public String name;
 	
