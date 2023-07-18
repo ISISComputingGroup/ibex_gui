@@ -2,8 +2,6 @@ package uk.ac.stfc.isis.ibex.ui.moxas.views;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Arrays;
-
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;

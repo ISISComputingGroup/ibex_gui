@@ -3,16 +3,8 @@ package uk.ac.stfc.isis.ibex.ui.moxas.views;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.PostConstruct;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
@@ -23,24 +15,15 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Tree;
-import org.eclipse.ui.dialogs.FilteredTree;
-import org.eclipse.ui.dialogs.PatternFilter;
 
 
 public class MoxaInfoPanel  extends Composite {
 	private final Button expandButton;
 	private final Button  collapseButton;
-	private final Button refreshButton;
-//	private Tree moxasTree;
-
 
 	private DataBindingContext bindingContext = new DataBindingContext();
 	private TreeViewer viewer;
-	private static final int COLUMN_WIDTH = 200;
-	private static final int LAYOUT = 3;
-	private static final int MARGIN_WIDTH = 10;
+	private static final int COLUMN_WIDTH = 500;
 	/**
 	 * The constructor.
 	 * 
@@ -51,15 +34,10 @@ public class MoxaInfoPanel  extends Composite {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
 		
-		// Add selection tree.
-		Composite treeComposite = new Composite(this, SWT.FILL);
-  		treeComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-  		treeComposite.setLayout(new GridLayout(1, true));
-  		final var viewer = new TreeViewer(treeComposite, SWT.FULL_SELECTION);
+  		final var viewer = new TreeViewer(this);
   		 TreeViewerColumn moxaPortColumn = new TreeViewerColumn(viewer, SWT.NONE);
          moxaPortColumn.getColumn().setText("MOXA port");
          moxaPortColumn.getColumn().setWidth(COLUMN_WIDTH);
-         moxaPortColumn.getColumn().setAlignment(SWT.CENTER);
 
          moxaPortColumn.setLabelProvider(new ColumnLabelProvider() {
       	    @Override
@@ -78,7 +56,6 @@ public class MoxaInfoPanel  extends Composite {
          TreeViewerColumn comPortColumn = new TreeViewerColumn(viewer, SWT.NONE);
          comPortColumn.getColumn().setText("COM port");
          comPortColumn.getColumn().setWidth(COLUMN_WIDTH);
-         comPortColumn.getColumn().setAlignment(SWT.CENTER);
          
          comPortColumn.setLabelProvider(new ColumnLabelProvider() {
      	    @Override
@@ -94,14 +71,10 @@ public class MoxaInfoPanel  extends Composite {
       	
       	viewer.setInput(model.getMoxaPorts());
       	
-        viewer.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        viewer.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 21, 1));
         viewer.getTree().setHeaderVisible(true);
         viewer.getTree().setLinesVisible(true);
-     	moxaPortColumn.getColumn().pack();
      	
-        GridLayoutFactory.fillDefaults().generateLayout(parent);
-
-
 		
 		Composite expansionComposite = new Composite(this, SWT.FILL);
 		expansionComposite.setLayout(new GridLayout(3, true));
@@ -125,22 +98,10 @@ public class MoxaInfoPanel  extends Composite {
 			}
 		});
 		
-  		refreshButton = new Button(expansionComposite, SWT.NONE);
-		refreshButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-		refreshButton.setText("\u27F3 Refresh mappings");
-		refreshButton.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				model.refreshMappings();
-				viewer.setInput(model.getMoxaPorts());
-			}
-		});
-		
-		
 		model.addUiThreadPropertyChangeListener("moxaMappings", new PropertyChangeListener() {
     		@Override
     		public void propertyChange(PropertyChangeEvent evt) {
     			viewer.getTree().setVisible(false);
-    			
     			viewer.setInput(evt.getNewValue());
     			viewer.getTree().setVisible(true);
     		}
