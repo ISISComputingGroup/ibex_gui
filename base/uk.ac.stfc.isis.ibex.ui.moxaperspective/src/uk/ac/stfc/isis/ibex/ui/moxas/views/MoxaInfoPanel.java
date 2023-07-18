@@ -34,9 +34,9 @@ public class MoxaInfoPanel  extends Composite {
 		super(parent, style);
 		setLayout(new GridLayout(1, false));
 		
-  		final var viewer = new TreeViewer(this);
+  		final var viewer = new TreeViewer(this, SWT.FULL_SELECTION);
   		 TreeViewerColumn moxaPortColumn = new TreeViewerColumn(viewer, SWT.NONE);
-         moxaPortColumn.getColumn().setText("MOXA port");
+         moxaPortColumn.getColumn().setText("Physical MOXA port");
          moxaPortColumn.getColumn().setWidth(COLUMN_WIDTH);
 
          moxaPortColumn.setLabelProvider(new ColumnLabelProvider() {
