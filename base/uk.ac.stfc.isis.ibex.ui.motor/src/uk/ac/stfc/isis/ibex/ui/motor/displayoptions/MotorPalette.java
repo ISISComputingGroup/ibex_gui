@@ -67,7 +67,12 @@ public class MotorPalette {
     public Color getMovingColor() {
         return movingColor;
     }
-    
+
+    /**
+     * Returns the colour used when the motor is paused.
+     * 
+     * @return the colour used when the motor is paused.
+     */
     public Color getIntermediateColor() {
     	return intermediateColor;
     }
