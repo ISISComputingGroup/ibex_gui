@@ -3289,5 +3289,18 @@
         </categories>
       </value>
     </entry>
+    <entry>
+      <key>PEARL Jaw Set</key>
+      <value>
+        <type>MONITOR</type>
+        <path>jaws/jaws_managers/pearl_manager.opi</path>
+        <description>PEARL Jaw Set Manager</description>
+        <macros>
+        </macros>
+        <categories>
+          <category>Jaws and slits</category>
+        </categories>
+      </value>
+    </entry>
   </opis>
 </descriptions>
