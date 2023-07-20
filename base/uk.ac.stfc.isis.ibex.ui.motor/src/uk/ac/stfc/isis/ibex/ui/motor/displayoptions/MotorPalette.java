@@ -30,6 +30,7 @@ public class MotorPalette {
     private final Color disabledColor;
     private final Color stoppedColor;
     private final Color movingColor;
+    private final Color intermediateColor;
     
     private final Color inPositionBorderColor;
     private final Color outsideToleranceBorderColor;
@@ -41,16 +42,18 @@ public class MotorPalette {
      * @param stoppedColor colour to be used when the motor is stopped.
      * @param disabledColor colour to be used when the motor is disabled.
      * @param unnamedColor colour to be used when the motor is unnamed.
+     * @param intermediateColor colour to be used when the motor is not done moving and it is not moving.
      * @param inPositonBorderColor border colour to be used when the motor is in position (within tolerance)
      * @param outsideToleranceBorderColor border colour to be used when the motor is outside tolerance of SP
      */
     public MotorPalette(Color movingColor, Color stoppedColor, 
-    		Color disabledColor, Color unnamedColor,
+    		Color disabledColor, Color unnamedColor, Color intermediateColor,
     		Color inPositonBorderColor, Color outsideToleranceBorderColor) {
         this.movingColor = movingColor;
         this.stoppedColor = stoppedColor;
         this.disabledColor = disabledColor;
         this.unnamedColor = unnamedColor;
+        this.intermediateColor = intermediateColor;
         
         this.inPositionBorderColor = inPositonBorderColor;
         this.outsideToleranceBorderColor = outsideToleranceBorderColor;
@@ -63,6 +66,15 @@ public class MotorPalette {
      */
     public Color getMovingColor() {
         return movingColor;
+    }
+
+    /**
+     * Returns the colour used when the motor is paused.
+     * 
+     * @return the colour used when the motor is paused.
+     */
+    public Color getIntermediateColor() {
+    	return intermediateColor;
     }
 
     /**
