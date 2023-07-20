@@ -2629,6 +2629,7 @@
           <macro>
             <name>TTIEX355P</name>
             <description>The TTIEX355P PV prefix (e.g. TTIEX355P_01)</description>
+            <default>TTIEX355P_01</default>
           </macro>
         </macros>
       </value>
