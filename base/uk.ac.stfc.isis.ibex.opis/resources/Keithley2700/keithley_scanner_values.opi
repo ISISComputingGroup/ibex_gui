@@ -256,7 +256,13 @@ $(pv_value)</tooltip>
       <border_alarm_sensitive>true</border_alarm_sensitive>
       <height>25</height>
       <on_label>ON</on_label>
+<<<<<<< Updated upstream
       <border_width>1</border_width>
+=======
+      <pv_name>$(PV_ROOT):SCAN:STATE</pv_name>
+      <pv_value />
+      <rules />
+>>>>>>> Stashed changes
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
