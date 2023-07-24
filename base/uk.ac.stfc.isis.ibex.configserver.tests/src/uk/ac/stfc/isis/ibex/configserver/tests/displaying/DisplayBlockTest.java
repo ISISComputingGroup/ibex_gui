@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.configserver.tests.displaying;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -43,6 +44,7 @@ public class DisplayBlockTest {
     TestableIOSObservable<Double> lowLimitObservable;
     
 	DisplayBlock displayBlock;
+	Block mockedBlock;
 	
 	@Before
 	public void setUp() {
@@ -53,8 +55,9 @@ public class DisplayBlockTest {
         descriptionObservable = new TestableIOSObservable<String>(mock(ClosableObservable.class));
         alarmObservable= new TestableIOSObservable<AlarmState>(mock(ClosableObservable.class));
         lowLimitObservable = new TestableIOSObservable<Double>(mock(ClosableObservable.class));
+        mockedBlock = mock(Block.class);
 		displayBlock = new DisplayBlock(
-                mock(Block.class), // block
+                mockedBlock, // block
                 valueObservable, // value
                 descriptionObservable, // description
                 alarmObservable, // alarm
@@ -299,5 +302,31 @@ public class DisplayBlockTest {
 
         // Assert
         assertEquals(lowLimit, displayBlock.getRunControlLowLimit());
+    }
+    
+    @Test
+    public void GIVEN_pv_connection_THEN_get_value_tooltip_text_correct() {
+    	// Arrange
+    	String name = "name";
+    	String pvAddress = "pv_address";
+    	String description = "description";
+    	String value = "10";
+    	
+    	when(mockedBlock.getPV()).thenReturn(pvAddress);
+    	when(mockedBlock.getName()).thenReturn(name);
+    	
+    	// Act
+    	valueObservable.setConnectionStatus(true);
+    	descriptionObservable.setValue(description);
+    	valueObservable.setValue(value);
+    	
+    	// Assert
+    	String expected = String.format("%s%sPV Address: %s%sValue: %s%sStatus: %s%s%s", 
+        		name, System.lineSeparator(),
+        		pvAddress, System.lineSeparator(),
+        		value, System.lineSeparator(), 
+        		"No alarm", System.lineSeparator(), 
+        		description);
+    	assertEquals(expected, displayBlock.getValueTooltipText());
     }
 }

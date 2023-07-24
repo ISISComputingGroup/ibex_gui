@@ -2629,6 +2629,7 @@
           <macro>
             <name>TTIEX355P</name>
             <description>The TTIEX355P PV prefix (e.g. TTIEX355P_01)</description>
+            <default>TTIEX355P_01</default>
           </macro>
         </macros>
       </value>
@@ -3286,6 +3287,19 @@
         </macros>
         <categories>
           <category>Monitors</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>PEARL Jaw Set</key>
+      <value>
+        <type>MONITOR</type>
+        <path>jaws/jaws_managers/pearl_manager.opi</path>
+        <description>PEARL Jaw Set Manager</description>
+        <macros>
+        </macros>
+        <categories>
+          <category>Jaws and slits</category>
         </categories>
       </value>
     </entry>
