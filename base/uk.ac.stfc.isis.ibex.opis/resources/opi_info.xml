@@ -1029,6 +1029,26 @@
       </value>
     </entry>
     <entry>
+      <key>MEASM905</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>MEASM905/measm905.opi</path>
+        <description>The pressure transducer for PEARL</description>
+        <macros>
+          <macro>
+            <name>MEASM905</name>
+            <include_parent_macros>true</include_parent_macros>
+            <PV_ROOT>$P(MEASM905)</PV_ROOT>
+            <description>The MEASM905 PV prefix (e.g. MEASM905_01).</description>
+            <default>MEASM905_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Pressure sensors</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>TDS 3000 Trace</key>
       <value>
         <type>OSCILLOSCOPE</type>
@@ -2629,6 +2649,7 @@
           <macro>
             <name>TTIEX355P</name>
             <description>The TTIEX355P PV prefix (e.g. TTIEX355P_01)</description>
+            <default>TTIEX355P_01</default>
           </macro>
         </macros>
       </value>
@@ -3304,6 +3325,18 @@
         </macros>
         <categories>
           <category>Pressure control handling systems</category>
+          </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>PEARL Jaw Set</key>
+      <value>
+        <type>MONITOR</type>
+        <path>jaws/jaws_managers/pearl_manager.opi</path>
+        <description>PEARL Jaw Set Manager</description>
+        <macros/>
+        <categories>
+          <category>Jaws and slits</category>
         </categories>
       </value>
     </entry>

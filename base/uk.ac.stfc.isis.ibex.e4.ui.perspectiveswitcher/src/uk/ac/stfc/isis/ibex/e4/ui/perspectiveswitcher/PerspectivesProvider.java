@@ -30,7 +30,8 @@ public class PerspectivesProvider {
     private EModelService modelService;
     
     private static final String MAIN_PERSPECTIVE_STACK_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspectivestack.0";
-
+    private static final String DEFAULT_PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.weblinks";
+    
     /**
      * Instantiates the class and initialises the internal perspective list with
      * all perspectives found in the application model.
@@ -125,6 +126,13 @@ public class PerspectivesProvider {
             }
         }
         return perspectives;
+    }
+    
+    /**
+     * @return the default perspective id (usually displayed on launch as landing page)
+     */
+    public String getDefaultPerspectiveId() {
+    	return DEFAULT_PERSPECTIVE_ID;
     }
 
     /**
