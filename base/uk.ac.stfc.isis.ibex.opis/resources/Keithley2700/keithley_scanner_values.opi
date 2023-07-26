@@ -277,7 +277,8 @@
         <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
       </on_color>
       <on_label>ON</on_label>
-      <pv_name>$(PV_ROOT):</pv_name>
+      <border_width>1</border_width>
+      <pv_name>$(PV_ROOT):SCAN:STATE</pv_name>
       <pv_value />
       <rules />
       <scale_options>
