@@ -378,8 +378,8 @@ $(pv_value)</tooltip>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
       <limits_from_pv>false</limits_from_pv>
-      <maximum>0.0</maximum>
-      <minimum>2000.0</minimum>
+      <maximum>1.7976931348623157E308</maximum>
+      <minimum>-1.7976931348623157E308</minimum>
       <multiline_input>false</multiline_input>
       <name>Text Input</name>
       <precision>0</precision>
