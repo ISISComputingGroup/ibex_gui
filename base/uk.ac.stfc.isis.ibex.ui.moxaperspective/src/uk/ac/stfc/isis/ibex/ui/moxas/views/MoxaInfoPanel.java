@@ -4,7 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
-import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
@@ -21,8 +20,6 @@ public class MoxaInfoPanel  extends Composite {
 	private final Button expandButton;
 	private final Button  collapseButton;
 
-	private DataBindingContext bindingContext = new DataBindingContext();
-	private TreeViewer viewer;
 	private static final int COLUMN_WIDTH = 500;
 	/**
 	 * The constructor.
