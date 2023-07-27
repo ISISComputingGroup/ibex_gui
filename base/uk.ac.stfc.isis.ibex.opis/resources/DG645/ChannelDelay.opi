@@ -378,8 +378,8 @@ $(pv_value)</tooltip>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
       <limits_from_pv>false</limits_from_pv>
-      <maximum>1.7976931348623157E308</maximum>
-      <minimum>-1.7976931348623157E308</minimum>
+      <maximum>0.0</maximum>
+      <minimum>2000.0</minimum>
       <multiline_input>false</multiline_input>
       <name>Text Input</name>
       <precision>0</precision>
@@ -540,7 +540,25 @@ $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
       <pv_name></pv_name>
       <pv_value />
-      <rules />
+      <rules>
+        <rule name="Disable if value is out of range or incomplete" prop_id="enabled" out_exp="false">
+          <exp bool_exp="pvStr0 == &quot;&quot; || pvStr1 == &quot;&quot;">
+            <value>false</value>
+          </exp>
+          <exp bool_exp="+pvStr1 * Math.pow(10, (-pv2)) &gt; 2000">
+            <value>false</value>
+          </exp>
+          <exp bool_exp="+pvStr1 * Math.pow(10, (-pv2)) &lt; 0">
+            <value>false</value>
+          </exp>
+          <exp bool_exp="isNaN(+pvStr1)">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)$(CHANNEL_X)REFERENCE:SP</pv>
+          <pv trig="true">$(PV_ROOT)$(CHANNEL_X)DELAY:SP</pv>
+          <pv trig="true">$(PV_ROOT)$(CHANNEL_X)DELAYUNIT:SP.RVAL</pv>
+        </rule>
+      </rules>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -589,7 +607,25 @@ $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
       <pv_name></pv_name>
       <pv_value />
-      <rules />
+      <rules>
+        <rule name="Disable if value is out of range or incomplete" prop_id="enabled" out_exp="false">
+          <exp bool_exp="pvStr0 == &quot;&quot; || pvStr1 == &quot;&quot;">
+            <value>false</value>
+          </exp>
+          <exp bool_exp="+pvStr1 * Math.pow(10, (-pv2)) &gt; 2000">
+            <value>false</value>
+          </exp>
+          <exp bool_exp="+pvStr1 * Math.pow(10, (-pv2)) &lt; 0">
+            <value>false</value>
+          </exp>
+          <exp bool_exp="isNaN(+pvStr1)">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)$(CHANNEL_Y)REFERENCE:SP</pv>
+          <pv trig="true">$(PV_ROOT)$(CHANNEL_Y)DELAY:SP</pv>
+          <pv trig="true">$(PV_ROOT)$(CHANNEL_Y)DELAYUNIT:SP.RVAL</pv>
+        </rule>
+      </rules>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
