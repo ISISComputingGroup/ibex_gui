@@ -18,9 +18,10 @@ set CLIENTDIR=%APPSDIR%\Client_E4
 
 REM Copy the pydev command history file to temp so it can be copied back in after deploy (otherwise it's overwritten) 
 set GENIECMDLOGFILE=history.py
-set GENIECMDLOG=%CLIENTDIR%\workspace\.metadata\.plugins\org.python.pydev.shared_interactive_console\%GENIECMDLOGFILE%
-if exist %GENIECMDLOG% (
-	robocopy %GENIECMDLOG% %TMP%\%GENIECMDLOGFILE%
+set GENIECMDLOGDIR=%CLIENTDIR%\workspace\.metadata\.plugins\org.python.pydev.shared_interactive_console\
+if exist %GENIECMDLOGDIR%\%GENIECMDLOGFILE% (
+	@echo Copying pydev history file before copying client
+	robocopy %GENIECMDLOGDIR% %TEMP% %GENIECMDLOGFILE% /IS /NFL /NDL /NP /NC /NS /LOG:NUL
 )
 
 mkdir %CLIENTDIR%
@@ -33,7 +34,8 @@ if %errcode% GEQ 4 (
 
 REM re-copy the pydev command history file back if it exists
 if exist %TEMP%\%GENIECMDLOGFILE% (
-	robocopy %TEMP%\%GENIECMDLOGFILE% %GENIECMDLOG%
+	@echo Moving pydev history file to client
+	robocopy %TEMP% %GENIECMDLOGDIR% %GENIECMDLOGFILE% /MOV /NFL /NDL /NP /NC /NS /LOG:NUL
 )
 
 REM Copy EPICS_UTILS across
