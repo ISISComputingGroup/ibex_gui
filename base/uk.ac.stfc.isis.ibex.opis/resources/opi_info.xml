@@ -3311,13 +3311,30 @@
       </value>
     </entry>
     <entry>
+      <key>PACE5000</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>pace5000.opi</path>
+        <description>The OPI for the PACE5000</description>
+        <macros>
+          <macro>
+            <name>PACE5000</name>
+            <description>The PACE5000 PV prefix (e.g. PACE5000_01)</description>
+            <default>PACE5000_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Pressure control handling systems</category>
+          </categories>
+      </value>
+    </entry>
+    <entry>
       <key>PEARL Jaw Set</key>
       <value>
         <type>MONITOR</type>
         <path>jaws/jaws_managers/pearl_manager.opi</path>
         <description>PEARL Jaw Set Manager</description>
-        <macros>
-        </macros>
+        <macros/>
         <categories>
           <category>Jaws and slits</category>
         </categories>
