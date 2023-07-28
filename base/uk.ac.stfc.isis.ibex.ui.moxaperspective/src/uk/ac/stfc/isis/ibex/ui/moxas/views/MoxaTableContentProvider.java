@@ -4,18 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.eclipse.jface.viewers.Viewer;
 
 
 public class MoxaTableContentProvider implements ITreeContentProvider {
-	@Override
-	public void dispose() {
-	}
-
-	@Override
-	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-	}
-
 	@Override
 	public Object[] getElements(Object inputElement) {
 		return HashMap.class.cast(inputElement).values().toArray();
