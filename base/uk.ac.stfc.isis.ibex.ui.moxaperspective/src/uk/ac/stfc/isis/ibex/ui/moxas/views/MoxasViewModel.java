@@ -5,7 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import uk.ac.stfc.isis.ibex.configserver.MoxaMappings;
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 
@@ -15,7 +15,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 public class MoxasViewModel extends ModelObject {
 	
 	private HashMap<String, MoxaList> moxaPorts = new HashMap<String, MoxaList>();
-	private final MoxaMappings control; 
+	private final Configurations control; 
 	
 	/**
 	 * represents all moxa physical port to COM port mappings. 
@@ -24,7 +24,7 @@ public class MoxasViewModel extends ModelObject {
 	public HashMap<String, MoxaList> getMoxaPorts() {
 		HashMap<String, MoxaList> map = new HashMap<String, MoxaList>();
 		
-		HashMap<String, ArrayList<ArrayList<String>>> ret = control.getMappings().getValue();
+		HashMap<String, ArrayList<ArrayList<String>>> ret = control.moxaMappings().getValue();
 		if (ret != null) {
 		ret.forEach((key, value) -> {
 			MoxaList list = new MoxaList(key);
@@ -40,7 +40,7 @@ public class MoxasViewModel extends ModelObject {
 	
 	private PropertyChangeListener moxasListener;
 
-	public MoxasViewModel(MoxaMappings control) {
+	public MoxasViewModel(Configurations control) {
 		this.control = control;
         moxaPorts = getMoxaPorts();
 
@@ -51,10 +51,10 @@ public class MoxasViewModel extends ModelObject {
     		}
     	};
     	
-    	control.getMappings().addPropertyChangeListener(moxasListener);
+    	control.moxaMappings().addPropertyChangeListener(moxasListener);
 	}
 
 	public void removeListeners() {
-		control.getMappings().removePropertyChangeListener(moxasListener);
+		control.moxaMappings().removePropertyChangeListener(moxasListener);
 	}
 }

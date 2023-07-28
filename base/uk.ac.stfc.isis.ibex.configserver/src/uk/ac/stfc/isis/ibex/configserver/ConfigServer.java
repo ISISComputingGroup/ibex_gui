@@ -346,6 +346,11 @@ public class ConfigServer extends Closer {
 				variables.protectedIocs);
 	}
 	
+	/**
+	 * Returns an observable to the moxa mappings.
+	 * 
+	 * @return the map of hostname and ip addresses to moxa port mappings
+	 */
 	public ForwardingObservable<HashMap<String, ArrayList<ArrayList<String>>>> moxaMappings() { 
 		return variables.moxaMappings;
 	}

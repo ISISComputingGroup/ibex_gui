@@ -8,16 +8,15 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
-import uk.ac.stfc.isis.ibex.configserver.MoxaMappings;
 
 public class MoxasView  {
 	
-	MoxaMappings control;
+	Configurations control;
 
 	@PostConstruct
     public void createPartControl(Composite parent) {
     	parent.setLayout(new GridLayout(1, true));
-    	control = Configurations.getInstance().moxaMappings();
+    	control = Configurations.getInstance();
     	MoxasViewModel iocControlViewModel = new MoxasViewModel(control);
     	MoxaInfoPanel iocControlView = new MoxaInfoPanel(parent, SWT.FILL, iocControlViewModel);
     	iocControlView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));

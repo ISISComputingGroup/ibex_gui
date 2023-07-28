@@ -34,6 +34,7 @@ import uk.ac.stfc.isis.ibex.configserver.internal.ConfigEditing;
 import uk.ac.stfc.isis.ibex.configserver.internal.LoggingConfigurationObserver;
 import uk.ac.stfc.isis.ibex.configserver.json.JsonConverters;
 import uk.ac.stfc.isis.ibex.configserver.recent.RecentConfigList;
+import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.observing.LoggingObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
@@ -55,7 +56,7 @@ public class Configurations extends Closer implements BundleActivator {
 	private final Displaying displaying;
 	private final Editing editing;
 	private final IocControl iocControl;
-	private final MoxaMappings moxaMappings;
+	private final UpdatedObservableAdapter<HashMap<String, ArrayList<ArrayList<String>>>> moxaMappings;
 	private final RecentConfigList recent;
 
 	private final ConfigServerVariables variables;
@@ -78,7 +79,7 @@ public class Configurations extends Closer implements BundleActivator {
 		editing = registerForClose(new ConfigEditing(server));
 
 		iocControl = new IocControl(server);
-		moxaMappings = new MoxaMappings(server);
+		moxaMappings = new UpdatedObservableAdapter<>(server.moxaMappings());
 		addLogging();
 	}
 	
@@ -131,7 +132,10 @@ public class Configurations extends Closer implements BundleActivator {
 		return iocControl;
 	}
 	
-	public MoxaMappings moxaMappings() { 
+	/**
+	 * @return Moxa mapping information
+	 */
+	public UpdatedObservableAdapter<HashMap<String, ArrayList<ArrayList<String>>>> moxaMappings() { 
 		return moxaMappings;
 	}
 	/**
