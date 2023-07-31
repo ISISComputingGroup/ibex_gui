@@ -106,11 +106,9 @@ public class BlockServerAddresses {
 
     /** The field used to get the current banner description. */
     private static final String BANNER_DESCRIPTION = "BANNER_DESCRIPTION";
-    
+    /** The field used to get the moxa mapping information. */
     private static final String MOXA_MAPPINGS = "MOXA_MAPPINGS";
     
-    private static final String UPDATE_MM = "UPDATE_MM";
-	
     /** The PV address of the block server. */
 	private final PVAddress blockServerAddress;
     /** The PV address for block server block aliases. */
@@ -377,12 +375,11 @@ public class BlockServerAddresses {
         return blockServerAddress.endWith(CONFIG_DESCRIPTION_RULES);
     }
     
+    /**
+     * @return The PV providing the moxa mapping information
+     */
     public String moxaMappings() {
     	return blockServerAddress.endWith(MOXA_MAPPINGS);
-    }
-    
-    public String updateMoxaMappings() {
-    	return blockServerAddress.endWith(UPDATE_MM);
     }
 
 }
