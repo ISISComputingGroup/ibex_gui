@@ -3293,7 +3293,7 @@
       <key>Muon Separator Tuning</key>
       <value>
         <type>MUON_FRONT_END</type>
-        <path>separator_tuning.opi</path>
+        <path>RIKEN/separator_tuning.opi</path>
         <description>The OPI to remotely tune a muon separator with control of the PSU output and feedback from the vacuum system.</description>
         <macros>
           <macro>
