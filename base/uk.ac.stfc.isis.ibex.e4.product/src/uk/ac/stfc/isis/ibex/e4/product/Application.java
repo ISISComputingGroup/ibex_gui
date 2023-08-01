@@ -25,6 +25,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
+import org.csstudio.security.authentication.LoginJob;
+
 import uk.ac.stfc.isis.ibex.epics.pvmanager.PVManagerSettings;
 import uk.ac.stfc.isis.ibex.ui.JMXServer;
 
@@ -54,6 +56,9 @@ public class Application implements IApplication {
 		
 		// Set up diirt as early as possible in the startup sequence.
 		PVManagerSettings.setUp();
+		
+        // Authenticate user
+        LoginJob.forCurrentUser().schedule();
 		
 		Display display = PlatformUI.createDisplay();
 		try {

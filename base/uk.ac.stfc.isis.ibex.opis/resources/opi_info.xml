@@ -3340,5 +3340,26 @@
         </categories>
       </value>
     </entry>
+    <entry>
+      <key>Alarm Table</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>Alarm/AlarmTable.opi</path>
+        <description>Alarm Table</description>
+        <macros/>
+        <categories/>
+        <type>UNKNOWN</type>
+      </value>
+    </entry>
+    <entry>
+      <key>Alarm History</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>Alarm/AlarmHistory.opi</path>
+        <description>Alarm History</description>
+        <macros/>
+        <categories/>
+      </value>
+    </entry>
   </opis>
 </descriptions>
