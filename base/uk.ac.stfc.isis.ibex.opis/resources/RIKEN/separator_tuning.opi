@@ -111,7 +111,7 @@
     <axis_3_axis_color>
       <color red="0" green="0" blue="0" />
     </axis_3_axis_color>
-    <axis_3_axis_title>Pressure</axis_3_axis_title>
+    <axis_3_axis_title>Pressure (mbar)</axis_3_axis_title>
     <axis_3_dash_grid_line>true</axis_3_dash_grid_line>
     <axis_3_grid_color>
       <color red="200" green="200" blue="200" />
@@ -173,7 +173,7 @@ $(trace_0_y_pv_value)&#xD;
 $(trace_1_y_pv)&#xD;
 $(trace_1_y_pv_value)</tooltip>
     <trace_0_anti_alias>true</trace_0_anti_alias>
-    <trace_0_buffer_size>6000</trace_0_buffer_size>
+    <trace_0_buffer_size>600</trace_0_buffer_size>
     <trace_0_concatenate_data>true</trace_0_concatenate_data>
     <trace_0_line_width>1</trace_0_line_width>
     <trace_0_name>Voltage +ve</trace_0_name>
@@ -184,7 +184,7 @@ $(trace_1_y_pv_value)</tooltip>
       <color name="ISIS_Trace_1" red="242" green="26" blue="26" />
     </trace_0_trace_color>
     <trace_0_trace_type>0</trace_0_trace_type>
-    <trace_0_update_delay>100</trace_0_update_delay>
+    <trace_0_update_delay>0</trace_0_update_delay>
     <trace_0_update_mode>4</trace_0_update_mode>
     <trace_0_visible>true</trace_0_visible>
     <trace_0_x_axis_index>0</trace_0_x_axis_index>
@@ -194,7 +194,7 @@ $(trace_1_y_pv_value)</tooltip>
     <trace_0_y_pv>$(P)$(PSU_POSITIVE):VOLT</trace_0_y_pv>
     <trace_0_y_pv_value />
     <trace_1_anti_alias>true</trace_1_anti_alias>
-    <trace_1_buffer_size>6000</trace_1_buffer_size>
+    <trace_1_buffer_size>600</trace_1_buffer_size>
     <trace_1_concatenate_data>true</trace_1_concatenate_data>
     <trace_1_line_width>1</trace_1_line_width>
     <trace_1_name>Voltage -ve</trace_1_name>
@@ -205,7 +205,7 @@ $(trace_1_y_pv_value)</tooltip>
       <color name="ISIS_Trace_1_NEW" red="0" green="0" blue="255" />
     </trace_1_trace_color>
     <trace_1_trace_type>0</trace_1_trace_type>
-    <trace_1_update_delay>100</trace_1_update_delay>
+    <trace_1_update_delay>0</trace_1_update_delay>
     <trace_1_update_mode>4</trace_1_update_mode>
     <trace_1_visible>true</trace_1_visible>
     <trace_1_x_axis_index>0</trace_1_x_axis_index>
@@ -215,7 +215,7 @@ $(trace_1_y_pv_value)</tooltip>
     <trace_1_y_pv>$(P)$(PSU_NEGATIVE):VOLT</trace_1_y_pv>
     <trace_1_y_pv_value />
     <trace_2_anti_alias>true</trace_2_anti_alias>
-    <trace_2_buffer_size>6000</trace_2_buffer_size>
+    <trace_2_buffer_size>600</trace_2_buffer_size>
     <trace_2_concatenate_data>true</trace_2_concatenate_data>
     <trace_2_line_width>1</trace_2_line_width>
     <trace_2_name>Current +ve</trace_2_name>
@@ -226,7 +226,7 @@ $(trace_1_y_pv_value)</tooltip>
       <color name="ISIS_Trace_4_NEW" red="255" green="109" blue="182" />
     </trace_2_trace_color>
     <trace_2_trace_type>0</trace_2_trace_type>
-    <trace_2_update_delay>100</trace_2_update_delay>
+    <trace_2_update_delay>0</trace_2_update_delay>
     <trace_2_update_mode>4</trace_2_update_mode>
     <trace_2_visible>true</trace_2_visible>
     <trace_2_x_axis_index>0</trace_2_x_axis_index>
@@ -236,7 +236,7 @@ $(trace_1_y_pv_value)</tooltip>
     <trace_2_y_pv>$(P)$(PSU_POSITIVE):CURRENT</trace_2_y_pv>
     <trace_2_y_pv_value />
     <trace_3_anti_alias>true</trace_3_anti_alias>
-    <trace_3_buffer_size>6000</trace_3_buffer_size>
+    <trace_3_buffer_size>600</trace_3_buffer_size>
     <trace_3_concatenate_data>true</trace_3_concatenate_data>
     <trace_3_line_width>1</trace_3_line_width>
     <trace_3_name>Current -ve</trace_3_name>
@@ -247,7 +247,7 @@ $(trace_1_y_pv_value)</tooltip>
       <color name="ISIS_DAE_Button_Abort" red="78" green="165" blue="249" />
     </trace_3_trace_color>
     <trace_3_trace_type>0</trace_3_trace_type>
-    <trace_3_update_delay>100</trace_3_update_delay>
+    <trace_3_update_delay>0</trace_3_update_delay>
     <trace_3_update_mode>4</trace_3_update_mode>
     <trace_3_visible>true</trace_3_visible>
     <trace_3_x_axis_index>0</trace_3_x_axis_index>
@@ -257,7 +257,7 @@ $(trace_1_y_pv_value)</tooltip>
     <trace_3_y_pv>$(P)$(PSU_NEGATIVE):CURRENT</trace_3_y_pv>
     <trace_3_y_pv_value />
     <trace_4_anti_alias>true</trace_4_anti_alias>
-    <trace_4_buffer_size>6000</trace_4_buffer_size>
+    <trace_4_buffer_size>600</trace_4_buffer_size>
     <trace_4_concatenate_data>true</trace_4_concatenate_data>
     <trace_4_line_width>1</trace_4_line_width>
     <trace_4_name>Pressure</trace_4_name>
@@ -268,7 +268,7 @@ $(trace_1_y_pv_value)</tooltip>
       <color name="ISIS_Trace_2" red="33" green="179" blue="33" />
     </trace_4_trace_color>
     <trace_4_trace_type>0</trace_4_trace_type>
-    <trace_4_update_delay>100</trace_4_update_delay>
+    <trace_4_update_delay>0</trace_4_update_delay>
     <trace_4_update_mode>4</trace_4_update_mode>
     <trace_4_visible>true</trace_4_visible>
     <trace_4_x_axis_index>0</trace_4_x_axis_index>
