@@ -18,7 +18,7 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <PVROOT>$(P)$(R)</PVROOT>
+    <ADPVROOT>$(P)$(R)</ADPVROOT>
   </macros>
   <name></name>
   <rules />
@@ -190,7 +190,7 @@
         <name>Intensity Graph</name>
         <pixel_info_pv_name></pixel_info_pv_name>
         <pixel_info_pv_value />
-        <pv_name>$(PVROOT):$(IMAGE):ArrayData</pv_name>
+        <pv_name>$(ADPVROOT):$(IMAGE):ArrayData</pv_name>
         <pv_value />
         <rgb_mode>false</rgb_mode>
         <roi_color>
@@ -202,51 +202,51 @@
             <exp bool_exp="true">
               <value>pv0</value>
             </exp>
-            <pv trig="true">$(PVROOT):$(ROI):ArraySizeX_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(ROI):ArraySizeX_RBV</pv>
           </rule>
           <rule name="Set data_height" prop_id="data_height" out_exp="true">
             <exp bool_exp="true">
               <value>pv0</value>
             </exp>
-            <pv trig="true">$(PVROOT):$(ROI):ArraySizeY_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(ROI):ArraySizeY_RBV</pv>
           </rule>
           <rule name="Set x_max" prop_id="x_axis_maximum" out_exp="true">
             <exp bool_exp="true">
               <value>pv0+pv1</value>
             </exp>
-            <pv trig="true">$(PVROOT):$(ROI):MinX_RBV</pv>
-            <pv trig="true">$(PVROOT):$(ROI):SizeX_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(ROI):MinX_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(ROI):SizeX_RBV</pv>
           </rule>
           <rule name="Set y_max" prop_id="y_axis_maximum" out_exp="true">
             <exp bool_exp="true">
               <value>pv0+pv1</value>
             </exp>
-            <pv trig="true">$(PVROOT):$(ROI):MinY_RBV</pv>
-            <pv trig="true">$(PVROOT):$(ROI):SizeY_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(ROI):MinY_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(ROI):SizeY_RBV</pv>
           </rule>
           <rule name="Set max_colour" prop_id="maximum" out_exp="true">
             <exp bool_exp="true">
               <value>pv0</value>
             </exp>
-            <pv trig="true">$(PVROOT):$(STATS):MaxValue_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(STATS):MaxValue_RBV</pv>
           </rule>
           <rule name="Set min_colour" prop_id="minimum" out_exp="true">
             <exp bool_exp="true">
               <value>pv0</value>
             </exp>
-            <pv trig="true">$(PVROOT):$(STATS):MinValue_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(STATS):MinValue_RBV</pv>
           </rule>
           <rule name="Set x_min" prop_id="x_axis_minimum" out_exp="true">
             <exp bool_exp="true">
               <value>pv0</value>
             </exp>
-            <pv trig="true">$(PVROOT):$(ROI):MinX_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(ROI):MinX_RBV</pv>
           </rule>
           <rule name="Set y_min" prop_id="y_axis_minimum" out_exp="true">
             <exp bool_exp="true">
               <value>pv0</value>
             </exp>
-            <pv trig="true">$(PVROOT):$(ROI):MinY_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(ROI):MinY_RBV</pv>
           </rule>
         </rules>
         <scale_options>
@@ -384,7 +384,7 @@
         <name>Intensity Graph</name>
         <pixel_info_pv_name></pixel_info_pv_name>
         <pixel_info_pv_value />
-        <pv_name>$(PVROOT):$(IMAGE):ArrayData</pv_name>
+        <pv_name>$(ADPVROOT):$(IMAGE):ArrayData</pv_name>
         <pv_value />
         <rgb_mode>false</rgb_mode>
         <roi_color>
@@ -396,51 +396,51 @@
             <exp bool_exp="true">
               <value>pv0</value>
             </exp>
-            <pv trig="true">$(PVROOT):$(ROI):ArraySizeX_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(ROI):ArraySizeX_RBV</pv>
           </rule>
           <rule name="Set data_height" prop_id="data_height" out_exp="true">
             <exp bool_exp="true">
               <value>pv0</value>
             </exp>
-            <pv trig="true">$(PVROOT):$(ROI):ArraySizeY_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(ROI):ArraySizeY_RBV</pv>
           </rule>
           <rule name="Set x_max" prop_id="x_axis_maximum" out_exp="true">
             <exp bool_exp="true">
               <value>pv0+pv1</value>
             </exp>
-            <pv trig="true">$(PVROOT):$(ROI):MinX_RBV</pv>
-            <pv trig="true">$(PVROOT):$(ROI):SizeX_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(ROI):MinX_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(ROI):SizeX_RBV</pv>
           </rule>
           <rule name="Set y_max" prop_id="y_axis_maximum" out_exp="true">
             <exp bool_exp="true">
               <value>pv0+pv1</value>
             </exp>
-            <pv trig="true">$(PVROOT):$(ROI):MinY_RBV</pv>
-            <pv trig="true">$(PVROOT):$(ROI):SizeY_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(ROI):MinY_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(ROI):SizeY_RBV</pv>
           </rule>
           <rule name="Set max_colour" prop_id="maximum" out_exp="true">
             <exp bool_exp="true">
               <value>pv0</value>
             </exp>
-            <pv trig="true">$(PVROOT):$(STATS):MaxValue_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(STATS):MaxValue_RBV</pv>
           </rule>
           <rule name="Set min_colour" prop_id="minimum" out_exp="true">
             <exp bool_exp="true">
               <value>pv0</value>
             </exp>
-            <pv trig="true">$(PVROOT):$(STATS):MinValue_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(STATS):MinValue_RBV</pv>
           </rule>
           <rule name="Set x_min" prop_id="x_axis_minimum" out_exp="true">
             <exp bool_exp="true">
               <value>pv0</value>
             </exp>
-            <pv trig="true">$(PVROOT):$(ROI):MinX_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(ROI):MinX_RBV</pv>
           </rule>
           <rule name="Set y_min" prop_id="y_axis_minimum" out_exp="true">
             <exp bool_exp="true">
               <value>pv0</value>
             </exp>
-            <pv trig="true">$(PVROOT):$(ROI):MinY_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(ROI):MinY_RBV</pv>
           </rule>
         </rules>
         <scale_options>
@@ -570,26 +570,26 @@
             <exp bool_exp="true">
               <value>pv0+pv1</value>
             </exp>
-            <pv trig="true">$(PVROOT):$(ROI):MinY_RBV</pv>
-            <pv trig="true">$(PVROOT):$(ROI):SizeY_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(ROI):MinY_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(ROI):SizeY_RBV</pv>
           </rule>
           <rule name="Set y_max" prop_id="axis_1_maximum" out_exp="true">
             <exp bool_exp="true">
               <value>pv0</value>
             </exp>
-            <pv trig="true">$(PVROOT):$(STATS):MaxValue_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(STATS):MaxValue_RBV</pv>
           </rule>
           <rule name="Set x_min" prop_id="axis_0_minimum" out_exp="true">
             <exp bool_exp="true">
               <value>pv0</value>
             </exp>
-            <pv trig="true">$(PVROOT):$(ROI):MinY_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(ROI):MinY_RBV</pv>
           </rule>
           <rule name="Set y_min" prop_id="axis_1_minimum" out_exp="true">
             <exp bool_exp="true">
               <value>pv0</value>
             </exp>
-            <pv trig="true">$(PVROOT):$(STATS):MinValue_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(STATS):MinValue_RBV</pv>
           </rule>
         </rules>
         <scale_options>
@@ -608,7 +608,7 @@
         <tooltip>$(pv_name)
 $(pv_value)</tooltip>
         <trace_0_anti_alias>true</trace_0_anti_alias>
-        <trace_0_buffer_size>1024</trace_0_buffer_size>
+        <trace_0_buffer_size>50000</trace_0_buffer_size>
         <trace_0_concatenate_data>false</trace_0_concatenate_data>
         <trace_0_line_width>1</trace_0_line_width>
         <trace_0_name>Trace 0</trace_0_name>
@@ -716,26 +716,26 @@ $(pv_value)</tooltip>
             <exp bool_exp="true">
               <value>pv0+pv1</value>
             </exp>
-            <pv trig="true">$(PVROOT):$(ROI):MinY_RBV</pv>
-            <pv trig="true">$(PVROOT):$(ROI):SizeY_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(ROI):MinY_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(ROI):SizeY_RBV</pv>
           </rule>
           <rule name="Set x_max" prop_id="axis_0_maximum" out_exp="true">
             <exp bool_exp="true">
               <value>pv0</value>
             </exp>
-            <pv trig="true">$(PVROOT):$(STATS):MaxValue_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(STATS):MaxValue_RBV</pv>
           </rule>
           <rule name="Set y_min" prop_id="axis_1_minimum" out_exp="true">
             <exp bool_exp="true">
               <value>pv0</value>
             </exp>
-            <pv trig="true">$(PVROOT):$(ROI):MinY_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(ROI):MinY_RBV</pv>
           </rule>
           <rule name="Set x_min" prop_id="axis_0_minimum" out_exp="true">
             <exp bool_exp="true">
               <value>pv0</value>
             </exp>
-            <pv trig="true">$(PVROOT):$(STATS):MinValue_RBV</pv>
+            <pv trig="true">$(ADPVROOT):$(STATS):MinValue_RBV</pv>
           </rule>
         </rules>
         <scale_options>
@@ -754,7 +754,7 @@ $(pv_value)</tooltip>
         <tooltip>$(pv_name)
 $(pv_value)</tooltip>
         <trace_0_anti_alias>true</trace_0_anti_alias>
-        <trace_0_buffer_size>1024</trace_0_buffer_size>
+        <trace_0_buffer_size>50000</trace_0_buffer_size>
         <trace_0_concatenate_data>false</trace_0_concatenate_data>
         <trace_0_line_width>1</trace_0_line_width>
         <trace_0_name>Trace 0</trace_0_name>
@@ -1058,7 +1058,7 @@ $(pv_value)</tooltip>
           <name>Text Update_4</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PVROOT):$(ROI):MinX_RBV</pv_name>
+          <pv_name>$(ADPVROOT):$(ROI):MinX_RBV</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -1110,7 +1110,7 @@ $(pv_value)</tooltip>
           <name>Text Update_2</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PVROOT):$(ROI):SizeX_RBV</pv_name>
+          <pv_name>$(ADPVROOT):$(ROI):SizeX_RBV</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -1162,7 +1162,7 @@ $(pv_value)</tooltip>
           <name>Text Update_3</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PVROOT):$(ROI):BinX_RBV</pv_name>
+          <pv_name>$(ADPVROOT):$(ROI):BinX_RBV</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -1219,7 +1219,7 @@ $(pv_value)</tooltip>
           <name>Text Input_1</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PVROOT):$(ROI):BinX</pv_name>
+          <pv_name>$(ADPVROOT):$(ROI):BinX</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -1276,7 +1276,7 @@ $(pv_value)</tooltip>
           <name>Text Input_1</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PVROOT):$(ROI):SizeX</pv_name>
+          <pv_name>$(ADPVROOT):$(ROI):SizeX</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -1333,7 +1333,7 @@ $(pv_value)</tooltip>
           <name>Text Input_1</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PVROOT):$(ROI):MinX</pv_name>
+          <pv_name>$(ADPVROOT):$(ROI):MinX</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -1549,7 +1549,7 @@ $(pv_value)</tooltip>
           <name>Text Update_1</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PVROOT):$(ROI):BinY_RBV</pv_name>
+          <pv_name>$(ADPVROOT):$(ROI):BinY_RBV</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -1601,7 +1601,7 @@ $(pv_value)</tooltip>
           <name>Text Update_5</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PVROOT):$(ROI):SizeY_RBV</pv_name>
+          <pv_name>$(ADPVROOT):$(ROI):SizeY_RBV</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -1653,7 +1653,7 @@ $(pv_value)</tooltip>
           <name>Text Update</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PVROOT):$(ROI):MinY_RBV</pv_name>
+          <pv_name>$(ADPVROOT):$(ROI):MinY_RBV</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -1710,7 +1710,7 @@ $(pv_value)</tooltip>
           <name>Text Input_1</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PVROOT):$(ROI):MinY</pv_name>
+          <pv_name>$(ADPVROOT):$(ROI):MinY</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -1767,7 +1767,7 @@ $(pv_value)</tooltip>
           <name>Text Input_1</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PVROOT):$(ROI):SizeY</pv_name>
+          <pv_name>$(ADPVROOT):$(ROI):SizeY</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -1824,7 +1824,7 @@ $(pv_value)</tooltip>
           <name>Text Input_1</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PVROOT):$(ROI):BinY</pv_name>
+          <pv_name>$(ADPVROOT):$(ROI):BinY</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -1958,7 +1958,7 @@ $(pv_value)</tooltip>
           <name>Text Update_6</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PVROOT):$(RAWIMAGE):Type</pv_name>
+          <pv_name>$(ADPVROOT):$(RAWIMAGE):Type</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -2006,7 +2006,7 @@ $(pv_value)</tooltip>
           <height>27</height>
           <items_from_pv>true</items_from_pv>
           <name>Combo_2</name>
-          <pv_name>$(PVROOT):$(RAWIMAGE):Type</pv_name>
+          <pv_name>$(ADPVROOT):$(RAWIMAGE):Type</pv_name>
           <pv_value />
           <rules />
           <scale_options>
@@ -2095,7 +2095,7 @@ $(pv_value)</tooltip>
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PVROOT):$(STATS):MaxValue_RBV</pv_name>
+      <pv_name>$(ADPVROOT):$(STATS):MaxValue_RBV</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -2227,7 +2227,7 @@ $(pv_value)</tooltip>
       <name>Text Update_1</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PVROOT):$(STATS):Total_RBV</pv_name>
+      <pv_name>$(ADPVROOT):$(STATS):Total_RBV</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -2279,7 +2279,7 @@ $(pv_value)</tooltip>
       <name>Text Update_2</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PVROOT):NumImagesCounter_RBV</pv_name>
+      <pv_name>$(ADPVROOT):NumImagesCounter_RBV</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />

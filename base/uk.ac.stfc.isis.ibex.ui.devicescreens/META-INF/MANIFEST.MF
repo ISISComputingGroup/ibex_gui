@@ -16,7 +16,6 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.targets;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.logger,
  uk.ac.stfc.isis.ibex.ui.targets;bundle-version="1.0.0",
- javax.annotation;bundle-version="1.2.0",
  uk.ac.stfc.isis.ibex.epics;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.widgets;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy

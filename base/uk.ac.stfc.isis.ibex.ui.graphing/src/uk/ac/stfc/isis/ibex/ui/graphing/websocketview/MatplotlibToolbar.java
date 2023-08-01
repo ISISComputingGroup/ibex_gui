@@ -50,26 +50,29 @@ public class MatplotlibToolbar {
 		
 		this.viewModel = viewModel;
 		
-		
-		
 		homeButton = new MatplotlibButton(viewModel.getHomeButtonState(), toolBar, 
-				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.HOME)), HOME_ICON);
-
+				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.HOME)), HOME_ICON, "Reset original view");
+		homeButton.getButton().setToolTipText(homeButton.getDescription());
+		
 		backButton = new MatplotlibButton(viewModel.getBackButtonState(), toolBar, 
-				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.BACK)), BACK_ICON);
+				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.BACK)), BACK_ICON, "Back to previous view");
+		backButton.getButton().setToolTipText(backButton.getDescription());
 		
 		forwardButton = new MatplotlibButton(viewModel.getForwardButtonState(), toolBar, 
-				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.FORWARD)), FORWARD_ICON);
+				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.FORWARD)), FORWARD_ICON, "Forward to next view");
+		forwardButton.getButton().setToolTipText(forwardButton.getDescription());
 		
 		// This is used, but only to be added to the toolbar.
 		@SuppressWarnings("unused")
 		var separator = new ToolItem(toolBar, SWT.SEPARATOR);
 		
 		panButton = new MatplotlibButton(viewModel.getPanButtonState(), toolBar, 
-				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.PAN)), PAN_ACTIVE, PAN_INACTIVE);
+				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.PAN)), PAN_ACTIVE, PAN_INACTIVE, "Pan");
+		panButton.getButton().setToolTipText(panButton.getDescription());
 		
 		zoomButton = new MatplotlibButton(viewModel.getZoomButtonState(), toolBar, 
-				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.ZOOM)), ZOOM_ACTIVE, ZOOM_INACTIVE);
+				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.ZOOM)), ZOOM_ACTIVE, ZOOM_INACTIVE, "Zoom");
+		zoomButton.getButton().setToolTipText(zoomButton.getDescription());
 	}
 	
 	/**
@@ -94,6 +97,7 @@ public class MatplotlibToolbar {
 		private ToolItem button;
 		private Image activeIcon;
 		private Image inactiveIcon;
+		private String description;
 		
 		private final PropertyChangeListener buttonListener;
 		
@@ -107,8 +111,8 @@ public class MatplotlibToolbar {
 		 * @param selectionListener
 		 * @param iconFilePath
 		 */
-		MatplotlibButton(UpdatedValue<MatplotlibButtonState> state, ToolBar toolBar, SelectionListener selectionListener, String iconFilePath) {
-			this(state, toolBar, selectionListener, iconFilePath, iconFilePath);
+		MatplotlibButton(UpdatedValue<MatplotlibButtonState> state, ToolBar toolBar, SelectionListener selectionListener, String iconFilePath, String description) {
+			this(state, toolBar, selectionListener, iconFilePath, iconFilePath, description);
 		}
 		
 		/**
@@ -119,10 +123,11 @@ public class MatplotlibToolbar {
 		 * @param activeIconFilePath
 		 * @param inactiveIconFilePath
 		 */
-		MatplotlibButton(UpdatedValue<MatplotlibButtonState> viewModelState, ToolBar toolBar, SelectionListener selectionListener, String activeIconFilePath, String inactiveIconFilePath) {
+		MatplotlibButton(UpdatedValue<MatplotlibButtonState> viewModelState, ToolBar toolBar, SelectionListener selectionListener, String activeIconFilePath, String inactiveIconFilePath, String description) {
 			this.activeIcon = ResourceManager.getPluginImage(SYMBOLIC_PATH, activeIconFilePath);
 			this.inactiveIcon = ResourceManager.getPluginImage(SYMBOLIC_PATH, inactiveIconFilePath);
 			this.viewModelState = viewModelState;
+			this.description = description;
 			
 			this.buttonState.setValue(viewModelState.getValue());
 			button = new ToolItem(toolBar, SWT.PUSH);
@@ -136,6 +141,20 @@ public class MatplotlibToolbar {
 							this.setState((MatplotlibButtonState) e.getNewValue());
 						}
 					});
+		}
+		
+		/**
+		 * @return the button's embedded ToolItem object
+		 */
+		public ToolItem getButton() {
+			return button;
+		}
+		
+		/**
+		 * @return the button's description
+		 */
+		public String getDescription() {
+			return description;
 		}
 		
 		/**

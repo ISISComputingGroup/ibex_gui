@@ -107,7 +107,8 @@ public class MatplotlibModelTests {
     
     @Test
     public void WHEN_refresh_requested_THEN_refresh_queued() {
-    	model.forceServerRefresh();;
+    	model.setImageData(new ByteArrayInputStream(FAKE_IMAGE_BYTES));
+    	model.forceServerRefresh();
     	Mockito.verify(workerThread, Mockito.times(1)).submit(runnableCaptor.capture());
     	
     	runnableCaptor.getValue().run();

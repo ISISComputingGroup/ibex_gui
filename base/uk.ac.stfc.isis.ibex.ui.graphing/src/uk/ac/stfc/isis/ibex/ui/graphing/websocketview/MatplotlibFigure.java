@@ -1,6 +1,7 @@
 package uk.ac.stfc.isis.ibex.ui.graphing.websocketview;
 
 import java.beans.PropertyChangeListener;
+import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
@@ -12,6 +13,7 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.events.MouseTrackListener;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Rectangle;
@@ -44,9 +46,14 @@ public class MatplotlibFigure extends Composite {
 	private Image plotImage;
 	private MatplotlibToolbar toolBar;
 	
+	private final Cursor defaultCursor;
+	private final Cursor zoomCursor;
+	private final Cursor panCursor;
+	
 	private final PropertyChangeListener connectionNameListener;
-	private final PropertyChangeListener imageListener;
+	private final PropertyChangeListener canvasListener;
 	private final PropertyChangeListener plotMessageListener;
+	private final PropertyChangeListener cursorTypeListener;
 	private final MouseTrackListener mouseTrackListener;
 	private final MouseMoveListener mouseMoveListener;
 	private final MouseListener mouseListener;
@@ -77,6 +84,10 @@ public class MatplotlibFigure extends Composite {
 		containerLayout.marginHeight = 0;
 		container.setLayout(containerLayout);
 		
+		defaultCursor = new Cursor(container.getDisplay(), SWT.CURSOR_ARROW);
+		zoomCursor = new Cursor(container.getDisplay(), SWT.CURSOR_CROSS);
+		panCursor = new Cursor(container.getDisplay(), SWT.CURSOR_HAND);
+		
 		labelConnectionStatus = new Label(container, SWT.NONE);
 		labelConnectionStatus.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 		labelConnectionStatus.setText(viewModel.getPlotName().getValue());
@@ -99,8 +110,17 @@ public class MatplotlibFigure extends Composite {
 				viewModel.canvasResized(bounds.width, bounds.height);
 			}
 		});
-		
-		plotCanvas.addPaintListener(event -> event.gc.drawImage(plotImage, 0, 0));
+
+		plotCanvas.addPaintListener(e -> {
+			e.gc.drawImage(plotImage, 0, 0);
+			
+            if (viewModel.getDragState().getValue()) {
+                Map<String, Integer> bounds = viewModel.getCanvasData().getValue().zoomSelectionArea();
+                
+                e.gc.setLineStyle(SWT.LINE_DASH);
+                e.gc.drawRectangle(bounds.get("minX"), bounds.get("minY"), bounds.get("width"), bounds.get("height"));
+            }
+        });
 		
 		viewModel.canvasResized(plotCanvas.getBounds().width, plotCanvas.getBounds().height);
 		
@@ -120,7 +140,10 @@ public class MatplotlibFigure extends Composite {
 			@Override
 			public void mouseMove(MouseEvent e) {
 				viewModel.setCursorPosition(new MatplotlibCursorPosition(e.x, e.y, true));
-
+				
+				if (viewModel.getDragState().getValue()) {
+					viewModel.notifyClientRedrawRequired();
+				}
 			}
 		};
 		
@@ -128,13 +151,15 @@ public class MatplotlibFigure extends Composite {
 			@Override
 			public void mouseDown(MouseEvent e) {
 				viewModel.notifyButtonPressed(new MatplotlibCursorPosition(e.x, e.y, true), MatplotlibPressType.BUTTON_PRESS);
-
 			}
 			
 			@Override
 			public void mouseUp(MouseEvent e) {
 				viewModel.notifyButtonPressed(new MatplotlibCursorPosition(e.x, e.y, true), MatplotlibPressType.BUTTON_RELEASE);
-
+				
+				if (viewModel.getDragState().getValue()) {
+					viewModel.notifyClientRedrawRequired();
+				}
 			}
 		};
 		
@@ -154,10 +179,23 @@ public class MatplotlibFigure extends Composite {
 					    plotMessage.setText(e.getNewValue().toString());
 					}
 				});
-		imageListener = viewModel.getImage()
-				.addUiThreadPropertyChangeListener(e -> drawImage((ImageData) e.getNewValue()));
-		
-		
+		cursorTypeListener = viewModel.getCursorType()
+				.addUiThreadPropertyChangeListener(e -> {
+					if (!container.isDisposed()) {
+					    if (MatplotlibCursorType.CROSSHAIR.equals(viewModel.getCursorType().getValue())) {
+					    	container.setCursor(zoomCursor);
+					    } else if (MatplotlibCursorType.HAND.equals(viewModel.getCursorType().getValue())) {
+					    	container.setCursor(panCursor);
+					    } else {
+					    	container.setCursor(defaultCursor);
+					    }
+				
+					}
+				});
+		canvasListener = viewModel.getCanvasData()
+				.addUiThreadPropertyChangeListener(e -> {
+					drawImage(viewModel.getCanvasData().getValue().image());
+				});
 	}
 	
 	/**
@@ -193,8 +231,9 @@ public class MatplotlibFigure extends Composite {
 	@Override
 	public void dispose() {
 		viewModel.getPlotName().removePropertyChangeListener(connectionNameListener);
-		viewModel.getImage().removePropertyChangeListener(imageListener);
 		viewModel.getPlotMessage().removePropertyChangeListener(plotMessageListener);
+		viewModel.getCursorType().removePropertyChangeListener(cursorTypeListener);
+		viewModel.getCanvasData().removePropertyChangeListener(canvasListener);
 		viewModel.close();
 		
 		if (!plotImage.isDisposed()) {
@@ -208,6 +247,10 @@ public class MatplotlibFigure extends Composite {
 			plotCanvas.dispose();
 		}
 		labelConnectionStatus.dispose();
+		
+		defaultCursor.dispose();
+		zoomCursor.dispose();
+		panCursor.dispose();
 		
 		toolBar.dispose();
 		

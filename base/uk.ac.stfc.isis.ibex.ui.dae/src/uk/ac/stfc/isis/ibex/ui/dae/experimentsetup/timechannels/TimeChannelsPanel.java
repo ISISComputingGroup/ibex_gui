@@ -26,15 +26,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -48,6 +45,7 @@ import org.eclipse.swt.widgets.Label;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.CalculationMethod;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeRegime;
 import uk.ac.stfc.isis.ibex.dae.experimentsetup.timechannels.TimeUnit;
+import uk.ac.stfc.isis.ibex.model.DeferredPropertyChangeListener;
 import uk.ac.stfc.isis.ibex.ui.UIUtils;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.DaeExperimentSetupCombo;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.DaeExperimentSetupRadioButton;
@@ -77,9 +75,7 @@ public class TimeChannelsPanel extends Composite {
     private ArrayList<DaeExperimentSetupRadioButton> calcMethodBtns = new ArrayList<DaeExperimentSetupRadioButton>();
     private Composite timeChannelFilePanel;
     private Composite timeUnitPanel;
-    private final Map<String, PropertyChangeListener> viewModelListeners = new HashMap<>();
-
-	private static final Display DISPLAY = Display.getCurrent();
+    private final Map<String, DeferredPropertyChangeListener> viewModelListeners = new HashMap<>();
 
     private static final int TOP_MARGIN_WIDTH = 5;
     private static final int HORIZONTAL_SPACING = 100;
@@ -126,14 +122,7 @@ public class TimeChannelsPanel extends Composite {
         timeRegimesPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         timeRegimesPanel.setLayout(new GridLayout(3, false));
         
-        this.addDisposeListener(new DisposeListener() {
-
-            @Override
-            public void widgetDisposed(DisposeEvent e) {
-                removeListeners();
-            }
-            
-        });
+        this.addDisposeListener(evt -> removeListeners());
         
         fillWidgetLists();
 	}
@@ -154,26 +143,26 @@ public class TimeChannelsPanel extends Composite {
         bindingContext.bindValue(WidgetProperties.text().observe(timeChannelFileRB),
                 BeanProperties.value("timeChannelFile").observe(viewModel));
         
-        viewModelListeners.put("timeChannelFile", new PropertyChangeListener() {        
+        viewModelListeners.put("timeChannelFile", new DeferredPropertyChangeListener(new PropertyChangeListener() {        
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 Display.getDefault().asyncExec(() -> timeChannelFileSelector.setCachedValue(timeChannelFileRB.getText()));
             }
-        });
+        }, 1, java.util.concurrent.TimeUnit.SECONDS));
         
-        viewModelListeners.put("timeRegimes", new PropertyChangeListener() {        
+        viewModelListeners.put("timeRegimes", new DeferredPropertyChangeListener(new PropertyChangeListener() {        
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 updateTimeRegimes();
             }
-        });
+        }, 1, java.util.concurrent.TimeUnit.SECONDS));
         
-        viewModelListeners.put("calculationMethod", new PropertyChangeListener() {
+        viewModelListeners.put("calculationMethod",  new DeferredPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 setCalculationMethod(viewModel.getCalculationMethod());
             }
-        });
+        }, 1, java.util.concurrent.TimeUnit.SECONDS));
         
         updateTimeRegimes();
         setCalculationMethod(viewModel.getCalculationMethod());
@@ -183,32 +172,28 @@ public class TimeChannelsPanel extends Composite {
      * Updates time regime tables.
      */
 	private void updateTimeRegimes() {
-		DISPLAY.asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				clearExistingTimeRegimeViews();
-
-				GridData timeRegimeGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-				int count = 1;
-				String name = "";
+		Display.getDefault().asyncExec(() -> {
+			clearExistingTimeRegimeViews();
+	
+			GridData timeRegimeGridData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+			int count = 1;
+			String name = "";
+			
+			for (TimeRegime timeRegime : viewModel.timeRegimes()) {
+			    name =  String.format("Time regime %d", count);
+	            TimeRegimeView view = new TimeRegimeView(timeRegimesPanel, SWT.NONE, panelViewModel, name);
+				view.setLayoutData(timeRegimeGridData);					
 				
-				for (TimeRegime timeRegime : viewModel.timeRegimes()) {
-				    name =  String.format("Time regime %d", count);
-                    TimeRegimeView view = new TimeRegimeView(timeRegimesPanel, SWT.NONE, panelViewModel, name);
-					view.setLayoutData(timeRegimeGridData);					
-					
-					view.setModel(timeRegime);
-					view.setTitle(String.format("Time regime %d", count));
-					
-					count++;
-					timeRegimeViews.add(view);
-				}
+				view.setModel(timeRegime);
+				view.setTitle(String.format("Time regime %d", count));
 				
-                timeRegimesPanel.layout();
-                UIUtils.recursiveSetEnabled(timeRegimesPanel, timeRegimesPanel.getEnabled());
+				count++;
+				timeRegimeViews.add(view);
 			}
+			
+	        timeRegimesPanel.requestLayout();
+	        UIUtils.recursiveSetEnabled(timeRegimesPanel, timeRegimesPanel.getEnabled());
 		});
-
 	}
 	
     /**
@@ -233,26 +218,23 @@ public class TimeChannelsPanel extends Composite {
     }
     
     private void updateCalculationMethod() {
-    	Display.getDefault().asyncExec(new Runnable() {
-    		@Override
-    		public void run() {
-    			
-    			final CalculationMethod method = viewModel.getCalculationMethod();
-    			
-                radioSpecifyParameters.setSelection(method == CalculationMethod.SPECIFY_PARAMETERS);
-                radioUseTCBFile.setSelection(method == CalculationMethod.USE_TCB_FILE);
-                
-    	        stack.topControl = method == CalculationMethod.USE_TCB_FILE ? tcbFilePanel : timeRegimesPanel;
-    	        
-                tcbSettingsSwitchPanel.layout();
-                if (method == CalculationMethod.SPECIFY_PARAMETERS) {
-                    for (TimeRegimeView view : timeRegimeViews) {
-                        view.createInitialCachedValues();
-                    }
-                } else {
-                    timeChannelFileSelector.setCachedValue(timeChannelFileRB.getText());
+    	Display.getDefault().asyncExec(() -> {
+			
+			final CalculationMethod method = viewModel.getCalculationMethod();
+			
+            radioSpecifyParameters.setSelection(method == CalculationMethod.SPECIFY_PARAMETERS);
+            radioUseTCBFile.setSelection(method == CalculationMethod.USE_TCB_FILE);
+            
+	        stack.topControl = method == CalculationMethod.USE_TCB_FILE ? tcbFilePanel : timeRegimesPanel;
+	        
+            tcbSettingsSwitchPanel.layout();
+            if (method == CalculationMethod.SPECIFY_PARAMETERS) {
+                for (TimeRegimeView view : timeRegimeViews) {
+                    view.createInitialCachedValues();
                 }
-    		}
+            } else {
+                timeChannelFileSelector.setCachedValue(timeChannelFileRB.getText());
+            }
     	});
     }
 
@@ -431,7 +413,7 @@ public class TimeChannelsPanel extends Composite {
      * Adds the various listeners to the viewModel.
      */
     private void addViewModelListeners() {
-        for (Entry<String, PropertyChangeListener> listener : viewModelListeners.entrySet()) {
+        for (Entry<String, DeferredPropertyChangeListener> listener : viewModelListeners.entrySet()) {
             this.viewModel.addPropertyChangeListener(listener.getKey(), listener.getValue());
         }
     }
@@ -449,8 +431,9 @@ public class TimeChannelsPanel extends Composite {
      * Removes listeners from the viewModel.
      */
     public void removeViewModelListeners() {
-        for (Entry<String, PropertyChangeListener> listener : viewModelListeners.entrySet()) {
+        for (Entry<String, DeferredPropertyChangeListener> listener : viewModelListeners.entrySet()) {
             this.viewModel.removePropertyChangeListener(listener.getKey(), listener.getValue());
+            listener.getValue().close();
         }
         viewModelListeners.clear();
     }

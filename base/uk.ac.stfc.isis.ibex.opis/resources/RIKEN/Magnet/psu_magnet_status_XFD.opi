@@ -128,7 +128,7 @@ $(pv_value)</tooltip>
       <color name="ISIS_Red" red="255" green="0" blue="0" />
     </on_color>
     <on_label>A</on_label>
-    <pv_name>$(P)$(PV):LIMIT</pv_name>
+    <pv_name>$(P)$(PV):ALARM:SUMMARY</pv_name>
     <pv_value />
     <rules />
     <scale_options>
@@ -156,7 +156,7 @@ $(pv_value)</tooltip>
           <include_parent_macros>true</include_parent_macros>
           <TRANSTECHNIK>$(PV)</TRANSTECHNIK>
         </macros>
-        <mode>0</mode>
+        <mode>3</mode>
         <description></description>
       </action>
     </actions>

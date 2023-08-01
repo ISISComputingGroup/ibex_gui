@@ -47,8 +47,8 @@ public class ConfigDetailsDialog extends TitleAreaDialog implements
     private static final Point MINIMUM_SIZE = new Point(450, 700);
 	private final String title;
 	private final String subTitle;
-
-    /** Error messages that are displayed. <Source, message> */
+	
+	/** Error messages that are displayed. <Source, message> */
 	private Map<String, String> errorMessages = new HashMap<String, String>();
 
 	/**
@@ -99,6 +99,7 @@ public class ConfigDetailsDialog extends TitleAreaDialog implements
         editor = new ConfigEditorPanel(parent, SWT.NONE, this, config, configurationViewModels);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		setTitle(subTitle);
+		
 		return editor;
 	}
 	

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -151,6 +152,9 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 		    case "navigate_mode":
 		    	model.toggleZoomAndPan((String) content.getOrDefault("mode", ""));
 		    	break;
+		    case "cursor":
+		    	model.setCursor((String) content.getOrDefault("cursor", "default"));
+		    	break;
 		    default:
 		    	// No action required
 		    	break;
@@ -189,6 +193,7 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 		    Map<String, Object> propertiesToSend = new HashMap<>(properties);
 		    propertiesToSend.put("type", type);
 		    propertiesToSend.put("figure_id", Integer.toString(figNum));
+		    
 		    
 			remote.sendText(GSON.toJson(propertiesToSend));
 			LoggerUtils.logIfExtraDebug(LOG, String.format("sent %s to %s", propertiesToSend, getUrl()));
@@ -246,7 +251,14 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	 * @param position the cursor position
 	 */
 	public void cursorPositionChanged(final MatplotlibCursorPosition position) {
-		final Map<String, Object> event = Map.of("x", position.x(), "y", position.y(), "button", 0, "guiEvent", new HashMap<>());
+		final Map<String, Object> event = Map.of(
+				"x", position.x(), 
+				"y", position.y(), 
+				"button", 0, 
+				"guiEvent", new HashMap<>(), 
+				"modifiers", new ArrayList<>()
+		);
+		
 		if (position.inPlot()) {
 		    sendProperty(session, "figure_enter", event);
 			sendProperty(session, "motion_notify", event);
@@ -270,8 +282,14 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	 * @param pressType
 	 */
 	public void notifyButtonPress(final MatplotlibCursorPosition position, MatplotlibPressType pressType) {
-	  final Map<String, Object> event = Map.of("x", position.x(), "y",
-	  position.y(), "button", 0, "guiEvent", new HashMap<>());
+	  final Map<String, Object> event = Map.of(
+			  "x", position.x(), 
+			  "y", position.y(), 
+			  "button", 0, 
+			  "guiEvent", new HashMap<>(), 
+			  "modifiers", new ArrayList<>()
+	  );
+	  
 	  sendProperty(session, pressType.getWebsocketString(), event);
 	}
 	

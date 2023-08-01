@@ -41,6 +41,7 @@ import org.eclipse.ui.PlatformUI;
 import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup.RBLookupDialog;
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup.RBLookupViewModel;
+import uk.ac.stfc.isis.ibex.ui.widgets.HelpButton;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
 
 /**
@@ -74,6 +75,9 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 	private Button btnClearUserDetails;
 	private Button btnRemoveUserDetails;
 	private Button btnDisplayTitle;
+	
+	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Experiment-Details";
+	private static final String DESCRIPTION = "Experiment Details View";
 	
 	/**
 	 * Create an instance of this panel.
@@ -205,6 +209,8 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 				viewModel.displayTitle.uncheckedSetValue(btnDisplayTitle.getSelection());
 			}
 		});
+		
+		new HelpButton(parent, HELP_LINK, DESCRIPTION);
     }
 	
 	private void bind() {

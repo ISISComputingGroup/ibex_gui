@@ -9,12 +9,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElementWrapper;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import org.eclipse.core.runtime.Path;
 import org.junit.Test;
@@ -26,7 +26,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.XMLUtil;
  * a map and we need to check all keys in the OPI list. 
  *
  */
-public class XmlDuplicateCheck {
+public class XmlDuplicateCheckTest {
 	
 	@XmlAccessorType(XmlAccessType.FIELD)
 	private static class OpiEntry {

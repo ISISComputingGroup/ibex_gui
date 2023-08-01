@@ -39,6 +39,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibButtonState;
 import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibButtonType;
 import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibCursorPosition;
+import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibCursorType;
 import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibFigureViewModel;
 import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibNavigationType;
 import uk.ac.stfc.isis.ibex.ui.graphing.websocketview.MatplotlibPressType;
@@ -144,6 +145,21 @@ public class MatplotlibViewModelTests {
     	assertEquals(viewModel.getForwardButtonState().getValue(), MatplotlibButtonState.DISABLED);
     }
     
+   @Test 
+   public void WHEN_server_connected_and_cursor_style_received_THEN_cursor_updated() {
+	   Mockito.when(model.getCursorType()).thenReturn(MatplotlibCursorType.CROSSHAIR);
+	   Mockito.when(model.isConnected()).thenReturn(true);
+	   viewModel.updateCursorType();
+	   assertEquals(viewModel.getCursorType().getValue(), MatplotlibCursorType.CROSSHAIR);
+   }
+   
+   @Test
+   public void WHEN_server_disconnected_then_cursor_style_default() {
+	   Mockito.when(model.isConnected()).thenReturn(false);
+	   viewModel.updateCursorType();
+	   assertEquals(viewModel.getCursorType().getValue(), MatplotlibCursorType.DEFAULT);
+   }
+    
     @Test
     public void WHEN_canvas_resized_THEN_resize_request_sent_to_model() {
     	Mockito.verify(workerThread, Mockito.times(4)).scheduleWithFixedDelay(runnableCaptor.capture(), Mockito.anyLong(), Mockito.anyLong(), Mockito.any());
@@ -185,7 +201,7 @@ public class MatplotlibViewModelTests {
     			Optional.of(new ImageData(new ByteArrayInputStream(MatplotlibModelTests.FAKE_IMAGE_BYTES))));
     	
     	var mockListener = Mockito.mock(PropertyChangeListener.class);
-    	viewModel.getImage().addPropertyChangeListener(mockListener);
+    	viewModel.getCanvasData().addPropertyChangeListener(mockListener);
     	viewModel.imageUpdated();
     	
     	// index 0 = redraw, 1 = canvas size, 2 = cursor position, 3 = force refresh
@@ -226,6 +242,48 @@ public class MatplotlibViewModelTests {
     	viewModel.navigatePlot(navType);
     	
     	Mockito.verify(model, Mockito.times(1)).navigatePlot(navType);
+    }
+    
+    @Test
+    public void WHEN_zoom_enabled_and_button_press_THEN_drag_status_true() {
+    	Mockito.when(model.getNavMode()).thenReturn(MatplotlibNavigationType.ZOOM);
+    	Mockito.when(model.isConnected()).thenReturn(true);
+    	viewModel.updateNavMode();
+    	
+    	viewModel.notifyButtonPressed(new MatplotlibCursorPosition(0, 0, true), MatplotlibPressType.BUTTON_PRESS);
+    	assertEquals(viewModel.getDragState().getValue(), true);
+    }
+    
+    @Test
+    public void WHEN_zoom_enabled_and_button_up_THEN_drag_status_false() {
+    	Mockito.when(model.getNavMode()).thenReturn(MatplotlibNavigationType.ZOOM);
+    	Mockito.when(model.isConnected()).thenReturn(true);
+    	viewModel.updateNavMode();
+    	
+    	viewModel.notifyButtonPressed(new MatplotlibCursorPosition(0, 0, true), MatplotlibPressType.BUTTON_RELEASE);
+    	assertEquals(viewModel.getDragState().getValue(), false);
+    }
+    
+    @Test
+    public void WHEN_zoom_enabled_and_mouse_moves_THEN_drag_status_true() {
+    	Mockito.when(model.getNavMode()).thenReturn(MatplotlibNavigationType.ZOOM);
+    	Mockito.when(model.isConnected()).thenReturn(true);
+    	viewModel.updateNavMode();
+    	
+    	viewModel.notifyButtonPressed(new MatplotlibCursorPosition(0, 0, true), MatplotlibPressType.BUTTON_PRESS);
+    	
+    	viewModel.setCursorPosition(new MatplotlibCursorPosition(0, 0, true));
+    	assertEquals(viewModel.getDragState().getValue(), true);
+    }
+    
+    @Test
+    public void WHEN_zoom_not_active_and_mouse_moves_THEN_drag_status_false() {
+    	Mockito.when(model.getNavMode()).thenReturn(MatplotlibNavigationType.ZOOM);
+    	Mockito.when(model.isConnected()).thenReturn(true);
+    	viewModel.updateNavMode();
+    	
+    	viewModel.setCursorPosition(new MatplotlibCursorPosition(0, 0, true));
+    	assertEquals(viewModel.getDragState().getValue(), false);
     }
     
     @Test

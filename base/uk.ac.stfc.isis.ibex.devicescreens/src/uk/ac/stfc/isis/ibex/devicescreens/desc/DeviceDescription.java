@@ -25,11 +25,11 @@ package uk.ac.stfc.isis.ibex.devicescreens.desc;
 
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlTransient;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.targets.OpiTarget;
@@ -43,7 +43,7 @@ import uk.ac.stfc.isis.ibex.targets.OpiTarget;
  * Note: the constructor of this class is NOT called! Instead, this class is
  * instantiated via reflection.
  */
-@XmlRootElement(name = "device", namespace = "")
+@XmlRootElement(name = "device")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class DeviceDescription extends ModelObject {
 

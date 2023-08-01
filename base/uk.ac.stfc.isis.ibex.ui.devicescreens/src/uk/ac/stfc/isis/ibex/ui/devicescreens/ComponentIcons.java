@@ -106,7 +106,12 @@ public final class ComponentIcons {
             case CAEN:
             case IPS:
             case POWER_SUPPLY:
+            case PSU_STATUS_SUMMARY:
                 return "powersupply";
+            case HTS_MAGNET:
+            case B17TMAG:
+            case TESLAMETER:
+            	return "magnet";
             case BEAMSTOP:
                 return "beamstop";
             case MOVINGMONITOR:
@@ -127,6 +132,10 @@ public final class ComponentIcons {
                 return "euro";
             case PINHOLESELECTOR:
                 return "pinhole_selector";
+            case SINGLE_APERTURE: 
+            	return "single_aperture";
+            case VERTICAL_APERTURE_STRIP:
+            	return "vertical_aperture";
             case SINGLESTAGE:
                 return "single_stage";
             case LINKAM95:
@@ -147,6 +156,8 @@ public final class ComponentIcons {
                 return "magnet_gaussmeter";
             case CCD100:
             case PRESSURE_GAUGE:
+            case PEARLPC:
+            case RIKEN:
                 return "pressure_gauge";
             case SCIMAG3D:
                 return "scimag3D";
@@ -161,7 +172,12 @@ public final class ComponentIcons {
             case KEITHLEY:
             case KHLY2700:
             case KHLY2400:
+            case KHLY2290:
                 return "keithley2400";
+            case KSE4980:
+            	return "lcr_circuit"; 
+            case DSC:
+            	return "hrpd_in_situ_dsc";
             case MULTIMETER:
                 return "multimeter";
             case ROT_SAMPLE_CHANGER:

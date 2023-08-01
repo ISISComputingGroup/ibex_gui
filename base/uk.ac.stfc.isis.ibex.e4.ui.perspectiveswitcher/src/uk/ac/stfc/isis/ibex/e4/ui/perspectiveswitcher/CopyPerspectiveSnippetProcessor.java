@@ -89,14 +89,15 @@ public class CopyPerspectiveSnippetProcessor {
 
         // clone each snippet that is a perspective and add the cloned
         // perspective into the main PerspectiveStack
-        boolean isFirst = true;
         for (MPerspective perspective : perspectivesProvider.getInitialPerspectives()) {
             
             perspectiveStack.getChildren().add(perspective);
-            if (isFirst) {
+            
+            // set default (welcome) perspective
+            if (perspective.getElementId().equals(perspectivesProvider.getDefaultPerspectiveId())) {
                 perspectiveStack.setSelectedElement(perspective);
-                isFirst = false;
             }
+            
             subscribeChangedElement(broker, perspective);
             subscribeSelectedPerspective(broker, perspective);
         }

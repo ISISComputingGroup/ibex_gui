@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
 <descriptions>
   <opis>
-	<entry>
+    <entry>
       <key>Aeroflex</key>
       <value>
         <type>FUNCTION_GENERATOR</type>
@@ -332,6 +332,52 @@
         <macros>
           <macro>
             <name>PH</name>
+            <description>The name of the device, as defined in the positions look-up file (e.g. PINHOLE)</description>
+            <default/>
+          </macro>
+          <macro>
+            <name>MM</name>
+            <description>The motor PV to point at, as defined in the motionsetpoints file (e.g. MOT:MTR0605)</description>
+            <default>MOT:MTR0101</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Single Aperture</key>
+      <value>
+        <type>SINGLE_APERTURE</type>
+        <path>stage/inout_motion_setpoints.opi</path>
+        <description>The OPI for motion setpoints for one to three setpoints.</description>
+        <macros>
+          <macro>
+            <name>SA</name>
+            <description>The name of the device, as defined in the positions look-up file (e.g. PINHOLE)</description>
+            <default/>
+          </macro>
+          <macro>
+            <name>MM</name>
+            <description>The motor PV to point at, as defined in the motionsetpoints file (e.g. MOT:MTR0605)</description>
+            <default>MOT:MTR0101</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Vertical Aperture Strip</key>
+      <value>
+        <type>VERTICAL_APERTURE_STRIP</type>
+        <path>stage/motion_setpoint.opi</path>
+        <description>The OPI for motion setpoints.</description>
+        <macros>
+          <macro>
+            <name>VA</name>
             <description>The name of the device, as defined in the positions look-up file (e.g. PINHOLE)</description>
             <default/>
           </macro>
@@ -838,7 +884,6 @@
         </categories>
       </value>
     </entry>
-    
     <entry>
       <key>Caen HV (MuSR)</key>
       <value>
@@ -980,6 +1025,26 @@
         </macros>
         <categories>
           <category>Jaws and slits</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>MEASM905</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>MEASM905/measm905.opi</path>
+        <description>The pressure transducer for PEARL</description>
+        <macros>
+          <macro>
+            <name>MEASM905</name>
+            <include_parent_macros>true</include_parent_macros>
+            <PV_ROOT>$P(MEASM905)</PV_ROOT>
+            <description>The MEASM905 PV prefix (e.g. MEASM905_01).</description>
+            <default>MEASM905_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Pressure sensors</category>
         </categories>
       </value>
     </entry>
@@ -1411,35 +1476,58 @@
       </value>
     </entry>
     <entry>
-      <key>Riken Front End Overview</key>
+      <key>RIKEN Front End Overview</key>
       <value>
         <type>MUON_FRONT_END</type>
         <path>muon_overviews/riken_front_end_overview.opi</path>
-        <description>The OPI for the Riken front end. No properties required.</description>
+        <description>The OPI for the RIKEN front end. No properties required.</description>
         <macros/>
         <categories/>
       </value>
     </entry>
     <entry>
-      <key>Riken Magnet PSU</key>
+      <key>RIKEN Magnet PSU</key>
       <value>
         <type>MUON_FRONT_END</type>
         <path>RIKEN/Magnet/RIKEN_magnet_PSUs.opi</path>
-        <description>The OPI for the Riken Magnet PSU Synoptic</description>
-        <macros></macros>
+        <description>The OPI for the RIKEN Magnet PSU overview</description>
+        <macros/>
+      </value>
+    </entry>
+    <entry>
+      <key>RIKEN Kicker and Separator HV settings</key>
+      <value>
+        <type>MUON_FRONT_END</type>
+        <path>RIKEN/Magnet/Kickers/kickers_and_separators.opi</path>
+        <description>The OPI for the Kicker and Separator HV Settings</description>
+        <macros/>
         <categories>
           <category>PLCs</category>
         </categories>
       </value>
     </entry>
     <entry>
-      <key>Riken PSU Status Summary</key>
+      <key>RIKEN PSU Status Summary</key>
       <value>
-        <type>psu_status_summary</type>
+        <type>PSU_STATUS_SUMMARY</type>
         <path>RIKEN/Magnet/psu_status_summary.opi</path>
-        <description>The OPI for the status summary of Riken Magnet PSUs</description>
+        <description>The OPI for the status summary of RIKEN Magnet PSUs</description>
         <macros/>
         <categories/>
+      </value>
+    </entry>
+    <entry>
+      <key>RIKEN Vacuum</key>
+      <value>
+        <type>RIKEN</type>
+        <path>RIKEN/Vacuum/RIKEN_vacuum_synoptic.opi</path>
+        <macros>
+          <macro>
+            <name>SCHNDR</name>
+            <description>The SCHNDR PV prefix (e.g. SCHNDR_01)</description>
+            <default>SCHNDR_01</default>
+          </macro>
+        </macros>
       </value>
     </entry>
     <entry>
@@ -1820,6 +1908,24 @@
       </value>
     </entry>
     <entry>
+      <key>Keithley 2290</key>
+      <value>
+        <type>KHLY2290</type>
+        <path>Keithley2290/Keithley2290.opi</path>
+        <description>The OPI for the Keithley 2290 High Voltage Power Supply.</description>
+        <macros>
+          <macro>
+            <name>KHLY2290</name>
+            <description>The Keithley 2290 PV name (e.g. KHLY2290_01).</description>
+            <default>KHLY2290_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Superlogics</key>
       <value>
         <type>MERCURY</type>
@@ -2158,6 +2264,42 @@
             <name>KHLY2001</name>
             <description>The Keithley 2001 PV prefix (e.g. KHLY2001_01).</description>
             <default>KHLY2001_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Keithley 2000</key>
+      <value>
+        <categories>
+          <category>Multimeters</category>
+        </categories>
+        <type>KEITHLEY</type>
+        <path>keithley_2000.opi</path>
+        <description>The OPI for the Keithley 2000 multimeter.</description>
+        <macros>
+          <macro>
+            <name>KHLY2000</name>
+            <description>The Keithley 2000 PV prefix (e.g. KHLY2000_01).</description>
+            <default>KHLY2000_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Keysight E4980AL</key>
+      <value>
+        <categories>
+          <category>Multimeters</category>
+        </categories>
+        <type>KSE4980</type>
+        <path>kse4980.opi</path>
+        <description>The OPI for the Keysight E4980AL LCR meter.</description>
+        <macros>
+          <macro>
+            <name>KSE4980</name>
+            <description>The KSE4980 PV prefix (e.g. KSE4980_01).</description>
+            <default>KSE4980_01</default>
           </macro>
         </macros>
       </value>
@@ -2507,6 +2649,7 @@
           <macro>
             <name>TTIEX355P</name>
             <description>The TTIEX355P PV prefix (e.g. TTIEX355P_01)</description>
+            <default>TTIEX355P_01</default>
           </macro>
         </macros>
       </value>
@@ -3142,8 +3285,8 @@
           </macro>
         </macros>
       </value>
-  </entry>
-	<entry>
+    </entry>
+    <entry>
       <key>Rules tests (developer)</key>
       <value>
         <type>DEBUG</type>
@@ -3154,17 +3297,68 @@
       </value>
     </entry>
     <entry>
-      <key>RIKEN Vacuum </key>
-	  <value>
-	    <type>RIKEN</type>
-	    <path>RIKEN/Vacuum/RIKEN_vacuum_synoptic.opi</path>
-	    <macros>
+      <key>Razorbill RP100 Strain Cell PSU</key>
+      <value>
+        <type>POWER_SUPPLY</type>
+        <path>Razorbill_RP100.opi</path>
+        <macros>
           <macro>
-            <name>SCHNDR</name>
-            <description>The SCHNDR PV prefix (e.g. SCHNDR_01)</description>
-            <default>SCHNDR_01</default>
+            <name>RZBRP100</name>
+            <description>The RZBRP100 PV prefix (e.g. RZBRP100_01)</description>
+            <default>RZBRP100_01</default>
           </macro>
         </macros>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>CAENHEXAGON</key>
+      <value>
+        <type>MONITOR</type>
+        <path>CAENHexagon/CAEN_hexagon.opi</path>
+        <description>CAEN Hexagon</description>
+        <macros>
+          <macro>
+            <name>HEXAGON</name>
+            <description>The CAEN Hexagon prefix (e.g. HEX0)</description>
+            <default>HEX0</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Monitors</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>PACE5000</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>pace5000.opi</path>
+        <description>The OPI for the PACE5000</description>
+        <macros>
+          <macro>
+            <name>PACE5000</name>
+            <description>The PACE5000 PV prefix (e.g. PACE5000_01)</description>
+            <default>PACE5000_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Pressure control handling systems</category>
+          </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>PEARL Jaw Set</key>
+      <value>
+        <type>MONITOR</type>
+        <path>jaws/jaws_managers/pearl_manager.opi</path>
+        <description>PEARL Jaw Set Manager</description>
+        <macros/>
+        <categories>
+          <category>Jaws and slits</category>
+        </categories>
       </value>
     </entry>
   </opis>

@@ -19,8 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.instrument.pv;
 
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlEnum;
+import jakarta.xml.bind.annotation.XmlType;
 
 /**
  * ENUM of types and an associated display name for linking to PVs for the
