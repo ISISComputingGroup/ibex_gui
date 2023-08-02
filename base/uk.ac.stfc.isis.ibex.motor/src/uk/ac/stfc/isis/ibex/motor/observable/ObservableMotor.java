@@ -42,6 +42,7 @@ public class ObservableMotor extends Motor {
 	private final UpdatedObservableAdapter<Double> error;
 	private final UpdatedObservableAdapter<MotorDirection> direction;
 	private final UpdatedObservableAdapter<Boolean> moving;
+	private final UpdatedObservableAdapter<Boolean> doneMoving;
 	private final UpdatedObservableAdapter<Boolean> atHome;
 	private final UpdatedObservableAdapter<Boolean> atLowerLimitSwitch;
 	private final UpdatedObservableAdapter<Boolean> atUpperLimitSwitch;
@@ -70,6 +71,7 @@ public class ObservableMotor extends Motor {
 		
 		direction = adapt(variables.direction, "direction");
 		moving = adapt(variables.moving, "moving");
+		doneMoving = adapt(variables.doneMoving, "doneMoving");
 		atHome = adapt(variables.atHome, "atHome");
 		atLowerLimitSwitch = adapt(variables.atLowerLimitSwitch, "atLowerLimitSwitch");
 		atUpperLimitSwitch = adapt(variables.atUpperLimitSwitch, "atUpperLimitSwitch");
@@ -176,6 +178,14 @@ public class ObservableMotor extends Motor {
 		return moving.getValue();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Boolean getDoneMoving() {
+		return doneMoving.getValue();
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
