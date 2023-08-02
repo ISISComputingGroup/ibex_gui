@@ -37,15 +37,16 @@ public class AlarmSettings {
      * The plugin activator ID for beast.
      */
     private static final String PREF_QUALIFIER_ID = org.csstudio.alarm.beast.Activator.ID;
+    private static final String PREF_QUALIFIER_HIST_ID = org.csstudio.alarm.beast.msghist.Activator.ID;
 
-    private Preferences preferences;
+    private Preferences preferences, preferences_hist;
 
 
     /**
      * Instantiates a new alarm settings with default preferences store.
      */
     public AlarmSettings() {
-        this(InstanceScope.INSTANCE.getNode(PREF_QUALIFIER_ID));
+        this(InstanceScope.INSTANCE.getNode(PREF_QUALIFIER_ID), InstanceScope.INSTANCE.getNode(PREF_QUALIFIER_HIST_ID));
     }
 
 
@@ -54,8 +55,9 @@ public class AlarmSettings {
      *
      * @param preferences The preferences to use
      */
-    public AlarmSettings(Preferences preferences) {
+    public AlarmSettings(Preferences preferences, Preferences preferences_hist) {
         this.preferences = preferences;
+        this.preferences_hist = preferences_hist;
     }
 
     /**
@@ -65,17 +67,20 @@ public class AlarmSettings {
      */
     public void setInstrument(InstrumentInfo instrument) {
         String hostName = instrument.hostName();
-        preferences.put(org.csstudio.alarm.beast.Preferences.RDB_URL, buildRdbUrl(hostName));
+        preferences.put(org.csstudio.alarm.beast.Preferences.RDB_URL, buildRdbUrl(hostName, "ALARM"));
         preferences.put(org.csstudio.alarm.beast.Preferences.JMS_URL, buildJmsUrl(hostName));
+//        preferences_hist.put(org.csstudio.alarm.beast.msghist.Preferences.RDB_URL, buildRdbUrl(hostName, "log"));
+        preferences_hist.put(org.csstudio.alarm.beast.msghist.Preferences.RDB_URL, buildRdbUrl("localhost", "log"));
     }
 
     /**
      * @param hostName The instrument name
+     * @table Database table name
      * @return The archive settings string corresponding to the given
      *         instrument.
      */
-    private static String buildRdbUrl(String hostName) {
-        return "jdbc:mysql://" + hostName + "/ALARM?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true";
+    private static String buildRdbUrl(String hostName, String table) {
+        return "jdbc:mysql://" + hostName + "/" + table + "?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true";
     }
 
     /**
