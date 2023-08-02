@@ -6,19 +6,19 @@
       <view
             class="uk.ac.stfc.isis.ibex.ui.alarm.AlarmView"
             id="uk.ac.stfc.isis.ibex.ui.alarm.AlarmView"
-            name="Alarm"
-            restorable="true">
-      </view>
-      <view
-            class="uk.ac.stfc.isis.ibex.ui.alarm.AlarmHistoryView"
-            id="uk.ac.stfc.isis.ibex.ui.alarm.AlarmHistory"
-            name="Alarm History"
+            name="Alarm Tree"
             restorable="true">
       </view>
       <view
             class="uk.ac.stfc.isis.ibex.ui.alarm.AlarmTableView"
             id="uk.ac.stfc.isis.ibex.ui.alarm.AlarmTable"
             name="Alarm Table"
+            restorable="true">
+      </view>
+      <view
+            class="uk.ac.stfc.isis.ibex.ui.alarm.AlarmHistoryView"
+            id="uk.ac.stfc.isis.ibex.ui.alarm.AlarmHistory"
+            name="Alarm History"
             restorable="true">
       </view>
    </extension>
