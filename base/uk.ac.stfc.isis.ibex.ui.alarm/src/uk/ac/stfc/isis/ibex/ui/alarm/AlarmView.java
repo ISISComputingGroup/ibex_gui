@@ -52,8 +52,9 @@ public class AlarmView extends ViewPart {
 
         gui = new GUI(parent, model, getViewSite());
 
-        // There's nothing on the default menu we currently want
-        gui.getTreeViewer().getTree().setMenu(null);
+        // Use this if there's is nothing on the default menu we wanted
+        // now we can acknowledge alarms, have added back menu
+        //gui.getTreeViewer().getTree().setMenu(null);
 
         // Lots of other controls available (see AlarmTreeView). For now they're just clutter
         getViewSite().getActionBars().getToolBarManager().add(new RefreshAction());

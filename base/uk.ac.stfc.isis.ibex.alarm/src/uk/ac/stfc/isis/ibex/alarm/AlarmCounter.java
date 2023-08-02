@@ -23,6 +23,7 @@
  */
 package uk.ac.stfc.isis.ibex.alarm;
 
+import org.csstudio.alarm.beast.SeverityLevel;
 import org.csstudio.alarm.beast.client.AlarmTreePV;
 import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModel;
 import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModelListener;
@@ -47,6 +48,26 @@ public class AlarmCounter extends ModelObject {
     }
 
     /**
+     * Get count of active alarms. An alarm is also considered active if it is latched
+     * but has subsequently moved out of alarm state. If there are no current alarms
+     * but some unacknowledged latched alarms then we return a negative count of
+     * the alarms  
+     * 
+     * @param alarmModel the alarm model
+     */
+    public int getAlarmCount(final AlarmClientModel alarmModel) {
+    	int current = 0;
+        AlarmTreePV[] pvs = alarmModel.getActiveAlarms();
+        int total = pvs.length; 
+        for(int i=0; i<total; ++i) {
+            if (pvs[i].getCurrentSeverity() != SeverityLevel.OK) {
+            	++current;
+            }
+        }
+        return (current > 0 ? total : -total);
+    }
+    
+    /**
      * Set the alarm model used by the alarm counter. On set count property if
      * updated.
      * 
@@ -62,7 +83,7 @@ public class AlarmCounter extends ModelObject {
     
     			@Override
     			public void newAlarmConfiguration(AlarmClientModel model) {
-                    fireCountChanged(count, count = model.getActiveAlarms().length);
+                    fireCountChanged(count, count = getAlarmCount(model));
     			}
     
     			@Override
@@ -71,15 +92,15 @@ public class AlarmCounter extends ModelObject {
     
     			@Override
     			public void serverModeUpdate(AlarmClientModel model, boolean maintenanceMode) {
-                    fireCountChanged(count, count = model.getActiveAlarms().length);
+                    fireCountChanged(count, count = getAlarmCount(model));
     			}
     
     			@Override
     			public void newAlarmState(AlarmClientModel model, AlarmTreePV pv, boolean parentChanged) {
-                    fireCountChanged(count, count = model.getActiveAlarms().length);
+                    fireCountChanged(count, count = getAlarmCount(model));
     			}
     		});
-            fireCountChanged(count, count = alarmModel.getActiveAlarms().length);
+            fireCountChanged(count, count = getAlarmCount(alarmModel));
         }
     }
 	

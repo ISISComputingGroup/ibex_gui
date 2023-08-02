@@ -12,7 +12,10 @@ import uk.ac.stfc.isis.ibex.alarm.AlarmCounter;
 public final class AlarmButtonViewModel extends PerspectiveButtonViewModel {
 
     private static final String ALARM = "Alarms";
-    private static final Color ALARM_COLOR = SWTResourceManager.getColor(250, 150, 150);
+    private static final Color ALARM_ERROR_COLOR = SWTResourceManager.getColor(250, 150, 150);
+    // ALARM_WARN_COLOR used for if no current alarms but there are
+    // unacknowledged previous alarms
+    private static final Color ALARM_WARN_COLOR = SWTResourceManager.getColor(255, 165, 0);
     private static final int MAX_ALARMS = 100;
 
     private int alarmCount = 0;
@@ -30,7 +33,7 @@ public final class AlarmButtonViewModel extends PerspectiveButtonViewModel {
     public AlarmButtonViewModel(final AlarmCounter alarmCounter, String buttonLabel) {
         super(buttonLabel);
 
-        flash = new FlashingButton(this, ALARM_COLOR);
+        flash = new FlashingButton(this, ALARM_ERROR_COLOR);
         flash.setDefaultColour(DEFOCUSSED);
 
         alarmCounter.addPropertyChangeListener("alarmCount", ignored -> {
@@ -59,9 +62,14 @@ public final class AlarmButtonViewModel extends PerspectiveButtonViewModel {
     protected void updateFlashing() {
         if (!this.active) {
             // If there are alarms that the user hasn't seen yet.
-            if (getAlarmCount() != 0 && !alarmSeen) {
+            if (getAlarmCount() > 0 && !alarmSeen) {
+                flash.setDefaultColour(DEFOCUSSED);
                 flash.start();
+            } else if (getAlarmCount() < 0 && !alarmSeen) {
+                flash.setDefaultColour(ALARM_WARN_COLOR);
+                flash.stop();
             } else {
+                flash.setDefaultColour(DEFOCUSSED);
                 flash.stop();
             }
         }
@@ -69,9 +77,9 @@ public final class AlarmButtonViewModel extends PerspectiveButtonViewModel {
 
     private String alarmCountAsText() {
         String countText;
-        if (alarmCount > 0) {
+        if (alarmCount != 0) {
             countText = " ("
-                    + (alarmCount > MAX_ALARMS ? Integer.toString(MAX_ALARMS) + "+" : Integer.toString(alarmCount))
+                    + (alarmCount > MAX_ALARMS ? Integer.toString(MAX_ALARMS) + "+" : Integer.toString(Math.abs(alarmCount)))
                     + ")";
         } else {
             countText = "";
@@ -88,7 +96,9 @@ public final class AlarmButtonViewModel extends PerspectiveButtonViewModel {
     protected Color chooseColor() {
         Color color;
         if (alarmCount > 0) {
-            color = ALARM_COLOR;
+            color = ALARM_ERROR_COLOR;
+        } else if (alarmCount < 0) {
+            color = ALARM_WARN_COLOR;
         } else if (active) {
             color = ACTIVE;
         } else if (inFocus) {
