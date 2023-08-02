@@ -4,6 +4,7 @@ Bundle-Name: Alarm
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.alarm;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: uk.ac.stfc.isis.ibex.alarm.Alarm
+Export-Package: uk.ac.stfc.isis.ibex.alarm
 Require-Bundle: org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.model,
  org.eclipse.ui.workbench,
@@ -15,6 +16,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.csstudio.alarm.beast;bundle-version="4.5.0",
  uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-17
-Bundle-ActivationPolicy: lazy
-Export-Package: uk.ac.stfc.isis.ibex.alarm
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.alarm
+Import-Package: javax.annotation;version="1.0.0";resolution:=optional,
+ javax.inject;version="1.0.0"
+Bundle-ActivationPolicy: lazy
