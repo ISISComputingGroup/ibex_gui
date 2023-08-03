@@ -39,7 +39,7 @@ public class AlarmSettings {
     private static final String PREF_QUALIFIER_ID = org.csstudio.alarm.beast.Activator.ID;
     private static final String PREF_QUALIFIER_HIST_ID = org.csstudio.alarm.beast.msghist.Activator.ID;
 
-    private Preferences preferences, preferences_hist;
+    private Preferences preferences, preferencesHist;
 
 
     /**
@@ -53,11 +53,12 @@ public class AlarmSettings {
     /**
      * Instantiates a new alarm settings with desired preferences.
      *
-     * @param preferences The preferences to use
+     * @param preferences The preferences to use for normal alarms
+     * @param preferencesHist The preferences to use for alarm history
      */
-    public AlarmSettings(Preferences preferences, Preferences preferences_hist) {
+    public AlarmSettings(Preferences preferences, Preferences preferencesHist) {
         this.preferences = preferences;
-        this.preferences_hist = preferences_hist;
+        this.preferencesHist = preferencesHist;
     }
 
     /**
@@ -70,7 +71,7 @@ public class AlarmSettings {
         preferences.put(org.csstudio.alarm.beast.Preferences.RDB_URL, buildRdbUrl(hostName, "ALARM"));
         preferences.put(org.csstudio.alarm.beast.Preferences.JMS_URL, buildJmsUrl(hostName));
 //        preferences_hist.put(org.csstudio.alarm.beast.msghist.Preferences.RDB_URL, buildRdbUrl(hostName, "log"));
-        preferences_hist.put(org.csstudio.alarm.beast.msghist.Preferences.RDB_URL, buildRdbUrl("localhost", "log"));
+        preferencesHist.put(org.csstudio.alarm.beast.msghist.Preferences.RDB_URL, buildRdbUrl("localhost", "log"));
     }
 
     /**

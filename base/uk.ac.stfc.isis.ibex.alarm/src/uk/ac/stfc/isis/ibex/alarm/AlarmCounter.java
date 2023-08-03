@@ -54,12 +54,13 @@ public class AlarmCounter extends ModelObject {
      * the alarms  
      * 
      * @param alarmModel the alarm model
+     * @return alarm count
      */
     public int getAlarmCount(final AlarmClientModel alarmModel) {
     	int current = 0;
         AlarmTreePV[] pvs = alarmModel.getActiveAlarms();
         int total = pvs.length; 
-        for(int i=0; i<total; ++i) {
+        for(int i = 0; i < total; ++i) {
             if (pvs[i].getCurrentSeverity() != SeverityLevel.OK) {
             	++current;
             }
