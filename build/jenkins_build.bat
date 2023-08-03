@@ -1,5 +1,5 @@
 REM %~dp0 expands to directory where this file lives
-setlocal
+setlocal enabledelayedexpansion
 
 set BASEDIR=%~dp0
 
@@ -29,12 +29,6 @@ set build_error_level=%errorlevel%
 
 @echo on
 
-REM Whether to deploy
-set EXIT=YES
-if "%DEPLOY%" == "YES" set EXIT=NO
-if "%RELEASE%" == "YES" set EXIT=NO
-if "%EXIT%" == "YES" exit /b %build_error_level%
-
 REM Copy zip to installs area
 REM Delete older versions?
 REM the password for isis\IBEXbuilder is contained in the BUILDERPW system environment variable on the build server
@@ -57,11 +51,14 @@ if not "%RELEASE%" == "YES" (
     ) else (
         set INSTALLBASEDIR=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\Client
     )
+    if not "%DEPLOY%" == "YES" (
+        set "INSTALLBASEDIR=!INSTALLBASEDIR!\branches\%GIT_BRANCH%"
+    )
 ) 
 
-if not "%RELEASE%" == "YES" set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
-REM Set a symlink for folder BUILD_LATEST to point to most recent build
-if not "%RELEASE%" == "YES" set INSTALLLINKDIR=%INSTALLBASEDIR%\BUILD_LATEST
+if not "%RELEASE%" == "YES" (
+    set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
+)
 
 if "%RELEASE%" == "YES" (
     if not exist "%RELEASE_DIR%" (
@@ -87,13 +84,6 @@ if %errorlevel% geq 4 (
     )
     @echo Client copy failed
     exit /b 1
-)
-
-if not "%RELEASE%"=="YES" (
-    if exist "%INSTALLLINKDIR%" (
-        rmdir "%INSTALLLINKDIR%"
-    )
-    mklink /J "%INSTALLLINKDIR%" "%INSTALLDIR%"
 )
 
 REM copy MSI
