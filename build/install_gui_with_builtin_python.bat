@@ -24,7 +24,7 @@ if exist "%GENIECMDLOGDIR%\%GENIECMDLOGFILE%" (
 	robocopy "%GENIECMDLOGDIR%" "%TEMP%" "%GENIECMDLOGFILE%" /IS /NFL /NDL /NP /NC /NS /LOG:NUL
 )
 
-mkdir %CLIENTDIR%
+if not exist "%CLIENTDIR%" mkdir %CLIENTDIR%
 robocopy "%BASEDIR%Client" "%CLIENTDIR%" /MIR /R:2 /MT /NFL /NDL /NP /NC /NS /LOG:NUL
 set errcode=%errorlevel%
 if %errcode% GEQ 4 (
@@ -41,7 +41,7 @@ if exist "%TEMP%\%GENIECMDLOGFILE%" (
 REM Copy EPICS_UTILS across
 @echo %TIME% epics utils install started
 set UTILSDIR=%APPSDIR%\EPICS_UTILS
-mkdir %UTILSDIR%
+if not exist "%UTILSDIR%" mkdir %UTILSDIR%
 robocopy "\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\EPICS_UTILS\EPICS_UTILS" "%UTILSDIR%" /MIR /R:2 /MT /NFL /NDL /NP /NC /NS /LOG:NUL
 set errcode=%errorlevel%
 if %errcode% GEQ 4 (
