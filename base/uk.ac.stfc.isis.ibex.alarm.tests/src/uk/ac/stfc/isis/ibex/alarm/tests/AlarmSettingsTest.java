@@ -105,7 +105,6 @@ public class AlarmSettingsTest {
      * RDB URL for localhost.
      */
     private static final String LOCALHOST_RDB_URL = buildRdbUrl(LOCALHOST, "ALARM");
-    private static final String LOCALHOST_RDB_HIST_URL = buildRdbUrl(LOCALHOST, "log");
 
     /**
      * JMS URL for localhost.
@@ -168,7 +167,6 @@ public class AlarmSettingsTest {
      * RDB URL for the default instrument (currently localhost).
      */
     private static final String DEFAULT_RDB_URL = LOCALHOST_RDB_URL;
-    private static final String DEFAULT_RDB_HIST_URL = LOCALHOST_RDB_HIST_URL;
 
     /**
      * JMS URL for the default instrument (currently localhost).
@@ -213,7 +211,6 @@ public class AlarmSettingsTest {
      * Return value for mocked preference store rdb value.
      */
     private String mockRdbUrl;
-    private String mockRdbHistUrl;
 
     /**
      * Set up procedure to run before tests.
@@ -222,7 +219,6 @@ public class AlarmSettingsTest {
     public void setUp() {
         // Arrange
         mockRdbUrl = DEFAULT_RDB_URL;
-        mockRdbHistUrl = DEFAULT_RDB_HIST_URL;
         mockJmsUrl = DEFAULT_JMS_URL;
 
         preferences = mock(org.osgi.service.prefs.Preferences.class);
