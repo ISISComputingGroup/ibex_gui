@@ -29,7 +29,7 @@ import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
 /**
  * Converts a JSON representation of a PV into a java object representation.
  */
-@SuppressWarnings("checkstyle:magicnumber")
+@SuppressWarnings({ "checkstyle:magicnumber", "rawtypes", "unchecked" })
 public class MoxaMappingsConverter implements Function<Map, HashMap<String, ArrayList<ArrayList<String>>>> {
 
 	/**
