@@ -49,7 +49,7 @@ if "%~2" == "" (
 	set built_client="%~dp0..\%~2"
 )
 set sensible_build_dir="%~dp0..\%TARGET_DIR%"
-RMDIR /S /Q %sensible_build_dir%
+if exist "%sensible_build_dir%" RMDIR /S /Q %sensible_build_dir%
 robocopy "%built_client%" "%sensible_build_dir%" /MT /E /PURGE /R:2 /XF "install.log" /NFL /NDL /NP /NS /NC /LOG:"local_copy_client.log"
 set errcode=%ERRORLEVEL%
 if %errcode% GEQ 4 (
