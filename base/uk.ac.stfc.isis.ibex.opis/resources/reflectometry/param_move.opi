@@ -527,7 +527,7 @@ $(pv_value)</tooltip>
       </foreground_color>
       <height>20</height>
       <horizontal_alignment>1</horizontal_alignment>
-      <name>Out_label</name>
+      <name>locked_label</name>
       <rules>
         <rule name="Visible" prop_id="visible" out_exp="false">
           <exp bool_exp="pv0==1">
@@ -600,6 +600,55 @@ $(pv_value)</tooltip>
       <width>56</width>
       <wrap_words>false</wrap_words>
       <wuid>3f33d901:177f440403d:-7ee0</wuid>
+      <x>380</x>
+      <y>0</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <auto_size>false</auto_size>
+      <background_color>
+        <color red="255" green="255" blue="255" />
+      </background_color>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <foreground_color>
+        <color red="0" green="0" blue="0" />
+      </foreground_color>
+      <height>20</height>
+      <horizontal_alignment>1</horizontal_alignment>
+      <name>readonly_label</name>
+      <rules>
+        <rule name="Visible" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0==1 &amp;&amp; pv1==0 &amp;&amp; pv2==0">
+            <value>true</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):ACTION.DISP</pv>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):SP_NO_ACTION.DISP</pv>
+          <pv trig="true">$(PV_ROOT)$(PREFIXED_PV):READ_ONLY</pv>
+        </rule>
+      </rules>
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <text>Read Only</text>
+      <tooltip>Cannot move axis - component is set to be parked out of beam</tooltip>
+      <transparent>true</transparent>
+      <vertical_alignment>1</vertical_alignment>
+      <visible>false</visible>
+      <widget_type>Label</widget_type>
+      <width>56</width>
+      <wrap_words>false</wrap_words>
+      <wuid>-355560b4:188ba9abe0f:-7fd0</wuid>
       <x>380</x>
       <y>0</y>
     </widget>
