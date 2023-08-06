@@ -70,8 +70,7 @@ public class AlarmSettings {
         String hostName = instrument.hostName();
         preferences.put(org.csstudio.alarm.beast.Preferences.RDB_URL, buildRdbUrl(hostName, "ALARM"));
         preferences.put(org.csstudio.alarm.beast.Preferences.JMS_URL, buildJmsUrl(hostName));
-//        preferences_hist.put(org.csstudio.alarm.beast.msghist.Preferences.RDB_URL, buildRdbUrl(hostName, "log"));
-        preferencesHist.put(org.csstudio.alarm.beast.msghist.Preferences.RDB_URL, buildRdbUrl("localhost", "log"));
+        preferences_hist.put(org.csstudio.alarm.beast.msghist.Preferences.RDB_URL, buildRdbUrl(hostName, "log"));
     }
 
     /**
