@@ -5,7 +5,9 @@ import java.util.HashMap;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 
-
+/**
+ * Content provider for the table displaying Moxa port mappings.
+ */
 public class MoxaTableContentProvider implements ITreeContentProvider {
 	@Override
 	public Object[] getElements(Object inputElement) {
@@ -20,7 +22,7 @@ public class MoxaTableContentProvider implements ITreeContentProvider {
 			Object[] empty = {};
 			return empty;
 		}
-		
+
 	}
 
 	@Override

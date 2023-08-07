@@ -27,55 +27,54 @@
  * warranties of merchantability and/or fitness for a particular purpose.
  */
 package uk.ac.stfc.isis.ibex.ui.moxas.views;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- * Class to hold information about the mapping between physical moxa ports and COM numbers.
+ * Class to hold information about the mapping between physical moxa ports and
+ * COM numbers.
  *
  */
 public class MoxaModelObject extends ModelObject implements Comparable<MoxaModelObject> {
 
-    private final String physport;
-    private final String comport;
+	private final String physport;
+	private final String comport;
 
-    /**
-     * Instantiates a new moxa mapping pair.
-     *
-     * @param physport
-     *            physical moxa port number for a mapping.
-     * @param comport
-     *            COM port for a mapping.
-     */
-    public MoxaModelObject(String physport,String comport) {
-        this.physport = physport;
-        this.comport = comport;
-    }
+	/**
+	 * Instantiates a new moxa mapping pair.
+	 *
+	 * @param physport physical moxa port number for a mapping.
+	 * @param comport  COM port for a mapping.
+	 */
+	public MoxaModelObject(String physport, String comport) {
+		this.physport = physport;
+		this.comport = comport;
+	}
 
-    /**
-     * Gets physical moxa port number for a mapping.
-     *
-     * @return the port number
-     */
+	/**
+	 * Gets physical moxa port number for a mapping.
+	 *
+	 * @return the port number
+	 */
 
-    public String getPhysPort() {
-        return physport;
-    }
+	public String getPhysPort() {
+		return physport;
+	}
 
-    /**
-     * Gets the COM port for a mapping.
-     *
-     * @return COM port string
-     */
-    public String getComPort() {
-        return comport;
-    }
+	/**
+	 * Gets the COM port for a mapping.
+	 *
+	 * @return COM port string
+	 */
+	public String getComPort() {
+		return comport;
+	}
 
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int compareTo(MoxaModelObject moxaModelObject) {
-        return physport.compareTo(moxaModelObject.getPhysPort());
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int compareTo(MoxaModelObject moxaModelObject) {
+		return physport.compareTo(moxaModelObject.getPhysPort());
+	}
 }
