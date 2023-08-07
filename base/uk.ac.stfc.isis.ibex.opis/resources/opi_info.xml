@@ -1029,6 +1029,26 @@
       </value>
     </entry>
     <entry>
+      <key>MEASM905</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>MEASM905/measm905.opi</path>
+        <description>The pressure transducer for PEARL</description>
+        <macros>
+          <macro>
+            <name>MEASM905</name>
+            <include_parent_macros>true</include_parent_macros>
+            <PV_ROOT>$P(MEASM905)</PV_ROOT>
+            <description>The MEASM905 PV prefix (e.g. MEASM905_01).</description>
+            <default>MEASM905_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Pressure sensors</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>TDS 3000 Trace</key>
       <value>
         <type>OSCILLOSCOPE</type>
@@ -1471,8 +1491,8 @@
         <type>MUON_FRONT_END</type>
         <path>RIKEN/Magnet/RIKEN_magnet_PSUs.opi</path>
         <description>The OPI for the RIKEN Magnet PSU overview</description>
-        <macros></macros>
-       </value>
+        <macros/>
+      </value>
     </entry>
     <entry>
       <key>RIKEN Kicker and Separator HV settings</key>
@@ -1498,10 +1518,10 @@
     </entry>
     <entry>
       <key>RIKEN Vacuum</key>
-	  <value>
-	    <type>RIKEN</type>
-	    <path>RIKEN/Vacuum/RIKEN_vacuum_synoptic.opi</path>
-	    <macros>
+      <value>
+        <type>RIKEN</type>
+        <path>RIKEN/Vacuum/RIKEN_vacuum_synoptic.opi</path>
+        <macros>
           <macro>
             <name>SCHNDR</name>
             <description>The SCHNDR PV prefix (e.g. SCHNDR_01)</description>
@@ -2266,7 +2286,7 @@
         </macros>
       </value>
     </entry>
-	<entry>
+    <entry>
       <key>Keysight E4980AL</key>
       <value>
         <categories>
@@ -2629,6 +2649,7 @@
           <macro>
             <name>TTIEX355P</name>
             <description>The TTIEX355P PV prefix (e.g. TTIEX355P_01)</description>
+            <default>TTIEX355P_01</default>
           </macro>
         </macros>
       </value>
@@ -3286,6 +3307,36 @@
         </macros>
         <categories>
           <category>Monitors</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>PACE5000</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>pace5000.opi</path>
+        <description>The OPI for the PACE5000</description>
+        <macros>
+          <macro>
+            <name>PACE5000</name>
+            <description>The PACE5000 PV prefix (e.g. PACE5000_01)</description>
+            <default>PACE5000_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Pressure control handling systems</category>
+          </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>PEARL Jaw Set</key>
+      <value>
+        <type>MONITOR</type>
+        <path>jaws/jaws_managers/pearl_manager.opi</path>
+        <description>PEARL Jaw Set Manager</description>
+        <macros/>
+        <categories>
+          <category>Jaws and slits</category>
         </categories>
       </value>
     </entry>

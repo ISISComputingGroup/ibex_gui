@@ -61,7 +61,7 @@
     </scale_options>
     <scripts />
     <show_scrollbar>false</show_scrollbar>
-    <text>Jaw Set (SANDALS)</text>
+    <text>Jaw Set (PEARL)</text>
     <tooltip></tooltip>
     <transparent>false</transparent>
     <vertical_alignment>1</vertical_alignment>
@@ -1257,7 +1257,7 @@ $(pv_value)</tooltip>
       <NUMBER>1</NUMBER>
     </macros>
     <name>A Linking Container That Looks Like a Group Box</name>
-    <opi_file>../single_jaw_manager.opi</opi_file>
+    <opi_file>../single_horizontal_jaw_manager.opi</opi_file>
     <resize_behaviour>1</resize_behaviour>
     <rules />
     <scale_options>

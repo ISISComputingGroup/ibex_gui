@@ -35,6 +35,7 @@ public final class DisplayPreferences extends ModelObject {
 	private static DisplayPreferences instance;
 	
     private static final Color NORMAL_VISION_MOVING_COLOR = SWTResourceManager.getColor(160, 250, 170);
+    private static final Color NORMAL_VISION_INTERMEDIATE_COLOR = SWTResourceManager.getColor(255, 191, 0);
     private static final Color NORMAL_VISION_STOPPED_COLOR = SWTResourceManager.getColor(255, 200, 200);
     private static final Color NORMAL_VISION_DISABLED_COLOR = SWTResourceManager.getColor(200, 200, 200);
     private static final Color NORMAL_VISION_UNNAMED_COLOR = SWTResourceManager.getColor(220, 220, 220);
@@ -42,6 +43,7 @@ public final class DisplayPreferences extends ModelObject {
     private static final Color NORMAL_VISION_IN_TOLERANCE_BORDER_COLOR = SWTResourceManager.getColor(127, 127, 127);
 
     private static final Color ACCESSIBLE_MOVING_COLOR = SWTResourceManager.getColor(0, 255, 0);
+    private static final Color ACCESSIBLE_INTERMEDIATE_COLOR = SWTResourceManager.getColor(255, 87, 0);
     private static final Color ACCESSIBLE_STOPPED_COLOR = SWTResourceManager.getColor(120, 120, 255);
     private static final Color ACCESSIBLE_DISABLED_COLOR = SWTResourceManager.getColor(200, 200, 200);
     private static final Color ACCESSIBLE_UNNAMED_COLOR = SWTResourceManager.getColor(220, 220, 220);
@@ -71,12 +73,12 @@ public final class DisplayPreferences extends ModelObject {
         
         PALETTE_OPTIONS.put(ColourOption.NORMAL_VISION, new MotorPalette(
                 NORMAL_VISION_MOVING_COLOR, NORMAL_VISION_STOPPED_COLOR,
-                NORMAL_VISION_DISABLED_COLOR, NORMAL_VISION_UNNAMED_COLOR, 
+                NORMAL_VISION_DISABLED_COLOR, NORMAL_VISION_UNNAMED_COLOR, NORMAL_VISION_INTERMEDIATE_COLOR,
                 NORMAL_VISION_IN_TOLERANCE_BORDER_COLOR, NORMAL_VISION_OUTSIDE_TOLERANCE_BORDER_COLOR));
         
         PALETTE_OPTIONS.put(ColourOption.ACCESSIBLE, new MotorPalette(
         		ACCESSIBLE_MOVING_COLOR, ACCESSIBLE_STOPPED_COLOR, 
-        		ACCESSIBLE_DISABLED_COLOR, ACCESSIBLE_UNNAMED_COLOR, 
+        		ACCESSIBLE_DISABLED_COLOR, ACCESSIBLE_UNNAMED_COLOR, ACCESSIBLE_INTERMEDIATE_COLOR,
         		ACCESSIBLE_IN_TOLERANCE_BORDER_COLOR, ACCESSIBLE_OUTSIDE_TOLERANCE_BORDER_COLOR));
     }
 
