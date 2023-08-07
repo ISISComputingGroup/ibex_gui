@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="ISIS"
+            id="uk.ac.stfc.isis.ibex.ui.moxas">
+      </category>
+      <view
+            name="Moxa table"
+            icon="icons/sample.gif"
+            category="uk.ac.stfc.isis.ibex.ui.moxas"
+            class="uk.ac.stfc.isis.ibex.ui.moxas.views.MoxasView"
+            id="uk.ac.stfc.isis.ibex.ui.moxas.MoxaTableView">
+      </view>
+   </extension>
+   <extension
+         name="Moxas"
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="uk.ac.stfc.isis.ibex.ui.moxas.views.Perspective"
+            id="uk.ac.stfc.isis.ibex.ui.moxas.perspective"
+            name="Beam Status">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="uk.ac.stfc.isis.ibex.ui.moxas.perspective">
+         <view
+               closeable="false"
+               id="uk.ac.stfc.isis.ibex.ui.moxas.MoxaTableView"
+               minimized="false"
+               moveable="false"
+               ratio="1.0f"
+               relationship="right"
+               relative="uk.ac.stfc.isis.ibex.ui.perspectives.PerspectiveSwitcher"
+               showTitle="false"
+               standalone="true"
+               visible="true">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
+
+</plugin>

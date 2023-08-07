@@ -19,7 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.configserver.internal;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.function.Function;
 
 import uk.ac.stfc.isis.ibex.configserver.BlockRules;
@@ -112,5 +114,9 @@ public interface Converters {
      * @return converter for the banner description
      */
     Function<String, CustomBannerData> toBannerDescription();
-
+    
+    /**
+     * @return Converter for the moxa mapping information.
+     */
+    Function<String, HashMap<String, ArrayList<ArrayList<String>>>> toMoxaMappings();
 }
