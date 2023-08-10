@@ -211,3 +211,7 @@ info designed by Freepik at www.flaticon.com
 Widgets -> uk.ac.stfc.isis.ibex.ui.widgets/resources
 
 helpIcon created by Anggara at www.flaticon.com
+
+Moxas -> uk.ac.stfc.isis.ibex.ui.moxas/icons
+
+Vga icons created by Nendra Wahyu at www.flaticon.com

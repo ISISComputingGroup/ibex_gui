@@ -19,7 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.configserver;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -342,6 +344,15 @@ public class ConfigServer extends Closer {
 	public ForwardingObservable<Collection<IocState>> iocStates() {
 		return FilteredCollectionObservable.createFilteredByNameObservable(variables.iocStates,
 				variables.protectedIocs);
+	}
+	
+	/**
+	 * Returns an observable to the moxa mappings.
+	 * 
+	 * @return the map of hostname and ip addresses to moxa port mappings
+	 */
+	public ForwardingObservable<HashMap<String, ArrayList<ArrayList<String>>>> moxaMappings() { 
+		return variables.moxaMappings;
 	}
 
 	/**
