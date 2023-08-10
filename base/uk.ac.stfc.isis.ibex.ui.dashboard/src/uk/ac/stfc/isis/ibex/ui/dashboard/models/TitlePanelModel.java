@@ -21,8 +21,12 @@ package uk.ac.stfc.isis.ibex.ui.dashboard.models;
 
 import uk.ac.stfc.isis.ibex.epics.adapters.TextUpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
+import uk.ac.stfc.isis.ibex.epics.observing.BooleanWritableObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
+import uk.ac.stfc.isis.ibex.epics.writing.Writable;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
+import uk.ac.stfc.isis.ibex.instrument.channels.BooleanChannel;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 
 /**
@@ -34,15 +38,26 @@ public class TitlePanelModel extends Closer {
 	private final UpdatedObservableAdapter<String> users;
 	
 	/**
+	 * An observable for whether to display the title on the web dashboard.
+	 */
+	public final BooleanWritableObservableAdapter displayTitle;
+
+	
+	/**
 	 * Create the model.
 	 * @param title an observable on the title
 	 * @param users an observable on the users
+	 * @param displayTitle is an observable and writer on the displayTitle
 	 */
-	public TitlePanelModel(ForwardingObservable<String> title, ForwardingObservable<String> users) {
+	public TitlePanelModel(ForwardingObservable<String> title, ForwardingObservable<String> users, ForwardingObservable<Boolean> displayTitle, Writable<Long> displayTitleSetter) {
 		this.title = registerForClose(new TextUpdatedObservableAdapter(title));
 		this.users = registerForClose(new TextUpdatedObservableAdapter(users));
-	}
+        this.displayTitle = registerForClose(new BooleanWritableObservableAdapter(displayTitleSetter, displayTitle));
+        
 
+
+	}
+	
 	/**
 	 * Gets the title.
 	 * @return the title
@@ -58,4 +73,14 @@ public class TitlePanelModel extends Closer {
 	public UpdatedValue<String> users() {
 		return users;
 	}
+	
+	/**
+	 * Gets the displayTitle.
+	 * @return the displayTitle
+	 */
+	public BooleanWritableObservableAdapter displayTitle() {
+		return displayTitle;
+	}
+
+
 }

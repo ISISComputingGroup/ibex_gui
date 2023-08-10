@@ -25,11 +25,14 @@ import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Button;
 
 import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.dashboard.models.TitlePanelModel;
@@ -41,7 +44,8 @@ public class TitlePanel extends Composite {
 
 	private final Label title;
 	private final Label users;
-	
+	private Button btnDisplayTitle;
+
     /**
      * Default constructor, creates the panel.
      * 
@@ -60,7 +64,7 @@ public class TitlePanel extends Composite {
 		this.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		
 		Label lblTitle = new Label(this, SWT.NONE);
-		lblTitle.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblTitle.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 		lblTitle.setFont(font);
 		lblTitle.setText("Title:");
 		
@@ -71,7 +75,7 @@ public class TitlePanel extends Composite {
 		title.setToolTipText("Experiment title");
 		
 		Label lblUsers = new Label(this, SWT.NONE);
-		lblUsers.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblUsers.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 		lblUsers.setFont(font);
 		lblUsers.setText("Users:");
 		
@@ -79,6 +83,19 @@ public class TitlePanel extends Composite {
 		users.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		users.setFont(font);
 		users.setText("Experiment users");
+		users.setToolTipText("Experiment users");
+
+		btnDisplayTitle = new Button(this, SWT.CHECK);
+		btnDisplayTitle.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+		btnDisplayTitle.setFont(font);
+		btnDisplayTitle.setText("Show Title and Users in Dataweb Dashboard Page");
+		btnDisplayTitle.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				super.widgetSelected(e);
+				model.displayTitle().uncheckedSetValue(btnDisplayTitle.getSelection());
+			}
+		});
 		
 		if (model != null) {
 			bind(model);
@@ -103,7 +120,11 @@ public class TitlePanel extends Composite {
         		WidgetProperties.tooltipText().observe(title), 
         		BeanProperties.<Object, String>value("value").observe(model.title()), 
         		null, literalAmpersands);
-		
+		bindingContext.bindValue(WidgetProperties.buttonSelection().observe(btnDisplayTitle),
+				BeanProperties.value("value").observe(model.displayTitle().value()));
+		bindingContext.bindValue(WidgetProperties.enabled().observe(btnDisplayTitle), 
+		        BeanProperties.value("value").observe(model.displayTitle().canSetValue()));
+
         if (Utils.SHOULD_HIDE_USER_INFORMATION) {
         	users.setText("<Users unavailable>");
         	users.setToolTipText("<Users unavailable>");
@@ -116,7 +137,7 @@ public class TitlePanel extends Composite {
 			bindingContext.bindValue(
 					WidgetProperties.tooltipText().observe(users), 
 					BeanProperties.<Object, String>value("value").observe(model.users()), 
-					null, new UpdateValueStrategy<String, String>().setConverter(deJsoner));
+					null, new UpdateValueStrategy<String, String>().setConverter(deJsoner));	
         }
 	}
 }
