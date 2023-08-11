@@ -19,10 +19,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.alarm;
 
-import org.csstudio.alarm.beast.ui.alarmtree.GUI;
-import org.csstudio.alarm.beast.ui.clientmodel.AlarmClientModel;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.part.ViewPart;
 
 import uk.ac.stfc.isis.ibex.alarm.Alarm;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -31,46 +28,20 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 /**
  * The Class AlarmView which is the view which contains the alarm tree.
  */
-public class AlarmView extends ViewPart {
+public class AlarmTableView extends org.csstudio.alarm.beast.ui.alarmtable.AlarmTableView {
 
 	/**
 	 * The ID for this class.
 	 */
-    public static final String ID = "uk.ac.stfc.isis.ibex.ui.alarm"; //$NON-NLS-1$
-
-    private AlarmClientModel model;
-    private GUI gui;
+    public static final String ID = "uk.ac.stfc.isis.ibex.ui.alarm.AlarmTable"; //$NON-NLS-1$
 
     @Override
     public void createPartControl(final Composite parent) {
 		Alarm.getInstance().initInstrument();
         try {
-			model = AlarmClientModel.getInstance();
+			super.createPartControl(parent);
 		} catch (Exception e) {
             IsisLog.getLogger(getClass()).error("Cannot load alarm model", e); //$NON-NLS-1$
 		}
-
-        gui = new GUI(parent, model, getViewSite());
-
-        // Use this if there's is nothing on the default menu we wanted
-        // now we can acknowledge alarms, have added back menu
-        //gui.getTreeViewer().getTree().setMenu(null);
-
-        // Lots of other controls available (see AlarmTreeView). For now they're just clutter
-        getViewSite().getActionBars().getToolBarManager().add(new RefreshAction());
-    }
-
-    @Override
-    public void setFocus() {
-    	gui.setFocus();
-    }
-
-    @Override
-    public void dispose() {
-    	super.dispose();
-    	if (model != null) {
-    		model.release();
-    	}
-        model = null;
     }
 }
