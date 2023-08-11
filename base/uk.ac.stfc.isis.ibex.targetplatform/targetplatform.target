@@ -7,7 +7,7 @@
         <unit id="org.eclipse.e4.tools.spies.feature.feature.group" version="0.0.0"/>
     </location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-         <unit id="org.eclipse.sapphire.ui.swt.gef.feature.group" version="9.1.0.201609301330"/>
+         <unit id="org.eclipse.sapphire.ui.swt.gef.feature.group" version="0.0.0"/>
          <repository location="http://download.eclipse.org/releases/2018-09"/>
      </location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
@@ -74,40 +74,40 @@
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/css_gui_dependencies_2023_08_11/p2repo/"/>
-		<unit id="com.fasterxml.jackson.core.jackson-annotations" version="2.9.0"/>
-		<unit id="com.fasterxml.jackson.core.jackson-core" version="2.9.7"/>
-		<unit id="com.fasterxml.jackson.core.jackson-databind" version="2.9.7"/>
-		<unit id="com.fasterxml.jackson.dataformat.jackson-dataformat-smile" version="2.6.3"/>
-		<unit id="com.fasterxml.jackson.jaxrs.jackson-jaxrs-base" version="2.6.3"/>
-		<unit id="com.fasterxml.jackson.jaxrs.jackson-jaxrs-json-provider" version="2.6.3"/>
-		<unit id="com.fasterxml.jackson.module.jackson-module-jaxb-annotations" version="2.9.7"/>
-		<unit id="org.csstudio.alarm.beast.tools.feature.feature.group" version="4.0.1.202308110153"/>
-		<unit id="org.csstudio.alarm.beast.ui.alarmtable.opiwidget.feature.feature.group" version="1.0.0.202308110153"/>
-		<unit id="org.csstudio.alarm.beast.ui.feature.feature.group" version="4.1.0.202308110153"/>
-		<unit id="org.csstudio.alarm.diirt.datasource.feature.feature.group" version="0.0.1.202308110153"/>
-		<unit id="org.csstudio.applications.opibuilder.feature.feature.group" version="5.0.0.202308110153"/>
-		<unit id="org.csstudio.applications.opibuilder.widgets.detailpanel.feature.feature.group" version="0.0.1.202308110153"/>
-		<unit id="org.csstudio.applications.pvmanager.diag.feature.feature.group" version="1.0.0.202308110153"/>
-		<unit id="org.csstudio.applications.utility.feature.feature.group" version="1.0.0.202308110153"/>
-		<unit id="org.csstudio.archive.reader.rdb.feature.feature.group" version="1.0.0.202308110153"/>
-		<unit id="org.csstudio.core.base.feature.feature.group" version="0.0.1.202308110153"/>
-		<unit id="org.csstudio.core.base.feature.source.feature.group" version="0.0.1.202308110153"/>
-		<unit id="org.csstudio.core.diirt.feature.feature.group" version="0.0.1.202308110153"/>
-		<unit id="org.csstudio.core.platform.feature.feature.group" version="0.0.1.202308110153"/>
-		<unit id="org.csstudio.core.platform.feature.source.feature.group" version="0.0.1.202308110153"/>
-		<unit id="org.csstudio.core.utility.feature.feature.group" version="4.1.0.202308110153"/>
-		<unit id="org.csstudio.core.utility.feature.source.feature.group" version="4.1.0.202308110153"/>
-		<unit id="org.csstudio.thirdparty.all.feature.feature.group" version="1.0.3.202101071159"/>
-		<unit id="org.csstudio.thirdparty.all.feature.source.feature.group" version="1.0.3.202101071159"/>
-		<unit id="org.csstudio.trends.databrowser2.feature.feature.group" version="4.1.0.202308110153"/>
-		<unit id="org.csstudio.trends.databrowser2.opiwidget.feature.feature.group" version="3.2.0.202308110153"/>
-		<unit id="org.csstudio.utilities.debugging.feature.feature.group" version="1.0.0.202308110153"/>
-		<unit id="org.epics.caj" version="1.1.14"/>
-		<unit id="org.epics.channelfinder.cf-client-api" version="3.0.3"/>
-		<unit id="org.epics.jca" version="2.4.3"/>
-		<unit id="org.epics.jca.source" version="2.4.2"/>
-		<unit id="org.epics.pvaccess.source" version="5.1.2"/>
-		<unit id="org.epics.pvdata.source" version="6.1.2"/>
+		<unit id="com.fasterxml.jackson.core.jackson-annotations" version="0.0.0"/>
+		<unit id="com.fasterxml.jackson.core.jackson-core" version="0.0.0"/>
+		<unit id="com.fasterxml.jackson.core.jackson-databind" version="0.0.0"/>
+		<unit id="com.fasterxml.jackson.dataformat.jackson-dataformat-smile" version="0.0.0"/>
+		<unit id="com.fasterxml.jackson.jaxrs.jackson-jaxrs-base" version="0.0.0"/>
+		<unit id="com.fasterxml.jackson.jaxrs.jackson-jaxrs-json-provider" version="0.0.0"/>
+		<unit id="com.fasterxml.jackson.module.jackson-module-jaxb-annotations" version="0.0.0"/>
+		<unit id="org.csstudio.alarm.beast.tools.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.alarm.beast.ui.alarmtable.opiwidget.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.alarm.beast.ui.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.alarm.diirt.datasource.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.applications.opibuilder.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.applications.opibuilder.widgets.detailpanel.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.applications.pvmanager.diag.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.applications.utility.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.archive.reader.rdb.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.core.base.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.core.base.feature.source.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.core.diirt.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.core.platform.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.core.platform.feature.source.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.core.utility.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.core.utility.feature.source.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.thirdparty.all.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.thirdparty.all.feature.source.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.trends.databrowser2.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.trends.databrowser2.opiwidget.feature.feature.group" version="0.0.0"/>
+		<unit id="org.csstudio.utilities.debugging.feature.feature.group" version="0.0.0"/>
+		<unit id="org.epics.caj" version="0.0.0"/>
+		<unit id="org.epics.channelfinder.cf-client-api" version="0.0.0"/>
+		<unit id="org.epics.jca" version="0.0.0"/>
+		<unit id="org.epics.jca.source" version="0.0.0"/>
+		<unit id="org.epics.pvaccess.source" version="0.0.0"/>
+		<unit id="org.epics.pvdata.source" version="0.0.0"/>
 	</location>
 	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
 		<dependencies>
