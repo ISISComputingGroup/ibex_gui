@@ -3340,5 +3340,23 @@
         </categories>
       </value>
     </entry>
+    <entry>
+      <key>Moxa E1242</key>
+      <value>
+        <type>MOXA_12XX</type>
+        <path>moxa1242.opi</path>
+        <description>The OPI for a Moxa E1242 Volt/Current and Digital logger.</description>
+        <macros>
+          <macro>
+            <name>MOXA1210</name>
+            <description>The Moxa E1242 PV prefix (e.g. MOXA12XX_01).</description>
+            <default>MOXA12XX_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Multimeters</category>
+        </categories>
+      </value>
+    </entry>
   </opis>
 </descriptions>
