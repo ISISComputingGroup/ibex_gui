@@ -185,7 +185,7 @@ $(trace_1_y_pv_value)</tooltip>
     </trace_0_trace_color>
     <trace_0_trace_type>0</trace_0_trace_type>
     <trace_0_update_delay>0</trace_0_update_delay>
-    <trace_0_update_mode>3</trace_0_update_mode>
+    <trace_0_update_mode>0</trace_0_update_mode>
     <trace_0_visible>true</trace_0_visible>
     <trace_0_x_axis_index>0</trace_0_x_axis_index>
     <trace_0_x_pv></trace_0_x_pv>
@@ -206,7 +206,7 @@ $(trace_1_y_pv_value)</tooltip>
     </trace_1_trace_color>
     <trace_1_trace_type>0</trace_1_trace_type>
     <trace_1_update_delay>0</trace_1_update_delay>
-    <trace_1_update_mode>3</trace_1_update_mode>
+    <trace_1_update_mode>0</trace_1_update_mode>
     <trace_1_visible>true</trace_1_visible>
     <trace_1_x_axis_index>0</trace_1_x_axis_index>
     <trace_1_x_pv></trace_1_x_pv>
@@ -227,7 +227,7 @@ $(trace_1_y_pv_value)</tooltip>
     </trace_2_trace_color>
     <trace_2_trace_type>0</trace_2_trace_type>
     <trace_2_update_delay>0</trace_2_update_delay>
-    <trace_2_update_mode>3</trace_2_update_mode>
+    <trace_2_update_mode>0</trace_2_update_mode>
     <trace_2_visible>true</trace_2_visible>
     <trace_2_x_axis_index>0</trace_2_x_axis_index>
     <trace_2_x_pv></trace_2_x_pv>
@@ -248,7 +248,7 @@ $(trace_1_y_pv_value)</tooltip>
     </trace_3_trace_color>
     <trace_3_trace_type>0</trace_3_trace_type>
     <trace_3_update_delay>0</trace_3_update_delay>
-    <trace_3_update_mode>3</trace_3_update_mode>
+    <trace_3_update_mode>0</trace_3_update_mode>
     <trace_3_visible>true</trace_3_visible>
     <trace_3_x_axis_index>0</trace_3_x_axis_index>
     <trace_3_x_pv></trace_3_x_pv>
@@ -269,7 +269,7 @@ $(trace_1_y_pv_value)</tooltip>
     </trace_4_trace_color>
     <trace_4_trace_type>0</trace_4_trace_type>
     <trace_4_update_delay>0</trace_4_update_delay>
-    <trace_4_update_mode>3</trace_4_update_mode>
+    <trace_4_update_mode>0</trace_4_update_mode>
     <trace_4_visible>true</trace_4_visible>
     <trace_4_x_axis_index>0</trace_4_x_axis_index>
     <trace_4_x_pv></trace_4_x_pv>
