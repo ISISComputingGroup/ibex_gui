@@ -18,7 +18,7 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <PV_ROOT>$(P)$(MOXA1210)</PV_ROOT>
+    <PV_ROOT>$(P)$(MOXA1242)</PV_ROOT>
   </macros>
   <name>$(NAME)</name>
   <rules />
@@ -138,7 +138,7 @@
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
-    <name>Voltages</name>
+    <name>AIs</name>
     <rules />
     <scale_options>
       <width_scalable>true</width_scalable>
