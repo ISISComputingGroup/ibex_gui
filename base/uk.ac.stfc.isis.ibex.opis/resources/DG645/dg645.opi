@@ -251,19 +251,7 @@
     </tab_1_foreground_color>
     <tab_1_icon_path></tab_1_icon_path>
     <tab_1_title>Level</tab_1_title>
-    <tab_2_background_color>
-      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
-    </tab_2_background_color>
-    <tab_2_enabled>true</tab_2_enabled>
-    <tab_2_font>
-      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_TabTitle_NEW</opifont.name>
-    </tab_2_font>
-    <tab_2_foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-    </tab_2_foreground_color>
-    <tab_2_icon_path></tab_2_icon_path>
-    <tab_2_title>Settings</tab_2_title>
-    <tab_count>3</tab_count>
+    <tab_count>2</tab_count>
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Tabbed Container</widget_type>
@@ -2251,9 +2239,9 @@ $(pv_value)</tooltip>
         <visible>true</visible>
         <widget_type>Grouping Container</widget_type>
         <width>319</width>
-        <wuid>b429f37:189d44d78f9:-7987</wuid>
+        <wuid>-4d9fb07c:18a031ecdc2:-7dce</wuid>
         <x>587</x>
-        <y>515</y>
+        <y>518</y>
         <widget typeId="org.csstudio.opibuilder.widgets.combo" version="1.0.0">
           <actions hook="false" hook_all="false" />
           <alarm_pulsing>false</alarm_pulsing>
@@ -2292,7 +2280,7 @@ $(pv_value)</tooltip>
           <visible>true</visible>
           <widget_type>Combo</widget_type>
           <width>150</width>
-          <wuid>b429f37:189d44d78f9:-7a08</wuid>
+          <wuid>-4d9fb07c:18a031ecdc2:-7dcd</wuid>
           <x>0</x>
           <y>38</y>
         </widget>
@@ -2346,7 +2334,7 @@ $(pv_value)</tooltip>
           <visible>true</visible>
           <widget_type>Action Button</widget_type>
           <width>61</width>
-          <wuid>b429f37:189d44d78f9:-79fe</wuid>
+          <wuid>-4d9fb07c:18a031ecdc2:-7dcc</wuid>
           <x>162</x>
           <y>38</y>
         </widget>
@@ -2356,8 +2344,8 @@ $(pv_value)</tooltip>
               <pv_name>$(pv_name)</pv_name>
               <value>1</value>
               <timeout>10</timeout>
-              <confirm_message>Are you sure you want to load configuration? This will overwrite current settings.</confirm_message>
-              <description></description>
+              <confirm_message>Are you sure you want to load configuration from the selected slot? This will overwrite current settings, and restart the IOC. NOTE: Changes may take a few minutes to update, do not touch any other buttons until after the IOC restarts. The Value 1 in this dialogue box does not reflect the selected slot.</confirm_message>
+              <description>Sends a command to the DG645 IOC to Load the selected save slot from the drop down to the left. The Value 1 in this dialog box is not related.</description>
             </action>
           </actions>
           <alarm_pulsing>false</alarm_pulsing>
@@ -2400,7 +2388,7 @@ $(pv_value)</tooltip>
           <visible>true</visible>
           <widget_type>Action Button</widget_type>
           <width>61</width>
-          <wuid>b429f37:189d44d78f9:-79f2</wuid>
+          <wuid>-4d9fb07c:18a031ecdc2:-7dcb</wuid>
           <x>228</x>
           <y>37</y>
         </widget>
@@ -2441,7 +2429,7 @@ $(pv_value)</tooltip>
           <widget_type>Label</widget_type>
           <width>150</width>
           <wrap_words>true</wrap_words>
-          <wuid>b429f37:189d44d78f9:-7964</wuid>
+          <wuid>-4d9fb07c:18a031ecdc2:-7dca</wuid>
           <x>0</x>
           <y>12</y>
         </widget>
@@ -2737,142 +2725,6 @@ $(pv_value)</tooltip>
         <wuid>231c343d:183cb33d8b8:-4687</wuid>
         <x>12</x>
         <y>332</y>
-      </widget>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-      <actions hook="false" hook_all="false" />
-      <background_color>
-        <color red="240" green="240" blue="240" />
-      </background_color>
-      <border_color>
-        <color red="0" green="128" blue="255" />
-      </border_color>
-      <border_style>0</border_style>
-      <border_width>1</border_width>
-      <enabled>true</enabled>
-      <fc>false</fc>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-      </font>
-      <foreground_color>
-        <color red="192" green="192" blue="192" />
-      </foreground_color>
-      <height>620</height>
-      <lock_children>false</lock_children>
-      <macros>
-        <include_parent_macros>true</include_parent_macros>
-      </macros>
-      <name>Settings</name>
-      <rules />
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>true</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts />
-      <show_scrollbar>true</show_scrollbar>
-      <tooltip></tooltip>
-      <transparent>true</transparent>
-      <visible>false</visible>
-      <widget_type>Grouping Container</widget_type>
-      <width>1067</width>
-      <wuid>231c343d:183cb33d8b8:-59f7</wuid>
-      <x>1</x>
-      <y>1</y>
-      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-        <actions hook="false" hook_all="false" />
-        <background_color>
-          <color red="240" green="240" blue="240" />
-        </background_color>
-        <border_color>
-          <color red="0" green="128" blue="255" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>0</border_width>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-        </font>
-        <foreground_color>
-          <color red="192" green="192" blue="192" />
-        </foreground_color>
-        <group_name></group_name>
-        <height>376</height>
-        <macros>
-          <include_parent_macros>true</include_parent_macros>
-          <CONFIG>AS:$(IOC):dgconfig</CONFIG>
-        </macros>
-        <name>Linking Container_1</name>
-        <opi_file>../autosave/configMenu.opi</opi_file>
-        <resize_behaviour>1</resize_behaviour>
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <tooltip></tooltip>
-        <visible>true</visible>
-        <widget_type>Linking Container</widget_type>
-        <width>241</width>
-        <wuid>231c343d:183cb33d8b8:-59cc</wuid>
-        <x>12</x>
-        <y>12</y>
-      </widget>
-      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-        <actions hook="false" hook_all="false">
-          <action type="WRITE_PV">
-            <pv_name>$(PV_ROOT)ResetBO</pv_name>
-            <value></value>
-            <timeout>10</timeout>
-            <confirm_message></confirm_message>
-            <description></description>
-          </action>
-        </actions>
-        <alarm_pulsing>false</alarm_pulsing>
-        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-        <background_color>
-          <color red="240" green="240" blue="240" />
-        </background_color>
-        <border_alarm_sensitive>false</border_alarm_sensitive>
-        <border_color>
-          <color red="0" green="128" blue="255" />
-        </border_color>
-        <border_style>0</border_style>
-        <border_width>1</border_width>
-        <enabled>true</enabled>
-        <font>
-          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
-        </font>
-        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-        <foreground_color>
-          <color red="0" green="0" blue="0" />
-        </foreground_color>
-        <height>25</height>
-        <image></image>
-        <name>Action Button</name>
-        <push_action_index>0</push_action_index>
-        <pv_name></pv_name>
-        <pv_value />
-        <rules />
-        <scale_options>
-          <width_scalable>true</width_scalable>
-          <height_scalable>true</height_scalable>
-          <keep_wh_ratio>false</keep_wh_ratio>
-        </scale_options>
-        <scripts />
-        <style>0</style>
-        <text>Reset to Factory Settings</text>
-        <toggle_button>false</toggle_button>
-        <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-        <visible>true</visible>
-        <widget_type>Action Button</widget_type>
-        <width>241</width>
-        <wuid>-6906150b:17c54eb3068:-663f</wuid>
-        <x>12</x>
-        <y>396</y>
       </widget>
     </widget>
   </widget>
