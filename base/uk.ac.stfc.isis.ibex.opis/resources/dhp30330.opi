@@ -515,10 +515,10 @@ $(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
       <horizontal_buttons_layout>false</horizontal_buttons_layout>
       <limits_from_pv>false</limits_from_pv>
-      <maximum>1.7976931348623157E308</maximum>
-      <minimum>-1.7976931348623157E308</minimum>
+      <maximum>330.0</maximum>
+      <minimum>0.0</minimum>
       <name>Text Input_1</name>
-      <page_increment>10.0</page_increment>
+      <page_increment>1.0</page_increment>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)CURR:REQ:SP</pv_name>
@@ -756,10 +756,10 @@ $(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
       <horizontal_buttons_layout>false</horizontal_buttons_layout>
       <limits_from_pv>false</limits_from_pv>
-      <maximum>1.7976931348623157E308</maximum>
-      <minimum>-1.7976931348623157E308</minimum>
+      <maximum>30.0</maximum>
+      <minimum>0.0</minimum>
       <name>Text Input_3</name>
-      <page_increment>10.0</page_increment>
+      <page_increment>0.01</page_increment>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)VOLT:REQ:SP</pv_name>
@@ -1161,10 +1161,10 @@ $(pv_value)</tooltip>
       <horizontal_alignment>0</horizontal_alignment>
       <horizontal_buttons_layout>false</horizontal_buttons_layout>
       <limits_from_pv>false</limits_from_pv>
-      <maximum>1.7976931348623157E308</maximum>
-      <minimum>-1.7976931348623157E308</minimum>
+      <maximum>10000.0</maximum>
+      <minimum>0.0</minimum>
       <name>Text Input_5</name>
-      <page_increment>10.0</page_increment>
+      <page_increment>1.0</page_increment>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
       <pv_name>$(PV_ROOT)POW:REQ:SP</pv_name>
