@@ -25,11 +25,11 @@ call build_msi.bat %BASEDIR%.. %TARGET_DIR% %MSINAME%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 pushd %CD%\..\%TARGET_DIR%
+if exist "..\Client-tmp.7z" del ..\Client-tmp.7z
 "c:\Program Files\7-Zip\7z.exe" a -mx1 -r ..\Client-tmp.7z .
 set errcode=%errorlevel%
 popd
 if %errcode% gtr 1 exit /b %errcode%
-
 
 REM set EXIT=YES will change error code to 1 if not set previously so store the current
 set build_error_level=%errorlevel%
@@ -102,6 +102,8 @@ if %errorlevel% neq 0 (
 
 REM 7zip archive
 if not exist "%INSTALLDIR%\zips" mkdir %INSTALLDIR%\zips
+if exist "%INSTALLDIR%\zips\Client-tmp.7z" del %INSTALLDIR%\zips\Client-tmp.7z
+if exist "%INSTALLDIR%\zips\Client.7z" del %INSTALLDIR%\zips\Client.7z
 xcopy /y /j %CD%\..\Client-tmp.7z %INSTALLDIR%\zips
 if %errorlevel% neq 0 (
     @echo 7z copy failed
