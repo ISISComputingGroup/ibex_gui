@@ -24,6 +24,13 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 call build_msi.bat %BASEDIR%.. %TARGET_DIR% %MSINAME%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
+pushd %CD%\..\%TARGET_DIR%
+"c:\Program Files\7-Zip\7z.exe" a -mx1 -r ..\Client-tmp.7z .
+set errcode=%errorlevel%
+popd
+if %errcode% gtr 1 exit /b %errcode%
+
+
 REM set EXIT=YES will change error code to 1 if not set previously so store the current
 set build_error_level=%errorlevel%
 
@@ -87,9 +94,26 @@ if %errorlevel% geq 4 (
 )
 
 REM copy MSI
-copy /Y %MSINAME%.msi %INSTALLDIR%
+xcopy /y /j %MSINAME%.msi %INSTALLDIR%
 if %errorlevel% neq 0 (
     @echo MSI copy failed
+    exit /b %errorlevel%
+)
+
+REM 7zip archive
+if not exist "%INSTALLDIR%\zips" mkdir %INSTALLDIR%\zips
+xcopy /y /j %CD%\..\Client-tmp.7z %INSTALLDIR%\zips
+if %errorlevel% neq 0 (
+    @echo 7z copy failed
+    exit /b %errorlevel%
+)
+ren %INSTALLDIR%\zips\Client-tmp.7z Client.7z
+if %errorlevel% neq 0 (
+    waitfor /t 30 WillNeverHappen >NUL 2>&1
+    ren %INSTALLDIR%\zips\Client-tmp.7z Client.7z
+)
+if %errorlevel% neq 0 (
+    @echo 7z rename failed
     exit /b %errorlevel%
 )
 
@@ -110,4 +134,3 @@ if not "%RELEASE%" == "YES" (
     @echo %BUILD_NUMBER%>%INSTALLDIR%\..\LATEST_BUILD.txt 
 )
 exit /b 0
-
