@@ -69,12 +69,6 @@ class CheckStrictOpiFormat(unittest.TestCase):
         if len(errors):
             self.fail("\n".join(["On line {}, text '{}', colour was not correct.".format(*error) for error in errors]))
 
-    def _assert_rgb_definition_correct(self): # Need this to unpack a tuple with the line and colour name when mismatch occurs.
-        errors = check_rgb_definitions(self.xml_root)
-
-        if len(errors):
-            self.fail("\n".join(["On line {}, colour '{}', RGB values were not correct.".format(*error) for error in errors]))
-
     def _assert_trace_buffers_are_the_same(self):
         errors = get_traces_with_different_buffer_sizes(self.xml_root)
 
@@ -102,6 +96,11 @@ class CheckStrictOpiFormat(unittest.TestCase):
 
     def test_GIVEN_an_opi_file_with_led_WHEN_checking_off_colour_THEN_it_is_the_isis_led_off_colour(self):
         self._assert_colour_correct("off_color", "LED", ["ISIS_Green_LED_Off", "ISIS_Red_LED_Off"])
+
+    def test_rgb_definitions_are_correct(self):
+        errors = check_rgb_definitions(self.xml_root)
+        if len(errors):
+            self.fail("\n".join(["On line {}, colour '{}', RGB values are not correct.".format(*error) for error in errors]))
 
     def test_GIVEN_plot_area_THEN_it_has_correct_plot_area_background_colour(self):
         errors = check_plot_area_backgrounds(self.xml_root)

@@ -1,4 +1,6 @@
 ﻿import re
+import os
+
 
 def populate_rgb_definitions(): 
     """
@@ -7,7 +9,7 @@ def populate_rgb_definitions():
     Arguments: 
         None
     Returns: 
-        A populated dictionary: {str<name>: (str<red>, str<green>, str<blue>)}
+        A dictionary of colour definitions: {str<name>: (str<red>, str<green>, str<blue>)}
     """
     colour_rgb_definitions = {} 
 
@@ -20,7 +22,7 @@ def populate_rgb_definitions():
             rgb_values = tuple(split_line[1].split(","))
             colour_rgb_definitions[colour_name] = rgb_values
     
-    with open("isis_colours.def") as f: 
+    with open(os.path.join("/Instrument/Apps/EPICS/CSS/master/Share", "isis_colours.def")) as f: 
         for line in f.readlines():
             add_definition(line)    
     return colour_rgb_definitions
@@ -32,7 +34,7 @@ def check_rgb_definitions(root):
     Arguments: 
         root (etree): The root of the xml to search.
     Returns: 
-        *MISMATCH SHOULD THROW AN ERROR, THAT WILL THEN ADD TO THE ERRORS ARRAY*
+        list: A list of tuples (str<line number>, str<colour name>) for "color" tags that do not conform to their RGB definition
     """
     colour_rgb_definitions = populate_rgb_definitions()
     errors = [] 
@@ -47,8 +49,8 @@ def check_rgb_definitions(root):
             rgb_definition = colour_rgb_definitions[name]
             if actual_colors != rgb_definition:
                 return (color.sourceline, name)
-        except: # Bypassing key error for colour names that are not defined in isis_colours.def - "Major" on fermi_chopper.opi
-            print("Name not recognised in definitions file.")
+        except:
+            print(f"'{name}' - colour not recognised from definitions file.")
     
     for color in root.iter("color"):
         error = check_definition(color)
