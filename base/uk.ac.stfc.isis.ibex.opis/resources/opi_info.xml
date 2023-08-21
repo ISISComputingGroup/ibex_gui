@@ -3311,6 +3311,21 @@
       </value>
     </entry>
     <entry>
+      <key>DHP30330</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>dhp30330.opi</path>
+        <description>The OPI for the DHP30330</description>
+        <macros>
+          <macro>
+            <name>DHP30330</name>
+            <description>The DHP30330 PV prefix (e.g. DHP30330_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
       <key>Muon Separator Tuning</key>
       <value>
         <type>MUON_FRONT_END</type>
