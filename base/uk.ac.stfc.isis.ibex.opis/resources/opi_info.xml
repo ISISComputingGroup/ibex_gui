@@ -3311,6 +3311,39 @@
       </value>
     </entry>
     <entry>
+      <key>Muon Separator Tuning</key>
+      <value>
+        <type>MUON_FRONT_END</type>
+        <path>RIKEN/separator_tuning.opi</path>
+        <description>The OPI to remotely tune a muon separator with control of the PSU output and feedback from the vacuum system.</description>
+        <macros>
+          <macro>
+            <name>PSU_POSITIVE</name>
+            <description>The IOC prefix for the positive plate PSU (e.g. TECHNIX_01).</description>
+            <default>TECHNIX_01</default>
+          </macro>
+          <macro>
+            <name>PSU_NEGATIVE</name>
+            <description>The IOC prefix for the negative plate PSU (e.g. TECHNIX_02).</description>
+            <default>TECHNIX_02</default>
+          </macro>
+          <macro>
+            <name>TPG300</name>
+            <description>The IOC prefix for the TPG300 Pressure controller (e.g. TPG300_01).</description>
+            <default>TPG300_01</default>
+          </macro>
+          <macro>
+            <name>TPG300_CHANNEL</name>
+            <description>The pressure channel to read (eg. A1, A2, B1, B2).</description>
+            <default>A1</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>PACE5000</key>
       <value>
         <type>PRESSURE_GAUGE</type>
