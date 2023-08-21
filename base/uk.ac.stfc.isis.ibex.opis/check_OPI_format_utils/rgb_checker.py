@@ -35,19 +35,24 @@ def check_rgb_definitions(root):
         *MISMATCH SHOULD THROW AN ERROR, THAT WILL THEN ADD TO THE ERRORS ARRAY*
     """
     colour_rgb_definitions = populate_rgb_definitions()
+    errors = [] 
 
     def check_definition(color):
-        attributes = color.attrib 
-        if "name" not in attributes: # No name given ends the execution of the function for the given color tag.
-            return True
+        attributes = color.attrib
+        if "name" not in attributes:
+            return False
         name = attributes["name"]
         actual_colors = (attributes["red"], attributes["green"], attributes["blue"])
-        rgb_definition = colour_rgb_definitions[name]
-        return actual_colors == rgb_definition
+        try:
+            rgb_definition = colour_rgb_definitions[name]
+            if actual_colors != rgb_definition:
+                return (color.sourceline, name)
+        except: # Bypassing key error for colour names that are not defined in isis_colours.def - "Major" on fermi_chopper.opi
+            print("Name not recognised in definitions file.")
     
     for color in root.iter("color"):
-        if not check_definition(color):
-            print("Mismatch with definition")
-        else:
-            print("match")
+        error = check_definition(color)
+        if error:
+            errors.append(error)
+    return errors
 
