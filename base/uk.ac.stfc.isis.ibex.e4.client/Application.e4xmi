@@ -232,7 +232,9 @@
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_i2zuEGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.partsashcontainer.1" containerData="70" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_Cah-0GIsEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.3" containerData="">
-          <children xsi:type="basic:Part" xmi:id="_9zpdoHziEee7XtTTU-lRdw" elementId="uk.ac.stfc.isis.ibex.ui.alarm.AlarmView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Alarms"/>
+          <children xsi:type="basic:Part" xmi:id="_9zpdoHziEee7XtTTU-lRdw" elementId="uk.ac.stfc.isis.ibex.ui.alarm.AlarmView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Alarm Tree"/>
+          <children xsi:type="basic:Part" xmi:id="_tAzWcDF8Ee6Zd5hUjrQ4XA" elementId="uk.ac.stfc.isis.ibex.ui.alarm.AlarmTable" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Alarm Table"/>
+          <children xsi:type="basic:Part" xmi:id="_STVkYDFzEe6Zd5hUjrQ4XA" elementId="uk.ac.stfc.isis.ibex.ui.alarm.AlarmHistory" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Alarm History"/>
         </children>
       </children>
     </children>
@@ -604,6 +606,25 @@
             <properties key="FigureNumber" value="1"/>
           </children>
         </children>
+      </children>
+    </children>
+  </snippets>
+  <snippets xsi:type="advanced:Perspective" xmi:id="_yx0hUBTJEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.moxas" accessibilityPhrase="Moxa Ports" label="Moxa Ports" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.moxas/icons/moxa_24x24.png" tooltip="The front panel for viewing Moxa mappings">
+    <children xsi:type="basic:PartSashContainer" xmi:id="_oBKlsBTKEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.30">
+      <children xsi:type="basic:PartSashContainer" xmi:id="_r2gDEBTLEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.19" containerData="30" horizontal="true">
+        <children xsi:type="basic:PartStack" xmi:id="_r2gDERTLEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.30" containerData="35">
+          <children xsi:type="advanced:Placeholder" xmi:id="_r2gDEhTLEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.6" ref="_RgW1RIjKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
+        </children>
+        <children xsi:type="basic:PartStack" xmi:id="_r2gDExTLEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.31" containerData="65">
+          <children xsi:type="advanced:Placeholder" xmi:id="_r2gDFBTLEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.12" ref="_RgW1RojKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
+        </children>
+      </children>
+      <children xsi:type="basic:PartStack" xmi:id="_szUGEBTKEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.38" containerData="70">
+        <children xsi:type="basic:Part" xmi:id="_XXUCEBTLEe6w1JslCXKbuw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.moxaportmappings" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.moxas/uk.ac.stfc.isis.ibex.ui.moxas.views.MoxasView" label="Moxa Port Mappings"/>
       </children>
     </children>
   </snippets>
