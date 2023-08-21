@@ -7,6 +7,7 @@ from lxml import etree
 from lxml.etree import LxmlError
 
 from check_OPI_format_utils.colour_checker import check_colour, check_plot_area_backgrounds
+from check_OPI_format_utils.rgb_checker import check_rgb_definitions
 from check_OPI_format_utils.text import check_label_punctuation, check_label_case_inside_containers, \
     check_label_case_outside_containers
 from check_OPI_format_utils.container import get_items_not_in_grouping_container
@@ -67,6 +68,12 @@ class CheckStrictOpiFormat(unittest.TestCase):
 
         if len(errors):
             self.fail("\n".join(["On line {}, text '{}', colour was not correct.".format(*error) for error in errors]))
+
+    def _assert_rgb_definition_correct(self): # Need this to unpack a tuple with the line and colour name when mismatch occurs.
+        errors = check_rgb_definitions(self.xml_root)
+
+        if len(errors):
+            self.fail("\n".join(["On line {}, colour '{}', RGB values were not correct.".format(*error) for error in errors]))
 
     def _assert_trace_buffers_are_the_same(self):
         errors = get_traces_with_different_buffer_sizes(self.xml_root)
