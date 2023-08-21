@@ -1029,6 +1029,26 @@
       </value>
     </entry>
     <entry>
+      <key>MEASM905</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>MEASM905/measm905.opi</path>
+        <description>The pressure transducer for PEARL</description>
+        <macros>
+          <macro>
+            <name>MEASM905</name>
+            <include_parent_macros>true</include_parent_macros>
+            <PV_ROOT>$P(MEASM905)</PV_ROOT>
+            <description>The MEASM905 PV prefix (e.g. MEASM905_01).</description>
+            <default>MEASM905_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Pressure sensors</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>TDS 3000 Trace</key>
       <value>
         <type>OSCILLOSCOPE</type>
@@ -2629,6 +2649,7 @@
           <macro>
             <name>TTIEX355P</name>
             <description>The TTIEX355P PV prefix (e.g. TTIEX355P_01)</description>
+            <default>TTIEX355P_01</default>
           </macro>
         </macros>
       </value>
@@ -3302,6 +3323,69 @@
             <description>The DHP30330 PV prefix (e.g. DHP30330_01)</description>
           </macro>
         </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Muon Separator Tuning</key>
+      <value>
+        <type>MUON_FRONT_END</type>
+        <path>RIKEN/separator_tuning.opi</path>
+        <description>The OPI to remotely tune a muon separator with control of the PSU output and feedback from the vacuum system.</description>
+        <macros>
+          <macro>
+            <name>PSU_POSITIVE</name>
+            <description>The IOC prefix for the positive plate PSU (e.g. TECHNIX_01).</description>
+            <default>TECHNIX_01</default>
+          </macro>
+          <macro>
+            <name>PSU_NEGATIVE</name>
+            <description>The IOC prefix for the negative plate PSU (e.g. TECHNIX_02).</description>
+            <default>TECHNIX_02</default>
+          </macro>
+          <macro>
+            <name>TPG300</name>
+            <description>The IOC prefix for the TPG300 Pressure controller (e.g. TPG300_01).</description>
+            <default>TPG300_01</default>
+          </macro>
+          <macro>
+            <name>TPG300_CHANNEL</name>
+            <description>The pressure channel to read (eg. A1, A2, B1, B2).</description>
+            <default>A1</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>PACE5000</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>pace5000.opi</path>
+        <description>The OPI for the PACE5000</description>
+        <macros>
+          <macro>
+            <name>PACE5000</name>
+            <description>The PACE5000 PV prefix (e.g. PACE5000_01)</description>
+            <default>PACE5000_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Pressure control handling systems</category>
+          </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>PEARL Jaw Set</key>
+      <value>
+        <type>MONITOR</type>
+        <path>jaws/jaws_managers/pearl_manager.opi</path>
+        <description>PEARL Jaw Set Manager</description>
+        <macros/>
+        <categories>
+          <category>Jaws and slits</category>
+        </categories>
       </value>
     </entry>
   </opis>

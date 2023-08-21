@@ -68,6 +68,7 @@ public class MinimalMotorViewModel extends ModelObject {
     private String tooltip;
     private Boolean enabled;
     private Boolean moving;
+    private Boolean doneMoving;
     private Boolean usingEncoder;
     private Boolean energised;
     private boolean advancedMinimalMotorView;
@@ -121,6 +122,7 @@ public class MinimalMotorViewModel extends ModelObject {
         }
 
         boolean isMoving = (moving != null) && (moving);
+        boolean isDoneMoving = (doneMoving != null) && (doneMoving);
         boolean isEnabled = (enabled != null) && (enabled);
         boolean isNamed = !Strings.isNullOrEmpty(motorName);
 
@@ -130,6 +132,8 @@ public class MinimalMotorViewModel extends ModelObject {
             backgroundColour = palette.getDisabledColor();
         } else if (!isNamed) {
             backgroundColour = palette.getUnnamedColor();
+        } else if (!isMoving && !isDoneMoving) {
+            backgroundColour = palette.getIntermediateColor();
         } else if (!isMoving) {
             backgroundColour = palette.getStoppedColor();
         } else {
@@ -324,9 +328,10 @@ public class MinimalMotorViewModel extends ModelObject {
         refreshLabels();
         
         this.moving = motor.getMoving();
+        this.doneMoving = motor.getDoneMoving();
         setEnabled(motor.getEnabled());
         setColor(chooseBackgroundColor());
-        
+                
         setBorderColor(chooseBorderColor());
         this.font = chooseFont();
         
@@ -347,6 +352,15 @@ public class MinimalMotorViewModel extends ModelObject {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 moving = (Boolean) evt.getNewValue();
+                setColor(chooseBackgroundColor());
+                setFont(chooseFont());
+            }
+        });
+        motor.addPropertyChangeListener("doneMoving", new PropertyChangeListener() {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                doneMoving = (Boolean) evt.getNewValue();
                 setColor(chooseBackgroundColor());
                 setFont(chooseFont());
             }
@@ -422,6 +436,25 @@ public class MinimalMotorViewModel extends ModelObject {
         this.moving = moving;
     }
 
+    /**
+     * Gets whether the motor is done moving.
+     *
+     * @return whether the motor is done moving or not
+     */
+    public boolean getDoneMoving() {
+        return doneMoving;
+    }
+    
+    /**
+     * Sets whether or not the motor is done moving.
+     *
+     * @param doneMoving
+     *            whether the motor is moving or not
+     */
+    public void setDoneMoving(boolean doneMoving) {
+        this.doneMoving = doneMoving;
+    }
+    
     /**
      * @return the motor used by this view model
      */

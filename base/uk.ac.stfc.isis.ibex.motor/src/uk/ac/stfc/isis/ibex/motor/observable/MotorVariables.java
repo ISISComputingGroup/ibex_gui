@@ -109,6 +109,9 @@ public class MotorVariables extends Closer {
 
     /** The moving observable. */
 	public final ForwardingObservable<Boolean> moving;
+	
+	/** The "done moving" observable. */
+	public final ForwardingObservable<Boolean> doneMoving;
 
     /** The "at home" observable. */
 	public final ForwardingObservable<Boolean> atHome;
@@ -162,6 +165,8 @@ public class MotorVariables extends Closer {
 		
         moving = InstrumentUtils.convert(
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("MOVN")), TO_BOOLEAN);
+        doneMoving = InstrumentUtils.convert(
+                obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("DMOV")), TO_BOOLEAN);
         atHome = InstrumentUtils.convert(
                 obsFactory.getSwitchableObservable(new ShortChannel(), fullAddress.endWithField("ATHM")), TO_BOOLEAN);
         atUpperLimitSwitch = InstrumentUtils.convert(

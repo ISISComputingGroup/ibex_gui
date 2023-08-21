@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.configserver;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.logging.log4j.Logger;
@@ -33,6 +34,7 @@ import uk.ac.stfc.isis.ibex.configserver.internal.ConfigEditing;
 import uk.ac.stfc.isis.ibex.configserver.internal.LoggingConfigurationObserver;
 import uk.ac.stfc.isis.ibex.configserver.json.JsonConverters;
 import uk.ac.stfc.isis.ibex.configserver.recent.RecentConfigList;
+import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.epics.observing.LoggingObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.epics.pv.Closer;
@@ -54,6 +56,7 @@ public class Configurations extends Closer implements BundleActivator {
 	private final Displaying displaying;
 	private final Editing editing;
 	private final IocControl iocControl;
+	private final UpdatedObservableAdapter<HashMap<String, ArrayList<ArrayList<String>>>> moxaMappings;
 	private final RecentConfigList recent;
 
 	private final ConfigServerVariables variables;
@@ -76,6 +79,7 @@ public class Configurations extends Closer implements BundleActivator {
 		editing = registerForClose(new ConfigEditing(server));
 
 		iocControl = new IocControl(server);
+		moxaMappings = new UpdatedObservableAdapter<>(server.moxaMappings());
 		addLogging();
 	}
 	
@@ -127,7 +131,13 @@ public class Configurations extends Closer implements BundleActivator {
 	public IocControl iocControl() {
 		return iocControl;
 	}
-
+	
+	/**
+	 * @return Moxa mapping information
+	 */
+	public UpdatedObservableAdapter<HashMap<String, ArrayList<ArrayList<String>>>> moxaMappings() { 
+		return moxaMappings;
+	}
 	/**
      * Returns the names of recently used configurations without that of the current configuration.
      * 
@@ -197,5 +207,6 @@ public class Configurations extends Closer implements BundleActivator {
 	private void addLogging() {
 		loggingSubscriptions.add(variables.currentConfig.subscribe(new LoggingConfigurationObserver(LOG, "Current config")));
 		loggingSubscriptions.add(variables.serverStatus.subscribe(new LoggingObserver<ServerStatus>(LOG, "Server status")));
-	}
+		loggingSubscriptions.add(variables.moxaMappings.subscribe(new LoggingObserver<HashMap<String, ArrayList<ArrayList<String>>>>(LOG, "Moxa status")));
+		}
 }

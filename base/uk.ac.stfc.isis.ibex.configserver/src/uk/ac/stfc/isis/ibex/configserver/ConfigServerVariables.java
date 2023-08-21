@@ -19,7 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.configserver;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Locale;
 
 import org.apache.logging.log4j.Logger;
@@ -118,6 +120,8 @@ public class ConfigServerVariables extends Closer {
 	public final ForwardingObservable<Collection<String>> protectedIocs;
 	/** Provides the description for the spangle banner. */
     public final ForwardingObservable<CustomBannerData> bannerDescription;
+    /** Provides the details for the Moxa port mappings. */
+    public final ForwardingObservable<HashMap<String, ArrayList<ArrayList<String>>>> moxaMappings;
 
     /**
      * Default Constructor.
@@ -195,13 +199,14 @@ public class ConfigServerVariables extends Closer {
         restartIoc = InstrumentUtils.convert(writeCompressed(blockServerAddresses.restartIocs()),
                 converters.namesToString());
 
-        iocStates = InstrumentUtils.convert(readCompressed(blockServerAddresses.iocs()), converters.toIocStates());
+		iocStates = InstrumentUtils.convert(readCompressed(blockServerAddresses.iocs()), converters.toIocStates());
         protectedIocs =
                 InstrumentUtils.convert(readCompressed(blockServerAddresses.iocsNotToStop()), converters.toNames());
         bannerDescription = 
                 InstrumentUtils.convert(readCompressed(blockServerAddresses.bannerDescription()),
                         converters.toBannerDescription());
-	}
+        moxaMappings = InstrumentUtils.convert(readCompressed(blockServerAddresses.moxaMappings()), converters.toMoxaMappings());
+        }
 
     /**
      * Provides a monitor on the specified configuration.
