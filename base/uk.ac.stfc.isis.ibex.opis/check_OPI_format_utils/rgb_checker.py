@@ -41,7 +41,7 @@ def check_rgb_definitions(root):
 
     def check_definition(color):
         attributes = color.attrib
-        if "name" not in attributes:
+        if not all(attribute in attributes for attribute in ("name", "red", "green", "blue")): # If not all attributes exist, ignore color
             return False
         name = attributes["name"]
         actual_colors = (attributes["red"], attributes["green"], attributes["blue"])
