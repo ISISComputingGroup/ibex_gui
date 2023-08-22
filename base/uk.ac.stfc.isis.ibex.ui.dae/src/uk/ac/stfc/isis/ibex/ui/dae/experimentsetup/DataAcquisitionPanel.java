@@ -48,7 +48,7 @@ public class DataAcquisitionPanel extends Composite {
     private DaeExperimentSetupText from;
     private DaeExperimentSetupText to;
     private DaeExperimentSetupText autosaveFrequency;
-    private DaeExperimentSetupSpinner monitorSpectrum;
+    private DaeExperimentSetupText monitorSpectrum;
     private DaeExperimentSetupCombo daeTimingSource;
     private DaeExperimentSetupCombo autosaveUnits;
     private DaeExperimentSetupButton btnVeto0;
@@ -213,8 +213,7 @@ public class DataAcquisitionPanel extends Composite {
         lblSpectrum.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
         lblSpectrum.setText("Spectrum:");
         
-        monitorSpectrum = new DaeExperimentSetupSpinner(grpMonitor, SWT.BORDER, panelViewModel, "monitorSpectrum", "monitorSpectrum");
-        monitorSpectrum.setMaximum(MAXIMUM_MONITOR_SPECTRUM);
+        monitorSpectrum = new DaeExperimentSetupText(grpMonitor, SWT.BORDER, panelViewModel, "monitorSpectrum", "DataAcquisitonPanel","monitorSpectrum");
 
         Label lblNewLabel_1 = new Label(grpMonitor, SWT.NONE);
         GridData gd_lblNewLabel_1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -418,7 +417,7 @@ public class DataAcquisitionPanel extends Composite {
         bindingContext.bindValue(WidgetProperties.singleSelectionIndex().observe(spectraTableSelector), 
         		BeanProperties.value("newSpectraTable").observe(viewModel));
 
-        bindingContext.bindValue(WidgetProperties.spinnerSelection().observe(monitorSpectrum),
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(monitorSpectrum),
                 BeanProperties.value("monitorSpectrum").observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(from),
                 BeanProperties.value("from").observe(viewModel));
@@ -501,7 +500,7 @@ public class DataAcquisitionPanel extends Composite {
         if (!spinners.isEmpty()) {
             spinners.clear();
         }
-        spinners.add(monitorSpectrum);
+        textInputs.add(monitorSpectrum);
         
         if (!radioBtns.isEmpty()) {
             radioBtns.clear();
