@@ -1215,6 +1215,18 @@
       </value>
     </entry>
     <entry>
+      <key>INTER Beckhoff Diagnostics</key>
+      <value>
+        <type>DEBUG</type>
+        <path>inter_beckhoff_params.opi</path>
+        <description>The OPI showing diagnostic fields from the INTER tank beckhoff.</description>
+        <macros/>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>SCIMAG3D</key>
       <value>
         <type>SCIMAG3D</type>
