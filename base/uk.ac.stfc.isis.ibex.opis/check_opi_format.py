@@ -7,7 +7,7 @@ from lxml import etree
 from lxml.etree import LxmlError
 
 from check_OPI_format_utils.colour_checker import check_colour, check_plot_area_backgrounds
-from check_OPI_format_utils.rgb_checker import check_rgb_definitions
+from check_OPI_format_utils.definition_checker import DefinitionChecker #Change file name now updated content to be more general.
 from check_OPI_format_utils.text import check_label_punctuation, check_label_case_inside_containers, \
     check_label_case_outside_containers
 from check_OPI_format_utils.container import get_items_not_in_grouping_container
@@ -98,7 +98,8 @@ class CheckStrictOpiFormat(unittest.TestCase):
         self._assert_colour_correct("off_color", "LED", ["ISIS_Green_LED_Off", "ISIS_Red_LED_Off"])
 
     def test_rgb_definitions_are_correct(self):
-        errors = check_rgb_definitions(self.xml_root)
+        rgb_checker = RGBErrorCheck(self.xml_root)
+        errors = rgb_checker.check_and_output_errors()
         if len(errors):
             self.fail("\n".join(["On line {}, colour '{}', RGB values are not correct.".format(*error) for error in errors]))
 

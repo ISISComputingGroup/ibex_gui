@@ -1,7 +1,7 @@
 ﻿import argparse
 from lxml import etree
 from lxml.etree import LxmlError
-from check_OPI_format_utils.rgb_checker import check_rgb_definitions, populate_rgb_definitions
+from check_OPI_format_utils.definition_checker import Checker # Checker now imported since OOP change, must implement into update script.
 from check_opi_format import file_iterator
 
 
