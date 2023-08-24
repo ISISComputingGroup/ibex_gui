@@ -2,6 +2,9 @@
 import os
 
 class RGBDefinitionChecker():
+    """
+    Checks that a color tag matches the definition given in the colour definitions file.
+    """
     def __init__(self, element, definition) -> None:
         self.attributes = element.attrib
         self.definition = definition
@@ -12,7 +15,10 @@ class RGBDefinitionChecker():
         actual_colors = (self.attributes["red"], self.attributes["green"], self.attributes["blue"])
         return actual_colors == self.definition
 
-class FontDefinitionChecker(): 
+class FontDefinitionChecker():
+    """
+    Checks that a font tag matches the definition given in the font definitions file.
+    """
     def __init__(self, element, definition) -> None:
         self.attributes = list(element)[0].attrib
         self.definition = definition
@@ -25,7 +31,7 @@ class FontDefinitionChecker():
 
 class Checker():
     """
-    This is the general checker for incorrect definitions in tags.
+    This is the general checker for definitions that applies to RGB and fonts.
     """
     def __init__(self, root, definitions) -> None:
         self.root = root 
