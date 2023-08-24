@@ -213,19 +213,16 @@ public class ScriptGeneratorView {
 						"Could not update script definitions, because the remote git repository could not be reached. "
 						+ "You can still continue to use the existing script definitions, but they may be out of date.");
 			}
+			String message = "";
 			if (scriptGeneratorViewModel.updatesAvailable()) {
 				// Display prompt if new commits are available
-				int performMerge = MessageDialog.open(MessageDialog.CONFIRM,
-						DISPLAY.getActiveShell(),
-						"Error pulling repository",
-						scriptGeneratorViewModel.getPromptMessage(),
-						0,
-						"Keep local changes",
-						"Discard local changes and update");	
-				
-				if (performMerge == 1) {
-					scriptGeneratorViewModel.mergeOrigin();
-				}
+				message += scriptGeneratorViewModel.getUpdatesPromptMessage();
+			}
+			message += scriptGeneratorViewModel.getDirtyPromptMessage();
+			if (message.length() != 0) {
+				MessageDialog.openInformation(DISPLAY.getActiveShell(),
+						"Error pulling repository", 
+						message);
 			}
 			Optional<String> gitErrors = scriptGeneratorViewModel.getGitLoadErrors();
 			if (gitErrors.isPresent()) {

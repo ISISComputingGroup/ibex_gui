@@ -1217,18 +1217,28 @@ public class ScriptGeneratorViewModel extends ModelObject {
     public void reloadScriptDefinitions() {
     	scriptGeneratorModel.reloadScriptDefinitions();
     }
-    
+
+	/**
+	 * Creates prompt message for git updates available.
+	 * @return The prompt message
+	 */
+	public String getUpdatesPromptMessage() {
+		String message = "Updates to the script definitions are available. Please notify your local contact to update the script definitions at their earliest convenience.";
+		
+		return message;
+	}
     /**
-     * Creates a prompt message string. 
+     * Creates a dirty local repo prompt message string. 
      * @return The prompt message
      */
-	public String getPromptMessage() {
-        String message = "Updates to the script definitions are available. Updating your definitions may erase current scripts.";
+	public String getDirtyPromptMessage() {
+		String message = "";
 		if (scriptGeneratorModel.isDirty()) {
-			message += "\n WARNING: There are uncommitted changes to the script definitions. These will be lost if you update.";
+			message = "\n \nWARNING: There are uncommitted changes to the script definitions. These will be lost if you update.";
 		}
 		return message;
 	}
+	
 
 	/**
 	 * Gets whether the remote git repo URL is accessible.
