@@ -25,7 +25,7 @@ def main():
             try:
                 spectrum = PVUtil.getLong(spectrumPv)
             except:
-                spectrum = 1
+                spectrum = counter + 1
                 spectrumPv.setValue(spectrum)
            
     
