@@ -1,15 +1,17 @@
 ﻿import re
 import os
 
-COLOR_REGEX_PATTERN = re.compile("^[a-zA-Z0-9_ ]+ = [0-9, ]+$")
+# Regular expressions for definition lines in files.
+COLOR_REGEX_PATTERN = re.compile("^[a-zA-Z0-9_ ]+ = [0-9, ]+$") 
 FONT_REGEX_PATTERN = re.compile("^[a-zA-Z0-9_ ()]+ = [a-zA-Z0-9- ]+$")
 
+# File paths for definition files.
 COLOR_FILE_PATH = os.path.join("/Instrument/Apps/EPICS/CSS/master/Share", "isis_colours.def")
 FONT_FILE_PATH = os.path.join("/Instrument/Apps/EPICS/CSS/master/Share", "isis_fonts.def")
 
 class RGBDefinitionChecker():
     """
-    Checks that a color tag matches the definition given in the colour definitions file.
+    Checks that a color element matches the definition given in the colour definitions file.
     """
     def __init__(self, element, definition) -> None:
         self.attributes = element.attrib
@@ -23,7 +25,7 @@ class RGBDefinitionChecker():
 
 class FontDefinitionChecker():
     """
-    Checks that a font tag matches the definition given in the font definitions file.
+    Checks that a font element matches the definition given in the font definitions file.
     """
     def __init__(self, element, definition) -> None:
         self.attributes = list(element)[0].attrib
@@ -37,7 +39,7 @@ class FontDefinitionChecker():
 
 class Checker():
     """
-    This is the general checker for definitions that applies to RGB and fonts.
+    Checker class for RGB and font definitions, that can populate a list of incorrect elements and output the errors. 
     """
     def __init__(self, root, definitions) -> None:
         self.root = root 
@@ -78,7 +80,7 @@ class Checker():
 
 class DefinitionPopulator():
     """
-    This is where the definitions dictionary to be checked against can be populated.
+    Populates a dictionary with {<str>definition_name: <str>definition} for each line from the definition file.
     """
     def __init__(self, regex_pattern, file_path) -> None:
         self.regex_pattern = regex_pattern
@@ -98,7 +100,7 @@ class DefinitionPopulator():
 
 class DefinitionChecker():
     """
-    Class containing full RGB definition checking and error output for an OPI file.
+    Combines population of the definition dictionary and checking against the XML to output errors for RGB or fonts.
     """
     def __init__(self, root, tag_type) -> None:
         self.root = root

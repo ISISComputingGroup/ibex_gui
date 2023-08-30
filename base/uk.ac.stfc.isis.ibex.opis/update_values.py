@@ -8,6 +8,9 @@ from check_opi_format import file_iterator
 DEFAULT_ROOT_DIR = r"./resources/"
 
 class XmlParser():
+    """
+    Parses an XML file, producing a tree. Also provides functionality to write the current tree to a given file.
+    """
     def __init__(self, file_name) -> None:
         self.file_name = file_name
         self.tree = None
@@ -22,9 +25,10 @@ class XmlParser():
     def write_to_file(self):
         self.tree.write(self.file_name)
 
+
 class UpdateColor():
     """
-    Class that updates an incorrect colour definition
+    Updates incorrect RGB values with the correct ones supplied by the definition file.
     """
     def __init__(self, element, definitions) -> None:
         self.element = element
@@ -39,7 +43,7 @@ class UpdateColor():
 
 class UpdateFont():
     """
-    Class that updates an incorrect font definition
+    Updates incorrect font value with the correct one supplied by the definition file.
     """
     def __init__(self, element, definitions) -> None:
         self.element = element
@@ -53,16 +57,17 @@ class UpdateFont():
         opi_font_tag.set("style", correct_attributes[1])
         opi_font_tag.set("height", correct_attributes[2])
 
+
 class Updater():
     """
-    Class that updates the attributes of incorrect color or font tags.
+    Updates the attributes of incorrect color or font tags using the definition file.
     """
     def __init__(self, file_name, tag_type) -> None:
         self.tag_type = tag_type
         self.regex_pattern = COLOR_REGEX_PATTERN if tag_type == "color" else FONT_REGEX_PATTERN
+        self.definition_file_path = COLOR_FILE_PATH if self.tag_type == "color" else FONT_FILE_PATH
         self.xmlParser = XmlParser(file_name)
         self.root = self.xmlParser.get_root()
-        self.definition_file_path = COLOR_FILE_PATH if self.tag_type == "color" else FONT_FILE_PATH
         self.definition_populator = DefinitionPopulator(self.regex_pattern, self.definition_file_path)
         self.definition_populator.populate_definitions()
         self.definitions = self.definition_populator.definitions
@@ -77,6 +82,9 @@ class Updater():
         self.xmlParser.write_to_file()
 
 def main():
+    """
+    Collects user input from command line to determine which opis to update and whether to update colors or fonts. 
+    """
     confirmation = input("Update incorrect definitions in .opi file(s)? [y/n]")
     if confirmation not in ("y", "n"):
         print("Invalid input. No files updated")
