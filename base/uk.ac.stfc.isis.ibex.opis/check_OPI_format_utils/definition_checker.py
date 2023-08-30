@@ -44,25 +44,26 @@ class Checker():
         self.definitions = definitions
         self.incorrect_elements = [] 
 
-    def check_definitions(self, tag_type): 
-        for tag in self.root.iter(tag_type):
-            if tag_type == "color" and "name" in tag.attrib: 
-                colour_name = tag.attrib["name"]
+    def check_definitions(self, tag_type):
+        elements = self.root.xpath(f"//{tag_type}")
+        for element in elements:
+            if tag_type == "color" and "name" in element.attrib: 
+                colour_name = element.attrib["name"]
                 if colour_name not in self.definitions:
                     continue
                 definition = self.definitions[colour_name]
-                tag_checker = RGBDefinitionChecker(tag, definition)
+                tag_checker = RGBDefinitionChecker(element, definition)
                 if not tag_checker.check_match():
-                    self.incorrect_elements.append(tag)
+                    self.incorrect_elements.append(element)
             
             if tag_type == "font":
-                font_name = tag.findtext("opifont.name")
+                font_name = element.findtext("opifont.name")
                 if font_name not in self.definitions:
                     continue
                 definition = self.definitions[font_name]
-                tag_checker = FontDefinitionChecker(tag, definition)
+                tag_checker = FontDefinitionChecker(element, definition)
                 if not tag_checker.check_match():
-                    self.incorrect_elements.append(tag)
+                    self.incorrect_elements.append(element)
     
     def output_errors(self, tag_type):
         errors = []

@@ -21,7 +21,6 @@ class XmlParser():
 
     def write_to_file(self):
         self.tree.write(self.file_name)
-        
 
 class UpdateColor():
     """
