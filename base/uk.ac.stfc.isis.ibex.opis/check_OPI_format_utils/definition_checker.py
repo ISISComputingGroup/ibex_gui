@@ -1,6 +1,12 @@
 ﻿import re
 import os
 
+COLOR_REGEX_PATTERN = re.compile("^[a-zA-Z0-9_ ]+ = [0-9, ]+$")
+FONT_REGEX_PATTERN = re.compile("^[a-zA-Z0-9_ ()]+ = [a-zA-Z0-9- ]+$")
+
+COLOR_FILE_PATH = os.path.join("/Instrument/Apps/EPICS/CSS/master/Share", "isis_colours.def")
+FONT_FILE_PATH = os.path.join("/Instrument/Apps/EPICS/CSS/master/Share", "isis_fonts.def")
+
 class RGBDefinitionChecker():
     """
     Checks that a color tag matches the definition given in the colour definitions file.
@@ -96,8 +102,8 @@ class DefinitionChecker():
     def __init__(self, root, tag_type) -> None:
         self.root = root
         self.tag_type = tag_type
-        self.regex_pattern = re.compile("^[a-zA-Z0-9_ ]+ = [0-9, ]+$") if tag_type == "color" else re.compile("^[a-zA-Z0-9_ ()]+ = [a-zA-Z0-9- ]+$")
-        self.definition_file_path = os.path.join("/Instrument/Apps/EPICS/CSS/master/Share", "isis_colours.def") if tag_type == "color" else os.path.join("/Instrument/Apps/EPICS/CSS/master/Share", "isis_fonts.def")
+        self.regex_pattern = COLOR_REGEX_PATTERN if tag_type == "color" else FONT_REGEX_PATTERN
+        self.definition_file_path = COLOR_FILE_PATH if tag_type == "color" else FONT_FILE_PATH
 
     def check_and_output_errors(self):
         definition_populator = DefinitionPopulator(self.regex_pattern, self.definition_file_path)
