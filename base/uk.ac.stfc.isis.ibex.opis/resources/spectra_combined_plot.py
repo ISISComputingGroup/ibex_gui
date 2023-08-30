@@ -9,7 +9,7 @@ xAxisUnitsPv = pvs[13]
 yAxisUnitsPv = pvs[14]
 
 def main():
-    ConsoleUtil.writeError("***************************************")
+    ConsoleUtil.writeError("****NEW****NEW****NEW****NEW****NEW****NEW****NEW****NEW****")
     
     widget.clearGraph();
     
@@ -65,19 +65,28 @@ def main():
        
         # handle checkbox
         try:
-            PVUtil.getLong(checkboxPV)
+            PVUtil.getDouble(checkboxPV)
+            ConsoleUtil.writeError("Getting value")
         except:
             value = 1
+            ConsoleUtil.writeError("Value is null, so setting to 1")
             checkboxPV.setValue(value)
-            
-                       
-        ConsoleUtil.writeError("checkbox_" + str(counter) + ": " +  str(PVUtil.getDouble(checkboxPV)))
         
-        # show or hide trace
-        if PVUtil.getLong(checkboxPV) == 1.0:
+        checkbox_val = PVUtil.getDouble(checkboxPV)
+                       
+        ConsoleUtil.writeError("checkbox_" + str(counter) + ": " +  str( checkbox_val))
+         
+        # checkbox_fake_vals = [False, True, False, False]
+        # comment out to get real value
+        # checkbox_val = 1.0 if checkbox_fake_vals[counter] else 0.0
+          
+        if  checkbox_val == 1.0:
             widget.setPropertyValue("trace_" + str(counter) + "_visible", "true")
         else:
             widget.setPropertyValue("trace_" + str(counter) + "_visible", "false")
+            
+            
+            
         
         # debug
         # ConsoleUtil.writeError("trace_" + str(counter) + "_x_pv" + ", " + "$(P)DAE:SPEC:" + str(period) + ":" + str(spectrum) + ":X")

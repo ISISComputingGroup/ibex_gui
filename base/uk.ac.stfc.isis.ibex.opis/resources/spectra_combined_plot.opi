@@ -114,16 +114,16 @@
       <path pathString="spectra_combined_plot.py" checkConnect="true" sfe="false" seoe="false">
         <pv trig="true">$(SPECTRUM_PV1)</pv>
         <pv trig="true">$(PERIOD_PV1)</pv>
-        <pv trig="true">$(CHECKBOX_PV1))</pv>
+        <pv trig="true">loc://CHECKBOX_PV1</pv>
         <pv trig="true">$(SPECTRUM_PV2)</pv>
         <pv trig="true">$(PERIOD_PV2)</pv>
-        <pv trig="true">$(CHECKBOX_PV2))</pv>
+        <pv trig="true">loc://CHECKBOX_PV2</pv>
         <pv trig="true">$(SPECTRUM_PV3)</pv>
         <pv trig="true">$(PERIOD_PV3)</pv>
-        <pv trig="true">$(CHECKBOX_PV3))</pv>
+        <pv trig="true">loc://CHECKBOX_PV3</pv>
         <pv trig="true">$(SPECTRUM_PV4)</pv>
         <pv trig="true">$(PERIOD_PV4)</pv>
-        <pv trig="true">$(CHECKBOX_PV4))</pv>
+        <pv trig="true">loc://CHECKBOX_PV4</pv>
         <pv trig="true">$(MODE_PV)</pv>
         <pv trig="true">$(P)DAE:SPEC:1:1:X.EGU</pv>
         <pv trig="true">$(P)DAE:SPEC:1:1:Y.EGU</pv>

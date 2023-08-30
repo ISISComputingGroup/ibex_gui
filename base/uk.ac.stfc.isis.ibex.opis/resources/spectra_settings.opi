@@ -352,7 +352,7 @@ $(pv_value)</tooltip>
     <height>33</height>
     <label></label>
     <name>Check Box</name>
-    <pv_name>$(CHECKBOX_PV$(NUMBER))</pv_name>
+    <pv_name>loc://CHECKBOX_PV$(NUMBER)</pv_name>
     <pv_value />
     <rules />
     <scale_options>
