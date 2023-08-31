@@ -9,10 +9,38 @@ xAxisUnitsPv = pvs[13]
 yAxisUnitsPv = pvs[14]
 
 def main():
-    ConsoleUtil.writeError("****NEW****NEW****NEW****NEW****NEW****NEW****NEW****NEW****")
+    ConsoleUtil.writeError("*****RELOADED*****")
     
     widget.clearGraph();
     
+    # set axis titles
+    # axis title logic requires modePv != null
+    try:
+        PVUtil.getString(modePv).lower()
+    except:
+        modePv.setValue("counts")
+        
+    if xAxisUnitsPv.isConnected():
+        x_axis_title = "Time of flight (" + PVUtil.getString(xAxisUnitsPv) + ")"
+    else:
+        x_axis_title = "Time of flight (us)"
+    
+    if modePv.isConnected() and PVUtil.getString(modePv).lower() == "counts":
+        mode = "YC"
+        y_axis_title = "counts"
+    else:
+        mode = "Y"
+        if yAxisUnitsPv.isConnected():
+            # Remove cnt from start of string and add counts to make it more readable 
+            y_axis_title = "counts/" + PVUtil.getString(yAxisUnitsPv).split("/")[1]
+        else:
+            y_axis_title = "counts/us"
+            
+            
+    widget.setPropertyValue("axis_0_axis_title", x_axis_title)
+    widget.setPropertyValue("axis_1_axis_title", y_axis_title)
+            
+    # setting the 4 traces
     counter = 0
     for trace in traces:
     
@@ -20,15 +48,14 @@ def main():
         periodPv = trace[1]
         checkboxPV = trace[2]
         
-        # handle null values at initiation of opi
+        # handle null values 
         if spectrumPv.isConnected():
             try:
                 spectrum = PVUtil.getLong(spectrumPv)
             except:
                 spectrum = counter + 1
                 spectrumPv.setValue(spectrum)
-           
-    
+
         if periodPv.isConnected():
             try:
                 period = PVUtil.getLong(periodPv)
@@ -37,66 +64,35 @@ def main():
                 periodPv.setValue(period)
             
         try:
-            PVUtil.getString(modePv).lower()
-        except:
-            modePv.setValue("counts")
-        
-        # set axis title
-        
-        if modePv.isConnected() and PVUtil.getString(modePv).lower() == "counts":
-            mode = "YC"
-            y_axis_title = "counts"
-        else:
-            mode = "Y"
-            if yAxisUnitsPv.isConnected():
-                # Remove cnt from start of string and add counts to make it more readable 
-                y_axis_title = "counts/" + PVUtil.getString(yAxisUnitsPv).split("/")[1]
-            else:
-                y_axis_title = "counts/us"
-        
-        if xAxisUnitsPv.isConnected():
-            x_axis_title = "Time of flight (" + PVUtil.getString(xAxisUnitsPv) + ")"
-        else:
-            x_axis_title = "Time of flight (us)"
-       
-        # set trace to correct spec and period
-        widget.setPropertyValue("trace_" + str(counter) + "_x_pv","$(P)DAE:SPEC:" + str(period) + ":" + str(spectrum) + ":X")
-        widget.setPropertyValue("trace_" + str(counter) + "_y_pv","$(P)DAE:SPEC:" + str(period) + ":" + str(spectrum) + ":" + mode)
-       
-        # handle checkbox
-        try:
             PVUtil.getDouble(checkboxPV)
-            ConsoleUtil.writeError("Getting value")
         except:
             value = 1
-            ConsoleUtil.writeError("Value is null, so setting to 1")
             checkboxPV.setValue(value)
         
+        # set trace to correct spectrum and period
+        # widget.setPropertyValue("trace_" + str(counter) + "_x_pv","$(P)DAE:SPEC:" + "1" + ":" + "0" + ":X")
+        # widget.setPropertyValue("trace_" + str(counter) + "_y_pv","$(P)DAE:SPEC:" + "1" + ":" + "0" + ":" + mode)
+        
+        # widget.setPropertyValue("trace_" + str(counter) + "_update_mode", "Trigger")
+        
+        
+        
+        widget.setPropertyValue("trace_" + str(counter) + "_x_pv","$(P)DAE:SPEC:" + str(period) + ":" + str(spectrum) + ":X")
+        widget.setPropertyValue("trace_" + str(counter) + "_y_pv","$(P)DAE:SPEC:" + str(period) + ":" + str(spectrum) + ":" + mode)
+        
+        # widget.setPropertyValue("trace_" + str(counter) + "_update_mode", "X or Y")
+        
+        # set visibility of trace based on checkbox
         checkbox_val = PVUtil.getDouble(checkboxPV)
-                       
-        ConsoleUtil.writeError("checkbox_" + str(counter) + ": " +  str( checkbox_val))
-         
-        # checkbox_fake_vals = [False, True, False, False]
-        # comment out to get real value
-        # checkbox_val = 1.0 if checkbox_fake_vals[counter] else 0.0
-          
         if  checkbox_val == 1.0:
             widget.setPropertyValue("trace_" + str(counter) + "_visible", "true")
         else:
             widget.setPropertyValue("trace_" + str(counter) + "_visible", "false")
             
-            
-            
-        
         # debug
-        # ConsoleUtil.writeError("trace_" + str(counter) + "_x_pv" + ", " + "$(P)DAE:SPEC:" + str(period) + ":" + str(spectrum) + ":X")
-        # ConsoleUtil.writeError("trace_" + str(counter) + "_y_pv" + ", " + "$(P)DAE:SPEC:" + str(period) + ":" + str(spectrum) + ":" + mode)
-        
+        ConsoleUtil.writeError("Trace " + str(counter) + " | DAE:SPEC:" + str(period) + ":" + str(spectrum) + " | CHECKBOX: " + str(checkbox_val))
         
         counter += 1
-        
-    widget.setPropertyValue("axis_0_axis_title", x_axis_title)
-    widget.setPropertyValue("axis_1_axis_title", y_axis_title)
         
 
 main()

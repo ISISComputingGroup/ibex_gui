@@ -18,6 +18,19 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
+    <CHECKBOX_PV1>loc://_LOCAL:SPEC:CHECKBOX1</CHECKBOX_PV1>
+    <CHECKBOX_PV2>loc://_LOCAL:SPEC:CHECKBOX2</CHECKBOX_PV2>
+    <CHECKBOX_PV3>loc://_LOCAL:SPEC:CHECKBOX3</CHECKBOX_PV3>
+    <CHECKBOX_PV4>loc://_LOCAL:SPEC:CHECKBOX4</CHECKBOX_PV4>
+    <MODE_PV>loc://_LOCAL:SPEC:MODE1</MODE_PV>
+    <PERIOD_PV1>loc://_LOCAL:SPEC:PERIOD1</PERIOD_PV1>
+    <PERIOD_PV2>loc://_LOCAL:SPEC:PERIOD2</PERIOD_PV2>
+    <PERIOD_PV3>loc://_LOCAL:SPEC:PERIOD3</PERIOD_PV3>
+    <PERIOD_PV4>loc://_LOCAL:SPEC:PERIOD4</PERIOD_PV4>
+    <SPECTRUM_PV1>loc://_LOCAL:SPEC:SPEC1</SPECTRUM_PV1>
+    <SPECTRUM_PV2>loc://_LOCAL:SPEC:SPEC2</SPECTRUM_PV2>
+    <SPECTRUM_PV3>loc://_LOCAL:SPEC:SPEC3</SPECTRUM_PV3>
+    <SPECTRUM_PV4>loc://_LOCAL:SPEC:SPEC4</SPECTRUM_PV4>
   </macros>
   <name>Combined Spectra</name>
   <rules />
@@ -111,7 +124,7 @@
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <scripts>
-      <path pathString="spectra_combined_plot.py" checkConnect="true" sfe="false" seoe="false">
+      <path pathString="spectra_combined_plot.py" checkConnect="false" sfe="false" seoe="false">
         <pv trig="true">$(SPECTRUM_PV1)</pv>
         <pv trig="true">$(PERIOD_PV1)</pv>
         <pv trig="true">loc://CHECKBOX_PV1</pv>
@@ -139,7 +152,7 @@
     <tooltip>$(trace_0_y_pv)
 $(trace_0_y_pv_value)</tooltip>
     <trace_0_anti_alias>false</trace_0_anti_alias>
-    <trace_0_buffer_size>100</trace_0_buffer_size>
+    <trace_0_buffer_size>100000</trace_0_buffer_size>
     <trace_0_concatenate_data>false</trace_0_concatenate_data>
     <trace_0_line_width>1</trace_0_line_width>
     <trace_0_name>trace_1</trace_0_name>
@@ -151,7 +164,7 @@ $(trace_0_y_pv_value)</tooltip>
     </trace_0_trace_color>
     <trace_0_trace_type>0</trace_0_trace_type>
     <trace_0_update_delay>100</trace_0_update_delay>
-    <trace_0_update_mode>0</trace_0_update_mode>
+    <trace_0_update_mode>4</trace_0_update_mode>
     <trace_0_visible>false</trace_0_visible>
     <trace_0_x_axis_index>0</trace_0_x_axis_index>
     <trace_0_x_pv></trace_0_x_pv>
@@ -160,7 +173,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_0_y_pv></trace_0_y_pv>
     <trace_0_y_pv_value />
     <trace_1_anti_alias>false</trace_1_anti_alias>
-    <trace_1_buffer_size>100</trace_1_buffer_size>
+    <trace_1_buffer_size>100000</trace_1_buffer_size>
     <trace_1_concatenate_data>false</trace_1_concatenate_data>
     <trace_1_line_width>1</trace_1_line_width>
     <trace_1_name>trace_2</trace_1_name>
@@ -172,7 +185,7 @@ $(trace_0_y_pv_value)</tooltip>
     </trace_1_trace_color>
     <trace_1_trace_type>0</trace_1_trace_type>
     <trace_1_update_delay>100</trace_1_update_delay>
-    <trace_1_update_mode>0</trace_1_update_mode>
+    <trace_1_update_mode>4</trace_1_update_mode>
     <trace_1_visible>true</trace_1_visible>
     <trace_1_x_axis_index>0</trace_1_x_axis_index>
     <trace_1_x_pv></trace_1_x_pv>
@@ -181,7 +194,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_1_y_pv></trace_1_y_pv>
     <trace_1_y_pv_value />
     <trace_2_anti_alias>false</trace_2_anti_alias>
-    <trace_2_buffer_size>100</trace_2_buffer_size>
+    <trace_2_buffer_size>100000</trace_2_buffer_size>
     <trace_2_concatenate_data>false</trace_2_concatenate_data>
     <trace_2_line_width>1</trace_2_line_width>
     <trace_2_name>trace_3</trace_2_name>
@@ -193,7 +206,7 @@ $(trace_0_y_pv_value)</tooltip>
     </trace_2_trace_color>
     <trace_2_trace_type>0</trace_2_trace_type>
     <trace_2_update_delay>100</trace_2_update_delay>
-    <trace_2_update_mode>0</trace_2_update_mode>
+    <trace_2_update_mode>4</trace_2_update_mode>
     <trace_2_visible>true</trace_2_visible>
     <trace_2_x_axis_index>0</trace_2_x_axis_index>
     <trace_2_x_pv></trace_2_x_pv>
@@ -202,7 +215,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_2_y_pv></trace_2_y_pv>
     <trace_2_y_pv_value />
     <trace_3_anti_alias>false</trace_3_anti_alias>
-    <trace_3_buffer_size>100</trace_3_buffer_size>
+    <trace_3_buffer_size>100000</trace_3_buffer_size>
     <trace_3_concatenate_data>false</trace_3_concatenate_data>
     <trace_3_line_width>1</trace_3_line_width>
     <trace_3_name>trace_4</trace_3_name>
@@ -214,7 +227,7 @@ $(trace_0_y_pv_value)</tooltip>
     </trace_3_trace_color>
     <trace_3_trace_type>0</trace_3_trace_type>
     <trace_3_update_delay>100</trace_3_update_delay>
-    <trace_3_update_mode>0</trace_3_update_mode>
+    <trace_3_update_mode>4</trace_3_update_mode>
     <trace_3_visible>true</trace_3_visible>
     <trace_3_x_axis_index>0</trace_3_x_axis_index>
     <trace_3_x_pv></trace_3_x_pv>
@@ -251,7 +264,7 @@ $(trace_0_y_pv_value)</tooltip>
       <color red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>37</height>
+    <height>35</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
       <NUMBER>1</NUMBER>
@@ -269,10 +282,10 @@ $(trace_0_y_pv_value)</tooltip>
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>403</width>
+    <width>370</width>
     <wuid>-7ed7ade9:18a1c73b1c3:-7d5d</wuid>
     <x>54</x>
-    <y>11</y>
+    <y>6</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -292,7 +305,7 @@ $(trace_0_y_pv_value)</tooltip>
       <color red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>37</height>
+    <height>35</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
       <NUMBER>2</NUMBER>
@@ -310,10 +323,10 @@ $(trace_0_y_pv_value)</tooltip>
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>403</width>
+    <width>370</width>
     <wuid>-7ed7ade9:18a1c73b1c3:-7d1e</wuid>
     <x>54</x>
-    <y>53</y>
+    <y>48</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -333,7 +346,7 @@ $(trace_0_y_pv_value)</tooltip>
       <color red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>37</height>
+    <height>35</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
       <NUMBER>3</NUMBER>
@@ -351,10 +364,10 @@ $(trace_0_y_pv_value)</tooltip>
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>403</width>
+    <width>370</width>
     <wuid>-7ed7ade9:18a1c73b1c3:-7d05</wuid>
     <x>54</x>
-    <y>95</y>
+    <y>90</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -374,7 +387,7 @@ $(trace_0_y_pv_value)</tooltip>
       <color red="192" green="192" blue="192" />
     </foreground_color>
     <group_name></group_name>
-    <height>37</height>
+    <height>35</height>
     <macros>
       <include_parent_macros>true</include_parent_macros>
       <NUMBER>4</NUMBER>
@@ -392,10 +405,10 @@ $(trace_0_y_pv_value)</tooltip>
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Linking Container</widget_type>
-    <width>403</width>
+    <width>370</width>
     <wuid>-7ed7ade9:18a1c73b1c3:-7cec</wuid>
     <x>54</x>
-    <y>137</y>
+    <y>132</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -415,7 +428,7 @@ $(trace_0_y_pv_value)</tooltip>
     <foreground_color>
       <color name="ISIS_Trace_1_NEW" red="0" green="0" blue="255" />
     </foreground_color>
-    <height>36</height>
+    <height>35</height>
     <horizontal_alignment>0</horizontal_alignment>
     <name>Label_1</name>
     <rules />
@@ -436,7 +449,7 @@ $(trace_0_y_pv_value)</tooltip>
     <wrap_words>true</wrap_words>
     <wuid>-7ed7ade9:18a1c73b1c3:-7816</wuid>
     <x>6</x>
-    <y>12</y>
+    <y>7</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -456,7 +469,7 @@ $(trace_0_y_pv_value)</tooltip>
     <foreground_color>
       <color name="ISIS_Trace_2_NEW" red="196" green="0" blue="0" />
     </foreground_color>
-    <height>36</height>
+    <height>35</height>
     <horizontal_alignment>0</horizontal_alignment>
     <name>Label_2</name>
     <rules />
@@ -477,7 +490,7 @@ $(trace_0_y_pv_value)</tooltip>
     <wrap_words>true</wrap_words>
     <wuid>-7ed7ade9:18a1c73b1c3:-780b</wuid>
     <x>6</x>
-    <y>54</y>
+    <y>49</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -497,7 +510,7 @@ $(trace_0_y_pv_value)</tooltip>
     <foreground_color>
       <color name="ISIS_Trace_3_NEW" red="0" green="226" blue="0" />
     </foreground_color>
-    <height>36</height>
+    <height>35</height>
     <horizontal_alignment>0</horizontal_alignment>
     <name>Label_3</name>
     <rules />
@@ -518,7 +531,7 @@ $(trace_0_y_pv_value)</tooltip>
     <wrap_words>true</wrap_words>
     <wuid>-7ed7ade9:18a1c73b1c3:-7806</wuid>
     <x>6</x>
-    <y>96</y>
+    <y>91</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -538,7 +551,7 @@ $(trace_0_y_pv_value)</tooltip>
     <foreground_color>
       <color name="ISIS_Trace_5_NEW" red="0" green="0" blue="0" />
     </foreground_color>
-    <height>36</height>
+    <height>35</height>
     <horizontal_alignment>0</horizontal_alignment>
     <name>Label_4</name>
     <rules />
@@ -559,7 +572,7 @@ $(trace_0_y_pv_value)</tooltip>
     <wrap_words>true</wrap_words>
     <wuid>-7ed7ade9:18a1c73b1c3:-7801</wuid>
     <x>6</x>
-    <y>138</y>
+    <y>133</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -617,7 +630,7 @@ $(pv_value)</tooltip>
     <width>192</width>
     <wuid>-7ed7ade9:18a1c73b1c3:-7702</wuid>
     <x>498</x>
-    <y>12</y>
+    <y>7</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -658,7 +671,7 @@ $(pv_value)</tooltip>
     <wrap_words>true</wrap_words>
     <wuid>-7ed7ade9:18a1c73b1c3:-7a76</wuid>
     <x>504</x>
-    <y>15</y>
+    <y>10</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.combo" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -706,7 +719,7 @@ $(pv_value)</tooltip>
     <width>123</width>
     <wuid>-7ed7ade9:18a1c73b1c3:-7a75</wuid>
     <x>558</x>
-    <y>19</y>
+    <y>14</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -737,7 +750,7 @@ $(pv_value)</tooltip>
     </scale_options>
     <scripts />
     <show_scrollbar>false</show_scrollbar>
-    <text>Note: Traces will overlap and may appear not plotted if set to same spectrum and period.</text>
+    <text>Note: If set to the same spectrum and period traces will overlap and appear not plotted.</text>
     <tooltip></tooltip>
     <transparent>true</transparent>
     <vertical_alignment>1</vertical_alignment>
@@ -747,6 +760,6 @@ $(pv_value)</tooltip>
     <wrap_words>true</wrap_words>
     <wuid>-7ed7ade9:18a1c73b1c3:-75a0</wuid>
     <x>498</x>
-    <y>84</y>
+    <y>91</y>
   </widget>
 </display>
