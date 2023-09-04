@@ -136,20 +136,6 @@ class DefinitionsRepository:
 
         return branch_info
 
-    def merge_with_origin(self):
-        """
-        If the supplied path is a valid script definitions repository, attempt to merge with origin
-        """
-        if self.is_dirty():
-            # Revert all uncommitted changes on this branch before a merge
-            self.repo.git.reset(hard=True)
-
-        try:
-            self.repo.git.merge('origin/{branch}'.format(branch=self.branch))
-        except Exception as err:
-            self._append_error("Error occurred merging with remote: {}".format(err))
-            self.repo.git.merge(abort=True)
-
     def clone_repo_from_bundle(self):
         """
         Unbundles the repository supplied with the release, sets remote URL to upstream

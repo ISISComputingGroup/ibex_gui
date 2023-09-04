@@ -206,31 +206,44 @@ public class ScriptGeneratorView {
 	 */
 	private void doGitActions() {
 		DISPLAY.asyncExec(() -> {
-			if (!scriptGeneratorViewModel.remoteAvailable()) {
-				// Warn user git could not be found
-				MessageDialog.openInformation(DISPLAY.getActiveShell(),
-						"Git error",
-						"Could not update script definitions, because the remote git repository could not be reached. "
-						+ "You can still continue to use the existing script definitions, but they may be out of date.");
-			}
 			String message = "";
-			if (scriptGeneratorViewModel.updatesAvailable()) {
-				// Display prompt if new commits are available
-				message += scriptGeneratorViewModel.getUpdatesPromptMessage();
-			}
-			message += scriptGeneratorViewModel.getDirtyPromptMessage();
-			if (message.length() != 0) {
-				MessageDialog.openInformation(DISPLAY.getActiveShell(),
-						"Error pulling repository", 
-						message);
-			}
+			
+			// Display prompt if remote git is not available
+			message += promptBuilder(scriptGeneratorViewModel.getGitErrorPromptMessage());
+			
+			// Display prompt if new commits are available
+			message += promptBuilder(scriptGeneratorViewModel.getUpdatesPromptMessage());
+			
+			// Display prompt if local repo is dirty
+			message += promptBuilder(scriptGeneratorViewModel.getDirtyPromptMessage());
+			
 			Optional<String> gitErrors = scriptGeneratorViewModel.getGitLoadErrors();
 			if (gitErrors.isPresent()) {
-				MessageDialog.openInformation(DISPLAY.getActiveShell(), "Git errors occurred", gitErrors.get());
+				message += gitErrors.get();
 			}
+			
+			if (message.length() != 0) {
+				MessageDialog.openInformation(DISPLAY.getActiveShell(),
+						"Git errors occurred", 
+						message);
+			}
+			
 		});
 
 		scriptGeneratorViewModel.setRepoPath();
+	}
+	
+	/**
+	 * Helper function to add New lines between each error of the prompt error message
+	 * @param errorMessage 
+	 * @return the message, with another new line at the end of it. 
+	 */
+	public String promptBuilder(String errorMessage) {
+		if (errorMessage.length() > 0) {
+			errorMessage += "\n ";
+		}
+		
+		return errorMessage;
 	}
 
     /**

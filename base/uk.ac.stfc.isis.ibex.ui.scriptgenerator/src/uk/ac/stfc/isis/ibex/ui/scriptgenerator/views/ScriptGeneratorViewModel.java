@@ -1222,9 +1222,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * Creates prompt message for git updates available.
 	 * @return The prompt message
 	 */
-	public String getUpdatesPromptMessage() {
-		String message = "Updates to the script definitions are available. Please notify your local contact to update the script definitions at their earliest convenience.";
-		
+	public String getUpdatesPromptMessage() { 
+		String message = "";
+		if (scriptGeneratorModel.updatesAvailable()) {
+			message = "Updates to the script definitions are available. Please notify your local contact to update the script definitions at their earliest convenience.";
+		}
 		return message;
 	}
     /**
@@ -1239,31 +1241,20 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		return message;
 	}
 	
-
 	/**
-	 * Gets whether the remote git repo URL is accessible.
-	 * @return true if the remote repo URL can be accessed.
+	 * Creates a git connection error prompt message
+	 * @return
 	 */
-	public boolean remoteAvailable() {
-		return scriptGeneratorModel.remoteAvailable();
-	}
-	
-	/**
-	 * Get whether there are updates available for the git repository.
-	 * @return true if there are updates available.
-	 */
-	public boolean updatesAvailable() {
-		return scriptGeneratorModel.updatesAvailable();
+	public String getGitErrorPromptMessage() {
+		String message = "";
+		if (!scriptGeneratorModel.remoteAvailable()) {
+			// Warn user git could not be found
+			message = "Git error: Could not update script definitions, because the remote git repository could not be reached. "
+					+ "You can still continue to use the existing script definitions, but they may be out of date.";
+		}
+		return message;
 	}
 
-
-	/**
-	 * Merges git repository from upstream.
-	 */
-	public void mergeOrigin() {
-		scriptGeneratorModel.mergeOrigin();
-		
-	}
     /**
      * Reload the actions table actions.
      */
