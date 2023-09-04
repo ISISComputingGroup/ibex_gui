@@ -1,5 +1,4 @@
 ﻿import argparse
-import os
 from lxml import etree
 from lxml.etree import LxmlError
 from check_OPI_format_utils.definition_checker import Checker, DefinitionPopulator, COLOR_REGEX_PATTERN, FONT_REGEX_PATTERN, COLOR_FILE_PATH, FONT_FILE_PATH
