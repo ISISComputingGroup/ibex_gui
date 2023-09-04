@@ -1347,8 +1347,8 @@ $(pv_value)</tooltip>
           <name>Text Update_2</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PV_ROOT)VOLT_CURR_REG</pv_name>
-          <pv_value/>
+          <pv_name>$(PV_ROOT)REGULATION</pv_name>
+          <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules/>
           <scale_options>

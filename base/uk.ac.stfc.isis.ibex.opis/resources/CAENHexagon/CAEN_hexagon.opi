@@ -51,6 +51,8 @@
     <horizontal_tabs>true</horizontal_tabs>
     <macros>
       <include_parent_macros>true</include_parent_macros>
+      <Q>$(HEXAGON)</Q>
+      <CHAN>C0</CHAN>
     </macros>
     <minimum_tab_height>10</minimum_tab_height>
     <name>Tabbed Container</name>
@@ -107,8 +109,8 @@
     <tab_3_foreground_color>
       <color red="0" green="0" blue="0"/>
     </tab_3_foreground_color>
-    <tab_3_icon_path/>
-    <tab_3_title>Channel 1</tab_3_title>
+    <tab_3_icon_path></tab_3_icon_path>
+    <tab_3_title>Event Spec 0</tab_3_title>
     <tab_4_background_color>
       <color red="255" green="255" blue="255"/>
     </tab_4_background_color>
@@ -119,7 +121,7 @@
     <tab_4_foreground_color>
       <color red="0" green="0" blue="0"/>
     </tab_4_foreground_color>
-    <tab_4_icon_path/>
+    <tab_4_icon_path></tab_4_icon_path>
     <tab_4_title>Energy Spec 1</tab_4_title>
     <tab_5_background_color>
       <color red="255" green="255" blue="255"/>
@@ -131,10 +133,10 @@
     <tab_5_foreground_color>
       <color red="0" green="0" blue="0"/>
     </tab_5_foreground_color>
-    <tab_5_icon_path/>
+    <tab_5_icon_path></tab_5_icon_path>
     <tab_5_title>HV 1</tab_5_title>
     <tab_count>6</tab_count>
-    <tooltip/>
+    <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Tabbed Container</widget_type>
     <width>847</width>
@@ -391,6 +393,89 @@
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <fc>false</fc>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <foreground_color>
+        <color red="192" green="192" blue="192" />
+      </foreground_color>
+      <height>662</height>
+      <lock_children>false</lock_children>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <name>Event Spec 0</name>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_scrollbar>true</show_scrollbar>
+      <tooltip></tooltip>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <widget_type>Grouping Container</widget_type>
+      <width>845</width>
+      <wuid>282ef270:189e1fea679:-7bda</wuid>
+      <x>1</x>
+      <y>1</y>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>3</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <group_name></group_name>
+        <height>612</height>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <Q>$(HEXAGON)</Q>
+          <CHAN>C0</CHAN>
+        </macros>
+        <name>Linking Container</name>
+        <opi_file>CAEN_hexagon_eventspec.opi</opi_file>
+        <resize_behaviour>0</resize_behaviour>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <tooltip></tooltip>
+        <visible>true</visible>
+        <widget_type>Linking Container</widget_type>
+        <width>725</width>
+        <wuid>282ef270:189e1fea679:-7bd6</wuid>
+        <x>20</x>
+        <y>19</y>
+      </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false"/>
       <background_color>
         <color red="240" green="240" blue="240"/>
@@ -590,7 +675,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip/>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>845</width>
       <wuid>3f75a06:17db542637e:-71f6</wuid>
@@ -637,6 +722,89 @@
         <wuid>3f75a06:17db542637e:-71f3</wuid>
         <x>9</x>
         <y>11</y>
+      </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <fc>false</fc>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <foreground_color>
+        <color red="192" green="192" blue="192" />
+      </foreground_color>
+      <height>662</height>
+      <lock_children>false</lock_children>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <name>Event Spec 1</name>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_scrollbar>true</show_scrollbar>
+      <tooltip></tooltip>
+      <transparent>true</transparent>
+      <visible>true</visible>
+      <widget_type>Grouping Container</widget_type>
+      <width>845</width>
+      <wuid>282ef270:189e1fea679:-783b</wuid>
+      <x>1</x>
+      <y>1</y>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>3</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <group_name></group_name>
+        <height>612</height>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <Q>$(HEXAGON)</Q>
+          <CHAN>C1</CHAN>
+        </macros>
+        <name>Linking Container</name>
+        <opi_file>CAEN_hexagon_eventspec.opi</opi_file>
+        <resize_behaviour>0</resize_behaviour>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <tooltip></tooltip>
+        <visible>true</visible>
+        <widget_type>Linking Container</widget_type>
+        <width>725</width>
+        <wuid>282ef270:189e1fea679:-7833</wuid>
+        <x>30</x>
+        <y>12</y>
       </widget>
     </widget>
   </widget>

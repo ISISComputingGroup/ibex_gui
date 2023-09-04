@@ -25,6 +25,17 @@ if exist "%GENIECMDLOGDIR%\%GENIECMDLOGFILE%" (
 )
 
 if not exist "%CLIENTDIR%" mkdir %CLIENTDIR%
+
+REM we unzip the archive and then robocopy as before
+REM this is in case there has been a patch to the on-disk files
+REM if there are no changes the robocopy is very quick
+set "ZIPPROG=c:\Program Files\7-Zip\7z.exe"
+if exist "%ZIPPROG%" (
+    if exist "%BASEDIR%zips\Client.7z" (
+        "%ZIPPROG%" x -aoa -o%CLIENTDIR% "%BASEDIR%zips\Client.7z"
+    )
+)
+
 robocopy "%BASEDIR%Client" "%CLIENTDIR%" /MIR /R:2 /MT /NFL /NDL /NP /NC /NS /LOG:NUL
 set errcode=%errorlevel%
 if %errcode% GEQ 4 (

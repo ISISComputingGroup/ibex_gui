@@ -278,18 +278,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
       </foreground_color>
       <height>23</height>
-      <items>
-        <s>T0</s>
-        <s>A</s>
-        <s>B</s>
-        <s>C</s>
-        <s>D</s>
-        <s>E</s>
-        <s>F</s>
-        <s>G</s>
-        <s>H</s>
-      </items>
-      <items_from_pv>false</items_from_pv>
+      <items_from_pv>true</items_from_pv>
       <name>Combo</name>
       <pv_name>$(PV_ROOT)$(CHANNEL_X)REFERENCE:SP</pv_name>
       <pv_value/>
@@ -430,18 +419,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
       </foreground_color>
       <height>23</height>
-      <items>
-        <s>T0</s>
-        <s>A</s>
-        <s>B</s>
-        <s>C</s>
-        <s>D</s>
-        <s>E</s>
-        <s>F</s>
-        <s>G</s>
-        <s>H</s>
-      </items>
-      <items_from_pv>false</items_from_pv>
+      <items_from_pv>true</items_from_pv>
       <name>Combo</name>
       <pv_name>$(PV_ROOT)$(CHANNEL_Y)REFERENCE:SP</pv_name>
       <pv_value/>
@@ -483,14 +461,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
       </foreground_color>
       <height>23</height>
-      <items>
-        <s>s</s>
-        <s>ms</s>
-        <s>us</s>
-        <s>ns</s>
-        <s>ps</s>
-      </items>
-      <items_from_pv>false</items_from_pv>
+      <items_from_pv>true</items_from_pv>
       <name>Combo</name>
       <pv_name>$(PV_ROOT)$(CHANNEL_Y)DELAYUNIT:SP</pv_name>
       <pv_value/>

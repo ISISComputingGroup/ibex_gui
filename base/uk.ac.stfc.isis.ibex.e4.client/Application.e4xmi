@@ -232,7 +232,9 @@
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_i2zuEGGWEee2EOm7UkHWHg" elementId="uk.ac.stfc.isis.ibex.client.e4.product.partsashcontainer.1" containerData="70" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_Cah-0GIsEeeBJ_yF1PfHTw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.3" containerData="">
-          <children xsi:type="basic:Part" xmi:id="_9zpdoHziEee7XtTTU-lRdw" elementId="uk.ac.stfc.isis.ibex.ui.alarm.AlarmView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Alarms"/>
+          <children xsi:type="basic:Part" xmi:id="_9zpdoHziEee7XtTTU-lRdw" elementId="uk.ac.stfc.isis.ibex.ui.alarm.AlarmView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Alarm Tree"/>
+          <children xsi:type="basic:Part" xmi:id="_tAzWcDF8Ee6Zd5hUjrQ4XA" elementId="uk.ac.stfc.isis.ibex.ui.alarm.AlarmTable" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Alarm Table"/>
+          <children xsi:type="basic:Part" xmi:id="_STVkYDFzEe6Zd5hUjrQ4XA" elementId="uk.ac.stfc.isis.ibex.ui.alarm.AlarmHistory" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Alarm History"/>
         </children>
       </children>
     </children>
