@@ -84,6 +84,10 @@ public class NewBlockHandler extends AbstractHandler {
 		return SERVER.setCurrentConfig().canWrite();
 	}
 	
+	/**
+	 * Set whether the block should be local by default.
+	 * @param local whether the block should be local by default
+	 */
 	public void setLocal(Boolean local) {
 		this.local = local;
 	}
