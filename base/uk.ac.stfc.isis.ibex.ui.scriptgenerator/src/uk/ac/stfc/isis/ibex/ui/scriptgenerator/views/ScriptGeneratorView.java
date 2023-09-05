@@ -227,11 +227,6 @@ public class ScriptGeneratorView {
 						"Git errors occurred", 
 						message);
 			}
-			else {
-				MessageDialog.openInformation(DISPLAY.getActiveShell(),
-						"No Git errors occurred", 
-						message);
-			}
 			
 		});
 
