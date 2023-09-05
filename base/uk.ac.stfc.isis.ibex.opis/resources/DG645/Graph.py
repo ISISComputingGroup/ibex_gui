@@ -32,8 +32,8 @@ def get_starting_y(x_value, current_polarity):
     return 0 if check_in_range(x_value) else current_polarity
 
 
-x_start = get_value_scaled(PVUtil.getDouble(pvs[7]))
-x_end = get_value_scaled(PVUtil.getDouble(pvs[8]))
+x_start = get_value_scaled(PVUtil.getDouble(pvs[0]))
+x_end = get_value_scaled(PVUtil.getDouble(pvs[1]))
 
 if x_maximum < x_end:
     x_maximum = x_end + 1
