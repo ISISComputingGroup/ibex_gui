@@ -239,7 +239,7 @@ public class ScriptGeneratorView {
 	}
 	
 	/**
-	 * Helper function to add New lines between each error of the prompt error message
+	 * Helper function to add New lines between each error of the prompt error message.
 	 * @param errorMessage 
 	 * @return the message, with another new line at the end of it. 
 	 */

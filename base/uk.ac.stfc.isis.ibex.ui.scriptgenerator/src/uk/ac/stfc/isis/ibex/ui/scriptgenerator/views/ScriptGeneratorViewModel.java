@@ -1242,8 +1242,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	}
 	
 	/**
-	 * Creates a git connection error prompt message
-	 * @return
+	 * Creates a git connection error prompt message.
+	 * @return the prompt message
 	 */
 	public String getGitErrorPromptMessage() {
 		String message = "";
