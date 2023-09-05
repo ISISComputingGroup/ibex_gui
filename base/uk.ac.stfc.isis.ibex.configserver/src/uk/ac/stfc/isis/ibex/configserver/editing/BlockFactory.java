@@ -37,6 +37,7 @@ public class BlockFactory {
     private static final String DEFAULT_BLOCK_NAME = "NEW_BLOCK";
     private final DefaultName blockName = new DefaultName(DEFAULT_BLOCK_NAME);
     EditableConfiguration config;
+    private Boolean local = true;
 
     /**
      * This class is responsible for the creation of editable blocks to be
@@ -47,6 +48,19 @@ public class BlockFactory {
     public BlockFactory(EditableConfiguration config) {
         this.config = config;
     }
+    
+    /**
+     * This class is responsible for the creation of editable blocks to be
+     * registered in the configuration.
+     * 
+     * @param config the configuration the blocks are registered with.
+     * @param defaultLocal whether the block should default to local
+     */
+    public BlockFactory(EditableConfiguration config, Boolean defaultLocal) {
+        this.config = config;
+        this.local = defaultLocal;
+    }
+   
 
     /**
      * Create a new block with a unique name.
@@ -57,7 +71,7 @@ public class BlockFactory {
      */
     public EditableBlock createNewBlock(Optional<String> newPV) {
         String name = blockName.getUnique(blockNames());
-        EditableBlock block = new EditableBlock(new Block(name, newPV.orElse(""), true, true));
+        EditableBlock block = new EditableBlock(new Block(name, newPV.orElse(""), true, local));
         return block;
     }
 

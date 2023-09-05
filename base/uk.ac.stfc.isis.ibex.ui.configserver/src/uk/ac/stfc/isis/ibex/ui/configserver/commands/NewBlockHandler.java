@@ -54,6 +54,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.EditBlockDialog;
 public class NewBlockHandler extends AbstractHandler {
     static final ConfigServer SERVER = Configurations.getInstance().server();
     static final Shell SHELL = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+	private Boolean local = true;
     /**
      * Open the new block dialogue.
      *
@@ -83,6 +84,10 @@ public class NewBlockHandler extends AbstractHandler {
 		return SERVER.setCurrentConfig().canWrite();
 	}
 	
+	public void setLocal(Boolean local) {
+		this.local = local;
+	}
+	
     /**
      * Create the dialog for creating the new block.
      * 
@@ -95,7 +100,7 @@ public class NewBlockHandler extends AbstractHandler {
     	ConfigurationViewModels configurationViewModels = ConfigurationServerUI.getDefault().configurationViewModels();
 
         EditableConfiguration config = configurationViewModels.getCurrentConfig();
-        BlockFactory blockFactory = new BlockFactory(config);
+        BlockFactory blockFactory = new BlockFactory(config, local);
         EditableBlock added = blockFactory.createNewBlock(Optional.of(pvAddress));
         Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 
