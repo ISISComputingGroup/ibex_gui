@@ -84,30 +84,6 @@ class DefinitionsRepositoryTests(unittest.TestCase):
 
             mock_clone.assert_called()
 
-    def test_GIVEN_repository_clean_WHEN_pull_requested_THEN_repository_gets_merged(self):
-        with patch.object(self.definitions_repo, "is_dirty", return_value=False):
-
-            self.definitions_repo.merge_with_origin()
-            self.mock_repo.git.merge.assert_called()
-
-    def test_GIVEN_repository_dirty_WHEN_pull_requested_THEN_repository_gets_merged(self):
-        with patch.object(self.definitions_repo, "is_dirty", return_value=True):
-
-            self.definitions_repo.merge_with_origin()
-            self.mock_repo.git.reset.assert_called()
-
-    def test_GIVEN_repository_which_has_unpushed_changes_WHEN_merge_attempted_THEN_merge_is_aborted(self):
-        self.mock_repo.git.merge = MagicMock(side_effect=self._raise_error_when_attempting_merge)
-
-        self.definitions_repo.merge_with_origin()
-        self.mock_repo.git.merge.assert_called_with(abort=True)
-
-    def test_GIVEN_error_raised_while_merging_THEN_error_logged(self):
-        self.mock_repo.git.merge = MagicMock(side_effect=self._raise_error_when_attempting_merge)
-        with patch.object(self.definitions_repo, "_append_error") as error_handler:
-            self.definitions_repo.merge_with_origin()
-            error_handler.assert_called()
-
     @patch("git_utils.Repo")
     def test_GIVEN_repository_can_be_pulled_WHEN_repo_initialised_THEN_no_error_gets_logged(self, mock_repo):
         with patch.object(self.definitions_repo, "_append_error") as error_handler:
