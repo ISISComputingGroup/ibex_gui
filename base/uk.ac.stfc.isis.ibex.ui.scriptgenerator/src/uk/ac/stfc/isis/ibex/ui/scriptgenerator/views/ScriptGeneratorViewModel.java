@@ -1225,7 +1225,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	public String getUpdatesPromptMessage() { 
 		String message = "";
 		if (scriptGeneratorModel.updatesAvailable()) {
-			message = "Updates to the script definitions are available. Please notify your local contact to update the script definitions at their earliest convenience.";
+			message = "Updates Available: Updates to the script definitions are available. Please notify your local contact to update the script definitions at their earliest convenience. ";
 		}
 		return message;
 	}
@@ -1236,7 +1236,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	public String getDirtyPromptMessage() {
 		String message = "";
 		if (scriptGeneratorModel.isDirty()) {
-			message = "\n \nWARNING: There are uncommitted changes to the script definitions. These will be lost if you update.";
+			message = "Local Repo is Dirty: There are uncommitted changes to the script definitions. These will be lost if you update. ";
 		}
 		return message;
 	}
@@ -1249,8 +1249,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		String message = "";
 		if (!scriptGeneratorModel.remoteAvailable()) {
 			// Warn user git could not be found
-			message = "Git error: Could not update script definitions, because the remote git repository could not be reached. "
-					+ "You can still continue to use the existing script definitions, but they may be out of date.";
+			message = "Git error, remote repo unavailable: Could not update script definitions, because the remote git repository could not be reached. "
+					+ "You can still continue to use the existing script definitions, but they may be out of date. ";
 		}
 		return message;
 	}

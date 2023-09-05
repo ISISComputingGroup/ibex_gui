@@ -219,12 +219,17 @@ public class ScriptGeneratorView {
 			
 			Optional<String> gitErrors = scriptGeneratorViewModel.getGitLoadErrors();
 			if (gitErrors.isPresent()) {
-				message += gitErrors.get();
+				message += promptBuilder(gitErrors.get());
 			}
 			
 			if (message.length() != 0) {
 				MessageDialog.openInformation(DISPLAY.getActiveShell(),
 						"Git errors occurred", 
+						message);
+			}
+			else {
+				MessageDialog.openInformation(DISPLAY.getActiveShell(),
+						"No Git errors occurred", 
 						message);
 			}
 			
@@ -240,7 +245,7 @@ public class ScriptGeneratorView {
 	 */
 	public String promptBuilder(String errorMessage) {
 		if (errorMessage.length() > 0) {
-			errorMessage += "\n ";
+			errorMessage += "\n\n";
 		}
 		
 		return errorMessage;
