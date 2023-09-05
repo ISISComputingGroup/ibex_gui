@@ -86,8 +86,8 @@ public class AlarmSettingsTest {
      * @return The archive settings string corresponding to the given
      *         instrument.
      */
-    private static String buildRdbUrl(String hostName) {
-        return "jdbc:mysql://" + hostName + "/ALARM?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true";
+    private static String buildRdbUrl(String hostName, String table) {
+        return "jdbc:mysql://" + hostName + "/" + table + "?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true";
     }
 
     /**
@@ -104,7 +104,7 @@ public class AlarmSettingsTest {
     /**
      * RDB URL for localhost.
      */
-    private static final String LOCALHOST_RDB_URL = buildRdbUrl(LOCALHOST);
+    private static final String LOCALHOST_RDB_URL = buildRdbUrl(LOCALHOST, "ALARM");
 
     /**
      * JMS URL for localhost.
@@ -114,7 +114,7 @@ public class AlarmSettingsTest {
     /**
      * RDB URL for larmor.
      */
-    private static final String LARMOR_RDB_URL = buildRdbUrl(NDXLARMOR);
+    private static final String LARMOR_RDB_URL = buildRdbUrl(NDXLARMOR, "ALARM");
 
     /**
      * JMS URL for larmor.
@@ -124,7 +124,7 @@ public class AlarmSettingsTest {
     /**
      * RDB URL for demo.
      */
-    private static final String DEMO_RDB_URL = buildRdbUrl(NDXDEMO);
+    private static final String DEMO_RDB_URL = buildRdbUrl(NDXDEMO, "ALARM");
 
     /**
      * JMS URL for demo.
@@ -134,7 +134,7 @@ public class AlarmSettingsTest {
     /**
      * RDB URL for a custom instrument.
      */
-    private static final String CUSTOM_RDB_URL = buildRdbUrl(NDWCUSTOM);
+    private static final String CUSTOM_RDB_URL = buildRdbUrl(NDWCUSTOM, "ALARM");
 
     /**
      * JMS URL for a custom instrument.
@@ -145,7 +145,7 @@ public class AlarmSettingsTest {
      * RDB URL for an instrument not conforming to standard ISIS naming
      * convention.
      */
-    private static final String NON_ISIS_INST_RDB_URL = buildRdbUrl(NON_ISIS_INST_NAME);
+    private static final String NON_ISIS_INST_RDB_URL = buildRdbUrl(NON_ISIS_INST_NAME, "ALARM");
 
     /**
      * JMS URL for an instrument not conforming to standard ISIS naming
@@ -156,7 +156,7 @@ public class AlarmSettingsTest {
     /**
      * RDB URL for an instrument in IP address format.
      */
-    private static final String IP_RDB_URL = buildRdbUrl(IP_ADDRESS);
+    private static final String IP_RDB_URL = buildRdbUrl(IP_ADDRESS, "ALARM");
 
     /**
      * JMS URL for an instrument in IP address format.
@@ -200,7 +200,7 @@ public class AlarmSettingsTest {
     /**
      * Preference store.
      */
-    private org.osgi.service.prefs.Preferences preferences;
+    private org.osgi.service.prefs.Preferences preferences, preferences_hist;
 
     /**
      * Return value for mocked preference store jms value.
@@ -222,6 +222,7 @@ public class AlarmSettingsTest {
         mockJmsUrl = DEFAULT_JMS_URL;
 
         preferences = mock(org.osgi.service.prefs.Preferences.class);
+        preferences_hist = mock(org.osgi.service.prefs.Preferences.class);
         doAnswer(new Answer<Void>() {
             @Override
             public Void answer(InvocationOnMock invocation) throws Throwable {
@@ -252,7 +253,7 @@ public class AlarmSettingsTest {
             }
         }).when(preferences).get(eq(Preferences.RDB_URL), nullable(String.class));
 
-        alarmSettings = new AlarmSettings(preferences);
+        alarmSettings = new AlarmSettings(preferences, preferences_hist);
 
         mockLocalHost = mockInstrument(LOCALHOST);
         mockLarmor = mockInstrument(NDXLARMOR);

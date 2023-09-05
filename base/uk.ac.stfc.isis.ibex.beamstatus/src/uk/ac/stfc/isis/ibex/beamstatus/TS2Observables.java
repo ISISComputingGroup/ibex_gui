@@ -66,6 +66,16 @@ public class TS2Observables extends EndStationObservables {
 	 */
 	public final FacilityPV decoupledModeratorUAHBeam;
 
+	/**
+	 * An updating value giving the beam limit of the TS2 decoupled moderator.
+	 */
+	public final FacilityPV decoupledModeratorBeamLimit;
+	
+	/**
+	 * An updating value giving the charge change time of the TS2 decoupled moderator.
+	 */
+	public final FacilityPV decoupledModeratorChargeChangeTime;
+	
 	private static final PVAddress TS2_PV = PVAddress.startWith("AC").append("TS2");
 
 	private static final String MOD_PREFIX = "TG:TS2:DMOD:";
@@ -96,6 +106,12 @@ public class TS2Observables extends EndStationObservables {
 
 		decoupledModeratorUAHBeam = new FacilityPV(MOD_PREFIX + "BEAM",
 				adaptNumber(obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), MOD_PREFIX + "BEAM")));
+		
+		decoupledModeratorBeamLimit = new FacilityPV(MOD_PREFIX + "BEAM:LIM",
+				adaptNumber(obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), MOD_PREFIX + "BEAM:LIM")));
+		
+		decoupledModeratorChargeChangeTime = new FacilityPV(MOD_PREFIX + "CHRGCHNG:TIME",
+				adaptNumber(obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), MOD_PREFIX + "CHRGCHNG:TIME")));
 
 	}
 }

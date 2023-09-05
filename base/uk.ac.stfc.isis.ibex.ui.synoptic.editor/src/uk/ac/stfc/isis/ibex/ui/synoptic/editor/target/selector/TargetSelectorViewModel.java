@@ -163,7 +163,7 @@ public class TargetSelectorViewModel extends ModelObject {
         int iconSelectionIndexForCurrentlySelectedOpi = componentTypesList.indexOf(currentlySelectedOpiType);        
         boolean isIconDefault = getIconSelectionIndex() == 0 || iconSelectionIndexForCurrentlySelectedOpi == getIconSelectionIndex();
         
-        if (isIconDefault == false) {
+        if (!isIconDefault) {
         	this.iconIsDefault = false;
         }
         

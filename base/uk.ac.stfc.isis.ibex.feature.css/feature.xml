@@ -768,6 +768,34 @@
          unpack="false"/>
 
    <plugin
+         id="org.csstudio.alarm.beast.ui.alarmtable"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.alarm.beast.ui.alarmtable.opiwidget"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.alarm.beast.msghist"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.csstudio.alarm.beast.msghist.opiwidget"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.csstudio.opibuilder.rcp"
          download-size="0"
          install-size="0"
