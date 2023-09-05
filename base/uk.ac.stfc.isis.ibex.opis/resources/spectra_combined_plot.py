@@ -1,5 +1,4 @@
 from org.csstudio.opibuilder.scriptUtil import PVUtil
-from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
 
 traces = [pvs[0:3], pvs[3:6], pvs[6:9], pvs[9:12]]
 
@@ -9,9 +8,8 @@ xAxisUnitsPv = pvs[13]
 yAxisUnitsPv = pvs[14]
 
 def main():
-    ConsoleUtil.writeError("*****RELOADED*****")
     
-    widget.clearGraph();
+    widget.clearGraph()
     
     # set axis titles
     # axis title logic requires modePv != null
@@ -69,18 +67,8 @@ def main():
             value = 1
             checkboxPV.setValue(value)
         
-        # set trace to correct spectrum and period
-        # widget.setPropertyValue("trace_" + str(counter) + "_x_pv","$(P)DAE:SPEC:" + "1" + ":" + "0" + ":X")
-        # widget.setPropertyValue("trace_" + str(counter) + "_y_pv","$(P)DAE:SPEC:" + "1" + ":" + "0" + ":" + mode)
-        
-        # widget.setPropertyValue("trace_" + str(counter) + "_update_mode", "Trigger")
-        
-        
-        
         widget.setPropertyValue("trace_" + str(counter) + "_x_pv","$(P)DAE:SPEC:" + str(period) + ":" + str(spectrum) + ":X")
         widget.setPropertyValue("trace_" + str(counter) + "_y_pv","$(P)DAE:SPEC:" + str(period) + ":" + str(spectrum) + ":" + mode)
-        
-        # widget.setPropertyValue("trace_" + str(counter) + "_update_mode", "X or Y")
         
         # set visibility of trace based on checkbox
         checkbox_val = PVUtil.getDouble(checkboxPV)
@@ -88,9 +76,6 @@ def main():
             widget.setPropertyValue("trace_" + str(counter) + "_visible", "true")
         else:
             widget.setPropertyValue("trace_" + str(counter) + "_visible", "false")
-            
-        # debug
-        ConsoleUtil.writeError("Trace " + str(counter) + " | DAE:SPEC:" + str(period) + ":" + str(spectrum) + " | CHECKBOX: " + str(checkbox_val))
         
         counter += 1
         
