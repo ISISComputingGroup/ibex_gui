@@ -4,12 +4,17 @@ from jarray import array
 # This script controls behaviour of graphs in the OPI
 
 x_minimum = -1
-x_maximum = 60
+x_maximum = 1
 y_minimum = -1
 y_maximum = 1
 
 graph_multiplier_microseconds = 1000000
 
+# Get global maximum x to sync all graphs' x axis
+try:    
+    x_maximum = PVUtil.getDouble(pvs[6])
+except:
+    pvs[6].setValue(x_maximum)
 
 def get_value_scaled(val):
     return round(float(val) * graph_multiplier_microseconds, 2)
@@ -27,8 +32,14 @@ def get_starting_y(x_value, current_polarity):
     return 0 if check_in_range(x_value) else current_polarity
 
 
-x_start = get_value_scaled(PVUtil.getDouble(pvs[0]))
-x_end = get_value_scaled(PVUtil.getDouble(pvs[1]))
+x_start = get_value_scaled(PVUtil.getDouble(pvs[7]))
+x_end = get_value_scaled(PVUtil.getDouble(pvs[8]))
+
+if x_maximum < x_end:
+    x_maximum = x_end + 1
+    pvs[6].setValue(x_maximum)
+
+
 # Boolean PV to be converted into y or -y
 polarity = y_minimum if PVUtil.getDouble(pvs[5]) == 0 else y_maximum
 

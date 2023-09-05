@@ -122,6 +122,9 @@
         <pv trig="true">loc://$(CHANNEL_WIDTH)AXISY</pv>
         <pv trig="true">$(CS_ROOT)DEVIOS:HEARTBEAT</pv>
         <pv trig="true">$(PV_ROOT)$(POLARITY)OutputPolarityBI</pv>
+        <pv trig="true">loc://COMMON:X:MAX</pv>
+        <pv trig="true">$(PV_ROOT)$(CHANNEL_X)DELAYWIDTH</pv>
+        <pv trig="true">$(PV_ROOT)$(CHANNEL_Y)DELAYWIDTH</pv>
       </path>
     </scripts>
     <show_legend>false</show_legend>
