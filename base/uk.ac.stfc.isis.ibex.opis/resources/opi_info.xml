@@ -3439,5 +3439,21 @@
         </categories>
       </value>
     </entry>
+    <entry>
+      <key>PRE4500</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>pre4500.opi</path>
+        <description>The OPI for the PRE4500</description>
+        <macros>
+          <macro>
+            <name>PRE4500</name>
+            <description>The PRE4500 PV prefix (e.g. PRE4500_01)</description>
+            <default>PRE4500_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
   </opis>
 </descriptions>
