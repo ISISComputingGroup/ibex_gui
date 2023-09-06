@@ -3439,6 +3439,22 @@
         </categories>
       </value>
     </entry>
+	<entry>
+      <key>PEARL Single Motor Alignment</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>pearl/singlemotoralignment.opi</path>
+        <description>PEARL Single Motor Alignment</description>
+		<macros>
+		  <macro>
+			<name>PEARLALIGN</name>	
+			<description>The single motor alignment controller for Pearl sample space</description>
+			<default>MOT:MTR0101</default>
+		  </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
     <entry>
       <key>PRE4500</key>
       <value>
