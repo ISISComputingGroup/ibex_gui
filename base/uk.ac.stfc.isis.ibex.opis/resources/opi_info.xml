@@ -483,7 +483,7 @@
       <value>
         <type>PRESSURE_GAUGE</type>
         <path>TPG300.opi</path>
-        <description>The OPI for the PFEIFFER 300 Vacuum Gauge.</description>
+        <description>The OPI for the PFEIFFER 300 and 500 Vacuum Gauges.</description>
         <macros>
           <macro>
             <name>TPG300</name>
@@ -1208,6 +1208,18 @@
         <type>DEBUG</type>
         <path>twincat/twincat_engineering.opi</path>
         <description>The OPI giving a detailed engineering view of a Beckhoff.</description>
+        <macros/>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>INTER Beckhoff Diagnostics</key>
+      <value>
+        <type>DEBUG</type>
+        <path>inter_beckhoff_params.opi</path>
+        <description>The OPI showing diagnostic fields from the INTER tank beckhoff.</description>
         <macros/>
         <categories>
           <category>Miscellaneous motion control</category>
@@ -3143,6 +3155,27 @@
       </value>
     </entry>
     <entry>
+      <key>Automatic Needle Valve Controller</key>
+      <value>
+        <type>EUROTHERM</type>
+        <path>automatic_needle_valve.opi</path>
+        <description>Automatic Needle Valve Controller</description>
+        <macros>
+          <macro>
+            <name>EURO</name>
+            <description>The Eurotherm PV prefix (e.g. EUROTHRM_01).</description>
+            <default>EUROTHRM_01</default>
+          </macro>
+          <macro>
+            <name>SENSOR</name>
+            <description>The temperature sensor number (e.g. 1).</description>
+            <default>1</default>
+          </macro>
+        </macros>
+        <categories/>
+      </value>
+    </entry>
+    <entry>
       <key>Tektronix AFG3000</key>
       <value>
         <type>FUNCTION_GENERATOR</type>
@@ -3394,6 +3427,54 @@
       </value>
     </entry>
     <entry>
+      <key>DHP30330</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>dhp30330.opi</path>
+        <description>The OPI for the DHP30330</description>
+        <macros>
+          <macro>
+            <name>DHP30330</name>
+            <description>The DHP30330 PV prefix (e.g. DHP30330_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Muon Separator Tuning</key>
+      <value>
+        <type>MUON_FRONT_END</type>
+        <path>RIKEN/separator_tuning.opi</path>
+        <description>The OPI to remotely tune a muon separator with control of the PSU output and feedback from the vacuum system.</description>
+        <macros>
+          <macro>
+            <name>PSU_POSITIVE</name>
+            <description>The IOC prefix for the positive plate PSU (e.g. TECHNIX_01).</description>
+            <default>TECHNIX_01</default>
+          </macro>
+          <macro>
+            <name>PSU_NEGATIVE</name>
+            <description>The IOC prefix for the negative plate PSU (e.g. TECHNIX_02).</description>
+            <default>TECHNIX_02</default>
+          </macro>
+          <macro>
+            <name>TPG300</name>
+            <description>The IOC prefix for the TPG300 Pressure controller (e.g. TPG300_01).</description>
+            <default>TPG300_01</default>
+          </macro>
+          <macro>
+            <name>TPG300_CHANNEL</name>
+            <description>The pressure channel to read (eg. A1, A2, B1, B2).</description>
+            <default>A1</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>PACE5000</key>
       <value>
         <type>PRESSURE_GAUGE</type>
@@ -3421,6 +3502,56 @@
         <categories>
           <category>Jaws and slits</category>
         </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Moxa E1242</key>
+      <value>
+        <type>MOXA_12XX</type>
+        <path>moxa1242.opi</path>
+        <description>The OPI for a Moxa E1242 Volt/Current and Digital logger.</description>
+        <macros>
+          <macro>
+            <name>MOXA1210</name>
+            <description>The Moxa E1242 PV prefix (e.g. MOXA12XX_01).</description>
+            <default>MOXA12XX_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Multimeters</category>
+        </categories>
+      </value>
+    </entry>
+	<entry>
+      <key>PEARL Single Motor Alignment</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>pearl/singlemotoralignment.opi</path>
+        <description>PEARL Single Motor Alignment</description>
+		<macros>
+		  <macro>
+			<name>PEARLALIGN</name>	
+			<description>The single motor alignment controller for Pearl sample space</description>
+			<default>MOT:MTR0101</default>
+		  </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+    <entry>
+      <key>PRE4500</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>pre4500.opi</path>
+        <description>The OPI for the PRE4500</description>
+        <macros>
+          <macro>
+            <name>PRE4500</name>
+            <description>The PRE4500 PV prefix (e.g. PRE4500_01)</description>
+            <default>PRE4500_01</default>
+          </macro>
+        </macros>
       </value>
     </entry>
   </opis>
