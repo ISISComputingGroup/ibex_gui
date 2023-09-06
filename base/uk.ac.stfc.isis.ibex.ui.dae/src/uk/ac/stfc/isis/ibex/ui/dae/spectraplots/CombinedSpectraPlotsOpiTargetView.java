@@ -79,7 +79,7 @@ public class CombinedSpectraPlotsOpiTargetView extends OpiView {
 	protected MacrosInput macros() {
 		MacrosInput macros = emptyMacrosInput();
 		macros.put("INST", Instrument.getInstance().currentInstrument().name());
-		macros.put("P", pvPrefix);
+		macros.put("P", Instrument.getInstance().currentInstrument().pvPrefix());
 		return macros;
 	}
 }
