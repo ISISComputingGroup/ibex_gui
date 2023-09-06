@@ -3442,7 +3442,7 @@
 	<entry>
       <key>PEARL Single Motor Alignment</key>
       <value>
-        <type>MOTOR</type>
+        <type>UNKNOWN</type>
         <path>pearl/singlemotoralignment.opi</path>
         <description>PEARL Single Motor Alignment</description>
 		<macros>
