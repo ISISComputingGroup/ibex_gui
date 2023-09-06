@@ -116,12 +116,13 @@
     </scale_options>
     <scripts>
       <path pathString="Graph.py" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">$(PV_ROOT)$(CHANNEL_X)DelayAI</pv>
-        <pv trig="true">$(PV_ROOT)$(CHANNEL_Y)DelayAI</pv>
+        <pv trig="true">$(PV_ROOT)$(CHANNEL_X)DELAYWIDTH</pv>
+        <pv trig="true">$(PV_ROOT)$(CHANNEL_Y)DELAYWIDTH</pv>
         <pv trig="true">loc://$(CHANNEL_WIDTH)AXISX</pv>
         <pv trig="true">loc://$(CHANNEL_WIDTH)AXISY</pv>
         <pv trig="true">$(CS_ROOT)DEVIOS:HEARTBEAT</pv>
         <pv trig="true">$(PV_ROOT)$(POLARITY)OutputPolarityBI</pv>
+        <pv trig="true">loc://COMMON:X:MAX</pv>
       </path>
     </scripts>
     <show_legend>false</show_legend>
