@@ -623,7 +623,7 @@ $(pv_value)</tooltip>
     <plot_area_background_color>
       <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
     </plot_area_background_color>
-    <pv_name>$(PV_ROOT_PRE4500):SPARE:TEMP</pv_name>
+    <pv_name></pv_name>
     <pv_value />
     <rules />
     <scale_options>
@@ -654,10 +654,10 @@ $(trace_0_y_pv_value)</tooltip>
     </trace_0_trace_color>
     <trace_0_trace_type>0</trace_0_trace_type>
     <trace_0_update_delay>100</trace_0_update_delay>
-    <trace_0_update_mode>4</trace_0_update_mode>
+    <trace_0_update_mode>0</trace_0_update_mode>
     <trace_0_visible>true</trace_0_visible>
     <trace_0_x_axis_index>0</trace_0_x_axis_index>
-    <trace_0_x_pv></trace_0_x_pv>
+    <trace_0_x_pv>$(P)CS:IOC:$(PRE4500):DEVIOS:HEARTBEAT</trace_0_x_pv>
     <trace_0_x_pv_value />
     <trace_0_y_axis_index>1</trace_0_y_axis_index>
     <trace_0_y_pv>$(PV_ROOT_PRE4500):SPARE:TEMP</trace_0_y_pv>
@@ -678,9 +678,11 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_1_update_mode>0</trace_1_update_mode>
     <trace_1_visible>true</trace_1_visible>
     <trace_1_x_axis_index>0</trace_1_x_axis_index>
-    <trace_1_x_pv></trace_1_x_pv>
+    <trace_1_x_pv>$(P)CS:IOC:$(PRE4500):DEVIOS:HEARTBEAT</trace_1_x_pv>
+    <trace_1_x_pv_value />
     <trace_1_y_axis_index>1</trace_1_y_axis_index>
     <trace_1_y_pv>$(PV_ROOT_PRE4500):CHOPPER:BODY:TEMP</trace_1_y_pv>
+    <trace_1_y_pv_value />
     <trace_2_anti_alias>true</trace_2_anti_alias>
     <trace_2_buffer_size>100</trace_2_buffer_size>
     <trace_2_concatenate_data>true</trace_2_concatenate_data>
@@ -697,9 +699,11 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_2_update_mode>0</trace_2_update_mode>
     <trace_2_visible>true</trace_2_visible>
     <trace_2_x_axis_index>0</trace_2_x_axis_index>
-    <trace_2_x_pv></trace_2_x_pv>
+    <trace_2_x_pv>$(P)CS:IOC:$(PRE4500):DEVIOS:HEARTBEAT</trace_2_x_pv>
+    <trace_2_x_pv_value />
     <trace_2_y_axis_index>1</trace_2_y_axis_index>
     <trace_2_y_pv>$(PV_ROOT_PRE4500):COOLING:WATER:TEMP</trace_2_y_pv>
+    <trace_2_y_pv_value />
     <trace_3_anti_alias>true</trace_3_anti_alias>
     <trace_3_buffer_size>100</trace_3_buffer_size>
     <trace_3_concatenate_data>true</trace_3_concatenate_data>
@@ -716,9 +720,11 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_3_update_mode>0</trace_3_update_mode>
     <trace_3_visible>true</trace_3_visible>
     <trace_3_x_axis_index>0</trace_3_x_axis_index>
-    <trace_3_x_pv></trace_3_x_pv>
+    <trace_3_x_pv>$(P)CS:IOC:$(PRE4500):DEVIOS:HEARTBEAT</trace_3_x_pv>
+    <trace_3_x_pv_value />
     <trace_3_y_axis_index>1</trace_3_y_axis_index>
     <trace_3_y_pv>$(PV_ROOT_PRE4500):CHOPPER:PIT:TEMP</trace_3_y_pv>
+    <trace_3_y_pv_value />
     <trace_count>4</trace_count>
     <transparent>false</transparent>
     <trigger_pv>$(P)CS:IOC:$(PRE4500):DEVIOS:HEARTBEAT</trigger_pv>
