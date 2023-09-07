@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
   <actions hook="false" hook_all="false">
     <action type="EXECUTE_PYTHONSCRIPT">
-      <path></path>
-      <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+      <path/>
+      <scriptText>from org.csstudio.opibuilder.scriptUtil import PVUtil
 from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
-]]></scriptText>
+</scriptText>
       <embedded>true</embedded>
-      <description></description>
+      <description/>
     </action>
   </actions>
   <auto_scale_widgets>
@@ -17,11 +17,11 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
   </auto_scale_widgets>
   <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
   <background_color>
-    <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    <color name="ISIS_OPI_Background" red="240" green="240" blue="240"/>
   </background_color>
   <boy_version>5.1.0</boy_version>
   <foreground_color>
-    <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+    <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192"/>
   </foreground_color>
   <grid_space>10</grid_space>
   <height>600</height>
@@ -30,8 +30,8 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     <PV_ROOT>$(P)SKFCHOPPER</PV_ROOT>
   </macros>
   <name>$(NAME)</name>
-  <rules />
-  <scripts />
+  <rules/>
+  <scripts/>
   <show_close_button>true</show_close_button>
   <show_edit_range>true</show_edit_range>
   <show_grid>true</show_grid>
@@ -43,19 +43,19 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
   <x>0</x>
   <y>0</y>
   <widget typeId="org.csstudio.opibuilder.widgets.tab" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <active_tab>0</active_tab>
     <background_color>
-      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240"/>
     </background_color>
     <border_color>
-      <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255"/>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
     <enabled>true</enabled>
     <foreground_color>
-      <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192"/>
     </foreground_color>
     <height>550</height>
     <horizontal_tabs>true</horizontal_tabs>
@@ -64,87 +64,87 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     </macros>
     <minimum_tab_height>10</minimum_tab_height>
     <name>Tabs</name>
-    <rules />
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <tab_0_background_color>
-      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240"/>
     </tab_0_background_color>
     <tab_0_enabled>true</tab_0_enabled>
     <tab_0_font>
       <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
     </tab_0_font>
     <tab_0_foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
     </tab_0_foreground_color>
-    <tab_0_icon_path></tab_0_icon_path>
+    <tab_0_icon_path/>
     <tab_0_title>Controller 01</tab_0_title>
     <tab_1_background_color>
-      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240"/>
     </tab_1_background_color>
     <tab_1_enabled>true</tab_1_enabled>
     <tab_1_font>
       <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
     </tab_1_font>
     <tab_1_foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
     </tab_1_foreground_color>
-    <tab_1_icon_path></tab_1_icon_path>
+    <tab_1_icon_path/>
     <tab_1_title>Controller 02</tab_1_title>
     <tab_2_background_color>
-      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240"/>
     </tab_2_background_color>
     <tab_2_enabled>true</tab_2_enabled>
     <tab_2_font>
       <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
     </tab_2_font>
     <tab_2_foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
     </tab_2_foreground_color>
-    <tab_2_icon_path></tab_2_icon_path>
+    <tab_2_icon_path/>
     <tab_2_title>Controller 03</tab_2_title>
     <tab_3_background_color>
-      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240"/>
     </tab_3_background_color>
     <tab_3_enabled>true</tab_3_enabled>
     <tab_3_font>
       <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
     </tab_3_font>
     <tab_3_foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
     </tab_3_foreground_color>
-    <tab_3_icon_path></tab_3_icon_path>
+    <tab_3_icon_path/>
     <tab_3_title>Controller 04</tab_3_title>
     <tab_4_background_color>
-      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240"/>
     </tab_4_background_color>
     <tab_4_enabled>true</tab_4_enabled>
     <tab_4_font>
       <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
     </tab_4_font>
     <tab_4_foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
     </tab_4_foreground_color>
-    <tab_4_icon_path></tab_4_icon_path>
+    <tab_4_icon_path/>
     <tab_4_title>Controller 05</tab_4_title>
     <tab_5_background_color>
-      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240"/>
     </tab_5_background_color>
     <tab_5_enabled>true</tab_5_enabled>
     <tab_5_font>
       <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
     </tab_5_font>
     <tab_5_foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
     </tab_5_foreground_color>
-    <tab_5_icon_path></tab_5_icon_path>
+    <tab_5_icon_path/>
     <tab_5_title>Controller 06</tab_5_title>
     <tab_count>6</tab_count>
-    <tooltip></tooltip>
+    <tooltip/>
     <visible>true</visible>
     <widget_type>Tabbed Container</widget_type>
     <width>800</width>
@@ -152,12 +152,12 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     <x>5</x>
     <y>80</y>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <background_color>
-        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240"/>
       </background_color>
       <border_color>
-        <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+        <color name="ISIS_Check_Border" red="0" green="128" blue="255"/>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
@@ -167,7 +167,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
       </font>
       <foreground_color>
-        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192"/>
       </foreground_color>
       <height>521</height>
       <lock_children>false</lock_children>
@@ -175,15 +175,15 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <include_parent_macros>true</include_parent_macros>
       </macros>
       <name>Controller 01</name>
-      <rules />
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts/>
       <show_scrollbar>true</show_scrollbar>
-      <tooltip></tooltip>
+      <tooltip/>
       <transparent>true</transparent>
       <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
@@ -192,12 +192,12 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <x>1</x>
       <y>1</y>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-        <actions hook="false" hook_all="false" />
+        <actions hook="false" hook_all="false"/>
         <background_color>
-          <color red="240" green="240" blue="240" />
+          <color red="240" green="240" blue="240"/>
         </background_color>
         <border_color>
-          <color red="0" green="128" blue="255" />
+          <color red="0" green="128" blue="255"/>
         </border_color>
         <border_style>0</border_style>
         <border_width>1</border_width>
@@ -206,9 +206,9 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
           <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
         </font>
         <foreground_color>
-          <color red="192" green="192" blue="192" />
+          <color red="192" green="192" blue="192"/>
         </foreground_color>
-        <group_name></group_name>
+        <group_name/>
         <height>520</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -217,14 +217,14 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <name>Tab 0 Linking Container</name>
         <opi_file>SKFChopper_Master.opi</opi_file>
         <resize_behaviour>0</resize_behaviour>
-        <rules />
+        <rules/>
         <scale_options>
           <width_scalable>true</width_scalable>
           <height_scalable>true</height_scalable>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
-        <scripts />
-        <tooltip></tooltip>
+        <scripts/>
+        <tooltip/>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
         <width>795</width>
@@ -234,12 +234,12 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <background_color>
-        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240"/>
       </background_color>
       <border_color>
-        <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+        <color name="ISIS_Check_Border" red="0" green="128" blue="255"/>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
@@ -249,7 +249,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
       </font>
       <foreground_color>
-        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192"/>
       </foreground_color>
       <height>521</height>
       <lock_children>false</lock_children>
@@ -257,15 +257,15 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <include_parent_macros>true</include_parent_macros>
       </macros>
       <name>Controller 02</name>
-      <rules />
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts/>
       <show_scrollbar>true</show_scrollbar>
-      <tooltip></tooltip>
+      <tooltip/>
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
@@ -274,12 +274,12 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <x>1</x>
       <y>1</y>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-        <actions hook="false" hook_all="false" />
+        <actions hook="false" hook_all="false"/>
         <background_color>
-          <color red="240" green="240" blue="240" />
+          <color red="240" green="240" blue="240"/>
         </background_color>
         <border_color>
-          <color red="0" green="128" blue="255" />
+          <color red="0" green="128" blue="255"/>
         </border_color>
         <border_style>0</border_style>
         <border_width>1</border_width>
@@ -288,9 +288,9 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
           <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
         </font>
         <foreground_color>
-          <color red="192" green="192" blue="192" />
+          <color red="192" green="192" blue="192"/>
         </foreground_color>
-        <group_name></group_name>
+        <group_name/>
         <height>520</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -299,14 +299,14 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <name>Tab 1 Linking Container</name>
         <opi_file>SKFChopper_Master.opi</opi_file>
         <resize_behaviour>0</resize_behaviour>
-        <rules />
+        <rules/>
         <scale_options>
           <width_scalable>true</width_scalable>
           <height_scalable>true</height_scalable>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
-        <scripts />
-        <tooltip></tooltip>
+        <scripts/>
+        <tooltip/>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
         <width>795</width>
@@ -316,12 +316,12 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <background_color>
-        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240"/>
       </background_color>
       <border_color>
-        <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+        <color name="ISIS_Check_Border" red="0" green="128" blue="255"/>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
@@ -331,7 +331,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
       </font>
       <foreground_color>
-        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192"/>
       </foreground_color>
       <height>521</height>
       <lock_children>false</lock_children>
@@ -339,15 +339,15 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <include_parent_macros>true</include_parent_macros>
       </macros>
       <name>Controller 03</name>
-      <rules />
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts/>
       <show_scrollbar>true</show_scrollbar>
-      <tooltip></tooltip>
+      <tooltip/>
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
@@ -356,12 +356,12 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <x>1</x>
       <y>1</y>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-        <actions hook="false" hook_all="false" />
+        <actions hook="false" hook_all="false"/>
         <background_color>
-          <color red="240" green="240" blue="240" />
+          <color red="240" green="240" blue="240"/>
         </background_color>
         <border_color>
-          <color red="0" green="128" blue="255" />
+          <color red="0" green="128" blue="255"/>
         </border_color>
         <border_style>0</border_style>
         <border_width>1</border_width>
@@ -370,9 +370,9 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
           <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
         </font>
         <foreground_color>
-          <color red="192" green="192" blue="192" />
+          <color red="192" green="192" blue="192"/>
         </foreground_color>
-        <group_name></group_name>
+        <group_name/>
         <height>520</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -381,14 +381,14 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <name>Tab 2 Linking Container</name>
         <opi_file>SKFChopper_Master.opi</opi_file>
         <resize_behaviour>0</resize_behaviour>
-        <rules />
+        <rules/>
         <scale_options>
           <width_scalable>true</width_scalable>
           <height_scalable>true</height_scalable>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
-        <scripts />
-        <tooltip></tooltip>
+        <scripts/>
+        <tooltip/>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
         <width>795</width>
@@ -398,12 +398,12 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <background_color>
-        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240"/>
       </background_color>
       <border_color>
-        <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+        <color name="ISIS_Check_Border" red="0" green="128" blue="255"/>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
@@ -413,7 +413,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
       </font>
       <foreground_color>
-        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192"/>
       </foreground_color>
       <height>521</height>
       <lock_children>false</lock_children>
@@ -421,15 +421,15 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <include_parent_macros>true</include_parent_macros>
       </macros>
       <name>Controller 04</name>
-      <rules />
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts/>
       <show_scrollbar>true</show_scrollbar>
-      <tooltip></tooltip>
+      <tooltip/>
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
@@ -438,12 +438,12 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <x>1</x>
       <y>1</y>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-        <actions hook="false" hook_all="false" />
+        <actions hook="false" hook_all="false"/>
         <background_color>
-          <color red="240" green="240" blue="240" />
+          <color red="240" green="240" blue="240"/>
         </background_color>
         <border_color>
-          <color red="0" green="128" blue="255" />
+          <color red="0" green="128" blue="255"/>
         </border_color>
         <border_style>0</border_style>
         <border_width>1</border_width>
@@ -452,9 +452,9 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
           <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
         </font>
         <foreground_color>
-          <color red="192" green="192" blue="192" />
+          <color red="192" green="192" blue="192"/>
         </foreground_color>
-        <group_name></group_name>
+        <group_name/>
         <height>520</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -463,14 +463,14 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <name>Tab 3 Linking Container</name>
         <opi_file>SKFChopper_Master.opi</opi_file>
         <resize_behaviour>0</resize_behaviour>
-        <rules />
+        <rules/>
         <scale_options>
           <width_scalable>true</width_scalable>
           <height_scalable>true</height_scalable>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
-        <scripts />
-        <tooltip></tooltip>
+        <scripts/>
+        <tooltip/>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
         <width>795</width>
@@ -480,12 +480,12 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <background_color>
-        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240"/>
       </background_color>
       <border_color>
-        <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+        <color name="ISIS_Check_Border" red="0" green="128" blue="255"/>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
@@ -495,7 +495,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
       </font>
       <foreground_color>
-        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192"/>
       </foreground_color>
       <height>521</height>
       <lock_children>false</lock_children>
@@ -503,15 +503,15 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <include_parent_macros>true</include_parent_macros>
       </macros>
       <name>Controller 05</name>
-      <rules />
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts/>
       <show_scrollbar>true</show_scrollbar>
-      <tooltip></tooltip>
+      <tooltip/>
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
@@ -520,12 +520,12 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <x>1</x>
       <y>1</y>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-        <actions hook="false" hook_all="false" />
+        <actions hook="false" hook_all="false"/>
         <background_color>
-          <color red="240" green="240" blue="240" />
+          <color red="240" green="240" blue="240"/>
         </background_color>
         <border_color>
-          <color red="0" green="128" blue="255" />
+          <color red="0" green="128" blue="255"/>
         </border_color>
         <border_style>0</border_style>
         <border_width>1</border_width>
@@ -534,9 +534,9 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
           <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
         </font>
         <foreground_color>
-          <color red="192" green="192" blue="192" />
+          <color red="192" green="192" blue="192"/>
         </foreground_color>
-        <group_name></group_name>
+        <group_name/>
         <height>520</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -545,14 +545,14 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <name>Tab 4 Linking Container</name>
         <opi_file>SKFChopper_Master.opi</opi_file>
         <resize_behaviour>0</resize_behaviour>
-        <rules />
+        <rules/>
         <scale_options>
           <width_scalable>true</width_scalable>
           <height_scalable>true</height_scalable>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
-        <scripts />
-        <tooltip></tooltip>
+        <scripts/>
+        <tooltip/>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
         <width>795</width>
@@ -562,12 +562,12 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false"/>
       <background_color>
-        <color red="240" green="240" blue="240" />
+        <color red="240" green="240" blue="240"/>
       </background_color>
       <border_color>
-        <color red="0" green="128" blue="255" />
+        <color red="0" green="128" blue="255"/>
       </border_color>
       <border_style>0</border_style>
       <border_width>1</border_width>
@@ -577,7 +577,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
       </font>
       <foreground_color>
-        <color red="192" green="192" blue="192" />
+        <color red="192" green="192" blue="192"/>
       </foreground_color>
       <height>521</height>
       <lock_children>false</lock_children>
@@ -585,15 +585,15 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <include_parent_macros>true</include_parent_macros>
       </macros>
       <name>Controller 06</name>
-      <rules />
+      <rules/>
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts />
+      <scripts/>
       <show_scrollbar>true</show_scrollbar>
-      <tooltip></tooltip>
+      <tooltip/>
       <transparent>true</transparent>
       <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
@@ -602,12 +602,12 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <x>1</x>
       <y>1</y>
       <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
-        <actions hook="false" hook_all="false" />
+        <actions hook="false" hook_all="false"/>
         <background_color>
-          <color red="240" green="240" blue="240" />
+          <color red="240" green="240" blue="240"/>
         </background_color>
         <border_color>
-          <color red="0" green="128" blue="255" />
+          <color red="0" green="128" blue="255"/>
         </border_color>
         <border_style>0</border_style>
         <border_width>1</border_width>
@@ -616,9 +616,9 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
           <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
         </font>
         <foreground_color>
-          <color red="192" green="192" blue="192" />
+          <color red="192" green="192" blue="192"/>
         </foreground_color>
-        <group_name></group_name>
+        <group_name/>
         <height>520</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
@@ -627,14 +627,14 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
         <name>Tab 5 Linking Container</name>
         <opi_file>SKFChopper_Master.opi</opi_file>
         <resize_behaviour>0</resize_behaviour>
-        <rules />
+        <rules/>
         <scale_options>
           <width_scalable>true</width_scalable>
           <height_scalable>true</height_scalable>
           <keep_wh_ratio>false</keep_wh_ratio>
         </scale_options>
-        <scripts />
-        <tooltip></tooltip>
+        <scripts/>
+        <tooltip/>
         <visible>true</visible>
         <widget_type>Linking Container</widget_type>
         <width>795</width>
@@ -645,16 +645,16 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <alarm_pulsing>false</alarm_pulsing>
     <auto_size>false</auto_size>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
-      <color red="255" green="255" blue="255" />
+      <color red="255" green="255" blue="255"/>
     </background_color>
     <border_alarm_sensitive>true</border_alarm_sensitive>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
@@ -664,7 +664,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     </font>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <foreground_color>
-      <color red="0" green="0" blue="0" />
+      <color red="0" green="0" blue="0"/>
     </foreground_color>
     <format_type>0</format_type>
     <height>25</height>
@@ -673,9 +673,9 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
     <pv_name>loc://SKFCHOPPER_$(DID)("$(DEFAULT_ACTIVE_TAB)")</pv_name>
-    <pv_value />
+    <pv_value/>
     <rotation_angle>0.0</rotation_angle>
-    <rules />
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
@@ -707,10 +707,10 @@ $(pv_value)</tooltip>
     <y>12</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <border_color>
-      <color name="ISIS_Border" red="0" green="0" blue="0" />
+      <color name="ISIS_Border" red="0" green="0" blue="0"/>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
@@ -720,25 +720,25 @@ $(pv_value)</tooltip>
     </font>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
     </foreground_color>
     <height>1</height>
-    <image></image>
+    <image/>
     <name>Dummy</name>
     <push_action_index>0</push_action_index>
-    <pv_name></pv_name>
-    <pv_value />
-    <rules />
+    <pv_name/>
+    <pv_value/>
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <style>1</style>
-    <text></text>
+    <text/>
     <toggle_button>false</toggle_button>
-    <tooltip></tooltip>
+    <tooltip/>
     <visible>true</visible>
     <widget_type>Action Button</widget_type>
     <width>1</width>
@@ -747,13 +747,13 @@ $(pv_value)</tooltip>
     <y>12</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <auto_size>false</auto_size>
     <background_color>
-      <color name="ISIS_Title_Background_NEW" red="240" green="240" blue="240" />
+      <color name="ISIS_Title_Background_NEW" red="240" green="240" blue="240"/>
     </background_color>
     <border_color>
-      <color name="ISIS_Border" red="0" green="0" blue="0" />
+      <color name="ISIS_Border" red="0" green="0" blue="0"/>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
@@ -762,21 +762,21 @@ $(pv_value)</tooltip>
       <opifont.name fontName="Segoe UI" height="18" style="1" pixels="false">ISIS_Header1_NEW</opifont.name>
     </font>
     <foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
     </foreground_color>
     <height>37</height>
     <horizontal_alignment>0</horizontal_alignment>
     <name>Label</name>
-    <rules />
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <show_scrollbar>false</show_scrollbar>
     <text>SKF G5 Chopper Controllers</text>
-    <tooltip></tooltip>
+    <tooltip/>
     <transparent>false</transparent>
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
@@ -788,13 +788,13 @@ $(pv_value)</tooltip>
     <y>6</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <auto_size>false</auto_size>
     <background_color>
-      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+      <color name="ISIS_Label_Background" red="240" green="240" blue="240"/>
     </background_color>
     <border_color>
-      <color name="ISIS_Border" red="0" green="0" blue="0" />
+      <color name="ISIS_Border" red="0" green="0" blue="0"/>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
@@ -803,21 +803,21 @@ $(pv_value)</tooltip>
       <opifont.name fontName="Segoe UI" height="14" style="1" pixels="false">ISIS_Header2_NEW</opifont.name>
     </font>
     <foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
     </foreground_color>
     <height>37</height>
     <horizontal_alignment>0</horizontal_alignment>
     <name>Label_1</name>
-    <rules />
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <show_scrollbar>false</show_scrollbar>
     <text>$(NAME)</text>
-    <tooltip></tooltip>
+    <tooltip/>
     <transparent>false</transparent>
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
@@ -827,5 +827,45 @@ $(pv_value)</tooltip>
     <wuid>-6be08b9e:18506520459:-79a0</wuid>
     <x>5</x>
     <y>42</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <actions hook="false" hook_all="false"/>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0"/>
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
+    </foreground_color>
+    <height>1</height>
+    <image/>
+    <name>Dummy</name>
+    <push_action_index>0</push_action_index>
+    <pv_name/>
+    <pv_value/>
+    <rules/>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts/>
+    <style>1</style>
+    <text/>
+    <toggle_button>false</toggle_button>
+    <tooltip/>
+    <visible>true</visible>
+    <widget_type>Action Button</widget_type>
+    <width>1</width>
+    <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
+    <x>0</x>
+    <y>12</y>
   </widget>
 </display>

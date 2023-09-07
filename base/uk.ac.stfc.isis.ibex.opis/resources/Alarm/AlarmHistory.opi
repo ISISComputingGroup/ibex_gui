@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
-  <actions hook="false" hook_all="false" />
+  <actions hook="false" hook_all="false"/>
   <auto_scale_widgets>
     <auto_scale_widgets>false</auto_scale_widgets>
     <min_width>-1</min_width>
@@ -8,20 +8,20 @@
   </auto_scale_widgets>
   <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
   <background_color>
-    <color red="240" green="240" blue="240" />
+    <color red="240" green="240" blue="240"/>
   </background_color>
   <boy_version>5.1.0</boy_version>
   <foreground_color>
-    <color red="192" green="192" blue="192" />
+    <color red="192" green="192" blue="192"/>
   </foreground_color>
   <grid_space>6</grid_space>
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
   </macros>
-  <name></name>
-  <rules />
-  <scripts />
+  <name/>
+  <rules/>
+  <scripts/>
   <show_close_button>true</show_close_button>
   <show_edit_range>true</show_edit_range>
   <show_grid>true</show_grid>
@@ -33,33 +33,33 @@
   <x>-1</x>
   <y>-1</y>
   <widget typeId="org.csstudio.alarm.beast.msghist" version="1.0.0">
-    <actions hook="false" hook_all="false" />
+    <actions hook="false" hook_all="false"/>
     <background_color>
-      <color red="240" green="240" blue="240" />
+      <color red="240" green="240" blue="240"/>
     </background_color>
     <border_color>
-      <color red="0" green="128" blue="255" />
+      <color red="0" green="128" blue="255"/>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
     <column_headers>true</column_headers>
     <columns>
-      <column name="SEQ" weight="5" width="40" visible="true" />
-      <column name="TIME" weight="10" width="180" visible="true" />
-      <column name="DELTA" weight="1" width="60" visible="true" />
-      <column name="TYPE" weight="5" width="45" visible="true" />
-      <column name="TEXT" weight="400" width="50" visible="true" />
-      <column name="NAME" weight="100" width="50" visible="true" />
-      <column name="STATUS" weight="80" width="45" visible="true" />
-      <column name="SEVERITY" weight="80" width="50" visible="true" />
-      <column name="CURRENT_SEVERITY" weight="80" width="50" visible="true" />
-      <column name="VALUE" weight="50" width="35" visible="true" />
-      <column name="CREATETIME" weight="50" width="80" visible="true" />
-      <column name="USER" weight="10" width="45" visible="true" />
-      <column name="HOST" weight="40" width="50" visible="true" />
-      <column name="APPLICATION-ID" weight="10" width="40" visible="true" />
-      <column name="CLASS" weight="10" width="50" visible="true" />
-      <column name="FILENAME" weight="10" width="50" visible="true" />
+      <column name="SEQ" weight="5" width="40" visible="true"/>
+      <column name="TIME" weight="10" width="180" visible="true"/>
+      <column name="DELTA" weight="1" width="60" visible="true"/>
+      <column name="TYPE" weight="5" width="45" visible="true"/>
+      <column name="TEXT" weight="400" width="50" visible="true"/>
+      <column name="NAME" weight="100" width="50" visible="true"/>
+      <column name="STATUS" weight="80" width="45" visible="true"/>
+      <column name="SEVERITY" weight="80" width="50" visible="true"/>
+      <column name="CURRENT_SEVERITY" weight="80" width="50" visible="true"/>
+      <column name="VALUE" weight="50" width="35" visible="true"/>
+      <column name="CREATETIME" weight="50" width="80" visible="true"/>
+      <column name="USER" weight="10" width="45" visible="true"/>
+      <column name="HOST" weight="40" width="50" visible="true"/>
+      <column name="APPLICATION-ID" weight="10" width="40" visible="true"/>
+      <column name="CLASS" weight="10" width="50" visible="true"/>
+      <column name="FILENAME" weight="10" width="50" visible="true"/>
     </columns>
     <enabled>true</enabled>
     <filter>START_TIME=-1 hours AND END_TIME=now</filter>
@@ -67,26 +67,66 @@
       <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
     </font>
     <foreground_color>
-      <color red="192" green="192" blue="192" />
+      <color red="192" green="192" blue="192"/>
     </foreground_color>
     <height>562</height>
     <max_messages>10000</max_messages>
     <name>Message history</name>
-    <rules />
+    <rules/>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts />
+    <scripts/>
     <sort_ascending>true</sort_ascending>
     <sorting_column>0</sorting_column>
     <time_format>yyyy-MM-dd'T'HH:mmX</time_format>
-    <tooltip></tooltip>
+    <tooltip/>
     <visible>true</visible>
     <widget_type>Message history</widget_type>
     <width>754</width>
     <wuid>-467b8db1:189acad3484:-7dea</wuid>
+    <x>27</x>
+    <y>21</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <actions hook="false" hook_all="false"/>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0"/>
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
+    </foreground_color>
+    <height>1</height>
+    <image/>
+    <name>Dummy</name>
+    <push_action_index>0</push_action_index>
+    <pv_name/>
+    <pv_value/>
+    <rules/>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts/>
+    <style>1</style>
+    <text/>
+    <toggle_button>false</toggle_button>
+    <tooltip/>
+    <visible>true</visible>
+    <widget_type>Action Button</widget_type>
+    <width>1</width>
+    <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
     <x>27</x>
     <y>21</y>
   </widget>
