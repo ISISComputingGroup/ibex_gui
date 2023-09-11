@@ -44,8 +44,6 @@ public class CombinedSpectraPlotsOpiTargetView extends OpiView {
      * File name of the web links OPI.
      */
     private static final String COMBINED_SPECTRA_PLOTS_OPI = "spectra_combined_plot.opi";
-    
-    private final String pvPrefix = Instrument.getInstance().currentInstrument().pvPrefix();
 
     /**
      * {@inheritDoc}
