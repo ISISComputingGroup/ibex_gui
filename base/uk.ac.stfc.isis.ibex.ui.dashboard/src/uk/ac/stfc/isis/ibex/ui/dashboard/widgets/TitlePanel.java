@@ -86,7 +86,7 @@ public class TitlePanel extends Composite {
 		users.setToolTipText("Experiment users");
 
 		btnDisplayTitle = new Button(this, SWT.CHECK);
-		btnDisplayTitle.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+		btnDisplayTitle.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		btnDisplayTitle.setFont(font);
 		btnDisplayTitle.setText("Show Title and Users in Dataweb Dashboard Page");
 		btnDisplayTitle.addSelectionListener(new SelectionAdapter() {
