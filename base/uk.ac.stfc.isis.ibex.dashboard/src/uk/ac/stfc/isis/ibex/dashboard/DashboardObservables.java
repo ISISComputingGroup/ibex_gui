@@ -28,8 +28,12 @@ import uk.ac.stfc.isis.ibex.epics.pv.Closer;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.SwitchableObservable;
+import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
+import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
+import uk.ac.stfc.isis.ibex.instrument.channels.BooleanChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.CompressedCharWaveformChannel;
+import uk.ac.stfc.isis.ibex.instrument.channels.LongChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 
 /**
@@ -39,22 +43,33 @@ import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
 public class DashboardObservables extends Closer {
 
     private static final String USERS = "ED:SURNAME";
-
+    private static final String DISPLAY_TITLE = "DAE:TITLE:DISPLAY";
 
     private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
 
     private final Map<DashboardPv, SwitchableObservable<String>> valueObservables = new EnumMap<>(DashboardPv.class);
     private final Map<DashboardPv, SwitchableObservable<String>> labelObservables = new EnumMap<>(DashboardPv.class);
-
+    private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
+    
     /**
      * An observable for the list of users to be displayed on the dashboard.
      */
-    
     public final ForwardingObservable<String> users;
+    
     /**
      * An observable for the title on the dashboard.
      */
     public final ForwardingObservable<String> title;
+    
+    /**
+     * An observable for the flag which denotes whether the title is displayed on the dashboard.
+     */
+    public final ForwardingObservable<Boolean> displayTitle;
+    
+    /**
+     * An observable for the flag which denotes whether the title is displayed on the dashboard.
+     */
+    public final Writable<Long> displayTitleSetter;
     
     /**
      * An observable for the run state on the dashboard.
@@ -71,7 +86,12 @@ public class DashboardObservables extends Closer {
     public DashboardObservables() {
 	users = registerForClose(obsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
 		InstrumentUtils.addPrefix(USERS)));
-
+	
+    displayTitleSetter = writeFactory.getSwitchableWritable(new LongChannel(),
+    		InstrumentUtils.addPrefix(DISPLAY_TITLE));
+	
+    displayTitle = obsFactory.getSwitchableObservable(new BooleanChannel(),
+            InstrumentUtils.addPrefix(DISPLAY_TITLE));
 	final DaeObservables dae = new DaeObservables();
 	title = registerForClose(dae.title);
 	runState = registerForClose(dae.runState);
