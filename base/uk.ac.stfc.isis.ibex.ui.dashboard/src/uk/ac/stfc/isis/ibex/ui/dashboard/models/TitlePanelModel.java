@@ -46,6 +46,7 @@ public class TitlePanelModel extends Closer {
 	 * @param title an observable on the title
 	 * @param users an observable on the users
 	 * @param displayTitle is an observable and writer on the displayTitle
+	 * @param displayTitleSetter is an observable and writer on the displayTitle visibility
 	 */
 	public TitlePanelModel(ForwardingObservable<String> title, ForwardingObservable<String> users, ForwardingObservable<Boolean> displayTitle, Writable<Long> displayTitleSetter) {
 		this.title = registerForClose(new TextUpdatedObservableAdapter(title));
