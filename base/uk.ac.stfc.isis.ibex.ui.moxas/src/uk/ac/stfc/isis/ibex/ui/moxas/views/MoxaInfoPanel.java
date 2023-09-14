@@ -15,6 +15,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.TreeEvent;
 import org.eclipse.swt.events.TreeListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -82,6 +83,20 @@ public class MoxaInfoPanel extends Composite {
 		iocColumn.getColumn().setWidth(COLUMN_WIDTH);
 
 		iocColumn.setLabelProvider(new ColumnLabelProvider() {
+			@Override
+			public Color getForeground(Object element) {
+				// Change the text colour of cells where a port is connected to multiple IOCs
+				if (element instanceof MoxaModelObject) {
+					MoxaModelObject p = (MoxaModelObject) element;
+					List<Ioc> iocs = p.getIocs();
+					
+					if (iocs.size() > 1) {
+						return new Color(255, 0, 0);
+					}
+				}
+				return super.getForeground(element);
+			}
+			
 			@Override
 			public String getText(Object element) {
 				if (element instanceof ArrayList<?>) {
