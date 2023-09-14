@@ -7,15 +7,19 @@ import java.util.ArrayList;
 import static java.util.stream.Collectors.joining;
 
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.TreeEvent;
+import org.eclipse.swt.events.TreeListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.TreeItem;
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 
@@ -85,10 +89,11 @@ public class MoxaInfoPanel extends Composite {
 				}
 				MoxaModelObject p = (MoxaModelObject) element;
 				List<Ioc> iocs = p.getIocs();
-								
+				
 				return iocs.stream().map(Ioc::getName).collect(joining(", "));
 			}
 		});
+		
 		viewer.setContentProvider(new MoxaTableContentProvider());
 
 		viewer.setInput(model.getMoxaPorts());
@@ -97,6 +102,21 @@ public class MoxaInfoPanel extends Composite {
 		viewer.getTree().setHeaderVisible(true);
 		viewer.getTree().setLinesVisible(true);
 
+		// Tree expand and collapse listener.
+		viewer.getTree().addTreeListener(new TreeListener() {
+			@Override
+			public void treeCollapsed(TreeEvent e) {
+				TreeItem item = (TreeItem) e.item;
+				model.removeExpanded(item.getText());
+			}
+
+			@Override
+			public void treeExpanded(TreeEvent e) {
+				TreeItem item = (TreeItem) e.item;
+				model.addExpanded(item.getText());		
+			}
+    	});
+				
 		Composite expansionComposite = new Composite(this, SWT.FILL);
 		expansionComposite.setLayout(new GridLayout(3, true));
 		expandButton = new Button(expansionComposite, SWT.NONE);
@@ -125,8 +145,29 @@ public class MoxaInfoPanel extends Composite {
 				viewer.getTree().setVisible(false);
 				viewer.setInput(evt.getNewValue());
 				viewer.getTree().setVisible(true);
+				model.refresh();
 			}
 		});
+		
+    	model.addUiThreadPropertyChangeListener("expanded", new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				// Re-expand previously expanded items
+				if (evt.getNewValue() instanceof List<?>) {
+					ArrayList<TreePath> paths = new ArrayList<TreePath>();
+
+					List<?> test = (List<?>) evt.getNewValue();
+					for (var each : test) {
+						MoxaList[] iocArray = {(MoxaList) each};
+						paths.add(new TreePath(iocArray));
+					}
+					
+					viewer.setExpandedTreePaths(paths.toArray(new TreePath[0]));
+				}
+				
+				
+			}
+    	});
 	}
 
 }

@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,6 +25,8 @@ public class MoxasViewModel extends ModelObject {
 	private HashMap<String, MoxaList> moxaPorts = new HashMap<String, MoxaList>();
 	private final Configurations control;
 	private final UpdatedObservableAdapter<Configuration> currentConfig;
+	
+	private HashSet<String> expanded = new HashSet<String>(); // Store keys of expanded MoxaLists to re-expand on refresh
 	
 	/**
 	 * Represents all moxa physical port to COM port mappings.
@@ -67,7 +70,7 @@ public class MoxasViewModel extends ModelObject {
 	                configIocs.addAll(comp.getIocs());
 	            }
 	        });
-		} catch (Exception exception) {
+		} catch (Exception ignore) {
 			// error while retrieving iocs in config
 			// could be that the server is not running
 		}
@@ -109,6 +112,38 @@ public class MoxasViewModel extends ModelObject {
         currentConfig.addPropertyChangeListener(moxasListener);
 	}
 
+	/**
+	 * Add a currently expanded tree item.
+	 * @param key The MoxaList key.
+	 */
+	public void addExpanded(final String key) {
+		expanded.add(key);
+	}
+	
+	/**
+	 * Remove from expanded as the tree item was collapsed in the view.
+	 * @param key The MoxaList key.
+	 */
+	public void removeExpanded(final String key) {
+		expanded.remove(key);
+	}
+	
+	/**
+	 * @return The MoxaLists that were previously expanded.
+	 */
+	public List<MoxaList> getExpanded() {
+		return expanded.stream()
+					   .map(key -> moxaPorts.get(key))
+					   .collect(Collectors.toList());
+	}
+	
+	/**
+	 * Fire the view state restore properties.
+	 */
+	public void refresh() {
+		firePropertyChange("expanded", null, getExpanded());
+	}
+	
 	/**
 	 * Removes listeners on Moxa mappings.
 	 */
