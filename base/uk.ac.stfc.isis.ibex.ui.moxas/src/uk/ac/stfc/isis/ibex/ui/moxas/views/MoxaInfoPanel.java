@@ -2,7 +2,9 @@ package uk.ac.stfc.isis.ibex.ui.moxas.views;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 import java.util.ArrayList;
+import static java.util.stream.Collectors.joining;
 
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -14,6 +16,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+
+import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 
 /**
  * A panel showing port mappings of networked Moxa switches set up for this
@@ -69,6 +73,22 @@ public class MoxaInfoPanel extends Composite {
 				return p.getComPort();
 			}
 		});
+		TreeViewerColumn iocColumn = new TreeViewerColumn(viewer, SWT.NONE);
+		iocColumn.getColumn().setText("Connected IOC");
+		iocColumn.getColumn().setWidth(COLUMN_WIDTH);
+
+		iocColumn.setLabelProvider(new ColumnLabelProvider() {
+			@Override
+			public String getText(Object element) {
+				if (element instanceof ArrayList<?>) {
+					return null;
+				}
+				MoxaModelObject p = (MoxaModelObject) element;
+				List<Ioc> iocs = p.getIocs();
+								
+				return iocs.stream().map(Ioc::getName).collect(joining(", "));
+			}
+		});
 		viewer.setContentProvider(new MoxaTableContentProvider());
 
 		viewer.setInput(model.getMoxaPorts());
@@ -107,7 +127,6 @@ public class MoxaInfoPanel extends Composite {
 				viewer.getTree().setVisible(true);
 			}
 		});
-
 	}
 
 }
