@@ -935,7 +935,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>ERROR:</text>
+          <text>ERROR</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -982,7 +982,7 @@ $(pv_value)</tooltip>
           </off_color>
           <off_label>OFF</off_label>
           <on_color>
-            <color name="ISIS_Red_LED_On" red="255" green="100" blue="100" />
+            <color name="ISIS_Red_LED_On" red="255" green="0" blue="0" />
           </on_color>
           <on_label>ON</on_label>
           <pv_name>$(PV_ROOT)StatusLI</pv_name>
@@ -1075,7 +1075,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Link:</text>
+          <text>Link</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -1116,7 +1116,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Delay:</text>
+          <text>Delay</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -1418,7 +1418,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Delay:</text>
+          <text>Delay</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -1459,7 +1459,8 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Logic:</text>
+
+          <text>Logic</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -1500,7 +1501,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Polarity:</text>
+          <text>Polarity</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
@@ -2626,7 +2627,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Settings save slot:</text>
+          <text>Settings Save Slot:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
