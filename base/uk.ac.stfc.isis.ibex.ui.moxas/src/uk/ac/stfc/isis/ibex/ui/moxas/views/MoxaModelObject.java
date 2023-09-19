@@ -50,6 +50,7 @@ public class MoxaModelObject extends ModelObject implements Comparable<MoxaModel
 	 *
 	 * @param physport physical moxa port number for a mapping.
 	 * @param comport  COM port for a mapping.
+	 * @param iocs List of IOCs using the COM port.
 	 */
 	public MoxaModelObject(String physport, String comport, List<Ioc> iocs) {
 		this.physport = physport;

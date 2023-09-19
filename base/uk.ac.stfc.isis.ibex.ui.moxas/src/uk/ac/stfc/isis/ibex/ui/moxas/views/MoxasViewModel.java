@@ -77,10 +77,18 @@ public class MoxasViewModel extends ModelObject {
         return configIocs;
 	}
 	
+	/**
+	 * Get a list of IOCs for a given COM port.
+	 * @param iocs All IOCs in the current config.
+	 * @param comPort a COM port to check against.
+	 * @return A list of IOCs for a given COM port.
+	 */
 	public List<Ioc> getIocsForCom(Collection<Ioc> iocs, String comPort) {
 		return iocs.stream().filter((ioc) -> {
 			Macro portMacro = ioc.getMacros().stream().filter(macro -> macro.getName().equals("PORT")).findFirst().orElse(null);
-			if (portMacro == null) return false;
+			if (portMacro == null) {
+				return false; 
+			}
 			return portMacro.getValue().equals(comPort);
 		}).toList();
 	}
