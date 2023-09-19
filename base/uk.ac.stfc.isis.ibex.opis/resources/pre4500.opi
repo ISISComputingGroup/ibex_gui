@@ -62,7 +62,7 @@
     </scale_options>
     <scripts />
     <show_scrollbar>false</show_scrollbar>
-    <text>PRE4500 Temperature Controller</text>
+    <text>PRE4500 Temperature Monitor</text>
     <tooltip></tooltip>
     <transparent>false</transparent>
     <vertical_alignment>1</vertical_alignment>
@@ -577,32 +577,7 @@ $(pv_value)</tooltip>
       <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_GraphLabels_NEW</opifont.name>
     </axis_1_title_font>
     <axis_1_visible>true</axis_1_visible>
-    <axis_2_auto_scale>true</axis_2_auto_scale>
-    <axis_2_auto_scale_threshold>0.0</axis_2_auto_scale_threshold>
-    <axis_2_axis_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-    </axis_2_axis_color>
-    <axis_2_axis_title>Output</axis_2_axis_title>
-    <axis_2_dash_grid_line>true</axis_2_dash_grid_line>
-    <axis_2_grid_color>
-      <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
-    </axis_2_grid_color>
-    <axis_2_left_bottom_side>false</axis_2_left_bottom_side>
-    <axis_2_log_scale>false</axis_2_log_scale>
-    <axis_2_maximum>100.0</axis_2_maximum>
-    <axis_2_minimum>0.0</axis_2_minimum>
-    <axis_2_scale_font>
-      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_GraphScale_NEW</opifont.name>
-    </axis_2_scale_font>
-    <axis_2_scale_format></axis_2_scale_format>
-    <axis_2_show_grid>true</axis_2_show_grid>
-    <axis_2_time_format>0</axis_2_time_format>
-    <axis_2_title_font>
-      <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_GraphLabels_NEW</opifont.name>
-    </axis_2_title_font>
-    <axis_2_visible>false</axis_2_visible>
-    <axis_2_y_axis>true</axis_2_y_axis>
-    <axis_count>3</axis_count>
+    <axis_count>2</axis_count>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
@@ -623,7 +598,7 @@ $(pv_value)</tooltip>
     <plot_area_background_color>
       <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
     </plot_area_background_color>
-    <pv_name></pv_name>
+    <pv_name>$(PV_ROOT_PRE4500):SPARE:TEMP</pv_name>
     <pv_value />
     <rules />
     <scale_options>
@@ -654,10 +629,10 @@ $(trace_0_y_pv_value)</tooltip>
     </trace_0_trace_color>
     <trace_0_trace_type>0</trace_0_trace_type>
     <trace_0_update_delay>100</trace_0_update_delay>
-    <trace_0_update_mode>0</trace_0_update_mode>
+    <trace_0_update_mode>4</trace_0_update_mode>
     <trace_0_visible>true</trace_0_visible>
     <trace_0_x_axis_index>0</trace_0_x_axis_index>
-    <trace_0_x_pv>$(P)CS:IOC:$(PRE4500):DEVIOS:HEARTBEAT</trace_0_x_pv>
+    <trace_0_x_pv></trace_0_x_pv>
     <trace_0_x_pv_value />
     <trace_0_y_axis_index>1</trace_0_y_axis_index>
     <trace_0_y_pv>$(PV_ROOT_PRE4500):SPARE:TEMP</trace_0_y_pv>
@@ -675,10 +650,10 @@ $(trace_0_y_pv_value)</tooltip>
     </trace_1_trace_color>
     <trace_1_trace_type>0</trace_1_trace_type>
     <trace_1_update_delay>100</trace_1_update_delay>
-    <trace_1_update_mode>0</trace_1_update_mode>
+    <trace_1_update_mode>4</trace_1_update_mode>
     <trace_1_visible>true</trace_1_visible>
     <trace_1_x_axis_index>0</trace_1_x_axis_index>
-    <trace_1_x_pv>$(P)CS:IOC:$(PRE4500):DEVIOS:HEARTBEAT</trace_1_x_pv>
+    <trace_1_x_pv></trace_1_x_pv>
     <trace_1_x_pv_value />
     <trace_1_y_axis_index>1</trace_1_y_axis_index>
     <trace_1_y_pv>$(PV_ROOT_PRE4500):CHOPPER:BODY:TEMP</trace_1_y_pv>
@@ -696,10 +671,10 @@ $(trace_0_y_pv_value)</tooltip>
     </trace_2_trace_color>
     <trace_2_trace_type>0</trace_2_trace_type>
     <trace_2_update_delay>100</trace_2_update_delay>
-    <trace_2_update_mode>0</trace_2_update_mode>
+    <trace_2_update_mode>4</trace_2_update_mode>
     <trace_2_visible>true</trace_2_visible>
     <trace_2_x_axis_index>0</trace_2_x_axis_index>
-    <trace_2_x_pv>$(P)CS:IOC:$(PRE4500):DEVIOS:HEARTBEAT</trace_2_x_pv>
+    <trace_2_x_pv></trace_2_x_pv>
     <trace_2_x_pv_value />
     <trace_2_y_axis_index>1</trace_2_y_axis_index>
     <trace_2_y_pv>$(PV_ROOT_PRE4500):COOLING:WATER:TEMP</trace_2_y_pv>
@@ -708,7 +683,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_3_buffer_size>100</trace_3_buffer_size>
     <trace_3_concatenate_data>true</trace_3_concatenate_data>
     <trace_3_line_width>1</trace_3_line_width>
-    <trace_3_name>CHOPPER PITS</trace_3_name>
+    <trace_3_name>CHOPPER PIT</trace_3_name>
     <trace_3_plot_mode>0</trace_3_plot_mode>
     <trace_3_point_size>4</trace_3_point_size>
     <trace_3_point_style>0</trace_3_point_style>
@@ -717,10 +692,10 @@ $(trace_0_y_pv_value)</tooltip>
     </trace_3_trace_color>
     <trace_3_trace_type>0</trace_3_trace_type>
     <trace_3_update_delay>100</trace_3_update_delay>
-    <trace_3_update_mode>0</trace_3_update_mode>
+    <trace_3_update_mode>4</trace_3_update_mode>
     <trace_3_visible>true</trace_3_visible>
     <trace_3_x_axis_index>0</trace_3_x_axis_index>
-    <trace_3_x_pv>$(P)CS:IOC:$(PRE4500):DEVIOS:HEARTBEAT</trace_3_x_pv>
+    <trace_3_x_pv></trace_3_x_pv>
     <trace_3_x_pv_value />
     <trace_3_y_axis_index>1</trace_3_y_axis_index>
     <trace_3_y_pv>$(PV_ROOT_PRE4500):CHOPPER:PIT:TEMP</trace_3_y_pv>
