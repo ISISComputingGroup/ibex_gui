@@ -61,6 +61,7 @@ public class ExperimentDetailsVariables {
     
     /** The observable for display title status. **/
     public final ForwardingObservable<Boolean> displayTitle;
+    
     /** The writable for display title status. **/
     public final Writable<Long> displayTitleSetter;
 

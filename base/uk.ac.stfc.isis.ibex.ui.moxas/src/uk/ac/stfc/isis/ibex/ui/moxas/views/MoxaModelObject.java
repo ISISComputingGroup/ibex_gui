@@ -28,7 +28,11 @@
  */
 package uk.ac.stfc.isis.ibex.ui.moxas.views;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 
 /**
  * Class to hold information about the mapping between physical moxa ports and
@@ -39,16 +43,19 @@ public class MoxaModelObject extends ModelObject implements Comparable<MoxaModel
 
 	private final String physport;
 	private final String comport;
+	private final List<Ioc> iocs;
 
 	/**
 	 * Instantiates a new moxa mapping pair.
 	 *
 	 * @param physport physical moxa port number for a mapping.
 	 * @param comport  COM port for a mapping.
+	 * @param iocs List of IOCs using the COM port.
 	 */
-	public MoxaModelObject(String physport, String comport) {
+	public MoxaModelObject(String physport, String comport, List<Ioc> iocs) {
 		this.physport = physport;
 		this.comport = comport;
+		this.iocs = new ArrayList<Ioc>(iocs);
 	}
 
 	/**
@@ -69,7 +76,14 @@ public class MoxaModelObject extends ModelObject implements Comparable<MoxaModel
 	public String getComPort() {
 		return comport;
 	}
-
+	
+	/**
+	 * @return IOCs that use the COM port
+	 */
+	public List<Ioc> getIocs() {
+		return new ArrayList<Ioc>(iocs);
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */

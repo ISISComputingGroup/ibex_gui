@@ -21,5 +21,11 @@
             name="name"
             restorable="true">
       </view>
+      <view
+            class="uk.ac.stfc.isis.ibex.ui.dae.spectraplots.CombinedSpectraPlotsOpiTargetView"
+            id="uk.ac.stfc.isis.ibex.ui.dae.CombinedSpectraPlotsOpiTargetView"
+            name="name"
+            restorable="true">
+      </view>
    </extension>
 </plugin>
