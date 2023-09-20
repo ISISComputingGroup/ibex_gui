@@ -105,7 +105,7 @@ public abstract class OpiTargetView extends OpiView {
     	macros.put("OPINAME", target.opiName());
     	macros.put("P", pvPrefix);
     	for (Map.Entry<String, String> macro : target.properties().entrySet()) {
-    		if (!macro.getValue().trim().equals("")) {
+    		if (macro.getValue() != null && !macro.getValue().trim().equals("")) {
     			macros.put(macro.getKey(), macro.getValue());
     		}
     	}
