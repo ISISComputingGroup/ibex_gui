@@ -41,15 +41,19 @@ public class NicosStatusContainer {
         nicosStatus.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         nicosStatus.setLayout(new GridLayout(2, false));
         
-        lblCurrentError = new Label(nicosStatus, SWT.NONE);
-        lblCurrentError.setText("Server status: ");
-        
-        Label errorIndicator = new Label(nicosStatus, SWT.NONE);
-        errorIndicator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        bindingContext.bindValue(WidgetProperties.text().observe(errorIndicator),
-                BeanProperties.value("error").observe(model));
-        
         new HelpButton(nicosStatus, HELP_LINK, DESCRIPTION);
         
+        Composite textComposite = new Composite(nicosStatus, SWT.NONE);
+        textComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        textComposite.setLayout(new GridLayout(1, false));
+        
+        lblCurrentError = new Label(textComposite, SWT.NONE);
+        lblCurrentError.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        lblCurrentError.setText("Server status: ");
+        
+        Label errorIndicator = new Label(textComposite, SWT.NONE);
+        errorIndicator.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        bindingContext.bindValue(WidgetProperties.text().observe(errorIndicator),
+                BeanProperties.value("error").observe(model));
     }
 }
