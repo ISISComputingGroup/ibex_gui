@@ -25,9 +25,9 @@ public class MoxasView {
 	public void createPartControl(Composite parent) {
 		parent.setLayout(new GridLayout(1, true));
 		control = Configurations.getInstance();
-		MoxasViewModel iocControlViewModel = new MoxasViewModel(control);
-		MoxaInfoPanel iocControlView = new MoxaInfoPanel(parent, SWT.FILL, iocControlViewModel);
-		iocControlView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		MoxasViewModel moxasViewModel = new MoxasViewModel(control);
+		MoxaInfoPanel moxasView = new MoxaInfoPanel(parent, SWT.FILL, moxasViewModel);
+		moxasView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 	}
 
