@@ -15,7 +15,6 @@ import org.eclipse.ui.menus.WorkbenchWindowControlContribution;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
-import uk.ac.stfc.isis.ibex.ui.widgets.HelpButton;
 
 /**
  * Handler for console menu bar button that links to the scripting page on the user wiki.
@@ -32,7 +31,7 @@ public class ConsoleHelpButton extends WorkbenchWindowControlContribution {
 	 */
 	@Override
 	protected Control createControl(Composite parent) {
-		button = new Button(parent, SWT.NONE); // This needs to be a HelpButton instance, which needs to be modified to inherit from Button. Then we can return it as a Control.
+		button = new Button(parent, SWT.NONE);
 		button.setText(BUTTON_TEXT);
 		button.addSelectionListener(new SelectionAdapter() {
 			  public void widgetSelected(SelectionEvent e) {
