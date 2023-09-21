@@ -143,11 +143,7 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 		showMoxasButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				System.out.println("moxas button hit");
-				
-				if (moxaDetailsDialog.open() == Window.OK) {
-					
-				}
+				moxaDetailsDialog.open()	
 			}
 		});	
 		
