@@ -1102,7 +1102,7 @@
         <color red="192" green="192" blue="192" />
       </foreground_color>
       <height>24</height>
-      <image_file>../icons_for_opis/help_icon_24.png</image_file>
+      <image_file>../icons_for_opis/helpIcon.png</image_file>
       <name>Image</name>
       <no_animation>false</no_animation>
       <permutation_matrix>
