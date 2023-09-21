@@ -53,6 +53,7 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 
 	private Button saveAsBtn;
 	private Button saveButton;
+	private Button showMoxasButton;
 	private boolean editBlockFirst;
 	private boolean switchConfigOnSaveAs;
 	private boolean calledSwitchConfigOnSaveAs = false;
@@ -62,7 +63,7 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 	private static final String CONFIG_HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Create-And-Manage-Configurations";
 	private static final String COMPONENT_HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Create-and-Manage-Components";
 	private final String description;
-	
+	private MoxaDetailsDialog moxaDetailsDialog;
 	/**
 	 * Constructor.
 	 * 
@@ -131,11 +132,21 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 			new HelpButton(parent, COMPONENT_HELP_LINK, description);
 		}
 		
+		this.moxaDetailsDialog = new MoxaDetailsDialog(this.getShell());
+		
 		return control;
 	}
 
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
+		showMoxasButton = createButton(parent, IDialogConstants.CLIENT_ID + 1, "Show Moxa ports", false);
+		showMoxasButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				moxaDetailsDialog.open();
+			}
+		});	
+		
 		if (!isBlank && !this.config.getName().isEmpty()) {
 			saveButton = createButton(parent, IDialogConstants.OK_ID, "Save", true);
 		}
@@ -170,6 +181,7 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 				}
 			}
 		});
+		
 
 		createButton(parent, IDialogConstants.CANCEL_ID, "Cancel", false);
 

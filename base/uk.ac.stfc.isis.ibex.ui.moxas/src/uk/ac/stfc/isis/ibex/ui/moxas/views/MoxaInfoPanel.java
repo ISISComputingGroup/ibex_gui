@@ -34,7 +34,8 @@ public class MoxaInfoPanel extends Composite {
 	private final Button collapseButton;
 
 	private static final int COLUMN_WIDTH = 500;
-
+	private static final int COLUMN_WIDTH_NARROW = 150;
+	
 	/**
 	 * The constructor.
 	 * 
@@ -66,7 +67,7 @@ public class MoxaInfoPanel extends Composite {
 		});
 		TreeViewerColumn comPortColumn = new TreeViewerColumn(viewer, SWT.NONE);
 		comPortColumn.getColumn().setText("COM port");
-		comPortColumn.getColumn().setWidth(COLUMN_WIDTH);
+		comPortColumn.getColumn().setWidth(COLUMN_WIDTH_NARROW);
 
 		comPortColumn.setLabelProvider(new ColumnLabelProvider() {
 			@Override
