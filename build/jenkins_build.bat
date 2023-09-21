@@ -21,18 +21,23 @@ set MSINAME=ibex_client
 call build.bat "LOG" %BUILT_CLIENT_DIR% %TARGET_DIR%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-call build_msi.bat %BASEDIR%.. %TARGET_DIR% %MSINAME%
-if %errorlevel% neq 0 exit /b %errorlevel%
+set PUBLISH=NO
+if "%RELEASE%" == "YES" set PUBLISH=YES
+if "%DEPLOY%" == "YES" set PUBLISH=YES
 
-pushd %CD%\..\%TARGET_DIR%
-if exist "..\Client-tmp.7z" del "..\Client-tmp.7z"
-"c:\Program Files\7-Zip\7z.exe" a -mx1 -r "..\Client-tmp.7z" .
-set errcode=%errorlevel%
-popd
-if %errcode% gtr 1 exit /b %errcode%
+if "%PUBLISH%" == "YES" (
+    call build_msi.bat %BASEDIR%.. %TARGET_DIR% %MSINAME%
+    if !errorlevel! neq 0 exit /b !errorlevel!
 
-REM set EXIT=YES will change error code to 1 if not set previously so store the current
-set build_error_level=%errorlevel%
+    pushd %CD%\..\%TARGET_DIR%
+    if exist "..\Client-tmp.7z" del "..\Client-tmp.7z"
+    "c:\Program Files\7-Zip\7z.exe" a -mx1 -r "..\Client-tmp.7z" .
+    set errcode=!errorlevel!
+    popd
+    if !errcode! gtr 1 exit /b !errcode!
+)
+
+if "%PUBLISH%" == "NO" exit /b 0
 
 @echo on
 
