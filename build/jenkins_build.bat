@@ -25,19 +25,18 @@ set PUBLISH=NO
 if "%RELEASE%" == "YES" set PUBLISH=YES
 if "%DEPLOY%" == "YES" set PUBLISH=YES
 
-if "%PUBLISH%" == "YES" (
-    call build_msi.bat %BASEDIR%.. %TARGET_DIR% %MSINAME%
-    if !errorlevel! neq 0 exit /b !errorlevel!
-
-    pushd %CD%\..\%TARGET_DIR%
-    if exist "..\Client-tmp.7z" del "..\Client-tmp.7z"
-    "c:\Program Files\7-Zip\7z.exe" a -mx1 -r "..\Client-tmp.7z" .
-    set errcode=!errorlevel!
-    popd
-    if !errcode! gtr 1 exit /b !errcode!
-)
-
 if "%PUBLISH%" == "NO" exit /b 0
+
+REM disable msi for now
+REM call build_msi.bat %BASEDIR%.. %TARGET_DIR% %MSINAME%
+REM if !errorlevel! neq 0 exit /b !errorlevel!
+
+pushd %CD%\..\%TARGET_DIR%
+if exist "..\Client-tmp.7z" del "..\Client-tmp.7z"
+"c:\Program Files\7-Zip\7z.exe" a -mx1 -r "..\Client-tmp.7z" .
+set errcode=!errorlevel!
+popd
+if !errcode! gtr 1 exit /b !errcode!
 
 @echo on
 
@@ -99,10 +98,12 @@ if %errorlevel% geq 4 (
 )
 
 REM copy MSI
-xcopy /y /j %MSINAME%.msi %INSTALLDIR%
-if %errorlevel% neq 0 (
-    @echo MSI copy failed
-    exit /b %errorlevel%
+if exist "%MSINAME%.msi" (
+    xcopy /y /j %MSINAME%.msi %INSTALLDIR%
+    if !errorlevel! neq 0 (
+        @echo MSI copy failed
+        exit /b !errorlevel!
+    )
 )
 
 REM 7zip archive
