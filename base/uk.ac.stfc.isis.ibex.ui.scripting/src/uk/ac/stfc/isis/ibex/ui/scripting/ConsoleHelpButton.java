@@ -24,7 +24,7 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 public class ConsoleHelpButton extends WorkbenchWindowControlContribution {
 	private Button button;
 	
-	private static final String BUTTON_TEXT = "Help";
+//	private static final String BUTTON_TEXT = "Help";
 	private static final String TOOLTIP_TEXT = "Open user manual link in browser for help with scripting";
 	private static final String WIKI_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Scripting-View.rest";
 	private static final String SYMBOLIC_PATH = "uk.ac.stfc.isis.ibex.ui.widgets";
