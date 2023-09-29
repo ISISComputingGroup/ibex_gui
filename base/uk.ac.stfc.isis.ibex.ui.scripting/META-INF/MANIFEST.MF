@@ -39,3 +39,4 @@ Require-Bundle: javax.annotation;bundle-version="1.2.0",
  uk.ac.stfc.isis.ibex.jaxb;bundle-version="1.0.0",
  jakarta.activation-api;bundle-version="2.1.1"
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.scripting
+Import-Package: uk.ac.stfc.isis.ibex.ui.widgets

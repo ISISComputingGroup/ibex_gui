@@ -185,7 +185,7 @@ $(trace_1_y_pv_value)</tooltip>
     </trace_0_trace_color>
     <trace_0_trace_type>0</trace_0_trace_type>
     <trace_0_update_delay>0</trace_0_update_delay>
-    <trace_0_update_mode>0</trace_0_update_mode>
+    <trace_0_update_mode>4</trace_0_update_mode>
     <trace_0_visible>true</trace_0_visible>
     <trace_0_x_axis_index>0</trace_0_x_axis_index>
     <trace_0_x_pv></trace_0_x_pv>
@@ -206,7 +206,7 @@ $(trace_1_y_pv_value)</tooltip>
     </trace_1_trace_color>
     <trace_1_trace_type>0</trace_1_trace_type>
     <trace_1_update_delay>0</trace_1_update_delay>
-    <trace_1_update_mode>0</trace_1_update_mode>
+    <trace_1_update_mode>4</trace_1_update_mode>
     <trace_1_visible>true</trace_1_visible>
     <trace_1_x_axis_index>0</trace_1_x_axis_index>
     <trace_1_x_pv></trace_1_x_pv>
@@ -227,7 +227,7 @@ $(trace_1_y_pv_value)</tooltip>
     </trace_2_trace_color>
     <trace_2_trace_type>0</trace_2_trace_type>
     <trace_2_update_delay>0</trace_2_update_delay>
-    <trace_2_update_mode>0</trace_2_update_mode>
+    <trace_2_update_mode>4</trace_2_update_mode>
     <trace_2_visible>true</trace_2_visible>
     <trace_2_x_axis_index>0</trace_2_x_axis_index>
     <trace_2_x_pv></trace_2_x_pv>
@@ -248,7 +248,7 @@ $(trace_1_y_pv_value)</tooltip>
     </trace_3_trace_color>
     <trace_3_trace_type>0</trace_3_trace_type>
     <trace_3_update_delay>0</trace_3_update_delay>
-    <trace_3_update_mode>0</trace_3_update_mode>
+    <trace_3_update_mode>4</trace_3_update_mode>
     <trace_3_visible>true</trace_3_visible>
     <trace_3_x_axis_index>0</trace_3_x_axis_index>
     <trace_3_x_pv></trace_3_x_pv>
@@ -269,7 +269,7 @@ $(trace_1_y_pv_value)</tooltip>
     </trace_4_trace_color>
     <trace_4_trace_type>0</trace_4_trace_type>
     <trace_4_update_delay>0</trace_4_update_delay>
-    <trace_4_update_mode>0</trace_4_update_mode>
+    <trace_4_update_mode>4</trace_4_update_mode>
     <trace_4_visible>true</trace_4_visible>
     <trace_4_x_axis_index>0</trace_4_x_axis_index>
     <trace_4_x_pv></trace_4_x_pv>
@@ -511,73 +511,6 @@ $(pv_value)</tooltip>
       <wuid>-133fa697:18920a3c6a7:-77c5</wuid>
       <x>90</x>
       <y>6</y>
-    </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.combo" version="1.0.0">
-      <actions hook="false" hook_all="false" />
-      <alarm_pulsing>false</alarm_pulsing>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <background_color>
-        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-      </background_color>
-      <border_alarm_sensitive>true</border_alarm_sensitive>
-      <border_color>
-        <color name="ISIS_Border" red="0" green="0" blue="0" />
-      </border_color>
-      <border_style>0</border_style>
-      <border_width>1</border_width>
-      <enabled>true</enabled>
-      <font>
-        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
-      </font>
-      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-      <foreground_color>
-        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-      </foreground_color>
-      <height>27</height>
-      <items />
-      <items_from_pv>false</items_from_pv>
-      <name>frequency_current_values_combo_1</name>
-      <pv_name>$(PV_ROOT)FREQ:SP</pv_name>
-      <pv_value />
-      <rules>
-        <rule name="IF_local_mode_THEN_disable_user_input" prop_id="enabled" out_exp="false">
-          <exp bool_exp="pv0==0">
-            <value>false</value>
-          </exp>
-          <pv trig="true">$(PV_ROOT)COMP:MODE</pv>
-        </rule>
-      </rules>
-      <scale_options>
-        <width_scalable>true</width_scalable>
-        <height_scalable>false</height_scalable>
-        <keep_wh_ratio>false</keep_wh_ratio>
-      </scale_options>
-      <scripts>
-        <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
-          <scriptName>EmbeddedScript</scriptName>
-          <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
-from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
-
-value = PVUtil.getString(pvs[0])
-
-items = widget.getPropertyValue("items")
-if len(items) == 0:
-	values = value.split("|")
-	for a in values:
-		items.add(str(a))
-	items = widget.setPropertyValue("items", items)
-]]></scriptText>
-          <pv trig="true">$(PV_ROOT)VALIDFREQS</pv>
-        </path>
-      </scripts>
-      <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-      <visible>true</visible>
-      <widget_type>Combo</widget_type>
-      <width>90</width>
-      <wuid>-133fa697:18920a3c6a7:-77c0</wuid>
-      <x>348</x>
-      <y>163</y>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">

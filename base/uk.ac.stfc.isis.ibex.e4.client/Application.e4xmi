@@ -286,9 +286,11 @@
         <children xsi:type="basic:Part" xmi:id="_uB3noIf-EeeTH-lQyXhh9A" elementId="uk.ac.stfc.isis.ibex.ui.dae.views.runsummary" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dae/uk.ac.stfc.isis.ibex.ui.dae.run.RunSummary" label="Run Summary"/>
         <children xsi:type="basic:Part" xmi:id="_QGpWsJ7LEeemm6vdKXiI0Q" elementId="uk.ac.stfc.isis.ibex.e4.client.part.experimentsetup" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dae/uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.ExperimentSetup" label="Experiment Setup"/>
         <children xsi:type="basic:Part" xmi:id="_q1_uMJ7LEeemm6vdKXiI0Q" elementId="uk.ac.stfc.isis.ibex.e4.client.part.runinformation" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dae/uk.ac.stfc.isis.ibex.ui.dae.runinformation.RunInformationPanel" label="Run Information"/>
-        <children xsi:type="basic:Part" xmi:id="_Nh7O0J7ZEeemm6vdKXiI0Q" elementId="uk.ac.stfc.isis.ibex.ui.dae.SpectraOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Spectra Plots"/>
+        <children xsi:type="basic:Part" xmi:id="_NdEc8EgEEe6cnsbFlljtcQ" elementId="uk.ac.stfc.isis.ibex.ui.dae.SpectraOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Spectra Plots"/>
+        <children xsi:type="basic:Part" xmi:id="_Nh7O0J7ZEeemm6vdKXiI0Q" elementId="uk.ac.stfc.isis.ibex.ui.dae.CombinedSpectraPlotsOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Combined Spectra Plots"/>
         <children xsi:type="basic:Part" xmi:id="_aWGE4J7ZEeemm6vdKXiI0Q" elementId="uk.ac.stfc.isis.ibex.e4.client.part.detectordiagnostics" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dae/uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics.DetectorDiagnosticsPanel" label="Detector Diagnostics"/>
         <children xsi:type="basic:Part" xmi:id="_lWyjcJ7fEeemm6vdKXiI0Q" elementId="uk.ac.stfc.isis.ibex.e4.client.part.vetos" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dae/uk.ac.stfc.isis.ibex.ui.dae.vetos.VetosPanel" label="Vetos"/>
+        <children xsi:type="basic:Part" xmi:id="_vjS5MEf1Ee6cnsbFlljtcQ" elementId="uk.ac.stfc.isis.ibex.e4.client.part.0"/>
       </children>
     </children>
   </snippets>
@@ -393,10 +395,10 @@
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_83AgIKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.14" containerData="70" horizontal="true">
         <children xsi:type="basic:PartSashContainer" xmi:id="_bjNsoI_6Eei7V5fpLz0Rmw" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.25">
-          <children xsi:type="basic:PartStack" xmi:id="_9-DnwKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13" containerData="90">
+          <children xsi:type="basic:PartStack" xmi:id="_9-DnwKjdEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13" containerData="88">
             <children xsi:type="basic:Part" xmi:id="_V-05IKjeEeeNUPQOsQF40g" elementId="uk.ac.stfc.isis.ibex.ui.nicos.NicosOutputContainer" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.nicos/uk.ac.stfc.isis.ibex.ui.nicos.NicosOutputContainer" label="Output"/>
           </children>
-          <children xsi:type="basic:PartStack" xmi:id="_mi000I_6Eei7V5fpLz0Rmw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.33" containerData="10">
+          <children xsi:type="basic:PartStack" xmi:id="_mi000I_6Eei7V5fpLz0Rmw" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.33" containerData="12">
             <children xsi:type="basic:Part" xmi:id="_m1vw0I_6Eei7V5fpLz0Rmw" elementId="uk.ac.stfc.isis.ibex.e4.client.part.nicosstatus" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.nicos/uk.ac.stfc.isis.ibex.ui.nicos.NicosStatusContainer" label="Status"/>
           </children>
         </children>

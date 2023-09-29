@@ -32,4 +32,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.configserver
 Import-Package: uk.ac.stfc.isis.ibex.ui.ioccontrol,
- uk.ac.stfc.isis.ibex.ui.mainmenu.instrument
+ uk.ac.stfc.isis.ibex.ui.mainmenu.instrument,
+ uk.ac.stfc.isis.ibex.ui.moxas.views

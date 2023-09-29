@@ -46,8 +46,9 @@ public class BeamInfoMenu extends MenuManager {
 			public void run() {
 
 				try {
-
-					new NewBlockHandler().createDialog(facilityPV.pv);
+					var handler = new NewBlockHandler();
+					handler.setLocal(false);
+					handler.createDialog(facilityPV.pv);
 
 				} catch (TimeoutException e) {
 					LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);

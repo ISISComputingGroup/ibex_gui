@@ -62,7 +62,13 @@
             id="uk.ac.stfc.isis.ibex.ui.scripting.clearConsole">
       </dynamic>
       </menuContribution>
-      
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.console.ConsoleView">
+      <dynamic
+            class="uk.ac.stfc.isis.ibex.ui.scripting.ConsoleHelpButton" 
+            id="uk.ac.stfc.isis.ibex.ui.scripting.ConsoleHelpButton">
+      </dynamic>
+      </menuContribution>
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.console.ConsoleView?before=launchGroup">
         	  <dynamic

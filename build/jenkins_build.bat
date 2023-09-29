@@ -21,18 +21,22 @@ set MSINAME=ibex_client
 call build.bat "LOG" %BUILT_CLIENT_DIR% %TARGET_DIR%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-call build_msi.bat %BASEDIR%.. %TARGET_DIR% %MSINAME%
-if %errorlevel% neq 0 exit /b %errorlevel%
+set PUBLISH=NO
+if "%RELEASE%" == "YES" set PUBLISH=YES
+if "%DEPLOY%" == "YES" set PUBLISH=YES
+
+if "%PUBLISH%" == "NO" exit /b 0
+
+REM disable msi for now
+REM call build_msi.bat %BASEDIR%.. %TARGET_DIR% %MSINAME%
+REM if !errorlevel! neq 0 exit /b !errorlevel!
 
 pushd %CD%\..\%TARGET_DIR%
 if exist "..\Client-tmp.7z" del "..\Client-tmp.7z"
 "c:\Program Files\7-Zip\7z.exe" a -mx1 -r "..\Client-tmp.7z" .
-set errcode=%errorlevel%
+set errcode=!errorlevel!
 popd
-if %errcode% gtr 1 exit /b %errcode%
-
-REM set EXIT=YES will change error code to 1 if not set previously so store the current
-set build_error_level=%errorlevel%
+if !errcode! gtr 1 exit /b !errcode!
 
 @echo on
 
@@ -94,10 +98,12 @@ if %errorlevel% geq 4 (
 )
 
 REM copy MSI
-xcopy /y /j %MSINAME%.msi %INSTALLDIR%
-if %errorlevel% neq 0 (
-    @echo MSI copy failed
-    exit /b %errorlevel%
+if exist "%MSINAME%.msi" (
+    xcopy /y /j %MSINAME%.msi %INSTALLDIR%
+    if !errorlevel! neq 0 (
+        @echo MSI copy failed
+        exit /b !errorlevel!
+    )
 )
 
 REM 7zip archive

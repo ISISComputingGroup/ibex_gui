@@ -36,8 +36,8 @@ subst /d %FreeDriveLetter%:
 subst %FreeDriveLetter%: %FILESROOT%
 pushd %FreeDriveLetter%:\
 
-del %MSINAME%.wxi
-del %MSINAME%.msi
+if exist "%MSINAME%.wxi" del %MSINAME%.wxi
+if exist "%MSINAME%.msi" del %MSINAME%.msi
 
 @echo %TIME% Running HEAT
 REM -sw5150 supresses warning about self registering DLLs

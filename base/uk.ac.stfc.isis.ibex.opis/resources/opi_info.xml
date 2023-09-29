@@ -2395,6 +2395,89 @@
         </macros>
       </value>
     </entry>
+     <entry>
+      <key>Spectra combined plot</key>
+      <value>
+        <categories>
+          <category>Monitors</category>
+        </categories>
+        <type>DAE</type>
+        <path>spectra_combined_plot.opi</path>
+        <description>A combined sprectra plot.</description>
+        <macros>
+          <macro>
+            <name>SPECTRUM_PV1</name>
+            <description>e.g. loc://_LOCAL:SPEC:SPEC1</description>
+            <default>loc://_LOCAL:SPEC:SPEC1</default>
+          </macro>
+          <macro>
+            <name>PERIOD_PV1</name>
+            <description>e.g. loc://_LOCAL:SPEC:PERIOD1</description>
+            <default>loc://_LOCAL:SPEC:PERIOD1</default>
+          </macro>
+          <macro>
+            <name>CHECKBOX_PV1</name>
+            <description>e.g. loc://_LOCAL:SPEC:CHECKBOX1</description>
+            <default>loc://_LOCAL:SPEC:CHECKBOX1</default>
+          </macro>
+           <macro>
+            <name>MODE_PV</name>
+            <description>e.g. loc://_LOCAL:SPEC:MODE1</description>
+            <default>loc://_LOCAL:SPEC:MODE1</default>
+          </macro>
+          
+           <macro>
+            <name>SPECTRUM_PV2</name>
+            <description>e.g. loc://_LOCAL:SPEC:SPEC2</description>
+            <default>loc://_LOCAL:SPEC:SPEC2</default>
+          </macro>
+          <macro>
+            <name>PERIOD_PV2</name>
+            <description>e.g. loc://_LOCAL:SPEC:PERIOD2</description>
+            <default>loc://_LOCAL:SPEC:PERIOD2</default>
+          </macro>
+          <macro>
+            <name>CHECKBOX_PV2</name>
+            <description>e.g. loc://_LOCAL:SPEC:CHECKBOX2</description>
+            <default>loc://_LOCAL:SPEC:CHECKBOX2</default>
+          </macro>
+
+           <macro>
+            <name>SPECTRUM_PV3</name>
+            <description>e.g. loc://_LOCAL:SPEC:SPEC3</description>
+            <default>loc://_LOCAL:SPEC:SPEC3</default>
+          </macro>
+          <macro>
+            <name>PERIOD_PV3</name>
+            <description>e.g. loc://_LOCAL:SPEC:PERIOD3</description>
+            <default>loc://_LOCAL:SPEC:PERIOD3</default>
+          </macro>
+          <macro>
+            <name>CHECKBOX_PV3</name>
+            <description>e.g. loc://_LOCAL:SPEC:CHECKBOX3</description>
+            <default>loc://_LOCAL:SPEC:CHECKBOX3</default>
+          </macro>
+
+           <macro>
+            <name>SPECTRUM_PV4</name>
+            <description>e.g. loc://_LOCAL:SPEC:SPEC4</description>
+            <default>loc://_LOCAL:SPEC:SPEC4</default>
+          </macro>
+          <macro>
+            <name>PERIOD_PV4</name>
+            <description>e.g. loc://_LOCAL:SPEC:PERIOD4</description>
+            <default>loc://_LOCAL:SPEC:PERIOD4</default>
+          </macro>
+           <macro>
+            <name>CHECKBOX_PV4</name>
+            <description>e.g. loc://_LOCAL:SPEC:CHECKBOX4</description>
+            <default>loc://_LOCAL:SPEC:CHECKBOX4</default>
+          </macro>
+
+          
+        </macros>
+      </value>
+    </entry>
     <entry>
       <key>Astrium</key>
       <value>
@@ -3437,6 +3520,40 @@
         <categories>
           <category>Multimeters</category>
         </categories>
+      </value>
+    </entry>
+	<entry>
+      <key>PEARL Single Motor Alignment</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>pearl/singlemotoralignment.opi</path>
+        <description>PEARL Single Motor Alignment</description>
+        <macros>
+          <macro>
+            <name>PEARLALIGN</name>	
+              <description>The single motor alignment controller for Pearl sample space</description>
+            <default>MOT:MTR0101</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>PRE4500</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>pre4500.opi</path>
+        <description>The OPI for the PRE4500</description>
+        <macros>
+          <macro>
+            <name>PRE4500</name>
+            <description>The PRE4500 PV prefix (e.g. PRE4500_01)</description>
+            <default>PRE4500_01</default>
+          </macro>
+        </macros>
       </value>
     </entry>
   </opis>
