@@ -3556,7 +3556,7 @@
       <value>
         <categories/>
         <type>UNKNOWN</type>
-        <path>rknmntr.opi</path>
+        <path>RIKEN/MagnetTemperature/temperature_table.opi</path>
         <description>The OPI for the RKNMNTR</description>
         <macros>
           <macro>
