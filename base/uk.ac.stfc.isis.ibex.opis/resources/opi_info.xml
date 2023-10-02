@@ -3562,6 +3562,7 @@
           <macro>
             <name>RKNMNTR</name>
             <description>The RKNMNTR PV prefix (e.g. RKNMNTR_01)</description>
+            <default>RKNMNTR_01</default>
           </macro>
         </macros>
       </value>
