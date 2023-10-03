@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -103,7 +104,7 @@ public class ActionsTable extends ModelObject {
 	 */
 	private ScriptGeneratorAction createAction(Map<JavaActionParameter, String> parametersMap) {
 		// Ensure is not shallow copy
-		Map<JavaActionParameter, String> newParamsMap = new HashMap<JavaActionParameter, String>();
+		Map<JavaActionParameter, String> newParamsMap = new LinkedHashMap<JavaActionParameter, String>();
 		for (Map.Entry<JavaActionParameter, String> entry: parametersMap.entrySet()) {
 			newParamsMap.put(entry.getKey(), entry.getValue());
 		}
@@ -132,7 +133,7 @@ public class ActionsTable extends ModelObject {
 	 * @return The default action for the given row.
 	 */
 	private ScriptGeneratorAction createDefaultAction(Optional<Integer> insertionLocation) {
-		var parametersMap = new HashMap<JavaActionParameter, String>();
+		var parametersMap = new LinkedHashMap<JavaActionParameter, String>();
 		// Make a parameter/string pair for each parameter in the action
 		for (JavaActionParameter actionParameter: this.actionParameters) {
 			createDefaultActionParameter(insertionLocation, parametersMap, actionParameter);
