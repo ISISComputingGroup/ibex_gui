@@ -479,7 +479,7 @@ class ScriptDefinitionsWrapper(object):
 
     def convert_list_of_actions_to_python(self, list_of_actions) -> List[Dict[AnyStr, AnyStr]]:
         python_list_of_actions: List = ListConverter().convert(list_of_actions, gateway._gateway_client)
-        return [MapConverter().convert(action, gateway._gateway_client) for action in python_list_of_actions]
+        return python_list_of_actions
 
     def areParamsValid(self, list_of_actions, global_params, script_definition: ScriptDefinitionWrapper) -> bool:
         """

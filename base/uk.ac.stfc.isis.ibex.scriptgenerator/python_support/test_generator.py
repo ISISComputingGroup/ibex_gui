@@ -173,11 +173,14 @@ class DoRun(ScriptDefinition):
 
 
 
+# Function that executes each action
 def runscript():
     script_definition = DoRun()
     if hasattr(script_definition, "global_params_definition"):
         script_definition.global_params = dict(zip(script_definition.global_params_definition.keys(), {}))
+    # Action 1
     script_definition.run(**{'param1': '1', 'param2': '2'})
+    # Action 2
     script_definition.run(**{'param1': '1', 'param2': '2'})
     
 
