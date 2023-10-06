@@ -1885,13 +1885,32 @@ $(pv_value)</tooltip>
     </macros>
     <minimum_tab_height>10</minimum_tab_height>
     <name>Pressure_Screens_Tabbed_Container</name>
-    <rules/>
+    <rules>
+      <rule name="Disable advanced tab if not in manager mode" prop_id="tab_2_enabled" out_exp="false">
+        <exp bool_exp="pv0==0">
+          <value>false</value>
+        </exp>
+        <pv trig="true">$(P)CS:MANAGER</pv>
+      </rule>
+    </rules>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts/>
+    <scripts>
+      <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
+        <scriptName>EmbeddedScript</scriptName>
+        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+active_tab = widget.getActiveTabIndex()
+manager_mode = PVUtil.getDouble(pvs[0])
+
+if active_tab == 2 and manager_mode == 0:
+	widget.setActiveTabIndex(0)]]></scriptText>
+        <pv trig="true">$(P)CS:MANAGER</pv>
+      </path>
+    </scripts>
     <tab_0_background_color>
       <color name="ISIS_OPI_Background" red="240" green="240" blue="240"/>
     </tab_0_background_color>
