@@ -1217,43 +1217,44 @@ public class ScriptGeneratorViewModel extends ModelObject {
     public void reloadScriptDefinitions() {
     	scriptGeneratorModel.reloadScriptDefinitions();
     }
-    
+
+	/**
+	 * Creates prompt message for git updates available.
+	 * @return The prompt message
+	 */
+	public String getUpdatesPromptMessage() { 
+		String message = "";
+		if (scriptGeneratorModel.updatesAvailable()) {
+			message = "Updates Available: Updates to the script definitions are available. Please notify your local contact to update the script definitions at their earliest convenience. ";
+		}
+		return message;
+	}
     /**
-     * Creates a prompt message string. 
+     * Creates a dirty local repo prompt message string. 
      * @return The prompt message
      */
-	public String getPromptMessage() {
-        String message = "Updates to the script definitions are available. Updating your definitions may erase current scripts.";
+	public String getDirtyPromptMessage() {
+		String message = "";
 		if (scriptGeneratorModel.isDirty()) {
-			message += "\n WARNING: There are uncommitted changes to the script definitions. These will be lost if you update.";
+			message = "Local Repo is Dirty: There are uncommitted changes to the script definitions. These will be lost if you update. ";
+		}
+		return message;
+	}
+	
+	/**
+	 * Creates a git connection error prompt message.
+	 * @return the prompt message
+	 */
+	public String getGitErrorPromptMessage() {
+		String message = "";
+		if (!scriptGeneratorModel.remoteAvailable()) {
+			// Warn user git could not be found
+			message = "Git error, remote repo unavailable: Could not update script definitions, because the remote git repository could not be reached. "
+					+ "You can still continue to use the existing script definitions, but they may be out of date. ";
 		}
 		return message;
 	}
 
-	/**
-	 * Gets whether the remote git repo URL is accessible.
-	 * @return true if the remote repo URL can be accessed.
-	 */
-	public boolean remoteAvailable() {
-		return scriptGeneratorModel.remoteAvailable();
-	}
-	
-	/**
-	 * Get whether there are updates available for the git repository.
-	 * @return true if there are updates available.
-	 */
-	public boolean updatesAvailable() {
-		return scriptGeneratorModel.updatesAvailable();
-	}
-
-
-	/**
-	 * Merges git repository from upstream.
-	 */
-	public void mergeOrigin() {
-		scriptGeneratorModel.mergeOrigin();
-		
-	}
     /**
      * Reload the actions table actions.
      */
