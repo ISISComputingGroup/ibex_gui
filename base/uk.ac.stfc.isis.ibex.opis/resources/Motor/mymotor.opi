@@ -398,10 +398,14 @@ $(pv_value)</tooltip>
       <pv_value />
       <rules>
         <rule name="Disable at limit" prop_id="enabled" out_exp="false">
+          <exp bool_exp="PVUtil.getString(pvs[1]).startsWith(&quot;TC&quot;)">
+            <value>true</value>
+          </exp>
           <exp bool_exp="pv0!=0">
             <value>false</value>
           </exp>
           <pv trig="true">$(P)$(MM).HLS</pv>
+          <pv trig="true">$(P)$(MM)_IOCNAME</pv>
         </rule>
         <rule name="Tooltip at limit" prop_id="tooltip" out_exp="false">
           <exp bool_exp="pv0 != 0">
