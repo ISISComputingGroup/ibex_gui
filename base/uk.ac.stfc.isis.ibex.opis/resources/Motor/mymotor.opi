@@ -2048,14 +2048,7 @@ $(pv_value)</tooltip>
       <include_parent_macros>true</include_parent_macros>
     </macros>
     <name>Info</name>
-    <rules>
-      <rule name="Rule" prop_id="visible" out_exp="false">
-        <exp bool_exp="pv0 == 1">
-          <value>true</value>
-        </exp>
-        <pv trig="true">$(P)CS:MANAGER.RVAL</pv>
-      </rule>
-    </rules>
+    <rules />
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
@@ -2068,10 +2061,12 @@ $(pv_value)</tooltip>
 
 ioc_name = PVUtil.getString(pvs[0]).split("_")[0]
 
-if ioc_name in ["GALIL", "GALILMUL", "TC"]:
-    widget.setPropertyValue("visible", True)
+if PVUtil.getDouble(pvs[1]) == 1:
+    if ioc_name in ["GALIL", "GALILMUL", "TC"]:
+        widget.setPropertyValue("visible", True)
 ]]></scriptText>
         <pv trig="true">$(M)_IOCNAME</pv>
+        <pv trig="true">$(P)CS:MANAGER.RVAL</pv>
       </path>
     </scripts>
     <show_scrollbar>true</show_scrollbar>
