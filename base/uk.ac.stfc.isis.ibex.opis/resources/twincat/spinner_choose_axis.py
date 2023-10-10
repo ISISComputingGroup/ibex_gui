@@ -16,8 +16,11 @@ def add_macro(widget, name, value):
     widget.setPropertyValue("macros", macros)
     reload_widget(widget)
 
-
-widget = display.getWidget("link1")
+NUM_AXES_TO_SHOW = 8
 spinner = display.getWidget("spinner")
-value = spinner.getPropertyValue("text")
-add_macro(widget, "AXIS", value)
+FIRST_AXIS_TO_SHOW = spinner.getPropertyValue("text")
+
+for i in range(1, NUM_AXES_TO_SHOW+1):
+	widget = display.getWidget("link" + str(i))
+	value = int(FIRST_AXIS_TO_SHOW) + i - 1
+	add_macro(widget, "AXIS", value)
