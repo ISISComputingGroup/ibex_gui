@@ -2395,7 +2395,7 @@
         </macros>
       </value>
     </entry>
-     <entry>
+    <entry>
       <key>Spectra combined plot</key>
       <value>
         <categories>
@@ -2420,13 +2420,12 @@
             <description>e.g. loc://_LOCAL:SPEC:CHECKBOX1</description>
             <default>loc://_LOCAL:SPEC:CHECKBOX1</default>
           </macro>
-           <macro>
+          <macro>
             <name>MODE_PV</name>
             <description>e.g. loc://_LOCAL:SPEC:MODE1</description>
             <default>loc://_LOCAL:SPEC:MODE1</default>
           </macro>
-          
-           <macro>
+          <macro>
             <name>SPECTRUM_PV2</name>
             <description>e.g. loc://_LOCAL:SPEC:SPEC2</description>
             <default>loc://_LOCAL:SPEC:SPEC2</default>
@@ -2441,8 +2440,7 @@
             <description>e.g. loc://_LOCAL:SPEC:CHECKBOX2</description>
             <default>loc://_LOCAL:SPEC:CHECKBOX2</default>
           </macro>
-
-           <macro>
+          <macro>
             <name>SPECTRUM_PV3</name>
             <description>e.g. loc://_LOCAL:SPEC:SPEC3</description>
             <default>loc://_LOCAL:SPEC:SPEC3</default>
@@ -2457,8 +2455,7 @@
             <description>e.g. loc://_LOCAL:SPEC:CHECKBOX3</description>
             <default>loc://_LOCAL:SPEC:CHECKBOX3</default>
           </macro>
-
-           <macro>
+          <macro>
             <name>SPECTRUM_PV4</name>
             <description>e.g. loc://_LOCAL:SPEC:SPEC4</description>
             <default>loc://_LOCAL:SPEC:SPEC4</default>
@@ -2468,13 +2465,11 @@
             <description>e.g. loc://_LOCAL:SPEC:PERIOD4</description>
             <default>loc://_LOCAL:SPEC:PERIOD4</default>
           </macro>
-           <macro>
+          <macro>
             <name>CHECKBOX_PV4</name>
             <description>e.g. loc://_LOCAL:SPEC:CHECKBOX4</description>
             <default>loc://_LOCAL:SPEC:CHECKBOX4</default>
           </macro>
-
-          
         </macros>
       </value>
     </entry>
@@ -3489,7 +3484,7 @@
         </macros>
         <categories>
           <category>Pressure control handling systems</category>
-          </categories>
+        </categories>
       </value>
     </entry>
     <entry>
@@ -3522,7 +3517,7 @@
         </categories>
       </value>
     </entry>
-	<entry>
+    <entry>
       <key>PEARL Single Motor Alignment</key>
       <value>
         <type>UNKNOWN</type>
@@ -3530,8 +3525,8 @@
         <description>PEARL Single Motor Alignment</description>
         <macros>
           <macro>
-            <name>PEARLALIGN</name>	
-              <description>The single motor alignment controller for Pearl sample space</description>
+            <name>PEARLALIGN</name>
+            <description>The single motor alignment controller for Pearl sample space</description>
             <default>MOT:MTR0101</default>
           </macro>
         </macros>
@@ -3552,6 +3547,22 @@
             <name>PRE4500</name>
             <description>The PRE4500 PV prefix (e.g. PRE4500_01)</description>
             <default>PRE4500_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>RIKEN Callibrated Temperatures</key>
+      <value>
+        <categories/>
+        <type>RIKEN</type>
+        <path>RIKEN/MagnetTemperature/temperature_table.opi</path>
+        <description>The OPI for the RKNMNTR</description>
+        <macros>
+          <macro>
+            <name>RKNMNTR</name>
+            <description>The RKNMNTR PV prefix (e.g. RKNMNTR_01)</description>
+            <default>RKNMNTR_01</default>
           </macro>
         </macros>
       </value>
