@@ -47,6 +47,8 @@ import org.eclipse.swt.widgets.Display;
 import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.dae.Dae;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
+import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.ui.UIUtils;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
@@ -288,7 +290,10 @@ public class ExperimentSetup {
         DISPLAY.asyncExec(new Runnable() {
             @Override
             public void run() {
-                setChildrenEnabled(isRunning != null && !isRunning);
+                // access to the Experiment Setup page is disabled if IBEX is not run on the localhost
+            	InstrumentInfo info = Instrument.getInstance().currentInstrument();
+            	final Boolean isLocal = info.hostName().equals("localhost");
+                setChildrenEnabled(isRunning != null && !isRunning && isLocal);
             }
         });
     }
