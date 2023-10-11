@@ -940,10 +940,19 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	                    }
 	            	}
                 });
-    
-            var editingSupport = new ScriptGeneratorEditingSupport(viewTable.viewer(), ScriptGeneratorAction.class, actionParameter);
-            viewTable.addEditingSupport(editingSupport);
-            column.setEditingSupport(editingSupport);
+            
+            
+            
+            if (actionParameter.getIsEnum()) {
+            	var editingSupport = new ScriptGeneratorEditingSupportEnum(viewTable.viewer(), ScriptGeneratorAction.class, actionParameter);
+            	 viewTable.addEnumEditingSupport(editingSupport);
+                 column.setEditingSupport(editingSupport);
+            } else {
+            	var editingSupport = new ScriptGeneratorEditingSupport(viewTable.viewer(), ScriptGeneratorAction.class, actionParameter);
+            	 viewTable.addEditingSupport(editingSupport);
+                 column.setEditingSupport(editingSupport);
+            }
+            
         }
     }
     

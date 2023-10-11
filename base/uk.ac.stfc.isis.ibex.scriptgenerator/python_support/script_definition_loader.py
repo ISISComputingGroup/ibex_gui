@@ -22,13 +22,15 @@ class PythonActionParameter(object):
     class Java:
         implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter']
 
-    def __init__(self, name, default_value, copyPreviousRow):
+    def __init__(self, name, default_value, copyPreviousRow, enum=False, enum_values=None):
         """
         Initialise the name and default value of the action parameter.
         """
         self.name = name
         self.default_value = default_value
         self.copyPreviousRow = copyPreviousRow
+        self.enum = enum
+        self.enum_values = enum_values
 
     def getName(self) -> str:
         """
@@ -50,6 +52,13 @@ class PythonActionParameter(object):
 
     def getCopyPreviousRow(self) -> bool:
         return self.copyPreviousRow
+    
+    def getIsEnum(self) -> bool:
+        return self.enum
+    
+    def getEnumValues(self) -> List[str]:
+        return self.enum_values
+    
 
 
 class ScriptDefinitionWrapper(object):
@@ -84,14 +93,40 @@ class ScriptDefinitionWrapper(object):
 
         kwargs_with_defaults = []
 
+        enum_parameter_names = []
+        
+        try:
+            enum_parameter_names = getattr(self.script_definition,"enum_params")
+        except:
+            enum_parameter_names = []
+
+
         for arg in arguments:
             if arguments[arg].default == arguments[arg].empty:
                 action_parameter = PythonActionParameter(arg, arg, False)
             elif isinstance(arguments[arg].default, CopyPreviousRow):
                 # If none copy the previous row's value over
-                action_parameter = PythonActionParameter(arg, str(arguments[arg].default.value), True)
+                # add if else for if the param has enum in the name and account for this
+                if arg in enum_parameter_names:
+                    # get the enum values from the script_definition property 
+                    enum_values = getattr(self.script_definition, arg+"_values")
+                    action_parameter = PythonActionParameter(arg, enum_values[0], True, True, ListConverter().convert(enum_values, gateway._gateway_client))
+                else:
+                    try:
+                        action_parameter = PythonActionParameter(arg, str(arguments[arg].default.value), True)
+                    except:
+                        action_parameter = PythonActionParameter(arg, str(arguments[arg].default), True)
             else:
-                action_parameter = PythonActionParameter(arg, str(arguments[arg].default), False)
+                if arg in enum_parameter_names:
+                    # get the enum values from the script_definition property 
+                    enum_values = getattr(self.script_definition, arg+"_values")
+                    action_parameter = PythonActionParameter(arg, enum_values[0], False, True, ListConverter().convert(enum_values, gateway._gateway_client))
+                else:
+                    try:
+                        action_parameter = PythonActionParameter(arg, str(arguments[arg].default.value), False)
+                    except:
+                        action_parameter = PythonActionParameter(arg, str(arguments[arg].default),False )
+            
             kwargs_with_defaults.append(action_parameter)
 
         return ListConverter().convert(kwargs_with_defaults, gateway._gateway_client)
