@@ -306,7 +306,7 @@
           <width>472</width>
           <wuid>210db951:18ae04a130b:-651c</wuid>
           <x>150</x>
-          <y>6</y>
+          <y>48</y>
           <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
             <actions hook="false" hook_all="false"/>
             <auto_size>false</auto_size>
@@ -719,7 +719,7 @@
           <width>472</width>
           <wuid>210db951:18ae04a130b:-64f5</wuid>
           <x>150</x>
-          <y>6</y>
+          <y>48</y>
           <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
             <actions hook="false" hook_all="false"/>
             <auto_size>false</auto_size>
@@ -1091,7 +1091,7 @@
           <width>472</width>
           <wuid>210db951:18ae04a130b:-64cd</wuid>
           <x>150</x>
-          <y>6</y>
+          <y>48</y>
           <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
             <actions hook="false" hook_all="false"/>
             <auto_size>false</auto_size>
