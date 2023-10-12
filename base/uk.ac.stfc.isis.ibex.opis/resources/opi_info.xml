@@ -3567,5 +3567,20 @@
         </macros>
       </value>
     </entry>
+    <entry>
+      <key>LKSHTEMP</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>lkshtemp.opi</path>
+        <description>The OPI for the LKSHTEMP</description>
+        <macros>
+          <macro>
+            <name>LKSHTEMP</name>
+            <description>The LKSHTEMP PV prefix (e.g. LKSHTEMP_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
   </opis>
 </descriptions>
