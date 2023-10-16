@@ -1906,11 +1906,15 @@ $(pv_value)</tooltip>
     <minimum_tab_height>10</minimum_tab_height>
     <name>Pressure_Screens_Tabbed_Container</name>
     <rules>
-      <rule name="Disable advanced tab if not in manager mode" prop_id="tab_2_enabled" out_exp="false">
+      <rule name="Disable advanced tab if not in manager mode or dae running" prop_id="tab_2_enabled" out_exp="false">
         <exp bool_exp="pv0==0">
           <value>false</value>
         </exp>
+        <exp bool_exp="pv1!=1">
+          <value>false</value>
+        </exp>
         <pv trig="true">$(P)CS:MANAGER</pv>
+        <pv trig="true">$(P)DAE:RUNSTATE.RVAL</pv>
       </rule>
     </rules>
     <scale_options>
@@ -1925,10 +1929,12 @@ $(pv_value)</tooltip>
 
 active_tab = widget.getActiveTabIndex()
 manager_mode = PVUtil.getDouble(pvs[0])
+run_state = PVUtil.getDouble(pvs[1])
 
-if active_tab == 2 and manager_mode == 0:
+if active_tab == 2 and (manager_mode == 0 or run_state != 1):
 	widget.setActiveTabIndex(0)]]></scriptText>
         <pv trig="true">$(P)CS:MANAGER</pv>
+        <pv trig="true">$(P)DAE:RUNSTATE</pv>
       </path>
     </scripts>
     <tab_0_background_color>
