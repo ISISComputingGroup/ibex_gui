@@ -39,6 +39,7 @@ import org.eclipse.jface.viewers.ComboBoxCellEditor;
 import org.eclipse.jface.viewers.ComboBoxViewerCellEditor;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.FocusCellOwnerDrawHighlighter;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TableViewerEditor;
@@ -47,7 +48,11 @@ import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
@@ -58,6 +63,9 @@ import uk.ac.stfc.isis.ibex.ui.tables.NullComparator;
 import uk.ac.stfc.isis.ibex.ui.widgets.EnumEditingSupport;
 import uk.ac.stfc.isis.ibex.ui.widgets.FakeEnumEditingSupport;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
+import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.ComboBoxViewerCellEditor;
+
 
 /**
  * A table that holds the properties for a target.
@@ -84,7 +92,13 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	 */
 	protected static final Integer NON_EDITABLE_COLUMNS_ON_LEFT = 1;
 	private List<StringEditingSupport<ScriptGeneratorAction>> editingSupports = new ArrayList<StringEditingSupport<ScriptGeneratorAction>>();
-	private List<FakeEnumEditingSupport<ScriptGeneratorAction>> enumEditingSupports = new ArrayList<FakeEnumEditingSupport<ScriptGeneratorAction>>();
+	private List<ScriptGeneratorEditingSupportEnum<ScriptGeneratorAction>> enumEditingSupports = new ArrayList<ScriptGeneratorEditingSupportEnum<ScriptGeneratorAction>>();
+
+	
+	
+	
+	
+	
 	/**
      * Default constructor for the table. Creates all the correct columns.
      * 
@@ -121,6 +135,11 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 		    }
 		    
 		};
+
+		
+		
+		
+		
 		manager.add(copyAction);
 		Action pasteAction = new Action("Paste Actions") {
 		    @Override
@@ -315,8 +334,9 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	public void addEditingSupport(StringEditingSupport<ScriptGeneratorAction> editingSupport) {
 	    editingSupports.add(editingSupport);
 	}
+
 	
-	public void addEnumEditingSupport(FakeEnumEditingSupport<ScriptGeneratorAction> editingSupport) {
+	public void addEnumEditingSupport(ScriptGeneratorEditingSupportEnum editingSupport) {
 		enumEditingSupports.add(editingSupport);
 	}
 	
@@ -442,29 +462,14 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	 * @param row row number of table
 	 * @param column column number of table
 	 */
-//	public void setCellFocus(int row, int column) {
-//		var element = viewer.getElementAt(row);
-//		
-//		if (row >= 0 && element != null) {
-//			viewer.editElement(element, column);
-//		}
-//	}
-//	
 	public void setCellFocus(int row, int column) {
 		var element = viewer.getElementAt(row);
-		viewer.getColumnProperties();
 		
-		 org.eclipse.jface.viewers.CellEditor cellEditor = viewer.getCellEditors()[column];
-
-         if (cellEditor instanceof ComboBoxViewerCellEditor) {
-             // This is a combo box cell, so don't run the editElement function
-             return;
-         }
-
-         if (row >= 0 && element != null) {
-             viewer.editElement(element, column);
-         }
+		if (row >= 0 && element != null) {
+			viewer.editElement(element, column);
+		}
 	}
+
 	
 	/**
 	 * Sets the dynamic non editable columns on the right.
