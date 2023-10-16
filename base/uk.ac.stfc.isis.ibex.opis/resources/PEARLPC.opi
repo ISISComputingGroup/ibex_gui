@@ -307,7 +307,11 @@ $(pv_value)</tooltip>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts/>
+      <scripts>
+        <path pathString="Common Scripts/setEnabled.py" checkConnect="true" sfe="false" seoe="false">
+          <pv trig="true">$(PV_ROOT_PEARLPC):PRESSURE:SP.DISP</pv>
+        </path>
+      </scripts>
       <style>1</style>
       <text>Start</text>
       <toggle_button>false</toggle_button>
@@ -356,7 +360,11 @@ $(pv_value)</tooltip>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts/>
+      <scripts>
+        <path pathString="Common Scripts/setEnabled.py" checkConnect="true" sfe="false" seoe="false">
+          <pv trig="true">$(PV_ROOT_PEARLPC):PRESSURE:SP.DISP</pv>
+        </path>
+      </scripts>
       <style>1</style>
       <text>Stop</text>
       <toggle_button>false</toggle_button>
@@ -405,7 +413,11 @@ $(pv_value)</tooltip>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts/>
+      <scripts>
+        <path pathString="Common Scripts/setEnabled.py" checkConnect="true" sfe="false" seoe="false">
+          <pv trig="true">$(PV_ROOT_PEARLPC):PRESSURE:SP.DISP</pv>
+        </path>
+      </scripts>
       <style>1</style>
       <text>Send Parameters</text>
       <toggle_button>false</toggle_button>
@@ -546,7 +558,11 @@ $(pv_value)</tooltip>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts/>
+      <scripts>
+        <path pathString="Common Scripts/setEnabled.py" checkConnect="true" sfe="false" seoe="false">
+          <pv trig="true">$(PV_ROOT_PEARLPC):PRESSURE:SP.DISP</pv>
+        </path>
+      </scripts>
       <style>1</style>
       <text>Retract</text>
       <toggle_button>false</toggle_button>
@@ -840,7 +856,11 @@ $(pv_value)</tooltip>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts/>
+      <scripts>
+        <path pathString="Common Scripts/setEnabled.py" checkConnect="true" sfe="false" seoe="false">
+          <pv trig="true">$(PV_ROOT_PEARLPC):PRESSURE:SP.DISP</pv>
+        </path>
+      </scripts>
       <selector_type>0</selector_type>
       <show_units>true</show_units>
       <style>0</style>
