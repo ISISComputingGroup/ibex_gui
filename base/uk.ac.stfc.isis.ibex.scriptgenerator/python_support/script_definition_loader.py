@@ -106,10 +106,11 @@ class ScriptDefinitionWrapper(object):
                 action_parameter = PythonActionParameter(arg, arg, False)
             elif isinstance(arguments[arg].default, CopyPreviousRow):
                 # If none copy the previous row's value over
-                # add if else for if the param has enum in the name and account for this
                 if arg in enum_parameter_names:
-                    # get the enum values from the script_definition property 
-                    enum_values = getattr(self.script_definition, arg+"_values")
+
+                    enum = getattr(self.script_definition, arg+"_enum")
+
+                    enum_values = [str(item.name) for item in enum]
                     action_parameter = PythonActionParameter(arg, enum_values[0], True, True, ListConverter().convert(enum_values, gateway._gateway_client))
                 else:
                     try:
@@ -118,8 +119,8 @@ class ScriptDefinitionWrapper(object):
                         action_parameter = PythonActionParameter(arg, str(arguments[arg].default), True)
             else:
                 if arg in enum_parameter_names:
-                    # get the enum values from the script_definition property 
-                    enum_values = getattr(self.script_definition, arg+"_values")
+                    enum = getattr(self.script_definition, arg+"_enum")
+                    enum_values = [str(item.name) for item in enum]
                     action_parameter = PythonActionParameter(arg, enum_values[0], False, True, ListConverter().convert(enum_values, gateway._gateway_client))
                 else:
                     try:
