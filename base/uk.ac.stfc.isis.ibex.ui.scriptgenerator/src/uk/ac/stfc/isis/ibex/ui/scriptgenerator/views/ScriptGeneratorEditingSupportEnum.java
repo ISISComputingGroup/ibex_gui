@@ -2,7 +2,6 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import org.eclipse.jface.viewers.ColumnViewer;
 import uk.ac.stfc.isis.ibex.scriptgenerator.JavaActionParameter;
-import uk.ac.stfc.isis.ibex.scriptgenerator.table.ActionDynamicScriptingStatus;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.widgets.FakeEnumEditingSupport;
 

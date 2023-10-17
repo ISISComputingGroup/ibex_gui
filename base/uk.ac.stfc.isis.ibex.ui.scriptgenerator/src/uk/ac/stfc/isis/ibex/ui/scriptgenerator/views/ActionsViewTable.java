@@ -35,11 +35,7 @@ import org.eclipse.jface.viewers.CellNavigationStrategy;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
-import org.eclipse.jface.viewers.ComboBoxCellEditor;
-import org.eclipse.jface.viewers.ComboBoxViewerCellEditor;
-import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.FocusCellOwnerDrawHighlighter;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TableViewerEditor;
@@ -48,11 +44,7 @@ import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 
@@ -60,11 +52,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.tables.ColumnComparator;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.tables.NullComparator;
-import uk.ac.stfc.isis.ibex.ui.widgets.EnumEditingSupport;
-import uk.ac.stfc.isis.ibex.ui.widgets.FakeEnumEditingSupport;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
-import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jface.viewers.ComboBoxViewerCellEditor;
 
 
 /**
@@ -336,7 +324,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	}
 
 	
-	public void addEnumEditingSupport(ScriptGeneratorEditingSupportEnum editingSupport) {
+	public void addEnumEditingSupport(ScriptGeneratorEditingSupportEnum<ScriptGeneratorAction> editingSupport) {
 		enumEditingSupports.add(editingSupport);
 	}
 	
