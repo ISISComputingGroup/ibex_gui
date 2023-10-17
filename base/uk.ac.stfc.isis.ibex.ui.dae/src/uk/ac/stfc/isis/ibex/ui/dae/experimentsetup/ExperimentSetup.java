@@ -291,9 +291,7 @@ public class ExperimentSetup {
             @Override
             public void run() {
                 // access to the Experiment Setup page is disabled if IBEX is not run on the localhost
-            	InstrumentInfo info = Instrument.getInstance().currentInstrument();
-            	final Boolean isLocal = info.hostName().equals("localhost");
-                setChildrenEnabled(isRunning != null && !isRunning && isLocal);
+                setChildrenEnabled(isRunning != null && !isRunning && Instrument.getInstance().isLocalInstrument());
             }
         });
     }
@@ -337,18 +335,22 @@ public class ExperimentSetup {
      *              True if the button should be enabled.
      */
     public void setSendChangeBtnEnableState(boolean enable) {
-        btnSendChanges.setEnabled(enable);
-        if (enable) {
-            btnSendChanges.setBackground(panelViewModel.getColour("changedColour"));
-        } else {
-            btnSendChanges.setBackground(panelViewModel.getColour("unchangedColour"));
+    	btnSendChanges.setEnabled(false);
+    	if ( Instrument.getInstance().isLocalInstrument()) {
+        	btnSendChanges.setEnabled(enable);
+    	
+	        if (enable) {
+	            btnSendChanges.setBackground(panelViewModel.getColour("changedColour"));
+	        } else {
+	            btnSendChanges.setBackground(panelViewModel.getColour("unchangedColour"));
+	        }
         }
     }
     
     /**
      * Adds the listeners used in the panels.
      */
-    private void addChangeListeners() {
+    private void addChangeListeners() { 
         timeChannels.createInitialCachedValues();
         timeChannels.addListeners();
         dataAcquisition.createInitialCachedValues();

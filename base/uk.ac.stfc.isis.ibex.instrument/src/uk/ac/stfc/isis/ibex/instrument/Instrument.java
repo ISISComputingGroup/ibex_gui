@@ -384,4 +384,11 @@ public class Instrument implements BundleActivator {
             LoggerUtils.logErrorWithStackTrace(LOG, "Unable to set initial instrument", e);
         }
     }
+    /**
+     * Checks that the instrument is the local host 
+     */
+    public boolean isLocalInstrument() {
+    	InstrumentInfo info = this.currentInstrument();
+    	return info.hostName().equals("localhost");
+    }
 }
