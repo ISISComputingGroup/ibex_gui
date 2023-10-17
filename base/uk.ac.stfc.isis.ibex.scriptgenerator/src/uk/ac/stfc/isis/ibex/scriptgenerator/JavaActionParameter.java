@@ -44,6 +44,8 @@ public class JavaActionParameter implements ActionParameter {
 	 * @param name The name of the action parameter (column header)
 	 * @param defaultValue The value this parameter should have as a default
 	 * @param copyPreviousRow Whether or not the parameter should copy the previous row
+	 * @param isEnum Whether or not the parameter is a dropdown ENUM or not
+	 * @param enumValues The values for the dropdown ENUM if the parameter is one
 	 */
 	public JavaActionParameter(String name, String defaultValue, boolean copyPreviousRow, boolean isEnum, List<String> enumValues) {
 		this.name = name;
