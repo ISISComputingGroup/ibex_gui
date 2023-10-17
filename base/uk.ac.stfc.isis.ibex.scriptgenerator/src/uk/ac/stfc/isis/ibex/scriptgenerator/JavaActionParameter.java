@@ -76,10 +76,16 @@ public class JavaActionParameter implements ActionParameter {
 		return copyPreviousRow;
 	}
 	
+	/**
+	 * @return Whether or not the parameter is a dropdown ENUM. 
+	 */
 	public boolean getIsEnum() {
 		return isEnum;
 	}
 	
+	/**
+	 * @return List of the dropdown's ENUM values if the parameter is a dropdown ENUM
+	 */
 	public List<String> getEnumValues() {
 		return enumValues;
 	}
