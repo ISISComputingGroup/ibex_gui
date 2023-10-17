@@ -36,8 +36,7 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * Editing support for enum types.
  *
- * @param <T> the type of row which is edited
- * @param <E> the enum type which is edited (within a cell)
+ * @param <TRow> the type of row which is edited
  */
 public abstract class FakeEnumEditingSupport<TRow> extends EditingSupport {
 	private ComboBoxViewerCellEditor cellEditor;	
@@ -46,40 +45,20 @@ public abstract class FakeEnumEditingSupport<TRow> extends EditingSupport {
 	 * Create new editing support for an enum type.
 	 * @param viewer the column viewer
 	 * @param rowType the type of row
-	 * @param enumType the enum type which is edited within a cell
+	 * @param enumValues the list of values the dropdown should have
 	 */
 	public FakeEnumEditingSupport(ColumnViewer viewer, Class<TRow> rowType, List<String> enumValues) {
 		super(viewer);
 		this.rowType = rowType;
-		cellEditor = new ComboBoxViewerCellEditor((Composite) viewer.getControl() );
-		cellEditor.setActivationStyle(ComboBoxViewerCellEditor.DROP_DOWN_ON_MOUSE_ACTIVATION);
-		//		cellEditor = new ComboBoxViewerEditorWrapper((Composite) viewer.getControl() );
-		
-// add me a listener that when on lick itll instly open the dropdown without etting erro: The method addSelectionListener(new SelectionAdapter(){}) is undefined for the type Control
-		
-//		cellEditor.getViewer().addSelectionChangedListener(event -> {
-//			
-//			// make it so that when you click on the cell itll open the dropdow now 
-//			// but only if the cell is not already open
-//			if (cellEditor.getViewer().getControl().isEnabled() == false) {
-//				cellEditor.getViewer().getControl().setEnabled(true);
-//				// cellEditor.getViewer().getControl().notifyListeners(SWT.Selection, null);
-//				// now open the dropdown
-//				cellEditor.activate();
-//
-//			}
-//
-//		});
-
+		cellEditor = new ComboBoxViewerCellEditor((Composite) viewer.getControl());
+		cellEditor.setActivationStyle(ComboBoxViewerCellEditor.DROP_DOWN_ON_MOUSE_ACTIVATION);	
 		cellEditor.setStyle(SWT.DROP_DOWN);
-//		cellEditor.getViewer().getControl().setEnabled(false);
 
 
         cellEditor.setLabelProvider(new LabelProvider());
         cellEditor.setContentProvider(new ArrayContentProvider());
 
         List<String> options = enumValues;
-//        String[] options = new String[] {"hello", "goodbye"};
 
         System.out.println(options.toString());
         cellEditor.setInput(options);
@@ -109,7 +88,7 @@ public abstract class FakeEnumEditingSupport<TRow> extends EditingSupport {
 	
 	@Override
 	protected void setValue(Object element, Object value) {
-		if (rowType.isInstance(element) ) {
+		if (rowType.isInstance(element)) {
 			TRow row = rowType.cast(element);
 			String newValue = (String) value;
 			
