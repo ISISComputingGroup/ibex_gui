@@ -323,7 +323,10 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	    editingSupports.add(editingSupport);
 	}
 
-	
+	/**
+	 * Create a list of the editingSupport for each ENUM column. Required for resetting the selection after focus change.
+	 * @param editingSupport The editing support for the column
+	 */
 	public void addEnumEditingSupport(ScriptGeneratorEditingSupportEnum<ScriptGeneratorAction> editingSupport) {
 		enumEditingSupports.add(editingSupport);
 	}

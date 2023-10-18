@@ -28,6 +28,8 @@ import org.eclipse.jface.viewers.ComboBoxViewerCellEditor;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
 
 
@@ -60,11 +62,8 @@ public abstract class FakeEnumEditingSupport<TRow> extends EditingSupport {
 
         List<String> options = enumValues;
 
-        System.out.println(options.toString());
         cellEditor.setInput(options);
-        
-        cellEditor.activate();
-        
+      
         
         
        
@@ -74,6 +73,8 @@ public abstract class FakeEnumEditingSupport<TRow> extends EditingSupport {
 	protected CellEditor getCellEditor(Object element) {
 		return cellEditor;
 	}
+	
+
 	
 	@Override
 	protected boolean canEdit(Object element) {

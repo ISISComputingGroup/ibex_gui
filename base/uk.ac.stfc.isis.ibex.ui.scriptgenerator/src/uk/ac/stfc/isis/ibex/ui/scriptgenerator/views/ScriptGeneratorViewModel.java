@@ -952,7 +952,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
             
             
             if (actionParameter.getIsEnum()) {
-            	var editingSupport = new ScriptGeneratorEditingSupportEnum(viewTable.viewer(), ScriptGeneratorAction.class, actionParameter);
+            	var editingSupport = new ScriptGeneratorEditingSupportEnum<ScriptGeneratorAction>(viewTable.viewer(), ScriptGeneratorAction.class, actionParameter);
 
             	viewTable.addEnumEditingSupport(editingSupport);
                  column.setEditingSupport(editingSupport);

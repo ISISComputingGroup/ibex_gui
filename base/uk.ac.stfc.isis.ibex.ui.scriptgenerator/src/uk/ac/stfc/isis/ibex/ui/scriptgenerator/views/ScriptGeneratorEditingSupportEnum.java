@@ -7,7 +7,7 @@ import uk.ac.stfc.isis.ibex.ui.widgets.FakeEnumEditingSupport;
 
 /**
  * Editing support for the scriptgenerator.
- *
+ * @param <TRow> the type of row which is edited 
  */
 public class ScriptGeneratorEditingSupportEnum<TRow> extends FakeEnumEditingSupport<ScriptGeneratorAction> {
 	private JavaActionParameter actionParameter;
