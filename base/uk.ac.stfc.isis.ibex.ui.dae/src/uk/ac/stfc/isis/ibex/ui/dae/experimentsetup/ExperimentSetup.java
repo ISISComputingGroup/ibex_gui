@@ -48,7 +48,6 @@ import uk.ac.stfc.isis.ibex.model.UpdatedValue;
 import uk.ac.stfc.isis.ibex.dae.Dae;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
-import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.ui.UIUtils;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
@@ -335,15 +334,11 @@ public class ExperimentSetup {
      *              True if the button should be enabled.
      */
     public void setSendChangeBtnEnableState(boolean enable) {
-    	btnSendChanges.setEnabled(false);
-    	if ( Instrument.getInstance().isLocalInstrument()) {
-        	btnSendChanges.setEnabled(enable);
-    	
-	        if (enable) {
-	            btnSendChanges.setBackground(panelViewModel.getColour("changedColour"));
-	        } else {
-	            btnSendChanges.setBackground(panelViewModel.getColour("unchangedColour"));
-	        }
+        btnSendChanges.setEnabled(enable);
+        if (enable) {
+            btnSendChanges.setBackground(panelViewModel.getColour("changedColour"));
+        } else {
+            btnSendChanges.setBackground(panelViewModel.getColour("unchangedColour"));
         }
     }
     
