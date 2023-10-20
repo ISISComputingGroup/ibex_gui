@@ -139,7 +139,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_0_x_pv></trace_0_x_pv>
     <trace_0_x_pv_value />
     <trace_0_y_axis_index>1</trace_0_y_axis_index>
-    <trace_0_y_pv>$(P)$(Q):$(CHAN):ENERGYSPEC</trace_0_y_pv>
+    <trace_0_y_pv>$(P)$(Q):$(CHAN):ENERGYSPEC:EVENT</trace_0_y_pv>
     <trace_0_y_pv_value />
     <trace_count>1</trace_count>
     <transparent>false</transparent>
