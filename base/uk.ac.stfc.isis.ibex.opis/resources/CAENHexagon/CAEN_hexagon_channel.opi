@@ -353,16 +353,16 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <scripts />
-    <text>Unsaved Events</text>
+    <text>Unprocessed Events</text>
     <tooltip></tooltip>
     <transparent>true</transparent>
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
     <widget_type>Label</widget_type>
-    <width>80</width>
+    <width>119</width>
     <wrap_words>false</wrap_words>
     <wuid>3f75a06:17db542637e:-7716</wuid>
-    <x>45</x>
+    <x>20</x>
     <y>102</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -1237,16 +1237,16 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <scripts />
-    <text>Unsaved Events Limit</text>
+    <text>Unprocessed Events Limit</text>
     <tooltip></tooltip>
     <transparent>true</transparent>
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
     <widget_type>Label</widget_type>
-    <width>119</width>
+    <width>138</width>
     <wrap_words>false</wrap_words>
     <wuid>-85743c:17db65dcc3e:-7efe</wuid>
-    <x>34</x>
+    <x>15</x>
     <y>160</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
@@ -1426,7 +1426,7 @@ $(pv_value)</tooltip>
     <name>Text Update_16</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(P)$(Q):$(CHAN):EVENTSPEC:NEV</pv_name>
+    <pv_name>$(P)$(Q):$(CHAN):NEVENTSPROC</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />
@@ -1478,16 +1478,16 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <scripts />
-    <text>Saved Events</text>
+    <text>Processed  Events</text>
     <tooltip></tooltip>
     <transparent>true</transparent>
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
     <widget_type>Label</widget_type>
-    <width>80</width>
+    <width>104</width>
     <wrap_words>false</wrap_words>
     <wuid>282ef270:189e1fea679:-7dbd</wuid>
-    <x>342</x>
+    <x>318</x>
     <y>306</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
