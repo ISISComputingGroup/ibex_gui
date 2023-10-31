@@ -30,9 +30,6 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
-
-
-
 /**
  * Editing support for enum types.
  *
@@ -61,18 +58,12 @@ public abstract class FakeEnumEditingSupport<TRow> extends EditingSupport {
         List<String> options = enumValues;
 
         cellEditor.setInput(options);
-      
-        
-        
-       
 	}
 
 	@Override
 	protected CellEditor getCellEditor(Object element) {
 		return cellEditor;
 	}
-	
-
 	
 	@Override
 	protected boolean canEdit(Object element) {
@@ -111,12 +102,4 @@ public abstract class FakeEnumEditingSupport<TRow> extends EditingSupport {
 	 * @param value the enum value
 	 */
 	protected abstract void setEnumForRow(TRow row, String value);
-  
-
-
-
-
-
-
-
 }
