@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2023 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -20,7 +20,9 @@
 package uk.ac.stfc.isis.ibex.epics.tests.conversion;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
+import java.text.NumberFormat;
 import java.util.function.Function;
 
 import org.diirt.util.array.ListByte;
@@ -38,6 +40,7 @@ import org.diirt.vtype.ValueFactory;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
+import uk.ac.stfc.isis.ibex.epics.conversion.ExponentialOnThresholdFormat;
 import uk.ac.stfc.isis.ibex.epics.conversion.VTypeFormat;
 
 /**
@@ -245,5 +248,59 @@ public class VTypeFormatToConversionsTest {
 		
 		// Assert
 		assertEquals(result, "TEST1");
+	}
+	
+	/**
+	 * Performs multiple tests to check the following:
+	 * 1. If the number has additional trailing zeros due to precision - zeroes aren't padded
+	 * 2. If the number has non-zero significant digits after decimal - they are retained
+	 * @throws ConversionException
+	 */
+	@Test
+	public void conversion_with_precision_remove_trailing_zeroes() throws ConversionException {
+		// Arrange
+		Function<VType, String> converter = VTypeFormat.defaultFormatterNoUnits();
+		
+		// Case - precision reduces the digits in the original number
+		Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "", NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
+		VDouble vnum = ValueFactory.newVDouble(123.123456789, display);
+		
+		NumberFormat exponentialWhenNeededFormat = new ExponentialOnThresholdFormat(vnum.getFormat());
+		String resultWithPrecision = exponentialWhenNeededFormat.format(vnum.getValue());
+		String result = converter.apply(vnum);
+		
+		// Assert - original number has more digits, so truncated number is expected result.
+		assertEquals("123.123457", resultWithPrecision);
+		assertEquals(resultWithPrecision, result);
+		
+		// Case - precision increases the digits in the original number
+		vnum = ValueFactory.newVDouble(123.123, display);
+		resultWithPrecision = exponentialWhenNeededFormat.format(vnum.getValue());
+		result = converter.apply(vnum);
+		
+		// Assert - original number has fewer digits, so zero padded, precision implemented number isn't expected.
+		assertNotEquals(resultWithPrecision, result);
+		assertEquals("123.123000", resultWithPrecision);
+		assertEquals("123.123", result);
+		
+		// Case - Original number is exactly 0.0
+		vnum = ValueFactory.newVDouble(0.0, display);
+		resultWithPrecision = exponentialWhenNeededFormat.format(vnum.getValue());
+		result = converter.apply(vnum);
+		
+		// Assert - original number has fewer digits, so zero padded, precision implemented number isn't expected.
+		assertNotEquals(resultWithPrecision, result);
+		assertEquals("0.000000", resultWithPrecision);
+		assertEquals("0.0", result);
+		
+		//Case - original number is integer, but format applied with precision
+		VInt value = ValueFactory.newVInt(123, null, null, display);
+		resultWithPrecision = exponentialWhenNeededFormat.format(value.getValue());
+		result = converter.apply(value);
+		
+		// Assert - original number is integer, so zero padded, precision implemented number isn't expected. Result remains an integer
+		assertNotEquals(resultWithPrecision, result);
+		assertEquals("123.000000", resultWithPrecision);
+		assertEquals("123", result);
 	}
 }
