@@ -95,9 +95,9 @@ class ScriptDefinitionWrapper(object):
 
         enum_parameter_names = []
         
-        try:
+        if hasattr(self.script_definition,"enum_params"):
             enum_parameter_names = getattr(self.script_definition,"enum_params")
-        except:
+        else:
             enum_parameter_names = []
 
 
