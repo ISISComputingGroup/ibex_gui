@@ -82,11 +82,6 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	private List<StringEditingSupport<ScriptGeneratorAction>> editingSupports = new ArrayList<StringEditingSupport<ScriptGeneratorAction>>();
 	private List<ScriptGeneratorEditingSupportEnum<ScriptGeneratorAction>> enumEditingSupports = new ArrayList<ScriptGeneratorEditingSupportEnum<ScriptGeneratorAction>>();
 
-	
-	
-	
-	
-	
 	/**
      * Default constructor for the table. Creates all the correct columns.
      * 
@@ -123,11 +118,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 		    }
 		    
 		};
-
-		
-		
-		
-		
+	    
 		manager.add(copyAction);
 		Action pasteAction = new Action("Paste Actions") {
 		    @Override
