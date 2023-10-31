@@ -18,6 +18,7 @@
 
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
+import java.util.List;
 import java.util.Objects;
 
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
@@ -34,16 +35,24 @@ public class JavaActionParameter implements ActionParameter {
 	
 	private final boolean copyPreviousRow;
 	
+	private final boolean isEnum;
+	
+	private final List<String> enumValues;
+	
 	/**
 	 * This class holds the name about an action parameter.
 	 * @param name The name of the action parameter (column header)
 	 * @param defaultValue The value this parameter should have as a default
 	 * @param copyPreviousRow Whether or not the parameter should copy the previous row
+	 * @param isEnum Whether or not the parameter is a dropdown ENUM or not
+	 * @param enumValues The values for the dropdown ENUM if the parameter is one
 	 */
-	public JavaActionParameter(String name, String defaultValue, boolean copyPreviousRow) {
+	public JavaActionParameter(String name, String defaultValue, boolean copyPreviousRow, boolean isEnum, List<String> enumValues) {
 		this.name = name;
 		this.defaultValue = defaultValue;
 		this.copyPreviousRow = copyPreviousRow;
+		this.isEnum = isEnum;
+		this.enumValues = enumValues;
 	}
 
 	/**
@@ -66,6 +75,20 @@ public class JavaActionParameter implements ActionParameter {
 	public boolean getCopyPreviousRow() { 
 		return copyPreviousRow;
 	}
+	
+	/**
+	 * @return Whether or not the parameter is a dropdown ENUM. 
+	 */
+	public boolean getIsEnum() {
+		return isEnum;
+	}
+	
+	/**
+	 * @return List of the dropdown's ENUM values if the parameter is a dropdown ENUM
+	 */
+	public List<String> getEnumValues() {
+		return enumValues;
+	}
 
 	/**
 	 * Check to see if the ActionParameter's attributes are equal to provided object.
@@ -83,7 +106,9 @@ public class JavaActionParameter implements ActionParameter {
 		JavaActionParameter actionParameter = (JavaActionParameter) other;
 		return Objects.equals(this.getName(), actionParameter.getName()) 
 			&& Objects.equals(this.getDefaultValue(), actionParameter.getDefaultValue())
-			&& Objects.deepEquals(this.getCopyPreviousRow(), actionParameter.getCopyPreviousRow());
+			&& Objects.deepEquals(this.getCopyPreviousRow(), actionParameter.getCopyPreviousRow())
+			&& Objects.deepEquals(this.getIsEnum(), actionParameter.getIsEnum())
+			&& Objects.deepEquals(this.getEnumValues(), actionParameter.getEnumValues());
 	}
 	
 	/**
