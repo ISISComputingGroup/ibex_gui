@@ -23,18 +23,6 @@ public class ScriptGeneratorEditingSupportEnum<TRow> extends FakeEnumEditingSupp
 		this.actionParameter = actionParameter;
 	}
 
-
-//	protected String valueFromRow(ScriptGeneratorAction row) {
-//        return row.getActionParameterValue(actionParameter);
-//    }
-//	
-//
-//    protected void setValueForRow(ScriptGeneratorAction row, String value) {
-//        row.setActionParameterValue(actionParameter, value);
-//    }
-
-
-
 	@Override
 	protected String getEnumValueForRow(ScriptGeneratorAction row) {
 		return row.getActionParameterValue(actionParameter);
