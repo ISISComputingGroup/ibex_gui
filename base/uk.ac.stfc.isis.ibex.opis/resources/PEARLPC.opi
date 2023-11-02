@@ -307,7 +307,11 @@ $(pv_value)</tooltip>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts/>
+      <scripts>
+        <path pathString="Common Scripts/setEnabled.py" checkConnect="true" sfe="false" seoe="false">
+          <pv trig="true">$(PV_ROOT_PEARLPC):PRESSURE:SP.DISP</pv>
+        </path>
+      </scripts>
       <style>1</style>
       <text>Start</text>
       <toggle_button>false</toggle_button>
@@ -356,7 +360,11 @@ $(pv_value)</tooltip>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts/>
+      <scripts>
+        <path pathString="Common Scripts/setEnabled.py" checkConnect="true" sfe="false" seoe="false">
+          <pv trig="true">$(PV_ROOT_PEARLPC):PRESSURE:SP.DISP</pv>
+        </path>
+      </scripts>
       <style>1</style>
       <text>Stop</text>
       <toggle_button>false</toggle_button>
@@ -405,7 +413,11 @@ $(pv_value)</tooltip>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts/>
+      <scripts>
+        <path pathString="Common Scripts/setEnabled.py" checkConnect="true" sfe="false" seoe="false">
+          <pv trig="true">$(PV_ROOT_PEARLPC):PRESSURE:SP.DISP</pv>
+        </path>
+      </scripts>
       <style>1</style>
       <text>Send Parameters</text>
       <toggle_button>false</toggle_button>
@@ -546,7 +558,11 @@ $(pv_value)</tooltip>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts/>
+      <scripts>
+        <path pathString="Common Scripts/setEnabled.py" checkConnect="true" sfe="false" seoe="false">
+          <pv trig="true">$(PV_ROOT_PEARLPC):PRESSURE:SP.DISP</pv>
+        </path>
+      </scripts>
       <style>1</style>
       <text>Retract</text>
       <toggle_button>false</toggle_button>
@@ -840,7 +856,11 @@ $(pv_value)</tooltip>
         <height_scalable>true</height_scalable>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
-      <scripts/>
+      <scripts>
+        <path pathString="Common Scripts/setEnabled.py" checkConnect="true" sfe="false" seoe="false">
+          <pv trig="true">$(PV_ROOT_PEARLPC):PRESSURE:SP.DISP</pv>
+        </path>
+      </scripts>
       <selector_type>0</selector_type>
       <show_units>true</show_units>
       <style>0</style>
@@ -1886,11 +1906,15 @@ $(pv_value)</tooltip>
     <minimum_tab_height>10</minimum_tab_height>
     <name>Pressure_Screens_Tabbed_Container</name>
     <rules>
-      <rule name="Disable advanced tab if not in manager mode" prop_id="tab_2_enabled" out_exp="false">
+      <rule name="Disable advanced tab if not in manager mode or dae running" prop_id="tab_2_enabled" out_exp="false">
         <exp bool_exp="pv0==0">
           <value>false</value>
         </exp>
+        <exp bool_exp="pv1!=1">
+          <value>false</value>
+        </exp>
         <pv trig="true">$(P)CS:MANAGER</pv>
+        <pv trig="true">$(P)DAE:RUNSTATE.RVAL</pv>
       </rule>
     </rules>
     <scale_options>
@@ -1905,10 +1929,12 @@ $(pv_value)</tooltip>
 
 active_tab = widget.getActiveTabIndex()
 manager_mode = PVUtil.getDouble(pvs[0])
+run_state = PVUtil.getDouble(pvs[1])
 
-if active_tab == 2 and manager_mode == 0:
+if active_tab == 2 and (manager_mode == 0 or run_state != 1):
 	widget.setActiveTabIndex(0)]]></scriptText>
         <pv trig="true">$(P)CS:MANAGER</pv>
+        <pv trig="true">$(P)DAE:RUNSTATE</pv>
       </path>
     </scripts>
     <tab_0_background_color>

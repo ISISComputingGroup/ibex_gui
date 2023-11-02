@@ -347,9 +347,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void addEmptyAction() {
 	    scriptGeneratorModel.addEmptyAction();
 	    // Make sure the table is updated with the new action before selecting it
-	    DISPLAY.asyncExec(() -> {
-	    	viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
-	    });
+	    if (!scriptGeneratorModel.getActionParameters().get(ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT).getIsEnum()) {
+	    	  DISPLAY.asyncExec(() -> {
+	  	    	viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
+	  	    });
+	    }
+	  
     }
     
     /**
@@ -360,9 +363,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void insertEmptyAction(Integer insertionLocation) {
 	    scriptGeneratorModel.insertEmptyAction(insertionLocation);
 	    // Make sure the table is updated with the new action before selecting it
-	    DISPLAY.asyncExec(() -> {
-	        viewTable.setCellFocus(insertionLocation, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
-	    });
+	    if (!scriptGeneratorModel.getActionParameters().get(ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT).getIsEnum()) {
+	    	  DISPLAY.asyncExec(() -> {
+	  	    	viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
+	  	    });
+	    }
     }
     
     /**
@@ -375,10 +380,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    int toSelect = getFocusRowIndexAfterDelete(actionsToDelete);
 	    
 	    scriptGeneratorModel.deleteAction(actionsToDelete);
-	    
-	    DISPLAY.asyncExec(() -> {
-	    	viewTable.setCellFocus(toSelect, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
-	    });
+	    if (!scriptGeneratorModel.getActionParameters().get(ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT).getIsEnum()) {
+	    	  DISPLAY.asyncExec(() -> {
+	  	    	viewTable.setCellFocus(toSelect, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
+	  	    });
+	    }
     }
 
     private int getFocusRowIndexAfterDelete(List<ScriptGeneratorAction> actionsToDelete) {
@@ -404,9 +410,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
     protected void duplicateAction(List<ScriptGeneratorAction> actionsToDuplicate, Integer insertionLocation) {
 	    scriptGeneratorModel.duplicateAction(actionsToDuplicate, insertionLocation);
 	    // Make sure the table is updated with the new action before selecting it
-	    DISPLAY.asyncExec(() -> {
-	    	viewTable.setCellFocus(insertionLocation, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
-	    });
+	    if (!scriptGeneratorModel.getActionParameters().get(ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT).getIsEnum()) {
+	    	  DISPLAY.asyncExec(() -> {
+	  	    	viewTable.setCellFocus(insertionLocation, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
+	  	    });
+	    }
     }
 
     /**
@@ -940,10 +948,20 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	                    }
 	            	}
                 });
-    
-            var editingSupport = new ScriptGeneratorEditingSupport(viewTable.viewer(), ScriptGeneratorAction.class, actionParameter);
-            viewTable.addEditingSupport(editingSupport);
-            column.setEditingSupport(editingSupport);
+            
+            
+            
+            if (actionParameter.getIsEnum()) {
+            	var editingSupport = new ScriptGeneratorEditingSupportEnum<ScriptGeneratorAction>(viewTable.viewer(), ScriptGeneratorAction.class, actionParameter);
+
+            	viewTable.addEnumEditingSupport(editingSupport);
+                 column.setEditingSupport(editingSupport);
+            } else {
+            	var editingSupport = new ScriptGeneratorEditingSupport(viewTable.viewer(), ScriptGeneratorAction.class, actionParameter);
+            	 viewTable.addEditingSupport(editingSupport);
+                 column.setEditingSupport(editingSupport);
+            }
+            
         }
     }
     
