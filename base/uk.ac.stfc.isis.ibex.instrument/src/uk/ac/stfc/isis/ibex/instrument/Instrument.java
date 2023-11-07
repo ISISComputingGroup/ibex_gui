@@ -385,7 +385,7 @@ public class Instrument implements BundleActivator {
         }
     }
     /**
-     * Checks that the instrument is the local host 
+     * @return Return true or false depending on whether the current instrument is the localhost or not.
      */
     public boolean isLocalInstrument() {
     	InstrumentInfo info = this.currentInstrument();
