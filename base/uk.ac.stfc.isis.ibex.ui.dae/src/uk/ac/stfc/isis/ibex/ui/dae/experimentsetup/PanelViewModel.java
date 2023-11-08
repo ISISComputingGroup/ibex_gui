@@ -28,6 +28,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
 
 
 /**
@@ -373,11 +374,11 @@ public class PanelViewModel extends ModelObject {
         
         if (change) {
             experimentSetupViewModel.setIsChanged(change);
-            experimentSetup.setSendChangeBtnEnableState(change);
+            experimentSetup.setSendChangeBtnEnableState(change && Instrument.getInstance().isLocalInstrument());
         } else {
             if (!isChanged.containsValue(true)) {
                 experimentSetupViewModel.setIsChanged(change);
-                experimentSetup.setSendChangeBtnEnableState(change);
+                experimentSetup.setSendChangeBtnEnableState(change && Instrument.getInstance().isLocalInstrument());
             }
         }
     }
