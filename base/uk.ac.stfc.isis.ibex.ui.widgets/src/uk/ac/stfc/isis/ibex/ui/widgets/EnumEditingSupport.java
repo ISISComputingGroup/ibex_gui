@@ -52,6 +52,8 @@ public abstract class EnumEditingSupport<T, E extends Enum<E>> extends EditingSu
 		this.enumType = enumType;
 		
 		cellEditor = new ComboBoxViewerCellEditor((Composite) viewer.getControl(), SWT.READ_ONLY);
+		cellEditor.setActivationStyle(ComboBoxViewerCellEditor.DROP_DOWN_ON_MOUSE_ACTIVATION);	
+		
         cellEditor.setLabelProvider(new LabelProvider());
         cellEditor.setContentProvider(new ArrayContentProvider());
 
