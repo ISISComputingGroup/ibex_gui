@@ -307,7 +307,7 @@ public class ScriptGeneratorView {
     }
     
     /**
-     * Draw Run, Pause, Stop buttons for dynamic scripting
+     * Draw Run, Pause, Stop buttons for dynamic scripting.
      * 
      * @param parent a composite control which will be the parent of the new instance (cannot be null)
      */
