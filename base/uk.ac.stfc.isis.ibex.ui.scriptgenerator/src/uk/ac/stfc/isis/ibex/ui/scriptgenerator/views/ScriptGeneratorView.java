@@ -136,7 +136,9 @@ public class ScriptGeneratorView {
     private ActionsViewTable table;
     private Button btnMoveActionUp;
     private Button btnMoveActionDown;
-    private Button btnAddAction;
+    @SuppressWarnings("unused")
+	private Button btnAddAction;
+    @SuppressWarnings("unused")
     private Button btnInsertAction;
     private Label parametersFileText;
     private Label scriptGenerationTimeText;
