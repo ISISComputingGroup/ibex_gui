@@ -76,9 +76,6 @@ public class ScriptGeneratorView {
      * A clear colour for use in other script generator table columns when a row is valid.
      */
     private static final Color CLEAR_COLOUR = DISPLAY.getSystemColor(SWT.COLOR_WHITE);
-
-    private static final int NUM_COLUMNS = 2;
-    private static final int LEFT_PANEL_SPAN = 1;
     
     /**
      * The ViewModel the View is updated by.
@@ -167,7 +164,7 @@ public class ScriptGeneratorView {
     GridData gdQueueContainer = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
     gdQueueContainer.heightHint = 300;
     parent.setLayoutData(gdQueueContainer);
-    parent.setLayout(new GridLayout(NUM_COLUMNS, false));
+    parent.setLayout(new GridLayout());
 
     mainParent = parent;
 
@@ -256,22 +253,22 @@ public class ScriptGeneratorView {
      * Display loading.
      */
     private void displayLoading() {
-    DISPLAY.asyncExec(() -> {
-        destroyUIContents();
-        Label loadingMessage = new Label(mainParent, SWT.NONE);
-        loadingMessage.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, true));
-        // Make the warning label bigger from: https://stackoverflow.com/questions/1449968/change-just-the-font-size-in-swt
-        FontData[] fD = loadingMessage.getFont().getFontData();
-        fD[0].setHeight(16);
-        loadingMessage.setFont(new Font(Display.getDefault(), fD[0]));
-        if (scriptDefinitionsLoadedOnce) {
-        loadingMessage.setText(RELOADING_MESSAGE);
-        } else {
-        loadingMessage.setText(LOADING_MESSAGE);
-        }
-
-        mainParent.layout();
-    });
+	    DISPLAY.asyncExec(() -> {
+	        destroyUIContents();
+	        Label loadingMessage = new Label(mainParent, SWT.NONE);
+	        loadingMessage.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
+	        // Make the warning label bigger from: https://stackoverflow.com/questions/1449968/change-just-the-font-size-in-swt
+	        FontData[] fD = loadingMessage.getFont().getFontData();
+	        fD[0].setHeight(16);
+	        loadingMessage.setFont(new Font(Display.getDefault(), fD[0]));
+	        if (scriptDefinitionsLoadedOnce) {
+	        loadingMessage.setText(RELOADING_MESSAGE);
+	        } else {
+	        loadingMessage.setText(LOADING_MESSAGE);
+	        }
+	
+	        mainParent.layout();
+	    });
     }
 
     /**
@@ -333,7 +330,7 @@ public class ScriptGeneratorView {
     private void drawDynamicScriptingControls(Composite parent) {
     	// Composite for generate buttons
         Composite dynamicScriptingButtonsGrp = new Composite(parent, SWT.NONE);
-        dynamicScriptingButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
+        dynamicScriptingButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
         GridLayout layout = new GridLayout(3, true);
         layout.marginHeight = 10;
         layout.marginWidth = 10;
@@ -418,7 +415,7 @@ public class ScriptGeneratorView {
 	        // A composite to contain the elements at the top of the script generator
 	        Composite topBarComposite = new Composite(mainParent, SWT.NONE);
 	        topBarComposite.setLayout(new GridLayout(6, false));
-	        topBarComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, NUM_COLUMNS, 1));
+	        topBarComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 	
 	        // Composite to contain help strings from script definitions
 	        Composite scriptDefinitionComposite = new Composite(topBarComposite, SWT.NONE);
@@ -440,7 +437,7 @@ public class ScriptGeneratorView {
 	        
 	        Composite globalParamComposite = new Composite(mainParent, SWT.NONE);
 	        globalParamComposite.setLayout(new GridLayout(24, false));
-	        globalParamComposite.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false, NUM_COLUMNS, 5));
+	        globalParamComposite.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
 	        
 	        List<Label> globalLabel = new ArrayList<Label>();
 	        List<Text> globalParamText = new ArrayList<Text>();
@@ -450,22 +447,27 @@ public class ScriptGeneratorView {
 	            setUpScriptDefinitionLoadErrorTable(mainParent, scriptDefinitionLoadErrors);                 
 	        }
 	        
+	        // Composite to split the middle into bigger left and smaller right section
+	        Composite middleComposite = new Composite(mainParent, SWT.NONE);
+	        middleComposite.setLayout(new GridLayout(2, false));
+	        middleComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+	        
 	        // The composite to contain the UI table
-	        Composite tableContainerComposite = new Composite(mainParent, SWT.NONE);
+	        Composite tableContainerComposite = new Composite(middleComposite, SWT.NONE);
 	        tableContainerComposite.setLayout(new GridLayout(2, false));
-	        tableContainerComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, LEFT_PANEL_SPAN, 1));
-	
+	        tableContainerComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
 	        // The UI table
 	        table = new ActionsViewTable(tableContainerComposite,
 	            SWT.NONE, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION,
 	            scriptGeneratorViewModel);
-	        table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+	        table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 	        scriptGeneratorViewModel.reloadActions();
 	
 	        // Composite for move action up/down buttons
 	        Composite moveComposite = new Composite(tableContainerComposite, SWT.NONE);
-	        moveComposite.setLayout(new GridLayout(1, false));
-	        moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+	        moveComposite.setLayout(new GridLayout());
+	        moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
 	
 	        // Make buttons to move an action up and down the list
 	        btnMoveActionUp = createMoveRowButton(moveComposite, "move_up.png", "up");
@@ -476,8 +478,8 @@ public class ScriptGeneratorView {
 	
 	        
 	        // The composite to contain the buttons on the right to the table
-	        Composite buttonContainerComposite = new Composite(mainParent, SWT.NONE);
-	        buttonContainerComposite.setLayout(new GridLayout(1, false));
+	        Composite buttonContainerComposite = new Composite(middleComposite, SWT.NONE);
+	        buttonContainerComposite.setLayout(new GridLayout());
 	        GridData gridData = new GridData();
 	        gridData.verticalAlignment = SWT.FILL;
 	        buttonContainerComposite.setLayoutData(gridData);
@@ -490,7 +492,7 @@ public class ScriptGeneratorView {
 	        
 	        // Composite for the row containing the parameter file location and total estimated run time
 	        Composite scriptInfoGrp = new Composite(mainParent, SWT.NONE);
-	        scriptInfoGrp.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, NUM_COLUMNS, 1));
+	        scriptInfoGrp.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1));
 	        GridLayout scriptInfoLayout = new GridLayout(3, true);
 	        scriptInfoLayout.marginRight = 40;
 	        scriptInfoGrp.setLayout(scriptInfoLayout);
