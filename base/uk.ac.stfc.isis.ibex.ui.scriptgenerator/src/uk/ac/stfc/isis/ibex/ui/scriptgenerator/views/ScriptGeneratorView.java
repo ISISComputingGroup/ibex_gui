@@ -315,9 +315,9 @@ public class ScriptGeneratorView {
         Composite actionsControlsGrp = makeGroupingComposite(parent);
 
         // Make buttons for insert new/delete/duplicate actions
-        btnAddAction = makeButton(actionsControlsGrp, "Add Action To End", null, e -> scriptGeneratorViewModel.addEmptyAction());
-        btnInsertAction = makeButton(actionsControlsGrp, "Insert Action Below", null, e -> scriptGeneratorViewModel.insertEmptyAction(table.getSelectionIndex() + 1));
-        makeButton(actionsControlsGrp, "Clear All Actions", null, e -> scriptGeneratorViewModel.clearAction());
+        btnAddAction = makeButton(actionsControlsGrp, "Add Row To End", null, e -> scriptGeneratorViewModel.addEmptyAction());
+        btnInsertAction = makeButton(actionsControlsGrp, "Insert Row Below", null, e -> scriptGeneratorViewModel.insertEmptyAction(table.getSelectionIndex() + 1));
+        makeButton(actionsControlsGrp, "Clear All Rows", null, e -> scriptGeneratorViewModel.clearAction());
     }
     
     private void drawScriptSavingAndLoadingButtons(Composite parent) {
