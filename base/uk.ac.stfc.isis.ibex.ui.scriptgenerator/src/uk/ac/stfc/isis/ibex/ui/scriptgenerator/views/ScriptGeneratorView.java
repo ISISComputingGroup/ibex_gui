@@ -325,8 +325,8 @@ public class ScriptGeneratorView {
         Composite generateButtonsGrp = makeGroupingComposite(parent);
         
     	// Buttons to generate a script
-        generateScriptButton = makeButton(generateButtonsGrp, "Generate Script", null, e -> scriptGeneratorViewModel.generateScriptToCurrentFilepath());
-        generateScriptAsButton = makeButton(generateButtonsGrp, "Generate Script As", null, e -> scriptGeneratorViewModel.generateScript());
+        generateScriptButton = makeButton(generateButtonsGrp, "Save Script", null, e -> scriptGeneratorViewModel.generateScriptToCurrentFilepath());
+        generateScriptAsButton = makeButton(generateButtonsGrp, "Save Script As", null, e -> scriptGeneratorViewModel.generateScript());
         makeButton(generateButtonsGrp, "Load Script", null, e -> scriptGeneratorViewModel.loadParameterValues());
     }
     
