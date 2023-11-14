@@ -374,6 +374,37 @@ public class ScriptGeneratorView {
         expectedFinishText.setText("Expected Finish Time: 00:00:00");
     }
     
+    /**
+     * Creates the help text box as well as a label in front of it
+     * 
+     * @param parent the container to draw the text help into
+     * @return the text box instance
+     */
+    private Text makeHelpTextBox(Composite parent) {
+    	// Label for script definition help
+        Label helpLabel = new Label(parent, SWT.NONE);
+        helpLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false, 1, 1));
+        helpLabel.setText("Help: ");
+
+        // Display help for the script definition
+        Text helpText = new Text(parent, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
+        var helpTextDataLayout = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        helpTextDataLayout.heightHint = 50;
+        helpText.setLayoutData(helpTextDataLayout);
+        helpText.setBackground(CLEAR_COLOUR);
+        // Display the correct starting text
+        scriptGeneratorViewModel.getScriptDefinition().ifPresentOrElse(
+            scriptDefinition -> {
+                Optional.ofNullable(scriptDefinition.getHelp()).ifPresentOrElse(
+                    helpString -> helpText.setText(helpString),
+                    () -> helpText.setText("")
+                    );
+            },
+            () -> helpText.setText("")
+            );
+        
+        return helpText;
+    }
     
     /**
      * Display when loaded.
@@ -392,11 +423,11 @@ public class ScriptGeneratorView {
 	        // Composite to contain help strings from script definitions
 	        Composite scriptDefinitionComposite = new Composite(topBarComposite, SWT.NONE);
 	        scriptDefinitionComposite.setLayout(new GridLayout(5, false));
-	        scriptDefinitionComposite.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1));
+	        scriptDefinitionComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 	
 	        // The label for the script definition selector drop down
 	        Label scriptDefinitionSelectorLabel = new Label(scriptDefinitionComposite, SWT.NONE);
-	        scriptDefinitionSelectorLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
+	        scriptDefinitionSelectorLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, true, 1, 1));
 	        scriptDefinitionSelectorLabel.setText("Script Definition:");
 	
 	        // Drop-down box to select between script definitions.
@@ -405,32 +436,11 @@ public class ScriptGeneratorView {
 	        // Separate help and selector
 	        new Label(scriptDefinitionComposite, SWT.SEPARATOR | SWT.VERTICAL);
 	
-	        // Label for script definition help
-	        Label helpLabel = new Label(scriptDefinitionComposite, SWT.NONE);
-	        helpLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-	        helpLabel.setText("Help: ");
-	
-	        // Display help for the script definition
-	        Text helpText = new Text(scriptDefinitionComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
-	        var helpTextDataLayout = new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false, 1, 1);
-	        helpTextDataLayout.widthHint = 400;
-	        helpTextDataLayout.heightHint = 100;
-	        helpText.setLayoutData(helpTextDataLayout);
-	        helpText.setBackground(CLEAR_COLOUR);
-	        // Display the correct starting text
-	        scriptGeneratorViewModel.getScriptDefinition().ifPresentOrElse(
-	            scriptDefinition -> {
-	                Optional.ofNullable(scriptDefinition.getHelp()).ifPresentOrElse(
-	                    helpString -> helpText.setText(helpString),
-	                    () -> helpText.setText("")
-	                    );
-	            },
-	            () -> helpText.setText("")
-	            );
+	        Text helpText = makeHelpTextBox(scriptDefinitionComposite);
 	        
 	        Composite globalParamComposite = new Composite(mainParent, SWT.NONE);
 	        globalParamComposite.setLayout(new GridLayout(24, false));
-	        globalParamComposite.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, NUM_COLUMNS, 5));
+	        globalParamComposite.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false, NUM_COLUMNS, 5));
 	        
 	        List<Label> globalLabel = new ArrayList<Label>();
 	        List<Text> globalParamText = new ArrayList<Text>();
@@ -572,15 +582,15 @@ public class ScriptGeneratorView {
      * @return Combo box with available script definitions
      */
     private ComboViewer setUpScriptDefinitionSelector(Composite globalSettingsComposite) {
-    ComboViewer scriptDefinitionSelector = new ComboViewer(globalSettingsComposite, SWT.READ_ONLY);
-
-    scriptDefinitionSelector.setContentProvider(ArrayContentProvider.getInstance());
-    scriptDefinitionSelector.setLabelProvider(scriptGeneratorViewModel.getScriptDefinitionSelectorLabelProvider());
-    scriptDefinitionSelector.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
-    scriptDefinitionSelector.setInput(scriptGeneratorViewModel.getAvailableScriptDefinitionsNames());
-    scriptDefinitionSelector.setSelection(new StructuredSelection(scriptGeneratorViewModel.getScriptDefinition().get().getName()));
-
-    return scriptDefinitionSelector;
+	    ComboViewer scriptDefinitionSelector = new ComboViewer(globalSettingsComposite, SWT.READ_ONLY);
+	
+	    scriptDefinitionSelector.setContentProvider(ArrayContentProvider.getInstance());
+	    scriptDefinitionSelector.setLabelProvider(scriptGeneratorViewModel.getScriptDefinitionSelectorLabelProvider());
+	    scriptDefinitionSelector.getCombo().setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false, 1, 1));
+	    scriptDefinitionSelector.setInput(scriptGeneratorViewModel.getAvailableScriptDefinitionsNames());
+	    scriptDefinitionSelector.setSelection(new StructuredSelection(scriptGeneratorViewModel.getScriptDefinition().get().getName()));
+	
+	    return scriptDefinitionSelector;
     }
 
     private void bindToHasSelected(Control controlToDisable) {
