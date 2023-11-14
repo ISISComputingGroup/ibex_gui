@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Consumer;
-
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
@@ -39,15 +37,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -57,6 +52,7 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
+import uk.ac.stfc.isis.ibex.ui.widgets.IBEXButtonFactory;
 
 /**
  * Provides the UI to control the script generator.
@@ -131,25 +127,6 @@ public class ScriptGeneratorView {
     private Button generateScriptButton;
     private Button generateScriptAsButton;
     private ScriptGeneratorHelpMenu helpMenu;
-
-    /**
-     * Create a button to manipulate the rows of the script generator table and
-     *  move them up and down.
-     * 
-     * @param parent The composite the button will live in.
-     * @param icon The icon to display on the button.
-     * @param direction The direction of the button "up" or "down".
-     * @return The created button.
-     */
-    private Button createMoveRowButton(Composite parent, String icon, String direction) {
-    Button moveButton =  new Button(parent, SWT.NONE);
-    GridData gdBtnMoveRow = new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1);
-    gdBtnMoveRow.widthHint = 25;
-    moveButton.setLayoutData(gdBtnMoveRow);
-    moveButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/" + icon));
-    moveButton.setToolTipText("Move selected row " + direction);
-    return moveButton;
-    }
 
     /**
      * Container for the UI objects.
@@ -270,31 +247,11 @@ public class ScriptGeneratorView {
 	        mainParent.layout();
 	    });
     }
-
-    /**
-     * Creates a new Button in the format that is used on this page.
-     * 
-     * @param parent the Composite into which the button is placed
-     * @param text the title of the button
-     * @param image the image icon of the button
-     * @param clickConsumer the action that happens when button is clicked (click event is propagated)
-     * @return the new button instance
-     */
-    private Button makeButton(Composite parent, String text, Image image, Consumer<Event> clickConsumer) {
-    	Button btn = new Button(parent, SWT.NONE);
-        if (image != null)
-        	btn.setImage(image);
-        btn.setText(text);
-        btn.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-        if (clickConsumer != null)
-        	btn.addListener(SWT.Selection, e -> clickConsumer.accept(e));
-        return btn;
-    }
     
     /**
      * Creates a new Composite used to group buttons primarily on this page.
      * 
-     * @param parent the parent of this widget
+     * @param parent a composite control which will be the parent of the new instance (cannot be null)
      * @return the new COmposite instance
      */
     private Composite makeGroupingComposite(Composite parent) {
@@ -312,9 +269,9 @@ public class ScriptGeneratorView {
         Composite actionsControlsGrp = makeGroupingComposite(parent);
 
         // Make buttons for insert new/delete/duplicate actions
-        btnAddAction = makeButton(actionsControlsGrp, "Add Row To End", null, e -> scriptGeneratorViewModel.addEmptyAction());
-        btnInsertAction = makeButton(actionsControlsGrp, "Insert Row Below", null, e -> scriptGeneratorViewModel.insertEmptyAction(table.getSelectionIndex() + 1));
-        makeButton(actionsControlsGrp, "Clear All Rows", null, e -> scriptGeneratorViewModel.clearAction());
+        btnAddAction = IBEXButtonFactory.expanding(actionsControlsGrp, "Add Row To End", "Add a new row to the end of the table", null, e -> scriptGeneratorViewModel.addEmptyAction());
+        btnInsertAction = IBEXButtonFactory.expanding(actionsControlsGrp, "Insert Row Below", "Insert a new row below the selected line in the table", null, e -> scriptGeneratorViewModel.insertEmptyAction(table.getSelectionIndex() + 1));
+        IBEXButtonFactory.expanding(actionsControlsGrp, "Clear All Rows", "Delete all rows in the table", null, e -> scriptGeneratorViewModel.clearAction());
     }
     
     private void drawScriptSavingAndLoadingButtons(Composite parent) {
@@ -322,12 +279,17 @@ public class ScriptGeneratorView {
         Composite generateButtonsGrp = makeGroupingComposite(parent);
         
     	// Buttons to generate a script
-        generateScriptButton = makeButton(generateButtonsGrp, "Save Script", null, e -> scriptGeneratorViewModel.generateScriptToCurrentFilepath());
-        generateScriptAsButton = makeButton(generateButtonsGrp, "Save Script As", null, e -> scriptGeneratorViewModel.generateScript());
-        makeButton(generateButtonsGrp, "Load Script", null, e -> scriptGeneratorViewModel.loadParameterValues());
+        generateScriptButton = IBEXButtonFactory.expanding(generateButtonsGrp, "Save Script", null, null, e -> scriptGeneratorViewModel.generateScriptToCurrentFilepath());
+        generateScriptAsButton = IBEXButtonFactory.expanding(generateButtonsGrp, "Save Script As", null, null, e -> scriptGeneratorViewModel.generateScript());
+        IBEXButtonFactory.expanding(generateButtonsGrp, "Load Script", null, null, e -> scriptGeneratorViewModel.loadParameterValues());
     }
     
-    private void drawDynamicScriptingControls(Composite parent) {
+    /**
+     * Draw Run, Pause, Stop buttons for dynamic scripting
+     * 
+     * @param parent a composite control which will be the parent of the new instance (cannot be null)
+     */
+    private void drawDynamicScriptingControlButtons(Composite parent) {
     	// Composite for generate buttons
         Composite dynamicScriptingButtonsGrp = new Composite(parent, SWT.NONE);
         dynamicScriptingButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
@@ -336,16 +298,10 @@ public class ScriptGeneratorView {
         layout.marginWidth = 10;
         dynamicScriptingButtonsGrp.setLayout(layout);
         
-        // Button to run script in nicos
-        runButton = makeButton(dynamicScriptingButtonsGrp, "", ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/play.png"), null);
-        runButton.setToolTipText("Run");
-        // Button to pause script in nicos
-        pauseButton = makeButton(dynamicScriptingButtonsGrp, "", ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/pause.png"), null);
-        pauseButton.setToolTipText("Pause");
-        // Button to stop script in nicos
-        stopButton = makeButton(dynamicScriptingButtonsGrp, "", ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/stop.png"), null);        
-        stopButton.setToolTipText("Stop");
-        // Bind dynamic scripting controls
+        // Button to run/pause/stop script in nicos
+        runButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Run", ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/play.png"), null);
+        pauseButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Pause", ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/pause.png"), null);
+        stopButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Stop", ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/stop.png"), null);        
         nicosViewModel.bindControls(runButton, pauseButton, stopButton);
     }
 
@@ -404,6 +360,58 @@ public class ScriptGeneratorView {
     }
     
     /**
+     * Draws left side of the panel containing the table and the move up/down buttons
+     */
+    private void drawTable(Composite parent) {
+    	// The composite to contain the UI table
+        Composite tableContainerComposite = new Composite(parent, SWT.NONE);
+        tableContainerComposite.setLayout(new GridLayout(2, false));
+        tableContainerComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+        // The UI table
+        table = new ActionsViewTable(tableContainerComposite, SWT.NONE, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION, scriptGeneratorViewModel);
+        table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        scriptGeneratorViewModel.reloadActions();
+
+        // Composite for move action up/down buttons
+        Composite moveComposite = new Composite(tableContainerComposite, SWT.NONE);
+        moveComposite.setLayout(new GridLayout());
+        moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
+
+        // Make buttons to move an action up and down the list
+        btnMoveActionUp = IBEXButtonFactory.compact(moveComposite, null, "Move selected row up.", ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_up.png"), e -> scriptGeneratorViewModel.moveActionUp(table.selectedRows()));
+        btnMoveActionDown = IBEXButtonFactory.compact( moveComposite, null, "Move selected row down.", ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png"), e -> scriptGeneratorViewModel.moveActionDown(table.selectedRows()));
+    }
+    
+    /**
+     * Draws right side of the panel containing the buttons
+     */
+    private void drawButtons(Composite parent) {
+    	drawScriptSavingAndLoadingButtons(parent);
+        drawActionsModifierButtons(parent);
+        drawDynamicScriptingControlButtons(parent);
+        drawRunAndFinishTime(parent);
+    }
+    
+    private void drawMiddle() {
+    	// Composite to split the middle into bigger left and smaller right section
+        Composite middleComposite = new Composite(mainParent, SWT.NONE);
+        middleComposite.setLayout(new GridLayout(2, false));
+        middleComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        
+        drawTable(middleComposite);
+        
+        // The composite to contain the buttons on the right to the table
+        Composite buttonContainerComposite = new Composite(middleComposite, SWT.NONE);
+        buttonContainerComposite.setLayout(new GridLayout());
+        GridData gridData = new GridData();
+        gridData.verticalAlignment = SWT.FILL;
+        buttonContainerComposite.setLayoutData(gridData);
+        
+        drawButtons(buttonContainerComposite);
+    }
+    
+    /**
      * Display when loaded.
      */
     private void displayLoaded() {
@@ -447,48 +455,7 @@ public class ScriptGeneratorView {
 	            setUpScriptDefinitionLoadErrorTable(mainParent, scriptDefinitionLoadErrors);                 
 	        }
 	        
-	        // Composite to split the middle into bigger left and smaller right section
-	        Composite middleComposite = new Composite(mainParent, SWT.NONE);
-	        middleComposite.setLayout(new GridLayout(2, false));
-	        middleComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	        
-	        // The composite to contain the UI table
-	        Composite tableContainerComposite = new Composite(middleComposite, SWT.NONE);
-	        tableContainerComposite.setLayout(new GridLayout(2, false));
-	        tableContainerComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
-	        // The UI table
-	        table = new ActionsViewTable(tableContainerComposite,
-	            SWT.NONE, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION,
-	            scriptGeneratorViewModel);
-	        table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-	        scriptGeneratorViewModel.reloadActions();
-	
-	        // Composite for move action up/down buttons
-	        Composite moveComposite = new Composite(tableContainerComposite, SWT.NONE);
-	        moveComposite.setLayout(new GridLayout());
-	        moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
-	
-	        // Make buttons to move an action up and down the list
-	        btnMoveActionUp = createMoveRowButton(moveComposite, "move_up.png", "up");
-	        btnMoveActionUp.addListener(SWT.Selection, e ->    scriptGeneratorViewModel.moveActionUp(table.selectedRows()));
-	
-	        btnMoveActionDown = createMoveRowButton(moveComposite, "move_down.png", "down");
-	        btnMoveActionDown.addListener(SWT.Selection, e -> scriptGeneratorViewModel.moveActionDown(table.selectedRows()));
-	
-	        
-	        // The composite to contain the buttons on the right to the table
-	        Composite buttonContainerComposite = new Composite(middleComposite, SWT.NONE);
-	        buttonContainerComposite.setLayout(new GridLayout());
-	        GridData gridData = new GridData();
-	        gridData.verticalAlignment = SWT.FILL;
-	        buttonContainerComposite.setLayoutData(gridData);
-	        
-	        drawScriptSavingAndLoadingButtons(buttonContainerComposite);
-	        drawActionsModifierButtons(buttonContainerComposite);
-	        drawDynamicScriptingControls(buttonContainerComposite);
-	        drawRunAndFinishTime(buttonContainerComposite);
-
+	        drawMiddle();
 	        
 	        // Composite for the row containing the parameter file location and total estimated run time
 	        Composite scriptInfoGrp = new Composite(mainParent, SWT.NONE);
@@ -605,34 +572,30 @@ public class ScriptGeneratorView {
      * @param scriptDefinitionSelector The selector for script definitions
      * @param helpText The help text
      */
-    private void bind(ComboViewer scriptDefinitionSelector,
-        Text helpText,
-        List<Label> globalLabel,
-        List<Text> globalParamText,
-        Composite globalParamsComposite) {
-    scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText, globalLabel, globalParamText, globalParamsComposite, mainParent);
-
-    scriptGeneratorViewModel.bindActionProperties(table, generateScriptButton, generateScriptAsButton);
-
-    table.addSelectionChangedListener(event -> scriptGeneratorViewModel.setSelected(table.selectedRows()));
-
-    bindingContext.bindValue(WidgetProperties.text().observe(parametersFileText),
-    	BeanProperties.value("parametersFile").observe(scriptGeneratorViewModel));
-    
-    bindingContext.bindValue(WidgetProperties.text().observe(scriptGenerationTimeText),
-        	BeanProperties.value("scriptGenerationTime").observe(scriptGeneratorViewModel));
-    
-    bindingContext.bindValue(WidgetProperties.text().observe(estimateText),
-        BeanProperties.value("timeEstimate").observe(scriptGeneratorViewModel));
-    
-    scriptGeneratorViewModel.getFinishTimer().addPropertyChangeListener("finishTimeVal", e -> {
-    	DISPLAY.asyncExec(() -> {
-    		expectedFinishText.setText((String) e.getNewValue());
-    	});
-    });
-
-    bindToHasSelected(btnMoveActionUp);
-    bindToHasSelected(btnMoveActionDown);
+    private void bind(ComboViewer scriptDefinitionSelector, Text helpText, List<Label> globalLabel, List<Text> globalParamText, Composite globalParamsComposite) {
+	    scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText, globalLabel, globalParamText, globalParamsComposite, mainParent);
+	
+	    scriptGeneratorViewModel.bindActionProperties(table, generateScriptButton, generateScriptAsButton);
+	
+	    table.addSelectionChangedListener(event -> scriptGeneratorViewModel.setSelected(table.selectedRows()));
+	
+	    bindingContext.bindValue(WidgetProperties.text().observe(parametersFileText),
+	    	BeanProperties.value("parametersFile").observe(scriptGeneratorViewModel));
+	    
+	    bindingContext.bindValue(WidgetProperties.text().observe(scriptGenerationTimeText),
+	        	BeanProperties.value("scriptGenerationTime").observe(scriptGeneratorViewModel));
+	    
+	    bindingContext.bindValue(WidgetProperties.text().observe(estimateText),
+	        BeanProperties.value("timeEstimate").observe(scriptGeneratorViewModel));
+	    
+	    scriptGeneratorViewModel.getFinishTimer().addPropertyChangeListener("finishTimeVal", e -> {
+	    	DISPLAY.asyncExec(() -> {
+	    		expectedFinishText.setText((String) e.getNewValue());
+	    	});
+	    });
+	
+	    bindToHasSelected(btnMoveActionUp);
+	    bindToHasSelected(btnMoveActionDown);
     }
 
 }
