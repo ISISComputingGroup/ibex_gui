@@ -12,6 +12,11 @@ import org.eclipse.swt.widgets.Listener;
  */
 public class IBEXButtonFactory {
 	
+	protected IBEXButtonFactory() {
+	    // Utility class is not meant to be instantiated
+	    throw new UnsupportedOperationException();
+	}
+	
 	/**
 	 * Creates a button that fills all available horizontal space.
 	 * 
@@ -22,7 +27,7 @@ public class IBEXButtonFactory {
 	 * @param onClickListener the event handler for clicks
 	 * @return a new button instance
 	 */
-	static public Button expanding(Composite parent, String text, String tooltip, Image image, Listener onClickListener) {
+	public static Button expanding(Composite parent, String text, String tooltip, Image image, Listener onClickListener) {
 		int style = SWT.NONE;
 		GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		
@@ -39,7 +44,7 @@ public class IBEXButtonFactory {
 	 * @param onClickListener the event handler for clicks
 	 * @return a new button instance
 	 */
-	static public Button compact(Composite parent, String text, String tooltip, Image image, Listener onClickListener) {
+	public static Button compact(Composite parent, String text, String tooltip, Image image, Listener onClickListener) {
 		int style = SWT.NONE;
 		GridData layoutData = new GridData(SWT.FILL, SWT.FILL, false, false);
 
@@ -54,19 +59,22 @@ public class IBEXButtonFactory {
      * @param text the title of the button
      * @param tooltip the tooltip string for the button (or null)
      * @param image the image icon of the button
-     * @param clickConsumer the action that happens when button is clicked (click event is propagated)
+     * @param onClickListener the action that happens when button is clicked (click event is propagated)
      * @param layoutData the layout data for the button
      * @return the new button instance
      */
-    static public Button create(Composite parent, int style, String text, String tooltip, Image image, Listener onClickListener, Object layoutData) {
+    public static Button create(Composite parent, int style, String text, String tooltip, Image image, Listener onClickListener, Object layoutData) {
     	Button btn = new Button(parent, SWT.NONE);
-        if (text != null)
+        if (text != null) {
         	btn.setText(text);
+        }
 		btn.setToolTipText(tooltip);
-		if (image != null)
+		if (image != null) {
         	btn.setImage(image);
-        if (onClickListener != null)
+		}
+        if (onClickListener != null) {
         	btn.addListener(SWT.Selection, onClickListener);
+        }
         btn.setLayoutData(layoutData);
 		return btn;
     }
