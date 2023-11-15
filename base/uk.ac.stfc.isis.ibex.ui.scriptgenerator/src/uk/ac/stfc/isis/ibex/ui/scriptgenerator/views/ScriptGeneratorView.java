@@ -27,6 +27,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
@@ -83,6 +84,15 @@ public class ScriptGeneratorView {
 	private static final Image IMAGE_UP_ARROW = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_up.png");
 	private static final Image IMAGE_DOWN_ARROW = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png");
 
+	/**
+     * The string to display if Python is loading.
+     */
+    private static final String LOADING_MESSAGE = "Loading...";
+
+    /**
+     * The string to display if Python is loading.
+     */
+    private static final String RELOADING_MESSAGE = "Reloading...";
 	
     private static PreferenceSupplier preferences = new PreferenceSupplier();
 
@@ -117,16 +127,6 @@ public class ScriptGeneratorView {
         + System.getProperty("line.separator")
         + "Have they been located in the correct place or is this not your preferred location?", 
         preferences.scriptGeneratorScriptDefinitionFolder());
-
-    /**
-     * The string to display if python is loading.
-     */
-    private static final String LOADING_MESSAGE = "Loading...";
-
-    /**
-     * The string to display if python is loading.
-     */
-    private static final String RELOADING_MESSAGE = "Reloading...";
 
     /**
      * Denotes whether script definitions have been loaded once.
@@ -172,11 +172,11 @@ public class ScriptGeneratorView {
     scriptGeneratorViewModel.addPropertyChangeListener(ScriptGeneratorProperties.PYTHON_READINESS_PROPERTY, evt -> {
         boolean ready = (boolean) evt.getNewValue();
         if (ready) {
-        doGitActions();
-        displayLoaded();
-        scriptGeneratorViewModel.reloadScriptDefinitions();
+	        doGitActions();
+	        displayLoaded();
+	        scriptGeneratorViewModel.reloadScriptDefinitions();
         } else {
-        displayLoading();
+        	displayLoading();
         }
     });
     
@@ -258,14 +258,17 @@ public class ScriptGeneratorView {
 	        destroyUIContents();
 	        Label loadingMessage = new Label(mainParent, SWT.NONE);
 	        loadingMessage.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
-	        // Make the warning label bigger from: https://stackoverflow.com/questions/1449968/change-just-the-font-size-in-swt
-	        FontData[] fD = loadingMessage.getFont().getFontData();
-	        fD[0].setHeight(16);
-	        loadingMessage.setFont(new Font(Display.getDefault(), fD[0]));
+	        
+	        // Make the warning label bigger
+	        final FontDescriptor largeDescriptor = FontDescriptor.createFrom(loadingMessage.getFont()).setHeight(16);
+	        final Font largeFont = largeDescriptor.createFont(Display.getDefault());
+	        loadingMessage.setFont(largeFont);
+	        loadingMessage.addDisposeListener(e -> largeFont.dispose()); // Need to dispose of new font's resources
+	        
 	        if (scriptDefinitionsLoadedOnce) {
-	        loadingMessage.setText(RELOADING_MESSAGE);
+	        	loadingMessage.setText(RELOADING_MESSAGE);
 	        } else {
-	        loadingMessage.setText(LOADING_MESSAGE);
+	        	loadingMessage.setText(LOADING_MESSAGE);
 	        }
 	
 	        mainParent.layout();
