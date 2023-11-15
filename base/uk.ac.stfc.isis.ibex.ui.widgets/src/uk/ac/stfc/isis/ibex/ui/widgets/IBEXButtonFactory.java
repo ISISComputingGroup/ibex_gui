@@ -12,6 +12,9 @@ import org.eclipse.swt.widgets.Listener;
  */
 public class IBEXButtonFactory {
 	
+	/**
+	 * Do not use this constructor.
+	 */
 	protected IBEXButtonFactory() {
 	    // Utility class is not meant to be instantiated
 	    throw new UnsupportedOperationException();
