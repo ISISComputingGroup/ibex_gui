@@ -404,7 +404,7 @@ public class ScriptGeneratorView {
 
         // Make buttons to move an action up and down the list
         btnMoveActionUp = IBEXButtonFactory.compact(moveComposite, null, "Move selected row up.", IMAGE_UP_ARROW, e -> scriptGeneratorViewModel.moveActionUp(table.selectedRows()));
-        btnMoveActionDown = IBEXButtonFactory.compact( moveComposite, null, "Move selected row down.", IMAGE_DOWN_ARROW, e -> scriptGeneratorViewModel.moveActionDown(table.selectedRows()));
+        btnMoveActionDown = IBEXButtonFactory.compact(moveComposite, null, "Move selected row down.", IMAGE_DOWN_ARROW, e -> scriptGeneratorViewModel.moveActionDown(table.selectedRows()));
     }
     
     /**
