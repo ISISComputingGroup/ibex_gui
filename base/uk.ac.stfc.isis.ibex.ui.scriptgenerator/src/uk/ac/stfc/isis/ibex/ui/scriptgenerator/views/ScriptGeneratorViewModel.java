@@ -749,6 +749,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
     	String paramVal = "";
         if (getScriptDefinition().get().getGlobalParameters() != null) {
       	  temp = getScriptDefinition().get().getGlobalParameters();
+      	  
+      	  // Hide global parameters row if there is nothing to display
+      	  ((GridData) globalParamsComposite.getLayoutData()).exclude = temp.isEmpty();
+      	  globalParamsComposite.setVisible(!temp.isEmpty());
+      	  
       	  if (!temp.isEmpty()) {
       		  for (ActionParameter global : temp) {
       			  param = global.getName();
@@ -769,7 +774,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	            	  globalParamTextCurrent.setText(paramVal);
 	            	  globalParamText.add(globalParamTextCurrent);
       			  }
-      			  }
+      		  }
       	  }
       }
 	}

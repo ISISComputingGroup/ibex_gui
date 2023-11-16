@@ -23,11 +23,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
@@ -38,6 +38,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -53,6 +54,7 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
+import uk.ac.stfc.isis.ibex.ui.widgets.IBEXButtonFactory;
 
 /**
  * Provides the UI to control the script generator.
@@ -61,7 +63,37 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class ScriptGeneratorView {
+	
+	// strings and images
+	private static final String BUTTON_TITLE_SAVE = "Save Script";
+	private static final String BUTTON_TITLE_SAVE_AS = "Save Script As";
+	private static final String BUTTON_TITLE_LOAD = "Load Script";
+	
+	private static final String BUTTON_TITLE_ADD_ROW_TO_END = "Add Row to End";
+	private static final String BUTTON_TITLE_INSERT_ROW_BELOW = "Insert Row Below";
+	private static final String BUTTON_TITLE_DELETE_ROWS = "Clear All Rows";
+	
+	private static final String BUTTON_TOOLTIP_ADD_ROW_TO_END = "Add a new row to the end of the table";
+	private static final String BUTTON_TOOLTIP_INSERT_ROW_BELOW = "Insert a new row below the selected line in the table";
+	private static final String BUTTON_TOOLTIP_DELETE_ROWS = "Delete all rows in the table";
 
+	private static final Image IMAGE_RUN = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/play.png");
+	private static final Image IMAGE_PAUSE = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/pause.png");
+	private static final Image IMAGE_STOP = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/stop.png");
+	
+	private static final Image IMAGE_UP_ARROW = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_up.png");
+	private static final Image IMAGE_DOWN_ARROW = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png");
+
+	/**
+     * The string to display if Python is loading.
+     */
+    private static final String LOADING_MESSAGE = "Loading...";
+
+    /**
+     * The string to display if Python is loading.
+     */
+    private static final String RELOADING_MESSAGE = "Reloading...";
+	
     private static PreferenceSupplier preferences = new PreferenceSupplier();
 
     private static final Display DISPLAY = Display.getDefault();
@@ -72,7 +104,7 @@ public class ScriptGeneratorView {
      * A clear colour for use in other script generator table columns when a row is valid.
      */
     private static final Color CLEAR_COLOUR = DISPLAY.getSystemColor(SWT.COLOR_WHITE);
-
+    
     /**
      * The ViewModel the View is updated by.
      */
@@ -97,16 +129,6 @@ public class ScriptGeneratorView {
         preferences.scriptGeneratorScriptDefinitionFolder());
 
     /**
-     * The string to display if python is loading.
-     */
-    private static final String LOADING_MESSAGE = "Loading...";
-
-    /**
-     * The string to display if python is loading.
-     */
-    private static final String RELOADING_MESSAGE = "Reloading...";
-
-    /**
      * Denotes whether script definitions have been loaded once.
      */
     private boolean scriptDefinitionsLoadedOnce = false;
@@ -114,7 +136,9 @@ public class ScriptGeneratorView {
     private ActionsViewTable table;
     private Button btnMoveActionUp;
     private Button btnMoveActionDown;
-    private Button btnAddAction;
+    @SuppressWarnings("unused")
+	private Button btnAddAction;
+    @SuppressWarnings("unused")
     private Button btnInsertAction;
     private Label parametersFileText;
     private Label scriptGenerationTimeText;
@@ -129,25 +153,6 @@ public class ScriptGeneratorView {
     private ScriptGeneratorHelpMenu helpMenu;
 
     /**
-     * Create a button to manipulate the rows of the script generator table and
-     *  move them up and down.
-     * 
-     * @param parent The composite the button will live in.
-     * @param icon The icon to display on the button.
-     * @param direction The direction of the button "up" or "down".
-     * @return The created button.
-     */
-    private Button createMoveRowButton(Composite parent, String icon, String direction) {
-    Button moveButton =  new Button(parent, SWT.NONE);
-    GridData gdBtnMoveRow = new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1);
-    gdBtnMoveRow.widthHint = 25;
-    moveButton.setLayoutData(gdBtnMoveRow);
-    moveButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/" + icon));
-    moveButton.setToolTipText("Move selected row " + direction);
-    return moveButton;
-    }
-
-    /**
      * Container for the UI objects.
      * 
      * @param parent the parent composite.
@@ -156,23 +161,22 @@ public class ScriptGeneratorView {
     public void createPartControl(Composite parent) {
 
     scriptGeneratorViewModel = new ScriptGeneratorViewModel();
-    
 
     GridData gdQueueContainer = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
     gdQueueContainer.heightHint = 300;
     parent.setLayoutData(gdQueueContainer);
-    parent.setLayout(new GridLayout(1, false));
+    parent.setLayout(new GridLayout());
 
     mainParent = parent;
 
     scriptGeneratorViewModel.addPropertyChangeListener(ScriptGeneratorProperties.PYTHON_READINESS_PROPERTY, evt -> {
         boolean ready = (boolean) evt.getNewValue();
         if (ready) {
-        doGitActions();
-        displayLoaded();
-        scriptGeneratorViewModel.reloadScriptDefinitions();
+	        doGitActions();
+	        displayLoaded();
+	        scriptGeneratorViewModel.reloadScriptDefinitions();
         } else {
-        displayLoading();
+        	displayLoading();
         }
     });
     
@@ -250,24 +254,190 @@ public class ScriptGeneratorView {
      * Display loading.
      */
     private void displayLoading() {
-    DISPLAY.asyncExec(() -> {
-        destroyUIContents();
-        Label loadingMessage = new Label(mainParent, SWT.NONE);
-        loadingMessage.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, true));
-        // Make the warning label bigger from: https://stackoverflow.com/questions/1449968/change-just-the-font-size-in-swt
-        FontData[] fD = loadingMessage.getFont().getFontData();
-        fD[0].setHeight(16);
-        loadingMessage.setFont(new Font(Display.getDefault(), fD[0]));
-        if (scriptDefinitionsLoadedOnce) {
-        loadingMessage.setText(RELOADING_MESSAGE);
-        } else {
-        loadingMessage.setText(LOADING_MESSAGE);
-        }
+	    DISPLAY.asyncExec(() -> {
+	        destroyUIContents();
+	        Label loadingMessage = new Label(mainParent, SWT.NONE);
+	        loadingMessage.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
+	        
+	        // Make the warning label bigger
+	        final FontDescriptor largeDescriptor = FontDescriptor.createFrom(loadingMessage.getFont()).setHeight(16);
+	        final Font largeFont = largeDescriptor.createFont(Display.getDefault());
+	        loadingMessage.setFont(largeFont);
+	        loadingMessage.addDisposeListener(e -> largeFont.dispose()); // Need to dispose of new font's resources
+	        
+	        if (scriptDefinitionsLoadedOnce) {
+	        	loadingMessage.setText(RELOADING_MESSAGE);
+	        } else {
+	        	loadingMessage.setText(LOADING_MESSAGE);
+	        }
+	
+	        mainParent.layout();
+	    });
+    }
+    
+    /**
+     * Creates a new Composite used to group buttons primarily on this page.
+     * 
+     * @param parent a composite control which will be the parent of the new instance (cannot be null)
+     * @return the new COmposite instance
+     */
+    private Composite makeGroupingComposite(Composite parent) {
+    	Composite group = new Composite(parent, SWT.NONE);
+        group.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
+        GridLayout layout = new GridLayout(1, true);
+        layout.marginHeight = 10;
+        layout.marginWidth = 10;
+        group.setLayout(layout);
+        return group;
+    }
+    
+    private void drawActionsModifierButtons(Composite parent) {
+    	// Composite for laying out new/delete/duplicate action buttons
+        Composite actionsControlsGrp = makeGroupingComposite(parent);
 
-        mainParent.layout();
-    });
+        // Make buttons for insert new/delete/duplicate actions
+        btnAddAction = IBEXButtonFactory.expanding(actionsControlsGrp, BUTTON_TITLE_ADD_ROW_TO_END, BUTTON_TOOLTIP_ADD_ROW_TO_END, null, e -> scriptGeneratorViewModel.addEmptyAction());
+        btnInsertAction = IBEXButtonFactory.expanding(actionsControlsGrp, BUTTON_TITLE_INSERT_ROW_BELOW, BUTTON_TOOLTIP_INSERT_ROW_BELOW, null, e -> scriptGeneratorViewModel.insertEmptyAction(table.getSelectionIndex() + 1));
+        IBEXButtonFactory.expanding(actionsControlsGrp, BUTTON_TITLE_DELETE_ROWS, BUTTON_TOOLTIP_DELETE_ROWS, null, e -> scriptGeneratorViewModel.clearAction());
+    }
+    
+    private void drawScriptSavingAndLoadingButtons(Composite parent) {
+    	// Composite for generate buttons
+        Composite generateButtonsGrp = makeGroupingComposite(parent);
+        
+    	// Buttons to generate a script
+        generateScriptButton = IBEXButtonFactory.expanding(generateButtonsGrp, BUTTON_TITLE_SAVE, null, null, e -> scriptGeneratorViewModel.generateScriptToCurrentFilepath());
+        generateScriptAsButton = IBEXButtonFactory.expanding(generateButtonsGrp, BUTTON_TITLE_SAVE_AS, null, null, e -> scriptGeneratorViewModel.generateScript());
+        IBEXButtonFactory.expanding(generateButtonsGrp, BUTTON_TITLE_LOAD, null, null, e -> scriptGeneratorViewModel.loadParameterValues());
+    }
+    
+    /**
+     * Draw Run, Pause, Stop buttons for dynamic scripting.
+     * 
+     * @param parent a composite control which will be the parent of the new instance (cannot be null)
+     */
+    private void drawDynamicScriptingControlButtons(Composite parent) {
+    	// Composite for generate buttons
+        Composite dynamicScriptingButtonsGrp = new Composite(parent, SWT.NONE);
+        dynamicScriptingButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
+        GridLayout layout = new GridLayout(3, true);
+        layout.marginHeight = 10;
+        layout.marginWidth = 10;
+        dynamicScriptingButtonsGrp.setLayout(layout);
+        
+        // Button to run/pause/stop script in nicos
+        runButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Run", IMAGE_RUN, null);
+        pauseButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Pause", IMAGE_PAUSE, null);
+        stopButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Stop", IMAGE_STOP, null);        
+        nicosViewModel.bindControls(runButton, pauseButton, stopButton);
     }
 
+    private void drawRunAndFinishTime(Composite parent) {
+    	// Composite for the row containing  total estimated run time
+        Composite scriptTimeGrp = makeGroupingComposite(parent);
+        scriptTimeGrp.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, true, false));
+        
+    	// Label for the total estimated run time
+        estimateText = new Label(scriptTimeGrp, SWT.TOP);
+        estimateText.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        String currentFont = estimateText.getFont().getFontData()[0].getName();
+        Font font = new Font(estimateText.getDisplay(), new FontData(currentFont, 11, SWT.BOLD));
+        estimateText.setFont(font);
+        estimateText.setText("Total estimated run time: 0 seconds");
+
+        // Label for the expected finish time
+        expectedFinishText = new Label(scriptTimeGrp, SWT.BOTTOM);
+        expectedFinishText.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        currentFont = expectedFinishText.getFont().getFontData()[0].getName();
+        font = new Font(expectedFinishText.getDisplay(), new FontData(currentFont, 11, SWT.BOLD));
+        expectedFinishText.setFont(font);
+        expectedFinishText.setText("Expected Finish Time: 00:00:00");
+    }
+    
+    /**
+     * Creates the help text box as well as a label in front of it
+     * 
+     * @param parent the container to draw the text help into
+     * @return the text box instance
+     */
+    private Text makeHelpTextBox(Composite parent) {
+    	// Label for script definition help
+        Label helpLabel = new Label(parent, SWT.NONE);
+        helpLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false, 1, 1));
+        helpLabel.setText("Help: ");
+
+        // Display help for the script definition
+        Text helpText = new Text(parent, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
+        var helpTextDataLayout = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        helpTextDataLayout.heightHint = 50;
+        helpText.setLayoutData(helpTextDataLayout);
+        helpText.setBackground(CLEAR_COLOUR);
+        // Display the correct starting text
+        scriptGeneratorViewModel.getScriptDefinition().ifPresentOrElse(
+            scriptDefinition -> {
+                Optional.ofNullable(scriptDefinition.getHelp()).ifPresentOrElse(
+                    helpString -> helpText.setText(helpString),
+                    () -> helpText.setText("")
+                    );
+            },
+            () -> helpText.setText("")
+            );
+        
+        return helpText;
+    }
+    
+    /**
+     * Draws left side of the panel containing the table and the move up/down buttons
+     */
+    private void drawTable(Composite parent) {
+    	// The composite to contain the UI table
+        Composite tableContainerComposite = new Composite(parent, SWT.NONE);
+        tableContainerComposite.setLayout(new GridLayout(2, false));
+        tableContainerComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+        // The UI table
+        table = new ActionsViewTable(tableContainerComposite, SWT.NONE, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION, scriptGeneratorViewModel);
+        table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        scriptGeneratorViewModel.reloadActions();
+
+        // Composite for move action up/down buttons
+        Composite moveComposite = new Composite(tableContainerComposite, SWT.NONE);
+        moveComposite.setLayout(new GridLayout());
+        moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
+
+        // Make buttons to move an action up and down the list
+        btnMoveActionUp = IBEXButtonFactory.compact(moveComposite, null, "Move selected row up.", IMAGE_UP_ARROW, e -> scriptGeneratorViewModel.moveActionUp(table.selectedRows()));
+        btnMoveActionDown = IBEXButtonFactory.compact(moveComposite, null, "Move selected row down.", IMAGE_DOWN_ARROW, e -> scriptGeneratorViewModel.moveActionDown(table.selectedRows()));
+    }
+    
+    /**
+     * Draws right side of the panel containing the buttons
+     */
+    private void drawButtons(Composite parent) {
+    	drawScriptSavingAndLoadingButtons(parent);
+        drawActionsModifierButtons(parent);
+        drawDynamicScriptingControlButtons(parent);
+        drawRunAndFinishTime(parent);
+    }
+    
+    private void drawMiddle() {
+    	// Composite to split the middle into bigger left and smaller right section
+        Composite middleComposite = new Composite(mainParent, SWT.NONE);
+        middleComposite.setLayout(new GridLayout(2, false));
+        middleComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        
+        drawTable(middleComposite);
+        
+        // The composite to contain the buttons on the right to the table
+        Composite buttonContainerComposite = new Composite(middleComposite, SWT.NONE);
+        buttonContainerComposite.setLayout(new GridLayout());
+        GridData gridData = new GridData();
+        gridData.verticalAlignment = SWT.FILL;
+        buttonContainerComposite.setLayoutData(gridData);
+        
+        drawButtons(buttonContainerComposite);
+    }
+    
     /**
      * Display when loaded.
      */
@@ -280,16 +450,16 @@ public class ScriptGeneratorView {
 	        // A composite to contain the elements at the top of the script generator
 	        Composite topBarComposite = new Composite(mainParent, SWT.NONE);
 	        topBarComposite.setLayout(new GridLayout(6, false));
-	        topBarComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+	        topBarComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 	
 	        // Composite to contain help strings from script definitions
 	        Composite scriptDefinitionComposite = new Composite(topBarComposite, SWT.NONE);
 	        scriptDefinitionComposite.setLayout(new GridLayout(5, false));
-	        scriptDefinitionComposite.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1));
+	        scriptDefinitionComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
 	
 	        // The label for the script definition selector drop down
 	        Label scriptDefinitionSelectorLabel = new Label(scriptDefinitionComposite, SWT.NONE);
-	        scriptDefinitionSelectorLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
+	        scriptDefinitionSelectorLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, true, 1, 1));
 	        scriptDefinitionSelectorLabel.setText("Script Definition:");
 	
 	        // Drop-down box to select between script definitions.
@@ -298,32 +468,11 @@ public class ScriptGeneratorView {
 	        // Separate help and selector
 	        new Label(scriptDefinitionComposite, SWT.SEPARATOR | SWT.VERTICAL);
 	
-	        // Label for script definition help
-	        Label helpLabel = new Label(scriptDefinitionComposite, SWT.NONE);
-	        helpLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-	        helpLabel.setText("Help: ");
-	
-	        // Display help for the script definition
-	        Text helpText = new Text(scriptDefinitionComposite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
-	        var helpTextDataLayout = new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false, 1, 1);
-	        helpTextDataLayout.widthHint = 400;
-	        helpTextDataLayout.heightHint = 100;
-	        helpText.setLayoutData(helpTextDataLayout);
-	        helpText.setBackground(CLEAR_COLOUR);
-	        // Display the correct starting text
-	        scriptGeneratorViewModel.getScriptDefinition().ifPresentOrElse(
-	            scriptDefinition -> {
-	                Optional.ofNullable(scriptDefinition.getHelp()).ifPresentOrElse(
-	                    helpString -> helpText.setText(helpString),
-	                    () -> helpText.setText("")
-	                    );
-	            },
-	            () -> helpText.setText("")
-	            );
+	        Text helpText = makeHelpTextBox(scriptDefinitionComposite);
 	        
 	        Composite globalParamComposite = new Composite(mainParent, SWT.NONE);
 	        globalParamComposite.setLayout(new GridLayout(24, false));
-	        globalParamComposite.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 1, 5));
+	        globalParamComposite.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
 	        
 	        List<Label> globalLabel = new ArrayList<Label>();
 	        List<Text> globalParamText = new ArrayList<Text>();
@@ -332,32 +481,8 @@ public class ScriptGeneratorView {
 	        if (!scriptDefinitionLoadErrors.isEmpty()) {
 	            setUpScriptDefinitionLoadErrorTable(mainParent, scriptDefinitionLoadErrors);                 
 	        }
-	
-	        // The composite to contain the UI table
-	        Composite tableContainerComposite = new Composite(mainParent, SWT.NONE);
-	        tableContainerComposite.setLayout(new GridLayout(2, false));
-	        tableContainerComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-	
-	        // The UI table
-	        table = new ActionsViewTable(tableContainerComposite,
-	            SWT.NONE, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION,
-	            scriptGeneratorViewModel);
-	        table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	        scriptGeneratorViewModel.reloadActions();
-	
-	        // Composite for move action up/down buttons
-	        Composite moveComposite = new Composite(tableContainerComposite, SWT.NONE);
-	        moveComposite.setLayout(new GridLayout(1, false));
-	        moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-	
-	        // Make buttons to move an action up and down the list
-	        btnMoveActionUp = createMoveRowButton(moveComposite, "move_up.png", "up");
-	        btnMoveActionUp.addListener(SWT.Selection, e ->    scriptGeneratorViewModel.moveActionUp(table.selectedRows()));
-	
-	        btnMoveActionDown = createMoveRowButton(moveComposite, "move_down.png", "down");
-	        btnMoveActionDown.addListener(SWT.Selection, e -> scriptGeneratorViewModel.moveActionDown(table.selectedRows()));
-	
-	
+	        
+	        drawMiddle();
 	        
 	        // Composite for the row containing the parameter file location and total estimated run time
 	        Composite scriptInfoGrp = new Composite(mainParent, SWT.NONE);
@@ -374,120 +499,11 @@ public class ScriptGeneratorView {
 	        scriptGenerationTimeText = new Label(scriptInfoGrp, SWT.LEFT);
 	        scriptGenerationTimeText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 	        
-	        Composite utilitiesGrp = new Composite(mainParent, SWT.NONE);
-	        utilitiesGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-	        GridLayout ugLayout = new GridLayout(2, true);
-	        ugLayout.marginHeight = 10;
-	        ugLayout.marginWidth = 10;
-	        utilitiesGrp.setLayout(ugLayout);
-	        	        
-	        // Composite for the row containing  total estimated run time
-	        Composite scriptTimeGrp = new Composite(scriptInfoGrp, SWT.RIGHT);
-	        scriptTimeGrp.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, true, false, 1, 2));
-	        GridLayout scriptTimeLayout = new GridLayout(1, true);
-	        scriptTimeLayout.marginRight = 40;
-	        scriptTimeGrp.setLayout(scriptTimeLayout);
-	        
-	        // Label for the total estimated run time
-	        estimateText = new Label(scriptTimeGrp, SWT.TOP);
-	        estimateText.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
-	        String currentFont = estimateText.getFont().getFontData()[0].getName();
-	        Font font = new Font(estimateText.getDisplay(), new FontData(currentFont, 11, SWT.BOLD));
-	        estimateText.setFont(font);
-	        estimateText.setText("Total estimated run time: 0 seconds");
-	
-	        // Label for the expected finish time
-	        expectedFinishText = new Label(scriptTimeGrp, SWT.BOTTOM);
-	        expectedFinishText.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
-	        currentFont = expectedFinishText.getFont().getFontData()[0].getName();
-	        font = new Font(expectedFinishText.getDisplay(), new FontData(currentFont, 11, SWT.BOLD));
-	        expectedFinishText.setFont(font);
-	        expectedFinishText.setText("Expected Finish Time: 00:00:00");
-	
-	        // Composite for laying out new/delete/duplicate action buttons
-	        Composite actionsControlsGrp = new Composite(mainParent, SWT.NONE);
-	        actionsControlsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-	        GridLayout ssgLayout = new GridLayout(3, true);
-	        ssgLayout.marginHeight = 10;
-	        ssgLayout.marginWidth = 10;
-	        actionsControlsGrp.setLayout(ssgLayout);
-	
-	        // Make buttons for insert new/delete/duplicate actions
-	        btnAddAction = new Button(actionsControlsGrp, SWT.NONE);
-	        btnAddAction.setText("Add Action To End");
-	        btnAddAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	        btnAddAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.addEmptyAction());
-	        
-	        btnInsertAction = new Button(actionsControlsGrp, SWT.NONE);
-	        btnInsertAction.setText("Insert Action Below");
-	        btnInsertAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	        btnInsertAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.insertEmptyAction(table.getSelectionIndex() + 1));
-	
-	        final Button btnClearAction = new Button(actionsControlsGrp, SWT.NONE);
-	        btnClearAction.setText("Clear All Actions");
-	        btnClearAction.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	        btnClearAction.addListener(SWT.Selection, e -> scriptGeneratorViewModel.clearAction());
-	
-	
-	        // Composite for generate buttons
-	        Composite generateButtonsGrp = new Composite(mainParent, SWT.NONE);
-	        generateButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-	        GridLayout gbgLayout = new GridLayout(3, true);
-	        gbgLayout.marginHeight = 10;
-	        gbgLayout.marginWidth = 10;
-	        generateButtonsGrp.setLayout(gbgLayout);
-	        
-	        // Composite for generate buttons
-	        Composite dynamicScriptingButtonsGrp = new Composite(mainParent, SWT.NONE);
-	        dynamicScriptingButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-	        GridLayout dsgLayout = new GridLayout(3, true);
-	        dsgLayout.marginHeight = 10;
-	        dsgLayout.marginWidth = 10;
-	        dynamicScriptingButtonsGrp.setLayout(dsgLayout);
-	        
-	        // Button to run script in nicos
-	        runButton = new Button(dynamicScriptingButtonsGrp, SWT.NONE);
-	        runButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/play.png"));
-	        runButton.setText("Run");
-	        runButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	        
-	        
-	        // Button to pause script in nicos
-	        pauseButton = new Button(dynamicScriptingButtonsGrp, SWT.NONE);
-	        pauseButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/pause.png"));
-	        pauseButton.setText("Pause");
-	        pauseButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	        
-	        
-	        // Button to stop script in nicos
-	        stopButton = new Button(dynamicScriptingButtonsGrp, SWT.NONE);
-	        stopButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/stop.png"));
-	        stopButton.setText("Stop");
-	        stopButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));	        
-	        
-	        // Bind dynamic scripting controls
-	        nicosViewModel.bindControls(runButton, pauseButton, stopButton);
-	        
-	        // Needs to be after nicos model has been set up
+	        // Needs to be after nicos model has been set up (in drawDynamicScriptingControls)
 	        helpMenu = new ScriptGeneratorHelpMenu(topBarComposite);
 			var scriptDefinitionsRepoPath = scriptGeneratorViewModel.getScriptDefinitionsRepoPath();
 			helpMenu.setScriptDefinitionsLocation(scriptDefinitionsRepoPath);
-	
-	        // Buttons to generate a script
-	        generateScriptButton = new Button(generateButtonsGrp, SWT.NONE);
-	        generateScriptButton.setText("Generate Script");
-	        generateScriptButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	        generateScriptButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.generateScriptToCurrentFilepath());
-	        
-	        generateScriptAsButton = new Button(generateButtonsGrp, SWT.NONE);
-	        generateScriptAsButton.setText("Generate Script As");
-	        generateScriptAsButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	        generateScriptAsButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.generateScript());
-	        
-	        final Button loadExperimentalParametersButton = new Button(generateButtonsGrp, SWT.NONE);
-	        loadExperimentalParametersButton.setText("Load Script");
-	        loadExperimentalParametersButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-	        loadExperimentalParametersButton.addListener(SWT.Selection, e -> scriptGeneratorViewModel.loadParameterValues());
+
 	        // Bind the context and the validity checking listeners
 	        bind(scriptDefinitionSelector,
 	            helpText,
@@ -562,15 +578,15 @@ public class ScriptGeneratorView {
      * @return Combo box with available script definitions
      */
     private ComboViewer setUpScriptDefinitionSelector(Composite globalSettingsComposite) {
-    ComboViewer scriptDefinitionSelector = new ComboViewer(globalSettingsComposite, SWT.READ_ONLY);
-
-    scriptDefinitionSelector.setContentProvider(ArrayContentProvider.getInstance());
-    scriptDefinitionSelector.setLabelProvider(scriptGeneratorViewModel.getScriptDefinitionSelectorLabelProvider());
-    scriptDefinitionSelector.getCombo().setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
-    scriptDefinitionSelector.setInput(scriptGeneratorViewModel.getAvailableScriptDefinitionsNames());
-    scriptDefinitionSelector.setSelection(new StructuredSelection(scriptGeneratorViewModel.getScriptDefinition().get().getName()));
-
-    return scriptDefinitionSelector;
+	    ComboViewer scriptDefinitionSelector = new ComboViewer(globalSettingsComposite, SWT.READ_ONLY);
+	
+	    scriptDefinitionSelector.setContentProvider(ArrayContentProvider.getInstance());
+	    scriptDefinitionSelector.setLabelProvider(scriptGeneratorViewModel.getScriptDefinitionSelectorLabelProvider());
+	    scriptDefinitionSelector.getCombo().setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false, 1, 1));
+	    scriptDefinitionSelector.setInput(scriptGeneratorViewModel.getAvailableScriptDefinitionsNames());
+	    scriptDefinitionSelector.setSelection(new StructuredSelection(scriptGeneratorViewModel.getScriptDefinition().get().getName()));
+	
+	    return scriptDefinitionSelector;
     }
 
     private void bindToHasSelected(Control controlToDisable) {
@@ -583,34 +599,30 @@ public class ScriptGeneratorView {
      * @param scriptDefinitionSelector The selector for script definitions
      * @param helpText The help text
      */
-    private void bind(ComboViewer scriptDefinitionSelector,
-        Text helpText,
-        List<Label> globalLabel,
-        List<Text> globalParamText,
-        Composite globalParamsComposite) {
-    scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText, globalLabel, globalParamText, globalParamsComposite, mainParent);
-
-    scriptGeneratorViewModel.bindActionProperties(table, generateScriptButton, generateScriptAsButton);
-
-    table.addSelectionChangedListener(event -> scriptGeneratorViewModel.setSelected(table.selectedRows()));
-
-    bindingContext.bindValue(WidgetProperties.text().observe(parametersFileText),
-    	BeanProperties.value("parametersFile").observe(scriptGeneratorViewModel));
-    
-    bindingContext.bindValue(WidgetProperties.text().observe(scriptGenerationTimeText),
-        	BeanProperties.value("scriptGenerationTime").observe(scriptGeneratorViewModel));
-    
-    bindingContext.bindValue(WidgetProperties.text().observe(estimateText),
-        BeanProperties.value("timeEstimate").observe(scriptGeneratorViewModel));
-    
-    scriptGeneratorViewModel.getFinishTimer().addPropertyChangeListener("finishTimeVal", e -> {
-    	DISPLAY.asyncExec(() -> {
-    		expectedFinishText.setText((String) e.getNewValue());
-    	});
-    });
-
-    bindToHasSelected(btnMoveActionUp);
-    bindToHasSelected(btnMoveActionDown);
+    private void bind(ComboViewer scriptDefinitionSelector, Text helpText, List<Label> globalLabel, List<Text> globalParamText, Composite globalParamsComposite) {
+	    scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText, globalLabel, globalParamText, globalParamsComposite, mainParent);
+	
+	    scriptGeneratorViewModel.bindActionProperties(table, generateScriptButton, generateScriptAsButton);
+	
+	    table.addSelectionChangedListener(event -> scriptGeneratorViewModel.setSelected(table.selectedRows()));
+	
+	    bindingContext.bindValue(WidgetProperties.text().observe(parametersFileText),
+	    	BeanProperties.value("parametersFile").observe(scriptGeneratorViewModel));
+	    
+	    bindingContext.bindValue(WidgetProperties.text().observe(scriptGenerationTimeText),
+	        	BeanProperties.value("scriptGenerationTime").observe(scriptGeneratorViewModel));
+	    
+	    bindingContext.bindValue(WidgetProperties.text().observe(estimateText),
+	        BeanProperties.value("timeEstimate").observe(scriptGeneratorViewModel));
+	    
+	    scriptGeneratorViewModel.getFinishTimer().addPropertyChangeListener("finishTimeVal", e -> {
+	    	DISPLAY.asyncExec(() -> {
+	    		expectedFinishText.setText((String) e.getNewValue());
+	    	});
+	    });
+	
+	    bindToHasSelected(btnMoveActionUp);
+	    bindToHasSelected(btnMoveActionDown);
     }
 
 }
