@@ -23,14 +23,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -38,7 +39,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -50,7 +50,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
@@ -63,36 +62,7 @@ import uk.ac.stfc.isis.ibex.ui.widgets.IBEXButtonFactory;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class ScriptGeneratorView {
-	
-	// strings and images
-	private static final String BUTTON_TITLE_SAVE = "Save Script";
-	private static final String BUTTON_TITLE_SAVE_AS = "Save Script As";
-	private static final String BUTTON_TITLE_LOAD = "Load Script";
-	
-	private static final String BUTTON_TITLE_ADD_ROW_TO_END = "Add Row to End";
-	private static final String BUTTON_TITLE_INSERT_ROW_BELOW = "Insert Row Below";
-	private static final String BUTTON_TITLE_DELETE_ROWS = "Clear All Rows";
-	
-	private static final String BUTTON_TOOLTIP_ADD_ROW_TO_END = "Add a new row to the end of the table";
-	private static final String BUTTON_TOOLTIP_INSERT_ROW_BELOW = "Insert a new row below the selected line in the table";
-	private static final String BUTTON_TOOLTIP_DELETE_ROWS = "Delete all rows in the table";
 
-	private static final Image IMAGE_RUN = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/play.png");
-	private static final Image IMAGE_PAUSE = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/pause.png");
-	private static final Image IMAGE_STOP = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/stop.png");
-	
-	private static final Image IMAGE_UP_ARROW = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_up.png");
-	private static final Image IMAGE_DOWN_ARROW = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png");
-
-	/**
-     * The string to display if Python is loading.
-     */
-    private static final String LOADING_MESSAGE = "Loading...";
-
-    /**
-     * The string to display if Python is loading.
-     */
-    private static final String RELOADING_MESSAGE = "Reloading...";
 	
     private static PreferenceSupplier preferences = new PreferenceSupplier();
 
@@ -266,9 +236,9 @@ public class ScriptGeneratorView {
 	        loadingMessage.addDisposeListener(e -> largeFont.dispose()); // Need to dispose of new font's resources
 	        
 	        if (scriptDefinitionsLoadedOnce) {
-	        	loadingMessage.setText(RELOADING_MESSAGE);
+	        	loadingMessage.setText(Constants.RELOADING_MESSAGE);
 	        } else {
-	        	loadingMessage.setText(LOADING_MESSAGE);
+	        	loadingMessage.setText(Constants.LOADING_MESSAGE);
 	        }
 	
 	        mainParent.layout();
@@ -296,9 +266,9 @@ public class ScriptGeneratorView {
         Composite actionsControlsGrp = makeGroupingComposite(parent);
 
         // Make buttons for insert new/delete/duplicate actions
-        btnAddAction = IBEXButtonFactory.expanding(actionsControlsGrp, BUTTON_TITLE_ADD_ROW_TO_END, BUTTON_TOOLTIP_ADD_ROW_TO_END, null, e -> scriptGeneratorViewModel.addEmptyAction());
-        btnInsertAction = IBEXButtonFactory.expanding(actionsControlsGrp, BUTTON_TITLE_INSERT_ROW_BELOW, BUTTON_TOOLTIP_INSERT_ROW_BELOW, null, e -> scriptGeneratorViewModel.insertEmptyAction(table.getSelectionIndex() + 1));
-        IBEXButtonFactory.expanding(actionsControlsGrp, BUTTON_TITLE_DELETE_ROWS, BUTTON_TOOLTIP_DELETE_ROWS, null, e -> scriptGeneratorViewModel.clearAction());
+        btnAddAction = IBEXButtonFactory.expanding(actionsControlsGrp, Constants.BUTTON_TITLE_ADD_ROW_TO_END, Constants.BUTTON_TOOLTIP_ADD_ROW_TO_END, null, e -> scriptGeneratorViewModel.addEmptyAction());
+        btnInsertAction = IBEXButtonFactory.expanding(actionsControlsGrp, Constants.BUTTON_TITLE_INSERT_ROW_BELOW, Constants.BUTTON_TOOLTIP_INSERT_ROW_BELOW, null, e -> scriptGeneratorViewModel.insertEmptyAction(table.getSelectionIndex() + 1));
+        IBEXButtonFactory.expanding(actionsControlsGrp, Constants.BUTTON_TITLE_DELETE_ROWS, Constants.BUTTON_TOOLTIP_DELETE_ROWS, null, e -> scriptGeneratorViewModel.clearAction());
     }
     
     private void drawScriptSavingAndLoadingButtons(Composite parent) {
@@ -306,9 +276,9 @@ public class ScriptGeneratorView {
         Composite generateButtonsGrp = makeGroupingComposite(parent);
         
     	// Buttons to generate a script
-        generateScriptButton = IBEXButtonFactory.expanding(generateButtonsGrp, BUTTON_TITLE_SAVE, null, null, e -> scriptGeneratorViewModel.generateScriptToCurrentFilepath());
-        generateScriptAsButton = IBEXButtonFactory.expanding(generateButtonsGrp, BUTTON_TITLE_SAVE_AS, null, null, e -> scriptGeneratorViewModel.generateScript());
-        IBEXButtonFactory.expanding(generateButtonsGrp, BUTTON_TITLE_LOAD, null, null, e -> scriptGeneratorViewModel.loadParameterValues());
+        generateScriptButton = IBEXButtonFactory.expanding(generateButtonsGrp, Constants.BUTTON_TITLE_SAVE, null, null, e -> scriptGeneratorViewModel.generateScriptToCurrentFilepath());
+        generateScriptAsButton = IBEXButtonFactory.expanding(generateButtonsGrp, Constants.BUTTON_TITLE_SAVE_AS, null, null, e -> scriptGeneratorViewModel.generateScript());
+        IBEXButtonFactory.expanding(generateButtonsGrp, Constants.BUTTON_TITLE_LOAD, null, null, e -> scriptGeneratorViewModel.loadParameterValues());
     }
     
     /**
@@ -326,9 +296,9 @@ public class ScriptGeneratorView {
         dynamicScriptingButtonsGrp.setLayout(layout);
         
         // Button to run/pause/stop script in nicos
-        runButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Run", IMAGE_RUN, null);
-        pauseButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Pause", IMAGE_PAUSE, null);
-        stopButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Stop", IMAGE_STOP, null);        
+        runButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Run", Constants.IMAGE_RUN, null);
+        pauseButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Pause", Constants.IMAGE_PAUSE, null);
+        stopButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Stop", Constants.IMAGE_STOP, null);        
         nicosViewModel.bindControls(runButton, pauseButton, stopButton);
     }
 
@@ -406,8 +376,8 @@ public class ScriptGeneratorView {
         moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
 
         // Make buttons to move an action up and down the list
-        btnMoveActionUp = IBEXButtonFactory.compact(moveComposite, null, "Move selected row up.", IMAGE_UP_ARROW, e -> scriptGeneratorViewModel.moveActionUp(table.selectedRows()));
-        btnMoveActionDown = IBEXButtonFactory.compact(moveComposite, null, "Move selected row down.", IMAGE_DOWN_ARROW, e -> scriptGeneratorViewModel.moveActionDown(table.selectedRows()));
+        btnMoveActionUp = IBEXButtonFactory.compact(moveComposite, null, "Move selected row up.", Constants.IMAGE_UP_ARROW, e -> scriptGeneratorViewModel.moveActionUp(table.selectedRows()));
+        btnMoveActionDown = IBEXButtonFactory.compact(moveComposite, null, "Move selected row down.", Constants.IMAGE_DOWN_ARROW, e -> scriptGeneratorViewModel.moveActionDown(table.selectedRows()));
     }
     
     /**
