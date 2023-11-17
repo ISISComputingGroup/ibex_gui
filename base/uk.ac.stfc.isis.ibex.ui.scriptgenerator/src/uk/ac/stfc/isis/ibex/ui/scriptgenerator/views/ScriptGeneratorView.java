@@ -180,28 +180,25 @@ public class ScriptGeneratorView {
 	 */
 	private void doGitActions() {
 		DISPLAY.asyncExec(() -> {
-			String message = "";
+			StringBuilder messageBuilder = new StringBuilder();
 			
 			// Display prompt if remote git is not available
-			message += promptBuilder(scriptGeneratorViewModel.getGitErrorPromptMessage());
+			messageBuilder.append(promptBuilder(scriptGeneratorViewModel.getGitErrorPromptMessage()));
 			
 			// Display prompt if new commits are available
-			message += promptBuilder(scriptGeneratorViewModel.getUpdatesPromptMessage());
+			messageBuilder.append(promptBuilder(scriptGeneratorViewModel.getUpdatesPromptMessage()));
 			
 			// Display prompt if local repo is dirty
-			message += promptBuilder(scriptGeneratorViewModel.getDirtyPromptMessage());
+			messageBuilder.append(scriptGeneratorViewModel.getDirtyPromptMessage());
 			
 			Optional<String> gitErrors = scriptGeneratorViewModel.getGitLoadErrors();
 			if (gitErrors.isPresent()) {
-				message += promptBuilder(gitErrors.get());
+				messageBuilder.append(promptBuilder(gitErrors.get()));
 			}
 			
-			if (message.length() != 0) {
-				MessageDialog.openInformation(DISPLAY.getActiveShell(),
-						"Git errors occurred", 
-						message);
+			if (messageBuilder.length() != 0) {
+				MessageDialog.openInformation(DISPLAY.getActiveShell(), "Git errors occurred", messageBuilder.toString());
 			}
-			
 		});
 
 		scriptGeneratorViewModel.setRepoPath();
