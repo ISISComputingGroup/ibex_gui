@@ -93,10 +93,9 @@ public class ScriptGeneratorView {
     /**
      * The string to display if there are no script definitions to select.
      */
-    private static final String NO_SCRIPT_DEFINITIONS_MESSAGE = String.format("\u26A0 Warning: Could not load any script definitions from %s"
-        + System.getProperty("line.separator")
-        + "Have they been located in the correct place or is this not your preferred location?", 
-        preferences.scriptGeneratorScriptDefinitionFolder());
+	private static final String NO_SCRIPT_DEFINITIONS_MESSAGE = "\u26A0 Warning: Could not load any script definitions from "
+			+ preferences.scriptGeneratorScriptDefinitionFolder().orElse("any folders") + System.lineSeparator()
+			+ "Have they been located in the correct place or is this not your preferred location?";
 
     /**
      * Denotes whether script definitions have been loaded once.
@@ -128,34 +127,33 @@ public class ScriptGeneratorView {
      * @param parent the parent composite.
      */
     @PostConstruct
-    public void createPartControl(Composite parent) {
+	public void createPartControl(Composite parent) {
+		scriptGeneratorViewModel = new ScriptGeneratorViewModel();
 
-    scriptGeneratorViewModel = new ScriptGeneratorViewModel();
+		GridData gdQueueContainer = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		gdQueueContainer.heightHint = 300;
+		parent.setLayoutData(gdQueueContainer);
+		parent.setLayout(new GridLayout());
 
-    GridData gdQueueContainer = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-    gdQueueContainer.heightHint = 300;
-    parent.setLayoutData(gdQueueContainer);
-    parent.setLayout(new GridLayout());
+		mainParent = parent;
 
-    mainParent = parent;
+		scriptGeneratorViewModel.addPropertyChangeListener(ScriptGeneratorProperties.PYTHON_READINESS_PROPERTY, evt -> {
+			boolean ready = (boolean) evt.getNewValue();
+			if (ready) {
+				doGitActions();
+				displayLoaded();
+				scriptGeneratorViewModel.reloadScriptDefinitions();
+			} else {
+				displayLoading();
+			}
+		});
 
-    scriptGeneratorViewModel.addPropertyChangeListener(ScriptGeneratorProperties.PYTHON_READINESS_PROPERTY, evt -> {
-        boolean ready = (boolean) evt.getNewValue();
-        if (ready) {
-	        doGitActions();
-	        displayLoaded();
-	        scriptGeneratorViewModel.reloadScriptDefinitions();
-        } else {
-        	displayLoading();
-        }
-    });
-    
 //    scriptGeneratorViewModel.addPropertyChangeListener(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, evt -> {
 //    	nicosModel.queueScript("Script generator", (String) evt.getNewValue() + "\nrunscript()"); 
 //    });
 
-    var scriptGeneratorModel = scriptGeneratorViewModel.setUpModel();
-    nicosViewModel = new ScriptGeneratorNicosViewModel(scriptGeneratorModel);
+		var scriptGeneratorModel = scriptGeneratorViewModel.setUpModel();
+		nicosViewModel = new ScriptGeneratorNicosViewModel(scriptGeneratorModel);
     }
 
     /**
@@ -169,11 +167,11 @@ public class ScriptGeneratorView {
     /**
      * Destroy all child elements of the mainParent.
      */
-    private void destroyUIContents() {
-    for (Control child : mainParent.getChildren()) {
-        child.dispose();
-    }
-    }
+	private void destroyUIContents() {
+		for (Control child : mainParent.getChildren()) {
+			child.dispose();
+		}
+	}
 
     /**
 	 * Create dialog boxes asking informing the user if there are changes to the git repository.
@@ -184,10 +182,8 @@ public class ScriptGeneratorView {
 			
 			// Display prompt if remote git is not available
 			messageBuilder.append(promptBuilder(scriptGeneratorViewModel.getGitErrorPromptMessage()));
-			
 			// Display prompt if new commits are available
 			messageBuilder.append(promptBuilder(scriptGeneratorViewModel.getUpdatesPromptMessage()));
-			
 			// Display prompt if local repo is dirty
 			messageBuilder.append(scriptGeneratorViewModel.getDirtyPromptMessage());
 			
@@ -217,28 +213,33 @@ public class ScriptGeneratorView {
 		return errorMessage;
 	}
 
+	/**
+	 * Creates a label centred vertically and horizontally within its parent.
+	 * 
+	 * @param parent the containing composite
+	 * @param message the message to be displayed
+	 */
+	private void makeCenteredMessage(Composite parent, String message) {
+		Label messageLabel = new Label(parent, SWT.NONE);
+        messageLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
+        
+        // Make the label bigger
+        final FontDescriptor largeDescriptor = FontDescriptor.createFrom(messageLabel.getFont()).setHeight(16);
+        final Font largeFont = largeDescriptor.createFont(Display.getDefault());
+        messageLabel.setFont(largeFont);
+        messageLabel.addDisposeListener(e -> largeFont.dispose()); // Need to dispose of new font's resources
+        
+        messageLabel.setText(message);
+        parent.layout();
+	}
+	
     /**
-     * Display loading.
+     * Display loading message while python has not been loaded yet.
      */
     private void displayLoading() {
 	    DISPLAY.asyncExec(() -> {
 	        destroyUIContents();
-	        Label loadingMessage = new Label(mainParent, SWT.NONE);
-	        loadingMessage.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
-	        
-	        // Make the warning label bigger
-	        final FontDescriptor largeDescriptor = FontDescriptor.createFrom(loadingMessage.getFont()).setHeight(16);
-	        final Font largeFont = largeDescriptor.createFont(Display.getDefault());
-	        loadingMessage.setFont(largeFont);
-	        loadingMessage.addDisposeListener(e -> largeFont.dispose()); // Need to dispose of new font's resources
-	        
-	        if (scriptDefinitionsLoadedOnce) {
-	        	loadingMessage.setText(Constants.RELOADING_MESSAGE);
-	        } else {
-	        	loadingMessage.setText(Constants.LOADING_MESSAGE);
-	        }
-	
-	        mainParent.layout();
+	        makeCenteredMessage(mainParent, scriptDefinitionsLoadedOnce ? Constants.RELOADING_MESSAGE : Constants.LOADING_MESSAGE);
 	    });
     }
     
@@ -322,38 +323,6 @@ public class ScriptGeneratorView {
     }
     
     /**
-     * Creates the help text box as well as a label in front of it
-     * 
-     * @param parent the container to draw the text help into
-     * @return the text box instance
-     */
-    private Text makeHelpTextBox(Composite parent) {
-    	// Label for script definition help
-        Label helpLabel = new Label(parent, SWT.NONE);
-        helpLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false, 1, 1));
-        helpLabel.setText("Help: ");
-
-        // Display help for the script definition
-        Text helpText = new Text(parent, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
-        var helpTextDataLayout = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-        helpTextDataLayout.heightHint = 50;
-        helpText.setLayoutData(helpTextDataLayout);
-        helpText.setBackground(CLEAR_COLOUR);
-        // Display the correct starting text
-        scriptGeneratorViewModel.getScriptDefinition().ifPresentOrElse(
-            scriptDefinition -> {
-                Optional.ofNullable(scriptDefinition.getHelp()).ifPresentOrElse(
-                    helpString -> helpText.setText(helpString),
-                    () -> helpText.setText("")
-                    );
-            },
-            () -> helpText.setText("")
-            );
-        
-        return helpText;
-    }
-    
-    /**
      * Draws left side of the panel containing the table and the move up/down buttons
      */
     private void drawTable(Composite parent) {
@@ -406,101 +375,102 @@ public class ScriptGeneratorView {
     }
     
     /**
+	 * Creates the help text box as well as a label in front of it
+	 * 
+	 * @param parent the container to draw the text help into
+	 * @return the text box instance
+	 */
+	private Text makeHelpTextBox(Composite parent) {
+		// Label for script definition help
+		Label helpLabel = new Label(parent, SWT.NONE);
+		helpLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false, 1, 1));
+		helpLabel.setText("Help: ");
+
+		// Display help for the script definition
+		Text helpText = new Text(parent, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
+		var helpTextDataLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		helpTextDataLayout.heightHint = 50;
+		helpText.setLayoutData(helpTextDataLayout);
+		helpText.setBackground(CLEAR_COLOUR);
+		// Display the correct starting text
+		scriptGeneratorViewModel.getScriptDefinition().ifPresentOrElse(scriptDefinition -> {
+			Optional.ofNullable(scriptDefinition.getHelp()).ifPresentOrElse(helpString -> helpText.setText(helpString),
+					() -> helpText.setText(""));
+		}, () -> helpText.setText(""));
+
+		return helpText;
+	}
+    
+	
+    /**
      * Display when loaded.
      */
-    private void displayLoaded() {
-    DISPLAY.asyncExec(() -> {
-        scriptDefinitionsLoadedOnce = true;
-        destroyUIContents();
-        if (scriptGeneratorViewModel.scriptDefinitionsAvailable()) {
+	private void displayLoaded() {
+		DISPLAY.asyncExec(() -> {
+			scriptDefinitionsLoadedOnce = true;
+			destroyUIContents();
+			if (scriptGeneratorViewModel.scriptDefinitionsAvailable()) {
 
-	        // A composite to contain the elements at the top of the script generator
-	        Composite topBarComposite = new Composite(mainParent, SWT.NONE);
-	        topBarComposite.setLayout(new GridLayout(6, false));
-	        topBarComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-	
-	        // Composite to contain help strings from script definitions
-	        Composite scriptDefinitionComposite = new Composite(topBarComposite, SWT.NONE);
-	        scriptDefinitionComposite.setLayout(new GridLayout(5, false));
-	        scriptDefinitionComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1));
-	
-	        // The label for the script definition selector drop down
-	        Label scriptDefinitionSelectorLabel = new Label(scriptDefinitionComposite, SWT.NONE);
-	        scriptDefinitionSelectorLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, true, 1, 1));
-	        scriptDefinitionSelectorLabel.setText("Script Definition:");
-	
-	        // Drop-down box to select between script definitions.
-	        ComboViewer scriptDefinitionSelector = setUpScriptDefinitionSelector(scriptDefinitionComposite);
-	
-	        // Separate help and selector
-	        new Label(scriptDefinitionComposite, SWT.SEPARATOR | SWT.VERTICAL);
-	
-	        Text helpText = makeHelpTextBox(scriptDefinitionComposite);
-	        
-	        Composite globalParamComposite = new Composite(mainParent, SWT.NONE);
-	        globalParamComposite.setLayout(new GridLayout(24, false));
-	        globalParamComposite.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
-	        
-	        List<Label> globalLabel = new ArrayList<Label>();
-	        List<Text> globalParamText = new ArrayList<Text>();
-	        Map<String, String> scriptDefinitionLoadErrors = scriptGeneratorViewModel.getScriptDefinitionLoadErrors();
-	
-	        if (!scriptDefinitionLoadErrors.isEmpty()) {
-	            setUpScriptDefinitionLoadErrorTable(mainParent, scriptDefinitionLoadErrors);                 
-	        }
-	        
-	        drawMiddle();
-	        
-	        // Composite for the row containing the parameter file location and total estimated run time
-	        Composite scriptInfoGrp = new Composite(mainParent, SWT.NONE);
-	        scriptInfoGrp.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1));
-	        GridLayout scriptInfoLayout = new GridLayout(3, true);
-	        scriptInfoLayout.marginRight = 40;
-	        scriptInfoGrp.setLayout(scriptInfoLayout);
-	        
-	        // Label for Location of Saved Parameters File
-	        parametersFileText = new Label(scriptInfoGrp, SWT.LEFT);
-	        parametersFileText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-	        parametersFileText.setText("Current Script: <new file>");
-	        
-	        scriptGenerationTimeText = new Label(scriptInfoGrp, SWT.LEFT);
-	        scriptGenerationTimeText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-	        
-	        // Needs to be after nicos model has been set up (in drawDynamicScriptingControls)
-	        helpMenu = new ScriptGeneratorHelpMenu(topBarComposite);
-			var scriptDefinitionsRepoPath = scriptGeneratorViewModel.getScriptDefinitionsRepoPath();
-			helpMenu.setScriptDefinitionsLocation(scriptDefinitionsRepoPath);
+				// A composite to contain the elements at the top of the script generator
+				Composite topBarComposite = new Composite(mainParent, SWT.NONE);
+				topBarComposite.setLayout(new GridLayout(6, false));
+				topBarComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-	        // Bind the context and the validity checking listeners
-	        bind(scriptDefinitionSelector,
-	            helpText,
-	            globalLabel,
-	            globalParamText,
-	            globalParamComposite);
-	        scriptGeneratorViewModel.createGlobalParamsWidgets();
-	        
-        } else {
+				ComboViewer scriptDefinitionSelector = makeScriptDefinitionSelector(topBarComposite);
 
-	        Label warningMessage = new Label(mainParent, SWT.NONE);
-	        warningMessage.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, true));
-	        // Make the warning label bigger from: https://stackoverflow.com/questions/1449968/change-just-the-font-size-in-swt
-	        FontData[] fD = warningMessage.getFont().getFontData();
-	        fD[0].setHeight(16);
-	        warningMessage.setFont(new Font(Display.getDefault(), fD[0]));
-	        warningMessage.setText(NO_SCRIPT_DEFINITIONS_MESSAGE);
-	        warningMessage.pack();
-	
-	        Map<String, String> scriptDefinitionLoadErrors = scriptGeneratorViewModel.getScriptDefinitionLoadErrors();
-	
-	        if (!scriptDefinitionLoadErrors.isEmpty()) {
-	            setUpScriptDefinitionLoadErrorTable(mainParent, scriptDefinitionLoadErrors);                 
-	        }
+				new Label(topBarComposite, SWT.SEPARATOR | SWT.VERTICAL);
 
-        }
-        
-        mainParent.layout();
-    });
-    }
+				Text helpText = makeHelpTextBox(topBarComposite);
+
+				Composite globalParamComposite = new Composite(mainParent, SWT.NONE);
+				globalParamComposite.setLayout(new GridLayout(24, false));
+				globalParamComposite.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
+
+				drawMiddle();
+
+				// Composite for the row containing the parameter file location and total
+				// estimated run time
+				Composite scriptInfoGrp = new Composite(mainParent, SWT.NONE);
+				scriptInfoGrp.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1));
+				GridLayout scriptInfoLayout = new GridLayout(3, true);
+				scriptInfoLayout.marginRight = 40;
+				scriptInfoGrp.setLayout(scriptInfoLayout);
+
+				// Label for Location of Saved Parameters File
+				parametersFileText = new Label(scriptInfoGrp, SWT.LEFT);
+				parametersFileText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+				parametersFileText.setText("Current Script: <new file>");
+
+				scriptGenerationTimeText = new Label(scriptInfoGrp, SWT.LEFT);
+				scriptGenerationTimeText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+				// Needs to be after nicos model has been set up (in
+				// drawDynamicScriptingControls)
+				helpMenu = new ScriptGeneratorHelpMenu(topBarComposite);
+				var scriptDefinitionsRepoPath = scriptGeneratorViewModel.getScriptDefinitionsRepoPath();
+				helpMenu.setScriptDefinitionsLocation(scriptDefinitionsRepoPath);
+
+				List<Label> globalLabel = new ArrayList<Label>();
+				List<Text> globalParamText = new ArrayList<Text>();
+				// Bind the context and the validity checking listeners
+				bind(scriptDefinitionSelector, helpText, globalLabel, globalParamText, globalParamComposite);
+				scriptGeneratorViewModel.createGlobalParamsWidgets();
+			} else {
+				makeCenteredMessage(mainParent, NO_SCRIPT_DEFINITIONS_MESSAGE);
+			}
+
+			Map<String, String> scriptDefinitionLoadErrors = scriptGeneratorViewModel
+					.getScriptDefinitionLoadErrors();
+
+			if (!scriptDefinitionLoadErrors.isEmpty()) {
+				Label errorLabel = new Label(mainParent, SWT.NONE);
+				errorLabel.setText("Errors:");
+				setUpScriptDefinitionLoadErrorTable(mainParent, scriptDefinitionLoadErrors);
+			}
+			
+			mainParent.layout();
+		});
+	}
 
 
     /**
@@ -508,45 +478,57 @@ public class ScriptGeneratorView {
      * @param parent The parent container
      * @param scriptDefinitionLoadErrors The map containing the script definition load errors.
      */
-    private void setUpScriptDefinitionLoadErrorTable(Composite parent, Map<String, String> scriptDefinitionLoadErrors) {
-    if (!preferences.hideScriptGenScriptDefinitionErrorTable()) {
-        // A composite to contain the script definition load errors
-        Composite scriptDefinitionErrorComposite = new Composite(parent, SWT.NONE);
-        scriptDefinitionErrorComposite.setLayout(new GridLayout(1, false));
-        scriptDefinitionErrorComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+	private void setUpScriptDefinitionLoadErrorTable(Composite parent, Map<String, String> scriptDefinitionLoadErrors) {
+		if (!preferences.hideScriptGenScriptDefinitionErrorTable()) {
+			// A composite to contain the script definition load errors
+			Composite scriptDefinitionErrorComposite = new Composite(parent, SWT.NONE);
+			scriptDefinitionErrorComposite.setLayout(new GridLayout(1, false));
+			scriptDefinitionErrorComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
-        // A table to display the script definition load errors
-        // From http://www.java2s.com/Code/Java/SWT-JFace-Eclipse/SWTTableSimpleDemo.htm
-        Table table = new Table(scriptDefinitionErrorComposite, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
-        table.setHeaderVisible(true);
-        String[] titles = {"Script Definition", "Error"};
+			// A table to display the script definition load errors
+			// From http://www.java2s.com/Code/Java/SWT-JFace-Eclipse/SWTTableSimpleDemo.htm
+			Table table = new Table(scriptDefinitionErrorComposite, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
+			table.setHeaderVisible(true);
+			GridData d = new GridData();
+			d.heightHint = 80;
+			table.setLayoutData(d);
+			String[] titles = { "Script Definition", "Error" };
 
-        for (int i = 0; i < titles.length; i++) {
-        TableColumn column = new TableColumn(table, SWT.NULL);
-        column.setText(titles[i]);
-        }
+			for (String title : titles) {
+				TableColumn column = new TableColumn(table, SWT.NULL);
+				column.setText(title);
+			}
 
-        for (Map.Entry<String, String> loadError : scriptDefinitionLoadErrors.entrySet()) {
-        TableItem item = new TableItem(table, SWT.NULL);
-        item.setText(0, loadError.getKey());
-        item.setText(1, loadError.getValue());
-        }
+			for (Map.Entry<String, String> loadError : scriptDefinitionLoadErrors.entrySet()) {
+				TableItem item = new TableItem(table, SWT.NULL);
+				item.setText(0, loadError.getKey());
+				item.setText(1, loadError.getValue());
+			}
 
-        for (int i = 0; i < titles.length; i++) {
-        table.getColumn(i).pack();
-        }
-    }
-    }
+			for (int i = 0; i < titles.length; i++) {
+				table.getColumn(i).pack();
+			}
+		}
+	}
 
-    /**
-     * Creates a new combo box and configures sets its input to the script definition loader.
-     * @param globalSettingsComposite
-     *             The composite to draw the box in
+	/**
+     * Creates a new label and combo box and configures its input to the script definition loader.
+     * 
+     * @param parent the composite to draw the box in
      * @return Combo box with available script definitions
      */
-    private ComboViewer setUpScriptDefinitionSelector(Composite globalSettingsComposite) {
-	    ComboViewer scriptDefinitionSelector = new ComboViewer(globalSettingsComposite, SWT.READ_ONLY);
-	
+    private ComboViewer makeScriptDefinitionSelector(Composite parent) {
+    	// Composite to contain help strings from script definitions
+        Composite scriptDefinitionComposite = new Composite(parent, SWT.NONE);
+        scriptDefinitionComposite.setLayout(new GridLayout(2, false));
+
+        // The label for the script definition selector drop down
+        Label scriptDefinitionSelectorLabel = new Label(scriptDefinitionComposite, SWT.NONE);
+        scriptDefinitionSelectorLabel.setText("Script Definition:");
+
+        // Drop-down box to select between script definitions.        
+        ComboViewer scriptDefinitionSelector = new ComboViewer(parent, SWT.READ_ONLY);
+    	
 	    scriptDefinitionSelector.setContentProvider(ArrayContentProvider.getInstance());
 	    scriptDefinitionSelector.setLabelProvider(scriptGeneratorViewModel.getScriptDefinitionSelectorLabelProvider());
 	    scriptDefinitionSelector.getCombo().setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false, 1, 1));
@@ -555,7 +537,7 @@ public class ScriptGeneratorView {
 	
 	    return scriptDefinitionSelector;
     }
-
+    
     private void bindToHasSelected(Control controlToDisable) {
     bindingContext.bindValue(WidgetProperties.enabled().observe(controlToDisable),
         BeanProperties.value("hasSelection").observe(scriptGeneratorViewModel));        
