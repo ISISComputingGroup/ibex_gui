@@ -18,10 +18,16 @@
 
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.ResourceManager;
 
-class Constants {
+/**
+ * Constants used on the script generator page.
+ */
+final class Constants {
 	protected static final String BUTTON_TITLE_SAVE = "Save Script";
 	protected static final String BUTTON_TITLE_SAVE_AS = "Save Script As";
 	protected static final String BUTTON_TITLE_LOAD = "Load Script";
@@ -44,6 +50,49 @@ class Constants {
 	protected static final Image IMAGE_UP_ARROW = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_up.png");
 	protected static final Image IMAGE_DOWN_ARROW = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png");
 	
+	/**
+     * A clear colour for use in other script generator table columns when a row is valid.
+     */
+    protected static final Color CLEAR_COLOUR = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
+	protected static final Display DISPLAY = Display.getDefault();
+	/**
+	 * A dark red for use in the validity column when a row is invalid.
+	 */
+	protected static final Color INVALID_DARK_COLOR = DISPLAY.getSystemColor(SWT.COLOR_RED);
+	/**
+	 * A light read for use in the other script generator table columns when a row is invalid.
+	 */
+	protected static final Color INVALID_LIGHT_COLOR = new Color(DISPLAY, 255, 204, 203);
+	/**
+	 * The string to use to denote an unknown amount of estimated time.
+	 */
+	protected static final String UNKNOWN_TEXT = "Unknown";
+	/**
+	 * A green for use in the validity column when a row is valid.
+	 */
+	protected static final Color VALID_COLOR = DISPLAY.getSystemColor(SWT.COLOR_GREEN);
+	/**
+	 * A clear colour for use in other script generator table columns when a row is valid.
+	 */
+	protected static final Color CLEAR_COLOR = DISPLAY.getSystemColor(SWT.COLOR_WHITE);
+	/**
+	 * The maximum number of lines to display in the "Get Validity Errors" dialog box before suppressing others.
+	 */
+	protected static final int MAX_ERRORS_TO_DISPLAY_IN_DIALOG = 10;
+	protected static final String UNSAVED_CHANGES_MARKER = " (*)";
+	/**
+	 * The header of the validity column.
+	 */
+	protected static final String VALIDITY_COLUMN_HEADER = "Validity";
+	/**
+	 * The header of the action column.
+	 */
+	protected static final String ACTION_NUMBER_COLUMN_HEADER = "Action";
+	/**
+	 * The header of the estimated run time column.
+	 */
+	protected static final String ESTIMATED_RUN_TIME_COLUMN_HEADER = "Estimated run time";
+    
 	/**
 	 * Do not use this constructor.
 	 */

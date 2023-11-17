@@ -37,7 +37,6 @@ import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
@@ -73,56 +72,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * The ViewModel for the ScriptGeneratorView.
  */
 public class ScriptGeneratorViewModel extends ModelObject {
-    private static final Display DISPLAY = Display.getDefault();
-
-    /**
-     * A dark red for use in the validity column when a row is invalid.
-     */
-    private static final Color INVALID_DARK_COLOR = DISPLAY.getSystemColor(SWT.COLOR_RED);
-
-    /**
-     * A light read for use in the other script generator table columns when a row is invalid.
-     */
-    private static final Color INVALID_LIGHT_COLOR = new Color(DISPLAY, 255, 204, 203);
-
-    /**
-     * A green for use in the validity column when a row is valid.
-     */
-    private static final Color VALID_COLOR = DISPLAY.getSystemColor(SWT.COLOR_GREEN);
-
-    /**
-     * A clear colour for use in other script generator table columns when a row is valid.
-     */
-    private static final Color CLEAR_COLOR = DISPLAY.getSystemColor(SWT.COLOR_WHITE);
-
-    /**
-     * The maximum number of lines to display in the "Get Validity Errors" dialog box before suppressing others.
-     */
-    private static final int MAX_ERRORS_TO_DISPLAY_IN_DIALOG = 10;
-
-    private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
-    
-    private static final String UNSAVED_CHANGES_MARKER = " (*)";
-    
-    /**
-     * The header of the validity column.
-     */
-    public static final String VALIDITY_COLUMN_HEADER = "Validity";
-    
-    /**
-     * The header of the action column.
-     */
-    public static final String ACTION_NUMBER_COLUMN_HEADER = "Action";
-    
-    /**
-     * The header of the estimated run time column.
-     */
-    public static final String ESTIMATED_RUN_TIME_COLUMN_HEADER = "Estimated run time";
-    
-    /**
-     * The string to use to denote an unknown amount of estimated time.
-     */
-    public static final String UNKNOWN_TEXT = "Unknown";
+    protected static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
     
     private Set<Integer> nicosScriptIds = new HashSet<>();
     
@@ -241,7 +191,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    // Listen for generated script refreshes
 	    scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.GENERATED_SCRIPT_FILENAME_PROPERTY, evt -> {
 	        String scriptFilename = (String) evt.getNewValue();
-	        DISPLAY.asyncExec(() -> {
+	        Constants.DISPLAY.asyncExec(() -> {
 	        scriptGeneratorModel.getLastGeneratedScriptId().ifPresentOrElse(
 	            generatedScriptId -> {
 	            	scriptGeneratorModel.getScriptFromId(generatedScriptId).ifPresentOrElse(generatedScript -> {
@@ -253,11 +203,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	            			}
 	            		}
 	            	}, () -> {
-	            		MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
+	            		MessageDialog.openWarning(Constants.DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
 	            	});
 	            },
 	            () -> {
-	                MessageDialog.openWarning(DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
+	                MessageDialog.openWarning(Constants.DISPLAY.getActiveShell(), "Error", "Failed to generate the script");
 	            }
 	            );
 	        });
@@ -276,14 +226,14 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			scriptGeneratorModel.saveParameters(scriptFilePath);
 			this.updateParametersFilePath(scriptGeneratorModel.getParametersFileNameFromFilepath(scriptFilePath));
 			this.updateGenerationTime();
-			MessageDialog.openInformation(DISPLAY.getActiveShell(), "Script Generated", 
+			MessageDialog.openInformation(Constants.DISPLAY.getActiveShell(), "Script Generated", 
 					String.format("Generated script saved to %s.", scriptFilePath));
 			
 		} catch (IOException e) {
 			LOG.error(e);
-			MessageDialog.openError(DISPLAY.getActiveShell(), "Error", "Failed to write generated script to file");
+			MessageDialog.openError(Constants.DISPLAY.getActiveShell(), "Error", "Failed to write generated script to file");
 		} catch (NoScriptDefinitionSelectedException e) {
-	        MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
+	        MessageDialog.openWarning(Constants.DISPLAY.getActiveShell(), "No script definition selection", 
 	                "Cannot generate script. No script definition has been selected");
 		}
     }
@@ -315,7 +265,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Display a message dialog box that the language that is being used is unsupported.
      */
     private void displayLanguageSupportError() {
-	    MessageDialog.openError(DISPLAY.getActiveShell(), 
+	    MessageDialog.openError(Constants.DISPLAY.getActiveShell(), 
 	        "Language support issue",
 	        "You are attempting to use an unsupported language, "
 	            + "parameter validity checking and script generation are disabled at this time");
@@ -325,8 +275,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Display a message dialog box that there was a threading issue when generating or checking parameter validity.
      */
     private void displayGenerationError() {
-	    DISPLAY.asyncExec(() -> {
-	        MessageDialog.openError(DISPLAY.getActiveShell(), 
+	    Constants.DISPLAY.asyncExec(() -> {
+	        MessageDialog.openError(Constants.DISPLAY.getActiveShell(), 
 	            "Error",
 	            "Error when generating a script, are your parameters valid?");
 	    });
@@ -336,7 +286,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Display a message dialog box that there was an issue when generating a script
      */
     private void displayThreadingError() {
-	    MessageDialog.openError(DISPLAY.getActiveShell(), 
+	    MessageDialog.openError(Constants.DISPLAY.getActiveShell(), 
 	        "Error",
 	        "Generating or parameter validity checking error. Threading issue.");
     }
@@ -348,7 +298,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    scriptGeneratorModel.addEmptyAction();
 	    // Make sure the table is updated with the new action before selecting it
 	    if (!scriptGeneratorModel.getActionParameters().get(ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT).getIsEnum()) {
-	    	  DISPLAY.asyncExec(() -> {
+	    	  Constants.DISPLAY.asyncExec(() -> {
 	  	    	viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
 	  	    });
 	    }
@@ -364,7 +314,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    scriptGeneratorModel.insertEmptyAction(insertionLocation);
 	    // Make sure the table is updated with the new action before selecting it
 	    if (!scriptGeneratorModel.getActionParameters().get(ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT).getIsEnum()) {
-	    	  DISPLAY.asyncExec(() -> {
+	    	  Constants.DISPLAY.asyncExec(() -> {
 	  	    	viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
 	  	    });
 	    }
@@ -381,7 +331,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    
 	    scriptGeneratorModel.deleteAction(actionsToDelete);
 	    if (!scriptGeneratorModel.getActionParameters().get(ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT).getIsEnum()) {
-	    	  DISPLAY.asyncExec(() -> {
+	    	  Constants.DISPLAY.asyncExec(() -> {
 	  	    	viewTable.setCellFocus(toSelect, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
 	  	    });
 	    }
@@ -411,7 +361,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    scriptGeneratorModel.duplicateAction(actionsToDuplicate, insertionLocation);
 	    // Make sure the table is updated with the new action before selecting it
 	    if (!scriptGeneratorModel.getActionParameters().get(ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT).getIsEnum()) {
-	    	  DISPLAY.asyncExec(() -> {
+	    	  Constants.DISPLAY.asyncExec(() -> {
 	  	    	viewTable.setCellFocus(insertionLocation, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
 	  	    });
 	    }
@@ -421,8 +371,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * Clears all actions from the ActionsTable.
      */
     protected void clearAction() {
-	    DISPLAY.asyncExec(() -> {
-	        boolean userConfirmation = MessageDialog.openConfirm(DISPLAY.getActiveShell(),
+	    Constants.DISPLAY.asyncExec(() -> {
+	        boolean userConfirmation = MessageDialog.openConfirm(Constants.DISPLAY.getActiveShell(),
 	            "Warning",
 	            "This will delete all actions, are you sure you want to continue?");
 	        if (userConfirmation) {
@@ -439,7 +389,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     protected void moveActionUp(List<ScriptGeneratorAction> actionsToMove) {
 	    scriptGeneratorModel.moveActionUp(actionsToMove);
-	    DISPLAY.asyncExec(() -> {
+	    Constants.DISPLAY.asyncExec(() -> {
 	    	viewTable.setSelected(actionsToMove, true); 
 	    });
     }
@@ -452,7 +402,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     protected void moveActionDown(List<ScriptGeneratorAction> actionsToMove) {
 	    scriptGeneratorModel.moveActionDown(actionsToMove);
-	    DISPLAY.asyncExec(() -> {
+	    Constants.DISPLAY.asyncExec(() -> {
 	    	viewTable.setSelected(actionsToMove, true);
 	    });
     }
@@ -587,14 +537,14 @@ public class ScriptGeneratorViewModel extends ModelObject {
     	if (!tableActionParameters.equals(currentFileActions)) {
         	if (!unsavedChangesMarkerDisplayed) {
         		// If table does not match file, and no unsaved changes marker is displayed, display it
-        		String displayString = parametersFileDisplayString + UNSAVED_CHANGES_MARKER;
+        		String displayString = parametersFileDisplayString + Constants.UNSAVED_CHANGES_MARKER;
             	firePropertyChange("parametersFile", parametersFileDisplayString, parametersFileDisplayString = displayString);
             	unsavedChangesMarkerDisplayed = true;
         	}
     	} else {
     		if (unsavedChangesMarkerDisplayed) {
     			// If table matches file, and unsaved changes marker is displayed, hide it
-        		String displayString = parametersFileDisplayString.replace(UNSAVED_CHANGES_MARKER, "");
+        		String displayString = parametersFileDisplayString.replace(Constants.UNSAVED_CHANGES_MARKER, "");
 	    		firePropertyChange("parametersFile", parametersFileDisplayString, parametersFileDisplayString = displayString);
 	    		unsavedChangesMarkerDisplayed = false;
     		}
@@ -674,7 +624,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      * @param btnGenerateScript Generate Script button's visibility to manipulate
      */
     private void actionChangeHandler(ActionsViewTable viewTable, Button btnGenerateScript, Button btnGenerateScriptAs, boolean rowsChanged) {
-	    DISPLAY.asyncExec(() -> {
+	    Constants.DISPLAY.asyncExec(() -> {
 	        if (!viewTable.isDisposed()) {
 	        	viewTable.updateActions(scriptGeneratorModel.getActions());
 	        	updateValidityChecks(viewTable);
@@ -883,11 +833,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    Map<Integer, String> globals = scriptGeneratorModel.getGlobalParamErrors();
 	    for (int i = 0; i < this.globalParamText.size(); i++) {
 	    	if (globals.containsKey(i)) {
-	    		globalParamText.get(i).setBackground(INVALID_LIGHT_COLOR);
-	    		globalParamText.get(i).setBackground(INVALID_DARK_COLOR);
+	    		globalParamText.get(i).setBackground(Constants.INVALID_LIGHT_COLOR);
+	    		globalParamText.get(i).setBackground(Constants.INVALID_DARK_COLOR);
 	    		globalParamText.get(i).setToolTipText(globals.get(i));
 	    	} else {
-	    		globalParamText.get(i).setBackground(CLEAR_COLOR);
+	    		globalParamText.get(i).setBackground(Constants.CLEAR_COLOR);
 	    		globalParamText.get(i).setToolTipText(null);
 	    	}
 	    }
@@ -895,15 +845,15 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
     
     private void addLineNumberColumn(ActionsViewTable viewTable) {
-    	TableViewerColumn lineNumberColumn = viewTable.createColumn(ACTION_NUMBER_COLUMN_HEADER, 0, 
+    	TableViewerColumn lineNumberColumn = viewTable.createColumn(Constants.ACTION_NUMBER_COLUMN_HEADER, 0, 
 	        new CellLabelProvider() {
 	            @Override
 	            public void update(ViewerCell cell) {
 	            	ScriptGeneratorAction action = (ScriptGeneratorAction) cell.getElement();
 	            	if (action.isValid()) {
-	            		cell.setBackground(CLEAR_COLOR);
+	            		cell.setBackground(Constants.CLEAR_COLOR);
 	                } else {
-	                	cell.setBackground(INVALID_LIGHT_COLOR);
+	                	cell.setBackground(Constants.INVALID_LIGHT_COLOR);
 	                }
 	                for (int i = 0; i < viewTable.table().getItemCount(); i++) {
 	                    if (action.equals(viewTable.viewer().getElementAt(i))) {
@@ -947,9 +897,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	            		cell.setText(stringFromRow(row));
 	                    cell.setImage(imageFromRow(row));
 	                    if (row.isValid()) {
-	                    	cell.setBackground(CLEAR_COLOR);
+	                    	cell.setBackground(Constants.CLEAR_COLOR);
 	                    } else {
-	                    	cell.setBackground(INVALID_LIGHT_COLOR);
+	                    	cell.setBackground(Constants.INVALID_LIGHT_COLOR);
 	                    }
 	            	}
                 });
@@ -971,7 +921,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
     
     private void addValidityColumn(ActionsViewTable viewTable) {
-    	TableViewerColumn validityColumn = viewTable.createColumn(VALIDITY_COLUMN_HEADER, 
+    	TableViewerColumn validityColumn = viewTable.createColumn(Constants.VALIDITY_COLUMN_HEADER, 
             1, 
             new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty("validity")) {
 	            @Override
@@ -996,9 +946,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	        		cell.setText(stringFromRow(row));
 	                cell.setImage(imageFromRow(row));
 	                if (row.isValid()) {
-	                	cell.setBackground(VALID_COLOR);
+	                	cell.setBackground(Constants.VALID_COLOR);
 	                } else {
-	                	cell.setBackground(INVALID_DARK_COLOR);
+	                	cell.setBackground(Constants.INVALID_DARK_COLOR);
 	                }
 	        	}
         	});
@@ -1006,7 +956,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
     
     private void addTimeEstimateColumn(ActionsViewTable viewTable) {
-    	TableViewerColumn timeEstimateColumn = viewTable.createColumn(ESTIMATED_RUN_TIME_COLUMN_HEADER, 
+    	TableViewerColumn timeEstimateColumn = viewTable.createColumn(Constants.ESTIMATED_RUN_TIME_COLUMN_HEADER, 
             1, 
             new DataboundCellLabelProvider<ScriptGeneratorAction>(viewTable.observeProperty(ScriptGeneratorProperties.TIME_ESTIMATE_PROPERTY)) {
 	            @Override
@@ -1017,7 +967,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		    
 		            Optional<Number> estimatedTime = row.getEstimatedTime();
 		            if (estimatedTime.isEmpty()) {
-		                return UNKNOWN_TEXT;
+		                return Constants.UNKNOWN_TEXT;
 		            }
 		            return changeSecondsToTimeFormat(estimatedTime.get().longValue());
 	            }
@@ -1033,9 +983,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	        		cell.setText(stringFromRow(row));
 	                cell.setImage(imageFromRow(row));
 	                if (row.isValid()) {
-	                	cell.setBackground(CLEAR_COLOR);
+	                	cell.setBackground(Constants.CLEAR_COLOR);
 	                } else {
-	                	cell.setBackground(INVALID_LIGHT_COLOR);
+	                	cell.setBackground(Constants.INVALID_LIGHT_COLOR);
 	                }
 	        	}
         	});
@@ -1061,10 +1011,10 @@ public class ScriptGeneratorViewModel extends ModelObject {
     						
     						Optional<Map<String, String>> estimatedCustom = row.getEstimatedCustom();
     			            if (estimatedCustom.isEmpty() || estimatedCustom.get().isEmpty()) {
-    			                return UNKNOWN_TEXT;
+    			                return Constants.UNKNOWN_TEXT;
     			            }
     						
-    	                    return estimatedCustom.get().getOrDefault(param, UNKNOWN_TEXT);
+    	                    return estimatedCustom.get().getOrDefault(param, Constants.UNKNOWN_TEXT);
     	                }
     					
     					@Override
@@ -1078,9 +1028,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
     		        		cell.setText(stringFromRow(row));
     		                cell.setImage(imageFromRow(row));
     		                if (row.isValid()) {
-    		                	cell.setBackground(CLEAR_COLOR);
+    		                	cell.setBackground(Constants.CLEAR_COLOR);
     		                } else {
-    		                	cell.setBackground(INVALID_LIGHT_COLOR);
+    		                	cell.setBackground(Constants.INVALID_LIGHT_COLOR);
     		                }
     		        	}
     				});
@@ -1141,7 +1091,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     protected void addActionParamPropertyListener(ActionsViewTable viewTable) {
     	scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener("actionParameters", 
-	        e -> DISPLAY.asyncExec(() -> {
+	        e -> Constants.DISPLAY.asyncExec(() -> {
 	            if (!viewTable.isDisposed()) {
 	            viewTable.updateTableColumns();
 	            }
@@ -1154,13 +1104,13 @@ public class ScriptGeneratorViewModel extends ModelObject {
      */
     public void displayValidityErrors() {
 	    if (scriptGeneratorModel.languageSupported) {
-	        String body = getFirstNLinesOfInvalidityErrors(MAX_ERRORS_TO_DISPLAY_IN_DIALOG);
+	        String body = getFirstNLinesOfInvalidityErrors(Constants.MAX_ERRORS_TO_DISPLAY_IN_DIALOG);
 	        if (!body.isEmpty()) {
 	        String heading = "Validity errors:\n\n";
 	        String message = heading + body;
-	        MessageDialog.openWarning(DISPLAY.getActiveShell(), "Validity Errors", message);
+	        MessageDialog.openWarning(Constants.DISPLAY.getActiveShell(), "Validity Errors", message);
 	        } else {
-	        MessageDialog.openInformation(DISPLAY.getActiveShell(), "Validity Errors", "No validity errors");
+	        MessageDialog.openInformation(Constants.DISPLAY.getActiveShell(), "Validity Errors", "No validity errors");
 	        }
 	    } else {
 	        displayLanguageSupportError();
@@ -1204,15 +1154,15 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	    try {
 	        return scriptGeneratorModel.refreshGeneratedScript();
 	    } catch (InvalidParamsException e) {
-	        MessageDialog.openWarning(DISPLAY.getActiveShell(), "Params Invalid", 
+	        MessageDialog.openWarning(Constants.DISPLAY.getActiveShell(), "Params Invalid", 
 	            "Cannot generate script. Parameters are invalid.");
 	    } catch (UnsupportedLanguageException e) {
 	        LOG.error(e);
-	        MessageDialog.openWarning(DISPLAY.getActiveShell(), "Unsupported language", 
+	        MessageDialog.openWarning(Constants.DISPLAY.getActiveShell(), "Unsupported language", 
 	            "Cannot generate script. Language to generate in is unsupported.");
 	    } catch (NoScriptDefinitionSelectedException e) {
 	        LOG.error(e);
-	        MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
+	        MessageDialog.openWarning(Constants.DISPLAY.getActiveShell(), "No script definition selection", 
 	            "Cannot generate script. No script definition has been selected");
 	    }
 	    return Optional.empty();
@@ -1317,12 +1267,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	        newActions = scriptGeneratorModel.loadParameterValues(Paths.get(selectedFile.get()));
 	        } catch (NoScriptDefinitionSelectedException e) {
 	        LOG.error(e);
-	        MessageDialog.openWarning(DISPLAY.getActiveShell(), "No script definition selection", 
+	        MessageDialog.openWarning(Constants.DISPLAY.getActiveShell(), "No script definition selection", 
 	            "Cannot generate script. No script definition has been selected");
 	        return;
 	        } catch (ScriptDefinitionNotMatched | UnsupportedOperationException e) {
 	        LOG.error(e);
-	        MessageDialog.openError(DISPLAY.getActiveShell(), "Error", e.getMessage());
+	        MessageDialog.openError(Constants.DISPLAY.getActiveShell(), "Error", e.getMessage());
 	        return;
 	        }
 	        
@@ -1334,7 +1284,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	        } else {
 	        emptyModel = false;
 	        String[] replaceOrAppend = new String[] {"Append", "Replace"};
-	        MessageDialog dialog = new MessageDialog(DISPLAY.getActiveShell(), "Replace or Append", null,
+	        MessageDialog dialog = new MessageDialog(Constants.DISPLAY.getActiveShell(), "Replace or Append", null,
 	            "Would you like to replace the current parameters or append the new parameters?", 
 	            MessageDialog.QUESTION, replaceOrAppend, -1);
 	        dialogResponse = dialog.open();
