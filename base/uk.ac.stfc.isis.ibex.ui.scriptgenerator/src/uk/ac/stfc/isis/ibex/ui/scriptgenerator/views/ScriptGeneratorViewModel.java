@@ -72,7 +72,8 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * The ViewModel for the ScriptGeneratorView.
  */
 public class ScriptGeneratorViewModel extends ModelObject {
-    protected static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
+	
+    private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
     
     private Set<Integer> nicosScriptIds = new HashSet<>();
     
