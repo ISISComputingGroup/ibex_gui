@@ -181,7 +181,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>527</width>
       <wuid>4fbad31a:1436c3e166f:-6faf</wuid>
@@ -257,7 +257,7 @@
         <plot_area_background_color>
           <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
         </plot_area_background_color>
-        <pv_name>$(PV_ROOT):MEAS:RB</pv_name>
+        <pv_name>$(PV_ROOT):MEAS</pv_name>
         <pv_value />
         <rules />
         <scale_options>
@@ -294,7 +294,7 @@ $(trace_0_y_pv_value)</tooltip>
         <trace_0_x_pv></trace_0_x_pv>
         <trace_0_x_pv_value />
         <trace_0_y_axis_index>1</trace_0_y_axis_index>
-        <trace_0_y_pv>$(PV_ROOT):MEAS:CHAN1:RB</trace_0_y_pv>
+        <trace_0_y_pv>$(PV_ROOT):MEAS:CHAN1</trace_0_y_pv>
         <trace_0_y_pv_value />
         <trace_1_anti_alias>true</trace_1_anti_alias>
         <trace_1_buffer_size>1000</trace_1_buffer_size>
@@ -315,7 +315,7 @@ $(trace_0_y_pv_value)</tooltip>
         <trace_1_x_pv></trace_1_x_pv>
         <trace_1_x_pv_value />
         <trace_1_y_axis_index>1</trace_1_y_axis_index>
-        <trace_1_y_pv>$(PV_ROOT):MEAS:CHAN2:RB</trace_1_y_pv>
+        <trace_1_y_pv>$(PV_ROOT):MEAS:CHAN2</trace_1_y_pv>
         <trace_1_y_pv_value />
         <trace_count>2</trace_count>
         <transparent>false</transparent>
@@ -396,7 +396,7 @@ $(trace_0_y_pv_value)</tooltip>
           <image></image>
           <name>Measure Channel 1</name>
           <push_action_index>0</push_action_index>
-          <pv_name>$(PV_ROOT):MEAS:CHAN1</pv_name>
+          <pv_name>$(PV_ROOT):MEAS:CHAN1:SP</pv_name>
           <pv_value />
           <rules />
           <scale_options>
@@ -445,7 +445,7 @@ $(pv_value)</tooltip>
           <name>Text Update</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PV_ROOT):MEAS:CHAN1:RB</pv_name>
+          <pv_name>$(PV_ROOT):MEAS:CHAN1</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -538,7 +538,7 @@ $(pv_value)</tooltip>
           <image></image>
           <name>Measure Channel 2</name>
           <push_action_index>0</push_action_index>
-          <pv_name>$(PV_ROOT):MEAS:CHAN2</pv_name>
+          <pv_name>$(PV_ROOT):MEAS:CHAN2:SP</pv_name>
           <pv_value />
           <rules />
           <scale_options>
@@ -587,7 +587,7 @@ $(pv_value)</tooltip>
           <name>Text Update</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PV_ROOT):MEAS:CHAN2:RB</pv_name>
+          <pv_name>$(PV_ROOT):MEAS:CHAN2</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -648,9 +648,9 @@ $(pv_value)</tooltip>
         <transparent>false</transparent>
         <visible>true</visible>
         <widget_type>Grouping Container</widget_type>
-        <width>289</width>
+        <width>157</width>
         <wuid>-5fc7b887:18b7fabb433:-7859</wuid>
-        <x>210</x>
+        <x>324</x>
         <y>12</y>
         <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
           <actions hook="false" hook_all="false">
@@ -680,7 +680,7 @@ $(pv_value)</tooltip>
           <image></image>
           <name>Fill Channel 1</name>
           <push_action_index>0</push_action_index>
-          <pv_name>$(PV_ROOT):FILL:CHAN1</pv_name>
+          <pv_name>$(PV_ROOT):FILL:START:CHAN1</pv_name>
           <pv_value />
           <rules />
           <scale_options>
@@ -729,7 +729,7 @@ $(pv_value)</tooltip>
           <name>Text Update</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PV_ROOT):FILL:CHAN1:TIME</pv_name>
+          <pv_name>$(PV_ROOT):FILL:CHAN1</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -751,58 +751,6 @@ $(pv_value)</tooltip>
           <wrap_words>false</wrap_words>
           <wuid>-5fc7b887:18b7fabb433:-7857</wuid>
           <x>100</x>
-          <y>4</y>
-        </widget>
-        <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
-          <actions hook="false" hook_all="false" />
-          <alarm_pulsing>false</alarm_pulsing>
-          <auto_size>false</auto_size>
-          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-          <background_color>
-            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-          </background_color>
-          <border_alarm_sensitive>true</border_alarm_sensitive>
-          <border_color>
-            <color name="ISIS_Border" red="0" green="0" blue="0" />
-          </border_color>
-          <border_style>0</border_style>
-          <border_width>1</border_width>
-          <enabled>true</enabled>
-          <font>
-            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
-          </font>
-          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-          <foreground_color>
-            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-          </foreground_color>
-          <format_type>0</format_type>
-          <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
-          <name>Text Update</name>
-          <precision>0</precision>
-          <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PV_ROOT):FILL:CHAN1:STATUS</pv_name>
-          <pv_value />
-          <rotation_angle>0.0</rotation_angle>
-          <rules />
-          <scale_options>
-            <width_scalable>true</width_scalable>
-            <height_scalable>true</height_scalable>
-            <keep_wh_ratio>false</keep_wh_ratio>
-          </scale_options>
-          <scripts />
-          <show_units>true</show_units>
-          <text>######</text>
-          <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-          <transparent>true</transparent>
-          <vertical_alignment>1</vertical_alignment>
-          <visible>true</visible>
-          <widget_type>Text Update</widget_type>
-          <width>50</width>
-          <wrap_words>false</wrap_words>
-          <wuid>-5fc7b887:18b7fabb433:-783e</wuid>
-          <x>160</x>
           <y>4</y>
         </widget>
       </widget>
@@ -842,9 +790,9 @@ $(pv_value)</tooltip>
         <transparent>false</transparent>
         <visible>true</visible>
         <widget_type>Grouping Container</widget_type>
-        <width>289</width>
+        <width>157</width>
         <wuid>-5fc7b887:18b7fabb433:-782d</wuid>
-        <x>210</x>
+        <x>324</x>
         <y>48</y>
         <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
           <actions hook="false" hook_all="false">
@@ -874,7 +822,7 @@ $(pv_value)</tooltip>
           <image></image>
           <name>Fill Channel 1</name>
           <push_action_index>0</push_action_index>
-          <pv_name>$(PV_ROOT):FILL:CHAN2</pv_name>
+          <pv_name>$(PV_ROOT):FILL:START:CHAN2</pv_name>
           <pv_value />
           <rules />
           <scale_options>
@@ -923,7 +871,7 @@ $(pv_value)</tooltip>
           <name>Text Update</name>
           <precision>0</precision>
           <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PV_ROOT):FILL:CHAN2:TIME</pv_name>
+          <pv_name>$(PV_ROOT):FILL:CHAN2</pv_name>
           <pv_value />
           <rotation_angle>0.0</rotation_angle>
           <rules />
@@ -945,58 +893,6 @@ $(pv_value)</tooltip>
           <wrap_words>false</wrap_words>
           <wuid>-5fc7b887:18b7fabb433:-782b</wuid>
           <x>100</x>
-          <y>4</y>
-        </widget>
-        <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
-          <actions hook="false" hook_all="false" />
-          <alarm_pulsing>false</alarm_pulsing>
-          <auto_size>false</auto_size>
-          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-          <background_color>
-            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
-          </background_color>
-          <border_alarm_sensitive>true</border_alarm_sensitive>
-          <border_color>
-            <color name="ISIS_Border" red="0" green="0" blue="0" />
-          </border_color>
-          <border_style>0</border_style>
-          <border_width>1</border_width>
-          <enabled>true</enabled>
-          <font>
-            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
-          </font>
-          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-          <foreground_color>
-            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
-          </foreground_color>
-          <format_type>0</format_type>
-          <height>20</height>
-          <horizontal_alignment>0</horizontal_alignment>
-          <name>Text Update</name>
-          <precision>0</precision>
-          <precision_from_pv>true</precision_from_pv>
-          <pv_name>$(PV_ROOT):FILL:CHAN2:STATUS</pv_name>
-          <pv_value />
-          <rotation_angle>0.0</rotation_angle>
-          <rules />
-          <scale_options>
-            <width_scalable>true</width_scalable>
-            <height_scalable>true</height_scalable>
-            <keep_wh_ratio>false</keep_wh_ratio>
-          </scale_options>
-          <scripts />
-          <show_units>true</show_units>
-          <text>######</text>
-          <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-          <transparent>true</transparent>
-          <vertical_alignment>1</vertical_alignment>
-          <visible>true</visible>
-          <widget_type>Text Update</widget_type>
-          <width>50</width>
-          <wrap_words>false</wrap_words>
-          <wuid>-5fc7b887:18b7fabb433:-782a</wuid>
-          <x>160</x>
           <y>4</y>
         </widget>
       </widget>
@@ -1035,7 +931,7 @@ $(pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>527</width>
       <wuid>-118b11e6:18b7028135c:-7f38</wuid>
@@ -1230,7 +1126,7 @@ $(pv_value)</tooltip>
               <name>Text Update_2</name>
               <precision>0</precision>
               <precision_from_pv>true</precision_from_pv>
-              <pv_name>$(PV_ROOT):HIGH:RB</pv_name>
+              <pv_name>$(PV_ROOT):HIGH</pv_name>
               <pv_value />
               <rotation_angle>0.0</rotation_angle>
               <rules />
@@ -1421,7 +1317,7 @@ $(pv_value)</tooltip>
               <name>Text Update_2</name>
               <precision>0</precision>
               <precision_from_pv>true</precision_from_pv>
-              <pv_name>$(PV_ROOT):LOW:RB</pv_name>
+              <pv_name>$(PV_ROOT):LOW</pv_name>
               <pv_value />
               <rotation_angle>0.0</rotation_angle>
               <rules />
@@ -1612,7 +1508,7 @@ $(pv_value)</tooltip>
               <name>Text Update_2</name>
               <precision>0</precision>
               <precision_from_pv>true</precision_from_pv>
-              <pv_name>$(PV_ROOT):UNITS:RB</pv_name>
+              <pv_name>$(PV_ROOT):UNITS</pv_name>
               <pv_value />
               <rotation_angle>0.0</rotation_angle>
               <rules />
@@ -1739,7 +1635,7 @@ $(pv_value)</tooltip>
               <color red="192" green="192" blue="192" />
             </foreground_color>
             <height>20</height>
-            <lock_children>true</lock_children>
+            <lock_children>false</lock_children>
             <macros>
               <include_parent_macros>true</include_parent_macros>
             </macros>
@@ -1789,7 +1685,7 @@ $(pv_value)</tooltip>
               </scale_options>
               <scripts />
               <show_scrollbar>false</show_scrollbar>
-              <text>Channel Type 1:</text>
+              <text>Channel 1 Type:</text>
               <tooltip></tooltip>
               <transparent>false</transparent>
               <vertical_alignment>1</vertical_alignment>
@@ -1829,7 +1725,7 @@ $(pv_value)</tooltip>
               <name>Text Update</name>
               <precision>0</precision>
               <precision_from_pv>true</precision_from_pv>
-              <pv_name>$(PV_ROOT):TYPE:CHAN1:RB</pv_name>
+              <pv_name>$(PV_ROOT):TYPE:CHAN1</pv_name>
               <pv_value />
               <rotation_angle>0.0</rotation_angle>
               <rules />
@@ -1873,7 +1769,7 @@ $(pv_value)</tooltip>
               <color red="192" green="192" blue="192" />
             </foreground_color>
             <height>20</height>
-            <lock_children>true</lock_children>
+            <lock_children>false</lock_children>
             <macros>
               <include_parent_macros>true</include_parent_macros>
             </macros>
@@ -1923,7 +1819,7 @@ $(pv_value)</tooltip>
               </scale_options>
               <scripts />
               <show_scrollbar>false</show_scrollbar>
-              <text>Channel Type 2:</text>
+              <text>Channel 2 Type:</text>
               <tooltip></tooltip>
               <transparent>false</transparent>
               <vertical_alignment>1</vertical_alignment>
@@ -1963,7 +1859,7 @@ $(pv_value)</tooltip>
               <name>Text Update</name>
               <precision>0</precision>
               <precision_from_pv>true</precision_from_pv>
-              <pv_name>$(PV_ROOT):TYPE:CHAN2:RB</pv_name>
+              <pv_name>$(PV_ROOT):TYPE:CHAN2</pv_name>
               <pv_value />
               <rotation_angle>0.0</rotation_angle>
               <rules />
@@ -2139,7 +2035,7 @@ $(pv_value)</tooltip>
               <name>Text Update</name>
               <precision>0</precision>
               <precision_from_pv>true</precision_from_pv>
-              <pv_name>$(PV_ROOT):CHANNEL:RB</pv_name>
+              <pv_name>$(PV_ROOT):CHANNEL</pv_name>
               <pv_value />
               <rotation_angle>0.0</rotation_angle>
               <rules />
@@ -2314,7 +2210,7 @@ $(pv_value)</tooltip>
               <name>Text Update_2</name>
               <precision>0</precision>
               <precision_from_pv>true</precision_from_pv>
-              <pv_name>$(PV_ROOT):INTRVL:RB</pv_name>
+              <pv_name>$(PV_ROOT):INTRVL</pv_name>
               <pv_value />
               <rotation_angle>0.0</rotation_angle>
               <rules />
@@ -2734,7 +2630,7 @@ $(pv_value)</tooltip>
               <name>Text Update_7</name>
               <precision>0</precision>
               <precision_from_pv>true</precision_from_pv>
-              <pv_name>$(PV_ROOT):MODE:RB</pv_name>
+              <pv_name>$(PV_ROOT):MODE</pv_name>
               <pv_value />
               <rotation_angle>0.0</rotation_angle>
               <rules />
@@ -2870,7 +2766,7 @@ $(pv_value)</tooltip>
             <name>Text Update_1</name>
             <precision>0</precision>
             <precision_from_pv>true</precision_from_pv>
-            <pv_name>$(PV_ROOT):BOOST:RB</pv_name>
+            <pv_name>$(PV_ROOT):BOOST</pv_name>
             <pv_value />
             <rotation_angle>0.0</rotation_angle>
             <rules />
