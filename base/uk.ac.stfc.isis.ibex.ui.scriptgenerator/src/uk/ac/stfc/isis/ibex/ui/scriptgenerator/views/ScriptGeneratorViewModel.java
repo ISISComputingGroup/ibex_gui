@@ -1435,6 +1435,22 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	}
 
 	/**
+	 * Attach listener.
+	 * TODO: finish documentation
+	 * @param listener
+	 */
+	public void addOnActionValidityChangeListener(ActionsValidityChangeListener listener) {
+	    this.scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, (evt) -> {
+	    	System.out.println(scriptGeneratorModel.areParamsValid());
+	    	if (scriptGeneratorModel.areParamsValid()) {
+	    		listener.onValid();
+	    	} else {
+	    		listener.onInvalid(scriptGeneratorModel.getGlobalParamErrors());
+	    	}
+	    });
+	}
+	
+	/**
 	 * Cleans up resources being used by the view model.
 	 */
     public void dispose() {

@@ -312,25 +312,52 @@ public class ScriptGeneratorView {
     }
     
     /**
-     * Draw Run, Pause, Stop buttons for dynamic scripting.
-     * 
-     * @param parent a composite control which will be the parent of the new instance (cannot be null)
-     */
-    private void drawDynamicScriptingControlButtons(Composite parent) {
-    	// Composite for generate buttons
-        Composite dynamicScriptingButtonsGrp = new Composite(parent, SWT.NONE);
-        dynamicScriptingButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
-        GridLayout layout = new GridLayout(3, true);
-        layout.marginHeight = 10;
-        layout.marginWidth = 10;
-        dynamicScriptingButtonsGrp.setLayout(layout);
-        
-        // Button to run/pause/stop script in nicos
-        runButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Run", IMAGE_RUN, null);
-        pauseButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Pause", IMAGE_PAUSE, null);
-        stopButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Stop", IMAGE_STOP, null);        
-        nicosViewModel.bindControls(runButton, pauseButton, stopButton);
-    }
+	 * Draw Run, Pause, Stop buttons for dynamic scripting.
+	 * 
+	 * @param parent a composite control which will be the parent of the new
+	 *               instance (cannot be null)
+	 */
+	private void drawDynamicScriptingControlButtons(Composite parent) {
+		// Composite for generate buttons
+		Composite dynamicScriptingButtonsGrp = new Composite(parent, SWT.NONE);
+		dynamicScriptingButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
+		GridLayout layout = new GridLayout(3, true);
+		layout.marginHeight = 10;
+		layout.marginWidth = 10;
+		dynamicScriptingButtonsGrp.setLayout(layout);
+
+		// Button to run/pause/stop script in nicos
+		runButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Run", IMAGE_RUN, null);
+		pauseButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Pause", IMAGE_PAUSE, null);
+		stopButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Stop", IMAGE_STOP, null);
+		nicosViewModel.bindControls(runButton, pauseButton, stopButton);
+		
+		Label errorLabel = new Label(parent, SWT.NONE);
+		errorLabel.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, true));
+		errorLabel.setForeground(new Color(255, 0, 0));
+		
+		scriptGeneratorViewModel.addOnActionValidityChangeListener(new ActionsValidityChangeListener() {
+			
+			@Override
+			public void onValid() {
+				DISPLAY.asyncExec(() -> {
+					runButton.setEnabled(true);
+					errorLabel.setText("");
+					errorLabel.getParent().layout();
+				});
+			}
+
+			@Override
+			public void onInvalid(Map<Integer, String> errors) {
+				DISPLAY.asyncExec(() -> {
+					runButton.setEnabled(false);
+					errorLabel.setText("There are invalid actions.");
+					errorLabel.getParent().layout();
+				});
+
+			}
+		});
+	}
 
     private void drawRunAndFinishTime(Composite parent) {
     	// Composite for the row containing  total estimated run time
