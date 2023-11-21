@@ -142,7 +142,7 @@
         </scale_options>
         <scripts />
         <show_scrollbar>false</show_scrollbar>
-        <text>Auto Refill is Inhibited by Low = 0.0 or Timeout: </text>
+        <text>Auto refill is inhibited by low = 0.0 or timeout:</text>
         <tooltip></tooltip>
         <transparent>false</transparent>
         <vertical_alignment>1</vertical_alignment>
@@ -282,7 +282,7 @@ $(pv_value)</tooltip>
         </scale_options>
         <scripts />
         <show_scrollbar>false</show_scrollbar>
-        <text>Alarm Limit is Exceeded: </text>
+        <text>Alarm limit is exceeded:</text>
         <tooltip></tooltip>
         <transparent>false</transparent>
         <vertical_alignment>1</vertical_alignment>
@@ -422,7 +422,7 @@ $(pv_value)</tooltip>
         </scale_options>
         <scripts />
         <show_scrollbar>false</show_scrollbar>
-        <text>Open Sensor was Detected: </text>
+        <text>Open sensor was detected:</text>
         <tooltip></tooltip>
         <transparent>false</transparent>
         <vertical_alignment>1</vertical_alignment>
@@ -562,7 +562,7 @@ $(pv_value)</tooltip>
         </scale_options>
         <scripts />
         <show_scrollbar>false</show_scrollbar>
-        <text>Burnout Condition was Detected: </text>
+        <text>Burnout condition was detected:</text>
         <tooltip></tooltip>
         <transparent>false</transparent>
         <vertical_alignment>1</vertical_alignment>
@@ -702,7 +702,7 @@ $(pv_value)</tooltip>
         </scale_options>
         <scripts />
         <show_scrollbar>false</show_scrollbar>
-        <text>Read in Progress: </text>
+        <text>Read in progress:</text>
         <tooltip></tooltip>
         <transparent>false</transparent>
         <vertical_alignment>1</vertical_alignment>
@@ -842,7 +842,7 @@ $(pv_value)</tooltip>
         </scale_options>
         <scripts />
         <show_scrollbar>false</show_scrollbar>
-        <text>Refill Active: </text>
+        <text>Refill active:</text>
         <tooltip></tooltip>
         <transparent>false</transparent>
         <vertical_alignment>1</vertical_alignment>
@@ -982,7 +982,7 @@ $(pv_value)</tooltip>
         </scale_options>
         <scripts />
         <show_scrollbar>false</show_scrollbar>
-        <text>Refill Timeout Occured: </text>
+        <text>Refill timeout occured:</text>
         <tooltip></tooltip>
         <transparent>false</transparent>
         <vertical_alignment>1</vertical_alignment>

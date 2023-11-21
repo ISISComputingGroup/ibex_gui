@@ -1086,7 +1086,7 @@ $(pv_value)</tooltip>
               </scale_options>
               <scripts />
               <show_scrollbar>false</show_scrollbar>
-              <text>High Level:</text>
+              <text>High level:</text>
               <tooltip></tooltip>
               <transparent>false</transparent>
               <vertical_alignment>1</vertical_alignment>
@@ -1227,7 +1227,7 @@ $(pv_value)</tooltip>
               <color red="192" green="192" blue="192" />
             </foreground_color>
             <height>20</height>
-            <lock_children>true</lock_children>
+            <lock_children>false</lock_children>
             <macros>
               <include_parent_macros>true</include_parent_macros>
             </macros>
@@ -1277,7 +1277,7 @@ $(pv_value)</tooltip>
               </scale_options>
               <scripts />
               <show_scrollbar>false</show_scrollbar>
-              <text>Low Level:</text>
+              <text>Low level:</text>
               <tooltip></tooltip>
               <transparent>false</transparent>
               <vertical_alignment>1</vertical_alignment>
@@ -1468,7 +1468,7 @@ $(pv_value)</tooltip>
               </scale_options>
               <scripts />
               <show_scrollbar>false</show_scrollbar>
-              <text>Unit Selection:</text>
+              <text>Unit selection:</text>
               <tooltip></tooltip>
               <transparent>false</transparent>
               <vertical_alignment>1</vertical_alignment>
@@ -1685,7 +1685,7 @@ $(pv_value)</tooltip>
               </scale_options>
               <scripts />
               <show_scrollbar>false</show_scrollbar>
-              <text>Channel 1 Type:</text>
+              <text>Channel 1 type:</text>
               <tooltip></tooltip>
               <transparent>false</transparent>
               <vertical_alignment>1</vertical_alignment>
@@ -1819,7 +1819,7 @@ $(pv_value)</tooltip>
               </scale_options>
               <scripts />
               <show_scrollbar>false</show_scrollbar>
-              <text>Channel 2 Type:</text>
+              <text>Channel 2 type:</text>
               <tooltip></tooltip>
               <transparent>false</transparent>
               <vertical_alignment>1</vertical_alignment>
@@ -1995,7 +1995,7 @@ $(pv_value)</tooltip>
               </scale_options>
               <scripts />
               <show_scrollbar>false</show_scrollbar>
-              <text>Default Channel</text>
+              <text>Default channel:</text>
               <tooltip></tooltip>
               <transparent>false</transparent>
               <vertical_alignment>1</vertical_alignment>
@@ -2120,7 +2120,7 @@ $(pv_value)</tooltip>
               <color red="192" green="192" blue="192" />
             </foreground_color>
             <height>20</height>
-            <lock_children>true</lock_children>
+            <lock_children>false</lock_children>
             <macros>
               <include_parent_macros>true</include_parent_macros>
             </macros>
@@ -2170,7 +2170,7 @@ $(pv_value)</tooltip>
               </scale_options>
               <scripts />
               <show_scrollbar>false</show_scrollbar>
-              <text>Sample Interval:</text>
+              <text>Sample interval:</text>
               <tooltip></tooltip>
               <transparent>false</transparent>
               <vertical_alignment>1</vertical_alignment>
@@ -2253,7 +2253,7 @@ $(pv_value)</tooltip>
                 <color red="192" green="192" blue="192" />
               </foreground_color>
               <height>20</height>
-              <lock_children>true</lock_children>
+              <lock_children>false</lock_children>
               <macros>
                 <include_parent_macros>true</include_parent_macros>
               </macros>
@@ -2443,7 +2443,7 @@ $(pv_value)</tooltip>
                 <actions hook="false" hook_all="false" />
                 <auto_size>false</auto_size>
                 <background_color>
-                  <color red="255" green="255" blue="255" />
+                  <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
                 </background_color>
                 <border_color>
                   <color red="0" green="128" blue="255" />
@@ -2452,10 +2452,10 @@ $(pv_value)</tooltip>
                 <border_width>1</border_width>
                 <enabled>true</enabled>
                 <font>
-                  <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+                  <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
                 </font>
                 <foreground_color>
-                  <color red="0" green="0" blue="0" />
+                  <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
                 </foreground_color>
                 <height>20</height>
                 <horizontal_alignment>1</horizontal_alignment>
@@ -2483,7 +2483,7 @@ $(pv_value)</tooltip>
                 <actions hook="false" hook_all="false" />
                 <auto_size>false</auto_size>
                 <background_color>
-                  <color red="255" green="255" blue="255" />
+                  <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
                 </background_color>
                 <border_color>
                   <color red="0" green="128" blue="255" />
@@ -2492,10 +2492,10 @@ $(pv_value)</tooltip>
                 <border_width>1</border_width>
                 <enabled>true</enabled>
                 <font>
-                  <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+                  <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
                 </font>
                 <foreground_color>
-                  <color red="0" green="0" blue="0" />
+                  <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
                 </foreground_color>
                 <height>20</height>
                 <horizontal_alignment>1</horizontal_alignment>
@@ -2590,7 +2590,7 @@ $(pv_value)</tooltip>
               </scale_options>
               <scripts />
               <show_scrollbar>false</show_scrollbar>
-              <text>Sample Mode:</text>
+              <text>Sample mode:</text>
               <tooltip></tooltip>
               <transparent>false</transparent>
               <vertical_alignment>1</vertical_alignment>
@@ -2726,7 +2726,7 @@ $(pv_value)</tooltip>
             </scale_options>
             <scripts />
             <show_scrollbar>false</show_scrollbar>
-            <text>Boost Mode:</text>
+            <text>Boost mode:</text>
             <tooltip></tooltip>
             <transparent>false</transparent>
             <vertical_alignment>1</vertical_alignment>
@@ -2976,7 +2976,7 @@ $(pv_value)</tooltip>
           <color red="192" green="192" blue="192" />
         </foreground_color>
         <height>20</height>
-        <lock_children>true</lock_children>
+        <lock_children>false</lock_children>
         <macros>
           <include_parent_macros>true</include_parent_macros>
         </macros>
@@ -3026,7 +3026,7 @@ $(pv_value)</tooltip>
           </scale_options>
           <scripts />
           <show_scrollbar>false</show_scrollbar>
-          <text>Menu Mode: </text>
+          <text>Menu mode:</text>
           <tooltip></tooltip>
           <transparent>false</transparent>
           <vertical_alignment>1</vertical_alignment>
