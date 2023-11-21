@@ -326,13 +326,13 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	private boolean validityChanged(String columnHeader, TableItem item, int column, ScriptGeneratorAction action) {
 		var validityText = item.getText(column);
 		var validityDisplay = ValidityDisplay.fromText(validityText);
-		return columnHeader.equals(ScriptGeneratorViewModel.VALIDITY_COLUMN_HEADER) && !validityDisplay.equalsAction(action);
+		return columnHeader.equals(Constants.VALIDITY_COLUMN_HEADER) && !validityDisplay.equalsAction(action);
 	}
 	
 	private boolean executingStatusChanged(String columnHeader, TableItem item, int column, ScriptGeneratorAction action) {
 		var lineNumberImage = Optional.ofNullable(item.getImage(column));
 		var statusFromLastDisplay = ExecutingStatusDisplay.fromImage(lineNumberImage);
-		return columnHeader.equals(ScriptGeneratorViewModel.ACTION_NUMBER_COLUMN_HEADER) && !ExecutingStatusDisplay.equalsAction(statusFromLastDisplay, action);
+		return columnHeader.equals(Constants.ACTION_NUMBER_COLUMN_HEADER) && !ExecutingStatusDisplay.equalsAction(statusFromLastDisplay, action);
 	}
 	
 	private boolean parameterValueChanged(Optional<String> parameterValue, TableItem item, int columnNumber) {
@@ -341,9 +341,9 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	
 	private boolean estimatedTimeChanged(String columnHeader, TableItem item, int column, ScriptGeneratorAction action) {
 		var estimatedTimeText = item.getText(column);
-		return columnHeader.equals(ScriptGeneratorViewModel.ESTIMATED_RUN_TIME_COLUMN_HEADER) 
+		return columnHeader.equals(Constants.ESTIMATED_RUN_TIME_COLUMN_HEADER) 
 				&& (
-						(action.getEstimatedTime().isEmpty() && !estimatedTimeText.equals(ScriptGeneratorViewModel.UNKNOWN_TEXT)) 
+						(action.getEstimatedTime().isEmpty() && !estimatedTimeText.equals(Constants.UNKNOWN_TEXT)) 
 						|| (action.getEstimatedTime().isPresent() && !estimatedTimeText.equals(ScriptGeneratorViewModel.changeSecondsToTimeFormat(action.getEstimatedTime().get().longValue())))
 				);
 	}
