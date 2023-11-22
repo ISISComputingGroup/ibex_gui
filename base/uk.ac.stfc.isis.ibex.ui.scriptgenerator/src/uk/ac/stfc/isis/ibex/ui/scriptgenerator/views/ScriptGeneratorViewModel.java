@@ -83,6 +83,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
     private Set<Integer> scriptsToGenerateToCurrentFilepath = new HashSet<>();
 
     /**
+     * Listeners on validity change
+     */
+    private final Set<ActionsValidityChangeListener> actionsValidityChangeListeners = new HashSet<>();
+
+    /**
      * Path to the current parameters save file.
      */
     private String currentParametersFilePath;
@@ -478,9 +483,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
     }
 
     /**
-     * Listen for changes in actions and activate the handler.
+     * Listen for changes in actions and activate the appropriate handler(s).
      */
     private PropertyChangeListener actionChangeListener = evt -> {
+    	if (evt.getPropertyName().equals(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY)) {
+    		notifyActionsValidityChangeListeners();
+    	}
     	actionChangeHandler(viewTable, btnGenerateScript, btnGenerateScriptAs, false);
     };
 
@@ -638,6 +646,14 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	        }
 	        updateTotalEstimatedTime();
 	    });
+    }
+    
+    private void notifyActionsValidityChangeListeners() {
+    	if (scriptGeneratorModel.areParamsValid()) {
+    		actionsValidityChangeListeners.forEach(ActionsValidityChangeListener::onValid);
+    	} else {
+    		actionsValidityChangeListeners.forEach(listener -> listener.onInvalid(scriptGeneratorModel.getGlobalParamErrors()));
+    	}
     }
 
     private void setButtonGenerateStyle(Button btnGenerateScript) {
@@ -1384,21 +1400,21 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		}
 		scriptGeneratorModel.pasteActions(listOfActions, pasteLocation);
 	}
-
+	
 	/**
-	 * Attach listener.
-	 * TODO: finish documentation
-	 * @param listener
+	 * Attach listener to action validity change.
+	 * @param listener to be invoked when the validity of any action changes
 	 */
 	public void addOnActionValidityChangeListener(ActionsValidityChangeListener listener) {
-	    this.scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY, (evt) -> {
-	    	System.out.println(scriptGeneratorModel.areParamsValid());
-	    	if (scriptGeneratorModel.areParamsValid()) {
-	    		listener.onValid();
-	    	} else {
-	    		listener.onInvalid(scriptGeneratorModel.getGlobalParamErrors());
-	    	}
-	    });
+		actionsValidityChangeListeners.add(listener);
+	}
+	
+	/**
+	 * Remove action change validity listener.
+	 * @param listener the listener to be removed
+	 */
+	public void removeOnActionsValidityChangeListener(ActionsValidityChangeListener listener) {
+		actionsValidityChangeListeners.remove(listener);
 	}
 	
 	/**
