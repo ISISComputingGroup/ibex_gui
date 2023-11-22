@@ -432,9 +432,9 @@ public class ScriptGeneratorView {
 		moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
 
 		// Make buttons to move an action up and down the list
-		btnMoveActionUp = IBEXButtonFactory.compact(moveComposite, null, "Move selected row up.",
+		btnMoveActionUp = IBEXButtonFactory.compact(moveComposite, null, "Move selected row up",
 				Constants.IMAGE_UP_ARROW, e -> scriptGeneratorViewModel.moveActionUp(table.selectedRows()));
-		btnMoveActionDown = IBEXButtonFactory.compact(moveComposite, null, "Move selected row down.",
+		btnMoveActionDown = IBEXButtonFactory.compact(moveComposite, null, "Move selected row down",
 				Constants.IMAGE_DOWN_ARROW, e -> scriptGeneratorViewModel.moveActionDown(table.selectedRows()));
 	}
 
