@@ -788,11 +788,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 
 		@Override
 		public void selectionChanged(SelectionChangedEvent event) {
-			//TODO This is where actions should be saved and loaded into new table if possible
+			// Save out previous script definition's actions and parameters
 			final List<JavaActionParameter> previousParameters = scriptGeneratorModel.getActionParameters();
 			final List<ScriptGeneratorAction> previousActions = scriptGeneratorModel.getActions();
-			
-			
+
+			// Perform the script definition change
 			String selectedScriptDefinitionName;
 			if (!event.getSelection().isEmpty()) {
 				selectedScriptDefinitionName = (String) event.getStructuredSelection().getFirstElement();
@@ -805,39 +805,58 @@ public class ScriptGeneratorViewModel extends ModelObject {
 						}, () -> scriptGeneratorModel.getScriptDefinitionLoader()
 								.setScriptDefinition(selectedScriptDefinitionName));
 			}
-			
-			System.out.println("Script def changed:");
 
-			final List<Map<JavaActionParameter, String>> actionsToLoad = new ArrayList<>();
-			
-			for (ScriptGeneratorAction action : previousActions) {
-				final Map<JavaActionParameter, String> keepParams = action.getActionParameterValueMap().entrySet()
-						.stream()
-						.filter(entry -> scriptGeneratorModel.getActionParameters().stream()
-								.anyMatch(currentParam -> currentParam.equals(entry.getKey())))
-						.collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
-
-				final Map<JavaActionParameter, String> additionalParams = scriptGeneratorModel.getActionParameters()
-						.stream()
-						.filter(param -> keepParams.keySet().stream()
-								.noneMatch(key -> key.getName().equals(param.getName())))
-						.collect(Collectors.toMap(p -> p, p -> p.getDefaultValue()));
-
-				if (!keepParams.isEmpty()) {
-					keepParams.putAll(additionalParams);
-					
-					actionsToLoad.add(keepParams);
-				}
-			}
-			
-			if (!actionsToLoad.isEmpty()) {
-				scriptGeneratorModel.addActionsToTable(actionsToLoad, false);
-				
+			// Transfer previous parameters if possible
+			List<JavaActionParameter> matchingParams = transferPreviousParameters(previousParameters, previousActions);
+			if (!matchingParams.isEmpty() && !previousActions.isEmpty()) {
 				MessageDialog.openInformation(Constants.DISPLAY.getActiveShell(), "Action parameters transferred",
-						"The following action parameters have been transferred from previous configuration.");
+						"The following action parameters have been transferred from previous configuration:"
+								+ System.lineSeparator()
+								+ String.join(", ", matchingParams.stream().map(p -> p.getName()).toList()));
 			}
 		}
 	};
+
+	/**
+	 * Transfer actions that have parameters that match exactly some parameters of
+	 * the new script definition.
+	 * 
+	 * @param previousParameters list of previous parameters
+	 * @param previousActions list of previous actions
+	 * @return a list of parameters that were transferred
+	 */
+	private List<JavaActionParameter> transferPreviousParameters(List<JavaActionParameter> previousParameters,
+			List<ScriptGeneratorAction> previousActions) {
+		final List<Map<JavaActionParameter, String>> actionsToLoad = new ArrayList<>();
+
+		// List of those parameters that match exactly in the previous and current
+		// script definition
+		final List<JavaActionParameter> matchingParams = previousParameters.stream()
+				.filter(param -> scriptGeneratorModel.getActionParameters().contains(param)).toList();
+
+		for (ScriptGeneratorAction action : previousActions) {
+			// For each action grab those parameters that match any new script definition
+			// parameters
+			final Map<JavaActionParameter, String> paramsToKeep = action.getActionParameterValueMap().entrySet()
+					.stream().filter(entry -> matchingParams.contains(entry.getKey()))
+					.collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
+
+			if (!paramsToKeep.isEmpty()) {
+				// If we have any to keep, populate the new parameters that we can't transfer
+				// from previous definition with their default values
+				final Map<JavaActionParameter, String> paramsSetToDefault = scriptGeneratorModel.getActionParameters()
+						.stream().filter(param -> !matchingParams.contains(param))
+						.collect(Collectors.toMap(p -> p, p -> p.getDefaultValue()));
+				// Merge the transferred and default parameters
+				paramsToKeep.putAll(paramsSetToDefault);
+				actionsToLoad.add(paramsToKeep);
+			}
+		}
+
+		scriptGeneratorModel.addActionsToTable(actionsToLoad, false);
+
+		return matchingParams;
+	}
 
 	/**
 	 * Bind the script definition loader to the context.
@@ -1341,12 +1360,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		dialog.setOverwrite(true);
 		if (action == SWT.SAVE) {
 			dialog.setText("Save as");
-			dialog.setFilterExtensions(new String[] {"*.sgp"});
+			dialog.setFilterExtensions(new String[] { "*.sgp" });
 
 		} else {
 			dialog.setText("Load");
 			// Keep JSON extension when loading (for older param. files)
-			dialog.setFilterExtensions(new String[] {"*.sgp", "*.json"});
+			dialog.setFilterExtensions(new String[] { "*.sgp", "*.json" });
 		}
 		return Optional.ofNullable(dialog.open());
 	}
@@ -1378,7 +1397,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 				dialogResponse = 0;
 			} else {
 				emptyModel = false;
-				String[] replaceOrAppend = new String[] {"Append", "Replace"};
+				String[] replaceOrAppend = new String[] { "Append", "Replace" };
 				MessageDialog dialog = new MessageDialog(Constants.DISPLAY.getActiveShell(), "Replace or Append", null,
 						"Would you like to replace the current parameters or append the new parameters?",
 						MessageDialog.QUESTION, replaceOrAppend, -1);
@@ -1454,7 +1473,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * @param actions copied actions
 	 */
 	public void copyActions(String actions) {
-		clipboard.setContents(new Object[] {actions}, new Transfer[] {TextTransfer.getInstance()});
+		clipboard.setContents(new Object[] { actions }, new Transfer[] { TextTransfer.getInstance() });
 	}
 
 	/**
