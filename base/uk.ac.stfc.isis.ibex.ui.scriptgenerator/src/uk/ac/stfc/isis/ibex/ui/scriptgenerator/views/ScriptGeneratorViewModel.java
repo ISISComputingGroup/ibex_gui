@@ -1305,12 +1305,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		dialog.setOverwrite(true);
 		if (action == SWT.SAVE) {
 			dialog.setText("Save as");
-			dialog.setFilterExtensions(new String[] { "*.sgp" });
+			dialog.setFilterExtensions(new String[] {"*.sgp"});
 
 		} else {
 			dialog.setText("Load");
 			// Keep JSON extension when loading (for older param. files)
-			dialog.setFilterExtensions(new String[] { "*.sgp", "*.json" });
+			dialog.setFilterExtensions(new String[] {"*.sgp", "*.json"});
 		}
 		return Optional.ofNullable(dialog.open());
 	}
@@ -1342,7 +1342,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 				dialogResponse = 0;
 			} else {
 				emptyModel = false;
-				String[] replaceOrAppend = new String[] { "Append", "Replace" };
+				String[] replaceOrAppend = new String[] {"Append", "Replace"};
 				MessageDialog dialog = new MessageDialog(Constants.DISPLAY.getActiveShell(), "Replace or Append", null,
 						"Would you like to replace the current parameters or append the new parameters?",
 						MessageDialog.QUESTION, replaceOrAppend, -1);
@@ -1418,7 +1418,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * @param actions copied actions
 	 */
 	public void copyActions(String actions) {
-		clipboard.setContents(new Object[] { actions }, new Transfer[] { TextTransfer.getInstance() });
+		clipboard.setContents(new Object[] {actions}, new Transfer[] {TextTransfer.getInstance()});
 	}
 
 	/**
