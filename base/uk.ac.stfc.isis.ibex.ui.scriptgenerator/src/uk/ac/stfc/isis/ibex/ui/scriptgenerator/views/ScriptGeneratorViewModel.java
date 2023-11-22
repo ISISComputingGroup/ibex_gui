@@ -788,6 +788,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 
 		@Override
 		public void selectionChanged(SelectionChangedEvent event) {
+			//TODO This is where actions should be saved and loaded into new table if possible
+			final List<JavaActionParameter> previousParameters = scriptGeneratorModel.getActionParameters();
+			final List<ScriptGeneratorAction> previousActions = scriptGeneratorModel.getActions();
+			
+			
 			String selectedScriptDefinitionName;
 			if (!event.getSelection().isEmpty()) {
 				selectedScriptDefinitionName = (String) event.getStructuredSelection().getFirstElement();
@@ -799,6 +804,37 @@ public class ScriptGeneratorViewModel extends ModelObject {
 							}
 						}, () -> scriptGeneratorModel.getScriptDefinitionLoader()
 								.setScriptDefinition(selectedScriptDefinitionName));
+			}
+			
+			System.out.println("Script def changed:");
+
+			final List<Map<JavaActionParameter, String>> actionsToLoad = new ArrayList<>();
+			
+			for (ScriptGeneratorAction action : previousActions) {
+				final Map<JavaActionParameter, String> keepParams = action.getActionParameterValueMap().entrySet()
+						.stream()
+						.filter(entry -> scriptGeneratorModel.getActionParameters().stream()
+								.anyMatch(currentParam -> currentParam.equals(entry.getKey())))
+						.collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
+
+				final Map<JavaActionParameter, String> additionalParams = scriptGeneratorModel.getActionParameters()
+						.stream()
+						.filter(param -> keepParams.keySet().stream()
+								.noneMatch(key -> key.getName().equals(param.getName())))
+						.collect(Collectors.toMap(p -> p, p -> p.getDefaultValue()));
+
+				if (!keepParams.isEmpty()) {
+					keepParams.putAll(additionalParams);
+					
+					actionsToLoad.add(keepParams);
+				}
+			}
+			
+			if (!actionsToLoad.isEmpty()) {
+				scriptGeneratorModel.addActionsToTable(actionsToLoad, false);
+				
+				MessageDialog.openInformation(Constants.DISPLAY.getActiveShell(), "Action parameters transferred",
+						"The following action parameters have been transferred from previous configuration.");
 			}
 		}
 	};
