@@ -534,7 +534,7 @@ public class ScriptGeneratorView {
 		scriptDefinitionSelectorLabel.setText("Script Definition:");
 
 		// Drop-down box to select between script definitions.
-		ComboViewer scriptDefinitionSelector = new ComboViewer(parent, SWT.READ_ONLY);
+		ComboViewer scriptDefinitionSelector = new ComboViewer(scriptDefinitionComposite, SWT.READ_ONLY);
 
 		scriptDefinitionSelector.setContentProvider(ArrayContentProvider.getInstance());
 		scriptDefinitionSelector.setLabelProvider(scriptGeneratorViewModel.getScriptDefinitionSelectorLabelProvider());
