@@ -463,9 +463,9 @@ public class ScriptGeneratorView {
 		moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
 
 		// Make buttons to move an action up and down the list
-		btnMoveActionUp = IBEXButtonFactory.compact(moveComposite, null, "Move selected row up.",
+		btnMoveActionUp = IBEXButtonFactory.compact(moveComposite, null, "Move selected row up",
 				Constants.IMAGE_UP_ARROW, e -> scriptGeneratorViewModel.moveActionUp(table.selectedRows()));
-		btnMoveActionDown = IBEXButtonFactory.compact(moveComposite, null, "Move selected row down.",
+		btnMoveActionDown = IBEXButtonFactory.compact(moveComposite, null, "Move selected row down",
 				Constants.IMAGE_DOWN_ARROW, e -> scriptGeneratorViewModel.moveActionDown(table.selectedRows()));
 	}
 
@@ -565,7 +565,7 @@ public class ScriptGeneratorView {
 		scriptDefinitionSelectorLabel.setText("Script Definition:");
 
 		// Drop-down box to select between script definitions.
-		ComboViewer scriptDefinitionSelector = new ComboViewer(parent, SWT.READ_ONLY);
+		ComboViewer scriptDefinitionSelector = new ComboViewer(scriptDefinitionComposite, SWT.READ_ONLY);
 
 		scriptDefinitionSelector.setContentProvider(ArrayContentProvider.getInstance());
 		scriptDefinitionSelector.setLabelProvider(scriptGeneratorViewModel.getScriptDefinitionSelectorLabelProvider());
