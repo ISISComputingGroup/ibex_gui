@@ -38,6 +38,13 @@ public class IBEXButtonFactory {
 	    throw new UnsupportedOperationException();
 	}
 	
+	public static Button checkbox(Composite parent, String text, String tooltip, Listener onClickListener) {
+		int style = SWT.CHECK;
+		GridData layoutData = new GridData();
+		
+		return create(parent, style, text, tooltip, null, onClickListener, layoutData);
+	}
+	
 	/**
 	 * Creates a button that fills all available horizontal space.
 	 * 
@@ -85,7 +92,7 @@ public class IBEXButtonFactory {
      * @return the new button instance
      */
     public static Button create(Composite parent, int style, String text, String tooltip, Image image, Listener onClickListener, Object layoutData) {
-    	Button btn = new Button(parent, SWT.NONE);
+    	Button btn = new Button(parent, style);
         if (text != null) {
         	btn.setText(text);
         }

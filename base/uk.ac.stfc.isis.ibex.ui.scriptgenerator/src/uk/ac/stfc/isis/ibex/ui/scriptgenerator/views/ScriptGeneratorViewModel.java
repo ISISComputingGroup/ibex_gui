@@ -151,6 +151,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * The currently selected rows
 	 */
 	private boolean hasSelection;
+	
+	private boolean parameterTransferEnabled = Constants.PARAM_TRANSFER_DEFAULT;
 
 	private Clipboard clipboard;
 	private static final String TAB = "\t";
@@ -806,17 +808,27 @@ public class ScriptGeneratorViewModel extends ModelObject {
 								.setScriptDefinition(selectedScriptDefinitionName));
 			}
 
-			// Transfer previous parameters if possible
-			List<JavaActionParameter> matchingParams = transferPreviousParameters(previousParameters, previousActions);
-			if (!matchingParams.isEmpty() && !previousActions.isEmpty()) {
-				MessageDialog.openInformation(Constants.DISPLAY.getActiveShell(), "Action parameters transferred",
-						"The following action parameters have been transferred from previous configuration:"
-								+ System.lineSeparator()
-								+ String.join(", ", matchingParams.stream().map(p -> p.getName()).toList()));
+			if (parameterTransferEnabled) {
+				// Transfer previous parameters if possible
+				List<JavaActionParameter> matchingParams = transferPreviousParameters(previousParameters, previousActions);
+				if (!matchingParams.isEmpty() && !previousActions.isEmpty()) {
+					MessageDialog.openInformation(Constants.DISPLAY.getActiveShell(), "Action parameters transferred",
+							"The following action parameters have been transferred from previous configuration:"
+									+ System.lineSeparator()
+									+ String.join(", ", matchingParams.stream().map(p -> p.getName()).toList()));
+				}
 			}
 		}
 	};
 
+	public boolean getParameterTransferEnabled() {
+		return this.parameterTransferEnabled;
+	}
+	
+	public void setParameterTransferEnabled(boolean enabled) {
+		this.parameterTransferEnabled = enabled;
+	}
+	
 	/**
 	 * Transfer actions that have parameters that match exactly some parameters of
 	 * the new script definition.
