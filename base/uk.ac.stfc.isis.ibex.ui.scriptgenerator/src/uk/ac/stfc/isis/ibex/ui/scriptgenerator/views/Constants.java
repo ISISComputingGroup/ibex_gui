@@ -36,18 +36,18 @@ final class Constants {
 	protected static final String BUTTON_TITLE_INSERT_ROW_BELOW = "Insert Row Below";
 	protected static final String BUTTON_TITLE_DELETE_ROWS = "Clear All Rows";
 	
-	protected static final String CHECKBOX_TITLE_PARAM_TRANSFER = "Parameter Transferring";
+	protected static final String CHECKBOX_TITLE_PARAM_TRANSFER = "Transfer Compatible Parameters";
 	
 	protected static final String BUTTON_TOOLTIP_ADD_ROW_TO_END = "Add a new row to the end of the table";
 	protected static final String BUTTON_TOOLTIP_INSERT_ROW_BELOW = "Insert a new row below the selected line in the table";
 	protected static final String BUTTON_TOOLTIP_DELETE_ROWS = "Delete all rows in the table";
-	protected static final String TOOLTIP_PARAM_TRANSFER = "Enable parameter transferring where possible when changing script definitions";
+	protected static final String TOOLTIP_PARAM_TRANSFER = "Enable action parameter transferring where possible when changing script definitions";
 	
     protected static final String LOADING_MESSAGE = "Loading...";
     protected static final String RELOADING_MESSAGE = "Reloading...";
     
     /**
-     * Defines the  default behaviour of parameter transferring.
+     * Defines the default behaviour of action parameter transferring.
      */
 	protected static final boolean PARAM_TRANSFER_DEFAULT = true;
 
