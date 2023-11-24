@@ -821,10 +821,18 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		}
 	};
 
+	/**
+	 * @return true if parameter transferring is enabled, false otherwise.
+	 */
 	public boolean getParameterTransferEnabled() {
 		return this.parameterTransferEnabled;
 	}
 	
+	/**
+	 * Enables or disables the parameter transfer functionality.
+	 * 
+	 * @param enabled true or false to enable or disable.
+	 */
 	public void setParameterTransferEnabled(boolean enabled) {
 		this.parameterTransferEnabled = enabled;
 	}
