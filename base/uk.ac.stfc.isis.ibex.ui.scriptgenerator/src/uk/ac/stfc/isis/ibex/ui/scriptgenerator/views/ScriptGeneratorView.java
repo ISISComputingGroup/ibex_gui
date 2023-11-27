@@ -35,6 +35,7 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -375,6 +376,10 @@ public class ScriptGeneratorView {
 	 *               instance (cannot be null)
 	 */
 	private void makeDynamicScriptingControlButtons(Composite parent) {
+		Label errorLabel = new Label(parent, SWT.NONE);
+		errorLabel.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, true));
+		errorLabel.setForeground(new Color(255, 0, 0));
+		
 		// Composite for generate buttons
 		Composite dynamicScriptingButtonsGrp = makeGrid(parent, 3, true, 10);
 
@@ -384,6 +389,28 @@ public class ScriptGeneratorView {
 				null);
 		stopButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Stop", Constants.IMAGE_STOP, null);
 		nicosViewModel.bindControls(runButton, pauseButton, stopButton);
+
+		scriptGeneratorViewModel.addOnActionValidityChangeListener(new ActionsValidityChangeListener() {
+
+			@Override
+			public void onValid() {
+				DISPLAY.asyncExec(() -> {
+					runButton.setEnabled(true);
+					errorLabel.setText("");
+					errorLabel.getParent().layout();
+				});
+			}
+
+			@Override
+			public void onInvalid(Map<Integer, String> errors) {
+				DISPLAY.asyncExec(() -> {
+					runButton.setEnabled(false);
+					errorLabel.setText("\u26A0 There are invalid actions.");
+					errorLabel.getParent().layout();
+				});
+
+			}
+		});
 	}
 
 	private void makeRunAndFinishTime(Composite parent) {
