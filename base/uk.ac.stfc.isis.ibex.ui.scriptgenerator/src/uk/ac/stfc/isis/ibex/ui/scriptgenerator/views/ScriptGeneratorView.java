@@ -376,6 +376,10 @@ public class ScriptGeneratorView {
 	 *               instance (cannot be null)
 	 */
 	private void makeDynamicScriptingControlButtons(Composite parent) {
+		Label errorLabel = new Label(parent, SWT.NONE);
+		errorLabel.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, true));
+		errorLabel.setForeground(new Color(255, 0, 0));
+		
 		// Composite for generate buttons
 		Composite dynamicScriptingButtonsGrp = makeGrid(parent, 3, true, 10);
 
@@ -386,10 +390,6 @@ public class ScriptGeneratorView {
 		stopButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Stop", Constants.IMAGE_STOP, null);
 		nicosViewModel.bindControls(runButton, pauseButton, stopButton);
 
-		Label errorLabel = new Label(parent, SWT.NONE);
-		errorLabel.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, true));
-		errorLabel.setForeground(new Color(255, 0, 0));
-
 		scriptGeneratorViewModel.addOnActionValidityChangeListener(new ActionsValidityChangeListener() {
 
 			@Override
@@ -397,8 +397,6 @@ public class ScriptGeneratorView {
 				DISPLAY.asyncExec(() -> {
 					runButton.setEnabled(true);
 					errorLabel.setText("");
-					((GridData) errorLabel.getLayoutData()).exclude = true;
-					errorLabel.setVisible(false);
 					errorLabel.getParent().layout();
 				});
 			}
@@ -408,8 +406,6 @@ public class ScriptGeneratorView {
 				DISPLAY.asyncExec(() -> {
 					runButton.setEnabled(false);
 					errorLabel.setText("\u26A0 There are invalid actions.");
-					((GridData) errorLabel.getLayoutData()).exclude = false;
-					errorLabel.setVisible(true);
 					errorLabel.getParent().layout();
 				});
 
