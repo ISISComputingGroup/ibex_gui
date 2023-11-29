@@ -149,7 +149,9 @@ public class DaeSettings extends ModelObject {
      * @param value The new monitor spectrum number
      */
 	public void setMonitorSpectrum(int value) {
-		firePropertyChange("monitorSpectrum", monitorSpectrum, monitorSpectrum = value);
+    	Display.getDefault().asyncExec(() -> {
+    		firePropertyChange("monitorSpectrum", monitorSpectrum, monitorSpectrum = value);
+    	});
 	}
 
     /**
@@ -458,9 +460,7 @@ public class DaeSettings extends ModelObject {
      * @param value the file path.
      */
     public void setDetectorTable(String value) {
-    	Display.getDefault().asyncExec(() -> {
-            firePropertyChange("detectorTable", this.detectorTable, this.detectorTable = value);
-    	});
+    	firePropertyChange("detectorTable", this.detectorTable, this.detectorTable = value);
     }
 
 
