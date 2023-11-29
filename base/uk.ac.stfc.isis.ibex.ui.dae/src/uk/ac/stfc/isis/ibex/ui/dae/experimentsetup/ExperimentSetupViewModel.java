@@ -30,6 +30,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.periods.PeriodsViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.timechannels.TimeChannelsViewModel;
 
+
 /**
  * The view model that contains the logic for displaying how the experiment is
  * set up on the DAE.
@@ -291,17 +292,17 @@ public class ExperimentSetupViewModel extends ModelObject {
     }
     
     /**
-     * Saves the current maps of cached values and loads the one related to the instrument that is being loaded.
-     * 
-     * @param newInstrument
-     *                              The name of the instrument that is being loaded.
-     */
-    public void switchInstrumentCachedValues(String newInstrument) {
-        setInstrumentCachedValues(currentInstrumentName);
-        cachedValues = getInstrumentCachedValues(newInstrument);
-        radioBtnsCachedValues = getRadioBtnsInstrumentCachedValues(newInstrument);
-        tableCachedValues = getTableInstrumentCachedValues(newInstrument);
-        currentInstrumentName = newInstrument;
-    }
-    
+	 * Saves the current maps of cached values and loads the one related to the
+	 * instrument that is being loaded.
+	 * 
+	 * @param newInstrument The name of the instrument that is being loaded.
+	 */
+	public void switchInstrumentCachedValues(String newInstrument) {
+		setInstrumentCachedValues(currentInstrumentName);
+		cachedValues = getInstrumentCachedValues(newInstrument);
+		radioBtnsCachedValues = getRadioBtnsInstrumentCachedValues(newInstrument);
+		tableCachedValues = getTableInstrumentCachedValues(newInstrument);
+		currentInstrumentName = newInstrument;
+
+	}
 }

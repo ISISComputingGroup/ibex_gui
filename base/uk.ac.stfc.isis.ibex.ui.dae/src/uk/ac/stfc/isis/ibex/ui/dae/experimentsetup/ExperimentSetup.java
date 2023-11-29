@@ -239,7 +239,8 @@ public class ExperimentSetup {
 	}
     
     private void resetChangeLabels() {
-        addChangeListeners();
+    	updateChangeListeners(); ///seems to remove the yellow is it reset the compared values cache, however the changed value remains 
+    	addChangeListeners();
         changeLabelsIfDifferentFromCachedValues();
     }
 	
