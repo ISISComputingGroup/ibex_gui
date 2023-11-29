@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.dae.dataacquisition;
 
+import org.eclipse.swt.widgets.Display;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -147,7 +149,7 @@ public class DaeSettings extends ModelObject {
      * @param value The new monitor spectrum number
      */
 	public void setMonitorSpectrum(int value) {
-		firePropertyChange("monitorSpectrum", monitorSpectrum, monitorSpectrum = value);
+		Display.getDefault().asyncExec(() -> firePropertyChange("monitorSpectrum", monitorSpectrum, monitorSpectrum = value));
 	}
 
     /**
