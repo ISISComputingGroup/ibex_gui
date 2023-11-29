@@ -19,6 +19,8 @@
 
 package uk.ac.stfc.isis.ibex.dae.dataacquisition;
 
+import org.eclipse.swt.widgets.Display;
+
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
@@ -456,7 +458,9 @@ public class DaeSettings extends ModelObject {
      * @param value the file path.
      */
     public void setDetectorTable(String value) {
-        firePropertyChange("detectorTable", this.detectorTable, this.detectorTable = value);
+    	Display.getDefault().asyncExec(() -> {
+            firePropertyChange("detectorTable", this.detectorTable, this.detectorTable = value);
+    	});
     }
 
 
