@@ -40,7 +40,7 @@
     <axis_0_axis_color>
       <color red="0" green="0" blue="0" />
     </axis_0_axis_color>
-    <axis_0_axis_title>Primary X Axis (0)</axis_0_axis_title>
+    <axis_0_axis_title>Time of Flight</axis_0_axis_title>
     <axis_0_dash_grid_line>true</axis_0_dash_grid_line>
     <axis_0_grid_color>
       <color red="200" green="200" blue="200" />
@@ -63,7 +63,7 @@
     <axis_1_axis_color>
       <color red="0" green="0" blue="0" />
     </axis_1_axis_color>
-    <axis_1_axis_title>Primary Y Axis (1)</axis_1_axis_title>
+    <axis_1_axis_title>Counts</axis_1_axis_title>
     <axis_1_dash_grid_line>true</axis_1_dash_grid_line>
     <axis_1_grid_color>
       <color red="200" green="200" blue="200" />
@@ -114,7 +114,7 @@
     <show_legend>true</show_legend>
     <show_plot_area_border>false</show_plot_area_border>
     <show_toolbar>true</show_toolbar>
-    <title></title>
+    <title>Event Time of Flight spectrum</title>
     <title_font>
       <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">Default Bold</opifont.name>
     </title_font>
@@ -1936,8 +1936,8 @@ $(pv_value)</tooltip>
     <width>73</width>
     <wrap_words>false</wrap_words>
     <wuid>42ad8506:18b488109b4:-6a51</wuid>
-    <x>402</x>
-    <y>419</y>
+    <x>408</x>
+    <y>390</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -1976,8 +1976,8 @@ $(pv_value)</tooltip>
     <width>64</width>
     <wrap_words>false</wrap_words>
     <wuid>42ad8506:18b488109b4:-6a49</wuid>
-    <x>334</x>
-    <y>419</y>
+    <x>340</x>
+    <y>390</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -2070,5 +2070,59 @@ $(pv_value)</tooltip>
     <wuid>42ad8506:18b488109b4:-4174</wuid>
     <x>42</x>
     <y>485</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <actions hook="false" hook_all="false">
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name)</pv_name>
+        <value>1</value>
+        <timeout>10</timeout>
+        <confirm_message></confirm_message>
+        <description></description>
+      </action>
+    </actions>
+    <alarm_pulsing>false</alarm_pulsing>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <height>40</height>
+    <image></image>
+    <name>Action Button_5</name>
+    <push_action_index>0</push_action_index>
+    <pv_name>$(P)$(Q):$(CHAN):RELOADLIVE:SP</pv_name>
+    <pv_value />
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <style>0</style>
+    <text>Reload Live Data</text>
+    <toggle_button>false</toggle_button>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <visible>true</visible>
+    <widget_type>Action Button</widget_type>
+    <width>118</width>
+    <wuid>-1bee12c9:18c13262f6f:-7d9a</wuid>
+    <x>354</x>
+    <y>425</y>
   </widget>
 </display>

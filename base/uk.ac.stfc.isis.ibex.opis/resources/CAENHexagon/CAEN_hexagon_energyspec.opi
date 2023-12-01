@@ -40,7 +40,7 @@
     <axis_0_axis_color>
       <color red="0" green="0" blue="0" />
     </axis_0_axis_color>
-    <axis_0_axis_title>Primary X Axis (0)</axis_0_axis_title>
+    <axis_0_axis_title>Energy Bin</axis_0_axis_title>
     <axis_0_dash_grid_line>true</axis_0_dash_grid_line>
     <axis_0_grid_color>
       <color red="200" green="200" blue="200" />
@@ -63,7 +63,7 @@
     <axis_1_axis_color>
       <color red="0" green="0" blue="0" />
     </axis_1_axis_color>
-    <axis_1_axis_title>Primary Y Axis (1)</axis_1_axis_title>
+    <axis_1_axis_title>Counts</axis_1_axis_title>
     <axis_1_dash_grid_line>true</axis_1_dash_grid_line>
     <axis_1_grid_color>
       <color red="200" green="200" blue="200" />
@@ -114,7 +114,7 @@
     <show_legend>true</show_legend>
     <show_plot_area_border>false</show_plot_area_border>
     <show_toolbar>true</show_toolbar>
-    <title></title>
+    <title>Energy Spectrum direct from Hexagon</title>
     <title_font>
       <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">Default Bold</opifont.name>
     </title_font>

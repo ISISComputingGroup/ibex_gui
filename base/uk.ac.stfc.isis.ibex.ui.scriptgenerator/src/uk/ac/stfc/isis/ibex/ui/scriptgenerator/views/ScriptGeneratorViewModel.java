@@ -152,7 +152,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 */
 	private boolean hasSelection;
 	
-	private boolean parameterTransferEnabled = Constants.PARAM_TRANSFER_DEFAULT;
+	private boolean parameterTransferEnabled = Constants.PARAM_TRANSFER_DEFAULT
 
 	private Clipboard clipboard;
 	private static final String TAB = "\t";
@@ -807,7 +807,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 						}, () -> scriptGeneratorModel.getScriptDefinitionLoader()
 								.setScriptDefinition(selectedScriptDefinitionName));
 			}
-
 			if (parameterTransferEnabled) {
 				// Transfer previous parameters if possible
 				List<JavaActionParameter> matchingParams = transferPreviousParameters(previousParameters, previousActions);

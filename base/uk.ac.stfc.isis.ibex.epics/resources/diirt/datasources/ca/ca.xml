@@ -24,7 +24,7 @@
     <jcaContext pureJava="true" addr_list="127.255.255.255 130.246.51.255 130.246.55.255 130.246.39.255 130.246.59.255 130.246.39.152:5066" 
                 auto_addr_list="false" connection_timeout="30.0"
                 beacon_period="15.0" repeater_port="5065" server_port="5064"
-                max_array_bytes="100000000" />
+                max_array_bytes="150000000" />
 
     <!-- This examples uses the JNI over C implementation (JCA) with the given
         configuration parameters -->
