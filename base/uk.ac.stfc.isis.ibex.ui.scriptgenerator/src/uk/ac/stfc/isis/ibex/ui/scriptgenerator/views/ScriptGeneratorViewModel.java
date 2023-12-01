@@ -151,6 +151,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * The currently selected rows
 	 */
 	private boolean hasSelection;
+	
+	private boolean parameterTransferEnabled = Constants.PARAM_TRANSFER_DEFAULT;
 
 	private Clipboard clipboard;
 	private static final String TAB = "\t";
@@ -788,6 +790,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 
 		@Override
 		public void selectionChanged(SelectionChangedEvent event) {
+			// Save out previous script definition's actions and parameters
+			final List<JavaActionParameter> previousParameters = scriptGeneratorModel.getActionParameters();
+			final List<ScriptGeneratorAction> previousActions = scriptGeneratorModel.getActions();
+
+			// Perform the script definition change
 			String selectedScriptDefinitionName;
 			if (!event.getSelection().isEmpty()) {
 				selectedScriptDefinitionName = (String) event.getStructuredSelection().getFirstElement();
@@ -800,8 +807,75 @@ public class ScriptGeneratorViewModel extends ModelObject {
 						}, () -> scriptGeneratorModel.getScriptDefinitionLoader()
 								.setScriptDefinition(selectedScriptDefinitionName));
 			}
+			if (parameterTransferEnabled) {
+				// Transfer previous parameters if possible
+				List<JavaActionParameter> matchingParams = transferPreviousParameters(previousParameters, previousActions);
+				if (!matchingParams.isEmpty() && !previousActions.isEmpty()) {
+					MessageDialog.openInformation(Constants.DISPLAY.getActiveShell(), "Action parameters transferred",
+							"The following action parameters have been transferred from previous configuration:"
+									+ System.lineSeparator()
+									+ String.join(", ", matchingParams.stream().map(p -> p.getName()).toList()));
+				}
+			}
 		}
 	};
+
+	/**
+	 * @return true if parameter transferring is enabled, false otherwise.
+	 */
+	public boolean getParameterTransferEnabled() {
+		return this.parameterTransferEnabled;
+	}
+	
+	/**
+	 * Enables or disables the parameter transfer functionality.
+	 * 
+	 * @param enabled true or false to enable or disable.
+	 */
+	public void setParameterTransferEnabled(boolean enabled) {
+		this.parameterTransferEnabled = enabled;
+	}
+	
+	/**
+	 * Transfer actions that have parameters that match exactly some parameters of
+	 * the new script definition.
+	 * 
+	 * @param previousParameters list of previous parameters
+	 * @param previousActions    list of previous actions
+	 * @return a list of parameters that were transferred
+	 */
+	private List<JavaActionParameter> transferPreviousParameters(List<JavaActionParameter> previousParameters,
+			List<ScriptGeneratorAction> previousActions) {
+		final List<Map<JavaActionParameter, String>> actionsToLoad = new ArrayList<>();
+
+		// List of those parameters that match exactly in the previous and current
+		// script definition
+		final List<JavaActionParameter> matchingParams = previousParameters.stream()
+				.filter(param -> scriptGeneratorModel.getActionParameters().contains(param)).toList();
+
+		for (ScriptGeneratorAction action : previousActions) {
+			// For each action grab those parameters that match any new script definition
+			// parameters
+			final Map<JavaActionParameter, String> paramsToKeep = action.getActionParameterValueMap().entrySet()
+					.stream().filter(entry -> matchingParams.contains(entry.getKey()))
+					.collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
+
+			if (!paramsToKeep.isEmpty()) {
+				// If we have any to keep, populate the new parameters that we can't transfer
+				// from previous definition with their default values
+				final Map<JavaActionParameter, String> paramsSetToDefault = scriptGeneratorModel.getActionParameters()
+						.stream().filter(param -> !matchingParams.contains(param))
+						.collect(Collectors.toMap(p -> p, p -> p.getDefaultValue()));
+				// Merge the transferred and default parameters
+				paramsToKeep.putAll(paramsSetToDefault);
+				actionsToLoad.add(paramsToKeep);
+			}
+		}
+
+		scriptGeneratorModel.addActionsToTable(actionsToLoad, false);
+
+		return matchingParams;
+	}
 
 	/**
 	 * Bind the script definition loader to the context.
