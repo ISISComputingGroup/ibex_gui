@@ -98,7 +98,7 @@
     <format_type>0</format_type>
     <height>20</height>
     <horizontal_alignment>0</horizontal_alignment>
-    <name>TextUpdate_Klixon</name>
+    <name>Long Klixon Status</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
     <pv_name>IN:RIKENFE:SCHNDR_01:ARGUS:LONG:KLIXON:STAT</pv_name>
@@ -169,7 +169,7 @@ $(pv_value)</tooltip>
     <format_type>0</format_type>
     <height>20</height>
     <horizontal_alignment>0</horizontal_alignment>
-    <name>TextUpdate_Water</name>
+    <name>Long Water Flow Status</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
     <pv_name>IN:RIKENFE:SCHNDR_01:ARGUS:LONG:MAG:WATER:FLOW:STAT</pv_name>
@@ -240,7 +240,7 @@ $(pv_value)</tooltip>
     <format_type>0</format_type>
     <height>20</height>
     <horizontal_alignment>0</horizontal_alignment>
-    <name>TextUpdate_Flow</name>
+    <name>Long Water Flow Rate</name>
     <precision>1</precision>
     <precision_from_pv>true</precision_from_pv>
     <pv_name>IN:RIKENFE:SCHNDR_01:ARGUS:LONG:MAG:WATER:FLOW:RATE</pv_name>
@@ -292,10 +292,10 @@ $(pv_value)</tooltip>
     <format_type>0</format_type>
     <height>20</height>
     <horizontal_alignment>0</horizontal_alignment>
-    <name>Text Update_Temp</name>
+    <name>Long Water Temp</name>
     <precision>3</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>IN:RIKENFE:SCHNDR_01:$(LONG_MAG):WATER:TEMP</pv_name>
+    <pv_name></pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />
@@ -306,7 +306,7 @@ $(pv_value)</tooltip>
     </scale_options>
     <scripts />
     <show_units>false</show_units>
-    <text>######</text>
+    <text>N/A</text>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <transparent>false</transparent>
@@ -834,7 +834,7 @@ $(pv_value)</tooltip>
     <format_type>0</format_type>
     <height>20</height>
     <horizontal_alignment>0</horizontal_alignment>
-    <name>TextUpdate_Klixon_1</name>
+    <name>Trans Klixon Status</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
     <pv_name>IN:RIKENFE:SCHNDR_01:ARGUS:TRANS:KLIXON:STAT</pv_name>
@@ -976,7 +976,7 @@ $(pv_value)</tooltip>
     <format_type>0</format_type>
     <height>20</height>
     <horizontal_alignment>0</horizontal_alignment>
-    <name>TextUpdate_Flow_1</name>
+    <name>Trans Water Flow Rate</name>
     <precision>1</precision>
     <precision_from_pv>true</precision_from_pv>
     <pv_name>IN:RIKENFE:SCHNDR_01:ARGUS:TRANS:MAG:WATER:FLOW:RATE</pv_name>
@@ -1028,10 +1028,10 @@ $(pv_value)</tooltip>
     <format_type>0</format_type>
     <height>20</height>
     <horizontal_alignment>0</horizontal_alignment>
-    <name>Text Update_Temp_1</name>
+    <name>Trans Water Temp</name>
     <precision>3</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>IN:RIKENFE:SCHNDR_01:$(TRANS_MAG):WATER:TEMP</pv_name>
+    <pv_name></pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />
@@ -1042,7 +1042,7 @@ $(pv_value)</tooltip>
     </scale_options>
     <scripts />
     <show_units>false</show_units>
-    <text>######</text>
+    <text>N/A</text>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <transparent>false</transparent>
@@ -1231,7 +1231,7 @@ $(pv_value)</tooltip>
     </foreground_color>
     <height>20</height>
     <horizontal_alignment>1</horizontal_alignment>
-    <name>Water_Label_1</name>
+    <name>Trans Water Flow Status</name>
     <rules />
     <scale_options>
       <width_scalable>true</width_scalable>
