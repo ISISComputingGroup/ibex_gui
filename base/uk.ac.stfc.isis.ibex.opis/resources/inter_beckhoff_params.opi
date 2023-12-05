@@ -1935,7 +1935,7 @@ $(pv_value)</tooltip>
           <width>165</width>
           <wuid>1b122d53:18b8f512125:-7e1b</wuid>
           <x>6</x>
-          <y>36</y>
+          <y>82</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
           <actions hook="false" hook_all="false">
@@ -1984,7 +1984,7 @@ $(pv_value)</tooltip>
           <width>165</width>
           <wuid>1b122d53:18b8f512125:-7a4c</wuid>
           <x>6</x>
-          <y>66</y>
+          <y>112</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -2231,7 +2231,7 @@ $(pv_value)</tooltip>
           <width>165</width>
           <wuid>1b122d53:18b8f512125:-7a14</wuid>
           <x>6</x>
-          <y>110</y>
+          <y>156</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
           <actions hook="false" hook_all="false">
@@ -2280,7 +2280,7 @@ $(pv_value)</tooltip>
           <width>165</width>
           <wuid>1b122d53:18b8f512125:-7a0c</wuid>
           <x>6</x>
-          <y>140</y>
+          <y>186</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
           <actions hook="false" hook_all="false">
@@ -2329,7 +2329,7 @@ $(pv_value)</tooltip>
           <width>165</width>
           <wuid>1b122d53:18b8f512125:-7a04</wuid>
           <x>6</x>
-          <y>170</y>
+          <y>216</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -2370,7 +2370,7 @@ $(pv_value)</tooltip>
           <wrap_words>true</wrap_words>
           <wuid>1b122d53:18b8f512125:-7a3a</wuid>
           <x>185</x>
-          <y>172</y>
+          <y>218</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -2428,7 +2428,7 @@ $(pv_value)</tooltip>
           <width>25</width>
           <wuid>1b122d53:18b8f512125:-7a3b</wuid>
           <x>324</x>
-          <y>169</y>
+          <y>215</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -2486,7 +2486,7 @@ $(pv_value)</tooltip>
           <width>25</width>
           <wuid>1b122d53:18b8f512125:-7a39</wuid>
           <x>323</x>
-          <y>211</y>
+          <y>257</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -2527,7 +2527,7 @@ $(pv_value)</tooltip>
           <wrap_words>true</wrap_words>
           <wuid>1b122d53:18b8f512125:-7a38</wuid>
           <x>185</x>
-          <y>214</y>
+          <y>260</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
           <actions hook="false" hook_all="false">
@@ -2576,7 +2576,7 @@ $(pv_value)</tooltip>
           <width>165</width>
           <wuid>1b122d53:18b8f512125:-79fc</wuid>
           <x>6</x>
-          <y>212</y>
+          <y>258</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
           <actions hook="false" hook_all="false">
@@ -2625,7 +2625,7 @@ $(pv_value)</tooltip>
           <width>165</width>
           <wuid>1b122d53:18b8f512125:-79f4</wuid>
           <x>6</x>
-          <y>245</y>
+          <y>291</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
           <actions hook="false" hook_all="false">
@@ -2674,7 +2674,56 @@ $(pv_value)</tooltip>
           <width>165</width>
           <wuid>1b122d53:18b8f512125:-79ec</wuid>
           <x>6</x>
-          <y>285</y>
+          <y>331</y>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+          <actions hook="false" hook_all="false">
+            <action type="WRITE_PV">
+              <pv_name>$(PV_ROOT)RUN_KINEMATICS</pv_name>
+              <value>0</value>
+              <timeout>10</timeout>
+              <confirm_message></confirm_message>
+              <description></description>
+            </action>
+          </actions>
+          <border_alarm_sensitive>false</border_alarm_sensitive>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+          </font>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <height>24</height>
+          <image></image>
+          <name>Button_1</name>
+          <push_action_index>0</push_action_index>
+          <pv_name>$(PV_ROOT)RUN_KINEMATICS</pv_name>
+          <pv_value />
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <style>1</style>
+          <text>Stop kinematics</text>
+          <toggle_button>false</toggle_button>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <visible>true</visible>
+          <widget_type>Action Button</widget_type>
+          <width>165</width>
+          <wuid>-5376bcd1:18c3a36079c:-7e49</wuid>
+          <x>6</x>
+          <y>36</y>
         </widget>
       </widget>
     </widget>
