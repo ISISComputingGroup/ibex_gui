@@ -318,8 +318,8 @@ public class ScriptGeneratorView {
 	 * @param parent  a composite control which will be the parent of the new
 	 *                instance (cannot be null)
 	 * @param columns number of columns
-	 * @param equal whether or not to make the columns equal width
-	 * @param margin margin around all four sides
+	 * @param equal   whether or not to make the columns equal width
+	 * @param margin  margin around all four sides
 	 * @return the new COmposite instance
 	 */
 	private Composite makeGrid(Composite parent, int columns, boolean equal, int margin) {
@@ -335,13 +335,14 @@ public class ScriptGeneratorView {
 	private void makeToggleParameterTransfer(Composite parent) {
 		Composite actionsControlsGrp = makeGrid(parent, 1, true, 10);
 
-		Button checkbox = IBEXButtonFactory.checkbox(actionsControlsGrp, Constants.CHECKBOX_TITLE_PARAM_TRANSFER, Constants.TOOLTIP_PARAM_TRANSFER, evt -> {
-			boolean enabled = ((Button) evt.widget).getSelection();
-			scriptGeneratorViewModel.setParameterTransferEnabled(enabled);
-		});
+		Button checkbox = IBEXButtonFactory.checkbox(actionsControlsGrp, Constants.CHECKBOX_TITLE_PARAM_TRANSFER,
+				Constants.TOOLTIP_PARAM_TRANSFER, evt -> {
+					boolean enabled = ((Button) evt.widget).getSelection();
+					scriptGeneratorViewModel.setParameterTransferEnabled(enabled);
+				});
 		checkbox.setSelection(Constants.PARAM_TRANSFER_DEFAULT);
 	}
-	
+
 	/**
 	 * Creates a column containing three buttons for table row modifications.
 	 * 
@@ -389,7 +390,7 @@ public class ScriptGeneratorView {
 		Label errorLabel = new Label(parent, SWT.NONE);
 		errorLabel.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, true));
 		errorLabel.setForeground(new Color(255, 0, 0));
-		
+
 		// Composite for generate buttons
 		Composite dynamicScriptingButtonsGrp = makeGrid(parent, 3, true, 10);
 
@@ -436,19 +437,21 @@ public class ScriptGeneratorView {
 		estimateText = new Label(scriptTimeGrp, SWT.TOP);
 		estimateText.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 
-		final FontDescriptor boldDescriptor = FontDescriptor.createFrom(estimateText.getFont()).setHeight(11).setStyle(SWT.BOLD);
+		final FontDescriptor boldDescriptor = FontDescriptor.createFrom(estimateText.getFont()).setHeight(11)
+				.setStyle(SWT.BOLD);
 		final Font estimateFont = boldDescriptor.createFont(Display.getDefault());
 		estimateText.setFont(estimateFont);
 		estimateText.setText("Total estimated run time: 0 seconds");
 		estimateText.addDisposeListener(e -> estimateFont.dispose()); // Need to dispose of new font's resources
-		
+
 		// Label for the expected finish time
 		expectedFinishText = new Label(scriptTimeGrp, SWT.BOTTOM);
 		expectedFinishText.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		final Font expectedFinishFont = boldDescriptor.createFont(Display.getDefault());
 		expectedFinishText.setFont(expectedFinishFont);
 		expectedFinishText.setText("Expected Finish Time: 00:00:00");
-		expectedFinishText.addDisposeListener(e -> expectedFinishFont.dispose()); // Need to dispose of new font's resources
+		expectedFinishText.addDisposeListener(e -> expectedFinishFont.dispose()); // Need to dispose of new font's
+																					// resources
 	}
 
 	/**
@@ -525,14 +528,14 @@ public class ScriptGeneratorView {
 	 *                                   load errors.
 	 */
 	private void setUpScriptDefinitionLoadErrorTable(Composite parent, Map<String, String> scriptDefinitionLoadErrors) {
-		if (!preferences.hideScriptGenScriptDefinitionErrorTable()) {			
+		if (!preferences.hideScriptGenScriptDefinitionErrorTable()) {
 			// A composite to contain the script definition load errors
 			Composite scriptDefinitionErrorComposite = makeGrid(parent, 1, false, 5);
 			scriptDefinitionErrorComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 
 			Label errorLabel = new Label(scriptDefinitionErrorComposite, SWT.NONE);
 			errorLabel.setText("Errors:");
-			
+
 			// A table to display the script definition load errors
 			// From http://www.java2s.com/Code/Java/SWT-JFace-Eclipse/SWTTableSimpleDemo.htm
 			Table table = new Table(scriptDefinitionErrorComposite, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
@@ -540,7 +543,7 @@ public class ScriptGeneratorView {
 			GridData d = new GridData();
 			d.heightHint = 80;
 			table.setLayoutData(d);
-			String[] titles = {"Script Definition", "Error"};
+			String[] titles = { "Script Definition", "Error" };
 
 			for (String title : titles) {
 				TableColumn column = new TableColumn(table, SWT.NULL);
@@ -605,7 +608,13 @@ public class ScriptGeneratorView {
 		scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText, globalLabel,
 				globalParamText, globalParamsComposite, mainParent);
 
-		scriptGeneratorViewModel.bindActionProperties(table, generateScriptButton, generateScriptAsButton);
+		// Bind enable/disable of save and save as buttons
+		bindingContext.bindValue(WidgetProperties.enabled().observe(generateScriptButton),
+				BeanProperties.value(Properties.SAVE_SCRIPT_ENABLED).observe(scriptGeneratorViewModel));
+		bindingContext.bindValue(WidgetProperties.enabled().observe(generateScriptAsButton),
+				BeanProperties.value(Properties.SAVE_SCRIPT_ENABLED).observe(scriptGeneratorViewModel));
+
+		scriptGeneratorViewModel.bindActionProperties(table);
 
 		table.addSelectionChangedListener(event -> scriptGeneratorViewModel.setSelected(table.selectedRows()));
 

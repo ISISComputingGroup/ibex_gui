@@ -42,7 +42,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
@@ -138,25 +137,17 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	private ActionsViewTable viewTable;
 
 	/**
-	 * The current generate script button in the view.
-	 */
-	private Button btnGenerateScript;
-
-	/**
-	 * The current Generate Script As button in the view.
-	 */
-	private Button btnGenerateScriptAs;
-
-	/**
 	 * The currently selected rows
 	 */
 	private boolean hasSelection;
-	
+
 	private boolean parameterTransferEnabled = Constants.PARAM_TRANSFER_DEFAULT;
 
 	private Clipboard clipboard;
 	private static final String TAB = "\t";
 	private static final String CRLF = "\r\n";
+
+	private boolean saveScriptEnabled = true;
 
 	/**
 	 * A constructor that sets up the script generator model and begins listening to
@@ -495,22 +486,17 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		if (evt.getPropertyName().equals(ScriptGeneratorProperties.VALIDITY_ERROR_MESSAGE_PROPERTY)) {
 			notifyActionsValidityChangeListeners();
 		}
-		actionChangeHandler(viewTable, btnGenerateScript, btnGenerateScriptAs, false);
+		actionChangeHandler(viewTable, false);
 	};
 
 	/**
 	 * Listen to changes on the actions and action properties of the scriptGenerator
 	 * table and update the view table.
 	 * 
-	 * @param viewTable           The view table to update.
-	 * @param btnGenerateScript   The generate script button to style change.
-	 * @param btnGenerateScriptAs The generate script as button to style change.
+	 * @param viewTable The view table to update.
 	 */
-	protected void bindActionProperties(ActionsViewTable viewTable, Button btnGenerateScript,
-			Button btnGenerateScriptAs) {
+	protected void bindActionProperties(ActionsViewTable viewTable) {
 		this.viewTable = viewTable;
-		this.btnGenerateScript = btnGenerateScript;
-		this.btnGenerateScriptAs = btnGenerateScriptAs;
 		// Remove listeners so as not to bind them twice
 		this.scriptGeneratorModel.getScriptGeneratorTable()
 				.removePropertyChangeListener(ScriptGeneratorProperties.ACTIONS_PROPERTY, actionChangeListener);
@@ -657,21 +643,18 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * @param viewTable         The view table to update.
 	 * @param btnGenerateScript Generate Script button's visibility to manipulate
 	 */
-	private void actionChangeHandler(ActionsViewTable viewTable, Button btnGenerateScript, Button btnGenerateScriptAs,
-			boolean rowsChanged) {
+	private void actionChangeHandler(ActionsViewTable viewTable, boolean rowsChanged) {
 		Constants.DISPLAY.asyncExec(() -> {
 			if (!viewTable.isDisposed()) {
 				viewTable.updateActions(scriptGeneratorModel.getActions());
 				updateValidityChecks(viewTable);
 			}
-			if (!btnGenerateScript.isDisposed()) {
-				setButtonGenerateStyle(btnGenerateScript);
-			}
-			if (!btnGenerateScriptAs.isDisposed()) {
-				setButtonGenerateStyle(btnGenerateScriptAs);
-			}
+
+			setSaveScriptEnabled(scriptGeneratorModel.languageSupported && scriptGeneratorModel.areParamsValid());
+
 			updateTotalEstimatedTime();
 		});
+
 	}
 
 	private void notifyActionsValidityChangeListeners() {
@@ -680,16 +663,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		} else {
 			actionsValidityChangeListeners
 					.forEach(listener -> listener.onInvalid(scriptGeneratorModel.getGlobalParamErrors()));
-		}
-	}
-
-	private void setButtonGenerateStyle(Button btnGenerateScript) {
-		if (scriptGeneratorModel.languageSupported) {
-			// Grey the button out if parameters are valid
-			btnGenerateScript.setEnabled(scriptGeneratorModel.areParamsValid());
-		} else {
-			// Grey the button out when language is not supported
-			btnGenerateScript.setEnabled(false);
 		}
 	}
 
@@ -809,7 +782,8 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			}
 			if (parameterTransferEnabled) {
 				// Transfer previous parameters if possible
-				List<JavaActionParameter> matchingParams = transferPreviousParameters(previousParameters, previousActions);
+				List<JavaActionParameter> matchingParams = transferPreviousParameters(previousParameters,
+						previousActions);
 				if (!matchingParams.isEmpty() && !previousActions.isEmpty()) {
 					MessageDialog.openInformation(Constants.DISPLAY.getActiveShell(), "Action parameters transferred",
 							"The following action parameters have been transferred from previous configuration:"
@@ -826,7 +800,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	public boolean getParameterTransferEnabled() {
 		return this.parameterTransferEnabled;
 	}
-	
+
 	/**
 	 * Enables or disables the parameter transfer functionality.
 	 * 
@@ -835,7 +809,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	public void setParameterTransferEnabled(boolean enabled) {
 		this.parameterTransferEnabled = enabled;
 	}
-	
+
 	/**
 	 * Transfer actions that have parameters that match exactly some parameters of
 	 * the new script definition.
@@ -1457,6 +1431,26 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 */
 	public boolean getHasSelection() {
 		return hasSelection;
+	}
+
+	/**
+	 * @return True if script can be saved, False otherwise.
+	 */
+	public boolean getSaveScriptEnabled() {
+		return this.saveScriptEnabled;
+	}
+
+	/**
+	 * Setter for the saveScriptEnabled and dispatched event if value has changed.
+	 * 
+	 * @param saveScriptEnabled the new value
+	 */
+	public void setSaveScriptEnabled(boolean saveScriptEnabled) {
+		if (this.saveScriptEnabled != saveScriptEnabled) {
+			// Only dispatch event if value actually changed
+			firePropertyChange(Properties.SAVE_SCRIPT_ENABLED, this.saveScriptEnabled,
+					this.saveScriptEnabled = saveScriptEnabled);
+		}
 	}
 
 	/**
