@@ -551,7 +551,7 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 			GridData d = new GridData();
 			d.heightHint = 80;
 			table.setLayoutData(d);
-			String[] titles = { "Script Definition", "Error" };
+			String[] titles = {"Script Definition", "Error"};
 
 			for (String title : titles) {
 				TableColumn column = new TableColumn(table, SWT.NULL);
