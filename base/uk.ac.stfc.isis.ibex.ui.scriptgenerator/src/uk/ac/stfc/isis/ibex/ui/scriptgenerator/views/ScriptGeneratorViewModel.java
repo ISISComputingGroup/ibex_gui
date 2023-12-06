@@ -631,7 +631,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	private void notifyActionsValidityChangeListeners() {
 		scriptGeneratorViewModelDelegate
 				.ifPresent(delegate -> delegate.onActionsValidityChange(this, scriptGeneratorModel.areParamsValid(),
-						scriptGeneratorModel.getGlobalParamErrors(), scriptGeneratorModel.getGlobalParamErrors()));
+						scriptGeneratorModel.getGlobalParamErrors()));
 		if (scriptGeneratorModel.areParamsValid()) {
 			actionsValidityChangeListeners.forEach(ActionsValidityChangeListener::onValid);
 		} else {

@@ -655,7 +655,7 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 
 	@Override
 	public void onActionsValidityChange(ScriptGeneratorViewModel viewModel, boolean allActionsValid,
-			Map<Integer, String> globalErrors, Map<Integer, String> errors) {
+			Map<Integer, String> globalErrors) {
 		// Highlight global param errors
 		Display.getDefault().asyncExec(() -> {
 			for (int i = 0; i < this.globalParamTextList.size(); i++) {

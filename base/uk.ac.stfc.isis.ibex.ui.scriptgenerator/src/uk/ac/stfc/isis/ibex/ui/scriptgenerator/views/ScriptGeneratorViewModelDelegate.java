@@ -12,29 +12,28 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrap
 public interface ScriptGeneratorViewModelDelegate {
 
 	/**
-	 * Called when save and save as is enabled or disabled.
+	 * Called when "save" and "save as" is enabled or disabled.
 	 * 
-	 * @param viewModel
-	 * @param enabled
+	 * @param viewModel the dispatching view model
+	 * @param enabled   whether the buttons should be enabled or disabled
 	 */
 	void onSaveEnabledChange(ScriptGeneratorViewModel viewModel, boolean enabled);
 
 	/**
 	 * Called when actions validity changes in the table.
 	 * 
-	 * @param viewModel
-	 * @param allActionsValid
-	 * @param globalErrors TODO
-	 * @param errors
+	 * @param viewModel       the dispatching view model
+	 * @param allActionsValid whether all actions are valid or not
+	 * @param globalErrors    map of global errors
 	 */
 	void onActionsValidityChange(ScriptGeneratorViewModel viewModel, boolean allActionsValid,
-			Map<Integer, String> globalErrors, Map<Integer, String> errors);
+			Map<Integer, String> globalErrors);
 
 	/**
 	 * Called when selected script definition changes.
 	 * 
-	 * @param viewModel
-	 * @param scriptDefinition
+	 * @param viewModel        the dispatching view model
+	 * @param scriptDefinition the selected definition wrapper
 	 */
 	void onScriptDefinitionChange(ScriptGeneratorViewModel viewModel,
 			Optional<ScriptDefinitionWrapper> scriptDefinition);
