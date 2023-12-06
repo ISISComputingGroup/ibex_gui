@@ -215,7 +215,9 @@ public enum ComponentType {
     /** Delay generators. */
     DELAY_GENERATORS,
 	/** Function generators. */
-	FUNCTION_GENERATOR;
+	FUNCTION_GENERATOR,
+	/** STANDARD MAGNET */
+	MAGNET;
 
     private Target target;
 

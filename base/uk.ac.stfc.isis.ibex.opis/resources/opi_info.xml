@@ -52,23 +52,11 @@
       </value>
     </entry>
     <entry>
-      <key>ARGUS Magnet Status</key>
+      <key>ARGUS Magnet Statuses</key>
       <value>
-        <type>SCIMAG3D</type>
+        <type>MAGNET</type>
         <path>ARGUS/magnet_status.opi</path>
-        <description>Magnet Status for ARGUS: temps, flow and MOL</description>
-       <macros>
-          <macro>
-            <name>LONG_MAG</name>
-            <description></description>
-            <default/>
-          </macro>
-           <macro>
-            <name>TRANS_MAG</name>
-            <description></description>
-            <default/>
-          </macro>
-        </macros>
+        <description>Statuses of ARGUS trans and long magnets</description>
         <categories/>
       </value>
     </entry>
