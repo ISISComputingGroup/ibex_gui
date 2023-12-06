@@ -342,6 +342,16 @@ public class ScriptGeneratorView {
 		checkbox.setSelection(Constants.PARAM_TRANSFER_DEFAULT);
 	}
 	
+	
+	private void makeToggleInvalidPauseSkip(Composite parent) {
+		Composite actionsControlsGrp = makeGrid(parent, 1, true, 10);
+
+		Button checkbox = IBEXButtonFactory.checkbox(actionsControlsGrp, Constants.CHECKBOX_TITLE_INVALID_PASS, Constants.TOOLTIP_INVALID_PASS, evt -> {
+			boolean enabled = ((Button) evt.widget).getSelection();
+			scriptGeneratorViewModel.setParameterTransferEnabled(enabled);
+		});
+		checkbox.setSelection(Constants.INVALID_PASS_DEFAULT);
+	}
 	/**
 	 * Creates a column containing three buttons for table row modifications.
 	 * 
@@ -484,6 +494,7 @@ public class ScriptGeneratorView {
 	 */
 	private void makeControlButtons(Composite parent) {
 		makeToggleParameterTransfer(parent);
+		makeToggleInvalidPauseSkip(parent);
 		makeScriptSaveLoadButtons(parent);
 		makeTableRowControlButtons(parent);
 		makeDynamicScriptingControlButtons(parent);

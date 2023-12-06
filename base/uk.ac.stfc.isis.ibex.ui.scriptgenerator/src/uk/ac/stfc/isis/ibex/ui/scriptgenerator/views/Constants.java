@@ -37,11 +37,13 @@ final class Constants {
 	protected static final String BUTTON_TITLE_DELETE_ROWS = "Clear All Rows";
 	
 	protected static final String CHECKBOX_TITLE_PARAM_TRANSFER = "Transfer Compatible Parameters";
+	protected static final String CHECKBOX_TITLE_INVALID_PASS = "Invalid Actions are Skipped";
 	
 	protected static final String BUTTON_TOOLTIP_ADD_ROW_TO_END = "Add a new row to the end of the table";
 	protected static final String BUTTON_TOOLTIP_INSERT_ROW_BELOW = "Insert a new row below the selected line in the table";
 	protected static final String BUTTON_TOOLTIP_DELETE_ROWS = "Delete all rows in the table";
 	protected static final String TOOLTIP_PARAM_TRANSFER = "Enable action parameter transferring where possible when changing script definitions";
+	protected static final String TOOLTIP_INVALID_PASS = "Skip/Pause";
 	
     protected static final String LOADING_MESSAGE = "Loading...";
     protected static final String RELOADING_MESSAGE = "Reloading...";
@@ -50,6 +52,7 @@ final class Constants {
      * Defines the default behaviour of action parameter transferring.
      */
 	protected static final boolean PARAM_TRANSFER_DEFAULT = true;
+	protected static final boolean INVALID_PASS_DEFAULT = false;
 
 	protected static final Image IMAGE_RUN = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/play.png");
 	protected static final Image IMAGE_PAUSE = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/pause.png");
