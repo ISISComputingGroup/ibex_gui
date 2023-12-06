@@ -78,11 +78,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	private Set<Integer> scriptsToGenerateToCurrentFilepath = new HashSet<>();
 
 	/**
-	 * Listeners on validity change
-	 */
-	private final Set<ActionsValidityChangeListener> actionsValidityChangeListeners = new HashSet<>();
-
-	/**
 	 * Path to the current parameters save file.
 	 */
 	private String currentParametersFilePath;
@@ -632,12 +627,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		scriptGeneratorViewModelDelegate
 				.ifPresent(delegate -> delegate.onActionsValidityChange(this, scriptGeneratorModel.areParamsValid(),
 						scriptGeneratorModel.getGlobalParamErrors()));
-		if (scriptGeneratorModel.areParamsValid()) {
-			actionsValidityChangeListeners.forEach(ActionsValidityChangeListener::onValid);
-		} else {
-			actionsValidityChangeListeners
-					.forEach(listener -> listener.onInvalid(scriptGeneratorModel.getGlobalParamErrors()));
-		}
 	}
 
 	/**
@@ -1338,24 +1327,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			listOfActions.add(map);
 		}
 		scriptGeneratorModel.pasteActions(listOfActions, pasteLocation);
-	}
-
-	/**
-	 * Attach listener to action validity change.
-	 * 
-	 * @param listener to be invoked when the validity of any action changes
-	 */
-	public void addOnActionValidityChangeListener(ActionsValidityChangeListener listener) {
-		actionsValidityChangeListeners.add(listener);
-	}
-
-	/**
-	 * Remove action change validity listener.
-	 * 
-	 * @param listener the listener to be removed
-	 */
-	public void removeOnActionsValidityChangeListener(ActionsValidityChangeListener listener) {
-		actionsValidityChangeListeners.remove(listener);
 	}
 
 	private void dispatchErrorMessage(String title, String message) {

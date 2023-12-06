@@ -121,6 +121,7 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 	private Text helpText;
 	private Composite globalParamComposite;
 	private List<Text> globalParamTextList = new ArrayList<Text>();
+	private Label errorLabel;
 
 	/**
 	 * Container for the UI objects.
@@ -395,7 +396,7 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 	 *               instance (cannot be null)
 	 */
 	private void makeDynamicScriptingControlButtons(Composite parent) {
-		Label errorLabel = new Label(parent, SWT.NONE);
+		errorLabel = new Label(parent, SWT.NONE);
 		errorLabel.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, true));
 		errorLabel.setForeground(new Color(255, 0, 0));
 
@@ -408,32 +409,6 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 				null);
 		stopButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Stop", Constants.IMAGE_STOP, null);
 		nicosViewModel.bindControls(runButton, pauseButton, stopButton);
-
-		scriptGeneratorViewModel.addOnActionValidityChangeListener(new ActionsValidityChangeListener() {
-
-			@Override
-			public void onValid() {
-				DISPLAY.asyncExec(() -> {
-					runButton.setEnabled(true);
-					errorLabel.setText("");
-					((GridData) errorLabel.getLayoutData()).exclude = true;
-					errorLabel.setVisible(false);
-					errorLabel.getParent().layout();
-				});
-			}
-
-			@Override
-			public void onInvalid(Map<Integer, String> errors) {
-				DISPLAY.asyncExec(() -> {
-					runButton.setEnabled(false);
-					errorLabel.setText("\u26A0 There are invalid actions.");
-					((GridData) errorLabel.getLayoutData()).exclude = false;
-					errorLabel.setVisible(true);
-					errorLabel.getParent().layout();
-				});
-
-			}
-		});
 	}
 
 	private void makeRunAndFinishTime(Composite parent) {
@@ -668,6 +643,11 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 					globalParamTextList.get(i).setToolTipText(null);
 				}
 			}
+			
+			runButton.setEnabled(allActionsValid);
+			errorLabel.setText(allActionsValid ? "" : "\u26A0 There are invalid actions.");
+			errorLabel.setVisible(!allActionsValid);
+			errorLabel.getParent().layout();
 		});
 	}
 
