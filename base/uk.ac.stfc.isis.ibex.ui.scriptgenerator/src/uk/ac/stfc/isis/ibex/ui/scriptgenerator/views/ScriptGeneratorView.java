@@ -19,6 +19,7 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -33,6 +34,8 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -51,6 +54,7 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.ui.widgets.IBEXButtonFactory;
 
@@ -115,6 +119,8 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 	private Button generateScriptAsButton;
 	private ScriptGeneratorHelpMenu helpMenu;
 	private Text helpText;
+	private Composite globalParamComposite;
+	private List<Text> globalParamTextList = new ArrayList<Text>();
 
 	/**
 	 * Container for the UI objects.
@@ -257,9 +263,9 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 
 				new Label(topBarComposite, SWT.SEPARATOR | SWT.VERTICAL);
 
-				Text helpText = makeHelpTextBox(topBarComposite);
+				makeHelpTextBox(topBarComposite);
 
-				Composite globalParamComposite = new Composite(mainParent, SWT.NONE);
+				globalParamComposite = new Composite(mainParent, SWT.NONE);
 				globalParamComposite.setLayout(new GridLayout(24, false));
 				globalParamComposite.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
 
@@ -296,11 +302,10 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 				var scriptDefinitionsRepoPath = scriptGeneratorViewModel.getScriptDefinitionsRepoPath();
 				helpMenu.setScriptDefinitionsLocation(scriptDefinitionsRepoPath);
 
-				List<Label> globalLabel = new ArrayList<Label>();
-				List<Text> globalParamText = new ArrayList<Text>();
 				// Bind the context and the validity checking listeners
-				bind(scriptDefinitionSelector, helpText, globalLabel, globalParamText, globalParamComposite);
-				scriptGeneratorViewModel.createGlobalParamsWidgets();
+				bind(scriptDefinitionSelector);
+
+				onScriptDefinitionChange(scriptGeneratorViewModel, scriptGeneratorViewModel.getScriptDefinition());
 			} else {
 				makeCenteredMessage(mainParent, NO_SCRIPT_DEFINITIONS_MESSAGE);
 			}
@@ -591,6 +596,17 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 		scriptDefinitionSelector
 				.setSelection(new StructuredSelection(scriptGeneratorViewModel.getScriptDefinition().get().getName()));
 
+		scriptDefinitionSelector.addSelectionChangedListener(new ISelectionChangedListener() {
+
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				if (!event.getSelection().isEmpty()) {
+					String selectedScriptDefinitionName = (String) event.getStructuredSelection().getFirstElement();
+					scriptGeneratorViewModel.changeScriptDefinition(selectedScriptDefinitionName);
+				}
+			}
+		});
+
 		return scriptDefinitionSelector;
 	}
 
@@ -604,18 +620,9 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 	 * check models to their views.
 	 * 
 	 * @param scriptDefinitionSelector The selector for script definitions
-	 * @param helpText                 The help text
 	 */
-	private void bind(ComboViewer scriptDefinitionSelector, Text helpText, List<Label> globalLabel,
-			List<Text> globalParamText, Composite globalParamsComposite) {
-		scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, globalLabel, globalParamText,
-				globalParamsComposite, mainParent);
-
-		// Bind enable/disable of save and save as buttons
-		bindingContext.bindValue(WidgetProperties.enabled().observe(generateScriptButton),
-				BeanProperties.value(Properties.SAVE_SCRIPT_ENABLED).observe(scriptGeneratorViewModel));
-		bindingContext.bindValue(WidgetProperties.enabled().observe(generateScriptAsButton),
-				BeanProperties.value(Properties.SAVE_SCRIPT_ENABLED).observe(scriptGeneratorViewModel));
+	private void bind(ComboViewer scriptDefinitionSelector) {
+		scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector);
 
 		scriptGeneratorViewModel.bindActionProperties(table);
 
@@ -648,21 +655,74 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 
 	@Override
 	public void onActionsValidityChange(ScriptGeneratorViewModel viewModel, boolean allActionsValid,
-			Map<Integer, String> errors) {
-		// TODO Auto-generated method stub
-
+			Map<Integer, String> globalErrors, Map<Integer, String> errors) {
+		// Highlight global param errors
+		Display.getDefault().asyncExec(() -> {
+			for (int i = 0; i < this.globalParamTextList.size(); i++) {
+				if (globalErrors.containsKey(i)) {
+					globalParamTextList.get(i).setBackground(Constants.INVALID_LIGHT_COLOR);
+					globalParamTextList.get(i).setBackground(Constants.INVALID_DARK_COLOR);
+					globalParamTextList.get(i).setToolTipText(globalErrors.get(i));
+				} else {
+					globalParamTextList.get(i).setBackground(Constants.CLEAR_COLOR);
+					globalParamTextList.get(i).setToolTipText(null);
+				}
+			}
+		});
 	}
 
 	@Override
 	public void onScriptDefinitionChange(ScriptGeneratorViewModel viewModel,
 			Optional<ScriptDefinitionWrapper> scriptDefinition) {
-		// Display help text
-		if (scriptDefinition.isPresent()) {
-			helpText.setText(scriptDefinition.get().getHelp());
-		} else {
+
+		if (scriptDefinition.isEmpty()) {
 			helpText.setText("");
+			return;
 		}
-		// Display global parameters
+
+		ScriptDefinitionWrapper scriptDefinitionWrapper = scriptDefinition.get();
+
+		// Display help text
+		helpText.setText(scriptDefinitionWrapper.getHelp());
+
+		// Clear previous global parameter widgets and display new global parameters
+		Arrays.stream(globalParamComposite.getChildren()).forEach(Control::dispose);
+		globalParamTextList.clear();
+
+		List<ActionParameter> temp;
+		String param = "No Global Paramaters";
+		String paramVal = "";
+		if (scriptDefinitionWrapper.getGlobalParameters() != null) {
+			temp = scriptDefinitionWrapper.getGlobalParameters();
+
+			// Hide global parameters row if there is nothing to display
+			((GridData) globalParamComposite.getLayoutData()).exclude = temp.isEmpty();
+			globalParamComposite.setVisible(!temp.isEmpty());
+
+			if (!temp.isEmpty()) {
+				for (int paramIndex = 0; paramIndex < temp.size(); paramIndex++) {
+					ActionParameter global = temp.get(paramIndex);
+					param = global.getName();
+					paramVal = global.getDefaultValue();
+					if (!globalParamComposite.isDisposed()) {
+						Label globalLabelCurrent = new Label(globalParamComposite, SWT.NONE);
+						globalLabelCurrent.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+						globalLabelCurrent.setText(param);
+						Text globalParamTextCurrent = new Text(globalParamComposite, SWT.NONE);
+						globalParamTextCurrent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
+						globalParamTextCurrent.setEnabled(true);
+						final int index = paramIndex;
+						globalParamTextCurrent.addListener(SWT.Modify, e -> {
+							viewModel.updateGlobalParams(index, globalParamTextCurrent.getText());
+						});
+						globalParamTextCurrent.setText(paramVal);
+						globalParamTextList.add(globalParamTextCurrent);
+					}
+				}
+			}
+		}
+
+		mainParent.layout();
 	}
 
 	@Override
@@ -686,8 +746,8 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 	}
 
 	@Override
-	public int onUserSelectOptionRequest(ScriptGeneratorViewModel viewModel, String title, String message, String[] options,
-			int defaultIndex) {
+	public int onUserSelectOptionRequest(ScriptGeneratorViewModel viewModel, String title, String message,
+			String[] options, int defaultIndex) {
 		MessageDialog dialog = new MessageDialog(Constants.DISPLAY.getActiveShell(), title, null, message,
 				MessageDialog.QUESTION, options, defaultIndex);
 		return dialog.open();

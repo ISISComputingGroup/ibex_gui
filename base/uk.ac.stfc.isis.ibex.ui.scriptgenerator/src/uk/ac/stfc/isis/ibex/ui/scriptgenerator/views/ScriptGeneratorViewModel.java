@@ -2,7 +2,6 @@ package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import static java.lang.Math.min;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -28,9 +27,7 @@ import org.apache.logging.log4j.Logger;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ComboViewer;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
@@ -40,12 +37,8 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
@@ -59,7 +52,6 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.InvalidParamsException;
 import uk.ac.stfc.isis.ibex.scriptgenerator.generation.UnsupportedLanguageException;
-import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 import uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs.SaveScriptGeneratorFileMessageDialog;
@@ -71,6 +63,10 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 public class ScriptGeneratorViewModel extends ModelObject {
 
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
+
+	private static final String TAB = "\t";
+
+	private static final String CRLF = "\r\n";
 
 	private Optional<ScriptGeneratorViewModelDelegate> scriptGeneratorViewModelDelegate;
 
@@ -145,9 +141,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	private boolean parameterTransferEnabled = Constants.PARAM_TRANSFER_DEFAULT;
 
 	private Clipboard clipboard;
-	private static final String TAB = "\t";
-	private static final String CRLF = "\r\n";
-
 	private boolean saveScriptEnabled = true;
 
 	/**
@@ -164,9 +157,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	}
 
 	/**
-	 * TODO document
+	 * Assigns an object as the delegate of this class.
 	 * 
-	 * @param delegate
+	 * @param delegate the object implementing the delegate methods
 	 */
 	public void setScriptGeneratorViewModelDelegate(ScriptGeneratorViewModelDelegate delegate) {
 		this.scriptGeneratorViewModelDelegate = Optional.of(delegate);
@@ -222,6 +215,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 						});
 					});
 				});
+
 		return scriptGeneratorModel;
 	}
 
@@ -625,7 +619,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		Constants.DISPLAY.asyncExec(() -> {
 			if (!viewTable.isDisposed()) {
 				viewTable.updateActions(scriptGeneratorModel.getActions());
-				updateValidityChecks(viewTable);
 			}
 
 			setSaveScriptEnabled(scriptGeneratorModel.languageSupported && scriptGeneratorModel.areParamsValid());
@@ -636,6 +629,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	}
 
 	private void notifyActionsValidityChangeListeners() {
+		scriptGeneratorViewModelDelegate
+				.ifPresent(delegate -> delegate.onActionsValidityChange(this, scriptGeneratorModel.areParamsValid(),
+						scriptGeneratorModel.getGlobalParamErrors(), scriptGeneratorModel.getGlobalParamErrors()));
 		if (scriptGeneratorModel.areParamsValid()) {
 			actionsValidityChangeListeners.forEach(ActionsValidityChangeListener::onValid);
 		} else {
@@ -644,131 +640,43 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		}
 	}
 
-	private PropertyChangeListener scriptDefinitionSwitchHelpListener = new PropertyChangeListener() {
-
-		@Override
-		public void propertyChange(PropertyChangeEvent evt) {
-			scriptGeneratorViewModelDelegate.ifPresent(delegate -> delegate
-					.onScriptDefinitionChange(ScriptGeneratorViewModel.this, getScriptDefinition()));
-
-			scriptGeneratorModel.clearActions();
-			for (Label label : globalLabel) {
-				if (!label.isDisposed()) {
-					label.dispose();
-				}
-			}
-			globalLabel.clear();
-			for (Text text : globalParamText) {
-				if (!text.isDisposed()) {
-					text.dispose();
-				}
-			}
-			scriptGeneratorModel.clearGlobalParams();
-			currentGlobals.clear();
-			globalParamText.clear();
-			createGlobalParamsWidgets();
-			if (!globalParamsComposite.isDisposed()) {
-				globalParamsComposite.layout();
-			}
-			mainParent.layout();
-			// Display the new script definition help string
-//			if (!helpText.isDisposed()) {
-//
-//				Optional<ScriptDefinitionWrapper> optionalScriptDefinition = getScriptDefinition();
-//				optionalScriptDefinition.ifPresentOrElse(realScriptDefinition -> {
-//					displayHelpString(realScriptDefinition, helpText);
-//				}, () -> {
-//					helpText.setText("");
-//				});
-//			}
-			scriptGeneratorModel.clearActions();
-		}
-	};
-
 	/**
-	 * Create widgets for the global parameters.
+	 * Changes the selected script definition.
+	 * 
+	 * @param selectedScriptDefinitionName the name of the script definition to load
 	 */
-	@SuppressWarnings("checkstyle:magicnumber")
-	public void createGlobalParamsWidgets() {
-		List<ActionParameter> temp;
-		String param = "No Global Paramaters";
-		String paramVal = "";
-		if (getScriptDefinition().get().getGlobalParameters() != null) {
-			temp = getScriptDefinition().get().getGlobalParameters();
+	protected void changeScriptDefinition(String selectedScriptDefinitionName) {
+		// Save out previous script definition's actions and parameters
+		final List<JavaActionParameter> previousParameters = scriptGeneratorModel.getActionParameters();
+		final List<ScriptGeneratorAction> previousActions = scriptGeneratorModel.getActions();
 
-			// Hide global parameters row if there is nothing to display
-			((GridData) globalParamsComposite.getLayoutData()).exclude = temp.isEmpty();
-			globalParamsComposite.setVisible(!temp.isEmpty());
-
-			if (!temp.isEmpty()) {
-				for (ActionParameter global : temp) {
-					param = global.getName();
-					currentGlobals.add(global.getName());
-					paramVal = global.getDefaultValue();
-					if (!globalParamsComposite.isDisposed()) {
-						Label globalLabelCurrent = new Label(globalParamsComposite, SWT.NONE);
-						globalLabelCurrent.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-						globalLabelCurrent.setText(param);
-						globalLabel.add(globalLabelCurrent);
-						Text globalParamTextCurrent = new Text(globalParamsComposite, SWT.NONE);
-						globalParamTextCurrent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
-						globalParamTextCurrent.setEnabled(true);
-						globalParamTextCurrent.addListener(SWT.Modify, e -> {
-							updateGlobalParams(globalParamTextCurrent.getText(), globalLabelCurrent.getText());
-
-						});
-						globalParamTextCurrent.setText(paramVal);
-						globalParamText.add(globalParamTextCurrent);
+		// Perform the script definition change
+		scriptGeneratorModel.getScriptDefinitionLoader().getLastSelectedScriptDefinitionName()
+				.ifPresentOrElse(lastSelectedScriptDefinitionName -> {
+					if (!selectedScriptDefinitionName.equals(lastSelectedScriptDefinitionName)) {
+						scriptGeneratorModel.getScriptDefinitionLoader()
+								.setScriptDefinition(selectedScriptDefinitionName);
 					}
-				}
+				}, () -> scriptGeneratorModel.getScriptDefinitionLoader()
+						.setScriptDefinition(selectedScriptDefinitionName));
+
+		scriptGeneratorModel.clearGlobalParams();
+		scriptGeneratorModel.clearActions();
+
+		scriptGeneratorViewModelDelegate.ifPresent(
+				delegate -> delegate.onScriptDefinitionChange(ScriptGeneratorViewModel.this, getScriptDefinition()));
+
+		if (parameterTransferEnabled) {
+			// Transfer previous parameters if possible
+			List<JavaActionParameter> matchingParams = transferPreviousParameters(previousParameters, previousActions);
+			if (!matchingParams.isEmpty() && !previousActions.isEmpty()) {
+				dispatchInfoMessage("Action parameters transferred",
+						"The following action parameters have been transferred from previous configuration:"
+								+ System.lineSeparator()
+								+ String.join(", ", matchingParams.stream().map(p -> p.getName()).toList()));
 			}
 		}
 	}
-
-	private List<Label> globalLabel;
-
-	private List<Text> globalParamText;
-
-	private List<String> currentGlobals;
-
-	private Composite globalParamsComposite;
-
-	private Composite mainParent;
-
-	private ISelectionChangedListener scriptDefinitionSwitchListener = new ISelectionChangedListener() {
-
-		@Override
-		public void selectionChanged(SelectionChangedEvent event) {
-			// Save out previous script definition's actions and parameters
-			final List<JavaActionParameter> previousParameters = scriptGeneratorModel.getActionParameters();
-			final List<ScriptGeneratorAction> previousActions = scriptGeneratorModel.getActions();
-
-			// Perform the script definition change
-			String selectedScriptDefinitionName;
-			if (!event.getSelection().isEmpty()) {
-				selectedScriptDefinitionName = (String) event.getStructuredSelection().getFirstElement();
-				scriptGeneratorModel.getScriptDefinitionLoader().getLastSelectedScriptDefinitionName()
-						.ifPresentOrElse(lastSelectedScriptDefinitionName -> {
-							if (!selectedScriptDefinitionName.equals(lastSelectedScriptDefinitionName)) {
-								scriptGeneratorModel.getScriptDefinitionLoader()
-										.setScriptDefinition(selectedScriptDefinitionName);
-							}
-						}, () -> scriptGeneratorModel.getScriptDefinitionLoader()
-								.setScriptDefinition(selectedScriptDefinitionName));
-			}
-			if (parameterTransferEnabled) {
-				// Transfer previous parameters if possible
-				List<JavaActionParameter> matchingParams = transferPreviousParameters(previousParameters,
-						previousActions);
-				if (!matchingParams.isEmpty() && !previousActions.isEmpty()) {
-					dispatchInfoMessage("Action parameters transferred",
-							"The following action parameters have been transferred from previous configuration:"
-									+ System.lineSeparator()
-									+ String.join(", ", matchingParams.stream().map(p -> p.getName()).toList()));
-				}
-			}
-		}
-	};
 
 	/**
 	 * @return true if parameter transferring is enabled, false otherwise.
@@ -799,9 +707,10 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		final List<Map<JavaActionParameter, String>> actionsToLoad = new ArrayList<>();
 
 		// List of those parameters that match exactly in the previous and current
-		// script definition
-		final List<JavaActionParameter> matchingParams = previousParameters.stream()
-				.filter(param -> scriptGeneratorModel.getActionParameters().contains(param)).toList();
+		// script definition and are not "copy previous param"
+		final List<JavaActionParameter> matchingParams = previousParameters.stream().filter(
+				param -> scriptGeneratorModel.getActionParameters().contains(param) && !param.getCopyPreviousRow())
+				.toList();
 
 		for (ScriptGeneratorAction action : previousActions) {
 			// For each action grab those parameters that match any new script definition
@@ -832,31 +741,15 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * 
 	 * @param scriptDefinitionSelector The script definition selector UI element to
 	 *                                 bind.
-	 * @param globalLabel              The label widgets of the global parameters.
-	 * @param globalParamText          The text widgets of the global parameters.
-	 * @param scriptDefintionComposite Composite containing the script definition
-	 *                                 selector.
-	 * @param mainParent               A composite containing the script generator
-	 *                                 as a whole.
 	 */
-	protected void bindScriptDefinitionLoader(ComboViewer scriptDefinitionSelector, List<Label> globalLabel,
-			List<Text> globalParamText, Composite scriptDefintionComposite, Composite mainParent) {
-		// Switch the composite value when script definition switched
-		scriptDefinitionSelector.removeSelectionChangedListener(scriptDefinitionSwitchListener);
-		scriptDefinitionSelector.addSelectionChangedListener(scriptDefinitionSwitchListener);
-		// Display new help when script definition switch or make invisible if not help
-		// available
-		this.globalLabel = globalLabel;
-		this.globalParamText = globalParamText;
-		this.globalParamsComposite = scriptDefintionComposite;
-		this.mainParent = mainParent;
-		this.currentGlobals = new ArrayList<String>();
+	protected void bindScriptDefinitionLoader(ComboViewer scriptDefinitionSelector) {
+
 		this.finishTimer = new ScriptGeneratorExpectedFinishTimer();
 		this.scheduler = Executors.newScheduledThreadPool(1,
 				new ThreadFactoryBuilder().setNameFormat("ScriptGeneratorViewModel-threadpool-%d").build());
 		this.scheduler.scheduleWithFixedDelay(finishTimer, 0, 1, TimeUnit.SECONDS);
-		scriptGeneratorModel.getScriptDefinitionLoader().addPropertyChangeListener(
-				ScriptGeneratorProperties.SCRIPT_DEFINITION_SWITCH_PROPERTY, scriptDefinitionSwitchHelpListener);
+//		scriptGeneratorModel.getScriptDefinitionLoader().addPropertyChangeListener(
+//				ScriptGeneratorProperties.SCRIPT_DEFINITION_SWITCH_PROPERTY, scriptDefinitionSwitchHelpListener);
 	}
 
 	/**
@@ -877,26 +770,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 */
 	protected List<ScriptGeneratorAction> getActions() {
 		return scriptGeneratorModel.getActions();
-	}
-
-	/**
-	 * Update the tables action rows to be coloured if invalid.
-	 * 
-	 * @param viewTable The table in the view to update.
-	 */
-	protected void updateValidityChecks(ActionsViewTable viewTable) {
-		Map<Integer, String> globals = scriptGeneratorModel.getGlobalParamErrors();
-		for (int i = 0; i < this.globalParamText.size(); i++) {
-			if (globals.containsKey(i)) {
-				globalParamText.get(i).setBackground(Constants.INVALID_LIGHT_COLOR);
-				globalParamText.get(i).setBackground(Constants.INVALID_DARK_COLOR);
-				globalParamText.get(i).setToolTipText(globals.get(i));
-			} else {
-				globalParamText.get(i).setBackground(Constants.CLEAR_COLOR);
-				globalParamText.get(i).setToolTipText(null);
-			}
-		}
-
 	}
 
 	private void addLineNumberColumn(ActionsViewTable viewTable) {
@@ -1170,20 +1043,13 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	}
 
 	/**
-	 * Take the params and and the params that we need to update and instruct the
-	 * model to update them.
+	 * Updates a global parameter based on its index.
 	 * 
-	 * @param params   All the params.
-	 * @param toUpdate The params to update.
+	 * @param paramIndex index of the param to update
+	 * @param value      the new value of the global parameter
 	 */
-	public void updateGlobalParams(String params, String toUpdate) {
-		int i = 0;
-		for (String paramName : this.currentGlobals) {
-			if (paramName.equals(toUpdate)) {
-				scriptGeneratorModel.updateGlobalParams(params, i);
-			}
-			i++;
-		}
+	public void updateGlobalParams(int paramIndex, String value) {
+		scriptGeneratorModel.updateGlobalParams(value, paramIndex);
 	}
 
 	/**
@@ -1309,12 +1175,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		dialog.setOverwrite(true);
 		if (action == SWT.SAVE) {
 			dialog.setText("Save as");
-			dialog.setFilterExtensions(new String[] { "*.sgp" });
+			dialog.setFilterExtensions(new String[] {"*.sgp"});
 
 		} else {
 			dialog.setText("Load");
 			// Keep JSON extension when loading (for older param. files)
-			dialog.setFilterExtensions(new String[] { "*.sgp", "*.json" });
+			dialog.setFilterExtensions(new String[] {"*.sgp", "*.json"});
 		}
 		return Optional.ofNullable(dialog.open());
 	}
@@ -1346,7 +1212,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 				dialogResponse = 0;
 			} else {
 				emptyModel = false;
-				String[] replaceOrAppend = new String[] { "Append", "Replace" };
+				String[] replaceOrAppend = new String[] {"Append", "Replace"};
 
 				dialogResponse = dispatchUserSelectOptionRequest("Replace or Append",
 						"Would you like to replace the current parameters or append the new parameters?",
@@ -1403,11 +1269,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 */
 	public void setSaveScriptEnabled(boolean saveScriptEnabled) {
 		if (this.saveScriptEnabled != saveScriptEnabled) {
-			// Only dispatch event if value actually changed
-//			firePropertyChange(Properties.SAVE_SCRIPT_ENABLED, this.saveScriptEnabled,
-//					this.saveScriptEnabled = saveScriptEnabled);
 			this.saveScriptEnabled = saveScriptEnabled;
-
 			scriptGeneratorViewModelDelegate
 					.ifPresent(delegate -> delegate.onSaveEnabledChange(this, saveScriptEnabled));
 		}
@@ -1446,7 +1308,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * @param actions copied actions
 	 */
 	public void copyActions(String actions) {
-		clipboard.setContents(new Object[] { actions }, new Transfer[] { TextTransfer.getInstance() });
+		clipboard.setContents(new Object[] {actions}, new Transfer[] {TextTransfer.getInstance()});
 	}
 
 	/**
@@ -1496,12 +1358,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		actionsValidityChangeListeners.remove(listener);
 	}
 
-	/**
-	 * Use to notify the delegate to display an error message.
-	 * 
-	 * @param title   the dialog's title
-	 * @param message the dialog's message
-	 */
 	private void dispatchErrorMessage(String title, String message) {
 		scriptGeneratorViewModelDelegate.ifPresent(delegate -> delegate.onErrorMessage(this, title, message));
 	}

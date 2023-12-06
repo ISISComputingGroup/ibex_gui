@@ -17,17 +17,18 @@ public interface ScriptGeneratorViewModelDelegate {
 	 * @param viewModel
 	 * @param enabled
 	 */
-	public void onSaveEnabledChange(ScriptGeneratorViewModel viewModel, boolean enabled);
+	void onSaveEnabledChange(ScriptGeneratorViewModel viewModel, boolean enabled);
 
 	/**
 	 * Called when actions validity changes in the table.
 	 * 
 	 * @param viewModel
 	 * @param allActionsValid
+	 * @param globalErrors TODO
 	 * @param errors
 	 */
-	public void onActionsValidityChange(ScriptGeneratorViewModel viewModel, boolean allActionsValid,
-			Map<Integer, String> errors);
+	void onActionsValidityChange(ScriptGeneratorViewModel viewModel, boolean allActionsValid,
+			Map<Integer, String> globalErrors, Map<Integer, String> errors);
 
 	/**
 	 * Called when selected script definition changes.
@@ -35,7 +36,7 @@ public interface ScriptGeneratorViewModelDelegate {
 	 * @param viewModel
 	 * @param scriptDefinition
 	 */
-	public void onScriptDefinitionChange(ScriptGeneratorViewModel viewModel,
+	void onScriptDefinitionChange(ScriptGeneratorViewModel viewModel,
 			Optional<ScriptDefinitionWrapper> scriptDefinition);
 
 	/**
@@ -45,7 +46,7 @@ public interface ScriptGeneratorViewModelDelegate {
 	 * @param title     usually the dialog's title
 	 * @param message   the main body
 	 */
-	public void onErrorMessage(ScriptGeneratorViewModel viewModel, String title, String message);
+	void onErrorMessage(ScriptGeneratorViewModel viewModel, String title, String message);
 
 	/**
 	 * Called when a warning message needs to be displayed to the user.
@@ -54,7 +55,7 @@ public interface ScriptGeneratorViewModelDelegate {
 	 * @param title     usually the dialog's title
 	 * @param message   the main body
 	 */
-	public void onWarningMessage(ScriptGeneratorViewModel viewModel, String title, String message);
+	void onWarningMessage(ScriptGeneratorViewModel viewModel, String title, String message);
 
 	/**
 	 * Called when an information message needs to be displayed to the user.
@@ -63,7 +64,7 @@ public interface ScriptGeneratorViewModelDelegate {
 	 * @param title     usually the dialog's title
 	 * @param message   the main body
 	 */
-	public void onInfoMessage(ScriptGeneratorViewModel viewModel, String title, String message);
+	void onInfoMessage(ScriptGeneratorViewModel viewModel, String title, String message);
 
 	/**
 	 * Called when a user confirmation message needs to be displayed.
@@ -73,7 +74,7 @@ public interface ScriptGeneratorViewModelDelegate {
 	 * @param message   the main body
 	 * @return whether the user confirmed the message or denied it
 	 */
-	public boolean onUserConfirmationRequest(ScriptGeneratorViewModel viewModel, String title, String message);
+	boolean onUserConfirmationRequest(ScriptGeneratorViewModel viewModel, String title, String message);
 
 	/**
 	 * Called when the user needs to select from a range of options.
@@ -85,6 +86,6 @@ public interface ScriptGeneratorViewModelDelegate {
 	 * @param defaultIndex the index of the default option
 	 * @return the selected option's index
 	 */
-	public int onUserSelectOptionRequest(ScriptGeneratorViewModel viewModel, String title, String message, String[] options,
+	int onUserSelectOptionRequest(ScriptGeneratorViewModel viewModel, String title, String message, String[] options,
 			int defaultIndex);
 }
