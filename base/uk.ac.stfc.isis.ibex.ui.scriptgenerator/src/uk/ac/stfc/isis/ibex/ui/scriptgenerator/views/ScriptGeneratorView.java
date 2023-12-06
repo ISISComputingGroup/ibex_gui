@@ -51,6 +51,7 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.ui.widgets.IBEXButtonFactory;
 
 /**
@@ -60,7 +61,7 @@ import uk.ac.stfc.isis.ibex.ui.widgets.IBEXButtonFactory;
  * http://www.java2s.com/Code/Java/SWT-JFace-Eclipse/SWTTableSimpleDemo.htm
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class ScriptGeneratorView {
+public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 
 	private static PreferenceSupplier preferences = new PreferenceSupplier();
 
@@ -113,6 +114,7 @@ public class ScriptGeneratorView {
 	private Button generateScriptButton;
 	private Button generateScriptAsButton;
 	private ScriptGeneratorHelpMenu helpMenu;
+	private Text helpText;
 
 	/**
 	 * Container for the UI objects.
@@ -122,6 +124,7 @@ public class ScriptGeneratorView {
 	@PostConstruct
 	public void createPartControl(Composite parent) {
 		scriptGeneratorViewModel = new ScriptGeneratorViewModel();
+		scriptGeneratorViewModel.setScriptGeneratorViewModelDelegate(this);
 
 		GridData gdQueueContainer = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gdQueueContainer.heightHint = 300;
@@ -506,7 +509,7 @@ public class ScriptGeneratorView {
 		helpLabel.setText("Help: ");
 
 		// Display help for the script definition
-		Text helpText = new Text(parent, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
+		helpText = new Text(parent, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
 		var helpTextDataLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		helpTextDataLayout.heightHint = 50;
 		helpText.setLayoutData(helpTextDataLayout);
@@ -605,8 +608,8 @@ public class ScriptGeneratorView {
 	 */
 	private void bind(ComboViewer scriptDefinitionSelector, Text helpText, List<Label> globalLabel,
 			List<Text> globalParamText, Composite globalParamsComposite) {
-		scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText, globalLabel,
-				globalParamText, globalParamsComposite, mainParent);
+		scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, globalLabel, globalParamText,
+				globalParamsComposite, mainParent);
 
 		// Bind enable/disable of save and save as buttons
 		bindingContext.bindValue(WidgetProperties.enabled().observe(generateScriptButton),
@@ -635,6 +638,59 @@ public class ScriptGeneratorView {
 
 		bindToHasSelected(btnMoveActionUp);
 		bindToHasSelected(btnMoveActionDown);
+	}
+
+	@Override
+	public void onSaveEnabledChange(ScriptGeneratorViewModel viewModel, boolean enabled) {
+		generateScriptButton.setEnabled(enabled);
+		generateScriptAsButton.setEnabled(enabled);
+	}
+
+	@Override
+	public void onActionsValidityChange(ScriptGeneratorViewModel viewModel, boolean allActionsValid,
+			Map<Integer, String> errors) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onScriptDefinitionChange(ScriptGeneratorViewModel viewModel,
+			Optional<ScriptDefinitionWrapper> scriptDefinition) {
+		// Display help text
+		if (scriptDefinition.isPresent()) {
+			helpText.setText(scriptDefinition.get().getHelp());
+		} else {
+			helpText.setText("");
+		}
+		// Display global parameters
+	}
+
+	@Override
+	public void onErrorMessage(ScriptGeneratorViewModel viewModel, String title, String message) {
+		MessageDialog.openError(Constants.DISPLAY.getActiveShell(), title, message);
+	}
+
+	@Override
+	public void onWarningMessage(ScriptGeneratorViewModel viewModel, String title, String message) {
+		MessageDialog.openWarning(Constants.DISPLAY.getActiveShell(), title, message);
+	}
+
+	@Override
+	public void onInfoMessage(ScriptGeneratorViewModel viewModel, String title, String message) {
+		MessageDialog.openInformation(Constants.DISPLAY.getActiveShell(), title, message);
+	}
+
+	@Override
+	public boolean onUserConfirmationRequest(ScriptGeneratorViewModel viewModel, String title, String message) {
+		return MessageDialog.openConfirm(Constants.DISPLAY.getActiveShell(), title, message);
+	}
+
+	@Override
+	public int onUserSelectOptionRequest(ScriptGeneratorViewModel viewModel, String title, String message, String[] options,
+			int defaultIndex) {
+		MessageDialog dialog = new MessageDialog(Constants.DISPLAY.getActiveShell(), title, null, message,
+				MessageDialog.QUESTION, options, defaultIndex);
+		return dialog.open();
 	}
 
 }

@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.apache.logging.log4j.Logger;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -72,6 +71,8 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 public class ScriptGeneratorViewModel extends ModelObject {
 
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
+
+	private Optional<ScriptGeneratorViewModelDelegate> scriptGeneratorViewModelDelegate;
 
 	private Set<Integer> nicosScriptIds = new HashSet<>();
 
@@ -163,6 +164,15 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	}
 
 	/**
+	 * TODO document
+	 * 
+	 * @param delegate
+	 */
+	public void setScriptGeneratorViewModelDelegate(ScriptGeneratorViewModelDelegate delegate) {
+		this.scriptGeneratorViewModelDelegate = Optional.of(delegate);
+	}
+
+	/**
 	 * Set up the model. Allows us to attach listeners for the view first.
 	 * 
 	 * @return the model.
@@ -175,18 +185,20 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		// notify the user if the language is not supported
 		scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.LANGUAGE_SUPPORT_PROPERTY, evt -> {
 			if (Objects.equals(evt.getOldValue(), true) && Objects.equals(evt.getNewValue(), false)) {
-				displayLanguageSupportError();
+				dispatchErrorMessage("Language support issue",
+						"You are attempting to use an unsupported language, parameter validity checking and script generation are disabled at this time");
+
 			}
 		});
 		// Listen for model threading errors and display to the user if there is one
 		// Model is responsible for logging it
 		scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.THREAD_ERROR_PROPERTY, evt -> {
-			displayThreadingError();
+			dispatchErrorMessage("Error", "Generating or parameter validity checking error. Threading issue.");
 		});
 		scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.SCRIPT_GENERATION_ERROR_PROPERTY,
 				evt -> {
 					LOG.info("Generation error");
-					displayGenerationError();
+					dispatchErrorMessage("Error", "Error when generating a script, are your parameters valid?");
 				});
 		// Listen for generated script refreshes
 		scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.GENERATED_SCRIPT_FILENAME_PROPERTY,
@@ -203,12 +215,10 @@ public class ScriptGeneratorViewModel extends ModelObject {
 									}
 								}
 							}, () -> {
-								MessageDialog.openWarning(Constants.DISPLAY.getActiveShell(), "Error",
-										"Failed to generate the script");
+								dispatchWarningMessage("Error", "Failed to generate the script");
 							});
 						}, () -> {
-							MessageDialog.openWarning(Constants.DISPLAY.getActiveShell(), "Error",
-									"Failed to generate the script");
+							dispatchWarningMessage("Error", "Failed to generate the script");
 						});
 					});
 				});
@@ -226,15 +236,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			scriptGeneratorModel.saveParameters(scriptFilePath);
 			this.updateParametersFilePath(scriptGeneratorModel.getParametersFileNameFromFilepath(scriptFilePath));
 			this.updateGenerationTime();
-			MessageDialog.openInformation(Constants.DISPLAY.getActiveShell(), "Script Generated",
-					String.format("Generated script saved to %s.", scriptFilePath));
-
+			dispatchInfoMessage("Script Generated", String.format("Generated script saved to %s.", scriptFilePath));
 		} catch (IOException e) {
 			LOG.error(e);
-			MessageDialog.openError(Constants.DISPLAY.getActiveShell(), "Error",
-					"Failed to write generated script to file");
+			dispatchErrorMessage("Error", "Failed to write generated script to file");
 		} catch (NoScriptDefinitionSelectedException e) {
-			MessageDialog.openWarning(Constants.DISPLAY.getActiveShell(), "No script definition selection",
+			dispatchWarningMessage("No script definition selection",
 					"Cannot generate script. No script definition has been selected");
 		}
 	}
@@ -261,35 +268,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 */
 	public boolean scriptDefinitionsAvailable() {
 		return this.scriptGeneratorModel.getScriptDefinitionLoader().scriptDefinitionAvailable();
-	}
-
-	/**
-	 * Display a message dialog box that the language that is being used is
-	 * unsupported.
-	 */
-	private void displayLanguageSupportError() {
-		MessageDialog.openError(Constants.DISPLAY.getActiveShell(), "Language support issue",
-				"You are attempting to use an unsupported language, "
-						+ "parameter validity checking and script generation are disabled at this time");
-	}
-
-	/**
-	 * Display a message dialog box that there was a threading issue when generating
-	 * or checking parameter validity.
-	 */
-	private void displayGenerationError() {
-		Constants.DISPLAY.asyncExec(() -> {
-			MessageDialog.openError(Constants.DISPLAY.getActiveShell(), "Error",
-					"Error when generating a script, are your parameters valid?");
-		});
-	}
-
-	/**
-	 * Display a message dialog box that there was an issue when generating a script
-	 */
-	private void displayThreadingError() {
-		MessageDialog.openError(Constants.DISPLAY.getActiveShell(), "Error",
-				"Generating or parameter validity checking error. Threading issue.");
 	}
 
 	/**
@@ -379,7 +357,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 */
 	protected void clearAction() {
 		Constants.DISPLAY.asyncExec(() -> {
-			boolean userConfirmation = MessageDialog.openConfirm(Constants.DISPLAY.getActiveShell(), "Warning",
+			boolean userConfirmation = dispatchUserConfirmRequest("Warning",
 					"This will delete all actions, are you sure you want to continue?");
 			if (userConfirmation) {
 				scriptGeneratorModel.clearActions();
@@ -670,6 +648,9 @@ public class ScriptGeneratorViewModel extends ModelObject {
 
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
+			scriptGeneratorViewModelDelegate.ifPresent(delegate -> delegate
+					.onScriptDefinitionChange(ScriptGeneratorViewModel.this, getScriptDefinition()));
+
 			scriptGeneratorModel.clearActions();
 			for (Label label : globalLabel) {
 				if (!label.isDisposed()) {
@@ -691,15 +672,15 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			}
 			mainParent.layout();
 			// Display the new script definition help string
-			if (!helpText.isDisposed()) {
-
-				Optional<ScriptDefinitionWrapper> optionalScriptDefinition = getScriptDefinition();
-				optionalScriptDefinition.ifPresentOrElse(realScriptDefinition -> {
-					displayHelpString(realScriptDefinition, helpText);
-				}, () -> {
-					helpText.setText("");
-				});
-			}
+//			if (!helpText.isDisposed()) {
+//
+//				Optional<ScriptDefinitionWrapper> optionalScriptDefinition = getScriptDefinition();
+//				optionalScriptDefinition.ifPresentOrElse(realScriptDefinition -> {
+//					displayHelpString(realScriptDefinition, helpText);
+//				}, () -> {
+//					helpText.setText("");
+//				});
+//			}
 			scriptGeneratorModel.clearActions();
 		}
 	};
@@ -744,11 +725,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		}
 	}
 
-	/**
-	 * The view's current helpText element.
-	 */
-	private Text helpText;
-
 	private List<Label> globalLabel;
 
 	private List<Text> globalParamText;
@@ -785,7 +761,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 				List<JavaActionParameter> matchingParams = transferPreviousParameters(previousParameters,
 						previousActions);
 				if (!matchingParams.isEmpty() && !previousActions.isEmpty()) {
-					MessageDialog.openInformation(Constants.DISPLAY.getActiveShell(), "Action parameters transferred",
+					dispatchInfoMessage("Action parameters transferred",
 							"The following action parameters have been transferred from previous configuration:"
 									+ System.lineSeparator()
 									+ String.join(", ", matchingParams.stream().map(p -> p.getName()).toList()));
@@ -856,8 +832,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * 
 	 * @param scriptDefinitionSelector The script definition selector UI element to
 	 *                                 bind.
-	 * @param helpText                 The UI element to display help string text
-	 *                                 in.
 	 * @param globalLabel              The label widgets of the global parameters.
 	 * @param globalParamText          The text widgets of the global parameters.
 	 * @param scriptDefintionComposite Composite containing the script definition
@@ -865,15 +839,13 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * @param mainParent               A composite containing the script generator
 	 *                                 as a whole.
 	 */
-	protected void bindScriptDefinitionLoader(ComboViewer scriptDefinitionSelector, Text helpText,
-			List<Label> globalLabel, List<Text> globalParamText, Composite scriptDefintionComposite,
-			Composite mainParent) {
+	protected void bindScriptDefinitionLoader(ComboViewer scriptDefinitionSelector, List<Label> globalLabel,
+			List<Text> globalParamText, Composite scriptDefintionComposite, Composite mainParent) {
 		// Switch the composite value when script definition switched
 		scriptDefinitionSelector.removeSelectionChangedListener(scriptDefinitionSwitchListener);
 		scriptDefinitionSelector.addSelectionChangedListener(scriptDefinitionSwitchListener);
 		// Display new help when script definition switch or make invisible if not help
 		// available
-		this.helpText = helpText;
 		this.globalLabel = globalLabel;
 		this.globalParamText = globalParamText;
 		this.globalParamsComposite = scriptDefintionComposite;
@@ -885,21 +857,6 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		this.scheduler.scheduleWithFixedDelay(finishTimer, 0, 1, TimeUnit.SECONDS);
 		scriptGeneratorModel.getScriptDefinitionLoader().addPropertyChangeListener(
 				ScriptGeneratorProperties.SCRIPT_DEFINITION_SWITCH_PROPERTY, scriptDefinitionSwitchHelpListener);
-	}
-
-	/**
-	 * Display help string to the user if present, else clear the help string UI
-	 * display.
-	 * 
-	 * @param scriptDefinition The script definition to get the help string from
-	 * @param helpText         The text UI element to display the help string in.
-	 */
-	private void displayHelpString(ScriptDefinitionWrapper scriptDefinition, Text helpText) {
-		Optional.ofNullable(scriptDefinition.getHelp()).ifPresentOrElse(helpString -> {
-			helpText.setText(helpString);
-		}, () -> {
-			helpText.setText("");
-		});
 	}
 
 	/**
@@ -1202,13 +1159,13 @@ public class ScriptGeneratorViewModel extends ModelObject {
 			if (!body.isEmpty()) {
 				String heading = "Validity errors:\n\n";
 				String message = heading + body;
-				MessageDialog.openWarning(Constants.DISPLAY.getActiveShell(), "Validity Errors", message);
+				dispatchWarningMessage("Validity Errors", message);
 			} else {
-				MessageDialog.openInformation(Constants.DISPLAY.getActiveShell(), "Validity Errors",
-						"No validity errors");
+				dispatchInfoMessage("Validity Errors", "No validity errors");
 			}
 		} else {
-			displayLanguageSupportError();
+			dispatchErrorMessage("Language support issue",
+					"You are attempting to use an unsupported language, parameter validity checking and script generation are disabled at this time");
 		}
 	}
 
@@ -1255,15 +1212,14 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		try {
 			return scriptGeneratorModel.refreshGeneratedScript();
 		} catch (InvalidParamsException e) {
-			MessageDialog.openWarning(Constants.DISPLAY.getActiveShell(), "Params Invalid",
-					"Cannot generate script. Parameters are invalid.");
+			dispatchWarningMessage("Params Invalid", "Cannot generate script. Parameters are invalid.");
 		} catch (UnsupportedLanguageException e) {
 			LOG.error(e);
-			MessageDialog.openWarning(Constants.DISPLAY.getActiveShell(), "Unsupported language",
+			dispatchWarningMessage("Unsupported language",
 					"Cannot generate script. Language to generate in is unsupported.");
 		} catch (NoScriptDefinitionSelectedException e) {
 			LOG.error(e);
-			MessageDialog.openWarning(Constants.DISPLAY.getActiveShell(), "No script definition selection",
+			dispatchWarningMessage("No script definition selection",
 					"Cannot generate script. No script definition has been selected");
 		}
 		return Optional.empty();
@@ -1353,12 +1309,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		dialog.setOverwrite(true);
 		if (action == SWT.SAVE) {
 			dialog.setText("Save as");
-			dialog.setFilterExtensions(new String[] {"*.sgp"});
+			dialog.setFilterExtensions(new String[] { "*.sgp" });
 
 		} else {
 			dialog.setText("Load");
 			// Keep JSON extension when loading (for older param. files)
-			dialog.setFilterExtensions(new String[] {"*.sgp", "*.json"});
+			dialog.setFilterExtensions(new String[] { "*.sgp", "*.json" });
 		}
 		return Optional.ofNullable(dialog.open());
 	}
@@ -1374,12 +1330,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
 				newActions = scriptGeneratorModel.loadParameterValues(Paths.get(selectedFile.get()));
 			} catch (NoScriptDefinitionSelectedException e) {
 				LOG.error(e);
-				MessageDialog.openWarning(Constants.DISPLAY.getActiveShell(), "No script definition selection",
+				dispatchWarningMessage("No script definition selection",
 						"Cannot generate script. No script definition has been selected");
 				return;
 			} catch (ScriptDefinitionNotMatched | UnsupportedOperationException e) {
 				LOG.error(e);
-				MessageDialog.openError(Constants.DISPLAY.getActiveShell(), "Error", e.getMessage());
+				dispatchErrorMessage("Error", e.getMessage());
 				return;
 			}
 
@@ -1390,11 +1346,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 				dialogResponse = 0;
 			} else {
 				emptyModel = false;
-				String[] replaceOrAppend = new String[] {"Append", "Replace"};
-				MessageDialog dialog = new MessageDialog(Constants.DISPLAY.getActiveShell(), "Replace or Append", null,
+				String[] replaceOrAppend = new String[] { "Append", "Replace" };
+
+				dialogResponse = dispatchUserSelectOptionRequest("Replace or Append",
 						"Would you like to replace the current parameters or append the new parameters?",
-						MessageDialog.QUESTION, replaceOrAppend, -1);
-				dialogResponse = dialog.open();
+						replaceOrAppend, -1);
 			}
 
 			if (dialogResponse != -1) {
@@ -1448,8 +1404,12 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	public void setSaveScriptEnabled(boolean saveScriptEnabled) {
 		if (this.saveScriptEnabled != saveScriptEnabled) {
 			// Only dispatch event if value actually changed
-			firePropertyChange(Properties.SAVE_SCRIPT_ENABLED, this.saveScriptEnabled,
-					this.saveScriptEnabled = saveScriptEnabled);
+//			firePropertyChange(Properties.SAVE_SCRIPT_ENABLED, this.saveScriptEnabled,
+//					this.saveScriptEnabled = saveScriptEnabled);
+			this.saveScriptEnabled = saveScriptEnabled;
+
+			scriptGeneratorViewModelDelegate
+					.ifPresent(delegate -> delegate.onSaveEnabledChange(this, saveScriptEnabled));
 		}
 	}
 
@@ -1486,7 +1446,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 * @param actions copied actions
 	 */
 	public void copyActions(String actions) {
-		clipboard.setContents(new Object[] {actions}, new Transfer[] {TextTransfer.getInstance()});
+		clipboard.setContents(new Object[] { actions }, new Transfer[] { TextTransfer.getInstance() });
 	}
 
 	/**
@@ -1534,6 +1494,39 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 */
 	public void removeOnActionsValidityChangeListener(ActionsValidityChangeListener listener) {
 		actionsValidityChangeListeners.remove(listener);
+	}
+
+	/**
+	 * Use to notify the delegate to display an error message.
+	 * 
+	 * @param title   the dialog's title
+	 * @param message the dialog's message
+	 */
+	private void dispatchErrorMessage(String title, String message) {
+		scriptGeneratorViewModelDelegate.ifPresent(delegate -> delegate.onErrorMessage(this, title, message));
+	}
+
+	private void dispatchWarningMessage(String title, String message) {
+		scriptGeneratorViewModelDelegate.ifPresent(delegate -> delegate.onWarningMessage(this, title, message));
+	}
+
+	private void dispatchInfoMessage(String title, String message) {
+		scriptGeneratorViewModelDelegate.ifPresent(delegate -> delegate.onInfoMessage(this, title, message));
+	}
+
+	private boolean dispatchUserConfirmRequest(String title, String message) {
+		if (scriptGeneratorViewModelDelegate.isPresent()) {
+			return scriptGeneratorViewModelDelegate.get().onUserConfirmationRequest(this, title, message);
+		}
+		return false;
+	}
+
+	private int dispatchUserSelectOptionRequest(String title, String message, String[] options, int defaultIndex) {
+		if (scriptGeneratorViewModelDelegate.isPresent()) {
+			return scriptGeneratorViewModelDelegate.get().onUserSelectOptionRequest(this, title, message, options,
+					defaultIndex);
+		}
+		return defaultIndex;
 	}
 
 	/**
