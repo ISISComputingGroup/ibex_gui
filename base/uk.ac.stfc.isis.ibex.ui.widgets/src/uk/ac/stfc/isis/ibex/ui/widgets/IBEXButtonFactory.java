@@ -55,10 +55,10 @@ public class IBEXButtonFactory {
 	}
 	
 	/**
-	 * Creates a button that appears as a checkbox.
+	 * Creates a button that appears as a radio button.
 	 * 
 	 * @param parent a composite control which will be the parent of the new instance (cannot be null)
-	 * @param text the title of the checkbox
+	 * @param text the title of the radio button
 	 * @param tooltip the tooltip of the button (can be null)
 	 * @param onClickListener the event handler for clicks
 	 * @return n new button instance

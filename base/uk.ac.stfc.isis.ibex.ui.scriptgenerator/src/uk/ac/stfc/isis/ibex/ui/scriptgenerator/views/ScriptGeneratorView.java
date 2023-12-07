@@ -348,13 +348,13 @@ public class ScriptGeneratorView {
 
 		Button radiosPause = IBEXButtonFactory.radio(actionsControlsGrp, Constants.CHECKBOX_TITLE_INVALID_PAUSE, Constants.TOOLTIP_INVALID_PAUSE, evt -> {
 			boolean enabled = ((Button) evt.widget).getSelection();
-			scriptGeneratorViewModel.setParameterTransferEnabled(enabled);
+			scriptGeneratorViewModel.setParameterTransferEnabled(enabled); //not going to be setparametertransfer, needs to change to whatever
 		});
 		radiosPause.setSelection(Constants.INVALID_PAUSE_DEFAULT);
 
 		Button radioSkip = IBEXButtonFactory.radio(actionsControlsGrp, Constants.CHECKBOX_TITLE_INVALID_SKIP, Constants.TOOLTIP_INVALID_SKIP, evt -> {
 			boolean enabled = ((Button) evt.widget).getSelection();
-			scriptGeneratorViewModel.setParameterTransferEnabled(enabled);
+			scriptGeneratorViewModel.setParameterTransferEnabled(enabled); //not going to be setparametertransfer, needs to change to whatever
 		});
 		radioSkip.setSelection(Constants.INVALID_SKIP_DEFAULT);
 	}
