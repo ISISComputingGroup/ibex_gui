@@ -346,12 +346,19 @@ public class ScriptGeneratorView {
 	private void makeToggleInvalidPauseSkip(Composite parent) {
 		Composite actionsControlsGrp = makeGrid(parent, 1, true, 10);
 
-		Button checkbox = IBEXButtonFactory.checkbox(actionsControlsGrp, Constants.CHECKBOX_TITLE_INVALID_PASS, Constants.TOOLTIP_INVALID_PASS, evt -> {
+		Button radiosPause = IBEXButtonFactory.radio(actionsControlsGrp, Constants.CHECKBOX_TITLE_INVALID_PAUSE, Constants.TOOLTIP_INVALID_PAUSE, evt -> {
 			boolean enabled = ((Button) evt.widget).getSelection();
 			scriptGeneratorViewModel.setParameterTransferEnabled(enabled);
 		});
-		checkbox.setSelection(Constants.INVALID_PASS_DEFAULT);
+		radiosPause.setSelection(Constants.INVALID_PAUSE_DEFAULT);
+
+		Button radioSkip = IBEXButtonFactory.radio(actionsControlsGrp, Constants.CHECKBOX_TITLE_INVALID_SKIP, Constants.TOOLTIP_INVALID_SKIP, evt -> {
+			boolean enabled = ((Button) evt.widget).getSelection();
+			scriptGeneratorViewModel.setParameterTransferEnabled(enabled);
+		});
+		radioSkip.setSelection(Constants.INVALID_SKIP_DEFAULT);
 	}
+	
 	/**
 	 * Creates a column containing three buttons for table row modifications.
 	 * 
