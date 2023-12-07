@@ -22,101 +22,112 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Spinner;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
 /**
- * DataAcquisitionSpinner: on input change: will change background to a colour indicating a change that hasn't been applied to the instrument.
+ * DataAcquisitionSpinner: on input change: will change background to a colour
+ * indicating a change that hasn't been applied to the instrument.
  *
  */
 public class DaeExperimentSetupSpinner extends Spinner {
-    
-    private PanelViewModel panelViewModel;
-    private String cachedValue;
-    private String property;
-    private ModelObject viewModel;
-    private String name;
-    private ExperimentSetupViewModel experimentSetupViewModel;
-    private PropertyChangeListener propertyChangeListener;
-    
-    /**
-     * Create a new data acquisition spinner.
-     * 
-     * @param parent a composite control which will be the parent of the new instance (cannot be null).
-     * @param style the style of control to construct.
-     * @param panelViewModel the panelViewModel to help with the editing the panels.
-     * @param property the property the listener will be observing.
-     * @param name the name of the widget, which is used as a key in the cached values map.
-     */
-    public DaeExperimentSetupSpinner(Composite parent, int style, PanelViewModel panelViewModel, String property, String name) {
-        super(parent, style);
-        this.panelViewModel = panelViewModel;
-        this.property = property;
-        experimentSetupViewModel = panelViewModel.getExperimentSetupViewModel();
-        this.viewModel = experimentSetupViewModel.daeSettings();
-        
-        this.name = name;
-        
-        
-        addSpinnerPropertyChangeListener();
-    }
-    
-    @Override
-    protected void checkSubclass() {
-        // Allow sub-classing
-    }
-    
-    /**
-     * Adds a listener to a spinner to colour it's background upon change to the observed property.
-     */
-    public void addSpinnerPropertyChangeListener() {
-        propertyChangeListener = new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                ifValueDifferentFromCachedValueThenChangeLabel();
-            }
-        };
-        viewModel.addPropertyChangeListener(property, propertyChangeListener);
-    }
-    
-    /**
-     * Removes all property change listeners on the spinner.
-     */
-    public void removeSpinnerPropertyChangeListeners() {
-        viewModel.removePropertyChangeListener(property, propertyChangeListener);
-    }
-    
-    /**
-     * Will set a label denoting a change that has not been applied to the instrument and notifies the dae view model.
-     */
-    public void ifValueDifferentFromCachedValueThenChangeLabel() {
-        if (this.getText().equals(cachedValue)) {
-            setBackground(panelViewModel.getColour("white"));
-            panelViewModel.setIsChanged(name, false);
-        } else {
-            setBackground(panelViewModel.getColour("changedColour"));
-            panelViewModel.setIsChanged(name, true);
-        }
-    }
-    
-    /**
-     * Resets the cached value.
-     */
-    public void resetCachedValue() {
-        cachedValue = this.getText();
-        experimentSetupViewModel.addtoCachedValues(name, cachedValue);
-    }
-    
-    /** 
-     * Creates a cached value for the first time, used when after the panels are created when they have been first initialised.
-     */
-    public void createInitialCachedValue() {
-        if (experimentSetupViewModel.getItemFromCachedValues(name).isEmpty()) {
-            resetCachedValue();
-        } else {
-            cachedValue = experimentSetupViewModel.getItemFromCachedValues(name);
-        }
-    }
+
+	private PanelViewModel panelViewModel;
+	private String cachedValue;
+	private String property;
+	private ModelObject viewModel;
+	private String name;
+	private ExperimentSetupViewModel experimentSetupViewModel;
+	private PropertyChangeListener propertyChangeListener;
+
+	/**
+	 * Create a new data acquisition spinner.
+	 * 
+	 * @param parent         a composite control which will be the parent of the new
+	 *                       instance (cannot be null).
+	 * @param style          the style of control to construct.
+	 * @param panelViewModel the panelViewModel to help with the editing the panels.
+	 * @param property       the property the listener will be observing.
+	 * @param name           the name of the widget, which is used as a key in the
+	 *                       cached values map.
+	 */
+	public DaeExperimentSetupSpinner(Composite parent, int style, PanelViewModel panelViewModel, String property,
+			String name) {
+		super(parent, style);
+		this.panelViewModel = panelViewModel;
+		this.property = property;
+		experimentSetupViewModel = panelViewModel.getExperimentSetupViewModel();
+		this.viewModel = experimentSetupViewModel.daeSettings();
+
+		this.name = name;
+
+		addSpinnerPropertyChangeListener();
+	}
+
+	@Override
+	protected void checkSubclass() {
+		// Allow sub-classing
+	}
+
+	/**
+	 * Adds a listener to a spinner to colour it's background upon change to the
+	 * observed property.
+	 */
+	public void addSpinnerPropertyChangeListener() {
+		propertyChangeListener = new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (Display.getDefault().getThread() == Thread.currentThread()) {
+					ifValueDifferentFromCachedValueThenChangeLabel();
+				} else {
+					Display.getDefault().asyncExec(() -> ifValueDifferentFromCachedValueThenChangeLabel());
+				}
+			}
+		};
+		viewModel.addPropertyChangeListener(property, propertyChangeListener);
+	}
+
+	/**
+	 * Removes all property change listeners on the spinner.
+	 */
+	public void removeSpinnerPropertyChangeListeners() {
+		viewModel.removePropertyChangeListener(property, propertyChangeListener);
+	}
+
+	/**
+	 * Will set a label denoting a change that has not been applied to the
+	 * instrument and notifies the dae view model.
+	 */
+	public void ifValueDifferentFromCachedValueThenChangeLabel() {
+		if (this.getText().equals(cachedValue)) {
+			setBackground(panelViewModel.getColour("white"));
+			panelViewModel.setIsChanged(name, false);
+		} else {
+			setBackground(panelViewModel.getColour("changedColour"));
+			panelViewModel.setIsChanged(name, true);
+		}
+	}
+
+	/**
+	 * Resets the cached value.
+	 */
+	public void resetCachedValue() {
+		cachedValue = this.getText();
+		experimentSetupViewModel.addtoCachedValues(name, cachedValue);
+	}
+
+	/**
+	 * Creates a cached value for the first time, used when after the panels are
+	 * created when they have been first initialised.
+	 */
+	public void createInitialCachedValue() {
+		if (experimentSetupViewModel.getItemFromCachedValues(name).isEmpty()) {
+			resetCachedValue();
+		} else {
+			cachedValue = experimentSetupViewModel.getItemFromCachedValues(name);
+		}
+	}
 
 }
