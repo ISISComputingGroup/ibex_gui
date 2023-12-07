@@ -325,16 +325,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	protected void addEmptyAction() {
 		scriptGeneratorModel.addEmptyAction();
 		// Make sure the table is updated with the new action before selecting it
-		if (scriptGeneratorModel.getActionParameters().size() > ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT) {
-			if (!scriptGeneratorModel.getActionParameters().get(ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT)
-					.getIsEnum()) {
-				Constants.DISPLAY.asyncExec(() -> {
-					viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1,
-							ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
-				});
-			}
-		}
-
+		setCellFocus(scriptGeneratorModel.getActions().size() - 1);
 	}
 
 	/**
@@ -346,15 +337,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	protected void insertEmptyAction(Integer insertionLocation) {
 		scriptGeneratorModel.insertEmptyAction(insertionLocation);
 		// Make sure the table is updated with the new action before selecting it
-		if (scriptGeneratorModel.getActionParameters().size() > ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT) {
-			if (!scriptGeneratorModel.getActionParameters().get(ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT)
-					.getIsEnum()) {
-				Constants.DISPLAY.asyncExec(() -> {
-					viewTable.setCellFocus(scriptGeneratorModel.getActions().size() - 1,
-							ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
-				});
-			}
-		}
+		setCellFocus(scriptGeneratorModel.getActions().size() - 1);
 	}
 
 	/**
@@ -366,14 +349,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		int toSelect = getFocusRowIndexAfterDelete(actionsToDelete);
 
 		scriptGeneratorModel.deleteAction(actionsToDelete);
-		if (scriptGeneratorModel.getActionParameters().size() > ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT) {
-			if (!scriptGeneratorModel.getActionParameters().get(ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT)
-					.getIsEnum()) {
-				Constants.DISPLAY.asyncExec(() -> {
-					viewTable.setCellFocus(toSelect, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
-				});
-			}
-		}
+		setCellFocus(toSelect);
 	}
 
 	private int getFocusRowIndexAfterDelete(List<ScriptGeneratorAction> actionsToDelete) {
@@ -399,11 +375,21 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	protected void duplicateAction(List<ScriptGeneratorAction> actionsToDuplicate, Integer insertionLocation) {
 		scriptGeneratorModel.duplicateAction(actionsToDuplicate, insertionLocation);
 		// Make sure the table is updated with the new action before selecting it
-		if (!scriptGeneratorModel.getActionParameters().get(ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT)
-				.getIsEnum()) {
-			Constants.DISPLAY.asyncExec(() -> {
-				viewTable.setCellFocus(insertionLocation, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
-			});
+		setCellFocus(insertionLocation);
+	}
+
+	/**
+	 * Method is used to set the focus on the appropriate cell after add/delete row is done.
+	 * @param rowToSelect - The row to be selected
+	 */
+	private void setCellFocus(int rowToSelect) {
+		if (scriptGeneratorModel.getActionParameters().size() > ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT) {
+			if (!scriptGeneratorModel.getActionParameters().get(ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT)
+					.getIsEnum()) {
+				Constants.DISPLAY.asyncExec(() -> {
+					viewTable.setCellFocus(rowToSelect, ActionsViewTable.NON_EDITABLE_COLUMNS_ON_LEFT);
+				});
+			}
 		}
 	}
 
