@@ -1122,7 +1122,7 @@ $(pv_value)</tooltip>
               </foreground_color>
               <format_type>0</format_type>
               <height>20</height>
-              <horizontal_alignment>0</horizontal_alignment>
+              <horizontal_alignment>2</horizontal_alignment>
               <name>Text Update_2</name>
               <precision>0</precision>
               <precision_from_pv>true</precision_from_pv>
@@ -1175,7 +1175,7 @@ $(pv_value)</tooltip>
               </foreground_color>
               <format_type>0</format_type>
               <height>20</height>
-              <horizontal_alignment>0</horizontal_alignment>
+              <horizontal_alignment>2</horizontal_alignment>
               <limits_from_pv>false</limits_from_pv>
               <maximum>1.7976931348623157E308</maximum>
               <minimum>-1.7976931348623157E308</minimum>
@@ -1202,7 +1202,7 @@ $(pv_value)</tooltip>
               <transparent>false</transparent>
               <visible>true</visible>
               <widget_type>Text Input</widget_type>
-              <width>43</width>
+              <width>37</width>
               <wuid>-118b11e6:18b7028135c:-7e77</wuid>
               <x>186</x>
               <y>0</y>
@@ -1256,7 +1256,7 @@ $(pv_value)</tooltip>
               <width>30</width>
               <wrap_words>false</wrap_words>
               <wuid>-37548769:18c5daa330e:-7f3e</wuid>
-              <x>240</x>
+              <x>228</x>
               <y>0</y>
             </widget>
             <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -1308,7 +1308,7 @@ $(pv_value)</tooltip>
               <width>30</width>
               <wrap_words>false</wrap_words>
               <wuid>-37548769:18c5daa330e:-7f11</wuid>
-              <x>144</x>
+              <x>136</x>
               <y>0</y>
             </widget>
           </widget>
@@ -1417,7 +1417,7 @@ $(pv_value)</tooltip>
               </foreground_color>
               <format_type>0</format_type>
               <height>20</height>
-              <horizontal_alignment>0</horizontal_alignment>
+              <horizontal_alignment>2</horizontal_alignment>
               <name>Text Update_2</name>
               <precision>0</precision>
               <precision_from_pv>true</precision_from_pv>
@@ -1470,7 +1470,7 @@ $(pv_value)</tooltip>
               </foreground_color>
               <format_type>0</format_type>
               <height>20</height>
-              <horizontal_alignment>0</horizontal_alignment>
+              <horizontal_alignment>2</horizontal_alignment>
               <limits_from_pv>false</limits_from_pv>
               <maximum>1.7976931348623157E308</maximum>
               <minimum>-1.7976931348623157E308</minimum>
@@ -1497,7 +1497,7 @@ $(pv_value)</tooltip>
               <transparent>false</transparent>
               <visible>true</visible>
               <widget_type>Text Input</widget_type>
-              <width>43</width>
+              <width>37</width>
               <wuid>-118b11e6:18b7028135c:-7e67</wuid>
               <x>186</x>
               <y>0</y>
@@ -1551,7 +1551,7 @@ $(pv_value)</tooltip>
               <width>30</width>
               <wrap_words>false</wrap_words>
               <wuid>-37548769:18c5daa330e:-7f36</wuid>
-              <x>240</x>
+              <x>228</x>
               <y>0</y>
             </widget>
             <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -1603,7 +1603,7 @@ $(pv_value)</tooltip>
               <width>30</width>
               <wrap_words>false</wrap_words>
               <wuid>-37548769:18c5daa330e:-7f09</wuid>
-              <x>144</x>
+              <x>136</x>
               <y>0</y>
             </widget>
           </widget>
@@ -1712,7 +1712,7 @@ $(pv_value)</tooltip>
               </foreground_color>
               <format_type>0</format_type>
               <height>18</height>
-              <horizontal_alignment>0</horizontal_alignment>
+              <horizontal_alignment>1</horizontal_alignment>
               <name>Text Update_2</name>
               <precision>0</precision>
               <precision_from_pv>true</precision_from_pv>
@@ -1734,7 +1734,7 @@ $(pv_value)</tooltip>
               <vertical_alignment>1</vertical_alignment>
               <visible>true</visible>
               <widget_type>Text Update</widget_type>
-              <width>92</width>
+              <width>74</width>
               <wrap_words>false</wrap_words>
               <wuid>-118b11e6:18b7028135c:-7e88</wuid>
               <x>107</x>
@@ -1951,7 +1951,7 @@ $(pv_value)</tooltip>
               <vertical_alignment>1</vertical_alignment>
               <visible>true</visible>
               <widget_type>Text Update</widget_type>
-              <width>92</width>
+              <width>74</width>
               <wrap_words>false</wrap_words>
               <wuid>-48159ee9:1567f536160:-5a1b</wuid>
               <x>107</x>
@@ -2085,7 +2085,7 @@ $(pv_value)</tooltip>
               <vertical_alignment>1</vertical_alignment>
               <visible>true</visible>
               <widget_type>Text Update</widget_type>
-              <width>92</width>
+              <width>74</width>
               <wrap_words>false</wrap_words>
               <wuid>-5fc7b887:18b7fabb433:-7ac4</wuid>
               <x>107</x>
@@ -2261,7 +2261,7 @@ $(pv_value)</tooltip>
               <vertical_alignment>1</vertical_alignment>
               <visible>true</visible>
               <widget_type>Text Update</widget_type>
-              <width>85</width>
+              <width>74</width>
               <wrap_words>false</wrap_words>
               <wuid>-48159ee9:1567f536160:-5a0b</wuid>
               <x>107</x>
@@ -2436,7 +2436,7 @@ $(pv_value)</tooltip>
               <vertical_alignment>1</vertical_alignment>
               <visible>true</visible>
               <widget_type>Text Update</widget_type>
-              <width>92</width>
+              <width>74</width>
               <wrap_words>false</wrap_words>
               <wuid>-118b11e6:18b7028135c:-7e52</wuid>
               <x>107</x>
@@ -2856,7 +2856,7 @@ $(pv_value)</tooltip>
               <vertical_alignment>1</vertical_alignment>
               <visible>true</visible>
               <widget_type>Text Update</widget_type>
-              <width>92</width>
+              <width>74</width>
               <wrap_words>false</wrap_words>
               <wuid>-118b11e6:18b7028135c:-7e15</wuid>
               <x>107</x>
@@ -2992,7 +2992,7 @@ $(pv_value)</tooltip>
             <vertical_alignment>1</vertical_alignment>
             <visible>true</visible>
             <widget_type>Text Update</widget_type>
-            <width>92</width>
+            <width>74</width>
             <wrap_words>false</wrap_words>
             <wuid>-118b11e6:18b7028135c:-7e25</wuid>
             <x>107</x>
