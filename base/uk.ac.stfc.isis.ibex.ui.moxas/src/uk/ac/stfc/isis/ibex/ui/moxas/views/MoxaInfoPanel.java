@@ -1,3 +1,31 @@
+/*
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2023
+ * Science & Technology Facilities Council. All rights reserved.
+ *
+ * This program is distributed in the hope that it will be useful. This program
+ * and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution. EXCEPT AS
+ * EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM AND
+ * ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND. See the Eclipse Public License v1.0 for more
+ * details.
+ *
+ * You should have received a copy of the Eclipse Public License v1.0 along with
+ * this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or
+ * http://opensource.org/licenses/eclipse-1.0.php
+ */
+
+/*
+ * Copyright (C) 2013-2014 Research Councils UK (STFC)
+ *
+ * This file is part of the Instrument Control Project at ISIS.
+ *
+ * This code and information are provided "as is" without warranty of any kind,
+ * either expressed or implied, including but not limited to the implied
+ * warranties of merchantability and/or fitness for a particular purpose.
+ */
+
 package uk.ac.stfc.isis.ibex.ui.moxas.views;
 
 import java.beans.PropertyChangeEvent;
@@ -36,6 +64,7 @@ public class MoxaInfoPanel extends Composite {
 	private static final int COLUMN_WIDTH = 500;
 	private static final int COLUMN_WIDTH_NARROW = 150;
 	
+	private static final String UP_STATUS = "up";
 	/**
 	 * The constructor.
 	 * 
@@ -48,67 +77,11 @@ public class MoxaInfoPanel extends Composite {
 		setLayout(new GridLayout(1, false));
 
 		final var viewer = new TreeViewer(this, SWT.FULL_SELECTION);
-		TreeViewerColumn moxaPortColumn = new TreeViewerColumn(viewer, SWT.NONE);
-		moxaPortColumn.getColumn().setText("Physical MOXA port");
-		moxaPortColumn.getColumn().setWidth(COLUMN_WIDTH);
-
-		moxaPortColumn.setLabelProvider(new ColumnLabelProvider() {
-			@Override
-			public String getText(Object element) {
-				if (element instanceof MoxaList) {
-					MoxaList list = MoxaList.class.cast(element);
-					String name = list.name;
-					return name;
-				} else {
-					MoxaModelObject p = (MoxaModelObject) element;
-					return p.getPhysPort();
-				}
-			}
-		});
-		TreeViewerColumn comPortColumn = new TreeViewerColumn(viewer, SWT.NONE);
-		comPortColumn.getColumn().setText("COM port");
-		comPortColumn.getColumn().setWidth(COLUMN_WIDTH_NARROW);
-
-		comPortColumn.setLabelProvider(new ColumnLabelProvider() {
-			@Override
-			public String getText(Object element) {
-				if (element instanceof ArrayList<?>) {
-					return null;
-				}
-				MoxaModelObject p = (MoxaModelObject) element;
-				return p.getComPort();
-			}
-		});
-		TreeViewerColumn iocColumn = new TreeViewerColumn(viewer, SWT.NONE);
-		iocColumn.getColumn().setText("Connected IOC");
-		iocColumn.getColumn().setWidth(COLUMN_WIDTH);
-
-		iocColumn.setLabelProvider(new ColumnLabelProvider() {
-			@Override
-			public Color getForeground(Object element) {
-				// Change the text colour of cells where a port is connected to multiple IOCs
-				if (element instanceof MoxaModelObject) {
-					MoxaModelObject p = (MoxaModelObject) element;
-					List<Ioc> iocs = p.getIocs();
-					
-					if (iocs.size() > 1) {
-						return new Color(255, 0, 0);
-					}
-				}
-				return super.getForeground(element);
-			}
-			
-			@Override
-			public String getText(Object element) {
-				if (element instanceof ArrayList<?>) {
-					return null;
-				}
-				MoxaModelObject p = (MoxaModelObject) element;
-				List<Ioc> iocs = p.getIocs();
-				
-				return iocs.stream().map(Ioc::getName).collect(joining(", "));
-			}
-		});
+		makePhysicalPortColumn(viewer);
+		makeComPortColumn(viewer);
+		makeConnectedIOCColumn(viewer);	
+		makeStatusColumn(viewer);
+		makeAdditionInfoColumn(viewer);
 		
 		viewer.setContentProvider(new MoxaTableContentProvider());
 
@@ -184,6 +157,145 @@ public class MoxaInfoPanel extends Composite {
 				
 			}
     	});
+	}
+
+	/**
+	 * @param viewer
+	 */
+	private void makeComPortColumn(final TreeViewer viewer) {
+		TreeViewerColumn comPortColumn = new TreeViewerColumn(viewer, SWT.NONE);
+		comPortColumn.getColumn().setText("COM port");
+		comPortColumn.getColumn().setWidth(COLUMN_WIDTH_NARROW);
+
+		comPortColumn.setLabelProvider(new ColumnLabelProvider() {
+			@Override
+			public String getText(Object element) {
+				if (element instanceof ArrayList<?>) {
+					return null;
+				}
+				MoxaModelObject p = (MoxaModelObject) element;
+				return p.getComPort();
+			}
+		});
+	}
+
+	/**
+	 * @param viewer
+	 */
+	private void makePhysicalPortColumn(final TreeViewer viewer) {
+		TreeViewerColumn moxaPortColumn = new TreeViewerColumn(viewer, SWT.NONE);
+		moxaPortColumn.getColumn().setText("Physical MOXA port");
+		moxaPortColumn.getColumn().setWidth(COLUMN_WIDTH);
+
+		moxaPortColumn.setLabelProvider(new ColumnLabelProvider() {
+			@Override
+			public String getText(Object element) {
+				if (element instanceof MoxaList) {
+					MoxaList list = MoxaList.class.cast(element);
+					String name = list.name;
+					
+					// extracting uptime for conversion and display
+					String[] parts = name.split("\\)\\(");
+					if (1 < parts.length) {
+						String uptime = parts[1].substring(0, parts[1].length() - 1);
+						name = parts[0] + ") [Up Since:" + MoxasViewModel.toDaysHoursMinutes(Long.valueOf(uptime) * 10) + "]";	
+					}
+					return name;
+				} else {
+					MoxaModelObject p = (MoxaModelObject) element;
+					return p.getPhysPort();
+				}
+			}
+		});
+	}
+
+	/**
+	 * @param viewer
+	 */
+	private void makeConnectedIOCColumn(final TreeViewer viewer) {
+		TreeViewerColumn iocColumn = new TreeViewerColumn(viewer, SWT.NONE);
+		iocColumn.getColumn().setText("Connected IOC");
+		iocColumn.getColumn().setWidth(COLUMN_WIDTH);
+
+		iocColumn.setLabelProvider(new ColumnLabelProvider() {
+			@Override
+			public Color getForeground(Object element) {
+				// Change the text colour of cells where a port is connected to multiple IOCs
+				if (element instanceof MoxaModelObject) {
+					MoxaModelObject p = (MoxaModelObject) element;
+					List<Ioc> iocs = p.getIocs();
+					
+					if (iocs.size() > 1) {
+						return new Color(255, 0, 0);
+					}
+				}
+				return super.getForeground(element);
+			}
+			
+			@Override
+			public String getText(Object element) {
+				if (element instanceof ArrayList<?>) {
+					return null;
+				}
+				MoxaModelObject p = (MoxaModelObject) element;
+				List<Ioc> iocs = p.getIocs();
+				
+				return iocs.stream().map(Ioc::getName).collect(joining(", "));
+			}
+		});
+	}
+
+	/**
+	 * @param viewer
+	 */
+	private void makeStatusColumn(final TreeViewer viewer) {
+		TreeViewerColumn infoColumn = new TreeViewerColumn(viewer, SWT.NONE);
+		infoColumn.getColumn().setText("Status");
+		infoColumn.getColumn().setWidth(COLUMN_WIDTH_NARROW);
+
+		infoColumn.setLabelProvider(new ColumnLabelProvider() {
+			@Override
+			public String getText(Object element) {
+				if (element instanceof ArrayList<?>) {
+					return null;
+				}
+				MoxaModelObject field = (MoxaModelObject) element;
+				return field.getStatus();
+			}
+			
+			@Override
+			public Color getForeground(Object element) {
+				// Change the text colour of cells where a port is physically connected
+				if (element instanceof MoxaModelObject) {
+					MoxaModelObject field = (MoxaModelObject) element;
+					
+					if (field.getStatus().equalsIgnoreCase(UP_STATUS)) {
+						return new Color(0, 0, 255);
+					}
+				}
+				return super.getForeground(element);
+			}
+		});
+	}
+
+	/**
+	 * @param viewer
+	 */
+	private void makeAdditionInfoColumn(final TreeViewer viewer) {
+		TreeViewerColumn infoColumn = new TreeViewerColumn(viewer, SWT.NONE);
+		infoColumn.getColumn().setText("Additional Info");
+		infoColumn.getColumn().setWidth(COLUMN_WIDTH);
+
+		infoColumn.setLabelProvider(new ColumnLabelProvider() {
+			@Override
+			public String getText(Object element) {
+				if (element instanceof ArrayList<?>) {
+					return null;
+				}
+				MoxaModelObject field = (MoxaModelObject) element;
+				return field.getAdditionalInfo();
+			}
+		});
 	}
 
 }
