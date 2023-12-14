@@ -20,6 +20,7 @@
 -Dpython.console.encoding=UTF-8
 -Dpython.import.site=false
 -XX:+CreateCoredumpOnCrash
+-XX:+CrashOnOutOfMemoryError
 -Dlog4j2.formatMsgNoLookups=true
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts

@@ -191,7 +191,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>749</width>
       <wuid>4fbad31a:1436c3e166f:-6faf</wuid>
@@ -683,7 +683,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>749</width>
       <wuid>-6ebff10c:1701cbda537:-7148</wuid>

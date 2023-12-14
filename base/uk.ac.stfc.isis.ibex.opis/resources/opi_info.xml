@@ -3567,5 +3567,20 @@
         </macros>
       </value>
     </entry>
+    <entry>
+      <key>TESTWXY</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>testwxy.opi</path>
+        <description>The OPI for the TESTWXY</description>
+        <macros>
+          <macro>
+            <name>TESTWXY</name>
+            <description>The TESTWXY PV prefix (e.g. TESTWXY_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
   </opis>
 </descriptions>
