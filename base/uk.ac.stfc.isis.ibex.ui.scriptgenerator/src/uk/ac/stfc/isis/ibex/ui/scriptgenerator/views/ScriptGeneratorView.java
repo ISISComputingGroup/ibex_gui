@@ -51,6 +51,7 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
+import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSettingsSingleton;
 import uk.ac.stfc.isis.ibex.ui.widgets.IBEXButtonFactory;
 
 /**
@@ -346,15 +347,13 @@ public class ScriptGeneratorView {
 	private void makeToggleInvalidPauseSkip(Composite parent) {
 		Composite actionsControlsGrp = makeGrid(parent, 1, true, 10);
 
-		Button radiosPause = IBEXButtonFactory.radio(actionsControlsGrp, Constants.CHECKBOX_TITLE_INVALID_PAUSE, Constants.TOOLTIP_INVALID_PAUSE, evt -> {
-			boolean enabled = ((Button) evt.widget).getSelection();
-			scriptGeneratorViewModel.setParameterTransferEnabled(enabled); //not going to be setparametertransfer, needs to change to whatever
+		Button radioPause = IBEXButtonFactory.radio(actionsControlsGrp, Constants.CHECKBOX_TITLE_INVALID_PAUSE, Constants.TOOLTIP_INVALID_PAUSE, evt -> {
+			ScriptGeneratorSettingsSingleton.getInstance().setSkipEnabled(false); //sets skipEnabled to false, causing Pause on invalid actions during run of script
 		});
-		radiosPause.setSelection(Constants.INVALID_PAUSE_DEFAULT);
+		radioPause.setSelection(Constants.INVALID_PAUSE_DEFAULT);
 
 		Button radioSkip = IBEXButtonFactory.radio(actionsControlsGrp, Constants.CHECKBOX_TITLE_INVALID_SKIP, Constants.TOOLTIP_INVALID_SKIP, evt -> {
-			boolean enabled = ((Button) evt.widget).getSelection();
-			scriptGeneratorViewModel.setParameterTransferEnabled(enabled); //not going to be setparametertransfer, needs to change to whatever
+			ScriptGeneratorSettingsSingleton.getInstance().setSkipEnabled(true); //sets skipEnabled to true, skipping over invalid actions during run of script
 		});
 		radioSkip.setSelection(Constants.INVALID_SKIP_DEFAULT);
 	}
