@@ -48,7 +48,12 @@ public class PlayingState extends DynamicScriptingState {
 	public Optional<ScriptGeneratorAction> getNextExecutingAction() {
 		if (currentlyExecutingAction.isPresent()) {
 			var currentAction = currentlyExecutingAction.get();
-			return modelAdapter.getActionAfter(currentAction);
+			Optional<ScriptGeneratorAction> nextAction = modelAdapter.getActionAfter(currentAction);
+			while (nextAction.isPresent() && !nextAction.get().isValid()) {
+				nextAction = modelAdapter.getActionAfter(nextAction.get());
+			}
+			return nextAction;
+			
 		} else {
 			return Optional.empty();
 		}
