@@ -135,7 +135,7 @@ public class DaeSettings extends ModelObject {
 	private double fcDelay;
 
 	/**
-	 * The width of he Fermi chopper.
+	 * The width of the Fermi chopper.
 	 */
 	private double fcWidth;
 
@@ -276,14 +276,14 @@ public class DaeSettings extends ModelObject {
 	}
 
 	/**
-	 * @return The current state of the smp veto
+	 * @return The current state of the SMP veto
 	 */
 	public BinaryChoice smpVeto() {
 		return smpVeto;
 	}
 
 	/**
-	 * @param value The new state of the smp veto
+	 * @param value The new state of the SMP veto
 	 */
 	public void setSmpVeto(BinaryChoice value) {
 		firePropertyChange(SMP_VETO, smpVeto, smpVeto = value);
@@ -381,7 +381,7 @@ public class DaeSettings extends ModelObject {
 	}
 
 	/**
-	 * @param value The new fermi chopper width
+	 * @param value The new Fermi chopper width
 	 */
 	public void setFcWidth(double value) {
 		firePropertyChange(FC_WIDTH, fcWidth, fcWidth = value);
