@@ -3567,5 +3567,21 @@
         </macros>
       </value>
     </entry>
+    <entry>
+      <key>LM500</key>
+      <value>
+        <categories/>
+        <type>MONITOR</type>
+        <path>LM500.opi</path>
+        <description>The OPI for the LM500</description>
+        <macros>
+          <macro>
+            <name>LM500</name>
+            <description>The LM500 PV prefix (e.g. LM500_01)</description>
+            <default>LM500_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
   </opis>
 </descriptions>

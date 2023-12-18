@@ -332,6 +332,16 @@ public class ScriptGeneratorView {
 		return group;
 	}
 
+	private void makeToggleParameterTransfer(Composite parent) {
+		Composite actionsControlsGrp = makeGrid(parent, 1, true, 10);
+
+		Button checkbox = IBEXButtonFactory.checkbox(actionsControlsGrp, Constants.CHECKBOX_TITLE_PARAM_TRANSFER, Constants.TOOLTIP_PARAM_TRANSFER, evt -> {
+			boolean enabled = ((Button) evt.widget).getSelection();
+			scriptGeneratorViewModel.setParameterTransferEnabled(enabled);
+		});
+		checkbox.setSelection(Constants.PARAM_TRANSFER_DEFAULT);
+	}
+	
 	/**
 	 * Creates a column containing three buttons for table row modifications.
 	 * 
@@ -397,6 +407,8 @@ public class ScriptGeneratorView {
 				DISPLAY.asyncExec(() -> {
 					runButton.setEnabled(true);
 					errorLabel.setText("");
+					((GridData) errorLabel.getLayoutData()).exclude = true;
+					errorLabel.setVisible(false);
 					errorLabel.getParent().layout();
 				});
 			}
@@ -406,6 +418,8 @@ public class ScriptGeneratorView {
 				DISPLAY.asyncExec(() -> {
 					runButton.setEnabled(false);
 					errorLabel.setText("\u26A0 There are invalid actions.");
+					((GridData) errorLabel.getLayoutData()).exclude = false;
+					errorLabel.setVisible(true);
 					errorLabel.getParent().layout();
 				});
 
@@ -469,6 +483,7 @@ public class ScriptGeneratorView {
 	 * Draws right side of the panel containing the buttons
 	 */
 	private void makeControlButtons(Composite parent) {
+		makeToggleParameterTransfer(parent);
 		makeScriptSaveLoadButtons(parent);
 		makeTableRowControlButtons(parent);
 		makeDynamicScriptingControlButtons(parent);

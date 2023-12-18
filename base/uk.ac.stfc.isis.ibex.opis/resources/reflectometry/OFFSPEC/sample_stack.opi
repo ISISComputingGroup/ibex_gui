@@ -135,7 +135,7 @@
       <height>25</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <PARAM_NAME>Height</PARAM_NAME>
+        <PARAM_NAME>Coarse Height</PARAM_NAME>
         <PARAM_PV>SAMPOFFSET</PARAM_PV>
       </macros>
       <name>Linking Container</name>
@@ -177,7 +177,7 @@
       <height>25</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <PARAM_NAME>Height 2</PARAM_NAME>
+        <PARAM_NAME>Height</PARAM_NAME>
         <PARAM_PV>SAMPHEIGHT</PARAM_PV>
       </macros>
       <name>Linking Container</name>
