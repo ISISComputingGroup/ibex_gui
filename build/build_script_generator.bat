@@ -23,6 +23,9 @@ set "PATH=%PATH%;%~dp0maven\bin"
 
 SET "JAVA_HOME=%LOCAL_JRE_LOCATION%"
 
+REM temporarily disable checks as workaround for JDK CEN header issue
+set "JAVA_TOOL_OPTIONS=-Djdk.util.zip.disableZip64ExtraFieldValidation=true"
+
 if "%PYTHON3%" == "" (
 	set "PYTHON3=C:\Instrument\Apps\Python3\python.exe"
 )
