@@ -86,11 +86,12 @@ if not "%RELEASE%"=="YES" (
 )
 
 REM copy MSI
-copy /Y %MSINAME%.msi %INSTALLDIR%
-if %errorlevel% neq 0 (
-    @echo MSI copy failed
-    exit /b %errorlevel%
-)
+REM disable for now
+REM copy /Y %MSINAME%.msi %INSTALLDIR%
+REM if %errorlevel% neq 0 (
+REM     @echo MSI copy failed
+REM     exit /b %errorlevel%
+REM )
 
 REM Copy the install script across
 cd %BASEDIR%
