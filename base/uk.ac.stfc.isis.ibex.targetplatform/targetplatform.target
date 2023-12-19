@@ -89,6 +89,12 @@
 		<unit id="org.eclipse.nebula.visualization.feature.feature.group" version="2.1.0.202303072132"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="https://download.eclipse.org/eclipse/updates/4.26/"/>
+		<unit id="org.eclipse.platform.ide" version="4.26.0.I20221123-1800"/>
+		<unit id="org.eclipse.rcp.feature.group" version="4.26.0.v20221123-2302"/>
+		<unit id="org.eclipse.rcp.source.feature.group" version="4.26.0.v20221123-2302"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="https://download.eclipse.org/releases/2023-03/"/>
 		<unit id="org.eclipse.emf.sdk.feature.group" version="2.33.0.v20230226-0921"/>
 		<unit id="org.eclipse.gef.cloudio.sdk.feature.group" version="5.0.2.202209120200"/>
@@ -102,12 +108,6 @@
 		<unit id="org.eclipse.gef.layout.sdk.feature.group" version="5.0.0.202209120200"/>
 		<unit id="org.eclipse.gef.mvc.sdk.feature.group" version="5.2.3.202209120200"/>
 		<unit id="org.eclipse.gef.zest.sdk.feature.group" version="5.1.2.202209120200"/>
-	</location>
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="https://download.eclipse.org/eclipse/updates/4.26/"/>
-		<unit id="org.eclipse.platform.ide" version="4.26.0.I20221123-1800"/>
-		<unit id="org.eclipse.rcp.feature.group" version="4.26.0.v20221123-2302"/>
-		<unit id="org.eclipse.rcp.source.feature.group" version="4.26.0.v20221123-2302"/>
 	</location>
 	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
 		<dependencies>
