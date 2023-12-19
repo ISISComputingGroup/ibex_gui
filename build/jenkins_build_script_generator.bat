@@ -1,5 +1,5 @@
 REM %~dp0 expands to directory where this file lives
-setlocal
+setlocal enabledelayedexpansion
 
 set BASEDIR=%~dp0
 
@@ -86,12 +86,13 @@ if not "%RELEASE%"=="YES" (
 )
 
 REM copy MSI
-REM disable for now
-REM copy /Y %MSINAME%.msi %INSTALLDIR%
-REM if %errorlevel% neq 0 (
-REM     @echo MSI copy failed
-REM     exit /b %errorlevel%
-REM )
+if exist "%MSINAME%.msi" (
+    xcopy /y /j %MSINAME%.msi %INSTALLDIR%
+    if !errorlevel! neq 0 (
+        @echo MSI copy failed
+        exit /b !errorlevel!
+    )
+)
 
 REM Copy the install script across
 cd %BASEDIR%
