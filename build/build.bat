@@ -27,6 +27,8 @@ set "PATH=%PATH%;%~dp0maven\bin"
 
 SET "JAVA_HOME=%~dp0jdk"
 
+set "JAVA_TOOL_OPTIONS=-Djdk.util.zip.disableZip64ExtraFieldValidation=true"
+
 if "%PYTHON3%" == "" (
 	set "PYTHON3=C:\Instrument\Apps\Python3\python.exe"
 )
