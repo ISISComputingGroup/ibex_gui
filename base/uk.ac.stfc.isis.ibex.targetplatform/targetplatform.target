@@ -39,48 +39,6 @@
 		<unit id="org.hamcrest.source" version="2.2.0.v20210711-0821"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/Pydev_10_1_3/features/org.python.pydev.p2-repo/target/repository/"/>
-		<unit id="org.python.pydev.feature.feature.group" version="10.1.3.202302240955"/>
-		<unit id="org.python.pydev.feature.source.feature.group" version="10.1.3.202302240955"/>
-	</location>
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/css_gui_dependencies_2023_08_11/p2repo/"/>
-		<unit id="com.fasterxml.jackson.core.jackson-annotations" version="0.0.0"/>
-		<unit id="com.fasterxml.jackson.core.jackson-core" version="0.0.0"/>
-		<unit id="com.fasterxml.jackson.core.jackson-databind" version="0.0.0"/>
-		<unit id="com.fasterxml.jackson.dataformat.jackson-dataformat-smile" version="0.0.0"/>
-		<unit id="com.fasterxml.jackson.jaxrs.jackson-jaxrs-base" version="0.0.0"/>
-		<unit id="com.fasterxml.jackson.jaxrs.jackson-jaxrs-json-provider" version="0.0.0"/>
-		<unit id="com.fasterxml.jackson.module.jackson-module-jaxb-annotations" version="0.0.0"/>
-		<unit id="org.csstudio.alarm.beast.tools.feature.feature.group" version="0.0.0"/>
-		<unit id="org.csstudio.alarm.beast.ui.alarmtable.opiwidget.feature.feature.group" version="0.0.0"/>
-		<unit id="org.csstudio.alarm.beast.ui.feature.feature.group" version="0.0.0"/>
-		<unit id="org.csstudio.alarm.diirt.datasource.feature.feature.group" version="0.0.0"/>
-		<unit id="org.csstudio.applications.opibuilder.feature.feature.group" version="0.0.0"/>
-		<unit id="org.csstudio.applications.opibuilder.widgets.detailpanel.feature.feature.group" version="0.0.0"/>
-		<unit id="org.csstudio.applications.pvmanager.diag.feature.feature.group" version="0.0.0"/>
-		<unit id="org.csstudio.applications.utility.feature.feature.group" version="0.0.0"/>
-		<unit id="org.csstudio.archive.reader.rdb.feature.feature.group" version="0.0.0"/>
-		<unit id="org.csstudio.core.base.feature.feature.group" version="0.0.0"/>
-		<unit id="org.csstudio.core.base.feature.source.feature.group" version="0.0.0"/>
-		<unit id="org.csstudio.core.diirt.feature.feature.group" version="0.0.0"/>
-		<unit id="org.csstudio.core.platform.feature.feature.group" version="0.0.0"/>
-		<unit id="org.csstudio.core.platform.feature.source.feature.group" version="0.0.0"/>
-		<unit id="org.csstudio.core.utility.feature.feature.group" version="0.0.0"/>
-		<unit id="org.csstudio.core.utility.feature.source.feature.group" version="0.0.0"/>
-		<unit id="org.csstudio.thirdparty.all.feature.feature.group" version="0.0.0"/>
-		<unit id="org.csstudio.thirdparty.all.feature.source.feature.group" version="0.0.0"/>
-		<unit id="org.csstudio.trends.databrowser2.feature.feature.group" version="0.0.0"/>
-		<unit id="org.csstudio.trends.databrowser2.opiwidget.feature.feature.group" version="0.0.0"/>
-		<unit id="org.csstudio.utilities.debugging.feature.feature.group" version="0.0.0"/>
-		<unit id="org.epics.caj" version="0.0.0"/>
-		<unit id="org.epics.channelfinder.cf-client-api" version="0.0.0"/>
-		<unit id="org.epics.jca" version="0.0.0"/>
-		<unit id="org.epics.jca.source" version="0.0.0"/>
-		<unit id="org.epics.pvaccess.source" version="0.0.0"/>
-		<unit id="org.epics.pvdata.source" version="0.0.0"/>
-	</location>
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="http://download.eclipse.org/e4/snapshots/org.eclipse.e4.tools/latest"/>
 		<unit id="org.eclipse.e4.tools.spies.feature.feature.group" version="0.18.0.v20200923-1237"/>
 	</location>
@@ -108,6 +66,11 @@
 		<unit id="org.eclipse.gef.layout.sdk.feature.group" version="5.0.0.202209120200"/>
 		<unit id="org.eclipse.gef.mvc.sdk.feature.group" version="5.2.3.202209120200"/>
 		<unit id="org.eclipse.gef.zest.sdk.feature.group" version="5.1.2.202209120200"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/Pydev_11_0_3/features/org.python.pydev.p2-repo/target/repository/"/>
+		<unit id="org.python.pydev.feature.feature.group" version="11.0.3.202312151337"/>
+		<unit id="org.python.pydev.feature.source.feature.group" version="11.0.3.202312151337"/>
 	</location>
 	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
 		<dependencies>
@@ -288,6 +251,43 @@
 				<type>jar</type>
 			</dependency>
 		</dependencies>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/css_gui_dependencies_2023_12_20/p2repo"/>
+		<unit id="com.fasterxml.jackson.core.jackson-annotations" version="2.9.0"/>
+		<unit id="com.fasterxml.jackson.core.jackson-core" version="2.9.7"/>
+		<unit id="com.fasterxml.jackson.core.jackson-databind" version="2.9.7"/>
+		<unit id="com.fasterxml.jackson.dataformat.jackson-dataformat-smile" version="2.6.3"/>
+		<unit id="com.fasterxml.jackson.jaxrs.jackson-jaxrs-base" version="2.6.3"/>
+		<unit id="com.fasterxml.jackson.jaxrs.jackson-jaxrs-json-provider" version="2.6.3"/>
+		<unit id="com.fasterxml.jackson.module.jackson-module-jaxb-annotations" version="2.9.7"/>
+		<unit id="org.csstudio.alarm.beast.tools.feature.feature.group" version="4.0.1.202312190310"/>
+		<unit id="org.csstudio.alarm.beast.ui.alarmtable.opiwidget.feature.feature.group" version="1.0.0.202312190310"/>
+		<unit id="org.csstudio.alarm.beast.ui.feature.feature.group" version="4.1.0.202312190310"/>
+		<unit id="org.csstudio.alarm.diirt.datasource.feature.feature.group" version="0.0.1.202312190310"/>
+		<unit id="org.csstudio.applications.opibuilder.feature.feature.group" version="5.0.0.202312190310"/>
+		<unit id="org.csstudio.applications.opibuilder.widgets.detailpanel.feature.feature.group" version="0.0.1.202312190310"/>
+		<unit id="org.csstudio.applications.pvmanager.diag.feature.feature.group" version="1.0.0.202312190310"/>
+		<unit id="org.csstudio.applications.utility.feature.feature.group" version="1.0.0.202312190310"/>
+		<unit id="org.csstudio.archive.reader.rdb.feature.feature.group" version="1.0.0.202312190310"/>
+		<unit id="org.csstudio.core.base.feature.feature.group" version="0.0.1.202312190310"/>
+		<unit id="org.csstudio.core.base.feature.source.feature.group" version="0.0.1.202312190310"/>
+		<unit id="org.csstudio.core.diirt.feature.feature.group" version="0.0.1.202312190310"/>
+		<unit id="org.csstudio.core.platform.feature.feature.group" version="0.0.1.202312190310"/>
+		<unit id="org.csstudio.core.platform.feature.source.feature.group" version="0.0.1.202312190310"/>
+		<unit id="org.csstudio.core.utility.feature.feature.group" version="4.1.0.202312190310"/>
+		<unit id="org.csstudio.core.utility.feature.source.feature.group" version="4.1.0.202312190310"/>
+		<unit id="org.csstudio.thirdparty.all.feature.feature.group" version="1.0.3.202101071159"/>
+		<unit id="org.csstudio.thirdparty.all.feature.source.feature.group" version="1.0.3.202101071159"/>
+		<unit id="org.csstudio.trends.databrowser2.feature.feature.group" version="4.1.0.202312190310"/>
+		<unit id="org.csstudio.trends.databrowser2.opiwidget.feature.feature.group" version="3.2.0.202312190310"/>
+		<unit id="org.csstudio.utilities.debugging.feature.feature.group" version="1.0.0.202312190310"/>
+		<unit id="org.epics.caj" version="1.1.14"/>
+		<unit id="org.epics.channelfinder.cf-client-api" version="3.0.3"/>
+		<unit id="org.epics.jca" version="2.4.3"/>
+		<unit id="org.epics.jca.source" version="2.4.2"/>
+		<unit id="org.epics.pvaccess.source" version="5.1.2"/>
+		<unit id="org.epics.pvdata.source" version="6.1.2"/>
 	</location>
 </locations>
 <environment>
