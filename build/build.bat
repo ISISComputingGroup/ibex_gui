@@ -1,4 +1,6 @@
 setlocal
+cd /d %~dp0
+
 REM We bundle our own JRE with the client, this is where it is
 set "JRELOCATION=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\ibex_client_jdk-17.0.9+9"
 set "LOCAL_JRE_LOCATION=%~dp0jdk"
@@ -25,6 +27,7 @@ set "PATH=%PATH%;%~dp0maven\bin"
 
 SET "JAVA_HOME=%~dp0jdk"
 
+REM temporarily disable checks as workaround for JDK CEN header issue
 set "JAVA_TOOL_OPTIONS=-Djdk.util.zip.disableZip64ExtraFieldValidation=true"
 
 if "%PYTHON3%" == "" (

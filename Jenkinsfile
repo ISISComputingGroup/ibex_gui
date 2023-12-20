@@ -36,11 +36,15 @@ pipeline {
   stages {  
     stage("Checkout") {
       steps {
-        echo "Branch: ${env.BRANCH_NAME}"
-        checkout scm
+        timeout(time: 2, unit: 'HOURS') {
+          retry(5) {
+            echo "Branch: ${env.BRANCH_NAME}"
+            checkout scm
+	  }
+	}
       }
     }
-    
+	  
     stage("Build") {
       steps {
         script {
