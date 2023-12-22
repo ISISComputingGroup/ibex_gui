@@ -16,6 +16,8 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 
 import uk.ac.stfc.isis.ibex.beamstatus.FacilityPV;
+import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
+import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.ui.blocks.groups.BlocksMenu;
@@ -30,6 +32,8 @@ public class BeamInfoMenu extends MenuManager {
 
 	private static final String LOG_PLOTTER_PERSPECTIVE_ID = "uk.ac.stfc.isis.ibex.client.e4.product.perspective.logplotter";
 	private static final Logger LOG = IsisLog.getLogger(BeamInfoMenu.class);
+	static final ConfigServer SERVER = Configurations.getInstance().server();
+	
 
 	/**
 	 * The constructor, creates the menu for when the specific facility PV is
@@ -38,26 +42,28 @@ public class BeamInfoMenu extends MenuManager {
 	 * @param facilityPV the selected PV
 	 */
 	public BeamInfoMenu(FacilityPV facilityPV) {
-
+		
 		// Creating right-click menu
-
-		add(new Action("Add block to config: " + facilityPV.pv) { // Opening configuration dialog window
-			@Override
-			public void run() {
-
-				try {
-					var handler = new NewBlockHandler();
-					handler.setLocal(false);
-					handler.createDialog(facilityPV.pv);
-
-				} catch (TimeoutException e) {
-					LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
-				} catch (IOException e) {
-					LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
+		// Add the option to add a block to a config, if there are any configs we can write to.
+		if (SERVER.configNamesWithFlags().values().contains(false)) {
+			add(new Action("Add block to config: " + facilityPV.pv) { // Opening configuration dialog window
+				@Override
+				public void run() {
+	
+					try {
+						var handler = new NewBlockHandler();
+						handler.setLocal(false);
+						handler.createDialog(facilityPV.pv);
+	
+					} catch (TimeoutException e) {
+						LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
+					} catch (IOException e) {
+						LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
+					}
+					super.run();
 				}
-				super.run();
-			}
-		});
+			});
+		}
 
 		add(new Action("Open in Log Plotter: " + facilityPV.pv) { // Opening log plotter window
 			public void run() {
