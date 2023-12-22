@@ -58,6 +58,14 @@ public class AddBlockToConfigHandler extends AbstractHandler {
 
 		return null;
 	}
+	
+	/**
+	 * Prevent adding block without permission.
+	 */
+	@Override
+	public boolean isEnabled() {
+		return SERVER.configNamesWithFlags().values().contains(false);
+	}
 
 	/**
 	 * Create dialog to select configuration, open edit configuration and add new
