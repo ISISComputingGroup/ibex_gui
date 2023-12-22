@@ -307,6 +307,15 @@ public class ConfigServer extends Closer {
 	public Collection<String> configNames() {
 		return ConfigInfo.names(configsInfo().getValue());
 	}
+	
+	/**
+	 * Returns whether or not there are writable configurations - dictated by whether all configurations have the protected flag set. 
+	 * 
+	 * @return the true or false value of whether there are currently any writable configurations.
+	 */
+	public Boolean writableConfigsExist() {
+		return this.configNamesWithFlags().values().contains(false);
+	}
 
 	/**
 	 * Returns a hashmap of config names as key and protection flag as value.
