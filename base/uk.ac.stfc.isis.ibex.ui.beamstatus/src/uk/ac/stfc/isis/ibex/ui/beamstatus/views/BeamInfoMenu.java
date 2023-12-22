@@ -45,25 +45,28 @@ public class BeamInfoMenu extends MenuManager {
 		
 		// Creating right-click menu
 		// Add the option to add a block to a config, if there are any configs we can write to.
-		if (SERVER.configNamesWithFlags().values().contains(false)) {
-			add(new Action("Add block to config: " + facilityPV.pv) { // Opening configuration dialog window
-				@Override
-				public void run() {
-	
-					try {
-						var handler = new NewBlockHandler();
-						handler.setLocal(false);
-						handler.createDialog(facilityPV.pv);
-	
-					} catch (TimeoutException e) {
-						LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
-					} catch (IOException e) {
-						LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
-					}
-					super.run();
+		add(new Action("Add block to config: " + facilityPV.pv) { // Opening configuration dialog window
+			@Override
+			public void run() {
+
+				try {
+					var handler = new NewBlockHandler();
+					handler.setLocal(false);
+					handler.createDialog(facilityPV.pv);
+
+				} catch (TimeoutException e) {
+					LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
+				} catch (IOException e) {
+					LoggerUtils.logErrorWithStackTrace(LOG, e.getMessage(), e);
 				}
-			});
-		}
+				super.run();
+			}
+			
+			@Override
+			public boolean isEnabled() {
+				return SERVER.writableConfigsExist();
+			}
+		});
 
 		add(new Action("Open in Log Plotter: " + facilityPV.pv) { // Opening log plotter window
 			public void run() {
