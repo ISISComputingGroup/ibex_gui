@@ -313,8 +313,8 @@ public class ConfigServer extends Closer {
 	 * 
 	 * @return the true or false value of whether there are currently any writable configurations.
 	 */
-	public Boolean writableConfigsExist() {
-		return this.configNamesWithFlags().values().contains(false);
+	public boolean writableConfigsExist() {
+		return this.configNamesWithFlags().values().contains(Boolean.FALSE);
 	}
 
 	/**
