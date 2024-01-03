@@ -64,7 +64,7 @@ public class BeamInfoMenu extends MenuManager {
 			
 			@Override
 			public boolean isEnabled() {
-				return SERVER.writableConfigsExist();
+				return super.isEnabled() && SERVER.writableConfigsExist();
 			}
 		});
 
