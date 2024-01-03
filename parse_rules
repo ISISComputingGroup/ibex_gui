@@ -1,0 +1,4 @@
+# match line starting with ‘error ‘, case-insensitive
+error /(?i)error:?/
+warning /(?i)warning:? /
+info /(?i)info:? /

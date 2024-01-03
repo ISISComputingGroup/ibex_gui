@@ -19,6 +19,7 @@
 package uk.ac.stfc.isis.ibex.ui.scriptgenerator.views;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -33,6 +34,8 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -51,6 +54,8 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
+import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.ui.widgets.IBEXButtonFactory;
 
 /**
@@ -60,7 +65,7 @@ import uk.ac.stfc.isis.ibex.ui.widgets.IBEXButtonFactory;
  * http://www.java2s.com/Code/Java/SWT-JFace-Eclipse/SWTTableSimpleDemo.htm
  */
 @SuppressWarnings("checkstyle:magicnumber")
-public class ScriptGeneratorView {
+public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 
 	private static PreferenceSupplier preferences = new PreferenceSupplier();
 
@@ -113,6 +118,10 @@ public class ScriptGeneratorView {
 	private Button generateScriptButton;
 	private Button generateScriptAsButton;
 	private ScriptGeneratorHelpMenu helpMenu;
+	private Text helpText;
+	private Composite globalParamComposite;
+	private List<Text> globalParamTextList = new ArrayList<Text>();
+	private Label errorLabel;
 
 	/**
 	 * Container for the UI objects.
@@ -122,6 +131,7 @@ public class ScriptGeneratorView {
 	@PostConstruct
 	public void createPartControl(Composite parent) {
 		scriptGeneratorViewModel = new ScriptGeneratorViewModel();
+		scriptGeneratorViewModel.setScriptGeneratorViewModelDelegate(this);
 
 		GridData gdQueueContainer = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		gdQueueContainer.heightHint = 300;
@@ -254,9 +264,9 @@ public class ScriptGeneratorView {
 
 				new Label(topBarComposite, SWT.SEPARATOR | SWT.VERTICAL);
 
-				Text helpText = makeHelpTextBox(topBarComposite);
+				makeHelpTextBox(topBarComposite);
 
-				Composite globalParamComposite = new Composite(mainParent, SWT.NONE);
+				globalParamComposite = new Composite(mainParent, SWT.NONE);
 				globalParamComposite.setLayout(new GridLayout(24, false));
 				globalParamComposite.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
 
@@ -293,11 +303,10 @@ public class ScriptGeneratorView {
 				var scriptDefinitionsRepoPath = scriptGeneratorViewModel.getScriptDefinitionsRepoPath();
 				helpMenu.setScriptDefinitionsLocation(scriptDefinitionsRepoPath);
 
-				List<Label> globalLabel = new ArrayList<Label>();
-				List<Text> globalParamText = new ArrayList<Text>();
 				// Bind the context and the validity checking listeners
-				bind(scriptDefinitionSelector, helpText, globalLabel, globalParamText, globalParamComposite);
-				scriptGeneratorViewModel.createGlobalParamsWidgets();
+				bind(scriptDefinitionSelector);
+
+				onScriptDefinitionChange(scriptGeneratorViewModel, scriptGeneratorViewModel.getScriptDefinition());
 			} else {
 				makeCenteredMessage(mainParent, NO_SCRIPT_DEFINITIONS_MESSAGE);
 			}
@@ -318,8 +327,8 @@ public class ScriptGeneratorView {
 	 * @param parent  a composite control which will be the parent of the new
 	 *                instance (cannot be null)
 	 * @param columns number of columns
-	 * @param equal whether or not to make the columns equal width
-	 * @param margin margin around all four sides
+	 * @param equal   whether or not to make the columns equal width
+	 * @param margin  margin around all four sides
 	 * @return the new COmposite instance
 	 */
 	private Composite makeGrid(Composite parent, int columns, boolean equal, int margin) {
@@ -335,13 +344,14 @@ public class ScriptGeneratorView {
 	private void makeToggleParameterTransfer(Composite parent) {
 		Composite actionsControlsGrp = makeGrid(parent, 1, true, 10);
 
-		Button checkbox = IBEXButtonFactory.checkbox(actionsControlsGrp, Constants.CHECKBOX_TITLE_PARAM_TRANSFER, Constants.TOOLTIP_PARAM_TRANSFER, evt -> {
-			boolean enabled = ((Button) evt.widget).getSelection();
-			scriptGeneratorViewModel.setParameterTransferEnabled(enabled);
-		});
+		Button checkbox = IBEXButtonFactory.checkbox(actionsControlsGrp, Constants.CHECKBOX_TITLE_PARAM_TRANSFER,
+				Constants.TOOLTIP_PARAM_TRANSFER, evt -> {
+					boolean enabled = ((Button) evt.widget).getSelection();
+					scriptGeneratorViewModel.setParameterTransferEnabled(enabled);
+				});
 		checkbox.setSelection(Constants.PARAM_TRANSFER_DEFAULT);
 	}
-	
+
 	/**
 	 * Creates a column containing three buttons for table row modifications.
 	 * 
@@ -386,10 +396,10 @@ public class ScriptGeneratorView {
 	 *               instance (cannot be null)
 	 */
 	private void makeDynamicScriptingControlButtons(Composite parent) {
-		Label errorLabel = new Label(parent, SWT.NONE);
+		errorLabel = new Label(parent, SWT.NONE);
 		errorLabel.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, true));
 		errorLabel.setForeground(new Color(255, 0, 0));
-		
+
 		// Composite for generate buttons
 		Composite dynamicScriptingButtonsGrp = makeGrid(parent, 3, true, 10);
 
@@ -399,32 +409,6 @@ public class ScriptGeneratorView {
 				null);
 		stopButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Stop", Constants.IMAGE_STOP, null);
 		nicosViewModel.bindControls(runButton, pauseButton, stopButton);
-
-		scriptGeneratorViewModel.addOnActionValidityChangeListener(new ActionsValidityChangeListener() {
-
-			@Override
-			public void onValid() {
-				DISPLAY.asyncExec(() -> {
-					runButton.setEnabled(true);
-					errorLabel.setText("");
-					((GridData) errorLabel.getLayoutData()).exclude = true;
-					errorLabel.setVisible(false);
-					errorLabel.getParent().layout();
-				});
-			}
-
-			@Override
-			public void onInvalid(Map<Integer, String> errors) {
-				DISPLAY.asyncExec(() -> {
-					runButton.setEnabled(false);
-					errorLabel.setText("\u26A0 There are invalid actions.");
-					((GridData) errorLabel.getLayoutData()).exclude = false;
-					errorLabel.setVisible(true);
-					errorLabel.getParent().layout();
-				});
-
-			}
-		});
 	}
 
 	private void makeRunAndFinishTime(Composite parent) {
@@ -436,19 +420,21 @@ public class ScriptGeneratorView {
 		estimateText = new Label(scriptTimeGrp, SWT.TOP);
 		estimateText.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 
-		final FontDescriptor boldDescriptor = FontDescriptor.createFrom(estimateText.getFont()).setHeight(11).setStyle(SWT.BOLD);
+		final FontDescriptor boldDescriptor = FontDescriptor.createFrom(estimateText.getFont()).setHeight(11)
+				.setStyle(SWT.BOLD);
 		final Font estimateFont = boldDescriptor.createFont(Display.getDefault());
 		estimateText.setFont(estimateFont);
 		estimateText.setText("Total estimated run time: 0 seconds");
 		estimateText.addDisposeListener(e -> estimateFont.dispose()); // Need to dispose of new font's resources
-		
+
 		// Label for the expected finish time
 		expectedFinishText = new Label(scriptTimeGrp, SWT.BOTTOM);
 		expectedFinishText.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		final Font expectedFinishFont = boldDescriptor.createFont(Display.getDefault());
 		expectedFinishText.setFont(expectedFinishFont);
 		expectedFinishText.setText("Expected Finish Time: 00:00:00");
-		expectedFinishText.addDisposeListener(e -> expectedFinishFont.dispose()); // Need to dispose of new font's resources
+		expectedFinishText.addDisposeListener(e -> expectedFinishFont.dispose()); // Need to dispose of new font's
+																					// resources
 	}
 
 	/**
@@ -503,7 +489,7 @@ public class ScriptGeneratorView {
 		helpLabel.setText("Help: ");
 
 		// Display help for the script definition
-		Text helpText = new Text(parent, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
+		helpText = new Text(parent, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
 		var helpTextDataLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		helpTextDataLayout.heightHint = 50;
 		helpText.setLayoutData(helpTextDataLayout);
@@ -525,14 +511,14 @@ public class ScriptGeneratorView {
 	 *                                   load errors.
 	 */
 	private void setUpScriptDefinitionLoadErrorTable(Composite parent, Map<String, String> scriptDefinitionLoadErrors) {
-		if (!preferences.hideScriptGenScriptDefinitionErrorTable()) {			
+		if (!preferences.hideScriptGenScriptDefinitionErrorTable()) {
 			// A composite to contain the script definition load errors
 			Composite scriptDefinitionErrorComposite = makeGrid(parent, 1, false, 5);
 			scriptDefinitionErrorComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 
 			Label errorLabel = new Label(scriptDefinitionErrorComposite, SWT.NONE);
 			errorLabel.setText("Errors:");
-			
+
 			// A table to display the script definition load errors
 			// From http://www.java2s.com/Code/Java/SWT-JFace-Eclipse/SWTTableSimpleDemo.htm
 			Table table = new Table(scriptDefinitionErrorComposite, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
@@ -585,6 +571,17 @@ public class ScriptGeneratorView {
 		scriptDefinitionSelector
 				.setSelection(new StructuredSelection(scriptGeneratorViewModel.getScriptDefinition().get().getName()));
 
+		scriptDefinitionSelector.addSelectionChangedListener(new ISelectionChangedListener() {
+
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				if (!event.getSelection().isEmpty()) {
+					String selectedScriptDefinitionName = (String) event.getStructuredSelection().getFirstElement();
+					scriptGeneratorViewModel.changeScriptDefinition(selectedScriptDefinitionName);
+				}
+			}
+		});
+
 		return scriptDefinitionSelector;
 	}
 
@@ -598,14 +595,11 @@ public class ScriptGeneratorView {
 	 * check models to their views.
 	 * 
 	 * @param scriptDefinitionSelector The selector for script definitions
-	 * @param helpText                 The help text
 	 */
-	private void bind(ComboViewer scriptDefinitionSelector, Text helpText, List<Label> globalLabel,
-			List<Text> globalParamText, Composite globalParamsComposite) {
-		scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector, helpText, globalLabel,
-				globalParamText, globalParamsComposite, mainParent);
+	private void bind(ComboViewer scriptDefinitionSelector) {
+		scriptGeneratorViewModel.bindScriptDefinitionLoader(scriptDefinitionSelector);
 
-		scriptGeneratorViewModel.bindActionProperties(table, generateScriptButton, generateScriptAsButton);
+		scriptGeneratorViewModel.bindActionProperties(table);
 
 		table.addSelectionChangedListener(event -> scriptGeneratorViewModel.setSelected(table.selectedRows()));
 
@@ -626,6 +620,117 @@ public class ScriptGeneratorView {
 
 		bindToHasSelected(btnMoveActionUp);
 		bindToHasSelected(btnMoveActionDown);
+	}
+
+	@Override
+	public void onSaveEnabledChange(ScriptGeneratorViewModel viewModel, boolean enabled) {
+		generateScriptButton.setEnabled(enabled);
+		generateScriptAsButton.setEnabled(enabled);
+	}
+
+	@Override
+	public void onActionsValidityChange(ScriptGeneratorViewModel viewModel, boolean allActionsValid,
+			Map<Integer, String> globalErrors) {
+		// Highlight global param errors
+		Display.getDefault().asyncExec(() -> {
+			for (int i = 0; i < this.globalParamTextList.size(); i++) {
+				if (globalErrors.containsKey(i)) {
+					globalParamTextList.get(i).setBackground(Constants.INVALID_LIGHT_COLOR);
+					globalParamTextList.get(i).setBackground(Constants.INVALID_DARK_COLOR);
+					globalParamTextList.get(i).setToolTipText(globalErrors.get(i));
+				} else {
+					globalParamTextList.get(i).setBackground(Constants.CLEAR_COLOR);
+					globalParamTextList.get(i).setToolTipText(null);
+				}
+			}
+			
+			runButton.setEnabled(allActionsValid);
+			errorLabel.setText(allActionsValid ? "" : "\u26A0 There are invalid actions.");
+			errorLabel.setVisible(!allActionsValid);
+			errorLabel.getParent().layout();
+		});
+	}
+
+	@Override
+	public void onScriptDefinitionChange(ScriptGeneratorViewModel viewModel,
+			Optional<ScriptDefinitionWrapper> scriptDefinition) {
+
+		if (scriptDefinition.isEmpty()) {
+			helpText.setText("");
+			return;
+		}
+
+		ScriptDefinitionWrapper scriptDefinitionWrapper = scriptDefinition.get();
+
+		// Display help text
+		helpText.setText(scriptDefinitionWrapper.getHelp());
+
+		// Clear previous global parameter widgets and display new global parameters
+		Arrays.stream(globalParamComposite.getChildren()).forEach(Control::dispose);
+		globalParamTextList.clear();
+
+		List<ActionParameter> temp;
+		String param = "No Global Paramaters";
+		String paramVal = "";
+		if (scriptDefinitionWrapper.getGlobalParameters() != null) {
+			temp = scriptDefinitionWrapper.getGlobalParameters();
+
+			// Hide global parameters row if there is nothing to display
+			((GridData) globalParamComposite.getLayoutData()).exclude = temp.isEmpty();
+			globalParamComposite.setVisible(!temp.isEmpty());
+
+			if (!temp.isEmpty()) {
+				for (int paramIndex = 0; paramIndex < temp.size(); paramIndex++) {
+					ActionParameter global = temp.get(paramIndex);
+					param = global.getName();
+					paramVal = global.getDefaultValue();
+					if (!globalParamComposite.isDisposed()) {
+						Label globalLabelCurrent = new Label(globalParamComposite, SWT.NONE);
+						globalLabelCurrent.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+						globalLabelCurrent.setText(param);
+						Text globalParamTextCurrent = new Text(globalParamComposite, SWT.NONE);
+						globalParamTextCurrent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
+						globalParamTextCurrent.setEnabled(true);
+						final int index = paramIndex;
+						globalParamTextCurrent.addListener(SWT.Modify, e -> {
+							viewModel.updateGlobalParams(index, globalParamTextCurrent.getText());
+						});
+						globalParamTextCurrent.setText(paramVal);
+						globalParamTextList.add(globalParamTextCurrent);
+					}
+				}
+			}
+		}
+
+		mainParent.layout();
+	}
+
+	@Override
+	public void onErrorMessage(ScriptGeneratorViewModel viewModel, String title, String message) {
+		MessageDialog.openError(Constants.DISPLAY.getActiveShell(), title, message);
+	}
+
+	@Override
+	public void onWarningMessage(ScriptGeneratorViewModel viewModel, String title, String message) {
+		MessageDialog.openWarning(Constants.DISPLAY.getActiveShell(), title, message);
+	}
+
+	@Override
+	public void onInfoMessage(ScriptGeneratorViewModel viewModel, String title, String message) {
+		MessageDialog.openInformation(Constants.DISPLAY.getActiveShell(), title, message);
+	}
+
+	@Override
+	public boolean onUserConfirmationRequest(ScriptGeneratorViewModel viewModel, String title, String message) {
+		return MessageDialog.openConfirm(Constants.DISPLAY.getActiveShell(), title, message);
+	}
+
+	@Override
+	public int onUserSelectOptionRequest(ScriptGeneratorViewModel viewModel, String title, String message,
+			String[] options, int defaultIndex) {
+		MessageDialog dialog = new MessageDialog(Constants.DISPLAY.getActiveShell(), title, null, message,
+				MessageDialog.QUESTION, options, defaultIndex);
+		return dialog.open();
 	}
 
 }
