@@ -1,4 +1,6 @@
 setlocal
+cd /d %~dp0
+
 REM We bundle our own JRE with the client, this is where it is
 set "JRELOCATION=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\ibex_client_jdk-17.0.6+10"
 set "LOCAL_JRE_LOCATION=%~dp0jdk"
@@ -25,6 +27,9 @@ set "PATH=%PATH%;%~dp0maven\bin"
 
 SET "JAVA_HOME=%~dp0jdk"
 
+REM temporarily disable checks as workaround for JDK CEN header issue
+set "JAVA_TOOL_OPTIONS=-Djdk.util.zip.disableZip64ExtraFieldValidation=true"
+
 if "%PYTHON3%" == "" (
 	set "PYTHON3=C:\Instrument\Apps\Python3\python.exe"
 )
@@ -38,7 +43,8 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 if "%BUILD_NUMBER%" == "" SET BUILD_NUMBER=SNAPSHOT
 
 set mvnErr=
-call mvn -T 1C --settings=%~dp0..\mvn_user_settings.xml -f %~dp0..\base\uk.ac.stfc.isis.ibex.client.tycho.parent\pom.xml -DforceContextQualifier=%BUILD_NUMBER% -Dmaven.repo.local=%~dp0\.m2 clean verify || set mvnErr=1
+REM removing "-T 1C" from mvn for the moment to check if it is causing the occasional "file in use" build fail error
+call mvn --settings=%~dp0..\mvn_user_settings.xml -f %~dp0..\base\uk.ac.stfc.isis.ibex.client.tycho.parent\pom.xml -DforceContextQualifier=%BUILD_NUMBER% -Dmaven.repo.local=%~dp0\.m2 clean verify || set mvnErr=1
 if defined mvnErr exit /b 1
 
 REM Copy built client into a sensible directory to run it
