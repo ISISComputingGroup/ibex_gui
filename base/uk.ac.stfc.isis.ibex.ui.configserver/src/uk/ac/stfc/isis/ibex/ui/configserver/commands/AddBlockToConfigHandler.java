@@ -64,7 +64,7 @@ public class AddBlockToConfigHandler extends AbstractHandler {
 	 */
 	@Override
 	public boolean isEnabled() {
-		return SERVER.writableConfigsExist();
+		return super.isEnabled() && SERVER.writableConfigsExist();
 	}
 
 	/**
