@@ -12,6 +12,21 @@ import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
  */
 public class ServerStatusVariables {
 
+	private static ServerStatusVariables instance;
+
+	/**
+	 * The constructor.
+	 */
+	private ServerStatusVariables() {
+	}
+
+	public static ServerStatusVariables getInstance() {
+		if (instance == null) {
+			instance = new ServerStatusVariables();
+		}
+		return instance;
+	}
+    
     /** PV for existence of Runcontrol IOC */
     private static final String RUNCTRL_PV = "CS:RC:INRANGE";
     /** PV for existence of Blockserver */
@@ -54,12 +69,6 @@ public class ServerStatusVariables {
 
     private final ForwardingObservable<String> alarmServerPV = 
             obsFactory.getSwitchableObservable(new DefaultChannel(), InstrumentUtils.addPrefix(ALARMSVR_PV));
-
-    /**
-     * The constructor.
-     */
-    public ServerStatusVariables() {
-    }
 
     /**
      * @return Observable for PV of Runcontrol IOC
