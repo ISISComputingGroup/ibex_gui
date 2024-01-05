@@ -52,6 +52,15 @@
       </value>
     </entry>
     <entry>
+      <key>ARGUS Magnet Statuses</key>
+      <value>
+        <type>MAGNET</type>
+        <path>ARGUS/magnet_status.opi</path>
+        <description>Statuses of ARGUS trans and long magnets</description>
+        <categories/>
+      </value>
+    </entry>
+    <entry>
       <key>Mk3 Chopper</key>
       <value>
         <type>CHOPPER</type>
@@ -3563,6 +3572,22 @@
             <name>RKNMNTR</name>
             <description>The RKNMNTR PV prefix (e.g. RKNMNTR_01)</description>
             <default>RKNMNTR_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>LM500</key>
+      <value>
+        <categories/>
+        <type>MONITOR</type>
+        <path>LM500.opi</path>
+        <description>The OPI for the LM500</description>
+        <macros>
+          <macro>
+            <name>LM500</name>
+            <description>The LM500 PV prefix (e.g. LM500_01)</description>
+            <default>LM500_01</default>
           </macro>
         </macros>
       </value>

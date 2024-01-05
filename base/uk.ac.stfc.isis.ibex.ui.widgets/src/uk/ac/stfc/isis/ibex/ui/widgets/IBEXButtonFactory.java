@@ -1,3 +1,21 @@
+/*
+ * This file is part of the ISIS IBEX application.
+ * Copyright (C) 2012-2023 Science & Technology Facilities Council.
+ * All rights reserved.
+ *
+ * This program is distributed in the hope that it will be useful.
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution.
+ * EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+ * AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+ * OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+ *
+ * You should have received a copy of the Eclipse Public License v1.0
+ * along with this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or 
+ * http://opensource.org/licenses/eclipse-1.0.php
+ */
+
 package uk.ac.stfc.isis.ibex.ui.widgets;
 
 import org.eclipse.swt.SWT;
@@ -18,6 +36,22 @@ public class IBEXButtonFactory {
 	protected IBEXButtonFactory() {
 	    // Utility class is not meant to be instantiated
 	    throw new UnsupportedOperationException();
+	}
+	
+	/**
+	 * Creates a button that appears as a checkbox.
+	 * 
+	 * @param parent a composite control which will be the parent of the new instance (cannot be null)
+	 * @param text the title of the checkbox
+	 * @param tooltip the tooltip of the button (can be null)
+	 * @param onClickListener the event handler for clicks
+	 * @return n new button instance
+	 */
+	public static Button checkbox(Composite parent, String text, String tooltip, Listener onClickListener) {
+		int style = SWT.CHECK;
+		GridData layoutData = new GridData();
+		
+		return create(parent, style, text, tooltip, null, onClickListener, layoutData);
 	}
 	
 	/**
@@ -67,7 +101,7 @@ public class IBEXButtonFactory {
      * @return the new button instance
      */
     public static Button create(Composite parent, int style, String text, String tooltip, Image image, Listener onClickListener, Object layoutData) {
-    	Button btn = new Button(parent, SWT.NONE);
+    	Button btn = new Button(parent, style);
         if (text != null) {
         	btn.setText(text);
         }
