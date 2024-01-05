@@ -702,6 +702,9 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 			}
 		}
 
+		if (!globalParamComposite.isDisposed()) {
+			globalParamComposite.layout();
+		}
 		mainParent.layout();
 	}
 
