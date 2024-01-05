@@ -10,7 +10,7 @@ import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
 /**
  * Collection of PVs related to the IBEX server status.
  */
-public class ServerStatusVariables {
+public final class ServerStatusVariables {
 
 	private static ServerStatusVariables instance;
 
@@ -20,6 +20,11 @@ public class ServerStatusVariables {
 	private ServerStatusVariables() {
 	}
 
+	/**
+	 * Retrieve the single instance of this class.
+	 * 
+	 * @return the singleton instance
+	 */
 	public static ServerStatusVariables getInstance() {
 		if (instance == null) {
 			instance = new ServerStatusVariables();
