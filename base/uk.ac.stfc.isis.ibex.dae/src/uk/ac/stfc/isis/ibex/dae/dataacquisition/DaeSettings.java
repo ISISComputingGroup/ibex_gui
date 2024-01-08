@@ -171,7 +171,6 @@ public class DaeSettings extends ModelObject {
 	 */
 	public void setMonitorSpectrum(int value) {
 		firePropertyChange(MONITOR_SPECTRUM, monitorSpectrum, monitorSpectrum = value);
-
 	}
 
 	/**
