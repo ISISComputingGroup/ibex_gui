@@ -39,8 +39,6 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.GridData;
@@ -53,6 +51,7 @@ import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.beamstatus.BeamStatus;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonFactory;
 
 /**
  * Provides access to the data browser to show data from TS1/TS2 beam currents
@@ -100,7 +99,7 @@ public class BeamGraphView extends ModelListenerAdapter {
 
 	/** Number of milliseconds in a week */
 	private static final long MILLISECONDS_IN_WEEK = MILLISECONDS_IN_DAY * 7;
-	
+
 	/** Current plot time span in milliseconds. */
 	private long currentPlotTimespanMilliseconds = MILLISECONDS_IN_DAY;
 
@@ -119,16 +118,15 @@ public class BeamGraphView extends ModelListenerAdapter {
 	private Label currentTS1;
 
 	private Label currentTS2;
-	
+
 	private Composite rowOne;
-	
+
 	private Composite rowTwo;
 
 	/**
 	 * Creates the Beam Graph view.
 	 * 
-	 * @param parent
-	 *            The parent container obtained via dependency injection
+	 * @param parent The parent container obtained via dependency injection
 	 */
 	@PostConstruct
 	public void createPartControl(final Composite parent) {
@@ -161,7 +159,7 @@ public class BeamGraphView extends ModelListenerAdapter {
 		}
 
 		createBeamStatusPlot();
-		
+
 		// Get the BeamStatus instance and bind the TS1/TS2 current stats
 		if (BeamStatus.getInstance() != null) {
 			bind(BeamStatus.getInstance());
@@ -171,63 +169,61 @@ public class BeamGraphView extends ModelListenerAdapter {
 	/*
 	 * Generates the time range radio buttons and TS1/2 beam current stats
 	 *
-	 * @param parent the parent container 
+	 * @param parent the parent container
 	 */
 	private void createBeamStatsAndTimeToggles(final Composite parent) {
 
 		rowOne = createCompositeRow(parent);
 		rowTwo = createCompositeRow(parent);
-	
+
 		createTSCurrentLabel(rowOne, 1);
 		createTSCurrentLabel(rowOne, 2);
-		
+
 		createButton(rowTwo, "Last 24 Hours", MILLISECONDS_IN_DAY);
 		createButton(rowTwo, "Last Hour", MILLISECONDS_IN_HOUR);
 		createButton(rowTwo, "Last Week", MILLISECONDS_IN_WEEK);
 
 	}
-	
+
 	/*
 	 * Creates a Composite with a row layout.
 	 */
 	@SuppressWarnings("checkstyle:magicnumber")
-	private Composite createCompositeRow(final Composite parent) { 
-		
+	private Composite createCompositeRow(final Composite parent) {
+
 		Composite controlsComposite = new Composite(parent, SWT.NONE);
 		controlsComposite.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, false));
 		controlsComposite.setSize(SWT.FILL, 20);
 		RowLayout rows2 = new RowLayout(SWT.HORIZONTAL);
 		rows2.spacing = 20;
 		controlsComposite.setLayout(rows2);
-		
+
 		return controlsComposite;
 	}
 
 	private void createButton(final Composite parent, final String name, final long timeDuration) {
-		
-		Button button = new Button(parent, SWT.RADIO);
-		button.setText(name);
-		button.setSelection(timeDuration == currentPlotTimespanMilliseconds);
-		button.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				setTimeRange(timeDuration);
-			}
+
+		Button button = IBEXButtonFactory.radio(parent, name, "Tooltip text", evt -> {
+			setTimeRange(timeDuration);
 		});
+		button.setSelection(timeDuration == currentPlotTimespanMilliseconds);
 	}
 
 	/*
-	 * Creates a TS current label with the value of the current, for either TS1 or TS2
+	 * Creates a TS current label with the value of the current, for either TS1 or
+	 * TS2
 	 * 
 	 * @param parent : the parent container
+	 * 
 	 * @param beamType: whether we are building a label for TS1 or TS2 (1|2)
+	 * 
 	 * @param currentFont : the font to use for the current labels
 	 */
 	@SuppressWarnings("checkstyle:magicnumber")
 	private void createTSCurrentLabel(final Composite parent, int beamType) {
-		
+
 		Font currentFont = new Font(parent.getDisplay(), "Arial", 12, SWT.BOLD);
-		String title = String.format("TS%d Beam Current", beamType);  
+		String title = String.format("TS%d Beam Current", beamType);
 		createBeamLabel(parent, title, currentFont);
 
 		switch (beamType) {
@@ -263,17 +259,15 @@ public class BeamGraphView extends ModelListenerAdapter {
 	 * Binds the value of the beam current for TS1/2 to the appropriate labels.
 	 */
 	private void bind(BeamStatus bs) {
-		
+
 		DataBindingContext bindingContext = new DataBindingContext();
 
-		
 		bindingContext.bindValue(WidgetProperties.text().observe(currentTS1),
 				BeanProperties.value("value").observe(bs.ts1().beamCurrent()));
 
 		bindingContext.bindValue(WidgetProperties.text().observe(currentTS2),
 				BeanProperties.value("value").observe(bs.ts2().beamCurrent()));
 	}
-	
 
 	private void createBeamStatusPlot() {
 		RTTimePlot rtPlot = modelPlot.getPlot();
@@ -287,8 +281,7 @@ public class BeamGraphView extends ModelListenerAdapter {
 	/**
 	 * Sets various properties for the given axis.
 	 * 
-	 * @param axisConfig
-	 *            The axis configuration whose properties will be updated.
+	 * @param axisConfig The axis configuration whose properties will be updated.
 	 */
 	private void setAxisProperties(AxisConfig axisConfig) {
 		axisConfig.setName(Y_AXIS_TITLE);
@@ -309,11 +302,9 @@ public class BeamGraphView extends ModelListenerAdapter {
 	}
 
 	/**
-	 * Add the PV by the specified address to the model for inclusion in the
-	 * plot.
+	 * Add the PV by the specified address to the model for inclusion in the plot.
 	 * 
-	 * @param pvAddress
-	 *            Name of the PV to add to the plot
+	 * @param pvAddress Name of the PV to add to the plot
 	 * @return The generated PV item
 	 */
 	private PVItem generatePVItem(final String pvAddress) {
@@ -350,8 +341,7 @@ public class BeamGraphView extends ModelListenerAdapter {
 	/**
 	 * Add this PV to the model for inclusion in the plot.
 	 * 
-	 * @param newItem
-	 *            PV to add to the plot
+	 * @param newItem PV to add to the plot
 	 */
 	protected void addTrace(final PVItem newItem) {
 		newItem.useDefaultArchiveDataSources();
@@ -381,8 +371,7 @@ public class BeamGraphView extends ModelListenerAdapter {
 	/**
 	 * Error handler for the general errors which CSStudio classes can throw.
 	 * 
-	 * @param err
-	 *            the error that was thrown
+	 * @param err the error that was thrown
 	 */
 	private void onError(Throwable err) {
 		IsisLog.getLogger(getClass()).error(err.toString(), err);
