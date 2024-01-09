@@ -27,54 +27,65 @@ import org.eclipse.wb.swt.ResourceManager;
 /**
  * Constants used on the script generator page.
  */
-final class Constants {	
+final class Constants {
 	protected static final String BUTTON_TITLE_SAVE = "Save Script";
 	protected static final String BUTTON_TITLE_SAVE_AS = "Save Script As";
 	protected static final String BUTTON_TITLE_LOAD = "Load Script";
-	
+
 	protected static final String BUTTON_TITLE_ADD_ROW_TO_END = "Add Row to End";
 	protected static final String BUTTON_TITLE_INSERT_ROW_BELOW = "Insert Row Below";
 	protected static final String BUTTON_TITLE_DELETE_ROWS = "Clear All Rows";
-	
+
 	protected static final String CHECKBOX_TITLE_PARAM_TRANSFER = "Transfer Compatible Parameters";
 	protected static final String CHECKBOX_TITLE_INVALID_PAUSE = "Invalid Actions are Paused on";
 	protected static final String CHECKBOX_TITLE_INVALID_SKIP = "Invalid Actions are Skipped";
-	
+
 	protected static final String BUTTON_TOOLTIP_ADD_ROW_TO_END = "Add a new row to the end of the table";
 	protected static final String BUTTON_TOOLTIP_INSERT_ROW_BELOW = "Insert a new row below the selected line in the table";
 	protected static final String BUTTON_TOOLTIP_DELETE_ROWS = "Delete all rows in the table";
 	protected static final String TOOLTIP_PARAM_TRANSFER = "Enable action parameter transferring where possible when changing script definitions";
 	protected static final String TOOLTIP_INVALID_PAUSE = "Enable toggle to pause whenever an invalid action is found";
 	protected static final String TOOLTIP_INVALID_SKIP = "Enable toggle to skip whenever an invalid action is found";
-	
-    protected static final String LOADING_MESSAGE = "Loading...";
-    protected static final String RELOADING_MESSAGE = "Reloading...";
-    
-    /**
-     * Defines the default behaviour of action parameter transferring.
-     */
-	protected static final boolean PARAM_TRANSFER_DEFAULT = true;
-	protected static final boolean INVALID_PAUSE_DEFAULT = true;
-	protected static final boolean INVALID_SKIP_DEFAULT = false;
 
-	protected static final Image IMAGE_RUN = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/play.png");
-	protected static final Image IMAGE_PAUSE = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/pause.png");
-	protected static final Image IMAGE_STOP = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator", "icons/stop.png");
-	
-	protected static final Image IMAGE_UP_ARROW = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_up.png");
-	protected static final Image IMAGE_DOWN_ARROW = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png");
+	protected static final String LOADING_MESSAGE = "Loading...";
+	protected static final String RELOADING_MESSAGE = "Reloading...";
+
+	/**
+	 * Defines the default behaviour of action parameter transferring.
+	 */
+	protected static final boolean PARAM_TRANSFER_DEFAULT = true;
 	
 	/**
-     * A clear colour for use in other script generator table columns when a row is valid.
-     */
-    protected static final Color CLEAR_COLOUR = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
+	 * When true dynamic scripting skips over invalid actions, when false
+	 * encountering an invalid action while running pauses the execution.
+	 */
+	protected static final boolean INVALID_SKIP_DEFAULT = false;
+
+	protected static final Image IMAGE_RUN = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator",
+			"icons/play.png");
+	protected static final Image IMAGE_PAUSE = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator",
+			"icons/pause.png");
+	protected static final Image IMAGE_STOP = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.scriptgenerator",
+			"icons/stop.png");
+
+	protected static final Image IMAGE_UP_ARROW = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui",
+			"icons/move_up.png");
+	protected static final Image IMAGE_DOWN_ARROW = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui",
+			"icons/move_down.png");
+
+	/**
+	 * A clear colour for use in other script generator table columns when a row is
+	 * valid.
+	 */
+	protected static final Color CLEAR_COLOUR = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
 	protected static final Display DISPLAY = Display.getDefault();
 	/**
 	 * A dark red for use in the validity column when a row is invalid.
 	 */
 	protected static final Color INVALID_DARK_COLOR = DISPLAY.getSystemColor(SWT.COLOR_RED);
 	/**
-	 * A light read for use in the other script generator table columns when a row is invalid.
+	 * A light read for use in the other script generator table columns when a row
+	 * is invalid.
 	 */
 	protected static final Color INVALID_LIGHT_COLOR = new Color(DISPLAY, 255, 204, 203);
 	/**
@@ -86,11 +97,13 @@ final class Constants {
 	 */
 	protected static final Color VALID_COLOR = DISPLAY.getSystemColor(SWT.COLOR_GREEN);
 	/**
-	 * A clear colour for use in other script generator table columns when a row is valid.
+	 * A clear colour for use in other script generator table columns when a row is
+	 * valid.
 	 */
 	protected static final Color CLEAR_COLOR = DISPLAY.getSystemColor(SWT.COLOR_WHITE);
 	/**
-	 * The maximum number of lines to display in the "Get Validity Errors" dialog box before suppressing others.
+	 * The maximum number of lines to display in the "Get Validity Errors" dialog
+	 * box before suppressing others.
 	 */
 	protected static final int MAX_ERRORS_TO_DISPLAY_IN_DIALOG = 10;
 	protected static final String UNSAVED_CHANGES_MARKER = " (*)";
@@ -106,12 +119,12 @@ final class Constants {
 	 * The header of the estimated run time column.
 	 */
 	protected static final String ESTIMATED_RUN_TIME_COLUMN_HEADER = "Estimated run time";
-    
+
 	/**
 	 * Do not use this constructor.
 	 */
 	private Constants() {
 		// Utility class is not meant to be instantiated
-	    throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();
 	}
 }

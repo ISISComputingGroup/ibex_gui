@@ -359,7 +359,7 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 		Button radioPause = IBEXButtonFactory.radio(actionsControlsGrp, Constants.CHECKBOX_TITLE_INVALID_PAUSE, Constants.TOOLTIP_INVALID_PAUSE, evt -> {
 			ScriptGeneratorSettingsSingleton.getInstance().setSkipEnabled(false); //sets skipEnabled to false, causing Pause on invalid actions during run of script
 		});
-		radioPause.setSelection(Constants.INVALID_PAUSE_DEFAULT);
+		radioPause.setSelection(!Constants.INVALID_SKIP_DEFAULT);
 
 		Button radioSkip = IBEXButtonFactory.radio(actionsControlsGrp, Constants.CHECKBOX_TITLE_INVALID_SKIP, Constants.TOOLTIP_INVALID_SKIP, evt -> {
 			ScriptGeneratorSettingsSingleton.getInstance().setSkipEnabled(true); //sets skipEnabled to true, skipping over invalid actions during run of script

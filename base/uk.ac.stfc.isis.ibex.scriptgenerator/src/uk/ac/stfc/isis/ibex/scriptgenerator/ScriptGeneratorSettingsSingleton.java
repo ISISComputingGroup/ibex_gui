@@ -1,22 +1,19 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator;
 
-// TODO import uk.ac.stfc.isis.ibex.ui.scriptgenerator.views.Constants;
 /***
- * The singleton class for settings of the Script Generator, to hold
- * values such as whether skipping or pausing on invalid actions is 
- * selected.
- * @author yyf77781
- *
+ * The singleton class for settings of the Script Generator, to hold values such
+ * as whether skipping or pausing on invalid actions is selected.
  */
 public final class ScriptGeneratorSettingsSingleton {
 	private static ScriptGeneratorSettingsSingleton instance;
 	private boolean skipEnabled = false;
-	
-	
-	private ScriptGeneratorSettingsSingleton() { }
-	
+
+	private ScriptGeneratorSettingsSingleton() {
+	}
+
 	/***
 	 * Method to get the instance of this class.
+	 * 
 	 * @return the instance of the class
 	 */
 	public static ScriptGeneratorSettingsSingleton getInstance() {
@@ -25,18 +22,20 @@ public final class ScriptGeneratorSettingsSingleton {
 		}
 		return instance;
 	}
-	
+
 	/***
-	 * Get the value of skip enabled setting, where true is enabled and
-	 * false is not enabled.
+	 * Get the value of skip enabled setting, where true is enabled and false is not
+	 * enabled.
+	 * 
 	 * @return true or false
 	 */
 	public boolean getSkipEnabled() {
 		return skipEnabled;
 	}
-	
+
 	/***
 	 * Set the value of skip enabled setting.
+	 * 
 	 * @param enabled
 	 */
 	public void setSkipEnabled(boolean enabled) {
