@@ -1,4 +1,3 @@
-
 /*
 * This file is part of the ISIS IBEX application.
 * Copyright (C) 2012-2015 Science & Technology Facilities Council.
@@ -16,8 +15,7 @@
 * https://www.eclipse.org/org/documents/epl-v10.php or 
 * http://opensource.org/licenses/eclipse-1.0.php
 */
-
-package uk.ac.stfc.isis.ibex.ui.dae.run;
+package uk.ac.stfc.isis.ibex.ui.widgets.buttons;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
@@ -35,16 +33,17 @@ import uk.ac.stfc.isis.ibex.model.Action;
  */
 public class ActionButton extends Button {
 
-    /**
-     * Create a new action button.
-     * 
-     * @param parent a composite control which will be the parent of the new instance (cannot be null)
-     * @param style the style of control to construct
-     * @param action the action the button should perform
-     */
+	/**
+	 * Create a new action button.
+	 * 
+	 * @param parent a composite control which will be the parent of the new
+	 *               instance (cannot be null)
+	 * @param style  the style of control to construct
+	 * @param action the action the button should perform
+	 */
 	public ActionButton(Composite parent, int style, Action action) {
 		super(parent, style);
-		
+
 		if (action != null) {
 			bind(action);
 		}
@@ -54,11 +53,12 @@ public class ActionButton extends Button {
 	protected void checkSubclass() {
 		// Allow sub-classing
 	}
-	
+
 	private void bind(final Action action) {
 		DataBindingContext bindingContext = new DataBindingContext();
-		bindingContext.bindValue(WidgetProperties.enabled().observe(this), BeanProperties.value("canExecute").observe(action));
-		
+		bindingContext.bindValue(WidgetProperties.enabled().observe(this),
+				BeanProperties.value("canExecute").observe(action));
+
 		addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

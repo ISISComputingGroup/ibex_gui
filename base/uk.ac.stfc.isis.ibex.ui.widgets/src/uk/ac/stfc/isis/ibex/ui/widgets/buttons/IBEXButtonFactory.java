@@ -16,14 +16,17 @@
  * http://opensource.org/licenses/eclipse-1.0.php
  */
 
-package uk.ac.stfc.isis.ibex.ui.widgets;
+package uk.ac.stfc.isis.ibex.ui.widgets.buttons;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Listener;
+
+import uk.ac.stfc.isis.ibex.model.Action;
 
 /**
  * A factory pattern for creating commonly used buttons.
@@ -50,6 +53,15 @@ public class IBEXButtonFactory {
 	public static Button checkbox(Composite parent, String text, String tooltip, Listener onClickListener) {
 		int style = SWT.CHECK;
 		GridData layoutData = new GridData();
+		
+		
+		return create(parent, style, text, tooltip, null, onClickListener, layoutData);
+	}
+	
+	public static Button radio(Composite parent, String text, String tooltip, Listener onClickListener) {
+		int style = SWT.RADIO;
+		RowData layoutData = new RowData();
+		
 		
 		return create(parent, style, text, tooltip, null, onClickListener, layoutData);
 	}
@@ -115,4 +127,17 @@ public class IBEXButtonFactory {
         btn.setLayoutData(layoutData);
 		return btn;
     }
+    
+    public static ActionButton actionButton(Composite parent, Action action, String text, Image image ) {
+		ActionButton button = new ActionButton(parent, SWT.CENTER, action);
+		
+		button.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		button.setText(text);
+		button.setImage(image);
+		
+		return button; 	
+    }
+    
+	
+    
 }
