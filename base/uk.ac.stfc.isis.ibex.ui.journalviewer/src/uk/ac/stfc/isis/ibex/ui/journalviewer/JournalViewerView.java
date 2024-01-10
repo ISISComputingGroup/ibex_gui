@@ -63,6 +63,7 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.tables.NullComparator;
 import uk.ac.stfc.isis.ibex.validators.NumbersOnlyListener;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonFactory;
 
 /**
  * Journal viewer main view.
@@ -201,13 +202,15 @@ public class JournalViewerView {
 	    error.setLayoutData(new RowData(200, SWT.DEFAULT));
 
         for (final JournalField property : JournalField.values()) {
-            final Button checkbox = new Button(selectedContainer, SWT.CHECK);
-            checkbox.setText(property.getFriendlyName());
+        	  final Button checkbox = IBEXButtonFactory.checkbox(selectedContainer, property.getFriendlyName(), null, null);
+        	  
+        			  
+//            final Button checkbox = new Button(selectedContainer, SWT.CHECK);
+//            checkbox.setText(property.getFriendlyName());
             checkbox.setSelection(model.getFieldSelected(property));
             checkbox.addSelectionListener(new SelectionAdapter() {
                 @Override
                 public void widgetSelected(SelectionEvent e) {
-                    super.widgetSelected(e);
                     setProgressIndicatorsVisible(true);
                     model.setFieldSelected(property, checkbox.getSelection()).thenAccept(ignored -> setProgressIndicatorsVisible(false));
                 }

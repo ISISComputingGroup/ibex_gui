@@ -13,7 +13,7 @@ import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
-import uk.ac.stfc.isis.ibex.ui.widgets.HelpButton;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonFactory;
 
 /**
  * The nicos status container.
@@ -41,7 +41,7 @@ public class NicosStatusContainer {
         nicosStatus.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         nicosStatus.setLayout(new GridLayout(2, false));
         
-        new HelpButton(nicosStatus, HELP_LINK, DESCRIPTION);
+        IBEXButtonFactory.helpButton(nicosStatus, HELP_LINK, DESCRIPTION);
         
         Composite textComposite = new Composite(nicosStatus, SWT.NONE);
         textComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));

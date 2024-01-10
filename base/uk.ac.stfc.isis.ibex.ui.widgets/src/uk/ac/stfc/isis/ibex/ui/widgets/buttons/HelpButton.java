@@ -1,4 +1,4 @@
-package uk.ac.stfc.isis.ibex.ui.widgets;
+package uk.ac.stfc.isis.ibex.ui.widgets.buttons;
 
 import java.net.MalformedURLException;
 import java.net.URL;

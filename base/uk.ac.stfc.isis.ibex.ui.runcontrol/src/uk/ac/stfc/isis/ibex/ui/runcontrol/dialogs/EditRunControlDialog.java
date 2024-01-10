@@ -36,7 +36,8 @@ import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlActivator;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
-import uk.ac.stfc.isis.ibex.ui.widgets.HelpButton;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.HelpButton;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonFactory;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
 /**
@@ -88,7 +89,7 @@ public class EditRunControlDialog extends TitleAreaDialog {
         editor = new RunControlSettingsPanel(this, parent, SWT.NONE, configServer, runControlServer, viewModel);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
-		new HelpButton(parent, HELP_LINK, TITLE);
+		IBEXButtonFactory.helpButton(parent, HELP_LINK, TITLE);
 
 		return editor;
 	}

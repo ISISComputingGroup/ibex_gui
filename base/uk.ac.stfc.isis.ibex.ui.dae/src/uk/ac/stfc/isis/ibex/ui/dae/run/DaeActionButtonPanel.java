@@ -29,7 +29,7 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.dae.actions.DaeActions;
 import uk.ac.stfc.isis.ibex.model.Action;
-import uk.ac.stfc.isis.ibex.ui.widgets.HelpButton;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.HelpButton;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonFactory;
 
 /**
@@ -77,7 +77,7 @@ public class DaeActionButtonPanel extends Composite {
 		Label bottomSpacer = new Label(this, SWT.NONE);
 		bottomSpacer.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1));
 
-		new HelpButton(parent, HELP_LINK, DESCRIPTION);
+		IBEXButtonFactory.helpButton(parent, HELP_LINK, DESCRIPTION);
 	}
 
 	private void addActionButton(String text, String imageFileName, final Action action) {

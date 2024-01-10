@@ -37,6 +37,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.w3c.dom.events.EventTarget;
 
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
@@ -45,7 +46,8 @@ import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.commands.ConfigureDeviceScreensHandler;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.list.DeviceScreensTable;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.ViewDeviceScreensDescriptionViewModel;
-import uk.ac.stfc.isis.ibex.ui.widgets.HelpButton;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.HelpButton;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonFactory;
 
 /**
  * A UI Panel for the devices screens.
@@ -82,24 +84,32 @@ public class DeviceScreenListPanel extends Composite {
 
         GridLayout compositeLayout = new GridLayout(1, true);
         this.setLayout(compositeLayout);
-
-        configureDevScreensButton = new Button(this, SWT.NONE);
-        configureDevScreensButton.setText("Edit Device Screens");
-        GridData gdconfigureDevScreensButton = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
-        configureDevScreensButton.setLayoutData(gdconfigureDevScreensButton);
-
-        configureDevScreensButton.addSelectionListener(new SelectionAdapter() {
-
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                try {
-                    configureDeviceScreensHandler.execute(new ExecutionEvent());
-                } catch (ExecutionException ex) {
-                    LOG.catching(ex);
-                    MessageDialog.openError(parent.getShell(), "Error displaying config dialogue", ex.getMessage());
-                }
-            }
-        });
+        
+        configureDevScreensButton = IBEXButtonFactory.fitText(this, "Edit Device Screens", null, null, evt -> {  
+        try {
+            configureDeviceScreensHandler.execute(new ExecutionEvent());
+        } catch (ExecutionException ex) {
+            LOG.catching(ex);
+            MessageDialog.openError(parent.getShell(), "Error displaying config dialogue", ex.getMessage());
+        }} );
+        
+//        configureDevScreensButton = new Button(this, SWT.NONE);
+//        configureDevScreensButton.setText("Edit Device Screens");
+//        GridData gdconfigureDevScreensButton = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
+//        configureDevScreensButton.setLayoutData(gdconfigureDevScreensButton);
+//
+//        configureDevScreensButton.addSelectionListener(new SelectionAdapter() {
+//
+//            @Override
+//            public void widgetSelected(SelectionEvent e) {
+//                try {
+//                    configureDeviceScreensHandler.execute(new ExecutionEvent());
+//                } catch (ExecutionException ex) {
+//                    LOG.catching(ex);
+//                    MessageDialog.openError(parent.getShell(), "Error displaying config dialogue", ex.getMessage());
+//                }
+//            }
+//        });
 
         deviceScreenList = new DeviceScreensTable(this, SWT.NONE, SWT.FULL_SELECTION);
         GridData devicesListLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
@@ -123,7 +133,8 @@ public class DeviceScreenListPanel extends Composite {
             }
         });
         
-        new HelpButton(this, HELP_LINK, DESCRIPTION);
+        IBEXButtonFactory.helpButton(this, HELP_LINK, DESCRIPTION);
+        
 
         viewModel.addPropertyChangeListener(new PropertyChangeListener() {
             @Override
