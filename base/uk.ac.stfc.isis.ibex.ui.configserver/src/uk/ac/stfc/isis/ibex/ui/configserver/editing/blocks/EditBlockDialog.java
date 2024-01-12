@@ -42,6 +42,9 @@ public class EditBlockDialog extends TitleAreaDialog {
     
     BlockGroupPanel blockGroupPanel;
     BlockGroupViewModel blockGroupViewModel;
+    
+    BlockSetPanel blockSetPanel;
+    BlockSetViewModel blockSetViewModel;
 	
 	Button okButton;
 	
@@ -91,6 +94,7 @@ public class EditBlockDialog extends TitleAreaDialog {
         blockRunControlViewModel = new BlockRunControlViewModel(this.block);
         blockDetailsViewModel = new BlockDetailsViewModel(this.block, this.config);
         blockGroupViewModel = new BlockGroupViewModel(this.block, this.config);
+        blockSetViewModel = new BlockSetViewModel(this.block, this.config);
 		
 		viewModels = Arrays.asList(blockLogSettingsViewModel, blockRunControlViewModel, blockDetailsViewModel, blockGroupViewModel);
 		
@@ -119,6 +123,10 @@ public class EditBlockDialog extends TitleAreaDialog {
         blockGroupPanel = new BlockGroupPanel(blockDetailsPanel, SWT.NONE,
         		blockGroupViewModel);
         blockGroupPanel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        
+        blockSetPanel = new BlockSetPanel(blockDetailsPanel, SWT.NONE,
+        		blockSetViewModel);
+        blockSetPanel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
 		new HelpButton(parent, HELP_LINK, DESCRIPTION);
 		
