@@ -241,8 +241,8 @@ public class MoxasViewModel extends ModelObject {
 		if (2 < days) {
 			upTime = String.format("%d Day(s)", days);
 		} else {
-			upTime = String.format("%d Day(s) %d Hour(s) %d Minute(s) %d Seconds(s)", duration.toDaysPart(),
-					duration.toHoursPart(), duration.toMinutesPart(), duration.toSecondsPart());
+			upTime = String.format("%d Day(s) %d Hour(s) %d Minute(s)", duration.toDaysPart(),
+					duration.toHoursPart(), duration.toMinutesPart());
 		}
 
 		return upTime;

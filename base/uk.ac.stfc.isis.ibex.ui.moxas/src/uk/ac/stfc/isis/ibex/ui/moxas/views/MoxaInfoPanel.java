@@ -47,8 +47,11 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.wb.swt.SWTResourceManager;
+
 
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 
@@ -104,10 +107,10 @@ public class MoxaInfoPanel extends Composite {
 				TreeItem item = (TreeItem) e.item;
 				model.addExpanded(item.getText());		
 			}
-    	});
-				
+		});
+
 		Composite expansionComposite = new Composite(this, SWT.FILL);
-		expansionComposite.setLayout(new GridLayout(3, true));
+		expansionComposite.setLayout(new GridLayout(5, true));
 		expandButton = new Button(expansionComposite, SWT.NONE);
 		expandButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		expandButton.setText("\u25BC Expand All");
@@ -128,6 +131,11 @@ public class MoxaInfoPanel extends Composite {
 			}
 		});
 
+		Label refreshLabel = new Label(expansionComposite, SWT.NONE);
+		refreshLabel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 3, 1));
+		refreshLabel.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
+		refreshLabel.setText("Items will refresh every 30 seconds");
+
 		model.addUiThreadPropertyChangeListener("moxaMappings", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
@@ -137,8 +145,8 @@ public class MoxaInfoPanel extends Composite {
 				model.refresh();
 			}
 		});
-		
-    	model.addUiThreadPropertyChangeListener("expanded", new PropertyChangeListener() {
+
+		model.addUiThreadPropertyChangeListener("expanded", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				// Re-expand previously expanded items
@@ -198,7 +206,7 @@ public class MoxaInfoPanel extends Composite {
 					String[] parts = name.split("\\)\\(");
 					if (1 < parts.length) {
 						String uptime = parts[1].substring(0, parts[1].length() - 1);
-						name = parts[0] + ") [Up Since:" + MoxasViewModel.toDaysHoursMinutes(Long.valueOf(uptime) * 10) + "]";	
+						name = parts[0] + ") [Up " + MoxasViewModel.toDaysHoursMinutes(Long.valueOf(uptime) * 10) + "]";
 					}
 					return name;
 				} else {
@@ -215,7 +223,7 @@ public class MoxaInfoPanel extends Composite {
 	private void makeConnectedIOCColumn(final TreeViewer viewer) {
 		TreeViewerColumn iocColumn = new TreeViewerColumn(viewer, SWT.NONE);
 		iocColumn.getColumn().setText("Connected IOC");
-		iocColumn.getColumn().setWidth(COLUMN_WIDTH);
+		iocColumn.getColumn().setWidth(COLUMN_WIDTH_NARROW);
 
 		iocColumn.setLabelProvider(new ColumnLabelProvider() {
 			@Override
