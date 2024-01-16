@@ -290,7 +290,6 @@
         <children xsi:type="basic:Part" xmi:id="_Nh7O0J7ZEeemm6vdKXiI0Q" elementId="uk.ac.stfc.isis.ibex.ui.dae.CombinedSpectraPlotsOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Combined Spectra Plots"/>
         <children xsi:type="basic:Part" xmi:id="_aWGE4J7ZEeemm6vdKXiI0Q" elementId="uk.ac.stfc.isis.ibex.e4.client.part.detectordiagnostics" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dae/uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics.DetectorDiagnosticsPanel" label="Detector Diagnostics"/>
         <children xsi:type="basic:Part" xmi:id="_lWyjcJ7fEeemm6vdKXiI0Q" elementId="uk.ac.stfc.isis.ibex.e4.client.part.vetos" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.dae/uk.ac.stfc.isis.ibex.ui.dae.vetos.VetosPanel" label="Vetos"/>
-        <children xsi:type="basic:Part" xmi:id="_vjS5MEf1Ee6cnsbFlljtcQ" elementId="uk.ac.stfc.isis.ibex.e4.client.part.0"/>
       </children>
     </children>
   </snippets>

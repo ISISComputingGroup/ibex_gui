@@ -110,6 +110,8 @@ public final class ComponentIcons {
                 return "powersupply";
             case HTS_MAGNET:
             case B17TMAG:
+            case MAGNET:
+            	return "magnet";
             case TESLAMETER:
             	return "magnet";
             case BEAMSTOP:
