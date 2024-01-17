@@ -121,6 +121,22 @@ public class IBEXButtonFactory {
 
 		return create(parent, style, text, tooltip, null, onClickListener, layoutData);
 	}
+	
+	public static Button fitTextRow(Composite parent, String text, String tooltip, Integer widthHint,
+			Listener onClickListener) {
+		int style = SWT.NONE;
+		RowData layoutData;
+		if (widthHint != null) {
+		layoutData = new RowData(widthHint, SWT.DEFAULT);
+		} else {
+			layoutData = new RowData();
+		}
+//		if (widthHint != null) {
+//			layoutData.widthHint = widthHint;
+//		}
+
+		return create(parent, style, text, tooltip, null, onClickListener, layoutData);
+	}
 
 	/**
 	 * Creates a button using the given parameters.

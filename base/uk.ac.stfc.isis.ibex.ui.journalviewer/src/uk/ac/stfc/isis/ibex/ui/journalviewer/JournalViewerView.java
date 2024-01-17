@@ -151,31 +151,56 @@ public class JournalViewerView {
 	    RowData lblResultsData = new RowData();
 	    lblResultsData.width = 180;
 		lblResults.setLayoutData(lblResultsData);
-	
-		btnFirstPage = new Button(basicControls, SWT.NONE);
-		btnFirstPage.setText("<<");
-	    btnFirstPage.setToolTipText("Go to the first page.");
+		
+		btnFirstPage = IBEXButtonFactory.fitTextRow(basicControls, "<<", "Go to the first page.", null,  e -> {
+        	setProgressIndicatorsVisible(true);
+        	model.firstPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        });
+//		btnFirstPage = new Button(basicControls, SWT.NONE);
+//		btnFirstPage.setText("<<");
+//	    btnFirstPage.setToolTipText("Go to the first page.");
+
+        btnPrevPage = IBEXButtonFactory.fitTextRow(basicControls, "< Prev", "Go to the previous page.", null, e -> {
+        	setProgressIndicatorsVisible(true);
+        	model.prevPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        });
 	    
-	    btnPrevPage = new Button(basicControls, SWT.NONE);
-	    btnPrevPage.setText(" < Prev ");
-	    btnPrevPage.setToolTipText("Go to the previous page.");
+	    // btnPrevPage = new Button(basicControls, SWT.NONE);
+	    // btnPrevPage.setText(" < Prev ");
+	    // btnPrevPage.setToolTipText("Go to the previous page.");
 	
 	    textPageNumber = new Text(basicControls, SWT.BORDER);
 	    RowData textPageNumberData = new RowData();
 	    textPageNumberData.width = 40;
 	    textPageNumber.setLayoutData(textPageNumberData);
 	    textPageNumber.setTextLimit(9);
+
+        btnNextPage = IBEXButtonFactory.fitTextRow(basicControls, "Next >", "Go to the next page.", null, e -> {
+        	setProgressIndicatorsVisible(true);
+        	model.nextPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        });
 	
-	    btnNextPage = new Button(basicControls, SWT.NONE);
-	    btnNextPage.setText(" Next > ");
-	    btnNextPage.setToolTipText("Go to the next page.");
+	    // btnNextPage = new Button(basicControls, SWT.NONE);
+	    // btnNextPage.setText(" Next > ");
+	    // btnNextPage.setToolTipText("Go to the next page.");
+
+        btnLastPage = IBEXButtonFactory.fitTextRow(basicControls, ">>", "Go to the last page.", null, e -> {
+        	setProgressIndicatorsVisible(true);
+        	model.lastPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        });
 	    
-	    btnLastPage = new Button(basicControls, SWT.NONE);
-	    btnLastPage.setText(">>");
-	    btnLastPage.setToolTipText("Go to the last page.");
+	    // btnLastPage = new Button(basicControls, SWT.NONE);
+	    // btnLastPage.setText(">>");
+	    // btnLastPage.setToolTipText("Go to the last page.");
+
+        btnRefresh = IBEXButtonFactory.fitTextRow(basicControls, "Refresh", "Refresh the journal.", null, e -> {
+            resetPageNumber();
+            setProgressIndicatorsVisible(true);
+            model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        });
 	
-	    btnRefresh = new Button(basicControls, SWT.NONE);
-	    btnRefresh.setText("Refresh");
+	    // btnRefresh = new Button(basicControls, SWT.NONE);
+	    // btnRefresh.setText("Refresh");
 	
 	    searchControls = new Composite(controls, SWT.NONE);
 	    RowLayout rlSearchControls = new RowLayout(SWT.HORIZONTAL);
@@ -185,13 +210,23 @@ public class JournalViewerView {
 	    searchInput = new SearchInput(searchControls, model);
 	    RowLayout rlFilterControl = new RowLayout(SWT.HORIZONTAL);
 	    searchInput.setLayout(rlFilterControl);
+
+        btnSearch = IBEXButtonFactory.fitTextRow(searchControls, "Search", "Search the journal.", 80, e -> search());
 	
-	    btnSearch = new Button(searchControls, SWT.NONE);
-	    btnSearch.setLayoutData(new RowData(80, SWT.DEFAULT));
-	    btnSearch.setText("Search");
+	    // btnSearch = new Button(searchControls, SWT.NONE);
+	    // btnSearch.setLayoutData(new RowData(80, SWT.DEFAULT));
+	    // btnSearch.setText("Search");
+
+        btnClear = IBEXButtonFactory.fitTextRow(searchControls, "Clear", "Clear the search.", null, e -> {
+            resetPageNumber();
+            searchInput.clearInput();
+            model.resetActiveSearch();
+            setProgressIndicatorsVisible(true);
+            model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        });
 	
-	    btnClear = new Button(searchControls, SWT.NONE);
-	    btnClear.setText("Clear");
+	    // btnClear = new Button(searchControls, SWT.NONE);
+	    // btnClear.setText("Clear");
 	
 	    progressBar = new ProgressBar(searchControls, SWT.INDETERMINATE);
 	    progressBar.setMaximum(80);
@@ -202,7 +237,7 @@ public class JournalViewerView {
 	    error.setLayoutData(new RowData(200, SWT.DEFAULT));
 
         for (final JournalField property : JournalField.values()) {
-        	  final Button checkbox = IBEXButtonFactory.checkbox(selectedContainer, property.getFriendlyName(), null, null);
+        	  final Button checkbox = IBEXButtonFactory.checkboxRow(selectedContainer, property.getFriendlyName(), null, null);
         	  
         			  
 //            final Button checkbox = new Button(selectedContainer, SWT.CHECK);
@@ -371,41 +406,41 @@ public class JournalViewerView {
         	textPageNumber.selectAll();
         });
         
-        btnPrevPage.addListener(SWT.Selection, e -> {
-        	setProgressIndicatorsVisible(true);
-        	model.prevPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
-        });
+        // btnPrevPage.addListener(SWT.Selection, e -> {
+        // 	setProgressIndicatorsVisible(true);
+        // 	model.prevPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        // });
 
-        btnNextPage.addListener(SWT.Selection, e -> {
-        	setProgressIndicatorsVisible(true);
-        	model.nextPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
-        });
+        // btnNextPage.addListener(SWT.Selection, e -> {
+        // 	setProgressIndicatorsVisible(true);
+        // 	model.nextPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        // });
         
-        btnFirstPage.addListener(SWT.Selection, e -> {
-        	setProgressIndicatorsVisible(true);
-        	model.firstPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
-        });
+//        btnFirstPage.addListener(SWT.Selection, e -> {
+//        	setProgressIndicatorsVisible(true);
+//        	model.firstPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
+//        });
 
-        btnLastPage.addListener(SWT.Selection, e -> {
-        	setProgressIndicatorsVisible(true);
-        	model.lastPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
-        });
+        // btnLastPage.addListener(SWT.Selection, e -> {
+        // 	setProgressIndicatorsVisible(true);
+        // 	model.lastPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        // });
 
-        btnRefresh.addListener(SWT.Selection, e -> {
-            resetPageNumber();
-            setProgressIndicatorsVisible(true);
-            model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
-        });
+        // btnRefresh.addListener(SWT.Selection, e -> {
+        //     resetPageNumber();
+        //     setProgressIndicatorsVisible(true);
+        //     model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        // });
 
-        btnSearch.addListener(SWT.Selection, e -> search());
+        // btnSearch.addListener(SWT.Selection, e -> search());
 
-        btnClear.addListener(SWT.Selection, e -> {
-            resetPageNumber();
-            searchInput.clearInput();
-            model.resetActiveSearch();
-            setProgressIndicatorsVisible(true);
-            model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
-        });
+        // btnClear.addListener(SWT.Selection, e -> {
+        //     resetPageNumber();
+        //     searchInput.clearInput();
+        //     model.resetActiveSearch();
+        //     setProgressIndicatorsVisible(true);
+        //     model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        // });
 
         model.addPropertyChangeListener("runs", e -> 
         DISPLAY.asyncExec(() -> {
