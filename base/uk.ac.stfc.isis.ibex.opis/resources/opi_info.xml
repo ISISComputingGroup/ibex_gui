@@ -3293,13 +3293,14 @@
       <key>PRLTHERM</key>
       <value>
         <categories/>
-        <type>UNKNOWN</type>
+        <type>EUROTHERM</type>
         <path>prltherm.opi</path>
-        <description>The OPI for the PRLTHERM</description>
+        <description>The OPI for the PEARL Thermometry Device</description>
         <macros>
           <macro>
             <name>PRLTHERM</name>
             <description>The PRLTHERM PV prefix (e.g. PRLTHERM_01)</description>
+            <default>PRLTHERM_01</default>
           </macro>
         </macros>
       </value>
