@@ -65,7 +65,9 @@ public class BlockSetPanel extends Composite {
         lblGroup.setLayoutData(gdLblType);
 
         textSet = new Text(grpBlockSet, SWT.BORDER);
-        textSet.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+        GridData textGrid = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        textGrid.widthHint = 110;
+        textSet.setLayoutData(textGrid);
 
         btnEnabled = new Button(grpBlockSet, SWT.CHECK);
         btnEnabled.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));

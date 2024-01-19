@@ -39,7 +39,6 @@ public class BlockSetViewModel extends ErrorMessageProvider {
     private boolean enabled = false;
     private String textBoxText;
     private String labelText;
-    private EditableGroup activeGroup;
     
 
     /**
@@ -51,6 +50,10 @@ public class BlockSetViewModel extends ErrorMessageProvider {
     public BlockSetViewModel(final EditableBlock editingBlock, EditableConfiguration config) {
     	this.editingBlock = editingBlock;
     	this.editingConfig = config;
+    	if (this.editingBlock!=null){
+    		this.enabled = editingBlock.getblockSet();
+    		this.textBoxText = editingBlock.getblockSetVal();
+    	}
     }
     
     
@@ -115,9 +118,11 @@ public class BlockSetViewModel extends ErrorMessageProvider {
      */
     public void updateBlock() {
     	if (this.enabled) {
-    		List<EditableBlock> blockToAdd = new ArrayList<>();
-    		blockToAdd.add(this.editingBlock);
-    		this.activeGroup.toggleSelection(blockToAdd);
+    		this.editingBlock.setBlockSet(enabled);
+    		this.editingBlock.setBlockSetVal(textBoxText);
+    	} else {
+    		this.editingBlock.setBlockSet(enabled);
+    		this.editingBlock.setBlockSetVal("");
     	}
     }
 }
