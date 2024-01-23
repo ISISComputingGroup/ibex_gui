@@ -1,5 +1,5 @@
 /*
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2023
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2024
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -68,6 +68,8 @@ public class MoxaInfoPanel extends Composite {
 	private static final int COLUMN_WIDTH_NARROW = 150;
 	
 	private static final String UP_STATUS = "up";
+	private static final String NOT_CONNECTED = "[INFO UNAVAILABLE]";
+
 	/**
 	 * The constructor.
 	 * 
@@ -207,6 +209,8 @@ public class MoxaInfoPanel extends Composite {
 					if (1 < parts.length) {
 						String uptime = parts[1].substring(0, parts[1].length() - 1);
 						name = parts[0] + ") [Up " + MoxasViewModel.toDaysHoursMinutes(Long.valueOf(uptime) * 10) + "]";
+					} else {
+						name = parts[0] + NOT_CONNECTED;
 					}
 					return name;
 				} else {
