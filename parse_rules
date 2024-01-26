@@ -1,8 +1,8 @@
 # match line starting with ‘error ‘, case-insensitive
 # also allow for [timestamp]
 error /(?i)^error:?/
-error /(?i)^\[^]*\] error:?/
+error /(?i)^\[[^]]*\] error:?/
 warning /(?i)^warning:?/
-warning /(?i)^\[^]*\] warning:?/
+warning /(?i)^\[[^]]*\] warning:?/
 info /(?i)^info:?/
-info /(?i)^\[^]*\] info:?/
+info /(?i)^\[[^]]*\] info:?/
