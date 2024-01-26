@@ -1,5 +1,5 @@
 /*
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2023
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2024
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -194,7 +194,7 @@ public class MoxasViewModel extends ModelObject {
 	 * @param key The MoxaList key.
 	 */
 	public void addExpanded(final String key) {
-		expanded.add(key);
+		expanded.add(moxaHostName(key));
 	}
 	
 	/**
@@ -202,7 +202,7 @@ public class MoxasViewModel extends ModelObject {
 	 * @param key The MoxaList key.
 	 */
 	public void removeExpanded(final String key) {
-		expanded.remove(key);
+		expanded.remove(moxaHostName(key));
 	}
 	
 	/**
@@ -210,7 +210,7 @@ public class MoxasViewModel extends ModelObject {
 	 */
 	public List<MoxaList> getExpanded() {
 		return expanded.stream()
-					   .map(key -> moxaPorts.get(key))
+					   .map(key -> mappedMoxa(key))
 					   .collect(Collectors.toList());
 	}
 	
@@ -246,5 +246,31 @@ public class MoxasViewModel extends ModelObject {
 		}
 
 		return upTime;
+	}
+
+	/**
+	 * Method is used to extract the moxa host name
+	 * @param moxaDetail The string has the full moxa detail like hostname, ip, running time
+	 * @return the moxa host name
+	 */
+	private String moxaHostName(final String moxaDetail) {
+		String[] parts = moxaDetail.split("\\(");
+		return parts[0];
+	}
+
+	/**
+	 * Method is used to extract the moxa port details
+	 * @param moxaDetail The string has the full moxa detail like hostname, ip, running time
+	 * @return the moxa port list for the given Moxa.
+	 */
+	private MoxaList mappedMoxa(final String moxaDetail) {
+		MoxaList selectedMoxa = null;
+		for (String moxa : moxaPorts.keySet()) {
+			if (moxa.startsWith(moxaDetail)) {
+				selectedMoxa = moxaPorts.get(moxa);
+				break;
+			}
+		}
+		return selectedMoxa;
 	}
 }
