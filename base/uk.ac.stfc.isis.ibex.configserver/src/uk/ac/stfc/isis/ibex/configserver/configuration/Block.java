@@ -72,7 +72,7 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
      * @param local whether the PV is local to the instrument
      */
     public Block(String name, String pv, boolean visible, boolean local) {
-        this(name, pv, visible, local, null, 0.0f, 0.0f, false, false, true, DEFAULT_SCAN_RATE, 0.00f, false, "");
+        this(name, pv, visible, local, null, 0.0f, 0.0f, false, false, true, DEFAULT_SCAN_RATE, 0.0f, false, "");
     }
 		
     /**
