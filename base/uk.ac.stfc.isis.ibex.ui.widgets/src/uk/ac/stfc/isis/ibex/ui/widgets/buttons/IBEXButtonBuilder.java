@@ -1,25 +1,52 @@
 package uk.ac.stfc.isis.ibex.ui.widgets.buttons;
 
+import java.text.DecimalFormat;
+
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
+import org.eclipse.jface.viewers.CellEditor.LayoutData;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.widgets.Button;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Listener;
 
 import uk.ac.stfc.isis.ibex.model.Action;
+import java.net.MalformedURLException;
+import java.net.URL;
+import org.apache.logging.log4j.Logger;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.wb.swt.ResourceManager;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
+
 
 public class IBEXButtonBuilder {
     private String text;
     private String tooltip;
-    private Style style;
-    private ButtonType buttonType;
-    private ActionButton actionButton;
-    private HelpButton helpButton;
+    private Integer buttonStyle;
+    private Boolean rowData;
     private Composite parent;
     private Integer width;
-    private Integer height;
+    private Image image;
+    private Action action;
+    private Listener listener;
+    private String wikiLink;
+    private String description;
+    
+	
+	private static final String SYMBOLIC_PATH = "uk.ac.stfc.isis.ibex.ui.widgets";
+	private static final String HELP_ICON2 = "/icons/helpIcon.png";
+	private static final String TOOLTIP_TEXT = "Open user manual link in browser for help with '%s': \n%s";
 
     public IBEXButtonBuilder setLabel(String label) {
         this.text = label;
@@ -30,33 +57,96 @@ public class IBEXButtonBuilder {
         this.tooltip = tooltip;
         return this;
     }
+    
+    public IBEXButtonBuilder setRowData(Boolean layoutData) {
+        this.rowData = layoutData;
+        return this;
+    }
+    
+    public IBEXButtonBuilder setWikiLink(String wikiLink) {
+    	this.wikiLink = wikiLink;
+    	return this;
+    }
+    
+    public IBEXButtonBuilder setDescription(String description) {
+    	this.description = description;
+    	return this;
+    }
+    
 
-    public IBEXButtonBuilder setStyle(Style style) {
-        this.style = style;
+    public IBEXButtonBuilder setButtonType(Integer buttonStyle) {
+        this.buttonStyle = buttonStyle;
         return this;
     }
 
-    public IBEXButtonBuilder setButtonType(ButtonType buttonType) {
-        this.buttonType = buttonType;
+    public IBEXButtonBuilder setAction(Action action) {
+        this.action = action;
         return this;
+    }
+    
+    public IBEXButtonBuilder setListener(Listener listener) {
+    	this.listener = listener;
+    	return this;
     }
 
-    public IBEXButtonBuilder setActionButton(ActionButton actionButton) {
-        this.actionButton = actionButton;
-        return this;
+    
+    public IBEXButtonBuilder setWidth(Integer width) {
+    	this.width = width;
+    	return this;
     }
 
-    public IBEXButtonBuilder setHelpButton(HelpButton helpButton) {
-        this.helpButton = helpButton;
+    public IBEXButtonBuilder setHelpButton(String wikiLink, String description) {
+        this.wikiLink = wikiLink;
+        this.description = description;
         return this;
     }
+    
+    public IBEXButtonBuilder setParent(Composite parent) {
+    	this.parent = parent;
+    	return this;
+    }
+    
+    
 
     public Button build() {
-        Button button;
-        
-        if (parent != null) {
-            button = new Button(parent, SWT.NONE);
-        }
+	        
+	    if (wikiLink != null && description != null) {
+	    	String tooltipDesc = String.format(TOOLTIP_TEXT, description, wikiLink);
+			
+			//create button
+			Button helpButton = new Button(parent, SWT.PUSH);
+			helpButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+			helpButton.setImage(ResourceManager.getPluginImage(SYMBOLIC_PATH, HELP_ICON2));
+			helpButton.setToolTipText(tooltipDesc);
+			
+			helpButton.addSelectionListener(new SelectionAdapter() {
+				  public void widgetSelected(SelectionEvent e) {
+					  try {
+						PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser().openURL(new URL(wikiLink));
+					  } catch (PartInitException | MalformedURLException ex) {
+							LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), "Failed to open URL in browser: " + wikiLink, ex);
+					  }
+				  }
+			});
+			
+			return helpButton;
+	   
+	    }
+	    
+        Button button = new Button(parent, buttonStyle);
+	    
+	    if (action != null) {
+	    	DataBindingContext bindingContext = new DataBindingContext();
+			bindingContext.bindValue(WidgetProperties.enabled().observe(button),
+					BeanProperties.value("canExecute").observe(action));
+
+			button.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					action.execute();
+				}
+			});
+	    }
 
         if (text != null) {
             button.setText(text);
@@ -65,71 +155,25 @@ public class IBEXButtonBuilder {
         if (tooltip != null) {
             button.setToolTipText(tooltip);
         }
+//        
+//        if (width != null) {
+//    		layoutData.widthHint = width;
+//        }
 
-        if (style != null) {
-            button.setLayoutData(style.getLayoutData());
+        if (rowData != null) {
+            button.setLayoutData(new RowData());
         }
 
-        // Handle different button types
-        switch (buttonType) {
-            case TEXT:
-                // Handle text button specifics
-                break;
-            case RADIO:
-                // Handle radio button specifics
-                break;
-            case CHECKBOX:
-                // Handle checkbox specifics
-                break;
-            // Add more cases as needed
-
-            default:
-                break;
+        if (image != null) {
+            button.setImage(image);
         }
 
-        // Attach action button and help button
-        if (actionButton != null) {
-            
-        }
-
-        if (helpButton != null) {
-            // Attach help button logic
+        if (listener != null) {
+            button.addListener(SWT.Selection, listener);
         }
 
         return button;
     }
+  
 
 }
-
-
-enum Style {
-    COMPACT,
-    EXPANDING,
-    CUSTOM;
-
-    public void getLayoutData() {
-        // Apply the style to the component
-        switch (this) {
-            case COMPACT:
-                // Apply compact style
-                break;
-            case EXPANDING:
-                // Apply expanding style
-                break;
-            case CUSTOM:
-                // Apply custom style (custom width and height)
-                break;
-            default:
-                break;
-        }
-    }
-}
-
-// Placeholder enum for button types
-enum ButtonType {
-    TEXT,
-    RADIO,
-    CHECKBOX,
-    // Add more button types as needed
-}
-

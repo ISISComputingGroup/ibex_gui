@@ -118,7 +118,7 @@ public class IBEXButtonFactory {
 		if (widthHint != null) {
 			layoutData.widthHint = widthHint;
 		}
-
+ 
 		return create(parent, style, text, tooltip, null, onClickListener, layoutData);
 	}
 	

@@ -51,7 +51,7 @@ import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.beamstatus.BeamStatus;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonFactory;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
 
 /**
  * Provides access to the data browser to show data from TS1/TS2 beam currents
@@ -203,9 +203,13 @@ public class BeamGraphView extends ModelListenerAdapter {
 
 	private void createButton(final Composite parent, final String name, final long timeDuration) {
 
-		Button button = IBEXButtonFactory.radio(parent, name, "Tooltip text", evt -> {
+//		Button button = IBEXButtonFactory.radio(parent, name, "Tooltip text", evt -> {
+//			setTimeRange(timeDuration);
+//		});
+		
+		Button button = new IBEXButtonBuilder().setParent(parent).setRowData(true).setLabel(name).setButtonType(SWT.RADIO).setTooltip("Tooltip text").setListener(evt -> {
 			setTimeRange(timeDuration);
-		});
+		}).build();
 		button.setSelection(timeDuration == currentPlotTimespanMilliseconds);
 	}
 

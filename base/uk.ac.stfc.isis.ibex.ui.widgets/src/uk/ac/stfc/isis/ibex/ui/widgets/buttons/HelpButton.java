@@ -2,7 +2,7 @@ package uk.ac.stfc.isis.ibex.ui.widgets.buttons;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-
+import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -19,7 +19,7 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 /**
  * Universal 'help' button - links to appropriate wiki page.
  */
-public class HelpButton {
+public class HelpButton extends Button {
 	
 	private static final String SYMBOLIC_PATH = "uk.ac.stfc.isis.ibex.ui.widgets";
 	private static final String HELP_ICON2 = "/icons/helpIcon.png";
@@ -33,15 +33,15 @@ public class HelpButton {
 	 * @param description	Description of help for tooltip
 	 */
 	public HelpButton(Composite parent, String wikiLink, String description) {
+		super(parent, SWT.PUSH);
 		String tooltipDesc = String.format(TOOLTIP_TEXT, description, wikiLink);
-		
 		//create button
-		Button helpButton = new Button(parent, SWT.PUSH);
-		helpButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-		helpButton.setImage(ResourceManager.getPluginImage(SYMBOLIC_PATH, HELP_ICON2));
-		helpButton.setToolTipText(tooltipDesc);
+//		Button helpButton = new Button(parent, SWT.PUSH);
+		this.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
+		this.setImage(ResourceManager.getPluginImage(SYMBOLIC_PATH, HELP_ICON2));
+		this.setToolTipText(tooltipDesc);
 		
-		helpButton.addSelectionListener(new SelectionAdapter() {
+		this.addSelectionListener(new SelectionAdapter() {
 			  public void widgetSelected(SelectionEvent e) {
 				  try {
 					PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser().openURL(new URL(wikiLink));
@@ -50,6 +50,7 @@ public class HelpButton {
 				  }
 			  }
 		});
+		
 	}
 	
 	

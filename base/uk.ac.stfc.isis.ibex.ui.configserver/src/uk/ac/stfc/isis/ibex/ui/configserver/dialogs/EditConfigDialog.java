@@ -43,6 +43,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.EditBlockDialog;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonFactory;
 
 /**
@@ -127,9 +128,11 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 		
 		// Set link according to whether this is a component or a config.
 		if (!config.getIsComponent()) {
-			IBEXButtonFactory.helpButton(parent, CONFIG_HELP_LINK, description);
+//			IBEXButtonFactory.helpButton(parent, CONFIG_HELP_LINK, description);
+			Button button = new IBEXButtonBuilder().setHelpButton(CONFIG_HELP_LINK, description).setParent(parent).build();
 		} else {
-			IBEXButtonFactory.helpButton(parent, COMPONENT_HELP_LINK, description);
+//			IBEXButtonFactory.helpButton(parent, COMPONENT_HELP_LINK, description);
+			Button button = new IBEXButtonBuilder().setHelpButton(COMPONENT_HELP_LINK, description).setParent(parent).build();
 		}
 		
 		this.moxaDetailsDialog = new MoxaDetailsDialog(this.getShell());
