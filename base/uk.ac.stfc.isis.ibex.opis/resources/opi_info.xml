@@ -3294,7 +3294,7 @@
       <value>
         <categories/>
         <type>EUROTHERM</type>
-        <path>prltherm.opi</path>
+        <path>PEARL_Thermometry.opi</path>
         <description>The OPI for the PEARL Thermometry Device</description>
         <macros>
           <macro>
@@ -3387,4 +3387,3 @@
     </entry>
   </opis>
 </descriptions>
-l
