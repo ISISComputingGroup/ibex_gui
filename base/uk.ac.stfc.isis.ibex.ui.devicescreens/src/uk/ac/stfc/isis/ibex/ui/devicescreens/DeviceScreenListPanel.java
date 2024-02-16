@@ -47,6 +47,7 @@ import uk.ac.stfc.isis.ibex.ui.devicescreens.commands.ConfigureDeviceScreensHand
 import uk.ac.stfc.isis.ibex.ui.devicescreens.list.DeviceScreensTable;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.ViewDeviceScreensDescriptionViewModel;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.HelpButton;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonFactory;
 
 /**
@@ -85,13 +86,21 @@ public class DeviceScreenListPanel extends Composite {
         GridLayout compositeLayout = new GridLayout(1, true);
         this.setLayout(compositeLayout);
         
-        configureDevScreensButton = IBEXButtonFactory.fitText(this, "Edit Device Screens", null, null, evt -> {  
-        try {
-            configureDeviceScreensHandler.execute(new ExecutionEvent());
-        } catch (ExecutionException ex) {
-            LOG.catching(ex);
-            MessageDialog.openError(parent.getShell(), "Error displaying config dialogue", ex.getMessage());
-        }} );
+//        configureDevScreensButton = IBEXButtonFactory.fitText(this, "Edit Device Screens", null, null, evt -> {  
+//        try {
+//            configureDeviceScreensHandler.execute(new ExecutionEvent());
+//        } catch (ExecutionException ex) {
+//            LOG.catching(ex);
+//            MessageDialog.openError(parent.getShell(), "Error displaying config dialogue", ex.getMessage());
+//        }} );
+        
+        configureDevScreensButton = new IBEXButtonBuilder().setParent(this).setText("Edit Device Screens").setListener(evt -> {  
+            try {
+                configureDeviceScreensHandler.execute(new ExecutionEvent());
+            } catch (ExecutionException ex) {
+                LOG.catching(ex);
+                MessageDialog.openError(parent.getShell(), "Error displaying config dialogue", ex.getMessage());
+            }}).setButtonType(SWT.NONE).setCustomLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false)).build();
         
 //        configureDevScreensButton = new Button(this, SWT.NONE);
 //        configureDevScreensButton.setText("Edit Device Screens");

@@ -63,6 +63,7 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.tables.NullComparator;
 import uk.ac.stfc.isis.ibex.validators.NumbersOnlyListener;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonFactory;
 
 /**
@@ -152,18 +153,30 @@ public class JournalViewerView {
 	    lblResultsData.width = 180;
 		lblResults.setLayoutData(lblResultsData);
 		
-		btnFirstPage = IBEXButtonFactory.fitTextRow(basicControls, "<<", "Go to the first page.", null,  e -> {
+//		btnFirstPage = IBEXButtonFactory.fitTextRow(basicControls, "<<", "Go to the first page.", null,  e -> {
+//        	setProgressIndicatorsVisible(true);
+//        	model.firstPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
+//        });
+//		RowData(widthHint, SWT.DEFAULT)
+        btnFirstPage = new IBEXButtonBuilder().setParent(basicControls).setText("<<").setTooltip("Go to the first page.").setListener(e -> {
         	setProgressIndicatorsVisible(true);
         	model.firstPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
-        });
+        }).setButtonType(SWT.NONE).setCustomLayoutData(new RowData()).build();
+
+
 //		btnFirstPage = new Button(basicControls, SWT.NONE);
 //		btnFirstPage.setText("<<");
 //	    btnFirstPage.setToolTipText("Go to the first page.");
 
-        btnPrevPage = IBEXButtonFactory.fitTextRow(basicControls, "< Prev", "Go to the previous page.", null, e -> {
+        // btnPrevPage = IBEXButtonFactory.fitTextRow(basicControls, "< Prev", "Go to the previous page.", null, e -> {
+        // 	setProgressIndicatorsVisible(true);
+        // 	model.prevPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        // });
+
+        btnPrevPage = new IBEXButtonBuilder().setParent(basicControls).setText("< Prev").setTooltip("Go to the previous page.").setListener(e -> {
         	setProgressIndicatorsVisible(true);
         	model.prevPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
-        });
+        }).setButtonType(SWT.NONE).setCustomLayoutData(new RowData()).build();
 	    
 	    // btnPrevPage = new Button(basicControls, SWT.NONE);
 	    // btnPrevPage.setText(" < Prev ");
@@ -175,29 +188,45 @@ public class JournalViewerView {
 	    textPageNumber.setLayoutData(textPageNumberData);
 	    textPageNumber.setTextLimit(9);
 
-        btnNextPage = IBEXButtonFactory.fitTextRow(basicControls, "Next >", "Go to the next page.", null, e -> {
+        // btnNextPage = IBEXButtonFactory.fitTextRow(basicControls, "Next >", "Go to the next page.", null, e -> {
+        // 	setProgressIndicatorsVisible(true);
+        // 	model.nextPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        // });
+	
+        btnNextPage = new IBEXButtonBuilder().setParent(basicControls).setText("Next >").setTooltip("Go to the next page.").setListener(e -> {
         	setProgressIndicatorsVisible(true);
         	model.nextPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
-        });
-	
+        }).setButtonType(SWT.NONE).setCustomLayoutData(new RowData()).build();
+
 	    // btnNextPage = new Button(basicControls, SWT.NONE);
 	    // btnNextPage.setText(" Next > ");
 	    // btnNextPage.setToolTipText("Go to the next page.");
 
-        btnLastPage = IBEXButtonFactory.fitTextRow(basicControls, ">>", "Go to the last page.", null, e -> {
+        // btnLastPage = IBEXButtonFactory.fitTextRow(basicControls, ">>", "Go to the last page.", null, e -> {
+        // 	setProgressIndicatorsVisible(true);
+        // 	model.lastPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        // });
+
+        btnLastPage = new IBEXButtonBuilder().setParent(basicControls).setText(">>").setTooltip("Go to the last page.").setListener(e -> {
         	setProgressIndicatorsVisible(true);
         	model.lastPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
-        });
+        }).setButtonType(SWT.NONE).setCustomLayoutData(new RowData()).build();
 	    
 	    // btnLastPage = new Button(basicControls, SWT.NONE);
 	    // btnLastPage.setText(">>");
 	    // btnLastPage.setToolTipText("Go to the last page.");
 
-        btnRefresh = IBEXButtonFactory.fitTextRow(basicControls, "Refresh", "Refresh the journal.", null, e -> {
+        // btnRefresh = IBEXButtonFactory.fitTextRow(basicControls, "Refresh", "Refresh the journal.", null, e -> {
+        //     resetPageNumber();
+        //     setProgressIndicatorsVisible(true);
+        //     model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        // });
+
+        btnRefresh = new IBEXButtonBuilder().setParent(basicControls).setText("Refresh").setTooltip("Refresh the journal.").setListener(e -> {
             resetPageNumber();
             setProgressIndicatorsVisible(true);
             model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
-        });
+        }).setButtonType(SWT.NONE).setCustomLayoutData(new RowData()).build();
 	
 	    // btnRefresh = new Button(basicControls, SWT.NONE);
 	    // btnRefresh.setText("Refresh");
@@ -211,19 +240,29 @@ public class JournalViewerView {
 	    RowLayout rlFilterControl = new RowLayout(SWT.HORIZONTAL);
 	    searchInput.setLayout(rlFilterControl);
 
-        btnSearch = IBEXButtonFactory.fitTextRow(searchControls, "Search", "Search the journal.", 80, e -> search());
+        // btnSearch = IBEXButtonFactory.fitTextRow(searchControls, "Search", "Search the journal.", 80, e -> search());
+
+        btnSearch = new IBEXButtonBuilder().setParent(searchControls).setText("Search").setTooltip("Search the journal.").setListener(e -> search()).setCustomLayoutData(new RowData(80, SWT.DEFAULT)).setButtonType(SWT.NONE).build();
 	
 	    // btnSearch = new Button(searchControls, SWT.NONE);
 	    // btnSearch.setLayoutData(new RowData(80, SWT.DEFAULT));
 	    // btnSearch.setText("Search");
 
-        btnClear = IBEXButtonFactory.fitTextRow(searchControls, "Clear", "Clear the search.", null, e -> {
+        // btnClear = IBEXButtonFactory.fitTextRow(searchControls, "Clear", "Clear the search.", null, e -> {
+        //     resetPageNumber();
+        //     searchInput.clearInput();
+        //     model.resetActiveSearch();
+        //     setProgressIndicatorsVisible(true);
+        //     model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
+        // });
+
+        btnClear = new IBEXButtonBuilder().setParent(searchControls).setText("Clear").setTooltip("Clear the search.").setListener(e -> {
             resetPageNumber();
             searchInput.clearInput();
             model.resetActiveSearch();
             setProgressIndicatorsVisible(true);
             model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
-        });
+        }).setButtonType(SWT.NONE).setCustomLayoutData(new RowData()).build();
 	
 	    // btnClear = new Button(searchControls, SWT.NONE);
 	    // btnClear.setText("Clear");
@@ -237,7 +276,8 @@ public class JournalViewerView {
 	    error.setLayoutData(new RowData(200, SWT.DEFAULT));
 
         for (final JournalField property : JournalField.values()) {
-        	  final Button checkbox = IBEXButtonFactory.checkboxRow(selectedContainer, property.getFriendlyName(), null, null);
+//        	  final Button checkbox = IBEXButtonFactory.checkboxRow(selectedContainer, property.getFriendlyName(), null, null);
+        	final Button checkbox = new IBEXButtonBuilder().setButtonType(SWT.CHECK).setCustomLayoutData(new RowData()).setParent(selectedContainer).setText(property.getFriendlyName()).build();
         	  
         			  
 //            final Button checkbox = new Button(selectedContainer, SWT.CHECK);

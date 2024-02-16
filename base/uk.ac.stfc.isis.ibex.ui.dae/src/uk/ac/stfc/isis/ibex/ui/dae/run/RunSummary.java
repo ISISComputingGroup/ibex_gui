@@ -41,6 +41,7 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.ExperimentSetupViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.widgets.LogMessageBox;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonFactory;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
 
@@ -174,12 +175,16 @@ public class RunSummary {
 
 		new Label(infoComposite, SWT.NONE);
 		new Label(infoComposite, SWT.NONE);
+//		
+//		btnDisplayTitle = IBEXButtonFactory.checkbox(infoComposite, "Show Title and Users in Dataweb Dashboard Page", 
+//				"Show Title and Users in Dataweb Dashboard Page", 
+//				evt -> {
+//					model.displayTitle().uncheckedSetValue(btnDisplayTitle.getSelection());
+//				});
 		
-		btnDisplayTitle = IBEXButtonFactory.checkbox(infoComposite, "Show Title and Users in Dataweb Dashboard Page", 
-				"Show Title and Users in Dataweb Dashboard Page", 
-				evt -> {
-					model.displayTitle().uncheckedSetValue(btnDisplayTitle.getSelection());
-				});
+		btnDisplayTitle = new IBEXButtonBuilder().setParent(infoComposite).setTooltip("Show Title and Users in Dataweb Dashboard Page").setText("Show Title and Users in Dataweb Dashboard Page").setListener(evt -> {
+			model.displayTitle().uncheckedSetValue(btnDisplayTitle.getSelection());
+		}).setButtonType(SWT.CHECK).setCustomLayoutData(new GridData()).build();
 
 		messageBox = new LogMessageBox(lhsComposite, SWT.NONE);
 		messageBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));

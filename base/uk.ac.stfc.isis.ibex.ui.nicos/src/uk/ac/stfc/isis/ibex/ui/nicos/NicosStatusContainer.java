@@ -8,11 +8,13 @@ import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonFactory;
 
 /**
@@ -41,7 +43,8 @@ public class NicosStatusContainer {
         nicosStatus.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         nicosStatus.setLayout(new GridLayout(2, false));
         
-        IBEXButtonFactory.helpButton(nicosStatus, HELP_LINK, DESCRIPTION);
+//        IBEXButtonFactory.helpButton(nicosStatus, HELP_LINK, DESCRIPTION);
+        Button helpButton = new IBEXButtonBuilder().setParent(nicosStatus).setHelpButton(HELP_LINK, DESCRIPTION).build();
         
         Composite textComposite = new Composite(nicosStatus, SWT.NONE);
         textComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));

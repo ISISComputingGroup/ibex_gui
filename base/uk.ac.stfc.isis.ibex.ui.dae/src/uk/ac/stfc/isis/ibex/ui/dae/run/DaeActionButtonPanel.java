@@ -21,6 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.dae.run;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -30,6 +31,7 @@ import org.eclipse.wb.swt.ResourceManager;
 import uk.ac.stfc.isis.ibex.dae.actions.DaeActions;
 import uk.ac.stfc.isis.ibex.model.Action;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.HelpButton;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonFactory;
 
 /**
@@ -77,11 +79,14 @@ public class DaeActionButtonPanel extends Composite {
 		Label bottomSpacer = new Label(this, SWT.NONE);
 		bottomSpacer.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1));
 
-		IBEXButtonFactory.helpButton(parent, HELP_LINK, DESCRIPTION);
+//		IBEXButtonFactory.helpButton(parent, HELP_LINK, DESCRIPTION);
+		Button button = new IBEXButtonBuilder().setHelpButton(HELP_LINK, DESCRIPTION).setParent(parent).build();
 	}
 
 	private void addActionButton(String text, String imageFileName, final Action action) {
 		Image image = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/" + imageFileName);
-		IBEXButtonFactory.actionButton(this, action, text, image);
+//		IBEXButtonFactory.actionButton(this, action, text, image);
+//		button.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		Button button = new IBEXButtonBuilder().setAction(action).setParent(this).setText(text).setButtonType(SWT.CENTER).setImage(image).setCustomLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1)).build();
 	}
 }

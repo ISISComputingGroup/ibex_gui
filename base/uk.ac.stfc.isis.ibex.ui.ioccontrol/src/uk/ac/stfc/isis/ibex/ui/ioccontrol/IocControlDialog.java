@@ -34,11 +34,13 @@ import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.IocControl;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonFactory;
 
 /**
@@ -80,6 +82,8 @@ public class IocControlDialog extends TitleAreaDialog {
 		iocControlView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
 		IBEXButtonFactory.helpButton(parent, HELP_LINK, SUB_TITLE);
+		Button helpButton = new IBEXButtonBuilder().setParent(parent).setHelpButton(MAIN_TITLE, SUB_TITLE).build();
+		
 		
 		return iocControlView;
 	}

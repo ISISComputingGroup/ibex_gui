@@ -34,9 +34,11 @@ public class IBEXButtonBuilder {
     private String text;
     private String tooltip;
     private Integer buttonStyle;
-    private Boolean rowData;
+    private RowData rowData;
+    private GridData gridData;
     private Composite parent;
     private Integer width;
+    private Integer height;
     private Image image;
     private Action action;
     private Listener listener;
@@ -58,11 +60,31 @@ public class IBEXButtonBuilder {
         return this;
     }
     
-    public IBEXButtonBuilder setRowData(Boolean layoutData) {
+    public IBEXButtonBuilder setCustomLayoutData(RowData layoutData) {
         this.rowData = layoutData;
         return this;
     }
     
+    public IBEXButtonBuilder setCustomLayoutData(GridData layoutData) {
+    	this.gridData = layoutData;
+    	return this;
+    }
+    
+    public IBEXButtonBuilder setLayout(String layout) {
+    	if (layout == "defaultGrid") {
+    		this.gridData = new GridData();
+    	} else if (layout == "expandingGrid") {
+    		this.gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+    	} else if (layout == "compactGrid") {
+    		this.gridData = new GridData(SWT.FILL, SWT.FILL, false, false);
+    	} else if (layout == "fitGrid") {
+    		this.gridData = new GridData(SWT.LEFT, SWT.FILL, false, false);
+    	} else if (layout == "defaultRow") {
+    		this.rowData = new RowData(SWT.DEFAULT, SWT.DEFAULT);
+    	}
+    	return this;
+    }
+
     public IBEXButtonBuilder setWikiLink(String wikiLink) {
     	this.wikiLink = wikiLink;
     	return this;
@@ -88,10 +110,25 @@ public class IBEXButtonBuilder {
     	this.listener = listener;
     	return this;
     }
+    
+    public IBEXButtonBuilder setText(String text) {
+    	this.text = text;
+    	return this;
+    }
+    
+    public IBEXButtonBuilder setImage(Image image) {
+    	this.image = image;
+    	return this;
+    }
 
     
     public IBEXButtonBuilder setWidth(Integer width) {
     	this.width = width;
+    	return this;
+    }
+    
+    public IBEXButtonBuilder setHeight(Integer height) {
+    	this.height = height;
     	return this;
     }
 
@@ -155,13 +192,24 @@ public class IBEXButtonBuilder {
         if (tooltip != null) {
             button.setToolTipText(tooltip);
         }
-//        
-//        if (width != null) {
-//    		layoutData.widthHint = width;
-//        }
+
+        if (gridData != null) {
+        	if (width != null) {
+        		gridData.widthHint(width);
+        	}
+        	button.setLayoutData(gridData);
+        }
 
         if (rowData != null) {
-            button.setLayoutData(new RowData());
+        	if (width != null) {
+        		rowData.width = width;
+        	}
+        	
+        	if (height != null) {
+        		rowData.height = height;
+        	}
+        	
+            button.setLayoutData(rowData);
         }
 
         if (image != null) {

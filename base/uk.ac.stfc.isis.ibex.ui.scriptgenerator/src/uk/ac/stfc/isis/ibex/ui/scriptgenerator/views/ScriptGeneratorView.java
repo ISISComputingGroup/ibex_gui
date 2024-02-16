@@ -57,6 +57,7 @@ import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonFactory;
 
 /**
@@ -345,11 +346,16 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 	private void makeToggleParameterTransfer(Composite parent) {
 		Composite actionsControlsGrp = makeGrid(parent, 1, true, 10);
 
-		Button checkbox = IBEXButtonFactory.checkbox(actionsControlsGrp, Constants.CHECKBOX_TITLE_PARAM_TRANSFER,
-				Constants.TOOLTIP_PARAM_TRANSFER, evt -> {
-					boolean enabled = ((Button) evt.widget).getSelection();
-					scriptGeneratorViewModel.setParameterTransferEnabled(enabled);
-				});
+//		Button checkbox = IBEXButtonFactory.checkbox(actionsControlsGrp, Constants.CHECKBOX_TITLE_PARAM_TRANSFER,
+//				Constants.TOOLTIP_PARAM_TRANSFER, evt -> {
+//					boolean enabled = ((Button) evt.widget).getSelection();
+//					scriptGeneratorViewModel.setParameterTransferEnabled(enabled);
+//				});
+		
+		Button checkbox = new IBEXButtonBuilder().setButtonType(SWT.CHECK).setParent(actionsControlsGrp).setText(Constants.CHECKBOX_TITLE_PARAM_TRANSFER).setListener(evt -> {
+			boolean enabled = ((Button) evt.widget).getSelection();
+			scriptGeneratorViewModel.setParameterTransferEnabled(enabled);
+		}).setCustomLayoutData(new GridData()).build();
 		checkbox.setSelection(Constants.PARAM_TRANSFER_DEFAULT);
 	}
 
@@ -363,13 +369,18 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 		Composite actionsControlsGrp = makeGrid(parent, 1, true, 10);
 
 		// Make buttons for insert new/delete/duplicate actions
-		btnAddAction = IBEXButtonFactory.expanding(actionsControlsGrp, Constants.BUTTON_TITLE_ADD_ROW_TO_END,
-				Constants.BUTTON_TOOLTIP_ADD_ROW_TO_END, null, e -> scriptGeneratorViewModel.addEmptyAction());
-		btnInsertAction = IBEXButtonFactory.expanding(actionsControlsGrp, Constants.BUTTON_TITLE_INSERT_ROW_BELOW,
-				Constants.BUTTON_TOOLTIP_INSERT_ROW_BELOW, null,
-				e -> scriptGeneratorViewModel.insertEmptyAction(table.getSelectionIndex() + 1));
-		IBEXButtonFactory.expanding(actionsControlsGrp, Constants.BUTTON_TITLE_DELETE_ROWS,
-				Constants.BUTTON_TOOLTIP_DELETE_ROWS, null, e -> scriptGeneratorViewModel.clearAction());
+		// btnAddAction = IBEXButtonFactory.expanding(actionsControlsGrp, Constants.BUTTON_TITLE_ADD_ROW_TO_END,
+				// Constants.BUTTON_TOOLTIP_ADD_ROW_TO_END, null, e -> scriptGeneratorViewModel.addEmptyAction());
+		btnAddAction = new IBEXButtonBuilder().setParent(actionsControlsGrp).setTooltip(Constants.BUTTON_TOOLTIP_ADD_ROW_TO_END).setText(Constants.BUTTON_TITLE_ADD_ROW_TO_END).setCustomLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true)).setListener(e -> scriptGeneratorViewModel.addEmptyAction()).setButtonType(SWT.NONE).build();
+
+		// btnInsertAction = IBEXButtonFactory.expanding(actionsControlsGrp, Constants.BUTTON_TITLE_INSERT_ROW_BELOW,
+		// 		Constants.BUTTON_TOOLTIP_INSERT_ROW_BELOW, null,
+		// 		e -> scriptGeneratorViewModel.insertEmptyAction(table.getSelectionIndex() + 1));
+		btnInsertAction = new IBEXButtonBuilder().setParent(actionsControlsGrp).setTooltip(Constants.BUTTON_TOOLTIP_INSERT_ROW_BELOW).setText(Constants.BUTTON_TITLE_INSERT_ROW_BELOW).setCustomLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true)).setListener(e -> scriptGeneratorViewModel.insertEmptyAction(table.getSelectionIndex() + 1)).setButtonType(SWT.NONE).build();
+
+		// IBEXButtonFactory.expanding(actionsControlsGrp, Constants.BUTTON_TITLE_DELETE_ROWS,
+		// 		Constants.BUTTON_TOOLTIP_DELETE_ROWS, null, e -> scriptGeneratorViewModel.clearAction());
+		Button clearButton = new IBEXButtonBuilder().setParent(actionsControlsGrp).setTooltip(Constants.BUTTON_TOOLTIP_DELETE_ROWS).setText(Constants.BUTTON_TITLE_DELETE_ROWS).setCustomLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true)).setListener(e -> scriptGeneratorViewModel.clearAction()).setButtonType(SWT.NONE).build();
 	}
 
 	/**
@@ -382,13 +393,19 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 		Composite generateButtonsGrp = makeGrid(parent, 1, true, 10);
 
 		// Buttons to generate a script
-		generateScriptButton = IBEXButtonFactory.expanding(generateButtonsGrp, Constants.BUTTON_TITLE_SAVE, null, null,
-				e -> scriptGeneratorViewModel.generateScriptToCurrentFilepath());
-		generateScriptAsButton = IBEXButtonFactory.expanding(generateButtonsGrp, Constants.BUTTON_TITLE_SAVE_AS, null,
-				null, e -> scriptGeneratorViewModel.generateScript());
-		IBEXButtonFactory.expanding(generateButtonsGrp, Constants.BUTTON_TITLE_LOAD, null, null,
-				e -> scriptGeneratorViewModel.loadParameterValues());
-	}
+		// generateScriptButton = IBEXButtonFactory.expanding(generateButtonsGrp, Constants.BUTTON_TITLE_SAVE, null, null,
+				// e -> scriptGeneratorViewModel.generateScriptToCurrentFilepath());
+		generateScriptButton = new IBEXButtonBuilder().setParent(generateButtonsGrp).setTooltip(Constants.BUTTON_TITLE_SAVE).setCustomLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true)).setText(Constants.BUTTON_TITLE_SAVE).setListener(e -> scriptGeneratorViewModel.generateScriptToCurrentFilepath()).setButtonType(SWT.NONE).build();
+		// generateScriptAsButton = IBEXButtonFactory.expanding(generateButtonsGrp, Constants.BUTTON_TITLE_SAVE_AS, null,
+				// null, e -> scriptGeneratorViewModel.generateScript());
+		generateScriptAsButton = new IBEXButtonBuilder().setParent(generateButtonsGrp).setTooltip(Constants.BUTTON_TITLE_SAVE_AS).setCustomLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true)).setText(Constants.BUTTON_TITLE_SAVE_AS).setListener(e -> scriptGeneratorViewModel.generateScript()).setButtonType(SWT.NONE).build();
+
+				// IBEXButtonFactory.expanding(generateButtonsGrp, Constants.BUTTON_TITLE_LOAD, null, null,
+				// e -> scriptGeneratorViewModel.loadParameterValues());
+		Button loadButton = new IBEXButtonBuilder().setParent(generateButtonsGrp).setTooltip(Constants.BUTTON_TITLE_LOAD).setCustomLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true)).setText(Constants.BUTTON_TITLE_LOAD).setListener(e -> scriptGeneratorViewModel.loadParameterValues()).setButtonType(SWT.NONE).build();
+
+			}
+
 
 	/**
 	 * Draw Run, Pause, Stop buttons for dynamic scripting.
@@ -405,10 +422,13 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 		Composite dynamicScriptingButtonsGrp = makeGrid(parent, 3, true, 10);
 
 		// Button to run/pause/stop script in nicos
-		runButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Run", Constants.IMAGE_RUN, null);
-		pauseButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Pause", Constants.IMAGE_PAUSE,
-				null);
-		stopButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Stop", Constants.IMAGE_STOP, null);
+//		runButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Run", Constants.IMAGE_RUN, null);
+		runButton = new IBEXButtonBuilder().setParent(dynamicScriptingButtonsGrp).setTooltip("Run").setCustomLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true)).setImage(Constants.IMAGE_RUN).setButtonType(SWT.NONE).build();
+		// pauseButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Pause", Constants.IMAGE_PAUSE,
+		// 		null);
+		pauseButton = new IBEXButtonBuilder().setParent(dynamicScriptingButtonsGrp).setTooltip("Pause").setCustomLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true)).setImage(Constants.IMAGE_PAUSE).setButtonType(SWT.NONE).build();
+		// stopButton = IBEXButtonFactory.expanding(dynamicScriptingButtonsGrp, null, "Stop", Constants.IMAGE_STOP, null);
+		stopButton = new IBEXButtonBuilder().setParent(dynamicScriptingButtonsGrp).setTooltip("Stop").setCustomLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true)).setImage(Constants.IMAGE_STOP).setButtonType(SWT.NONE).build();
 		nicosViewModel.bindControls(runButton, pauseButton, stopButton);
 	}
 
@@ -460,10 +480,12 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 		moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
 
 		// Make buttons to move an action up and down the list
-		btnMoveActionUp = IBEXButtonFactory.compact(moveComposite, null, "Move selected row up",
-				Constants.IMAGE_UP_ARROW, e -> scriptGeneratorViewModel.moveActionUp(table.selectedRows()));
-		btnMoveActionDown = IBEXButtonFactory.compact(moveComposite, null, "Move selected row down",
-				Constants.IMAGE_DOWN_ARROW, e -> scriptGeneratorViewModel.moveActionDown(table.selectedRows()));
+//		btnMoveActionUp = IBEXButtonFactory.compact(moveComposite, null, "Move selected row up",
+//				Constants.IMAGE_UP_ARROW, e -> scriptGeneratorViewModel.moveActionUp(table.selectedRows()));
+		btnMoveActionUp = new IBEXButtonBuilder().setParent(moveComposite).setTooltip("Move selected row up").setButtonType(SWT.NONE).setCustomLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false)).setImage(Constants.IMAGE_UP_ARROW).setListener(e -> scriptGeneratorViewModel.moveActionUp(table.selectedRows())).build();
+		// btnMoveActionDown = IBEXButtonFactory.compact(moveComposite, null, "Move selected row down",
+		// 		Constants.IMAGE_DOWN_ARROW, e -> scriptGeneratorViewModel.moveActionDown(table.selectedRows()));
+		btnMoveActionDown = new IBEXButtonBuilder().setParent(moveComposite).setTooltip("Move selected row down").setButtonType(SWT.NONE).setCustomLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false)).setImage(Constants.IMAGE_DOWN_ARROW).setListener(e -> scriptGeneratorViewModel.moveActionDown(table.selectedRows())).build();
 	}
 
 	/**
