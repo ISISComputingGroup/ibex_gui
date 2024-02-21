@@ -49,6 +49,7 @@ import uk.ac.stfc.isis.ibex.ui.LinkWrapper;
 import uk.ac.stfc.isis.ibex.ui.configserver.ImportVariables;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.components.ComponentTable;
 import uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.InstrumentTable;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
 
 /**
  * Dialog for importing a component.
@@ -222,16 +223,19 @@ public class ImportComponentDialog extends TitleAreaDialog  {
 		
 		Text text = new Text(group, SWT.BORDER);
 		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+		Button button = new IBEXButtonBuilder()
+			.setText("Select")
+			.setListener(new Listener() {
+					@Override
+					public void handleEvent(Event event) {
+						importVariables.selectInstrument(text.getText());
+					}
+				}).setParent(group).setCustomLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1)).setButtonType(SWT.NONE).build();
+
 		
-		Button button = new Button(group, SWT.NONE);
-		button.setText("Select");
-		button.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-		button.addListener(SWT.Selection, new Listener() {
-			@Override
-			public void handleEvent(Event event) {
-				importVariables.selectInstrument(text.getText());
-			}
-		});
+		
+		
 	}
 	
 	/**
