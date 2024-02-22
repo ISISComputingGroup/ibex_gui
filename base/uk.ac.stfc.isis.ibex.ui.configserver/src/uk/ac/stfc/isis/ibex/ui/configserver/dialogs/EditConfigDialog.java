@@ -44,7 +44,6 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.EditBlockDialog;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonFactory;
 
 /**
  * Dialog for editing a configuration (top dialogue that contains save and save
@@ -128,10 +127,8 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 		
 		// Set link according to whether this is a component or a config.
 		if (!config.getIsComponent()) {
-//			IBEXButtonFactory.helpButton(parent, CONFIG_HELP_LINK, description);
 			Button button = new IBEXButtonBuilder().setHelpButton(CONFIG_HELP_LINK, description).setParent(parent).build();
 		} else {
-//			IBEXButtonFactory.helpButton(parent, COMPONENT_HELP_LINK, description);
 			Button button = new IBEXButtonBuilder().setHelpButton(COMPONENT_HELP_LINK, description).setParent(parent).build();
 		}
 		

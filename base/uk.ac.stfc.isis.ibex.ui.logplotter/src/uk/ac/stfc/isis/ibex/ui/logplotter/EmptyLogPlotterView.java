@@ -11,9 +11,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.HelpButton;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonFactory;
 
 
 /**
@@ -46,7 +44,6 @@ public class EmptyLogPlotterView extends ViewPart {
 		lblDescription.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		lblDescription.setText("This can be populated with graphs displaying block history.\r\nTo display a graph right click on a block in the blocks view above and click Display Block History.\r\nAlternatively a graph can be displayed by right clicking on a PV in an OPI and selecting Process Variable -> Log Plotter.");
 
-//		IBEXButtonFactory.helpButton(parent, HELP_LINK, TITLE);
 		Button helpButton = new IBEXButtonBuilder().setParent(parent).setHelpButton(HELP_LINK, TITLE).build();
 	}
 

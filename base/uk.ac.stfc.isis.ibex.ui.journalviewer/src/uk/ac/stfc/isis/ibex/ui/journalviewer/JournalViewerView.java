@@ -64,8 +64,6 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.tables.NullComparator;
 import uk.ac.stfc.isis.ibex.validators.NumbersOnlyListener;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonFactory;
-
 /**
  * Journal viewer main view.
  */

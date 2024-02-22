@@ -21,7 +21,6 @@ import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateBlockNameException;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonFactory;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
 /**
@@ -121,7 +120,6 @@ public class EditBlockDialog extends TitleAreaDialog {
         		blockGroupViewModel);
         blockGroupPanel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
-//		IBEXButtonFactory.helpButton(parent, HELP_LINK, DESCRIPTION);
         Button button = new IBEXButtonBuilder().setHelpButton(HELP_LINK, DESCRIPTION).setParent(parent).build();
 		
         return blockDetailsPanel;

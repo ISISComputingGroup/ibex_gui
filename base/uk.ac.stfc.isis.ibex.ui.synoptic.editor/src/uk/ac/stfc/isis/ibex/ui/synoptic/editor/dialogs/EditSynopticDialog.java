@@ -41,7 +41,6 @@ import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.SynopticPreview;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.validators.SynopticValidator;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonFactory;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
 /**
@@ -98,7 +97,6 @@ public class EditSynopticDialog extends TitleAreaDialog {
     	editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
     	setTitle(subtitle);
     	
-//    	IBEXButtonFactory.helpButton(parent, HELP_LINK, title);
     	Button helpButton = new IBEXButtonBuilder().setParent(parent).setHelpButton(HELP_LINK, title).build();
     	
     	return editor;	

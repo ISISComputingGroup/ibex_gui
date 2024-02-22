@@ -202,10 +202,6 @@ public class BeamGraphView extends ModelListenerAdapter {
 	}
 
 	private void createButton(final Composite parent, final String name, final long timeDuration) {
-
-//		Button button = IBEXButtonFactory.radio(parent, name, "Tooltip text", evt -> {
-//			setTimeRange(timeDuration);
-//		});
 		
 		Button button = new IBEXButtonBuilder().setParent(parent).setCustomLayoutData(new RowData()).setLabel(name).setButtonType(SWT.RADIO).setTooltip("Tooltip text").setListener(evt -> {
 			setTimeRange(timeDuration);

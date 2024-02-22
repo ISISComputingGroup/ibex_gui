@@ -30,9 +30,7 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.dae.actions.DaeActions;
 import uk.ac.stfc.isis.ibex.model.Action;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.HelpButton;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonFactory;
 
 /**
  * Pane which contains the action buttons in the DAE perspective in the "Run

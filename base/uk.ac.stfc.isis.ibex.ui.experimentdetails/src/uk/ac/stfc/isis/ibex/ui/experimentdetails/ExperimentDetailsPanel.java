@@ -21,17 +21,12 @@ package uk.ac.stfc.isis.ibex.ui.experimentdetails;
 
 import javax.inject.Inject;
 
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -41,13 +36,10 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
-import org.w3c.dom.events.EventTarget;
-
 import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup.RBLookupDialog;
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup.RBLookupViewModel;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonFactory;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
 
 /**
@@ -126,14 +118,6 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 		rbNumberTextBox = new WritableObservingTextBox(parent, SWT.NONE, viewModel.rbNumber);
 		rbNumberTextBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		rbNumberTextBox.setToolTip(RB_NUM_INPUT_TIP_MESSAGE);
-
-//		btnRBLookup = IBEXButtonFactory.fitText(parent, "Search", null, null, evt -> {
-//			RBLookupViewModel lookupViewModel = new RBLookupViewModel();
-//			RBLookupDialog lookupDialog = new RBLookupDialog(shell, lookupViewModel);
-//			if (lookupDialog.open() == Window.OK) {
-//				viewModel.rbNumber.uncheckedSetText(lookupViewModel.getSelectedUser().getAssociatedExperimentID());
-//			}
-//		});
 		
 		btnRBLookup = new IBEXButtonBuilder().setParent(parent).setText("Search").setListener(evt -> {
 			RBLookupViewModel lookupViewModel = new RBLookupViewModel();
@@ -163,112 +147,29 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 		experimentTeamButtons = new Composite(parent, SWT.NONE);
 		experimentTeamButtons.setLayout(new GridLayout(1, false));
 
-		// btnAddUserDetails = IBEXButtonFactory.fitText(experimentTeamButtons, "Add", null, 50, evt -> {
-		// 	viewModel.model.addDefaultUser();
-		// 	viewModel.model.sendUserDetails();
-		// });
-
 		btnAddUserDetails = new IBEXButtonBuilder().setParent(experimentTeamButtons).setText("Add").setListener(evt -> {
 			viewModel.model.addDefaultUser();
 			viewModel.model.sendUserDetails();
 		}).setCustomLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false)).setButtonType(SWT.NONE).build();
-
-//		GridData gdDetailsButtons = new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1);
-//		gdDetailsButtons.widthHint = 50;
-//		
-//		btnAddUserDetails = new Button(experimentTeamButtons, SWT.NONE);
-//		btnAddUserDetails.addSelectionListener(new SelectionAdapter() {
-//			@Override
-//			public void widgetSelected(SelectionEvent e) {
-//				viewModel.model.addDefaultUser();
-//				viewModel.model.sendUserDetails();
-//			}
-//		});
-//		btnAddUserDetails.setText("Add");
-//		btnAddUserDetails.setLayoutData(gdDetailsButtons);
-
-		// btnRemoveUserDetails = IBEXButtonFactory.fitText(experimentTeamButtons, "Remove", null, 50, evt -> {
-		// 	viewModel.model.removeUsers(userDetails.selectedRows());
-		// 	viewModel.model.sendUserDetails();
-		// });
 
 		btnRemoveUserDetails = new IBEXButtonBuilder().setParent(experimentTeamButtons).setText("Remove").setListener(evt -> {
 			viewModel.model.removeUsers(userDetails.selectedRows());
 			viewModel.model.sendUserDetails();
 		}).setCustomLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false)).setButtonType(SWT.NONE).build();
 
-//		btnRemoveUserDetails = new Button(experimentTeamButtons, SWT.NONE);
-//		btnRemoveUserDetails.addSelectionListener(new SelectionAdapter() {
-//			@Override
-//			public void widgetSelected(SelectionEvent e) {
-//				viewModel.model.removeUsers(userDetails.selectedRows());
-//				viewModel.model.sendUserDetails();
-//			}
-//		});
-//
-//		btnRemoveUserDetails.setText("Remove");
-//		btnRemoveUserDetails.setLayoutData(gdDetailsButtons);
-
-		// btnClearUserDetails = IBEXButtonFactory.fitText(experimentTeamButtons, "Clear", null, 50, evt -> {
-		// 	viewModel.model.clearUserDetails();
-		// 	viewModel.model.sendUserDetails();
-		// });
-
 		btnClearUserDetails = new IBEXButtonBuilder().setParent(experimentTeamButtons).setText("Clear").setListener(evt -> {
 			viewModel.model.clearUserDetails();
 			viewModel.model.sendUserDetails();
 		}).setCustomLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false)).setButtonType(SWT.NONE).build();
-
-//		btnClearUserDetails = new Button(experimentTeamButtons, SWT.NONE);
-//		btnClearUserDetails.addSelectionListener(new SelectionAdapter() {
-//			@Override
-//			public void widgetSelected(SelectionEvent e) {
-//				viewModel.model.clearUserDetails();
-//				viewModel.model.sendUserDetails();
-//			}
-//		});
-//		btnClearUserDetails.setText("Clear");
-//		btnClearUserDetails.setLayoutData(gdDetailsButtons);
-
-//		btnSetRBNumber = IBEXButtonFactory.fitText(experimentTeamButtons, "Set", null, 50, evt -> {
-//			viewModel.model.sendUserDetails();
-//		});
-//		
+	
 		btnSetRBNumber = new IBEXButtonBuilder().setParent(experimentTeamButtons).setText("Set").setListener(evt -> {
 			viewModel.model.sendUserDetails();
 		}).setCustomLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false)).setButtonType(SWT.NONE).build();
-
-//		btnSetRBNumber = new Button(experimentTeamButtons, SWT.NONE);
-//		btnSetRBNumber.addSelectionListener(new SelectionAdapter() {
-//			@Override
-//			public void widgetSelected(SelectionEvent e) {
-//				viewModel.model.sendUserDetails();
-//			}
-//		});
-//
-//		btnSetRBNumber.setText("Set");
-//		btnSetRBNumber.setLayoutData(gdDetailsButtons);
-
-//		btnDisplayTitle = IBEXButtonFactory.checkbox(experimentTeamButtons,
-//				"Show Title and Users in Dataweb Dashboard Page", null, event -> {
-//					viewModel.displayTitle.uncheckedSetValue(btnDisplayTitle.getSelection());
-//				});
 		
 		btnDisplayTitle = new IBEXButtonBuilder().setButtonType(SWT.CHECK).setParent(experimentTeamButtons).setText("Show Title and Users in Dataweb Dashboard Page").setListener(event -> {
 					viewModel.displayTitle.uncheckedSetValue(btnDisplayTitle.getSelection());
 				}).setCustomLayoutData(new GridData()).build();
 
-//		btnDisplayTitle = new Button(experimentTeamButtons, SWT.CHECK);
-//		btnDisplayTitle.setText("Show Title and Users in Dataweb Dashboard Page");
-//		btnDisplayTitle.addSelectionListener(new SelectionAdapter() {
-//			@Override
-//			public void widgetSelected(SelectionEvent e) {
-//				super.widgetSelected(e);
-//				viewModel.displayTitle.uncheckedSetValue(btnDisplayTitle.getSelection());
-//			}
-//		});
-
-//		IBEXButtonFactory.helpButton(parent, HELP_LINK, DESCRIPTION);
 		Button helpButton = new IBEXButtonBuilder().setParent(parent).setHelpButton(HELP_LINK, DESCRIPTION).build();
 	}
 
