@@ -74,24 +74,6 @@ public class IBEXButtonBuilder {
 		this.gridData = layoutData;
 		return this;
 	}
-	
-	
-	public IBEXButtonBuilder setLayout(String layout) {
-		if (layout == "defaultGrid") {
-			this.gridData = new GridData();
-		} else if (layout == "expandingGrid") {
-			this.gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
-		} else if (layout == "compactGrid") {
-			this.gridData = new GridData(SWT.FILL, SWT.FILL, false, false);
-		} else if (layout == "fitGrid") {
-			this.gridData = new GridData(SWT.LEFT, SWT.FILL, false, false);
-		} else if (layout == "centerGrid") {
-			this.gridData = new GridData(SWT.CENTER, SWT.CENTER, false, true);
-		} else if (layout == "defaultRow") {
-			this.rowData = new RowData();
-		}
-		return this;
-	}
 
 	public IBEXButtonBuilder setWikiLink(String wikiLink) {
 		this.wikiLink = wikiLink;
