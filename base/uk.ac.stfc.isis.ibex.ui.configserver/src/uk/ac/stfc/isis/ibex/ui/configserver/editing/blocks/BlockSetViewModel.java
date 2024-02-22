@@ -20,7 +20,6 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
 
@@ -30,8 +29,6 @@ import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 public class BlockSetViewModel extends ErrorMessageProvider {
     
     private final EditableBlock editingBlock;
-    private final EditableConfiguration editingConfig;
-    
     private boolean enabled = false;
     private String textBoxText;
     private String labelText;
@@ -41,12 +38,10 @@ public class BlockSetViewModel extends ErrorMessageProvider {
      * Constructor.
      * 
      * @param editingBlock the block being edited
-     * @param config the configuration being edited
      */
-    public BlockSetViewModel(final EditableBlock editingBlock, EditableConfiguration config) {
+    public BlockSetViewModel(final EditableBlock editingBlock) {
     	this.editingBlock = editingBlock;
-    	this.editingConfig = config;
-    	if (this.editingBlock!=null){
+    	if (this.editingBlock != null) {
     		this.enabled = editingBlock.getblockSet();
     		this.textBoxText = editingBlock.getblockSetVal();
     	}
@@ -62,7 +57,7 @@ public class BlockSetViewModel extends ErrorMessageProvider {
      */
     public void setEnabled(boolean enabled) {
         firePropertyChange("enabled", this.enabled, this.enabled = enabled);  
-        if(!enabled) {
+        if (!enabled) {
         	settextBoxText("");
         }
     }

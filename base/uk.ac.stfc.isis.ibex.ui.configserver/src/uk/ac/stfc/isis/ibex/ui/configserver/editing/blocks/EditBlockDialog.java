@@ -94,7 +94,7 @@ public class EditBlockDialog extends TitleAreaDialog {
         blockRunControlViewModel = new BlockRunControlViewModel(this.block);
         blockDetailsViewModel = new BlockDetailsViewModel(this.block, this.config);
         blockGroupViewModel = new BlockGroupViewModel(this.block, this.config);
-        blockSetViewModel = new BlockSetViewModel(this.block, this.config);
+        blockSetViewModel = new BlockSetViewModel(this.block);
 		
 		viewModels = Arrays.asList(blockLogSettingsViewModel, blockRunControlViewModel, blockDetailsViewModel, blockGroupViewModel);
 		
