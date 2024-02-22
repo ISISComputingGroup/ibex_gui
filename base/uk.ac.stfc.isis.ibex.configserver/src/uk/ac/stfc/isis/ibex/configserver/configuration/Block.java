@@ -91,6 +91,8 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
      *            archiver
      * @param logRate time between archive samples (seconds)
      * @param logDeadband deadband for the block to be archived
+     * @param blockSet A boolean value indicating whether or not to set a value on block on config change.
+     * @param blockSetVal The value to set the block to on config change if the blockSet is true.
      */
     public Block(String name, String pv, boolean visible, boolean local, String component, double lowLimit,
             double highLimit, boolean suspendOnInvalid, Boolean runcontrol, boolean logPeriodic, int logRate, float logDeadband, boolean blockSet, String blockSetVal) {
