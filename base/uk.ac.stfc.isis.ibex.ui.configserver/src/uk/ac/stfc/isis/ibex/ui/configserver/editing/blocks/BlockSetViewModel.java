@@ -21,11 +21,7 @@ package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableGroup;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
