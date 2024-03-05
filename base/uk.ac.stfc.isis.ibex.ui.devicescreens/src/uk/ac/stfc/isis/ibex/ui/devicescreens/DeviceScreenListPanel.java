@@ -49,99 +49,96 @@ import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
  */
 public class DeviceScreenListPanel extends Composite {
 
-    /**
-     * Logger.
-     */
-    private static final Logger LOG = IsisLog.getLogger(DeviceScreenListPanel.class);
+	/**
+	 * Logger.
+	 */
+	private static final Logger LOG = IsisLog.getLogger(DeviceScreenListPanel.class);
 
-    private Button configureDevScreensButton;
+	private Button configureDevScreensButton;
 
-    private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Create-and-Manage-Device-Screens";
+	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Create-and-Manage-Device-Screens";
 	private static final String DESCRIPTION = "Device Screens View";
-    
-    private DeviceScreensTable deviceScreenList;
 
-    private ConfigureDeviceScreensHandler configureDeviceScreensHandler = new ConfigureDeviceScreensHandler();
+	private DeviceScreensTable deviceScreenList;
 
-    /**
-     * Create a Devices Screen Panel.
-     * 
-     * @param parent
-     *            parent component
-     * @param style
-     *            SWT Style
-     * @param viewModel
-     *            the view model to be used by this view
-     */
-    public DeviceScreenListPanel(final Composite parent, int style, ViewDeviceScreensDescriptionViewModel viewModel) {
-        super(parent, style);
-        setLayout(new FillLayout(SWT.HORIZONTAL));
+	private ConfigureDeviceScreensHandler configureDeviceScreensHandler = new ConfigureDeviceScreensHandler();
 
-        GridLayout compositeLayout = new GridLayout(1, true);
-        this.setLayout(compositeLayout);
-        
-        configureDevScreensButton = new IBEXButtonBuilder().setParent(this).setText("Edit Device Screens").setListener(evt -> {  
-            try {
-                configureDeviceScreensHandler.execute(new ExecutionEvent());
-            } catch (ExecutionException ex) {
-                LOG.catching(ex);
-                MessageDialog.openError(parent.getShell(), "Error displaying config dialogue", ex.getMessage());
-            }}).setButtonType(SWT.NONE).setCustomLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false)).build();
+	/**
+	 * Create a Devices Screen Panel.
+	 * 
+	 * @param parent    parent component
+	 * @param style     SWT Style
+	 * @param viewModel the view model to be used by this view
+	 */
+	public DeviceScreenListPanel(final Composite parent, int style, ViewDeviceScreensDescriptionViewModel viewModel) {
+		super(parent, style);
+		setLayout(new FillLayout(SWT.HORIZONTAL));
 
-        deviceScreenList = new DeviceScreensTable(this, SWT.NONE, SWT.FULL_SELECTION);
-        GridData devicesListLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-        deviceScreenList.setLayoutData(devicesListLayout);
+		GridLayout compositeLayout = new GridLayout(1, true);
+		this.setLayout(compositeLayout);
 
-        deviceScreenList.addSelectionChangedListener(new ISelectionChangedListener() {
+		configureDevScreensButton = new IBEXButtonBuilder(this, SWT.NONE).setText("Edit Device Screens")
+				.setListener(evt -> {
+					try {
+						configureDeviceScreensHandler.execute(new ExecutionEvent());
+					} catch (ExecutionException ex) {
+						LOG.catching(ex);
+						MessageDialog.openError(parent.getShell(), "Error displaying config dialogue", ex.getMessage());
+					}
+				}).setCustomLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false)).build();
 
-            @Override
-            public void selectionChanged(SelectionChangedEvent event) {
+		deviceScreenList = new DeviceScreensTable(this, SWT.NONE, SWT.FULL_SELECTION);
+		GridData devicesListLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		deviceScreenList.setLayoutData(devicesListLayout);
 
-                for (DeviceDescription deviceScreeen : deviceScreenList.selectedRows()) {
-                    LOG.info("Open opi target " + deviceScreeen.getName());
-                    try {
-                        DevicesOpiTargetView.displayOpi(deviceScreeen.getOPITarget());
-                    } catch (OPIViewCreationException e) {
-                        LOG.catching(e);
-                        MessageDialog.openError(parent.getShell(), "Error displaying OPI", e.getMessage());
-                    }
-                }
+		deviceScreenList.addSelectionChangedListener(new ISelectionChangedListener() {
 
-            }
-        });
-        
-        Button helpButton = new IBEXButtonBuilder().setHelpButton(HELP_LINK, DESCRIPTION).setParent(this).build();
-        
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
 
-        viewModel.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent deviceScreenDescription) {
-                updateDeviceScreensDescriptions((DeviceScreensDescription) deviceScreenDescription.getNewValue());
+				for (DeviceDescription deviceScreeen : deviceScreenList.selectedRows()) {
+					LOG.info("Open opi target " + deviceScreeen.getName());
+					try {
+						DevicesOpiTargetView.displayOpi(deviceScreeen.getOPITarget());
+					} catch (OPIViewCreationException e) {
+						LOG.catching(e);
+						MessageDialog.openError(parent.getShell(), "Error displaying OPI", e.getMessage());
+					}
+				}
 
-            }
-        });
+			}
+		});
 
-        // Force the device screens to update when they are first created.
-        updateDeviceScreensDescriptions(viewModel.getDeviceScreensDescription());
+		Button helpButton = new IBEXButtonBuilder().setHelpButton(HELP_LINK, DESCRIPTION).setParent(this).build();
 
-    }
+		viewModel.addPropertyChangeListener(new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent deviceScreenDescription) {
+				updateDeviceScreensDescriptions((DeviceScreensDescription) deviceScreenDescription.getNewValue());
 
-    /**
-     * Updates the device screen description in the GUI thread.
-     * 
-     * @param deviceScreensDescription
-     *            the new device screens description
-     */
-    protected void updateDeviceScreensDescriptions(final DeviceScreensDescription deviceScreensDescription) {
+			}
+		});
 
-        Display.getDefault().asyncExec(new Runnable() {
-            @Override
-            public void run() {
-                if (deviceScreenList != null && deviceScreensDescription != null) {
-                    deviceScreenList.setRows(deviceScreensDescription.getDevices());
-                }
-            }
-        });
-    }
+		// Force the device screens to update when they are first created.
+		updateDeviceScreensDescriptions(viewModel.getDeviceScreensDescription());
+
+	}
+
+	/**
+	 * Updates the device screen description in the GUI thread.
+	 * 
+	 * @param deviceScreensDescription the new device screens description
+	 */
+	protected void updateDeviceScreensDescriptions(final DeviceScreensDescription deviceScreensDescription) {
+
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				if (deviceScreenList != null && deviceScreensDescription != null) {
+					deviceScreenList.setRows(deviceScreensDescription.getDevices());
+				}
+			}
+		});
+	}
 
 }

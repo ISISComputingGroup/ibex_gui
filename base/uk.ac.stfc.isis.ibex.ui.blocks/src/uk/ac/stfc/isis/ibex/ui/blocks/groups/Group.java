@@ -125,9 +125,7 @@ public class Group extends Composite {
 		titleContainer.setLayout(titleContainerLayout);
 		
 		
-		title = new IBEXButtonBuilder()
-			    .setParent(titleContainer)
-			    .setButtonType(SWT.TOGGLE)
+		title = new IBEXButtonBuilder(titleContainer, SWT.NONE)
 			    .setText("   " + group.name())
 			    .setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.blocks", "icons/minus.png"))
 			    .setListener(e -> {

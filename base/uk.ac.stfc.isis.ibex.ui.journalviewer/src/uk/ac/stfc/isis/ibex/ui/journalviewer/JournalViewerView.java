@@ -64,6 +64,7 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.tables.NullComparator;
 import uk.ac.stfc.isis.ibex.validators.NumbersOnlyListener;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
+
 /**
  * Journal viewer main view.
  */
@@ -149,13 +150,13 @@ public class JournalViewerView {
 		lblResultsData.width = 180;
 		lblResults.setLayoutData(lblResultsData);
 
-		btnFirstPage = new IBEXButtonBuilder().setParent(basicControls).setText("<<")
-				.setTooltip("Go to the first page.").setListener(e -> {
+		btnFirstPage = new IBEXButtonBuilder(basicControls, SWT.NONE).setText("<<").setTooltip("Go to the first page.")
+				.setListener(e -> {
 					setProgressIndicatorsVisible(true);
 					model.firstPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
-				}).setButtonType(SWT.NONE).setCustomLayoutData(IBEXButtonBuilder.defaultRow).build();
+				}).setCustomLayoutData(IBEXButtonBuilder.defaultRow).build();
 
-		btnPrevPage = new IBEXButtonBuilder().setParent(basicControls).setText("< Prev")
+		btnPrevPage = new IBEXButtonBuilder(basicControls, SWT.NONE).setText("< Prev")
 				.setTooltip("Go to the previous page.").setListener(e -> {
 					setProgressIndicatorsVisible(true);
 					model.prevPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
@@ -167,24 +168,24 @@ public class JournalViewerView {
 		textPageNumber.setLayoutData(textPageNumberData);
 		textPageNumber.setTextLimit(9);
 
-		btnNextPage = new IBEXButtonBuilder().setParent(basicControls).setText("Next >")
+		btnNextPage = new IBEXButtonBuilder(basicControls, SWT.NONE).setText("Next >")
 				.setTooltip("Go to the next page.").setListener(e -> {
 					setProgressIndicatorsVisible(true);
 					model.nextPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
-				}).setButtonType(SWT.NONE).setCustomLayoutData(IBEXButtonBuilder.defaultRow).build();
+				}).setCustomLayoutData(IBEXButtonBuilder.defaultRow).build();
 
-		btnLastPage = new IBEXButtonBuilder().setParent(basicControls).setText(">>").setTooltip("Go to the last page.")
+		btnLastPage = new IBEXButtonBuilder(basicControls, SWT.NONE).setText(">>").setTooltip("Go to the last page.")
 				.setListener(e -> {
 					setProgressIndicatorsVisible(true);
 					model.lastPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
-				}).setButtonType(SWT.NONE).setCustomLayoutData(IBEXButtonBuilder.defaultRow).build();
+				}).setCustomLayoutData(IBEXButtonBuilder.defaultRow).build();
 
-		btnRefresh = new IBEXButtonBuilder().setParent(basicControls).setText("Refresh")
+		btnRefresh = new IBEXButtonBuilder(basicControls, SWT.NONE).setText("Refresh")
 				.setTooltip("Refresh the journal.").setListener(e -> {
 					resetPageNumber();
 					setProgressIndicatorsVisible(true);
 					model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
-				}).setButtonType(SWT.NONE).setCustomLayoutData(IBEXButtonBuilder.defaultRow).build();
+				}).setCustomLayoutData(IBEXButtonBuilder.defaultRow).build();
 
 		searchControls = new Composite(controls, SWT.NONE);
 		RowLayout rlSearchControls = new RowLayout(SWT.HORIZONTAL);
@@ -195,18 +196,17 @@ public class JournalViewerView {
 		RowLayout rlFilterControl = new RowLayout(SWT.HORIZONTAL);
 		searchInput.setLayout(rlFilterControl);
 
-		btnSearch = new IBEXButtonBuilder().setParent(searchControls).setText("Search")
-				.setTooltip("Search the journal.").setListener(e -> search())
-				.setCustomLayoutData(new RowData(80, SWT.DEFAULT)).setButtonType(SWT.NONE).build();
+		btnSearch = new IBEXButtonBuilder(searchControls, SWT.NONE).setText("Search").setTooltip("Search the journal.")
+				.setListener(e -> search()).setCustomLayoutData(new RowData(80, SWT.DEFAULT)).build();
 
-		btnClear = new IBEXButtonBuilder().setParent(searchControls).setText("Clear").setTooltip("Clear the search.")
+		btnClear = new IBEXButtonBuilder(searchControls, SWT.NONE).setText("Clear").setTooltip("Clear the search.")
 				.setListener(e -> {
 					resetPageNumber();
 					searchInput.clearInput();
 					model.resetActiveSearch();
 					setProgressIndicatorsVisible(true);
 					model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
-				}).setButtonType(SWT.NONE).setCustomLayoutData(IBEXButtonBuilder.defaultRow).build();
+				}).setCustomLayoutData(IBEXButtonBuilder.defaultRow).build();
 
 		progressBar = new ProgressBar(searchControls, SWT.INDETERMINATE);
 		progressBar.setMaximum(80);
@@ -217,8 +217,8 @@ public class JournalViewerView {
 		error.setLayoutData(new RowData(200, SWT.DEFAULT));
 
 		for (final JournalField property : JournalField.values()) {
-final Button checkbox = new IBEXButtonBuilder().setButtonType(SWT.CHECK).setCustomLayoutData(IBEXButtonBuilder.defaultRow)
-					.setParent(selectedContainer).setText(property.getFriendlyName()).build();
+			final Button checkbox = new IBEXButtonBuilder(selectedContainer, SWT.CHECK)
+					.setCustomLayoutData(IBEXButtonBuilder.defaultRow).setText(property.getFriendlyName()).build();
 
 			checkbox.setSelection(model.getFieldSelected(property));
 			checkbox.addSelectionListener(new SelectionAdapter() {

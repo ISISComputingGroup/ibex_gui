@@ -54,7 +54,7 @@ public class StatusIndicatorPanel extends Composite {
 		overallStatusLabel.setText("");
 		overallStatusLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		
-		Button showDetails = new IBEXButtonBuilder().setParent(this).setButtonType(SWT.NONE).setText("Details").setCustomLayoutData(IBEXButtonBuilder.centerGrid).setListener(e -> showDetailsDialog()).build();
+		Button showDetails = new IBEXButtonBuilder(this, SWT.NONE).setText("Details").setCustomLayoutData(IBEXButtonBuilder.centerGrid).setListener(e -> showDetailsDialog()).build();
 		
 	    this.pack();
 	    

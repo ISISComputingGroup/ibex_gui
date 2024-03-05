@@ -47,13 +47,21 @@ public class IBEXButtonBuilder {
 	private static final String SYMBOLIC_PATH = "uk.ac.stfc.isis.ibex.ui.widgets";
 	private static final String HELP_ICON2 = "/icons/helpIcon.png";
 	private static final String TOOLTIP_TEXT = "Open user manual link in browser for help with '%s': \n%s";
-	
+
 	public static GridData expandingGrid = new GridData(SWT.FILL, SWT.FILL, true, true);
 	public static GridData defaultGrid = new GridData();
 	public static GridData compactGrid = new GridData(SWT.FILL, SWT.FILL, false, false);
 	public static GridData fitGrid = new GridData(SWT.LEFT, SWT.FILL, false, false);
 	public static GridData centerGrid = new GridData(SWT.CENTER, SWT.CENTER, false, true);
 	public static RowData defaultRow = new RowData();
+
+	public IBEXButtonBuilder(Composite parent, Integer style) {
+		this.parent = parent;
+		this.buttonStyle = style;
+	}
+
+	public IBEXButtonBuilder() {
+	}
 
 	public IBEXButtonBuilder setLabel(String label) {
 		this.text = label;
@@ -130,7 +138,6 @@ public class IBEXButtonBuilder {
 		this.parent = parent;
 		return this;
 	}
-
 
 	public Button build() {
 

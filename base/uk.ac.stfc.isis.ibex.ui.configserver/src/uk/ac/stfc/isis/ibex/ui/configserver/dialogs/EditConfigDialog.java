@@ -127,7 +127,7 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 		
 		// Set link according to whether this is a component or a config.
 		if (!config.getIsComponent()) {
-			Button button = new IBEXButtonBuilder().setHelpButton(CONFIG_HELP_LINK, description).setParent(parent).build();
+			Button button = new IBEXButtonBuilder(parent, 999).setHelpButton(CONFIG_HELP_LINK, description).setParent(parent).build();
 		} else {
 			Button button = new IBEXButtonBuilder().setHelpButton(COMPONENT_HELP_LINK, description).setParent(parent).build();
 		}
