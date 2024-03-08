@@ -3598,5 +3598,23 @@
         </macros>
       </value>
     </entry>
+    <entry>
+      <key>PS300</key>
+      <value>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+        <type>Standord</type>
+        <path>PS300.opi</path>
+        <description>The OPI for the Stanford 300 series power supply.</description>
+        <macros>
+          <macro>
+            <name>NAME</name>
+            <description>The IOC PV prefix (e.g. PS300_01)</description>
+            <default>PS300_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
   </opis>
 </descriptions>
