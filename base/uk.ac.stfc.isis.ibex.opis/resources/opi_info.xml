@@ -52,6 +52,15 @@
       </value>
     </entry>
     <entry>
+      <key>ARGUS Magnet Statuses</key>
+      <value>
+        <type>MAGNET</type>
+        <path>ARGUS/magnet_status.opi</path>
+        <description>Statuses of ARGUS trans and long magnets</description>
+        <categories/>
+      </value>
+    </entry>
+    <entry>
       <key>Mk3 Chopper</key>
       <value>
         <type>CHOPPER</type>
@@ -1208,7 +1217,13 @@
         <type>DEBUG</type>
         <path>twincat/twincat_engineering.opi</path>
         <description>The OPI giving a detailed engineering view of a Beckhoff.</description>
-        <macros/>
+        <macros>
+		<macro>
+            <name>TC</name>
+            <description>The TC IOC number eg. TC_01</description>
+            <default>TC_01</default>
+          </macro>
+		</macros>
         <categories>
           <category>Miscellaneous motion control</category>
         </categories>

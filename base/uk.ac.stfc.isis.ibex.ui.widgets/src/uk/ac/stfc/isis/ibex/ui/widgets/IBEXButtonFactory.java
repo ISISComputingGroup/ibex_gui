@@ -55,6 +55,22 @@ public class IBEXButtonFactory {
 	}
 	
 	/**
+	 * Creates a button that appears as a radio button.
+	 * 
+	 * @param parent a composite control which will be the parent of the new instance (cannot be null)
+	 * @param text the title of the radio button
+	 * @param tooltip the tooltip of the button (can be null)
+	 * @param onClickListener the event handler for clicks
+	 * @return n new button instance
+	 */
+    public static Button radio(Composite parent, String text, String tooltip, Listener onClickListener) {
+    	int style = SWT.RADIO;
+    	GridData layoutData = new GridData();
+    	
+    	return create(parent, style, text, tooltip, null, onClickListener, layoutData);
+    }
+	
+	/**
 	 * Creates a button that fills all available horizontal space.
 	 * 
 	 * @param parent a composite control which will be the parent of the new instance (cannot be null)

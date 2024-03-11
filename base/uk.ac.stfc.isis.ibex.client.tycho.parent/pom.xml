@@ -237,6 +237,7 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.journalviewer</module>
 		<module>../uk.ac.stfc.isis.ibex.journal</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.journalviewer.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.journal.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.nicos.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.graphing</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.widgets.epics</module>

@@ -21,6 +21,7 @@
 -Dpython.import.site=false
 -XX:+CreateCoredumpOnCrash
 -Dlog4j2.formatMsgNoLookups=true
+-agentlib:jdwp=transport=dt_socket,server=y,suspend=n
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>

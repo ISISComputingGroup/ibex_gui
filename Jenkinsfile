@@ -117,6 +117,13 @@ pipeline {
     always {
 	    archiveArtifacts artifacts: 'build/*.log', caseSensitive: false
 	    junit '**/surefire-reports/TEST-*.xml,**/test-reports/TEST-*.xml'
+      logParser ([
+            projectRulePath: 'parse_rules',
+            parsingRulesPath: '',
+            showGraphs: true, 
+            unstableOnWarning: false, 
+            useProjectRule: true,
+        ])
     }
     cleanup {
             echo "***"
