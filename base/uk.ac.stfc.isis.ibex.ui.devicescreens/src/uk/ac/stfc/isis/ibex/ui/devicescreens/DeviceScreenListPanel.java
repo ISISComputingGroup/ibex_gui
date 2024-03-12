@@ -109,7 +109,7 @@ public class DeviceScreenListPanel extends Composite {
 			}
 		});
 
-		Button helpButton = new IBEXButtonBuilder().setHelpButton(HELP_LINK, DESCRIPTION).setParent(this).build();
+		Button helpButton = new IBEXButtonBuilder(this, SWT.PUSH).setHelpButton(true).setLink(HELP_LINK).setDescription(DESCRIPTION).build();
 
 		viewModel.addPropertyChangeListener(new PropertyChangeListener() {
 			@Override

@@ -224,14 +224,14 @@ public class ImportComponentDialog extends TitleAreaDialog  {
 		Text text = new Text(group, SWT.BORDER);
 		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-		Button button = new IBEXButtonBuilder()
+		Button button = new IBEXButtonBuilder(group, SWT.NONE)
 			.setText("Select")
 			.setListener(new Listener() {
 					@Override
 					public void handleEvent(Event event) {
 						importVariables.selectInstrument(text.getText());
 					}
-				}).setParent(group).setCustomLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1)).setButtonType(SWT.NONE).build();
+				}).setCustomLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1)).build();
 
 		
 		

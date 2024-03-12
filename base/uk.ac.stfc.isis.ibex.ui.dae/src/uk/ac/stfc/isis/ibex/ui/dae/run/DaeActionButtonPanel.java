@@ -77,14 +77,14 @@ public class DaeActionButtonPanel extends Composite {
 		Label bottomSpacer = new Label(this, SWT.NONE);
 		bottomSpacer.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1));
 
-		Button button = new IBEXButtonBuilder().setHelpButton(HELP_LINK, DESCRIPTION).setParent(parent).build();
+		Button button = new IBEXButtonBuilder(parent, SWT.PUSH).setHelpButton(true).setLink(HELP_LINK)
+				.setDescription(DESCRIPTION).build();
 	}
 
 	private void addActionButton(String text, String imageFileName, final Action action) {
 		Image image = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/" + imageFileName);
 
-		Button button = new IBEXButtonBuilder().setAction(action).setParent(this).setText(text)
-				.setButtonType(SWT.CENTER).setImage(image)
+		Button button = new IBEXButtonBuilder(this, SWT.CENTER).setAction(action).setText(text).setImage(image)
 				.setCustomLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1)).build();
 	}
 }

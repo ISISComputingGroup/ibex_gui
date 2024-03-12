@@ -1,7 +1,5 @@
 package uk.ac.stfc.isis.ibex.ui.widgets.buttons;
 
-import java.text.DecimalFormat;
-
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
@@ -13,6 +11,7 @@ import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.widgets.Button;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
 import uk.ac.stfc.isis.ibex.model.Action;
@@ -41,8 +40,9 @@ public class IBEXButtonBuilder {
 	private Image image;
 	private Action action;
 	private Listener listener;
-	private String wikiLink;
+	private String link;
 	private String description;
+	private Boolean isHelpButton;
 
 	private static final String SYMBOLIC_PATH = "uk.ac.stfc.isis.ibex.ui.widgets";
 	private static final String HELP_ICON2 = "/icons/helpIcon.png";
@@ -53,14 +53,12 @@ public class IBEXButtonBuilder {
 	public static GridData compactGrid = new GridData(SWT.FILL, SWT.FILL, false, false);
 	public static GridData fitGrid = new GridData(SWT.LEFT, SWT.FILL, false, false);
 	public static GridData centerGrid = new GridData(SWT.CENTER, SWT.CENTER, false, true);
+	public static GridData SquareImage = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 	public static RowData defaultRow = new RowData();
 
 	public IBEXButtonBuilder(Composite parent, Integer style) {
 		this.parent = parent;
 		this.buttonStyle = style;
-	}
-
-	public IBEXButtonBuilder() {
 	}
 
 	public IBEXButtonBuilder setLabel(String label) {
@@ -83,8 +81,8 @@ public class IBEXButtonBuilder {
 		return this;
 	}
 
-	public IBEXButtonBuilder setWikiLink(String wikiLink) {
-		this.wikiLink = wikiLink;
+	public IBEXButtonBuilder setLink(String link) {
+		this.link = link;
 		return this;
 	}
 
@@ -128,9 +126,8 @@ public class IBEXButtonBuilder {
 		return this;
 	}
 
-	public IBEXButtonBuilder setHelpButton(String wikiLink, String description) {
-		this.wikiLink = wikiLink;
-		this.description = description;
+	public IBEXButtonBuilder setHelpButton(Boolean isHelpButton) {
+		this.isHelpButton = isHelpButton;
 		return this;
 	}
 
@@ -139,33 +136,21 @@ public class IBEXButtonBuilder {
 		return this;
 	}
 
+	public IBEXButtonBuilder setOpenBrowser(String link) {
+		this.link = link;
+		return this;
+	}
+
 	public Button build() {
-
-		if (wikiLink != null && description != null) {
-			String tooltipDesc = String.format(TOOLTIP_TEXT, description, wikiLink);
-
-			// create button
-			Button helpButton = new Button(parent, SWT.PUSH);
-			helpButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-			helpButton.setImage(ResourceManager.getPluginImage(SYMBOLIC_PATH, HELP_ICON2));
-			helpButton.setToolTipText(tooltipDesc);
-
-			helpButton.addSelectionListener(new SelectionAdapter() {
-				public void widgetSelected(SelectionEvent e) {
-					try {
-						PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser().openURL(new URL(wikiLink));
-					} catch (PartInitException | MalformedURLException ex) {
-						LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()),
-								"Failed to open URL in browser: " + wikiLink, ex);
-					}
-				}
-			});
-
-			return helpButton;
-
-		}
-
 		Button button = new Button(parent, buttonStyle);
+
+		// at start so if the user wants to override the default help button settings
+		// they can do
+		if (isHelpButton != null) {
+			button.setToolTipText(String.format(TOOLTIP_TEXT, description, link));
+			button.setLayoutData(IBEXButtonBuilder.SquareImage);
+			button.setImage(ResourceManager.getPluginImage(SYMBOLIC_PATH, HELP_ICON2));
+		}
 
 		if (action != null) {
 			DataBindingContext bindingContext = new DataBindingContext();
@@ -182,7 +167,9 @@ public class IBEXButtonBuilder {
 
 		if (text != null) {
 			button.setText(text);
-		}
+		} 
+		
+		
 
 		if (tooltip != null) {
 			button.setToolTipText(tooltip);
@@ -214,6 +201,17 @@ public class IBEXButtonBuilder {
 
 		if (image != null) {
 			button.setImage(image);
+		}
+
+		if (link != null) {
+			button.addListener(SWT.Selection, e -> {
+				try {
+					PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser().openURL(new URL(link));
+				} catch (PartInitException | MalformedURLException ex) {
+					LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()),
+							"Failed to open URL in browser: " + link, ex);
+				}
+			});
 		}
 
 		if (listener != null) {

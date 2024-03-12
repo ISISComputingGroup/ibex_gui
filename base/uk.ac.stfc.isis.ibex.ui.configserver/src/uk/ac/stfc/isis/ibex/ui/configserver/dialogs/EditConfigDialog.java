@@ -29,6 +29,7 @@ import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
@@ -127,9 +128,9 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 		
 		// Set link according to whether this is a component or a config.
 		if (!config.getIsComponent()) {
-			Button button = new IBEXButtonBuilder(parent, 999).setHelpButton(CONFIG_HELP_LINK, description).setParent(parent).build();
+			Button button = new IBEXButtonBuilder(parent, SWT.PUSH).setHelpButton(true).setLink(CONFIG_HELP_LINK).setDescription(description).setParent(parent).build();
 		} else {
-			Button button = new IBEXButtonBuilder().setHelpButton(COMPONENT_HELP_LINK, description).setParent(parent).build();
+			Button button = new IBEXButtonBuilder(parent, SWT.PUSH).setHelpButton(true).setLink(COMPONENT_HELP_LINK).setDescription(description).setParent(parent).build();
 		}
 		
 		this.moxaDetailsDialog = new MoxaDetailsDialog(this.getShell());

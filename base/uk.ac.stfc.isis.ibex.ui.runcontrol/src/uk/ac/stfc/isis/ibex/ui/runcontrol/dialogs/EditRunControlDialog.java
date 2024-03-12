@@ -51,9 +51,9 @@ public class EditRunControlDialog extends TitleAreaDialog {
 	private RunControlSettingsPanel editor;
 	private final RunControlViewModel viewModel;
 	private static final String TITLE = "Run-Control Settings";
-	
+
 	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Menu-Bar#run-control-menu";
-	
+
 	/**
 	 * Creates a dialog for configuring the run-control settings.
 	 * 
@@ -61,11 +61,11 @@ public class EditRunControlDialog extends TitleAreaDialog {
 	 */
 	public EditRunControlDialog(Shell parentShell) {
 		super(parentShell);
-        setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE | SWT.APPLICATION_MODAL);
+		setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE | SWT.APPLICATION_MODAL);
 		this.configServer = Configurations.getInstance().server();
 		this.runControlServer = RunControlActivator.getInstance().getServer();
-        this.viewModel =
-                new RunControlViewModel(Configurations.getInstance().display().getDisplayBlocks(), runControlServer);
+		this.viewModel = new RunControlViewModel(Configurations.getInstance().display().getDisplayBlocks(),
+				runControlServer);
 		viewModel.addPropertyChangeListener("error", new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
@@ -78,22 +78,23 @@ public class EditRunControlDialog extends TitleAreaDialog {
 			}
 		});
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	protected Control createDialogArea(Composite parent) {
-        setTitle("Configure Run Control");
-		
-        editor = new RunControlSettingsPanel(this, parent, SWT.NONE, configServer, runControlServer, viewModel);
+		setTitle("Configure Run Control");
+
+		editor = new RunControlSettingsPanel(this, parent, SWT.NONE, configServer, runControlServer, viewModel);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
-		Button helpButton = new IBEXButtonBuilder().setParent(parent).setHelpButton(HELP_LINK, TITLE).build();
+
+		Button helpButton = new IBEXButtonBuilder(parent, SWT.PUSH).setHelpButton(true).setLink(HELP_LINK)
+				.setDescription(TITLE).build();
 
 		return editor;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -101,7 +102,7 @@ public class EditRunControlDialog extends TitleAreaDialog {
 	protected void createButtonsForButtonBar(Composite parent) {
 		createButton(parent, IDialogConstants.CANCEL_ID, "Close", false);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -110,7 +111,7 @@ public class EditRunControlDialog extends TitleAreaDialog {
 		super.configureShell(shell);
 		shell.setText(TITLE);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
