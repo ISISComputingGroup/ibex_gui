@@ -77,15 +77,15 @@ public class DeviceScreenListPanel extends Composite {
 		GridLayout compositeLayout = new GridLayout(1, true);
 		this.setLayout(compositeLayout);
 
-		configureDevScreensButton = new IBEXButtonBuilder(this, SWT.NONE).setText("Edit Device Screens")
-				.setListener(evt -> {
+		configureDevScreensButton = new IBEXButtonBuilder(this, SWT.NONE).text("Edit Device Screens")
+				.listener(evt -> {
 					try {
 						configureDeviceScreensHandler.execute(new ExecutionEvent());
 					} catch (ExecutionException ex) {
 						LOG.catching(ex);
 						MessageDialog.openError(parent.getShell(), "Error displaying config dialogue", ex.getMessage());
 					}
-				}).setCustomLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false)).build();
+				}).customLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false)).build();
 
 		deviceScreenList = new DeviceScreensTable(this, SWT.NONE, SWT.FULL_SELECTION);
 		GridData devicesListLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
@@ -109,7 +109,7 @@ public class DeviceScreenListPanel extends Composite {
 			}
 		});
 
-		Button helpButton = new IBEXButtonBuilder(this, SWT.PUSH).setHelpButton(true).setLink(HELP_LINK).setDescription(DESCRIPTION).build();
+		Button helpButton = new IBEXButtonBuilder(this, SWT.PUSH).helpButton(true).link(HELP_LINK).description(DESCRIPTION).build();
 
 		viewModel.addPropertyChangeListener(new PropertyChangeListener() {
 			@Override

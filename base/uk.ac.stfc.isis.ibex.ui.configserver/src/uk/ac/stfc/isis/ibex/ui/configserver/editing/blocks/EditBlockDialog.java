@@ -120,7 +120,7 @@ public class EditBlockDialog extends TitleAreaDialog {
         		blockGroupViewModel);
         blockGroupPanel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
-        Button button = new IBEXButtonBuilder(parent, SWT.PUSH).setHelpButton(true).setLink(HELP_LINK).setDescription(DESCRIPTION).build();
+        Button button = new IBEXButtonBuilder(parent, SWT.PUSH).helpButton(true).link(HELP_LINK).description(DESCRIPTION).build();
 		
         return blockDetailsPanel;
     }

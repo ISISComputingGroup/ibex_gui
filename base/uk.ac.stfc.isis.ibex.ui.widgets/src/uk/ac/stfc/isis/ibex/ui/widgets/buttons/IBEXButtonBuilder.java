@@ -44,6 +44,7 @@ public class IBEXButtonBuilder {
 	private String description;
 	private Boolean isHelpButton;
 
+	// files/text used many times within perspectives
 	private static final String SYMBOLIC_PATH = "uk.ac.stfc.isis.ibex.ui.widgets";
 	private static final String HELP_ICON2 = "/icons/helpIcon.png";
 	private static final String TOOLTIP_TEXT = "Open user manual link in browser for help with '%s': \n%s";
@@ -61,83 +62,68 @@ public class IBEXButtonBuilder {
 		this.buttonStyle = style;
 	}
 
-	public IBEXButtonBuilder setLabel(String label) {
+	public IBEXButtonBuilder label(String label) {
 		this.text = label;
 		return this;
 	}
 
-	public IBEXButtonBuilder setTooltip(String tooltip) {
+	public IBEXButtonBuilder tooltip(String tooltip) {
 		this.tooltip = tooltip;
 		return this;
 	}
 
-	public IBEXButtonBuilder setCustomLayoutData(RowData layoutData) {
+	public IBEXButtonBuilder customLayoutData(RowData layoutData) {
 		this.rowData = layoutData;
 		return this;
 	}
 
-	public IBEXButtonBuilder setCustomLayoutData(GridData layoutData) {
+	public IBEXButtonBuilder customLayoutData(GridData layoutData) {
 		this.gridData = layoutData;
 		return this;
 	}
 
-	public IBEXButtonBuilder setLink(String link) {
+	public IBEXButtonBuilder link(String link) {
 		this.link = link;
 		return this;
 	}
 
-	public IBEXButtonBuilder setDescription(String description) {
+	public IBEXButtonBuilder description(String description) {
 		this.description = description;
 		return this;
 	}
 
-	public IBEXButtonBuilder setButtonType(Integer buttonStyle) {
-		this.buttonStyle = buttonStyle;
-		return this;
-	}
-
-	public IBEXButtonBuilder setAction(Action action) {
+	public IBEXButtonBuilder action(Action action) {
 		this.action = action;
 		return this;
 	}
 
-	public IBEXButtonBuilder setListener(Listener listener) {
+	public IBEXButtonBuilder listener(Listener listener) {
 		this.listener = listener;
 		return this;
 	}
 
-	public IBEXButtonBuilder setText(String text) {
+	public IBEXButtonBuilder text(String text) {
 		this.text = text;
 		return this;
 	}
 
-	public IBEXButtonBuilder setImage(Image image) {
+	public IBEXButtonBuilder image(Image image) {
 		this.image = image;
 		return this;
 	}
 
-	public IBEXButtonBuilder setWidth(Integer width) {
+	public IBEXButtonBuilder width(Integer width) {
 		this.width = width;
 		return this;
 	}
 
-	public IBEXButtonBuilder setHeight(Integer height) {
+	public IBEXButtonBuilder height(Integer height) {
 		this.height = height;
 		return this;
 	}
 
-	public IBEXButtonBuilder setHelpButton(Boolean isHelpButton) {
+	public IBEXButtonBuilder helpButton(Boolean isHelpButton) {
 		this.isHelpButton = isHelpButton;
-		return this;
-	}
-
-	public IBEXButtonBuilder setParent(Composite parent) {
-		this.parent = parent;
-		return this;
-	}
-
-	public IBEXButtonBuilder setOpenBrowser(String link) {
-		this.link = link;
 		return this;
 	}
 
@@ -167,9 +153,7 @@ public class IBEXButtonBuilder {
 
 		if (text != null) {
 			button.setText(text);
-		} 
-		
-		
+		}
 
 		if (tooltip != null) {
 			button.setToolTipText(tooltip);

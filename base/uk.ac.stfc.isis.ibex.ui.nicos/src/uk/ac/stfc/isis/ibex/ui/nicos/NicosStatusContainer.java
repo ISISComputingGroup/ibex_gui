@@ -43,8 +43,8 @@ public class NicosStatusContainer {
 		nicosStatus.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		nicosStatus.setLayout(new GridLayout(2, false));
 
-		Button helpButton = new IBEXButtonBuilder(nicosStatus, SWT.PUSH).setHelpButton(true).setLink(HELP_LINK)
-				.setDescription(DESCRIPTION).build();
+		Button helpButton = new IBEXButtonBuilder(nicosStatus, SWT.PUSH).helpButton(true).link(HELP_LINK)
+				.description(DESCRIPTION).build();
 
 		Composite textComposite = new Composite(nicosStatus, SWT.NONE);
 		textComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));

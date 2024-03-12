@@ -80,7 +80,7 @@ public class IocControlDialog extends TitleAreaDialog {
 		IocControlView iocControlView = new IocControlView(parent, SWT.NONE, iocControlViewModel);
 		iocControlView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-		Button helpButton = new IBEXButtonBuilder(parent, SWT.PUSH).setHelpButton(true).setLink(HELP_LINK).setDescription(SUB_TITLE).build();
+		Button helpButton = new IBEXButtonBuilder(parent, SWT.PUSH).helpButton(true).link(HELP_LINK).description(SUB_TITLE).build();
 		
 		
 		return iocControlView;

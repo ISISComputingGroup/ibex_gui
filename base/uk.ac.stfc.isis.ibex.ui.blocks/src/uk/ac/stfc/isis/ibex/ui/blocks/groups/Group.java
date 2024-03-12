@@ -126,9 +126,9 @@ public class Group extends Composite {
 		
 		
 		title = new IBEXButtonBuilder(titleContainer, SWT.NONE)
-			    .setText("   " + group.name())
-			    .setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.blocks", "icons/minus.png"))
-			    .setListener(e -> {
+			    .text("   " + group.name())
+			    .image(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.blocks", "icons/minus.png"))
+			    .listener(e -> {
 			        Button source = (Button) e.widget; // Use e.widget to get the source widget
 			        if (source.getSelection()) {
 			            groupBlocks.setVisible(false);

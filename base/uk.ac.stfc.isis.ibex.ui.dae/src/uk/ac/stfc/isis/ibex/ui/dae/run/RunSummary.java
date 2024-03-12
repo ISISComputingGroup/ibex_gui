@@ -175,9 +175,9 @@ public class RunSummary {
 		new Label(infoComposite, SWT.NONE);
 		new Label(infoComposite, SWT.NONE);
 		
-		btnDisplayTitle = new IBEXButtonBuilder(infoComposite, SWT.CHECK).setTooltip("Show Title and Users in Dataweb Dashboard Page").setText("Show Title and Users in Dataweb Dashboard Page").setListener(evt -> {
+		btnDisplayTitle = new IBEXButtonBuilder(infoComposite, SWT.CHECK).tooltip("Show Title and Users in Dataweb Dashboard Page").text("Show Title and Users in Dataweb Dashboard Page").listener(evt -> {
 			model.displayTitle().uncheckedSetValue(btnDisplayTitle.getSelection());
-		}).setCustomLayoutData(new GridData()).build();
+		}).customLayoutData(new GridData()).build();
 
 		messageBox = new LogMessageBox(lhsComposite, SWT.NONE);
 		messageBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));

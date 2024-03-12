@@ -77,7 +77,7 @@ public class PerspectiveHidingDialog extends TitleAreaDialog {
         
         table.setRows(model.getPerspectiveInfo());
         
-        Button btnCheckButton = new IBEXButtonBuilder(container, SWT.CHECK).setText("Use Local Settings").build();
+        Button btnCheckButton = new IBEXButtonBuilder(container, SWT.CHECK).text("Use Local Settings").build();
         
         DataBindingContext bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.buttonSelection().observe(btnCheckButton),

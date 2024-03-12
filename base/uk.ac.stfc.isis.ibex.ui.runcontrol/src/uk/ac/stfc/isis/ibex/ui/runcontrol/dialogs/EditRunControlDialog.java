@@ -89,8 +89,8 @@ public class EditRunControlDialog extends TitleAreaDialog {
 		editor = new RunControlSettingsPanel(this, parent, SWT.NONE, configServer, runControlServer, viewModel);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-		Button helpButton = new IBEXButtonBuilder(parent, SWT.PUSH).setHelpButton(true).setLink(HELP_LINK)
-				.setDescription(TITLE).build();
+		Button helpButton = new IBEXButtonBuilder(parent, SWT.PUSH).helpButton(true).link(HELP_LINK)
+				.description(TITLE).build();
 
 		return editor;
 	}
