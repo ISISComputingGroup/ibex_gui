@@ -3,21 +3,17 @@ package uk.ac.stfc.isis.ibex.ui.widgets.buttons;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
-import org.eclipse.jface.viewers.CellEditor.LayoutData;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.widgets.Button;
-import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
 import uk.ac.stfc.isis.ibex.model.Action;
 import java.net.MalformedURLException;
 import java.net.URL;
-import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
