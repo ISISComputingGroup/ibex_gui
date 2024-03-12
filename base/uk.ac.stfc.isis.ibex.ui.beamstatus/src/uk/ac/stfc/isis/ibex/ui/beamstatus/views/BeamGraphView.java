@@ -203,7 +203,7 @@ public class BeamGraphView extends ModelListenerAdapter {
 
 	private void createButton(final Composite parent, final String name, final long timeDuration) {
 		
-		Button button = new IBEXButtonBuilder(parent, SWT.RADIO).customLayoutData(new RowData()).label(name).tooltip("Tooltip text").listener(evt -> {
+		Button button = new IBEXButtonBuilder(parent, SWT.RADIO).customLayoutData(new RowData()).text(name).tooltip("Tooltip text").listener(evt -> {
 			setTimeRange(timeDuration);
 		}).build();
 		button.setSelection(timeDuration == currentPlotTimespanMilliseconds);

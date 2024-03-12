@@ -28,6 +28,9 @@ import org.eclipse.wb.swt.ResourceManager;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
+/**
+ * Builder to create perspective buttons
+ */
 public class IBEXButtonBuilder {
 	private String text;
 	private String tooltip;
@@ -57,76 +60,154 @@ public class IBEXButtonBuilder {
 	public static GridData SquareImage = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 	public static RowData defaultRow = new RowData();
 
+	/**
+	 * Constructor with minimum paramaters required for button creation
+	 *
+	 * @param parent the composite to add the button to
+	 * @param style  the SWT style ENUM to assign the button
+	 */
 	public IBEXButtonBuilder(Composite parent, Integer style) {
 		this.parent = parent;
 		this.buttonStyle = style;
 	}
 
-	public IBEXButtonBuilder label(String label) {
-		this.text = label;
-		return this;
-	}
-
+	/**
+	 * Set the tooltip for the button
+	 * 
+	 * @param tooltip
+	 * @return IBEXButtonBuilder
+	 */
 	public IBEXButtonBuilder tooltip(String tooltip) {
 		this.tooltip = tooltip;
 		return this;
 	}
 
+	/**
+	 * sets a custom RowData layout
+	 * 
+	 * @param layoutData
+	 * @return IBEXButtonBuilder
+	 */
 	public IBEXButtonBuilder customLayoutData(RowData layoutData) {
 		this.rowData = layoutData;
 		return this;
 	}
 
+	/**
+	 * sets a custom GridData layout
+	 * 
+	 * @param layoutData
+	 * @return IBEXButtonBuilder
+	 */
 	public IBEXButtonBuilder customLayoutData(GridData layoutData) {
 		this.gridData = layoutData;
 		return this;
 	}
 
+	/**
+	 * sets the link for the button
+	 * 
+	 * @param link
+	 * @return IBEXButtonBuilder
+	 */
 	public IBEXButtonBuilder link(String link) {
 		this.link = link;
 		return this;
 	}
 
+	/**
+	 * sets the description for the button
+	 * 
+	 * @param description
+	 * @return IBEXButtonBuilder
+	 */
 	public IBEXButtonBuilder description(String description) {
 		this.description = description;
 		return this;
 	}
 
+	/**
+	 * sets the action the button should perform
+	 * 
+	 * @param action
+	 * @return IBEXButtonBuilder
+	 */
 	public IBEXButtonBuilder action(Action action) {
 		this.action = action;
 		return this;
 	}
 
+	/**
+	 * sets the listener for the button
+	 * 
+	 * @param listener
+	 * @return IBEXButtonBuilder
+	 */
 	public IBEXButtonBuilder listener(Listener listener) {
 		this.listener = listener;
 		return this;
 	}
 
+	/**
+	 * sets the text for the button
+	 * 
+	 * @param text
+	 * @return IBEXButtonBuilder
+	 */
 	public IBEXButtonBuilder text(String text) {
 		this.text = text;
 		return this;
 	}
 
+	/**
+	 * sets the image for the button
+	 * 
+	 * @param image
+	 * @return IBEXButtonBuilder
+	 */
 	public IBEXButtonBuilder image(Image image) {
 		this.image = image;
 		return this;
 	}
 
+	/**
+	 * sets the width for the button
+	 * 
+	 * @param width
+	 * @return IBEXButtonBuilder
+	 */
 	public IBEXButtonBuilder width(Integer width) {
 		this.width = width;
 		return this;
 	}
 
+	/**
+	 * sets the height for the button
+	 * 
+	 * @param height
+	 * @return IBEXButtonBuilder
+	 */
 	public IBEXButtonBuilder height(Integer height) {
 		this.height = height;
 		return this;
 	}
 
+	/**
+	 * sets the help button for the button
+	 * 
+	 * @param isHelpButton
+	 * @return IBEXButtonBuilder
+	 */
 	public IBEXButtonBuilder helpButton(Boolean isHelpButton) {
 		this.isHelpButton = isHelpButton;
 		return this;
 	}
 
+	/**
+	 * builds the button with the set parameters
+	 * 
+	 * @return Button
+	 */
 	public Button build() {
 		Button button = new Button(parent, buttonStyle);
 
