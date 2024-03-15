@@ -87,7 +87,6 @@ public class JournalViewerView {
 	private final JournalViewModel model = JournalViewerUI.getDefault().getModel();
 	private static final Display DISPLAY = Display.getCurrent();
 
-	private Button btnRefresh;
 	private Text textPageNumber;
 	private Button btnPrevPage;
 	private Button btnNextPage;
@@ -100,7 +99,6 @@ public class JournalViewerView {
 	private DataboundTable<JournalRow> journalTable;
 
 	private Composite searchControls;
-	private Button btnClear;
 	private Composite basicControls;
 
 	/**
@@ -180,7 +178,7 @@ public class JournalViewerView {
 					model.lastPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
 				}).customLayoutData(IBEXButtonBuilder.defaultRow).build();
 
-		btnRefresh = new IBEXButtonBuilder(basicControls, SWT.NONE).text("Refresh")
+		new IBEXButtonBuilder(basicControls, SWT.NONE).text("Refresh")
 				.tooltip("Refresh the journal.").listener(e -> {
 					resetPageNumber();
 					setProgressIndicatorsVisible(true);
@@ -199,7 +197,7 @@ public class JournalViewerView {
 		btnSearch = new IBEXButtonBuilder(searchControls, SWT.NONE).text("Search").tooltip("Search the journal.")
 				.listener(e -> search()).customLayoutData(new RowData(80, SWT.DEFAULT)).build();
 
-		btnClear = new IBEXButtonBuilder(searchControls, SWT.NONE).text("Clear").tooltip("Clear the search.")
+		new IBEXButtonBuilder(searchControls, SWT.NONE).text("Clear").tooltip("Clear the search.")
 				.listener(e -> {
 					resetPageNumber();
 					searchInput.clearInput();

@@ -370,7 +370,7 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 				.tooltip(Constants.BUTTON_TOOLTIP_INSERT_ROW_BELOW).text(Constants.BUTTON_TITLE_INSERT_ROW_BELOW)
 				.customLayoutData(IBEXButtonBuilder.expandingGrid)
 				.listener(e -> scriptGeneratorViewModel.insertEmptyAction(table.getSelectionIndex() + 1)).build();
-		Button clearButton = new IBEXButtonBuilder(actionsControlsGrp, SWT.NONE)
+		new IBEXButtonBuilder(actionsControlsGrp, SWT.NONE)
 				.tooltip(Constants.BUTTON_TOOLTIP_DELETE_ROWS).text(Constants.BUTTON_TITLE_DELETE_ROWS)
 				.customLayoutData(IBEXButtonBuilder.expandingGrid)
 				.listener(e -> scriptGeneratorViewModel.clearAction()).build();
@@ -394,7 +394,7 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 				.tooltip(Constants.BUTTON_TITLE_SAVE_AS).customLayoutData(IBEXButtonBuilder.expandingGrid)
 				.text(Constants.BUTTON_TITLE_SAVE_AS).listener(e -> scriptGeneratorViewModel.generateScript())
 				.build();
-		Button loadButton = new IBEXButtonBuilder(generateButtonsGrp, SWT.NONE).tooltip(Constants.BUTTON_TITLE_LOAD)
+		new IBEXButtonBuilder(generateButtonsGrp, SWT.NONE).tooltip(Constants.BUTTON_TITLE_LOAD)
 				.customLayoutData(IBEXButtonBuilder.expandingGrid).text(Constants.BUTTON_TITLE_LOAD)
 				.listener(e -> scriptGeneratorViewModel.loadParameterValues()).build();
 
@@ -541,7 +541,7 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 			GridData d = new GridData();
 			d.heightHint = 80;
 			table.setLayoutData(d);
-			String[] titles = { "Script Definition", "Error" };
+			String[] titles = {"Script Definition", "Error"};
 
 			for (String title : titles) {
 				TableColumn column = new TableColumn(table, SWT.NULL);

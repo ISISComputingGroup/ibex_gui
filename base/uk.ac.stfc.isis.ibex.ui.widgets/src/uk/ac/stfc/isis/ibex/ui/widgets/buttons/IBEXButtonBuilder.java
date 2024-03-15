@@ -25,7 +25,7 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
- * Builder to create perspective buttons
+ * Builder to create perspective buttons.
  */
 public class IBEXButtonBuilder {
 	private String text;
@@ -43,21 +43,38 @@ public class IBEXButtonBuilder {
 	private String description;
 	private Boolean isHelpButton;
 
-	// files/text used many times within perspectives
+	// files/text used many times within perspectives.
 	private static final String SYMBOLIC_PATH = "uk.ac.stfc.isis.ibex.ui.widgets";
 	private static final String HELP_ICON2 = "/icons/helpIcon.png";
 	private static final String TOOLTIP_TEXT = "Open user manual link in browser for help with '%s': \n%s";
 
+	/**
+	 *  An expanding grid.
+	 */
 	public static GridData expandingGrid = new GridData(SWT.FILL, SWT.FILL, true, true);
+	
+	/**
+	 * default grid.
+	 */
 	public static GridData defaultGrid = new GridData();
+	
+	/**
+	 *  A compact grid.
+	 */
 	public static GridData compactGrid = new GridData(SWT.FILL, SWT.FILL, false, false);
-	public static GridData fitGrid = new GridData(SWT.LEFT, SWT.FILL, false, false);
+	
+	/**
+	 *  A centre aligned grid.
+	 */
 	public static GridData centerGrid = new GridData(SWT.CENTER, SWT.CENTER, false, true);
-	public static GridData SquareImage = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+	
+	/**
+	 *  default row data.
+	 */
 	public static RowData defaultRow = new RowData();
 
 	/**
-	 * Constructor with minimum paramaters required for button creation
+	 * Constructor with minimum paramaters required for button creation.
 	 *
 	 * @param parent the composite to add the button to
 	 * @param style  the SWT style ENUM to assign the button
@@ -68,7 +85,7 @@ public class IBEXButtonBuilder {
 	}
 
 	/**
-	 * Set the tooltip for the button
+	 * Set the tooltip for the button.
 	 * 
 	 * @param tooltip
 	 * @return IBEXButtonBuilder
@@ -79,7 +96,7 @@ public class IBEXButtonBuilder {
 	}
 
 	/**
-	 * sets a custom RowData layout
+	 * sets a custom RowData layout.
 	 * 
 	 * @param layoutData
 	 * @return IBEXButtonBuilder
@@ -90,7 +107,7 @@ public class IBEXButtonBuilder {
 	}
 
 	/**
-	 * sets a custom GridData layout
+	 * sets a custom GridData layout.
 	 * 
 	 * @param layoutData
 	 * @return IBEXButtonBuilder
@@ -101,7 +118,7 @@ public class IBEXButtonBuilder {
 	}
 
 	/**
-	 * sets the link for the button
+	 * sets the link for the button.
 	 * 
 	 * @param link
 	 * @return IBEXButtonBuilder
@@ -112,7 +129,7 @@ public class IBEXButtonBuilder {
 	}
 
 	/**
-	 * sets the description for the button
+	 * sets the description for the button.
 	 * 
 	 * @param description
 	 * @return IBEXButtonBuilder
@@ -123,7 +140,7 @@ public class IBEXButtonBuilder {
 	}
 
 	/**
-	 * sets the action the button should perform
+	 * sets the action the button should perform.
 	 * 
 	 * @param action
 	 * @return IBEXButtonBuilder
@@ -134,7 +151,7 @@ public class IBEXButtonBuilder {
 	}
 
 	/**
-	 * sets the listener for the button
+	 * sets the listener for the button.
 	 * 
 	 * @param listener
 	 * @return IBEXButtonBuilder
@@ -145,7 +162,7 @@ public class IBEXButtonBuilder {
 	}
 
 	/**
-	 * sets the text for the button
+	 * sets the text for the button.
 	 * 
 	 * @param text
 	 * @return IBEXButtonBuilder
@@ -156,7 +173,7 @@ public class IBEXButtonBuilder {
 	}
 
 	/**
-	 * sets the image for the button
+	 * sets the image for the button.
 	 * 
 	 * @param image
 	 * @return IBEXButtonBuilder
@@ -167,7 +184,7 @@ public class IBEXButtonBuilder {
 	}
 
 	/**
-	 * sets the width for the button
+	 * sets the width for the button.
 	 * 
 	 * @param width
 	 * @return IBEXButtonBuilder
@@ -178,7 +195,7 @@ public class IBEXButtonBuilder {
 	}
 
 	/**
-	 * sets the height for the button
+	 * sets the height for the button.
 	 * 
 	 * @param height
 	 * @return IBEXButtonBuilder
@@ -189,7 +206,7 @@ public class IBEXButtonBuilder {
 	}
 
 	/**
-	 * sets the help button for the button
+	 * sets the help button for the button.
 	 * 
 	 * @param isHelpButton
 	 * @return IBEXButtonBuilder
@@ -200,7 +217,7 @@ public class IBEXButtonBuilder {
 	}
 
 	/**
-	 * builds the button with the set parameters
+	 * builds the button with the set parameters.
 	 * 
 	 * @return Button
 	 */
@@ -211,7 +228,7 @@ public class IBEXButtonBuilder {
 		// they can do
 		if (isHelpButton != null) {
 			button.setToolTipText(String.format(TOOLTIP_TEXT, description, link));
-			button.setLayoutData(IBEXButtonBuilder.SquareImage);
+			button.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
 			button.setImage(ResourceManager.getPluginImage(SYMBOLIC_PATH, HELP_ICON2));
 		}
 
@@ -228,41 +245,19 @@ public class IBEXButtonBuilder {
 			});
 		}
 
-		if (text != null) {
-			button.setText(text);
-		}
-
-		if (tooltip != null) {
-			button.setToolTipText(tooltip);
-		}
-
+		button.setText(text);
+		button.setToolTipText(tooltip);
 		if (gridData != null) {
-			if (width != null) {
-				gridData.widthHint = width;
-			}
-
-			if (height != null) {
-				gridData.heightHint = height;
-			}
-
+			gridData.widthHint = width;
+			gridData.heightHint = height;
 			button.setLayoutData(gridData);
 		}
-
 		if (rowData != null) {
-			if (width != null) {
-				rowData.width = width;
-			}
-
-			if (height != null) {
-				rowData.height = height;
-			}
-
+			rowData.width = width;
+			rowData.height = height;
 			button.setLayoutData(rowData);
 		}
-
-		if (image != null) {
-			button.setImage(image);
-		}
+		button.setImage(image);
 
 		if (link != null) {
 			button.addListener(SWT.Selection, e -> {
@@ -274,7 +269,6 @@ public class IBEXButtonBuilder {
 				}
 			});
 		}
-
 		if (listener != null) {
 			button.addListener(SWT.Selection, listener);
 		}

@@ -8,14 +8,13 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusViewModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatus;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusColourConverter;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusTextConverter;
+import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusViewModel;
 import uk.ac.stfc.isis.ibex.ui.banner.views.StatusDetailsDialog;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
 
@@ -54,7 +53,7 @@ public class StatusIndicatorPanel extends Composite {
 		overallStatusLabel.setText("");
 		overallStatusLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		
-		Button showDetails = new IBEXButtonBuilder(this, SWT.NONE).text("Details").customLayoutData(IBEXButtonBuilder.centerGrid).listener(e -> showDetailsDialog()).build();
+		new IBEXButtonBuilder(this, SWT.NONE).text("Details").customLayoutData(IBEXButtonBuilder.centerGrid).listener(e -> showDetailsDialog()).build();
 		
 	    this.pack();
 	    

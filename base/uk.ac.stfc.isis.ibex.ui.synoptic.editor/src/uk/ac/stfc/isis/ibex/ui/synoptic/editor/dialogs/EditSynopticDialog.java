@@ -95,9 +95,7 @@ public class EditSynopticDialog extends TitleAreaDialog {
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		setTitle(subtitle);
 
-		Button helpButton = new IBEXButtonBuilder(parent, SWT.PUSH).helpButton(true).link(HELP_LINK)
-				.description(title).build();
-
+		new IBEXButtonBuilder(parent, SWT.PUSH).helpButton(true).link(HELP_LINK).description(title).build();
 		return editor;
 	}
 

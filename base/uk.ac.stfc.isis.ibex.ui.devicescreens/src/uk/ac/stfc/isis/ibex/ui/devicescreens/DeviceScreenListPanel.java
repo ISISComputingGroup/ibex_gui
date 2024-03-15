@@ -32,9 +32,9 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
@@ -53,8 +53,6 @@ public class DeviceScreenListPanel extends Composite {
 	 * Logger.
 	 */
 	private static final Logger LOG = IsisLog.getLogger(DeviceScreenListPanel.class);
-
-	private Button configureDevScreensButton;
 
 	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Create-and-Manage-Device-Screens";
 	private static final String DESCRIPTION = "Device Screens View";
@@ -77,7 +75,7 @@ public class DeviceScreenListPanel extends Composite {
 		GridLayout compositeLayout = new GridLayout(1, true);
 		this.setLayout(compositeLayout);
 
-		configureDevScreensButton = new IBEXButtonBuilder(this, SWT.NONE).text("Edit Device Screens")
+		new IBEXButtonBuilder(this, SWT.NONE).text("Edit Device Screens")
 				.listener(evt -> {
 					try {
 						configureDeviceScreensHandler.execute(new ExecutionEvent());
@@ -109,7 +107,7 @@ public class DeviceScreenListPanel extends Composite {
 			}
 		});
 
-		Button helpButton = new IBEXButtonBuilder(this, SWT.PUSH).helpButton(true).link(HELP_LINK).description(DESCRIPTION).build();
+		new IBEXButtonBuilder(this, SWT.PUSH).helpButton(true).link(HELP_LINK).description(DESCRIPTION).build();
 
 		viewModel.addPropertyChangeListener(new PropertyChangeListener() {
 			@Override

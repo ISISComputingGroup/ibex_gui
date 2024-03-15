@@ -8,7 +8,6 @@ import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
@@ -43,7 +42,7 @@ public class NicosStatusContainer {
 		nicosStatus.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		nicosStatus.setLayout(new GridLayout(2, false));
 
-		Button helpButton = new IBEXButtonBuilder(nicosStatus, SWT.PUSH).helpButton(true).link(HELP_LINK)
+		new IBEXButtonBuilder(nicosStatus, SWT.PUSH).helpButton(true).link(HELP_LINK)
 				.description(DESCRIPTION).build();
 
 		Composite textComposite = new Composite(nicosStatus, SWT.NONE);

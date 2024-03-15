@@ -128,9 +128,9 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 		
 		// Set link according to whether this is a component or a config.
 		if (!config.getIsComponent()) {
-			Button button = new IBEXButtonBuilder(parent, SWT.PUSH).helpButton(true).link(CONFIG_HELP_LINK).description(description).build();
+			new IBEXButtonBuilder(parent, SWT.PUSH).helpButton(true).link(CONFIG_HELP_LINK).description(description).build();
 		} else {
-			Button button = new IBEXButtonBuilder(parent, SWT.PUSH).helpButton(true).link(COMPONENT_HELP_LINK).description(description).build();
+			new IBEXButtonBuilder(parent, SWT.PUSH).helpButton(true).link(COMPONENT_HELP_LINK).description(description).build();
 		}
 		
 		this.moxaDetailsDialog = new MoxaDetailsDialog(this.getShell());

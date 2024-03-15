@@ -42,6 +42,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
@@ -224,18 +225,14 @@ public class ImportComponentDialog extends TitleAreaDialog  {
 		Text text = new Text(group, SWT.BORDER);
 		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-		Button button = new IBEXButtonBuilder(group, SWT.NONE)
+		new IBEXButtonBuilder(group, SWT.NONE)
 			.text("Select")
 			.listener(new Listener() {
 					@Override
 					public void handleEvent(Event event) {
 						importVariables.selectInstrument(text.getText());
 					}
-				}).customLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1)).build();
-
-		
-		
-		
+				}).customLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1)).build();		
 	}
 	
 	/**

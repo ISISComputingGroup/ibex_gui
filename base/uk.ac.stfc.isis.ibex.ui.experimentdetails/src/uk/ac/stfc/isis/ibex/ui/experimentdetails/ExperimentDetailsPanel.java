@@ -71,7 +71,7 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 	private Button btnAddUserDetails;
 	private Composite experimentTeamButtons;
 	private Button btnClearUserDetails;
-	private Button btnRemoveUserDetails;
+	//private Button btnRemoveUserDetails;
 	private Button btnDisplayTitle;
 
 	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Experiment-Details";
@@ -152,7 +152,7 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 			viewModel.model.sendUserDetails();
 		}).customLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false)).build();
 
-		btnRemoveUserDetails = new IBEXButtonBuilder(experimentTeamButtons, SWT.NONE).text("Remove")
+		new IBEXButtonBuilder(experimentTeamButtons, SWT.NONE).text("Remove")
 				.listener(evt -> {
 					viewModel.model.removeUsers(userDetails.selectedRows());
 					viewModel.model.sendUserDetails();
@@ -173,7 +173,7 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 					viewModel.displayTitle.uncheckedSetValue(btnDisplayTitle.getSelection());
 				}).customLayoutData(new GridData()).build();
 
-		Button helpButton = new IBEXButtonBuilder(parent, SWT.PUSH).helpButton(true).link(HELP_LINK)
+		new IBEXButtonBuilder(parent, SWT.PUSH).helpButton(true).link(HELP_LINK)
 				.description(DESCRIPTION).build();
 	}
 

@@ -142,8 +142,7 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
 
 		content.layout();
 
-		Button button = new IBEXButtonBuilder(parent, SWT.PUSH).helpButton(true).link(HELP_LINK).description(DESCRIPTION).build();
-
+		new IBEXButtonBuilder(parent, SWT.PUSH).helpButton(true).link(HELP_LINK).description(DESCRIPTION).build();
 		return editIocPanel;
 	}
 
