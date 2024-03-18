@@ -60,6 +60,15 @@
         <categories/>
       </value>
     </entry>
+     <entry>
+      <key>CHRONUS Magnet Statuses</key>
+      <value>
+        <type>MAGNET</type>
+        <path>CHRONUS/magnet_status.opi</path>
+        <description>Statuses of CHRONUS trans and long magnets</description>
+        <categories/>
+      </value>
+    </entry>
     <entry>
       <key>Mk3 Chopper</key>
       <value>
