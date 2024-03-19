@@ -1,28 +1,27 @@
 package uk.ac.stfc.isis.ibex.ui.widgets.buttons;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Listener;
-
-import uk.ac.stfc.isis.ibex.model.Action;
-import java.net.MalformedURLException;
-import java.net.URL;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
+import uk.ac.stfc.isis.ibex.model.Action;
 
 /**
  * Builder to create perspective buttons.
@@ -49,27 +48,27 @@ public class IBEXButtonBuilder {
 	private static final String TOOLTIP_TEXT = "Open user manual link in browser for help with '%s': \n%s";
 
 	/**
-	 *  An expanding grid.
+	 * An expanding grid.
 	 */
 	public static GridData expandingGrid = new GridData(SWT.FILL, SWT.FILL, true, true);
-	
+
 	/**
 	 * default grid.
 	 */
 	public static GridData defaultGrid = new GridData();
-	
+
 	/**
-	 *  A compact grid.
+	 * A compact grid.
 	 */
 	public static GridData compactGrid = new GridData(SWT.FILL, SWT.FILL, false, false);
-	
+
 	/**
-	 *  A centre aligned grid.
+	 * A centre aligned grid.
 	 */
 	public static GridData centerGrid = new GridData(SWT.CENTER, SWT.CENTER, false, true);
-	
+
 	/**
-	 *  default row data.
+	 * default row data.
 	 */
 	public static RowData defaultRow = new RowData();
 
@@ -245,19 +244,37 @@ public class IBEXButtonBuilder {
 			});
 		}
 
-		button.setText(text);
-		button.setToolTipText(tooltip);
+		if (text != null) {
+			button.setText(text);
+		}
+
+		if (tooltip != null) {
+			button.setToolTipText(tooltip);
+		}
+
 		if (gridData != null) {
-			gridData.widthHint = width;
-			gridData.heightHint = height;
+			if (width != null) {
+				gridData.widthHint = width;
+			}
+			if (height != null) {
+				gridData.heightHint = height;
+			}
 			button.setLayoutData(gridData);
 		}
 		if (rowData != null) {
-			rowData.width = width;
-			rowData.height = height;
+			if (width != null) {
+				rowData.width = width;
+			}
+
+			if (height != null) {
+				rowData.height = height;
+			}
 			button.setLayoutData(rowData);
 		}
-		button.setImage(image);
+
+		if (image != null) {
+			button.setImage(image);
+		}
 
 		if (link != null) {
 			button.addListener(SWT.Selection, e -> {
@@ -269,6 +286,7 @@ public class IBEXButtonBuilder {
 				}
 			});
 		}
+
 		if (listener != null) {
 			button.addListener(SWT.Selection, listener);
 		}
