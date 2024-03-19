@@ -92,7 +92,7 @@
     <foreground_color>
       <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
     </foreground_color>
-    <height>457</height>
+    <height>475</height>
     <lock_children>false</lock_children>
     <macros>
       <include_parent_macros>true</include_parent_macros>
@@ -110,7 +110,7 @@
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
-    <width>463</width>
+    <width>445</width>
     <wuid>-4c7aafb3:18e32dab3e5:-7be3</wuid>
     <x>6</x>
     <y>84</y>
@@ -257,7 +257,7 @@ $(pv_value)</tooltip>
       <transparent>false</transparent>
       <visible>true</visible>
       <widget_type>Text Input</widget_type>
-      <width>90</width>
+      <width>129</width>
       <wuid>-4c7aafb3:18e32dab3e5:-7bdd</wuid>
       <x>178</x>
       <y>36</y>
@@ -353,7 +353,7 @@ $(pv_value)</tooltip>
       <transparent>false</transparent>
       <visible>true</visible>
       <widget_type>Text Input</widget_type>
-      <width>90</width>
+      <width>129</width>
       <wuid>-4c7aafb3:18e32dab3e5:-7bcd</wuid>
       <x>178</x>
       <y>66</y>
@@ -449,7 +449,7 @@ $(pv_value)</tooltip>
       <transparent>false</transparent>
       <visible>true</visible>
       <widget_type>Text Input</widget_type>
-      <width>90</width>
+      <width>129</width>
       <wuid>-4c7aafb3:18e32dab3e5:-7b76</wuid>
       <x>178</x>
       <y>96</y>
@@ -1632,8 +1632,8 @@ $(pv_value)</tooltip>
       <width>67</width>
       <wrap_words>false</wrap_words>
       <wuid>-4c7aafb3:18e32dab3e5:-7a3e</wuid>
-      <x>306</x>
-      <y>153</y>
+      <x>318</x>
+      <y>156</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -1684,8 +1684,8 @@ $(pv_value)</tooltip>
       <width>67</width>
       <wrap_words>false</wrap_words>
       <wuid>-4c7aafb3:18e32dab3e5:-7a36</wuid>
-      <x>306</x>
-      <y>186</y>
+      <x>318</x>
+      <y>189</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -1736,8 +1736,8 @@ $(pv_value)</tooltip>
       <width>67</width>
       <wrap_words>false</wrap_words>
       <wuid>-4c7aafb3:18e32dab3e5:-7a31</wuid>
-      <x>306</x>
-      <y>216</y>
+      <x>318</x>
+      <y>219</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -1788,8 +1788,8 @@ $(pv_value)</tooltip>
       <width>67</width>
       <wrap_words>false</wrap_words>
       <wuid>-4c7aafb3:18e32dab3e5:-7a2c</wuid>
-      <x>306</x>
-      <y>246</y>
+      <x>318</x>
+      <y>249</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -1840,8 +1840,8 @@ $(pv_value)</tooltip>
       <width>67</width>
       <wrap_words>false</wrap_words>
       <wuid>-4c7aafb3:18e32dab3e5:-7a27</wuid>
-      <x>306</x>
-      <y>276</y>
+      <x>318</x>
+      <y>279</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -1892,8 +1892,8 @@ $(pv_value)</tooltip>
       <width>67</width>
       <wrap_words>false</wrap_words>
       <wuid>-4c7aafb3:18e32dab3e5:-7a22</wuid>
-      <x>306</x>
-      <y>306</y>
+      <x>318</x>
+      <y>309</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -1944,8 +1944,8 @@ $(pv_value)</tooltip>
       <width>67</width>
       <wrap_words>false</wrap_words>
       <wuid>-4c7aafb3:18e32dab3e5:-7a1d</wuid>
-      <x>306</x>
-      <y>336</y>
+      <x>318</x>
+      <y>339</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -1996,8 +1996,8 @@ $(pv_value)</tooltip>
       <width>67</width>
       <wrap_words>false</wrap_words>
       <wuid>-4c7aafb3:18e32dab3e5:-7a18</wuid>
-      <x>306</x>
-      <y>366</y>
+      <x>318</x>
+      <y>369</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
@@ -2032,7 +2032,7 @@ else:
       </foreground_color>
       <height>22</height>
       <image></image>
-      <name>ChoiceBtn</name>
+      <name>ChoiceBtn1</name>
       <push_action_index>0</push_action_index>
       <pv_name>$(PV_ROOT)OUTLET1:STATUS</pv_name>
       <pv_value />
@@ -2088,7 +2088,7 @@ else:
       </foreground_color>
       <height>22</height>
       <image></image>
-      <name>autotune_setpoint</name>
+      <name>ChoiceBtn2</name>
       <push_action_index>0</push_action_index>
       <pv_name>$(PV_ROOT)OUTLET2:STATUS</pv_name>
       <pv_value />
@@ -2144,7 +2144,7 @@ else:
       </foreground_color>
       <height>22</height>
       <image></image>
-      <name>autotune_setpoint_2</name>
+      <name>ChoiceBtn3</name>
       <push_action_index>0</push_action_index>
       <pv_name>$(PV_ROOT)OUTLET3:STATUS</pv_name>
       <pv_value />
@@ -2200,7 +2200,7 @@ else:
       </foreground_color>
       <height>22</height>
       <image></image>
-      <name>autotune_setpoint</name>
+      <name>ChoiceBtn4</name>
       <push_action_index>0</push_action_index>
       <pv_name>$(PV_ROOT)OUTLET4:STATUS</pv_name>
       <pv_value />
@@ -2256,7 +2256,7 @@ else:
       </foreground_color>
       <height>22</height>
       <image></image>
-      <name>autotune_setpoint</name>
+      <name>ChoiceBtn5</name>
       <push_action_index>0</push_action_index>
       <pv_name>$(PV_ROOT)OUTLET5:STATUS</pv_name>
       <pv_value />
@@ -2312,7 +2312,7 @@ else:
       </foreground_color>
       <height>22</height>
       <image></image>
-      <name>autotune_setpoint</name>
+      <name>ChoiceBtn6</name>
       <push_action_index>0</push_action_index>
       <pv_name>$(PV_ROOT)OUTLET6:STATUS</pv_name>
       <pv_value />
@@ -2368,7 +2368,7 @@ else:
       </foreground_color>
       <height>22</height>
       <image></image>
-      <name>autotune_setpoint</name>
+      <name>ChoiceBtn7</name>
       <push_action_index>0</push_action_index>
       <pv_name>$(PV_ROOT)OUTLET7:STATUS</pv_name>
       <pv_value />
@@ -2424,7 +2424,7 @@ else:
       </foreground_color>
       <height>22</height>
       <image></image>
-      <name>autotune_setpoint</name>
+      <name>ChoiceBtn8</name>
       <push_action_index>0</push_action_index>
       <pv_name>$(PV_ROOT)OUTLET8:STATUS</pv_name>
       <pv_value />
@@ -2558,7 +2558,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
-      <text>Set On/Off</text>
+      <text>On/Off</text>
       <tooltip></tooltip>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -2605,7 +2605,7 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>49</width>
+      <width>61</width>
       <wrap_words>true</wrap_words>
       <wuid>-4c7aafb3:18e32dab3e5:-79ce</wuid>
       <x>306</x>
@@ -2644,7 +2644,7 @@ $(pv_value)</tooltip>
       <line_width>1</line_width>
       <name>Polyline</name>
       <points>
-        <point x="419" y="126" />
+        <point x="372" y="126" />
         <point x="-5" y="126" />
       </points>
       <pv_name></pv_name>
@@ -2662,7 +2662,7 @@ $(pv_value)</tooltip>
       <transparent>false</transparent>
       <visible>true</visible>
       <widget_type>Polyline</widget_type>
-      <width>425</width>
+      <width>378</width>
       <wuid>-4c7aafb3:18e32dab3e5:-79c6</wuid>
       <x>-5</x>
       <y>126</y>
