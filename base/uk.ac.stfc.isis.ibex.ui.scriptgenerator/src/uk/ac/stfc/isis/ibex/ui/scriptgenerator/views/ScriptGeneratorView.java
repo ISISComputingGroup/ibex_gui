@@ -54,7 +54,6 @@ import org.eclipse.swt.widgets.Text;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
-import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSettingsSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
@@ -352,20 +351,6 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 				}).customLayoutData(IBEXButtonBuilder.defaultGrid).build();
 		checkbox.setSelection(Constants.PARAM_TRANSFER_DEFAULT);
 	}
-	
-	private void makeToggleInvalidPauseSkip(Composite parent) {
-		Composite actionsControlsGrp = makeGrid(parent, 1, true, 10);
-
-		Button radioPause = IBEXButtonFactory.radio(actionsControlsGrp, Constants.CHECKBOX_TITLE_INVALID_PAUSE, Constants.TOOLTIP_INVALID_PAUSE, evt -> {
-			ScriptGeneratorSettingsSingleton.getInstance().setSkipEnabled(false); //sets skipEnabled to false, causing Pause on invalid actions during run of script
-		});
-		radioPause.setSelection(!Constants.INVALID_SKIP_DEFAULT);
-
-		Button radioSkip = IBEXButtonFactory.radio(actionsControlsGrp, Constants.CHECKBOX_TITLE_INVALID_SKIP, Constants.TOOLTIP_INVALID_SKIP, evt -> {
-			ScriptGeneratorSettingsSingleton.getInstance().setSkipEnabled(true); //sets skipEnabled to true, skipping over invalid actions during run of script
-		});
-		radioSkip.setSelection(Constants.INVALID_SKIP_DEFAULT);
-	}
 
 	/**
 	 * Creates a column containing three buttons for table row modifications.
@@ -500,7 +485,6 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 	 */
 	private void makeControlButtons(Composite parent) {
 		makeToggleParameterTransfer(parent);
-		makeToggleInvalidPauseSkip(parent);
 		makeScriptSaveLoadButtons(parent);
 		makeTableRowControlButtons(parent);
 		makeDynamicScriptingControlButtons(parent);
@@ -733,9 +717,6 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 			}
 		}
 
-		if (!globalParamComposite.isDisposed()) {
-			globalParamComposite.layout();
-		}
 		mainParent.layout();
 	}
 

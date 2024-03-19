@@ -19,7 +19,6 @@
 
 package uk.ac.stfc.isis.ibex.epics.observing;
 
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 
 
@@ -40,40 +39,20 @@ public class LoggingObserver<T> extends BaseObserver<T> {
 	 * An ID printed before each log message.
 	 */
 	protected final String id;
-
-	/**
-	 * The log level.
-	 */
-	protected final Level level;
-
+	
 	/**
 	 * Create a new logging observer.
 	 * @param log the log
 	 * @param id an ID printed before each message
 	 */
 	public LoggingObserver(Logger log, String id) {
-		this(log, id, null);
-	}
-
-	/**
-	 * Create a new logging observer.
-	 * @param log the log
-	 * @param id an ID printed before each message
-	 * @param level the log level
-	 */
-	public LoggingObserver(Logger log, String id, Level level) {
 		this.log = log;
 		this.id = id;
-		this.level = level;
 	}
-
+	
 	@Override
 	public void onValue(T value) {
-		if (null != level) {
-			log.log(level, id + " value: " + value);
-		} else {
-			log.info(id + " value: " + value);
-		}
+		log.info(id + " value: " + value);
 	}
 
 	@Override

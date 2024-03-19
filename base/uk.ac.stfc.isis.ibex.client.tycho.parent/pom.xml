@@ -9,7 +9,7 @@
 	<properties>
 		<tycho.version>2.7.4</tycho.version>
 		<tycho-repo.url>https://oss.sonatype.org/content/groups/public/</tycho-repo.url>
-		<photon-repo.url>http://download.eclipse.org/releases/2023-03</photon-repo.url>
+		<photon-repo.url>http://download.eclipse.org/releases/2022-06</photon-repo.url>
 		<photon-updates-repo.url>http://download.eclipse.org/eclipse/updates/4.26</photon-updates-repo.url>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -237,7 +237,6 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.journalviewer</module>
 		<module>../uk.ac.stfc.isis.ibex.journal</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.journalviewer.tests</module>
-		<module>../uk.ac.stfc.isis.ibex.journal.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.nicos.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.graphing</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.widgets.epics</module>

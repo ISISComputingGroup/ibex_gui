@@ -28,8 +28,6 @@ def _set_opi(widget, param_type, has_cv):
         widget.setPropertyValue("opi_file", "param_inout.opi")
     elif param_type == "float_value":
         widget.setPropertyValue("opi_file", "value.opi")
-    elif param_type == "string_value":
-    	widget.setPropertyValue("opi_file", "string_value.opi")
     elif param_type == "enum":
         widget.setPropertyValue("opi_file", "param_enum.opi")        
     else:

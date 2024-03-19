@@ -1,6 +1,6 @@
 
 /*
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2023
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2015
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -44,8 +44,6 @@ public class MoxaModelObject extends ModelObject implements Comparable<MoxaModel
 	private final String physport;
 	private final String comport;
 	private final List<Ioc> iocs;
-	private final String status;
-	private final String additionalInfo;
 
 	/**
 	 * Instantiates a new moxa mapping pair.
@@ -53,15 +51,11 @@ public class MoxaModelObject extends ModelObject implements Comparable<MoxaModel
 	 * @param physport physical moxa port number for a mapping.
 	 * @param comport  COM port for a mapping.
 	 * @param iocs List of IOCs using the COM port.
-	 * @param status the Operation Status information
-	 * @param additionalInfo Any additional information available for the port
 	 */
-	public MoxaModelObject(String physport, String comport, List<Ioc> iocs, String status, String additionalInfo) {
+	public MoxaModelObject(String physport, String comport, List<Ioc> iocs) {
 		this.physport = physport;
 		this.comport = comport;
 		this.iocs = new ArrayList<Ioc>(iocs);
-		this.additionalInfo = additionalInfo;
-		this.status = status;
 	}
 
 	/**
@@ -88,21 +82,6 @@ public class MoxaModelObject extends ModelObject implements Comparable<MoxaModel
 	 */
 	public List<Ioc> getIocs() {
 		return new ArrayList<Ioc>(iocs);
-	}
-
-	/**
-	 * @return status of the port
-	 */
-	public String getStatus() {
-		return status;
-	}
-
-	/**
-	 * 
-	 * @return any additional information
-	 */
-	public String getAdditionalInfo() {
-		return additionalInfo;
 	}
 	
 	/**

@@ -58,10 +58,6 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
     private boolean log_periodic = true;
     private int log_rate = DEFAULT_SCAN_RATE;
     private float log_deadband;
-    
-    // Block set configuration
-    private boolean set_block;
-    private String set_block_val;
 
     /**
      * Creates a new block given input properties.
@@ -72,7 +68,7 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
      * @param local whether the PV is local to the instrument
      */
     public Block(String name, String pv, boolean visible, boolean local) {
-        this(name, pv, visible, local, null, 0.0f, 0.0f, false, false, true, DEFAULT_SCAN_RATE, 0.0f, false, "");
+        this(name, pv, visible, local, null, 0.0f, 0.0f, false, false, true, DEFAULT_SCAN_RATE, 0.0f);
     }
 		
     /**
@@ -91,11 +87,9 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
      *            archiver
      * @param logRate time between archive samples (seconds)
      * @param logDeadband deadband for the block to be archived
-     * @param blockSet A boolean value indicating whether or not to set a value on block on config change.
-     * @param blockSetVal The value to set the block to on config change if the blockSet is true.
      */
     public Block(String name, String pv, boolean visible, boolean local, String component, double lowLimit,
-            double highLimit, boolean suspendOnInvalid, Boolean runcontrol, boolean logPeriodic, int logRate, float logDeadband, boolean blockSet, String blockSetVal) {
+            double highLimit, boolean suspendOnInvalid, Boolean runcontrol, boolean logPeriodic, int logRate, float logDeadband) {
 		this.name = name;
 		this.pv = pv;
 		this.visible = visible;
@@ -108,8 +102,6 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
         this.log_periodic = logPeriodic;
         this.log_rate = logRate;
         this.suspend_on_invalid = suspendOnInvalid;
-        this.set_block = blockSet;
-        this.set_block_val = blockSetVal;
 	}
 	
     /**
@@ -119,7 +111,7 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
      */
 	public Block(Block other) {
         this(other.name, other.pv, other.visible, other.local, other.component, other.lowlimit, other.highlimit, other.suspend_on_invalid, 
-                other.runcontrol, other.log_periodic, other.log_rate, other.log_deadband, other.set_block, other.set_block_val);
+                other.runcontrol, other.log_periodic, other.log_rate, other.log_deadband);
 	}
 
     /**
@@ -348,42 +340,6 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
     public boolean inComponent() {
 		return !Strings.isNullOrEmpty(component);
 	}
-	
-    /**
-     * Sets whether the block should be set on config change.
-     * 
-     * @param blockSet whether or not the block should be set on config change
-     */
-    public void setBlockSet(boolean blockSet) {
-        firePropertyChange("blockSet", this.set_block, this.set_block = blockSet);
-    }
-
-    /**
-     * Gets whether the block is set on config change.
-     * 
-     * @return whether the block is set on config change
-     */
-    public boolean getblockSet() {
-        return set_block;
-    }
-    
-    /**
-     * Sets the value a block should be set to on config change.
-     * 
-     * @param blockSetVal the value a block should be set to on config change
-     */
-    public void setBlockSetVal(String blockSetVal) {
-        firePropertyChange("blockSetVal", this.set_block_val, this.set_block_val = blockSetVal);
-    }
-
-    /**
-     * Gets the value a block should be set to on config change.
-     * 
-     * @return the value a block should be set to on config change
-     */
-    public String getblockSetVal() {
-        return set_block_val;
-    }
 	
 	@Override
 	public String toString() {
