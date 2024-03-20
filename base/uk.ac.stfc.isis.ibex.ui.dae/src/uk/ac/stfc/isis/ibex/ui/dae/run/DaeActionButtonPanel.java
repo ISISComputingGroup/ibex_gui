@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2024 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -29,63 +29,61 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.dae.actions.DaeActions;
 import uk.ac.stfc.isis.ibex.model.Action;
-import uk.ac.stfc.isis.ibex.ui.widgets.HelpButton;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
 
 /**
- * Pane which contains the action buttons in the DAE perspective in the "Run Summary" tab.
- * For example "BEGIN RUN" or "END RUN".
+ * Pane which contains the action buttons in the DAE perspective in the "Run
+ * Summary" tab. For example "BEGIN RUN" or "END RUN".
  *
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class DaeActionButtonPanel extends Composite {
-	
+
 	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Manage-the-DAE";
 	private static final String DESCRIPTION = "DAE View";
-	
-    /**
-     * Create the panel with all the buttons inside.
-     * 
-     * @param parent a composite control which will be the parent of the new instance (cannot be null)
-     * @param style the style of control to construct
-     * @param actions all state transitioning actions on the DAE
-     */
+
+	/**
+	 * Create the panel with all the buttons inside.
+	 * 
+	 * @param parent  a composite control which will be the parent of the new
+	 *                instance (cannot be null)
+	 * @param style   the style of control to construct
+	 * @param actions all state transitioning actions on the DAE
+	 */
 	public DaeActionButtonPanel(Composite parent, int style, DaeActions actions) {
 		super(parent, style);
-		
+
 		GridLayout gridLayout = new GridLayout(1, false);
 		gridLayout.verticalSpacing = 10;
 		setLayout(gridLayout);
-		
+
 		addActionButton("BEGIN RUN", "play.png", actions.begin);
 		addActionButton("END RUN", "stop.png", actions.end);
 		addActionButton("PAUSE RUN", "pause.png", actions.pause);
 		addActionButton("RESUME RUN", "resume.png", actions.resume);
 		addActionButton("ABORT RUN", "abort.png", actions.abort);
 		addActionButton("CANCEL ABORT", "undo.png", actions.cancelAbort);
-		
+
 		Label middleSpacer = new Label(this, SWT.NONE);
 		middleSpacer.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1));
 		middleSpacer = new Label(this, SWT.NONE);
 		middleSpacer.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1));
 		middleSpacer = new Label(this, SWT.NONE);
 		middleSpacer.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1));
-		
+
 		addActionButton("SAVE RUN", "save.png", actions.save);
-		
+
 		Label bottomSpacer = new Label(this, SWT.NONE);
 		bottomSpacer.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1));
-		
-		new HelpButton(parent, HELP_LINK, DESCRIPTION);
+
+		new IBEXButtonBuilder(parent, SWT.PUSH).helpButton(true).link(HELP_LINK)
+				.description(DESCRIPTION).build();
 	}
 
 	private void addActionButton(String text, String imageFileName, final Action action) {
-		ActionButton button = new ActionButton(this, SWT.CENTER, action);	
-		button.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		button.setText(text);
-		button.setImage(imageFromFile(imageFileName));
-	}
+		Image image = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/" + imageFileName);
 
-	private Image imageFromFile(String imageFileName) {
-		return ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/" + imageFileName);
+		new IBEXButtonBuilder(this, SWT.CENTER).action(action).text(text).image(image)
+				.customLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1)).build();
 	}
 }

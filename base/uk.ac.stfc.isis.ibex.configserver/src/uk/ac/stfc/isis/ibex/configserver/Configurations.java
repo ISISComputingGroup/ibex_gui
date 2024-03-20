@@ -24,7 +24,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -208,6 +207,6 @@ public class Configurations extends Closer implements BundleActivator {
 	private void addLogging() {
 		loggingSubscriptions.add(variables.currentConfig.subscribe(new LoggingConfigurationObserver(LOG, "Current config")));
 		loggingSubscriptions.add(variables.serverStatus.subscribe(new LoggingObserver<ServerStatus>(LOG, "Server status")));
-		loggingSubscriptions.add(variables.moxaMappings.subscribe(new LoggingObserver<HashMap<String, ArrayList<ArrayList<String>>>>(LOG, "Moxa status", Level.DEBUG)));
+		loggingSubscriptions.add(variables.moxaMappings.subscribe(new LoggingObserver<HashMap<String, ArrayList<ArrayList<String>>>>(LOG, "Moxa status")));
 		}
 }
