@@ -3604,7 +3604,7 @@
         <categories>
           <category>Power supplies</category>
         </categories>
-        <type>Standord</type>
+        <type>POWER_SUPPLY</type>
         <path>PS300.opi</path>
         <description>The OPI for the Stanford 300 series power supply.</description>
         <macros>
