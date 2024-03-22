@@ -501,14 +501,7 @@ $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
       <pv_name></pv_name>
       <pv_value />
-      <rules>
-        <rule name="Rule" prop_id="enabled" out_exp="false">
-          <exp bool_exp="pv0 == 0">
-            <value>true</value>
-          </exp>
-          <pv trig="true">$(PV_ROOT_PEARLPC):RESET_PRESSURE_TOO_HIGH</pv>
-        </rule>
-      </rules>
+      <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -1352,14 +1345,7 @@ $(pv_value)</tooltip>
       <push_action_index>0</push_action_index>
       <pv_name></pv_name>
       <pv_value />
-      <rules>
-        <rule name="Rule" prop_id="enabled" out_exp="false">
-          <exp bool_exp="pv0 == 0">
-            <value>true</value>
-          </exp>
-          <pv trig="true">$(PV_ROOT_PEARLPC):PURGE_PRESSURE_TOO_HIGH</pv>
-        </rule>
-      </rules>
+      <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -1367,7 +1353,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts>
         <path pathString="Common Scripts/setEnabled.py" checkConnect="true" sfe="false" seoe="false">
-          <pv trig="true">$(PV_ROOT_PEARLPC):PURGE_PRESSURE_TOO_HIGH:DISP</pv>
+          <pv trig="true">$(PV_ROOT_PEARLPC):PURGE:SP.DISP</pv>
         </path>
       </scripts>
       <style>1</style>
