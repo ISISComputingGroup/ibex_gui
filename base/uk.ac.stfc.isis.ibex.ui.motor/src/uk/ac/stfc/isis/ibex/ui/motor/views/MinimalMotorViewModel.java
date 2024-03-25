@@ -94,12 +94,19 @@ public class MinimalMotorViewModel extends ModelObject {
 				evt -> setPalette((MotorPalette) evt.getNewValue()));
 		
         setPalette(displayPrefsModel.getMotorBackgroundPalette());
-
+        
+        /**
+         *  This is needed because this class gets instantiated when the user opens the tab associated with it.
+         *  If the user doesn't open the non default (first) tab the change event listeners wont be
+         *  registered yet when the advanced setting is changed.
+         *  And the default value of this field will be false leading to inconsistencies within the UI.
+         */
+        this.advancedMinimalMotorView = motorsTableSettingsModel.isAdvancedMinimalMotorView();
+        
         /**
          *  Property change listener for the motor settings model to this minimal motor view model 
          *  to determine if the advanced minimal view is enabled for the table of motors.
          */
-        
         motorsTableSettingsModel.addPropertyChangeListener("advancedMinimalMotorView",
         		evt -> setAdvancedMinimalMotorView((boolean) evt.getNewValue()));
 	}
