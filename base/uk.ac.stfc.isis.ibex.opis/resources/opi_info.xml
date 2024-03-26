@@ -52,20 +52,17 @@
       </value>
     </entry>
     <entry>
-      <key>ARGUS Magnet Statuses</key>
+      <key>Magnet Statuses - TRANS and LONG</key>
       <value>
         <type>MAGNET</type>
-        <path>ARGUS/magnet_status.opi</path>
-        <description>Statuses of ARGUS trans and long magnets</description>
-        <categories/>
-      </value>
-    </entry>
-     <entry>
-      <key>CHRONUS Magnet Statuses</key>
-      <value>
-        <type>MAGNET</type>
-        <path>CHRONUS/magnet_status.opi</path>
-        <description>Statuses of CHRONUS trans and long magnets</description>
+        <path>magnet_status.opi</path>
+        <description>Statuses of trans and long magnets for MUONS</description>
+        <macros>
+          <macro>
+            <name>INST_NAME</name>
+            <description>The name of the instrument's magnets this OPI is looking at, e.g. ARGUS </description>
+          </macro>
+        </macros>
         <categories/>
       </value>
     </entry>
