@@ -29,6 +29,7 @@ import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
@@ -43,7 +44,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.EditBlockDialog;
-import uk.ac.stfc.isis.ibex.ui.widgets.HelpButton;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
 
 /**
  * Dialog for editing a configuration (top dialogue that contains save and save
@@ -127,9 +128,9 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 		
 		// Set link according to whether this is a component or a config.
 		if (!config.getIsComponent()) {
-			new HelpButton(parent, CONFIG_HELP_LINK, description);
+			new IBEXButtonBuilder(parent, SWT.PUSH).helpButton(true).link(CONFIG_HELP_LINK).description(description).build();
 		} else {
-			new HelpButton(parent, COMPONENT_HELP_LINK, description);
+			new IBEXButtonBuilder(parent, SWT.PUSH).helpButton(true).link(COMPONENT_HELP_LINK).description(description).build();
 		}
 		
 		this.moxaDetailsDialog = new MoxaDetailsDialog(this.getShell());

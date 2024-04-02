@@ -88,7 +88,7 @@ public class BannerView {
         GridData gdServerStatus = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         serverStatusPanel.setLayoutData(gdServerStatus);
         
-        ServerStatusViewModel model = new ServerStatusViewModel(ServerStatusVariables.getInstance());
+        ServerStatusViewModel model = new ServerStatusViewModel(new ServerStatusVariables());
 
         StatusIndicatorPanel statusIndicator = new StatusIndicatorPanel(serverStatusPanel, SWT.NONE, model);
         statusIndicator.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, true));

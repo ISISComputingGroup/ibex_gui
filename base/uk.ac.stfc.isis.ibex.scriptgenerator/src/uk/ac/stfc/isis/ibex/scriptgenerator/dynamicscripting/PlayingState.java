@@ -4,7 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.util.HashMap;
 import java.util.Optional;
 
-import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSettingsSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.table.ScriptGeneratorAction;
 
 /**
@@ -49,13 +48,7 @@ public class PlayingState extends DynamicScriptingState {
 	public Optional<ScriptGeneratorAction> getNextExecutingAction() {
 		if (currentlyExecutingAction.isPresent()) {
 			var currentAction = currentlyExecutingAction.get();
-			Optional<ScriptGeneratorAction> nextAction = modelAdapter.getActionAfter(currentAction);
-			// Skip invalid actions if setting enabled
-			while (ScriptGeneratorSettingsSingleton.getInstance().getSkipEnabled() && nextAction.isPresent()
-					&& !nextAction.get().isValid()) {
-				nextAction = modelAdapter.getActionAfter(nextAction.get());
-			}
-			return nextAction;
+			return modelAdapter.getActionAfter(currentAction);
 		} else {
 			return Optional.empty();
 		}

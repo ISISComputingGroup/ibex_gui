@@ -21,8 +21,8 @@ Require-Bundle: uk.ac.stfc.isis.ibex.scriptgenerator,
  uk.ac.stfc.isis.ibex.preferences;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.about;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.nicos;bundle-version="1.0.0",
- com.google.guava
+ com.google.guava,
+ uk.ac.stfc.isis.ibex.ui.widgets;bundle-version="1.0.0"
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.scriptgenerator
-Import-Package: uk.ac.stfc.isis.ibex.ui.widgets
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.ui.scriptgenerator.dialogs

@@ -52,11 +52,20 @@
       </value>
     </entry>
     <entry>
-      <key>ARGUS Magnet Statuses</key>
+      <key>Argus Magnet Statuses</key>
       <value>
         <type>MAGNET</type>
-        <path>ARGUS/magnet_status.opi</path>
-        <description>Statuses of ARGUS trans and long magnets</description>
+        <path>RIKEN/argus_magnet_status.opi</path>
+        <description>Statuses of the ARGUS trans and long magnets for MUONS</description>
+        <categories/>
+      </value>
+    </entry>
+    <entry>
+      <key>Chronus Magnet Statuses</key>
+      <value>
+        <type>MAGNET</type>
+        <path>RIKEN/chronus_magnet_status.opi</path>
+        <description>Statuses of the CHRONUS trans and long magnets for MUONS</description>
         <categories/>
       </value>
     </entry>
@@ -1218,12 +1227,13 @@
         <path>twincat/twincat_engineering.opi</path>
         <description>The OPI giving a detailed engineering view of a Beckhoff.</description>
         <macros>
-          <macro>
+        <macro>
             <name>TC</name>
             <description>The TC IOC number eg. TC_01</description>
             <default>TC_01</default>
           </macro>
         </macros>
+        <macros/>
         <categories>
           <category>Miscellaneous motion control</category>
         </categories>
