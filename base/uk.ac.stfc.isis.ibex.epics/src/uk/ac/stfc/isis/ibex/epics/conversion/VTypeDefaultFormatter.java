@@ -1,6 +1,6 @@
 
 /*
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2016
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2024
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -64,12 +64,18 @@ public class VTypeDefaultFormatter<T extends VType> {
 	private class NoUnits<R extends VType> implements Function<R, String> {
 		@Override
 		public String apply(VType value) throws ConversionException {	
-
+		
 			if (value instanceof VNumber) {
-				VNumber vnum = (VNumber) value;	 
-				return asString(vnum);
+				VNumber vnum = (VNumber) value;
+				String asisStringValue = String.valueOf(vnum.getValue());
+				String formattedStringValue = asString(vnum);
+				/*
+				 * For a numeric value, if formatting increases the length as compared to the original, then we are only padding zeroes.
+				 * In this case we don't format
+				 */
+				return (asisStringValue.length() < formattedStringValue.length()) ? asisStringValue : formattedStringValue;
+				//return asString(vnum);
 			}
-			
 			return format(value);
 		}
 	}

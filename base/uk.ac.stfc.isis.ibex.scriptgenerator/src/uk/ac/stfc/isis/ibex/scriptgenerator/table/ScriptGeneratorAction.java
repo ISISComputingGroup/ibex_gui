@@ -1,6 +1,7 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.table;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -98,7 +99,7 @@ public class ScriptGeneratorAction extends ModelObject {
      * 			Map of parameter, value pairs.
      */
     public Map<String, String> getActionParameterValueMapAsStrings() {
-    	Map<String, String> actionParametersAsString = new HashMap<>();
+    	Map<String, String> actionParametersAsString = new LinkedHashMap<>();
 
     	for (Map.Entry<JavaActionParameter, String> actionParam : actionParameterValues.entrySet()) {
     		actionParametersAsString.put(actionParam.getKey().getName(), actionParam.getValue());

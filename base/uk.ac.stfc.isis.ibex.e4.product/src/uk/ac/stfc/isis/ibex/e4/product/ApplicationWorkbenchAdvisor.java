@@ -36,7 +36,14 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
     org.eclipse.ui.application.IWorkbenchConfigurer configurer;
 	
 	private static final String DIALOG_BOX_TITLE = "Close the application?";
-	private static final String DIALOG_QUESTION = "Are you sure you want to close this application?";
+	private static final String DIALOG_QUESTION = """
+			Are you sure you want to close this application?
+			
+			Closing this GUI will not terminate the IBEX server processes that are communicating with devices and logging data in the background.
+			
+			If you wish to shutdown all IBEX components use the \"stop ibex server\" link in the Windows start menu.
+			If you wish to start or restart IBEX, use the \"start ibex server\" link in the Windows start menu"
+												""";
 
 	private ApplicationWorkbenchWindowAdvisor windowAdvisor;
 	

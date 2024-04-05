@@ -1,5 +1,5 @@
 REM %~dp0 expands to directory where this file lives
-setlocal
+setlocal enabledelayedexpansion
 
 set BASEDIR=%~dp0
 
@@ -14,20 +14,18 @@ set MSINAME=ibex_script_generator
 
 call build_script_generator.bat "" %TARGET_DIR%
 if %errorlevel% neq 0 exit /b %errorlevel%
-
-call build_msi.bat %BASEDIR%.. %TARGET_DIR% %MSINAME%
-if %errorlevel% neq 0 exit /b %errorlevel%
-
-@echo on
-
-REM set EXIT=YES will change error code to 1 if not set previously so store the current
 set build_error_level=%errorlevel%
 
-REM Whether to deploy
-set EXIT=YES
-if "%DEPLOY%" == "YES" set EXIT=NO
-if "%RELEASE%" == "YES" set EXIT=NO
-if "%EXIT%" == "YES" exit /b %build_error_level%
+set PUBLISH=NO
+if "%RELEASE%" == "YES" set PUBLISH=YES
+if "%DEPLOY%" == "YES" set PUBLISH=YES
+if "%PUBLISH%" == "NO" exit /b 0
+
+REM disable for now
+REM call build_msi.bat %BASEDIR%.. %TARGET_DIR% %MSINAME%
+REM if %errorlevel% neq 0 exit /b %errorlevel%
+
+@echo on
 
 REM Copy zip to installs area
 REM Delete older versions?
@@ -88,10 +86,12 @@ if not "%RELEASE%"=="YES" (
 )
 
 REM copy MSI
-copy /Y %MSINAME%.msi %INSTALLDIR%
-if %errorlevel% neq 0 (
-    @echo MSI copy failed
-    exit /b %errorlevel%
+if exist "%MSINAME%.msi" (
+    xcopy /y /j %MSINAME%.msi %INSTALLDIR%
+    if !errorlevel! neq 0 (
+        @echo MSI copy failed
+        exit /b !errorlevel!
+    )
 )
 
 REM Copy the install script across

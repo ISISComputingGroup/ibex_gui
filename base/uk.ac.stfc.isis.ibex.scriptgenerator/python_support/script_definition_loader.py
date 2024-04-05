@@ -20,15 +20,18 @@ class PythonActionParameter(object):
     """
 
     class Java:
-        implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter']
+        implements = [
+            'uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter']
 
-    def __init__(self, name, default_value, copyPreviousRow):
+    def __init__(self, name, default_value, copyPreviousRow, enum=False, enum_values=None):
         """
         Initialise the name and default value of the action parameter.
         """
         self.name = name
         self.default_value = default_value
         self.copyPreviousRow = copyPreviousRow
+        self.enum = enum
+        self.enum_values = enum_values
 
     def getName(self) -> str:
         """
@@ -51,6 +54,12 @@ class PythonActionParameter(object):
     def getCopyPreviousRow(self) -> bool:
         return self.copyPreviousRow
 
+    def getIsEnum(self) -> bool:
+        return self.enum
+
+    def getEnumValues(self) -> List[str]:
+        return self.enum_values
+
 
 class ScriptDefinitionWrapper(object):
     """
@@ -58,7 +67,8 @@ class ScriptDefinitionWrapper(object):
     """
 
     class Java:
-        implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper']
+        implements = [
+            'uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper']
 
     def __init__(self, name: str, script_definition: ScriptDefinition):
         self.script_definition = script_definition
@@ -84,17 +94,65 @@ class ScriptDefinitionWrapper(object):
 
         kwargs_with_defaults = []
 
+        enum_parameter_names = []
+
+        if hasattr(self.script_definition, "enum_params"):
+            enum_parameter_names = getattr(
+                self.script_definition, "enum_params")
+        else:
+            enum_parameter_names = []
+
         for arg in arguments:
             if arguments[arg].default == arguments[arg].empty:
                 action_parameter = PythonActionParameter(arg, arg, False)
             elif isinstance(arguments[arg].default, CopyPreviousRow):
                 # If none copy the previous row's value over
-                action_parameter = PythonActionParameter(arg, str(arguments[arg].default.value), True)
+                if arg in enum_parameter_names:
+                    action_parameter = self.createActionParameter(
+                        True, True, arg)
+                else:
+                    action_parameter = self.createActionParameter(
+                        False, True, arg)
             else:
-                action_parameter = PythonActionParameter(arg, str(arguments[arg].default), False)
+                if arg in enum_parameter_names:
+                    action_parameter = self.createActionParameter(
+                        True, False, arg)
+                else:
+                    action_parameter = self.createActionParameter(
+                        False, False, arg)
+
             kwargs_with_defaults.append(action_parameter)
 
         return ListConverter().convert(kwargs_with_defaults, gateway._gateway_client)
+
+    def createActionParameter(self, isEnum, default, arg) -> PythonActionParameter:
+        """
+        Creates an action parameter for the given argument.
+
+        Args:
+            isEnum: True if the argument is an enum, False otherwise.
+            default: Whether the action is default or not.
+            arg: The argument to create an action parameter for.
+
+        Returns:
+            action_parameter: The action parameter for the given argument.
+        """
+        arguments = signature(self.script_definition.run).parameters
+
+        if isEnum:
+            enum = getattr(self.script_definition, arg+"_enum")
+            enum_values = [str(item.name) for item in enum]
+            action_parameter = PythonActionParameter(arg, enum_values[0], default, True, ListConverter(
+            ).convert(enum_values, gateway._gateway_client))
+        else:
+            try:
+                action_parameter = PythonActionParameter(
+                    arg, str(arguments[arg].default.value), default)
+            except:
+                action_parameter = PythonActionParameter(
+                    arg, str(arguments[arg].default), default)
+
+        return action_parameter
 
     def getGlobalParameters(self) -> List[PythonActionParameter]:
         """
@@ -124,11 +182,13 @@ class ScriptDefinitionWrapper(object):
         list_of_names = []
         if self.hasCustomOutputs():
             # Pass the default keyword arguments in case 'cast_parameters_to' decorator is being used.
-            arguments = signature(self.script_definition.estimate_custom).parameters
+            arguments = signature(
+                self.script_definition.estimate_custom).parameters
             kwargs = {arg: arguments[arg].default for arg in arguments}
-            list_of_names = self.script_definition.estimate_custom(**kwargs).keys()
+            list_of_names = self.script_definition.estimate_custom(
+                **kwargs).keys()
         return ListConverter().convert(list_of_names, gateway._gateway_client)
-    
+
     def setGlobalParameters(self, global_params):
         """
         Using global_params set the global parameters for the script definition.
@@ -139,8 +199,10 @@ class ScriptDefinitionWrapper(object):
         Throws:
             ValueError: if at least one of the global parameters cannot be cast to the correct type.
         """
-        defs_and_vals = zip(self.script_definition.global_params_definition.items(), global_params)
-        self.script_definition.global_params = {name: type_[1](val) for (name, type_), val in defs_and_vals}
+        defs_and_vals = zip(
+            self.script_definition.global_params_definition.items(), global_params)
+        self.script_definition.global_params = {name: type_[
+            1](val) for (name, type_), val in defs_and_vals}
 
     def hasGlobalParameters(self):
         """
@@ -189,12 +251,14 @@ class ScriptDefinitionWrapper(object):
             return
 
         try:
-            list(self.script_definition.global_params_definition.values())[index][1](global_param)
+            list(self.script_definition.global_params_definition.values())[
+                index][1](global_param)
             return
         except (TypeError, ValueError):
             return 'Expected type: "{}" for global: "{}" but received: "{}"\n'.format(
-                str(list(self.script_definition.global_params_definition.values())[index][1])[8:-2],
-                list(self.script_definition.global_params_definition.keys())[index], global_param)  
+                str(list(self.script_definition.global_params_definition.values())[
+                    index][1])[8:-2],
+                list(self.script_definition.global_params_definition.keys())[index], global_param)
         except GlobalParamValidationError as e:
             return str(e)
         # Fix for edge case where python hasn't changed the script definition yet but java thinks it has.
@@ -306,7 +370,7 @@ class Generator(object):
         return True
 
     def getValidityErrors(self, global_params, list_of_actions, script_definition: ScriptDefinitionWrapper) -> List[
-                        Dict[int, AnyStr]]:
+            Dict[int, AnyStr]]:
         """
         Get a map of validity errors
 
@@ -317,21 +381,23 @@ class Generator(object):
         param_type_index = 0
         validityCheck: List[Dict[int, AnyStr]] = [{}, {}]
         for global_param in global_params:
-            singleParamValidityCheck = script_definition.globalParamsValid(global_param, current_action_index)
+            singleParamValidityCheck = script_definition.globalParamsValid(
+                global_param, current_action_index)
             if singleParamValidityCheck != None:
                 validityCheck[param_type_index][current_action_index] = singleParamValidityCheck
             current_action_index += 1
         param_type_index = 1
         current_action_index = 0
         for action in list_of_actions:
-            singleActionValidityCheck = script_definition.parametersValid(action, global_params)
+            singleActionValidityCheck = script_definition.parametersValid(
+                action, global_params)
             if singleActionValidityCheck != None:
                 validityCheck[param_type_index][current_action_index] = singleActionValidityCheck
             current_action_index += 1
         return validityCheck
 
     def estimateTime(self, list_of_actions, script_definition: ScriptDefinitionWrapper, global_params) -> Dict[
-        int, int]:
+            int, int]:
         """
         Estimates the time necessary to complete each action.
         Actions are only estimated if their parameters are valid.
@@ -342,13 +408,14 @@ class Generator(object):
         time_estimates: Dict[int, int] = {}
         for current_action_index, action in enumerate(list_of_actions, 0):
             if script_definition.parametersValid(action, global_params) is None:
-                time_estimate = script_definition.estimateTime(action, global_params)
+                time_estimate = script_definition.estimateTime(
+                    action, global_params)
                 if time_estimate != None:
                     time_estimates[current_action_index] = time_estimate
         return time_estimates
 
     def estimateCustom(self, list_of_actions, script_definition: ScriptDefinitionWrapper, global_params) -> Dict[
-        int, Dict[AnyStr, AnyStr]]:
+            int, Dict[AnyStr, AnyStr]]:
         """
         Custom Estimates for each action.
         Actions are only estimated if their parameters are valid.
@@ -359,7 +426,8 @@ class Generator(object):
         custom_estimates: Dict[int, Dict[AnyStr, AnyStr]] = {}
         for current_action_index, action in enumerate(list_of_actions, 0):
             if script_definition.parametersValid(action, global_params) is None:
-                custom_estimate = script_definition.estimateCustom(action, global_params)
+                custom_estimate = script_definition.estimateCustom(
+                    action, global_params)
                 if custom_estimate != None:
                     custom_estimates[current_action_index] = custom_estimate
         return custom_estimates
@@ -375,8 +443,10 @@ class Generator(object):
         if self.areParamsValid(list_of_actions, script_definition, global_params):
 
             try:
-                script_definition_file_path = "{}.py".format(script_definition.getName())
-                script_definition_template = self.env.get_template(script_definition_file_path)
+                script_definition_file_path = "{}.py".format(
+                    script_definition.getName())
+                script_definition_template = self.env.get_template(
+                    script_definition_file_path)
                 val = str(utilities.compress_and_hex(jsonString))
 
                 # if you need to change the template rendering, the file you need to change is
@@ -410,11 +480,13 @@ class ScriptDefinitionsWrapper(object):
     """
 
     class Java:
-        implements = ['uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionsWrapper']
+        implements = [
+            'uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionsWrapper']
 
     def __init__(self, path: str):
         self.repository = DefinitionsRepository(path=path)
-        self.script_definitions, self.script_definition_load_errors = get_script_definitions(self.repository.path)
+        self.script_definitions, self.script_definition_load_errors = get_script_definitions(
+            self.repository.path)
 
         self.generator = Generator(self.repository.path)
 
@@ -478,8 +550,9 @@ class ScriptDefinitionsWrapper(object):
         return ListConverter().convert(self.script_definitions, gateway._gateway_client)
 
     def convert_list_of_actions_to_python(self, list_of_actions) -> List[Dict[AnyStr, AnyStr]]:
-        python_list_of_actions: List = ListConverter().convert(list_of_actions, gateway._gateway_client)
-        return [MapConverter().convert(action, gateway._gateway_client) for action in python_list_of_actions]
+        python_list_of_actions: List = ListConverter().convert(
+            list_of_actions, gateway._gateway_client)
+        return python_list_of_actions
 
     def areParamsValid(self, list_of_actions, global_params, script_definition: ScriptDefinitionWrapper) -> bool:
         """
@@ -501,11 +574,12 @@ class ScriptDefinitionsWrapper(object):
         """
         errors_list = self.generator.getValidityErrors(global_params, self.convert_list_of_actions_to_python(
             list_of_actions), script_definition)
-        converted_list = [MapConverter().convert(errors, gateway._gateway_client) for errors in errors_list]
+        converted_list = [MapConverter().convert(
+            errors, gateway._gateway_client) for errors in errors_list]
         return ListConverter().convert(converted_list, gateway._gateway_client)
 
     def estimateTime(self, list_of_actions, script_definition: ScriptDefinitionWrapper, global_parameters) -> Dict[
-        int, int]:
+            int, int]:
         """
         Get the estimated time to complete the current actions
 
@@ -517,7 +591,7 @@ class ScriptDefinitionsWrapper(object):
             gateway._gateway_client)
 
     def estimateCustom(self, list_of_actions, script_definition: ScriptDefinitionWrapper, global_parameters) -> Dict[
-        int, Dict[AnyStr, AnyStr]]:
+            int, Dict[AnyStr, AnyStr]]:
         """
         Get the custom estimates of the current actions
 
@@ -566,23 +640,28 @@ def get_script_definitions(repo_path: str) -> Tuple[List[ScriptDefinitionWrapper
         module_name = os.path.splitext(os.path.basename(filename))[0]
         # Attempt to import the DoRun class
         try:
-            loader = importlib.machinery.SourceFileLoader(module_name, os.path.join(repo_path, filename))
+            loader = importlib.machinery.SourceFileLoader(
+                module_name, os.path.join(repo_path, filename))
             spec = importlib.util.spec_from_loader(module_name, loader)
             loaded_module = importlib.util.module_from_spec(spec)
             loader.exec_module(loaded_module)
-            script_definitions.append(ScriptDefinitionWrapper(module_name, loaded_module.DoRun()))
+            script_definitions.append(ScriptDefinitionWrapper(
+                module_name, loaded_module.DoRun()))
         except Exception as e:
             # On failure to load ensure we return the reason
             script_definition_load_errors[module_name] = str(e)
             # Print any errors to stderr, Java will catch and throw to the user
-            print("Error loading {}: {}".format(module_name, e), file=sys.stderr)
+            print("Error loading {}: {}".format(
+                module_name, e), file=sys.stderr)
     return script_definitions, script_definition_load_errors
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('java_port', type=int, help='the java port to connect on')
-    parser.add_argument('python_port', type=int, help='the python port to connect on')
+    parser.add_argument('java_port', type=int,
+                        help='the java port to connect on')
+    parser.add_argument('python_port', type=int,
+                        help='the python port to connect on')
     parser.add_argument('--repo_path', type=str, help='Path to the script generator repository',
                         default=DEFAULT_REPO_PATH)
 

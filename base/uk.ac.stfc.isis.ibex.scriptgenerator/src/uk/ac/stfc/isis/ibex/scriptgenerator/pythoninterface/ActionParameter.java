@@ -1,5 +1,7 @@
 package uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface;
 
+import java.util.List;
+
 /**
  * An action parameter with a name and default value.
  */
@@ -25,5 +27,21 @@ public interface ActionParameter {
 	 * @return A boolean of whether the parameter value should be copied from the previous row
 	 */
 	boolean getCopyPreviousRow();
+
+	/**
+	 * Get whether the parameter is an enum.
+	 * 
+	 * @return A boolean of whether the parameter is an enum
+	 */
+	boolean getIsEnum();
+
+	/**
+	 * Get the enum values for the parameter.
+	 * 
+	 * @return A list of strings of the enum values
+	 */
+	List<String> getEnumValues();
+	
+	
 	
 }

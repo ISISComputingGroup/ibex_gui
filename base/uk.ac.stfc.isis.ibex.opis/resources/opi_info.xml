@@ -52,6 +52,24 @@
       </value>
     </entry>
     <entry>
+      <key>Argus Magnet Statuses</key>
+      <value>
+        <type>MAGNET</type>
+        <path>RIKEN/argus_magnet_status.opi</path>
+        <description>Statuses of the ARGUS trans and long magnets for MUONS</description>
+        <categories/>
+      </value>
+    </entry>
+    <entry>
+      <key>Chronus Magnet Statuses</key>
+      <value>
+        <type>MAGNET</type>
+        <path>RIKEN/chronus_magnet_status.opi</path>
+        <description>Statuses of the CHRONUS trans and long magnets for MUONS</description>
+        <categories/>
+      </value>
+    </entry>
+    <entry>
       <key>Mk3 Chopper</key>
       <value>
         <type>CHOPPER</type>
@@ -483,7 +501,7 @@
       <value>
         <type>PRESSURE_GAUGE</type>
         <path>TPG300.opi</path>
-        <description>The OPI for the PFEIFFER 300 Vacuum Gauge.</description>
+        <description>The OPI for the PFEIFFER 300 and 500 Vacuum Gauges.</description>
         <macros>
           <macro>
             <name>TPG300</name>
@@ -1029,6 +1047,26 @@
       </value>
     </entry>
     <entry>
+      <key>MEASM905</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>MEASM905/measm905.opi</path>
+        <description>The pressure transducer for PEARL</description>
+        <macros>
+          <macro>
+            <name>MEASM905</name>
+            <include_parent_macros>true</include_parent_macros>
+            <PV_ROOT>$P(MEASM905)</PV_ROOT>
+            <description>The MEASM905 PV prefix (e.g. MEASM905_01).</description>
+            <default>MEASM905_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Pressure sensors</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>TDS 3000 Trace</key>
       <value>
         <type>OSCILLOSCOPE</type>
@@ -1188,6 +1226,18 @@
         <type>DEBUG</type>
         <path>twincat/twincat_engineering.opi</path>
         <description>The OPI giving a detailed engineering view of a Beckhoff.</description>
+        <macros/>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>INTER Beckhoff Diagnostics</key>
+      <value>
+        <type>DEBUG</type>
+        <path>inter_beckhoff_params.opi</path>
+        <description>The OPI showing diagnostic fields from the INTER tank beckhoff.</description>
         <macros/>
         <categories>
           <category>Miscellaneous motion control</category>
@@ -2364,6 +2414,84 @@
       </value>
     </entry>
     <entry>
+      <key>Spectra combined plot</key>
+      <value>
+        <categories>
+          <category>Monitors</category>
+        </categories>
+        <type>DAE</type>
+        <path>spectra_combined_plot.opi</path>
+        <description>A combined sprectra plot.</description>
+        <macros>
+          <macro>
+            <name>SPECTRUM_PV1</name>
+            <description>e.g. loc://_LOCAL:SPEC:SPEC1</description>
+            <default>loc://_LOCAL:SPEC:SPEC1</default>
+          </macro>
+          <macro>
+            <name>PERIOD_PV1</name>
+            <description>e.g. loc://_LOCAL:SPEC:PERIOD1</description>
+            <default>loc://_LOCAL:SPEC:PERIOD1</default>
+          </macro>
+          <macro>
+            <name>CHECKBOX_PV1</name>
+            <description>e.g. loc://_LOCAL:SPEC:CHECKBOX1</description>
+            <default>loc://_LOCAL:SPEC:CHECKBOX1</default>
+          </macro>
+          <macro>
+            <name>MODE_PV</name>
+            <description>e.g. loc://_LOCAL:SPEC:MODE1</description>
+            <default>loc://_LOCAL:SPEC:MODE1</default>
+          </macro>
+          <macro>
+            <name>SPECTRUM_PV2</name>
+            <description>e.g. loc://_LOCAL:SPEC:SPEC2</description>
+            <default>loc://_LOCAL:SPEC:SPEC2</default>
+          </macro>
+          <macro>
+            <name>PERIOD_PV2</name>
+            <description>e.g. loc://_LOCAL:SPEC:PERIOD2</description>
+            <default>loc://_LOCAL:SPEC:PERIOD2</default>
+          </macro>
+          <macro>
+            <name>CHECKBOX_PV2</name>
+            <description>e.g. loc://_LOCAL:SPEC:CHECKBOX2</description>
+            <default>loc://_LOCAL:SPEC:CHECKBOX2</default>
+          </macro>
+          <macro>
+            <name>SPECTRUM_PV3</name>
+            <description>e.g. loc://_LOCAL:SPEC:SPEC3</description>
+            <default>loc://_LOCAL:SPEC:SPEC3</default>
+          </macro>
+          <macro>
+            <name>PERIOD_PV3</name>
+            <description>e.g. loc://_LOCAL:SPEC:PERIOD3</description>
+            <default>loc://_LOCAL:SPEC:PERIOD3</default>
+          </macro>
+          <macro>
+            <name>CHECKBOX_PV3</name>
+            <description>e.g. loc://_LOCAL:SPEC:CHECKBOX3</description>
+            <default>loc://_LOCAL:SPEC:CHECKBOX3</default>
+          </macro>
+          <macro>
+            <name>SPECTRUM_PV4</name>
+            <description>e.g. loc://_LOCAL:SPEC:SPEC4</description>
+            <default>loc://_LOCAL:SPEC:SPEC4</default>
+          </macro>
+          <macro>
+            <name>PERIOD_PV4</name>
+            <description>e.g. loc://_LOCAL:SPEC:PERIOD4</description>
+            <default>loc://_LOCAL:SPEC:PERIOD4</default>
+          </macro>
+          <macro>
+            <name>CHECKBOX_PV4</name>
+            <description>e.g. loc://_LOCAL:SPEC:CHECKBOX4</description>
+            <default>loc://_LOCAL:SPEC:CHECKBOX4</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
       <key>Astrium</key>
       <value>
         <type>CHOPPER</type>
@@ -2629,6 +2757,7 @@
           <macro>
             <name>TTIEX355P</name>
             <description>The TTIEX355P PV prefix (e.g. TTIEX355P_01)</description>
+            <default>TTIEX355P_01</default>
           </macro>
         </macros>
       </value>
@@ -3039,6 +3168,27 @@
       </value>
     </entry>
     <entry>
+      <key>Automatic Needle Valve Controller</key>
+      <value>
+        <type>EUROTHERM</type>
+        <path>automatic_needle_valve.opi</path>
+        <description>Automatic Needle Valve Controller</description>
+        <macros>
+          <macro>
+            <name>EURO</name>
+            <description>The Eurotherm PV prefix (e.g. EUROTHRM_01).</description>
+            <default>EUROTHRM_01</default>
+          </macro>
+          <macro>
+            <name>SENSOR</name>
+            <description>The temperature sensor number (e.g. 1).</description>
+            <default>1</default>
+          </macro>
+        </macros>
+        <categories/>
+      </value>
+    </entry>
+    <entry>
       <key>Tektronix AFG3000</key>
       <value>
         <type>FUNCTION_GENERATOR</type>
@@ -3287,6 +3437,168 @@
         <categories>
           <category>Monitors</category>
         </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>DHP30330</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>dhp30330.opi</path>
+        <description>The OPI for the DHP30330</description>
+        <macros>
+          <macro>
+            <name>DHP30330</name>
+            <description>The DHP30330 PV prefix (e.g. DHP30330_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>Muon Separator Tuning</key>
+      <value>
+        <type>MUON_FRONT_END</type>
+        <path>RIKEN/separator_tuning.opi</path>
+        <description>The OPI to remotely tune a muon separator with control of the PSU output and feedback from the vacuum system.</description>
+        <macros>
+          <macro>
+            <name>PSU_POSITIVE</name>
+            <description>The IOC prefix for the positive plate PSU (e.g. TECHNIX_01).</description>
+            <default>TECHNIX_01</default>
+          </macro>
+          <macro>
+            <name>PSU_NEGATIVE</name>
+            <description>The IOC prefix for the negative plate PSU (e.g. TECHNIX_02).</description>
+            <default>TECHNIX_02</default>
+          </macro>
+          <macro>
+            <name>TPG300</name>
+            <description>The IOC prefix for the TPG300 Pressure controller (e.g. TPG300_01).</description>
+            <default>TPG300_01</default>
+          </macro>
+          <macro>
+            <name>TPG300_CHANNEL</name>
+            <description>The pressure channel to read (eg. A1, A2, B1, B2).</description>
+            <default>A1</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>PACE5000</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>pace5000.opi</path>
+        <description>The OPI for the PACE5000</description>
+        <macros>
+          <macro>
+            <name>PACE5000</name>
+            <description>The PACE5000 PV prefix (e.g. PACE5000_01)</description>
+            <default>PACE5000_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Pressure control handling systems</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>PEARL Jaw Set</key>
+      <value>
+        <type>MONITOR</type>
+        <path>jaws/jaws_managers/pearl_manager.opi</path>
+        <description>PEARL Jaw Set Manager</description>
+        <macros/>
+        <categories>
+          <category>Jaws and slits</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Moxa E1242</key>
+      <value>
+        <type>MOXA_12XX</type>
+        <path>moxa1242.opi</path>
+        <description>The OPI for a Moxa E1242 Volt/Current and Digital logger.</description>
+        <macros>
+          <macro>
+            <name>MOXA1210</name>
+            <description>The Moxa E1242 PV prefix (e.g. MOXA12XX_01).</description>
+            <default>MOXA12XX_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Multimeters</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>PEARL Single Motor Alignment</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>pearl/singlemotoralignment.opi</path>
+        <description>PEARL Single Motor Alignment</description>
+        <macros>
+          <macro>
+            <name>PEARLALIGN</name>
+            <description>The single motor alignment controller for Pearl sample space</description>
+            <default>MOT:MTR0101</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>PRE4500</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>pre4500.opi</path>
+        <description>The OPI for the PRE4500</description>
+        <macros>
+          <macro>
+            <name>PRE4500</name>
+            <description>The PRE4500 PV prefix (e.g. PRE4500_01)</description>
+            <default>PRE4500_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>RIKEN Callibrated Temperatures</key>
+      <value>
+        <categories/>
+        <type>RIKEN</type>
+        <path>RIKEN/MagnetTemperature/temperature_table.opi</path>
+        <description>The OPI for the RKNMNTR</description>
+        <macros>
+          <macro>
+            <name>RKNMNTR</name>
+            <description>The RKNMNTR PV prefix (e.g. RKNMNTR_01)</description>
+            <default>RKNMNTR_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>LM500</key>
+      <value>
+        <categories/>
+        <type>MONITOR</type>
+        <path>LM500.opi</path>
+        <description>The OPI for the LM500</description>
+        <macros>
+          <macro>
+            <name>LM500</name>
+            <description>The LM500 PV prefix (e.g. LM500_01)</description>
+            <default>LM500_01</default>
+          </macro>
+        </macros>
       </value>
     </entry>
     <entry>

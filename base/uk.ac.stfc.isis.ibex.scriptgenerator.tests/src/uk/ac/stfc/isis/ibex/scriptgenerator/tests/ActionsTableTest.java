@@ -33,7 +33,7 @@ public class ActionsTableTest {
 	
 	@Before
 	public void setUp() {		
-		testParameter = new JavaActionParameter("Test Parameter", "test value", false);
+		testParameter = new JavaActionParameter("Test Parameter", "test value", false, false, null);
 		
 		actionParameters = new ArrayList<JavaActionParameter>();
 		actionParameters.add(testParameter);

@@ -54,6 +54,7 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.tables.NullComparator;
 import uk.ac.stfc.isis.ibex.ui.widgets.StringEditingSupport;
 
+
 /**
  * A table that holds the properties for a target.
  */
@@ -79,7 +80,8 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	 */
 	protected static final Integer NON_EDITABLE_COLUMNS_ON_LEFT = 1;
 	private List<StringEditingSupport<ScriptGeneratorAction>> editingSupports = new ArrayList<StringEditingSupport<ScriptGeneratorAction>>();
-	
+	private List<ScriptGeneratorEditingSupportEnum<ScriptGeneratorAction>> enumEditingSupports = new ArrayList<ScriptGeneratorEditingSupportEnum<ScriptGeneratorAction>>();
+
 	/**
      * Default constructor for the table. Creates all the correct columns.
      * 
@@ -116,6 +118,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 		    }
 		    
 		};
+	    
 		manager.add(copyAction);
 		Action pasteAction = new Action("Paste Actions") {
 		    @Override
@@ -285,6 +288,7 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	@Override
 	protected void addColumns() {
 	    editingSupports.clear();
+	    enumEditingSupports.clear();
 		scriptGeneratorViewModel.addColumns(this);
 	}
 	
@@ -309,17 +313,26 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	public void addEditingSupport(StringEditingSupport<ScriptGeneratorAction> editingSupport) {
 	    editingSupports.add(editingSupport);
 	}
+
+	/**
+	 * Create a list of the editingSupport for each ENUM column. Required for resetting the selection after focus change.
+	 * @param editingSupport The editing support for the column
+	 */
+	public void addEnumEditingSupport(ScriptGeneratorEditingSupportEnum<ScriptGeneratorAction> editingSupport) {
+		enumEditingSupports.add(editingSupport);
+	}
+	
 	
 	private boolean validityChanged(String columnHeader, TableItem item, int column, ScriptGeneratorAction action) {
 		var validityText = item.getText(column);
 		var validityDisplay = ValidityDisplay.fromText(validityText);
-		return columnHeader.equals(ScriptGeneratorViewModel.VALIDITY_COLUMN_HEADER) && !validityDisplay.equalsAction(action);
+		return columnHeader.equals(Constants.VALIDITY_COLUMN_HEADER) && !validityDisplay.equalsAction(action);
 	}
 	
 	private boolean executingStatusChanged(String columnHeader, TableItem item, int column, ScriptGeneratorAction action) {
 		var lineNumberImage = Optional.ofNullable(item.getImage(column));
 		var statusFromLastDisplay = ExecutingStatusDisplay.fromImage(lineNumberImage);
-		return columnHeader.equals(ScriptGeneratorViewModel.ACTION_NUMBER_COLUMN_HEADER) && !ExecutingStatusDisplay.equalsAction(statusFromLastDisplay, action);
+		return columnHeader.equals(Constants.ACTION_NUMBER_COLUMN_HEADER) && !ExecutingStatusDisplay.equalsAction(statusFromLastDisplay, action);
 	}
 	
 	private boolean parameterValueChanged(Optional<String> parameterValue, TableItem item, int columnNumber) {
@@ -328,9 +341,9 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	
 	private boolean estimatedTimeChanged(String columnHeader, TableItem item, int column, ScriptGeneratorAction action) {
 		var estimatedTimeText = item.getText(column);
-		return columnHeader.equals(ScriptGeneratorViewModel.ESTIMATED_RUN_TIME_COLUMN_HEADER) 
+		return columnHeader.equals(Constants.ESTIMATED_RUN_TIME_COLUMN_HEADER) 
 				&& (
-						(action.getEstimatedTime().isEmpty() && !estimatedTimeText.equals(ScriptGeneratorViewModel.UNKNOWN_TEXT)) 
+						(action.getEstimatedTime().isEmpty() && !estimatedTimeText.equals(Constants.UNKNOWN_TEXT)) 
 						|| (action.getEstimatedTime().isPresent() && !estimatedTimeText.equals(ScriptGeneratorViewModel.changeSecondsToTimeFormat(action.getEstimatedTime().get().longValue())))
 				);
 	}
@@ -433,10 +446,12 @@ public class ActionsViewTable extends DataboundTable<ScriptGeneratorAction> {
 	 */
 	public void setCellFocus(int row, int column) {
 		var element = viewer.getElementAt(row);
+		
 		if (row >= 0 && element != null) {
 			viewer.editElement(element, column);
 		}
 	}
+
 	
 	/**
 	 * Sets the dynamic non editable columns on the right.

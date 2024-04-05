@@ -112,6 +112,13 @@ public abstract class Motor extends ModelObject {
      */
 	public abstract Boolean getMoving();
 	
+	/**
+     * Gets whether the motor is done moving.
+     * 
+     * @return whether it is done moving
+     */
+	public abstract Boolean getDoneMoving();
+	
     /**
      * Gets whether the motor is at the home position.
      * 

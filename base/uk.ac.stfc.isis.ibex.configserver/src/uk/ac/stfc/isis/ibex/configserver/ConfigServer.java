@@ -19,7 +19,9 @@
 
 package uk.ac.stfc.isis.ibex.configserver;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -305,6 +307,15 @@ public class ConfigServer extends Closer {
 	public Collection<String> configNames() {
 		return ConfigInfo.names(configsInfo().getValue());
 	}
+	
+	/**
+	 * Returns whether or not there are writable configurations - dictated by whether all configurations have the protected flag set. 
+	 * 
+	 * @return the true or false value of whether there are currently any writable configurations.
+	 */
+	public boolean writableConfigsExist() {
+		return this.configNamesWithFlags().values().contains(Boolean.FALSE);
+	}
 
 	/**
 	 * Returns a hashmap of config names as key and protection flag as value.
@@ -342,6 +353,15 @@ public class ConfigServer extends Closer {
 	public ForwardingObservable<Collection<IocState>> iocStates() {
 		return FilteredCollectionObservable.createFilteredByNameObservable(variables.iocStates,
 				variables.protectedIocs);
+	}
+	
+	/**
+	 * Returns an observable to the moxa mappings.
+	 * 
+	 * @return the map of hostname and ip addresses to moxa port mappings
+	 */
+	public ForwardingObservable<HashMap<String, ArrayList<ArrayList<String>>>> moxaMappings() { 
+		return variables.moxaMappings;
 	}
 
 	/**

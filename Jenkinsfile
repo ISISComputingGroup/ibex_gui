@@ -14,7 +14,7 @@ pipeline {
   // The options directive is for configuration that applies to the whole job.
   options {
     buildDiscarder(logRotator(numToKeepStr:'10'))
-    timeout(time: 120, unit: 'MINUTES')
+    timeout(time: 240, unit: 'MINUTES')
     disableConcurrentBuilds()
     timestamps()
 	skipDefaultCheckout(true)
@@ -36,11 +36,15 @@ pipeline {
   stages {  
     stage("Checkout") {
       steps {
-        echo "Branch: ${env.BRANCH_NAME}"
-        checkout scm
+        timeout(time: 2, unit: 'HOURS') {
+          retry(5) {
+            echo "Branch: ${env.BRANCH_NAME}"
+            checkout scm
+	  }
+	}
       }
     }
-    
+	  
     stage("Build") {
       steps {
         script {
@@ -113,6 +117,13 @@ pipeline {
     always {
 	    archiveArtifacts artifacts: 'build/*.log', caseSensitive: false
 	    junit '**/surefire-reports/TEST-*.xml,**/test-reports/TEST-*.xml'
+      logParser ([
+            projectRulePath: 'parse_rules',
+            parsingRulesPath: '',
+            showGraphs: true, 
+            unstableOnWarning: false, 
+            useProjectRule: true,
+        ])
     }
     cleanup {
             echo "***"

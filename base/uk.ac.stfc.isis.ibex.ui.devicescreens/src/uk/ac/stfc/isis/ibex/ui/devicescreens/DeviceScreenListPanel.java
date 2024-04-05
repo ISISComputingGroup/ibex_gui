@@ -29,12 +29,9 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
@@ -45,115 +42,101 @@ import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.commands.ConfigureDeviceScreensHandler;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.list.DeviceScreensTable;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.ViewDeviceScreensDescriptionViewModel;
-import uk.ac.stfc.isis.ibex.ui.widgets.HelpButton;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
 
 /**
  * A UI Panel for the devices screens.
  */
 public class DeviceScreenListPanel extends Composite {
 
-    /**
-     * Logger.
-     */
-    private static final Logger LOG = IsisLog.getLogger(DeviceScreenListPanel.class);
+	/**
+	 * Logger.
+	 */
+	private static final Logger LOG = IsisLog.getLogger(DeviceScreenListPanel.class);
 
-    private Button configureDevScreensButton;
-
-    private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Create-and-Manage-Device-Screens";
+	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Create-and-Manage-Device-Screens";
 	private static final String DESCRIPTION = "Device Screens View";
-    
-    private DeviceScreensTable deviceScreenList;
 
-    private ConfigureDeviceScreensHandler configureDeviceScreensHandler = new ConfigureDeviceScreensHandler();
+	private DeviceScreensTable deviceScreenList;
 
-    /**
-     * Create a Devices Screen Panel.
-     * 
-     * @param parent
-     *            parent component
-     * @param style
-     *            SWT Style
-     * @param viewModel
-     *            the view model to be used by this view
-     */
-    public DeviceScreenListPanel(final Composite parent, int style, ViewDeviceScreensDescriptionViewModel viewModel) {
-        super(parent, style);
-        setLayout(new FillLayout(SWT.HORIZONTAL));
+	private ConfigureDeviceScreensHandler configureDeviceScreensHandler = new ConfigureDeviceScreensHandler();
 
-        GridLayout compositeLayout = new GridLayout(1, true);
-        this.setLayout(compositeLayout);
+	/**
+	 * Create a Devices Screen Panel.
+	 * 
+	 * @param parent    parent component
+	 * @param style     SWT Style
+	 * @param viewModel the view model to be used by this view
+	 */
+	public DeviceScreenListPanel(final Composite parent, int style, ViewDeviceScreensDescriptionViewModel viewModel) {
+		super(parent, style);
+		setLayout(new FillLayout(SWT.HORIZONTAL));
 
-        configureDevScreensButton = new Button(this, SWT.NONE);
-        configureDevScreensButton.setText("Edit Device Screens");
-        GridData gdconfigureDevScreensButton = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
-        configureDevScreensButton.setLayoutData(gdconfigureDevScreensButton);
+		GridLayout compositeLayout = new GridLayout(1, true);
+		this.setLayout(compositeLayout);
 
-        configureDevScreensButton.addSelectionListener(new SelectionAdapter() {
+		new IBEXButtonBuilder(this, SWT.NONE).text("Edit Device Screens")
+				.listener(evt -> {
+					try {
+						configureDeviceScreensHandler.execute(new ExecutionEvent());
+					} catch (ExecutionException ex) {
+						LOG.catching(ex);
+						MessageDialog.openError(parent.getShell(), "Error displaying config dialogue", ex.getMessage());
+					}
+				}).customLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false)).build();
 
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                try {
-                    configureDeviceScreensHandler.execute(new ExecutionEvent());
-                } catch (ExecutionException ex) {
-                    LOG.catching(ex);
-                    MessageDialog.openError(parent.getShell(), "Error displaying config dialogue", ex.getMessage());
-                }
-            }
-        });
+		deviceScreenList = new DeviceScreensTable(this, SWT.NONE, SWT.FULL_SELECTION);
+		GridData devicesListLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		deviceScreenList.setLayoutData(devicesListLayout);
 
-        deviceScreenList = new DeviceScreensTable(this, SWT.NONE, SWT.FULL_SELECTION);
-        GridData devicesListLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-        deviceScreenList.setLayoutData(devicesListLayout);
+		deviceScreenList.addSelectionChangedListener(new ISelectionChangedListener() {
 
-        deviceScreenList.addSelectionChangedListener(new ISelectionChangedListener() {
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
 
-            @Override
-            public void selectionChanged(SelectionChangedEvent event) {
+				for (DeviceDescription deviceScreeen : deviceScreenList.selectedRows()) {
+					LOG.info("Open opi target " + deviceScreeen.getName());
+					try {
+						DevicesOpiTargetView.displayOpi(deviceScreeen.getOPITarget());
+					} catch (OPIViewCreationException e) {
+						LOG.catching(e);
+						MessageDialog.openError(parent.getShell(), "Error displaying OPI", e.getMessage());
+					}
+				}
 
-                for (DeviceDescription deviceScreeen : deviceScreenList.selectedRows()) {
-                    LOG.info("Open opi target " + deviceScreeen.getName());
-                    try {
-                        DevicesOpiTargetView.displayOpi(deviceScreeen.getOPITarget());
-                    } catch (OPIViewCreationException e) {
-                        LOG.catching(e);
-                        MessageDialog.openError(parent.getShell(), "Error displaying OPI", e.getMessage());
-                    }
-                }
+			}
+		});
 
-            }
-        });
-        
-        new HelpButton(this, HELP_LINK, DESCRIPTION);
+		new IBEXButtonBuilder(this, SWT.PUSH).helpButton(true).link(HELP_LINK).description(DESCRIPTION).build();
 
-        viewModel.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent deviceScreenDescription) {
-                updateDeviceScreensDescriptions((DeviceScreensDescription) deviceScreenDescription.getNewValue());
+		viewModel.addPropertyChangeListener(new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent deviceScreenDescription) {
+				updateDeviceScreensDescriptions((DeviceScreensDescription) deviceScreenDescription.getNewValue());
 
-            }
-        });
+			}
+		});
 
-        // Force the device screens to update when they are first created.
-        updateDeviceScreensDescriptions(viewModel.getDeviceScreensDescription());
+		// Force the device screens to update when they are first created.
+		updateDeviceScreensDescriptions(viewModel.getDeviceScreensDescription());
 
-    }
+	}
 
-    /**
-     * Updates the device screen description in the GUI thread.
-     * 
-     * @param deviceScreensDescription
-     *            the new device screens description
-     */
-    protected void updateDeviceScreensDescriptions(final DeviceScreensDescription deviceScreensDescription) {
+	/**
+	 * Updates the device screen description in the GUI thread.
+	 * 
+	 * @param deviceScreensDescription the new device screens description
+	 */
+	protected void updateDeviceScreensDescriptions(final DeviceScreensDescription deviceScreensDescription) {
 
-        Display.getDefault().asyncExec(new Runnable() {
-            @Override
-            public void run() {
-                if (deviceScreenList != null && deviceScreensDescription != null) {
-                    deviceScreenList.setRows(deviceScreensDescription.getDevices());
-                }
-            }
-        });
-    }
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				if (deviceScreenList != null && deviceScreensDescription != null) {
+					deviceScreenList.setRows(deviceScreensDescription.getDevices());
+				}
+			}
+		});
+	}
 
 }

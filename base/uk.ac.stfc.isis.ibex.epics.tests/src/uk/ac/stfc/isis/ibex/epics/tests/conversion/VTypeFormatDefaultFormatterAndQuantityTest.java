@@ -1007,7 +1007,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	String result = converter.apply(vnum);
 
 	// Assert
-	assertEquals(result, "123.456000");
+	assertEquals(result, "123.456");
     }
 
     @Test
@@ -1019,7 +1019,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = Double.valueOf(123.456);
+	Number number = Double.valueOf(123.45600041);
 
 	VNumber vnum = ValueFactory.newVNumber(number, null, null, display);
 
@@ -1047,7 +1047,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	String result = converter.apply(vnum);
 
 	// Assert
-	assertEquals(result, "123.456001");
+	assertEquals(result, "123.456");
     }
 
     @Test
@@ -1067,7 +1067,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	String result = converter.apply(vnum);
 
 	// Assert
-	assertEquals(result, "123.456001");
+	assertEquals(result, "123.456");
     }
 
     @Test
@@ -1282,7 +1282,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	String result = converter.apply(vnum);
 
 	// Assert
-	assertEquals(result, "123.456001");
+	assertEquals(result, "123.456");
     }
 
     @Test
@@ -1302,7 +1302,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 	String result = converter.apply(vnum);
 
 	// Assert
-	assertEquals(result, "123.456001");
+	assertEquals(result, "123.456");
     }
 
     @Test
@@ -1505,7 +1505,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "unit",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = Double.valueOf(123.456);
+	Number number = Double.valueOf(123.45600041);
 
 	VType value = ValueFactory.newVNumber(number, null, null, display);
 
@@ -1525,7 +1525,7 @@ public class VTypeFormatDefaultFormatterAndQuantityTest {
 
 	Display display = ValueFactory.newDisplay(0.0, 0.0, 0.0, "",
 		NumberFormats.format(6), 0.0, 0.0, 0.0, 0.0, 0.0);
-	Number number = Double.valueOf(123.456);
+	Number number = Double.valueOf(123.45600041);
 
 	VType value = ValueFactory.newVNumber(number, null, null, display);
 

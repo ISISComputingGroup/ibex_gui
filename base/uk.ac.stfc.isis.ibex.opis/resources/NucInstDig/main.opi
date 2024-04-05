@@ -1423,6 +1423,61 @@ $(pv_value)</tooltip>
         <x>232</x>
         <y>504</y>
       </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+        <actions hook="false" hook_all="false">
+          <action type="OPEN_DISPLAY">
+            <path>dig_multi.opi</path>
+            <macros>
+              <include_parent_macros>true</include_parent_macros>
+            </macros>
+            <mode>0</mode>
+            <description></description>
+          </action>
+        </actions>
+        <alarm_pulsing>false</alarm_pulsing>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <foreground_color>
+          <color red="0" green="0" blue="0" />
+        </foreground_color>
+        <height>40</height>
+        <image></image>
+        <name>Action Button_5</name>
+        <push_action_index>0</push_action_index>
+        <pv_name></pv_name>
+        <pv_value />
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <style>0</style>
+        <text>OpenMulti</text>
+        <toggle_button>false</toggle_button>
+        <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+        <visible>true</visible>
+        <widget_type>Action Button</widget_type>
+        <width>80</width>
+        <wuid>6c191510:18e4d66620f:-de9</wuid>
+        <x>73</x>
+        <y>512</y>
+      </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -2346,10 +2401,10 @@ $(pv_value)</tooltip>
         <height>565</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
-          <STATS>STATS1</STATS>
+          <STATS>ST1</STATS>
           <ROI>ROI1</ROI>
-          <RAWIMAGE>RAWIMAGE1</RAWIMAGE>
-          <IMAGE>IMAGE1</IMAGE>
+          <RAWIMAGE>RI1</RAWIMAGE>
+          <IMAGE>IM1</IMAGE>
           <R>$(NCINDG):AD1</R>
         </macros>
         <name>Linking Container</name>
@@ -2432,10 +2487,10 @@ $(pv_value)</tooltip>
         <height>565</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
-          <STATS>STATS1</STATS>
+          <STATS>ST1</STATS>
           <ROI>ROI1</ROI>
-          <RAWIMAGE>RAWIMAGE1</RAWIMAGE>
-          <IMAGE>IMAGE1</IMAGE>
+          <RAWIMAGE>RI1</RAWIMAGE>
+          <IMAGE>IM1</IMAGE>
           <R>$(NCINDG):AD2</R>
         </macros>
         <name>Linking Container</name>
@@ -2518,10 +2573,10 @@ $(pv_value)</tooltip>
         <height>565</height>
         <macros>
           <include_parent_macros>true</include_parent_macros>
-          <STATS>STATS1</STATS>
+          <STATS>ST1</STATS>
           <ROI>ROI1</ROI>
-          <RAWIMAGE>RAWIMAGE1</RAWIMAGE>
-          <IMAGE>IMAGE1</IMAGE>
+          <RAWIMAGE>RI1</RAWIMAGE>
+          <IMAGE>IM1</IMAGE>
           <R>$(NCINDG):AD3</R>
         </macros>
         <name>Linking Container</name>
@@ -2904,5 +2959,45 @@ $(pv_value)</tooltip>
         </widget>
       </widget>
     </widget>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <actions hook="false" hook_all="false" />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <height>1</height>
+    <image></image>
+    <name>Dummy</name>
+    <push_action_index>0</push_action_index>
+    <pv_name></pv_name>
+    <pv_value />
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <style>1</style>
+    <text></text>
+    <toggle_button>false</toggle_button>
+    <tooltip></tooltip>
+    <visible>true</visible>
+    <widget_type>Action Button</widget_type>
+    <width>1</width>
+    <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
+    <x>0</x>
+    <y>0</y>
   </widget>
 </display>

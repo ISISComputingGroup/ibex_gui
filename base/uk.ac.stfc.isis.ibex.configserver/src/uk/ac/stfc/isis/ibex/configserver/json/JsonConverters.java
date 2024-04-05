@@ -19,7 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.configserver.json;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Collection;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -176,7 +179,7 @@ public class JsonConverters implements Converters {
 	private static final Function<Configuration, Configuration> INIT_CONFIG = uninitialized -> new Configuration(uninitialized);
 
 	private static final Function<ComponentInfo, ComponentInfo> INIT_COMP = uninitialized -> new ComponentInfo(uninitialized);
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -184,4 +187,10 @@ public class JsonConverters implements Converters {
 	public Function<String, CustomBannerData> toBannerDescription() {
         return new JsonDeserialisingConverter<>(CustomBannerData.class);
     }
+	
+	@Override 
+	public Function<String, HashMap<String, ArrayList<ArrayList<String>>>> toMoxaMappings() {
+		return new JsonDeserialisingConverter<>(Map.class).andThen(new MoxaMappingsConverter());
+		
+	}
 }

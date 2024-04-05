@@ -37,6 +37,7 @@ public class TestMotor extends Motor {
     public Double upperLimit = 5.0;
     public MotorDirection direction = MotorDirection.POSITIVE;
     public boolean moving = false;
+    public boolean doneMoving = true;
     public boolean atHome = false;
     public boolean atLowerLimit = false;
     public boolean atUpperLimit = false;
@@ -134,6 +135,11 @@ public class TestMotor extends Motor {
 	@Override
 	public Boolean getWithinTolerance() {
 		return withinTolerance;
+	}
+
+	@Override
+	public Boolean getDoneMoving() {
+		return doneMoving;
 	}
 
 }
