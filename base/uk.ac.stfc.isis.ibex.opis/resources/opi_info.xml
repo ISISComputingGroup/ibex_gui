@@ -1226,6 +1226,13 @@
         <type>DEBUG</type>
         <path>twincat/twincat_engineering.opi</path>
         <description>The OPI giving a detailed engineering view of a Beckhoff.</description>
+        <macros>
+        <macro>
+            <name>TC</name>
+            <description>The TC IOC number eg. TC_01</description>
+            <default>TC_01</default>
+          </macro>
+        </macros>
         <macros/>
         <categories>
           <category>Miscellaneous motion control</category>
@@ -3597,6 +3604,21 @@
             <name>LM500</name>
             <description>The LM500 PV prefix (e.g. LM500_01)</description>
             <default>LM500_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>LNDYISW</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>lndyisw.opi</path>
+        <description>The OPI for the LNDYISW</description>
+        <macros>
+          <macro>
+            <name>LNDYISW</name>
+            <description>The LNDYISW PV prefix (e.g. LNDYISW_01)</description>
           </macro>
         </macros>
       </value>
