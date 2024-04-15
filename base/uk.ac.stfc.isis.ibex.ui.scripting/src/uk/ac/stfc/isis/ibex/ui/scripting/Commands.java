@@ -33,7 +33,7 @@ public final class Commands {
     private static final String SET_INSTRUMENT_CMD = "set_instrument('%s')\n";
 
     /**
-     * The command to initialise genie.
+     * The command to initialise genie. This is run on console startup.
      */
     public static final String GENIE_INITIALISATION_CMDS = "import matplotlib \n"
             + "matplotlib.use('module://genie_python.matplotlib_backend.ibex_websocket_backend') \n"
@@ -41,7 +41,8 @@ public final class Commands {
             + "_mpl_backend.set_up_plot_default(is_primary=True, should_open_ibex_window_on_show=True, max_figures=3)\n"
             + "from genie_python.genie_startup import * \n" 
             + "import os \n"
-            + "os.environ[\"FROM_IBEX\"] = str(True) \n";
+            + "os.environ[\"FROM_IBEX\"] = str(True) \n"
+            + "print(\"for genie_python reference please refer to the 'useful links' perspective on the left side of the GUI\")";
 
     private Commands() {
     }
