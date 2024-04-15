@@ -1,4 +1,7 @@
 # match line starting with ‘error ‘, case-insensitive
-error /^(?i)error:?/
-warning /^(?i)warning:?/
-info /^(?i)info:?/
+# also allow for [timestamp]
+ok /Problems running epstopdf/
+error /(?i)^(\[[^]]*\] )?error:?/
+error /(?i)^(\[[^]]*\] )?fatal:?/
+warning /(?i)^(\[[^]]*\] )?warning:?/
+info /(?i)^(\[[^]]*\] )?info:?/
