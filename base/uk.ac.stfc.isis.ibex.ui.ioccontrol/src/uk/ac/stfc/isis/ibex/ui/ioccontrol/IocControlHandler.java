@@ -44,7 +44,7 @@ import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusViewModel;
 public class IocControlHandler {
 	
 	private IocControl control;
-	private ServerStatusViewModel serverStatus = new ServerStatusViewModel(new ServerStatusVariables());
+	private ServerStatusViewModel serverStatus = new ServerStatusViewModel(ServerStatusVariables.getInstance());
 	
 	/**
 	 * Instantiates a new IOC control handler.

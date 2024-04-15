@@ -43,20 +43,21 @@ import uk.ac.stfc.isis.ibex.epics.writing.WritingSetCommand;
 import uk.ac.stfc.isis.ibex.model.SetCommand;
 
 /**
- * A class that exposes the information contained within configurations on the blockserver.
+ * A class that exposes the information contained within configurations on the
+ * blockserver.
  *
  */
 public class ConfigServer extends Closer {
 
-    private final ConfigServerVariables variables;
-    private final ComponentDependenciesModel dependenciesModel;
+	private final ConfigServerVariables variables;
+	private final ComponentDependenciesModel dependenciesModel;
 
-    private final ForwardingWritableAction updateAlarmManager = new ForwardingWritableAction() {
-        @Override
-        public void action() {
-            AlarmReloadManager.getInstance().queueDelayedUpdate();
-        }
-    };
+	private final ForwardingWritableAction updateAlarmManager = new ForwardingWritableAction() {
+		@Override
+		public void action() {
+			AlarmReloadManager.getInstance().queueDelayedUpdate();
+		}
+	};
 
 	/**
 	 * The default constructor for the ConfigServer.
@@ -65,8 +66,8 @@ public class ConfigServer extends Closer {
 	 *                  blockserver PVs.
 	 */
 	public ConfigServer(ConfigServerVariables variables) {
-        this.variables = variables;
-        this.dependenciesModel = new ComponentDependenciesModel(this);
+		this.variables = variables;
+		this.dependenciesModel = new ComponentDependenciesModel(this);
 	}
 
 	/**
@@ -78,7 +79,7 @@ public class ConfigServer extends Closer {
 	public ForwardingObservable<String> blockValue(String blockName) {
 		return variables.blockValue(blockName);
 	}
-	
+
 	/**
 	 * Returns an observable conveying the description of a given block.
 	 * 
@@ -89,15 +90,15 @@ public class ConfigServer extends Closer {
 		return variables.blockDescription(blockName);
 	}
 
-    /**
-     * Returns an observable conveying the alarm state of a given block.
-     * 
-     * @param blockName the name of the block
-     * @return the {@link AlarmState} observable object
-     */
-    public ForwardingObservable<AlarmState> alarm(String blockName) {
-        return variables.alarm(blockName);
-    }
+	/**
+	 * Returns an observable conveying the alarm state of a given block.
+	 * 
+	 * @param blockName the name of the block
+	 * @return the {@link AlarmState} observable object
+	 */
+	public ForwardingObservable<AlarmState> alarm(String blockName) {
+		return variables.alarm(blockName);
+	}
 
 	/**
 	 * Returns the PV that the blockserver exposes for a given block.
@@ -166,14 +167,14 @@ public class ConfigServer extends Closer {
 		return variables.componentsInfo;
 	}
 
-    /**
-     * Returns an observable to the details of all available components.
-     * 
-     * @return the Collection<{@link Configuration}> observable object
-     */
-    public ForwardingObservable<Collection<Configuration>> componentDetails() {
-        return variables.componentDetails;
-    }
+	/**
+	 * Returns an observable to the details of all available components.
+	 * 
+	 * @return the Collection<{@link Configuration}> observable object
+	 */
+	public ForwardingObservable<Collection<Configuration>> componentDetails() {
+		return variables.componentDetails;
+	}
 
 	/**
 	 * Returns an observable to the iocs that are available on the instrument.
@@ -307,14 +308,16 @@ public class ConfigServer extends Closer {
 	public Collection<String> configNames() {
 		return ConfigInfo.names(configsInfo().getValue());
 	}
-	
+
 	/**
-	 * Returns whether or not there are writable configurations - dictated by whether all configurations have the protected flag set. 
+	 * Returns whether or not there are writable configurations - dictated by
+	 * whether all configurations have the protected flag set.
 	 * 
-	 * @return the true or false value of whether there are currently any writable configurations.
+	 * @return the true or false value of whether there are currently any writable
+	 *         configurations.
 	 */
 	public boolean writableConfigsExist() {
-		return this.configNamesWithFlags().values().contains(Boolean.FALSE);
+		return this.configNamesWithFlags().values().contains(Boolean.FALSE) && this.serverStatus().isConnected();
 	}
 
 	/**
@@ -354,13 +357,13 @@ public class ConfigServer extends Closer {
 		return FilteredCollectionObservable.createFilteredByNameObservable(variables.iocStates,
 				variables.protectedIocs);
 	}
-	
+
 	/**
 	 * Returns an observable to the moxa mappings.
 	 * 
 	 * @return the map of hostname and ip addresses to moxa port mappings
 	 */
-	public ForwardingObservable<HashMap<String, ArrayList<ArrayList<String>>>> moxaMappings() { 
+	public ForwardingObservable<HashMap<String, ArrayList<ArrayList<String>>>> moxaMappings() {
 		return variables.moxaMappings;
 	}
 
@@ -404,8 +407,8 @@ public class ConfigServer extends Closer {
 	 * @return the logging writable
 	 */
 	private <T> Writable<T> logWithRestartAlarmConfig(String id, Writable<T> destination) {
-	    return new ForwardingWritableWithAction<>(updateAlarmManager,
-                new LoggingForwardingWritable<>(Configurations.LOG, id, destination, Function.identity()));
+		return new ForwardingWritableWithAction<>(updateAlarmManager,
+				new LoggingForwardingWritable<>(Configurations.LOG, id, destination, Function.identity()));
 	}
 
 	/**
@@ -448,22 +451,22 @@ public class ConfigServer extends Closer {
 		}
 	}
 
-    private void ifCalledSwitchConfigOnSaveAsChooseSave(EditableConfiguration config, boolean switchConfigOnSaveAs,
-            boolean calledSwitchConfigOnSaveAs) {
-        if (calledSwitchConfigOnSaveAs) {
-            switchConfigOnSaveAs(config, switchConfigOnSaveAs);
-        } else {
-            setCurrentConfig().uncheckedWrite(config.asConfiguration());
-            Configurations.getInstance().addNameToRecentlyLoadedConfigList(config.asConfiguration().getName());
-        }
-    }
+	private void ifCalledSwitchConfigOnSaveAsChooseSave(EditableConfiguration config, boolean switchConfigOnSaveAs,
+			boolean calledSwitchConfigOnSaveAs) {
+		if (calledSwitchConfigOnSaveAs) {
+			switchConfigOnSaveAs(config, switchConfigOnSaveAs);
+		} else {
+			setCurrentConfig().uncheckedWrite(config.asConfiguration());
+			Configurations.getInstance().addNameToRecentlyLoadedConfigList(config.asConfiguration().getName());
+		}
+	}
 
-    private void switchConfigOnSaveAs(EditableConfiguration config, boolean switchConfigOnSaveAs) {
-        if (switchConfigOnSaveAs) {
-            setCurrentConfig().uncheckedWrite(config.asConfiguration());
-            Configurations.getInstance().addNameToRecentlyLoadedConfigList(config.asConfiguration().getName());
-        } else {
-            saveAs().uncheckedWrite(config.asConfiguration());
-        }
-    }
+	private void switchConfigOnSaveAs(EditableConfiguration config, boolean switchConfigOnSaveAs) {
+		if (switchConfigOnSaveAs) {
+			setCurrentConfig().uncheckedWrite(config.asConfiguration());
+			Configurations.getInstance().addNameToRecentlyLoadedConfigList(config.asConfiguration().getName());
+		} else {
+			saveAs().uncheckedWrite(config.asConfiguration());
+		}
+	}
 }
