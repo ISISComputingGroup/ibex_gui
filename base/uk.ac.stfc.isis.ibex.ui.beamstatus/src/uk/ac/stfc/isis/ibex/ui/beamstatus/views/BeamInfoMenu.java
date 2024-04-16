@@ -1,5 +1,8 @@
 package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
@@ -71,6 +74,13 @@ public class BeamInfoMenu extends MenuManager {
 					messageBox.setMessage("Make the Log Plotter perspective visible.");
 					messageBox.open();
 				}
+			}
+		});
+		add(new Action("Copy to clipboard: " + facilityPV.pv) { // Opening log plotter window
+			public void run() {
+				StringSelection selection = new StringSelection(facilityPV.pv);
+				Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+				clipboard.setContents(selection, selection);
 			}
 		});
 	}
