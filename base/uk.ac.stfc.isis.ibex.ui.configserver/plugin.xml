@@ -33,6 +33,13 @@
                icon="icons/add_block.png"
                tooltip="Add this PV as a block to the current configuration">
          </command>
+         <command
+               commandId="uk.ac.stfc.isis.ibex.ui.configserver.commands.CopyPVToClipboardHandler"
+               label="Copy PV name to clipboard"
+               style="push"
+               icon="icons/add_block.png"
+               tooltip="Copy this PV name to the clipboard">
+         </command>
       </menuContribution>
    </extension>
       <extension
@@ -51,6 +58,11 @@
         <command
             defaultHandler="uk.ac.stfc.isis.ibex.ui.configserver.commands.AddBlockToComponentHandler"
             id="uk.ac.stfc.isis.ibex.ui.configserver.commands.AddBlockToComponentHandler"
+            name="%NewBlock">
+      </command>
+              <command
+            defaultHandler="uk.ac.stfc.isis.ibex.ui.configserver.commands.CopyPVToClipboardHandler"
+            id="uk.ac.stfc.isis.ibex.ui.configserver.commands.CopyPVToClipboardHandler"
             name="%NewBlock">
       </command>
    </extension>
