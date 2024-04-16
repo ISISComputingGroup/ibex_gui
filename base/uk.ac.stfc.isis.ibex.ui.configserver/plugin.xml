@@ -38,7 +38,7 @@
                label="Copy PV name to clipboard"
                style="push"
                icon="icons/add_block.png"
-               tooltip="Add this PV as a block to the current configuration">
+               tooltip="Copy this PV name to the clipboard">
          </command>
       </menuContribution>
    </extension>
