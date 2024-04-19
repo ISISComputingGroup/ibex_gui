@@ -5,6 +5,7 @@ ok /Problems running epstopdf/
 ok /(?i)^(\[[^]]*\] )?error_message_is_empty/
 warning /IPython does not exist, auto complete not installed/
 error /(?i)^(\[[^]]*\] )?error:?/
+error /(?i)^(\[[^]]*\] )?.*FAILURE \[[^]]*\]$/
 error /(?i)^(\[[^]]*\] )?fatal:?/
 warning /(?i)^(\[[^]]*\] )?warning:?/
 info /(?i)^(\[[^]]*\] )?info:?/
