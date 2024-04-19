@@ -50,6 +50,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DoubleListEditor;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
 import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
 import uk.ac.stfc.isis.ibex.validators.GroupNameValidator;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
@@ -214,44 +215,51 @@ public class GroupsEditorPanel extends Composite {
 
 		IObservableList<EditableBlock> selectedBlocks = ViewerProperties.singleSelection().list(BeanProperties.list("selectedBlocks", EditableBlock.class)).observe(groupsViewer);
 		IObservableList<EditableBlock> unselectedBlocks = ViewerProperties.singleSelection().list(BeanProperties.list("unselectedBlocks", EditableBlock.class)).observe(groupsViewer);
-
-		Button spacerButton = new Button(grpGroups, SWT.NONE);
-		GridData gd_spacerButton = new GridData(SWT.LEFT, SWT.CENTER, false, true, 1, 1);
-		gd_spacerButton.heightHint = 50;
-		spacerButton.setLayoutData(gd_spacerButton);
+		
+		Button spacerButton = new IBEXButtonBuilder(grpGroups, SWT.NONE)
+				.customLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, true, 1, 1))
+				.height(50)
+				.build();
 		spacerButton.setVisible(false);
-
-		Button btnUp =  new Button(grpGroups, SWT.NONE);
-		GridData gd_btnUp = new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1);
-		gd_btnUp.widthHint = 25;
-		btnUp.setLayoutData(gd_btnUp);
+		
+		Button btnUp = new IBEXButtonBuilder(grpGroups, SWT.NONE)
+				.customLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1))
+				.width(25)
+				.build();
+		
 		btnUp.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_up.png"));
 		btnUp.addListener(SWT.Selection, event -> groupEditorViewModel.moveGroupUp(groupList.getSelectionIndex()));
 
-		Button btnDown =  new Button(grpGroups, SWT.NONE);
-		GridData gd_btnDown = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
-		gd_btnDown.widthHint = 25;
-		btnDown.setLayoutData(gd_btnDown);
+		
+		Button btnDown = new IBEXButtonBuilder(grpGroups, SWT.NONE)
+				.customLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1))
+				.width(25)
+				.build();
+		
 		btnDown.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png"));
 		btnDown.addListener(SWT.Selection, event -> groupEditorViewModel.moveGroupDown(groupList.getSelectionIndex()));
 
-		Button spacerButton2 = new Button(grpGroups, SWT.NONE);
-		spacerButton2.setLayoutData(gd_spacerButton);
+		Button spacerButton2 = new IBEXButtonBuilder(grpGroups, SWT.NONE)
+				.customLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, true, 1, 1))
+				.build();
+		
 		spacerButton2.setVisible(false);
 		
-		Button btnAdd = new Button(grpGroups, SWT.NONE);
-		GridData gd_btnAdd = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_btnAdd.widthHint = 70;
-		btnAdd.setLayoutData(gd_btnAdd);
-		btnAdd.setText("Add");
+		Button btnAdd = new IBEXButtonBuilder(grpGroups, SWT.NONE)
+				.customLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1))
+				.width(70)
+				.text("Add")
+				.build();
+
 		btnAdd.addListener(SWT.Selection, event -> groupEditorViewModel.addNewGroup());
 
-		final Button btnRemove = new Button(grpGroups, SWT.NONE);
+		final Button btnRemove = new IBEXButtonBuilder(grpGroups, SWT.NONE)
+				.customLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1))
+				.width(70)
+				.text("Remove")
+				.build();
+
 		btnRemove.setEnabled(false);
-		GridData gd_btnRemove = new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1);
-		gd_btnRemove.widthHint = 70;
-		btnRemove.setLayoutData(gd_btnRemove);
-		btnRemove.setText("Remove");
 		btnRemove.addListener(SWT.Selection, event -> groupEditorViewModel.removeGroup(groupList.getSelectionIndex()));
 
 		new Label(grpGroups, SWT.NONE);

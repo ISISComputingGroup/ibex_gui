@@ -39,6 +39,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.wb.swt.ResourceManager;
 
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
+
 /**
  * The double list editor control.
  * 
@@ -88,9 +90,11 @@ public class DoubleListEditor<T> extends Composite {
 		unselectedList = unselectedViewer.getList();
 		unselectedList.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
 		
-		select = new Button(this, SWT.NONE);
-		select.setEnabled(false);
-		select.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, false, true, 1, 1));
+		select = new IBEXButtonBuilder(this, SWT.NONE)
+				.customLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, false, true, 1, 1))
+				.build();
+		
+		select.setEnabled(false);;
 		select.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_right.png"));
 		
 		selectedViewer = new ListViewer(this, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
@@ -98,24 +102,29 @@ public class DoubleListEditor<T> extends Composite {
 		selectedList = selectedViewer.getList();
 		selectedList.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
 		
-		btnUp =  new Button(this, SWT.NONE);
+		btnUp = new IBEXButtonBuilder(this, SWT.NONE)
+				.build();
+		
 		btnUp.setEnabled(false);
 		GridData gd_btnUp = new GridData(SWT.LEFT, SWT.BOTTOM, false, true, 1, 1);
 		gd_btnUp.widthHint = 25;
 		gd_btnUp.exclude = !orderable;
-		btnUp.setLayoutData(gd_btnUp);
 		btnUp.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_up.png"));
 		btnUp.setEnabled(false);
 		if (!orderable) {
 			new Label(this, SWT.NONE);
 		}
 		
-		unselect = new Button(this, SWT.NONE);
+		unselect = new IBEXButtonBuilder(this, SWT.NONE)
+				.customLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1))
+				.build();
+		
 		unselect.setEnabled(false);
-		unselect.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1));
 		unselect.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_left.png"));
 		
-		btnDown =  new Button(this, SWT.NONE);
+		btnDown = new IBEXButtonBuilder(this, SWT.NONE)
+				.build();
+		
 		GridData gd_btnDown = new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1);
 		gd_btnDown.widthHint = 25;
 		gd_btnDown.exclude = !orderable;

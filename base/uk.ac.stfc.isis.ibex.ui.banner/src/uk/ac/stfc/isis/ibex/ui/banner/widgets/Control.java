@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.banner.models.CustomControlModel;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
 
 /**
  * Holds a button which can be pressed to send a value to a PV.
@@ -53,9 +54,9 @@ public class Control extends Composite {
 	public Control(Composite parent, int style, CustomControlModel model) {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
-		
-		controlButton = new Button(this, SWT.NONE);
-		controlButton.setText("Placeholder");
+			
+		controlButton = new IBEXButtonBuilder(this, SWT.NONE)
+				.text("Placeholder").build();
 		controlButton.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		
 		if (model != null) {

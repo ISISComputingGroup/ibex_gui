@@ -49,6 +49,7 @@ import com.google.common.collect.Iterables;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.managermode.ManagerModeModel;
 import uk.ac.stfc.isis.ibex.managermode.ManagerModePvNotConnectedException;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
 import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
 import uk.ac.stfc.isis.ibex.validators.SummaryDescriptionValidator;
 
@@ -256,10 +257,18 @@ public class SaveConfigDialog extends TitleAreaDialog {
         new Label(composite, SWT.NONE);
 
         if (isConfig) {
-            btnAsComponent = new Button(composite, SWT.CHECK);
-            btnAsComponent.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
-            btnAsComponent.setText("Save the configuration as a component");
+            btnAsComponent = new IBEXButtonBuilder(composite, SWT.CHECK)
+            		.customLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1))
+            		.listener(evt -> {
+                        updateConfigType();
+                        update();
+                        asComponentSelected = true;    
+                    })
+                    .text("Save the configuration as a component")
+            		.build();
+            
             btnAsComponent.setVisible(true);
+            
 
             new Label(composite, SWT.NONE);
             btnAsComponent.addSelectionListener(new SelectionAdapter() {

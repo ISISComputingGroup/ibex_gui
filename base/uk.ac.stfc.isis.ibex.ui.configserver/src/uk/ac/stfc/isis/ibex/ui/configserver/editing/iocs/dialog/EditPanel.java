@@ -44,6 +44,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.MacroPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvs.IocPVsEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.pvsets.IocPVSetsEditorPanel;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
@@ -119,27 +120,24 @@ public class EditPanel extends Composite {
         simLevel.setInput(SimLevel.values());
 
         new Label(cmpIocDetails, SWT.NONE);
-
-        autoStart = new Button(cmpIocDetails, SWT.CHECK);
-        autoStart.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-        autoStart.setText("Auto-Start");
-        autoStart.setToolTipText(
-        		"If set, the IOC will be started/restarted whenever the configuration is changed.\n"
+        
+        autoStart = new IBEXButtonBuilder(cmpIocDetails, SWT.CHECK).
+        		customLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false))
+        		.text("Auto-Start")
+        		.tooltip("If set, the IOC will be started/restarted whenever the configuration is changed.\n"
         		+ "If not set then if the IOC is not running it will remained stopped after config change,\n"
         		+ "and if it is running it will remain running throughout the config change.\n"
         		+ "\n"
         		+ "Warning: if not set and the IOC is running, any changes you make (e.g. a macro change)\n"
-        		+ "will not be set on the IOC until you restart it manually."
-        );
-
-        autoRestart = new Button(cmpIocDetails, SWT.CHECK);
-        autoRestart.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-        autoRestart.setText("Auto-Restart");
-        autoRestart.setToolTipText(
-        		"If set, the IOC will be automatically restarted if it is terminated unexpectedly.\n"
-        		+ "If the IOC is stopped from the client then it will not be restarted."
-        );
-
+        		+ "will not be set on the IOC until you restart it manually.")
+        		.build();
+        
+        autoRestart = new IBEXButtonBuilder(cmpIocDetails, SWT.CHECK).
+        		customLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false))
+        		.text("Auto-Restart")
+        		.tooltip("If set, the IOC will be automatically restarted if it is terminated unexpectedly.\n"
+                		+ "If the IOC is stopped from the client then it will not be restarted.")
+        		.build();
         
         if (ALLOW_REMOTE_PV_PREFIX_CHANGE) {
 	        remotePvPrefixLbl = new Label(cmpIocDetails, SWT.NONE);
