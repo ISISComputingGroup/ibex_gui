@@ -61,297 +61,292 @@ public class ConfigServerVariables extends Closer {
 	private final BlockServerAddresses blockServerAddresses;
 	private final Converters converters;
 	private ObservableFactory switchingObsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
-    private final WritableFactory switchingWriteFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
-    private ObservableFactory closingObsFactory = new ObservableFactory(OnInstrumentSwitch.CLOSE);
+	private final WritableFactory switchingWriteFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
+	private ObservableFactory closingObsFactory = new ObservableFactory(OnInstrumentSwitch.CLOSE);
 
-    /** Provides the status of the block server. */
+	/**
+	 * Provides the status of the block server. This status does not hold a
+	 * meaningful value (it is null) the connection state is used to determine if
+	 * block server is up.
+	 */
 	public final ForwardingObservable<ServerStatus> serverStatus;
-    /** Monitors the current configuration. */
+	/** Monitors the current configuration. */
 	public final ForwardingObservable<Configuration> currentConfig;
-    /** Provides an "empty" configuration. */
+	/** Provides an "empty" configuration. */
 	public final ForwardingObservable<Configuration> blankConfig;
-    /** Provides the configuration information for all the configurations. */
+	/** Provides the configuration information for all the configurations. */
 	public final ForwardingObservable<Collection<ConfigInfo>> configsInfo;
-    /** Provides the component information for all the components. */
+	/** Provides the component information for all the components. */
 	public final ForwardingObservable<Collection<ConfigInfo>> componentsInfo;
-    /** Rules from the block server for how the block should be named. */
+	/** Rules from the block server for how the block should be named. */
 	public final ForwardingObservable<BlockRules> blockRules;
-    /** Rules from the block server for how the group should be named. */
-    public final ForwardingObservable<BlockServerNameValidator> groupRules;
-    /** Rules from the description should be formed. */
-    public final ForwardingObservable<BlockServerNameValidator> configDescriptionRules;
-    /** Provides the components on the instrument. */
+	/** Rules from the block server for how the group should be named. */
+	public final ForwardingObservable<BlockServerNameValidator> groupRules;
+	/** Rules from the description should be formed. */
+	public final ForwardingObservable<BlockServerNameValidator> configDescriptionRules;
+	/** Provides the components on the instrument. */
 	public final ForwardingObservable<Collection<ComponentInfo>> components;
-    /** Provides the details for all components on the instrument. */
-    public final ForwardingObservable<Collection<Configuration>> componentDetails;
-    /** Provides the IOCs on the instrument. */
+	/** Provides the details for all components on the instrument. */
+	public final ForwardingObservable<Collection<Configuration>> componentDetails;
+	/** Provides the IOCs on the instrument. */
 	public final ForwardingObservable<Collection<EditableIoc>> iocs;
-    /** Provides all the PVs on the instrument. */
+	/** Provides all the PVs on the instrument. */
 	public final ForwardingObservable<Collection<PV>> pvs;
-    /** Provides all the high interest PVs on the instrument. */
+	/** Provides all the high interest PVs on the instrument. */
 	public final ForwardingObservable<Collection<PV>> highInterestPVs;
-    /** Provides all the medium interest PVs on the instrument. */
+	/** Provides all the medium interest PVs on the instrument. */
 	public final ForwardingObservable<Collection<PV>> mediumInterestPVs;
-    /** Provides all the interesting facility PVs on the instrument. */
-    public final ForwardingObservable<Collection<PV>> facilityInterestPVs;
-    /** Provides all the active PVs on the instrument. */
+	/** Provides all the interesting facility PVs on the instrument. */
+	public final ForwardingObservable<Collection<PV>> facilityInterestPVs;
+	/** Provides all the active PVs on the instrument. */
 	public final ForwardingObservable<Collection<PV>> activePVs;
-    /** Allows the current configuration to be saved. */
+	/** Allows the current configuration to be saved. */
 	public final Writable<Configuration> setCurrentConfiguration;
-    /** Allows a configuration to be loaded. */
+	/** Allows a configuration to be loaded. */
 	public final Writable<String> loadConfiguration;
-    /** Allows a configuration to be saved with a specific name. */
+	/** Allows a configuration to be saved with a specific name. */
 	public final Writable<Configuration> saveAsConfiguration;
-    /** Allows a component to be saved with a specific name. */
+	/** Allows a component to be saved with a specific name. */
 	public final Writable<Configuration> saveAsComponent;
-    /** Allows a configuration(s) to be deleted. */
+	/** Allows a configuration(s) to be deleted. */
 	public final Writable<Collection<String>> deleteConfigurations;
-    /** Allows a component(s) to be deleted. */
+	/** Allows a component(s) to be deleted. */
 	public final Writable<Collection<String>> deleteComponents;
-    /** Allows an IOC to be started. */
+	/** Allows an IOC to be started. */
 	public final Writable<Collection<String>> startIoc;
-    /** Allows an IOC to be stopped. */
+	/** Allows an IOC to be stopped. */
 	public final Writable<Collection<String>> stopIoc;
-    /** Allows an IOC to be restarted. */
+	/** Allows an IOC to be restarted. */
 	public final Writable<Collection<String>> restartIoc;
-    /** Provides the states of the IOC (running, stopped etc.). */
+	/** Provides the states of the IOC (running, stopped etc.). */
 	public final ForwardingObservable<Collection<IocState>> iocStates;
-    /** Provides a list of IOCs that cannot be stopped or restarted. */
+	/** Provides a list of IOCs that cannot be stopped or restarted. */
 	public final ForwardingObservable<Collection<String>> protectedIocs;
 	/** Provides the description for the spangle banner. */
-    public final ForwardingObservable<CustomBannerData> bannerDescription;
-    /** Provides the details for the Moxa port mappings. */
-    public final ForwardingObservable<HashMap<String, ArrayList<ArrayList<String>>>> moxaMappings;
+	public final ForwardingObservable<CustomBannerData> bannerDescription;
+	/** Provides the details for the Moxa port mappings. */
+	public final ForwardingObservable<HashMap<String, ArrayList<ArrayList<String>>>> moxaMappings;
 
-    /**
-     * Default Constructor.
-     *
-     * @param converters converters to use to convert values from block server
-     *            to class instances for variables
-     */
-    public ConfigServerVariables(Converters converters) {
-        this(new BlockServerAddresses(), converters);
-    }
+	/**
+	 * Default Constructor.
+	 *
+	 * @param converters converters to use to convert values from block server to
+	 *                   class instances for variables
+	 */
+	public ConfigServerVariables(Converters converters) {
+		this(new BlockServerAddresses(), converters);
+	}
 
-    /**
-     * Set the configuration server variables from the block server using the
-     * converters.
-     *
-     * @param addresses The BlockServerAddresses to use for PV lookup
-     * @param converters converters to use to convert values from block server
-     *            to class instances for variables
-     */
-    public ConfigServerVariables(BlockServerAddresses addresses, Converters converters) {
-        blockServerAddresses = addresses;
+	/**
+	 * Set the configuration server variables from the block server using the
+	 * converters.
+	 *
+	 * @param addresses  The BlockServerAddresses to use for PV lookup
+	 * @param converters converters to use to convert values from block server to
+	 *                   class instances for variables
+	 */
+	public ConfigServerVariables(BlockServerAddresses addresses, Converters converters) {
+		blockServerAddresses = addresses;
 		this.converters = converters;
 
-        serverStatus = InstrumentUtils.convert(readCompressed(blockServerAddresses.serverStatus()),
-                converters.toServerStatus());
-        currentConfig =
-                InstrumentUtils.convert("currentConfig", readCompressed(blockServerAddresses.currentConfig()), converters.toConfig());
-        blankConfig =
-                InstrumentUtils.convert(readCompressed(blockServerAddresses.blankConfig()), converters.toConfig());
-        componentDetails =
-                InstrumentUtils.convert(readCompressed(blockServerAddresses.componentDetails()),
-                        converters.toConfigList());
+		serverStatus = InstrumentUtils.convert(readCompressed(blockServerAddresses.serverStatus()),
+				converters.toServerStatus());
+		currentConfig = InstrumentUtils.convert("currentConfig", readCompressed(blockServerAddresses.currentConfig()),
+				converters.toConfig());
+		blankConfig = InstrumentUtils.convert(readCompressed(blockServerAddresses.blankConfig()),
+				converters.toConfig());
+		componentDetails = InstrumentUtils.convert(readCompressed(blockServerAddresses.componentDetails()),
+				converters.toConfigList());
 
-        configsInfo =
-                InstrumentUtils.convert(readCompressed(blockServerAddresses.configs()), converters.toConfigsInfo());
-        componentsInfo =
-                InstrumentUtils.convert(readCompressed(blockServerAddresses.components()), converters.toConfigsInfo());
+		configsInfo = InstrumentUtils.convert(readCompressed(blockServerAddresses.configs()),
+				converters.toConfigsInfo());
+		componentsInfo = InstrumentUtils.convert(readCompressed(blockServerAddresses.components()),
+				converters.toConfigsInfo());
 
-        blockRules =
-                InstrumentUtils.convert(readCompressed(blockServerAddresses.blockRules()), converters.toBlockRules());
-        groupRules = InstrumentUtils.convert(readCompressed(blockServerAddresses.groupRules()),
-                converters.toBlockServerTextValidor());
-        configDescriptionRules = InstrumentUtils.convert(readCompressed(blockServerAddresses.configDescritpionRules()),
-                converters.toBlockServerTextValidor());
+		blockRules = InstrumentUtils.convert(readCompressed(blockServerAddresses.blockRules()),
+				converters.toBlockRules());
+		groupRules = InstrumentUtils.convert(readCompressed(blockServerAddresses.groupRules()),
+				converters.toBlockServerTextValidor());
+		configDescriptionRules = InstrumentUtils.convert(readCompressed(blockServerAddresses.configDescritpionRules()),
+				converters.toBlockServerTextValidor());
 
-        components =
-                InstrumentUtils.convert(readCompressed(blockServerAddresses.components()), converters.toComponents());
-        iocs = InstrumentUtils.convert(readCompressed(blockServerAddresses.iocs()), converters.toIocs());
-        pvs = InstrumentUtils.convert(readCompressed(blockServerAddresses.pvs()), converters.toPVs());
-        highInterestPVs =
-                InstrumentUtils.convert(readCompressed(blockServerAddresses.highInterestPVs()), converters.toPVs());
-        mediumInterestPVs =
-                InstrumentUtils.convert(readCompressed(blockServerAddresses.mediumInterestPVs()), converters.toPVs());
-        facilityInterestPVs =
-                InstrumentUtils.convert(readCompressed(blockServerAddresses.facilityInterestPVs()), converters.toPVs());
-        activePVs = InstrumentUtils.convert(readCompressed(blockServerAddresses.activePVs()), converters.toPVs());
+		components = InstrumentUtils.convert(readCompressed(blockServerAddresses.components()),
+				converters.toComponents());
+		iocs = InstrumentUtils.convert(readCompressed(blockServerAddresses.iocs()), converters.toIocs());
+		pvs = InstrumentUtils.convert(readCompressed(blockServerAddresses.pvs()), converters.toPVs());
+		highInterestPVs = InstrumentUtils.convert(readCompressed(blockServerAddresses.highInterestPVs()),
+				converters.toPVs());
+		mediumInterestPVs = InstrumentUtils.convert(readCompressed(blockServerAddresses.mediumInterestPVs()),
+				converters.toPVs());
+		facilityInterestPVs = InstrumentUtils.convert(readCompressed(blockServerAddresses.facilityInterestPVs()),
+				converters.toPVs());
+		activePVs = InstrumentUtils.convert(readCompressed(blockServerAddresses.activePVs()), converters.toPVs());
 
-        setCurrentConfiguration = InstrumentUtils.convert(writeCompressed(blockServerAddresses.setCurrentConfig()),
-                converters.configToString());
-        loadConfiguration =
-                InstrumentUtils.convert(writeCompressed(blockServerAddresses.loadConfig()), converters.nameToString());
-        saveAsConfiguration = InstrumentUtils.convert(writeCompressed(blockServerAddresses.saveNewConfig()),
-                converters.configToString());
-        saveAsComponent = InstrumentUtils.convert(writeCompressed(blockServerAddresses.saveComponent()),
-                converters.configToString());
+		setCurrentConfiguration = InstrumentUtils.convert(writeCompressed(blockServerAddresses.setCurrentConfig()),
+				converters.configToString());
+		loadConfiguration = InstrumentUtils.convert(writeCompressed(blockServerAddresses.loadConfig()),
+				converters.nameToString());
+		saveAsConfiguration = InstrumentUtils.convert(writeCompressed(blockServerAddresses.saveNewConfig()),
+				converters.configToString());
+		saveAsComponent = InstrumentUtils.convert(writeCompressed(blockServerAddresses.saveComponent()),
+				converters.configToString());
 
-        deleteConfigurations = InstrumentUtils.convert(writeCompressed(blockServerAddresses.deleteConfigs()),
-                converters.namesToString());
-        deleteComponents = InstrumentUtils.convert(writeCompressed(blockServerAddresses.deleteComponents()),
-                converters.namesToString());
+		deleteConfigurations = InstrumentUtils.convert(writeCompressed(blockServerAddresses.deleteConfigs()),
+				converters.namesToString());
+		deleteComponents = InstrumentUtils.convert(writeCompressed(blockServerAddresses.deleteComponents()),
+				converters.namesToString());
 
-        startIoc =
-                InstrumentUtils.convert(writeCompressed(blockServerAddresses.startIocs()), converters.namesToString());
-        stopIoc = InstrumentUtils.convert(writeCompressed(blockServerAddresses.stopIocs()), converters.namesToString());
-        restartIoc = InstrumentUtils.convert(writeCompressed(blockServerAddresses.restartIocs()),
-                converters.namesToString());
+		startIoc = InstrumentUtils.convert(writeCompressed(blockServerAddresses.startIocs()),
+				converters.namesToString());
+		stopIoc = InstrumentUtils.convert(writeCompressed(blockServerAddresses.stopIocs()), converters.namesToString());
+		restartIoc = InstrumentUtils.convert(writeCompressed(blockServerAddresses.restartIocs()),
+				converters.namesToString());
 
 		iocStates = InstrumentUtils.convert(readCompressed(blockServerAddresses.iocs()), converters.toIocStates());
-        protectedIocs =
-                InstrumentUtils.convert(readCompressed(blockServerAddresses.iocsNotToStop()), converters.toNames());
-        bannerDescription = 
-                InstrumentUtils.convert(readCompressed(blockServerAddresses.bannerDescription()),
-                        converters.toBannerDescription());
-        moxaMappings = InstrumentUtils.convert(readCompressed(blockServerAddresses.moxaMappings()), converters.toMoxaMappings());
-        }
+		protectedIocs = InstrumentUtils.convert(readCompressed(blockServerAddresses.iocsNotToStop()),
+				converters.toNames());
+		bannerDescription = InstrumentUtils.convert(readCompressed(blockServerAddresses.bannerDescription()),
+				converters.toBannerDescription());
+		moxaMappings = InstrumentUtils.convert(readCompressed(blockServerAddresses.moxaMappings()),
+				converters.toMoxaMappings());
+	}
 
-    /**
-     * Provides a monitor on the specified configuration.
-     *
-     * @param configName the configuration name
-     * @return the corresponding observable
-     */
+	/**
+	 * Provides a monitor on the specified configuration.
+	 *
+	 * @param configName the configuration name
+	 * @return the corresponding observable
+	 */
 	public ForwardingObservable<Configuration> config(String configName) {
-        return InstrumentUtils.convert(readCompressedClosing(blockServerAddresses.config(getConfigPV(configName))),
-                converters.toConfig());
+		return InstrumentUtils.convert(readCompressedClosing(blockServerAddresses.config(getConfigPV(configName))),
+				converters.toConfig());
 	}
 
-    /**
-     * Provides a monitor on the specified component.
-     *
-     * @param componentName the component name
-     * @return the corresponding observable
-     */
+	/**
+	 * Provides a monitor on the specified component.
+	 *
+	 * @param componentName the component name
+	 * @return the corresponding observable
+	 */
 	public ForwardingObservable<Configuration> component(String componentName) {
-        return InstrumentUtils.convert(
-                readCompressedClosing(blockServerAddresses.component(getComponentPV(componentName))),
-                converters.toConfig());
+		return InstrumentUtils.convert(
+				readCompressedClosing(blockServerAddresses.component(getComponentPV(componentName))),
+				converters.toConfig());
 	}
 
-    /**
-     * Provides a monitor on the list of configurations dependent on the specified component.
-     *
-     * @param componentName
-     *            the component name
-     * @return the corresponding observable
-     */
-    public ForwardingObservable<Collection<String>> dependencies(String componentName) {
-        return InstrumentUtils.convert(readCompressed(blockServerAddresses.componentDependencies(componentName)),
-                converters.toNames());
-    }
+	/**
+	 * Provides a monitor on the list of configurations dependent on the specified
+	 * component.
+	 *
+	 * @param componentName the component name
+	 * @return the corresponding observable
+	 */
+	public ForwardingObservable<Collection<String>> dependencies(String componentName) {
+		return InstrumentUtils.convert(readCompressed(blockServerAddresses.componentDependencies(componentName)),
+				converters.toNames());
+	}
 
-    /**
-     * Provides a monitor on a specified block.
-     *
-     * @param blockName
-     *            the block name
-     * @return the corresponding observable
-     */
+	/**
+	 * Provides a monitor on a specified block.
+	 *
+	 * @param blockName the block name
+	 * @return the corresponding observable
+	 */
 	public ForwardingObservable<String> blockValue(String blockName) {
-	    var blockValue = closingObsFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(),
-                InstrumentUtils.addPrefix(blockServerAlias(blockName)));
-	    var blockUnits = closingObsFactory.getSwitchableObservable(new StringChannel(),
-                InstrumentUtils.addPrefix(blockServerAddresses.blockUnits(blockServerAlias(blockName))));
-        return new ForwardingObservable<String>(new ConcatenatingObservable(blockValue, blockUnits));
+		var blockValue = closingObsFactory.getSwitchableObservable(new DefaultChannelWithoutUnits(),
+				InstrumentUtils.addPrefix(blockServerAlias(blockName)));
+		var blockUnits = closingObsFactory.getSwitchableObservable(new StringChannel(),
+				InstrumentUtils.addPrefix(blockServerAddresses.blockUnits(blockServerAlias(blockName))));
+		return new ForwardingObservable<String>(new ConcatenatingObservable(blockValue, blockUnits));
 	}
 
-    /**
-     * Provides a monitor on a specified block's description.
-     *
-     * @param blockName the block name
-     * @return the corresponding observable
-     */
+	/**
+	 * Provides a monitor on a specified block's description.
+	 *
+	 * @param blockName the block name
+	 * @return the corresponding observable
+	 */
 	public ForwardingObservable<String> blockDescription(String blockName) {
-        return closingObsFactory.getSwitchableObservable(new StringChannel(),
-                InstrumentUtils.addPrefix(blockServerAddresses.blockDescription(blockServerAlias(blockName))));
+		return closingObsFactory.getSwitchableObservable(new StringChannel(),
+				InstrumentUtils.addPrefix(blockServerAddresses.blockDescription(blockServerAlias(blockName))));
 	}
 
-    /**
-     * Returns an observable conveying the alarm state of a given block.
-     *
-     * @param blockName the name of the block
-     * @return the observable object
-     */
-    public ForwardingObservable<AlarmState> alarm(String blockName) {
-        return closingObsFactory.getSwitchableObservable(new EnumChannel<>(AlarmState.class),
-                InstrumentUtils.addPrefix(blockServerAddresses.blockAlarm(blockServerAlias(blockName))));
-    }
+	/**
+	 * Returns an observable conveying the alarm state of a given block.
+	 *
+	 * @param blockName the name of the block
+	 * @return the observable object
+	 */
+	public ForwardingObservable<AlarmState> alarm(String blockName) {
+		return closingObsFactory.getSwitchableObservable(new EnumChannel<>(AlarmState.class),
+				InstrumentUtils.addPrefix(blockServerAddresses.blockAlarm(blockServerAlias(blockName))));
+	}
 
-    /**
-     * Gets the PV name for a block.
-     *
-     * @param name the block
-     * @return the PV name
-     */
+	/**
+	 * Gets the PV name for a block.
+	 *
+	 * @param name the block
+	 * @return the PV name
+	 */
 	public String blockServerAlias(String name) {
 		return blockServerAddresses.blockAlias(name);
 	}
 
-    /**
-     * Provides an observable that reads compressed data and uncompresses it.
-     *
-     * @param address the PV name
-     * @return the new observable
-     */
+	/**
+	 * Provides an observable that reads compressed data and uncompresses it.
+	 *
+	 * @param address the PV name
+	 * @return the new observable
+	 */
 	private ForwardingObservable<String> readCompressed(String address) {
-        if (address.contains("BLOCKSERVER:IOCS")) {
-            LoggerUtils.logIfExtraDebug(LOG, "(Ticket 2161) Reading from " + address);
-        }
-        return switchingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
-                InstrumentUtils.addPrefix(address));
+		if (address.contains("BLOCKSERVER:IOCS")) {
+			LoggerUtils.logIfExtraDebug(LOG, "(Ticket 2161) Reading from " + address);
+		}
+		return switchingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+				InstrumentUtils.addPrefix(address));
 	}
 
-    /**
-     * Provides a closing observable that reads compressed data and uncompresses
-     * it.
-     *
-     * @param address the PV name
-     * @return the new observable
-     */
+	/**
+	 * Provides a closing observable that reads compressed data and uncompresses it.
+	 *
+	 * @param address the PV name
+	 * @return the new observable
+	 */
 	private ForwardingObservable<String> readCompressedClosing(String address) {
-        return closingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
-                InstrumentUtils.addPrefix(address));
+		return closingObsFactory.getSwitchableObservable(new CompressedCharWaveformChannel(),
+				InstrumentUtils.addPrefix(address));
 	}
 
-    /**
-     * Provides a writable that compresses data passed to it.
-     *
-     * @param address the PV name
-     * @return the new writable
-     */
+	/**
+	 * Provides a writable that compresses data passed to it.
+	 *
+	 * @param address the PV name
+	 * @return the new writable
+	 */
 	private Writable<String> writeCompressed(String address) {
-        return switchingWriteFactory.getSwitchableWritable(new CompressedCharWaveformChannel(),
-                InstrumentUtils.addPrefix(address));
+		return switchingWriteFactory.getSwitchableWritable(new CompressedCharWaveformChannel(),
+				InstrumentUtils.addPrefix(address));
 	}
 
-    /**
-     * Constructs the name of the PV for the specified configuration.
-     *
-     * @param configName the name
-     * @return the PV name
-     */
+	/**
+	 * Constructs the name of the PV for the specified configuration.
+	 *
+	 * @param configName the name
+	 * @return the PV name
+	 */
 	private String getConfigPV(final String configName) {
-		return configsInfo.getValue().stream()
-				.filter(info -> info.name().equals(configName))
-				.findFirst()
-				.map(ConfigInfo::pv)
-				.orElse(configName.toUpperCase(Locale.ENGLISH));
+		return configsInfo.getValue().stream().filter(info -> info.name().equals(configName)).findFirst()
+				.map(ConfigInfo::pv).orElse(configName.toUpperCase(Locale.ENGLISH));
 	}
 
-    /**
-     * Constructs the name of the PV for the specified component.
-     *
-     * @param componentName the name
-     * @return the PV name
-     */
+	/**
+	 * Constructs the name of the PV for the specified component.
+	 *
+	 * @param componentName the name
+	 * @return the PV name
+	 */
 	private String getComponentPV(final String componentName) {
-		return componentsInfo.getValue().stream()
-				.filter(info -> info.name().equals(componentName))
-				.findFirst()
-				.map(ConfigInfo::pv)
-				.orElse(componentName.toUpperCase(Locale.ENGLISH));
+		return componentsInfo.getValue().stream().filter(info -> info.name().equals(componentName)).findFirst()
+				.map(ConfigInfo::pv).orElse(componentName.toUpperCase(Locale.ENGLISH));
 	}
 }
