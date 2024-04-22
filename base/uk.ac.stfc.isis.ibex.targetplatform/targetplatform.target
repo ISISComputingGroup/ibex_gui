@@ -53,7 +53,11 @@
 		<unit id="org.eclipse.rcp.source.feature.group" version="4.26.0.v20221123-2302"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="https://download.eclipse.org/releases/2023-03/"/>
+		<repository location="https://download.eclipse.org/nebula/releases/2.7.2/"/>
+		<unit id="org.eclipse.nebula.visualization.feature.feature.group" version="2.1.0.202208171809"/>
+	</location>
+	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+		<repository location="https://download.eclipse.org/releases/2024-03/"/>
 		<unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
 		<unit id="org.eclipse.gef.cloudio.sdk.feature.group" version="0.0.0"/>
 		<unit id="org.eclipse.gef.cloudio.user.feature.group" version="0.0.0"/>
