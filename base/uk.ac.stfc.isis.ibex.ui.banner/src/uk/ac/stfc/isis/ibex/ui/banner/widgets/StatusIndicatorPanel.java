@@ -8,15 +8,15 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusViewModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatus;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusColourConverter;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusTextConverter;
+import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusViewModel;
 import uk.ac.stfc.isis.ibex.ui.banner.views.StatusDetailsDialog;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
 
 /** 
  * A panel displaying the overall status of the IBEX server.
@@ -52,11 +52,9 @@ public class StatusIndicatorPanel extends Composite {
 		Label overallStatusLabel = new Label(overallStatusPanel, SWT.NONE);
 		overallStatusLabel.setText("");
 		overallStatusLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
-
-		Button showDetails = new Button(this, SWT.NONE);
-		showDetails.setText("Details");
-		showDetails.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true));
-		showDetails.addListener(SWT.Selection, e -> showDetailsDialog());
+		
+		new IBEXButtonBuilder(this, SWT.NONE).text("Details").customLayoutData(IBEXButtonBuilder.centerGrid).listener(e -> showDetailsDialog()).build();
+		
 	    this.pack();
 	    
 	    detailsDialog = new StatusDetailsDialog(getShell(), model);
