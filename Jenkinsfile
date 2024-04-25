@@ -2,9 +2,13 @@
 
 pipeline {
 
+   parameters {
+        string(name: 'LABEL', defaultValue: 'ndw1757', description: 'Node to run job on')
+   }
+
   // agent defines where the pipeline will run.
   agent {  
-    label "ndw1757"
+    label "${params.LABEL}"
   }
   
   triggers {
