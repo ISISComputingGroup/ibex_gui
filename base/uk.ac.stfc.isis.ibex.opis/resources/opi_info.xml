@@ -3621,6 +3621,11 @@
             <name>NAME</name>
             <description>The IOC PV prefix (e.g. PS300_01)</description>
             <default>PS300_01</default>
+	  </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>	  
       <key>LNDYISW</key>
       <value>
         <categories/>
