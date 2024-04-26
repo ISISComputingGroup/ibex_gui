@@ -42,7 +42,8 @@ import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.commands.ConfigureDeviceScreensHandler;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.list.DeviceScreensTable;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.ViewDeviceScreensDescriptionViewModel;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXHelpButton;
 
 /**
  * A UI Panel for the devices screens.
@@ -75,15 +76,16 @@ public class DeviceScreenListPanel extends Composite {
 		GridLayout compositeLayout = new GridLayout(1, true);
 		this.setLayout(compositeLayout);
 
-		new IBEXButtonBuilder(this, SWT.NONE).text("Edit Device Screens")
-				.listener(evt -> {
-					try {
-						configureDeviceScreensHandler.execute(new ExecutionEvent());
-					} catch (ExecutionException ex) {
-						LOG.catching(ex);
-						MessageDialog.openError(parent.getShell(), "Error displaying config dialogue", ex.getMessage());
-					}
-				}).customLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false)).build();
+		new IBEXButton(this, SWT.NONE, event -> {
+			try {
+				configureDeviceScreensHandler.execute(new ExecutionEvent());
+			} catch (ExecutionException ex) {
+				LOG.catching(ex);
+				MessageDialog.openError(parent.getShell(), "Error displaying config dialogue", ex.getMessage());
+			}
+		})
+		.text("Edit Device Screens")
+		.layoutData(new GridData(SWT.LEFT, SWT.FILL, false, false));
 
 		deviceScreenList = new DeviceScreensTable(this, SWT.NONE, SWT.FULL_SELECTION);
 		GridData devicesListLayout = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
@@ -107,7 +109,7 @@ public class DeviceScreenListPanel extends Composite {
 			}
 		});
 
-		new IBEXButtonBuilder(this, SWT.PUSH).helpButton(true).link(HELP_LINK).description(DESCRIPTION).build();
+		new IBEXHelpButton(this, HELP_LINK, DESCRIPTION);
 
 		viewModel.addPropertyChangeListener(new PropertyChangeListener() {
 			@Override

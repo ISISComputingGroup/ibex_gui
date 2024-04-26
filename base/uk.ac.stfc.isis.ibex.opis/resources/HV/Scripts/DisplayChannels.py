@@ -26,7 +26,7 @@ def add_channel_widgets(this_display, this_pvs, group_container_name):
 
     for crate, slot, channel in get_available_channels(this_pvs[2:2+get_max_crates(this_display)], this_display):
         channel_selector_widget.addChildToBottom(
-            create_channel_widget_model(get_channel_pv_name(crate, slot, channel), ""HVChannelSummaryMaintenance.opi"))
+            create_channel_widget_model(get_channel_pv_name(crate, slot, channel), "HVChannelSummaryMaintenance.opi"))
 
         # Check if the channel is in in the list, and check the box if it is
         if get_channel_pv_name(crate, slot, channel) in current_included_channels:

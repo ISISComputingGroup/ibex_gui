@@ -16,7 +16,7 @@ import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusColourConverter;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusTextConverter;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusViewModel;
 import uk.ac.stfc.isis.ibex.ui.banner.views.StatusDetailsDialog;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
 
 /** 
  * A panel displaying the overall status of the IBEX server.
@@ -53,7 +53,9 @@ public class StatusIndicatorPanel extends Composite {
 		overallStatusLabel.setText("");
 		overallStatusLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
 		
-		new IBEXButtonBuilder(this, SWT.NONE).text("Details").customLayoutData(IBEXButtonBuilder.centerGrid).listener(e -> showDetailsDialog()).build();
+		new IBEXButton(this, SWT.NONE, e -> showDetailsDialog())
+			.text("Details")
+			.layoutData(IBEXButton.centerGrid);
 		
 	    this.pack();
 	    

@@ -63,7 +63,7 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
 import uk.ac.stfc.isis.ibex.ui.tables.DataboundTable;
 import uk.ac.stfc.isis.ibex.ui.tables.NullComparator;
 import uk.ac.stfc.isis.ibex.validators.NumbersOnlyListener;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
 
 /**
  * Journal viewer main view.
@@ -148,17 +148,23 @@ public class JournalViewerView {
 		lblResultsData.width = 180;
 		lblResults.setLayoutData(lblResultsData);
 
-		btnFirstPage = new IBEXButtonBuilder(basicControls, SWT.NONE).text("<<").tooltip("Go to the first page.")
-				.listener(e -> {
-					setProgressIndicatorsVisible(true);
-					model.firstPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
-				}).customLayoutData(IBEXButtonBuilder.defaultRow).build();
+		btnFirstPage = new IBEXButton(basicControls, SWT.NONE, event -> {
+			setProgressIndicatorsVisible(true);
+			model.firstPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
+		})
+				.text("<<")
+				.tooltip("Go to the first page.")
+				.layoutData(IBEXButton.defaultRow)
+				.get();
 
-		btnPrevPage = new IBEXButtonBuilder(basicControls, SWT.NONE).text("< Prev")
-				.tooltip("Go to the previous page.").listener(e -> {
-					setProgressIndicatorsVisible(true);
-					model.prevPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
-				}).customLayoutData(IBEXButtonBuilder.defaultRow).build();
+		btnPrevPage = new IBEXButton(basicControls, SWT.NONE, event -> {
+			setProgressIndicatorsVisible(true);
+			model.prevPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
+		})
+				.text("< Prev")
+				.tooltip("Go to the previous page.")
+				.layoutData(IBEXButton.defaultRow)
+				.get();
 
 		textPageNumber = new Text(basicControls, SWT.BORDER);
 		RowData textPageNumberData = new RowData();
@@ -166,24 +172,32 @@ public class JournalViewerView {
 		textPageNumber.setLayoutData(textPageNumberData);
 		textPageNumber.setTextLimit(9);
 
-		btnNextPage = new IBEXButtonBuilder(basicControls, SWT.NONE).text("Next >")
-				.tooltip("Go to the next page.").listener(e -> {
-					setProgressIndicatorsVisible(true);
-					model.nextPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
-				}).customLayoutData(IBEXButtonBuilder.defaultRow).build();
+		btnNextPage = new IBEXButton(basicControls, SWT.NONE, event -> {
+			setProgressIndicatorsVisible(true);
+			model.nextPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
+		})
+				.text("Next >")
+				.tooltip("Go to the next page.")
+				.layoutData(IBEXButton.defaultRow)
+				.get();
 
-		btnLastPage = new IBEXButtonBuilder(basicControls, SWT.NONE).text(">>").tooltip("Go to the last page.")
-				.listener(e -> {
-					setProgressIndicatorsVisible(true);
-					model.lastPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
-				}).customLayoutData(IBEXButtonBuilder.defaultRow).build();
+		btnLastPage = new IBEXButton(basicControls, SWT.NONE, event -> {
+			setProgressIndicatorsVisible(true);
+			model.lastPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
+		})
+				.text(">>")
+				.tooltip("Go to the last page.")
+				.layoutData(IBEXButton.defaultRow)
+				.get();
 
-		new IBEXButtonBuilder(basicControls, SWT.NONE).text("Refresh")
-				.tooltip("Refresh the journal.").listener(e -> {
-					resetPageNumber();
-					setProgressIndicatorsVisible(true);
-					model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
-				}).customLayoutData(IBEXButtonBuilder.defaultRow).build();
+		new IBEXButton(basicControls, SWT.NONE, event -> {
+			resetPageNumber();
+			setProgressIndicatorsVisible(true);
+			model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
+		})
+		.text("Refresh")
+		.tooltip("Refresh the journal.")
+		.layoutData(IBEXButton.defaultRow);
 
 		searchControls = new Composite(controls, SWT.NONE);
 		RowLayout rlSearchControls = new RowLayout(SWT.HORIZONTAL);
@@ -194,17 +208,22 @@ public class JournalViewerView {
 		RowLayout rlFilterControl = new RowLayout(SWT.HORIZONTAL);
 		searchInput.setLayout(rlFilterControl);
 
-		btnSearch = new IBEXButtonBuilder(searchControls, SWT.NONE).text("Search").tooltip("Search the journal.")
-				.listener(e -> search()).customLayoutData(new RowData(80, SWT.DEFAULT)).build();
+		btnSearch = new IBEXButton(searchControls, SWT.NONE, event -> search())
+				.text("Search")
+				.tooltip("Search the journal.")
+				.layoutData(new RowData(80, SWT.DEFAULT))
+				.get();
 
-		new IBEXButtonBuilder(searchControls, SWT.NONE).text("Clear").tooltip("Clear the search.")
-				.listener(e -> {
-					resetPageNumber();
-					searchInput.clearInput();
-					model.resetActiveSearch();
-					setProgressIndicatorsVisible(true);
-					model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
-				}).customLayoutData(IBEXButtonBuilder.defaultRow).build();
+		new IBEXButton(searchControls, SWT.NONE, event -> {
+			resetPageNumber();
+			searchInput.clearInput();
+			model.resetActiveSearch();
+			setProgressIndicatorsVisible(true);
+			model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
+		})
+		.text("Clear")
+		.tooltip("Clear the search.")
+		.layoutData(IBEXButton.defaultRow);
 
 		progressBar = new ProgressBar(searchControls, SWT.INDETERMINATE);
 		progressBar.setMaximum(80);
@@ -215,10 +234,12 @@ public class JournalViewerView {
 		error.setLayoutData(new RowData(200, SWT.DEFAULT));
 
 		for (final JournalField property : JournalField.values()) {
-			final Button checkbox = new IBEXButtonBuilder(selectedContainer, SWT.CHECK)
-					.customLayoutData(IBEXButtonBuilder.defaultRow).text(property.getFriendlyName()).build();
+			final Button checkbox = new IBEXButton(selectedContainer, SWT.CHECK)
+					.text(property.getFriendlyName())
+					.selected(model.getFieldSelected(property))
+					.layoutData(IBEXButton.defaultRow)
+					.get();
 
-			checkbox.setSelection(model.getFieldSelected(property));
 			checkbox.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {

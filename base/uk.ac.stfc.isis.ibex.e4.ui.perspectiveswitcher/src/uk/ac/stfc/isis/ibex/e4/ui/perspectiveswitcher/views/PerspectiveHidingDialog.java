@@ -24,7 +24,7 @@ import org.eclipse.swt.layout.GridLayout;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectiveInfo;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.PerspectivesVisibleModel;
 import uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher.controls.PerspectivesTable;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
@@ -77,7 +77,9 @@ public class PerspectiveHidingDialog extends TitleAreaDialog {
         
         table.setRows(model.getPerspectiveInfo());
         
-        Button btnCheckButton = new IBEXButtonBuilder(container, SWT.CHECK).text("Use Local Settings").build();
+        Button btnCheckButton = new IBEXButton(container, SWT.CHECK)
+        		.text("Use Local Settings")
+        		.get();
         
         DataBindingContext bindingContext = new DataBindingContext();
         bindingContext.bindValue(WidgetProperties.buttonSelection().observe(btnCheckButton),

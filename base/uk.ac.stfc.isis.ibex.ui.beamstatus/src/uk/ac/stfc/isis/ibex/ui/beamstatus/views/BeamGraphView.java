@@ -45,13 +45,12 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.beamstatus.BeamStatus;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
 
 /**
  * Provides access to the data browser to show data from TS1/TS2 beam currents
@@ -202,11 +201,13 @@ public class BeamGraphView extends ModelListenerAdapter {
 	}
 
 	private void createButton(final Composite parent, final String name, final long timeDuration) {
-		
-		Button button = new IBEXButtonBuilder(parent, SWT.RADIO).customLayoutData(new RowData()).text(name).tooltip("Tooltip text").listener(evt -> {
+
+		new IBEXButton(parent, SWT.RADIO, evt -> {
 			setTimeRange(timeDuration);
-		}).build();
-		button.setSelection(timeDuration == currentPlotTimespanMilliseconds);
+		})
+		.layoutData(new RowData())
+		.text(name)
+		.selected(timeDuration == currentPlotTimespanMilliseconds);
 	}
 
 	/*
