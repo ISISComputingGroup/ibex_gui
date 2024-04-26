@@ -146,7 +146,7 @@ public class Group extends Composite {
 			}
 		};
 
-		title = new IBEXButton(titleContainer, SWT.NONE, onClickListener)
+		title = new IBEXButton(titleContainer, SWT.TOGGLE, onClickListener)
 				.text("   " + group.name())
 				.image(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.blocks", "icons/minus.png"))
 				.get();
