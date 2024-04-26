@@ -57,7 +57,7 @@ import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorSettingsSingleton;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ActionParameter;
 import uk.ac.stfc.isis.ibex.scriptgenerator.pythoninterface.ScriptDefinitionWrapper;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
 
 /**
  * Provides the UI to control the script generator.
@@ -345,30 +345,33 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 	private void makeToggleParameterTransfer(Composite parent) {
 		Composite actionsControlsGrp = makeGrid(parent, 1, true, 10);
 
-		Button checkbox = new IBEXButtonBuilder(actionsControlsGrp, SWT.CHECK)
-				.text(Constants.CHECKBOX_TITLE_PARAM_TRANSFER).listener(evt -> {
-					boolean enabled = ((Button) evt.widget).getSelection();
-					scriptGeneratorViewModel.setParameterTransferEnabled(enabled);
-				}).customLayoutData(IBEXButtonBuilder.defaultGrid).build();
-		checkbox.setSelection(Constants.PARAM_TRANSFER_DEFAULT);
+		new IBEXButton(actionsControlsGrp, SWT.CHECK, event -> {
+			boolean enabled = ((Button) event.widget).getSelection();
+			scriptGeneratorViewModel.setParameterTransferEnabled(enabled);
+		})
+				.text(Constants.CHECKBOX_TITLE_PARAM_TRANSFER)
+				.layoutData(IBEXButton.defaultGrid)
+				.selected(Constants.PARAM_TRANSFER_DEFAULT);
 	}
 	
 	private void makeToggleInvalidPauseSkip(Composite parent) {
 		Composite actionsControlsGrp = makeGrid(parent, 1, true, 10);
 
-		Button radioPause = new IBEXButtonBuilder(actionsControlsGrp, SWT.RADIO)
-				.text(Constants.CHECKBOX_TITLE_INVALID_PAUSE).tooltip(Constants.TOOLTIP_INVALID_PAUSE)
-				.listener(evt -> {
-					ScriptGeneratorSettingsSingleton.getInstance().setSkipEnabled(false); //sets skipEnabled to false, causing Pause on invalid actions during run of script
-				}).build();
-		radioPause.setSelection(!Constants.INVALID_SKIP_DEFAULT);
+		// Pause
+		new IBEXButton(actionsControlsGrp, SWT.RADIO, event -> {
+			ScriptGeneratorSettingsSingleton.getInstance().setSkipEnabled(false); //sets skipEnabled to false, causing Pause on invalid actions during run of script
+		})
+				.text(Constants.CHECKBOX_TITLE_INVALID_PAUSE)
+				.tooltip(Constants.TOOLTIP_INVALID_PAUSE)
+				.selected(!Constants.INVALID_SKIP_DEFAULT);
 
-		Button radioSkip = new IBEXButtonBuilder(actionsControlsGrp, SWT.RADIO)
-				.text(Constants.CHECKBOX_TITLE_INVALID_SKIP).tooltip(Constants.TOOLTIP_INVALID_SKIP)
-				.listener(evt -> {
-					ScriptGeneratorSettingsSingleton.getInstance().setSkipEnabled(true); //sets skipEnabled to true, skipping over invalid actions during run of script
-				}).build();
-		radioSkip.setSelection(Constants.INVALID_SKIP_DEFAULT);
+		// Skip
+		new IBEXButton(actionsControlsGrp, SWT.RADIO, event -> {
+			ScriptGeneratorSettingsSingleton.getInstance().setSkipEnabled(true); //sets skipEnabled to true, skipping over invalid actions during run of script
+		})
+				.text(Constants.CHECKBOX_TITLE_INVALID_SKIP)
+				.tooltip(Constants.TOOLTIP_INVALID_SKIP)
+				.selected(Constants.INVALID_SKIP_DEFAULT);
 	}
 
 	/**
@@ -381,18 +384,26 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 		Composite actionsControlsGrp = makeGrid(parent, 1, true, 10);
 
 		// Make buttons for insert new/delete/duplicate actions
-		btnAddAction = new IBEXButtonBuilder(actionsControlsGrp, SWT.NONE)
-				.tooltip(Constants.BUTTON_TOOLTIP_ADD_ROW_TO_END).text(Constants.BUTTON_TITLE_ADD_ROW_TO_END)
-				.customLayoutData(IBEXButtonBuilder.expandingGrid)
-				.listener(e -> scriptGeneratorViewModel.addEmptyAction()).build();
-		btnInsertAction = new IBEXButtonBuilder(actionsControlsGrp, SWT.NONE)
-				.tooltip(Constants.BUTTON_TOOLTIP_INSERT_ROW_BELOW).text(Constants.BUTTON_TITLE_INSERT_ROW_BELOW)
-				.customLayoutData(IBEXButtonBuilder.expandingGrid)
-				.listener(e -> scriptGeneratorViewModel.insertEmptyAction(table.getSelectionIndex() + 1)).build();
-		new IBEXButtonBuilder(actionsControlsGrp, SWT.NONE)
-				.tooltip(Constants.BUTTON_TOOLTIP_DELETE_ROWS).text(Constants.BUTTON_TITLE_DELETE_ROWS)
-				.customLayoutData(IBEXButtonBuilder.expandingGrid)
-				.listener(e -> scriptGeneratorViewModel.clearAction()).build();
+		btnAddAction = new IBEXButton(actionsControlsGrp, SWT.NONE, event -> {
+			scriptGeneratorViewModel.addEmptyAction();
+		})
+				.text(Constants.BUTTON_TITLE_ADD_ROW_TO_END)
+				.tooltip(Constants.BUTTON_TOOLTIP_ADD_ROW_TO_END)
+				.layoutData(IBEXButton.expandingGrid)
+				.get();
+		btnInsertAction = new IBEXButton(actionsControlsGrp, SWT.NONE, event -> {
+			scriptGeneratorViewModel.insertEmptyAction(table.getSelectionIndex() + 1);
+		})
+				.text(Constants.BUTTON_TITLE_INSERT_ROW_BELOW)
+				.tooltip(Constants.BUTTON_TOOLTIP_INSERT_ROW_BELOW)
+				.layoutData(IBEXButton.expandingGrid)
+				.get();
+		new IBEXButton(actionsControlsGrp, SWT.NONE, event -> {
+			scriptGeneratorViewModel.clearAction();
+		})
+		.text(Constants.BUTTON_TITLE_DELETE_ROWS)
+		.tooltip(Constants.BUTTON_TOOLTIP_DELETE_ROWS)
+		.layoutData(IBEXButton.expandingGrid);
 	}
 
 	/**
@@ -405,18 +416,26 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 		Composite generateButtonsGrp = makeGrid(parent, 1, true, 10);
 
 		// Buttons to generate a script
-		generateScriptButton = new IBEXButtonBuilder(generateButtonsGrp, SWT.NONE)
-				.tooltip(Constants.BUTTON_TITLE_SAVE).customLayoutData(IBEXButtonBuilder.expandingGrid)
+		generateScriptButton = new IBEXButton(generateButtonsGrp, SWT.NONE, event -> {
+			scriptGeneratorViewModel.generateScriptToCurrentFilepath();
+		})
 				.text(Constants.BUTTON_TITLE_SAVE)
-				.listener(e -> scriptGeneratorViewModel.generateScriptToCurrentFilepath()).build();
-		generateScriptAsButton = new IBEXButtonBuilder(generateButtonsGrp, SWT.NONE)
-				.tooltip(Constants.BUTTON_TITLE_SAVE_AS).customLayoutData(IBEXButtonBuilder.expandingGrid)
-				.text(Constants.BUTTON_TITLE_SAVE_AS).listener(e -> scriptGeneratorViewModel.generateScript())
-				.build();
-		new IBEXButtonBuilder(generateButtonsGrp, SWT.NONE).tooltip(Constants.BUTTON_TITLE_LOAD)
-				.customLayoutData(IBEXButtonBuilder.expandingGrid).text(Constants.BUTTON_TITLE_LOAD)
-				.listener(e -> scriptGeneratorViewModel.loadParameterValues()).build();
-
+				.tooltip(Constants.BUTTON_TITLE_SAVE)
+				.layoutData(IBEXButton.expandingGrid)
+				.get();
+		generateScriptAsButton = new IBEXButton(generateButtonsGrp, SWT.NONE, event -> {
+			scriptGeneratorViewModel.generateScript();
+		})
+				.text(Constants.BUTTON_TITLE_SAVE_AS)
+				.tooltip(Constants.BUTTON_TITLE_SAVE_AS)
+				.layoutData(IBEXButton.expandingGrid)
+				.get();
+		new IBEXButton(generateButtonsGrp, SWT.NONE, event -> {
+			scriptGeneratorViewModel.loadParameterValues();
+		})
+		.text(Constants.BUTTON_TITLE_LOAD)
+		.tooltip(Constants.BUTTON_TITLE_LOAD)
+		.layoutData(IBEXButton.expandingGrid);
 	}
 
 	/**
@@ -434,12 +453,21 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 		Composite dynamicScriptingButtonsGrp = makeGrid(parent, 3, true, 10);
 
 		// Button to run/pause/stop script in nicos
-		runButton = new IBEXButtonBuilder(dynamicScriptingButtonsGrp, SWT.NONE).tooltip("Run")
-				.customLayoutData(IBEXButtonBuilder.expandingGrid).image(Constants.IMAGE_RUN).build();
-		pauseButton = new IBEXButtonBuilder(dynamicScriptingButtonsGrp, SWT.NONE).tooltip("Pause")
-				.customLayoutData(IBEXButtonBuilder.expandingGrid).image(Constants.IMAGE_PAUSE).build();
-		stopButton = new IBEXButtonBuilder(dynamicScriptingButtonsGrp, SWT.NONE).tooltip("Stop")
-				.customLayoutData(IBEXButtonBuilder.expandingGrid).image(Constants.IMAGE_STOP).build();
+		runButton = new IBEXButton(dynamicScriptingButtonsGrp, SWT.NONE)
+				.image(Constants.IMAGE_RUN)
+				.tooltip("Run")
+				.layoutData(IBEXButton.expandingGrid)
+				.get();
+		pauseButton = new IBEXButton(dynamicScriptingButtonsGrp, SWT.NONE)
+				.image(Constants.IMAGE_PAUSE)
+				.tooltip("Pause")
+				.layoutData(IBEXButton.expandingGrid)
+				.get();
+		stopButton = new IBEXButton(dynamicScriptingButtonsGrp, SWT.NONE)
+				.image(Constants.IMAGE_STOP)
+				.tooltip("Stop")
+				.layoutData(IBEXButton.expandingGrid)
+				.get();
 		nicosViewModel.bindControls(runButton, pauseButton, stopButton);
 	}
 
@@ -491,12 +519,20 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 		moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
 
 		// Make buttons to move an action up and down the list
-		btnMoveActionUp = new IBEXButtonBuilder(moveComposite, SWT.NONE).tooltip("Move selected row up")
-				.customLayoutData(IBEXButtonBuilder.compactGrid).image(Constants.IMAGE_UP_ARROW)
-				.listener(e -> scriptGeneratorViewModel.moveActionUp(table.selectedRows())).build();
-		btnMoveActionDown = new IBEXButtonBuilder(moveComposite, SWT.NONE).tooltip("Move selected row down")
-				.customLayoutData(IBEXButtonBuilder.compactGrid).image(Constants.IMAGE_DOWN_ARROW)
-				.listener(e -> scriptGeneratorViewModel.moveActionDown(table.selectedRows())).build();
+		btnMoveActionUp = new IBEXButton(moveComposite, SWT.NONE, event -> {
+			scriptGeneratorViewModel.moveActionUp(table.selectedRows());
+		})
+				.image(Constants.IMAGE_UP_ARROW)
+				.tooltip("Move selected row up")
+				.layoutData(IBEXButton.compactGrid)
+				.get();
+		btnMoveActionDown = new IBEXButton(moveComposite, SWT.NONE, event -> {
+			scriptGeneratorViewModel.moveActionDown(table.selectedRows());
+		})
+				.image(Constants.IMAGE_DOWN_ARROW)
+				.tooltip("Move selected row down")
+				.layoutData(IBEXButton.compactGrid)
+				.get();
 	}
 
 	/**

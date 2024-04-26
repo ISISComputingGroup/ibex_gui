@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXHelpButton;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
@@ -142,7 +142,8 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
 
 		content.layout();
 
-		new IBEXButtonBuilder(parent, SWT.PUSH).helpButton(true).link(HELP_LINK).description(DESCRIPTION).build();
+		new IBEXHelpButton(parent, HELP_LINK, DESCRIPTION);
+
 		return editIocPanel;
 	}
 

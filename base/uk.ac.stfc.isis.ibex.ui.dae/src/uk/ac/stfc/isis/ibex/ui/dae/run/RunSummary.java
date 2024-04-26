@@ -39,7 +39,7 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.ExperimentSetupViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.widgets.LogMessageBox;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
 
 /**
@@ -172,10 +172,14 @@ public class RunSummary {
 
 		new Label(infoComposite, SWT.NONE);
 		new Label(infoComposite, SWT.NONE);
-		
-		btnDisplayTitle = new IBEXButtonBuilder(infoComposite, SWT.CHECK).tooltip("Show Title and Users in Dataweb Dashboard Page").text("Show Title and Users in Dataweb Dashboard Page").listener(evt -> {
+
+		btnDisplayTitle = new IBEXButton(infoComposite, SWT.CHECK, event -> {
 			model.displayTitle().uncheckedSetValue(btnDisplayTitle.getSelection());
-		}).customLayoutData(new GridData()).build();
+		})
+				.text("Show Title and Users in Dataweb Dashboard Page")
+				.tooltip("Show Title and Users in Dataweb Dashboard Page")
+				.layoutData(new GridData())
+				.get();
 
 		messageBox = new LogMessageBox(lhsComposite, SWT.NONE);
 		messageBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
