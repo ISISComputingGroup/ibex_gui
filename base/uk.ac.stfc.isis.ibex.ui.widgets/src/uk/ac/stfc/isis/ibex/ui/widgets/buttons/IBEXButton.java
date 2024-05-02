@@ -1,3 +1,21 @@
+/*
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2024
+ * Science & Technology Facilities Council. All rights reserved.
+ *
+ * This program is distributed in the hope that it will be useful. This program
+ * and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution. EXCEPT AS
+ * EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM AND
+ * ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES
+ * OR CONDITIONS OF ANY KIND. See the Eclipse Public License v1.0 for more
+ * details.
+ *
+ * You should have received a copy of the Eclipse Public License v1.0 along with
+ * this program; if not, you can obtain a copy from
+ * https://www.eclipse.org/org/documents/epl-v10.php or
+ * http://opensource.org/licenses/eclipse-1.0.php
+ */
+
 package uk.ac.stfc.isis.ibex.ui.widgets.buttons;
 
 import java.net.MalformedURLException;
@@ -142,7 +160,7 @@ public class IBEXButton {
 	 * @param action
 	 * @return IBEXButton
 	 */
-	public IBEXButton action(Action action) {
+	private IBEXButton action(Action action) {
 		DataBindingContext bindingContext = new DataBindingContext();
 		bindingContext.bindValue(WidgetProperties.enabled().observe(this.button),
 				BeanProperties.value("canExecute").observe(action));
@@ -161,7 +179,7 @@ public class IBEXButton {
 	 * @param listener
 	 * @return IBEXButton
 	 */
-	public IBEXButton listener(int eventType, Listener listener) {
+	private IBEXButton listener(int eventType, Listener listener) {
 		this.button.addListener(eventType, listener);
 		return this;
 	}
