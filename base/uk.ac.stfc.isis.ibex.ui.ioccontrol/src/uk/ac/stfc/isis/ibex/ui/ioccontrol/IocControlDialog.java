@@ -39,7 +39,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.IocControl;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXHelpButton;
 
 /**
  * Class to display a dialog to start/stop IOCs.
@@ -78,7 +78,9 @@ public class IocControlDialog extends TitleAreaDialog {
 		IocControlViewModel iocControlViewModel = new IocControlViewModel(control);
 		IocControlView iocControlView = new IocControlView(parent, SWT.NONE, iocControlViewModel);
 		iocControlView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		new IBEXButtonBuilder(parent, SWT.PUSH).helpButton(true).link(HELP_LINK).description(SUB_TITLE).build();
+		
+		new IBEXHelpButton(parent, HELP_LINK, SUB_TITLE);
+
 		return iocControlView;
 	}
 	

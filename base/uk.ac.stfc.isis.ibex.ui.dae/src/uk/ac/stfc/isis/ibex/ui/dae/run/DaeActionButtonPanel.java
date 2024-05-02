@@ -29,7 +29,8 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.dae.actions.DaeActions;
 import uk.ac.stfc.isis.ibex.model.Action;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXHelpButton;
 
 /**
  * Pane which contains the action buttons in the DAE perspective in the "Run
@@ -76,14 +77,15 @@ public class DaeActionButtonPanel extends Composite {
 		Label bottomSpacer = new Label(this, SWT.NONE);
 		bottomSpacer.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1));
 
-		new IBEXButtonBuilder(parent, SWT.PUSH).helpButton(true).link(HELP_LINK)
-				.description(DESCRIPTION).build();
+		new IBEXHelpButton(parent, HELP_LINK, DESCRIPTION);
 	}
 
 	private void addActionButton(String text, String imageFileName, final Action action) {
 		Image image = ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/" + imageFileName);
 
-		new IBEXButtonBuilder(this, SWT.CENTER).action(action).text(text).image(image)
-				.customLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1)).build();
+		new IBEXButton(this, SWT.CENTER, action)
+		.text(text)
+		.image(image)
+		.layoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 	}
 }

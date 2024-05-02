@@ -39,7 +39,8 @@ import org.eclipse.ui.PlatformUI;
 import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup.RBLookupDialog;
 import uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup.RBLookupViewModel;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXHelpButton;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
 
 /**
@@ -119,13 +120,16 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 		rbNumberTextBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		rbNumberTextBox.setToolTip(RB_NUM_INPUT_TIP_MESSAGE);
 
-		btnRBLookup = new IBEXButtonBuilder(parent, SWT.NONE).text("Search").listener(evt -> {
+		btnRBLookup = new IBEXButton(parent, SWT.NONE, event -> {
 			RBLookupViewModel lookupViewModel = new RBLookupViewModel();
 			RBLookupDialog lookupDialog = new RBLookupDialog(shell, lookupViewModel);
 			if (lookupDialog.open() == Window.OK) {
 				viewModel.rbNumber.uncheckedSetText(lookupViewModel.getSelectedUser().getAssociatedExperimentID());
 			}
-		}).customLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false)).build();
+		})
+				.text("Search")
+				.layoutData(new GridData(SWT.LEFT, SWT.FILL, false, false))
+				.get();
 
 		lblExperimentTeam = new Label(parent, SWT.NONE);
 		lblExperimentTeam.setText("Experiment Team:");
@@ -147,34 +151,44 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 		experimentTeamButtons = new Composite(parent, SWT.NONE);
 		experimentTeamButtons.setLayout(new GridLayout(1, false));
 
-		btnAddUserDetails = new IBEXButtonBuilder(experimentTeamButtons, SWT.NONE).text("Add").listener(evt -> {
+		btnAddUserDetails = new IBEXButton(experimentTeamButtons, SWT.NONE, event -> {
 			viewModel.model.addDefaultUser();
 			viewModel.model.sendUserDetails();
-		}).customLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false)).build();
+		})
+				.text("Add")
+				.layoutData(new GridData(SWT.LEFT, SWT.FILL, false, false))
+				.get();
 
-		new IBEXButtonBuilder(experimentTeamButtons, SWT.NONE).text("Remove")
-				.listener(evt -> {
-					viewModel.model.removeUsers(userDetails.selectedRows());
-					viewModel.model.sendUserDetails();
-				}).customLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false)).build();
-
-		btnClearUserDetails = new IBEXButtonBuilder(experimentTeamButtons, SWT.NONE).text("Clear")
-				.listener(evt -> {
-					viewModel.model.clearUserDetails();
-					viewModel.model.sendUserDetails();
-				}).customLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false)).build();
-
-		btnSetRBNumber = new IBEXButtonBuilder(experimentTeamButtons, SWT.NONE).text("Set").listener(evt -> {
+		new IBEXButton(experimentTeamButtons, SWT.NONE, event -> {
+			viewModel.model.removeUsers(userDetails.selectedRows());
 			viewModel.model.sendUserDetails();
-		}).customLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false)).build();
+		})
+		.text("Remove")
+		.layoutData(new GridData(SWT.LEFT, SWT.FILL, false, false));
 
-		btnDisplayTitle = new IBEXButtonBuilder(experimentTeamButtons, SWT.CHECK)
-				.text("Show Title and Users in Dataweb Dashboard Page").listener(event -> {
-					viewModel.displayTitle.uncheckedSetValue(btnDisplayTitle.getSelection());
-				}).customLayoutData(new GridData()).build();
+		btnClearUserDetails = new IBEXButton(experimentTeamButtons, SWT.NONE, event -> {
+			viewModel.model.clearUserDetails();
+			viewModel.model.sendUserDetails();
+		})
+				.text("Clear")
+				.layoutData(new GridData(SWT.LEFT, SWT.FILL, false, false))
+				.get();
 
-		new IBEXButtonBuilder(parent, SWT.PUSH).helpButton(true).link(HELP_LINK)
-				.description(DESCRIPTION).build();
+		btnSetRBNumber = new IBEXButton(experimentTeamButtons, SWT.NONE, event -> {
+			viewModel.model.sendUserDetails();
+		})
+				.text("Set")
+				.layoutData(new GridData(SWT.LEFT, SWT.FILL, false, false))
+				.get();
+
+		btnDisplayTitle = new IBEXButton(experimentTeamButtons, SWT.CHECK, event -> {
+			viewModel.displayTitle.uncheckedSetValue(btnDisplayTitle.getSelection());
+		})
+				.text("Show Title and Users in Dataweb Dashboard Page")
+				.layoutData(new GridData())
+				.get();
+
+		new IBEXHelpButton(parent, HELP_LINK, DESCRIPTION);
 	}
 
 	private void bind() {
