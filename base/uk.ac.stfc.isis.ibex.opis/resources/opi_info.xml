@@ -1232,7 +1232,7 @@
             <description>The TC IOC number eg. TC_01</description>
             <default>TC_01</default>
           </macro>
-		    </macros>
+        </macros>
         <categories>
           <category>Miscellaneous motion control</category>
         </categories>
@@ -3621,11 +3621,11 @@
             <name>NAME</name>
             <description>The IOC PV prefix (e.g. PS300_01)</description>
             <default>PS300_01</default>
-	  </macro>
+          </macro>
         </macros>
       </value>
     </entry>
-    <entry>	  
+    <entry>
       <key>LNDYISW</key>
       <value>
         <categories/>
@@ -3636,6 +3636,21 @@
           <macro>
             <name>LNDYISW</name>
             <description>The LNDYISW PV prefix (e.g. LNDYISW_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>TEST1</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>test1.opi</path>
+        <description>The OPI for the test1</description>
+        <macros>
+          <macro>
+            <name>TEST1</name>
+            <description>The test1 PV prefix (e.g. TEST1_01)</description>
           </macro>
         </macros>
       </value>
