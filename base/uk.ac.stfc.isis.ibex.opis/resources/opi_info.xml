@@ -2341,6 +2341,24 @@
       </value>
     </entry>
     <entry>
+      <key>Tektronix DMM 4040/4050</key>
+      <value>
+        <categories>
+          <category>Multimeters</category>
+        </categories>
+        <type>KSE4980</type>
+        <path>tekdmm40X0.opi</path>
+        <description>The OPI for the Tektronix DMM4040/4050 Multimeters.</description>
+        <macros>
+          <macro>
+            <name>TEKDMM40X0</name>
+            <description>The DMM40X0 PV prefix (e.g. TEKDMM40X0_01).</description>
+            <default>TEKDMM40X0_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
       <key>DH-2000 Light source shutter</key>
       <value>
         <type>DH2000</type>
