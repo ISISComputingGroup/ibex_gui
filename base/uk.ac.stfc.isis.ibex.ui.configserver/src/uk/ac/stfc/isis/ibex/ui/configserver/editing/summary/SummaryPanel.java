@@ -148,7 +148,7 @@ public class SummaryPanel extends Composite {
         
         dynamicCheckBox = new IBEXButton(optionsContainer, SWT.CHECK)
         		.layoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1))
-				.tooltip(PROTECT_TOOLTIP)
+				.tooltip(DYNAMIC_TOOLTIP)
 				.get();
 
         lblDateCreated = new Label(cmpSummary, SWT.NONE);
