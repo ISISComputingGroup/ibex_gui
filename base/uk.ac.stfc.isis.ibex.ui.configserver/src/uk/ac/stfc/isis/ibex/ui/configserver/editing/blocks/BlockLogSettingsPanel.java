@@ -33,7 +33,8 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
+
 
 /**
  * A panel in the edit block dialog editing the block's logging settings.
@@ -85,10 +86,10 @@ public class BlockLogSettingsPanel extends Composite {
         gdTxtSettings.widthHint = 145;
         txtSettings.setLayoutData(gdTxtSettings);
         
-        btnEnabled = new IBEXButtonBuilder(grpLogSettings, SWT.CHECK)
-        		.customLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1))
+        btnEnabled = new IBEXButton(grpLogSettings, SWT.CHECK)
+        		.layoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1))
         		.text("Enabled")
-        		.build();
+        		.get();
         
         setModel(viewModel);
     }

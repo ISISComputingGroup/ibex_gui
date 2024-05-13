@@ -25,6 +25,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.Timer;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
@@ -54,7 +55,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.InterestFilte
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.PVFilter;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.PVFilterFactory;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.filters.SourceFilters;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
 
 
 /**
@@ -121,9 +122,9 @@ public class PVSelectorPanel extends Composite {
 		gdPvAddress.widthHint = 250;
 		pvAddress.setLayoutData(gdPvAddress);
 		
-		final Button btnClear = new IBEXButtonBuilder(grpPV, SWT.NONE)
+		final Button btnClear = new IBEXButton(grpPV, SWT.NONE)
 				.text("Clear")
-				.build();
+				.get();
 
 		Listener clearListener = new Listener() {
 			@Override

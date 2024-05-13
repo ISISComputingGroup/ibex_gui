@@ -32,7 +32,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
 
 /**
  * A panel in the edit block dialog for the block's run-control settings.
@@ -74,16 +74,16 @@ public class BlockRunControlPanel extends Composite {
         highLimit = new Text(grpRuncontrolSettings, SWT.BORDER);
         highLimit.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         
-        btnEnabled = new IBEXButtonBuilder(grpRuncontrolSettings, SWT.CHECK)
-        		.customLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1))
+        btnEnabled = new IBEXButton(grpRuncontrolSettings, SWT.CHECK)
+        		.layoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1))
         		.text("Enabled")
-        		.build();
-        
-        btnSuspendIfInvalid = new IBEXButtonBuilder(grpRuncontrolSettings, SWT.CHECK)
-        		.customLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1))
+        		.get();
+
+        btnSuspendIfInvalid = new IBEXButton(grpRuncontrolSettings, SWT.CHECK)
+        		.layoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1))
         		.text("Suspend data collection if invalid")
-        		.build();
-        
+        		.get();
+
         setModel(viewModel);
     }
 	

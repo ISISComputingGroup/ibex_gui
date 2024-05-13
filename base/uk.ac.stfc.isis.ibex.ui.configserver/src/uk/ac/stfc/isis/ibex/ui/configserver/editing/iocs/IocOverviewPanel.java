@@ -42,7 +42,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DeleteTableItemHelper;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog.AddIocDialog;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.dialog.IocDialog;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 /**
@@ -91,23 +91,17 @@ public class IocOverviewPanel extends Composite {
 		gdTable.heightHint = 200;
 		table.setLayoutData(gdTable);
 		
+		GridData gdButton = new GridData();
+        gdButton.widthHint = BUTTON_WIDTH;
 		
         // Add IOC button
-		
-		btnAddIoc = new IBEXButtonBuilder(this, SWT.NONE)
+        btnAddIoc = new IBEXButton(this, SWT.NONE, evt -> {
+        	EditableIoc added = new EditableIoc("");
+            openIocDialog(added, true);
+        })
 				.text("Add IOC")
-				.customLayoutData(new GridData())
-				.width(BUTTON_WIDTH)
-				.build();
-		
-        btnAddIoc.addSelectionListener(new SelectionAdapter() {
-
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                EditableIoc added = new EditableIoc("");
-                openIocDialog(added, true);
-            }
-        });
+				.layoutData(gdButton)
+				.get();
 
         // Selected IOC readback
         Composite cmpSelectedIoc = new Composite(this, SWT.FILL);
@@ -121,26 +115,24 @@ public class IocOverviewPanel extends Composite {
         selectedIocRb = new Text(cmpSelectedIoc, SWT.BORDER);
         selectedIocRb.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         selectedIocRb.setEditable(false);
-
-        // Edit IOC button
-        btnEditIoc = new IBEXButtonBuilder(this, SWT.NONE)
-				.text("Edit IOC")
-				.customLayoutData(new GridData())
-				.width(BUTTON_WIDTH)
-				.build();
         
-        btnEditIoc.setEnabled(false);
-        btnEditIoc.addListener(SWT.Selection, e -> openIocDialog(table.firstSelectedRow(), false));
+        // Edit IOC button
+        btnEditIoc = new IBEXButton(this, SWT.NONE, evt -> {
+        	openIocDialog(table.firstSelectedRow(), false);
+        })
+				.text("Edit IOC")
+				.layoutData(gdButton)
+				.enabled(false)
+				.get();
 
         // Delete IOC Button
-        btnDeleteIoc = new IBEXButtonBuilder(this, SWT.NONE)
+        btnDeleteIoc = new IBEXButton(this, SWT.NONE, evt -> {
+        	deleteSelected();
+        })
 				.text("Delete IOC")
-				.customLayoutData(new GridData())
-				.width(BUTTON_WIDTH)
-				.build();
-
-        btnDeleteIoc.setEnabled(false);
-        btnDeleteIoc.addListener(SWT.Selection, e -> deleteSelected());
+				.layoutData(gdButton)
+				.enabled(false)
+				.get();
 
         table.addSelectionChangedListener(new ISelectionChangedListener() {
             @Override

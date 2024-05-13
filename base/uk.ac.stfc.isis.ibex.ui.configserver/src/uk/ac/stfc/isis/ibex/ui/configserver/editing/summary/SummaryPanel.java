@@ -35,11 +35,11 @@ import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Button;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
@@ -48,7 +48,7 @@ import uk.ac.stfc.isis.ibex.epics.observing.Subscription;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.ui.UIUtils;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
 import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 import uk.ac.stfc.isis.ibex.validators.SummaryDescriptionValidator;
@@ -135,20 +135,21 @@ public class SummaryPanel extends Composite {
         protectLabel.setText("Protected:");
         protectLabel.setToolTipText(PROTECT_TOOLTIP);
         
-        protectedCheckBox = new IBEXButtonBuilder(optionsContainer, SWT.CHECK)
-				.customLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1))
+        protectedCheckBox = new IBEXButton(optionsContainer, SWT.CHECK)
+        		.layoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1))
 				.tooltip(PROTECT_TOOLTIP)
-				.build();
+				.get();
         
         dynamicLabel = new Label(optionsContainer,  SWT.NONE);
         dynamicLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.NONE, false, false, 1, 1));
         dynamicLabel.setText("Dynamic:");
         dynamicLabel.setToolTipText(DYNAMIC_TOOLTIP);
         
-        dynamicCheckBox = new IBEXButtonBuilder(optionsContainer, SWT.CHECK)
-				.customLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1))
-				.tooltip(DYNAMIC_TOOLTIP)
-				.build();
+        
+        dynamicCheckBox = new IBEXButton(optionsContainer, SWT.CHECK)
+        		.layoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1))
+				.tooltip(PROTECT_TOOLTIP)
+				.get();
 
         lblDateCreated = new Label(cmpSummary, SWT.NONE);
         lblDateCreated.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));

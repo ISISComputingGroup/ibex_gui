@@ -23,8 +23,6 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -34,7 +32,8 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
+
 
 /**
  * A panel in the edit block dialog displaying details about the block's name and PV.
@@ -73,14 +72,14 @@ public class BlockDetailsPanel extends Composite {
 		gdName.widthHint = 280;
 		name.setLayoutData(gdName);
 		
-		visible = new IBEXButtonBuilder(grpBlock, SWT.CHECK)
-				.customLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1))
+		visible = new IBEXButton(grpBlock, SWT.CHECK)
+				.layoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1))
 				.text("Visible")
-				.build();
+				.get();
 		
-		local = new IBEXButtonBuilder(grpBlock, SWT.CHECK)
+		local = new IBEXButton(grpBlock, SWT.CHECK)
 				.text("Local")
-				.build();
+				.get();
 		
 		Label lblPvAddress = new Label(grpBlock, SWT.NONE);
 		lblPvAddress.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -91,14 +90,10 @@ public class BlockDetailsPanel extends Composite {
 		gdPvAddress.minimumWidth = 380;
 		pvAddress.setLayoutData(gdPvAddress);
 		
-		
-		btnPickPV = new IBEXButtonBuilder(grpBlock, SWT.NONE)
-				.customLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1))
+		btnPickPV = new IBEXButton(grpBlock, SWT.NONE, evt -> viewModel.openPvDialog())
+				.layoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1))
 				.text("Select PV")
-				.listener(evt -> {
-					viewModel.openPvDialog();
-				})
-				.build();
+				.get();
 		
 		setModel(viewModel);
 	}

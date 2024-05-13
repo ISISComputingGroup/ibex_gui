@@ -39,7 +39,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.wb.swt.ResourceManager;
 
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
 
 /**
  * The double list editor control.
@@ -90,47 +90,45 @@ public class DoubleListEditor<T> extends Composite {
 		unselectedList = unselectedViewer.getList();
 		unselectedList.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
 		
-		select = new IBEXButtonBuilder(this, SWT.NONE)
-				.customLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, false, true, 1, 1))
-				.build();
-		
-		select.setEnabled(false);;
-		select.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_right.png"));
+		select = new IBEXButton(this, SWT.NONE)
+				.layoutData(new GridData(SWT.LEFT, SWT.BOTTOM, false, true, 1, 1))
+				.enabled(false)
+				.image(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_right.png"))
+				.get();
 		
 		selectedViewer = new ListViewer(this, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
 		configureViewer(selectedViewer, observedProperty);
 		selectedList = selectedViewer.getList();
 		selectedList.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 2));
 		
-		btnUp = new IBEXButtonBuilder(this, SWT.NONE)
-				.build();
-		
-		btnUp.setEnabled(false);
 		GridData gd_btnUp = new GridData(SWT.LEFT, SWT.BOTTOM, false, true, 1, 1);
 		gd_btnUp.widthHint = 25;
 		gd_btnUp.exclude = !orderable;
-		btnUp.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_up.png"));
-		btnUp.setEnabled(false);
 		if (!orderable) {
 			new Label(this, SWT.NONE);
 		}
 		
-		unselect = new IBEXButtonBuilder(this, SWT.NONE)
-				.customLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1))
-				.build();
+		btnUp = new IBEXButton(this, SWT.NONE)
+				.layoutData(gd_btnUp)
+				.image(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_up.png"))
+				.enabled(false)
+				.get();
 		
-		unselect.setEnabled(false);
-		unselect.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_left.png"));
-		
-		btnDown = new IBEXButtonBuilder(this, SWT.NONE)
-				.build();
+		unselect = new IBEXButton(this, SWT.NONE)
+				.layoutData(new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1))
+				.enabled(false)
+				.image(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_left.png"))
+				.get();
 		
 		GridData gd_btnDown = new GridData(SWT.LEFT, SWT.TOP, false, true, 1, 1);
 		gd_btnDown.widthHint = 25;
 		gd_btnDown.exclude = !orderable;
-		btnDown.setLayoutData(gd_btnDown);
-		btnDown.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png"));
-		btnDown.setEnabled(false);
+
+		btnDown = new IBEXButton(this, SWT.NONE)
+				.layoutData(gd_btnDown)
+				.image(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png"))
+				.enabled(false)
+				.get();
 		
 		selectedItems = ViewerProperties.<ISelectionProvider, T>multipleSelection().observe(selectedViewer);
 		unselectedItems = ViewerProperties.<ISelectionProvider, T>multipleSelection().observe(unselectedViewer);

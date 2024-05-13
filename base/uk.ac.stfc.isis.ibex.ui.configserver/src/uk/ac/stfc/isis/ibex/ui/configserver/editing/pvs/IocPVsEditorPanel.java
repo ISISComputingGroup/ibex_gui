@@ -36,7 +36,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.PVDefaultValue;
 import uk.ac.stfc.isis.ibex.configserver.editing.DefaultName;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IIocDependentPanel;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
 
@@ -87,33 +87,39 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 		composite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
 		composite.setLayout(new GridLayout(3, false));
 		
-		btnAdd = new IBEXButtonBuilder(composite, SWT.NONE)
-				.customLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1))
-				.width(70)
+		GridData gdBtnAdd = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
+		gdBtnAdd.widthHint = 70;
+		
+		btnAdd = new IBEXButton(composite, SWT.NONE, evt -> {
+			addPVValue(new PVDefaultValue(generateNewName(newPVName), "NEW_VALUE"));
+		})
+				.layoutData(gdBtnAdd)
+				.enabled(false)
 				.text("Add")
-				.build();
+				.get();
 		
-		btnAdd.setEnabled(false);
+		GridData gdBtnCopy = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
+		gdBtnCopy.widthHint = 70;
 		
-		btnCopy = new IBEXButtonBuilder(composite, SWT.NONE)
-				.customLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1))
-				.width(70)
+		btnCopy = new IBEXButton(composite, SWT.NONE, evt -> {
+			copySelected();
+		})
+				.layoutData(gdBtnCopy)
+				.enabled(false)
 				.text("&Duplicate")
-				.build();
-
-		btnCopy.setEnabled(false);
-		btnCopy.addListener(SWT.Selection, e -> copySelected());
+				.get();
 		
-		btnRemove = new IBEXButtonBuilder(composite, SWT.NONE)
-				.customLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1))
-				.width(70)
+		
+		GridData gdBtnRemove = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gdBtnRemove.widthHint = 70;
+		
+		btnRemove = new IBEXButton(composite, SWT.NONE, evt -> {
+			removeSelectedPV();
+		})
+				.layoutData(gdBtnCopy)
+				.enabled(false)
 				.text("Remove")
-				.build();
-
-		btnRemove.addListener(SWT.Selection, e -> removeSelectedPV());
-		btnRemove.setEnabled(false);
-		
-		btnAdd.addListener(SWT.Selection, e -> addPVValue(new PVDefaultValue(generateNewName(newPVName), "NEW_VALUE")));
+				.get();
 
 		details = new IocPVDetailsPanel(this, SWT.NONE, messageDisplayer);
 		Composite detailsComposite = details;

@@ -32,7 +32,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
+
 
 /**
  * A panel in the edit block dialog editing the block's logging settings.
@@ -69,10 +70,10 @@ public class BlockGroupPanel extends Composite {
         cmboGroup.setItems(viewModel.getGroups());
         cmboGroup.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
         
-        btnEnabled = new IBEXButtonBuilder(grpGroupSettings, SWT.CHECK)
-        		.customLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1))
+        btnEnabled = new IBEXButton(grpGroupSettings, SWT.CHECK)
+        		.layoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1))
         		.text("Add to Group")
-        		.build();
+        		.get();
 
         setModel(viewModel);
     }

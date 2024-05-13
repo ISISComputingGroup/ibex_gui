@@ -36,8 +36,6 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -51,7 +49,8 @@ import uk.ac.stfc.isis.ibex.configserver.editing.DuplicateBlockNameException;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DeleteTableItemHelper;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
+
 
 /**
  * The class responsible for creating the block editor panel.
@@ -120,48 +119,45 @@ public class BlocksEditorPanel extends Composite {
 		gl_composite.marginHeight = 0;
 		composite.setLayout(gl_composite);
 		
-		add = new IBEXButtonBuilder(composite, SWT.NONE)
-				.customLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1))
-				.width(110)
+		GridData gd_add = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_add.widthHint = 110;
+		
+		add = new IBEXButton(composite, SWT.NONE, evt -> {
+			addNew();
+		})
+				.layoutData(gd_add)
 				.text("&Add Block")
-				.listener(evt -> {
-					addNew();
-				})
-				.build();
+				.get();
 		
+		GridData gd_copy = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_copy.widthHint = 110;
 		
-		copy = new IBEXButtonBuilder(composite, SWT.NONE)
-				.customLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1))
-				.width(110)
+		copy = new IBEXButton(composite, SWT.NONE, evt -> {
+			copySelected();
+		})
+				.layoutData(gd_add)
 				.text("&Duplicate Block")
-				.listener(evt -> {
-					copySelected();
-				})
-				.build();
+				.get();
 		
-
-        
-		edit = new IBEXButtonBuilder(composite, SWT.NONE)
-				.customLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1))
-				.width(110)
+		GridData gd_edit = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_edit.widthHint = 110;
+		
+		edit = new IBEXButton(composite, SWT.NONE, evt -> {
+			openEditBlockDialog(table.firstSelectedRow());
+		})
+				.layoutData(gd_add)
 				.text("&Edit Block")
-				.listener(evt -> {
-					openEditBlockDialog(table.firstSelectedRow());
-				})
-				.build();
+				.get();
+
+		GridData gd_remove = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_remove.widthHint = 110;
 		
-
-
-		remove = new IBEXButtonBuilder(composite, SWT.NONE)
-				.customLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1))
-				.width(110)
+		remove = new IBEXButton(composite, SWT.NONE, evt -> {
+			deleteSelected();
+		})
+				.layoutData(gd_add)
 				.text("Delete Block")
-				.listener(evt -> {
-					deleteSelected();
-				})
-				.build();
-		
-
+				.get();
 		
 		table.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override

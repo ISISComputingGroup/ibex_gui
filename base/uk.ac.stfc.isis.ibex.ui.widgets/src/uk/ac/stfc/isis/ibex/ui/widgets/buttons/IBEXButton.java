@@ -7,6 +7,7 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.RowData;
@@ -196,6 +197,38 @@ public class IBEXButton {
 	 */
 	public IBEXButton selected(boolean selected) {
 		this.button.setSelection(selected);
+		return this;
+	}
+	
+	/**
+	 * Sets the font property of the text within the button.
+	 * 
+	 * @param font
+	 * @return IBEXButton
+	 */
+	public IBEXButton font(Font font) {
+		this.button.setFont(font);
+		return this;
+	}
+	
+	/**
+	 * Sets the visible property of the button.
+	 * 
+	 * @param visible
+	 * @return IBEXButton
+	 */
+	public IBEXButton visible(boolean visible) {
+		this.button.setVisible(visible);
+		return this;
+	}
+	
+	/**
+	 * Return the enabled property of the button.
+	 * 
+	 * @return Button
+	 */
+	public IBEXButton enabled(boolean enabled) {
+		this.button.setEnabled(enabled);
 		return this;
 	}
 

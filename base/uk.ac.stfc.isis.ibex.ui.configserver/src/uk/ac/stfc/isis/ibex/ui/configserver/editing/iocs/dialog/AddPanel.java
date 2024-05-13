@@ -28,25 +28,22 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButtonBuilder;
-
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.dialogs.FilteredTree;
+
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
 
 /**
  * Dialog panel for selecting a new IOC to add to a configuration.
  */
 public class AddPanel extends Composite {
 	private final Button expandButton;
-	private final Button  collapseButton;
+	private final Button collapseButton;
 	
     private FilteredTree availableIocsTree;
     private static final int TREE_HEIGHT = 300;
@@ -72,23 +69,19 @@ public class AddPanel extends Composite {
   		Composite expansionComposite = new Composite(this, SWT.FILL);
   		expansionComposite.setLayout(new GridLayout(2, true));
   		
-  		expandButton = new IBEXButtonBuilder(expansionComposite, SWT.NONE)
-  				.customLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1))
+  		expandButton = new IBEXButton(expansionComposite, SWT.NONE, evt -> {
+  			availableIocsTree.getViewer().expandAll();
+        })
+  				.layoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1))
   				.text("\u25BC Expand All")
-                .listener(evt -> {
-                    availableIocsTree.getViewer().expandAll();
-                })
-  				.build();
-
-
+  				.get();
   		
-  		collapseButton = new IBEXButtonBuilder(expansionComposite, SWT.NONE)
-  				.customLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1))
+  		collapseButton = new IBEXButton(expansionComposite, SWT.NONE, evt -> {
+  			availableIocsTree.getViewer().collapseAll();
+        })
+  				.layoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1))
   				.text("\u25B2 Collapse All")
-                  .listener(evt -> {
-                    availableIocsTree.getViewer().collapseAll();
-                })
-  				.build();
+  				.get();
 
         // Add selection tree
   		Composite treeComposite = new Composite(this, SWT.FILL);
