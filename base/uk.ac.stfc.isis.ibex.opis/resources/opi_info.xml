@@ -2705,7 +2705,7 @@
       <value>
         <categories/>
         <type>SYRINGE_PUMP</type>
-        <path>aldn1000.opi</path>
+        <path>ALDN1000/aldn1000.opi</path>
         <description>The OPI for the ALDN1000</description>
         <macros>
           <macro>
