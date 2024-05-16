@@ -225,6 +225,7 @@ public class IBEXButton {
 	/**
 	 * Return the enabled property of the button.
 	 * 
+	 * @param enabled
 	 * @return Button
 	 */
 	public IBEXButton enabled(boolean enabled) {

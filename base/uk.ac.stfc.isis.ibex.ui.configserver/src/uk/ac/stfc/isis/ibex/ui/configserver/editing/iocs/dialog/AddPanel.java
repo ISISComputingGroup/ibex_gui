@@ -41,6 +41,7 @@ import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
 /**
  * Dialog panel for selecting a new IOC to add to a configuration.
  */
+@SuppressWarnings({"unused" })
 public class AddPanel extends Composite {
 	private final Button expandButton;
 	private final Button collapseButton;

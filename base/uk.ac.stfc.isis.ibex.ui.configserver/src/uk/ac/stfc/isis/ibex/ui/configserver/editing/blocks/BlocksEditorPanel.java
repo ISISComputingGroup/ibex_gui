@@ -56,7 +56,7 @@ import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
  * The class responsible for creating the block editor panel.
  *
  */
-@SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
+@SuppressWarnings({"magicnumber", "unused" })
 public class BlocksEditorPanel extends Composite {
 
 	private final BlocksTable table;

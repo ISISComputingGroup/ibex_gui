@@ -27,8 +27,6 @@ import java.util.List;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -48,7 +46,7 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 /**
  * Panel showing an overview of all IOCs that are part of this configuration.
  */
-@SuppressWarnings("checkstyle:magicnumber")
+@SuppressWarnings({"magicnumber", "unused"})
 public class IocOverviewPanel extends Composite {
 
     private EditableConfiguration config;

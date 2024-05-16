@@ -59,7 +59,7 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
  * Group Editor Panel editing of groups for a component or configuration. Allows
  * groups to be added, removed, names edited block added and removed
  */
-@SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
+@SuppressWarnings({"magicnumber", "unused" })
 public class GroupsEditorPanel extends Composite {
     /** Editor for blocks, those available and those unavailable. */
 	private final DoubleListEditor<EditableBlock> blocksEditor;
