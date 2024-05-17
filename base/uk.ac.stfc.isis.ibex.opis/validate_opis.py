@@ -1,7 +1,6 @@
 from check_opi_format import file_iterator, DEFAULT_ROOT_DIR
 from lxml import etree
 from lxml.etree import LxmlError
-import six
 import os.path as path
 
 xml_parser = etree.XMLParser(remove_blank_text=True)
@@ -106,7 +105,7 @@ for file_path in file_iterator(OPI_folder):
     files_to_change[file_path] = root
 
 if files_to_change:
-    for file_path, root in six.iteritems(files_to_change):
+    for file_path, root in files_to_change.items():
         with open(file_path, "wb") as xml_file:
             xml_file.write(etree.tostring(root, pretty_print=True, xml_declaration=True, encoding='UTF-8'))
     print("Confirm dummy button has been added correctly and re-commit")
