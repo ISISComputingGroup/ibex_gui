@@ -92,6 +92,7 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 		if (isBlockVisibilityShown) {
 			blockIsVisible();
 		}
+		component();
 	}
 	
 	@Override
@@ -130,6 +131,21 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 	
 	private void blockIsVisible() {
 		enabled = createColumn("Visible?", 2, visibilityLabelProvider);
+	}
+	
+	private void component() {
+		createColumn("Component", 3, new DecoratedCellLabelProvider<EditableBlock>(
+				observeProperty("component"), 
+				Arrays.asList(rowDecorator)) {
+			@Override
+			public String stringFromRow(EditableBlock row) {
+				String component = row.getComponent();
+				if (component == null || component.isEmpty()) {
+					 component = "Configuration";
+				}
+				return component;
+			}
+		});	
 	}
 	
 	/**
