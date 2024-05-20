@@ -221,7 +221,7 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
 			public String stringFromRow(EditableIoc row) {
 				String component = row.getComponent();
 				if (component == null || component.isEmpty()) {
-					 component = "Component";
+					 component = "This component";
 				}
 				return component;
 			}
