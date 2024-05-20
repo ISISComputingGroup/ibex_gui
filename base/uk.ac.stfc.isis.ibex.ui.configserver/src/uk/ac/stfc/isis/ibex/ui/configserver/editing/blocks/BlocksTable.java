@@ -141,7 +141,7 @@ public class BlocksTable extends DataboundTable<EditableBlock> {
 			public String stringFromRow(EditableBlock row) {
 				String component = row.getComponent();
 				if (component == null || component.isEmpty()) {
-					 component = "Configuration";
+					 component = "This configuration";
 				}
 				return component;
 			}
