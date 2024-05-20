@@ -128,6 +128,7 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
 		autostart();
 		restart();
 		remotePvPrefix();
+		component();
 	}
 
     /**
@@ -207,6 +208,24 @@ public class EditableIocsTable extends DataboundTable<EditableIoc> {
      */
 	private void remotePvPrefix() {
         remotePvPrefix = createColumn("Remote prefix", 1, false, remotePvPrefixLabelProvider);
+	}
+	
+	/**
+     * Creates the Component column.
+     */
+	private void component() {
+        createColumn("Component", 1, false, new DecoratedCellLabelProvider<EditableIoc>(
+				observeProperty("component"), 
+				Arrays.asList(rowDecorator)) {
+			@Override
+			public String stringFromRow(EditableIoc row) {
+				String component = row.getComponent();
+				if (component == null || component.isEmpty()) {
+					 component = "This component";
+				}
+				return component;
+			}
+		});
 	}
 
     /**
