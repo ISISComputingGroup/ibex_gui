@@ -50,6 +50,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.DoubleListEditor;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
 import uk.ac.stfc.isis.ibex.validators.BlockServerNameValidator;
 import uk.ac.stfc.isis.ibex.validators.GroupNameValidator;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
@@ -58,7 +59,7 @@ import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
  * Group Editor Panel editing of groups for a component or configuration. Allows
  * groups to be added, removed, names edited block added and removed
  */
-@SuppressWarnings({ "checkstyle:magicnumber", "checkstyle:localvariablename" })
+@SuppressWarnings({"magicnumber", "unused" })
 public class GroupsEditorPanel extends Composite {
     /** Editor for blocks, those available and those unavailable. */
 	private final DoubleListEditor<EditableBlock> blocksEditor;
@@ -214,45 +215,63 @@ public class GroupsEditorPanel extends Composite {
 
 		IObservableList<EditableBlock> selectedBlocks = ViewerProperties.singleSelection().list(BeanProperties.list("selectedBlocks", EditableBlock.class)).observe(groupsViewer);
 		IObservableList<EditableBlock> unselectedBlocks = ViewerProperties.singleSelection().list(BeanProperties.list("unselectedBlocks", EditableBlock.class)).observe(groupsViewer);
-
-		Button spacerButton = new Button(grpGroups, SWT.NONE);
+		
+		
 		GridData gd_spacerButton = new GridData(SWT.LEFT, SWT.CENTER, false, true, 1, 1);
 		gd_spacerButton.heightHint = 50;
-		spacerButton.setLayoutData(gd_spacerButton);
-		spacerButton.setVisible(false);
-
-		Button btnUp =  new Button(grpGroups, SWT.NONE);
-		GridData gd_btnUp = new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1);
+		
+		Button spacerButton = new IBEXButton(grpGroups, SWT.NONE)
+				.layoutData(gd_spacerButton)
+				.visible(false)
+				.get();
+		
+		GridData gd_btnUp = new GridData(SWT.LEFT, SWT.CENTER, false, true, 1, 1);
 		gd_btnUp.widthHint = 25;
-		btnUp.setLayoutData(gd_btnUp);
-		btnUp.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_up.png"));
-		btnUp.addListener(SWT.Selection, event -> groupEditorViewModel.moveGroupUp(groupList.getSelectionIndex()));
-
-		Button btnDown =  new Button(grpGroups, SWT.NONE);
+		
+		Button btnUp = new IBEXButton(grpGroups, SWT.NONE, evt -> {
+			groupEditorViewModel.moveGroupUp(groupList.getSelectionIndex());
+		})
+				.layoutData(gd_btnUp)
+				.image(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_up.png"))
+				.get();
+		
 		GridData gd_btnDown = new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1);
 		gd_btnDown.widthHint = 25;
-		btnDown.setLayoutData(gd_btnDown);
-		btnDown.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png"));
-		btnDown.addListener(SWT.Selection, event -> groupEditorViewModel.moveGroupDown(groupList.getSelectionIndex()));
-
-		Button spacerButton2 = new Button(grpGroups, SWT.NONE);
-		spacerButton2.setLayoutData(gd_spacerButton);
-		spacerButton2.setVisible(false);
 		
-		Button btnAdd = new Button(grpGroups, SWT.NONE);
+		Button btnDown = new IBEXButton(grpGroups, SWT.NONE, evt -> {
+			groupEditorViewModel.moveGroupDown(groupList.getSelectionIndex());
+		})
+				.layoutData(gd_btnUp)
+				.image(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui", "icons/move_down.png"))
+				.get();
+
+		
+		Button spacerButton2 = new IBEXButton(grpGroups, SWT.NONE)
+				.layoutData(new GridData(SWT.LEFT, SWT.CENTER, false, true, 1, 1))
+				.visible(false)
+				.get();
+		
 		GridData gd_btnAdd = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_btnAdd.widthHint = 70;
-		btnAdd.setLayoutData(gd_btnAdd);
-		btnAdd.setText("Add");
-		btnAdd.addListener(SWT.Selection, event -> groupEditorViewModel.addNewGroup());
-
-		final Button btnRemove = new Button(grpGroups, SWT.NONE);
-		btnRemove.setEnabled(false);
+		
+		Button btnAdd = new IBEXButton(grpGroups, SWT.NONE, event -> {
+			groupEditorViewModel.addNewGroup();
+		})
+				.layoutData(gd_btnAdd)
+				.text("Add")
+				.get();
+		
+		
 		GridData gd_btnRemove = new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1);
 		gd_btnRemove.widthHint = 70;
-		btnRemove.setLayoutData(gd_btnRemove);
-		btnRemove.setText("Remove");
-		btnRemove.addListener(SWT.Selection, event -> groupEditorViewModel.removeGroup(groupList.getSelectionIndex()));
+		
+		final Button btnRemove = new IBEXButton(grpGroups, SWT.NONE, evt -> {
+			groupEditorViewModel.removeGroup(groupList.getSelectionIndex());
+		})
+				.layoutData(gd_btnRemove)
+				.text("Remove")
+				.enabled(false)
+				.get();
 
 		new Label(grpGroups, SWT.NONE);
 
