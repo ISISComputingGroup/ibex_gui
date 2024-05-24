@@ -1232,7 +1232,7 @@
             <description>The TC IOC number eg. TC_01</description>
             <default>TC_01</default>
           </macro>
-		    </macros>
+        </macros>
         <categories>
           <category>Miscellaneous motion control</category>
         </categories>
@@ -3639,11 +3639,11 @@
             <name>NAME</name>
             <description>The IOC PV prefix (e.g. PS300_01)</description>
             <default>PS300_01</default>
-	  </macro>
+          </macro>
         </macros>
       </value>
     </entry>
-    <entry>	  
+    <entry>
       <key>LNDYISW</key>
       <value>
         <categories/>
@@ -3656,6 +3656,22 @@
             <description>The LNDYISW PV prefix (e.g. LNDYISW_01)</description>
           </macro>
         </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>SR850</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>sr850.opi</path>
+        <description>The OPI for the SR850.</description>
+        <macros>
+          <macro>
+            <name>SR850</name>
+            <description>The SR850 PV prefix (e.g. SR850_01)</description>
+            <default>SR850_01</default>
+          </macro>
+        </macros>
+        <categories/>
       </value>
     </entry>
   </opis>
