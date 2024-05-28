@@ -184,7 +184,7 @@
       </scale_options>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
-      <text>Channel Number</text>
+      <text>Channel number:</text>
       <tooltip></tooltip>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -266,7 +266,7 @@
       </scale_options>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
-      <text>Temperature</text>
+      <text>Temperature:</text>
       <tooltip></tooltip>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -398,8 +398,8 @@ $(pv_value)</tooltip>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
       <limits_from_pv>false</limits_from_pv>
-      <maximum>Infinity</maximum>
-      <minimum>-Infinity</minimum>
+      <maximum>1.7976931348623157E308</maximum>
+      <minimum>-1.7976931348623157E308</minimum>
       <multiline_input>false</multiline_input>
       <name>Channel Name 01</name>
       <precision>0</precision>
@@ -548,8 +548,8 @@ $(pv_value)</tooltip>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
       <limits_from_pv>false</limits_from_pv>
-      <maximum>Infinity</maximum>
-      <minimum>-Infinity</minimum>
+      <maximum>1.7976931348623157E308</maximum>
+      <minimum>-1.7976931348623157E308</minimum>
       <multiline_input>false</multiline_input>
       <name>Channel Name 02</name>
       <precision>0</precision>
@@ -698,8 +698,8 @@ $(pv_value)</tooltip>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
       <limits_from_pv>false</limits_from_pv>
-      <maximum>Infinity</maximum>
-      <minimum>-Infinity</minimum>
+      <maximum>1.7976931348623157E308</maximum>
+      <minimum>-1.7976931348623157E308</minimum>
       <multiline_input>false</multiline_input>
       <name>Channel Name 03</name>
       <precision>0</precision>
@@ -848,8 +848,8 @@ $(pv_value)</tooltip>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
       <limits_from_pv>false</limits_from_pv>
-      <maximum>Infinity</maximum>
-      <minimum>-Infinity</minimum>
+      <maximum>1.7976931348623157E308</maximum>
+      <minimum>-1.7976931348623157E308</minimum>
       <multiline_input>false</multiline_input>
       <name>Channel Name 04</name>
       <precision>0</precision>
@@ -998,8 +998,8 @@ $(pv_value)</tooltip>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
       <limits_from_pv>false</limits_from_pv>
-      <maximum>Infinity</maximum>
-      <minimum>-Infinity</minimum>
+      <maximum>1.7976931348623157E308</maximum>
+      <minimum>-1.7976931348623157E308</minimum>
       <multiline_input>false</multiline_input>
       <name>Channel Name 05</name>
       <precision>0</precision>
@@ -1148,8 +1148,8 @@ $(pv_value)</tooltip>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
       <limits_from_pv>false</limits_from_pv>
-      <maximum>Infinity</maximum>
-      <minimum>-Infinity</minimum>
+      <maximum>1.7976931348623157E308</maximum>
+      <minimum>-1.7976931348623157E308</minimum>
       <multiline_input>false</multiline_input>
       <name>Channel Name 06</name>
       <precision>0</precision>
@@ -1298,8 +1298,8 @@ $(pv_value)</tooltip>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
       <limits_from_pv>false</limits_from_pv>
-      <maximum>Infinity</maximum>
-      <minimum>-Infinity</minimum>
+      <maximum>1.7976931348623157E308</maximum>
+      <minimum>-1.7976931348623157E308</minimum>
       <multiline_input>false</multiline_input>
       <name>Channel Name 07</name>
       <precision>0</precision>
@@ -1448,8 +1448,8 @@ $(pv_value)</tooltip>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
       <limits_from_pv>false</limits_from_pv>
-      <maximum>Infinity</maximum>
-      <minimum>-Infinity</minimum>
+      <maximum>1.7976931348623157E308</maximum>
+      <minimum>-1.7976931348623157E308</minimum>
       <multiline_input>false</multiline_input>
       <name>Channel Name 08</name>
       <precision>0</precision>
@@ -1598,8 +1598,8 @@ $(pv_value)</tooltip>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
       <limits_from_pv>false</limits_from_pv>
-      <maximum>Infinity</maximum>
-      <minimum>-Infinity</minimum>
+      <maximum>1.7976931348623157E308</maximum>
+      <minimum>-1.7976931348623157E308</minimum>
       <multiline_input>false</multiline_input>
       <name>Channel Name 09</name>
       <precision>0</precision>
@@ -1748,8 +1748,8 @@ $(pv_value)</tooltip>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
       <limits_from_pv>false</limits_from_pv>
-      <maximum>Infinity</maximum>
-      <minimum>-Infinity</minimum>
+      <maximum>1.7976931348623157E308</maximum>
+      <minimum>-1.7976931348623157E308</minimum>
       <multiline_input>false</multiline_input>
       <name>Channel Name 10</name>
       <precision>0</precision>
@@ -1898,8 +1898,8 @@ $(pv_value)</tooltip>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
       <limits_from_pv>false</limits_from_pv>
-      <maximum>Infinity</maximum>
-      <minimum>-Infinity</minimum>
+      <maximum>1.7976931348623157E308</maximum>
+      <minimum>-1.7976931348623157E308</minimum>
       <multiline_input>false</multiline_input>
       <name>Channel Name 11</name>
       <precision>0</precision>
@@ -2048,8 +2048,8 @@ $(pv_value)</tooltip>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
       <limits_from_pv>false</limits_from_pv>
-      <maximum>Infinity</maximum>
-      <minimum>-Infinity</minimum>
+      <maximum>1.7976931348623157E308</maximum>
+      <minimum>-1.7976931348623157E308</minimum>
       <multiline_input>false</multiline_input>
       <name>Channel Name 12</name>
       <precision>0</precision>
@@ -2198,8 +2198,8 @@ $(pv_value)</tooltip>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
       <limits_from_pv>false</limits_from_pv>
-      <maximum>Infinity</maximum>
-      <minimum>-Infinity</minimum>
+      <maximum>1.7976931348623157E308</maximum>
+      <minimum>-1.7976931348623157E308</minimum>
       <multiline_input>false</multiline_input>
       <name>Channel Name 13</name>
       <precision>0</precision>
@@ -2348,8 +2348,8 @@ $(pv_value)</tooltip>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
       <limits_from_pv>false</limits_from_pv>
-      <maximum>Infinity</maximum>
-      <minimum>-Infinity</minimum>
+      <maximum>1.7976931348623157E308</maximum>
+      <minimum>-1.7976931348623157E308</minimum>
       <multiline_input>false</multiline_input>
       <name>Channel Name 14</name>
       <precision>0</precision>
@@ -2498,8 +2498,8 @@ $(pv_value)</tooltip>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
       <limits_from_pv>false</limits_from_pv>
-      <maximum>Infinity</maximum>
-      <minimum>-Infinity</minimum>
+      <maximum>1.7976931348623157E308</maximum>
+      <minimum>-1.7976931348623157E308</minimum>
       <multiline_input>false</multiline_input>
       <name>Channel Name 15</name>
       <precision>0</precision>
@@ -2648,8 +2648,8 @@ $(pv_value)</tooltip>
       <height>20</height>
       <horizontal_alignment>0</horizontal_alignment>
       <limits_from_pv>false</limits_from_pv>
-      <maximum>Infinity</maximum>
-      <minimum>-Infinity</minimum>
+      <maximum>1.7976931348623157E308</maximum>
+      <minimum>-1.7976931348623157E308</minimum>
       <multiline_input>false</multiline_input>
       <name>Channel Name 16</name>
       <precision>0</precision>
