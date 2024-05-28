@@ -19,7 +19,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
   <background_color>
     <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
   </background_color>
-  <boy_version>5.1.0.201707071649</boy_version>
+  <boy_version>5.1.0</boy_version>
   <foreground_color>
     <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
   </foreground_color>
@@ -2159,7 +2159,7 @@ $(pv_value)</tooltip>
           <wrap_words>true</wrap_words>
           <wuid>-7fe0b3d4:16eef643027:-79fa</wuid>
           <x>0</x>
-          <y>54</y>
+          <y>49</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -2211,7 +2211,286 @@ $(pv_value)</tooltip>
           <wrap_words>false</wrap_words>
           <wuid>-7fe0b3d4:16eef643027:-79f9</wuid>
           <x>72</x>
-          <y>54</y>
+          <y>49</y>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <auto_size>false</auto_size>
+          <background_color>
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+          </font>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <height>20</height>
+          <horizontal_alignment>2</horizontal_alignment>
+          <name>Label_4</name>
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <show_scrollbar>false</show_scrollbar>
+          <text>Read time:</text>
+          <tooltip></tooltip>
+          <transparent>false</transparent>
+          <vertical_alignment>1</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Label</widget_type>
+          <width>67</width>
+          <wrap_words>true</wrap_words>
+          <wuid>c6cc858:18ce159da3e:-7e90</wuid>
+          <x>0</x>
+          <y>68</y>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <alarm_pulsing>false</alarm_pulsing>
+          <auto_size>false</auto_size>
+          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+          <background_color>
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <border_alarm_sensitive>true</border_alarm_sensitive>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
+          </font>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <format_type>0</format_type>
+          <height>20</height>
+          <horizontal_alignment>0</horizontal_alignment>
+          <name>Text Update_2</name>
+          <precision>0</precision>
+          <precision_from_pv>true</precision_from_pv>
+          <pv_name>$(PV_ROOT)STATEMACHINE:READ_TIME</pv_name>
+          <pv_value />
+          <rotation_angle>0.0</rotation_angle>
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <show_units>true</show_units>
+          <text>######</text>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <transparent>true</transparent>
+          <vertical_alignment>1</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Text Update</widget_type>
+          <width>55</width>
+          <wrap_words>false</wrap_words>
+          <wuid>c6cc858:18ce159da3e:-7e8f</wuid>
+          <x>72</x>
+          <y>68</y>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <auto_size>false</auto_size>
+          <background_color>
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+          </font>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <height>20</height>
+          <horizontal_alignment>2</horizontal_alignment>
+          <name>Label_2</name>
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <show_scrollbar>false</show_scrollbar>
+          <text>Write time:</text>
+          <tooltip></tooltip>
+          <transparent>false</transparent>
+          <vertical_alignment>1</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Label</widget_type>
+          <width>67</width>
+          <wrap_words>true</wrap_words>
+          <wuid>c6cc858:18ce159da3e:-7e88</wuid>
+          <x>0</x>
+          <y>87</y>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <alarm_pulsing>false</alarm_pulsing>
+          <auto_size>false</auto_size>
+          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+          <background_color>
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <border_alarm_sensitive>true</border_alarm_sensitive>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
+          </font>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <format_type>0</format_type>
+          <height>20</height>
+          <horizontal_alignment>0</horizontal_alignment>
+          <name>Text Update</name>
+          <precision>0</precision>
+          <precision_from_pv>true</precision_from_pv>
+          <pv_name>$(PV_ROOT)STATEMACHINE:WRITE_TIME</pv_name>
+          <pv_value />
+          <rotation_angle>0.0</rotation_angle>
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <show_units>true</show_units>
+          <text>######</text>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <transparent>true</transparent>
+          <vertical_alignment>1</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Text Update</widget_type>
+          <width>55</width>
+          <wrap_words>false</wrap_words>
+          <wuid>c6cc858:18ce159da3e:-7e87</wuid>
+          <x>72</x>
+          <y>87</y>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <auto_size>false</auto_size>
+          <background_color>
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">ISIS_Label_NEW</opifont.name>
+          </font>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <height>20</height>
+          <horizontal_alignment>2</horizontal_alignment>
+          <name>Label_6</name>
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <show_scrollbar>false</show_scrollbar>
+          <text>Check time:</text>
+          <tooltip></tooltip>
+          <transparent>false</transparent>
+          <vertical_alignment>1</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Label</widget_type>
+          <width>67</width>
+          <wrap_words>true</wrap_words>
+          <wuid>c6cc858:18ce159da3e:-7e80</wuid>
+          <x>0</x>
+          <y>106</y>
+        </widget>
+        <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <alarm_pulsing>false</alarm_pulsing>
+          <auto_size>false</auto_size>
+          <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+          <background_color>
+            <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+          </background_color>
+          <border_alarm_sensitive>true</border_alarm_sensitive>
+          <border_color>
+            <color name="ISIS_Border" red="0" green="0" blue="0" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
+          </font>
+          <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+          <foreground_color>
+            <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+          </foreground_color>
+          <format_type>0</format_type>
+          <height>20</height>
+          <horizontal_alignment>0</horizontal_alignment>
+          <name>Text Update_4</name>
+          <precision>0</precision>
+          <precision_from_pv>true</precision_from_pv>
+          <pv_name>$(PV_ROOT)STATEMACHINE:CHECK_TIME</pv_name>
+          <pv_value />
+          <rotation_angle>0.0</rotation_angle>
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <show_units>true</show_units>
+          <text>######</text>
+          <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+          <transparent>true</transparent>
+          <vertical_alignment>1</vertical_alignment>
+          <visible>true</visible>
+          <widget_type>Text Update</widget_type>
+          <width>55</width>
+          <wrap_words>false</wrap_words>
+          <wuid>c6cc858:18ce159da3e:-7e7f</wuid>
+          <x>72</x>
+          <y>106</y>
         </widget>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -4294,6 +4573,47 @@ $(pv_value)</tooltip>
           <x>72</x>
           <y>84</y>
         </widget>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <auto_size>false</auto_size>
+        <background_color>
+          <color red="255" green="255" blue="255" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="0" green="0" blue="0" />
+        </foreground_color>
+        <height>115</height>
+        <horizontal_alignment>1</horizontal_alignment>
+        <name>Label_1</name>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <show_scrollbar>false</show_scrollbar>
+        <text>For permanent changes to calibration values edit the IOC settings in the relevant configuration / component</text>
+        <tooltip></tooltip>
+        <transparent>true</transparent>
+        <vertical_alignment>1</vertical_alignment>
+        <visible>true</visible>
+        <widget_type>Label</widget_type>
+        <width>127</width>
+        <wrap_words>true</wrap_words>
+        <wuid>-44f401ed:18ef5beacac:-7cfa</wuid>
+        <x>678</x>
+        <y>214</y>
       </widget>
     </widget>
   </widget>
