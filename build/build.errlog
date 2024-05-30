@@ -1,6 +1,0 @@
-WARNING: An illegal reflective access operation has occurred
-WARNING: Illegal reflective access by org.eclipse.ecf.provider.filetransfer.httpclient4.SNIAwareHttpClient$1 (file:/C:/Users/Tom/.m2/repository/org/eclipse/tycho/tycho-bundles-external/1.2.0/eclipse/plugins/org.eclipse.ecf.provider.filetransfer.httpclient4_1.1.300.v20180301-0132.jar) to method sun.security.ssl.SSLSocketImpl.setHost(java.lang.String)
-WARNING: Please consider reporting this to the maintainers of org.eclipse.ecf.provider.filetransfer.httpclient4.SNIAwareHttpClient$1
-WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
-WARNING: All illegal access operations will be denied in a future release
-^C
