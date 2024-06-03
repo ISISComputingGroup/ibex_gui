@@ -3658,5 +3658,21 @@
         </macros>
       </value>
     </entry>
+    <entry>	  
+      <key>PRLTHERM</key>
+      <value>
+        <categories/>
+        <type>EUROTHERM</type>
+        <path>PEARL_Thermometry.opi</path>
+        <description>The OPI for the PEARL Thermometry Device</description>
+        <macros>
+          <macro>
+            <name>PRLTHERM</name>
+            <description>The PRLTHERM PV prefix (e.g. PRLTHERM_01)</description>
+            <default>PRLTHERM_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
   </opis>
 </descriptions>
