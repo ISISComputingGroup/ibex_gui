@@ -3661,7 +3661,7 @@
     <entry>
       <key>SR850</key>
       <value>
-        <type>UNKNOWN</type>
+        <type>Lock-In Amplifier</type>
         <path>sr850.opi</path>
         <description>The OPI for the SR850.</description>
         <macros>
