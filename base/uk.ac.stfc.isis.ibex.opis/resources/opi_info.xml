@@ -181,6 +181,24 @@
         </categories>
       </value>
     </entry>
+      <entry>
+      <key>CHIPIR Collimator</key>
+      <value>
+        <type>OSCILLATING_COLLIMATOR</type>
+        <path>chipir_collimator/chipircollimator.opi</path>
+        <description>The OPI for the CHIPIR collimator.</description>
+        <macros>
+          <macro>
+            <name>NUMBER</name>
+            <description>The Jawset number to show</description>
+            <default>1</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
     <entry>
       <key>Fermi chopper</key>
       <value>
