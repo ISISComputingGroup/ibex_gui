@@ -1232,7 +1232,7 @@
             <description>The TC IOC number eg. TC_01</description>
             <default>TC_01</default>
           </macro>
-		    </macros>
+        </macros>
         <categories>
           <category>Miscellaneous motion control</category>
         </categories>
@@ -3639,11 +3639,11 @@
             <name>NAME</name>
             <description>The IOC PV prefix (e.g. PS300_01)</description>
             <default>PS300_01</default>
-	  </macro>
+          </macro>
         </macros>
       </value>
     </entry>
-    <entry>	  
+    <entry>
       <key>LNDYISW</key>
       <value>
         <categories/>
@@ -3658,7 +3658,7 @@
         </macros>
       </value>
     </entry>
-    <entry>	  
+    <entry>
       <key>PRLTHERM</key>
       <value>
         <categories/>
@@ -3672,6 +3672,22 @@
             <default>PRLTHERM_01</default>
           </macro>
         </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>SR400</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>stanford_sr400_photon_counter.opi</path>
+        <description>The OPI for the Stanford SR400 Photon Counter.</description>
+        <macros>
+          <macro>
+            <name>SR400</name>
+            <description>The Stanford SR400 Photon Counter PV prefix (e.g. SR400_01)</description>
+            <default>SR400_01</default>
+          </macro>
+        </macros>
+        <categories/>
       </value>
     </entry>
   </opis>
