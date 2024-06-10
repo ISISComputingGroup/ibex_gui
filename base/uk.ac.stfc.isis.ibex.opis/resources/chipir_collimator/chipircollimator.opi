@@ -193,7 +193,7 @@
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
-    <width>328</width>
+    <width>376</width>
     <wuid>-4805f29c:1579922e8d6:-7f64</wuid>
     <x>3</x>
     <y>78</y>
@@ -678,8 +678,8 @@ $(pv_value)</tooltip>
       <widget_type>Image</widget_type>
       <width>299</width>
       <wuid>3678fe54:18fceb05548:-7aa1</wuid>
-      <x>-6</x>
-      <y>126</y>
+      <x>6</x>
+      <y>180</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -699,7 +699,7 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <height>103</height>
+      <height>139</height>
       <horizontal_alignment>0</horizontal_alignment>
       <name>Label_5</name>
       <rules />
@@ -722,11 +722,11 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>73</width>
+      <width>123</width>
       <wrap_words>true</wrap_words>
       <wuid>3678fe54:18fceb05548:-7c19</wuid>
-      <x>204</x>
-      <y>36</y>
+      <x>222</x>
+      <y>30</y>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
@@ -767,7 +767,7 @@ $(pv_value)</tooltip>
     <widget_type>Grouping Container</widget_type>
     <width>469</width>
     <wuid>3678fe54:18fceb05548:-78ba</wuid>
-    <x>330</x>
+    <x>378</x>
     <y>78</y>
     <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
       <actions hook="false" hook_all="false" />
