@@ -6,9 +6,9 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/vux62295/.m2/repository/net/bytebuddy/byte-buddy/1.14.11/byte-buddy-1.14.11.jar"/>
-	<classpathentry kind="lib" path="C:/Users/vux62295/.m2/repository/net/bytebuddy/byte-buddy-agent/1.14.11/byte-buddy-agent-1.14.11.jar"/>
-	<classpathentry kind="lib" path="C:/Users/vux62295/.m2/repository/net/java/dev/jna/jna/5.12.1/jna-5.12.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/vux62295/.m2/repository/net/java/dev/jna/jna-platform/5.12.1/jna-platform-5.12.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/net/bytebuddy/byte-buddy/1.14.11/byte-buddy-1.14.11.jar"/>
+	<classpathentry kind="var" path="M2_REPO/net/bytebuddy/byte-buddy-agent/1.14.11/byte-buddy-agent-1.14.11.jar"/>
+	<classpathentry kind="var" path="M2_REPO/net/java/dev/jna/jna/5.12.1/jna-5.12.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/net/java/dev/jna/jna-platform/5.12.1/jna-platform-5.12.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

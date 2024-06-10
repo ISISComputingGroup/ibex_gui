@@ -181,6 +181,24 @@
         </categories>
       </value>
     </entry>
+      <entry>
+      <key>CHIPIR Collimator</key>
+      <value>
+        <type>OSCILLATING_COLLIMATOR</type>
+        <path>chipir_collimator/chipircollimator.opi</path>
+        <description>The OPI for the CHIPIR collimator.</description>
+        <macros>
+          <macro>
+            <name>NUMBER</name>
+            <description>The Jawset number to show</description>
+            <default>1</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
     <entry>
       <key>Fermi chopper</key>
       <value>
@@ -3654,6 +3672,22 @@
           <macro>
             <name>LNDYISW</name>
             <description>The LNDYISW PV prefix (e.g. LNDYISW_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>	  
+      <key>PRLTHERM</key>
+      <value>
+        <categories/>
+        <type>EUROTHERM</type>
+        <path>PEARL_Thermometry.opi</path>
+        <description>The OPI for the PEARL Thermometry Device</description>
+        <macros>
+          <macro>
+            <name>PRLTHERM</name>
+            <description>The PRLTHERM PV prefix (e.g. PRLTHERM_01)</description>
+            <default>PRLTHERM_01</default>
           </macro>
         </macros>
       </value>
