@@ -97,6 +97,9 @@ public class AddPanel extends Composite {
         GridData gdIocTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
         gdIocTable.heightHint = TREE_HEIGHT;
         treeComposite.setLayoutData(gdIocTable);
+        
+        // setting the focus of a filtered tree sets the search widget within that tree to be focused
+        availableIocsTree.setFocus();
 
         bind(viewModel);
     }
