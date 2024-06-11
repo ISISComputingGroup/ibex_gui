@@ -3695,7 +3695,7 @@
     <entry>
       <key>SR850</key>
       <value>
-        <type>Lock-In Amplifier</type>
+        <type>OSCILLOSCOPE</type>
         <path>sr850.opi</path>
         <description>The OPI for the SR850.</description>
         <macros>
