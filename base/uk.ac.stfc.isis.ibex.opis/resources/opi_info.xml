@@ -3692,6 +3692,21 @@
         </macros>
       </value>
     </entry>
+    <entry>	
+      <key>SXD Tensile Stress Rig</key>
+      <value>
+        <categories/>
+        <type>STRESS_RIG</type>
+        <path>sxd_tensile_stress_rig.opi</path>
+        <description>The OPI for the LNDYISW</description>
+        <macros>
+          <macro>
+            <name>DDS_STRESS</name>
+            <description>The DDS_STRESS PV prefix (e.g. DDSSTRES_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
     <entry>
       <key>SR850</key>
       <value>
