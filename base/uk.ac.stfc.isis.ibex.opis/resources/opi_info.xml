@@ -2723,8 +2723,27 @@
       <value>
         <categories/>
         <type>SYRINGE_PUMP</type>
-        <path>aldn1000.opi</path>
-        <description>The OPI for the ALDN1000</description>
+        <path>ALDN1000/aldn1000.opi</path>
+        <description>The OPI for the ALDN1000 that shows daisy chained devices</description>
+        <macros>
+          <macro>
+            <name>ALDN1000</name>
+            <description>The ALDN1000 PV prefix (e.g. ALDN1000_01)</description>
+            <default>ALDN1000_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Gas and liquid handling systems</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Aladdin 1000 Single</key>
+      <value>
+        <categories/>
+        <type>SYRINGE_PUMP</type>
+        <path>ALDN1000/aldn1000_single_old.opi</path>
+        <description>The OPI for a single ALDN1000</description>
         <macros>
           <macro>
             <name>ALDN1000</name>
