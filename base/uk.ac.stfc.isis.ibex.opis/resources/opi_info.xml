@@ -181,6 +181,24 @@
         </categories>
       </value>
     </entry>
+      <entry>
+      <key>CHIPIR Collimator</key>
+      <value>
+        <type>OSCILLATING_COLLIMATOR</type>
+        <path>chipir_collimator/chipircollimator.opi</path>
+        <description>The OPI for the CHIPIR collimator.</description>
+        <macros>
+          <macro>
+            <name>NUMBER</name>
+            <description>The Jawset number to show</description>
+            <default>1</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
     <entry>
       <key>Fermi chopper</key>
       <value>
@@ -2705,8 +2723,27 @@
       <value>
         <categories/>
         <type>SYRINGE_PUMP</type>
-        <path>aldn1000.opi</path>
-        <description>The OPI for the ALDN1000</description>
+        <path>ALDN1000/aldn1000.opi</path>
+        <description>The OPI for the ALDN1000 that shows daisy chained devices</description>
+        <macros>
+          <macro>
+            <name>ALDN1000</name>
+            <description>The ALDN1000 PV prefix (e.g. ALDN1000_01)</description>
+            <default>ALDN1000_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Gas and liquid handling systems</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Aladdin 1000 Single</key>
+      <value>
+        <categories/>
+        <type>SYRINGE_PUMP</type>
+        <path>ALDN1000/aldn1000_single_old.opi</path>
+        <description>The OPI for a single ALDN1000</description>
         <macros>
           <macro>
             <name>ALDN1000</name>
@@ -3685,6 +3722,16 @@
             <name>SR400</name>
             <description>The Stanford SR400 Photon Counter PV prefix (e.g. SR400_01)</description>
             <default>SR400_01</default>
+      <key>SR850</key>
+      <value>
+        <type>OSCILLOSCOPE</type>
+        <path>sr850.opi</path>
+        <description>The OPI for the SR850.</description>
+        <macros>
+          <macro>
+            <name>SR850</name>
+            <description>The SR850 PV prefix (e.g. SR850_01)</description>
+            <default>SR850_01</default>
           </macro>
         </macros>
         <categories/>
