@@ -3722,6 +3722,11 @@
             <name>SR400</name>
             <description>The Stanford SR400 Photon Counter PV prefix (e.g. SR400_01)</description>
             <default>SR400_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
       <key>SR850</key>
       <value>
         <type>OSCILLOSCOPE</type>
