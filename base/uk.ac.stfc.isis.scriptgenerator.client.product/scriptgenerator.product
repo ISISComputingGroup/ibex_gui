@@ -18,6 +18,8 @@
 -Xmx512m
 -Dpython.console.encoding=UTF-8
 -XX:+CreateCoredumpOnCrash
+-Dlog4j2.formatMsgNoLookups=true
+-Djdk.util.zip.disableZip64ExtraFieldValidation=true
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>
