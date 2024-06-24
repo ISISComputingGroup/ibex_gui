@@ -130,7 +130,7 @@ if %errorlevel% neq 0 (
 
 REM Copy the install script across
 cd /d %BASEDIR%
-robocopy "." "%INSTALLDIR%" install_client.bat install_gui_with_builtin_python.bat install_gui_and_external_python.bat README_INSTALL.txt /R:1
+:: robocopy "." "%INSTALLDIR%" install_client.bat install_gui_with_builtin_python.bat install_gui_and_external_python.bat README_INSTALL.txt /R:1
 if %errorlevel% geq 4 (
     @echo Install client batch file copy failed  %errorlevel%
     exit /b 1
