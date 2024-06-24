@@ -21,7 +21,7 @@ set MSINAME=ibex_client
 call build.bat "LOG" %BUILT_CLIENT_DIR% %TARGET_DIR%
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-set PUBLISH=NO
+set PUBLISH=YES
 if "%RELEASE%" == "YES" set PUBLISH=YES
 if "%DEPLOY%" == "YES" set PUBLISH=YES
 
