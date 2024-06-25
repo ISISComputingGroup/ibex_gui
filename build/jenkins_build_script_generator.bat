@@ -16,7 +16,7 @@ call build_script_generator.bat "" %TARGET_DIR%
 if %errorlevel% neq 0 exit /b %errorlevel%
 set build_error_level=%errorlevel%
 
-set PUBLISH=YES
+set PUBLISH=NO
 if "%RELEASE%" == "YES" set PUBLISH=YES
 if "%DEPLOY%" == "YES" set PUBLISH=YES
 if "%PUBLISH%" == "NO" exit /b 0
