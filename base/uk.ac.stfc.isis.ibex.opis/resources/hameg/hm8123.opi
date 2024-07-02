@@ -18,7 +18,7 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <PV_ROOT>$(P)$(REPLACE_WITH_IOC_NAME_MACRO)</PV_ROOT>
+    <PV_ROOT>$(P)$(HAMEG8123)</PV_ROOT>
   </macros>
   <name>$(NAME)</name>
   <rules />
@@ -444,7 +444,7 @@ $(pv_value)</tooltip>
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT):COUNTS</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -527,7 +527,15 @@ $(pv_value)</tooltip>
       <y>30</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>1</value>
+          <timeout>10</timeout>
+          <confirm_message></confirm_message>
+          <description></description>
+        </action>
+      </actions>
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -546,7 +554,7 @@ $(pv_value)</tooltip>
       <image></image>
       <name>Button_1</name>
       <push_action_index>0</push_action_index>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT):START_COUNTING:SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -568,7 +576,15 @@ $(pv_value)</tooltip>
       <y>102</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>1</value>
+          <timeout>10</timeout>
+          <confirm_message></confirm_message>
+          <description></description>
+        </action>
+      </actions>
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -587,7 +603,7 @@ $(pv_value)</tooltip>
       <image></image>
       <name>Button_1</name>
       <push_action_index>0</push_action_index>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT):STOP_COUNTING:SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -609,7 +625,15 @@ $(pv_value)</tooltip>
       <y>102</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>1</value>
+          <timeout>10</timeout>
+          <confirm_message></confirm_message>
+          <description></description>
+        </action>
+      </actions>
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -628,7 +652,7 @@ $(pv_value)</tooltip>
       <image></image>
       <name>Button_1</name>
       <push_action_index>0</push_action_index>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT):RESET_COUNTS:SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -673,7 +697,7 @@ $(pv_value)</tooltip>
       <height>23</height>
       <items_from_pv>true</items_from_pv>
       <name>Combo</name>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT):FUNCTION:SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -923,7 +947,7 @@ $(pv_value)</tooltip>
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT):GATETIME</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -948,7 +972,15 @@ $(pv_value)</tooltip>
       <y>30</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>1</value>
+          <timeout>10</timeout>
+          <confirm_message></confirm_message>
+          <description></description>
+        </action>
+      </actions>
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -967,7 +999,7 @@ $(pv_value)</tooltip>
       <image></image>
       <name>Button_1</name>
       <push_action_index>0</push_action_index>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT):ARMED:SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -989,7 +1021,15 @@ $(pv_value)</tooltip>
       <y>114</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>1</value>
+          <timeout>10</timeout>
+          <confirm_message></confirm_message>
+          <description></description>
+        </action>
+      </actions>
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1008,7 +1048,7 @@ $(pv_value)</tooltip>
       <image></image>
       <name>Button_1</name>
       <push_action_index>0</push_action_index>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT):GATED:SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -1030,7 +1070,15 @@ $(pv_value)</tooltip>
       <y>114</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>1</value>
+          <timeout>10</timeout>
+          <confirm_message></confirm_message>
+          <description></description>
+        </action>
+      </actions>
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1049,7 +1097,7 @@ $(pv_value)</tooltip>
       <image></image>
       <name>Button_1</name>
       <push_action_index>0</push_action_index>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT):HOLD:SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -1071,7 +1119,15 @@ $(pv_value)</tooltip>
       <y>151</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>1</value>
+          <timeout>10</timeout>
+          <confirm_message></confirm_message>
+          <description></description>
+        </action>
+      </actions>
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1090,7 +1146,7 @@ $(pv_value)</tooltip>
       <image></image>
       <name>Button_1</name>
       <push_action_index>0</push_action_index>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT):OFFSET:SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -1112,7 +1168,15 @@ $(pv_value)</tooltip>
       <y>151</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-      <actions hook="false" hook_all="false" />
+      <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>1</value>
+          <timeout>10</timeout>
+          <confirm_message></confirm_message>
+          <description></description>
+        </action>
+      </actions>
       <border_alarm_sensitive>false</border_alarm_sensitive>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
@@ -1131,7 +1195,7 @@ $(pv_value)</tooltip>
       <image></image>
       <name>Button_1</name>
       <push_action_index>0</push_action_index>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT):TRIGGER:SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -1185,7 +1249,7 @@ $(pv_value)</tooltip>
       <name>Text Input</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT):GATETIME:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -1242,7 +1306,7 @@ $(pv_value)</tooltip>
       <name>Text Input</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT):PULSES_PER_REV:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -1294,7 +1358,7 @@ $(pv_value)</tooltip>
       <name>Text Update</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT):PULSES_PER_REV</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
