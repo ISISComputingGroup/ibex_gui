@@ -1996,6 +1996,22 @@
       </value>
     </entry>
     <entry>
+      <key>HAMEG8123</key>
+      <value>
+        <type>HAMEG8123</type>
+        <path>hameg/hm8123.opi</path>
+        <description>The OPI for the Hameg HM8123 Programmable counter.</description>
+        <macros>
+          <macro>
+            <name>HAMEG8123</name>
+            <description>The Superlogics PV prefix (e.g. HAMEG8123_01).</description>
+            <default>HAMEG8123_01</default>
+          </macro>
+        </macros>
+        <categories/>
+      </value>
+    </entry>
+    <entry>
       <key>Kepco</key>
       <value>
         <type>KEPCO</type>
