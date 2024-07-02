@@ -506,7 +506,7 @@ $(pv_value)</tooltip>
         <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
       </on_color>
       <on_label>ON</on_label>
-      <pv_name></pv_name>
+      <pv_name>$(PV_ROOT):COUNTING</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -528,6 +528,13 @@ $(pv_value)</tooltip>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false">
+        <action type="WRITE_PV">
+          <pv_name>$(pv_name)</pv_name>
+          <value>1</value>
+          <timeout>10</timeout>
+          <confirm_message></confirm_message>
+          <description></description>
+        </action>
         <action type="WRITE_PV">
           <pv_name>$(pv_name)</pv_name>
           <value>1</value>
@@ -580,6 +587,13 @@ $(pv_value)</tooltip>
         <action type="WRITE_PV">
           <pv_name>$(pv_name)</pv_name>
           <value>1</value>
+          <timeout>10</timeout>
+          <confirm_message></confirm_message>
+          <description></description>
+        </action>
+        <action type="WRITE_PV">
+          <pv_name>loc://counting</pv_name>
+          <value>0</value>
           <timeout>10</timeout>
           <confirm_message></confirm_message>
           <description></description>
