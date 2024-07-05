@@ -1998,7 +1998,7 @@
     <entry>
       <key>Hameg HM8123 Programmable Counter</key>
       <value>
-        <type>HAMEG8123</type>
+        <type>COUNTER</type>
         <path>hameg/hm8123.opi</path>
         <description>The OPI for the Hameg HM8123 Programmable counter.</description>
         <macros>
@@ -2008,7 +2008,9 @@
             <default>HAMEG8123_01</default>
           </macro>
         </macros>
-        <categories/>
+        <categories>
+        <category>Counters</category>
+        </categories>
       </value>
     </entry>
     <entry>
