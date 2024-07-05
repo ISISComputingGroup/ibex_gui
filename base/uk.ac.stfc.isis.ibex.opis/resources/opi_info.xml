@@ -2004,7 +2004,7 @@
         <macros>
           <macro>
             <name>HAMEG8123</name>
-            <description>The Superlogics PV prefix (e.g. HAMEG8123_01).</description>
+            <description>The Hameg PV prefix (e.g. HAMEG8123_01).</description>
             <default>HAMEG8123_01</default>
           </macro>
         </macros>
