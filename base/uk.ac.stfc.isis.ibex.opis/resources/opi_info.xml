@@ -1996,7 +1996,7 @@
       </value>
     </entry>
     <entry>
-      <key>HAMEG8123</key>
+      <key>Hameg HM8123 Programmable Counter</key>
       <value>
         <type>HAMEG8123</type>
         <path>hameg/hm8123.opi</path>
