@@ -220,8 +220,8 @@
       <height>25</height>
       <macros>
         <include_parent_macros>true</include_parent_macros>
-        <PARAM_NAME>Sample In Beam</PARAM_NAME>
-        <PARAM_PV>PARAM:SAMPINBEAM</PARAM_PV>
+        <PARAM_NAME>FOMinBeam(LaserOut)</PARAM_NAME>
+        <PARAM_PV>PARAM:FOMINBEAM</PARAM_PV>
       </macros>
       <name>_3</name>
       <opi_file>../param_inout.opi</opi_file>
