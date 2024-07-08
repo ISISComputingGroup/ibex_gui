@@ -1,8 +1,10 @@
 import unittest
-from mock import patch
+try:
+    from unittest.mock import patch, Mock, MagicMock
+except ImportError:
+    from mock import patch, Mock, MagicMock
 from git_utils import DefinitionsRepository, DEFAULT_REPO_PATH
 
-from mock import Mock, MagicMock
 from git.exc import GitCommandError
 
 

@@ -1,5 +1,9 @@
 import unittest
-from mock import MagicMock
+try:
+    from unittest.mock import MagicMock
+except ImportError:
+    from mock import MagicMock
+
 from script_definition_loader import Generator, ScriptDefinitionWrapper
 from typing import Dict, AnyStr, List
 from hamcrest.core import assert_that, equal_to
