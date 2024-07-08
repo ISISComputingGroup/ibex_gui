@@ -180,6 +180,7 @@ public final class ComponentIcons {
             	return "lcr_circuit"; 
             case DSC:
             	return "hrpd_in_situ_dsc";
+            case COUNTER:
             case MULTIMETER:
                 return "multimeter";
             case ROT_SAMPLE_CHANGER:
