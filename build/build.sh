@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-export JAVA_HOME=/opt/jdk-17
+#export JAVA_HOME=/opt/jdk-17
 export PATH=${JAVA_HOME}/bin:${PATH}
 
 SCRIPT=$(readlink -f "${BASH_SOURCE[0]}")
