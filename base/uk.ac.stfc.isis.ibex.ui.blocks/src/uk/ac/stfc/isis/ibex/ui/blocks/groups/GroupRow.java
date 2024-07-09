@@ -175,6 +175,7 @@ public class GroupRow extends Composite {
     
     private Label boundLabelMaker(Composite composite, int style, Optional<String> text, DisplayBlock block, String propertyName) {
         Label label = new Label(composite, style);
+        label.setData("org.eclipse.e4.ui.css.CssClassName", "block");
 
         text.ifPresent(label::setText);
 
