@@ -3,6 +3,10 @@ set -o errexit
 version=0.0 # dummy version, will have git in release field
 gitver=`git rev-parse --short HEAD`
 release=${BUILD_NUMBER}.`date +%Y%m%d`git${gitver}
+if test -z "$JAVA_HOME"; then
+    java_path=`which java`
+    export JAVA_HOME=`dirname ${java_path}`
+fi
 sh build.sh
 sh build_rpm.sh ${version} ${release}
 mkdir -p /misc/babylon/Scratch/IBEX/Linux
