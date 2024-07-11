@@ -26,6 +26,7 @@ Autoreq:    0
 ## stripping symbols breaks some numpy libraries
 %define debug_package %{nil}
 %define __strip /bin/true
+%define _build_id_links none
 
 #BuildRequires:    
 #Requires:    
@@ -48,9 +49,6 @@ mkdir -p %{buildroot}/usr/local/bin/
 ( cd %{buildroot}/usr/local/bin; ln -s ../ibex/client/ibex-client . )
 
 echo CS:INSTLIST:NONE>%{buildroot}/usr/local/ibex/etc/instpv.txt
-
-%clean
-rm -fr "$RPM_BUILD_ROOT"
 
 %files
 /usr/local/ibex/client/
