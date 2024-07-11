@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-#export JAVA_HOME=/opt/jdk-17
+export JAVA_HOME=/etc/alternatives/java_sdk
 export PATH=${JAVA_HOME}/bin:${PATH}
 export JAVA_TOOL_OPTIONS="-Djdk.util.zip.disableZip64ExtraFieldValidation=true"
 
