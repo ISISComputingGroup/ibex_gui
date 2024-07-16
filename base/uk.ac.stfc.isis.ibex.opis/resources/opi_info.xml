@@ -3763,16 +3763,19 @@
     <entry>
       <key>ENVMON</key>
       <value>
-        <categories/>
-        <type>UNKNOWN</type>
+        <type>EUROTHERM</type>
         <path>envmon.opi</path>
-        <description>The OPI for the ENVMON</description>
+        <description>The OPI for the ISIS Environment Monitor</description>
         <macros>
           <macro>
             <name>ENVMON</name>
             <description>The ENVMON PV prefix (e.g. ENVMON_01)</description>
+            <default>ENVMON_01</default>
           </macro>
         </macros>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
       </value>
     </entry>
   </opis>
