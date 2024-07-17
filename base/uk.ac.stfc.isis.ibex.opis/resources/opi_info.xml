@@ -181,7 +181,7 @@
         </categories>
       </value>
     </entry>
-      <entry>
+    <entry>
       <key>CHIPIR Collimator</key>
       <value>
         <type>OSCILLATING_COLLIMATOR</type>
@@ -2009,7 +2009,7 @@
           </macro>
         </macros>
         <categories>
-        <category>Counters</category>
+          <category>Counters</category>
         </categories>
       </value>
     </entry>
@@ -3758,6 +3758,21 @@
           </macro>
         </macros>
         <categories/>
+      </value>
+    </entry>
+    <entry>
+      <key>HUMIDCEL</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>humidcel.opi</path>
+        <description>The OPI for the HUMIDCEL</description>
+        <macros>
+          <macro>
+            <name>HUMIDCEL</name>
+            <description>The HUMIDCEL PV prefix (e.g. HUMIDCEL_01)</description>
+          </macro>
+        </macros>
       </value>
     </entry>
   </opis>
