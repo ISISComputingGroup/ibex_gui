@@ -71,7 +71,7 @@ if not "%RELEASE%" == "YES" (
 ) 
 
 if not "%RELEASE%" == "YES" (
-    set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
+    set INSTALLDIR=%INSTALLBASEDIR%\BUILD-%BUILD_NUMBER%
 )
 
 if "%RELEASE%" == "YES" (
