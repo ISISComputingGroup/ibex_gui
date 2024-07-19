@@ -1519,7 +1519,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_0_y_pv_value />
     <trace_count>1</trace_count>
     <transparent>false</transparent>
-    <trigger_pv>$(P)CS:IOC:$(DDSSTRES):DEVIOS:HEARTBEAT</trigger_pv>
+    <trigger_pv>$(P)CS:IOC:DDS_STRESS01:DEVIOS:HEARTBEAT</trigger_pv>
     <trigger_pv_value />
     <visible>true</visible>
     <widget_type>XY Graph</widget_type>

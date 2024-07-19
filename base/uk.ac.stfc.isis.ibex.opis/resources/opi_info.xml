@@ -3698,7 +3698,7 @@
         <categories/>
         <type>STRESS_RIG</type>
         <path>dds_tensile_stress_rig.opi</path>
-        <description>The OPI for the LNDYISW</description>
+        <description>The OPI for the DDS Tensile Stress Rig</description>
         <macros>
         </macros>
       </value>
