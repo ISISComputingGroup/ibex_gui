@@ -3729,6 +3729,17 @@
         </macros>
       </value>
     </entry>
+    <entry>	
+      <key>DDS Tensile Stress Rig</key>
+      <value>
+        <categories/>
+        <type>STRESS_RIG</type>
+        <path>dds_tensile_stress_rig.opi</path>
+        <description>The OPI for the DDS Tensile Stress Rig</description>
+        <macros>
+        </macros>
+      </value>
+    </entry>
     <entry>
       <key>SR400</key>
       <value>
