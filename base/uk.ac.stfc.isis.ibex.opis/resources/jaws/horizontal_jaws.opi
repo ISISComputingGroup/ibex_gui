@@ -361,15 +361,15 @@ $(pv_value)</tooltip>
     </scale_options>
     <scripts>
       <path pathString="blades_script.py" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="false">=100</pv>
-        <pv trig="false">=-100</pv>
+        <pv trig="false">loc://$(DID)_CONST_100(100)</pv>
+        <pv trig="false">loc://$(DID)_CONST_N100(-100)</pv>
         <pv trig="false">$(P)$(J):JE</pv>
         <pv trig="false">$(P)$(J):JW</pv>
-        <pv trig="false">=100</pv>
+        <pv trig="false">loc://$(DID)_CONST_100(100)</pv>
         <pv trig="false">$(P)$(J):MAXE</pv>
-        <pv trig="false">=-100</pv>
+        <pv trig="false">loc://$(DID)_CONST_N100(-100)</pv>
         <pv trig="false">$(P)$(J):MINW</pv>
-        <pv trig="true">=1</pv>
+        <pv trig="true">loc://$(DID)_CONST_1(1)</pv>
       </path>
     </scripts>
     <show_units>true</show_units>

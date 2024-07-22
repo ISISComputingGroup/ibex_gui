@@ -76,6 +76,40 @@ class CheckStrictOpiFormat(unittest.TestCase):
             self.fail("\n".join(["On line {}, buffer size {}, was different to the first, {}, in same graph xy widget."
                                 .format(*error) for error in errors]))
 
+    def test_font_definitions_are_correct(self):
+        font_checker = DefinitionChecker(self.xml_root, "font")
+        errors = font_checker.check_and_output_errors()
+        if len(errors):
+            self.fail("\n".join(["On line {}, font '{}', font style used is not correct".format(*error) for error in errors]))
+
+    def test_GIVEN_plot_area_THEN_it_has_a_trigger_PV(self):
+        errors = get_trigger_pv(self.xml_root)
+        if len(errors):
+            message = "\n".join(["Plot on line {} has no trigger PV, it should be triggered on a heartbeat"
+                                .format(*error) for error in errors])
+            self.fail(message)
+            
+    def test_GIVEN_trigger_pv_THEN_it_is_not_in_equal_const_format(self):
+        for item in self.xml_root.xpath("//pv"):
+            if item.text.startswith("="):
+                self.fail("Do not use =CONST syntax in OPIs as this causes a memory/CPU leak. Use loc://$(DID)_CONST_N(N) instead")
+
+
+class CheckOpiFormat(CheckStrictOpiFormat):
+
+    def test_rgb_definitions_are_correct(self):
+        rgb_checker = DefinitionChecker(self.xml_root, "color")
+        errors = rgb_checker.check_and_output_errors()
+        if len(errors):
+            self.fail("\n".join(["On line {}, colour '{}', RGB values are not correct.".format(*error) for error in errors]))
+
+    def test_GIVEN_plot_area_THEN_it_has_correct_plot_area_background_colour(self):
+        errors = check_plot_area_backgrounds(self.xml_root)
+        if len(errors):
+            message = "\n".join(["Plot on line {} with name '{}' has incorrect plot area background colour"
+                                .format(*error) for error in errors])
+            self.fail(message)
+
     def test_GIVEN_an_opi_file_with_grouping_containers_WHEN_checking_the_background_colour_THEN_it_is_the_isis_background(self):
         self._assert_colour_correct("background_color", "groupingContainer", ["ISIS_OPI_Background"])
 
@@ -96,35 +130,6 @@ class CheckStrictOpiFormat(unittest.TestCase):
 
     def test_GIVEN_an_opi_file_with_led_WHEN_checking_off_colour_THEN_it_is_the_isis_led_off_colour(self):
         self._assert_colour_correct("off_color", "LED", ["ISIS_Green_LED_Off", "ISIS_Red_LED_Off"])
-
-    def test_rgb_definitions_are_correct(self):
-        rgb_checker = DefinitionChecker(self.xml_root, "color")
-        errors = rgb_checker.check_and_output_errors()
-        if len(errors):
-            self.fail("\n".join(["On line {}, colour '{}', RGB values are not correct.".format(*error) for error in errors]))
-
-    def test_font_definitions_are_correct(self):
-        font_checker = DefinitionChecker(self.xml_root, "font")
-        errors = font_checker.check_and_output_errors()
-        if len(errors):
-            self.fail("\n".join(["On line {}, font '{}', font style used is not correct".format(*error) for error in errors]))
-
-    def test_GIVEN_plot_area_THEN_it_has_correct_plot_area_background_colour(self):
-        errors = check_plot_area_backgrounds(self.xml_root)
-        if len(errors):
-            message = "\n".join(["Plot on line {} with name '{}' has incorrect plot area background colour"
-                                .format(*error) for error in errors])
-            self.fail(message)
-
-    def test_GIVEN_plot_area_THEN_it_has_a_trigger_PV(self):
-        errors = get_trigger_pv(self.xml_root)
-        if len(errors):
-            message = "\n".join(["Plot on line {} has no trigger PV, it should be triggered on a heartbeat"
-                                .format(*error) for error in errors])
-            self.fail(message)
-
-
-class CheckOpiFormat(CheckStrictOpiFormat):
 
     def _assert_widgets_inside_x_y_boundary(self):
         errors = get_widgets_outside_of_boundary(self.xml_root)

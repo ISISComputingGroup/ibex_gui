@@ -165,7 +165,7 @@
     </scale_options>
     <scripts>
       <path pathString="spinner_choose_axis.py" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">=1</pv>
+        <pv trig="true">loc://$(DID)_CONST_1(1)</pv>
       </path>
     </scripts>
     <show_text>true</show_text>
