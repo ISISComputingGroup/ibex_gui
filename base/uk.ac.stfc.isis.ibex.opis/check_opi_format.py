@@ -76,12 +76,6 @@ class CheckStrictOpiFormat(unittest.TestCase):
             self.fail("\n".join(["On line {}, buffer size {}, was different to the first, {}, in same graph xy widget."
                                 .format(*error) for error in errors]))
 
-    def test_font_definitions_are_correct(self):
-        font_checker = DefinitionChecker(self.xml_root, "font")
-        errors = font_checker.check_and_output_errors()
-        if len(errors):
-            self.fail("\n".join(["On line {}, font '{}', font style used is not correct".format(*error) for error in errors]))
-
     def test_GIVEN_plot_area_THEN_it_has_a_trigger_PV(self):
         errors = get_trigger_pv(self.xml_root)
         if len(errors):
@@ -96,6 +90,12 @@ class CheckStrictOpiFormat(unittest.TestCase):
 
 
 class CheckOpiFormat(CheckStrictOpiFormat):
+
+    def test_font_definitions_are_correct(self):
+        font_checker = DefinitionChecker(self.xml_root, "font")
+        errors = font_checker.check_and_output_errors()
+        if len(errors):
+            self.fail("\n".join(["On line {}, font '{}', font style used is not correct".format(*error) for error in errors]))
 
     def test_rgb_definitions_are_correct(self):
         rgb_checker = DefinitionChecker(self.xml_root, "color")
