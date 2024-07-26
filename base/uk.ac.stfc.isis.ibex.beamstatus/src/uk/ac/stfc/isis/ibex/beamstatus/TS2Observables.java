@@ -101,7 +101,7 @@ public class TS2Observables extends EndStationObservables {
 		decoupledModeratorRuntimeLimit = new FacilityPV(MOD_PREFIX + "RTLIM", adaptNumber(
 				obsFactory.getSwitchableObservable(new NumberWithPrecisionChannel(), MOD_PREFIX + "RTLIM")));
 
-		decoupledModeratorAnnealPressure = new FacilityPV(MOD_PREFIX + "RTLIM", adaptEnum(
+		decoupledModeratorAnnealPressure = new FacilityPV(MOD_PREFIX + "ANNPLOW:STAT", adaptEnum(
 				obsFactory.getSwitchableObservable(new EnumChannel<YesNo>(YesNo.class), MOD_PREFIX + "ANNPLOW:STAT")));
 
 		decoupledModeratorUAHBeam = new FacilityPV(MOD_PREFIX + "BEAM",
