@@ -219,7 +219,10 @@ public enum ComponentType {
     /** STANDARD MAGNET. */
     MAGNET,
     /** Counters. */
-    COUNTER;
+    COUNTER,
+	//** PHOTON COUNTER. */
+	PHOTON_COUNTER;
+	
 
     private Target target;
 
