@@ -250,6 +250,8 @@ public final class ComponentIcons {
             	return "delay_generators";
             case FUNCTION_GENERATOR:
             	return "function_generator";
+            case PHOTON_COUNTER:
+            	return "photon_counter";
             default:
                 return "cog";
         }

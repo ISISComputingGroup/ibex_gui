@@ -3743,7 +3743,7 @@
     <entry>
       <key>SR400</key>
       <value>
-        <type>UNKNOWN</type>
+        <type>PHOTON_COUNTER</type>
         <path>stanford_sr400_photon_counter.opi</path>
         <description>The OPI for the Stanford SR400 Photon Counter.</description>
         <macros>
