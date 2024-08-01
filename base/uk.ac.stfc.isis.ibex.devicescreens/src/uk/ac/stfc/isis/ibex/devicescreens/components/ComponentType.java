@@ -220,7 +220,7 @@ public enum ComponentType {
     MAGNET,
     /** Counters. */
     COUNTER,
-	//** PHOTON COUNTER. */
+	/** PHOTON COUNTER. */
 	PHOTON_COUNTER;
 	
 
