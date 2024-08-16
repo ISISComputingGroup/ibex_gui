@@ -533,6 +533,19 @@
       </value>
     </entry>
     <entry>
+      <key>TPAR FILE EDITOR</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>TPAR_Editor/tpar_editor.opi</path>
+        <description>The OPI for the TPAR file editor</description>
+        <macros>
+        </macros>
+        <categories>
+          <category>Pressure sensors</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>In Out Monitor</key>
       <value>
         <type>MOVINGMONITOR</type>
