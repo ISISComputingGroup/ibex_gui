@@ -18,7 +18,7 @@
   <height>500</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <FILE_DIR>C:\Instrument\Dev\</FILE_DIR>
+    <PV_ROOT>$(P)$(IOCNAME)</PV_ROOT>
   </macros>
   <name></name>
   <rules />
@@ -182,7 +182,7 @@ $(pv_value)</tooltip>
     <name>Text Input</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>TE:NDW2455:MUONTPAR_01:FILE_NAME:SP</pv_name>
+    <pv_name>$(PV_ROOT):FILE_NAME:SP</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules>
@@ -190,7 +190,7 @@ $(pv_value)</tooltip>
         <exp bool_exp="1">
           <value>pvStr0</value>
         </exp>
-        <pv trig="true">TE:NDW2455:MUONTPAR_01:FILE_NAME</pv>
+        <pv trig="true">$(PV_ROOT):FILE_NAME</pv>
       </rule>
     </rules>
     <scale_options>
@@ -216,7 +216,7 @@ $(pv_value)</tooltip>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
     <actions hook="false" hook_all="false">
       <action type="WRITE_PV">
-        <pv_name>$(P)MUONTPAR_01:SAVE_FILE</pv_name>
+        <pv_name>$(PV_ROOT):SAVE_FILE</pv_name>
         <value>1</value>
         <timeout>10</timeout>
         <confirm_message></confirm_message>
@@ -379,7 +379,7 @@ NOTE: To press enter as a "SAVE" function in the text-box use CTRL-ENTER.</text>
     <name>TPAR_TEMP_TEXT</name>
     <precision>0</precision>
     <precision_from_pv>false</precision_from_pv>
-    <pv_name>TE:NDW2455:MUONTPAR_01:LINES_ARRAY:SP {"longString":true}</pv_name>
+    <pv_name>$(PV_ROOT):LINES_ARRAY:SP {"longString":true}</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules>
@@ -387,19 +387,13 @@ NOTE: To press enter as a "SAVE" function in the text-box use CTRL-ENTER.</text>
         <exp bool_exp="1">
           <value>pvStr0</value>
         </exp>
-        <pv trig="true">TE:NDW2455:MUONTPAR_01:LINES_ARRAY {"longString":true}</pv>
+        <pv trig="true">$(PV_ROOT):LINES_ARRAY {"longString":true}</pv>
       </rule>
       <rule name="Keep text at top of text box otherwise centers" prop_id="vertical_alignment" out_exp="true">
         <exp bool_exp="1">
           <value>0</value>
         </exp>
-        <pv trig="true">TE:NDW2455:MUONTPAR_01:LINES_ARRAY</pv>
-      </rule>
-      <rule name="V scroll" prop_id="show_v_scroll" out_exp="true">
-        <exp bool_exp="1">
-          <value>true</value>
-        </exp>
-        <pv trig="true">TE:NDW2455:MUONTPAR_01:LINES_ARRAY</pv>
+        <pv trig="true">$(PV_ROOT):LINES_ARRAY</pv>
       </rule>
     </rules>
     <scale_options>
@@ -455,7 +449,7 @@ $(pv_value)</tooltip>
     <name>Text Input_1</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(P)MUONTPAR_01:FILE_DIR</pv_name>
+    <pv_name>$(PV_ROOT):FILE_DIR</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />
@@ -482,7 +476,7 @@ $(pv_value)</tooltip>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
     <actions hook="false" hook_all="false">
       <action type="WRITE_PV">
-        <pv_name>TE:NDW2455:MUONTPAR_01:RESET</pv_name>
+        <pv_name>$(PV_ROOT):RESET</pv_name>
         <value>1</value>
         <timeout>10</timeout>
         <confirm_message></confirm_message>
@@ -564,7 +558,7 @@ $(pv_value)</tooltip>
     <name>TPAR_TEMP_TEXT_1</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>TE:NDW2455:MUONTPAR_01:LOG {"longString":true}</pv_name>
+    <pv_name>$(PV_ROOT):LOG {"longString":true}</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />

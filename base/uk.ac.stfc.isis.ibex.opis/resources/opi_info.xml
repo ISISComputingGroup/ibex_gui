@@ -539,6 +539,12 @@
         <path>TPAR_Editor/tpar_editor.opi</path>
         <description>The OPI for the TPAR file editor</description>
         <macros>
+                  <macro>
+        
+         <name>IOCNAME</name>
+            <description>The IOC name (e.g. MUONTPAR_01).</description>
+            <default>MUONTPAR_01</default>
+            </macro>
         </macros>
         <categories>
           <category>Pressure sensors</category>
