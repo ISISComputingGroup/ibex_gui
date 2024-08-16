@@ -88,8 +88,8 @@ $(pv_value)</tooltip>
     <widget_type>Rectangle</widget_type>
     <width>900</width>
     <wuid>-14e91752:190e46ee02e:-7cc2</wuid>
-    <x>0</x>
-    <y>0</y>
+    <x>3</x>
+    <y>10</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -264,8 +264,8 @@ $(pv_value)</tooltip>
     <widget_type>Action Button</widget_type>
     <width>157</width>
     <wuid>-14e91752:190e46ee02e:-788e</wuid>
-    <x>203</x>
-    <y>450</y>
+    <x>204</x>
+    <y>456</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -301,11 +301,11 @@ $(pv_value)</tooltip>
     <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
     <widget_type>Label</widget_type>
-    <width>253</width>
+    <width>375</width>
     <wrap_words>false</wrap_words>
     <wuid>-14e91752:190e46ee02e:-7791</wuid>
-    <x>326</x>
-    <y>15</y>
+    <x>265</x>
+    <y>24</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
     <actions hook="false" hook_all="false" />
@@ -325,7 +325,7 @@ $(pv_value)</tooltip>
     <foreground_color>
       <color red="0" green="0" blue="0" />
     </foreground_color>
-    <height>34</height>
+    <height>43</height>
     <horizontal_alignment>0</horizontal_alignment>
     <name>Label</name>
     <rules />
@@ -336,7 +336,8 @@ $(pv_value)</tooltip>
     </scale_options>
     <scripts />
     <text>NOTE: Displayed in the text field is a temporary version of the file. Only clicking the "Save To File" button will write the data back to the file.&#xD;
-NOTE: To press enter as a "SAVE" function in the text-box use CTRL-ENTER.</text>
+NOTE: To press enter as a "SAVE" function in the text-box use CTRL-ENTER.&#xD;
+NOTE: When text wraps in the text-box it will appear as 2 lines when the text-box is active but one when not.</text>
     <tooltip></tooltip>
     <transparent>true</transparent>
     <vertical_alignment>1</vertical_alignment>
@@ -346,7 +347,7 @@ NOTE: To press enter as a "SAVE" function in the text-box use CTRL-ENTER.</text>
     <wrap_words>false</wrap_words>
     <wuid>-14e91752:190e46ee02e:-759c</wuid>
     <x>29</x>
-    <y>408</y>
+    <y>402</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
     <actions hook="true" hook_all="false" />
@@ -383,17 +384,11 @@ NOTE: To press enter as a "SAVE" function in the text-box use CTRL-ENTER.</text>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules>
-      <rule name="Restrict text of textbox to be only of non SP text (so that it shows file value even if SP not been set yet)" prop_id="text" out_exp="true">
-        <exp bool_exp="1">
-          <value>pvStr0</value>
-        </exp>
-        <pv trig="true">$(PV_ROOT):LINES_ARRAY {"longString":true}</pv>
-      </rule>
       <rule name="Keep text at top of text box otherwise centers" prop_id="vertical_alignment" out_exp="true">
-        <exp bool_exp="1">
+        <exp bool_exp="0">
           <value>0</value>
         </exp>
-        <pv trig="true">$(PV_ROOT):LINES_ARRAY</pv>
+        <pv trig="true">$(PV_ROOT):LINES_ARRAY:SP</pv>
       </rule>
     </rules>
     <scale_options>
@@ -524,8 +519,8 @@ $(pv_value)</tooltip>
     <widget_type>Action Button</widget_type>
     <width>157</width>
     <wuid>-7883c3fa:1914b48c6dc:-70ca</wuid>
-    <x>28</x>
-    <y>450</y>
+    <x>29</x>
+    <y>456</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
     <actions hook="true" hook_all="false" />
