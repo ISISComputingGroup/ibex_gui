@@ -3789,5 +3789,23 @@
         </categories>
       </value>
     </entry>
+    <entry>
+      <key>CHIPIR Filter Set</key>
+      <value>
+        <type></type>
+        <path>chipir_filter_set.opi</path>
+        <description>The OPI for the CHIPIR Filter Set</description>
+        <macros>
+          <macro>
+            <name>SHUTTER_AND_FILTER_CONTROL</name>
+            <description>The CHIPIR Filter Set PV Prefix (e.g TC_01)</description>
+            <default>TC_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>UNKNOWN</category>
+        </categories>
+      </value>
+    </entry>
   </opis>
 </descriptions>
