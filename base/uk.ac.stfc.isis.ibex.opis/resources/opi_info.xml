@@ -3792,18 +3792,18 @@
     <entry>
       <key>CHIPIR Filter Set</key>
       <value>
-        <type></type>
+        <type>UNKNOWN</type>
         <path>chipir_filter_set.opi</path>
         <description>The OPI for the CHIPIR Filter Set</description>
         <macros>
           <macro>
             <name>SHUTTER_AND_FILTER_CONTROL</name>
-            <description>The CHIPIR Filter Set PV Prefix (e.g TC_01)</description>
+            <description>The TC IOC number eg. TC_01</description>
             <default>TC_01</default>
           </macro>
         </macros>
         <categories>
-          <category>UNKNOWN</category>
+          <category>Miscellaneous motion control</category>
         </categories>
       </value>
     </entry>
