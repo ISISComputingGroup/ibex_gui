@@ -200,6 +200,31 @@
       </value>
     </entry>
     <entry>
+      <key>CHIPIR XYZ table</key>
+      <value>
+        <type>OSCILLATING_COLLIMATOR</type>
+        <path>chipir_xyz_table.opi</path>
+        <description>The OPI for the CHIPIR XYZ table.</description>
+        <macros>
+          <macro>
+            <name>MOT_X</name>
+            <description>The motor for X ie. MTR0101</description>
+          </macro>
+          <macro>
+            <name>MOT_Y</name>
+            <description>The motor for Y ie. MTR0102</description>
+          </macro>
+          <macro>
+            <name>MOT_Z</name>
+            <description>The motor for Z ie. MTR0103</description>
+          </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Fermi chopper</key>
       <value>
         <type>FERMI_CHOPPER</type>
