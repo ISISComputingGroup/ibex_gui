@@ -202,7 +202,7 @@
     <entry>
       <key>CHIPIR XYZ table</key>
       <value>
-        <type>OSCILLATING_COLLIMATOR</type>
+        <type>SAMPLESTACK</type>
         <path>chipir_xyz_table.opi</path>
         <description>The OPI for the CHIPIR XYZ table.</description>
         <macros>
