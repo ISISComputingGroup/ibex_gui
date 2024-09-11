@@ -3090,6 +3090,11 @@
             <description>The CAEN PV prefix (e.g. CAENV895_01)</description>
             <default>CAENV895_01</default>
           </macro>
+          <macro>
+            <name>CRATE</name>
+            <description>The crate to communicate with (default 0)</description>
+            <default>0</default>
+          </macro>
         </macros>
         <categories>
           <category>Monitors</category>
