@@ -181,7 +181,7 @@
         </categories>
       </value>
     </entry>
-      <entry>
+    <entry>
       <key>CHIPIR Collimator</key>
       <value>
         <type>OSCILLATING_COLLIMATOR</type>
@@ -192,6 +192,31 @@
             <name>NUMBER</name>
             <description>The Jawset number to show</description>
             <default>1</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>CHIPIR XYZ table</key>
+      <value>
+        <type>SAMPLESTACK</type>
+        <path>chipir_xyz_table.opi</path>
+        <description>The OPI for the CHIPIR XYZ table.</description>
+        <macros>
+          <macro>
+            <name>MOT_X</name>
+            <description>The motor for X ie. MTR0101</description>
+          </macro>
+          <macro>
+            <name>MOT_Y</name>
+            <description>The motor for Y ie. MTR0102</description>
+          </macro>
+          <macro>
+            <name>MOT_Z</name>
+            <description>The motor for Z ie. MTR0103</description>
           </macro>
         </macros>
         <categories>
@@ -2028,7 +2053,7 @@
           </macro>
         </macros>
         <categories>
-        <category>Counters</category>
+          <category>Counters</category>
         </categories>
       </value>
     </entry>
@@ -3084,6 +3109,11 @@
             <description>The CAEN PV prefix (e.g. CAENV895_01)</description>
             <default>CAENV895_01</default>
           </macro>
+          <macro>
+            <name>CRATE</name>
+            <description>The crate to communicate with (default 0)</description>
+            <default>0</default>
+          </macro>
         </macros>
         <categories>
           <category>Monitors</category>
@@ -3762,7 +3792,7 @@
     <entry>
       <key>SR400</key>
       <value>
-        <type>UNKNOWN</type>
+        <type>PHOTON_COUNTER</type>
         <path>stanford_sr400_photon_counter.opi</path>
         <description>The OPI for the Stanford SR400 Photon Counter.</description>
         <macros>
@@ -3788,6 +3818,42 @@
           </macro>
         </macros>
         <categories/>
+      </value>
+    </entry>
+    <entry>
+      <key>ENVMON</key>
+      <value>
+        <type>EUROTHERM</type>
+        <path>envmon.opi</path>
+        <description>The OPI for the ISIS Environment Monitor</description>
+        <macros>
+          <macro>
+            <name>ENVMON</name>
+            <description>The ENVMON PV prefix (e.g. ENVMON_01)</description>
+            <default>ENVMON_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>CHIPIR Filter Set</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>chipir_filter_set.opi</path>
+        <description>The OPI for the CHIPIR Filter Set</description>
+        <macros>
+          <macro>
+            <name>SHUTTER_AND_FILTER_CONTROL</name>
+            <description>The TC IOC number eg. TC_01</description>
+            <default>TC_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
       </value>
     </entry>
   </opis>
