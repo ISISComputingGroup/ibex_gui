@@ -265,8 +265,7 @@ $(pv_value)</tooltip>
     <style>0</style>
     <text>Save To File</text>
     <toggle_button>false</toggle_button>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
+    <tooltip>Manager mode required for saving files</tooltip>
     <visible>true</visible>
     <widget_type>Action Button</widget_type>
     <width>157</width>
