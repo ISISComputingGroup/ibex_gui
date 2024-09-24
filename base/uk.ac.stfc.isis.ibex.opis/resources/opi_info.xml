@@ -3745,7 +3745,7 @@
       </value>
     </entry>
     <entry>
-      <key>LNDYISW</key>
+      <key>Lindy IPower switch</key>
       <value>
         <categories/>
         <type>UNKNOWN</type>
@@ -3755,6 +3755,7 @@
           <macro>
             <name>LNDYISW</name>
             <description>The LNDYISW PV prefix (e.g. LNDYISW_01)</description>
+            <default>LNDYISW_01</default>
           </macro>
         </macros>
       </value>
