@@ -558,6 +558,22 @@
       </value>
     </entry>
     <entry>
+      <key>File editor</key>
+      <value>
+        <type>DEBUG</type>
+        <path>TPAR_Editor/tpar_editor.opi</path>
+        <description>The OPI for a file editor</description>
+        <macros>
+            <macro>
+                <name>IOCNAME</name>
+                <description>The IOC name (e.g. MUONTPAR_01).</description>
+                <default>MUONTPAR_01</default>
+            </macro>
+        </macros>
+        <categories/>
+      </value>
+    </entry>
+    <entry>
       <key>In Out Monitor</key>
       <value>
         <type>MOVINGMONITOR</type>
