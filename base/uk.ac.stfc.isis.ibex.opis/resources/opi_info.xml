@@ -3755,6 +3755,7 @@
           <macro>
             <name>LNDYISW</name>
             <description>The LNDYISW PV prefix (e.g. LNDYISW_01)</description>
+            <default>LNDYISW_01</default>
           </macro>
         </macros>
       </value>
