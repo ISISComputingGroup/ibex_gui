@@ -2,3 +2,11 @@
     swt-maximize-visible: false; 
     swt-minimize-visible: false; 
 }
+
+.block {
+	all: inherit;
+	/* Uncomment the following lines to make font size on blocks larger and/or bold */
+	/* Can be edited in a built client under plugins/uk.ac.stfc.isis.ibex.e4.client/default.css */
+	/* font-size: 10; */
+	/* font-weight: bold; */
+}
