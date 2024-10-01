@@ -41,7 +41,9 @@ public final class Commands {
             + "_mpl_backend.set_up_plot_default(is_primary=True, should_open_ibex_window_on_show=True, max_figures=3)\n"
             + "from genie_python.genie_startup import * \n" 
             + "import os \n"
-            + "os.environ[\"FROM_IBEX\"] = str(True) \n";
+            + "os.environ[\"FROM_IBEX\"] = str(True) \n"
+            + "from ibex_bluesky_core.run_engine import get_run_engine\n"
+            + "RE = get_run_engine()\n";
 
     private Commands() {
     }
