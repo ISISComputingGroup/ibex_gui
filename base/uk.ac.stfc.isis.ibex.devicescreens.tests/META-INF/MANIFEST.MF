@@ -7,7 +7,6 @@ Fragment-Host: uk.ac.stfc.isis.ibex.devicescreens;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Require-Bundle: org.junit;bundle-version="4.11.0",
  uk.ac.stfc.isis.ibex.epics,
- javax.annotation;bundle-version="1.2.0",
  org.hamcrest;bundle-version="1.1.0",
  org.hamcrest.library;bundle-version="1.3.0",
  org.mockito.mockito-core;bundle-version="4.7.0",
