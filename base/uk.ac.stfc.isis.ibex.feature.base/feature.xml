@@ -880,12 +880,4 @@
          id="uk.ac.stfc.isis.ibex.ui.moxas"
          version="0.0.0"/>
 
-   <plugin
-         id="jakarta.activation-api"
-         version="2.1.2"/>
-
-   <plugin
-         id="com.sun.istack.commons-runtime"
-         version="3.0.12"/>
-
 </feature>
