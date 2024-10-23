@@ -689,10 +689,6 @@
          version="0.0.0"/>
 
    <plugin
-         id="com.sun.istack.commons-runtime"
-         version="0.0.0"/>
-
-   <plugin
          id="org.apache.batik.util"
          version="1.13.0.v20200622-2037"/>
 
@@ -714,18 +710,6 @@
 
    <plugin
          id="wrapped.org.jacorb.jacorb-omgapi"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.apache.commons.logging"
-         version="0.0.0"/>
-
-   <plugin
-         id="jakarta.mail-api"
-         version="0.0.0"/>
-
-   <plugin
-         id="jakarta.mail-api.source"
          version="0.0.0"/>
 
 </feature>
