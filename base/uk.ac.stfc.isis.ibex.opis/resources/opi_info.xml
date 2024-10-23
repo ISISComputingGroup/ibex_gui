@@ -3854,5 +3854,20 @@
         </categories>
       </value>
     </entry>
+    <entry>	
+      <key>ATTOCUBE</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>attocube.opi</path>
+        <description>The OPI for the ATTOCUBE</description>
+        <macros>
+          <macro>
+            <name>ATTOCUBE</name>
+            <description>The ATTOCUBE PV prefix (e.g. ATTOCUBE_01)</description>
+          </macro>
+        </macros>
+      </value>
+    </entry>
   </opis>
 </descriptions>
