@@ -712,4 +712,8 @@
          id="wrapped.org.jacorb.jacorb-omgapi"
          version="0.0.0"/>
 
+   <plugin
+         id="javax.activation"
+         version="<2.0.0"/>
+
 </feature>
