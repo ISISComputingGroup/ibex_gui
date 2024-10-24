@@ -32,6 +32,7 @@ public final class PVManagerSettings {
         try {
             System.setProperty(DIIRT_HOME_ENV_VAR, 
                 FileLocator.resolve(PVManagerSettings.class.getResource(DIIRT_DIR)).getPath());
+            IsisLog.getLogger(PVManagerSettings.class).info("Setting diirt.home env var to %s" + FileLocator.resolve(PVManagerSettings.class.getResource(DIIRT_DIR)).getPath().toString());
         } catch (IOException | RuntimeException err) {
             IsisLog.getLogger(PVManagerSettings.class).error(err.getMessage(), err);
         }

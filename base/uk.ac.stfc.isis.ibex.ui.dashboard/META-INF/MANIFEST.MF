@@ -20,7 +20,7 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.instrument,
  com.google.gson,
  org.eclipse.swt,
- javax.annotation;bundle-version="1.2.0",
+ jakarta.annotation-api;bundle-version="[1.3.5,1.3.5]",
  uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.epics.switching,
  org.apache.commons.lang
