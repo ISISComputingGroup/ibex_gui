@@ -7,7 +7,7 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<tycho.version>2.7.4</tycho.version>
+		<tycho.version>4.0.9</tycho.version>
 		<tycho-repo.url>https://oss.sonatype.org/content/groups/public/</tycho-repo.url>
 		<photon-repo.url>http://download.eclipse.org/releases/2023-03</photon-repo.url>
 		<photon-updates-repo.url>http://download.eclipse.org/eclipse/updates/4.33</photon-updates-repo.url>
