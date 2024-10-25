@@ -497,18 +497,6 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.hamcrest"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.hamcrest.core"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.hamcrest.library"
-         version="0.0.0"/>
-
-   <plugin
          id="com.sun.jersey.bundle"
          version="0.0.0"/>
 
@@ -582,18 +570,6 @@
 
    <plugin
          id="javax.xml.soap"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.hamcrest"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.hamcrest.core"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.hamcrest.library"
          version="0.0.0"/>
 
    <plugin
