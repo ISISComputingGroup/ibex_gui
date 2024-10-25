@@ -729,10 +729,6 @@
          version="0.0.0"/>
 
    <plugin
-         id="wrapped.org.apache.activemq.activemq-all.source"
-         version="0.0.0"/>
-
-   <plugin
          id="joda-time"
          version="0.0.0"/>
 
@@ -766,10 +762,6 @@
 
    <plugin
          id="wrapped.org.jacorb.jacorb-omgapi"
-         version="0.0.0"/>
-
-   <plugin
-         id="wrapped.org.glassfish.tyrus.bundles.tyrus-standalone-client"
          version="0.0.0"/>
 
    <plugin
@@ -821,10 +813,6 @@
          version="0.0.0"/>
 
    <plugin
-         id="wrapped.org.apache.logging.log4j.log4j-api"
-         version="0.0.0"/>
-
-   <plugin
          id="jakarta.xml.bind-api"
          version="0.0.0"/>
 
@@ -841,11 +829,15 @@
          version="0.0.0"/>
 
    <plugin
-         id="wrapped.org.mockito.mockito-inline"
+         id="uk.ac.stfc.isis.ibex.ui.moxas"
          version="0.0.0"/>
 
    <plugin
-         id="uk.ac.stfc.isis.ibex.ui.moxas"
+         id="org.glassfish.tyrus.bundles.tyrus-standalone-client"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.log4j"
          version="0.0.0"/>
 
 </feature>

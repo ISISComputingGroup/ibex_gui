@@ -22,7 +22,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.e4.ui.workbench,
  org.eclipse.e4.core.contexts;bundle-version="1.8.400",
  wrapped.net.sf.py4j.py4j;bundle-version="0.10.9",
- wrapped.org.glassfish.tyrus.bundles.tyrus-standalone-client;bundle-version="2.1.0"
+ org.glassfish.tyrus.bundles.tyrus-standalone-client;bundle-version="2.2.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.ui.graphing

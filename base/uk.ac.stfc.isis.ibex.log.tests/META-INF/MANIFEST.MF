@@ -4,6 +4,7 @@ Bundle-Name: Tests
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.log.tests
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: uk.ac.stfc.isis.ibex.log;bundle-version="1.0.0"
+Import-Package: org.apache.logging.log4j.core;version="2.24.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Require-Bundle: org.junit;bundle-version="4.11.0",
  org.mockito.mockito-core;bundle-version="4.7.0",
