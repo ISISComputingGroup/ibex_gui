@@ -20,9 +20,9 @@ package uk.ac.stfc.isis.ibex.activemq;
 
 import java.net.ConnectException;
 
-import jakarta.jms.Connection;
-import jakarta.jms.ExceptionListener;
-import jakarta.jms.JMSException;
+import javax.jms.Connection;
+import javax.jms.ExceptionListener;
+import javax.jms.JMSException;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.logging.log4j.Logger;

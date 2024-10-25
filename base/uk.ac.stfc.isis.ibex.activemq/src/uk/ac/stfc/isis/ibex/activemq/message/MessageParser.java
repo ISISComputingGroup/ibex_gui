@@ -24,9 +24,9 @@ package uk.ac.stfc.isis.ibex.activemq.message;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.jms.JMSException;
-import jakarta.jms.MessageConsumer;
-import jakarta.jms.TextMessage;
+import javax.jms.JMSException;
+import javax.jms.MessageConsumer;
+import javax.jms.TextMessage;
 
 /**
  * This class will listen for incoming active MQ messages, parse them into the
