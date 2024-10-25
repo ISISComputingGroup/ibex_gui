@@ -23,10 +23,6 @@
 		<unit id="org.eclipse.fx.slf4j.target.feature.feature.group" version="3.9.0.202209211359"/>
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-		<repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20221123021534/repository/"/>
-		<unit id="jakarta.servlet.jsp.source" version="3.0.0.v20221112-0806"/>
-	</location>
-	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="http://download.eclipse.org/e4/snapshots/org.eclipse.e4.tools/latest"/>
 		<unit id="org.eclipse.e4.tools.spies.feature.feature.group" version="0.0.0"/>
 	</location>
