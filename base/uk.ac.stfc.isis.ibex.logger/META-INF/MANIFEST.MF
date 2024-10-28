@@ -9,7 +9,7 @@ Require-Bundle: org.eclipse.ui,
  com.google.guava,
  org.apache.logging.log4j.api;bundle-version="2.24.1";visibility:=reexport,
  org.apache.logging.log4j.core;bundle-version="2.24.1";visibility:=reexport
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.logger
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.logger

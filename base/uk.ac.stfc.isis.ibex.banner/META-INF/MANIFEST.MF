@@ -11,7 +11,7 @@ Require-Bundle: org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.epics.switching,
  uk.ac.stfc.isis.ibex.configserver,
  uk.ac.stfc.isis.ibex.epics
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.banner
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.banner

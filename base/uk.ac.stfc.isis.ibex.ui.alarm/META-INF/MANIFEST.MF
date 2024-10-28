@@ -16,7 +16,7 @@ Require-Bundle: org.eclipse.ui,
  org.hamcrest,
  org.csstudio.alarm.beast.msghist;bundle-version="4.0.1",
  org.csstudio.alarm.beast.ui.alarmtable;bundle-version="4.1.2"
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.alarm
 Import-Package: javax.annotation;version="1.0.0";resolution:=optional,
  javax.inject;version="1.0.0"

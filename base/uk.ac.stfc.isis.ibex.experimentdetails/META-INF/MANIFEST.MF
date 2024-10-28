@@ -15,7 +15,7 @@ Require-Bundle: org.eclipse.ui,
  com.google.gson,
  uk.ac.stfc.isis.ibex.epics,
  uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Export-Package: uk.ac.stfc.isis.ibex.experimentdetails,
  uk.ac.stfc.isis.ibex.experimentdetails.database
 Bundle-ActivationPolicy: lazy

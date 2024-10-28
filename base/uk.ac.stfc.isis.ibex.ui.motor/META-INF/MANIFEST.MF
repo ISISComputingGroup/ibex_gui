@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Motor
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.motor;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Require-Bundle: uk.ac.stfc.isis.ibex.preferences,
  uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.motor;bundle-version="1.0.0",

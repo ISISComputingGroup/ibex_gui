@@ -19,7 +19,8 @@
 package uk.ac.stfc.isis.ibex.ui.widgets.buttons;
 
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
@@ -143,8 +144,8 @@ public class IBEXButton {
 	public IBEXButton link(String url) {
 		this.button.addListener(SWT.Selection, e -> {
 			try {
-				PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser().openURL(new URL(url));
-			} catch (PartInitException | MalformedURLException ex) {
+				PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser().openURL(new URI(url).toURL());
+			} catch (PartInitException | MalformedURLException | URISyntaxException ex) {
 				LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()),
 						"Failed to open URL in browser: " + url, ex);
 			}

@@ -8,5 +8,5 @@ Require-Bundle: org.junit;bundle-version="4.10.0",
  org.hamcrest,
  org.eclipse.persistence.moxy;bundle-version="2.7.6",
  org.eclipse.persistence.asm;bundle-version="7.2.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.opis.tests

@@ -4,7 +4,7 @@ Bundle-Name: Tests
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.validators.tests
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: uk.ac.stfc.isis.ibex.validators;bundle-version="1.0.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Require-Bundle: org.junit,
  jakarta.annotation-api;bundle-version="[1.3.5,1.3.5]",
  org.hamcrest

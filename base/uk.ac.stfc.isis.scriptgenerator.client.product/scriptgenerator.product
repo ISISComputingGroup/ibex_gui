@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="scriptgenerator" uid="scriptgenerator.product" id="uk.ac.stfc.isis.scriptgenerator.client.scriptgenerator" application="uk.ac.stfc.isis.scriptgenerator.product.scriptgenerator" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="scriptgenerator" uid="scriptgenerator.product" id="uk.ac.stfc.isis.scriptgenerator.client.scriptgenerator" application="uk.ac.stfc.isis.scriptgenerator.product.scriptgenerator" version="1.0.0.qualifier" type="features" includeLaunchers="true" autoIncludeRequirements="true">
 
    <aboutInfo>
       <image path="/uk.ac.stfc.isis.scriptgenerator.product/icons/scriptgen-icon-web256.gif"/>
@@ -35,7 +35,7 @@
    </launcher>
 
    <vm>
-      <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11</windows>
+      <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-21</windows>
    </vm>
 
    <plugins>
