@@ -564,11 +564,11 @@
         <path>TPAR_Editor/tpar_editor.opi</path>
         <description>The OPI for a file editor</description>
         <macros>
-            <macro>
-                <name>IOCNAME</name>
-                <description>The IOC name (e.g. MUONTPAR_01).</description>
-                <default>MUONTPAR_01</default>
-            </macro>
+          <macro>
+            <name>IOCNAME</name>
+            <description>The IOC name (e.g. MUONTPAR_01).</description>
+            <default>MUONTPAR_01</default>
+          </macro>
         </macros>
         <categories/>
       </value>
@@ -3776,7 +3776,7 @@
         </macros>
       </value>
     </entry>
-    <entry>	
+    <entry>
       <key>DDS Tensile Stress Rig</key>
       <value>
         <categories/>
@@ -3852,6 +3852,22 @@
         <categories>
           <category>Miscellaneous motion control</category>
         </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>TLFW102C</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>thorlabsfw102c.opi</path>
+        <description>The OPI for the ThorlabsFW102C.</description>
+        <macros>
+          <macro>
+            <name>TLFW102C</name>
+            <description>The ThorlabsFW102C PV prefix (e.g. TLFW102C_01)</description>
+            <default>TLFW102C_01</default>
+          </macro>
+        </macros>
+        <categories/>
       </value>
     </entry>
   </opis>
