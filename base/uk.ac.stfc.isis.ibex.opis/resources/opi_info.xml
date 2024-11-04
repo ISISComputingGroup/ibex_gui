@@ -3855,9 +3855,9 @@
       </value>
     </entry>
     <entry>
-      <key>G3HALLPR</key>
+      <key>Group3 Hall Probe</key>
       <value>
-        <type>UNKNOWN</type>
+        <type>ZERO_FIELD</type>
         <path>group3hallprobe.opi</path>
         <description>The OPI for the Group3HallProbe.</description>
         <macros>
@@ -3867,7 +3867,9 @@
             <default>G3HALLPR_01</default>
           </macro>
         </macros>
-        <categories/>
+        <categories>
+          <category>Magnets</category>
+        </categories>
       </value>
     </entry>
   </opis>
