@@ -22,6 +22,7 @@
 -XX:+CreateCoredumpOnCrash
 -Dlog4j2.formatMsgNoLookups=true
 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n
+-Djdk.util.zip.disableZip64ExtraFieldValidation=true
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>

@@ -1,7 +1,11 @@
 # match line starting with ‘error ‘, case-insensitive
 # also allow for [timestamp]
 ok /Problems running epstopdf/
+# this is a unit test that looks like an error message
+ok /(?i)^(\[[^]]*\] )?error_message_is_empty/
+warning /IPython does not exist, auto complete not installed/
 error /(?i)^(\[[^]]*\] )?error:?/
+error /(?i)^(\[[^]]*\] )?.*FAILURE \[[^]]*\]$/
 error /(?i)^(\[[^]]*\] )?fatal:?/
 warning /(?i)^(\[[^]]*\] )?warning:?/
 info /(?i)^(\[[^]]*\] )?info:?/

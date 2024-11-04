@@ -28,24 +28,23 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-
-import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
-
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.dialogs.FilteredTree;
+
+import uk.ac.stfc.isis.ibex.configserver.editing.EditableIoc;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
 
 /**
  * Dialog panel for selecting a new IOC to add to a configuration.
  */
+@SuppressWarnings({"unused" })
 public class AddPanel extends Composite {
 	private final Button expandButton;
-	private final Button  collapseButton;
+	private final Button collapseButton;
 	
     private FilteredTree availableIocsTree;
     private static final int TREE_HEIGHT = 300;
@@ -70,25 +69,20 @@ public class AddPanel extends Composite {
       //Add Expand and Collapse Tree buttons
   		Composite expansionComposite = new Composite(this, SWT.FILL);
   		expansionComposite.setLayout(new GridLayout(2, true));
-  		expandButton = new Button(expansionComposite, SWT.NONE);
-  		expandButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-  		expandButton.setText("\u25BC Expand All");
-  		expandButton.addSelectionListener(new SelectionAdapter() {
-  			@Override
-  			public void widgetSelected(SelectionEvent e) {
-  				availableIocsTree.getViewer().expandAll();
-  			}
-  		});
   		
-  		collapseButton = new Button(expansionComposite, SWT.NONE);
-  		collapseButton.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-  		collapseButton.setText("\u25B2 Collapse All");
-  		collapseButton.addSelectionListener(new SelectionAdapter() {
-  			@Override
-  			public void widgetSelected(SelectionEvent e) {
-  				availableIocsTree.getViewer().collapseAll();
-  			}
-  		});
+  		expandButton = new IBEXButton(expansionComposite, SWT.NONE, evt -> {
+  			availableIocsTree.getViewer().expandAll();
+        })
+  				.layoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1))
+  				.text("\u25BC Expand All")
+  				.get();
+  		
+  		collapseButton = new IBEXButton(expansionComposite, SWT.NONE, evt -> {
+  			availableIocsTree.getViewer().collapseAll();
+        })
+  				.layoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1))
+  				.text("\u25B2 Collapse All")
+  				.get();
 
         // Add selection tree
   		Composite treeComposite = new Composite(this, SWT.FILL);
@@ -103,6 +97,9 @@ public class AddPanel extends Composite {
         GridData gdIocTable = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
         gdIocTable.heightHint = TREE_HEIGHT;
         treeComposite.setLayoutData(gdIocTable);
+        
+        // setting the focus of a filtered tree sets the search widget within that tree to be focused
+        availableIocsTree.setFocus();
 
         bind(viewModel);
     }

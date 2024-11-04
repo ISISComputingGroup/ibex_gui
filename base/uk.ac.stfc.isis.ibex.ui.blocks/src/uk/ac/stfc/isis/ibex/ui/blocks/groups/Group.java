@@ -26,8 +26,6 @@ import java.util.Optional;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -37,6 +35,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.wb.swt.ResourceManager;
@@ -45,6 +44,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayGroup;
 import uk.ac.stfc.isis.ibex.epics.pv.PvState;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
 
 /**
  * Provides the display of the groups, which contain the selected blocks. Allows
@@ -123,30 +123,33 @@ public class Group extends Composite {
 		titleContainerLayout.horizontalSpacing = 0;
 		titleContainer.setLayout(titleContainerLayout);
 		
-		title = new Button(titleContainer, SWT.TOGGLE);
-		title.setText("   " + group.name());
-		title.setImage(ResourceManager.getPluginImage(
-				"uk.ac.stfc.isis.ibex.ui.blocks", "icons/minus.png"));
-		title.addSelectionListener(new SelectionAdapter() {
+		
+		Listener onClickListener = new Listener() {
+			
 			@Override
-			public void widgetSelected(SelectionEvent e) {
-				Button source = (Button) e.getSource();
-				if (source.getSelection()) {
-					groupBlocks.setVisible(false);
-					((GridData) groupBlocks.getLayoutData()).exclude = true;
-					source.setImage(ResourceManager.getPluginImage(
-							"uk.ac.stfc.isis.ibex.ui.blocks", "icons/plus.png"));
-					collapsed = true;
-				} else {
-					groupBlocks.setVisible(true);
-					((GridData) groupBlocks.getLayoutData()).exclude = false;
-					source.setImage(ResourceManager.getPluginImage(
-							"uk.ac.stfc.isis.ibex.ui.blocks", "icons/minus.png"));
-					collapsed = false;
-				}
-				panel.notifyListeners(SWT.Resize, new Event());
+			public void handleEvent(Event event) {
+				Button source = (Button) event.widget; // Use e.widget to get the source widget
+		        if (source.getSelection()) {
+		            groupBlocks.setVisible(false);
+		            ((GridData) groupBlocks.getLayoutData()).exclude = true;
+		            source.setImage(ResourceManager.getPluginImage(
+		                    "uk.ac.stfc.isis.ibex.ui.blocks", "icons/plus.png"));
+		            collapsed = true;
+		        } else {
+		            groupBlocks.setVisible(true);
+		            ((GridData) groupBlocks.getLayoutData()).exclude = false;
+		            source.setImage(ResourceManager.getPluginImage(
+		                    "uk.ac.stfc.isis.ibex.ui.blocks", "icons/minus.png"));
+		            collapsed = false;
+		        }
+		        panel.notifyListeners(SWT.Resize, new Event());
 			}
-		});
+		};
+
+		title = new IBEXButton(titleContainer, SWT.TOGGLE, onClickListener)
+				.text("   " + group.name())
+				.image(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.blocks", "icons/minus.png"))
+				.get();
 
 		groupBlocks = new Composite(this, SWT.NONE);
 

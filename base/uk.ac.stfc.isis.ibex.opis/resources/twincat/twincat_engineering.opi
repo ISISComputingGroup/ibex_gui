@@ -152,7 +152,7 @@
     <maximum>256.0</maximum>
     <minimum>1.0</minimum>
     <name>spinner</name>
-    <page_increment>10.0</page_increment>
+    <page_increment>8.0</page_increment>
     <precision>0</precision>
     <precision_from_pv>false</precision_from_pv>
     <pv_name>loc://axes(1)</pv_name>
@@ -165,11 +165,11 @@
     </scale_options>
     <scripts>
       <path pathString="spinner_choose_axis.py" checkConnect="true" sfe="false" seoe="false">
-        <pv trig="true">=1</pv>
+        <pv trig="true">loc://$(DID)_CONST_1(1)</pv>
       </path>
     </scripts>
     <show_text>true</show_text>
-    <step_increment>1.0</step_increment>
+    <step_increment>8.0</step_increment>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <transparent>false</transparent>
@@ -694,10 +694,10 @@ $(pv_value)</tooltip>
     <y>59</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-    <actions hook="false" hook_all="false"/>
+    <actions hook="false" hook_all="false" />
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <border_color>
-      <color name="ISIS_Border" red="0" green="0" blue="0"/>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
@@ -707,25 +707,25 @@ $(pv_value)</tooltip>
     </font>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
     <height>1</height>
-    <image/>
+    <image></image>
     <name>Dummy</name>
     <push_action_index>0</push_action_index>
-    <pv_name/>
-    <pv_value/>
-    <rules/>
+    <pv_name></pv_name>
+    <pv_value />
+    <rules />
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts/>
+    <scripts />
     <style>1</style>
-    <text/>
+    <text></text>
     <toggle_button>false</toggle_button>
-    <tooltip/>
+    <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Action Button</widget_type>
     <width>1</width>

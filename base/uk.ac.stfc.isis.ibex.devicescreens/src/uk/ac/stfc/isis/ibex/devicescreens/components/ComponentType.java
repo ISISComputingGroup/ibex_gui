@@ -217,7 +217,12 @@ public enum ComponentType {
     /** Function generators. */
     FUNCTION_GENERATOR,
     /** STANDARD MAGNET. */
-    MAGNET;
+    MAGNET,
+    /** Counters. */
+    COUNTER,
+	/** PHOTON COUNTER. */
+	PHOTON_COUNTER;
+	
 
     private Target target;
 

@@ -52,11 +52,20 @@
       </value>
     </entry>
     <entry>
-      <key>ARGUS Magnet Statuses</key>
+      <key>Argus Magnet Statuses</key>
       <value>
         <type>MAGNET</type>
-        <path>ARGUS/magnet_status.opi</path>
-        <description>Statuses of ARGUS trans and long magnets</description>
+        <path>RIKEN/argus_magnet_status.opi</path>
+        <description>Statuses of the ARGUS trans and long magnets for MUONS</description>
+        <categories/>
+      </value>
+    </entry>
+    <entry>
+      <key>Chronus Magnet Statuses</key>
+      <value>
+        <type>MAGNET</type>
+        <path>RIKEN/chronus_magnet_status.opi</path>
+        <description>Statuses of the CHRONUS trans and long magnets for MUONS</description>
         <categories/>
       </value>
     </entry>
@@ -165,6 +174,49 @@
             <name>MOT</name>
             <description>The motor controlling the collimator (e.g. MOT:MTR0101)</description>
             <default>MOT:MTR0101</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>CHIPIR Collimator</key>
+      <value>
+        <type>OSCILLATING_COLLIMATOR</type>
+        <path>chipir_collimator/chipircollimator.opi</path>
+        <description>The OPI for the CHIPIR collimator.</description>
+        <macros>
+          <macro>
+            <name>NUMBER</name>
+            <description>The Jawset number to show</description>
+            <default>1</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>CHIPIR XYZ table</key>
+      <value>
+        <type>SAMPLESTACK</type>
+        <path>chipir_xyz_table.opi</path>
+        <description>The OPI for the CHIPIR XYZ table.</description>
+        <macros>
+          <macro>
+            <name>MOT_X</name>
+            <description>The motor for X ie. MTR0101</description>
+          </macro>
+          <macro>
+            <name>MOT_Y</name>
+            <description>The motor for Y ie. MTR0102</description>
+          </macro>
+          <macro>
+            <name>MOT_Z</name>
+            <description>The motor for Z ie. MTR0103</description>
           </macro>
         </macros>
         <categories>
@@ -503,6 +555,22 @@
         <categories>
           <category>Pressure sensors</category>
         </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>File editor</key>
+      <value>
+        <type>DEBUG</type>
+        <path>TPAR_Editor/tpar_editor.opi</path>
+        <description>The OPI for a file editor</description>
+        <macros>
+            <macro>
+                <name>IOCNAME</name>
+                <description>The IOC name (e.g. MUONTPAR_01).</description>
+                <default>MUONTPAR_01</default>
+            </macro>
+        </macros>
+        <categories/>
       </value>
     </entry>
     <entry>
@@ -1218,12 +1286,12 @@
         <path>twincat/twincat_engineering.opi</path>
         <description>The OPI giving a detailed engineering view of a Beckhoff.</description>
         <macros>
-		<macro>
+          <macro>
             <name>TC</name>
             <description>The TC IOC number eg. TC_01</description>
             <default>TC_01</default>
           </macro>
-		</macros>
+        </macros>
         <categories>
           <category>Miscellaneous motion control</category>
         </categories>
@@ -1969,6 +2037,24 @@
       </value>
     </entry>
     <entry>
+      <key>Hameg HM8123 Programmable Counter</key>
+      <value>
+        <type>COUNTER</type>
+        <path>hameg/hm8123.opi</path>
+        <description>The OPI for the Hameg HM8123 Programmable counter.</description>
+        <macros>
+          <macro>
+            <name>HAMEG8123</name>
+            <description>The Hameg PV prefix (e.g. HAMEG8123_01).</description>
+            <default>HAMEG8123_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Counters</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Kepco</key>
       <value>
         <type>KEPCO</type>
@@ -2332,6 +2418,24 @@
       </value>
     </entry>
     <entry>
+      <key>Tektronix DMM 4040/4050</key>
+      <value>
+        <categories>
+          <category>Multimeters</category>
+        </categories>
+        <type>KSE4980</type>
+        <path>tekdmm40X0.opi</path>
+        <description>The OPI for the Tektronix DMM4040/4050 Multimeters.</description>
+        <macros>
+          <macro>
+            <name>TEKDMM40X0</name>
+            <description>The DMM40X0 PV prefix (e.g. TEKDMM40X0_01).</description>
+            <default>TEKDMM40X0_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
       <key>DH-2000 Light source shutter</key>
       <value>
         <type>DH2000</type>
@@ -2678,8 +2782,27 @@
       <value>
         <categories/>
         <type>SYRINGE_PUMP</type>
-        <path>aldn1000.opi</path>
-        <description>The OPI for the ALDN1000</description>
+        <path>ALDN1000/aldn1000.opi</path>
+        <description>The OPI for the ALDN1000 that shows daisy chained devices</description>
+        <macros>
+          <macro>
+            <name>ALDN1000</name>
+            <description>The ALDN1000 PV prefix (e.g. ALDN1000_01)</description>
+            <default>ALDN1000_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Gas and liquid handling systems</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Aladdin 1000 Single</key>
+      <value>
+        <categories/>
+        <type>SYRINGE_PUMP</type>
+        <path>ALDN1000/aldn1000_single_old.opi</path>
+        <description>The OPI for a single ALDN1000</description>
         <macros>
           <macro>
             <name>ALDN1000</name>
@@ -2982,6 +3105,11 @@
             <name>CAEN</name>
             <description>The CAEN PV prefix (e.g. CAENV895_01)</description>
             <default>CAENV895_01</default>
+          </macro>
+          <macro>
+            <name>CRATE</name>
+            <description>The crate to communicate with (default 0)</description>
+            <default>0</default>
           </macro>
         </macros>
         <categories>
@@ -3596,6 +3724,134 @@
             <default>LM500_01</default>
           </macro>
         </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>PS300</key>
+      <value>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+        <type>POWER_SUPPLY</type>
+        <path>PS300.opi</path>
+        <description>The OPI for the Stanford 300 series power supply.</description>
+        <macros>
+          <macro>
+            <name>NAME</name>
+            <description>The IOC PV prefix (e.g. PS300_01)</description>
+            <default>PS300_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>LNDYISW</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>lndyisw.opi</path>
+        <description>The OPI for the LNDYISW</description>
+        <macros>
+          <macro>
+            <name>LNDYISW</name>
+            <description>The LNDYISW PV prefix (e.g. LNDYISW_01)</description>
+            <default>LNDYISW_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>PRLTHERM</key>
+      <value>
+        <categories/>
+        <type>EUROTHERM</type>
+        <path>PEARL_Thermometry.opi</path>
+        <description>The OPI for the PEARL Thermometry Device</description>
+        <macros>
+          <macro>
+            <name>PRLTHERM</name>
+            <description>The PRLTHERM PV prefix (e.g. PRLTHERM_01)</description>
+            <default>PRLTHERM_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>	
+      <key>DDS Tensile Stress Rig</key>
+      <value>
+        <categories/>
+        <type>STRESS_RIG</type>
+        <path>dds_tensile_stress_rig.opi</path>
+        <description>The OPI for the DDS Tensile Stress Rig</description>
+        <macros>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>SR400</key>
+      <value>
+        <type>PHOTON_COUNTER</type>
+        <path>stanford_sr400_photon_counter.opi</path>
+        <description>The OPI for the Stanford SR400 Photon Counter.</description>
+        <macros>
+          <macro>
+            <name>SR400</name>
+            <description>The Stanford SR400 Photon Counter PV prefix (e.g. SR400_01)</description>
+            <default>SR400_01</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
+    <entry>
+      <key>SR850</key>
+      <value>
+        <type>OSCILLOSCOPE</type>
+        <path>sr850.opi</path>
+        <description>The OPI for the SR850.</description>
+        <macros>
+          <macro>
+            <name>SR850</name>
+            <description>The SR850 PV prefix (e.g. SR850_01)</description>
+            <default>SR850_01</default>
+          </macro>
+        </macros>
+        <categories/>
+      </value>
+    </entry>
+    <entry>
+      <key>ENVMON</key>
+      <value>
+        <type>EUROTHERM</type>
+        <path>envmon.opi</path>
+        <description>The OPI for the ISIS Environment Monitor</description>
+        <macros>
+          <macro>
+            <name>ENVMON</name>
+            <description>The ENVMON PV prefix (e.g. ENVMON_01)</description>
+            <default>ENVMON_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>CHIPIR Filter Set</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>chipir_filter_set.opi</path>
+        <description>The OPI for the CHIPIR Filter Set</description>
+        <macros>
+          <macro>
+            <name>SHUTTER_AND_FILTER_CONTROL</name>
+            <description>The TC IOC number eg. TC_01</description>
+            <default>TC_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
       </value>
     </entry>
   </opis>

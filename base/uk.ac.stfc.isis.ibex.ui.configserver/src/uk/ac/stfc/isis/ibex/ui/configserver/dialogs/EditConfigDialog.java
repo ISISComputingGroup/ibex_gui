@@ -43,7 +43,7 @@ import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.EditBlockDialog;
-import uk.ac.stfc.isis.ibex.ui.widgets.HelpButton;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXHelpButton;
 
 /**
  * Dialog for editing a configuration (top dialogue that contains save and save
@@ -127,9 +127,9 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 		
 		// Set link according to whether this is a component or a config.
 		if (!config.getIsComponent()) {
-			new HelpButton(parent, CONFIG_HELP_LINK, description);
+			new IBEXHelpButton(parent, CONFIG_HELP_LINK, description);
 		} else {
-			new HelpButton(parent, COMPONENT_HELP_LINK, description);
+			new IBEXHelpButton(parent, COMPONENT_HELP_LINK, description);
 		}
 		
 		this.moxaDetailsDialog = new MoxaDetailsDialog(this.getShell());

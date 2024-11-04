@@ -40,136 +40,132 @@ import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.SynopticPreview;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.validators.SynopticValidator;
-import uk.ac.stfc.isis.ibex.ui.widgets.HelpButton;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXHelpButton;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
 
 /**
- * This class provides the dialog to edit the synoptic. While this class is responsible for
- * saving, most of the layout for this dialogue is provided in the EditorPanel class.
+ * This class provides the dialog to edit the synoptic. While this class is
+ * responsible for saving, most of the layout for this dialogue is provided in
+ * the EditorPanel class.
  * 
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class EditSynopticDialog extends TitleAreaDialog {
-    private static final Point INITIAL_SIZE = new Point(950, 840);
-    private final String title;
-    private final String subtitle;
-    
-    private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Create-and-Manage-Synoptics";
-	
-    private EditorPanel editor;
-    private boolean isBlank;
-    private Button previewBtn;
-    private Button saveAsBtn;
-    private Button saveBtn;
+	private static final Point INITIAL_SIZE = new Point(950, 840);
+	private final String title;
+	private final String subtitle;
 
-    private SynopticViewModel synopticViewModel;
+	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Create-and-Manage-Synoptics";
 
-    private SynopticValidator synopticValidator;
+	private EditorPanel editor;
+	private boolean isBlank;
+	private Button previewBtn;
+	private Button saveAsBtn;
+	private Button saveBtn;
 
-    /**
-     * The constructor for the overall Synoptic editor dialog.
-     * 
-     * @param parentShell
-     *            The shell to open the dialog in.
-     * @param title
-     *            The title of the dialog.
-     * @param subtitle
-     * 		  Title within the dialog.
-     * @param isBlank
-     *            Whether the synoptic is blank or not, i.e. a new synoptic.
-     * @param synopticViewModel
-     *            The view model describing the logic of the synoptic editor
-     */
-    public EditSynopticDialog(Shell parentShell, String title, String subtitle, boolean isBlank,
-	    SynopticViewModel synopticViewModel) {
-	super(parentShell);
-	setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE);
-	this.title = title;
-	this.subtitle = subtitle;
-	this.isBlank = isBlank;
-	this.synopticViewModel = synopticViewModel;
-	this.synopticValidator = new SynopticValidator(synopticViewModel.getSynoptic());
-    }
+	private SynopticViewModel synopticViewModel;
 
-    @Override
-    protected Control createDialogArea(Composite parent) {
-    	editor = new EditorPanel(parent, SWT.NONE, synopticViewModel);
-    	editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-    	setTitle(subtitle);
-    	
-    	new HelpButton(parent, HELP_LINK, title);
-    	
-    	return editor;	
-    }
+	private SynopticValidator synopticValidator;
 
-
-    @Override
-    protected void createButtonsForButtonBar(Composite parent) {
-	// createButton(parent, IDialogConstants.OK_ID, "Save", true);
-	previewBtn = createButton(parent, IDialogConstants.CLIENT_ID + 3, "Synoptic Preview", false);
-	previewBtn.addSelectionListener(new SelectionAdapter() {
-	    @Override
-	    public void widgetSelected(SelectionEvent e) {
-		SynopticPreview previewDialog = new SynopticPreview(getShell(), synopticViewModel.getSynoptic());
-		previewDialog.open();
-	    }
-
-	});
-
-	if (!isBlank) { 
-	    saveBtn = createButton(parent, IDialogConstants.CLIENT_ID + 2, "Save", false);
-
-	    saveBtn.addSelectionListener(new SelectionAdapter() {
-		@Override
-		public void widgetSelected(SelectionEvent e) {
-		    okPressed();
-		}
-
-	    });
+	/**
+	 * The constructor for the overall Synoptic editor dialog.
+	 * 
+	 * @param parentShell       The shell to open the dialog in.
+	 * @param title             The title of the dialog.
+	 * @param subtitle          Title within the dialog.
+	 * @param isBlank           Whether the synoptic is blank or not, i.e. a new
+	 *                          synoptic.
+	 * @param synopticViewModel The view model describing the logic of the synoptic
+	 *                          editor
+	 */
+	public EditSynopticDialog(Shell parentShell, String title, String subtitle, boolean isBlank,
+			SynopticViewModel synopticViewModel) {
+		super(parentShell);
+		setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE);
+		this.title = title;
+		this.subtitle = subtitle;
+		this.isBlank = isBlank;
+		this.synopticViewModel = synopticViewModel;
+		this.synopticValidator = new SynopticValidator(synopticViewModel.getSynoptic());
 	}
-	saveAsBtn = createButton(parent, IDialogConstants.CLIENT_ID + 1, "Save as ...", false);
 
-	saveAsBtn.addSelectionListener(new SelectionAdapter() {
-	    @Override
-	    public void widgetSelected(SelectionEvent e) {
-		SaveSynopticViewModel model = new SaveSynopticViewModel(synopticViewModel.getSynoptic().name(),
-			SynopticInfo.names(Synoptic.getInstance().availableSynoptics()));
-		SaveSynopticDialog dlg = new SaveSynopticDialog(null, model);
-		if (dlg.open() == Window.OK) {
-		    synopticViewModel.getSynoptic().setName(model.getSynopticName());
-		    okPressed();
-		}
-	    }
-	});
+	@Override
+	protected Control createDialogArea(Composite parent) {
+		editor = new EditorPanel(parent, SWT.NONE, synopticViewModel);
+		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		setTitle(subtitle);
 
-	synopticValidator.addPropertyChangeListener("error", new PropertyChangeListener() {
-	    @Override
-	    public void propertyChange(PropertyChangeEvent evt) {
-		updateErrors((ErrorMessage) evt.getNewValue());
-	    }
-	});
-
-	updateErrors(synopticValidator.getError());
-
-	createButton(parent, IDialogConstants.CANCEL_ID, "Cancel", false);
-    }	
-
-    private void updateErrors(ErrorMessage error) {
-	setErrorMessage(error.getMessage());
-	saveAsBtn.setEnabled(!error.isError());
-	if (saveBtn != null) {
-	    saveBtn.setEnabled(!error.isError());
+		new IBEXHelpButton(parent, HELP_LINK, title);
+		return editor;
 	}
-    }
 
-    @Override
-    protected void configureShell(Shell shell) {
-	super.configureShell(shell);
-	shell.setText(title);
-    }
+	@Override
+	protected void createButtonsForButtonBar(Composite parent) {
+		// createButton(parent, IDialogConstants.OK_ID, "Save", true);
+		previewBtn = createButton(parent, IDialogConstants.CLIENT_ID + 3, "Synoptic Preview", false);
+		previewBtn.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				SynopticPreview previewDialog = new SynopticPreview(getShell(), synopticViewModel.getSynoptic());
+				previewDialog.open();
+			}
 
-    @Override
-    protected Point getInitialSize() {
-	return INITIAL_SIZE;
-    }
+		});
+
+		if (!isBlank) {
+			saveBtn = createButton(parent, IDialogConstants.CLIENT_ID + 2, "Save", false);
+
+			saveBtn.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					okPressed();
+				}
+
+			});
+		}
+		saveAsBtn = createButton(parent, IDialogConstants.CLIENT_ID + 1, "Save as ...", false);
+
+		saveAsBtn.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				SaveSynopticViewModel model = new SaveSynopticViewModel(synopticViewModel.getSynoptic().name(),
+						SynopticInfo.names(Synoptic.getInstance().availableSynoptics()));
+				SaveSynopticDialog dlg = new SaveSynopticDialog(null, model);
+				if (dlg.open() == Window.OK) {
+					synopticViewModel.getSynoptic().setName(model.getSynopticName());
+					okPressed();
+				}
+			}
+		});
+
+		synopticValidator.addPropertyChangeListener("error", new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				updateErrors((ErrorMessage) evt.getNewValue());
+			}
+		});
+
+		updateErrors(synopticValidator.getError());
+
+		createButton(parent, IDialogConstants.CANCEL_ID, "Cancel", false);
+	}
+
+	private void updateErrors(ErrorMessage error) {
+		setErrorMessage(error.getMessage());
+		saveAsBtn.setEnabled(!error.isError());
+		if (saveBtn != null) {
+			saveBtn.setEnabled(!error.isError());
+		}
+	}
+
+	@Override
+	protected void configureShell(Shell shell) {
+		super.configureShell(shell);
+		shell.setText(title);
+	}
+
+	@Override
+	protected Point getInitialSize() {
+		return INITIAL_SIZE;
+	}
 }

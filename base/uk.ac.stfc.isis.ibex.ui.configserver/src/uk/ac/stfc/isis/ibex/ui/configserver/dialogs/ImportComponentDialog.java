@@ -36,12 +36,11 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentInfo;
@@ -49,6 +48,7 @@ import uk.ac.stfc.isis.ibex.ui.LinkWrapper;
 import uk.ac.stfc.isis.ibex.ui.configserver.ImportVariables;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.components.ComponentTable;
 import uk.ac.stfc.isis.ibex.ui.mainmenu.instrument.InstrumentTable;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
 
 /**
  * Dialog for importing a component.
@@ -222,16 +222,12 @@ public class ImportComponentDialog extends TitleAreaDialog  {
 		
 		Text text = new Text(group, SWT.BORDER);
 		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		Button button = new Button(group, SWT.NONE);
-		button.setText("Select");
-		button.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
-		button.addListener(SWT.Selection, new Listener() {
-			@Override
-			public void handleEvent(Event event) {
-				importVariables.selectInstrument(text.getText());
-			}
-		});
+
+		new IBEXButton(group, SWT.NONE, event -> {
+			importVariables.selectInstrument(text.getText());
+		})
+		.text("Select")
+		.layoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));		
 	}
 	
 	/**

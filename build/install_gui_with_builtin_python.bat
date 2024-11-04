@@ -43,6 +43,9 @@ if %errcode% GEQ 4 (
 	goto ERROR
 )
 
+REM fix java RMI remote connection 
+@echo -Djava.rmi.server.hostname=%COMPUTERNAME%>>%CLIENTDIR%\ibex-client.ini
+
 REM re-copy the pydev command history file back if it exists
 if exist "%TEMP%\%GENIECMDLOGFILE%" (
 	@echo Moving pydev history file to client

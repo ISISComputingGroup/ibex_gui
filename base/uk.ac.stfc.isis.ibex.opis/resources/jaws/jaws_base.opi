@@ -369,7 +369,7 @@ $(pv_value)</tooltip>
         <pv trig="false">$(P)$(J):MAXE</pv>
         <pv trig="false">$(P)$(J):MINS</pv>
         <pv trig="false">$(P)$(J):MINW</pv>
-        <pv trig="true">=1</pv>
+        <pv trig="true">loc://$(DID)_CONST_1(1)</pv>
       </path>
     </scripts>
     <show_units>true</show_units>

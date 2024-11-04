@@ -4,9 +4,14 @@ pipeline {
 
   // agent defines where the pipeline will run.
   agent {  
-    label "ndw1757"
+    label "${params.LABEL}"
   }
-  
+
+  environment {
+      NODE = "${env.NODE_NAME}"
+      GUILOCK = "ibex_gui_${NODE}"
+  }
+
   triggers {
     pollSCM('H/2 * * * *')
   }
@@ -14,10 +19,9 @@ pipeline {
   // The options directive is for configuration that applies to the whole job.
   options {
     buildDiscarder(logRotator(numToKeepStr:'10'))
-    timeout(time: 240, unit: 'MINUTES')
     disableConcurrentBuilds()
     timestamps()
-	skipDefaultCheckout(true)
+    skipDefaultCheckout(true)
     office365ConnectorWebhooks([[
                     name: "Office 365",
                     notifyBackToNormal: true,
@@ -44,14 +48,14 @@ pipeline {
 	}
       }
     }
-	  
+
     stage("Build") {
       steps {
         script {
             // env.BRANCH_NAME is only supplied to multi-branch pipeline jobs
             if (env.BRANCH_NAME == null) {
                 env.BRANCH_NAME = ""
-	    }
+        }
             env.GIT_BRANCH = scm.branches[0].name
             env.GIT_COMMIT = bat(returnStdout: true, script: '@git rev-parse HEAD').trim()
             echo "git commit: ${env.GIT_COMMIT}"
@@ -77,15 +81,18 @@ pipeline {
                 env.IS_E4 = "YES"
             }
         }
-        
-        bat """
-            cd build
-            set GIT_COMMIT=${env.GIT_COMMIT}
-            set GIT_BRANCH=${env.BRANCH_NAME}
-            set RELEASE=${env.IS_RELEASE}
-            set DEPLOY=${env.IS_DEPLOY}
-            jenkins_build.bat
-            """
+        lock(resource: GUILOCK, inversePrecedence: false) {
+          timeout(time: 240, unit: 'MINUTES') {
+            bat """
+                cd build
+                set GIT_COMMIT=${env.GIT_COMMIT}
+                set GIT_BRANCH=${env.BRANCH_NAME}
+                set RELEASE=${env.IS_RELEASE}
+                set DEPLOY=${env.IS_DEPLOY}
+                jenkins_build.bat
+                """
+          }
+        }
       }
     }
     
@@ -93,7 +100,7 @@ pipeline {
       steps {
         bat """
             set PYTHON3=C:\\Instrument\\Apps\\Python3\\python.exe
-            %PYTHON3% .\\base\\uk.ac.stfc.isis.ibex.opis\\check_opi_format.py -strict 
+            %PYTHON3% .\\base\\uk.ac.stfc.isis.ibex.opis\\check_opi_format.py -strict -directory .\\base\\uk.ac.stfc.isis.ibex.opis
         """
       }
     }
@@ -115,9 +122,9 @@ pipeline {
   
   post {
     always {
-	    archiveArtifacts artifacts: 'build/*.log', caseSensitive: false
-	    junit '**/surefire-reports/TEST-*.xml,**/test-reports/TEST-*.xml'
-      logParser ([
+        archiveArtifacts artifacts: 'build/*.log', caseSensitive: false
+        junit '**/surefire-reports/TEST-*.xml,**/test-reports/TEST-*.xml'
+        logParser ([
             projectRulePath: 'parse_rules',
             parsingRulesPath: '',
             showGraphs: true, 

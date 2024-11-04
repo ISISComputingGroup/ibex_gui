@@ -1277,7 +1277,7 @@ if(display.getMacroValue("SHOW_SIMPLIFIED_VIEW") == "NO")
 	widget.setPropertyValue("visible",true);
 else
 	widget.setPropertyValue("visible",false);]]></scriptText>
-            <pv trig="true">=1</pv>
+            <pv trig="true">loc://$(DID)_CONST_1(1)</pv>
           </path>
         </scripts>
         <tooltip></tooltip>

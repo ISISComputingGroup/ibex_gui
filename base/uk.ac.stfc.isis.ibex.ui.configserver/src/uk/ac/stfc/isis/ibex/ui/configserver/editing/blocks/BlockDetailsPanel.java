@@ -23,8 +23,6 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -33,6 +31,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
+
 
 /**
  * A panel in the edit block dialog displaying details about the block's name and PV.
@@ -71,12 +72,14 @@ public class BlockDetailsPanel extends Composite {
 		gdName.widthHint = 280;
 		name.setLayoutData(gdName);
 		
-		visible = new Button(grpBlock, SWT.CHECK);
-		visible.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
-		visible.setText("Visible");
+		visible = new IBEXButton(grpBlock, SWT.CHECK)
+				.layoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1))
+				.text("Visible")
+				.get();
 		
-		local = new Button(grpBlock, SWT.CHECK);
-		local.setText("Local");
+		local = new IBEXButton(grpBlock, SWT.CHECK)
+				.text("Local")
+				.get();
 		
 		Label lblPvAddress = new Label(grpBlock, SWT.NONE);
 		lblPvAddress.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -87,15 +90,10 @@ public class BlockDetailsPanel extends Composite {
 		gdPvAddress.minimumWidth = 380;
 		pvAddress.setLayoutData(gdPvAddress);
 		
-		btnPickPV = new Button(grpBlock, SWT.NONE);
-		btnPickPV.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
-		btnPickPV.setText("Select PV");
-		btnPickPV.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				viewModel.openPvDialog();
-			}
-		});
+		btnPickPV = new IBEXButton(grpBlock, SWT.NONE, evt -> viewModel.openPvDialog())
+				.layoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1))
+				.text("Select PV")
+				.get();
 		
 		setModel(viewModel);
 	}

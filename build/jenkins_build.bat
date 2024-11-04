@@ -62,13 +62,16 @@ if not "%RELEASE%" == "YES" (
     ) else (
         set INSTALLBASEDIR=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\Client
     )
+	if "%JOB_NAME%" == "ibex_gui_win11_pipeline" (
+        set INSTALLBASEDIR=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\Client_E4_win11
+    )
     if not "%DEPLOY%" == "YES" (
         set "INSTALLBASEDIR=!INSTALLBASEDIR!\branches\%GIT_BRANCH%"
     )
 ) 
 
 if not "%RELEASE%" == "YES" (
-    set INSTALLDIR=%INSTALLBASEDIR%\BUILD%BUILD_NUMBER%
+    set INSTALLDIR=%INSTALLBASEDIR%\BUILD-%BUILD_NUMBER%
 )
 
 if "%RELEASE%" == "YES" (

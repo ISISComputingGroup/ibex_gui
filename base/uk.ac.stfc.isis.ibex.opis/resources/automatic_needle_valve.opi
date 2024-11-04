@@ -376,7 +376,7 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
-      <text> (required for writing)</text>
+      <text> </text>
       <tooltip></tooltip>
       <transparent>false</transparent>
       <vertical_alignment>1</vertical_alignment>
@@ -676,7 +676,7 @@ $(pv_value)</tooltip>
       <border_style>3</border_style>
       <border_width>1</border_width>
       <confirm_message></confirm_message>
-      <enabled>false</enabled>
+      <enabled>true</enabled>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
       </font>
@@ -697,31 +697,7 @@ $(pv_value)</tooltip>
       <pv_name>$(PV_ROOT)MANUAL_FLOW:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
-      <rules>
-        <rule name="bRule" prop_id="background_color" out_exp="false">
-          <exp bool_exp="pv0==0 || pv1==0">
-            <value>
-              <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
-            </value>
-          </exp>
-          <pv trig="true">$(P)CS:MANAGER</pv>
-          <pv trig="true">$(PV_ROOT)FLOW_SP_MODE_SELECT</pv>
-        </rule>
-        <rule name="fRule" prop_id="foreground_color" out_exp="false">
-          <exp bool_exp="pv0==0">
-            <value>
-              <color name="Gray_9" red="120" green="120" blue="120" />
-            </value>
-          </exp>
-          <pv trig="true">$(P)CS:MANAGER</pv>
-        </rule>
-        <rule name="eRule" prop_id="enabled" out_exp="false">
-          <exp bool_exp="pv0==1">
-            <value>true</value>
-          </exp>
-          <pv trig="true">$(P)CS:MANAGER</pv>
-        </rule>
-      </rules>
+      <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -1940,7 +1916,7 @@ $(pv_value)</tooltip>
       <border_style>3</border_style>
       <border_width>1</border_width>
       <confirm_message></confirm_message>
-      <enabled>false</enabled>
+      <enabled>true</enabled>
       <font>
         <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Value_NEW</opifont.name>
       </font>
@@ -1961,30 +1937,7 @@ $(pv_value)</tooltip>
       <pv_name>$(PV_ROOT)TEMP:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
-      <rules>
-        <rule name="bRule" prop_id="background_color" out_exp="false">
-          <exp bool_exp="pv0==0">
-            <value>
-              <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
-            </value>
-          </exp>
-          <pv trig="true">$(P)CS:MANAGER</pv>
-        </rule>
-        <rule name="fRule" prop_id="foreground_color" out_exp="false">
-          <exp bool_exp="pv0==0">
-            <value>
-              <color name="Gray_9" red="120" green="120" blue="120" />
-            </value>
-          </exp>
-          <pv trig="true">$(P)CS:MANAGER</pv>
-        </rule>
-        <rule name="eRule" prop_id="enabled" out_exp="false">
-          <exp bool_exp="pv0==1">
-            <value>true</value>
-          </exp>
-          <pv trig="true">$(P)CS:MANAGER</pv>
-        </rule>
-      </rules>
+      <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
         <height_scalable>true</height_scalable>
@@ -2368,7 +2321,7 @@ $(pv_value)</tooltip>
     </scale_options>
     <scripts />
     <show_scrollbar>false</show_scrollbar>
-    <text>To control this device, enable manager mode!</text>
+    <text>Some settings need manager mode</text>
     <tooltip></tooltip>
     <transparent>false</transparent>
     <vertical_alignment>1</vertical_alignment>

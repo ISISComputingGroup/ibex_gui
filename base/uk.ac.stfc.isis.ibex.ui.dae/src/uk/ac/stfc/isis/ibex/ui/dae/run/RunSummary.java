@@ -26,8 +26,6 @@ import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
@@ -41,6 +39,7 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 import uk.ac.stfc.isis.ibex.ui.dae.experimentsetup.ExperimentSetupViewModel;
 import uk.ac.stfc.isis.ibex.ui.dae.widgets.LogMessageBox;
+import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
 
 /**
@@ -174,16 +173,13 @@ public class RunSummary {
 		new Label(infoComposite, SWT.NONE);
 		new Label(infoComposite, SWT.NONE);
 
-		btnDisplayTitle = new Button(infoComposite, SWT.CHECK);
-		btnDisplayTitle.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-		btnDisplayTitle.setText("Show Title and Users in Dataweb Dashboard Page");
-		btnDisplayTitle.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				super.widgetSelected(e);
-				model.displayTitle().uncheckedSetValue(btnDisplayTitle.getSelection());
-			}
-		});
+		btnDisplayTitle = new IBEXButton(infoComposite, SWT.CHECK, event -> {
+			model.displayTitle().uncheckedSetValue(btnDisplayTitle.getSelection());
+		})
+				.text("Show Title and Users in Dataweb Dashboard Page")
+				.tooltip("Show Title and Users in Dataweb Dashboard Page")
+				.layoutData(new GridData())
+				.get();
 
 		messageBox = new LogMessageBox(lhsComposite, SWT.NONE);
 		messageBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));

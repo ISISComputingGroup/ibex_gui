@@ -37,7 +37,7 @@ for i in range(1, 9):
 		pvs[i].setValue(pv_val)
 
 ]]></scriptText>
-      <pv trig="true">=1</pv>
+      <pv trig="true">loc://$(DID)_CONST_1(1)</pv>
       <pv trig="false">loc://GRAPH_SENSOR_1_PRESENT</pv>
       <pv trig="false">loc://GRAPH_SENSOR_2_PRESENT</pv>
       <pv trig="false">loc://GRAPH_SENSOR_3_PRESENT</pv>
