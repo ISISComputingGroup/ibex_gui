@@ -163,7 +163,12 @@ public class DaeExperimentSetupTableViewer extends TableViewer {
      *              The index for the cell.
      */
     private void ifCellValueDifferentFromCachedValueThenChangeLabel(ViewerCell cell, int rowIndexCoefficient) {
-        String cachedValue = cachedValues.get(cell.getVisualIndex() + rowIndexCoefficient);
+    	String cachedValue;
+    	try {
+    		cachedValue = cachedValues.get(cell.getVisualIndex() + rowIndexCoefficient);
+    	} catch (IndexOutOfBoundsException e) {
+    		cachedValue = "";
+    	}
         
         if (cachedValue.equals(cell.getText())) {
             cell.setBackground(panelViewModel.getColour("white"));
