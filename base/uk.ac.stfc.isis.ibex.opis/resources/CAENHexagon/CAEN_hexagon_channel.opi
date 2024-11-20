@@ -895,7 +895,14 @@ $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
     <pv_name>$(P)$(Q):$(CHAN):START:SP</pv_name>
     <pv_value />
-    <rules />
+    <rules>
+      <rule name="Enabled" prop_id="enabled" out_exp="false">
+        <exp bool_exp="pv0 == 1">
+          <value>false</value>
+        </exp>
+        <pv trig="true">$(P)$(Q):$(CHAN):ACQ:RUNNING</pv>
+      </rule>
+    </rules>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
@@ -949,7 +956,14 @@ $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
     <pv_name>$(P)$(Q):$(CHAN):STOP:SP</pv_name>
     <pv_value />
-    <rules />
+    <rules>
+      <rule name="Enabled" prop_id="enabled" out_exp="false">
+        <exp bool_exp="pv0 == 0">
+          <value>false</value>
+        </exp>
+        <pv trig="true">$(P)$(Q):$(CHAN):ACQ:RUNNING</pv>
+      </rule>
+    </rules>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
@@ -1560,7 +1574,14 @@ $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
     <pv_name>$(P)$(Q):START:SP</pv_name>
     <pv_value />
-    <rules />
+    <rules>
+      <rule name="Enabled" prop_id="enabled" out_exp="false">
+        <exp bool_exp="pv0 == 1">
+          <value>false</value>
+        </exp>
+        <pv trig="true">$(P)$(Q):ACQ:RUNNING</pv>
+      </rule>
+    </rules>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
@@ -1614,7 +1635,14 @@ $(pv_value)</tooltip>
     <push_action_index>0</push_action_index>
     <pv_name>$(P)$(Q):STOP:SP</pv_name>
     <pv_value />
-    <rules />
+    <rules>
+      <rule name="Enabled" prop_id="enabled" out_exp="false">
+        <exp bool_exp="pv0 == 0">
+          <value>false</value>
+        </exp>
+        <pv trig="true">$(P)$(Q):ACQ:RUNNING</pv>
+      </rule>
+    </rules>
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
@@ -2005,8 +2033,8 @@ $(pv_value)</tooltip>
     <height>25</height>
     <horizontal_alignment>0</horizontal_alignment>
     <limits_from_pv>false</limits_from_pv>
-    <maximum>Infinity</maximum>
-    <minimum>-Infinity</minimum>
+    <maximum>1.7976931348623157E308</maximum>
+    <minimum>-1.7976931348623157E308</minimum>
     <multiline_input>false</multiline_input>
     <name>Text Input</name>
     <precision>0</precision>
@@ -2062,8 +2090,8 @@ $(pv_value)</tooltip>
     <height>25</height>
     <horizontal_alignment>0</horizontal_alignment>
     <limits_from_pv>false</limits_from_pv>
-    <maximum>Infinity</maximum>
-    <minimum>-Infinity</minimum>
+    <maximum>1.7976931348623157E308</maximum>
+    <minimum>-1.7976931348623157E308</minimum>
     <multiline_input>false</multiline_input>
     <name>Text Input_4</name>
     <precision>0</precision>
