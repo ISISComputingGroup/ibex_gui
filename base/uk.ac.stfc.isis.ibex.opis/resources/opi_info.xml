@@ -564,11 +564,11 @@
         <path>TPAR_Editor/tpar_editor.opi</path>
         <description>The OPI for a file editor</description>
         <macros>
-            <macro>
-                <name>IOCNAME</name>
-                <description>The IOC name (e.g. MUONTPAR_01).</description>
-                <default>MUONTPAR_01</default>
-            </macro>
+          <macro>
+            <name>IOCNAME</name>
+            <description>The IOC name (e.g. MUONTPAR_01).</description>
+            <default>MUONTPAR_01</default>
+          </macro>
         </macros>
         <categories/>
       </value>
@@ -3776,7 +3776,7 @@
         </macros>
       </value>
     </entry>
-    <entry>	
+    <entry>
       <key>DDS Tensile Stress Rig</key>
       <value>
         <categories/>
@@ -3851,6 +3851,24 @@
         </macros>
         <categories>
           <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Group3 Hall Probe</key>
+      <value>
+        <type>ZERO_FIELD</type>
+        <path>group3hallprobe.opi</path>
+        <description>The OPI for the Group3HallProbe.</description>
+        <macros>
+          <macro>
+            <name>G3HALLPR</name>
+            <description>The Group3HallProbe PV prefix (e.g. G3HALLPR_01)</description>
+            <default>G3HALLPR_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Magnets</category>
         </categories>
       </value>
     </entry>
