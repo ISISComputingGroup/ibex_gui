@@ -3868,6 +3868,23 @@
           </macro>
         </macros>
         <categories/>
+    </entry>
+    <entry>
+      <key>Group3 Hall Probe</key>
+      <value>
+        <type>ZERO_FIELD</type>
+        <path>group3hallprobe.opi</path>
+        <description>The OPI for the Group3HallProbe.</description>
+        <macros>
+          <macro>
+            <name>G3HALLPR</name>
+            <description>The Group3HallProbe PV prefix (e.g. G3HALLPR_01)</description>
+            <default>G3HALLPR_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Magnets</category>
+        </categories>
       </value>
     </entry>
   </opis>
