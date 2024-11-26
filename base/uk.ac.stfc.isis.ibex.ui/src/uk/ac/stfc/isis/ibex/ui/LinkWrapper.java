@@ -1,7 +1,8 @@
 package uk.ac.stfc.isis.ibex.ui;
 
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -33,8 +34,8 @@ public class LinkWrapper {
 	    	@Override
 	    	public void widgetSelected(SelectionEvent e) {
 	        	try {
-					PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser().openURL(new URL(e.text));
-				} catch (PartInitException | MalformedURLException ex) {
+					PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser().openURL(new URI(e.text).toURL());
+				} catch (PartInitException | MalformedURLException | URISyntaxException ex) {
 					LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), ex.getMessage(), ex);
 				}
 	        }

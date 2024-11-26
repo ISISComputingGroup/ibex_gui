@@ -65,7 +65,7 @@ public class ScriptGeneratorFileHandler {
 			// Try to open in Notepad++. If not found, display warning and open in Windows Notepad
 			try {
 				Runtime rs = Runtime.getRuntime();
-				rs.exec(String.format("%s %s", notepadExe, file));
+				rs.exec(new String[] {notepadExe, file.toString()});
 			} catch (IOException e) {
 				LOG.catching(e);
 				throw e;

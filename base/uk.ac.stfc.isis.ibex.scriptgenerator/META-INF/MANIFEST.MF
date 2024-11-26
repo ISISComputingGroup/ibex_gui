@@ -16,7 +16,7 @@ Require-Bundle: org.eclipse.core.runtime,
  com.google.gson,
  uk.ac.stfc.isis.ibex.nicos;bundle-version="1.0.0",
  wrapped.net.sf.py4j.py4j;bundle-version="0.10.9"
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.scriptgenerator,
  uk.ac.stfc.isis.ibex.scriptgenerator.dynamicscripting,

@@ -3,12 +3,11 @@ package uk.ac.stfc.isis.ibex.jaxb;
 import java.io.IOException;
 import java.util.Collections;
 
-import org.glassfish.jaxb.runtime.v2.JAXBContextFactory;
-
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
+import org.glassfish.jaxb.runtime.v2.JAXBContextFactory;
 
 /**
  * Utility methods to easily acquire JAXB marshallers and unmarshallers.
@@ -24,8 +23,8 @@ public final class JAXB {
 	}
 	
     private static <T> JAXBContext getJaxbContext(Class<T> clazz) throws JAXBException {
-		var factory = new JAXBContextFactory();
-		return factory.createContext(new Class[] {clazz}, Collections.emptyMap());
+    	var factory = new JAXBContextFactory();
+    	return factory.createContext(new Class[] {clazz}, Collections.emptyMap());
     }
     
     /**
