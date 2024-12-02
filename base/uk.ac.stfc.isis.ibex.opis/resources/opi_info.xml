@@ -564,11 +564,11 @@
         <path>TPAR_Editor/tpar_editor.opi</path>
         <description>The OPI for a file editor</description>
         <macros>
-            <macro>
-                <name>IOCNAME</name>
-                <description>The IOC name (e.g. MUONTPAR_01).</description>
-                <default>MUONTPAR_01</default>
-            </macro>
+          <macro>
+            <name>IOCNAME</name>
+            <description>The IOC name (e.g. MUONTPAR_01).</description>
+            <default>MUONTPAR_01</default>
+          </macro>
         </macros>
         <categories/>
       </value>
@@ -3776,7 +3776,7 @@
         </macros>
       </value>
     </entry>
-    <entry>	
+    <entry>
       <key>DDS Tensile Stress Rig</key>
       <value>
         <categories/>
@@ -3852,6 +3852,21 @@
         <categories>
           <category>Miscellaneous motion control</category>
         </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>LITRON</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>litron.opi</path>
+        <description>The OPI for the LITRON</description>
+        <macros>
+          <macro>
+            <name>LITRON</name>
+            <description>The LITRON PV prefix (e.g. LITRON_01)</description>
+          </macro>
+        </macros>
       </value>
     </entry>
   </opis>
