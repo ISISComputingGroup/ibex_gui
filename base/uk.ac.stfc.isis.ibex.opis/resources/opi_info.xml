@@ -385,6 +385,24 @@
       </value>
     </entry>
     <entry>
+      <key>Litron Power Control</key>
+      <value>
+        <type>LITRONPOWER</type>
+        <path>LITRON_POWER.opi</path>
+        <description>The OPI for the Litron laser power controller.</description>
+        <macros>
+          <macro>
+            <name>MOTOR</name>
+            <description>The motor used to control the laser power. (e.g. MOT:MTR0101)</description>
+            <default>MOT:MTR0101</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Pinhole Selector</key>
       <value>
         <type>PINHOLESELECTOR</type>
