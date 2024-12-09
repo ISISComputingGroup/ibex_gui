@@ -138,14 +138,7 @@
       <include_parent_macros>true</include_parent_macros>
     </macros>
     <name></name>
-    <rules>
-      <rule name="Height" prop_id="height" out_exp="true">
-        <exp bool_exp="true">
-          <value>40*pv0+30</value>
-        </exp>
-        <pv trig="true">loc://sample_stack:naxes</pv>
-      </rule>
-    </rules>
+    <rules />
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
@@ -362,8 +355,8 @@ $(pv_value)</tooltip>
         <height>25</height>
         <horizontal_alignment>0</horizontal_alignment>
         <limits_from_pv>false</limits_from_pv>
-        <maximum>Infinity</maximum>
-        <minimum>-Infinity</minimum>
+        <maximum>1.7976931348623157E308</maximum>
+        <minimum>-1.7976931348623157E308</minimum>
         <multiline_input>false</multiline_input>
         <name>Text Input</name>
         <precision>0</precision>
