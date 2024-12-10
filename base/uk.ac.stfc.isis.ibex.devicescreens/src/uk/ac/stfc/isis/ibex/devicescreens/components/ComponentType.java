@@ -221,7 +221,9 @@ public enum ComponentType {
     /** Counters. */
     COUNTER,
 	/** PHOTON COUNTER. */
-	PHOTON_COUNTER;
+	PHOTON_COUNTER,
+    /** Litron laser power control.  */
+    LITRONPOWER;
 	
 
     private Target target;
