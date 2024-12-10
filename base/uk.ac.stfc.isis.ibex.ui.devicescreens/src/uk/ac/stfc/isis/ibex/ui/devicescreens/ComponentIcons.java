@@ -252,6 +252,8 @@ public final class ComponentIcons {
             	return "function_generator";
             case PHOTON_COUNTER:
             	return "photon_counter";
+            case LITRONPOWER:
+            	return "litron_power";
             default:
                 return "cog";
         }
