@@ -17,18 +17,17 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.e4.core.di;bundle-version="1.5.0",
  org.eclipse.e4.ui.services;bundle-version="1.2.0",
  javax.inject;bundle-version="1.0.0",
- javax.annotation;bundle-version="1.3.5",
- org.apache.commons.lang
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+ jakarta.annotation-api;bundle-version="[1.3.5,1.3.5]",
+ org.apache.commons.lang,
+ uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Export-Package: org.eclipse.wb.swt,
  org.mihalis.opal,
  org.mihalis.opal.breadcrumb,
  uk.ac.stfc.isis.ibex.ui,
  uk.ac.stfc.isis.ibex.ui.dialogs,
  uk.ac.stfc.isis.ibex.ui.tables
-Import-Package: org.apache.logging.log4j,
- org.eclipse.wb.swt,
- uk.ac.stfc.isis.ibex.logger
+Import-Package: org.eclipse.wb.swt
 Bundle-ClassPath: lib/opal-1.0.0.jar,
  .
 Bundle-Activator: uk.ac.stfc.isis.ibex.ui.UI

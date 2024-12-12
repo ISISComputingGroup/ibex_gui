@@ -45,7 +45,7 @@ public class IocControlViewModel extends ModelObject {
 	 * Represents an IOC in the tree view using its description and name.
 	 * If the item is a description, 'ioc' will be empty.
 	 */
-	public static record Item(Optional<String> description, Optional<String> ioc) { };
+	public record Item(Optional<String> description, Optional<String> ioc) { };
 	
 	private IocState ioc;
 	private final IocControl control;
