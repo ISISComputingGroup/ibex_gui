@@ -4,11 +4,10 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Epics
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.epics
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Bundle-ClassPath: .,
  resources/
 Require-Bundle: uk.ac.stfc.isis.ibex.jaxb;bundle-version="1.0.0",
- javax.annotation;bundle-version="1.2.0";visibility:=reexport,
  uk.ac.stfc.isis.ibex.logger,
  org.eclipse.ui;bundle-version="3.8.2",
  uk.ac.stfc.isis.ibex.model;bundle-version="1.0.0",
@@ -21,8 +20,7 @@ Require-Bundle: uk.ac.stfc.isis.ibex.jaxb;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.e4.ui,
  org.eclipse.equinox.registry,
  org.apache.commons.commons-codec;bundle-version="1.15.0";visibility:=reexport,
- joda-time;bundle-version="2.11.0";visibility:=reexport,
- jakarta.activation-api;bundle-version="2.1.1"
+ joda-time;bundle-version="2.11.0";visibility:=reexport
 Export-Package: uk.ac.stfc.isis.ibex.epics.adapters,
  uk.ac.stfc.isis.ibex.epics.conversion,
  uk.ac.stfc.isis.ibex.epics.conversion.json,

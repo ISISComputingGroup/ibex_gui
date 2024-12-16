@@ -1021,7 +1021,7 @@ $(pv_value)</tooltip>
     <macros>
       <include_parent_macros>true</include_parent_macros>
     </macros>
-    <name>Shutter</name>
+    <name>Secondary Shutter</name>
     <rules />
     <scale_options>
       <width_scalable>true</width_scalable>
@@ -1034,7 +1034,7 @@ $(pv_value)</tooltip>
     <transparent>false</transparent>
     <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
-    <width>655</width>
+    <width>775</width>
     <wuid>-13ed6b84:191564d6d49:-7d76</wuid>
     <x>6</x>
     <y>120</y>
@@ -1125,13 +1125,13 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
-      <text>Shutter State:</text>
+      <text>Secondary Shutter State:</text>
       <tooltip></tooltip>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>108</width>
+      <width>139</width>
       <wrap_words>true</wrap_words>
       <wuid>-13ed6b84:191564d6d49:-7ac9</wuid>
       <x>36</x>
@@ -1200,7 +1200,7 @@ $(pv_value)</tooltip>
       <widget_type>LED</widget_type>
       <width>25</width>
       <wuid>-13ed6b84:191564d6d49:-786b</wuid>
-      <x>234</x>
+      <x>294</x>
       <y>7</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -1232,16 +1232,16 @@ $(pv_value)</tooltip>
       </scale_options>
       <scripts />
       <show_scrollbar>false</show_scrollbar>
-      <text>Shutter Moving Readback</text>
+      <text>Secondary Shutter Moving Readback</text>
       <tooltip></tooltip>
       <transparent>true</transparent>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>187</width>
+      <width>247</width>
       <wrap_words>true</wrap_words>
       <wuid>-13ed6b84:191564d6d49:-786a</wuid>
-      <x>234</x>
+      <x>300</x>
       <y>10</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
@@ -1287,7 +1287,7 @@ $(pv_value)</tooltip>
       <widget_type>Action Button</widget_type>
       <width>80</width>
       <wuid>-13ed6b84:191564d6d49:-76ba</wuid>
-      <x>430</x>
+      <x>556</x>
       <y>7</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
@@ -1333,7 +1333,7 @@ $(pv_value)</tooltip>
       <widget_type>Action Button</widget_type>
       <width>80</width>
       <wuid>-13ed6b84:191564d6d49:-76b9</wuid>
-      <x>528</x>
+      <x>654</x>
       <y>7</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
@@ -1395,7 +1395,7 @@ $(pv_value)</tooltip>
       <width>69</width>
       <wrap_words>false</wrap_words>
       <wuid>56101941:1916a18f18a:-7d93</wuid>
-      <x>138</x>
+      <x>174</x>
       <y>10</y>
     </widget>
   </widget>

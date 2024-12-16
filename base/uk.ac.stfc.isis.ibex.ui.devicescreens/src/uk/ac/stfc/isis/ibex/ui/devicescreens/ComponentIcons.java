@@ -205,6 +205,7 @@ public final class ComponentIcons {
             case SYRINGE_PUMP:
             	return "syringe_pump";
             case KEYENCE:
+            case LITRONPOWER:
             	return "keyence";
             case OSCILLOSCOPE:
             	return "oscilloscope";

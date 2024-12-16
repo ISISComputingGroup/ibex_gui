@@ -6,6 +6,6 @@ Bundle-Version: 1.0.0.qualifier
 Require-Bundle: uk.ac.stfc.isis.ibex.ui.scriptgenerator,
  uk.ac.stfc.isis.scriptgenerator.product
 Bundle-ManifestVersion: 2
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Bundle-Vendor: ISIS
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.scriptgenerator.client
