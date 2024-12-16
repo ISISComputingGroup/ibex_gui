@@ -3860,11 +3860,11 @@
         <categories/>
         <type>UNKNOWN</type>
         <path>litron.opi</path>
-        <description>The OPI for the LITRON</description>
+        <description>The OPI for the LITRON Laser</description>
         <macros>
           <macro>
             <name>LITRON</name>
-            <description>The LITRON PV prefix (e.g. LITRON_01)</description>
+            <description>LITRON_01</description>
           </macro>
         </macros>
       </value>
