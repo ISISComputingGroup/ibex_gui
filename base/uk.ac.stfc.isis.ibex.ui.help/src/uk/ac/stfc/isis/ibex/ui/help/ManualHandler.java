@@ -20,6 +20,8 @@
 package uk.ac.stfc.isis.ibex.ui.help;
 
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import org.eclipse.e4.core.di.annotations.CanExecute;
@@ -46,8 +48,8 @@ public class ManualHandler {
 
         URL url = null;
         try {
-            url = new URL(USER_MANUAL_ADDRESS);
-        } catch (MalformedURLException ex) {
+            url = new URI(USER_MANUAL_ADDRESS).toURL();
+        } catch (MalformedURLException | URISyntaxException ex) {
             LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), ex.getMessage(), ex);
         }
 

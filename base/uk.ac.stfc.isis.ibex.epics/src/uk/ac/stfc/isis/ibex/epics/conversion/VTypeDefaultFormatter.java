@@ -48,7 +48,7 @@ public class VTypeDefaultFormatter<T extends VType> {
      */
 	public final Function<T, String> noUnits = new NoUnits<T>();
 	
-	private class WithUnits<R extends VType> implements Function<R, String> {
+	private final class WithUnits<R extends VType> implements Function<R, String> {
 		@Override
 		public String apply(VType value) throws ConversionException {	
 
@@ -61,7 +61,7 @@ public class VTypeDefaultFormatter<T extends VType> {
 		}
 	}
 
-	private class NoUnits<R extends VType> implements Function<R, String> {
+	private final class NoUnits<R extends VType> implements Function<R, String> {
 		@Override
 		public String apply(VType value) throws ConversionException {	
 		

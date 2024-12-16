@@ -4,7 +4,7 @@ Bundle-Name: Managermode
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.managermode
 Bundle-Version: 1.0.0.qualifier
 Export-Package: uk.ac.stfc.isis.ibex.managermode
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.managermode
 Require-Bundle: uk.ac.stfc.isis.ibex.epics;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.epics.switching;bundle-version="1.0.0",
