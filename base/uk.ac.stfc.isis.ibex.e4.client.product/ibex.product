@@ -20,6 +20,8 @@
 -Dpython.console.encoding=UTF-8
 -Dpython.import.site=false
 -XX:+CreateCoredumpOnCrash
+-XX:HeapDumpPath=C:/Scratch/CrashDumps/ibexcd%p.hprof
+-XX:ErrorFile=C:/Scratch/CrashDumps/ibexerror%p.log
 -Dlog4j2.formatMsgNoLookups=true
 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n
 -Djdk.util.zip.disableZip64ExtraFieldValidation=true
