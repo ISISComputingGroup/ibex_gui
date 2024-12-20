@@ -193,10 +193,10 @@
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>48</width>
+      <width>36</width>
       <wrap_words>true</wrap_words>
       <wuid>601b1d13:193cfd9f297:-7f3c</wuid>
-      <x>18</x>
+      <x>27</x>
       <y>6</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
@@ -234,10 +234,10 @@
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>67</width>
+      <width>42</width>
       <wrap_words>true</wrap_words>
       <wuid>601b1d13:193cfd9f297:-7f3a</wuid>
-      <x>-1</x>
+      <x>21</x>
       <y>36</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
