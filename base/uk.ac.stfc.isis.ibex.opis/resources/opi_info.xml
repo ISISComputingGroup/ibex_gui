@@ -3956,16 +3956,16 @@
       </value>
     </entry>
     <entry>
-      <key>LLTDG645</key>
+      <key>Litron Laser Timing (DG645)</key>
       <value>
         <type>UNKNOWN</type>
         <path>litronlasertimer.opi</path>
         <description>The OPI for the LitronLaserTimer.</description>
         <macros>
           <macro>
-            <name>LLTDG645</name>
-            <description>The LitronLaserTimer PV prefix (e.g. LLTDG645_01)</description>
-            <default>LLTDG645_01</default>
+            <name>DG645</name>
+            <description>The DG645 PV prefix (e.g. DG645_01)</description>
+            <default>DG645_01</default>
           </macro>
         </macros>
         <categories/>
