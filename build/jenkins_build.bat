@@ -4,8 +4,8 @@ setlocal enabledelayedexpansion
 set BASEDIR=%~dp0
 
 set M2=%MAVEN%bin
-set PYTHON3=C:\Instrument\Apps\Python3\python.exe
-set PYTHON_HOME=C:\Instrument\Apps\Python3
+set PYTHON3=%WORKSPACE%\Python3\python.exe
+set PYTHON_HOME=%WORKSPACE%\Python3
 
 set PATH=%M2%;%JAVA_HOME%;%PATH%
 
