@@ -3922,6 +3922,20 @@
       </value>
     </entry>
     <entry>
+      <key>LITRON</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>litron.opi</path>
+        <description>The OPI for the LITRON Laser</description>
+        <macros>
+          <macro>
+            <name>LITRON</name>
+            <description>LITRON_01</description>
+          </macro>
+        </macros>
+    </entry>
+    <entry>
       <key>TLFW102C</key>
       <value>
         <type>UNKNOWN</type>
