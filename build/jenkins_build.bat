@@ -33,7 +33,7 @@ REM if !errorlevel! neq 0 exit /b !errorlevel!
 
 pushd %CD%\..\%TARGET_DIR%
 if exist "..\Client-tmp.7z" del "..\Client-tmp.7z"
-"c:\Program Files\7-Zip\7z.exe" a -mx1 -r "..\Client-tmp.7z" .
+"c:\Program Files\7-Zip\7z.exe" a "..\Client-tmp.7z" . -mx1 -r -xr^^!*-arm.exe -xr^^!*-arm64.exe
 set errcode=!errorlevel!
 popd
 if !errcode! gtr 1 exit /b !errcode!
