@@ -26,14 +26,13 @@ import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.logging.log4j.Logger;
+
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
 import javax.jms.Topic;
-
-import org.apache.logging.log4j.Logger;
-
 import uk.ac.stfc.isis.ibex.activemq.message.MessageParser;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.model.ModelObject;

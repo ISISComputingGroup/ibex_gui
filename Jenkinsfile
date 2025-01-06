@@ -48,6 +48,18 @@ pipeline {
 	}
       }
     }
+    
+    stage("Dependencies") {
+        steps {
+          echo "Installing local genie python"
+          timeout(time: 1, unit: 'HOURS') {
+            bat """
+                call update_genie_python.bat ${env.WORKSPACE}\\Python3
+                if %errorlevel% neq 0 exit /b %errorlevel%
+            """
+          }
+        }
+    }
 
     stage("Build") {
       steps {
@@ -99,7 +111,8 @@ pipeline {
     stage("OPI Checker") {
       steps {
         bat """
-            set PYTHON3=C:\\Instrument\\Apps\\Python3\\python.exe
+            set PYTHON3=${env.WORKSPACE}\\Python3\\python.exe
+            set PYTHON_HOME=${env.WORKSPACE}\\Python3
             %PYTHON3% .\\base\\uk.ac.stfc.isis.ibex.opis\\check_opi_format.py -strict -directory .\\base\\uk.ac.stfc.isis.ibex.opis
         """
       }

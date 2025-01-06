@@ -4,8 +4,8 @@ setlocal enabledelayedexpansion
 set BASEDIR=%~dp0
 
 set M2=%MAVEN%bin
-set PYTHON3=C:\Instrument\Apps\Python3\python.exe
-set PYTHON_HOME=C:\Instrument\Apps\Python3
+set PYTHON3=%WORKSPACE%\Python3\python.exe
+set PYTHON_HOME=%WORKSPACE%\Python3
 
 set PATH=%M2%;%JAVA_HOME%;%PATH%
 
@@ -33,7 +33,7 @@ REM if !errorlevel! neq 0 exit /b !errorlevel!
 
 pushd %CD%\..\%TARGET_DIR%
 if exist "..\Client-tmp.7z" del "..\Client-tmp.7z"
-"c:\Program Files\7-Zip\7z.exe" a -mx1 -r "..\Client-tmp.7z" .
+"c:\Program Files\7-Zip\7z.exe" a "..\Client-tmp.7z" . -mx1 -r -xr^^!*-arm.exe -xr^^!*-arm64.exe
 set errcode=!errorlevel!
 popd
 if !errcode! gtr 1 exit /b !errcode!

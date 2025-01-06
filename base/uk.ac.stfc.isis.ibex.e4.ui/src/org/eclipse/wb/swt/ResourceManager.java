@@ -17,6 +17,8 @@ import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -265,8 +267,8 @@ public class ResourceManager extends SWTResourceManager {
 	
 	public static Image getPluginImageFromUri(String uri) {
 		try {
-			return getPluginImageFromUrl(new URL(uri));
-		} catch (MalformedURLException e) {
+			return getPluginImageFromUrl(new URI(uri).toURL());
+		} catch (MalformedURLException | URISyntaxException e) {
 			return null;
 		}
 	}

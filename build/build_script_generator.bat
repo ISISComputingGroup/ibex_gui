@@ -2,7 +2,7 @@ setlocal
 cd /d %~dp0
 
 REM We bundle our own JRE with the client, this is where it is
-set "JRELOCATION=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\ibex_client_jdk-17.0.4.1+1"
+set "JRELOCATION=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\ibex_client_jdk-21.0.5+11"
 set "LOCAL_JRE_LOCATION=%~dp0\jdk"
 set "TARGET_DIR=%2"
 if "%TARGET_DIR%" == "" (
@@ -28,6 +28,7 @@ set "JAVA_TOOL_OPTIONS=-Djdk.util.zip.disableZip64ExtraFieldValidation=true"
 
 if "%PYTHON3%" == "" (
 	set "PYTHON3=C:\Instrument\Apps\Python3\python.exe"
+	set "PYTHON_HOME=C:\Instrument\Apps\Python3"
 )
 
 call %~dp0run_python_support_tests.bat

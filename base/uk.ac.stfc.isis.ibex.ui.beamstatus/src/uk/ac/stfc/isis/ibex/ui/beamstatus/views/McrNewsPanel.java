@@ -22,7 +22,8 @@ package uk.ac.stfc.isis.ibex.ui.beamstatus.views;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.util.Scanner;
@@ -116,7 +117,7 @@ public class McrNewsPanel {
         String content = "";
         URLConnection connection = null;
         try {
-            connection = new URL(MCR_NEWS_PAGE_URL).openConnection();
+            connection = new URI(MCR_NEWS_PAGE_URL).toURL().openConnection();
             InputStreamReader connectionWithEncoding = new InputStreamReader(connection.getInputStream(), "UTF-8");
             Scanner scanner = new Scanner(connectionWithEncoding);
             scanner.useDelimiter("\\Z");
@@ -124,7 +125,7 @@ public class McrNewsPanel {
             scanner.close();
         } catch (UnknownHostException ex) {
             content += getNewsFailedMessage("Unknown host", ex);
-        } catch (MalformedURLException ex) {
+        } catch (MalformedURLException | URISyntaxException ex) {
             content += getNewsFailedMessage("URL not valid", ex);
         } catch (IOException ex) {
             content += getNewsFailedMessage("Unable to read file", ex);

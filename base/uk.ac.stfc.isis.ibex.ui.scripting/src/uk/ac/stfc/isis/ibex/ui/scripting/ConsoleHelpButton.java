@@ -1,7 +1,8 @@
 package uk.ac.stfc.isis.ibex.ui.scripting;
 
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -42,8 +43,8 @@ public class ConsoleHelpButton extends WorkbenchWindowControlContribution {
 		button.addSelectionListener(new SelectionAdapter() {
 			  public void widgetSelected(SelectionEvent e) {
 				  try {
-					PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser().openURL(new URL(WIKI_LINK));
-				  } catch (PartInitException | MalformedURLException ex) {
+					PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser().openURL(new URI(WIKI_LINK).toURL());
+				  } catch (PartInitException | MalformedURLException | URISyntaxException ex) {
 						LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), "Failed to open URL in browser: " + WIKI_LINK, ex);
 				  }
 			  }

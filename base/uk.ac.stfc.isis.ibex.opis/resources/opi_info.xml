@@ -385,6 +385,24 @@
       </value>
     </entry>
     <entry>
+      <key>Litron Power Control</key>
+      <value>
+        <type>LITRONPOWER</type>
+        <path>LITRON_POWER.opi</path>
+        <description>The OPI for the Litron laser power controller.</description>
+        <macros>
+          <macro>
+            <name>MOTOR</name>
+            <description>The motor used to control the laser power. (e.g. MOT:MTR0101)</description>
+            <default>MOT:MTR0101</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Pinhole Selector</key>
       <value>
         <type>PINHOLESELECTOR</type>
@@ -564,11 +582,11 @@
         <path>TPAR_Editor/tpar_editor.opi</path>
         <description>The OPI for a file editor</description>
         <macros>
-            <macro>
-                <name>IOCNAME</name>
-                <description>The IOC name (e.g. MUONTPAR_01).</description>
-                <default>MUONTPAR_01</default>
-            </macro>
+          <macro>
+            <name>IOCNAME</name>
+            <description>The IOC name (e.g. MUONTPAR_01).</description>
+            <default>MUONTPAR_01</default>
+          </macro>
         </macros>
         <categories/>
       </value>
@@ -2065,6 +2083,55 @@
             <name>KEPCO</name>
             <description>The Kepco PV name (e.g. KEPCO_01).</description>
             <default>KEPCO_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Hifi Magnet</key>
+      <value>
+        <type>MAGNET</type>
+        <path>hifi_magnet_table.opi</path>
+        <description>The OPI for the HTS Magnet.</description>
+        <macros>
+          <macro>
+            <name>IOC1</name>
+            <description>The First Magnet IOC (e.g. KEPCO_01).</description>
+            <default>KEPCO_01</default>
+          </macro>
+          <macro>
+            <name>MAGNET1</name>
+            <description>A human readable name for the first magnet.</description>
+          </macro>
+          <macro>
+            <name>IOC2</name>
+            <description>The second magnet IOC (e.g. KEPCO_02).</description>
+            <default>KEPCO_02</default>
+          </macro>
+          <macro>
+            <name>MAGNET2</name>
+            <description>A human readable name for the second magnet.</description>
+          </macro>
+          <macro>
+            <name>IOC3</name>
+            <description>The third magnet IOC (e.g. DFKPS_01).</description>
+            <default>DFKPS_01</default>
+          </macro>
+          <macro>
+            <name>MAGNET3</name>
+            <description>A human readable name for the third magnet.</description>
+          </macro>
+          <macro>
+            <name>IOC4</name>
+            <description>The fourth magnet IOC (e.g. DFKPS_02).</description>
+            <default>DFKPS_02</default>
+          </macro>
+          <macro>
+            <name>MAGNET4</name>
+            <description>A human readable name for the fourth magnet.</description>
           </macro>
         </macros>
         <categories>
@@ -3776,7 +3843,7 @@
         </macros>
       </value>
     </entry>
-    <entry>	
+    <entry>
       <key>DDS Tensile Stress Rig</key>
       <value>
         <categories/>
@@ -3851,6 +3918,40 @@
         </macros>
         <categories>
           <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>TLFW102C</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>thorlabsfw102c.opi</path>
+        <description>The OPI for the ThorlabsFW102C.</description>
+        <macros>
+          <macro>
+            <name>TLFW102C</name>
+            <description>The ThorlabsFW102C PV prefix (e.g. TLFW102C_01)</description>
+            <default>TLFW102C_01</default>
+          </macro>
+        </macros>
+        <categories/>
+      </value>
+    </entry>
+    <entry>
+      <key>Group3 Hall Probe</key>
+      <value>
+        <type>ZERO_FIELD</type>
+        <path>group3hallprobe.opi</path>
+        <description>The OPI for the Group3HallProbe.</description>
+        <macros>
+          <macro>
+            <name>G3HALLPR</name>
+            <description>The Group3HallProbe PV prefix (e.g. G3HALLPR_01)</description>
+            <default>G3HALLPR_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Magnets</category>
         </categories>
       </value>
     </entry>

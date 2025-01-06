@@ -41,6 +41,18 @@ pipeline {
       }
     }
     
+    stage("Dependencies") {
+        steps {
+          echo "Installing local genie python"
+          timeout(time: 1, unit: 'HOURS') {
+            bat """
+                call update_genie_python.bat ${env.WORKSPACE}\\Python3
+                if %errorlevel% neq 0 exit /b %errorlevel%
+            """
+          }
+        }
+    }
+
     stage("Build") {
       steps {
         script {
