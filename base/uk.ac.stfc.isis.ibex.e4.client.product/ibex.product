@@ -20,8 +20,9 @@
 -Dpython.console.encoding=UTF-8
 -Dpython.import.site=false
 -XX:+CreateCoredumpOnCrash
--XX:HeapDumpPath=C:/Instrument/Scratch/CrashDumps/ibexcd%p.hprof
--XX:ErrorFile=C:/Instrument/Scratch/CrashDumps/ibexerror%p.log
+-XX:+HeapDumpOnOutOfMemoryError
+-XX:HeapDumpPath=C:\Instrument\Scratch\CrashDumps\ibex_client_%p.hprof
+-XX:ErrorFile=C:/Instrument/Scratch/CrashDumps/ibex_client_%p.log
 -Dlog4j2.formatMsgNoLookups=true
 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n
 -Djdk.util.zip.disableZip64ExtraFieldValidation=true
