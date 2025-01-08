@@ -3955,5 +3955,21 @@
         </categories>
       </value>
     </entry>
+    <entry>
+      <key>LDNS3300</key>
+      <value>
+        <type>SENSOR</type>
+        <path>ldens3300.opi</path>
+        <description>The OPI for the ldens3300.</description>
+        <macros>
+          <macro>
+            <name>LDNS3300</name>
+            <description>The ldens3300 PV prefix (e.g. LDNS3300_01)</description>
+            <default>LDNS3300_01</default>
+          </macro>
+        </macros>
+        <categories/>
+      </value>
+    </entry>
   </opis>
 </descriptions>
