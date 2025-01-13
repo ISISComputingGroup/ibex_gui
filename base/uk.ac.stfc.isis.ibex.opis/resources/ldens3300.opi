@@ -18,7 +18,7 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <PV_ROOT>$(P)$(LDNS3300):</PV_ROOT>
+    <PV_ROOT>$(P)$(LDEN3300):</PV_ROOT>
   </macros>
   <name></name>
   <rules />
