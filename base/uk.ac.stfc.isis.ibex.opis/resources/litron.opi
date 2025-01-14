@@ -415,7 +415,7 @@ $(pv_value)</tooltip>
       <name>Text Input</name>
       <precision>0</precision>
       <precision_from_pv>true</precision_from_pv>
-      <pv_name>$(PV_ROOT)OPO:CRYS:NUDGE:DIST</pv_name>
+      <pv_name>$(PV_ROOT)OPO:CRYS:NUDGE:DIST:SP</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -439,14 +439,9 @@ $(pv_value)</tooltip>
       <x>118</x>
       <y>66</y>
     </widget>
-    <widget typeId="org.csstudio.opibuilder.widgets.choiceButton" version="1.0.0">
+    <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
       <actions hook="false" hook_all="false" />
-      <alarm_pulsing>false</alarm_pulsing>
-      <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-      <background_color>
-        <color name="ISIS_Gray_1" red="218" green="218" blue="218" />
-      </background_color>
-      <border_alarm_sensitive>true</border_alarm_sensitive>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
       <border_color>
         <color name="ISIS_Border" red="0" green="0" blue="0" />
       </border_color>
@@ -460,15 +455,11 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <height>28</height>
-      <horizontal>true</horizontal>
-      <items>
-        <s>&lt;</s>
-        <s>&gt;</s>
-      </items>
-      <items_from_pv>false</items_from_pv>
-      <name>ChoiceBtn</name>
-      <pv_name></pv_name>
+      <height>20</height>
+      <image></image>
+      <name>Button_1</name>
+      <push_action_index>0</push_action_index>
+      <pv_name>$(PV_ROOT)OPO:CRYS:NUDGE:DN:SP</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -477,17 +468,58 @@ $(pv_value)</tooltip>
         <keep_wh_ratio>false</keep_wh_ratio>
       </scale_options>
       <scripts />
-      <selected_color>
-        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
-      </selected_color>
+      <style>1</style>
+      <text>&lt;</text>
+      <toggle_button>false</toggle_button>
       <tooltip>$(pv_name)
 $(pv_value)</tooltip>
       <visible>true</visible>
-      <widget_type>Choice Button</widget_type>
-      <width>90</width>
-      <wuid>dc942cb:193910a1aee:-780f</wuid>
+      <widget_type>Action Button</widget_type>
+      <width>35</width>
+      <wuid>-7c1d1026:19464e15f74:-7d6b</wuid>
       <x>216</x>
-      <y>62</y>
+      <y>66</y>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+      <actions hook="false" hook_all="false" />
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+      </font>
+      <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+      </foreground_color>
+      <height>20</height>
+      <image></image>
+      <name>Button_1</name>
+      <push_action_index>0</push_action_index>
+      <pv_name>$(PV_ROOT)OPO:CRYS:NUDGE:UP:SP</pv_name>
+      <pv_value />
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <style>1</style>
+      <text>&gt;</text>
+      <toggle_button>false</toggle_button>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <visible>true</visible>
+      <widget_type>Action Button</widget_type>
+      <width>35</width>
+      <wuid>-7c1d1026:19464e15f74:-7d5d</wuid>
+      <x>258</x>
+      <y>66</y>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">

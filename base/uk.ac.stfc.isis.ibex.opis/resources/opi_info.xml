@@ -3931,9 +3931,11 @@
         <macros>
           <macro>
             <name>LITRON</name>
-            <description>LITRON_01</description>
+            <description>The control for Litron Laser Front Panel (e.g. LITRON_01)</description>
+			<default>LITRON_01</default>
           </macro>
         </macros>
+		</value>
     </entry>
     <entry>
       <key>TLFW102C</key>
