@@ -3956,16 +3956,6 @@
       </value>
     </entry>
     <entry>
-      <key>Anton-Paar L-DENS 3300 Density Sensor</key>
-      <value>
-        <type>SENSOR</type>
-        <path>ldens3300.opi</path>
-        <description>The OPI for the ldens3300.</description>
-        <macros>
-          <macro>
-            <name>LDEN3300</name>
-            <description>The ldens3300 PV prefix (e.g. LDEN3300_01)</description>
-            <default>LDEN3300_01</default>
       <key>Litron Laser Timing (DG645)</key>
       <value>
         <type>UNKNOWN</type>
@@ -3976,6 +3966,22 @@
             <name>DG645</name>
             <description>The DG645 PV prefix (e.g. DG645_01)</description>
             <default>DG645_01</default>
+          </macro>
+        </macros>
+        <categories/>
+      </value>
+    </entry>
+    <entry>
+      <key>Anton-Paar L-DENS 3300 Density Sensor</key>
+      <value>
+        <type>SENSOR</type>
+        <path>ldens3300.opi</path>
+        <description>The OPI for the ldens3300.</description>
+        <macros>
+          <macro>
+            <name>LDEN3300</name>
+            <description>The ldens3300 PV prefix (e.g. LDEN3300_01)</description>
+            <default>LDEN3300_01</default>
           </macro>
         </macros>
         <categories/>
