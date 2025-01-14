@@ -3064,6 +3064,18 @@
       </value>
     </entry>
     <entry>
+      <key>Zero field controller (HIFI)</key>
+      <value>
+        <type>ZERO_FIELD</type>
+        <path>zero_field_controller_hifi/zero_field_controller_hifi.opi</path>
+        <description>OPI for the HIFI Zero-field controller</description>
+        <categories>
+          <category>Magnets</category>
+        </categories>
+        <macros/>
+      </value>
+    </entry>
+    <entry>
       <key>LSI correlator</key>
       <value>
         <type>LSICORR</type>
