@@ -3966,6 +3966,16 @@
             <name>LDEN3300</name>
             <description>The ldens3300 PV prefix (e.g. LDEN3300_01)</description>
             <default>LDEN3300_01</default>
+      <key>Litron Laser Timing (DG645)</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>litronlasertimer.opi</path>
+        <description>The OPI for the LitronLaserTimer.</description>
+        <macros>
+          <macro>
+            <name>DG645</name>
+            <description>The DG645 PV prefix (e.g. DG645_01)</description>
+            <default>DG645_01</default>
           </macro>
         </macros>
         <categories/>
