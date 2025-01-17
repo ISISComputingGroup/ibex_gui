@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Eclipse-BundleShape: dir
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.e4.client;singleton:=true
 Bundle-Name: IBEX
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 25.2.1
 Require-Bundle: uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.dashboard;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.beamstatus;bundle-version="1.0.0",
