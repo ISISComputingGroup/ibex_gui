@@ -43,7 +43,7 @@ public class Application implements IApplication {
 	 * selected to build with.
 	 */
 	private sealed interface Java17SealedInterface permits Java17SealedInterfaceImpl { }
-	private static non-sealed final class Java17SealedInterfaceImpl implements Java17SealedInterface { }
+	private static non-sealed class Java17SealedInterfaceImpl implements Java17SealedInterface { }
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.IApplicationContext)
