@@ -3290,6 +3290,11 @@
             <description>The HIFIMAGS PV prefix (e.g. HIFIMAGS_01)</description>
             <default>HIFIMAGS_01</default>
           </macro>
+          <macro>
+            <name>INST_PREFIX</name>
+            <description>The instrument prefix (e.g. IN:HIFI-C11:)</description>
+            <default>IN:HIFI-C11:</default>
+          </macro>
         </macros>
       </value>
     </entry>
