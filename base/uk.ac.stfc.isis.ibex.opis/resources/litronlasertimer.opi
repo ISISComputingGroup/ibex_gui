@@ -19,7 +19,7 @@
   <macros>
     <include_parent_macros>true</include_parent_macros>
     <PV_ROOT>$(P)$(IOC):</PV_ROOT>
-    <IOC>DG645_01</IOC>
+    <IOC>$(DG645)</IOC>
     <ASROOT>$(P)AS:$(IOC):</ASROOT>
     <CS_ROOT>$(P)CS:IOC:$(IOC):</CS_ROOT>
   </macros>

@@ -133,13 +133,13 @@
       <axis_0_scale_font>
         <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
       </axis_0_scale_font>
-      <axis_0_scale_format></axis_0_scale_format>
+      <axis_0_scale_format>HH:mm</axis_0_scale_format>
       <axis_0_show_grid>true</axis_0_show_grid>
       <axis_0_time_format>3</axis_0_time_format>
       <axis_0_title_font>
         <opifont.name fontName="Segoe UI" height="9" style="1" pixels="false">Default Bold</opifont.name>
       </axis_0_title_font>
-      <axis_0_visible>false</axis_0_visible>
+      <axis_0_visible>true</axis_0_visible>
       <axis_1_auto_scale>true</axis_1_auto_scale>
       <axis_1_auto_scale_threshold>0.0</axis_1_auto_scale_threshold>
       <axis_1_axis_color>
@@ -202,7 +202,7 @@
       </title_font>
       <tooltip>Right Click and select Clear graph to clear the plot</tooltip>
       <trace_0_anti_alias>true</trace_0_anti_alias>
-      <trace_0_buffer_size>100</trace_0_buffer_size>
+      <trace_0_buffer_size>10000</trace_0_buffer_size>
       <trace_0_concatenate_data>true</trace_0_concatenate_data>
       <trace_0_line_width>1</trace_0_line_width>
       <trace_0_name>Field(T)</trace_0_name>
@@ -214,7 +214,7 @@
       </trace_0_trace_color>
       <trace_0_trace_type>0</trace_0_trace_type>
       <trace_0_update_delay>100</trace_0_update_delay>
-      <trace_0_update_mode>0</trace_0_update_mode>
+      <trace_0_update_mode>4</trace_0_update_mode>
       <trace_0_visible>true</trace_0_visible>
       <trace_0_x_axis_index>0</trace_0_x_axis_index>
       <trace_0_x_pv></trace_0_x_pv>
@@ -224,7 +224,7 @@
       <trace_0_y_pv_value />
       <trace_count>1</trace_count>
       <transparent>false</transparent>
-      <trigger_pv>$(P)CS:IOC:PT2025_01:DEVIOS:HEARTBEAT</trigger_pv>
+      <trigger_pv>$(P)CS:IOC:$(PT2025):DEVIOS:HEARTBEAT</trigger_pv>
       <trigger_pv_value />
       <visible>true</visible>
       <widget_type>XY Graph</widget_type>
