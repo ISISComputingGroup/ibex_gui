@@ -52,7 +52,7 @@ def get_summary_channels(channel_list_pv, get_string_from_pv=PVUtil.getString, l
     channels = list()
     try:
         if channel_list_pv.getValue().getData().size() > 0:  # default method throws uncaught java exception if empty
-    	    channels = [channel_formatter(chan) for chan in get_string_from_pv(channel_list_pv).split(' ')]
+    	    channels = [channel_formatter(chan) for chan in PVUtil.getStringArray(channel_list_pv)]
     except Exception, e:  # Jython slightly different to standard Python
         log("Unable to get channel list for HVCaen: " + str(e))  # Jython str has no 'format'
     return channels
