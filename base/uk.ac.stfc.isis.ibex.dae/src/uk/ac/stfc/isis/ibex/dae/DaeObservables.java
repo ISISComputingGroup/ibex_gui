@@ -396,7 +396,7 @@ public class DaeObservables {
         startTime = obsFactory.getSwitchableObservable(new StringChannel(),
                 InstrumentUtils.addPrefix(DAE.endWith("STARTTIME")));
         runDuration = obsFactory.getSwitchableObservable(new IntegerChannel(),
-                InstrumentUtils.addPrefix(DAE.endWith("RUNDURATION")));
+                InstrumentUtils.addPrefix(DAE.endWith("RUNDURATION_STR")));
         timeChannels = obsFactory.getSwitchableObservable(new IntegerChannel(),
                 InstrumentUtils.addPrefix(DAE.endWith("NUMTIMECHANNELS")));
         spectra = obsFactory.getSwitchableObservable(new IntegerChannel(),
@@ -408,7 +408,7 @@ public class DaeObservables {
         periodRawFrames = obsFactory.getSwitchableObservable(new IntegerChannel(),
                 InstrumentUtils.addPrefix(DAE.endWith("RAWFRAMES_PD")));
         periodDuration = obsFactory.getSwitchableObservable(new IntegerChannel(),
-                InstrumentUtils.addPrefix(DAE.endWith("RUNDURATION_PD")));
+                InstrumentUtils.addPrefix(DAE.endWith("RUNDURATION_PD_STR")));
         periodType = obsFactory.getSwitchableObservable(new StringChannel(),
                 InstrumentUtils.addPrefix(DAE.endWith("PERIODTYPE")));
         periodSequence = obsFactory.getSwitchableObservable(new IntegerChannel(),
