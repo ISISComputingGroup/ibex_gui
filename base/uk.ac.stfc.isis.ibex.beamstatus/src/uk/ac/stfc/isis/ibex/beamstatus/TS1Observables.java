@@ -45,6 +45,16 @@ public class TS1Observables extends EndStationObservables {
 	 * An updating value giving the status of the muon kicker in TS1.
 	 */
 	public final FacilityPV muonKicker;
+	
+	/**
+	 * An updating value giving the muon beam current.
+	 */
+	public final FacilityPV muonBeamCurr;
+	
+	/**
+	 * An updating value giving the EPB1 beam current.
+	 */
+	public final FacilityPV epb1BeamCurr;
 
 	private static final String MOD_PREFIX = "TG:TS1:MOD:";
 
@@ -65,6 +75,17 @@ public class TS1Observables extends EndStationObservables {
 		ForwardingObservable<OnOff> muonKickerObs = obsFactory
 				.getSwitchableObservable(new EnumChannel<OnOff>(OnOff.class), "AC:MUON:KICKR:STAT");
 		muonKicker = new FacilityPV("AC:MUON:KICKR:STAT", adaptEnum(muonKickerObs));
+		
+		
+		ForwardingObservable<Number> muonBeamCurrObs = obsFactory
+				.getSwitchableObservable(new NumberWithPrecisionChannel(), "AC:MUON:BEAM:CURR");
+		muonBeamCurr = new FacilityPV("AC:MUON:BEAM:CURR", adaptNumber(muonBeamCurrObs));
+		
+		
+		ForwardingObservable<Number> epb1BeamCurrObs = obsFactory
+				.getSwitchableObservable(new NumberWithPrecisionChannel(), "AC:EPB1:BEAM:CURR");
+		epb1BeamCurr = new FacilityPV("AC:EPB1:BEAM:CURR", adaptNumber(epb1BeamCurrObs));
+		
 	}
 
 }

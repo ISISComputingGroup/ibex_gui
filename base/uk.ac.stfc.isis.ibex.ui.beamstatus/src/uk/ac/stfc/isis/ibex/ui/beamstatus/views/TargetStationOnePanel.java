@@ -41,6 +41,10 @@ public class TargetStationOnePanel extends BeamInfoComposite {
 	private final Label methaneTemperature;
 	private final Label hydrogenTemperature;
 	private final Label muonKicker;
+	private final Label muonBeamCurrent;
+	private final Label epb1BeamCurrent;
+
+
 
 	/**
 	 * The constructor.
@@ -106,6 +110,21 @@ public class TargetStationOnePanel extends BeamInfoComposite {
 
 		muonKicker = new Label(this, SWT.BORDER | SWT.RIGHT);
 		muonKicker.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		
+		Label lblMuonBeamCurrent = new Label(this, SWT.NONE);
+		lblMuonBeamCurrent.setText("Muon Beam Current");
+
+		muonBeamCurrent = new Label(this, SWT.BORDER | SWT.RIGHT);
+		muonBeamCurrent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		
+		Label lblEpb1BeamCurrent = new Label(this, SWT.NONE);
+		lblEpb1BeamCurrent.setText("EPB1 Beam Current");
+
+		epb1BeamCurrent = new Label(this, SWT.BORDER | SWT.RIGHT);
+		epb1BeamCurrent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
 
 		if (BeamStatus.getInstance() != null) {
 			bind(BeamStatus.getInstance().ts1());
@@ -127,6 +146,8 @@ public class TargetStationOnePanel extends BeamInfoComposite {
 		bindAndAddMenu(ts.methaneTemperature, methaneTemperature, this);
 		bindAndAddMenu(ts.hydrogenTemperature, hydrogenTemperature, this);
 		bindAndAddMenu(ts.muonKicker, muonKicker, this);
+		bindAndAddMenu(ts.muonBeamCurr, muonBeamCurrent, this);
+		bindAndAddMenu(ts.epb1BeamCurr, epb1BeamCurrent, this);
 
 	}
 
