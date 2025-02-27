@@ -68,6 +68,18 @@ public class TargetStationOnePanel extends BeamInfoComposite {
 
 		pps = new Label(this, SWT.BORDER | SWT.RIGHT);
 		pps.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		Label lblEpb1BeamCurrent = new Label(this, SWT.NONE);
+		lblEpb1BeamCurrent.setText("EPB1 Beam Current");
+
+		epb1BeamCurrent = new Label(this, SWT.BORDER | SWT.RIGHT);
+		epb1BeamCurrent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		Label lblMuonBeamCurrent = new Label(this, SWT.NONE);
+		lblMuonBeamCurrent.setText("Muon Beam Current");
+
+		muonBeamCurrent = new Label(this, SWT.BORDER | SWT.RIGHT);
+		muonBeamCurrent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Label lblBeamCurrent = new Label(this, SWT.NONE);
 		lblBeamCurrent.setText("TS1 Beam Current");
@@ -110,21 +122,6 @@ public class TargetStationOnePanel extends BeamInfoComposite {
 
 		muonKicker = new Label(this, SWT.BORDER | SWT.RIGHT);
 		muonKicker.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		
-		Label lblMuonBeamCurrent = new Label(this, SWT.NONE);
-		lblMuonBeamCurrent.setText("Muon Beam Current");
-
-		muonBeamCurrent = new Label(this, SWT.BORDER | SWT.RIGHT);
-		muonBeamCurrent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
-		
-		Label lblEpb1BeamCurrent = new Label(this, SWT.NONE);
-		lblEpb1BeamCurrent.setText("EPB1 Beam Current");
-
-		epb1BeamCurrent = new Label(this, SWT.BORDER | SWT.RIGHT);
-		epb1BeamCurrent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
 
 		if (BeamStatus.getInstance() != null) {
 			bind(BeamStatus.getInstance().ts1());
