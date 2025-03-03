@@ -18,7 +18,7 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <PV_ROOT>$(P)$(HIFIMAGS):</PV_ROOT>
+    <PV_ROOT>$(INST_PREFIX)$(HIFIMAGS):</PV_ROOT>
     <NAME>$(NAME)</NAME>
   </macros>
   <name>$(PV_ROOT)M:PERSIST:SP</name>
@@ -1720,23 +1720,23 @@ $(pv_value)</tooltip>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules>
-      <rule name="Rule" prop_id="enabled" out_exp="false">
-        <exp bool_exp="pvInt0 == 0">
-          <value>true</value>
-        </exp>
-        <exp bool_exp="pvInt0 != 0">
-          <value>false</value>
-        </exp>
-        <pv trig="true">$(PV_ROOT)Z:RAMP:RATE:SP.DISP</pv>
-      </rule>
-      <rule name="Rule" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pvInt0 != 0">
-          <value>
-            <color red="192" green="192" blue="192" />
-          </value>
-        </exp>
-        <pv trig="true">$(PV_ROOT)Z:RAMP:RATE:SP.DISP</pv>
-      </rule>
+        <rule name="Rule" prop_id="enabled" out_exp="false">
+          <exp bool_exp="pvInt0 == 0">
+            <value>true</value>
+          </exp>
+          <exp bool_exp="pvInt0 != 0">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)Z:RAMP:RATE:SP.DISP</pv>
+        </rule>
+        <rule name="Rule" prop_id="background_color" out_exp="false">
+          <exp bool_exp="pvInt0 != 0">
+            <value>
+              <color red="192" green="192" blue="192" />
+            </value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)Z:RAMP:RATE:SP.DISP</pv>
+        </rule>
       </rules>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -1847,23 +1847,23 @@ $(pv_value)</tooltip>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules>
-      <rule name="Rule" prop_id="enabled" out_exp="false">
-        <exp bool_exp="pvInt0 == 0">
-          <value>true</value>
-        </exp>
-        <exp bool_exp="pvInt0 != 0">
-          <value>false</value>
-        </exp>
-        <pv trig="true">$(PV_ROOT)Z:FIELD:MID:SP.DISP</pv>
-      </rule>
-      <rule name="Rule" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pvInt0 != 0">
-          <value>
-            <color red="192" green="192" blue="192" />
-          </value>
-        </exp>
-        <pv trig="true">$(PV_ROOT)Z:FIELD:MID:SP.DISP</pv>
-      </rule>
+        <rule name="Rule" prop_id="enabled" out_exp="false">
+          <exp bool_exp="pvInt0 == 0">
+            <value>true</value>
+          </exp>
+          <exp bool_exp="pvInt0 != 0">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)Z:FIELD:MID:SP.DISP</pv>
+        </rule>
+        <rule name="Rule" prop_id="background_color" out_exp="false">
+          <exp bool_exp="pvInt0 != 0">
+            <value>
+              <color red="192" green="192" blue="192" />
+            </value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)Z:FIELD:MID:SP.DISP</pv>
+        </rule>
       </rules>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -1917,12 +1917,12 @@ $(pv_value)</tooltip>
       <pv_value />
       <release_action_index>0</release_action_index>
       <rules>
-      <rule name="Rule" prop_id="enabled" out_exp="false">
-        <exp bool_exp="pvInt0 == 0">
-          <value>true</value>
-        </exp>
-        <pv trig="true">$(PV_ROOT)Z:SWITCH:SET:SP.DISP</pv>
-      </rule>
+        <rule name="Rule" prop_id="enabled" out_exp="false">
+          <exp bool_exp="pvInt0 == 0">
+            <value>true</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)Z:SWITCH:SET:SP.DISP</pv>
+        </rule>
       </rules>
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -2020,23 +2020,23 @@ $(pv_value)</tooltip>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules>
-      <rule name="Rule" prop_id="enabled" out_exp="false">
-        <exp bool_exp="pvInt0 == 0">
-          <value>true</value>
-        </exp>
-        <exp bool_exp="pvInt0 != 0">
-          <value>false</value>
-        </exp>
-        <pv trig="true">$(PV_ROOT)Z:FIELD:MAX:SP.DISP</pv>
-      </rule>
-      <rule name="Rule" prop_id="background_color" out_exp="false">
-        <exp bool_exp="pvInt0 != 0">
-          <value>
-            <color red="192" green="192" blue="192" />
-          </value>
-        </exp>
-        <pv trig="true">$(PV_ROOT)Z:FIELD:MAX:SP.DISP</pv>
-      </rule>
+        <rule name="Rule" prop_id="enabled" out_exp="false">
+          <exp bool_exp="pvInt0 == 0">
+            <value>true</value>
+          </exp>
+          <exp bool_exp="pvInt0 != 0">
+            <value>false</value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)Z:FIELD:MAX:SP.DISP</pv>
+        </rule>
+        <rule name="Rule" prop_id="background_color" out_exp="false">
+          <exp bool_exp="pvInt0 != 0">
+            <value>
+              <color red="192" green="192" blue="192" />
+            </value>
+          </exp>
+          <pv trig="true">$(PV_ROOT)Z:FIELD:MAX:SP.DISP</pv>
+        </rule>
       </rules>
       <scale_options>
         <width_scalable>true</width_scalable>
