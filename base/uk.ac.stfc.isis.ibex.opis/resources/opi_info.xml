@@ -2099,8 +2099,8 @@
         <macros>
           <macro>
             <name>IOC1</name>
-            <description>The First Magnet IOC (e.g. KEPCO_01).</description>
-            <default>KEPCO_01</default>
+            <description>The First Magnet IOC (e.g. IN:HIFI:KEPCO_01).</description>
+            <default>IN:HIFI:KEPCO_01</default>
           </macro>
           <macro>
             <name>MAGNET1</name>
@@ -2108,8 +2108,8 @@
           </macro>
           <macro>
             <name>IOC2</name>
-            <description>The second magnet IOC (e.g. KEPCO_02).</description>
-            <default>KEPCO_02</default>
+            <description>The second magnet IOC (e.g. IN:HIFI:KEPCO_02).</description>
+            <default>IN:HIFI:KEPCO_02</default>
           </macro>
           <macro>
             <name>MAGNET2</name>
@@ -2117,8 +2117,8 @@
           </macro>
           <macro>
             <name>IOC3</name>
-            <description>The third magnet IOC (e.g. DFKPS_01).</description>
-            <default>DFKPS_01</default>
+            <description>The third magnet IOC (e.g. IN:HIFI:DFKPS_01).</description>
+            <default>IN:HIFI:DFKPS_01</default>
           </macro>
           <macro>
             <name>MAGNET3</name>
@@ -2126,8 +2126,8 @@
           </macro>
           <macro>
             <name>IOC4</name>
-            <description>The fourth magnet IOC (e.g. DFKPS_02).</description>
-            <default>DFKPS_02</default>
+            <description>The fourth magnet IOC (e.g. IN:HIFI:DFKPS_02).</description>
+            <default>IN:HIFI:DFKPS_02</default>
           </macro>
           <macro>
             <name>MAGNET4</name>
@@ -3064,6 +3064,18 @@
       </value>
     </entry>
     <entry>
+      <key>Zero field controller (HIFI)</key>
+      <value>
+        <type>ZERO_FIELD</type>
+        <path>zero_field_controller_hifi/zero_field_controller_hifi.opi</path>
+        <description>OPI for the HIFI Zero-field controller</description>
+        <categories>
+          <category>Magnets</category>
+        </categories>
+        <macros/>
+      </value>
+    </entry>
+    <entry>
       <key>LSI correlator</key>
       <value>
         <type>LSICORR</type>
@@ -3277,6 +3289,11 @@
             <name>HIFIMAGS</name>
             <description>The HIFIMAGS PV prefix (e.g. HIFIMAGS_01)</description>
             <default>HIFIMAGS_01</default>
+          </macro>
+          <macro>
+            <name>INST_PREFIX</name>
+            <description>The instrument prefix (e.g. IN:HIFI-C11:)</description>
+            <default>IN:HIFI-C11:</default>
           </macro>
         </macros>
       </value>
@@ -3922,6 +3939,22 @@
       </value>
     </entry>
     <entry>
+      <key>LITRON</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>litron.opi</path>
+        <description>The OPI for the LITRON Laser</description>
+        <macros>
+          <macro>
+            <name>LITRON</name>
+            <description>The control for Litron Laser Front Panel (e.g. LITRON_01)</description>
+			<default>LITRON_01</default>
+          </macro>
+        </macros>
+		</value>
+    </entry>
+    <entry>
       <key>TLFW102C</key>
       <value>
         <type>UNKNOWN</type>
@@ -3953,6 +3986,38 @@
         <categories>
           <category>Magnets</category>
         </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Litron Laser Timing (DG645)</key>
+      <value>
+        <type>UNKNOWN</type>
+        <path>litronlasertimer.opi</path>
+        <description>The OPI for the LitronLaserTimer.</description>
+        <macros>
+          <macro>
+            <name>DG645</name>
+            <description>The DG645 PV prefix (e.g. DG645_01)</description>
+            <default>DG645_01</default>
+          </macro>
+        </macros>
+        <categories/>
+      </value>
+    </entry>
+    <entry>
+      <key>Anton-Paar L-DENS 3300 Density Sensor</key>
+      <value>
+        <type>SENSOR</type>
+        <path>ldens3300.opi</path>
+        <description>The OPI for the ldens3300.</description>
+        <macros>
+          <macro>
+            <name>LDEN3300</name>
+            <description>The ldens3300 PV prefix (e.g. LDEN3300_01)</description>
+            <default>LDEN3300_01</default>
+          </macro>
+        </macros>
+        <categories/>
       </value>
     </entry>
   </opis>

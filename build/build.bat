@@ -32,6 +32,7 @@ set "JAVA_TOOL_OPTIONS=-Djdk.util.zip.disableZip64ExtraFieldValidation=true"
 
 if "%PYTHON3%" == "" (
 	set "PYTHON3=C:\Instrument\Apps\Python3\python.exe"
+	set "PYTHON_HOME=C:\Instrument\Apps\Python3"
 )
 
 call %~dp0run_python_support_tests.bat
