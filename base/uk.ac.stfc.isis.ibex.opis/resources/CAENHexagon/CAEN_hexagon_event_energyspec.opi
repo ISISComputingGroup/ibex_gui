@@ -40,7 +40,7 @@
     <axis_0_axis_color>
       <color red="0" green="0" blue="0" />
     </axis_0_axis_color>
-    <axis_0_axis_title>Energy Bin</axis_0_axis_title>
+    <axis_0_axis_title>Energy</axis_0_axis_title>
     <axis_0_dash_grid_line>true</axis_0_dash_grid_line>
     <axis_0_grid_color>
       <color red="200" green="200" blue="200" />
@@ -136,7 +136,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_0_update_mode>0</trace_0_update_mode>
     <trace_0_visible>true</trace_0_visible>
     <trace_0_x_axis_index>0</trace_0_x_axis_index>
-    <trace_0_x_pv></trace_0_x_pv>
+    <trace_0_x_pv>$(P)$(Q):$(CHAN):ENERGYSPEC:X</trace_0_x_pv>
     <trace_0_x_pv_value />
     <trace_0_y_axis_index>1</trace_0_y_axis_index>
     <trace_0_y_pv>$(P)$(Q):$(CHAN):ENERGYSPEC:EVENT</trace_0_y_pv>
@@ -677,10 +677,10 @@ $(pv_value)</tooltip>
     <y>456</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-    <actions hook="false" hook_all="false"/>
+    <actions hook="false" hook_all="false" />
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <border_color>
-      <color name="ISIS_Border" red="0" green="0" blue="0"/>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
@@ -690,30 +690,71 @@ $(pv_value)</tooltip>
     </font>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
     <height>1</height>
-    <image/>
+    <image></image>
     <name>Dummy</name>
     <push_action_index>0</push_action_index>
-    <pv_name/>
-    <pv_value/>
-    <rules/>
+    <pv_name></pv_name>
+    <pv_value />
+    <rules />
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts/>
+    <scripts />
     <style>1</style>
-    <text/>
+    <text></text>
     <toggle_button>false</toggle_button>
-    <tooltip/>
+    <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Action Button</widget_type>
     <width>1</width>
     <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
     <x>102</x>
     <y>36</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <actions hook="false" hook_all="false" />
+    <auto_size>false</auto_size>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+    </font>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <height>74</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <name>Label</name>
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <show_scrollbar>false</show_scrollbar>
+    <text>Uses same A*X+B scaling as on other energy spectrum graph</text>
+    <tooltip></tooltip>
+    <transparent>true</transparent>
+    <vertical_alignment>1</vertical_alignment>
+    <visible>true</visible>
+    <widget_type>Label</widget_type>
+    <width>119</width>
+    <wrap_words>true</wrap_words>
+    <wuid>-7943822c:1933be2c5c1:-633c</wuid>
+    <x>636</x>
+    <y>423</y>
   </widget>
 </display>
