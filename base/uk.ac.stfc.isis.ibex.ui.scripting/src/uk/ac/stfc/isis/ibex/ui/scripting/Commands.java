@@ -36,6 +36,8 @@ public final class Commands {
      * The command to initialise genie.
      */
     public static final String GENIE_INITIALISATION_CMDS = "import matplotlib \n"
+            + "matplotlib.rcParams[\"figure.autolayout\"] = True"
+            + "matplotlib.rcParams[\"font.size\"] = 8"
             + "matplotlib.use('module://genie_python.matplotlib_backend.ibex_websocket_backend') \n"
             + "import genie_python.matplotlib_backend.ibex_websocket_backend as _mpl_backend\n"
             + "_mpl_backend.set_up_plot_default(is_primary=True, should_open_ibex_window_on_show=True, max_figures=3)\n"
