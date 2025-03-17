@@ -2,6 +2,8 @@ package uk.ac.stfc.isis.ibex.scriptgenerator;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Optional;
 
@@ -56,7 +58,7 @@ public final class ScriptGeneratorManual {
 	    // and return the first one reachable from the user's network
 	    for (String url : preferenceProperty.split(",")) {
 	        try {
-	            URL possibleUrl = new URL(url);
+	            URL possibleUrl = new URI(url).toURL();
 	            HttpURLConnection connection = (HttpURLConnection) possibleUrl.openConnection();
 	            connection.setConnectTimeout(URL_TIMEOUT_MILLISECONDS);
 	            connection.setRequestMethod("GET");
@@ -65,7 +67,7 @@ public final class ScriptGeneratorManual {
 	            if (responseCode >= GOOD_RESPONSE_CODE && responseCode < BAD_RESPONSE_CODE) {
 	                return Optional.of(possibleUrl);
 	            }
-	        } catch (IOException ex) {
+	        } catch (IOException | URISyntaxException ex) {
 	            LOG.debug("Invalid URL for user manual was found: " + url);
 	        }
 	    }

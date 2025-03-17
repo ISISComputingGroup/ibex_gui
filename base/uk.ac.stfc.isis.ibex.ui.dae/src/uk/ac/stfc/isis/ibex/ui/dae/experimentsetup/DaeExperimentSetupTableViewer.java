@@ -260,14 +260,15 @@ public class DaeExperimentSetupTableViewer extends TableViewer {
             x = xStart;
             y = yStart;
             ViewerCell cell = getCellFromPoint();
+            int rowIndex = (int) Math.floor((y - headerHeight) / height);
             while (cell != null) {
-                int rowIndex = (int) Math.floor((y - headerHeight) / height);
                 ifCellValueDifferentFromCachedValueThenChangeLabel(cell, rowIndex * table.getColumnCount());
                 for (int i = 0; i < table.getColumnCount() - 1; i++) {
                     cell = findNextCell(cell, true);
                     ifCellValueDifferentFromCachedValueThenChangeLabel(cell, rowIndex * table.getColumnCount());
                 }
                 cell = findNextCell(cell, false);
+                rowIndex++;
             }
         }
     }

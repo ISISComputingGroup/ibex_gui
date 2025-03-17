@@ -2370,7 +2370,7 @@ $(pv_value)</tooltip>
             <exp bool_exp="pv0==4">
               <value>../solenoid_kickers_fault.png</value>
             </exp>
-            <pv trig="true">TE:NDLT1540:SCHNDR_01:KICKERS:SUMMARY:STAT</pv>
+            <pv trig="true">IN:RIKENFE:SCHNDR_01:KICKERS:SUMMARY:STAT</pv>
           </rule>
         </rules>
         <scale_options>

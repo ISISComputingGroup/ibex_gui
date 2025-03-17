@@ -17,9 +17,9 @@ Require-Bundle: org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.logger,
  org.csstudio.platform.libs.jdbc,
  com.ibm.icu,
- com.google.guava
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+ com.google.guava,
+ uk.ac.stfc.isis.ibex.log;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.journal
-Import-Package: org.apache.logging.log4j
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.journal
