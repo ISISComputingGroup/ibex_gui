@@ -26,6 +26,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.map.WritableMap;
@@ -211,16 +212,16 @@ public class CheckboxLabelProviderTest {
     public void GIVEN_checkbox_with_selection_adapters_WHEN_clear_checkbox_selection_listeners_THEN_selection_adapters_removed() {
         Button mockCheckBox = mock(Button.class);
         
-        TypedListener[] checkBoxListeners = new TypedListener[2];
-        checkBoxListeners[0] = new TypedListener(modifiedCheckboxLabelProvider.new CheckboxSelectionAdapter(mockCheckBox, testModels[0]));
-        checkBoxListeners[1] = new TypedListener(modifiedCheckboxLabelProvider.new CheckboxSelectionAdapter(mockCheckBox, testModels[1]));
+        var checkBoxListeners = new CheckboxSelectionAdapter[2];
+        checkBoxListeners[0] = modifiedCheckboxLabelProvider.new CheckboxSelectionAdapter(mockCheckBox, testModels[0]);
+        checkBoxListeners[1] = modifiedCheckboxLabelProvider.new CheckboxSelectionAdapter(mockCheckBox, testModels[1]);
         
-        when(mockCheckBox.getListeners(SWT.Selection)).thenReturn(checkBoxListeners);
+        when(mockCheckBox.getTypedListeners(SWT.Selection, CheckboxSelectionAdapter.class)).thenReturn(Stream.of(checkBoxListeners));
         
         CheckboxLabelProvider.clearCheckBoxSelectListeners(mockCheckBox);
         
-        verify(mockCheckBox, times(1)).removeSelectionListener((SelectionListener) checkBoxListeners[0].getEventListener());
-        verify(mockCheckBox, times(1)).removeSelectionListener((SelectionListener) checkBoxListeners[1].getEventListener());
+        verify(mockCheckBox, times(1)).removeSelectionListener((SelectionListener) checkBoxListeners[0]);
+        verify(mockCheckBox, times(1)).removeSelectionListener((SelectionListener) checkBoxListeners[1]);
     }
     
     @Test

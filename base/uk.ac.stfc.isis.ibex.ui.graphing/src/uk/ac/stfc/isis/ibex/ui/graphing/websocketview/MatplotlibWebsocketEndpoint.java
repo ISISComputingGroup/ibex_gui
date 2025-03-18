@@ -254,7 +254,8 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 		final Map<String, Object> event = Map.of(
 				"x", position.x(), 
 				"y", position.y(), 
-				"button", 0, 
+				"button", 0,
+				"buttons", 0,
 				"guiEvent", new HashMap<>(), 
 				"modifiers", new ArrayList<>()
 		);
@@ -285,7 +286,8 @@ public class MatplotlibWebsocketEndpoint extends Endpoint implements Closeable {
 	  final Map<String, Object> event = Map.of(
 			  "x", position.x(), 
 			  "y", position.y(), 
-			  "button", 0, 
+			  "button", 0,
+			  "buttons", 0,
 			  "guiEvent", new HashMap<>(), 
 			  "modifiers", new ArrayList<>()
 	  );

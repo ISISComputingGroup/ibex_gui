@@ -105,10 +105,6 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.hamcrest.core"
-         version="0.0.0"/>
-
-   <plugin
          id="org.eclipse.equinox.p2.metadata"
          version="0.0.0"/>
 
@@ -130,10 +126,6 @@
 
    <plugin
          id="org.tukaani.xz"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.apache.commons.jxpath"
          version="0.0.0"/>
 
    <plugin
@@ -718,6 +710,10 @@
 
    <plugin
          id="jakarta.annotation-api"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.csstudio.opibuilder.widgets.extra"
          version="0.0.0"/>
 
 </feature>
