@@ -1,0 +1,4 @@
+lxml
+pyhamcrest
+pywin32
+xmlrunner
