@@ -4020,5 +4020,23 @@
         <categories/>
       </value>
     </entry>
+	<entry>
+      <key>MAPS-OPC-Server</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>MAPS_Vacuum.opi</path>
+        <description>The OPI for the MAPS' OPC Server, which controlls two TPGs.</description>
+        <macros>
+          <macro>
+            <name>MAPS-OPC</name>
+            <description>The OPCUA PV prefix (e.g. OPCUA_01).</description>
+            <default>OPCUA_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Pressure sensors</category>
+        </categories>
+      </value>
+    </entry>
   </opis>
 </descriptions>
