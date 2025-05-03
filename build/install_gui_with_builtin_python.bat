@@ -33,14 +33,20 @@ set "ZIPPROG=c:\Program Files\7-Zip\7z.exe"
 if exist "%ZIPPROG%" (
     if exist "%BASEDIR%zips\Client.7z" (
         "%ZIPPROG%" x -aoa -o%CLIENTDIR% "%BASEDIR%zips\Client.7z"
+        if !errorlevel! gtr 1 (
+            @echo UNZIP error !errorlevel!, but will be fixed by later robocopy
+        )
     )
 )
-
-robocopy "%BASEDIR%Client" "%CLIENTDIR%" /MIR /R:2 /MT /NFL /NDL /NP /NC /NS /LOG:NUL
-set errcode=%errorlevel%
-if %errcode% GEQ 4 (
-    @echo ERROR %errcode% in robocopy copying ibex client
-	goto ERROR
+if exist "%BASEDIR%Client\ZIP_ONLY_INSTALL.txt" (
+    robocopy "%BASEDIR%Client" "%CLIENTDIR%" /S /R:2 /MT /NFL /NDL /NP /NC /NS /XF "ZIP_ONLY_INSTALL.txt" /LOG:NUL
+) else (
+    robocopy "%BASEDIR%Client" "%CLIENTDIR%" /MIR /R:2 /MT /NFL /NDL /NP /NC /NS /LOG:NUL
+)
+set errcode=!errorlevel!
+if !errcode! GEQ 4 (
+    @echo ERROR !errcode! in robocopy copying ibex client
+    goto ERROR
 )
 
 REM fix java RMI remote connection 
