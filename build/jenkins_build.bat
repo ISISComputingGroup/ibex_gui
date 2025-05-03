@@ -93,12 +93,13 @@ if "%RELEASE%" == "YES" (
 if "%RELEASE%" == "YES" (
     @echo Copying full tree as RELEASE
     robocopy %CD%\..\%TARGET_DIR% %INSTALLDIR%\Client /MT /MIR /R:1 /NFL /NDL /NP /NS /NC /LOG:"copy_client.log"
+    set errcode=!errorlevel!
 ) else (
     @echo Not copying tree as zip only install
     @echo YES> %INSTALLDIR%\Client\ZIP_ONLY_INSTALL.txt
-    set errorlevel=0
+    set errcode=0
 )
-if %errorlevel% geq 4 (
+if %errcode% geq 4 (
     if not "%INSTALLDIR%" == "" (
         @echo Removing invalid client directory %INSTALLDIR%\Client
         rd /q /s %INSTALLDIR%\Client

@@ -33,9 +33,10 @@ set "ZIPPROG=c:\Program Files\7-Zip\7z.exe"
 if exist "%ZIPPROG%" (
     if exist "%BASEDIR%zips\Client.7z" (
         "%ZIPPROG%" x -aoa -o%CLIENTDIR% "%BASEDIR%zips\Client.7z"
-        if !errorlevel! gtr 1 (
-            @echo UNZIP error !errorlevel!
-            exit /b !errorlevel!
+        set errcode=!errorlevel!
+        if !errcode! gtr 1 (
+            @echo UNZIP error !errcode!
+            exit /b !errcode!
         )
     )
 )
