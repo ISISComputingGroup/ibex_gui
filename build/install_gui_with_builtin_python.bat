@@ -41,7 +41,7 @@ if exist "%ZIPPROG%" (
     )
 )
 if exist "%BASEDIR%Client\ZIP_ONLY_INSTALL.txt" (
-    robocopy "%BASEDIR%Client" "%CLIENTDIR%" /S /R:2 /MT /NFL /NDL /NP /NC /NS /XF "ZIP_ONLY_INSTALL.txt" /LOG:NUL
+    robocopy "%BASEDIR%Client" "%CLIENTDIR%" /E /R:2 /MT /NFL /NDL /NP /NC /NS /XF "ZIP_ONLY_INSTALL.txt" /LOG:NUL
 ) else (
     robocopy "%BASEDIR%Client" "%CLIENTDIR%" /MIR /R:2 /MT /NFL /NDL /NP /NC /NS /LOG:NUL
 )
