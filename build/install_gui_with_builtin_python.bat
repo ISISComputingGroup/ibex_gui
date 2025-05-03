@@ -34,7 +34,8 @@ if exist "%ZIPPROG%" (
     if exist "%BASEDIR%zips\Client.7z" (
         "%ZIPPROG%" x -aoa -o%CLIENTDIR% "%BASEDIR%zips\Client.7z"
         if !errorlevel! gtr 1 (
-            @echo UNZIP error !errorlevel!, but will be fixed by later robocopy
+            @echo UNZIP error !errorlevel!
+            exit /b !errorlevel!
         )
     )
 )
