@@ -4021,14 +4021,14 @@
       </value>
     </entry>
 	<entry>
-      <key>MAPS-OPC-Server</key>
+      <key>MAPS-Vacuum-System</key>
       <value>
         <type>PRESSURE_GAUGE</type>
-        <path>MAPS_Vacuum.opi</path>
+        <path>MAPS_Vacuum_System.opi</path>
         <description>The OPI for the MAPS' OPC Server, which controlls two TPGs.</description>
         <macros>
           <macro>
-            <name>MAPS-OPC</name>
+            <name>MAPS-OPC-TPG</name>
             <description>The OPCUA PV prefix (e.g. OPCUA_01).</description>
             <default>OPCUA_01</default>
           </macro>
