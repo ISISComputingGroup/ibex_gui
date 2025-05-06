@@ -159,7 +159,7 @@
           <NAME>Tank</NAME>
         </macros>
         <name>Linking Container</name>
-        <opi_file>MAPS_OPC.opi</opi_file>
+        <opi_file>MAPS_OPC_TPG.opi</opi_file>
         <resize_behaviour>0</resize_behaviour>
         <rules />
         <scale_options>
@@ -243,7 +243,7 @@
           <NAME>Other</NAME>
         </macros>
         <name>Linking Container</name>
-        <opi_file>MAPS_OPC.opi</opi_file>
+        <opi_file>MAPS_OPC_TPG.opi</opi_file>
         <resize_behaviour>0</resize_behaviour>
         <rules />
         <scale_options>
