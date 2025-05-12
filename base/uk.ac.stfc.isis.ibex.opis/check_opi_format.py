@@ -13,7 +13,6 @@ from check_OPI_format_utils.text import check_label_punctuation, check_label_cas
 from check_OPI_format_utils.container import get_items_not_in_grouping_container
 from check_OPI_format_utils.font import get_incorrect_fonts
 from check_OPI_format_utils.position import get_widgets_outside_of_boundary
-from xmlrunner import XMLTestRunner
 
 from check_OPI_format_utils.xy_graph import get_traces_with_different_buffer_sizes, get_trigger_pv
 from check_opi_format_tests import TestCheckOpiFormatMethods
@@ -214,7 +213,7 @@ if __name__ == "__main__":
     def self_valid():
         self_test_suite = unittest.TestSuite()
         self_test_suite.addTests(loader.loadTestsFromTestCase(TestCheckOpiFormatMethods))
-        runner = XMLTestRunner(output=os.path.join(logs_dir, "check_opi_format"), stream=sys.stdout)
+        runner = unittest.TextTestRunner()
         return runner.run(self_test_suite).wasSuccessful()
 
     if not self_valid():
@@ -245,14 +244,14 @@ if __name__ == "__main__":
                 suite.addTests([CheckStrictOpiFormat(test, root) for test in loader.getTestCaseNames(CheckStrictOpiFormat)])
         else:
             suite.addTests([CheckOpiFormat(test, root) for test in loader.getTestCaseNames(CheckOpiFormat)])
-        runner = XMLTestRunner(output=os.path.join(logs_dir, filename), stream=sys.stdout)
+        runner = unittest.TextTestRunner()
         return_values.append(runner.run(suite).wasSuccessful())
 
     # for the opi_info.xml check
     print("Testing '{}'".format(os.path.join(root_dir, "opi_info.xml")))
     suite = unittest.TestSuite()
     suite.addTests(loader.loadTestsFromTestCase(TestOpiInfo))
-    runner = XMLTestRunner(output=os.path.join(logs_dir, "TestOpiInfo"), stream=sys.stdout)
+    runner = unittest.TextTestRunner()
     return_values.append(runner.run(suite).wasSuccessful())
 
     sys.exit(False in return_values)

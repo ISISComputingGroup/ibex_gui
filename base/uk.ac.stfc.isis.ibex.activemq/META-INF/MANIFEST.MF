@@ -15,6 +15,6 @@ Require-Bundle: uk.ac.stfc.isis.ibex.logger,
  org.eclipse.ui;bundle-version="3.8.2",
  uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
  org.eclipse.ui.workbench,
- wrapped.org.apache.activemq.activemq-all;bundle-version="5.18.6"
+ wrapped.org.apache.activemq.activemq-all;bundle-version="5.19.0"
 Bundle-ClassPath: .
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.activemq
