@@ -89,7 +89,7 @@ pipeline {
             }
             else {
                 env.IS_RELEASE = "NO"
-                env.IS_DEPLOY = "NO"
+                env.IS_DEPLOY = "YES"
                 env.IS_E4 = "YES"
             }
         }
