@@ -65,7 +65,7 @@ if not "%RELEASE%" == "YES" (
 	if "%JOB_NAME%" == "ibex_gui_win11_pipeline" (
         set INSTALLBASEDIR=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\Client_E4_win11
     )
-    if not "%DEPLOY%" == "YES" (
+    if not "%GIT_BRANCH%" == "" (
         set "INSTALLBASEDIR=!INSTALLBASEDIR!\branches\%GIT_BRANCH%"
     )
 ) 
@@ -110,7 +110,7 @@ if %errcode% geq 4 (
 
 REM copy MSI
 if exist "%MSINAME%.msi" (
-    xcopy /y /j %MSINAME%.msi %INSTALLDIR%
+    xcopy /i /y /j %MSINAME%.msi %INSTALLDIR%
     if !errorlevel! neq 0 (
         @echo MSI copy failed
         exit /b !errorlevel!
@@ -121,7 +121,7 @@ REM 7zip archive
 if not exist "%INSTALLDIR%\zips" mkdir %INSTALLDIR%\zips
 if exist "%INSTALLDIR%\zips\Client-tmp.7z" del "%INSTALLDIR%\zips\Client-tmp.7z"
 if exist "%INSTALLDIR%\zips\Client.7z" del "%INSTALLDIR%\zips\Client.7z"
-xcopy /y /j "%CD%\..\Client-tmp.7z" %INSTALLDIR%\zips
+xcopy /i /y /j "%CD%\..\Client-tmp.7z" %INSTALLDIR%\zips
 if %errorlevel% neq 0 (
     @echo 7z copy failed
     exit /b %errorlevel%
