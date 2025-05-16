@@ -31,9 +31,12 @@ REM disable msi for now
 REM call build_msi.bat %BASEDIR%.. %TARGET_DIR% %MSINAME%
 REM if !errorlevel! neq 0 exit /b !errorlevel!
 
+REM we disable method filters (-mf=off) to avoid 7zip pack/unpack version issues
+REM with recently introduced ARM64 filter, excluding arm64 named files
+REM was not enough
 pushd %CD%\..\%TARGET_DIR%
 if exist "..\Client-tmp.7z" del "..\Client-tmp.7z"
-"c:\Program Files\7-Zip\7z.exe" a "..\Client-tmp.7z" . -mx1 -r -xr^^!*-arm.exe -xr^^!*-arm64.exe
+"c:\Program Files\7-Zip\7z.exe" a "..\Client-tmp.7z" . -mx1 -mf=off -r -xr^^!*-arm.exe -xr^^!*-arm64.exe
 set errcode=!errorlevel!
 popd
 if !errcode! gtr 1 exit /b !errcode!
