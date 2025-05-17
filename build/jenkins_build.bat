@@ -31,9 +31,12 @@ REM disable msi for now
 REM call build_msi.bat %BASEDIR%.. %TARGET_DIR% %MSINAME%
 REM if !errorlevel! neq 0 exit /b !errorlevel!
 
+REM we disable method filters (-mf=off) to avoid 7zip pack/unpack version issues
+REM with recently introduced ARM64 filter, excluding arm64 named files
+REM was not enough
 pushd %CD%\..\%TARGET_DIR%
 if exist "..\Client-tmp.7z" del "..\Client-tmp.7z"
-"c:\Program Files\7-Zip\7z.exe" a "..\Client-tmp.7z" . -mx1 -r -xr^^!*-arm.exe -xr^^!*-arm64.exe
+"c:\Program Files\7-Zip\7z.exe" a "..\Client-tmp.7z" . -mx1 -mf=off -r -xr^^!*-arm.exe -xr^^!*-arm64.exe
 set errcode=!errorlevel!
 popd
 if !errcode! gtr 1 exit /b !errcode!
@@ -65,7 +68,7 @@ if not "%RELEASE%" == "YES" (
 	if "%JOB_NAME%" == "ibex_gui_win11_pipeline" (
         set INSTALLBASEDIR=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\Client_E4_win11
     )
-    if not "%DEPLOY%" == "YES" (
+    if not "%GIT_BRANCH%" == "" (
         set "INSTALLBASEDIR=!INSTALLBASEDIR!\branches\%GIT_BRANCH%"
     )
 ) 
@@ -73,6 +76,9 @@ if not "%RELEASE%" == "YES" (
 if not "%RELEASE%" == "YES" (
     set INSTALLDIR=%INSTALLBASEDIR%\BUILD-%BUILD_NUMBER%
 )
+
+if not exist "%INSTALLBASEDIR%" mkdir "%INSTALLBASEDIR%"
+if not exist "%INSTALLDIR%" mkdir "%INSTALLDIR%"
 
 if "%RELEASE%" == "YES" (
     if not exist "%RELEASE_DIR%" (
@@ -84,14 +90,22 @@ if "%RELEASE%" == "YES" (
         mkdir %INSTALLDIR%
     )
 ) else (
-    if exist "%INSTALLDIR%\Client" (
+    if not exist "%INSTALLDIR%\Client" (
         @echo Creating client directory %INSTALLDIR%\Client
         mkdir %INSTALLDIR%\Client
     )
 )
 
-robocopy %CD%\..\%TARGET_DIR% %INSTALLDIR%\Client /MT /MIR /R:1 /NFL /NDL /NP /NS /NC /LOG:"copy_client.log"
-if %errorlevel% geq 4 (
+if "%RELEASE%" == "YES" (
+    @echo Copying full tree as RELEASE
+    robocopy %CD%\..\%TARGET_DIR% %INSTALLDIR%\Client /MT /MIR /R:1 /NFL /NDL /NP /NS /NC /LOG:"copy_client.log"
+    set errcode=!errorlevel!
+) else (
+    @echo Not copying tree as zip only install
+    @echo YES> %INSTALLDIR%\Client\ZIP_ONLY_INSTALL.txt
+    set errcode=0
+)
+if %errcode% geq 4 (
     if not "%INSTALLDIR%" == "" (
         @echo Removing invalid client directory %INSTALLDIR%\Client
         rd /q /s %INSTALLDIR%\Client
@@ -102,7 +116,7 @@ if %errorlevel% geq 4 (
 
 REM copy MSI
 if exist "%MSINAME%.msi" (
-    xcopy /y /j %MSINAME%.msi %INSTALLDIR%
+    xcopy /i /y /j %MSINAME%.msi %INSTALLDIR%
     if !errorlevel! neq 0 (
         @echo MSI copy failed
         exit /b !errorlevel!
@@ -113,7 +127,7 @@ REM 7zip archive
 if not exist "%INSTALLDIR%\zips" mkdir %INSTALLDIR%\zips
 if exist "%INSTALLDIR%\zips\Client-tmp.7z" del "%INSTALLDIR%\zips\Client-tmp.7z"
 if exist "%INSTALLDIR%\zips\Client.7z" del "%INSTALLDIR%\zips\Client.7z"
-xcopy /y /j "%CD%\..\Client-tmp.7z" %INSTALLDIR%\zips
+xcopy /i /y /j "%CD%\..\Client-tmp.7z" %INSTALLDIR%\zips
 if %errorlevel% neq 0 (
     @echo 7z copy failed
     exit /b %errorlevel%
