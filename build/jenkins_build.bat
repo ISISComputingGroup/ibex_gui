@@ -77,6 +77,9 @@ if not "%RELEASE%" == "YES" (
     set INSTALLDIR=%INSTALLBASEDIR%\BUILD-%BUILD_NUMBER%
 )
 
+if not exist "%INSTALLBASEDIR%" mkdir "%INSTALLBASEDIR%"
+if not exist "%INSTALLDIR%" mkdir "%INSTALLDIR%"
+
 if "%RELEASE%" == "YES" (
     if not exist "%RELEASE_DIR%" (
         mkdir %RELEASE_DIR%
