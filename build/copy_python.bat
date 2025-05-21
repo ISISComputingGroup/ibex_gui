@@ -7,23 +7,18 @@ set "PYCOPYPATH=%1"
 REM Get latest build
 if exist "%KITS_ICP_PATH%\genie_python_3\LATEST_BUILD.txt" (
 	for /f %%i in ( %KITS_ICP_PATH%\genie_python_3\LATEST_BUILD.txt ) do (
-	    set LATEST_PYTHON_DIR=%KITS_ICP_PATH%\genie_python_3\BUILD-%%i\Python
-		set LATEST_BUILD=%%i
+        set PYTHON_KITS_PATH=%KITS_ICP_PATH%\genie_python_3\BUILD-%%i
 	)
 ) else (
 	@echo Could not access LATEST_BUILD.txt
 	exit /b 1
 )
 
-robocopy "%LATEST_PYTHON_DIR%" "%PYCOPYPATH%" /e /purge /r:2 /XF "install.log" /MT /NFL /NDL /NP /NS /NC /LOG:NUL
-set errcode=%ERRORLEVEL%
-if %errcode% GEQ 4 (
-	@echo robocopy error
-    @echo *** Exit Code %errcode% ERROR see %INSTALLDIR%install.log ***
-	@echo ************** Exit Code %errcode% ERROR **************** >>%INSTALLDIR%install.log
-	exit /b %errcode%
-) else (
-	set ERRORLEVEL=0
+call %PYTHON_KITS_PATH%\genie_python_install.bat %PYCOPYPATH%
+if %errorlevel% neq 0 (
+    @echo *** Exit Code %errorlevel% genie_python_install ***
+    @echo *** Exit Code %errorlevel% genie_python_install ***>>%INSTALLDIR%install.log
+	exit /b %errorlevel%
 )
 
 if not exist %PYCOPYPATH%\python.exe (
