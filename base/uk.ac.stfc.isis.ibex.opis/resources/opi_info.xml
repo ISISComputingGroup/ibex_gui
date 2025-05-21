@@ -3939,16 +3939,17 @@
       </value>
     </entry>
     <entry>	
-      <key>ATTOCUBE</key>
+      <key>Attocube</key>
       <value>
         <categories/>
         <type>UNKNOWN</type>
         <path>attocube.opi</path>
-        <description>The OPI for the ATTOCUBE</description>
+        <description>The OPI for the Attocube</description>
         <macros>
           <macro>
             <name>ATTOCUBE</name>
             <description>The ATTOCUBE PV prefix (e.g. ATTOCUBE_01)</description>
+			<default>ATTOCUBE_01</default>
           </macro>
         </macros> 
       </value>
