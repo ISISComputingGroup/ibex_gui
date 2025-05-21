@@ -3949,10 +3949,10 @@
           <macro>
             <name>LITRON</name>
             <description>The control for Litron Laser Front Panel (e.g. LITRON_01)</description>
-			<default>LITRON_01</default>
+            <default>LITRON_01</default>
           </macro>
         </macros>
-		</value>
+      </value>
     </entry>
     <entry>
       <key>TLFW102C</key>
@@ -4018,6 +4018,21 @@
           </macro>
         </macros>
         <categories/>
+      </value>
+    </entry>
+    <entry>
+      <key>AMBRHEAT</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>ambrheat.opi</path>
+        <description>The OPI for the AMBRHEAT</description>
+        <macros>
+          <macro>
+            <name>AMBRHEAT</name>
+            <description>The AMBRHEAT PV prefix (e.g. AMBRHEAT_01)</description>
+          </macro>
+        </macros>
       </value>
     </entry>
   </opis>
