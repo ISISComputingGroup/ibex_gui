@@ -4021,16 +4021,17 @@
       </value>
     </entry>
     <entry>
-      <key>AMBRHEAT</key>
+      <key>Ambrell Easy Heat Induction Furnace</key>
       <value>
         <categories/>
-        <type>UNKNOWN</type>
-        <path>ambrheat.opi</path>
-        <description>The OPI for the AMBRHEAT</description>
+        <type>FURNACE</type>
+        <path>ambrell_easy_heat.opi</path>
+        <description>The OPI for the Ambrell Easy Heat Induction Furnace</description>
         <macros>
           <macro>
             <name>AMBRHEAT</name>
             <description>The AMBRHEAT PV prefix (e.g. AMBRHEAT_01)</description>
+            <default>AMBRHEAT_01</default>
           </macro>
         </macros>
       </value>
