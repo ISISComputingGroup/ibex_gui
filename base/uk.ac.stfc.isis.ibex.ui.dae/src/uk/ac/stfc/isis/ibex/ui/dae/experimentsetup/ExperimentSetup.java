@@ -49,6 +49,7 @@ import uk.ac.stfc.isis.ibex.dae.Dae;
 import uk.ac.stfc.isis.ibex.epics.adapters.UpdatedObservableAdapter;
 import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.ui.UIUtils;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeUI;
 import uk.ac.stfc.isis.ibex.ui.dae.DaeViewModel;
@@ -124,7 +125,7 @@ public class ExperimentSetup {
                     applyChangesToUI();
                 } catch (Exception err) {
                     // Top level error handler. Catch anything and log it, and bring up an error dialog informing the user of the error.
-                    IsisLog.getLogger(this.getClass()).error(err);
+                	LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(this.getClass()), err.getMessage(), err);
                     MessageDialog.openError(parent.getShell(), "Internal IBEX Error", 
                             "Please report this error to the IBEX team.\n\nException was: " + err.getMessage());
                 }
