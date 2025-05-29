@@ -13,7 +13,7 @@ if not exist "%BASEDIR%COPY_COMPLETE.txt" (
 
 REM Copy the Client files across
 @echo %TIME% main ibex client install started
-set APPSDIR=C:\Instrument\Apps
+set APPSDIR=\\?\C:\Instrument\Apps
 set CLIENTDIR=%APPSDIR%\Client_E4
 
 REM Copy the pydev command history file to temp so it can be copied back in after deploy (otherwise it is overwritten) 
@@ -24,7 +24,8 @@ if exist "%GENIECMDLOGDIR%\%GENIECMDLOGFILE%" (
 	robocopy "%GENIECMDLOGDIR%" "%TEMP%" "%GENIECMDLOGFILE%" /IS /NFL /NDL /NP /NC /NS /LOG:NUL
 )
 
-if not exist "%CLIENTDIR%" mkdir %CLIENTDIR%
+if exist "%CLIENTDIR%" rd /s /q %CLIENTDIR%
+mkdir %CLIENTDIR%
 
 REM we unzip the archive and then robocopy as before
 REM this is in case there has been a patch to the on-disk files
