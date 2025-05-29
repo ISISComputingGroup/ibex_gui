@@ -13,7 +13,7 @@ if not exist "%BASEDIR%COPY_COMPLETE.txt" (
 
 REM Copy the Client files across
 @echo %TIME% main ibex client install started
-set APPSDIR=\\?\C:\Instrument\Apps
+set APPSDIR=C:\Instrument\Apps
 set CLIENTDIR=%APPSDIR%\Client_E4
 
 REM Copy the pydev command history file to temp so it can be copied back in after deploy (otherwise it is overwritten) 
@@ -25,6 +25,12 @@ if exist "%GENIECMDLOGDIR%\%GENIECMDLOGFILE%" (
 )
 
 if exist "%CLIENTDIR%" rd /s /q %CLIENTDIR%
+REM try with long path prefix. Note that we haven't added it
+REM directly to APPSDIR as we may need to check APPSDIR for UNC path and
+REM also robocopy would need /256 flag to stop it adding this prefix itself
+REM and erroring
+if exist "%CLIENTDIR%" rd /s /q "\\.\%CLIENTDIR%"
+
 mkdir %CLIENTDIR%
 
 REM we unzip the archive and then robocopy as before
