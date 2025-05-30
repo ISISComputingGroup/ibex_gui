@@ -1,0 +1,2061 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<display version="2.0.0">
+  <name>$(NAME)</name>
+  <macros>
+    <PV_ROOT_EURO>$(P)$(EURO):A0$(EURO_NUM)</PV_ROOT_EURO>
+  </macros>
+  <x>18</x>
+  <y>30</y>
+  <width>775</width>
+  <height>585</height>
+  <background_color>
+    <color name="ISIS_OPI_Background" red="240" green="240" blue="240">
+    </color>
+  </background_color>
+  <actions>
+  </actions>
+  <grid_step_x>6</grid_step_x>
+  <grid_step_y>6</grid_step_y>
+  <widget type="group" version="3.0.0">
+    <name>Temperature Control</name>
+    <x>498</x>
+    <y>50</y>
+    <width>277</width>
+    <height>135</height>
+    <font>
+      <font name="ISIS_GroupBox_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+      </color>
+    </foreground_color>
+    <line_color>
+      <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+    <actions>
+    </actions>
+    <widget type="textupdate" version="2.0.0">
+      <name>Temperature_text</name>
+      <pv_name>$(PV_ROOT_EURO):TEMP</pv_name>
+      <x>87</x>
+      <y>5</y>
+      <width>70</width>
+      <height>19</height>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <precision>3</precision>
+      <show_units>false</show_units>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Setpoint_text</name>
+      <pv_name>$(PV_ROOT_EURO):TEMP:SP:RBV</pv_name>
+      <x>88</x>
+      <y>30</y>
+      <width>70</width>
+      <height>19</height>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <precision>3</precision>
+      <show_units>false</show_units>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>Setpoint_setpoint</name>
+      <pv_name>$(PV_ROOT_EURO):TEMP:SP</pv_name>
+      <x>162</x>
+      <y>30</y>
+      <width>80</width>
+      <height>19</height>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <precision>3</precision>
+      <show_units>false</show_units>
+      <actions>
+      </actions>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Heater_text</name>
+      <pv_name>$(PV_ROOT_EURO):OUTPUT</pv_name>
+      <x>88</x>
+      <y>55</y>
+      <width>70</width>
+      <height>19</height>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <precision>3</precision>
+      <show_units>false</show_units>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Setpoint_label</name>
+      <text>Setpoint:</text>
+      <y>30</y>
+      <width>78</width>
+      <font>
+        <font name="ISIS_Label_NEW" family="Segoe UI" style="BOLD" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Heater_label</name>
+      <text>Heater:</text>
+      <y>55</y>
+      <width>78</width>
+      <font>
+        <font name="ISIS_Label_NEW" family="Segoe UI" style="BOLD" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Temerature_label</name>
+      <text>Temperature:</text>
+      <y>5</y>
+      <width>78</width>
+      <font>
+        <font name="ISIS_Label_NEW" family="Segoe UI" style="BOLD" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Temperature_text_1</name>
+      <pv_name>$(PV_ROOT_EURO):TEMP.EGU</pv_name>
+      <x>161</x>
+      <y>5</y>
+      <width>70</width>
+      <height>19</height>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <precision>3</precision>
+      <show_units>false</show_units>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Ramping_label</name>
+      <text>Heating:</text>
+      <y>80</y>
+      <width>78</width>
+      <font>
+        <font name="ISIS_Label_NEW" family="Segoe UI" style="BOLD" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="led" version="2.0.0">
+      <name>Ramping_LED</name>
+      <pv_name>$(PV_ROOT_EURO):RAMPING</pv_name>
+      <x>92</x>
+      <y>82</y>
+      <width>21</width>
+      <height>21</height>
+      <off_color>
+        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0">
+        </color>
+      </off_color>
+      <on_color>
+        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0">
+        </color>
+      </on_color>
+      <font>
+        <font name="ISIS_Label_Small" family="Arial" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192">
+        </color>
+      </foreground_color>
+      <line_color>
+        <color red="150" green="150" blue="150">
+        </color>
+      </line_color>
+      <actions>
+      </actions>
+    </widget>
+  </widget>
+  <widget type="group" version="3.0.0">
+    <name>Sensor</name>
+    <x>498</x>
+    <width>277</width>
+    <height>50</height>
+    <font>
+      <font name="ISIS_GroupBox_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+      </color>
+    </foreground_color>
+    <line_color>
+      <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+    <actions>
+    </actions>
+    <widget type="label" version="2.0.0">
+      <name>Address_label</name>
+      <text>Address:</text>
+      <width>78</width>
+      <font>
+        <font name="ISIS_Label_NEW" family="Segoe UI" style="BOLD" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Address_text</name>
+      <pv_name>$(PV_ROOT_EURO):ADDRESS</pv_name>
+      <x>90</x>
+      <width>112</width>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>true</transparent>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+  </widget>
+  <widget type="group" version="3.0.0">
+    <name>Ramp Control</name>
+    <x>498</x>
+    <y>185</y>
+    <width>277</width>
+    <height>85</height>
+    <font>
+      <font name="ISIS_GroupBox_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+      </color>
+    </foreground_color>
+    <line_color>
+      <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+    <actions>
+    </actions>
+    <widget type="label" version="2.0.0">
+      <name>Ramp_rate_label</name>
+      <text>Ramp rate:</text>
+      <y>5</y>
+      <width>78</width>
+      <font>
+        <font name="ISIS_Label_NEW" family="Segoe UI" style="BOLD" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Ramp_rate_text</name>
+      <pv_name>$(PV_ROOT_EURO):RATE</pv_name>
+      <x>87</x>
+      <y>5</y>
+      <width>70</width>
+      <height>19</height>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <precision>3</precision>
+      <show_units>false</show_units>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Temperature_text_2</name>
+      <pv_name>$(PV_ROOT_EURO):RATE.EGU</pv_name>
+      <x>161</x>
+      <y>5</y>
+      <width>70</width>
+      <height>19</height>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <precision>3</precision>
+      <show_units>false</show_units>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Setpoint_label</name>
+      <text>Setpoint:</text>
+      <y>30</y>
+      <width>78</width>
+      <font>
+        <font name="ISIS_Label_NEW" family="Segoe UI" style="BOLD" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>Setpoint_setpoint</name>
+      <pv_name>$(PV_ROOT_EURO):RATE:SP</pv_name>
+      <x>162</x>
+      <y>30</y>
+      <width>80</width>
+      <height>19</height>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <precision>3</precision>
+      <show_units>false</show_units>
+      <actions>
+      </actions>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+  </widget>
+  <widget type="group" version="3.0.0">
+    <name>Device Control</name>
+    <x>498</x>
+    <y>270</y>
+    <width>277</width>
+    <height>125</height>
+    <font>
+      <font name="ISIS_GroupBox_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+      </color>
+    </foreground_color>
+    <line_color>
+      <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+    <actions>
+    </actions>
+    <widget type="label" version="2.0.0">
+      <name>Autotune_label</name>
+      <text>Autotune:</text>
+      <y>5</y>
+      <width>78</width>
+      <font>
+        <font name="ISIS_Label_NEW" family="Segoe UI" style="BOLD" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="led" version="2.0.0">
+      <name>Autotune_LED</name>
+      <pv_name>$(PV_ROOT_EURO):AUTOTUNE</pv_name>
+      <x>90</x>
+      <y>7</y>
+      <width>21</width>
+      <height>21</height>
+      <off_color>
+        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0">
+        </color>
+      </off_color>
+      <on_color>
+        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0">
+        </color>
+      </on_color>
+      <font>
+        <font name="ISIS_Label_Small" family="Arial" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192">
+        </color>
+      </foreground_color>
+      <line_color>
+        <color red="150" green="150" blue="150">
+        </color>
+      </line_color>
+      <actions>
+      </actions>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>autotune_setpoint</name>
+      <actions>
+        <action type="execute">
+          <description>Execute Script</description>
+          <script file="EmbeddedPy">
+            <text>from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+value0 = PVUtil.getDouble(pv)
+
+if value0 ==0:
+	pv.setValue(1)
+else:
+	pv.setValue(0)</text>
+          </script>
+        </action>
+      </actions>
+      <pv_name>$(PV_ROOT_EURO):AUTOTUNE:SP</pv_name>
+      <text>On/Off</text>
+      <x>162</x>
+      <y>5</y>
+      <width>80</width>
+      <height>22</height>
+      <font>
+        <font name="ISIS_Button_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Rampon_label</name>
+      <text>Ramp:</text>
+      <y>30</y>
+      <width>78</width>
+      <font>
+        <font name="ISIS_Label_NEW" family="Segoe UI" style="BOLD" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="led" version="2.0.0">
+      <name>Rampon_LED</name>
+      <pv_name>$(PV_ROOT_EURO):RAMPON</pv_name>
+      <x>90</x>
+      <y>32</y>
+      <width>21</width>
+      <height>21</height>
+      <off_color>
+        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0">
+        </color>
+      </off_color>
+      <on_color>
+        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0">
+        </color>
+      </on_color>
+      <font>
+        <font name="ISIS_Label_Small" family="Arial" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192">
+        </color>
+      </foreground_color>
+      <line_color>
+        <color red="150" green="150" blue="150">
+        </color>
+      </line_color>
+      <actions>
+      </actions>
+      <rules>
+        <rule name="Off_Colour" prop_id="off_color" out_exp="false">
+          <exp bool_exp="pv0==1">
+            <value>
+              <color name="ISIS_Red_LED_Off" red="102" green="0" blue="0">
+              </color>
+            </value>
+          </exp>
+          <pv_name>$(PV_ROOT_EURO):SENSOR_DISCONNECTED</pv_name>
+        </rule>
+        <rule name="On_Colour" prop_id="on_color" out_exp="false">
+          <exp bool_exp="pv0==1">
+            <value>
+              <color name="ISIS_Red_LED_On" red="255" green="100" blue="100">
+              </color>
+            </value>
+          </exp>
+          <pv_name>$(PV_ROOT_EURO):SENSOR_DISCONNECTED</pv_name>
+        </rule>
+        <rule name="Target_PV" prop_id="pv_name" out_exp="false">
+          <exp bool_exp="pv0==1">
+            <value>$(PV_ROOT_EURO):RAMPON:CACHE</value>
+          </exp>
+          <pv_name>$(PV_ROOT_EURO):SENSOR_DISCONNECTED</pv_name>
+        </rule>
+      </rules>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>rampon_setpoint</name>
+      <actions>
+        <action type="execute">
+          <description>Execute Script</description>
+          <script file="EmbeddedPy">
+            <text>from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+value0 = PVUtil.getDouble(pv)
+
+if value0 ==0:
+	pv.setValue(1)
+else:
+	pv.setValue(0)</text>
+          </script>
+        </action>
+      </actions>
+      <pv_name>$(PV_ROOT_EURO):RAMPON:SP</pv_name>
+      <text>On/Off</text>
+      <x>162</x>
+      <y>30</y>
+      <width>80</width>
+      <height>22</height>
+      <font>
+        <font name="ISIS_Button_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Sensor_disconnected_label</name>
+      <macros>
+        <pv_name />
+      </macros>
+      <text>Sensor disconnected. Ramping is disabled.</text>
+      <x>15</x>
+      <y>55</y>
+      <width>227</width>
+      <height>19</height>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="Minor" red="255" green="128" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <rules>
+        <rule name="Visibility" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0==0">
+            <value>false</value>
+          </exp>
+          <pv_name>$(PV_ROOT_EURO):SENSOR_DISCONNECTED</pv_name>
+        </rule>
+      </rules>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Sensor_disconnected_label</name>
+      <macros>
+        <pv_name />
+      </macros>
+      <text>Temperature above calibration range.</text>
+      <x>15</x>
+      <y>78</y>
+      <width>227</width>
+      <height>19</height>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="Minor" red="255" green="128" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <horizontal_alignment>1</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <rules>
+        <rule name="Visibility" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0==0">
+            <value>false</value>
+          </exp>
+          <pv_name>$(PV_ROOT_EURO):TEMP:RANGE:OVER</pv_name>
+        </rule>
+      </rules>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Sensor_disconnected_label</name>
+      <macros>
+        <pv_name />
+      </macros>
+      <text>Temperature below calibration range.</text>
+      <x>15</x>
+      <y>75</y>
+      <width>227</width>
+      <height>19</height>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="Minor" red="255" green="128" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <horizontal_alignment>1</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <rules>
+        <rule name="Visibility" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0==0">
+            <value>false</value>
+          </exp>
+          <pv_name>$(PV_ROOT_EURO):TEMP:RANGE:UNDER</pv_name>
+        </rule>
+      </rules>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+  </widget>
+  <widget type="group" version="3.0.0">
+    <name>PID and Max Output Lookup</name>
+    <y>395</y>
+    <width>250</width>
+    <height>190</height>
+    <font>
+      <font name="ISIS_GroupBox_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+      </color>
+    </foreground_color>
+    <line_color>
+      <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+    <actions>
+    </actions>
+    <widget type="label" version="2.0.0">
+      <name>Ramp_file_label</name>
+      <text>File:</text>
+      <y>10</y>
+      <width>31</width>
+      <font>
+        <font name="ISIS_Label_NEW" family="Segoe UI" style="BOLD" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Ramp_file</name>
+      <pv_name>$(PV_ROOT_EURO):RAMP_FILE</pv_name>
+      <x>36</x>
+      <y>10</y>
+      <width>79</width>
+      <height>22</height>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>true</transparent>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>Ramp_file_sp</name>
+      <pv_name>$(PV_ROOT_EURO):RAMP_FILE:SP</pv_name>
+      <x>120</x>
+      <y>10</y>
+      <width>80</width>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <actions>
+      </actions>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Ramp_dir_label</name>
+      <text>Dir:</text>
+      <y>39</y>
+      <width>31</width>
+      <font>
+        <font name="ISIS_Label_NEW" family="Segoe UI" style="BOLD" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Ramp_dir_text</name>
+      <pv_name>$(PV_ROOT_EURO):READ_RAMP_DIRBASE</pv_name>
+      <x>36</x>
+      <y>42</y>
+      <width>183</width>
+      <height>31</height>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <format>6</format>
+      <precision>3</precision>
+      <show_units>false</show_units>
+      <actions>
+      </actions>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Calib_error_text_$(PV_ROOT_EURO)</name>
+      <macros>
+        <pv_name />
+      </macros>
+      <text>Error reading ramp file. Check the path and format. See log for details.</text>
+      <y>72</y>
+      <width>219</width>
+      <height>49</height>
+      <visible>false</visible>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="Major" red="255" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <actions>
+      </actions>
+      <rules>
+        <rule name="Rule" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0 != 0">
+            <value>true</value>
+          </exp>
+          <pv_name>$(PV_ROOT_EURO):RAMP_FILE.SEVR</pv_name>
+        </rule>
+      </rules>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Lookup_warning_text_$(PV_ROOT_EURO)</name>
+      <macros>
+        <pv_name />
+      </macros>
+      <text>Default file changed but lookup not on.</text>
+      <y>114</y>
+      <width>219</width>
+      <height>37</height>
+      <visible>false</visible>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="Minor" red="255" green="128" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <actions>
+      </actions>
+      <rules>
+        <rule name="Visible" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0 != 1 &amp;&amp; pv1 == 1">
+            <value>true</value>
+          </exp>
+          <pv_name>$(PV_ROOT_EURO):LUTON</pv_name>
+          <pv_name>$(PV_ROOT_EURO):RAMP_FILE_NOT_DEFAULT</pv_name>
+        </rule>
+      </rules>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+  </widget>
+  <widget type="group" version="3.0.0">
+    <name>Sensor Calibration</name>
+    <x>249</x>
+    <y>395</y>
+    <width>250</width>
+    <height>190</height>
+    <font>
+      <font name="ISIS_GroupBox_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+      </color>
+    </foreground_color>
+    <line_color>
+      <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+    <actions>
+    </actions>
+    <widget type="textentry" version="3.0.0">
+      <name>Calibration_file_SP</name>
+      <pv_name>$(PV_ROOT_EURO):CAL:SEL</pv_name>
+      <x>120</x>
+      <y>12</y>
+      <width>80</width>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <actions>
+        <action type="execute">
+          <description>Trim white space from requested value</description>
+          <script file="EmbeddedPy">
+            <text>widget = display.getWidget("Calibration_file_SP")
+widget.setPropertyValue("text",widget.getPropertyValue('text').strip())</text>
+          </script>
+        </action>
+      </actions>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Calibration_file_text</name>
+      <pv_name>$(PV_ROOT_EURO):CAL:RBV</pv_name>
+      <x>36</x>
+      <y>11</y>
+      <width>79</width>
+      <height>22</height>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>true</transparent>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Calibration_file_label</name>
+      <text>File:</text>
+      <y>12</y>
+      <width>31</width>
+      <font>
+        <font name="ISIS_Label_NEW" family="Segoe UI" style="BOLD" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Calibration_dir_label</name>
+      <text>Dir:</text>
+      <y>39</y>
+      <width>31</width>
+      <font>
+        <font name="ISIS_Label_NEW" family="Segoe UI" style="BOLD" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Calibration_dir_text</name>
+      <macros>
+        <pv_name />
+      </macros>
+      <text>######</text>
+      <x>36</x>
+      <y>42</y>
+      <width>183</width>
+      <height>31</height>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <actions>
+      </actions>
+      <rules>
+        <rule name="Create directory text" prop_id="text" out_exp="true">
+          <exp bool_exp="1==1">
+            <expression>pvStr0 + "/" + pvStr1</expression>
+          </exp>
+          <pv_name>$(PV_ROOT_EURO):TEMP.BDIR</pv_name>
+          <pv_name>$(PV_ROOT_EURO):TEMP.TDIR</pv_name>
+        </rule>
+      </rules>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Calib_error_text_$(PV_ROOT_EURO)</name>
+      <macros>
+        <pv_name />
+      </macros>
+      <text>Error reading calibration file. Check the path and format. See log for details.</text>
+      <y>72</y>
+      <width>219</width>
+      <height>61</height>
+      <visible>false</visible>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="Major" red="255" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <actions>
+      </actions>
+      <rules>
+        <rule name="Rule" prop_id="visible" out_exp="false">
+          <exp bool_exp="pv0 != 0">
+            <value>true</value>
+          </exp>
+          <pv_name>$(PV_ROOT_EURO):CAL:RBV.SEVR</pv_name>
+        </rule>
+      </rules>
+      <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+  </widget>
+  <widget type="group" version="3.0.0">
+    <name>Control and Tuning</name>
+    <x>498</x>
+    <y>395</y>
+    <width>277</width>
+    <height>190</height>
+    <font>
+      <font name="ISIS_GroupBox_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+      </color>
+    </foreground_color>
+    <line_color>
+      <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+    <actions>
+    </actions>
+    <widget type="textentry" version="3.0.0">
+      <name>I_setpoint</name>
+      <pv_name>$(PV_ROOT_EURO):I:SP</pv_name>
+      <x>162</x>
+      <y>30</y>
+      <width>80</width>
+      <height>19</height>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <precision>3</precision>
+      <show_units>false</show_units>
+      <actions>
+      </actions>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>I_text</name>
+      <pv_name>$(PV_ROOT_EURO):I</pv_name>
+      <x>85</x>
+      <y>30</y>
+      <width>70</width>
+      <height>19</height>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <precision>3</precision>
+      <show_units>false</show_units>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Max_out_text</name>
+      <pv_name>$(PV_ROOT_EURO):MAX_OUTPUT</pv_name>
+      <x>85</x>
+      <y>80</y>
+      <width>70</width>
+      <height>18</height>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <precision>3</precision>
+      <show_units>false</show_units>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>mo_setpoint</name>
+      <pv_name>$(PV_ROOT_EURO):MAX_OUTPUT:SP</pv_name>
+      <x>162</x>
+      <y>80</y>
+      <width>80</width>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <precision>3</precision>
+      <show_units>false</show_units>
+      <actions>
+      </actions>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="led" version="2.0.0">
+      <name>Lookup_LED</name>
+      <pv_name>$(PV_ROOT_EURO):LUTON</pv_name>
+      <x>87</x>
+      <y>132</y>
+      <width>21</width>
+      <height>21</height>
+      <off_color>
+        <color name="ISIS_Green_LED_Off" red="0" green="102" blue="0">
+        </color>
+      </off_color>
+      <on_color>
+        <color name="ISIS_Green_LED_On" red="0" green="255" blue="0">
+        </color>
+      </on_color>
+      <font>
+        <font name="ISIS_Label_Small" family="Arial" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192">
+        </color>
+      </foreground_color>
+      <line_color>
+        <color red="150" green="150" blue="150">
+        </color>
+      </line_color>
+      <actions>
+      </actions>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>max_output_label</name>
+      <text>Max output:</text>
+      <y>80</y>
+      <width>73</width>
+      <height>21</height>
+      <font>
+        <font name="ISIS_Label_NEW" family="Segoe UI" style="BOLD" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>D_label</name>
+      <text>D:</text>
+      <y>55</y>
+      <width>73</width>
+      <font>
+        <font name="ISIS_Label_NEW" family="Segoe UI" style="BOLD" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Lookup_label</name>
+      <text>Lookup:</text>
+      <y>130</y>
+      <width>73</width>
+      <font>
+        <font name="ISIS_Label_NEW" family="Segoe UI" style="BOLD" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>Lookup_setpoint</name>
+      <actions>
+        <action type="execute">
+          <description>Execute Script</description>
+          <script file="EmbeddedPy">
+            <text>from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+pv = widget.getPV(); 
+value0 = PVUtil.getDouble(pv)
+
+if value0 ==0:
+	pv.setValue(1)
+else:
+	pv.setValue(0)
+</text>
+          </script>
+        </action>
+      </actions>
+      <pv_name>$(PV_ROOT_EURO):LUTON:SP</pv_name>
+      <text>On/Off</text>
+      <x>162</x>
+      <y>130</y>
+      <width>80</width>
+      <height>22</height>
+      <font>
+        <font name="ISIS_Button_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>P_text</name>
+      <pv_name>$(PV_ROOT_EURO):P</pv_name>
+      <x>85</x>
+      <y>5</y>
+      <width>70</width>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <precision>3</precision>
+      <show_units>false</show_units>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>P_setpoint</name>
+      <pv_name>$(PV_ROOT_EURO):P:SP</pv_name>
+      <x>162</x>
+      <y>5</y>
+      <width>80</width>
+      <height>19</height>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <precision>3</precision>
+      <show_units>false</show_units>
+      <actions>
+      </actions>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>D_setpoint</name>
+      <pv_name>$(PV_ROOT_EURO):D:SP</pv_name>
+      <x>162</x>
+      <y>55</y>
+      <width>80</width>
+      <height>19</height>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <precision>3</precision>
+      <show_units>false</show_units>
+      <actions>
+      </actions>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>D_text</name>
+      <pv_name>$(PV_ROOT_EURO):D</pv_name>
+      <x>85</x>
+      <y>55</y>
+      <width>70</width>
+      <height>21</height>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <precision>3</precision>
+      <show_units>false</show_units>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>I_label</name>
+      <text>I:</text>
+      <y>30</y>
+      <width>73</width>
+      <font>
+        <font name="ISIS_Label_NEW" family="Segoe UI" style="BOLD" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>P_label</name>
+      <text>P:</text>
+      <y>5</y>
+      <width>73</width>
+      <font>
+        <font name="ISIS_Label_NEW" family="Segoe UI" style="BOLD" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textentry" version="3.0.0">
+      <name>or_setpoint</name>
+      <pv_name>$(PV_ROOT_EURO):OUTPUT_RATE:SP</pv_name>
+      <x>162</x>
+      <y>105</y>
+      <width>80</width>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Textbox_Background" red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <precision>3</precision>
+      <show_units>false</show_units>
+      <actions>
+      </actions>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Out__rate_text</name>
+      <pv_name>$(PV_ROOT_EURO):OUTPUT_RATE</pv_name>
+      <x>85</x>
+      <y>105</y>
+      <width>70</width>
+      <height>18</height>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <precision>3</precision>
+      <show_units>false</show_units>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>output_rate_label</name>
+      <text>Output rate:</text>
+      <y>105</y>
+      <width>73</width>
+      <height>21</height>
+      <font>
+        <font name="ISIS_Label_NEW" family="Segoe UI" style="BOLD" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <horizontal_alignment>2</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+  </widget>
+  <widget type="stripchart" version="2.1.0">
+    <width>493</width>
+    <height>386</height>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="ISIS_Textbox_Background" red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <title_font>
+      <font name="ISIS_GraphLabels_NEW" family="Segoe UI" style="BOLD" size="8.910891089108912">
+      </font>
+    </title_font>
+    <show_toolbar>false</show_toolbar>
+    <show_legend>true</show_legend>
+    <actions>
+    </actions>
+    <y_axes>
+      <y_axis>
+        <title>Temperature</title>
+        <autoscale>true</autoscale>
+        <log_scale>false</log_scale>
+        <minimum>0.0</minimum>
+        <maximum>50.0</maximum>
+        <show_grid>true</show_grid>
+        <visible>true</visible>
+        <color>
+          <color name="Text" red="0" green="0" blue="0">
+          </color>
+        </color>
+      </y_axis>
+      <y_axis>
+        <title>Output</title>
+        <autoscale>true</autoscale>
+        <log_scale>false</log_scale>
+        <minimum>0.0</minimum>
+        <maximum>100.0</maximum>
+        <show_grid>true</show_grid>
+        <visible>true</visible>
+        <color>
+          <color name="Text" red="0" green="0" blue="0">
+          </color>
+        </color>
+      </y_axis>
+    </y_axes>
+    <traces>
+      <trace>
+        <name>TEMPERATURE</name>
+        <y_pv>$(PV_ROOT_EURO):TEMP</y_pv>
+        <axis>0</axis>
+        <trace_type>1</trace_type>
+        <color>
+          <color name="ISIS_Trace_1_NEW" red="0" green="0" blue="255">
+          </color>
+        </color>
+        <line_width>1</line_width>
+        <point_type>0</point_type>
+        <point_size>4</point_size>
+        <visible>true</visible>
+      </trace>
+      <trace>
+        <name>TEMPERATURE SETPOINT</name>
+        <y_pv>$(PV_ROOT_EURO):TEMP:SP:RBV</y_pv>
+        <axis>0</axis>
+        <trace_type>1</trace_type>
+        <color>
+          <color name="ISIS_Trace_2_NEW" red="196" green="0" blue="0">
+          </color>
+        </color>
+        <line_width>1</line_width>
+        <point_type>0</point_type>
+        <point_size>4</point_size>
+        <visible>true</visible>
+      </trace>
+      <trace>
+        <name>HEATER OUTPUT</name>
+        <y_pv>$(PV_ROOT_EURO):OUTPUT</y_pv>
+        <axis>1</axis>
+        <trace_type>1</trace_type>
+        <color>
+          <color name="ISIS_Trace_3_NEW" red="0" green="226" blue="0">
+          </color>
+        </color>
+        <line_width>1</line_width>
+        <point_type>0</point_type>
+        <point_size>4</point_size>
+        <visible>true</visible>
+      </trace>
+    </traces>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Dummy</name>
+    <actions>
+    </actions>
+    <text>dummy</text>
+    <x>766</x>
+    <y>511</y>
+    <width>1</width>
+    <height>1</height>
+    <font>
+      <font name="ISIS_Button_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <tooltip>$(actions)</tooltip>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+</display>

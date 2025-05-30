@@ -1,0 +1,204 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<display version="2.0.0">
+  <name>$(NAME)</name>
+  <macros>
+    <PV_ROOT>$(P)$(EURO)</PV_ROOT>
+    <TEMP_SENSOR>$(SENSOR)</TEMP_SENSOR>
+  </macros>
+  <width>776</width>
+  <height>662</height>
+  <background_color>
+    <color name="ISIS_OPI_Background" red="240" green="240" blue="240">
+    </color>
+  </background_color>
+  <actions>
+  </actions>
+  <grid_step_x>6</grid_step_x>
+  <grid_step_y>6</grid_step_y>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Eurotherm Temperature Controller</text>
+    <width>415</width>
+    <height>37</height>
+    <font>
+      <font name="ISIS_Header1_NEW" family="Segoe UI" style="BOLD" size="17.821782178217823">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="ISIS_Title_Background_NEW" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_1</name>
+    <text>$(NAME)</text>
+    <y>36</y>
+    <width>776</width>
+    <height>37</height>
+    <font>
+      <font name="ISIS_Header2_NEW" family="Segoe UI" style="BOLD" size="13.861386138613861">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_2</name>
+    <text>IOC is not configured with this eurotherm channel, check the 
+
+ADDR_x IOC macro is set correctly in the configuration.</text>
+    <x>414</x>
+    <width>362</width>
+    <height>37</height>
+    <visible>false</visible>
+    <foreground_color>
+      <color name="Major" red="255" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <wrap_words>false</wrap_words>
+    <actions>
+    </actions>
+    <scripts>
+      <script file="EmbeddedPy" check_connections="false">
+        <text>from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+if pvArray[0].isConnected() and PVUtil.getLong(pvs[0]) == 0:
+	widget.setPropertyValue("visible", True)
+else:
+	widget.setPropertyValue("visible", False)
+</text>
+        <pv_name>$(PV_ROOT):A0$(TEMP_SENSOR):ACTIVE</pv_name>
+      </script>
+    </scripts>
+    <border_color>
+      <color name="Invalid" red="255" green="0" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="embedded" version="2.0.0">
+    <name>Linking Container</name>
+    <macros>
+      <EURO_NUM>$(TEMP_SENSOR)</EURO_NUM>
+    </macros>
+    <file>Eurotherm_single.bob</file>
+    <y>78</y>
+    <width>776</width>
+    <height>584</height>
+    <resize>2</resize>
+    <transparent>true</transparent>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="group" version="3.0.0">
+    <name>Millivolts</name>
+    <x>498</x>
+    <y>36</y>
+    <width>278</width>
+    <height>46</height>
+    <font>
+      <font name="ISIS_GroupBox_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+      </color>
+    </foreground_color>
+    <line_color>
+      <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+      </color>
+    </line_color>
+    <background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+    <actions>
+    </actions>
+    <rules>
+      <rule name="EnableGroupingContainerEuro1" prop_id="visible" out_exp="false">
+        <exp bool_exp="pv0==0">
+          <value>false</value>
+        </exp>
+        <pv_name>$(PV_ROOT):A0$(TEMP_SENSOR):ACTIVE</pv_name>
+      </rule>
+    </rules>
+    <widget type="textupdate" version="2.0.0">
+      <name>Setpoint_text</name>
+      <pv_name>$(PV_ROOT):A0$(TEMP_SENSOR):SENSOR</pv_name>
+      <width>102</width>
+      <height>24</height>
+      <font>
+        <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+        </font>
+      </font>
+      <foreground_color>
+        <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <precision>3</precision>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+      <actions>
+      </actions>
+      <border_color>
+        <color name="ISIS_Border" red="0" green="0" blue="0">
+        </color>
+      </border_color>
+    </widget>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Dummy</name>
+    <actions>
+    </actions>
+    <text />
+    <x>414</x>
+    <y>36</y>
+    <width>1</width>
+    <height>1</height>
+    <font>
+      <font name="ISIS_Button_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <tooltip />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+</display>

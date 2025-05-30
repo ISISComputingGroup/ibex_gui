@@ -1,0 +1,1677 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<display version="2.0.0">
+  <name>$(NAME)</name>
+  <macros>
+    <IOC_NUM>01</IOC_NUM>
+    <PV_ROOT>$(P)$(EURO)</PV_ROOT>
+  </macros>
+  <x>18</x>
+  <y>30</y>
+  <width>794</width>
+  <height>703</height>
+  <background_color>
+    <color name="ISIS_OPI_Background" red="240" green="240" blue="240">
+    </color>
+  </background_color>
+  <actions>
+  </actions>
+  <grid_step_x>6</grid_step_x>
+  <grid_step_y>6</grid_step_y>
+  <widget type="tabs" version="2.0.0">
+    <name>Tabbed Container</name>
+    <tabs>
+      <tab>
+        <name>Sensor 1</name>
+        <children>
+          <widget type="embedded" version="2.0.0">
+            <name>Linking Container</name>
+            <macros>
+              <EURO_NUM>1</EURO_NUM>
+            </macros>
+            <file>Eurotherm_single.bob</file>
+            <width>776</width>
+            <height>584</height>
+            <resize>2</resize>
+            <transparent>true</transparent>
+            <actions>
+            </actions>
+            <border_color>
+              <color red="0" green="128" blue="255">
+              </color>
+            </border_color>
+          </widget>
+        </children>
+      </tab>
+      <tab>
+        <name>Sensor 2</name>
+        <children>
+          <widget type="embedded" version="2.0.0">
+            <name>Linking Container</name>
+            <macros>
+              <EURO_NUM>2</EURO_NUM>
+            </macros>
+            <file>Eurotherm_single.bob</file>
+            <width>776</width>
+            <height>584</height>
+            <resize>2</resize>
+            <transparent>true</transparent>
+            <actions>
+            </actions>
+            <border_color>
+              <color red="0" green="128" blue="255">
+              </color>
+            </border_color>
+          </widget>
+        </children>
+      </tab>
+      <tab>
+        <name>Sensor 3</name>
+        <children>
+          <widget type="embedded" version="2.0.0">
+            <name>Linking Container</name>
+            <macros>
+              <EURO_NUM>3</EURO_NUM>
+            </macros>
+            <file>Eurotherm_single.bob</file>
+            <width>776</width>
+            <height>584</height>
+            <resize>2</resize>
+            <transparent>true</transparent>
+            <actions>
+            </actions>
+            <border_color>
+              <color red="0" green="128" blue="255">
+              </color>
+            </border_color>
+          </widget>
+        </children>
+      </tab>
+      <tab>
+        <name>Sensor 4</name>
+        <children>
+          <widget type="embedded" version="2.0.0">
+            <name>Linking Container</name>
+            <macros>
+              <EURO_NUM>4</EURO_NUM>
+            </macros>
+            <file>Eurotherm_single.bob</file>
+            <width>776</width>
+            <height>584</height>
+            <resize>2</resize>
+            <transparent>true</transparent>
+            <actions>
+            </actions>
+            <border_color>
+              <color red="0" green="128" blue="255">
+              </color>
+            </border_color>
+          </widget>
+        </children>
+      </tab>
+      <tab>
+        <name>Sensor 5</name>
+        <children>
+          <widget type="embedded" version="2.0.0">
+            <name>Linking Container</name>
+            <macros>
+              <EURO_NUM>5</EURO_NUM>
+            </macros>
+            <file>Eurotherm_single.bob</file>
+            <width>776</width>
+            <height>584</height>
+            <resize>2</resize>
+            <transparent>true</transparent>
+            <actions>
+            </actions>
+            <border_color>
+              <color red="0" green="128" blue="255">
+              </color>
+            </border_color>
+          </widget>
+        </children>
+      </tab>
+      <tab>
+        <name>Sensor 6</name>
+        <children>
+          <widget type="embedded" version="2.0.0">
+            <name>Linking Container</name>
+            <macros>
+              <EURO_NUM>6</EURO_NUM>
+            </macros>
+            <file>Eurotherm_single.bob</file>
+            <width>776</width>
+            <height>584</height>
+            <resize>2</resize>
+            <transparent>true</transparent>
+            <actions>
+            </actions>
+            <border_color>
+              <color red="0" green="128" blue="255">
+              </color>
+            </border_color>
+          </widget>
+        </children>
+      </tab>
+      <tab>
+        <name>Sensor 7</name>
+        <children>
+          <widget type="embedded" version="2.0.0">
+            <name>Linking Container</name>
+            <macros>
+              <EURO_NUM>7</EURO_NUM>
+            </macros>
+            <file>Eurotherm_single.bob</file>
+            <width>776</width>
+            <height>584</height>
+            <resize>2</resize>
+            <transparent>true</transparent>
+            <actions>
+            </actions>
+            <border_color>
+              <color red="0" green="128" blue="255">
+              </color>
+            </border_color>
+          </widget>
+        </children>
+      </tab>
+      <tab>
+        <name>Sensor 8</name>
+        <children>
+          <widget type="embedded" version="2.0.0">
+            <name>Linking Container</name>
+            <macros>
+              <EURO_NUM>8</EURO_NUM>
+            </macros>
+            <file>Eurotherm_single.bob</file>
+            <width>776</width>
+            <height>584</height>
+            <resize>2</resize>
+            <transparent>true</transparent>
+            <actions>
+            </actions>
+            <border_color>
+              <color red="0" green="128" blue="255">
+              </color>
+            </border_color>
+          </widget>
+        </children>
+      </tab>
+      <tab>
+        <name>Sensor 9</name>
+        <children>
+          <widget type="embedded" version="2.0.0">
+            <name>Linking Container</name>
+            <macros>
+              <EURO_NUM>7</EURO_NUM>
+            </macros>
+            <file>Eurotherm_single.bob</file>
+            <width>776</width>
+            <height>584</height>
+            <resize>2</resize>
+            <transparent>true</transparent>
+            <actions>
+            </actions>
+            <border_color>
+              <color red="0" green="128" blue="255">
+              </color>
+            </border_color>
+          </widget>
+        </children>
+      </tab>
+      <tab>
+        <name>Sensor 10</name>
+        <children>
+          <widget type="embedded" version="2.0.0">
+            <name>Linking Container</name>
+            <macros>
+              <EURO_NUM>10</EURO_NUM>
+            </macros>
+            <file>Eurotherm_single.bob</file>
+            <width>776</width>
+            <height>584</height>
+            <resize>2</resize>
+            <transparent>true</transparent>
+            <actions>
+            </actions>
+            <border_color>
+              <color red="0" green="128" blue="255">
+              </color>
+            </border_color>
+          </widget>
+        </children>
+      </tab>
+      <tab>
+        <name>Display Millivolts</name>
+        <children>
+          <widget type="group" version="3.0.0">
+            <name>Sensor 1</name>
+            <x>36</x>
+            <y>18</y>
+            <width>169</width>
+            <height>85</height>
+            <font>
+              <font name="ISIS_GroupBox_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+              </font>
+            </font>
+            <foreground_color>
+              <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+              </color>
+            </foreground_color>
+            <line_color>
+              <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+              </color>
+            </line_color>
+            <background_color>
+              <color name="ISIS_OPI_Background" red="240" green="240" blue="240">
+              </color>
+            </background_color>
+            <actions>
+            </actions>
+            <rules>
+              <rule name="EnableGroupingContainerEuro1" prop_id="visible" out_exp="false">
+                <exp bool_exp="pv0==0">
+                  <value>false</value>
+                </exp>
+                <pv_name>$(PV_ROOT):A01:ACTIVE</pv_name>
+              </rule>
+            </rules>
+            <widget type="textupdate" version="2.0.0">
+              <name>Temperature_text_2</name>
+              <pv_name>$(PV_ROOT_EURO):RATE.EGU</pv_name>
+              <x>161</x>
+              <y>7</y>
+              <width>70</width>
+              <height>19</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <show_units>false</show_units>
+              <vertical_alignment>1</vertical_alignment>
+              <wrap_words>false</wrap_words>
+              <actions>
+              </actions>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+            <widget type="textentry" version="3.0.0">
+              <name>Setpoint_setpoint</name>
+              <pv_name>$(PV_ROOT_EURO):RATE:SP</pv_name>
+              <x>162</x>
+              <y>36</y>
+              <width>80</width>
+              <height>19</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Textbox_Background" red="255" green="255" blue="255">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <show_units>false</show_units>
+              <actions>
+              </actions>
+              <border_alarm_sensitive>false</border_alarm_sensitive>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+            <widget type="textupdate" version="2.0.0">
+              <name>Setpoint_text</name>
+              <pv_name>$(PV_ROOT):A01:SENSOR</pv_name>
+              <x>12</x>
+              <y>13</y>
+              <width>102</width>
+              <height>24</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <vertical_alignment>1</vertical_alignment>
+              <wrap_words>false</wrap_words>
+              <actions>
+              </actions>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+          </widget>
+          <widget type="group" version="3.0.0">
+            <name>Sensor 5</name>
+            <x>36</x>
+            <y>114</y>
+            <width>169</width>
+            <height>85</height>
+            <font>
+              <font name="ISIS_GroupBox_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+              </font>
+            </font>
+            <foreground_color>
+              <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+              </color>
+            </foreground_color>
+            <line_color>
+              <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+              </color>
+            </line_color>
+            <background_color>
+              <color name="ISIS_OPI_Background" red="240" green="240" blue="240">
+              </color>
+            </background_color>
+            <actions>
+            </actions>
+            <rules>
+              <rule name="EnableGroupingContainerEuro5" prop_id="visible" out_exp="false">
+                <exp bool_exp="pv0==0">
+                  <value>false</value>
+                </exp>
+                <pv_name>$(PV_ROOT):A05:ACTIVE</pv_name>
+              </rule>
+            </rules>
+            <widget type="textupdate" version="2.0.0">
+              <name>Temperature_text_2</name>
+              <pv_name>$(PV_ROOT_EURO):RATE.EGU</pv_name>
+              <x>161</x>
+              <y>7</y>
+              <width>70</width>
+              <height>19</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <show_units>false</show_units>
+              <vertical_alignment>1</vertical_alignment>
+              <wrap_words>false</wrap_words>
+              <actions>
+              </actions>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+            <widget type="textentry" version="3.0.0">
+              <name>Setpoint_setpoint</name>
+              <pv_name>$(PV_ROOT_EURO):RATE:SP</pv_name>
+              <x>162</x>
+              <y>36</y>
+              <width>80</width>
+              <height>19</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Textbox_Background" red="255" green="255" blue="255">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <show_units>false</show_units>
+              <actions>
+              </actions>
+              <border_alarm_sensitive>false</border_alarm_sensitive>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+            <widget type="textupdate" version="2.0.0">
+              <name>Setpoint_text</name>
+              <pv_name>$(PV_ROOT):A05:SENSOR</pv_name>
+              <x>12</x>
+              <y>13</y>
+              <width>102</width>
+              <height>24</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <vertical_alignment>1</vertical_alignment>
+              <wrap_words>false</wrap_words>
+              <actions>
+              </actions>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+          </widget>
+          <widget type="group" version="3.0.0">
+            <name>Sensor 6</name>
+            <x>222</x>
+            <y>114</y>
+            <width>169</width>
+            <height>85</height>
+            <font>
+              <font name="ISIS_GroupBox_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+              </font>
+            </font>
+            <foreground_color>
+              <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+              </color>
+            </foreground_color>
+            <line_color>
+              <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+              </color>
+            </line_color>
+            <background_color>
+              <color name="ISIS_OPI_Background" red="240" green="240" blue="240">
+              </color>
+            </background_color>
+            <actions>
+            </actions>
+            <rules>
+              <rule name="EnableGroupingContainerEuro6" prop_id="visible" out_exp="false">
+                <exp bool_exp="pv0==0">
+                  <value>false</value>
+                </exp>
+                <pv_name>$(PV_ROOT):A06:ACTIVE</pv_name>
+              </rule>
+            </rules>
+            <widget type="textupdate" version="2.0.0">
+              <name>Temperature_text_2</name>
+              <pv_name>$(PV_ROOT_EURO):RATE.EGU</pv_name>
+              <x>161</x>
+              <y>7</y>
+              <width>70</width>
+              <height>19</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <show_units>false</show_units>
+              <vertical_alignment>1</vertical_alignment>
+              <wrap_words>false</wrap_words>
+              <actions>
+              </actions>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+            <widget type="textentry" version="3.0.0">
+              <name>Setpoint_setpoint</name>
+              <pv_name>$(PV_ROOT_EURO):RATE:SP</pv_name>
+              <x>162</x>
+              <y>36</y>
+              <width>80</width>
+              <height>19</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Textbox_Background" red="255" green="255" blue="255">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <show_units>false</show_units>
+              <actions>
+              </actions>
+              <border_alarm_sensitive>false</border_alarm_sensitive>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+            <widget type="textupdate" version="2.0.0">
+              <name>Setpoint_text</name>
+              <pv_name>$(PV_ROOT):A06:SENSOR</pv_name>
+              <x>12</x>
+              <y>13</y>
+              <width>102</width>
+              <height>24</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <vertical_alignment>1</vertical_alignment>
+              <wrap_words>false</wrap_words>
+              <actions>
+              </actions>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+          </widget>
+          <widget type="group" version="3.0.0">
+            <name>Sensor 2</name>
+            <x>222</x>
+            <y>18</y>
+            <width>169</width>
+            <height>85</height>
+            <font>
+              <font name="ISIS_GroupBox_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+              </font>
+            </font>
+            <foreground_color>
+              <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+              </color>
+            </foreground_color>
+            <line_color>
+              <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+              </color>
+            </line_color>
+            <background_color>
+              <color name="ISIS_OPI_Background" red="240" green="240" blue="240">
+              </color>
+            </background_color>
+            <actions>
+            </actions>
+            <rules>
+              <rule name="EnableGroupingContainerEuro2" prop_id="visible" out_exp="false">
+                <exp bool_exp="pv0==0">
+                  <value>false</value>
+                </exp>
+                <pv_name>$(PV_ROOT):A02:ACTIVE</pv_name>
+              </rule>
+            </rules>
+            <widget type="textupdate" version="2.0.0">
+              <name>Temperature_text_2</name>
+              <pv_name>$(PV_ROOT_EURO):RATE.EGU</pv_name>
+              <x>161</x>
+              <y>7</y>
+              <width>70</width>
+              <height>19</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <show_units>false</show_units>
+              <vertical_alignment>1</vertical_alignment>
+              <wrap_words>false</wrap_words>
+              <actions>
+              </actions>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+            <widget type="textentry" version="3.0.0">
+              <name>Setpoint_setpoint</name>
+              <pv_name>$(PV_ROOT_EURO):RATE:SP</pv_name>
+              <x>162</x>
+              <y>36</y>
+              <width>80</width>
+              <height>19</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Textbox_Background" red="255" green="255" blue="255">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <show_units>false</show_units>
+              <actions>
+              </actions>
+              <border_alarm_sensitive>false</border_alarm_sensitive>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+            <widget type="textupdate" version="2.0.0">
+              <name>Setpoint_text</name>
+              <pv_name>$(PV_ROOT):A02:SENSOR</pv_name>
+              <x>12</x>
+              <y>13</y>
+              <width>102</width>
+              <height>24</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <vertical_alignment>1</vertical_alignment>
+              <wrap_words>false</wrap_words>
+              <actions>
+              </actions>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+          </widget>
+          <widget type="group" version="3.0.0">
+            <name>Sensor 3</name>
+            <x>408</x>
+            <y>18</y>
+            <width>169</width>
+            <height>85</height>
+            <font>
+              <font name="ISIS_GroupBox_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+              </font>
+            </font>
+            <foreground_color>
+              <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+              </color>
+            </foreground_color>
+            <line_color>
+              <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+              </color>
+            </line_color>
+            <background_color>
+              <color name="ISIS_OPI_Background" red="240" green="240" blue="240">
+              </color>
+            </background_color>
+            <actions>
+            </actions>
+            <rules>
+              <rule name="EnableGroupingContainerEuro3" prop_id="visible" out_exp="false">
+                <exp bool_exp="pv0==0">
+                  <value>false</value>
+                </exp>
+                <pv_name>$(PV_ROOT):A03:ACTIVE</pv_name>
+              </rule>
+            </rules>
+            <widget type="textupdate" version="2.0.0">
+              <name>Temperature_text_2</name>
+              <pv_name>$(PV_ROOT_EURO):RATE.EGU</pv_name>
+              <x>161</x>
+              <y>7</y>
+              <width>70</width>
+              <height>19</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <show_units>false</show_units>
+              <vertical_alignment>1</vertical_alignment>
+              <wrap_words>false</wrap_words>
+              <actions>
+              </actions>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+            <widget type="textentry" version="3.0.0">
+              <name>Setpoint_setpoint</name>
+              <pv_name>$(PV_ROOT_EURO):RATE:SP</pv_name>
+              <x>162</x>
+              <y>36</y>
+              <width>80</width>
+              <height>19</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Textbox_Background" red="255" green="255" blue="255">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <show_units>false</show_units>
+              <actions>
+              </actions>
+              <border_alarm_sensitive>false</border_alarm_sensitive>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+            <widget type="textupdate" version="2.0.0">
+              <name>Setpoint_text</name>
+              <pv_name>$(PV_ROOT):A03:SENSOR</pv_name>
+              <x>12</x>
+              <y>13</y>
+              <width>102</width>
+              <height>24</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <vertical_alignment>1</vertical_alignment>
+              <wrap_words>false</wrap_words>
+              <actions>
+              </actions>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+          </widget>
+          <widget type="group" version="3.0.0">
+            <name>Sensor 7</name>
+            <x>408</x>
+            <y>114</y>
+            <width>169</width>
+            <height>85</height>
+            <font>
+              <font name="ISIS_GroupBox_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+              </font>
+            </font>
+            <foreground_color>
+              <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+              </color>
+            </foreground_color>
+            <line_color>
+              <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+              </color>
+            </line_color>
+            <background_color>
+              <color name="ISIS_OPI_Background" red="240" green="240" blue="240">
+              </color>
+            </background_color>
+            <actions>
+            </actions>
+            <rules>
+              <rule name="EnableGroupingContainerEuro7" prop_id="visible" out_exp="false">
+                <exp bool_exp="pv0==0">
+                  <value>false</value>
+                </exp>
+                <pv_name>$(PV_ROOT):A07:ACTIVE</pv_name>
+              </rule>
+            </rules>
+            <widget type="textupdate" version="2.0.0">
+              <name>Temperature_text_2</name>
+              <pv_name>$(PV_ROOT_EURO):RATE.EGU</pv_name>
+              <x>161</x>
+              <y>7</y>
+              <width>70</width>
+              <height>19</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <show_units>false</show_units>
+              <vertical_alignment>1</vertical_alignment>
+              <wrap_words>false</wrap_words>
+              <actions>
+              </actions>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+            <widget type="textentry" version="3.0.0">
+              <name>Setpoint_setpoint</name>
+              <pv_name>$(PV_ROOT_EURO):RATE:SP</pv_name>
+              <x>162</x>
+              <y>36</y>
+              <width>80</width>
+              <height>19</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Textbox_Background" red="255" green="255" blue="255">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <show_units>false</show_units>
+              <actions>
+              </actions>
+              <border_alarm_sensitive>false</border_alarm_sensitive>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+            <widget type="textupdate" version="2.0.0">
+              <name>Setpoint_text</name>
+              <pv_name>$(PV_ROOT):A07:SENSOR</pv_name>
+              <x>12</x>
+              <y>13</y>
+              <width>102</width>
+              <height>24</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <vertical_alignment>1</vertical_alignment>
+              <wrap_words>false</wrap_words>
+              <actions>
+              </actions>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+          </widget>
+          <widget type="group" version="3.0.0">
+            <name>Sensor 4</name>
+            <x>588</x>
+            <y>18</y>
+            <width>169</width>
+            <height>85</height>
+            <font>
+              <font name="ISIS_GroupBox_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+              </font>
+            </font>
+            <foreground_color>
+              <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+              </color>
+            </foreground_color>
+            <line_color>
+              <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+              </color>
+            </line_color>
+            <background_color>
+              <color name="ISIS_OPI_Background" red="240" green="240" blue="240">
+              </color>
+            </background_color>
+            <actions>
+            </actions>
+            <rules>
+              <rule name="EnableGroupingContainerEuro4" prop_id="visible" out_exp="false">
+                <exp bool_exp="pv0==0">
+                  <value>false</value>
+                </exp>
+                <pv_name>$(PV_ROOT):A04:ACTIVE</pv_name>
+              </rule>
+            </rules>
+            <widget type="textupdate" version="2.0.0">
+              <name>Temperature_text_2</name>
+              <pv_name>$(PV_ROOT_EURO):RATE.EGU</pv_name>
+              <x>161</x>
+              <y>7</y>
+              <width>70</width>
+              <height>19</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <show_units>false</show_units>
+              <vertical_alignment>1</vertical_alignment>
+              <wrap_words>false</wrap_words>
+              <actions>
+              </actions>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+            <widget type="textentry" version="3.0.0">
+              <name>Setpoint_setpoint</name>
+              <pv_name>$(PV_ROOT_EURO):RATE:SP</pv_name>
+              <x>162</x>
+              <y>36</y>
+              <width>80</width>
+              <height>19</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Textbox_Background" red="255" green="255" blue="255">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <show_units>false</show_units>
+              <actions>
+              </actions>
+              <border_alarm_sensitive>false</border_alarm_sensitive>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+            <widget type="textupdate" version="2.0.0">
+              <name>Setpoint_text</name>
+              <pv_name>$(PV_ROOT):A04:SENSOR</pv_name>
+              <x>12</x>
+              <y>13</y>
+              <width>102</width>
+              <height>24</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <vertical_alignment>1</vertical_alignment>
+              <wrap_words>false</wrap_words>
+              <actions>
+              </actions>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+          </widget>
+          <widget type="group" version="3.0.0">
+            <name>Sensor 8</name>
+            <x>588</x>
+            <y>114</y>
+            <width>169</width>
+            <height>85</height>
+            <font>
+              <font name="ISIS_GroupBox_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+              </font>
+            </font>
+            <foreground_color>
+              <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+              </color>
+            </foreground_color>
+            <line_color>
+              <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+              </color>
+            </line_color>
+            <background_color>
+              <color name="ISIS_OPI_Background" red="240" green="240" blue="240">
+              </color>
+            </background_color>
+            <actions>
+            </actions>
+            <rules>
+              <rule name="EnableGroupingContainerEuro8" prop_id="visible" out_exp="false">
+                <exp bool_exp="pv0==0">
+                  <value>false</value>
+                </exp>
+                <pv_name>$(PV_ROOT):A08:ACTIVE</pv_name>
+              </rule>
+            </rules>
+            <widget type="textupdate" version="2.0.0">
+              <name>Temperature_text_2</name>
+              <pv_name>$(PV_ROOT_EURO):RATE.EGU</pv_name>
+              <x>161</x>
+              <y>7</y>
+              <width>70</width>
+              <height>19</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <show_units>false</show_units>
+              <vertical_alignment>1</vertical_alignment>
+              <wrap_words>false</wrap_words>
+              <actions>
+              </actions>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+            <widget type="textentry" version="3.0.0">
+              <name>Setpoint_setpoint</name>
+              <pv_name>$(PV_ROOT_EURO):RATE:SP</pv_name>
+              <x>162</x>
+              <y>36</y>
+              <width>80</width>
+              <height>19</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Textbox_Background" red="255" green="255" blue="255">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <show_units>false</show_units>
+              <actions>
+              </actions>
+              <border_alarm_sensitive>false</border_alarm_sensitive>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+            <widget type="textupdate" version="2.0.0">
+              <name>Setpoint_text</name>
+              <pv_name>$(PV_ROOT):A08:SENSOR</pv_name>
+              <x>12</x>
+              <y>13</y>
+              <width>102</width>
+              <height>24</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <vertical_alignment>1</vertical_alignment>
+              <wrap_words>false</wrap_words>
+              <actions>
+              </actions>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+          </widget>
+          <widget type="group" version="3.0.0">
+            <name>Sensor 9</name>
+            <x>36</x>
+            <y>210</y>
+            <width>169</width>
+            <height>85</height>
+            <font>
+              <font name="ISIS_GroupBox_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+              </font>
+            </font>
+            <foreground_color>
+              <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+              </color>
+            </foreground_color>
+            <line_color>
+              <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+              </color>
+            </line_color>
+            <background_color>
+              <color name="ISIS_OPI_Background" red="240" green="240" blue="240">
+              </color>
+            </background_color>
+            <actions>
+            </actions>
+            <rules>
+              <rule name="EnableGroupingContainerEuro9" prop_id="visible" out_exp="false">
+                <exp bool_exp="pv0==0">
+                  <value>false</value>
+                </exp>
+                <pv_name>$(PV_ROOT):A09:ACTIVE</pv_name>
+              </rule>
+            </rules>
+            <widget type="textupdate" version="2.0.0">
+              <name>Temperature_text_2</name>
+              <pv_name>$(PV_ROOT_EURO):RATE.EGU</pv_name>
+              <x>161</x>
+              <y>7</y>
+              <width>70</width>
+              <height>19</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <show_units>false</show_units>
+              <vertical_alignment>1</vertical_alignment>
+              <wrap_words>false</wrap_words>
+              <actions>
+              </actions>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+            <widget type="textentry" version="3.0.0">
+              <name>Setpoint_setpoint</name>
+              <pv_name>$(PV_ROOT_EURO):RATE:SP</pv_name>
+              <x>162</x>
+              <y>36</y>
+              <width>80</width>
+              <height>19</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Textbox_Background" red="255" green="255" blue="255">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <show_units>false</show_units>
+              <actions>
+              </actions>
+              <border_alarm_sensitive>false</border_alarm_sensitive>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+            <widget type="textupdate" version="2.0.0">
+              <name>Setpoint_text</name>
+              <pv_name>$(PV_ROOT):A09:SENSOR</pv_name>
+              <x>12</x>
+              <y>13</y>
+              <width>102</width>
+              <height>24</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <vertical_alignment>1</vertical_alignment>
+              <wrap_words>false</wrap_words>
+              <actions>
+              </actions>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+          </widget>
+          <widget type="group" version="3.0.0">
+            <name>Sensor 10</name>
+            <x>222</x>
+            <y>210</y>
+            <width>169</width>
+            <height>85</height>
+            <font>
+              <font name="ISIS_GroupBox_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+              </font>
+            </font>
+            <foreground_color>
+              <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+              </color>
+            </foreground_color>
+            <line_color>
+              <color name="ISIS_GroupBox_Border_NEW" red="0" green="128" blue="255">
+              </color>
+            </line_color>
+            <background_color>
+              <color name="ISIS_OPI_Background" red="240" green="240" blue="240">
+              </color>
+            </background_color>
+            <actions>
+            </actions>
+            <rules>
+              <rule name="EnableGroupingContainerEuro10" prop_id="visible" out_exp="false">
+                <exp bool_exp="pv0==0">
+                  <value>false</value>
+                </exp>
+                <pv_name>$(PV_ROOT):A010:ACTIVE</pv_name>
+              </rule>
+            </rules>
+            <widget type="textupdate" version="2.0.0">
+              <name>Temperature_text_2</name>
+              <pv_name>$(PV_ROOT_EURO):RATE.EGU</pv_name>
+              <x>161</x>
+              <y>7</y>
+              <width>70</width>
+              <height>19</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <show_units>false</show_units>
+              <vertical_alignment>1</vertical_alignment>
+              <wrap_words>false</wrap_words>
+              <actions>
+              </actions>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+            <widget type="textentry" version="3.0.0">
+              <name>Setpoint_setpoint</name>
+              <pv_name>$(PV_ROOT_EURO):RATE:SP</pv_name>
+              <x>162</x>
+              <y>36</y>
+              <width>80</width>
+              <height>19</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Textbox_Background" red="255" green="255" blue="255">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <show_units>false</show_units>
+              <actions>
+              </actions>
+              <border_alarm_sensitive>false</border_alarm_sensitive>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+            <widget type="textupdate" version="2.0.0">
+              <name>Setpoint_text</name>
+              <pv_name>$(PV_ROOT):A010:SENSOR</pv_name>
+              <x>12</x>
+              <y>13</y>
+              <width>102</width>
+              <height>24</height>
+              <font>
+                <font name="ISIS_Value_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+                </font>
+              </font>
+              <foreground_color>
+                <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+                </color>
+              </foreground_color>
+              <background_color>
+                <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+                </color>
+              </background_color>
+              <precision>3</precision>
+              <vertical_alignment>1</vertical_alignment>
+              <wrap_words>false</wrap_words>
+              <actions>
+              </actions>
+              <border_color>
+                <color name="ISIS_Border" red="0" green="0" blue="0">
+                </color>
+              </border_color>
+            </widget>
+          </widget>
+        </children>
+      </tab>
+    </tabs>
+    <y>78</y>
+    <width>794</width>
+    <height>625</height>
+    <background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+    <tab_height>10</tab_height>
+    <actions>
+    </actions>
+    <rules>
+      <rule name="EnableTabEuro1" prop_id="tab_0_enabled" out_exp="false">
+        <exp bool_exp="pv0==0">
+          <value>false</value>
+        </exp>
+        <pv_name>$(PV_ROOT):A01:ACTIVE</pv_name>
+      </rule>
+      <rule name="EnableTabEuro2" prop_id="tab_1_enabled" out_exp="false">
+        <exp bool_exp="pv0==0">
+          <value>false</value>
+        </exp>
+        <pv_name>$(PV_ROOT):A02:ACTIVE</pv_name>
+      </rule>
+      <rule name="EnableTabEuro3" prop_id="tab_2_enabled" out_exp="false">
+        <exp bool_exp="pv0==0">
+          <value>false</value>
+        </exp>
+        <pv_name>$(PV_ROOT):A03:ACTIVE</pv_name>
+      </rule>
+      <rule name="EnableTabEuro4" prop_id="tab_3_enabled" out_exp="false">
+        <exp bool_exp="pv0==0">
+          <value>false</value>
+        </exp>
+        <pv_name>$(PV_ROOT):A04:ACTIVE</pv_name>
+      </rule>
+      <rule name="EnableTabEuro5" prop_id="tab_4_enabled" out_exp="false">
+        <exp bool_exp="pv0==0">
+          <value>false</value>
+        </exp>
+        <pv_name>$(PV_ROOT):A05:ACTIVE</pv_name>
+      </rule>
+      <rule name="EnableTabEuro6" prop_id="tab_5_enabled" out_exp="false">
+        <exp bool_exp="pv0==0">
+          <value>false</value>
+        </exp>
+        <pv_name>$(PV_ROOT):A06:ACTIVE</pv_name>
+      </rule>
+      <rule name="EnableTabEuro7" prop_id="tab_6_enabled" out_exp="false">
+        <exp bool_exp="pv0==0">
+          <value>false</value>
+        </exp>
+        <pv_name>$(PV_ROOT):A07:ACTIVE</pv_name>
+      </rule>
+      <rule name="EnableTabEuro8" prop_id="tab_7_enabled" out_exp="false">
+        <exp bool_exp="pv0==0">
+          <value>false</value>
+        </exp>
+        <pv_name>$(PV_ROOT):A08:ACTIVE</pv_name>
+      </rule>
+      <rule name="EnableTabEuro9" prop_id="tab_8_enabled" out_exp="false">
+        <exp bool_exp="pv0==0">
+          <value>false</value>
+        </exp>
+        <pv_name>$(PV_ROOT):A09:ACTIVE</pv_name>
+      </rule>
+      <rule name="EnableTabEuro10" prop_id="tab_9_enabled" out_exp="false">
+        <exp bool_exp="pv0==0">
+          <value>false</value>
+        </exp>
+        <pv_name>$(PV_ROOT):A010:ACTIVE</pv_name>
+      </rule>
+    </rules>
+    <tooltip>Disabled tabs are because Eurotherm is not active in IOC.</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label</name>
+    <text>Eurotherm Temperature Controller</text>
+    <width>415</width>
+    <height>37</height>
+    <font>
+      <font name="ISIS_Header1_NEW" family="Segoe UI" style="BOLD" size="17.821782178217823">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="ISIS_Title_Background_NEW" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_1</name>
+    <text>$(NAME)</text>
+    <y>36</y>
+    <width>781</width>
+    <height>37</height>
+    <font>
+      <font name="ISIS_Header2_NEW" family="Segoe UI" style="BOLD" size="13.861386138613861">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <background_color>
+      <color name="ISIS_Label_Background" red="240" green="240" blue="240">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Dummy</name>
+    <actions>
+    </actions>
+    <text />
+    <y>36</y>
+    <width>1</width>
+    <height>1</height>
+    <font>
+      <font name="ISIS_Button_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <tooltip />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_2</name>
+    <text>IOC is not configured with any eurotherm channels, check the 
+
+ADDR_x IOC macros are set correctly in the configuration.</text>
+    <x>414</x>
+    <width>367</width>
+    <height>37</height>
+    <visible>false</visible>
+    <foreground_color>
+      <color name="Major" red="255" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <wrap_words>false</wrap_words>
+    <actions>
+    </actions>
+    <scripts>
+      <script file="EmbeddedPy" check_connections="false">
+        <text>from org.csstudio.opibuilder.scriptUtil import PVUtil
+
+states = []
+for tab in range(10):
+    if pvArray[tab].isConnected():
+        states.append(PVUtil.getLong(pvs[tab]))
+    else:
+        # If eurotherm is entirely down then we don't want the message displayed.
+        states.append(1)
+
+if all(state == 0 for state in states):
+    widget.setPropertyValue("visible", True);
+else:
+    widget.setPropertyValue("visible", False)
+</text>
+        <pv_name>$(PV_ROOT):A01:ACTIVE</pv_name>
+        <pv_name>$(PV_ROOT):A02:ACTIVE</pv_name>
+        <pv_name>$(PV_ROOT):A03:ACTIVE</pv_name>
+        <pv_name>$(PV_ROOT):A04:ACTIVE</pv_name>
+        <pv_name>$(PV_ROOT):A05:ACTIVE</pv_name>
+        <pv_name>$(PV_ROOT):A06:ACTIVE</pv_name>
+        <pv_name>$(PV_ROOT):A07:ACTIVE</pv_name>
+        <pv_name>$(PV_ROOT):A08:ACTIVE</pv_name>
+        <pv_name>$(PV_ROOT):A09:ACTIVE</pv_name>
+        <pv_name>$(PV_ROOT):A010:ACTIVE</pv_name>
+      </script>
+    </scripts>
+    <border_color>
+      <color name="Invalid" red="255" green="0" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Dummy</name>
+    <actions>
+    </actions>
+    <text />
+    <x>414</x>
+    <y>36</y>
+    <width>1</width>
+    <height>1</height>
+    <font>
+      <font name="ISIS_Button_NEW" family="Segoe UI" style="REGULAR" size="8.910891089108912">
+      </font>
+    </font>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0">
+      </color>
+    </foreground_color>
+    <tooltip />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+</display>
