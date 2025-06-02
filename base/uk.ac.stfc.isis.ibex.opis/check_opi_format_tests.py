@@ -1,7 +1,6 @@
 import unittest
 from hamcrest import *
 from lxml import etree
-import xmlrunner
 import sys
 
 from check_OPI_format_utils.colour_checker import check_specific_isis_colours, check_any_isis_colour, \
@@ -579,4 +578,4 @@ class TestCheckOpiFormatMethods(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main(testRunner=xmlrunner.XMLTestRunner(output='test-reports', stream=sys.stdout))
+    unittest.main()

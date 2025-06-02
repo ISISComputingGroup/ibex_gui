@@ -2099,8 +2099,8 @@
         <macros>
           <macro>
             <name>IOC1</name>
-            <description>The First Magnet IOC (e.g. KEPCO_01).</description>
-            <default>KEPCO_01</default>
+            <description>The First Magnet IOC (e.g. IN:HIFI:KEPCO_01).</description>
+            <default>IN:HIFI:KEPCO_01</default>
           </macro>
           <macro>
             <name>MAGNET1</name>
@@ -2108,8 +2108,8 @@
           </macro>
           <macro>
             <name>IOC2</name>
-            <description>The second magnet IOC (e.g. KEPCO_02).</description>
-            <default>KEPCO_02</default>
+            <description>The second magnet IOC (e.g. IN:HIFI:KEPCO_02).</description>
+            <default>IN:HIFI:KEPCO_02</default>
           </macro>
           <macro>
             <name>MAGNET2</name>
@@ -2117,8 +2117,8 @@
           </macro>
           <macro>
             <name>IOC3</name>
-            <description>The third magnet IOC (e.g. DFKPS_01).</description>
-            <default>DFKPS_01</default>
+            <description>The third magnet IOC (e.g. IN:HIFI:DFKPS_01).</description>
+            <default>IN:HIFI:DFKPS_01</default>
           </macro>
           <macro>
             <name>MAGNET3</name>
@@ -2126,8 +2126,8 @@
           </macro>
           <macro>
             <name>IOC4</name>
-            <description>The fourth magnet IOC (e.g. DFKPS_02).</description>
-            <default>DFKPS_02</default>
+            <description>The fourth magnet IOC (e.g. IN:HIFI:DFKPS_02).</description>
+            <default>IN:HIFI:DFKPS_02</default>
           </macro>
           <macro>
             <name>MAGNET4</name>
@@ -3290,6 +3290,11 @@
             <description>The HIFIMAGS PV prefix (e.g. HIFIMAGS_01)</description>
             <default>HIFIMAGS_01</default>
           </macro>
+          <macro>
+            <name>INST_PREFIX</name>
+            <description>The instrument prefix (e.g. IN:HIFI-C11:)</description>
+            <default>IN:HIFI-C11:</default>
+          </macro>
         </macros>
       </value>
     </entry>
@@ -3931,6 +3936,22 @@
         <categories>
           <category>Miscellaneous motion control</category>
         </categories>
+      </value>
+    </entry>
+    <entry>	
+      <key>Attocube</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>attocube.opi</path>
+        <description>The OPI for the Attocube</description>
+        <macros>
+          <macro>
+            <name>ATTOCUBE</name>
+            <description>The ATTOCUBE PV prefix (e.g. ATTOCUBE_01)</description>
+			<default>ATTOCUBE_01</default>
+          </macro>
+        </macros> 
       </value>
     </entry>
     <entry>

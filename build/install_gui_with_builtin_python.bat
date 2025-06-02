@@ -24,7 +24,14 @@ if exist "%GENIECMDLOGDIR%\%GENIECMDLOGFILE%" (
 	robocopy "%GENIECMDLOGDIR%" "%TEMP%" "%GENIECMDLOGFILE%" /IS /NFL /NDL /NP /NC /NS /LOG:NUL
 )
 
-if not exist "%CLIENTDIR%" mkdir %CLIENTDIR%
+if exist "%CLIENTDIR%" rd /s /q %CLIENTDIR%
+REM try with long path prefix. Note that we haven't added it
+REM directly to APPSDIR as we may need to check APPSDIR for UNC path and
+REM also robocopy would need /256 flag to stop it adding this prefix itself
+REM and erroring
+if exist "%CLIENTDIR%" rd /s /q "\\.\%CLIENTDIR%"
+
+mkdir %CLIENTDIR%
 
 REM we unzip the archive and then robocopy as before
 REM this is in case there has been a patch to the on-disk files
@@ -33,14 +40,22 @@ set "ZIPPROG=c:\Program Files\7-Zip\7z.exe"
 if exist "%ZIPPROG%" (
     if exist "%BASEDIR%zips\Client.7z" (
         "%ZIPPROG%" x -aoa -o%CLIENTDIR% "%BASEDIR%zips\Client.7z"
+        set errcode=!errorlevel!
+        if !errcode! gtr 1 (
+            @echo UNZIP error !errcode!
+            exit /b !errcode!
+        )
     )
 )
-
-robocopy "%BASEDIR%Client" "%CLIENTDIR%" /MIR /R:2 /MT /NFL /NDL /NP /NC /NS /LOG:NUL
-set errcode=%errorlevel%
-if %errcode% GEQ 4 (
-    @echo ERROR %errcode% in robocopy copying ibex client
-	goto ERROR
+if exist "%BASEDIR%Client\ZIP_ONLY_INSTALL.txt" (
+    robocopy "%BASEDIR%Client" "%CLIENTDIR%" /E /R:2 /MT /NFL /NDL /NP /NC /NS /XF "ZIP_ONLY_INSTALL.txt" /LOG:NUL
+) else (
+    robocopy "%BASEDIR%Client" "%CLIENTDIR%" /MIR /R:2 /MT /NFL /NDL /NP /NC /NS /LOG:NUL
+)
+set errcode=!errorlevel!
+if !errcode! GEQ 4 (
+    @echo ERROR !errcode! in robocopy copying ibex client
+    goto ERROR
 )
 
 REM fix java RMI remote connection 

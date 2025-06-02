@@ -29,10 +29,7 @@ import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.TypedListener;
 
 /**
  * A LabelProvider that adds a check box to a cell in a table. 
@@ -185,16 +182,8 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 	 * will remove.
 	 */
 	public static void clearCheckBoxSelectListeners(Button checkBox) {
-        for (Listener listener: checkBox.getListeners(SWT.Selection)) {
-            if (listener instanceof TypedListener) {
-                TypedListener typedListener = (TypedListener) listener;
-                
-                if (typedListener.getEventListener() instanceof CheckboxLabelProvider.CheckboxSelectionAdapter) {
-                    
-                    checkBox.removeSelectionListener((SelectionListener)
-                        typedListener.getEventListener());
-                }
-            }
+        for (var listener: checkBox.getTypedListeners(SWT.Selection, CheckboxLabelProvider.CheckboxSelectionAdapter.class).toList()) {
+            checkBox.removeSelectionListener(listener);
         }
     }
 	

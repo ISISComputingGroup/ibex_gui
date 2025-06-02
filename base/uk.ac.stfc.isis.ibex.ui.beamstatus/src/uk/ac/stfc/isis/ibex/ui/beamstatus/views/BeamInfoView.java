@@ -57,7 +57,7 @@ public class BeamInfoView {
 		xpndtmTargetStation1.setText("Target Station 1");
 		TargetStationOnePanel ts1 = new TargetStationOnePanel(expandBar, SWT.NONE);
 		xpndtmTargetStation1.setControl(ts1);
-		xpndtmTargetStation1.setHeight(220);
+		xpndtmTargetStation1.setHeight(260);
 
 		ExpandItem xpndtmTargetStation2 = new ExpandItem(expandBar, SWT.NONE);
 		xpndtmTargetStation2.setExpanded(true);

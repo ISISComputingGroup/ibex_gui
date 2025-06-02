@@ -1,0 +1,5 @@
+genie_python
+gitpython
+jinja2
+py4j
+pyhamcrest
