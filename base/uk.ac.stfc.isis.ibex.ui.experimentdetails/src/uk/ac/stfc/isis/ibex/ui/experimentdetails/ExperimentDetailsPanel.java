@@ -75,7 +75,7 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 	//private Button btnRemoveUserDetails;
 	private Button btnDisplayTitle;
 
-	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Experiment-Details";
+	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/gui/Experiment-Details.html";
 	private static final String DESCRIPTION = "Experiment Details View";
 
 	/**

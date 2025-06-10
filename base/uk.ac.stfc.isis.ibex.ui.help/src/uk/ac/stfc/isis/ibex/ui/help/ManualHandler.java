@@ -38,7 +38,7 @@ import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
  */
 public class ManualHandler {
 
-    private static final String USER_MANUAL_ADDRESS = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Home";
+    private static final String USER_MANUAL_ADDRESS = "https://shadow.nd.rl.ac.uk/ibex_user_manual";
 
     /**
      * Opens the 'User Manual' URL in help menu.

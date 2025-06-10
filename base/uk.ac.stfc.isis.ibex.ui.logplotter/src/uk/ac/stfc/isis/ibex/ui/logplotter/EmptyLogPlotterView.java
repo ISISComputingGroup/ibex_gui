@@ -26,7 +26,7 @@ public class EmptyLogPlotterView extends ViewPart {
     
     private static final String TITLE = "Log Plotter View";
     
-    private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Plot-a-Block-Graph";
+    private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/how_to/Plot-a-Block-Graph.html";
 	
     /**
      * {@inheritDoc}
