@@ -48,7 +48,7 @@ public class EditBlockDialog extends TitleAreaDialog {
 	
 	Button okButton;
 	
-	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Create-And-Manage-Configurations#blocks-tab";
+	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/how_to/Create-and-Manage-Configurations.html#blocks-tab";
 	private static final String DESCRIPTION = "Configure Block Dialog";
 	
 	private final List<ErrorMessageProvider> viewModels;

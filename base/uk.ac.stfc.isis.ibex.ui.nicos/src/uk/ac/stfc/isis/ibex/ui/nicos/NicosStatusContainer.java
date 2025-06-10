@@ -25,7 +25,7 @@ public class NicosStatusContainer {
 	private final DataBindingContext bindingContext = new DataBindingContext();
 	private final NicosModel model = Nicos.getDefault().getModel();
 
-	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Script-Server.rest";
+	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/gui/Script-Server.html";
 	private static final String DESCRIPTION = "Script Server";
 
 	/**

@@ -51,7 +51,7 @@ public class EditRunControlDialog extends TitleAreaDialog {
 	private final RunControlViewModel viewModel;
 	private static final String TITLE = "Run-Control Settings";
 
-	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Menu-Bar#run-control-menu";
+	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/gui/Menu-Bar.html#run-control-menu";
 
 	/**
 	 * Creates a dialog for configuring the run-control settings.

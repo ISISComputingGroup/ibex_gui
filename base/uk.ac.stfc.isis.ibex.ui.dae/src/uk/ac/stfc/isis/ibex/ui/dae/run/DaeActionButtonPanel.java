@@ -40,7 +40,7 @@ import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXHelpButton;
 @SuppressWarnings("checkstyle:magicnumber")
 public class DaeActionButtonPanel extends Composite {
 
-	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Manage-the-DAE";
+	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/how_to/Manage-the-DAE.html";
 	private static final String DESCRIPTION = "DAE View";
 
 	/**

@@ -55,7 +55,7 @@ public class EditSynopticDialog extends TitleAreaDialog {
 	private final String title;
 	private final String subtitle;
 
-	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Create-and-Manage-Synoptics";
+	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/how_to/Create-and-Manage-Synoptics.html";
 
 	private EditorPanel editor;
 	private boolean isBlank;

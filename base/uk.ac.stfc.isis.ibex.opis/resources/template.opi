@@ -4049,7 +4049,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
       <actions hook="true" hook_all="false">
         <action type="OPEN_WEBPAGE">
-          <hyperlink>https://shadow.nd.rl.ac.uk/ibex_user_manual/Kepco-Power-Supply</hyperlink>
+          <hyperlink>https://shadow.nd.rl.ac.uk/ibex_user_manual/device_specific/Kepco-Power-Supply.html</hyperlink>
           <description>Kepco IOC specific information</description>
         </action>
       </actions>
@@ -4136,7 +4136,7 @@ $(pv_value)</tooltip>
     <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0.0">
       <actions hook="true" hook_all="false">
         <action type="OPEN_WEBPAGE">
-          <hyperlink>https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Reflectometry-View#front-panel</hyperlink>
+          <hyperlink>https://isiscomputinggroup.github.io/ibex_user_manual/gui/Reflectometry-View.html</hyperlink>
           <description>Reflectometry view help page</description>
         </action>
       </actions>

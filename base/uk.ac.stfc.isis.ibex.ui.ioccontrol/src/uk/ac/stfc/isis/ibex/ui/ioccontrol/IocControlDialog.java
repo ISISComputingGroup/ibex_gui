@@ -51,7 +51,7 @@ public class IocControlDialog extends TitleAreaDialog {
 	
 	private static final Point INITIAL_SIZE = new Point(800, 600);
 	
-	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Start-and-Stop-IOCs";
+	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/how_to/Start-and-Stop-IOCs.html";
 	
 	private final IocControl control;
 	/**
