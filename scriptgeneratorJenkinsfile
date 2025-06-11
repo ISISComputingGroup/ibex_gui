@@ -6,6 +6,11 @@ pipeline {
   agent {  
     label "ndw1926"
   }
+
+  environment {
+      NODE = "${env.NODE_NAME}"
+      GUILOCK = "ibex_gui_${NODE}"
+  }
   
   triggers {
     pollSCM('H/2 * * * *')
@@ -14,10 +19,9 @@ pipeline {
   // The options directive is for configuration that applies to the whole job.
   options {
     buildDiscarder(logRotator(numToKeepStr:'10'))
-    timeout(time: 240, unit: 'MINUTES')
     disableConcurrentBuilds()
     timestamps()
-	skipDefaultCheckout(true)
+    skipDefaultCheckout(true)
     office365ConnectorWebhooks([[
                     name: "Office 365",
                     notifyBackToNormal: true,
@@ -77,15 +81,18 @@ pipeline {
                 env.IS_DEPLOY = "NO"
             }
         }
-        
-        bat """
-            cd build
-            set GIT_COMMIT=${env.GIT_COMMIT}
-            set GIT_BRANCH=${env.BRANCH_NAME}
-            set RELEASE=${env.IS_RELEASE}
-            set DEPLOY=${env.IS_DEPLOY}
-            jenkins_build_script_generator.bat
-            """
+        lock(resource: GUILOCK, inversePrecedence: false) {
+          timeout(time: 240, unit: 'MINUTES') {        
+            bat """
+              cd build
+              set GIT_COMMIT=${env.GIT_COMMIT}
+              set GIT_BRANCH=${env.BRANCH_NAME}
+              set RELEASE=${env.IS_RELEASE}
+              set DEPLOY=${env.IS_DEPLOY}
+              jenkins_build_script_generator.bat
+              """
+           }
+         }
       }
     }
     
