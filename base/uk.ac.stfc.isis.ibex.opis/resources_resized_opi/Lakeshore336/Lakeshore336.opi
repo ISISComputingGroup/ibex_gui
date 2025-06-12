@@ -1,0 +1,1615 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
+  <actions hook="false" hook_all="false" />
+  <auto_scale_widgets>
+    <auto_scale_widgets>false</auto_scale_widgets>
+    <min_width>-1</min_width>
+    <min_height>-1</min_height>
+  </auto_scale_widgets>
+  <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
+  <background_color>
+    <color red="240" green="240" blue="240" />
+  </background_color>
+  <boy_version>5.1.0</boy_version>
+  <foreground_color>
+    <color red="192" green="192" blue="192" />
+  </foreground_color>
+  <grid_space>6</grid_space>
+  <height>600</height>
+  <macros>
+    <include_parent_macros>true</include_parent_macros>
+    <PV_ROOT>$(P)$(LAKESHORE336)</PV_ROOT>
+  </macros>
+  <name>$(NAME)</name>
+  <rules />
+  <scripts />
+  <show_close_button>true</show_close_button>
+  <show_edit_range>true</show_edit_range>
+  <show_grid>true</show_grid>
+  <show_ruler>true</show_ruler>
+  <snap_to_geometry>true</snap_to_geometry>
+  <widget_type>Display</widget_type>
+  <width>800</width>
+  <wuid>24017828:15626637ea1:-2843</wuid>
+  <x>-1</x>
+  <y>-1</y>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <actions hook="false" hook_all="false" />
+    <auto_size>false</auto_size>
+    <background_color>
+      <color name="ISIS_Title_Background_NEW" red="240" green="240" blue="240" />
+    </background_color>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="18" style="1" pixels="false">ISIS_Header1_NEW</opifont.name>
+    </font>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <height>37</height>
+    <horizontal_alignment>0</horizontal_alignment>
+    <name>Label</name>
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <show_scrollbar>false</show_scrollbar>
+    <text>Lakeshore 336/350 Temperature Controller</text>
+    <tooltip></tooltip>
+    <transparent>false</transparent>
+    <vertical_alignment>1</vertical_alignment>
+    <visible>true</visible>
+    <widget_type>Label</widget_type>
+    <width>673</width>
+    <wrap_words>true</wrap_words>
+    <wuid>41f48fdf:15ab778b511:-7108</wuid>
+    <x>6</x>
+    <y>6</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <actions hook="false" hook_all="false" />
+    <auto_size>false</auto_size>
+    <background_color>
+      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+    </background_color>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="14" style="1" pixels="false">ISIS_Header2_NEW</opifont.name>
+    </font>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <height>37</height>
+    <horizontal_alignment>0</horizontal_alignment>
+    <name>Label_1</name>
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <show_scrollbar>false</show_scrollbar>
+    <text>$(NAME)</text>
+    <tooltip></tooltip>
+    <transparent>false</transparent>
+    <vertical_alignment>1</vertical_alignment>
+    <visible>true</visible>
+    <widget_type>Label</widget_type>
+    <width>673</width>
+    <wrap_words>true</wrap_words>
+    <wuid>41f48fdf:15ab778b511:-7107</wuid>
+    <x>6</x>
+    <y>42</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.tab" version="1.0.0">
+    <actions hook="false" hook_all="false" />
+    <active_tab>0</active_tab>
+    <background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </background_color>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <foreground_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </foreground_color>
+    <height>517</height>
+    <horizontal_tabs>true</horizontal_tabs>
+    <macros>
+      <include_parent_macros>true</include_parent_macros>
+    </macros>
+    <minimum_tab_height>10</minimum_tab_height>
+    <name>Tabbed Container</name>
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <tab_0_background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </tab_0_background_color>
+    <tab_0_enabled>true</tab_0_enabled>
+    <tab_0_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+    </tab_0_font>
+    <tab_0_foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </tab_0_foreground_color>
+    <tab_0_icon_path></tab_0_icon_path>
+    <tab_0_title>Output 1</tab_0_title>
+    <tab_1_background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </tab_1_background_color>
+    <tab_1_enabled>true</tab_1_enabled>
+    <tab_1_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+    </tab_1_font>
+    <tab_1_foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </tab_1_foreground_color>
+    <tab_1_icon_path></tab_1_icon_path>
+    <tab_1_title>Output 2</tab_1_title>
+    <tab_2_background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </tab_2_background_color>
+    <tab_2_enabled>true</tab_2_enabled>
+    <tab_2_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+    </tab_2_font>
+    <tab_2_foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </tab_2_foreground_color>
+    <tab_2_icon_path></tab_2_icon_path>
+    <tab_2_title>Output 3</tab_2_title>
+    <tab_3_background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </tab_3_background_color>
+    <tab_3_enabled>true</tab_3_enabled>
+    <tab_3_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+    </tab_3_font>
+    <tab_3_foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </tab_3_foreground_color>
+    <tab_3_icon_path></tab_3_icon_path>
+    <tab_3_title>Output 4</tab_3_title>
+    <tab_4_background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </tab_4_background_color>
+    <tab_4_enabled>true</tab_4_enabled>
+    <tab_4_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+    </tab_4_font>
+    <tab_4_foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </tab_4_foreground_color>
+    <tab_4_icon_path></tab_4_icon_path>
+    <tab_4_title>Graph All T</tab_4_title>
+    <tab_5_background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </tab_5_background_color>
+    <tab_5_enabled>true</tab_5_enabled>
+    <tab_5_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+    </tab_5_font>
+    <tab_5_foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </tab_5_foreground_color>
+    <tab_5_icon_path></tab_5_icon_path>
+    <tab_5_title>Measurements</tab_5_title>
+    <tab_6_background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </tab_6_background_color>
+    <tab_6_enabled>true</tab_6_enabled>
+    <tab_6_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+    </tab_6_font>
+    <tab_6_foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </tab_6_foreground_color>
+    <tab_6_icon_path></tab_6_icon_path>
+    <tab_6_title>Graph Measurements</tab_6_title>
+    <tab_count>7</tab_count>
+    <tooltip></tooltip>
+    <visible>true</visible>
+    <widget_type>Tabbed Container</widget_type>
+    <width>787</width>
+    <wuid>41f48fdf:15ab778b511:-7075</wuid>
+    <x>6</x>
+    <y>78</y>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <background_color>
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <border_color>
+        <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <fc>false</fc>
+      <font>
+        <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
+      </font>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <height>483</height>
+      <lock_children>false</lock_children>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <name>Output 1</name>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_scrollbar>true</show_scrollbar>
+      <tooltip></tooltip>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <widget_type>Grouping Container</widget_type>
+      <width>785</width>
+      <wuid>4fbad31a:1436c3e166f:-6faf</wuid>
+      <x>1</x>
+      <y>1</y>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <group_name></group_name>
+        <height>445</height>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <OUT>1</OUT>
+        </macros>
+        <name>Linking Container</name>
+        <opi_file>Lakeshore336_output.opi</opi_file>
+        <resize_behaviour>0</resize_behaviour>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <tooltip></tooltip>
+        <visible>true</visible>
+        <widget_type>Linking Container</widget_type>
+        <width>667</width>
+        <wuid>3c70a182:156ea885a6f:-7685</wuid>
+        <x>6</x>
+        <y>6</y>
+      </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <background_color>
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <border_color>
+        <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <fc>false</fc>
+      <font>
+        <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
+      </font>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <height>483</height>
+      <lock_children>false</lock_children>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <name>Output 2</name>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_scrollbar>true</show_scrollbar>
+      <tooltip></tooltip>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <widget_type>Grouping Container</widget_type>
+      <width>785</width>
+      <wuid>4fbad31a:1436c3e166f:-6fae</wuid>
+      <x>1</x>
+      <y>1</y>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <group_name></group_name>
+        <height>415</height>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <OUT>2</OUT>
+        </macros>
+        <name>Linking Container</name>
+        <opi_file>Lakeshore336_output.opi</opi_file>
+        <resize_behaviour>0</resize_behaviour>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <tooltip></tooltip>
+        <visible>true</visible>
+        <widget_type>Linking Container</widget_type>
+        <width>667</width>
+        <wuid>3c70a182:156ea885a6f:-6bb1</wuid>
+        <x>6</x>
+        <y>6</y>
+      </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <fc>false</fc>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <foreground_color>
+        <color red="192" green="192" blue="192" />
+      </foreground_color>
+      <height>483</height>
+      <lock_children>false</lock_children>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <name>Output 3</name>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_scrollbar>true</show_scrollbar>
+      <tooltip></tooltip>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <widget_type>Grouping Container</widget_type>
+      <width>785</width>
+      <wuid>c88dcb0:1824a523ea5:-7c3c</wuid>
+      <x>1</x>
+      <y>1</y>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <group_name></group_name>
+        <height>415</height>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <OUT>3</OUT>
+        </macros>
+        <name>Linking Container</name>
+        <opi_file>Lakeshore336_output.opi</opi_file>
+        <resize_behaviour>0</resize_behaviour>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <tooltip></tooltip>
+        <visible>true</visible>
+        <widget_type>Linking Container</widget_type>
+        <width>667</width>
+        <wuid>c88dcb0:1824a523ea5:-7c32</wuid>
+        <x>6</x>
+        <y>6</y>
+      </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <fc>false</fc>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <foreground_color>
+        <color red="192" green="192" blue="192" />
+      </foreground_color>
+      <height>483</height>
+      <lock_children>false</lock_children>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <name>Output 4</name>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_scrollbar>true</show_scrollbar>
+      <tooltip></tooltip>
+      <transparent>true</transparent>
+      <visible>true</visible>
+      <widget_type>Grouping Container</widget_type>
+      <width>785</width>
+      <wuid>c88dcb0:1824a523ea5:-7bc4</wuid>
+      <x>1</x>
+      <y>1</y>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <group_name></group_name>
+        <height>415</height>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <OUT>4</OUT>
+        </macros>
+        <name>Linking Container</name>
+        <opi_file>Lakeshore336_output.opi</opi_file>
+        <resize_behaviour>0</resize_behaviour>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <tooltip></tooltip>
+        <visible>true</visible>
+        <widget_type>Linking Container</widget_type>
+        <width>667</width>
+        <wuid>c88dcb0:1824a523ea5:-7bb8</wuid>
+        <x>6</x>
+        <y>6</y>
+      </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <background_color>
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <border_color>
+        <color name="ISIS_Check_Border" red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <fc>false</fc>
+      <font>
+        <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
+      </font>
+      <foreground_color>
+        <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
+      </foreground_color>
+      <height>483</height>
+      <lock_children>false</lock_children>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <name>Graph All T</name>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_scrollbar>true</show_scrollbar>
+      <tooltip></tooltip>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <widget_type>Grouping Container</widget_type>
+      <width>785</width>
+      <wuid>4fbad31a:1436c3e166f:-6fad</wuid>
+      <x>1</x>
+      <y>1</y>
+      <widget typeId="org.csstudio.opibuilder.widgets.xyGraph" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <alarm_pulsing>false</alarm_pulsing>
+        <axis_0_auto_scale>true</axis_0_auto_scale>
+        <axis_0_auto_scale_threshold>0.0</axis_0_auto_scale_threshold>
+        <axis_0_axis_color>
+          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+        </axis_0_axis_color>
+        <axis_0_axis_title>Time</axis_0_axis_title>
+        <axis_0_dash_grid_line>true</axis_0_dash_grid_line>
+        <axis_0_grid_color>
+          <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
+        </axis_0_grid_color>
+        <axis_0_log_scale>false</axis_0_log_scale>
+        <axis_0_maximum>120.0</axis_0_maximum>
+        <axis_0_minimum>0.0</axis_0_minimum>
+        <axis_0_scale_font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </axis_0_scale_font>
+        <axis_0_scale_format></axis_0_scale_format>
+        <axis_0_show_grid>true</axis_0_show_grid>
+        <axis_0_time_format>5</axis_0_time_format>
+        <axis_0_title_font>
+          <fontdata fontName="Arial" height="9" style="1" pixels="false" />
+        </axis_0_title_font>
+        <axis_0_visible>true</axis_0_visible>
+        <axis_1_auto_scale>true</axis_1_auto_scale>
+        <axis_1_auto_scale_threshold>0.0</axis_1_auto_scale_threshold>
+        <axis_1_axis_color>
+          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+        </axis_1_axis_color>
+        <axis_1_axis_title>Temperature</axis_1_axis_title>
+        <axis_1_dash_grid_line>true</axis_1_dash_grid_line>
+        <axis_1_grid_color>
+          <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
+        </axis_1_grid_color>
+        <axis_1_log_scale>false</axis_1_log_scale>
+        <axis_1_maximum>50.0</axis_1_maximum>
+        <axis_1_minimum>0.0</axis_1_minimum>
+        <axis_1_scale_font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </axis_1_scale_font>
+        <axis_1_scale_format></axis_1_scale_format>
+        <axis_1_show_grid>true</axis_1_show_grid>
+        <axis_1_time_format>0</axis_1_time_format>
+        <axis_1_title_font>
+          <fontdata fontName="Arial" height="9" style="1" pixels="false" />
+        </axis_1_title_font>
+        <axis_1_visible>true</axis_1_visible>
+        <axis_2_auto_scale>false</axis_2_auto_scale>
+        <axis_2_auto_scale_threshold>0.0</axis_2_auto_scale_threshold>
+        <axis_2_axis_color>
+          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+        </axis_2_axis_color>
+        <axis_2_axis_title>Heater Output</axis_2_axis_title>
+        <axis_2_dash_grid_line>true</axis_2_dash_grid_line>
+        <axis_2_grid_color>
+          <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
+        </axis_2_grid_color>
+        <axis_2_left_bottom_side>false</axis_2_left_bottom_side>
+        <axis_2_log_scale>false</axis_2_log_scale>
+        <axis_2_maximum>100.0</axis_2_maximum>
+        <axis_2_minimum>0.0</axis_2_minimum>
+        <axis_2_scale_font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </axis_2_scale_font>
+        <axis_2_scale_format></axis_2_scale_format>
+        <axis_2_show_grid>true</axis_2_show_grid>
+        <axis_2_time_format>0</axis_2_time_format>
+        <axis_2_title_font>
+          <fontdata fontName="Arial" height="9" style="1" pixels="false" />
+        </axis_2_title_font>
+        <axis_2_visible>true</axis_2_visible>
+        <axis_2_y_axis>true</axis_2_y_axis>
+        <axis_count>3</axis_count>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <background_color>
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+        </background_color>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <border_color>
+          <color name="ISIS_Border" red="0" green="0" blue="0" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <foreground_color>
+          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+        </foreground_color>
+        <height>463</height>
+        <name>XY Graph</name>
+        <plot_area_background_color>
+          <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
+        </plot_area_background_color>
+        <pv_name>$(PV_ROOT):TEMP_A</pv_name>
+        <pv_value />
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <show_legend>true</show_legend>
+        <show_plot_area_border>false</show_plot_area_border>
+        <show_toolbar>false</show_toolbar>
+        <title></title>
+        <title_font>
+          <fontdata fontName="Arial" height="12" style="1" pixels="false" />
+        </title_font>
+        <tooltip>$(trace_0_y_pv)
+$(trace_0_y_pv_value)</tooltip>
+        <trace_0_anti_alias>true</trace_0_anti_alias>
+        <trace_0_buffer_size>1000</trace_0_buffer_size>
+        <trace_0_concatenate_data>true</trace_0_concatenate_data>
+        <trace_0_line_width>1</trace_0_line_width>
+        <trace_0_name>Meas 1</trace_0_name>
+        <trace_0_plot_mode>0</trace_0_plot_mode>
+        <trace_0_point_size>4</trace_0_point_size>
+        <trace_0_point_style>0</trace_0_point_style>
+        <trace_0_trace_color>
+          <color name="ISIS_DAE_Trace" red="21" green="21" blue="196" />
+        </trace_0_trace_color>
+        <trace_0_trace_type>0</trace_0_trace_type>
+        <trace_0_update_delay>100</trace_0_update_delay>
+        <trace_0_update_mode>4</trace_0_update_mode>
+        <trace_0_visible>true</trace_0_visible>
+        <trace_0_x_axis_index>0</trace_0_x_axis_index>
+        <trace_0_x_pv></trace_0_x_pv>
+        <trace_0_x_pv_value />
+        <trace_0_y_axis_index>1</trace_0_y_axis_index>
+        <trace_0_y_pv>$(PV_ROOT):TEMP_A</trace_0_y_pv>
+        <trace_0_y_pv_value />
+        <trace_10_anti_alias>true</trace_10_anti_alias>
+        <trace_10_buffer_size>1000</trace_10_buffer_size>
+        <trace_10_concatenate_data>true</trace_10_concatenate_data>
+        <trace_10_line_width>1</trace_10_line_width>
+        <trace_10_name>Heater Out 3</trace_10_name>
+        <trace_10_plot_mode>0</trace_10_plot_mode>
+        <trace_10_point_size>4</trace_10_point_size>
+        <trace_10_point_style>0</trace_10_point_style>
+        <trace_10_trace_color>
+          <color red="114" green="40" blue="3" />
+        </trace_10_trace_color>
+        <trace_10_trace_type>0</trace_10_trace_type>
+        <trace_10_update_delay>100</trace_10_update_delay>
+        <trace_10_update_mode>4</trace_10_update_mode>
+        <trace_10_visible>true</trace_10_visible>
+        <trace_10_x_axis_index>0</trace_10_x_axis_index>
+        <trace_10_x_pv></trace_10_x_pv>
+        <trace_10_y_axis_index>2</trace_10_y_axis_index>
+        <trace_10_y_pv>$(PV_ROOT):HEATER3:OUTPUT</trace_10_y_pv>
+        <trace_11_anti_alias>true</trace_11_anti_alias>
+        <trace_11_buffer_size>1000</trace_11_buffer_size>
+        <trace_11_concatenate_data>true</trace_11_concatenate_data>
+        <trace_11_line_width>1</trace_11_line_width>
+        <trace_11_name>Heater Out 4</trace_11_name>
+        <trace_11_plot_mode>0</trace_11_plot_mode>
+        <trace_11_point_size>4</trace_11_point_size>
+        <trace_11_point_style>0</trace_11_point_style>
+        <trace_11_trace_color>
+          <color red="219" green="128" blue="4" />
+        </trace_11_trace_color>
+        <trace_11_trace_type>0</trace_11_trace_type>
+        <trace_11_update_delay>100</trace_11_update_delay>
+        <trace_11_update_mode>4</trace_11_update_mode>
+        <trace_11_visible>true</trace_11_visible>
+        <trace_11_x_axis_index>0</trace_11_x_axis_index>
+        <trace_11_x_pv></trace_11_x_pv>
+        <trace_11_y_axis_index>2</trace_11_y_axis_index>
+        <trace_11_y_pv>$(PV_ROOT):HEATER4:OUTPUT</trace_11_y_pv>
+        <trace_1_anti_alias>true</trace_1_anti_alias>
+        <trace_1_buffer_size>1000</trace_1_buffer_size>
+        <trace_1_concatenate_data>true</trace_1_concatenate_data>
+        <trace_1_line_width>1</trace_1_line_width>
+        <trace_1_name>Meas 2</trace_1_name>
+        <trace_1_plot_mode>0</trace_1_plot_mode>
+        <trace_1_point_size>4</trace_1_point_size>
+        <trace_1_point_style>0</trace_1_point_style>
+        <trace_1_trace_color>
+          <color name="ISIS_Trace" red="242" green="26" blue="26" />
+        </trace_1_trace_color>
+        <trace_1_trace_type>0</trace_1_trace_type>
+        <trace_1_update_delay>100</trace_1_update_delay>
+        <trace_1_update_mode>4</trace_1_update_mode>
+        <trace_1_visible>true</trace_1_visible>
+        <trace_1_x_axis_index>0</trace_1_x_axis_index>
+        <trace_1_x_pv></trace_1_x_pv>
+        <trace_1_x_pv_value />
+        <trace_1_y_axis_index>1</trace_1_y_axis_index>
+        <trace_1_y_pv>$(PV_ROOT):TEMP_B</trace_1_y_pv>
+        <trace_1_y_pv_value />
+        <trace_2_anti_alias>true</trace_2_anti_alias>
+        <trace_2_buffer_size>1000</trace_2_buffer_size>
+        <trace_2_concatenate_data>true</trace_2_concatenate_data>
+        <trace_2_line_width>1</trace_2_line_width>
+        <trace_2_name>Meas 3</trace_2_name>
+        <trace_2_plot_mode>0</trace_2_plot_mode>
+        <trace_2_point_size>4</trace_2_point_size>
+        <trace_2_point_style>0</trace_2_point_style>
+        <trace_2_trace_color>
+          <color name="ISIS_Trace_2" red="33" green="179" blue="33" />
+        </trace_2_trace_color>
+        <trace_2_trace_type>0</trace_2_trace_type>
+        <trace_2_update_delay>100</trace_2_update_delay>
+        <trace_2_update_mode>4</trace_2_update_mode>
+        <trace_2_visible>true</trace_2_visible>
+        <trace_2_x_axis_index>0</trace_2_x_axis_index>
+        <trace_2_x_pv></trace_2_x_pv>
+        <trace_2_x_pv_value />
+        <trace_2_y_axis_index>1</trace_2_y_axis_index>
+        <trace_2_y_pv>$(PV_ROOT):TEMP_C</trace_2_y_pv>
+        <trace_2_y_pv_value />
+        <trace_3_anti_alias>true</trace_3_anti_alias>
+        <trace_3_buffer_size>1000</trace_3_buffer_size>
+        <trace_3_concatenate_data>true</trace_3_concatenate_data>
+        <trace_3_line_width>1</trace_3_line_width>
+        <trace_3_name>Meas 4</trace_3_name>
+        <trace_3_plot_mode>0</trace_3_plot_mode>
+        <trace_3_point_size>4</trace_3_point_size>
+        <trace_3_point_style>0</trace_3_point_style>
+        <trace_3_trace_color>
+          <color red="0" green="0" blue="0" />
+        </trace_3_trace_color>
+        <trace_3_trace_type>0</trace_3_trace_type>
+        <trace_3_update_delay>100</trace_3_update_delay>
+        <trace_3_update_mode>4</trace_3_update_mode>
+        <trace_3_visible>true</trace_3_visible>
+        <trace_3_x_axis_index>0</trace_3_x_axis_index>
+        <trace_3_x_pv></trace_3_x_pv>
+        <trace_3_x_pv_value />
+        <trace_3_y_axis_index>1</trace_3_y_axis_index>
+        <trace_3_y_pv>$(PV_ROOT):TEMP_D</trace_3_y_pv>
+        <trace_3_y_pv_value />
+        <trace_4_anti_alias>true</trace_4_anti_alias>
+        <trace_4_buffer_size>1000</trace_4_buffer_size>
+        <trace_4_concatenate_data>true</trace_4_concatenate_data>
+        <trace_4_line_width>1</trace_4_line_width>
+        <trace_4_name>Setpoint 1</trace_4_name>
+        <trace_4_plot_mode>0</trace_4_plot_mode>
+        <trace_4_point_size>4</trace_4_point_size>
+        <trace_4_point_style>0</trace_4_point_style>
+        <trace_4_trace_color>
+          <color red="128" green="0" blue="255" />
+        </trace_4_trace_color>
+        <trace_4_trace_type>0</trace_4_trace_type>
+        <trace_4_update_delay>100</trace_4_update_delay>
+        <trace_4_update_mode>4</trace_4_update_mode>
+        <trace_4_visible>true</trace_4_visible>
+        <trace_4_x_axis_index>0</trace_4_x_axis_index>
+        <trace_4_x_pv></trace_4_x_pv>
+        <trace_4_x_pv_value />
+        <trace_4_y_axis_index>1</trace_4_y_axis_index>
+        <trace_4_y_pv>$(PV_ROOT):TEMP1:SP:RBV</trace_4_y_pv>
+        <trace_4_y_pv_value />
+        <trace_5_anti_alias>true</trace_5_anti_alias>
+        <trace_5_buffer_size>1000</trace_5_buffer_size>
+        <trace_5_concatenate_data>true</trace_5_concatenate_data>
+        <trace_5_line_width>1</trace_5_line_width>
+        <trace_5_name>Setpoint 2</trace_5_name>
+        <trace_5_plot_mode>0</trace_5_plot_mode>
+        <trace_5_point_size>4</trace_5_point_size>
+        <trace_5_point_style>0</trace_5_point_style>
+        <trace_5_trace_color>
+          <color red="255" green="170" blue="0" />
+        </trace_5_trace_color>
+        <trace_5_trace_type>0</trace_5_trace_type>
+        <trace_5_update_delay>100</trace_5_update_delay>
+        <trace_5_update_mode>4</trace_5_update_mode>
+        <trace_5_visible>true</trace_5_visible>
+        <trace_5_x_axis_index>0</trace_5_x_axis_index>
+        <trace_5_x_pv></trace_5_x_pv>
+        <trace_5_x_pv_value />
+        <trace_5_y_axis_index>1</trace_5_y_axis_index>
+        <trace_5_y_pv>$(PV_ROOT):TEMP2:SP:RBV</trace_5_y_pv>
+        <trace_5_y_pv_value />
+        <trace_6_anti_alias>true</trace_6_anti_alias>
+        <trace_6_buffer_size>1000</trace_6_buffer_size>
+        <trace_6_concatenate_data>true</trace_6_concatenate_data>
+        <trace_6_line_width>1</trace_6_line_width>
+        <trace_6_name>Setpoint 3</trace_6_name>
+        <trace_6_plot_mode>0</trace_6_plot_mode>
+        <trace_6_point_size>4</trace_6_point_size>
+        <trace_6_point_style>0</trace_6_point_style>
+        <trace_6_trace_color>
+          <color red="255" green="0" blue="240" />
+        </trace_6_trace_color>
+        <trace_6_trace_type>0</trace_6_trace_type>
+        <trace_6_update_delay>100</trace_6_update_delay>
+        <trace_6_update_mode>4</trace_6_update_mode>
+        <trace_6_visible>true</trace_6_visible>
+        <trace_6_x_axis_index>0</trace_6_x_axis_index>
+        <trace_6_x_pv></trace_6_x_pv>
+        <trace_6_x_pv_value />
+        <trace_6_y_axis_index>1</trace_6_y_axis_index>
+        <trace_6_y_pv>$(PV_ROOT):TEMP3:SP:RBV</trace_6_y_pv>
+        <trace_6_y_pv_value />
+        <trace_7_anti_alias>true</trace_7_anti_alias>
+        <trace_7_buffer_size>1000</trace_7_buffer_size>
+        <trace_7_concatenate_data>true</trace_7_concatenate_data>
+        <trace_7_line_width>1</trace_7_line_width>
+        <trace_7_name>Setpoint 4</trace_7_name>
+        <trace_7_plot_mode>0</trace_7_plot_mode>
+        <trace_7_point_size>4</trace_7_point_size>
+        <trace_7_point_style>0</trace_7_point_style>
+        <trace_7_trace_color>
+          <color red="243" green="132" blue="132" />
+        </trace_7_trace_color>
+        <trace_7_trace_type>0</trace_7_trace_type>
+        <trace_7_update_delay>100</trace_7_update_delay>
+        <trace_7_update_mode>4</trace_7_update_mode>
+        <trace_7_visible>true</trace_7_visible>
+        <trace_7_x_axis_index>0</trace_7_x_axis_index>
+        <trace_7_x_pv></trace_7_x_pv>
+        <trace_7_x_pv_value />
+        <trace_7_y_axis_index>1</trace_7_y_axis_index>
+        <trace_7_y_pv>$(PV_ROOT):TEMP4:SP:RBV</trace_7_y_pv>
+        <trace_7_y_pv_value />
+        <trace_8_anti_alias>true</trace_8_anti_alias>
+        <trace_8_buffer_size>1000</trace_8_buffer_size>
+        <trace_8_concatenate_data>true</trace_8_concatenate_data>
+        <trace_8_line_width>1</trace_8_line_width>
+        <trace_8_name>Heater Out 1</trace_8_name>
+        <trace_8_plot_mode>0</trace_8_plot_mode>
+        <trace_8_point_size>4</trace_8_point_size>
+        <trace_8_point_style>0</trace_8_point_style>
+        <trace_8_trace_color>
+          <color red="0" green="255" blue="11" />
+        </trace_8_trace_color>
+        <trace_8_trace_type>0</trace_8_trace_type>
+        <trace_8_update_delay>100</trace_8_update_delay>
+        <trace_8_update_mode>4</trace_8_update_mode>
+        <trace_8_visible>true</trace_8_visible>
+        <trace_8_x_axis_index>0</trace_8_x_axis_index>
+        <trace_8_x_pv></trace_8_x_pv>
+        <trace_8_y_axis_index>2</trace_8_y_axis_index>
+        <trace_8_y_pv>$(PV_ROOT):HEATER1:OUTPUT</trace_8_y_pv>
+        <trace_9_anti_alias>true</trace_9_anti_alias>
+        <trace_9_buffer_size>1000</trace_9_buffer_size>
+        <trace_9_concatenate_data>true</trace_9_concatenate_data>
+        <trace_9_line_width>1</trace_9_line_width>
+        <trace_9_name>Heater Out 2</trace_9_name>
+        <trace_9_plot_mode>0</trace_9_plot_mode>
+        <trace_9_point_size>4</trace_9_point_size>
+        <trace_9_point_style>0</trace_9_point_style>
+        <trace_9_trace_color>
+          <color red="0" green="214" blue="255" />
+        </trace_9_trace_color>
+        <trace_9_trace_type>0</trace_9_trace_type>
+        <trace_9_update_delay>100</trace_9_update_delay>
+        <trace_9_update_mode>4</trace_9_update_mode>
+        <trace_9_visible>true</trace_9_visible>
+        <trace_9_x_axis_index>0</trace_9_x_axis_index>
+        <trace_9_x_pv></trace_9_x_pv>
+        <trace_9_y_axis_index>2</trace_9_y_axis_index>
+        <trace_9_y_pv>$(PV_ROOT):HEATER2:OUTPUT</trace_9_y_pv>
+        <trace_count>12</trace_count>
+        <transparent>false</transparent>
+        <trigger_pv>sim://ramp(0,1,1)</trigger_pv>
+        <trigger_pv_value />
+        <visible>true</visible>
+        <widget_type>XY Graph</widget_type>
+        <width>763</width>
+        <wuid>3c70a182:156ea885a6f:-5ebf</wuid>
+        <x>12</x>
+        <y>12</y>
+      </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <background_color>
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <fc>false</fc>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <foreground_color>
+        <color red="192" green="192" blue="192" />
+      </foreground_color>
+      <height>483</height>
+      <lock_children>false</lock_children>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <name>Measurements</name>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_scrollbar>true</show_scrollbar>
+      <tooltip></tooltip>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <widget_type>Grouping Container</widget_type>
+      <width>785</width>
+      <wuid>24017828:15626637ea1:1c45</wuid>
+      <x>1</x>
+      <y>1</y>
+      <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>13</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <fc>false</fc>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <height>175</height>
+        <lock_children>false</lock_children>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <name>Measurement A</name>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <show_scrollbar>true</show_scrollbar>
+        <tooltip></tooltip>
+        <transparent>false</transparent>
+        <visible>true</visible>
+        <widget_type>Grouping Container</widget_type>
+        <width>283</width>
+        <wuid>3c70a182:156ea885a6f:-6d85</wuid>
+        <x>6</x>
+        <y>10</y>
+        <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <background_color>
+            <color red="240" green="240" blue="240" />
+          </background_color>
+          <border_color>
+            <color red="0" green="128" blue="255" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+          </font>
+          <foreground_color>
+            <color red="192" green="192" blue="192" />
+          </foreground_color>
+          <group_name></group_name>
+          <height>139</height>
+          <macros>
+            <include_parent_macros>true</include_parent_macros>
+            <INPUT>A</INPUT>
+          </macros>
+          <name>Linking Container</name>
+          <opi_file>Lakeshore336_input.opi</opi_file>
+          <resize_behaviour>0</resize_behaviour>
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <tooltip></tooltip>
+          <visible>true</visible>
+          <widget_type>Linking Container</widget_type>
+          <width>253</width>
+          <wuid>3c70a182:156ea885a6f:-7725</wuid>
+          <x>0</x>
+          <y>6</y>
+        </widget>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>13</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <fc>false</fc>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <height>175</height>
+        <lock_children>false</lock_children>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <name>Measurement B</name>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <show_scrollbar>true</show_scrollbar>
+        <tooltip></tooltip>
+        <transparent>false</transparent>
+        <visible>true</visible>
+        <widget_type>Grouping Container</widget_type>
+        <width>283</width>
+        <wuid>3c70a182:156ea885a6f:-6cda</wuid>
+        <x>300</x>
+        <y>10</y>
+        <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <background_color>
+            <color red="240" green="240" blue="240" />
+          </background_color>
+          <border_color>
+            <color red="0" green="128" blue="255" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+          </font>
+          <foreground_color>
+            <color red="192" green="192" blue="192" />
+          </foreground_color>
+          <group_name></group_name>
+          <height>139</height>
+          <macros>
+            <include_parent_macros>true</include_parent_macros>
+            <INPUT>B</INPUT>
+          </macros>
+          <name>Linking Container</name>
+          <opi_file>Lakeshore336_input.opi</opi_file>
+          <resize_behaviour>0</resize_behaviour>
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <tooltip></tooltip>
+          <visible>true</visible>
+          <widget_type>Linking Container</widget_type>
+          <width>253</width>
+          <wuid>3c70a182:156ea885a6f:-7725</wuid>
+          <x>0</x>
+          <y>6</y>
+        </widget>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>13</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <fc>false</fc>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <height>175</height>
+        <lock_children>false</lock_children>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <name>Measurement C</name>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <show_scrollbar>true</show_scrollbar>
+        <tooltip></tooltip>
+        <transparent>false</transparent>
+        <visible>true</visible>
+        <widget_type>Grouping Container</widget_type>
+        <width>283</width>
+        <wuid>3c70a182:156ea885a6f:-6ca4</wuid>
+        <x>6</x>
+        <y>192</y>
+        <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <background_color>
+            <color red="240" green="240" blue="240" />
+          </background_color>
+          <border_color>
+            <color red="0" green="128" blue="255" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+          </font>
+          <foreground_color>
+            <color red="192" green="192" blue="192" />
+          </foreground_color>
+          <group_name></group_name>
+          <height>139</height>
+          <macros>
+            <include_parent_macros>true</include_parent_macros>
+            <INPUT>C</INPUT>
+          </macros>
+          <name>Linking Container</name>
+          <opi_file>Lakeshore336_input.opi</opi_file>
+          <resize_behaviour>0</resize_behaviour>
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <tooltip></tooltip>
+          <visible>true</visible>
+          <widget_type>Linking Container</widget_type>
+          <width>253</width>
+          <wuid>3c70a182:156ea885a6f:-7725</wuid>
+          <x>0</x>
+          <y>6</y>
+        </widget>
+      </widget>
+      <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>13</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <fc>false</fc>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <height>175</height>
+        <lock_children>false</lock_children>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+        </macros>
+        <name>Measurement D</name>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <show_scrollbar>true</show_scrollbar>
+        <tooltip></tooltip>
+        <transparent>false</transparent>
+        <visible>true</visible>
+        <widget_type>Grouping Container</widget_type>
+        <width>283</width>
+        <wuid>3c70a182:156ea885a6f:-6c72</wuid>
+        <x>300</x>
+        <y>192</y>
+        <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+          <actions hook="false" hook_all="false" />
+          <background_color>
+            <color red="240" green="240" blue="240" />
+          </background_color>
+          <border_color>
+            <color red="0" green="128" blue="255" />
+          </border_color>
+          <border_style>0</border_style>
+          <border_width>1</border_width>
+          <enabled>true</enabled>
+          <font>
+            <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+          </font>
+          <foreground_color>
+            <color red="192" green="192" blue="192" />
+          </foreground_color>
+          <group_name></group_name>
+          <height>139</height>
+          <macros>
+            <include_parent_macros>true</include_parent_macros>
+            <INPUT>D</INPUT>
+          </macros>
+          <name>Linking Container</name>
+          <opi_file>Lakeshore336_input.opi</opi_file>
+          <resize_behaviour>0</resize_behaviour>
+          <rules />
+          <scale_options>
+            <width_scalable>true</width_scalable>
+            <height_scalable>true</height_scalable>
+            <keep_wh_ratio>false</keep_wh_ratio>
+          </scale_options>
+          <scripts />
+          <tooltip></tooltip>
+          <visible>true</visible>
+          <widget_type>Linking Container</widget_type>
+          <width>253</width>
+          <wuid>3c70a182:156ea885a6f:-7725</wuid>
+          <x>0</x>
+          <y>6</y>
+        </widget>
+      </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <background_color>
+        <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+      </background_color>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <fc>false</fc>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <foreground_color>
+        <color red="192" green="192" blue="192" />
+      </foreground_color>
+      <height>483</height>
+      <lock_children>false</lock_children>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <name>Graph Measurements</name>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_scrollbar>true</show_scrollbar>
+      <tooltip></tooltip>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <widget_type>Grouping Container</widget_type>
+      <width>785</width>
+      <wuid>24017828:15626637ea1:1c46</wuid>
+      <x>1</x>
+      <y>1</y>
+      <widget typeId="org.csstudio.opibuilder.widgets.xyGraph" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <alarm_pulsing>false</alarm_pulsing>
+        <axis_0_auto_scale>true</axis_0_auto_scale>
+        <axis_0_auto_scale_threshold>0.0</axis_0_auto_scale_threshold>
+        <axis_0_axis_color>
+          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+        </axis_0_axis_color>
+        <axis_0_axis_title>Time</axis_0_axis_title>
+        <axis_0_dash_grid_line>true</axis_0_dash_grid_line>
+        <axis_0_grid_color>
+          <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
+        </axis_0_grid_color>
+        <axis_0_log_scale>false</axis_0_log_scale>
+        <axis_0_maximum>120.0</axis_0_maximum>
+        <axis_0_minimum>0.0</axis_0_minimum>
+        <axis_0_scale_font>
+          <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
+        </axis_0_scale_font>
+        <axis_0_scale_format></axis_0_scale_format>
+        <axis_0_show_grid>true</axis_0_show_grid>
+        <axis_0_time_format>5</axis_0_time_format>
+        <axis_0_title_font>
+          <opifont.name fontName="Arial" height="9" style="1" pixels="false">ISIS_Header4</opifont.name>
+        </axis_0_title_font>
+        <axis_0_visible>true</axis_0_visible>
+        <axis_1_auto_scale>true</axis_1_auto_scale>
+        <axis_1_auto_scale_threshold>0.0</axis_1_auto_scale_threshold>
+        <axis_1_axis_color>
+          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+        </axis_1_axis_color>
+        <axis_1_axis_title>Temperature</axis_1_axis_title>
+        <axis_1_dash_grid_line>true</axis_1_dash_grid_line>
+        <axis_1_grid_color>
+          <color name="ISIS_Textbox_Readonly_Background" red="200" green="200" blue="200" />
+        </axis_1_grid_color>
+        <axis_1_log_scale>false</axis_1_log_scale>
+        <axis_1_maximum>50.0</axis_1_maximum>
+        <axis_1_minimum>0.0</axis_1_minimum>
+        <axis_1_scale_font>
+          <opifont.name fontName="Arial" height="9" style="0" pixels="false">ISIS_Label_Small</opifont.name>
+        </axis_1_scale_font>
+        <axis_1_scale_format></axis_1_scale_format>
+        <axis_1_show_grid>true</axis_1_show_grid>
+        <axis_1_time_format>0</axis_1_time_format>
+        <axis_1_title_font>
+          <opifont.name fontName="Arial" height="9" style="1" pixels="false">ISIS_Header4</opifont.name>
+        </axis_1_title_font>
+        <axis_1_visible>true</axis_1_visible>
+        <axis_count>2</axis_count>
+        <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+        <background_color>
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+        </background_color>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <border_color>
+          <color name="ISIS_Border" red="0" green="0" blue="0" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+        <foreground_color>
+          <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+        </foreground_color>
+        <height>439</height>
+        <name></name>
+        <plot_area_background_color>
+          <color name="ISIS_Textbox_Background" red="255" green="255" blue="255" />
+        </plot_area_background_color>
+        <pv_name>$(PV_ROOT):TEMP_A</pv_name>
+        <pv_value />
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <show_legend>true</show_legend>
+        <show_plot_area_border>false</show_plot_area_border>
+        <show_toolbar>false</show_toolbar>
+        <title></title>
+        <title_font>
+          <opifont.name fontName="Arial" height="9" style="1" pixels="false">ISIS_Header4</opifont.name>
+        </title_font>
+        <tooltip>$(trace_0_y_pv)
+$(trace_0_y_pv_value)</tooltip>
+        <trace_0_anti_alias>true</trace_0_anti_alias>
+        <trace_0_buffer_size>1000</trace_0_buffer_size>
+        <trace_0_concatenate_data>true</trace_0_concatenate_data>
+        <trace_0_line_width>1</trace_0_line_width>
+        <trace_0_name>Meas 1</trace_0_name>
+        <trace_0_plot_mode>0</trace_0_plot_mode>
+        <trace_0_point_size>4</trace_0_point_size>
+        <trace_0_point_style>0</trace_0_point_style>
+        <trace_0_trace_color>
+          <color name="ISIS_DAE_Trace" red="21" green="21" blue="196" />
+        </trace_0_trace_color>
+        <trace_0_trace_type>0</trace_0_trace_type>
+        <trace_0_update_delay>100</trace_0_update_delay>
+        <trace_0_update_mode>4</trace_0_update_mode>
+        <trace_0_visible>true</trace_0_visible>
+        <trace_0_x_axis_index>0</trace_0_x_axis_index>
+        <trace_0_x_pv></trace_0_x_pv>
+        <trace_0_x_pv_value />
+        <trace_0_y_axis_index>1</trace_0_y_axis_index>
+        <trace_0_y_pv>$(PV_ROOT):TEMP_A</trace_0_y_pv>
+        <trace_0_y_pv_value />
+        <trace_1_anti_alias>true</trace_1_anti_alias>
+        <trace_1_buffer_size>1000</trace_1_buffer_size>
+        <trace_1_concatenate_data>true</trace_1_concatenate_data>
+        <trace_1_line_width>1</trace_1_line_width>
+        <trace_1_name>Meas 2</trace_1_name>
+        <trace_1_plot_mode>0</trace_1_plot_mode>
+        <trace_1_point_size>4</trace_1_point_size>
+        <trace_1_point_style>0</trace_1_point_style>
+        <trace_1_trace_color>
+          <color name="ISIS_Trace" red="242" green="26" blue="26" />
+        </trace_1_trace_color>
+        <trace_1_trace_type>0</trace_1_trace_type>
+        <trace_1_update_delay>100</trace_1_update_delay>
+        <trace_1_update_mode>4</trace_1_update_mode>
+        <trace_1_visible>true</trace_1_visible>
+        <trace_1_x_axis_index>0</trace_1_x_axis_index>
+        <trace_1_x_pv></trace_1_x_pv>
+        <trace_1_x_pv_value />
+        <trace_1_y_axis_index>1</trace_1_y_axis_index>
+        <trace_1_y_pv>$(PV_ROOT):TEMP_B</trace_1_y_pv>
+        <trace_1_y_pv_value />
+        <trace_2_anti_alias>true</trace_2_anti_alias>
+        <trace_2_buffer_size>1000</trace_2_buffer_size>
+        <trace_2_concatenate_data>true</trace_2_concatenate_data>
+        <trace_2_line_width>1</trace_2_line_width>
+        <trace_2_name>Meas 3</trace_2_name>
+        <trace_2_plot_mode>0</trace_2_plot_mode>
+        <trace_2_point_size>4</trace_2_point_size>
+        <trace_2_point_style>0</trace_2_point_style>
+        <trace_2_trace_color>
+          <color name="ISIS_Trace_2" red="33" green="179" blue="33" />
+        </trace_2_trace_color>
+        <trace_2_trace_type>0</trace_2_trace_type>
+        <trace_2_update_delay>100</trace_2_update_delay>
+        <trace_2_update_mode>4</trace_2_update_mode>
+        <trace_2_visible>true</trace_2_visible>
+        <trace_2_x_axis_index>0</trace_2_x_axis_index>
+        <trace_2_x_pv></trace_2_x_pv>
+        <trace_2_x_pv_value />
+        <trace_2_y_axis_index>1</trace_2_y_axis_index>
+        <trace_2_y_pv>$(PV_ROOT):TEMP_C</trace_2_y_pv>
+        <trace_2_y_pv_value />
+        <trace_3_anti_alias>true</trace_3_anti_alias>
+        <trace_3_buffer_size>1000</trace_3_buffer_size>
+        <trace_3_concatenate_data>true</trace_3_concatenate_data>
+        <trace_3_line_width>1</trace_3_line_width>
+        <trace_3_name>Meas 4</trace_3_name>
+        <trace_3_plot_mode>0</trace_3_plot_mode>
+        <trace_3_point_size>4</trace_3_point_size>
+        <trace_3_point_style>0</trace_3_point_style>
+        <trace_3_trace_color>
+          <color red="0" green="0" blue="0" />
+        </trace_3_trace_color>
+        <trace_3_trace_type>0</trace_3_trace_type>
+        <trace_3_update_delay>100</trace_3_update_delay>
+        <trace_3_update_mode>4</trace_3_update_mode>
+        <trace_3_visible>true</trace_3_visible>
+        <trace_3_x_axis_index>0</trace_3_x_axis_index>
+        <trace_3_x_pv></trace_3_x_pv>
+        <trace_3_x_pv_value />
+        <trace_3_y_axis_index>1</trace_3_y_axis_index>
+        <trace_3_y_pv>$(PV_ROOT):TEMP_D</trace_3_y_pv>
+        <trace_3_y_pv_value />
+        <trace_count>4</trace_count>
+        <transparent>false</transparent>
+        <trigger_pv>sim://ramp(0,1,1)</trigger_pv>
+        <trigger_pv_value />
+        <visible>true</visible>
+        <widget_type>XY Graph</widget_type>
+        <width>733</width>
+        <wuid>24017828:15626637ea1:47cc</wuid>
+        <x>12</x>
+        <y>12</y>
+      </widget>
+    </widget>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <actions hook="false" hook_all="false" />
+    <alarm_pulsing>false</alarm_pulsing>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <height>1</height>
+    <image></image>
+    <name>Dummy</name>
+    <push_action_index>0</push_action_index>
+    <pv_name></pv_name>
+    <pv_value />
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <style>0</style>
+    <text></text>
+    <toggle_button>false</toggle_button>
+    <tooltip></tooltip>
+    <visible>true</visible>
+    <widget_type>Action Button</widget_type>
+    <width>1</width>
+    <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
+    <x>6</x>
+    <y>42</y>
+  </widget>
+</display>

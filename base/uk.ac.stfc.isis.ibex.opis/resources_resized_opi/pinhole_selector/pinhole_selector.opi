@@ -1,0 +1,2165 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<display typeId="org.csstudio.opibuilder.Display" version="1.0">
+  <show_close_button>true</show_close_button>
+  <rules/>
+  <wuid>-69d7811d:14d7b00e209:-7f32</wuid>
+  <show_grid>true</show_grid>
+  <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
+  <scripts>
+    <path pathString="Scripts/ButtonDisplayLabel.js" checkConnect="false" sfe="false" seoe="false">
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS</pv>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALA</pv>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALB</pv>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALC</pv>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALD</pv>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALE</pv>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALF</pv>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALG</pv>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALH</pv>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALI</pv>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALJ</pv>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALK</pv>
+      <pv trig="true">$(P)LKUP:$(PH):_SPLITPOSNS.VALL</pv>
+    </path>
+  </scripts>
+  <height>480</height>
+  <macros>
+    <include_parent_macros>true</include_parent_macros>
+  </macros>
+  <boy_version>3.1.4.201301231545</boy_version>
+  <show_edit_range>true</show_edit_range>
+  <widget_type>Display</widget_type>
+  <auto_scale_widgets>
+    <auto_scale_widgets>false</auto_scale_widgets>
+    <min_width>-1</min_width>
+    <min_height>-1</min_height>
+  </auto_scale_widgets>
+  <background_color>
+    <color red="240" green="240" blue="240"/>
+  </background_color>
+  <width>640</width>
+  <x>-1</x>
+  <name>$(NAME)</name>
+  <grid_space>6</grid_space>
+  <show_ruler>true</show_ruler>
+  <y>-1</y>
+  <snap_to_geometry>true</snap_to_geometry>
+  <foreground_color>
+    <color red="192" green="192" blue="192"/>
+  </foreground_color>
+  <actions hook="false" hook_all="false"/>
+  <widget typeId="org.csstudio.opibuilder.widgets.Rectangle" version="1.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <line_width>0</line_width>
+    <horizontal_fill>true</horizontal_fill>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>194106b1:151a16241f2:-6e6a</wuid>
+    <transparent>false</transparent>
+    <pv_value/>
+    <alpha>255</alpha>
+    <bg_gradient_color>
+      <color red="255" green="255" blue="255"/>
+    </bg_gradient_color>
+    <scripts/>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>283</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name/>
+    <gradient>false</gradient>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <anti_alias>true</anti_alias>
+    <line_style>0</line_style>
+    <widget_type>Rectangle</widget_type>
+    <fg_gradient_color>
+      <color red="255" green="255" blue="255"/>
+    </fg_gradient_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="255" green="255" blue="255"/>
+    </background_color>
+    <width>289</width>
+    <x>66</x>
+    <name>Background</name>
+    <y>54</y>
+    <fill_level>0.0</fill_level>
+    <foreground_color>
+      <color red="255" green="0" blue="0"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+    <line_color>
+      <color red="128" green="0" blue="255"/>
+    </line_color>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <precision>0</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>1</horizontal_alignment>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>-69d7811d:14d7b00e209:-7bf1</wuid>
+    <transparent>false</transparent>
+    <pv_value/>
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts/>
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>41</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>$(P)LKUP:$(PH):POSN:SP:RBV</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color red="255" green="255" blue="255"/>
+    </background_color>
+    <width>175</width>
+    <x>444</x>
+    <name>TargetPosition</name>
+    <y>54</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <font>
+      <opifont.name fontName="Arial" height="14" style="1">ISIS_Value</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <precision>0</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>1</horizontal_alignment>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>-69d7811d:14d7b00e209:-7b45</wuid>
+    <transparent>false</transparent>
+    <pv_value/>
+    <auto_size>false</auto_size>
+    <text>######</text>
+    <rotation_angle>0.0</rotation_angle>
+    <scripts/>
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <show_units>true</show_units>
+    <height>41</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>$(P)LKUP:$(PH):POSN</pv_name>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text Update</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <wrap_words>false</wrap_words>
+    <format_type>0</format_type>
+    <background_color>
+      <color red="255" green="255" blue="255"/>
+    </background_color>
+    <width>175</width>
+    <x>444</x>
+    <name>CurrentPosition</name>
+    <y>156</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <font>
+      <opifont.name fontName="Arial" height="14" style="1">ISIS_Value</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules/>
+    <effect_3d>true</effect_3d>
+    <bit>-1</bit>
+    <enabled>true</enabled>
+    <wuid>4e9517e9:14df687cb86:-7e5f</wuid>
+    <on_color>
+      <color red="0" green="255" blue="0"/>
+    </on_color>
+    <pv_value/>
+    <scripts/>
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <height>25</height>
+    <on_label>ON</on_label>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>true</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name>$(P)LKUP:$(PH):POSITIONED</pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <widget_type>LED</widget_type>
+    <off_color>
+      <color red="0" green="100" blue="0"/>
+    </off_color>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <square_led>false</square_led>
+    <width>25</width>
+    <x>558</x>
+    <name>Move Complete</name>
+    <data_type>0</data_type>
+    <y>246</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <show_boolean_label>false</show_boolean_label>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+    <off_label>OFF</off_label>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>-69d7811d:14d7b00e209:-7f28</wuid>
+    <pv_value/>
+    <text>View Motor</text>
+    <scripts/>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>30</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image/>
+    <visible>true</visible>
+    <pv_name/>
+    <border_color>
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255"/>
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="ISIS_Standard_Button" red="187" green="187" blue="187"/>
+    </background_color>
+    <width>120</width>
+    <x>471</x>
+    <name>ViewMotor</name>
+    <y>342</y>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false">
+      <action type="OPEN_DISPLAY">
+        <path>../Motor/mymotor.opi</path>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <M>$(MM)</M>
+        </macros>
+        <replace>1</replace>
+        <description/>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="14" style="1">ISIS_Button</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
+    <border_style>0</border_style>
+    <tooltip/>
+    <horizontal_alignment>1</horizontal_alignment>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>4e9517e9:14df687cb86:-7dec</wuid>
+    <transparent>false</transparent>
+    <auto_size>false</auto_size>
+    <text>Move Complete</text>
+    <scripts/>
+    <height>20</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <vertical_alignment>1</vertical_alignment>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <widget_type>Label</widget_type>
+    <wrap_words>true</wrap_words>
+    <background_color>
+      <color red="255" green="255" blue="255"/>
+    </background_color>
+    <width>88</width>
+    <x>471</x>
+    <name>MoveCompleteLabel</name>
+    <y>249</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <show_scrollbar>false</show_scrollbar>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.NativeButton" version="1.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>-4fb46c11:14ff514886e:-7e3d</wuid>
+    <pv_value/>
+    <text>Reload Positions File</text>
+    <scripts/>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>30</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image/>
+    <visible>true</visible>
+    <pv_name/>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <widget_type>Button</widget_type>
+    <width>80</width>
+    <x>490</x>
+    <name>ReloadPositions</name>
+    <y>390</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0"/>
+    </foreground_color>
+    <actions hook="false" hook_all="true">
+      <action type="WRITE_PV">
+        <pv_name>$(P)LKUP:$(PH):RESET</pv_name>
+        <value>1</value>
+        <timeout>10</timeout>
+        <description/>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(P)LKUP:$(PH):RESET</pv_name>
+        <value>0</value>
+        <timeout>10</timeout>
+        <description/>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.NativeText" version="1.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <show_native_border>false</show_native_border>
+    <precision>0</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>1</horizontal_alignment>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>-69d7811d:14d7b00e209:-7b4a</wuid>
+    <next_focus>0</next_focus>
+    <pv_value/>
+    <auto_size>false</auto_size>
+    <read_only>true</read_only>
+    <text>Target Position</text>
+    <scripts/>
+    <show_units>true</show_units>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>25</height>
+    <multiline_input>false</multiline_input>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name/>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text</widget_type>
+    <confirm_message/>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <format_type>0</format_type>
+    <limits_from_pv>false</limits_from_pv>
+    <background_color>
+      <color red="255" green="255" blue="255"/>
+    </background_color>
+    <password_input>false</password_input>
+    <name>TargetPositionLabel</name>
+    <width>175</width>
+    <x>444</x>
+    <y>24</y>
+    <maximum>1.7976931348623157E308</maximum>
+    <actions hook="false" hook_all="false"/>
+    <foreground_color>
+      <color red="0" green="0" blue="0"/>
+    </foreground_color>
+    <minimum>-1.7976931348623157E308</minimum>
+    <font>
+      <opifont.name fontName="Arial" height="16" style="1">ISIS_Header2</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.NativeText" version="1.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <show_native_border>false</show_native_border>
+    <precision>0</precision>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <horizontal_alignment>1</horizontal_alignment>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>-69d7811d:14d7b00e209:-7b44</wuid>
+    <next_focus>0</next_focus>
+    <pv_value/>
+    <auto_size>false</auto_size>
+    <read_only>true</read_only>
+    <text>Current Position</text>
+    <scripts/>
+    <show_units>true</show_units>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>25</height>
+    <multiline_input>false</multiline_input>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <pv_name/>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <precision_from_pv>true</precision_from_pv>
+    <widget_type>Text</widget_type>
+    <confirm_message/>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <format_type>0</format_type>
+    <limits_from_pv>false</limits_from_pv>
+    <background_color>
+      <color red="255" green="255" blue="255"/>
+    </background_color>
+    <password_input>false</password_input>
+    <name>CurrentPositionLabel</name>
+    <width>175</width>
+    <x>444</x>
+    <y>120</y>
+    <maximum>1.7976931348623157E308</maximum>
+    <actions hook="false" hook_all="false"/>
+    <foreground_color>
+      <color red="0" green="0" blue="0"/>
+    </foreground_color>
+    <minimum>-1.7976931348623157E308</minimum>
+    <font>
+      <opifont.name fontName="Arial" height="16" style="1">ISIS_Header2</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.combo" version="1.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>194106b1:151a16241f2:-7c98</wuid>
+    <pv_value/>
+    <scripts>
+      <path pathString="Scripts/Initialise.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">loc://useToInit(1)</pv>
+      </path>
+    </scripts>
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <height>27</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>false</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <items_from_pv>false</items_from_pv>
+    <visible>true</visible>
+    <pv_name>loc://Mode("Running")</pv_name>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <widget_type>Combo</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="255" green="255" blue="255"/>
+    </background_color>
+    <width>163</width>
+    <x>24</x>
+    <name>Mode Selector</name>
+    <y>22</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <items>
+      <s>Running</s>
+      <s>Loading</s>
+    </items>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
+    <border_style>0</border_style>
+    <tooltip/>
+    <rules/>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>194106b1:151a16241f2:-710f</wuid>
+    <auto_size>true</auto_size>
+    <image_file>label_A.png</image_file>
+    <scripts>
+      <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <height>74</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <crop_bottom>0</crop_bottom>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <no_animation>false</no_animation>
+    <widget_type>Image</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <width>74</width>
+    <x>174</x>
+    <name>RAct-0</name>
+    <y>73</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <flip_vertical>false</flip_vertical>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
+    <border_style>0</border_style>
+    <tooltip/>
+    <rules/>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>194106b1:151a16241f2:-70a4</wuid>
+    <auto_size>true</auto_size>
+    <image_file>label_A.png</image_file>
+    <scripts>
+      <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <height>74</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <crop_bottom>0</crop_bottom>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <no_animation>false</no_animation>
+    <widget_type>Image</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <width>74</width>
+    <x>247</x>
+    <name>RAct-1</name>
+    <y>109</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <flip_vertical>false</flip_vertical>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
+    <border_style>0</border_style>
+    <tooltip/>
+    <rules/>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>194106b1:151a16241f2:-709c</wuid>
+    <auto_size>true</auto_size>
+    <image_file>label_A.png</image_file>
+    <scripts>
+      <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <height>74</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <crop_bottom>0</crop_bottom>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <no_animation>false</no_animation>
+    <widget_type>Image</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <width>74</width>
+    <x>247</x>
+    <name>RAct-2</name>
+    <y>199</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <flip_vertical>false</flip_vertical>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
+    <border_style>0</border_style>
+    <tooltip/>
+    <rules/>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>194106b1:151a16241f2:-7098</wuid>
+    <auto_size>true</auto_size>
+    <image_file>label_A.png</image_file>
+    <scripts>
+      <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <height>74</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <crop_bottom>0</crop_bottom>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <no_animation>false</no_animation>
+    <widget_type>Image</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <width>74</width>
+    <x>174</x>
+    <name>RAct-3</name>
+    <y>239</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <flip_vertical>false</flip_vertical>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
+    <border_style>0</border_style>
+    <tooltip/>
+    <rules/>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>194106b1:151a16241f2:-7094</wuid>
+    <auto_size>true</auto_size>
+    <image_file>label_A.png</image_file>
+    <scripts>
+      <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <height>74</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <crop_bottom>0</crop_bottom>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <no_animation>false</no_animation>
+    <widget_type>Image</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <width>74</width>
+    <x>101</x>
+    <name>RAct-4</name>
+    <y>199</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <flip_vertical>false</flip_vertical>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
+    <border_style>0</border_style>
+    <tooltip/>
+    <rules/>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>194106b1:151a16241f2:-7090</wuid>
+    <auto_size>true</auto_size>
+    <image_file>label_A.png</image_file>
+    <scripts>
+      <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <height>74</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <crop_bottom>0</crop_bottom>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <no_animation>false</no_animation>
+    <widget_type>Image</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <width>74</width>
+    <x>101</x>
+    <name>RAct-5</name>
+    <y>109</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <flip_vertical>false</flip_vertical>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
+    <border_style>0</border_style>
+    <tooltip/>
+    <rules/>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>194106b1:151a16241f2:-7074</wuid>
+    <auto_size>true</auto_size>
+    <image_file>label_A.png</image_file>
+    <scripts>
+      <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <height>74</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <crop_bottom>0</crop_bottom>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <no_animation>false</no_animation>
+    <widget_type>Image</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <width>74</width>
+    <x>84</x>
+    <name>LAct-0</name>
+    <y>157</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <flip_vertical>false</flip_vertical>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
+    <border_style>0</border_style>
+    <tooltip/>
+    <rules/>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>194106b1:151a16241f2:-706c</wuid>
+    <auto_size>true</auto_size>
+    <image_file>label_A.png</image_file>
+    <scripts>
+      <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <height>74</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <crop_bottom>0</crop_bottom>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <no_animation>false</no_animation>
+    <widget_type>Image</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <width>74</width>
+    <x>132</x>
+    <name>LAct-1</name>
+    <y>84</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <flip_vertical>false</flip_vertical>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
+    <border_style>0</border_style>
+    <tooltip/>
+    <rules/>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>194106b1:151a16241f2:-7068</wuid>
+    <auto_size>true</auto_size>
+    <image_file>label_A.png</image_file>
+    <scripts>
+      <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <height>74</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <crop_bottom>0</crop_bottom>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <no_animation>false</no_animation>
+    <widget_type>Image</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <width>74</width>
+    <x>216</x>
+    <name>LAct-2</name>
+    <y>84</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <flip_vertical>false</flip_vertical>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
+    <border_style>0</border_style>
+    <tooltip/>
+    <rules/>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>194106b1:151a16241f2:-7064</wuid>
+    <auto_size>true</auto_size>
+    <image_file>label_A.png</image_file>
+    <scripts>
+      <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <height>74</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <crop_bottom>0</crop_bottom>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <no_animation>false</no_animation>
+    <widget_type>Image</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <width>74</width>
+    <x>259</x>
+    <name>LAct-3</name>
+    <y>157</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <flip_vertical>false</flip_vertical>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
+    <border_style>0</border_style>
+    <tooltip/>
+    <rules/>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>194106b1:151a16241f2:-7060</wuid>
+    <auto_size>true</auto_size>
+    <image_file>label_A.png</image_file>
+    <scripts>
+      <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <height>74</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <crop_bottom>0</crop_bottom>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <no_animation>false</no_animation>
+    <widget_type>Image</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <width>74</width>
+    <x>216</x>
+    <name>LAct-4</name>
+    <y>230</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <flip_vertical>false</flip_vertical>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
+    <border_style>0</border_style>
+    <tooltip/>
+    <rules/>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>194106b1:151a16241f2:-705c</wuid>
+    <auto_size>true</auto_size>
+    <image_file>label_A.png</image_file>
+    <scripts>
+      <path pathString="Scripts/SelectDisplayLabel.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">$(P)LKUP:$(PH):IPOSN</pv>
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <height>74</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <crop_bottom>0</crop_bottom>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <no_animation>false</no_animation>
+    <widget_type>Image</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <width>74</width>
+    <x>132</x>
+    <name>LAct-5</name>
+    <y>230</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <flip_vertical>false</flip_vertical>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
+    <border_style>0</border_style>
+    <tooltip/>
+    <rules/>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>194106b1:151a16241f2:-7044</wuid>
+    <auto_size>true</auto_size>
+    <image_file>active.png</image_file>
+    <scripts>
+      <path pathString="Scripts/ViewForLoading.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <height>74</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <crop_bottom>0</crop_bottom>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="0" blue="0"/>
+    </border_color>
+    <no_animation>false</no_animation>
+    <widget_type>Image</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <width>74</width>
+    <x>83</x>
+    <name>LActive</name>
+    <y>156</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <flip_vertical>false</flip_vertical>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
+    <border_style>0</border_style>
+    <tooltip/>
+    <rules/>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>194106b1:151a16241f2:-73b6</wuid>
+    <auto_size>true</auto_size>
+    <image_file>active.png</image_file>
+    <scripts>
+      <path pathString="Scripts/ViewForRunning.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <height>74</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <crop_bottom>0</crop_bottom>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="0" blue="0"/>
+    </border_color>
+    <no_animation>false</no_animation>
+    <widget_type>Image</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <width>74</width>
+    <x>173</x>
+    <name>RActive</name>
+    <y>72</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>false</stretch_to_fit>
+    <flip_vertical>false</flip_vertical>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0">
+    <border_style>0</border_style>
+    <tooltip/>
+    <rules/>
+    <crop_left>0</crop_left>
+    <enabled>true</enabled>
+    <wuid>194106b1:151a16241f2:-6f94</wuid>
+    <auto_size>false</auto_size>
+    <image_file>outline.png</image_file>
+    <scripts/>
+    <height>260</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <visible>true</visible>
+    <crop_bottom>0</crop_bottom>
+    <degree>0</degree>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <no_animation>false</no_animation>
+    <widget_type>Image</widget_type>
+    <flip_horizontal>false</flip_horizontal>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <permutation_matrix>
+      <row>
+        <col>1.0</col>
+        <col>0.0</col>
+      </row>
+      <row>
+        <col>0.0</col>
+        <col>1.0</col>
+      </row>
+    </permutation_matrix>
+    <width>260</width>
+    <x>81</x>
+    <name>Outline</name>
+    <y>64</y>
+    <foreground_color>
+      <color red="192" green="192" blue="192"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <crop_top>0</crop_top>
+    <crop_right>0</crop_right>
+    <stretch_to_fit>true</stretch_to_fit>
+    <flip_vertical>false</flip_vertical>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0">Default</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>-69d7811d:14d7b00e209:-7e54</wuid>
+    <pv_value/>
+    <text>Position 0</text>
+    <scripts>
+      <path pathString="Scripts/ViewForRunning.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>30</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image/>
+    <visible>true</visible>
+    <pv_name/>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <width>100</width>
+    <x>46</x>
+    <name>Running_Button_0</name>
+    <y>354</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0"/>
+    </foreground_color>
+    <actions hook="false" hook_all="true">
+      <action type="WRITE_PV">
+        <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+        <value>0</value>
+        <timeout>10</timeout>
+        <description/>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>-552780a2:14de1d345b9:-7fc6</wuid>
+    <pv_value/>
+    <text>Position 1</text>
+    <scripts>
+      <path pathString="Scripts/ViewForRunning.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>30</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image/>
+    <visible>true</visible>
+    <pv_name/>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <width>100</width>
+    <x>162</x>
+    <name>Running_Button_1</name>
+    <y>354</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0"/>
+    </foreground_color>
+    <actions hook="false" hook_all="true">
+      <action type="WRITE_PV">
+        <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+        <value>2</value>
+        <timeout>10</timeout>
+        <description/>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>-552780a2:14de1d345b9:-7fc1</wuid>
+    <pv_value/>
+    <text>Position 2</text>
+    <scripts>
+      <path pathString="Scripts/ViewForRunning.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>30</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image/>
+    <visible>true</visible>
+    <pv_name/>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <width>100</width>
+    <x>282</x>
+    <name>Running_Button_2</name>
+    <y>354</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0"/>
+    </foreground_color>
+    <actions hook="false" hook_all="true">
+      <action type="WRITE_PV">
+        <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+        <value>4</value>
+        <timeout>10</timeout>
+        <description/>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>-552780a2:14de1d345b9:-7fc0</wuid>
+    <pv_value/>
+    <text>Position 3</text>
+    <scripts>
+      <path pathString="Scripts/ViewForRunning.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>30</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image/>
+    <visible>true</visible>
+    <pv_name/>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <width>100</width>
+    <x>46</x>
+    <name>Running_Button_3</name>
+    <y>402</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0"/>
+    </foreground_color>
+    <actions hook="false" hook_all="true">
+      <action type="WRITE_PV">
+        <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+        <value>6</value>
+        <timeout>10</timeout>
+        <description/>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>-552780a2:14de1d345b9:-7fbb</wuid>
+    <pv_value/>
+    <text>Position 4</text>
+    <scripts>
+      <path pathString="Scripts/ViewForRunning.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>30</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image/>
+    <visible>true</visible>
+    <pv_name/>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <width>100</width>
+    <x>162</x>
+    <name>Running_Button_4</name>
+    <y>402</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0"/>
+    </foreground_color>
+    <actions hook="false" hook_all="true">
+      <action type="WRITE_PV">
+        <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+        <value>8</value>
+        <timeout>10</timeout>
+        <description/>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>-552780a2:14de1d345b9:-7fba</wuid>
+    <pv_value/>
+    <text>Position 5</text>
+    <scripts>
+      <path pathString="Scripts/ViewForRunning.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>30</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image/>
+    <visible>true</visible>
+    <pv_name/>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <width>100</width>
+    <x>281</x>
+    <name>Running_Button_5</name>
+    <y>402</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0"/>
+    </foreground_color>
+    <actions hook="false" hook_all="true">
+      <action type="WRITE_PV">
+        <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+        <value>10</value>
+        <timeout>10</timeout>
+        <description/>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>-69d7811d:14d7b00e209:-7e54</wuid>
+    <pv_value/>
+    <text>Load 0</text>
+    <scripts>
+      <path pathString="Scripts/ViewForLoading.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>30</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image/>
+    <visible>true</visible>
+    <pv_name/>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <width>100</width>
+    <x>46</x>
+    <name>Loading_Button_0</name>
+    <y>383</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0"/>
+    </foreground_color>
+    <actions hook="false" hook_all="true">
+      <action type="WRITE_PV">
+        <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+        <value>1</value>
+        <timeout>10</timeout>
+        <description/>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>-552780a2:14de1d345b9:-7fc6</wuid>
+    <pv_value/>
+    <text>Load 1</text>
+    <scripts>
+      <path pathString="Scripts/ViewForLoading.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>30</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image/>
+    <visible>true</visible>
+    <pv_name/>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <width>100</width>
+    <x>162</x>
+    <name>Loading_Button_1</name>
+    <y>383</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0"/>
+    </foreground_color>
+    <actions hook="false" hook_all="true">
+      <action type="WRITE_PV">
+        <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+        <value>3</value>
+        <timeout>10</timeout>
+        <description/>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>-552780a2:14de1d345b9:-7fc1</wuid>
+    <pv_value/>
+    <text>Load 2</text>
+    <scripts>
+      <path pathString="Scripts/ViewForLoading.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>30</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image/>
+    <visible>true</visible>
+    <pv_name/>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <width>100</width>
+    <x>282</x>
+    <name>Loading_Button_2</name>
+    <y>383</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0"/>
+    </foreground_color>
+    <actions hook="false" hook_all="true">
+      <action type="WRITE_PV">
+        <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+        <value>5</value>
+        <timeout>10</timeout>
+        <description/>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>-552780a2:14de1d345b9:-7fc0</wuid>
+    <pv_value/>
+    <text>Load 3</text>
+    <scripts>
+      <path pathString="Scripts/ViewForLoading.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>30</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image/>
+    <visible>true</visible>
+    <pv_name/>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <width>100</width>
+    <x>46</x>
+    <name>Loading_Button_3</name>
+    <y>431</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0"/>
+    </foreground_color>
+    <actions hook="false" hook_all="true">
+      <action type="WRITE_PV">
+        <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+        <value>7</value>
+        <timeout>10</timeout>
+        <description/>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>-552780a2:14de1d345b9:-7fbb</wuid>
+    <pv_value/>
+    <text>Load 4</text>
+    <scripts>
+      <path pathString="Scripts/ViewForLoading.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>30</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image/>
+    <visible>true</visible>
+    <pv_name/>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <width>100</width>
+    <x>162</x>
+    <name>Loading_Button_4</name>
+    <y>431</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0"/>
+    </foreground_color>
+    <actions hook="false" hook_all="true">
+      <action type="WRITE_PV">
+        <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+        <value>9</value>
+        <timeout>10</timeout>
+        <description/>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="1.0">
+    <toggle_button>false</toggle_button>
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <push_action_index>0</push_action_index>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>-552780a2:14de1d345b9:-7fba</wuid>
+    <pv_value/>
+    <text>Load 5</text>
+    <scripts>
+      <path pathString="Scripts/ViewForLoading.js" checkConnect="true" sfe="false" seoe="false">
+        <pv trig="true">loc://Mode("Running")</pv>
+      </path>
+    </scripts>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <height>30</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <image/>
+    <visible>true</visible>
+    <pv_name/>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <widget_type>Action Button</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <width>100</width>
+    <x>281</x>
+    <name>Loading_Button_5</name>
+    <y>431</y>
+    <foreground_color>
+      <color red="0" green="0" blue="0"/>
+    </foreground_color>
+    <actions hook="false" hook_all="true">
+      <action type="WRITE_PV">
+        <pv_name>$(P)LKUP:$(PH):IPOSN:SP</pv_name>
+        <value>11</value>
+        <timeout>10</timeout>
+        <description/>
+      </action>
+    </actions>
+    <font>
+      <opifont.name fontName="Arial" height="12" style="1">ISIS_Header3</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <actions hook="false" hook_all="false"/>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0"/>
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
+    </foreground_color>
+    <height>1</height>
+    <image/>
+    <name>Dummy</name>
+    <push_action_index>0</push_action_index>
+    <pv_name/>
+    <pv_value/>
+    <rules/>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts/>
+    <style>1</style>
+    <text/>
+    <toggle_button>false</toggle_button>
+    <tooltip/>
+    <visible>true</visible>
+    <widget_type>Action Button</widget_type>
+    <width>1</width>
+    <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
+    <x>101</x>
+    <y>109</y>
+  </widget>
+</display>

@@ -1,0 +1,251 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<display typeId="org.csstudio.opibuilder.Display" version="1.0">
+  <show_close_button>true</show_close_button>
+  <rules/>
+  <wuid>-1b177848:14212da2f74:-76cd</wuid>
+  <show_grid>true</show_grid>
+  <auto_zoom_to_fit_all>false</auto_zoom_to_fit_all>
+  <scripts/>
+  <height>600</height>
+  <macros>
+    <include_parent_macros>true</include_parent_macros>
+  </macros>
+  <boy_version>3.1.4.201301231545</boy_version>
+  <show_edit_range>true</show_edit_range>
+  <widget_type>Display</widget_type>
+  <auto_scale_widgets>
+    <auto_scale_widgets>false</auto_scale_widgets>
+    <min_width>-1</min_width>
+    <min_height>-1</min_height>
+  </auto_scale_widgets>
+  <background_color>
+    <color name="ISIS_OPI_Background" red="240" green="240" blue="240"/>
+  </background_color>
+  <width>800</width>
+  <x>-1</x>
+  <name>$(NAME)</name>
+  <grid_space>6</grid_space>
+  <show_ruler>true</show_ruler>
+  <y>-1</y>
+  <snap_to_geometry>true</snap_to_geometry>
+  <foreground_color>
+    <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192"/>
+  </foreground_color>
+  <actions hook="false" hook_all="false"/>
+  <widget typeId="org.csstudio.opibuilder.widgets.choiceButton" version="1.0">
+    <border_style>0</border_style>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>56d71e9c:142bcf2338a:-3c5d</wuid>
+    <selected_color>
+      <color name="ISIS_Textbox_Background" red="255" green="255" blue="255"/>
+    </selected_color>
+    <horizontal>false</horizontal>
+    <pv_value/>
+    <scripts/>
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <height>103</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <items_from_pv>false</items_from_pv>
+    <visible>true</visible>
+    <pv_name>$(P)LKUP:BEAMSTOP:POSN:SP</pv_name>
+    <border_color>
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255"/>
+    </border_color>
+    <widget_type>Choice Button</widget_type>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240"/>
+    </background_color>
+    <width>67</width>
+    <x>6</x>
+    <name>Choice Button</name>
+    <y>78</y>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <items>
+      <s>In</s>
+      <s>Out</s>
+    </items>
+    <font>
+      <opifont.name fontName="Arial" height="9" style="1">ISIS_Header4</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+    <opi_file>Motor/mymotor.opi</opi_file>
+    <border_style>3</border_style>
+    <tooltip/>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>56d71e9c:142bcf2338a:-3c5c</wuid>
+    <auto_size>true</auto_size>
+    <scripts/>
+    <height>266</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <macros>
+      <include_parent_macros>true</include_parent_macros>
+      <MM>MOT:MTR0607</MM>
+    </macros>
+    <visible>true</visible>
+    <group_name/>
+    <border_color>
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255"/>
+    </border_color>
+    <widget_type>Linking Container</widget_type>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <zoom_to_fit>true</zoom_to_fit>
+    <width>446</width>
+    <x>6</x>
+    <name>Linking Container</name>
+    <y>324</y>
+    <foreground_color>
+      <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <font>
+      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+    <opi_file>Motor/mymotor.opi</opi_file>
+    <border_style>3</border_style>
+    <tooltip/>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>-654d67a4:1443fbaccbd:-6280</wuid>
+    <auto_size>false</auto_size>
+    <scripts/>
+    <height>266</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <macros>
+      <include_parent_macros>true</include_parent_macros>
+      <MM>MOT:MTR0608</MM>
+    </macros>
+    <visible>true</visible>
+    <group_name/>
+    <border_color>
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255"/>
+    </border_color>
+    <widget_type>Linking Container</widget_type>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <zoom_to_fit>true</zoom_to_fit>
+    <width>446</width>
+    <x>462</x>
+    <name>Linking Container_1</name>
+    <y>324</y>
+    <foreground_color>
+      <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <font>
+      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0">
+    <opi_file>monitor.opi</opi_file>
+    <border_style>0</border_style>
+    <tooltip/>
+    <rules/>
+    <enabled>true</enabled>
+    <wuid>-654d67a4:1443fbaccbd:-624d</wuid>
+    <auto_size>false</auto_size>
+    <scripts/>
+    <height>301</height>
+    <border_width>1</border_width>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <macros>
+      <include_parent_macros>true</include_parent_macros>
+      <M>5</M>
+      <CHANNUM>4</CHANNUM>
+    </macros>
+    <visible>true</visible>
+    <group_name/>
+    <border_color>
+      <color name="ISIS_Check_Border" red="0" green="128" blue="255"/>
+    </border_color>
+    <widget_type>Linking Container</widget_type>
+    <background_color>
+      <color red="240" green="240" blue="240"/>
+    </background_color>
+    <zoom_to_fit>false</zoom_to_fit>
+    <width>643</width>
+    <x>112</x>
+    <name>Linking Container_2</name>
+    <y>12</y>
+    <foreground_color>
+      <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192"/>
+    </foreground_color>
+    <actions hook="false" hook_all="false"/>
+    <font>
+      <opifont.name fontName="Arial" height="9" style="0">ISIS_Label_Small</opifont.name>
+    </font>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <actions hook="false" hook_all="false"/>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0"/>
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
+    </foreground_color>
+    <height>1</height>
+    <image/>
+    <name>Dummy</name>
+    <push_action_index>0</push_action_index>
+    <pv_name/>
+    <pv_value/>
+    <rules/>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts/>
+    <style>1</style>
+    <text/>
+    <toggle_button>false</toggle_button>
+    <tooltip/>
+    <visible>true</visible>
+    <widget_type>Action Button</widget_type>
+    <width>1</width>
+    <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
+    <x>112</x>
+    <y>12</y>
+  </widget>
+</display>
