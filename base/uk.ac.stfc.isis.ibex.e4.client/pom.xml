@@ -8,4 +8,5 @@
   	<relativePath>../uk.ac.stfc.isis.ibex.client.tycho.parent</relativePath>
   	<artifactId>uk.ac.stfc.isis.ibex.client.tycho.parent</artifactId>
   </parent>
+  <version>0.0.0_fubar3</version>
 </project>
