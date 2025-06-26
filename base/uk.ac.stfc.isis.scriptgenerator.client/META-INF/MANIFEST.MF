@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Eclipse-BundleShape: dir
 Bundle-SymbolicName: uk.ac.stfc.isis.scriptgenerator.client;singleton:=true
 Bundle-Name: IBEX
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.0.0_fubar
 Require-Bundle: uk.ac.stfc.isis.ibex.ui.scriptgenerator,
  uk.ac.stfc.isis.scriptgenerator.product
 Bundle-ManifestVersion: 2
