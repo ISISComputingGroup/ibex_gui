@@ -23,6 +23,7 @@ import java.util.Collection;
 
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayAlerts;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayBlock;
 
 /**
@@ -45,4 +46,12 @@ public interface Displaying {
 	 *         a collection of blocks whose value and run-control settings can be displayed in a GUI.
 	 */
 	Collection<DisplayBlock> getDisplayBlocks();
+
+	/**
+	 * Returns a collection of alert settings that can be displayed in a GUI.
+	 * 
+	 * @return
+	 *         a collection of alert settings that can be displayed in a GUI
+	 */
+	Collection<DisplayAlerts> getDisplayAlerts();
 }
