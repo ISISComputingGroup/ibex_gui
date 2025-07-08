@@ -135,7 +135,7 @@ public class NicosModel extends ModelObject {
             }
         };
         updateStatusJob.setRunning(false);
-        this.connectionJob.schedule();
+        connectionJob.setRunning(true);
     }
 
     private void failConnection(String message) {

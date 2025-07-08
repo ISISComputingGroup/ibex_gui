@@ -56,6 +56,7 @@ public class DynamicScriptingStateFactory {
 	private DynamicScriptingState getNewState(DynamicScriptingStatus newStatus) {
 		HashMap<Integer, ScriptGeneratorAction> dynamicScriptIds = state.getDynamicScriptIds();
 		Optional<ScriptGeneratorAction> action = state.getCurrentlyExecutingAction();
+		
 		switch (newStatus) {
 			case PLAYING:
 				return new PlayingState(nicosAdapter, modelAdapter, action, dynamicScriptIds);

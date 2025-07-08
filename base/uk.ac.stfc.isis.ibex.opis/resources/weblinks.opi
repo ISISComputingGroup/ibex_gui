@@ -1,116 +1,80 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<display typeId="org.csstudio.opibuilder.Display" version="1.0">
-  <show_close_button>true</show_close_button>
-  <rules/>
-  <wuid>-1fce3382:15fb9cec36d:-75d6</wuid>
-  <show_grid>true</show_grid>
-  <auto_zoom_to_fit_all>true</auto_zoom_to_fit_all>
-  <scripts/>
-  <height>600</height>
-  <macros>
-    <include_parent_macros>true</include_parent_macros>
-  </macros>
-  <boy_version>3.1.4.201301231545</boy_version>
-  <show_edit_range>true</show_edit_range>
-  <widget_type>Display</widget_type>
+<?xml version="1.0" encoding="UTF-8"?>
+<display typeId="org.csstudio.opibuilder.Display" version="1.0.0">
+  <actions hook="false" hook_all="false" />
   <auto_scale_widgets>
     <auto_scale_widgets>false</auto_scale_widgets>
     <min_width>-1</min_width>
     <min_height>-1</min_height>
   </auto_scale_widgets>
+  <auto_zoom_to_fit_all>true</auto_zoom_to_fit_all>
   <background_color>
-    <color name="ISIS_OPI_Background" red="240" green="240" blue="240"/>
+    <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
   </background_color>
-  <width>800</width>
-  <x>-1</x>
-  <name/>
-  <grid_space>6</grid_space>
-  <show_ruler>true</show_ruler>
-  <y>-1</y>
-  <snap_to_geometry>true</snap_to_geometry>
+  <boy_version>5.1.0</boy_version>
   <foreground_color>
-    <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192"/>
+    <color name="ISIS_OPI_Foreground" red="192" green="192" blue="192" />
   </foreground_color>
-  <actions hook="false" hook_all="false"/>
-  <widget typeId="org.csstudio.opibuilder.widgets.webbrowser" version="1.0">
-    <border_style>1</border_style>
-    <show_toolbar>false</show_toolbar>
-    <tooltip/>
-    <rules/>
-    <enabled>true</enabled>
-    <wuid>-48694458:163e05af46d:-7b33</wuid>
-    <scripts/>
-    <height>565</height>
-    <border_width>1</border_width>
-    <scale_options>
-      <width_scalable>false</width_scalable>
-      <height_scalable>false</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <visible>true</visible>
-    <border_color>
-      <color red="192" green="192" blue="192"/>
-    </border_color>
-    <widget_type>Web Browser</widget_type>
-    <url>https://dataweb.isis.rl.ac.uk/IbexLinks/default.htm?&amp;instrument=$(INST)</url>
+  <grid_space>6</grid_space>
+  <height>600</height>
+  <macros>
+    <include_parent_macros>true</include_parent_macros>
+  </macros>
+  <name></name>
+  <rules />
+  <scripts />
+  <show_close_button>true</show_close_button>
+  <show_edit_range>true</show_edit_range>
+  <show_grid>true</show_grid>
+  <show_ruler>true</show_ruler>
+  <snap_to_geometry>true</snap_to_geometry>
+  <widget_type>Display</widget_type>
+  <width>800</width>
+  <wuid>-1fce3382:15fb9cec36d:-75d6</wuid>
+  <x>-1</x>
+  <y>-1</y>
+  <widget typeId="org.csstudio.opibuilder.widgets.webbrowser" version="1.0.0">
+    <actions hook="false" hook_all="false" />
     <background_color>
-      <color red="240" green="240" blue="240"/>
+      <color red="240" green="240" blue="240" />
     </background_color>
-    <width>745</width>
-    <x>6</x>
-    <name>Web Browser</name>
-    <y>36</y>
-    <foreground_color>
-      <color red="192" green="192" blue="192"/>
-    </foreground_color>
-    <actions hook="false" hook_all="false"/>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0">
-    <border_style>0</border_style>
-    <tooltip/>
-    <horizontal_alignment>0</horizontal_alignment>
-    <rules/>
-    <enabled>true</enabled>
-    <wuid>-28d9c50b:163ef4ca7ac:-7e51</wuid>
-    <transparent>false</transparent>
-    <auto_size>false</auto_size>
-    <text>Web Links ($(INST))</text>
-    <scripts/>
-    <height>37</height>
+    <border_color>
+      <color red="192" green="192" blue="192" />
+    </border_color>
+    <border_style>1</border_style>
     <border_width>1</border_width>
+    <enabled>true</enabled>
+    <foreground_color>
+      <color red="192" green="192" blue="192" />
+    </foreground_color>
+    <height>619</height>
+    <name>Web Browser</name>
+    <rules />
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
+    <scripts />
+    <show_toolbar>false</show_toolbar>
+    <tooltip></tooltip>
+    <url>https://catgpt.wvd.io/</url>
     <visible>true</visible>
-    <vertical_alignment>1</vertical_alignment>
-    <border_color>
-      <color name="ISIS_Border" red="0" green="0" blue="0"/>
-    </border_color>
-    <widget_type>Label</widget_type>
-    <wrap_words>true</wrap_words>
-    <background_color>
-      <color name="ISIS_Label_Background" red="240" green="240" blue="240"/>
-    </background_color>
-    <width>745</width>
+    <widget_type>Web Browser</widget_type>
+    <width>1135</width>
+    <wuid>-48694458:163e05af46d:-7b33</wuid>
     <x>6</x>
-    <name>Label_1</name>
     <y>0</y>
-    <foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
-    </foreground_color>
-    <actions hook="false" hook_all="false"/>
-    <show_scrollbar>false</show_scrollbar>
-    <font>
-      <opifont.name fontName="Segoe UI" height="14" style="1">ISIS_Header2_NEW</opifont.name>
-    </font>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
-    <actions hook="false" hook_all="false"/>
+    <actions hook="false" hook_all="false" />
+    <alarm_pulsing>false</alarm_pulsing>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
     <border_alarm_sensitive>false</border_alarm_sensitive>
     <border_color>
-      <color name="ISIS_Border" red="0" green="0" blue="0"/>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
@@ -120,25 +84,25 @@
     </font>
     <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
     <foreground_color>
-      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
     </foreground_color>
     <height>1</height>
-    <image/>
+    <image></image>
     <name>Dummy</name>
     <push_action_index>0</push_action_index>
-    <pv_name/>
-    <pv_value/>
-    <rules/>
+    <pv_name></pv_name>
+    <pv_value />
+    <rules />
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts/>
-    <style>1</style>
-    <text/>
+    <scripts />
+    <style>0</style>
+    <text></text>
     <toggle_button>false</toggle_button>
-    <tooltip/>
+    <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Action Button</widget_type>
     <width>1</width>

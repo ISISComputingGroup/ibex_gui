@@ -420,7 +420,7 @@
       </children>
     </children>
   </snippets>
-  <snippets xsi:type="advanced:Perspective" xmi:id="_iXv2wJIBEe-V38_cTZ3ImQ" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.weblinks" selectedElement="_iXv2wZIBEe-V38_cTZ3ImQ" label="Web Links" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.weblinks/icons/external1_24x24.png" tooltip="Links to useful web pages">
+  <snippets xsi:type="advanced:Perspective" xmi:id="_iXv2wJIBEe-V38_cTZ3ImQ" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.weblinks" selectedElement="_iXv2wZIBEe-V38_cTZ3ImQ" label="Copilot" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.weblinks/icons/external1_24x24.png" tooltip="Links to useful web pages">
     <children xsi:type="basic:PartSashContainer" xmi:id="_iXv2wZIBEe-V38_cTZ3ImQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.0">
       <children xsi:type="basic:PartSashContainer" xmi:id="_iXv2wpIBEe-V38_cTZ3ImQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.23" containerData="30" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_iXv2w5IBEe-V38_cTZ3ImQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.25" containerData="35">
