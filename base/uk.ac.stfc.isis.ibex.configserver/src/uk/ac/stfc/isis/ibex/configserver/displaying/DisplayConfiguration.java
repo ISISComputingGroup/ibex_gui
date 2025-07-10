@@ -58,6 +58,7 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 	private final RunControlServer runControlServer;
 	private final AlertsServer alertsServer;
 	private Collection<DisplayAlerts> displayAlerts;
+	private TopLevelAlertSettings topLevelAlertSettings;
 
 	/**
 	 * The constructor for a class to enable displaying configurations to a GUI.
@@ -75,6 +76,7 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 		this.configServer = configServer;
 		this.runControlServer = runControlServer;
 		this.alertsServer = alertsServer;
+		//topLevelAlertSettings = new TopLevelAlertSettings(alertsServer);
 		setSource(config);
 	}
 
@@ -263,7 +265,10 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 	 * @param blocks the blocks based on the configuration
 	 */
 	protected void setDisplayAlerts(Collection<Block> blocks) {
-
+		if (null != topLevelAlertSettings) {
+			topLevelAlertSettings.close();
+		}
+		topLevelAlertSettings = new TopLevelAlertSettings(alertsServer);
 		// Close old display alerts.
 		if (displayAlerts != null) {
 			displayAlerts.forEach(DisplayAlerts::close);
@@ -273,5 +278,13 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 		for (Block block : blocks) {
 			displayAlerts.add(new DisplayAlerts(block, alertsServer));
 		}
+	}
+	
+    /**
+     * Returns the top-level alerts settings for all the blocks.
+     * @return a copy of the top-level alerts settings for displaying
+     */
+	public TopLevelAlertSettings getTopLevelAlertSettings() {
+		return topLevelAlertSettings;
 	}
 }

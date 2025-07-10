@@ -137,4 +137,58 @@ public class AlertsServer extends Closer {
 	public Writable<Double> setDelayOut(String blockName) {
 		return variables.setDelayOut(blockName);
 	}
+
+	/**
+	 * Gets an observable looking at the alert-control message PV.
+	 *
+	 * @return the forwarding observable
+	 */
+	public ForwardingObservable<String> getMessage() {
+		return variables.getMessage();
+	}
+	/**
+	 * Gets a writable for the alert-control message PV.
+	 *
+	 * @return the writable
+	 */
+	public Writable<String> setMessage() {
+		return variables.setMessage();
+	}
+
+	/**
+	 * Gets an observable looking at the alert-control emails PV.
+	 *
+	 * @return the forwarding observable
+	 */
+	public ForwardingObservable<String> getEmails() {
+		return variables.getEmails();
+	}
+
+	/**
+	 * Gets a writable for the alert-control emails PV.
+	 *
+	 * @return the writable
+	 */
+	public Writable<String> setEmails() {
+		return variables.setEmails();
+	}
+
+	/**
+	 * Gets an observable looking at the alert-control mobiles PV.
+	 *
+	 * @return the forwarding observable
+	 */
+	public ForwardingObservable<String> getMobiles() {
+		return variables.getMobiles();
+	}
+
+	/**
+	 * Gets a writable for the alert-control mobiles PV.
+	 *
+	 * @return the writable
+	 */
+	public Writable<String> setMobiles() {
+		return variables.setMobiles();
+	}
+
 }

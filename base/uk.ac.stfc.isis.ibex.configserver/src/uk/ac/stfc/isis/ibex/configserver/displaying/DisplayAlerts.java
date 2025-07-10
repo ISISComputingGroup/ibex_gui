@@ -36,6 +36,9 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * Contains the functionality to display a Block's alerts settings in a GUI.
  */
 public class DisplayAlerts extends ModelObject implements Closable {
+	/**
+	 * The block for which this alert is being displayed.
+	 */
     private final Block block;
     
     /**
@@ -46,22 +49,22 @@ public class DisplayAlerts extends ModelObject implements Closable {
     /**
      * The current low limit alerts setting.
      */
-    private Double lowlimit;
+    private Double lowLimit;
 
     /**
      * The current high limit alerts setting.
      */
-    private Double highlimit;
+    private Double highLimit;
 
     /**
      * The current delay in alerts setting.
      */
-    private Double delayin;
+    private Double delayIn;
 
     /**
      * The current delay out alerts setting.
      */
-    private Double delayout;
+    private Double delayOut;
     
     private final BaseObserver<Double> lowLimitAdapter = new ObserverSetDefaultOnInvalid<Double>(value -> setLowLimit(value), null);
     private final BaseObserver<Double> highLimitAdapter = new ObserverSetDefaultOnInvalid<Double>(value -> setHighLimit(value), null);
@@ -71,14 +74,7 @@ public class DisplayAlerts extends ModelObject implements Closable {
     private final BaseObserver<String> enabledAdapter = new BaseObserver<String>() {
         @Override
         public void onValue(String value) {
-            if (Objects.equals(value, "YES")) {
-                setEnabled(true);
-            } else if (Objects.equals(value, "NO")) {
-            	setEnabled(false);
-            } else {
-            	// By default we assume the alert is enabled
-            	setEnabled(true);
-            }
+            setEnabled(!Objects.equals(value, "NO"));
         }
     };
 
@@ -149,7 +145,7 @@ public class DisplayAlerts extends ModelObject implements Closable {
      * @return the current low limit for run-control.
      */
     public Double getLowLimit() {
-        return lowlimit;
+        return lowLimit;
     }
 
     /**
@@ -157,14 +153,14 @@ public class DisplayAlerts extends ModelObject implements Closable {
      * @param limit the low limit value.
      */
     public synchronized void setLowLimit(Double limit) {
-        firePropertyChange("lowlimit", this.lowlimit, this.lowlimit = limit);
+        firePropertyChange("lowLimit", this.lowLimit, this.lowLimit = limit);
     }
 
     /**
      * @return the current high limit for alert on the block.
      */
     public Double getHighLimit() {
-        return highlimit;
+        return highLimit;
     }
 
     /**
@@ -172,14 +168,14 @@ public class DisplayAlerts extends ModelObject implements Closable {
      * @param limit the high limit value.
      */
     public synchronized void setHighLimit(Double limit) {
-        firePropertyChange("highlimit", this.highlimit, this.highlimit = limit);
+        firePropertyChange("highLimit", this.highLimit, this.highLimit = limit);
     }
 
     /**
      * @return the current delay in for the alert on the block.
      */
     public Double getDelayIn() {
-        return delayin;
+        return delayIn;
     }
 
     /**
@@ -187,14 +183,14 @@ public class DisplayAlerts extends ModelObject implements Closable {
      * @param delayin the delay in value.
      */
     public synchronized void setDelayIn(Double delayin) {
-        firePropertyChange("delayin", this.delayin, this.delayin = delayin);
+        firePropertyChange("delayIn", this.delayIn, this.delayIn = delayin);
     }
 
     /**
      * @return the current alerts delay out for the block.
      */
     public Double getDelayOut() {
-        return delayout;
+        return delayOut;
     }
 
     /**
@@ -202,9 +198,8 @@ public class DisplayAlerts extends ModelObject implements Closable {
      * @param delayout the delay out value.
      */
     public synchronized void setDelayOut(Double delayout) {
-        firePropertyChange("delayout", this.delayout, this.delayout = delayout);
+        firePropertyChange("delayOut", this.delayOut, this.delayOut = delayout);
     }
-
 
     /**
      * {@inheritDoc}

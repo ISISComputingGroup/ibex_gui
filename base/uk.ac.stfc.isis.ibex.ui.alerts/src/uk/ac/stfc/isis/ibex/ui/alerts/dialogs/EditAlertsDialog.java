@@ -62,7 +62,7 @@ public class EditAlertsDialog extends TitleAreaDialog {
 		setShellStyle(SWT.DIALOG_TRIM | SWT.RESIZE | SWT.APPLICATION_MODAL);
 		this.configServer = Configurations.getInstance().server();
 		this.alertsServer = AlertsActivator.getInstance().getServer();
-		this.viewModel = new AlertsViewModel(Configurations.getInstance().display().getDisplayAlerts(),
+		this.viewModel = new AlertsViewModel(Configurations.getInstance().display(),
 				alertsServer);
 		viewModel.addPropertyChangeListener("error", new PropertyChangeListener() {
 			@Override

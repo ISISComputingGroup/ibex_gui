@@ -124,7 +124,7 @@ public class AlertsSettingTable extends DataboundTable<DisplayAlerts> {
             @Override
 			public String stringFromRow(DisplayAlerts setting) {
                 if (setting != null) {
-                	if (setting.getHighLimit() != null) {
+                	if (setting.getDelayIn() != null) {
                 		 return setting.getDelayIn().toString();
                 	}
                 }
@@ -139,7 +139,7 @@ public class AlertsSettingTable extends DataboundTable<DisplayAlerts> {
             @Override
 			public String stringFromRow(DisplayAlerts setting) {
                 if (setting != null) {
-                	if (setting.getHighLimit() != null) {
+                	if (setting.getDelayOut() != null) {
                 		 return setting.getDelayOut().toString();
                 	}
                 }

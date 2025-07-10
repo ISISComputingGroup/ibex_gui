@@ -21,8 +21,6 @@ package uk.ac.stfc.isis.ibex.ui.alerts.dialogs;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
-import org.eclipse.jface.dialogs.IMessageProvider;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -44,27 +42,27 @@ import uk.ac.stfc.isis.ibex.ui.alerts.AlertsViewModel;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class AlertsEditorPanel extends Composite {
-    private static final String RESET_ALL_DIALOG_TITLE = "Confirm Restore";
-    private static final String RESET_ALL_DIALOG_MESSAGE = "Are you sure you want to restore all alerts settings to their configuration values?";
-	private static final String CONFIRM_CHANGES_HINT = "WARNING! The settings applied here are not permanent and will be overriden if current configuration changes (see: User Manual - Run Controls)";
 	private final Label name;
 	private final Text txtLowLimit;
 	private final Text txtHighLimit;
 	private final Text txtDelayIn;
 	private final Text txtDelayOut;
 	private final Button chkEnabled;
+	private final Text txtMessage;
+	private final Text txtEmails;
+	private final Text txtMobiles;
 
 	private final Button btnSend;
-    private final Button btnRestoreSingle;
-    private Button btnRestoreAll;
-    private Group grpGlobalSettings;
+    private final Button btnResetAlert;
+    private Button btnResetAlertTopLevel;
+    private final Button btnApplyTopLevel;
     private boolean canSend;
 
     private final AlertsViewModel viewModel;
 	
 	private OnCanWriteChangeListener canWriteListener = canWrite -> {
         canSend = canWrite;
-        btnRestoreAll.setEnabled(canWrite);
+        btnResetAlertTopLevel.setEnabled(canWrite);
 	};
 
 	/**
@@ -75,7 +73,6 @@ public class AlertsEditorPanel extends Composite {
 	 * @param configServer The config server object used to write to the instrument.
 	 * @param viewModel    The view model for this panel.
 	 * @param dialog       The initial dialog that opened this panel.
-	 * 
 	 */
     public AlertsEditorPanel(EditAlertsDialog dialog, Composite parent, int style, ConfigServer configServer,
             final AlertsViewModel viewModel) {
@@ -85,46 +82,45 @@ public class AlertsEditorPanel extends Composite {
         setLayout(new GridLayout(3, false));
 
 		Group grpSelectedSetting = new Group(this, SWT.NONE);
-        grpSelectedSetting.setText("Alert Settings");
-        grpSelectedSetting.setLayout(new GridLayout(10, false));
+        grpSelectedSetting.setText("Block-level Alert Settings");
+        grpSelectedSetting.setLayout(new GridLayout(4, false));
 		
 		Label lblName = new Label(grpSelectedSetting, SWT.NONE);
 		lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblName.setText("Name:");
 		
 		name = new Label(grpSelectedSetting, SWT.NONE);
-        GridData gdLblName = new GridData(SWT.FILL, SWT.CENTER, false, false, 9, 1);
+        GridData gdLblName = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
 		gdLblName.widthHint = 150;
 		name.setLayoutData(gdLblName);
-		
-		addLabel(grpSelectedSetting, "Low Limit:");
-		txtLowLimit = new Text(grpSelectedSetting, SWT.BORDER);
-		addLayout(txtLowLimit);
-		addLabel(grpSelectedSetting, "High Limit:");
-		txtHighLimit = new Text(grpSelectedSetting, SWT.BORDER);
-		addLayout(txtHighLimit);
-		
 		chkEnabled = new Button(grpSelectedSetting, SWT.CHECK);
 		chkEnabled.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		chkEnabled.setText("Enabled");
 		
+		addLabel(grpSelectedSetting, "Low Limit:");
+		txtLowLimit = new Text(grpSelectedSetting, SWT.BORDER);
+		addLayout(txtLowLimit, 50);
+		addLabel(grpSelectedSetting, "High Limit:");
+		txtHighLimit = new Text(grpSelectedSetting, SWT.BORDER);
+		addLayout(txtHighLimit, 50);
+		
 		addLabel(grpSelectedSetting, "Delay In:");
 		txtDelayIn = new Text(grpSelectedSetting, SWT.BORDER);
-		addLayout(txtDelayIn);
+		addLayout(txtDelayIn, 50);
 		addLabel(grpSelectedSetting, "Delay Out:");
 		txtDelayOut = new Text(grpSelectedSetting, SWT.BORDER);
-		addLayout(txtDelayOut);
+		addLayout(txtDelayOut, 50);
 
-        btnRestoreSingle = new Button(grpSelectedSetting, SWT.NONE);
-        btnRestoreSingle.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 8, 1));
-        btnRestoreSingle.setText("Reset Values");
-        btnRestoreSingle.addSelectionListener(new SelectionAdapter() {
+        btnResetAlert = new Button(grpSelectedSetting, SWT.NONE);
+        btnResetAlert.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1));
+        btnResetAlert.setText("Reset Values");
+        btnResetAlert.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                viewModel.resetFromSource();
+                viewModel.resetBlockLevelSettings();
             }
         });
-        btnRestoreSingle.setEnabled(false);
+        btnResetAlert.setEnabled(false);
         
 		btnSend = new Button(grpSelectedSetting, SWT.NONE);
 		btnSend.setText("Apply Changes");
@@ -132,24 +128,46 @@ public class AlertsEditorPanel extends Composite {
         btnSend.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-            	dialog.setMessage(CONFIRM_CHANGES_HINT, IMessageProvider.INFORMATION);
-                viewModel.sendChanges();
+               viewModel.applyBlockLevelChanges();
             }
         });
 		parent.getShell().setDefaultButton(btnSend);
 
-        grpGlobalSettings = new Group(this, SWT.NONE);
-        grpGlobalSettings.setText("Global Settings");
-        grpGlobalSettings.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
-        grpGlobalSettings.setLayout(new GridLayout(1, false));
-
-        btnRestoreAll = new Button(grpGlobalSettings, SWT.WRAP | SWT.PUSH);
-        GridData gdBtnRestoreAll = new GridData(SWT.CENTER, SWT.CENTER, true, true, 1, 1);
-        gdBtnRestoreAll.widthHint = 133;
-        btnRestoreAll.setLayoutData(gdBtnRestoreAll);
-        btnRestoreAll.setText("Restore All \n Configuration Values");
-        btnRestoreAll.addSelectionListener(restoreAllConfigurationValues);
-        
+		Group grpGlobalSettings = new Group(this, SWT.NONE);
+        grpGlobalSettings.setText("Global Alert Settings");
+        grpGlobalSettings.setLayout(new GridLayout(2, false));
+        addLabel(grpGlobalSettings, "Message:");
+        txtMessage = new Text(grpGlobalSettings, SWT.BORDER);
+		addLayout(txtMessage, 150);
+		txtMessage.setToolTipText("The message to send when the alert is triggered");
+        addLabel(grpGlobalSettings, "Emails(comma separated):");
+        txtEmails = new Text(grpGlobalSettings, SWT.BORDER);
+        txtEmails.setToolTipText("Emails to notify when the alert is triggered");
+		addLayout(txtEmails, 150);
+        addLabel(grpGlobalSettings, "Mobiles(comma separated):");
+        txtMobiles = new Text(grpGlobalSettings, SWT.BORDER);
+        txtMobiles.setToolTipText("Mobile numbers to text when the alert is triggered");
+		addLayout(txtMobiles, 150);
+		btnResetAlertTopLevel = new Button(grpGlobalSettings, SWT.NONE);
+		btnResetAlertTopLevel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		btnResetAlertTopLevel.setText("Reset Values");
+		btnResetAlertTopLevel.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                viewModel.resetTopLevelSettings();
+            }
+        });
+		btnResetAlertTopLevel.setEnabled(false);
+		
+		btnApplyTopLevel = new Button(grpGlobalSettings, SWT.NONE);
+		btnApplyTopLevel.setText("Apply Changes");
+		btnApplyTopLevel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		btnApplyTopLevel.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+               viewModel.applyTopLevelChanges();
+            }
+        });
         configServer.saveAs().addOnCanWriteChangeListener(canWriteListener);
         setModel(viewModel);
         setAlertDetails(null);
@@ -160,10 +178,10 @@ public class AlertsEditorPanel extends Composite {
 	/**
 	 * @param field the text field to add layout data to
 	 */
-	private void addLayout(final Text field) {
-		GridData gdTxtLow = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-        gdTxtLow.widthHint = 50;
-        field.setLayoutData(gdTxtLow);
+	private void addLayout(final Text field, int width) {
+		GridData textField = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+        textField.widthHint = width;
+        field.setLayoutData(textField);
 	}
 
 	/**
@@ -171,9 +189,9 @@ public class AlertsEditorPanel extends Composite {
 	 * @param label the text of the label
 	 */
 	private void addLabel(Group grpSelectedSetting, String label) {
-		Label lblLowLimit = new Label(grpSelectedSetting, SWT.NONE);
-		lblLowLimit.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblLowLimit.setText(label);
+		Label newLabel = new Label(grpSelectedSetting, SWT.NONE);
+		newLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		newLabel.setText(label);
 	}
 
     private void setModel(AlertsViewModel viewModel) {
@@ -191,6 +209,12 @@ public class AlertsEditorPanel extends Composite {
                 BeanProperties.value(AlertsViewModel.DELAYIN_BINDING_NAME).observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtDelayOut),
                 BeanProperties.value(AlertsViewModel.DELAYOUT_BINDING_NAME).observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtMessage),
+                BeanProperties.value(AlertsViewModel.MESSAGE_BINDING_NAME).observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtEmails),
+                BeanProperties.value(AlertsViewModel.EMAILS_BINDING_NAME).observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtMobiles),
+                BeanProperties.value(AlertsViewModel.MOBILES_BINDING_NAME).observe(viewModel));
     }
 	
     private void setAllEnabled(boolean enabled) {
@@ -199,7 +223,7 @@ public class AlertsEditorPanel extends Composite {
         txtDelayIn.setEnabled(enabled);
         txtDelayOut.setEnabled(enabled);
         chkEnabled.setEnabled(enabled);
-        btnRestoreSingle.setEnabled(enabled);
+        btnResetAlert.setEnabled(enabled);
         viewModel.setSendEnabled(enabled);
     }
 
@@ -215,19 +239,10 @@ public class AlertsEditorPanel extends Composite {
 		if (alert == null) {
 			name.setText("");
             setAllEnabled(false);
+            viewModel.resetTopLevelSettings();
 			return;
 		}
         setAllEnabled(canSend);
 		name.setText(alert.getName());
 	}
-
-    private SelectionAdapter restoreAllConfigurationValues = new SelectionAdapter() {
-        @Override
-        public void widgetSelected(SelectionEvent e) {
-            if (MessageDialog.openConfirm(getShell(), RESET_ALL_DIALOG_TITLE, RESET_ALL_DIALOG_MESSAGE)) {
-                viewModel.resetAlertSettings();
-                setAlertDetails(null);
-            }
-        }
-    };
 }

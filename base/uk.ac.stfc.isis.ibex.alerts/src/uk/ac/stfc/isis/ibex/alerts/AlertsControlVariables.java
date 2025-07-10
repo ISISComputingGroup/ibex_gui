@@ -24,6 +24,7 @@ import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.epics.switching.WritableFactory;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.InstrumentUtils;
+import uk.ac.stfc.isis.ibex.instrument.channels.CharWaveformChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DefaultChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
 import uk.ac.stfc.isis.ibex.instrument.channels.StringChannel;
@@ -150,5 +151,74 @@ public class AlertsControlVariables {
 	public Writable<Double> setDelayOut(String blockName) {
 		return writeFactory.getSwitchableWritable(new DoubleChannel(),
 				InstrumentUtils.addPrefix(alertPVs.getDelayOutPv(blockName)));
+	}
+
+	/**
+	 * Gets an observable looking at the alert-control message PV.
+	 *
+	 * @return the forwarding observable
+	 */
+	public ForwardingObservable<String> getMessage() {
+		return obsFactory.getSwitchableObservable(new CharWaveformChannel(),
+				InstrumentUtils.addPrefix(alertPVs.getMessagePv()));
+	}
+
+	/**
+	 * Gets a writable for the alert-control message PV.
+	 *
+	 * @return the writable
+	 */
+	public Writable<String> setMessage() {
+		return writeFactory.getSwitchableWritable(new StringChannel(),
+				InstrumentUtils.addPrefix(alertPVs.getMessagePv()));
+	}
+
+	/**
+	 * Gets an observable looking at the alert-control emails PV.
+	 *
+	 * @return the forwarding observable
+	 */
+	public ForwardingObservable<String> getEmails() {
+		return obsFactory.getSwitchableObservable(new CharWaveformChannel(),
+				InstrumentUtils.addPrefix(alertPVs.getEmailsPv()));
+	}
+
+	/**
+	 * Gets a writable for the alert-control emails PV.
+	 *
+	 * @return the writable
+	 */
+	public Writable<String> setEmails() {
+		return writeFactory.getSwitchableWritable(new CharWaveformChannel(),
+				InstrumentUtils.addPrefix(alertPVs.getEmailsPv()));
+	}
+
+	/**
+	 * Gets an observable looking at the alert-control mobiles PV.
+	 *
+	 * @return the forwarding observable
+	 */
+	public ForwardingObservable<String> getMobiles() {
+		return obsFactory.getSwitchableObservable(new CharWaveformChannel(),
+				InstrumentUtils.addPrefix(alertPVs.getMobilesPv()));
+	}
+
+	/**
+	 * Gets a writable for the alert-control mobiles PV.
+	 *
+	 * @return the writable
+	 */
+	public Writable<String> setMobiles() {
+		return writeFactory.getSwitchableWritable(new StringChannel(),
+				InstrumentUtils.addPrefix(alertPVs.getMobilesPv()));
+	}
+
+	/**
+	 * Gets the PVs used by the alerts control.
+	 *
+	 * @return the PVs
+	 */	
+	public AlertsPVs getPVs() {
+		return alertPVs;
 	}
 }

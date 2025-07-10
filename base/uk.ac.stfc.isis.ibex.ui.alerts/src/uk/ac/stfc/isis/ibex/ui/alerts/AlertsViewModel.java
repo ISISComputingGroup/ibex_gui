@@ -18,7 +18,6 @@
 
 package uk.ac.stfc.isis.ibex.ui.alerts;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
@@ -28,7 +27,10 @@ import org.apache.logging.log4j.Logger;
 
 import uk.ac.stfc.isis.ibex.alerts.AlertsServer;
 import uk.ac.stfc.isis.ibex.alerts.AlertsSetter;
+import uk.ac.stfc.isis.ibex.alerts.AlertsTopLevelSetter;
+import uk.ac.stfc.isis.ibex.configserver.Displaying;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayAlerts;
+import uk.ac.stfc.isis.ibex.configserver.displaying.TopLevelAlertSettings;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
@@ -51,7 +53,12 @@ public class AlertsViewModel extends ErrorMessageProvider {
     private boolean enabled;
 	private Double delayIn;
     private Double delayOut;
+    private String message;
+    private String emails;
+    private String mobiles;
     private DisplayAlerts source;
+    private final AlertsTopLevelSetter topLevelAlertsetters;
+    private final TopLevelAlertSettings topLevelAlertSource;
  
     /**
      * Field that the GUI should bind to to update high limit.
@@ -69,15 +76,30 @@ public class AlertsViewModel extends ErrorMessageProvider {
 	public static final String ENABLED_BINDING_NAME = "enabled";
 
 	/**
-     * Field that the GUI should bind to to update DelayIn flag.
+     * Field that the GUI should bind to to update DelayIn.
      */
 	public static final String DELAYIN_BINDING_NAME = "delayInString";
 
 	/**
-	 * Field that the GUI should bind to to update DelayOut flag.
+	 * Field that the GUI should bind to to update DelayOut.
 	 */
 	public static final String DELAYOUT_BINDING_NAME = "delayOutString";
 
+	/**
+	 * Field that the GUI should bind to to update alert message.
+	 */
+	public static final String MESSAGE_BINDING_NAME = "message";
+	
+	/**
+	 * Field that the GUI should bind to to update email.
+	 */
+	public static final String EMAILS_BINDING_NAME = "emails";
+	
+	/**
+	 * Field that the GUI should bind to to update mobile.
+	 */
+	public static final String MOBILES_BINDING_NAME = "mobiles";
+	
     /**
      * Creates the view model for changing the alert control settings outside of a
      * configuration.
@@ -85,14 +107,15 @@ public class AlertsViewModel extends ErrorMessageProvider {
      * The setters are created here so as the PVs have some time to connect
      * before writing to them.
      * 
-     * @param alerts
-     *            The alert to be configured.
+     * @param config the configuration containing the alerts settings.
      * @param alertsServer
      *            The object for creating the PV names for alerts control settings.
      */
-    public AlertsViewModel(Collection<DisplayAlerts> alerts, final AlertsServer alertsServer) {
-        setters = Collections.unmodifiableMap(alerts.stream()
+    public AlertsViewModel(final Displaying config, final AlertsServer alertsServer) {
+        setters = Collections.unmodifiableMap(config.getDisplayAlerts().stream()
                 .collect(Collectors.toMap(alert -> alert, alert -> new AlertsSetter(alert.getName(), alertsServer))));
+        topLevelAlertsetters = new AlertsTopLevelSetter(alertsServer);
+        topLevelAlertSource = config.getTopLevelAlertSettings();
     }
 
     /**
@@ -192,6 +215,50 @@ public class AlertsViewModel extends ErrorMessageProvider {
 	}
 
 	/**
+	 * @return the message
+	 */
+	public String getMessage() {
+		return message;
+	}
+
+	/**
+	 * @param message the message to set
+	 */
+	public void setMessage(String message) {
+		firePropertyChange("message", this.message, this.message = message);
+	}
+
+	/**
+	 * @return the emails
+	 */
+	public String getEmails() {
+		return emails;
+	}
+
+	/**
+	 * @param emails the emails to set
+	 */
+	public void setEmails(String emails) {
+		firePropertyChange("emails", this.emails, this.emails = emails);
+		validate();
+	}
+
+	/**
+	 * @return the mobiles
+	 */
+	public String getMobiles() {
+		return mobiles;
+	}
+
+	/**
+	 * @param mobiles the mobiles to set
+	 */
+	public void setMobiles(String mobiles) {
+		firePropertyChange("mobiles", this.mobiles, this.mobiles = mobiles);
+		this.mobiles = mobiles;
+	}
+
+	/**
      * Resets the alerts settings to the original settings.
      */
     public void resetAlertSettings() {
@@ -232,7 +299,7 @@ public class AlertsViewModel extends ErrorMessageProvider {
     /**
      * Sets the alert changes to the block.
      */
-    public void sendChanges() {
+    public void applyBlockLevelChanges() {
     	if (source != null) {
     		AlertsSetter setter = setters.get(source);
     		setter.setEnabled(enabled);
@@ -243,7 +310,16 @@ public class AlertsViewModel extends ErrorMessageProvider {
     	}
     	setSendEnabled(false);
     }
-	
+
+    /**
+     * Sets the top level alert changes.
+     */
+    public void applyTopLevelChanges() {
+    	topLevelAlertsetters.setMessage(message);
+    	topLevelAlertsetters.setEmails(emails);
+    	topLevelAlertsetters.setMobiles(mobiles);
+    }
+
     /**
      * Gets whether the send changes button is enabled or not.
      * 
@@ -358,7 +434,7 @@ public class AlertsViewModel extends ErrorMessageProvider {
 	/**
 	 * Resets the alert control settings to the original settings from the source.
 	 */
-	public void resetFromSource() {
+	public void resetBlockLevelSettings() {
     	Optional<DisplayAlerts> originalAlert = setters.keySet().stream()
     			.filter(source::equals)
     			.findFirst();
@@ -379,4 +455,14 @@ public class AlertsViewModel extends ErrorMessageProvider {
     		LOG.error(String.format("Attempting to reset alert %s from source failed because the block was not found.", source));
     	}
     }
+	
+	/**
+	 * Resets the alert control settings to the original settings from the source.
+	 */
+	public void resetTopLevelSettings() {
+		LOG.info("Resetting top level alert settings");
+		setMessage(topLevelAlertSource.getMessage());
+		setEmails(topLevelAlertSource.getEmails());
+		setMobiles(topLevelAlertSource.getMobiles());
+	}
 }
