@@ -123,15 +123,6 @@ pipeline {
         archiveCheckstyleResults()
       }
     }
-    
-    stage("Doxygen") {
-      steps {
-        bat '''
-            "C:\\Program Files\\doxygen\\bin\\doxygen.exe" build\\ibex_gui_doxy.config
-            '''
-      }
-    }
-  }
   
   post {
     always {
