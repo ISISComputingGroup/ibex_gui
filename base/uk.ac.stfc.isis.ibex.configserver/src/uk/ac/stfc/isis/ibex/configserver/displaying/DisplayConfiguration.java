@@ -76,7 +76,6 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 		this.configServer = configServer;
 		this.runControlServer = runControlServer;
 		this.alertsServer = alertsServer;
-		//topLevelAlertSettings = new TopLevelAlertSettings(alertsServer);
 		setSource(config);
 	}
 
@@ -91,6 +90,7 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 		setDisplayBlocks(value.getBlocks());
 		setGroups(value.getGroups());
 		setDisplayAlerts(value.getBlocks());
+		setTopLevelAlertSettings();
 		return this;
 	}
 
@@ -265,10 +265,6 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 	 * @param blocks the blocks based on the configuration
 	 */
 	protected void setDisplayAlerts(Collection<Block> blocks) {
-		if (null != topLevelAlertSettings) {
-			topLevelAlertSettings.close();
-		}
-		topLevelAlertSettings = new TopLevelAlertSettings(alertsServer);
 		// Close old display alerts.
 		if (displayAlerts != null) {
 			displayAlerts.forEach(DisplayAlerts::close);
@@ -286,5 +282,15 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
      */
 	public TopLevelAlertSettings getTopLevelAlertSettings() {
 		return topLevelAlertSettings;
+	}
+
+    /**
+     * Returns the top-level alerts settings.
+     */
+	public void setTopLevelAlertSettings() {
+		if (null != topLevelAlertSettings) {
+            topLevelAlertSettings.close();
+        }
+		topLevelAlertSettings = new TopLevelAlertSettings(alertsServer);
 	}
 }

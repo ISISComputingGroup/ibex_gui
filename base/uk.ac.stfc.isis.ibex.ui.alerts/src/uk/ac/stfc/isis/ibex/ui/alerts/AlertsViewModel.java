@@ -18,6 +18,7 @@
 
 package uk.ac.stfc.isis.ibex.ui.alerts;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
@@ -34,7 +35,7 @@ import uk.ac.stfc.isis.ibex.configserver.displaying.TopLevelAlertSettings;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
-import uk.ac.stfc.isis.ibex.validators.RunControlValidator;
+import uk.ac.stfc.isis.ibex.validators.AlertValidator;
 
 /**
  * ViewModel for the run-control, allowing blocks to be obtained from the
@@ -42,9 +43,14 @@ import uk.ac.stfc.isis.ibex.validators.RunControlValidator;
  */
 public class AlertsViewModel extends ErrorMessageProvider {
 	private static final Logger LOG = IsisLog.getLogger(AlertsViewModel.class);
+	private static final String ASTERISK = "*";
+	private static final String SEMI_COLON = ";";
+	private static final String SPACE = " ";
+	private static final String EMAIL_MASK = "(?<=.{2}).(?=.*@)";
+	private static final String MOBILE_MASK = "(?<=.{2}).(?=.{2})";
     private final Map<DisplayAlerts, AlertsSetter> setters;
     
-    private final RunControlValidator validator = new RunControlValidator();
+    private final AlertValidator validator = new AlertValidator();
 
     private boolean sendEnabled;
     
@@ -57,8 +63,9 @@ public class AlertsViewModel extends ErrorMessageProvider {
     private String emails;
     private String mobiles;
     private DisplayAlerts source;
-    private final AlertsTopLevelSetter topLevelAlertsetters;
-    private final TopLevelAlertSettings topLevelAlertSource;
+    private final AlertsTopLevelSetter topLevelSetters;
+    private final TopLevelAlertSettings topLevelSource;
+    private boolean canApplyTopLevelChanges	 = true; // Flag to indicate if top level changes can be applied;
  
     /**
      * Field that the GUI should bind to to update high limit.
@@ -93,12 +100,17 @@ public class AlertsViewModel extends ErrorMessageProvider {
 	/**
 	 * Field that the GUI should bind to to update email.
 	 */
-	public static final String EMAILS_BINDING_NAME = "emails";
+	public static final String EMAILS_BINDING_NAME = "maskedEmails";
 	
 	/**
 	 * Field that the GUI should bind to to update mobile.
 	 */
-	public static final String MOBILES_BINDING_NAME = "mobiles";
+	public static final String MOBILES_BINDING_NAME = "maskedMobiles";
+
+	/**
+	 * Field that the GUI should to allow top level changes to be applied.
+	 */
+	public static final String CAN_CHANGE_TOPLEVEL_BINDING_NAME = "canApplyTopLevelChanges";
 	
     /**
      * Creates the view model for changing the alert control settings outside of a
@@ -113,9 +125,10 @@ public class AlertsViewModel extends ErrorMessageProvider {
      */
     public AlertsViewModel(final Displaying config, final AlertsServer alertsServer) {
         setters = Collections.unmodifiableMap(config.getDisplayAlerts().stream()
-                .collect(Collectors.toMap(alert -> alert, alert -> new AlertsSetter(alert.getName(), alertsServer))));
-        topLevelAlertsetters = new AlertsTopLevelSetter(alertsServer);
-        topLevelAlertSource = config.getTopLevelAlertSettings();
+                .collect(Collectors.toMap(alert -> alert, alert -> new AlertsSetter(alert.getName(), alertsServer), (v1, v2) -> v1)));
+        topLevelSetters = new AlertsTopLevelSetter(alertsServer);
+        topLevelSource = config.getTopLevelAlertSettings();
+        resetTopLevelSettings(this);
     }
 
     /**
@@ -133,7 +146,7 @@ public class AlertsViewModel extends ErrorMessageProvider {
 	public void setLowLimit(Double lowLimit) {
 		firePropertyChange("lowLimit", this.lowLimit, this.lowLimit = lowLimit);
 		firePropertyChange("lowLimitString", null, getLowLimitString());
-		validate();
+		validateDetails();
 	}
 
 	/**
@@ -153,7 +166,7 @@ public class AlertsViewModel extends ErrorMessageProvider {
 	public void setHighLimit(Double highLimit) {
 		firePropertyChange("highLimit", this.highLimit, this.highLimit = highLimit);
 		firePropertyChange("highLimitString", null, getHighLimitString());
-		validate();
+		validateDetails();
 	}
 
 	/**
@@ -172,7 +185,7 @@ public class AlertsViewModel extends ErrorMessageProvider {
 	 */
 	public void setEnabled(boolean enabled) {
 		firePropertyChange("enabled", this.enabled, this.enabled = enabled);
-		validate();
+		validateDetails();
 	}
 
 	/**
@@ -191,7 +204,7 @@ public class AlertsViewModel extends ErrorMessageProvider {
 	public void setDelayIn(Double delayIn) {
 		firePropertyChange("delayIn", this.delayIn, this.delayIn = delayIn);
 		firePropertyChange("delayInString", null, getDelayInString());
-		validate();
+		validateDetails();
 	}
 
 	/**
@@ -211,7 +224,7 @@ public class AlertsViewModel extends ErrorMessageProvider {
 	public void setDelayOut(Double delayOut) {
 		firePropertyChange("delayOut", this.delayOut, this.delayOut = delayOut);
 		firePropertyChange("delayOutString", null, getDelayOutString());
-		validate();
+		validateDetails();
 	}
 
 	/**
@@ -240,7 +253,8 @@ public class AlertsViewModel extends ErrorMessageProvider {
 	 */
 	public void setEmails(String emails) {
 		firePropertyChange("emails", this.emails, this.emails = emails);
-		validate();
+		firePropertyChange("maskedEmails", null, getMaskedEmails());
+		validateTopLevel();
 	}
 
 	/**
@@ -255,7 +269,8 @@ public class AlertsViewModel extends ErrorMessageProvider {
 	 */
 	public void setMobiles(String mobiles) {
 		firePropertyChange("mobiles", this.mobiles, this.mobiles = mobiles);
-		this.mobiles = mobiles;
+		firePropertyChange("maskedMobiles", null, getMaskedMobiles());
+		validateTopLevel();
 	}
 
 	/**
@@ -293,13 +308,14 @@ public class AlertsViewModel extends ErrorMessageProvider {
     		setDelayIn(source.getDelayIn());
     		setDelayOut(source.getDelayOut());
 		}
-		validate();
+		validateDetails();
 	}
 
     /**
      * Sets the alert changes to the block.
+     * @param model the model to apply changes to
      */
-    public void applyBlockLevelChanges() {
+    public void applyBlockLevelChanges(AlertsViewModel model) {
     	if (source != null) {
     		AlertsSetter setter = setters.get(source);
     		setter.setEnabled(enabled);
@@ -309,15 +325,6 @@ public class AlertsViewModel extends ErrorMessageProvider {
     		setter.setDelayOut(delayOut);
     	}
     	setSendEnabled(false);
-    }
-
-    /**
-     * Sets the top level alert changes.
-     */
-    public void applyTopLevelChanges() {
-    	topLevelAlertsetters.setMessage(message);
-    	topLevelAlertsetters.setEmails(emails);
-    	topLevelAlertsetters.setMobiles(mobiles);
     }
 
     /**
@@ -340,11 +347,29 @@ public class AlertsViewModel extends ErrorMessageProvider {
 	}
 
 	/**
+	 * Gets whether the top level changes can be applied or not.
+	 * @return True if the top level changes can be applied
+	 */
+	public boolean getCanApplyTopLevelChanges() {
+		return canApplyTopLevelChanges;
+	}
+	
+	/**
+	 * Sets whether the top level changes can be applied or not.
+	 * 
+	 * @param canApplyTopLevelChanges True if the top level changes can be applied
+	 */
+	public void setCanApplyTopLevelChanges(boolean canApplyTopLevelChanges) {
+		firePropertyChange("canApplyTopLevelChanges", this.canApplyTopLevelChanges,
+				this.canApplyTopLevelChanges = canApplyTopLevelChanges);
+	}
+
+	/**
 	 * Validates the current settings and updates the error message and send button
 	 * accordingly.
 	 */
-	private void validate() {
-		boolean isValid = validator.isValid(lowLimit, highLimit, enabled);
+	private void validateDetails() {
+		boolean isValid = validator.alertDetailsAreValid(lowLimit, highLimit, enabled);
 		setError(!isValid, validator.getErrorMessage());
 		setSendEnabled(isValid);
 	}
@@ -432,9 +457,44 @@ public class AlertsViewModel extends ErrorMessageProvider {
 	}
 
 	/**
-	 * Resets the alert control settings to the original settings from the source.
+	 * Gets the masked emails.
+	 * 
+	 * @return the masked emails
 	 */
-	public void resetBlockLevelSettings() {
+	public String getMaskedEmails() {
+        return setMask(emails, EMAIL_MASK);
+    }
+	
+	/**
+	 * Sets the masked emails.
+	 * @param emails
+	 */
+	public void setMaskedEmails(String emails) {
+		setEmails(emails);
+	}
+	
+	/**
+	 * Gets the masked mobiles.
+	 * 
+	 * @return the masked mobiles
+	 */
+	public String getMaskedMobiles() {
+        return setMask(mobiles, MOBILE_MASK);
+    }
+	
+	/**	
+	 * Sets the masked mobiles.
+	 * @param mobiles
+	 */
+	public void setMaskedMobiles(String mobiles) {
+		setMobiles(mobiles);
+	}
+
+	/**
+	 * Resets the alert control settings to the original settings from the source.
+	 * @param model the model to reset
+	 */
+	public void resetBlockLevelSettings(AlertsViewModel model) {
     	Optional<DisplayAlerts> originalAlert = setters.keySet().stream()
     			.filter(source::equals)
     			.findFirst();
@@ -455,14 +515,52 @@ public class AlertsViewModel extends ErrorMessageProvider {
     		LOG.error(String.format("Attempting to reset alert %s from source failed because the block was not found.", source));
     	}
     }
-	
+
+    /**
+     * Sets the top level alert changes.
+     * @param model the model to apply changes to
+     */
+    public void applyTopLevelChanges(AlertsViewModel model) {
+    	validateTopLevel();
+    	topLevelSetters.setMessage(message);
+    	topLevelSetters.setEmails(emails);
+    	topLevelSetters.setMobiles(mobiles);
+    }
+ 
 	/**
 	 * Resets the alert control settings to the original settings from the source.
+	 * @param model the model to reset
 	 */
-	public void resetTopLevelSettings() {
+	public void resetTopLevelSettings(AlertsViewModel model) {
 		LOG.info("Resetting top level alert settings");
-		setMessage(topLevelAlertSource.getMessage());
-		setEmails(topLevelAlertSource.getEmails());
-		setMobiles(topLevelAlertSource.getMobiles());
+		setMessage(topLevelSource.getMessage());
+		setEmails(topLevelSource.getEmails());
+		setMobiles(topLevelSource.getMobiles());
+	}
+	
+	/**
+	 * Sets the mask for the given values.
+	 * 
+	 * @param values the values to mask
+	 * @param mask   the regex mask to apply
+	 * @return the masked values
+	 */
+	private String setMask(String values, String mask) {
+        if (values == null || values.isEmpty()) {
+            return "";
+        }
+        String result = Arrays.stream(values.split(SEMI_COLON)).map(value -> value.trim().replaceAll(mask, ASTERISK))
+                .collect(Collectors.joining(SEMI_COLON + SPACE));
+        return result.trim();
+	}
+
+	/**
+	 * Validates the current settings and updates the error message and send button
+	 * accordingly.
+	 */
+	private void validateTopLevel() {
+		boolean isValid = validator.topLevelAlertDetailsAreValid(emails, mobiles);
+		setError(!isValid, validator.getErrorMessage());
+		setCanApplyTopLevelChanges(isValid);
 	}
 }

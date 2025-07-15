@@ -212,13 +212,4 @@ public class AlertsControlVariables {
 		return writeFactory.getSwitchableWritable(new StringChannel(),
 				InstrumentUtils.addPrefix(alertPVs.getMobilesPv()));
 	}
-
-	/**
-	 * Gets the PVs used by the alerts control.
-	 *
-	 * @return the PVs
-	 */	
-	public AlertsPVs getPVs() {
-		return alertPVs;
-	}
 }

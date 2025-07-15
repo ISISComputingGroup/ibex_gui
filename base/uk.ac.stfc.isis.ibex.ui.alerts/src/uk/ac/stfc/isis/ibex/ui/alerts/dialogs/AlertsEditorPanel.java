@@ -54,7 +54,6 @@ public class AlertsEditorPanel extends Composite {
 
 	private final Button btnSend;
     private final Button btnResetAlert;
-    private Button btnResetAlertTopLevel;
     private final Button btnApplyTopLevel;
     private boolean canSend;
 
@@ -62,7 +61,6 @@ public class AlertsEditorPanel extends Composite {
 	
 	private OnCanWriteChangeListener canWriteListener = canWrite -> {
         canSend = canWrite;
-        btnResetAlertTopLevel.setEnabled(canWrite);
 	};
 
 	/**
@@ -111,26 +109,9 @@ public class AlertsEditorPanel extends Composite {
 		txtDelayOut = new Text(grpSelectedSetting, SWT.BORDER);
 		addLayout(txtDelayOut, 50);
 
-        btnResetAlert = new Button(grpSelectedSetting, SWT.NONE);
-        btnResetAlert.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1));
-        btnResetAlert.setText("Reset Values");
-        btnResetAlert.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                viewModel.resetBlockLevelSettings();
-            }
-        });
-        btnResetAlert.setEnabled(false);
-        
-		btnSend = new Button(grpSelectedSetting, SWT.NONE);
-		btnSend.setText("Apply Changes");
-        btnSend.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1));
-        btnSend.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-               viewModel.applyBlockLevelChanges();
-            }
-        });
+        btnResetAlert = createButton(grpSelectedSetting, new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1), "Reset", false, viewModel::resetBlockLevelSettings);
+        btnSend = createButton(grpSelectedSetting, new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1), "Apply", true, viewModel::applyBlockLevelChanges);
+
 		parent.getShell().setDefaultButton(btnSend);
 
 		Group grpGlobalSettings = new Group(this, SWT.NONE);
@@ -140,39 +121,48 @@ public class AlertsEditorPanel extends Composite {
         txtMessage = new Text(grpGlobalSettings, SWT.BORDER);
 		addLayout(txtMessage, 150);
 		txtMessage.setToolTipText("The message to send when the alert is triggered");
-        addLabel(grpGlobalSettings, "Emails(comma separated):");
+		
+        addLabel(grpGlobalSettings, "Emails(semi-colon separated):");
         txtEmails = new Text(grpGlobalSettings, SWT.BORDER);
         txtEmails.setToolTipText("Emails to notify when the alert is triggered");
 		addLayout(txtEmails, 150);
-        addLabel(grpGlobalSettings, "Mobiles(comma separated):");
+        addLabel(grpGlobalSettings, "Mobiles(semi-colon separated):");
         txtMobiles = new Text(grpGlobalSettings, SWT.BORDER);
         txtMobiles.setToolTipText("Mobile numbers to text when the alert is triggered");
 		addLayout(txtMobiles, 150);
-		btnResetAlertTopLevel = new Button(grpGlobalSettings, SWT.NONE);
-		btnResetAlertTopLevel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		btnResetAlertTopLevel.setText("Reset Values");
-		btnResetAlertTopLevel.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                viewModel.resetTopLevelSettings();
-            }
-        });
-		btnResetAlertTopLevel.setEnabled(false);
 		
-		btnApplyTopLevel = new Button(grpGlobalSettings, SWT.NONE);
-		btnApplyTopLevel.setText("Apply Changes");
-		btnApplyTopLevel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		btnApplyTopLevel.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-               viewModel.applyTopLevelChanges();
-            }
-        });
+		createButton(grpGlobalSettings, new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1), "Reset", true, viewModel::resetTopLevelSettings);		
+		btnApplyTopLevel = createButton(grpGlobalSettings, new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1), "Apply", true, viewModel::applyTopLevelChanges);
         configServer.saveAs().addOnCanWriteChangeListener(canWriteListener);
         setModel(viewModel);
         setAlertDetails(null);
         
         parent.addDisposeListener(e -> configServer.saveAs().removeOnCanWriteChangeListener(canWriteListener));
+	}
+
+	/**
+	 * @param viewModel the view model for this panel
+	 * @param group the parent group for the button
+	 * @param label the text of the button
+	 * @param enabled whether the button is enabled
+	 * @param onSelectAction the action to perform when the button is selected
+	 * @return the created button 
+	 */
+	private Button createButton(Group group, GridData grid, String label, boolean enabled,
+			java.util.function.Consumer<AlertsViewModel> onSelectAction) {
+		Button button = new Button(group, SWT.NONE);
+		button.setLayoutData(grid);
+		button.setText(label);
+		button.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (onSelectAction != null) {
+					onSelectAction.accept(viewModel);
+				}
+			}
+		});
+		button.setEnabled(enabled);
+		return button;
 	}
 
 	/**
@@ -215,6 +205,8 @@ public class AlertsEditorPanel extends Composite {
                 BeanProperties.value(AlertsViewModel.EMAILS_BINDING_NAME).observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(txtMobiles),
                 BeanProperties.value(AlertsViewModel.MOBILES_BINDING_NAME).observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.enabled().observe(btnApplyTopLevel),
+                BeanProperties.value(AlertsViewModel.CAN_CHANGE_TOPLEVEL_BINDING_NAME).observe(viewModel));
     }
 	
     private void setAllEnabled(boolean enabled) {
@@ -239,7 +231,6 @@ public class AlertsEditorPanel extends Composite {
 		if (alert == null) {
 			name.setText("");
             setAllEnabled(false);
-            viewModel.resetTopLevelSettings();
 			return;
 		}
         setAllEnabled(canSend);

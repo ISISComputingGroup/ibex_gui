@@ -17,6 +17,6 @@
  */
 
 /**
- * Provides the classes used to set alerts on blocks.
+ * Provides the classes used to configure alerts (Top level and block level).
  */
 package uk.ac.stfc.isis.ibex.alerts;

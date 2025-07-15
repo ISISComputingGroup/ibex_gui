@@ -49,8 +49,9 @@ public class EditAlertsDialog extends TitleAreaDialog {
 	private AlertsControlSettingsPanel editor;
 	private final AlertsViewModel viewModel;
 	private static final String TITLE = "Alerts Settings";
+	private static final String SUB_TITLE = "Configure Alerts Control";
 
-	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/gui/Menu-Bar.html#run-control-menu";
+	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/scripting/Alerts-on-Blocks.html";
 
 	/**
 	 * Creates a dialog for configuring the alerts-control settings.
@@ -82,7 +83,7 @@ public class EditAlertsDialog extends TitleAreaDialog {
 	 */
 	@Override
 	protected Control createDialogArea(Composite parent) {
-		setTitle("Configure Alerts Control");
+		setTitle(SUB_TITLE);
 
 		editor = new AlertsControlSettingsPanel(this, parent, SWT.NONE, configServer, viewModel);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));

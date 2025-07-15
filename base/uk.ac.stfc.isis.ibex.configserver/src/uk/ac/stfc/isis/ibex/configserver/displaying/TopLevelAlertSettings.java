@@ -136,7 +136,7 @@ public class TopLevelAlertSettings extends ModelObject implements Closable {
 	 * @return the mobiles configured for the alert.
 	 */
 	public String getMobiles() {
-		return emails;
+		return mobiles;
 	}
 	
     /**

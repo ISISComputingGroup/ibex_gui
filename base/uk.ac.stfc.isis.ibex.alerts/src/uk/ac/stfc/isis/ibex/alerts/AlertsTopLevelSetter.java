@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.alerts;
 import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 
 /**
- * This class sets the alerts control on the blocks within the server.
+ * This class sets the top level alerts configuration on the server.
  */
 public class AlertsTopLevelSetter {
     private final Writable<String> messageSetter;
