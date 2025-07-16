@@ -261,6 +261,8 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.moxas</module>
 		<module>../uk.ac.stfc.isis.ibex.alerts</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.alerts</module>
+		<module>../uk.ac.stfc.isis.ibex.alerts.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.alerts.tests</module>
 	</modules>
 </project>
 

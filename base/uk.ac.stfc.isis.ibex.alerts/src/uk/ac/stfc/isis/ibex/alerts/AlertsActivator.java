@@ -48,7 +48,7 @@ public class AlertsActivator extends Closer implements BundleActivator {
 	 * Gets the eclipse bundle context.
 	 * @return the context
 	 */
-	static BundleContext getContext() {
+	public static BundleContext getContext() {
 		return context;
 	}
 	
