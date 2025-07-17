@@ -522,9 +522,12 @@ public class AlertsViewModel extends ErrorMessageProvider {
      */
     public void applyTopLevelChanges(AlertsViewModel model) {
     	validateTopLevel();
-    	topLevelSetters.setMessage(message);
     	topLevelSetters.setEmails(emails);
     	topLevelSetters.setMobiles(mobiles);
+        // Only set the message if it is changed
+    	if (!message.equals(topLevelSource.getMessage())) {
+    		topLevelSetters.setMessage(message);
+		}
     }
  
 	/**
@@ -537,7 +540,15 @@ public class AlertsViewModel extends ErrorMessageProvider {
 		setEmails(topLevelSource.getEmails());
 		setMobiles(topLevelSource.getMobiles());
 	}
-	
+
+	/**
+	 * Sets the message to new values, possibly for testing.
+	 * @param model the model to set the message for
+	 */
+	public void setAlertMessage(AlertsViewModel model) {
+		topLevelSetters.setMessage(message);
+	}
+
 	/**
 	 * Sets the mask for the given values.
 	 * 

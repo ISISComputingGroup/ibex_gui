@@ -72,36 +72,36 @@ public class AlertsEditorPanel extends Composite {
 	 * @param viewModel    The view model for this panel.
 	 * @param dialog       The initial dialog that opened this panel.
 	 */
-    public AlertsEditorPanel(EditAlertsDialog dialog, Composite parent, int style, ConfigServer configServer,
-            final AlertsViewModel viewModel) {
+	public AlertsEditorPanel(EditAlertsDialog dialog, Composite parent, int style, ConfigServer configServer,
+			final AlertsViewModel viewModel) {
 		super(parent, style);
-        this.viewModel = viewModel;
+		this.viewModel = viewModel;
 
-        setLayout(new GridLayout(3, false));
+		setLayout(new GridLayout(3, false));
 
 		Group grpSelectedSetting = new Group(this, SWT.NONE);
-        grpSelectedSetting.setText("Block-level Alert Settings");
-        grpSelectedSetting.setLayout(new GridLayout(4, false));
-		
+		grpSelectedSetting.setText("Block-level Alert Settings");
+		grpSelectedSetting.setLayout(new GridLayout(4, false));
+
 		Label lblName = new Label(grpSelectedSetting, SWT.NONE);
 		lblName.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblName.setText("Name:");
-		
+
 		name = new Label(grpSelectedSetting, SWT.NONE);
-        GridData gdLblName = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
+		GridData gdLblName = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
 		gdLblName.widthHint = 150;
 		name.setLayoutData(gdLblName);
 		chkEnabled = new Button(grpSelectedSetting, SWT.CHECK);
 		chkEnabled.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
 		chkEnabled.setText("Enabled");
-		
+
 		addLabel(grpSelectedSetting, "Low Limit:");
 		txtLowLimit = new Text(grpSelectedSetting, SWT.BORDER);
 		addLayout(txtLowLimit, 50);
 		addLabel(grpSelectedSetting, "High Limit:");
 		txtHighLimit = new Text(grpSelectedSetting, SWT.BORDER);
 		addLayout(txtHighLimit, 50);
-		
+
 		addLabel(grpSelectedSetting, "Delay In:");
 		txtDelayIn = new Text(grpSelectedSetting, SWT.BORDER);
 		addLayout(txtDelayIn, 50);
@@ -109,35 +109,45 @@ public class AlertsEditorPanel extends Composite {
 		txtDelayOut = new Text(grpSelectedSetting, SWT.BORDER);
 		addLayout(txtDelayOut, 50);
 
-        btnResetAlert = createButton(grpSelectedSetting, new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1), "Reset", false, viewModel::resetBlockLevelSettings);
-        btnSend = createButton(grpSelectedSetting, new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1), "Apply", true, viewModel::applyBlockLevelChanges);
+		btnResetAlert = createButton(grpSelectedSetting, new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1),
+				"Reset", false, viewModel::resetBlockLevelSettings);
+		btnSend = createButton(grpSelectedSetting, new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1), "Apply",
+				true, viewModel::applyBlockLevelChanges);
 
 		parent.getShell().setDefaultButton(btnSend);
 
 		Group grpGlobalSettings = new Group(this, SWT.NONE);
-        grpGlobalSettings.setText("Global Alert Settings");
-        grpGlobalSettings.setLayout(new GridLayout(2, false));
-        addLabel(grpGlobalSettings, "Message:");
-        txtMessage = new Text(grpGlobalSettings, SWT.BORDER);
+		grpGlobalSettings.setText("Global Alert Settings");
+		grpGlobalSettings.setLayout(new GridLayout(3, false));
+
+		addLabel(grpGlobalSettings, "Emails(semi-colon separated):");
+		txtEmails = new Text(grpGlobalSettings, SWT.BORDER);
+		txtEmails.setToolTipText("Emails to notify when the alert is triggered");
+		addLayout(txtEmails, 150);
+		createButton(grpGlobalSettings, new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1), "Reload", true,
+				viewModel::resetTopLevelSettings).setToolTipText("Reload the global alert settings from the server");
+
+		addLabel(grpGlobalSettings, "Mobiles(semi-colon separated):");
+		txtMobiles = new Text(grpGlobalSettings, SWT.BORDER);
+		txtMobiles.setToolTipText("Mobile numbers to text when the alert is triggered");
+		addLayout(txtMobiles, 150);
+
+		btnApplyTopLevel = createButton(grpGlobalSettings, new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1),
+				"Apply", true, viewModel::applyTopLevelChanges);
+		btnApplyTopLevel.setToolTipText("Apply the global alert settings to all blocks");
+		
+		addLabel(grpGlobalSettings, "Test Message:");
+		txtMessage = new Text(grpGlobalSettings, SWT.BORDER);
 		addLayout(txtMessage, 150);
 		txtMessage.setToolTipText("The message to send when the alert is triggered");
+		createButton(grpGlobalSettings, new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1), "Send Message", true,
+				viewModel::setAlertMessage).setToolTipText("Used to send a custom message. This will be reset when the alert is triggered.");
 		
-        addLabel(grpGlobalSettings, "Emails(semi-colon separated):");
-        txtEmails = new Text(grpGlobalSettings, SWT.BORDER);
-        txtEmails.setToolTipText("Emails to notify when the alert is triggered");
-		addLayout(txtEmails, 150);
-        addLabel(grpGlobalSettings, "Mobiles(semi-colon separated):");
-        txtMobiles = new Text(grpGlobalSettings, SWT.BORDER);
-        txtMobiles.setToolTipText("Mobile numbers to text when the alert is triggered");
-		addLayout(txtMobiles, 150);
-		
-		createButton(grpGlobalSettings, new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1), "Reset", true, viewModel::resetTopLevelSettings);		
-		btnApplyTopLevel = createButton(grpGlobalSettings, new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1), "Apply", true, viewModel::applyTopLevelChanges);
-        configServer.saveAs().addOnCanWriteChangeListener(canWriteListener);
-        setModel(viewModel);
-        setAlertDetails(null);
-        
-        parent.addDisposeListener(e -> configServer.saveAs().removeOnCanWriteChangeListener(canWriteListener));
+		configServer.saveAs().addOnCanWriteChangeListener(canWriteListener);
+		setModel(viewModel);
+		setAlertDetails(null);
+
+		parent.addDisposeListener(e -> configServer.saveAs().removeOnCanWriteChangeListener(canWriteListener));
 	}
 
 	/**
