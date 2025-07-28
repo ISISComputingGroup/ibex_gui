@@ -2300,24 +2300,6 @@
       </value>
     </entry>
     <entry>
-      <key>SM300 Sample Changer</key>
-      <value>
-        <type>SM300_SAMPLE_CHANGER</type>
-        <path>sample_stack/sm300sampos.opi</path>
-        <description>The OPI for the SM300 Sample changer</description>
-        <macros>
-          <macro>
-            <name>MOTION_SET_POINT</name>
-            <description>The prefix of the Motion set points being used(e.g. LKUP:SAMPLE)</description>
-            <default/>
-          </macro>
-        </macros>
-        <categories>
-          <category>Sample changers</category>
-        </categories>
-      </value>
-    </entry>
-    <entry>
       <key>Instron stress rig</key>
       <value>
         <type>STRESS_RIG</type>
