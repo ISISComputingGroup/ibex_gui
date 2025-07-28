@@ -2660,24 +2660,6 @@
       </value>
     </entry>
     <entry>
-      <key>Astrium</key>
-      <value>
-        <type>CHOPPER</type>
-        <path>astrium_chopper/astrium_chopper.opi</path>
-        <description>The OPI for the Astrium chopper</description>
-        <macros>
-          <macro>
-            <name>ASTRIUM</name>
-            <description>The ASTRIUM PV prefix (e.g. ASTRIUM_01)</description>
-            <default>ASTRIUM_01</default>
-          </macro>
-        </macros>
-        <categories>
-          <category>Choppers</category>
-        </categories>
-      </value>
-    </entry>
-    <entry>
       <key>Water bath valve</key>
       <value>
         <type>WATER_BATH_VALVE</type>
