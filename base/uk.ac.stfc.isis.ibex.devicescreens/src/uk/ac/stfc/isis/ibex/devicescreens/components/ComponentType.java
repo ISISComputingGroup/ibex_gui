@@ -158,8 +158,6 @@ public enum ComponentType {
     CRYO_LEVEL_GAUGE,
     /** LET oscillating collimator. */
     OSCILLATING_COLLIMATOR,
-    /** SM300 sample changer.*/
-    SM300_SAMPLE_CHANGER,
     /** Dilution fridge.*/
     DILUTION_FRIDGE,
     /** Couette cell.*/

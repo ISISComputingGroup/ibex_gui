@@ -194,8 +194,6 @@ public final class ComponentIcons {
                 return "cryo_level_gauge";
             case OSCILLATING_COLLIMATOR:
                 return "oscillating_collimator";
-            case SM300_SAMPLE_CHANGER:
-            	return "sm300_sample_changer";
             case MOTION_SET_POINTS:
             	return "motion_set_points";
             case DILUTION_FRIDGE:
