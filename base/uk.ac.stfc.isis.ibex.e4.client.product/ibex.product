@@ -119,6 +119,8 @@
       <plugin id="uk.ac.stfc.isis.ibex.ui.weblinks" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.widgets" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.validators" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.alerts" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.alerts" autoStart="false" startLevel="0" />
       <property name="osgi.splashPath" value="platform:/base/plugins/uk.ac.stfc.isis.ibex.e4.product" />
    </configurations>
 

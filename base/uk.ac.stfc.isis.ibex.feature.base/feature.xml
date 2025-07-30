@@ -141,6 +141,10 @@
          version="0.0.0"/>
 
    <plugin
+         id="uk.ac.stfc.isis.ibex.alerts"
+         version="0.0.0"/>
+
+   <plugin
          id="uk.ac.stfc.isis.ibex.synoptic"
          version="0.0.0"/>
 
@@ -242,6 +246,10 @@
 
    <plugin
          id="uk.ac.stfc.isis.ibex.ui.runcontrol"
+         version="0.0.0"/>
+
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.alerts"
          version="0.0.0"/>
 
    <plugin
