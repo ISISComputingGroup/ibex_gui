@@ -88,7 +88,9 @@ public class NicosModel extends ModelObject {
     private long lastEntryTime;
     private List<QueuedScript> queuedScripts = new ArrayList<>();
 
-	private NicosErrorState error = NicosErrorState.NO_ERROR;
+    // Start with a 'connection failed' error. This will get cleared when
+    // a successful connection gets made.
+	private NicosErrorState error = NicosErrorState.CONNECTION_FAILED;
 
     /**
      * Default constructor.
