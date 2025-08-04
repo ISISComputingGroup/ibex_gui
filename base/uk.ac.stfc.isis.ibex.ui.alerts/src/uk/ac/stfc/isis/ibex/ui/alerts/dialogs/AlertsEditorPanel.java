@@ -151,7 +151,8 @@ public class AlertsEditorPanel extends Composite {
 	}
 
 	/**
-	 * @param viewModel the view model for this panel
+	 * Creates a button with the specified properties.
+	 * 
 	 * @param group the parent group for the button
 	 * @param label the text of the button
 	 * @param enabled whether the button is enabled

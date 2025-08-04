@@ -255,6 +255,7 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
      * Returns the display alerts for the blocks in this configuration.
      * @return a copy of the alerts defined for the blocks in the configuration for displaying
      */
+    @Override
 	public Collection<DisplayAlerts> getDisplayAlerts() {
 		return new ArrayList<>(displayAlerts);
 	}
@@ -280,6 +281,7 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
      * Returns the top-level alerts settings for all the blocks.
      * @return a copy of the top-level alerts settings for displaying
      */
+	@Override
 	public TopLevelAlertSettings getTopLevelAlertSettings() {
 		return topLevelAlertSettings;
 	}
