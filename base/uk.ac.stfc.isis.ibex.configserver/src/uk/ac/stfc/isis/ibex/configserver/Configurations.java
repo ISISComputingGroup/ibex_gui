@@ -29,6 +29,8 @@ import org.apache.logging.log4j.Logger;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
+import uk.ac.stfc.isis.ibex.alerts.AlertsActivator;
+import uk.ac.stfc.isis.ibex.alerts.AlertsServer;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ConfigInfo;
 import uk.ac.stfc.isis.ibex.configserver.displaying.DisplayConfiguration;
 import uk.ac.stfc.isis.ibex.configserver.internal.ConfigEditing;
@@ -64,6 +66,7 @@ public class Configurations extends Closer implements BundleActivator {
 	private final ConfigServer server;
 	private final RunControlServer runcontrol;
 	private final Collection<Subscription> loggingSubscriptions = new ArrayList<>();
+	private final AlertsServer alertsServer;
 	
 	/**
 	 * The default constructor that is called when the plugin is first loaded.
@@ -76,7 +79,8 @@ public class Configurations extends Closer implements BundleActivator {
 		server = registerForClose(new ConfigServer(variables));
 		runcontrol = RunControlActivator.getInstance().getServer();
 		
-		displaying = registerForClose(new DisplayConfiguration(variables.currentConfig, server, runcontrol));	
+		alertsServer = AlertsActivator.getInstance().getServer();
+		displaying = registerForClose(new DisplayConfiguration(variables.currentConfig, server, runcontrol, alertsServer));	
 		editing = registerForClose(new ConfigEditing(server));
 
 		iocControl = new IocControl(server);
