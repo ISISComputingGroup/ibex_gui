@@ -2300,24 +2300,6 @@
       </value>
     </entry>
     <entry>
-      <key>SM300 Sample Changer</key>
-      <value>
-        <type>SM300_SAMPLE_CHANGER</type>
-        <path>sample_stack/sm300sampos.opi</path>
-        <description>The OPI for the SM300 Sample changer</description>
-        <macros>
-          <macro>
-            <name>MOTION_SET_POINT</name>
-            <description>The prefix of the Motion set points being used(e.g. LKUP:SAMPLE)</description>
-            <default/>
-          </macro>
-        </macros>
-        <categories>
-          <category>Sample changers</category>
-        </categories>
-      </value>
-    </entry>
-    <entry>
       <key>Instron stress rig</key>
       <value>
         <type>STRESS_RIG</type>
@@ -2657,24 +2639,6 @@
             <default>loc://_LOCAL:SPEC:CHECKBOX4</default>
           </macro>
         </macros>
-      </value>
-    </entry>
-    <entry>
-      <key>Astrium</key>
-      <value>
-        <type>CHOPPER</type>
-        <path>astrium_chopper/astrium_chopper.opi</path>
-        <description>The OPI for the Astrium chopper</description>
-        <macros>
-          <macro>
-            <name>ASTRIUM</name>
-            <description>The ASTRIUM PV prefix (e.g. ASTRIUM_01)</description>
-            <default>ASTRIUM_01</default>
-          </macro>
-        </macros>
-        <categories>
-          <category>Choppers</category>
-        </categories>
       </value>
     </entry>
     <entry>
@@ -3938,6 +3902,22 @@
         </categories>
       </value>
     </entry>
+    <entry>	
+      <key>Attocube</key>
+      <value>
+        <categories/>
+        <type>UNKNOWN</type>
+        <path>attocube.opi</path>
+        <description>The OPI for the Attocube</description>
+        <macros>
+          <macro>
+            <name>ATTOCUBE</name>
+            <description>The ATTOCUBE PV prefix (e.g. ATTOCUBE_01)</description>
+			<default>ATTOCUBE_01</default>
+          </macro>
+        </macros> 
+      </value>
+    </entry>
     <entry>
       <key>LITRON</key>
       <value>
@@ -4033,7 +4013,25 @@
             <description>The AMBRHEAT PV prefix (e.g. AMBRHEAT_01)</description>
             <default>AMBRHEAT_01</default>
           </macro>
+          </macros>
+        </value>
+      </entry>
+	<entry>
+      <key>MAPS-Vacuum-System</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>MAPS_Vacuum_System.opi</path>
+        <description>The OPI for the MAPS' OPC Server, which controlls two TPGs.</description>
+        <macros>
+          <macro>
+            <name>MAPS-OPC-TPG</name>
+            <description>The OPCUA PV prefix (e.g. OPCUA_01).</description>
+            <default>OPCUA_01</default>
+          </macro>
         </macros>
+        <categories>
+          <category>Pressure sensors</category>
+        </categories>
       </value>
     </entry>
   </opis>

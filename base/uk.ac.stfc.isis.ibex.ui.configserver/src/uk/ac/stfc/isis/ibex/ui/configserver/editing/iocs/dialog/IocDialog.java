@@ -80,7 +80,7 @@ public class IocDialog extends TitleAreaDialog implements MessageDisplayer {
 	 */
 	protected final boolean readOnly;
 
-	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Create-And-Manage-Configurations#iocs-tab";
+	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/how_to/Create-and-Manage-Configurations.html#iocs-tab";
 	private static final String DESCRIPTION = "Add/Edit IOC dialog";
 
 	/**

@@ -27,6 +27,7 @@ import java.util.Set;
 
 import com.google.common.base.Strings;
 
+import uk.ac.stfc.isis.ibex.alerts.AlertsServer;
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Displaying;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
@@ -55,6 +56,9 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 
 	private final ConfigServer configServer;
 	private final RunControlServer runControlServer;
+	private final AlertsServer alertsServer;
+	private Collection<DisplayAlerts> displayAlerts;
+	private TopLevelAlertSettings topLevelAlertSettings;
 
 	/**
 	 * The constructor for a class to enable displaying configurations to a GUI.
@@ -65,11 +69,13 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 	 *                 The config server to which the config belongs.
 	 * @param runControlServer
 	 *                 The run control server controlling the state of the config.
+	 * @param alertsServer The alerts server providing alerts for the blocks in the config.	
 	 */
 	public DisplayConfiguration(ClosableObservable<Configuration> config, ConfigServer configServer,
-			RunControlServer runControlServer) {
+			RunControlServer runControlServer, AlertsServer alertsServer) {
 		this.configServer = configServer;
 		this.runControlServer = runControlServer;
+		this.alertsServer = alertsServer;
 		setSource(config);
 	}
 
@@ -83,6 +89,8 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
 		configuresBlockGWAndArchiver = value.configuresBlockGWAndArchiver();
 		setDisplayBlocks(value.getBlocks());
 		setGroups(value.getGroups());
+		setDisplayAlerts(value.getBlocks());
+		setTopLevelAlertSettings();
 		return this;
 	}
 
@@ -242,4 +250,49 @@ public class DisplayConfiguration extends TransformingObservable<Configuration, 
         sb.append("Please resolve these conflicts by removing / renaming duplicate elements as appropriate before proceeding.");
         return sb.toString();
     }
+
+    /**
+     * Returns the display alerts for the blocks in this configuration.
+     * @return a copy of the alerts defined for the blocks in the configuration for displaying
+     */
+    @Override
+	public Collection<DisplayAlerts> getDisplayAlerts() {
+		return new ArrayList<>(displayAlerts);
+	}
+
+	/**
+	 * Sets the display values of the alert defined for each block in this configuration.
+	 *
+	 * @param blocks the blocks based on the configuration
+	 */
+	protected void setDisplayAlerts(Collection<Block> blocks) {
+		// Close old display alerts.
+		if (displayAlerts != null) {
+			displayAlerts.forEach(DisplayAlerts::close);
+		}
+
+		displayAlerts = new ArrayList<>();
+		for (Block block : blocks) {
+			displayAlerts.add(new DisplayAlerts(block, alertsServer));
+		}
+	}
+	
+    /**
+     * Returns the top-level alerts settings for all the blocks.
+     * @return a copy of the top-level alerts settings for displaying
+     */
+	@Override
+	public TopLevelAlertSettings getTopLevelAlertSettings() {
+		return topLevelAlertSettings;
+	}
+
+    /**
+     * Returns the top-level alerts settings.
+     */
+	public void setTopLevelAlertSettings() {
+		if (null != topLevelAlertSettings) {
+            topLevelAlertSettings.close();
+        }
+		topLevelAlertSettings = new TopLevelAlertSettings(alertsServer);
+	}
 }

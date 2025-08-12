@@ -89,7 +89,7 @@ pipeline {
             }
             else {
                 env.IS_RELEASE = "NO"
-                env.IS_DEPLOY = "NO"
+                env.IS_DEPLOY = "YES"
                 env.IS_E4 = "YES"
             }
         }
@@ -115,20 +115,6 @@ pipeline {
             set PYTHON_HOME=${env.WORKSPACE}\\Python3
             %PYTHON3% .\\base\\uk.ac.stfc.isis.ibex.opis\\check_opi_format.py -strict -directory .\\base\\uk.ac.stfc.isis.ibex.opis
         """
-      }
-    }
-        
-    stage("Checkstyle") {
-      steps {
-        archiveCheckstyleResults()
-      }
-    }
-    
-    stage("Doxygen") {
-      steps {
-        bat '''
-            "C:\\Program Files\\doxygen\\bin\\doxygen.exe" build\\ibex_gui_doxy.config
-            '''
       }
     }
   }

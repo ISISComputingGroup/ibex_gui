@@ -57,7 +57,7 @@ public class ImportComponentDialog extends TitleAreaDialog  {
 	
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 800;
-	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Create-and-Manage-Components#import-a-component";
+	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/how_to/Create-and-Manage-Components.html#import-a-component";
 	
 	private final String title;
 	private final String subTitle;

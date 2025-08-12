@@ -55,7 +55,7 @@ public class DeviceScreenListPanel extends Composite {
 	 */
 	private static final Logger LOG = IsisLog.getLogger(DeviceScreenListPanel.class);
 
-	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/Create-and-Manage-Device-Screens";
+	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/how_to/Create-and-Manage-Device-Screens.html";
 	private static final String DESCRIPTION = "Device Screens View";
 
 	private DeviceScreensTable deviceScreenList;

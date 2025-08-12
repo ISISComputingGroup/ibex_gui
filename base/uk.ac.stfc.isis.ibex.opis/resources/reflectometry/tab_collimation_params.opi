@@ -165,7 +165,7 @@
   <widget typeId="org.csstudio.opibuilder.widgets.Image" version="1.0.0">
     <actions hook="true" hook_all="false">
       <action type="OPEN_WEBPAGE">
-        <hyperlink>https://github.com/ISISComputingGroup/ibex_user_manual/wiki/Reflectometry-View#collimation-plane-parameters</hyperlink>
+        <hyperlink>https://isiscomputinggroup.github.io/ibex_user_manual/gui/Reflectometry-View.html#collimation-plane-parameters</hyperlink>
         <description>Reflectometry view help page</description>
       </action>
     </actions>
