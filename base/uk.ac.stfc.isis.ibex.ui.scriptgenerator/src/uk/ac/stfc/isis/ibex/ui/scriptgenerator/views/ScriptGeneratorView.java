@@ -457,6 +457,7 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 				.image(Constants.IMAGE_RUN)
 				.tooltip("Run")
 				.layoutData(IBEXButton.expandingGrid)
+				.enabled(false)
 				.get();
 		pauseButton = new IBEXButton(dynamicScriptingButtonsGrp, SWT.NONE)
 				.image(Constants.IMAGE_PAUSE)
@@ -715,7 +716,6 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 				}
 			}
 
-			runButton.setEnabled(allActionsValid);
 			errorLabel.setText(allActionsValid ? "" : "\u26A0 There are invalid actions.");
 			errorLabel.setVisible(!allActionsValid);
 			errorLabel.getParent().layout();
