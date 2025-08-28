@@ -2300,24 +2300,6 @@
       </value>
     </entry>
     <entry>
-      <key>SM300 Sample Changer</key>
-      <value>
-        <type>SM300_SAMPLE_CHANGER</type>
-        <path>sample_stack/sm300sampos.opi</path>
-        <description>The OPI for the SM300 Sample changer</description>
-        <macros>
-          <macro>
-            <name>MOTION_SET_POINT</name>
-            <description>The prefix of the Motion set points being used(e.g. LKUP:SAMPLE)</description>
-            <default/>
-          </macro>
-        </macros>
-        <categories>
-          <category>Sample changers</category>
-        </categories>
-      </value>
-    </entry>
-    <entry>
       <key>Instron stress rig</key>
       <value>
         <type>STRESS_RIG</type>
@@ -2657,24 +2639,6 @@
             <default>loc://_LOCAL:SPEC:CHECKBOX4</default>
           </macro>
         </macros>
-      </value>
-    </entry>
-    <entry>
-      <key>Astrium</key>
-      <value>
-        <type>CHOPPER</type>
-        <path>astrium_chopper/astrium_chopper.opi</path>
-        <description>The OPI for the Astrium chopper</description>
-        <macros>
-          <macro>
-            <name>ASTRIUM</name>
-            <description>The ASTRIUM PV prefix (e.g. ASTRIUM_01)</description>
-            <default>ASTRIUM_01</default>
-          </macro>
-        </macros>
-        <categories>
-          <category>Choppers</category>
-        </categories>
       </value>
     </entry>
     <entry>
@@ -3965,10 +3929,10 @@
           <macro>
             <name>LITRON</name>
             <description>The control for Litron Laser Front Panel (e.g. LITRON_01)</description>
-			<default>LITRON_01</default>
+            <default>LITRON_01</default>
           </macro>
         </macros>
-		</value>
+      </value>
     </entry>
     <entry>
       <key>TLFW102C</key>
@@ -4036,6 +4000,22 @@
         <categories/>
       </value>
     </entry>
+    <entry>
+      <key>Ambrell Easy Heat Induction Furnace</key>
+      <value>
+        <categories/>
+        <type>FURNACE</type>
+        <path>ambrell_easy_heat.opi</path>
+        <description>The OPI for the Ambrell Easy Heat Induction Furnace</description>
+        <macros>
+          <macro>
+            <name>AMBRHEAT</name>
+            <description>The AMBRHEAT PV prefix (e.g. AMBRHEAT_01)</description>
+            <default>AMBRHEAT_01</default>
+          </macro>
+          </macros>
+        </value>
+      </entry>
 	<entry>
       <key>MAPS-Vacuum-System</key>
       <value>
