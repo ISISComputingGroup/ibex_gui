@@ -86,7 +86,7 @@
       <color red="0" green="0" blue="0" />
     </tab_10_foreground_color>
     <tab_10_icon_path></tab_10_icon_path>
-    <tab_10_title>Event Eng 1</tab_10_title>
+    <tab_10_title>Ev Eng 0B</tab_10_title>
     <tab_11_background_color>
       <color red="255" green="255" blue="255" />
     </tab_11_background_color>
@@ -98,7 +98,7 @@
       <color red="0" green="0" blue="0" />
     </tab_11_foreground_color>
     <tab_11_icon_path></tab_11_icon_path>
-    <tab_11_title>ADEvent 0</tab_11_title>
+    <tab_11_title>Ev Eng 1A</tab_11_title>
     <tab_12_background_color>
       <color red="255" green="255" blue="255" />
     </tab_12_background_color>
@@ -110,7 +110,7 @@
       <color red="0" green="0" blue="0" />
     </tab_12_foreground_color>
     <tab_12_icon_path></tab_12_icon_path>
-    <tab_12_title>ADEvent 1</tab_12_title>
+    <tab_12_title>Ev Eng 1B</tab_12_title>
     <tab_13_background_color>
       <color red="255" green="255" blue="255" />
     </tab_13_background_color>
@@ -122,7 +122,31 @@
       <color red="0" green="0" blue="0" />
     </tab_13_foreground_color>
     <tab_13_icon_path></tab_13_icon_path>
-    <tab_13_title>Load File</tab_13_title>
+    <tab_13_title>ADEvent 0</tab_13_title>
+    <tab_14_background_color>
+      <color red="255" green="255" blue="255" />
+    </tab_14_background_color>
+    <tab_14_enabled>true</tab_14_enabled>
+    <tab_14_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+    </tab_14_font>
+    <tab_14_foreground_color>
+      <color red="0" green="0" blue="0" />
+    </tab_14_foreground_color>
+    <tab_14_icon_path></tab_14_icon_path>
+    <tab_14_title>ADEvent 1</tab_14_title>
+    <tab_15_background_color>
+      <color red="255" green="255" blue="255" />
+    </tab_15_background_color>
+    <tab_15_enabled>true</tab_15_enabled>
+    <tab_15_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+    </tab_15_font>
+    <tab_15_foreground_color>
+      <color red="0" green="0" blue="0" />
+    </tab_15_foreground_color>
+    <tab_15_icon_path></tab_15_icon_path>
+    <tab_15_title>Load File</tab_15_title>
     <tab_1_background_color>
       <color red="255" green="255" blue="255" />
     </tab_1_background_color>
@@ -146,7 +170,7 @@
       <color red="0" green="0" blue="0" />
     </tab_2_foreground_color>
     <tab_2_icon_path></tab_2_icon_path>
-    <tab_2_title>Energy 0</tab_2_title>
+    <tab_2_title>Eng 0</tab_2_title>
     <tab_3_background_color>
       <color red="255" green="255" blue="255" />
     </tab_3_background_color>
@@ -182,7 +206,7 @@
       <color red="0" green="0" blue="0" />
     </tab_5_foreground_color>
     <tab_5_icon_path></tab_5_icon_path>
-    <tab_5_title>Channel 1</tab_5_title>
+    <tab_5_title>Chan 1</tab_5_title>
     <tab_6_background_color>
       <color red="255" green="255" blue="255" />
     </tab_6_background_color>
@@ -194,7 +218,7 @@
       <color red="0" green="0" blue="0" />
     </tab_6_foreground_color>
     <tab_6_icon_path></tab_6_icon_path>
-    <tab_6_title>Energy 1</tab_6_title>
+    <tab_6_title>Eng 1</tab_6_title>
     <tab_7_background_color>
       <color red="255" green="255" blue="255" />
     </tab_7_background_color>
@@ -230,8 +254,8 @@
       <color red="0" green="0" blue="0" />
     </tab_9_foreground_color>
     <tab_9_icon_path></tab_9_icon_path>
-    <tab_9_title>Event Eng 0</tab_9_title>
-    <tab_count>14</tab_count>
+    <tab_9_title>Ev Eng 0A</tab_9_title>
+    <tab_count>16</tab_count>
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Tabbed Container</widget_type>
@@ -273,7 +297,7 @@
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>833</width>
       <wuid>-7943822c:1933be2c5c1:-7722</wuid>
@@ -1331,7 +1355,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <name>Energy 0</name>
+      <name>Eng 0</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -1580,7 +1604,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <name>Channel 1</name>
+      <name>Chan 1</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -1663,7 +1687,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <name>Energy 1</name>
+      <name>Eng 1</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -1912,7 +1936,7 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <name>Event Eng 0</name>
+      <name>Ev Eng 0A</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -1923,7 +1947,7 @@ $(pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>833</width>
       <wuid>282ef270:189e1fea679:-77d8</wuid>
@@ -1952,6 +1976,7 @@ $(pv_value)</tooltip>
           <include_parent_macros>true</include_parent_macros>
           <Q>$(HEXAGON)</Q>
           <CHAN>C0</CHAN>
+          <ID></ID>
         </macros>
         <name>Linking Container</name>
         <opi_file>CAEN_hexagon_event_energyspec.opi</opi_file>
@@ -1995,7 +2020,91 @@ $(pv_value)</tooltip>
       <macros>
         <include_parent_macros>true</include_parent_macros>
       </macros>
-      <name>Event Eng 1</name>
+      <name>Ev Eng 0B</name>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_scrollbar>true</show_scrollbar>
+      <tooltip></tooltip>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <widget_type>Grouping Container</widget_type>
+      <width>833</width>
+      <wuid>7345cd01:1990c334284:-784c</wuid>
+      <x>1</x>
+      <y>1</y>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>3</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <group_name></group_name>
+        <height>635</height>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <Q>$(HEXAGON)</Q>
+          <CHAN>C0</CHAN>
+          <ID>2</ID>
+        </macros>
+        <name>Linking Container</name>
+        <opi_file>CAEN_hexagon_event_energyspec.opi</opi_file>
+        <resize_behaviour>0</resize_behaviour>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <tooltip></tooltip>
+        <visible>true</visible>
+        <widget_type>Linking Container</widget_type>
+        <width>793</width>
+        <wuid>7345cd01:1990c334284:-7841</wuid>
+        <x>0</x>
+        <y>6</y>
+      </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <fc>false</fc>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <foreground_color>
+        <color red="192" green="192" blue="192" />
+      </foreground_color>
+      <height>674</height>
+      <lock_children>false</lock_children>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <name>Ev Eng 1A</name>
       <rules />
       <scale_options>
         <width_scalable>true</width_scalable>
@@ -2035,6 +2144,7 @@ $(pv_value)</tooltip>
           <include_parent_macros>true</include_parent_macros>
           <Q>$(HEXAGON)</Q>
           <CHAN>C1</CHAN>
+          <ID></ID>
         </macros>
         <name>Linking Container</name>
         <opi_file>CAEN_hexagon_event_energyspec.opi</opi_file>
@@ -2053,6 +2163,90 @@ $(pv_value)</tooltip>
         <wuid>-1d551b59:18b3e94b725:-7e9e</wuid>
         <x>0</x>
         <y>12</y>
+      </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <fc>false</fc>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <foreground_color>
+        <color red="192" green="192" blue="192" />
+      </foreground_color>
+      <height>674</height>
+      <lock_children>false</lock_children>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <name>Ev Eng 1B</name>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_scrollbar>true</show_scrollbar>
+      <tooltip></tooltip>
+      <transparent>true</transparent>
+      <visible>false</visible>
+      <widget_type>Grouping Container</widget_type>
+      <width>833</width>
+      <wuid>7345cd01:1990c334284:-784b</wuid>
+      <x>1</x>
+      <y>1</y>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>3</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <group_name></group_name>
+        <height>649</height>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <Q>$(HEXAGON)</Q>
+          <CHAN>C1</CHAN>
+          <ID>2</ID>
+        </macros>
+        <name>Linking Container</name>
+        <opi_file>CAEN_hexagon_event_energyspec.opi</opi_file>
+        <resize_behaviour>0</resize_behaviour>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <tooltip></tooltip>
+        <visible>true</visible>
+        <widget_type>Linking Container</widget_type>
+        <width>799</width>
+        <wuid>7345cd01:1990c334284:-7815</wuid>
+        <x>0</x>
+        <y>6</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
