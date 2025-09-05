@@ -24,6 +24,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.e4.core.di.annotations.CanExecute;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.ui.PartInitException;
@@ -33,19 +34,27 @@ import org.eclipse.ui.browser.IWebBrowser;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
+import java.io.FileInputStream;
+import java.util.Properties;
+import java.io.IOException;
 /**
  * The handler for opening the user manual via the menu.
  */
 public class ManualHandler {
-
-    private static final String USER_MANUAL_ADDRESS = "https://shadow.nd.rl.ac.uk/ibex_user_manual";
-
     /**
      * Opens the 'User Manual' URL in help menu.
      */
 	@Execute
 	public void execute() {
-
+		Properties linkProps = new Properties();
+		try {
+			final var resourceFilePath = FileLocator.resolve(ManualHandler.class.getResource("/resources/helplink.properties")).getPath();
+			linkProps.load(new FileInputStream(resourceFilePath));
+		} catch (IOException | IllegalArgumentException ex) {	
+			LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), ex.getMessage(), ex);
+		}
+		String USER_MANUAL_ADDRESS = linkProps.getProperty("user_manual_address");
+		
         URL url = null;
         try {
             url = new URI(USER_MANUAL_ADDRESS).toURL();

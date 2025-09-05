@@ -29,6 +29,7 @@
  */
 package uk.ac.stfc.isis.ibex.ui.ioccontrol;
 
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
@@ -40,6 +41,12 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.IocControl;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXHelpButton;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
+
+import java.io.FileInputStream;
+import java.util.Properties;
+import java.io.IOException;
 
 /**
  * Class to display a dialog to start/stop IOCs.
@@ -51,7 +58,6 @@ public class IocControlDialog extends TitleAreaDialog {
 	
 	private static final Point INITIAL_SIZE = new Point(800, 600);
 	
-	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/how_to/Start-and-Stop-IOCs.html";
 	
 	private final IocControl control;
 	/**
@@ -78,6 +84,15 @@ public class IocControlDialog extends TitleAreaDialog {
 		IocControlViewModel iocControlViewModel = new IocControlViewModel(control);
 		IocControlView iocControlView = new IocControlView(parent, SWT.NONE, iocControlViewModel);
 		iocControlView.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
+		Properties linkProps = new Properties();
+		try {
+			final var resourceFilePath = FileLocator.resolve(IocControlDialog.class.getResource("/resources/helplink.properties")).getPath();
+			linkProps.load(new FileInputStream(resourceFilePath));
+		} catch (IOException | IllegalArgumentException ex) {
+			LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), ex.getMessage(), ex);
+		}
+		String HELP_LINK = linkProps.getProperty("help_link");
 		
 		new IBEXHelpButton(parent, HELP_LINK, SUB_TITLE);
 

@@ -1,9 +1,13 @@
 package uk.ac.stfc.isis.ibex.ui.scripting;
 
+import java.io.FileInputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Properties;
+import java.io.IOException;
 
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -27,7 +31,6 @@ public class ConsoleHelpButton extends WorkbenchWindowControlContribution {
 	
 //	private static final String BUTTON_TEXT = "Help";
 	private static final String TOOLTIP_TEXT = "Open user manual link in browser for help with scripting";
-	private static final String WIKI_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/gui/Scripting-View.html";
 	private static final String SYMBOLIC_PATH = "uk.ac.stfc.isis.ibex.ui.widgets";
 	private static final String HELP_ICON = "/icons/helpIcon.png";
 
@@ -36,6 +39,15 @@ public class ConsoleHelpButton extends WorkbenchWindowControlContribution {
 	 */
 	@Override
 	protected Control createControl(Composite parent) {
+		Properties linkProps = new Properties();
+		try {
+			final var resourceFilePath = FileLocator.resolve(ConsoleHelpButton.class.getResource("/resources/helplink.properties")).getPath();
+			linkProps.load(new FileInputStream(resourceFilePath)); 
+		} catch (IOException | IllegalArgumentException ex) {
+			LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), ex.getMessage(), ex);
+		}
+		String WIKI_LINK = linkProps.getProperty("help_link");
+		
 		button = new Button(parent, SWT.NONE);
 //		button.setText(BUTTON_TEXT);
 		button.setImage(ResourceManager.getPluginImage(SYMBOLIC_PATH, HELP_ICON));
