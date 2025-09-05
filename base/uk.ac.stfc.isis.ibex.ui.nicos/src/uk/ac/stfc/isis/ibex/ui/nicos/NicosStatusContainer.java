@@ -4,6 +4,7 @@ import javax.annotation.PostConstruct;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -11,9 +12,15 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXHelpButton;
+
+import java.io.FileInputStream;
+import java.util.Properties;
+import java.io.IOException;
 
 /**
  * The nicos status container.
@@ -25,7 +32,6 @@ public class NicosStatusContainer {
 	private final DataBindingContext bindingContext = new DataBindingContext();
 	private final NicosModel model = Nicos.getDefault().getModel();
 
-	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/gui/Script-Server.html";
 	private static final String DESCRIPTION = "Script Server";
 
 	/**
@@ -41,7 +47,16 @@ public class NicosStatusContainer {
 		Composite nicosStatus = new Composite(parent, SWT.NONE);
 		nicosStatus.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		nicosStatus.setLayout(new GridLayout(2, false));
-
+		
+		Properties linkProps = new Properties();
+		try {
+			final var resourceFilePath = FileLocator.resolve(NicosStatusContainer.class.getResource("/resources/helplink.properties")).getPath();
+			linkProps.load(new FileInputStream(resourceFilePath));
+		} catch (IOException | IllegalArgumentException ex) {
+			LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), ex.getMessage(), ex);
+		}
+		String HELP_LINK = linkProps.getProperty("help_link");
+		
 		new IBEXHelpButton(nicosStatus, HELP_LINK, DESCRIPTION);
 
 		Composite textComposite = new Composite(nicosStatus, SWT.NONE);
