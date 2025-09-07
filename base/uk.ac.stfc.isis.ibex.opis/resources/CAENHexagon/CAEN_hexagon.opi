@@ -53,6 +53,7 @@
       <include_parent_macros>true</include_parent_macros>
       <Q>$(HEXAGON)</Q>
       <CHAN>C0</CHAN>
+      <ID>2</ID>
     </macros>
     <minimum_tab_height>10</minimum_tab_height>
     <name>Tabbed Container</name>
@@ -612,11 +613,11 @@ $(pv_value)</tooltip>
         <vertical_alignment>1</vertical_alignment>
         <visible>true</visible>
         <widget_type>Label</widget_type>
-        <width>80</width>
+        <width>63</width>
         <wrap_words>false</wrap_words>
         <wuid>-7943822c:1933be2c5c1:-7632</wuid>
-        <x>12</x>
-        <y>522</y>
+        <x>42</x>
+        <y>486</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -652,11 +653,11 @@ $(pv_value)</tooltip>
         <vertical_alignment>1</vertical_alignment>
         <visible>true</visible>
         <widget_type>Label</widget_type>
-        <width>80</width>
+        <width>68</width>
         <wrap_words>false</wrap_words>
         <wuid>-7943822c:1933be2c5c1:-760c</wuid>
-        <x>0</x>
-        <y>595</y>
+        <x>24</x>
+        <y>522</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -1183,8 +1184,8 @@ $(pv_value)</tooltip>
         <width>672</width>
         <wrap_words>false</wrap_words>
         <wuid>557b281f:19914706948:-448f</wuid>
-        <x>92</x>
-        <y>522</y>
+        <x>114</x>
+        <y>486</y>
       </widget>
       <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
         <actions hook="false" hook_all="false" />
@@ -1229,14 +1230,14 @@ $(pv_value)</tooltip>
         <tooltip>$(pv_name)
 $(pv_value)</tooltip>
         <transparent>false</transparent>
-        <vertical_alignment>1</vertical_alignment>
+        <vertical_alignment>0</vertical_alignment>
         <visible>true</visible>
         <widget_type>Text Update</widget_type>
         <width>663</width>
         <wrap_words>false</wrap_words>
         <wuid>557b281f:19914706948:-448c</wuid>
-        <x>101</x>
-        <y>601</y>
+        <x>113</x>
+        <y>522</y>
       </widget>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">

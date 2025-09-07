@@ -139,7 +139,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_0_x_pv>$(P)$(Q):$(CHAN):ENERGYSPEC:X</trace_0_x_pv>
     <trace_0_x_pv_value />
     <trace_0_y_axis_index>1</trace_0_y_axis_index>
-    <trace_0_y_pv>$(P)$(Q):$(CHAN):ENERGYSPEC:EVENT</trace_0_y_pv>
+    <trace_0_y_pv>$(P)$(Q):$(CHAN):ENERGYSPEC$(ID):EVENT</trace_0_y_pv>
     <trace_0_y_pv_value />
     <trace_count>1</trace_count>
     <transparent>false</transparent>
@@ -180,7 +180,7 @@ $(trace_0_y_pv_value)</tooltip>
     <name>Text Update_2</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(P)$(Q):$(CHAN):ENERGYSPEC:EVENT:TMIN</pv_name>
+    <pv_name>$(P)$(Q):$(CHAN):ENERGYSPEC$(ID):EVENT:TMIN</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />
@@ -277,7 +277,7 @@ $(pv_value)</tooltip>
     <name>Text Input_1</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(P)$(Q):$(CHAN):ENERGYSPEC:EVENT:TMIN:SP</pv_name>
+    <pv_name>$(P)$(Q):$(CHAN):ENERGYSPEC$(ID):EVENT:TMIN:SP</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />
@@ -329,7 +329,7 @@ $(pv_value)</tooltip>
     <name>Text Update_6</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(P)$(Q):$(CHAN):ENERGYSPEC:EVENT:CNTS</pv_name>
+    <pv_name>$(P)$(Q):$(CHAN):ENERGYSPEC$(ID):EVENT:CNTS</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />
@@ -421,7 +421,7 @@ $(pv_value)</tooltip>
     <name>Text Update_10</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(P)$(Q):$(CHAN):ENERGYSPEC:EVENT:TMAX</pv_name>
+    <pv_name>$(P)$(Q):$(CHAN):ENERGYSPEC$(ID):EVENT:TMAX</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />
@@ -518,7 +518,7 @@ $(pv_value)</tooltip>
     <name>Text Input_2</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(P)$(Q):$(CHAN):ENERGYSPEC:EVENT:TMAX:SP</pv_name>
+    <pv_name>$(P)$(Q):$(CHAN):ENERGYSPEC$(ID):EVENT:TMAX:SP</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />
@@ -870,7 +870,7 @@ $(pv_value)</tooltip>
     <name>Text Input</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(P)$(Q):$(CHAN):ENERGYSPEC:EVENT:DESC:SP</pv_name>
+    <pv_name>$(P)$(Q):$(CHAN):ENERGYSPEC$(ID):EVENT:DESC:SP</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />
