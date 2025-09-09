@@ -22,11 +22,6 @@ package uk.ac.stfc.isis.ibex.ui.synoptic.editor.dialogs;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import java.io.FileInputStream;
-import java.util.Properties;
-import java.io.IOException;
-
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.window.Window;
@@ -40,10 +35,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.SynopticPreview;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.validators.SynopticValidator;
@@ -71,6 +65,9 @@ public class EditSynopticDialog extends TitleAreaDialog {
 	private SynopticViewModel synopticViewModel;
 
 	private SynopticValidator synopticValidator;
+	
+	private static final String HELP_LINK = Utils.getHelpLink(EditSynopticDialog.class, "help_link");
+	
 
 	/**
 	 * The constructor for the overall Synoptic editor dialog.
@@ -99,15 +96,6 @@ public class EditSynopticDialog extends TitleAreaDialog {
 		editor = new EditorPanel(parent, SWT.NONE, synopticViewModel);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		setTitle(subtitle);
-		
-		Properties linkProps = new Properties();
-		try {
-			final var resourceFilePath = FileLocator.resolve(EditSynopticDialog.class.getResource("/resources/helplink.properties")).getPath();
-			linkProps.load(new FileInputStream(resourceFilePath)); 
-		} catch (IOException | IllegalArgumentException ex) {
-			LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), ex.getMessage(), ex);
-		}
-		String HELP_LINK = linkProps.getProperty("help_link");
 		new IBEXHelpButton(parent, HELP_LINK, title);
 		return editor;
 	}

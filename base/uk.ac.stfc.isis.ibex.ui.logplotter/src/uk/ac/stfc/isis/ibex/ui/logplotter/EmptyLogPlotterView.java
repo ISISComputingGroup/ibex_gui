@@ -3,11 +3,6 @@
  */
 package uk.ac.stfc.isis.ibex.ui.logplotter;
 
-import java.io.FileInputStream;
-import java.util.Properties;
-import java.io.IOException;
-
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -15,8 +10,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXHelpButton;
 
 
@@ -33,6 +27,10 @@ public class EmptyLogPlotterView extends ViewPart {
     
     private static final String TITLE = "Log Plotter View";
     
+    private static final String HELP_LINK = Utils.getHelpLink(EmptyLogPlotterView.class, "help_link");
+    
+ 
+    
     /**
      * {@inheritDoc}
      */
@@ -47,15 +45,6 @@ public class EmptyLogPlotterView extends ViewPart {
 		Label lblDescription = new Label(parent, SWT.NONE);
 		lblDescription.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.NORMAL));
 		lblDescription.setText("This can be populated with graphs displaying block history.\r\nTo display a graph right click on a block in the blocks view above and click Display Block History.\r\nAlternatively a graph can be displayed by right clicking on a PV in an OPI and selecting Process Variable -> Log Plotter.");
-
-		Properties linkProps = new Properties();
-		try {
-			final var resourceFilePath = FileLocator.resolve(EmptyLogPlotterView.class.getResource("/resources/helplink.properties")).getPath();
-			linkProps.load(new FileInputStream(resourceFilePath)); 
-		} catch (IOException | IllegalArgumentException ex) {
-			LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), ex.getMessage(), ex);
-		}
-		String HELP_LINK = linkProps.getProperty("help_link");
 		
 		new IBEXHelpButton(parent, HELP_LINK, TITLE);
 	}

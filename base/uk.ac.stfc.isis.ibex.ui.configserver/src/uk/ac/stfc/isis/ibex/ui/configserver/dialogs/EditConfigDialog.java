@@ -23,12 +23,9 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
-import java.io.FileInputStream;
-import java.util.Properties;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.window.Window;
@@ -44,8 +41,7 @@ import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.configserver.editing.BlockFactory;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.configserver.ConfigurationViewModels;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.EditBlockDialog;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXHelpButton;
@@ -67,6 +63,10 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 	
 	private final String description;
 	private MoxaDetailsDialog moxaDetailsDialog;
+	
+	private static final String CONFIG_HELP_LINK = Utils.getHelpLink(EditConfigDialog.class, "config_help_link");
+	private static final String COMPONENT_HELP_LINK = Utils.getHelpLink(EditConfigDialog.class, "component_help_link");
+	
 	/**
 	 * Constructor.
 	 * 
@@ -127,17 +127,7 @@ public class EditConfigDialog extends ConfigDetailsDialog {
 		if (editBlockFirst) {
 			selectBlocksTab();
 		}
-		// changes
-		Properties linkProps = new Properties();
-		try {
-			final var resourceFilePath = FileLocator.resolve(EditConfigDialog.class.getResource("/resources/helplink.properties")).getPath();
-			linkProps.load(new FileInputStream(resourceFilePath)); 
-		} catch (IOException | IllegalArgumentException ex) {
-			LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), ex.getMessage(), ex);
-		}
-		String CONFIG_HELP_LINK = linkProps.getProperty("config_help_link");
-		String COMPONENT_HELP_LINK = linkProps.getProperty("component_help_link");
-		//
+		
 		// Set link according to whether this is a component or a config.
 		if (!config.getIsComponent()) {
 			new IBEXHelpButton(parent, CONFIG_HELP_LINK, description);

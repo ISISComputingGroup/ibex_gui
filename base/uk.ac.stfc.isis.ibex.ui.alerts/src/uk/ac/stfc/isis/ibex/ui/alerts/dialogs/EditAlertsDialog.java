@@ -21,7 +21,6 @@ package uk.ac.stfc.isis.ibex.ui.alerts.dialogs;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
@@ -33,17 +32,13 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.alerts.AlertsActivator;
 import uk.ac.stfc.isis.ibex.alerts.AlertsServer;
 import uk.ac.stfc.isis.ibex.ui.alerts.AlertsViewModel;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXHelpButton;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 
-import java.io.FileInputStream;
-import java.util.Properties;
-import java.io.IOException;
 
 /**
  * A dialog for editing the run control.
@@ -57,6 +52,8 @@ public class EditAlertsDialog extends TitleAreaDialog {
 	private final AlertsViewModel viewModel;
 	private static final String TITLE = "Alerts Settings";
 	private static final String SUB_TITLE = "Configure Alerts Control";
+	private static final String HELP_LINK = Utils.getHelpLink(EditAlertsDialog.class, "help_link");
+	
 
 	/**
 	 * Creates a dialog for configuring the alerts-control settings.
@@ -92,15 +89,6 @@ public class EditAlertsDialog extends TitleAreaDialog {
 
 		editor = new AlertsControlSettingsPanel(this, parent, SWT.NONE, configServer, viewModel);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
-		Properties linkProps = new Properties();
-		try {
-			final var resourceFilePath = FileLocator.resolve(EditAlertsDialog.class.getResource("/resources/helplink.properties")).getPath();
-			linkProps.load(new FileInputStream(resourceFilePath));
-		} catch (IOException | IllegalArgumentException ex) {
-			LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), ex.getMessage(), ex);
-		}
-		String HELP_LINK = linkProps.getProperty("help_link");
 		
 		new IBEXHelpButton(parent, HELP_LINK, TITLE);
 		return editor;

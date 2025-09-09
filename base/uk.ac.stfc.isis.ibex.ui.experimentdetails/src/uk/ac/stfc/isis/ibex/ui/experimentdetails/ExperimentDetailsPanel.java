@@ -19,15 +19,10 @@
 
 package uk.ac.stfc.isis.ibex.ui.experimentdetails;
 
-import java.io.FileInputStream;
-import java.util.Properties;
-import java.io.IOException;
-
 import javax.inject.Inject;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
@@ -47,8 +42,6 @@ import uk.ac.stfc.isis.ibex.ui.experimentdetails.rblookup.RBLookupViewModel;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXHelpButton;
 import uk.ac.stfc.isis.ibex.ui.widgets.observable.WritableObservingTextBox;
-import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * A panel containing details of the experiment such as RB number and the
@@ -83,6 +76,9 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 	private Button btnDisplayTitle;
 
 	private static final String DESCRIPTION = "Experiment Details View";
+	
+	private static final String HELP_LINK = Utils.getHelpLink(ExperimentDetailsPanel.class, "help_link");	
+	
 
 	/**
 	 * Create an instance of this panel.
@@ -193,15 +189,6 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 				.text("Show Title and Users in Dataweb Dashboard Page")
 				.layoutData(new GridData())
 				.get();
-		
-		Properties linkProps = new Properties();
-		try {
-			final var resourceFilePath = FileLocator.resolve(ExperimentDetailsPanel.class.getResource("/resources/helplink.properties")).getPath();			
-			linkProps.load(new FileInputStream(resourceFilePath)); 
-		} catch (IOException | IllegalArgumentException ex) {
-			LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), ex.getMessage(), ex);
-		}
-		String HELP_LINK = linkProps.getProperty("help_link");
 		
 		new IBEXHelpButton(parent, HELP_LINK, DESCRIPTION);
 	}

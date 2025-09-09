@@ -1,4 +1,5 @@
 Manifest-Version: 1.0
+Eclipse-BundleShape: dir
 Bundle-ManifestVersion: 2
 Bundle-Name: Synoptic
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.synoptic;singleton:=true

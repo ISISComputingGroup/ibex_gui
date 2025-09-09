@@ -21,14 +21,10 @@ package uk.ac.stfc.isis.ibex.ui.devicescreens;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.FileInputStream;
-import java.util.Properties;
-import java.io.IOException;
 
 import org.apache.logging.log4j.Logger;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -42,8 +38,8 @@ import org.eclipse.swt.widgets.Display;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
-import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.commands.ConfigureDeviceScreensHandler;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.list.DeviceScreensTable;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.ViewDeviceScreensDescriptionViewModel;
@@ -66,6 +62,8 @@ public class DeviceScreenListPanel extends Composite {
 
 	private ConfigureDeviceScreensHandler configureDeviceScreensHandler = new ConfigureDeviceScreensHandler();
 
+	private static final String HELP_LINK = Utils.getHelpLink(DeviceScreenListPanel.class, "help_link");
+	
 	/**
 	 * Create a Devices Screen Panel.
 	 * 
@@ -112,17 +110,6 @@ public class DeviceScreenListPanel extends Composite {
 
 			}
 		});
-		
-		
-		Properties linkProps = new Properties();
-		try {
-			final var resourceFilePath = FileLocator.resolve(DeviceScreenListPanel.class.getResource("/resources/helplink.properties")).getPath();
-			linkProps.load(new FileInputStream(resourceFilePath)); 
-		} catch (IOException | IllegalArgumentException ex) {
-			LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()),  ex.getMessage(), ex);
-		}
-		String HELP_LINK = linkProps.getProperty("help_link");
-
 		new IBEXHelpButton(this, HELP_LINK, DESCRIPTION);
 
 		viewModel.addPropertyChangeListener(new PropertyChangeListener() {
