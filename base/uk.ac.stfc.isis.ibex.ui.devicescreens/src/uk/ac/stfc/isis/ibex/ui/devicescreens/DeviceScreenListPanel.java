@@ -39,6 +39,7 @@ import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceDescription;
 import uk.ac.stfc.isis.ibex.devicescreens.desc.DeviceScreensDescription;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.commands.ConfigureDeviceScreensHandler;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.list.DeviceScreensTable;
 import uk.ac.stfc.isis.ibex.ui.devicescreens.models.ViewDeviceScreensDescriptionViewModel;
@@ -55,13 +56,14 @@ public class DeviceScreenListPanel extends Composite {
 	 */
 	private static final Logger LOG = IsisLog.getLogger(DeviceScreenListPanel.class);
 
-	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/how_to/Create-and-Manage-Device-Screens.html";
 	private static final String DESCRIPTION = "Device Screens View";
 
 	private DeviceScreensTable deviceScreenList;
 
 	private ConfigureDeviceScreensHandler configureDeviceScreensHandler = new ConfigureDeviceScreensHandler();
 
+	private static final String HELP_LINK = Utils.getHelpLink(DeviceScreenListPanel.class, "help_link");
+	
 	/**
 	 * Create a Devices Screen Panel.
 	 * 
@@ -108,7 +110,6 @@ public class DeviceScreenListPanel extends Composite {
 
 			}
 		});
-
 		new IBEXHelpButton(this, HELP_LINK, DESCRIPTION);
 
 		viewModel.addPropertyChangeListener(new PropertyChangeListener() {

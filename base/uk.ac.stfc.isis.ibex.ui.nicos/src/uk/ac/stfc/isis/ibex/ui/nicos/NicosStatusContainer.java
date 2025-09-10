@@ -13,7 +13,10 @@ import org.eclipse.swt.widgets.Label;
 
 import uk.ac.stfc.isis.ibex.nicos.Nicos;
 import uk.ac.stfc.isis.ibex.nicos.NicosModel;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXHelpButton;
+
+
 
 /**
  * The nicos status container.
@@ -25,9 +28,10 @@ public class NicosStatusContainer {
 	private final DataBindingContext bindingContext = new DataBindingContext();
 	private final NicosModel model = Nicos.getDefault().getModel();
 
-	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/gui/Script-Server.html";
 	private static final String DESCRIPTION = "Script Server";
 
+	private static final String HELP_LINK = Utils.getHelpLink(NicosStatusContainer.class, "help_link");
+	
 	/**
 	 * Creates the view.
 	 * 
@@ -41,7 +45,7 @@ public class NicosStatusContainer {
 		Composite nicosStatus = new Composite(parent, SWT.NONE);
 		nicosStatus.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		nicosStatus.setLayout(new GridLayout(2, false));
-
+		
 		new IBEXHelpButton(nicosStatus, HELP_LINK, DESCRIPTION);
 
 		Composite textComposite = new Composite(nicosStatus, SWT.NONE);

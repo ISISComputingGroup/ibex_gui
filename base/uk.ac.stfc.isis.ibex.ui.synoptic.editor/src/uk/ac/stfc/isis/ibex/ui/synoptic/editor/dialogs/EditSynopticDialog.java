@@ -37,6 +37,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.synoptic.Synoptic;
 import uk.ac.stfc.isis.ibex.synoptic.SynopticInfo;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.instrument.SynopticPreview;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.model.SynopticViewModel;
 import uk.ac.stfc.isis.ibex.ui.synoptic.editor.validators.SynopticValidator;
@@ -55,8 +56,6 @@ public class EditSynopticDialog extends TitleAreaDialog {
 	private final String title;
 	private final String subtitle;
 
-	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/how_to/Create-and-Manage-Synoptics.html";
-
 	private EditorPanel editor;
 	private boolean isBlank;
 	private Button previewBtn;
@@ -66,6 +65,9 @@ public class EditSynopticDialog extends TitleAreaDialog {
 	private SynopticViewModel synopticViewModel;
 
 	private SynopticValidator synopticValidator;
+	
+	private static final String HELP_LINK = Utils.getHelpLink(EditSynopticDialog.class, "help_link");
+	
 
 	/**
 	 * The constructor for the overall Synoptic editor dialog.
@@ -94,7 +96,6 @@ public class EditSynopticDialog extends TitleAreaDialog {
 		editor = new EditorPanel(parent, SWT.NONE, synopticViewModel);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		setTitle(subtitle);
-
 		new IBEXHelpButton(parent, HELP_LINK, title);
 		return editor;
 	}
