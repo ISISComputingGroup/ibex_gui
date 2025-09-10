@@ -82,7 +82,7 @@ public final class Utils {
     /**
      * Gets a help URL from it's resource file.
      * @param className class used to determine the path of the resources folder.
-     * @param linkName
+     * @param linkName the name of the help link in the resource folder
      * @return the help URL
      */
     public static String getHelpLink(Class<?> className, String linkName) {
