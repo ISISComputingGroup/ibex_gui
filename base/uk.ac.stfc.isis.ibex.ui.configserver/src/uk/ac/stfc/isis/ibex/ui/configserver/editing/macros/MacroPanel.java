@@ -133,6 +133,7 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 			for (final Macro setMacro : setMacros) {
 				if (setMacro.getName().equals(availableMacro.getName())) {
 					displayMacro.setValue(setMacro.getValue());
+					displayMacro.setUseDefault(setMacro.getUseDefault());
 				}
 			}
 
@@ -152,6 +153,7 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 			    if (existingMacro.isPresent()) {
 			        if (displayMacro.getValue() != null) {
 			            existingMacro.get().setValue(displayMacro.getValue());
+			            existingMacro.get().setUseDefault(displayMacro.getUseDefault());
 			        } else {
 			            setMacros.remove(existingMacro.get());
 			        }
