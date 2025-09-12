@@ -51,6 +51,10 @@ public class Macro extends ModelObject {
 	 */
 	private String defaultValue;
 	/**
+	 * Whether the default value is being used or not, defaults to true.
+	 */
+	private Boolean useDefault = true;
+	/**
 	 * Whether the macro has a default value or not (or if it is unknown).
 	 */
 	private HasDefault hasDefault;
@@ -94,7 +98,7 @@ public class Macro extends ModelObject {
 	 * @param other exiting Macro to clone
 	 */
 	public Macro(Macro other) {
-		this(other.getName(), other.getValue(), other.getDescription(), other.getPattern(), other.getDefaultValue(), other.getHasDefault());
+		this(other.getName(), other.getValue(), other.getDescription(), other.getPattern(), other.getDefaultValue(), other.getHasDefault(), other.getUseDefault());
 	}
 
 	/**
@@ -107,14 +111,16 @@ public class Macro extends ModelObject {
 	 * @param defaultValue the default value of the macro
 	 * @param hasDefault if the macro has a default, does not, or unknown
 	 */
-	public Macro(String name, String value, String description, String pattern, String defaultValue, HasDefault hasDefault) {
+	public Macro(String name, String value, String description, String pattern, String defaultValue, HasDefault hasDefault, boolean useDefault) {
 		this.name = name;
 		this.value = value;
 		this.description = description;
 		this.pattern = pattern;
 		this.defaultValue = defaultValue;
 		this.hasDefault = hasDefault;
+		this.useDefault = useDefault;
 	}
+	
 
 	/**
      * @return if the macro has a default, does not have a default, or unknown. 
@@ -138,6 +144,22 @@ public class Macro extends ModelObject {
 	public void setValue(String value) {
 		firePropertyChange("value", this.value, this.value = value);
 	}
+	
+	/**
+	 * Set whether the macro is using it's default.
+	 * 
+	 * @param value new useDefault value
+	 */
+	public void setUseDefault(boolean value) {
+		firePropertyChange("useDefault", this.useDefault, this.useDefault = value);
+	}
+	
+	/**
+     * @return if the macro is set to use it's default value. 
+     */
+    public boolean getUseDefault() {
+        return this.useDefault;
+    }
 
 	 /**
      * @return macro value, null indicates the default value is being used
@@ -169,7 +191,7 @@ public class Macro extends ModelObject {
 
 	@Override
 	public String toString() {
-		return name + "=" + value;
+		return name + "=" + value + " useDefault = " +this.getUseDefault();
 	}
 
 	@Override
