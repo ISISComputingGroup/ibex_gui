@@ -66,11 +66,9 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
     // Alarms config information
     private boolean alarmenabled;
     private boolean alarmlatched;
-	private double alarmlowlimit;
-    private double alarmhighlimit;
     private double alarmdelay;
     private String alarmguidance;
-    
+ 
     /**
      * Creates a new block given input properties.
      * 
@@ -81,7 +79,7 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
      */
 	public Block(String name, String pv, boolean visible, boolean local) {
 		this(name, pv, visible, local, null, 0.0f, 0.0f, false, false, true, DEFAULT_SCAN_RATE, 0.0f, false, "", false,
-				false, 0.0d, 0.0d, 0.0d, "");
+				false, 0.0d, "");
 	}
 		
     /**
@@ -104,15 +102,13 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
      * @param blockSetVal The value to set the block to on config change if the blockSet is true.
      * @param alarmEnabled whether alarm are enabled for this block
      * @param alarmLatched whether alarm are latched for this block
-     * @param alarmLowLimit the low limit for alarm
-     * @param alarmHighLimit the high limit for alarm
      * @param alarmDelay the delay before the alarm is triggered
      * @param alarmGuidance guidance text for alarm
      */
 	public Block(String name, String pv, boolean visible, boolean local, String component, double lowLimit,
 			double highLimit, boolean suspendOnInvalid, Boolean runcontrol, boolean logPeriodic, int logRate,
 			float logDeadband, boolean blockSet, String blockSetVal, boolean alarmEnabled, boolean alarmLatched,
-			Double alarmLowLimit, Double alarmHighLimit, Double alarmDelay, String alarmGuidance) {
+			Double alarmDelay, String alarmGuidance) {
 		this.name = name;
 		this.pv = pv;
 		this.visible = visible;
@@ -129,8 +125,6 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
 		this.set_block_val = blockSetVal;
 		this.alarmenabled = alarmEnabled;
 		this.alarmlatched = alarmLatched;
-		this.alarmlowlimit = alarmLowLimit;
-		this.alarmhighlimit = alarmHighLimit;
 		this.alarmdelay = alarmDelay;
 		this.alarmguidance = alarmGuidance;
 	}
@@ -143,8 +137,7 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
 	public Block(Block other) {
 		this(other.name, other.pv, other.visible, other.local, other.component, other.lowlimit, other.highlimit,
 				other.suspend_on_invalid, other.runcontrol, other.log_periodic, other.log_rate, other.log_deadband,
-				other.set_block, other.set_block_val, other.alarmenabled, other.alarmlatched, other.alarmlowlimit,
-				other.alarmhighlimit, other.alarmdelay, other.alarmguidance);
+				other.set_block, other.set_block_val, other.alarmenabled, other.alarmlatched, other.alarmdelay, other.alarmguidance);
 	}
 
     /**
@@ -436,34 +429,6 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
 	 */
 	public void setAlarmLatched(boolean alarmLatched) {
 		firePropertyChange("alarmLatched", this.alarmlatched, this.alarmlatched = alarmLatched);
-	}
-
-	/**
-	 * @return the alarmLowLimit
-	 */
-	public double getAlarmLowLimit() {
-		return alarmlowlimit;
-	}
-
-	/**
-	 * @param alarmLowLimit the alarmLowLimit to set
-	 */
-	public void setAlarmLowLimit(double alarmLowLimit) {
-		firePropertyChange("alarmLowLimit", this.alarmlowlimit, this.alarmlowlimit = alarmLowLimit);
-	}
-
-	/**
-	 * @return the alarmHighLimit
-	 */
-	public double getAlarmHighLimit() {
-		return alarmhighlimit;
-	}
-
-	/**
-	 * @param alarmHighLimit the alarmHighLimit to set
-	 */
-	public void setAlarmHighLimit(double alarmHighLimit) {
-		firePropertyChange("alarmHighLimit", this.alarmhighlimit, this.alarmhighlimit = alarmHighLimit);
 	}
 
 	/**

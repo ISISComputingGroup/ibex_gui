@@ -19,8 +19,13 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
+import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
+import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
+import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
+import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
-
 
 /**
  * The view model for the log settings for a block.
@@ -31,20 +36,55 @@ public class BlockAlarmConfigViewModel extends ErrorMessageProvider {
     
     private boolean enabled;
     private boolean latched;
-	private Double lowLimit;
-    private Double highLimit;
     private Double delay;
     private String guidance;
-    
-    /**
-     * Field that the GUI should bind to to update low limit.
-     */
-	public static final String LOW_LIMIT_BINDING_NAME = "lowLimitString";
 
-    /**
-     * Field that the GUI should bind to to update high limit.
-     */
-    public static final String HIGH_LIMIT_BINDING_NAME = "highLimitString";
+    // Observables for alarm limits
+    ObservableFactory observableFactory = new ObservableFactory(OnInstrumentSwitch.CLOSE);
+    private ForwardingObservable<Double> alarmLowLimitObservable = null;
+    private ForwardingObservable<Double> alarmHighLimitObservable = null;
+    private String lowLimit = null;
+    private String highLimit = null;
+
+    private final BaseObserver<Double> alarmLowLimitAdapter = new BaseObserver<Double>() {
+        @Override
+        public void onValue(Double value) {
+        	setLowLimit((null == value) ? "" : value.toString());
+        }
+
+        @Override
+        public void onError(Exception e) {
+        	lowLimit = "";
+            IsisLog.getLogger(getClass()).error("Exception in alarm low limit adapter: " + e.getMessage());
+        }
+
+        @Override
+        public void onConnectionStatus(boolean isConnected) {
+            if (!isConnected) {
+            	lowLimit = "";
+            }
+        }
+    };
+
+	private final BaseObserver<Double> alarmHighLimitAdapter = new BaseObserver<Double>() {
+		@Override
+		public void onValue(Double value) {
+			setHighLimit((null == value) ? "" : value.toString());
+		}
+
+		@Override
+		public void onError(Exception e) {
+			highLimit = "";
+			IsisLog.getLogger(getClass()).error("Exception in alarm high limit adapter: " + e.getMessage());
+		}
+
+		@Override
+		public void onConnectionStatus(boolean isConnected) {
+			if (!isConnected) {
+				highLimit = "";
+			}
+		}
+	};
 
     /**
      * Field that the GUI should bind to to update delay value.
@@ -67,6 +107,16 @@ public class BlockAlarmConfigViewModel extends ErrorMessageProvider {
     public static final String GUIDANCE_BINDING_NAME = "guidance";
 
     /**
+     * Field that the GUI should bind to to update lowLimit value.
+     */
+    public static final String LOWLIMIT_BINDING_NAME = "lowLimit";
+    
+    /**
+     * Field that the GUI should bind to to update highLimit value.
+     */
+    public static final String HIGHLIMIT_BINDING_NAME = "highLimit";
+    
+    /**
      * Constructor.
      * 
      * @param editingBlock the block being edited
@@ -75,13 +125,14 @@ public class BlockAlarmConfigViewModel extends ErrorMessageProvider {
     	this.editingBlock = editingBlock;
     	enabled = editingBlock.isAlarmEnabled();
 		latched = editingBlock.isAlarmLatched();
-		lowLimit = editingBlock.getAlarmLowLimit();
-		highLimit = editingBlock.getAlarmHighLimit();
 		delay = editingBlock.getAlarmDelay();
 		guidance = editingBlock.getAlarmGuidance();
+
+		// Create the observables to monitor the alarm limits
+		createAlarmObservables();
     }
 
-    /**
+	/**
      * Gets whether alarm is enabled.
      * 
      * @return is the alarm enabled
@@ -118,42 +169,6 @@ public class BlockAlarmConfigViewModel extends ErrorMessageProvider {
     }
 
 	/**
-	 * Gets the low limit.
-	 * 
-	 * @return the low limit
-	 */
-	public Double getLowLimit() {
-		return lowLimit;
-	}
-
-	/**
-	 * Set the low limit.
-	 * 
-	 * @param lowLimit the lower threshold for the alarm
-	 */
-	public void setLowLimit(Double lowLimit) {
-		firePropertyChange("lowLimit", this.lowLimit, this.lowLimit = lowLimit);
-	}
-	
-	/**
-	 * Gets the high limit.
-	 * 
-	 * @return the high limit
-	 */
-	public Double getHighLimit() {
-		return highLimit;
-	}
-	
-	/**
-	 * Set the high limit.
-	 * 
-	 * @param highLimit the upper threshold for the alarm.
-	 */
-	public void setHighLimit(Double highLimit) {
-		firePropertyChange("highLimit", this.highLimit, this.highLimit = highLimit);
-	}
-
-	/**
 	 * Gets the delay.
 	 * 
 	 * @return the delay
@@ -188,47 +203,37 @@ public class BlockAlarmConfigViewModel extends ErrorMessageProvider {
     }
 
 	/**
-	 * Gets the low limit as a string.
-	 * @return the low limit as a string
+	 * Gets the low limit .
+	 * @return the low limit 
 	 */
-	public String getLowLimitString() {
-		Double value = getLowLimit();
-		return value == null ? "" : value.toString();
-	}
-	
-	/**
-	 * Sets the low limit from a text value.
-	 * @param lowLimit the low limit as a string
-	 */
-	public void setLowLimitString(String lowLimit) {
-		try {
-			setLowLimit(Double.valueOf(lowLimit));
-		} catch (NumberFormatException | NullPointerException e) {
-			setLowLimit(null);
-		}
+	public String getLowLimit() {
+		return lowLimit;
 	}
 
 	/**
-	 * Gets the high limit as a string.
-	 * @return the high limit as a string
+	 * Sets the low limit.
+	 * @param lowLimit
 	 */
-	public String getHighLimitString() {
-		Double value = getHighLimit();
-		return value == null ? "" : value.toString();
+    public void setLowLimit(String lowLimit) {;
+    	firePropertyChange("lowLimit", this.lowLimit, this.lowLimit = lowLimit);
 	}
-	
+    
 	/**
-	 * Sets the high limit from a text value.
-	 * @param highLimit the high limit as a string
+	 * Gets the high limit.
+	 * @return the high limit
 	 */
-	public void setHighLimitString(String highLimit) {
-		try {
-			setHighLimit(Double.valueOf(highLimit));
-		} catch (NumberFormatException | NullPointerException e) {
-			setHighLimit(null);
-		}
+	public String getHighLimit() {
+		return highLimit;
 	}
 
+	/**
+	 * Sets the High limit.
+	 * @param highLimit
+	 */
+    public void setHighLimit(String highLimit) {;
+    	firePropertyChange("highLimit", this.highLimit, this.highLimit = highLimit);
+	}
+    
 	/**
 	 * Gets the delay value as a string.
 	 * @return the delay as a string
@@ -256,9 +261,20 @@ public class BlockAlarmConfigViewModel extends ErrorMessageProvider {
     public void updateBlock() {
 		editingBlock.setAlarmEnabled(enabled);
 		editingBlock.setAlarmLatched(latched);
-		editingBlock.setAlarmLowLimit(lowLimit);
-		editingBlock.setAlarmHighLimit(highLimit);
 		editingBlock.setAlarmDelay(delay);
 		editingBlock.setAlarmGuidance(guidance);
     }
+
+    /**
+     * Creates an observable for the PV holding the current state of this banner
+     * item.
+     */
+    private void createAlarmObservables() {
+		alarmLowLimitObservable = observableFactory.getSwitchableObservable(new DoubleChannel(),
+				editingBlock.getPV() + ".LOW");
+		alarmHighLimitObservable = observableFactory.getSwitchableObservable(new DoubleChannel(),
+				editingBlock.getPV() + ".HIGH");
+		alarmLowLimitObservable.subscribe(alarmLowLimitAdapter);
+		alarmHighLimitObservable.subscribe(alarmHighLimitAdapter);
+    }  
 }

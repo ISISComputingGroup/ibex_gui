@@ -63,12 +63,16 @@ public class BlockAlarmConfigPanel extends Composite {
         addLabel(alarmConfigGroup, "Low Limit:");
         lowLimit = new Text(alarmConfigGroup, SWT.BORDER);
         lowLimit.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        lowLimit.setToolTipText("Low limit for the alarm configuration");
+        lowLimit.setToolTipText("Alarm Low limit - not managed at block level");
+        lowLimit.setEnabled(false); // Low limit is currently not editable.
+        //lowLimit.setText(viewModel.getLowLimit());
 
         addLabel(alarmConfigGroup, "High Limit:");
         highLimit = new Text(alarmConfigGroup, SWT.BORDER);
         highLimit.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        highLimit.setToolTipText("High limit for the alarm configuration");
+        highLimit.setToolTipText("Alarm High limit - not managed at block level");
+        highLimit.setEnabled(false); // High limit is currently not editable.
+        //highLimit.setText(viewModel.getHighLimit());
 
         addLabel(alarmConfigGroup, "Delay:");
         delay = new Text(alarmConfigGroup, SWT.BORDER);
@@ -115,14 +119,13 @@ public class BlockAlarmConfigPanel extends Composite {
                 BeanProperties.value(BlockAlarmConfigViewModel.ENABLED_BINDING_NAME).observe(viewModel));
         bindingContext.bindValue(WidgetProperties.buttonSelection().observe(latched),
                 BeanProperties.value(BlockAlarmConfigViewModel.LATCHED_BINDING_NAME).observe(viewModel));
-
-        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(lowLimit),
-                BeanProperties.value(BlockAlarmConfigViewModel.LOW_LIMIT_BINDING_NAME).observe(viewModel));
-        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(highLimit),
-                BeanProperties.value(BlockAlarmConfigViewModel.HIGH_LIMIT_BINDING_NAME).observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(delay),
                 BeanProperties.value(BlockAlarmConfigViewModel.DELAY_BINDING_NAME).observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(guidance),
                 BeanProperties.value(BlockAlarmConfigViewModel.GUIDANCE_BINDING_NAME).observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(lowLimit),
+                BeanProperties.value(BlockAlarmConfigViewModel.LOWLIMIT_BINDING_NAME).observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(highLimit),
+                BeanProperties.value(BlockAlarmConfigViewModel.HIGHLIMIT_BINDING_NAME).observe(viewModel));
 	}
 }
