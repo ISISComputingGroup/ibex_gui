@@ -214,7 +214,7 @@ public class BlockAlarmConfigViewModel extends ErrorMessageProvider {
 	 * Sets the low limit.
 	 * @param lowLimit
 	 */
-    public void setLowLimit(String lowLimit) {;
+    public void setLowLimit(String lowLimit) {
     	firePropertyChange("lowLimit", this.lowLimit, this.lowLimit = lowLimit);
 	}
     
@@ -230,7 +230,7 @@ public class BlockAlarmConfigViewModel extends ErrorMessageProvider {
 	 * Sets the High limit.
 	 * @param highLimit
 	 */
-    public void setHighLimit(String highLimit) {;
+    public void setHighLimit(String highLimit) {
     	firePropertyChange("highLimit", this.highLimit, this.highLimit = highLimit);
 	}
     
