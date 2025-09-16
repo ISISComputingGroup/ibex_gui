@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-export JAVA_HOME=/etc/alternatives/java_sdk
+export JAVA_HOME=/home/jenkins/jdk-21.0.8+9/
 export PATH=${JAVA_HOME}/bin:${PATH}
 export JAVA_TOOL_OPTIONS="-Djdk.util.zip.disableZip64ExtraFieldValidation=true"
 
