@@ -110,6 +110,7 @@ public class Macro extends ModelObject {
 	 * @param pattern Regex pattern macro value should follow
 	 * @param defaultValue the default value of the macro
 	 * @param hasDefault if the macro has a default, does not, or unknown
+	 * @param useDefault if the default value is to be used, or over-written
 	 */
 	public Macro(String name, String value, String description, String pattern, String defaultValue, HasDefault hasDefault, boolean useDefault) {
 		this.name = name;
@@ -191,7 +192,7 @@ public class Macro extends ModelObject {
 
 	@Override
 	public String toString() {
-		return name + "=" + value + " useDefault = " +this.getUseDefault();
+		return name + "=" + value;
 	}
 
 	@Override
