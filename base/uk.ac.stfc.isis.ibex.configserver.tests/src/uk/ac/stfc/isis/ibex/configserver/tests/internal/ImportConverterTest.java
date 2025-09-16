@@ -50,7 +50,7 @@ public class ImportConverterTest {
 	private final static boolean IOC_AUTOSTART = true;
 	private final static boolean IOC_RESTART = true;
 	
-	private final static Macro MACRO = new Macro("MACRO", "10", "DESC", "pattern", "1", HasDefault.YES);
+	private final static Macro MACRO = new Macro("MACRO", "10", "DESC", "pattern", "1", HasDefault.YES, false);
 	private final static PVDefaultValue PV = new PVDefaultValue(SOURCE_PREFIX.concat(":PV"), "10");
 	private final static PVSet PV_SET = new PVSet(SOURCE_PREFIX.concat(":PV_SET"), true);
 	private final static Block BLOCK = new Block("BLOCK", SOURCE_PREFIX.concat(":PV"), true, true);
