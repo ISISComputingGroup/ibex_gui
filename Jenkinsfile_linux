@@ -82,35 +82,6 @@ pipeline {
             """
       }
     }
-    
-//    stage("OPI Checker") {
-//      steps {
-//        bat """
-//            set PYTHON3=C:\\Instrument\\Apps\\Python3\\python.exe
-//            %PYTHON3% .\\base\\uk.ac.stfc.isis.ibex.opis\\check_opi_format.py -strict 
-//        """
-//      }
-//    }
-    
-//     stage("Collate Unit Tests") {
-//       steps {
-//         junit '**/surefire-reports/TEST-*.xml,**/test-reports/TEST-*.xml'
-//       }
-//     }
-    
-    stage("Checkstyle") {
-      steps {
-        archiveCheckstyleResults()
-      }
-    }
-    
- //   stage("Doxygen") {
- //     steps {
-//        bat '''
-//            "C:\\Program Files\\doxygen\\bin\\doxygen.exe" build\\ibex_gui_doxy.config
-//            '''
- //     }
-//    }
   }
 }
 
