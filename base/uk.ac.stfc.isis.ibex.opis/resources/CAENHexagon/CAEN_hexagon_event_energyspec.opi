@@ -139,7 +139,7 @@ $(trace_0_y_pv_value)</tooltip>
     <trace_0_x_pv>$(P)$(Q):$(CHAN):ENERGYSPEC:X</trace_0_x_pv>
     <trace_0_x_pv_value/>
     <trace_0_y_axis_index>1</trace_0_y_axis_index>
-    <trace_0_y_pv>$(P)$(Q):$(CHAN):ENERGYSPEC:EVENT</trace_0_y_pv>
+    <trace_0_y_pv>$(P)$(Q):$(CHAN):ENERGYSPEC$(ID):EVENT</trace_0_y_pv>
     <trace_0_y_pv_value/>
     <trace_count>1</trace_count>
     <transparent>false</transparent>
@@ -180,7 +180,7 @@ $(trace_0_y_pv_value)</tooltip>
     <name>Text Update_2</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(P)$(Q):$(CHAN):ENERGYSPEC:EVENT:TMIN</pv_name>
+    <pv_name>$(P)$(Q):$(CHAN):ENERGYSPEC$(ID):EVENT:TMIN</pv_name>
     <pv_value/>
     <rotation_angle>0.0</rotation_angle>
     <rules/>
@@ -277,7 +277,7 @@ $(pv_value)</tooltip>
     <name>Text Input_1</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(P)$(Q):$(CHAN):ENERGYSPEC:EVENT:TMIN:SP</pv_name>
+    <pv_name>$(P)$(Q):$(CHAN):ENERGYSPEC$(ID):EVENT:TMIN:SP</pv_name>
     <pv_value/>
     <rotation_angle>0.0</rotation_angle>
     <rules/>
@@ -329,7 +329,7 @@ $(pv_value)</tooltip>
     <name>Text Update_6</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(P)$(Q):$(CHAN):ENERGYSPEC:EVENT:CNTS</pv_name>
+    <pv_name>$(P)$(Q):$(CHAN):ENERGYSPEC$(ID):EVENT:CNTS</pv_name>
     <pv_value/>
     <rotation_angle>0.0</rotation_angle>
     <rules/>
@@ -421,7 +421,7 @@ $(pv_value)</tooltip>
     <name>Text Update_10</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(P)$(Q):$(CHAN):ENERGYSPEC:EVENT:TMAX</pv_name>
+    <pv_name>$(P)$(Q):$(CHAN):ENERGYSPEC$(ID):EVENT:TMAX</pv_name>
     <pv_value/>
     <rotation_angle>0.0</rotation_angle>
     <rules/>
@@ -518,7 +518,7 @@ $(pv_value)</tooltip>
     <name>Text Input_2</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(P)$(Q):$(CHAN):ENERGYSPEC:EVENT:TMAX:SP</pv_name>
+    <pv_name>$(P)$(Q):$(CHAN):ENERGYSPEC$(ID):EVENT:TMAX:SP</pv_name>
     <pv_value/>
     <rotation_angle>0.0</rotation_angle>
     <rules/>
@@ -756,6 +756,143 @@ $(pv_value)</tooltip>
     <wuid>-7943822c:1933be2c5c1:-633c</wuid>
     <x>636</x>
     <y>423</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <actions hook="false" hook_all="false"/>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0"/>
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0"/>
+    </foreground_color>
+    <height>1</height>
+    <image/>
+    <name>Dummy</name>
+    <push_action_index>0</push_action_index>
+    <pv_name/>
+    <pv_value/>
+    <rules/>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts/>
+    <style>1</style>
+    <text/>
+    <toggle_button>false</toggle_button>
+    <tooltip/>
+    <visible>true</visible>
+    <widget_type>Action Button</widget_type>
+    <width>1</width>
+    <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
+    <x>102</x>
+    <y>36</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <actions hook="false" hook_all="false"/>
+    <auto_size>false</auto_size>
+    <background_color>
+      <color red="255" green="255" blue="255"/>
+    </background_color>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+    </font>
+    <foreground_color>
+      <color red="0" green="0" blue="0"/>
+    </foreground_color>
+    <height>20</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <name>Label_12</name>
+    <rules/>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts/>
+    <text>Description</text>
+    <tooltip/>
+    <transparent>true</transparent>
+    <vertical_alignment>1</vertical_alignment>
+    <visible>true</visible>
+    <widget_type>Label</widget_type>
+    <width>80</width>
+    <wrap_words>false</wrap_words>
+    <wuid>557b281f:19914706948:-4488</wuid>
+    <x>12</x>
+    <y>384</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.TextInput" version="2.0.0">
+    <actions hook="false" hook_all="false"/>
+    <alarm_pulsing>false</alarm_pulsing>
+    <auto_size>false</auto_size>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="255" green="255" blue="255"/>
+    </background_color>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color red="0" green="128" blue="255"/>
+    </border_color>
+    <border_style>3</border_style>
+    <border_width>1</border_width>
+    <confirm_message/>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color red="0" green="0" blue="0"/>
+    </foreground_color>
+    <format_type>0</format_type>
+    <height>19</height>
+    <horizontal_alignment>0</horizontal_alignment>
+    <limits_from_pv>false</limits_from_pv>
+    <maximum>Infinity</maximum>
+    <minimum>-Infinity</minimum>
+    <multiline_input>false</multiline_input>
+    <name>Text Input</name>
+    <precision>0</precision>
+    <precision_from_pv>true</precision_from_pv>
+    <pv_name>$(P)$(Q):$(CHAN):ENERGYSPEC$(ID):EVENT:DESC:SP</pv_name>
+    <pv_value/>
+    <rotation_angle>0.0</rotation_angle>
+    <rules/>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts/>
+    <selector_type>0</selector_type>
+    <show_units>true</show_units>
+    <style>0</style>
+    <text/>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <transparent>false</transparent>
+    <visible>true</visible>
+    <widget_type>Text Input</widget_type>
+    <width>232</width>
+    <wuid>557b281f:19914706948:-4484</wuid>
+    <x>102</x>
+    <y>384</y>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
     <actions hook="false" hook_all="false"/>
