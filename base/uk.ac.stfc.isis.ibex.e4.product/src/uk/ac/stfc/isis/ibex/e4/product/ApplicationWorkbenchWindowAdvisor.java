@@ -55,8 +55,8 @@ import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
  */
 public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
-    private static final int MIN_WINDOW_HEIGHT = 800;
-    private static final int MIN_WINDOW_WIDTH = 1100;
+    private static final int MIN_WINDOW_HEIGHT = 800; 
+    private static final int MIN_WINDOW_WIDTH = 1100; 
     
 	private static final String DIALOG_BOX_TITLE = "IBEX is already running.";
 	private static final String DIALOG_QUESTION = "It appears that IBEX client is already running. "

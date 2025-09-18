@@ -51,6 +51,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Group;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
@@ -100,7 +101,7 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 	 * Denotes whether script definitions have been loaded once.
 	 */
 	private boolean scriptDefinitionsLoadedOnce = false;
-
+	
 	private ActionsViewTable table;
 	private Button btnMoveActionUp;
 	private Button btnMoveActionDown;
@@ -135,7 +136,7 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 		scriptGeneratorViewModel.setScriptGeneratorViewModelDelegate(this);
 
 		GridData gdQueueContainer = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gdQueueContainer.heightHint = 300;
+		gdQueueContainer.heightHint = 300; 
 		parent.setLayoutData(gdQueueContainer);
 		parent.setLayout(new GridLayout());
 
@@ -269,16 +270,16 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 
 				globalParamComposite = new Composite(mainParent, SWT.NONE);
 				globalParamComposite.setLayout(new GridLayout(24, false));
-				globalParamComposite.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false));
-
+				globalParamComposite.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false)); 
+				
 				// Composite to split the middle into bigger left and smaller right section
 				Composite middleComposite = makeGrid(mainParent, 2, false, 0);
-				middleComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+				middleComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true)); 
 
 				makeTableAndUpDownButtons(middleComposite);
 
 				// The composite to contain the buttons on the right to the table
-				Composite buttonContainerComposite = makeGrid(middleComposite, 1, false, 0);
+				Composite buttonContainerComposite = makeGrid(middleComposite, 1, false, 0); 
 				buttonContainerComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
 
 				makeControlButtons(buttonContainerComposite);
@@ -286,15 +287,19 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 				// Composite for the row containing the parameter file location and total
 				// estimated run time
 				Composite scriptInfoGrp = new Composite(mainParent, SWT.NONE);
-				scriptInfoGrp.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1));
-				GridLayout scriptInfoLayout = new GridLayout(3, true);
-				scriptInfoLayout.marginRight = 40;
+				scriptInfoGrp.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1)); 
+				GridLayout scriptInfoLayout = new GridLayout(3, true); 
+				scriptInfoLayout.marginRight = 40; 
 				scriptInfoGrp.setLayout(scriptInfoLayout);
+				
+				Composite bottomComposite = makeGrid(mainParent, 2, false, 0);
+				bottomComposite.setLayoutData(new GridData(SWT.END, SWT.FILL, false, true));
 
 				// Label for Location of Saved Parameters File
 				parametersFileText = new Label(scriptInfoGrp, SWT.LEFT);
 				parametersFileText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 				parametersFileText.setText("Current Script: <new file>");
+				
 
 				scriptGenerationTimeText = new Label(scriptInfoGrp, SWT.LEFT);
 				scriptGenerationTimeText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -317,7 +322,7 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 			if (!scriptDefinitionLoadErrors.isEmpty()) {
 				setUpScriptDefinitionLoadErrorTable(mainParent, scriptDefinitionLoadErrors);
 			}
-
+			
 			mainParent.layout();
 		});
 	}
@@ -330,7 +335,7 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 	 * @param columns number of columns
 	 * @param equal   whether or not to make the columns equal width
 	 * @param margin  margin around all four sides
-	 * @return the new COmposite instance
+	 * @return the new Composite instance
 	 */
 	private Composite makeGrid(Composite parent, int columns, boolean equal, int margin) {
 		Composite group = new Composite(parent, SWT.NONE);
@@ -344,7 +349,8 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 
 	private void makeToggleParameterTransfer(Composite parent) {
 		Composite actionsControlsGrp = makeGrid(parent, 1, true, 10);
-
+		actionsControlsGrp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		
 		new IBEXButton(actionsControlsGrp, SWT.CHECK, event -> {
 			boolean enabled = ((Button) event.widget).getSelection();
 			scriptGeneratorViewModel.setParameterTransferEnabled(enabled);
@@ -356,7 +362,8 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 	
 	private void makeToggleInvalidPauseSkip(Composite parent) {
 		Composite actionsControlsGrp = makeGrid(parent, 1, true, 10);
-
+		actionsControlsGrp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		
 		// Pause
 		new IBEXButton(actionsControlsGrp, SWT.RADIO, event -> {
 			ScriptGeneratorSettingsSingleton.getInstance().setSkipEnabled(false); //sets skipEnabled to false, causing Pause on invalid actions during run of script
@@ -375,16 +382,20 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 	}
 
 	/**
-	 * Creates a column containing three buttons for table row modifications.
+	 * Creates a row containing three buttons for table row modifications.
 	 * 
 	 * @param parent the containing Composite
 	 */
 	private void makeTableRowControlButtons(Composite parent) {
-		// Composite for laying out new/delete/duplicate action buttons
-		Composite actionsControlsGrp = makeGrid(parent, 1, true, 10);
-
+		// Group for laying out new/delete/duplicate action buttons
+		Group actionsControlsGrp = new Group(parent, SWT.NONE); 
+		actionsControlsGrp.setText("Row Operations");
+		actionsControlsGrp.setLayout(new GridLayout(3, false));
+		actionsControlsGrp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		
 		// Make buttons for insert new/delete/duplicate actions
-		btnAddAction = new IBEXButton(actionsControlsGrp, SWT.NONE, event -> {
+		
+		btnAddAction = new IBEXButton(actionsControlsGrp, SWT.NONE, event -> { 
 			scriptGeneratorViewModel.addEmptyAction();
 		})
 				.text(Constants.BUTTON_TITLE_ADD_ROW_TO_END)
@@ -401,20 +412,24 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 		new IBEXButton(actionsControlsGrp, SWT.NONE, event -> {
 			scriptGeneratorViewModel.clearAction();
 		})
-		.text(Constants.BUTTON_TITLE_DELETE_ROWS)
-		.tooltip(Constants.BUTTON_TOOLTIP_DELETE_ROWS)
-		.layoutData(IBEXButton.expandingGrid);
+				.text(Constants.BUTTON_TITLE_DELETE_ROWS)
+				.tooltip(Constants.BUTTON_TOOLTIP_DELETE_ROWS)
+				.layoutData(IBEXButton.expandingGrid);
 	}
-
+	
+	
 	/**
-	 * Creates a column containing three buttons for save, save as, and load script.
+	 * Creates a row containing three buttons for save, save as, and load script.
 	 * 
 	 * @param parent the containing Composite
 	 */
 	private void makeScriptSaveLoadButtons(Composite parent) {
-		// Composite for generate buttons
-		Composite generateButtonsGrp = makeGrid(parent, 1, true, 10);
-
+		// Group for script operation buttons
+		Group generateButtonsGrp = new Group(parent, SWT.NONE); 
+		generateButtonsGrp.setText("Script Operations");
+        generateButtonsGrp.setLayout(new GridLayout(3, false));
+		generateButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		
 		// Buttons to generate a script
 		generateScriptButton = new IBEXButton(generateButtonsGrp, SWT.NONE, event -> {
 			scriptGeneratorViewModel.generateScriptToCurrentFilepath();
@@ -446,35 +461,37 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 	 */
 	private void makeDynamicScriptingControlButtons(Composite parent) {
 		errorLabel = new Label(parent, SWT.NONE);
-		errorLabel.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, true));
-		errorLabel.setForeground(new Color(255, 0, 0));
-
-		// Composite for generate buttons
-		Composite dynamicScriptingButtonsGrp = makeGrid(parent, 3, true, 10);
-
+		errorLabel.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, true)); 
+		errorLabel.setForeground(new Color(255, 0, 0)); 
+		// Group for dynamic scripting buttons
+		Group dynamicScriptingButtonsGrp = new Group(parent, SWT.NONE); 
+		dynamicScriptingButtonsGrp.setText("Run Operations");
+		dynamicScriptingButtonsGrp.setLayout(new GridLayout(3, false));
+		dynamicScriptingButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		
 		// Button to run/pause/stop script in nicos
 		runButton = new IBEXButton(dynamicScriptingButtonsGrp, SWT.NONE)
 				.image(Constants.IMAGE_RUN)
 				.tooltip("Run")
-				.layoutData(IBEXButton.expandingGrid)
+				.layoutData(IBEXButton.expandingGrid) 
 				.get();
 		pauseButton = new IBEXButton(dynamicScriptingButtonsGrp, SWT.NONE)
 				.image(Constants.IMAGE_PAUSE)
 				.tooltip("Pause")
-				.layoutData(IBEXButton.expandingGrid)
+				.layoutData(IBEXButton.expandingGrid) 
 				.get();
 		stopButton = new IBEXButton(dynamicScriptingButtonsGrp, SWT.NONE)
 				.image(Constants.IMAGE_STOP)
 				.tooltip("Stop")
-				.layoutData(IBEXButton.expandingGrid)
+				.layoutData(IBEXButton.expandingGrid) 
 				.get();
 		nicosViewModel.bindControls(runButton, pauseButton, stopButton);
 	}
 
 	private void makeRunAndFinishTime(Composite parent) {
 		// Composite for the row containing total estimated run time
-		Composite scriptTimeGrp = makeGrid(parent, 1, true, 10);
-		scriptTimeGrp.setLayoutData(new GridData(SWT.END, SWT.NONE, true, false));
+		Composite scriptTimeGrp = makeGrid(parent, 1, true, 10); 
+		scriptTimeGrp.setLayoutData(new GridData(SWT.END, SWT.NONE, true, false)); 
 
 		// Label for the total estimated run time
 		estimateText = new Label(scriptTimeGrp, SWT.TOP);
@@ -504,8 +521,8 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 	private void makeTableAndUpDownButtons(Composite parent) {
 		// The composite to contain the UI table
 		Composite tableContainerComposite = new Composite(parent, SWT.NONE);
-		tableContainerComposite.setLayout(new GridLayout(2, false));
-		tableContainerComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		tableContainerComposite.setLayout(new GridLayout(2, false)); 
+		tableContainerComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1)); 
 
 		// The UI table
 		table = new ActionsViewTable(tableContainerComposite, SWT.NONE, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION,
@@ -516,7 +533,7 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 		// Composite for move action up/down buttons
 		Composite moveComposite = new Composite(tableContainerComposite, SWT.NONE);
 		moveComposite.setLayout(new GridLayout());
-		moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
+		moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false)); 
 
 		// Make buttons to move an action up and down the list
 		btnMoveActionUp = new IBEXButton(moveComposite, SWT.NONE, event -> {
@@ -584,9 +601,10 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 	private void setUpScriptDefinitionLoadErrorTable(Composite parent, Map<String, String> scriptDefinitionLoadErrors) {
 		if (!preferences.hideScriptGenScriptDefinitionErrorTable()) {
 			// A composite to contain the script definition load errors
-			Composite scriptDefinitionErrorComposite = makeGrid(parent, 1, false, 5);
-			scriptDefinitionErrorComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-
+			Composite scriptDefinitionErrorComposite = makeGrid(parent, 1, false, 5); 
+			scriptDefinitionErrorComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false)); 
+			
+			
 			Label errorLabel = new Label(scriptDefinitionErrorComposite, SWT.NONE);
 			errorLabel.setText("Errors:");
 

@@ -28,13 +28,13 @@ import org.eclipse.wb.swt.ResourceManager;
  * Constants used on the script generator page.
  */
 final class Constants {
-	protected static final String BUTTON_TITLE_SAVE = "Save Script";
-	protected static final String BUTTON_TITLE_SAVE_AS = "Save Script As";
-	protected static final String BUTTON_TITLE_LOAD = "Load Script";
+	protected static final String BUTTON_TITLE_SAVE = "Save"; // Save Script
+	protected static final String BUTTON_TITLE_SAVE_AS = "Save As"; // Save Script As
+	protected static final String BUTTON_TITLE_LOAD = "Load"; // Load Script
 
-	protected static final String BUTTON_TITLE_ADD_ROW_TO_END = "Add Row to End";
-	protected static final String BUTTON_TITLE_INSERT_ROW_BELOW = "Insert Row Below";
-	protected static final String BUTTON_TITLE_DELETE_ROWS = "Clear All Rows";
+	protected static final String BUTTON_TITLE_ADD_ROW_TO_END = "Add to End"; // Add Row to End
+	protected static final String BUTTON_TITLE_INSERT_ROW_BELOW = "Insert Below"; // Insert Row Below
+	protected static final String BUTTON_TITLE_DELETE_ROWS = "Clear All"; // Clear All Rows
 
 	protected static final String CHECKBOX_TITLE_PARAM_TRANSFER = "Transfer Compatible Parameters";
 	protected static final String CHECKBOX_TITLE_INVALID_PAUSE = "Invalid Actions are Paused on";

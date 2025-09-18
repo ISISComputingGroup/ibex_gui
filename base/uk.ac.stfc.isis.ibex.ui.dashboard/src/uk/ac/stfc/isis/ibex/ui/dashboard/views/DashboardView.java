@@ -49,8 +49,8 @@ public class DashboardView {
 	 */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.dashboard.views.DashboardView"; //$NON-NLS-1$
 			
-    private static final int FIXED_WIDTH = 580;
-    private static final int FIXED_HEIGHT = 225;
+    private static final int FIXED_WIDTH = 580; // 580
+    private static final int FIXED_HEIGHT = 225; // 225
 	
 	private final Font bannerTitleFont = SWTResourceManager.getFont("Arial", 24, SWT.BOLD);
 	private final Font bannerFont = SWTResourceManager.getFont("Arial", 14, SWT.NORMAL);

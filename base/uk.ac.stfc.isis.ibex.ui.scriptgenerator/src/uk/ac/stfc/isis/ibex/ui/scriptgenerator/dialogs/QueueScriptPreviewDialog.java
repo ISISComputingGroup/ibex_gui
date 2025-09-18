@@ -26,7 +26,7 @@ public class QueueScriptPreviewDialog extends TitleAreaDialog {
 	 */
 	public QueueScriptPreviewDialog(Shell parentShell, String generatedScript) {
 		super(parentShell);
-		setShellStyle(getShellStyle() | SWT.RESIZE | SWT.MAX);
+		setShellStyle(getShellStyle() | SWT.RESIZE | SWT.MAX); 
 		this.generatedScript = generatedScript;
 		this.parentShell = parentShell;
 	}

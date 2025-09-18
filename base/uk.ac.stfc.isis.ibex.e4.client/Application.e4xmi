@@ -535,7 +535,7 @@
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_iXy6F5IBEe-V38_cTZ3ImQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.14" containerData="70">
         <children xsi:type="basic:PartStack" xmi:id="_iXy6GJIBEe-V38_cTZ3ImQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.13" containerData="60">
-          <children xsi:type="basic:Part" xmi:id="_iXy6GZIBEe-V38_cTZ3ImQ" elementId="uk.ac.stfc.isis.ibex.e4.client.part.scriptcomposer" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.scriptgenerator/uk.ac.stfc.isis.ibex.ui.scriptgenerator.views.ScriptGeneratorView" label="Script Composer"/>
+          <children xsi:type="basic:Part" xmi:id="_iXy6GZIBEe-V38_cTZ3ImQ" elementId="uk.ac.stfc.isis.ibex.e4.client.part.scriptcomposer" containerData="" contributionURI="bundleclass://uk.ac.stfc.isis.ibex.ui.scriptgenerator/uk.ac.stfc.isis.ibex.ui.scriptgenerator.views.ScriptGeneratorView" label="Script Composer"/>
         </children>
       </children>
     </children>

@@ -79,7 +79,7 @@ import uk.ac.stfc.isis.ibex.ui.tables.DataboundCellLabelProvider;
  * The ViewModel for the ScriptGeneratorView.
  */
 public class ScriptGeneratorViewModel extends ModelObject {
-
+	
 	private static final Logger LOG = IsisLog.getLogger(ScriptGeneratorViewModel.class);
 
 	private static final String TAB = "\t";
