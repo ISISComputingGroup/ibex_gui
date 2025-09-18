@@ -51,6 +51,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Group;
 
 import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 import uk.ac.stfc.isis.ibex.scriptgenerator.ScriptGeneratorProperties;
@@ -344,6 +345,7 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 
 	private void makeToggleParameterTransfer(Composite parent) {
 		Composite actionsControlsGrp = makeGrid(parent, 1, true, 10);
+		actionsControlsGrp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 
 		new IBEXButton(actionsControlsGrp, SWT.CHECK, event -> {
 			boolean enabled = ((Button) event.widget).getSelection();
@@ -356,6 +358,7 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 	
 	private void makeToggleInvalidPauseSkip(Composite parent) {
 		Composite actionsControlsGrp = makeGrid(parent, 1, true, 10);
+		actionsControlsGrp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 
 		// Pause
 		new IBEXButton(actionsControlsGrp, SWT.RADIO, event -> {
@@ -375,13 +378,16 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 	}
 
 	/**
-	 * Creates a column containing three buttons for table row modifications.
+	 * Creates a row containing three buttons for table row modifications.
 	 * 
 	 * @param parent the containing Composite
 	 */
 	private void makeTableRowControlButtons(Composite parent) {
-		// Composite for laying out new/delete/duplicate action buttons
-		Composite actionsControlsGrp = makeGrid(parent, 1, true, 10);
+		// Group for laying out new/delete/duplicate action buttons
+		Group actionsControlsGrp = new Group(parent, SWT.NONE); 
+		actionsControlsGrp.setText("Row Operations");
+		actionsControlsGrp.setLayout(new GridLayout(3, false));
+		actionsControlsGrp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 
 		// Make buttons for insert new/delete/duplicate actions
 		btnAddAction = new IBEXButton(actionsControlsGrp, SWT.NONE, event -> {
@@ -407,13 +413,16 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 	}
 
 	/**
-	 * Creates a column containing three buttons for save, save as, and load script.
+	 * Creates a row containing three buttons for save, save as, and load script.
 	 * 
 	 * @param parent the containing Composite
 	 */
 	private void makeScriptSaveLoadButtons(Composite parent) {
-		// Composite for generate buttons
-		Composite generateButtonsGrp = makeGrid(parent, 1, true, 10);
+		// Group for script operation buttons
+		Group generateButtonsGrp = new Group(parent, SWT.NONE); 
+		generateButtonsGrp.setText("Script Operations");
+		generateButtonsGrp.setLayout(new GridLayout(3, false));
+		generateButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 
 		// Buttons to generate a script
 		generateScriptButton = new IBEXButton(generateButtonsGrp, SWT.NONE, event -> {
@@ -449,8 +458,11 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 		errorLabel.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, true));
 		errorLabel.setForeground(new Color(255, 0, 0));
 
-		// Composite for generate buttons
-		Composite dynamicScriptingButtonsGrp = makeGrid(parent, 3, true, 10);
+		// Group for dynamic scripting buttons
+		Group dynamicScriptingButtonsGrp = new Group(parent, SWT.NONE); 
+		dynamicScriptingButtonsGrp.setText("Run Operations");
+		dynamicScriptingButtonsGrp.setLayout(new GridLayout(3, false));
+		dynamicScriptingButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 
 		// Button to run/pause/stop script in nicos
 		runButton = new IBEXButton(dynamicScriptingButtonsGrp, SWT.NONE)
