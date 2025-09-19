@@ -68,7 +68,7 @@ public class ScriptGeneratorNicosViewModel implements PropertyChangeListener {
 		bindPauseButton(pauseButton);
 		bindStopButton(stopButton);
 		formatButtonsBasedOnStatus(dynamicScriptingManager.getDynamicScriptingStatus());
-		nicosModel.addPropertyChangeListener(e -> updateButtonEnablement());
+		nicosModel.addUiThreadPropertyChangeListener(e -> updateButtonEnablement());
 	}
 	
 	/**
@@ -76,7 +76,8 @@ public class ScriptGeneratorNicosViewModel implements PropertyChangeListener {
 	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equals(DynamicScriptingProperties.STATE_CHANGE_PROPERTY)) {
+		var propName = evt.getPropertyName();
+		if (propName.equals(DynamicScriptingProperties.STATE_CHANGE_PROPERTY) || propName.equals("error")) {
 			updateButtonEnablement();
 		}
 	}
@@ -125,9 +126,7 @@ public class ScriptGeneratorNicosViewModel implements PropertyChangeListener {
 	}
 	
 	private void updateButtonEnablement() {
-		Display.getDefault().asyncExec(() -> {
-			formatButtonsBasedOnStatus(dynamicScriptingManager.getDynamicScriptingStatus());
-		});
+		formatButtonsBasedOnStatus(dynamicScriptingManager.getDynamicScriptingStatus());
 	}
 	
 	private void formatButtonsBasedOnStatus(DynamicScriptingStatus status) {
