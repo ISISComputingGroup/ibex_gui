@@ -4082,5 +4082,21 @@
         </categories>
       </value>
     </entry>
+    <entry>
+      <key>ASYN record</key>
+      <value>
+        <type>DEBUG</type>
+        <path>asyn/asynRecord.opi</path>
+        <description>ASYN record for port debugging.</description>
+        <macros>
+          <macro>
+            <name>R</name>
+            <description>This is the path to append to PV prefix to access the asyn record in the IOC</description>
+            <default />
+          </macro>
+        </macros>
+        <categories />
+      </value>
+    </entry>
   </opis>
 </descriptions>
