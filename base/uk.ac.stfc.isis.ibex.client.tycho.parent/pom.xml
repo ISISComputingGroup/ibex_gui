@@ -80,7 +80,12 @@
 					<failOnWarning>true</failOnWarning>
 					<showWarnings>true</showWarnings>
 					<useProjectSettings>false</useProjectSettings>
-					<compilerArgument>-warn:-warningToken</compilerArgument>
+				    <compilerArgs>
+				    	<arg>-warn:-warningToken</arg>
+				        <!-- Provide the project coordinates to `GraalVmProcessor`: -->
+				        <arg>-Alog4j.graalvm.groupId=${project.groupId}</arg>
+				        <arg>-Alog4j.graalvm.artifactId=${project.artifactId}</arg>
+				    </compilerArgs>
 				</configuration>
 			</plugin>
 
