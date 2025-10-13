@@ -229,7 +229,7 @@
 			<dependency>
 				<groupId>org.glassfish.jaxb</groupId>
 				<artifactId>jaxb-runtime</artifactId>
-				<version>3.0.2</version>
+				<version>4.0.6</version>
 				<type>jar</type>
 			</dependency>
 		</dependencies>
@@ -239,7 +239,7 @@
 			<dependency>
 				<groupId>org.glassfish.jaxb</groupId>
 				<artifactId>jaxb-core</artifactId>
-				<version>3.0.2</version>
+				<version>4.0.6</version>
 				<type>jar</type>
 			</dependency>
 		</dependencies>
