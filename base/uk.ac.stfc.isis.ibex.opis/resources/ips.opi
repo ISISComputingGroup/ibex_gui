@@ -147,7 +147,19 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
     <minimum_tab_height>10</minimum_tab_height>
     <name>Tabbed Container</name>
     <rules>
-      <rule name="hidden_if_legacy" prop_id="tab_2_enabled" out_exp="false">
+      <rule name="tab2_hidden_if_legacy" prop_id="tab_2_enabled" out_exp="false">
+        <exp bool_exp="pvStr0==&quot;LEGACY&quot;">
+          <value>false</value>
+        </exp>
+        <pv trig="true">$(PV_ROOT):PROTOCOL</pv>
+      </rule>
+      <rule name="tab3_hidden_if_legacy" prop_id="tab_3_enabled" out_exp="false">
+        <exp bool_exp="pvStr0==&quot;LEGACY&quot;">
+          <value>false</value>
+        </exp>
+        <pv trig="true">$(PV_ROOT):PROTOCOL</pv>
+      </rule>
+      <rule name="tab4_hidden_if_legacy" prop_id="tab_4_enabled" out_exp="false">
         <exp bool_exp="pvStr0==&quot;LEGACY&quot;">
           <value>false</value>
         </exp>
@@ -262,7 +274,7 @@ from org.csstudio.opibuilder.scriptUtil import ConsoleUtil
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>false</visible>
+      <visible>true</visible>
       <widget_type>Grouping Container</widget_type>
       <width>557</width>
       <wuid>-2040ea02:1687b99c8e2:-7d17</wuid>
@@ -972,7 +984,7 @@ Please let your local contact know in the first instance, and they will request 
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>557</width>
       <wuid>-2040ea02:1687b99c8e2:-7d15</wuid>
