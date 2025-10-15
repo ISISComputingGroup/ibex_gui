@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-export JAVA_HOME=/etc/alternatives/java_sdk
+export JAVA_HOME=/home/jenkins/jdk-21.0.8+9/
 export PATH=${JAVA_HOME}/bin:${PATH}
 export JAVA_TOOL_OPTIONS="-Djdk.util.zip.disableZip64ExtraFieldValidation=true"
 
@@ -11,7 +11,7 @@ TOPPATH="`dirname \"$SCRIPTPATH\"`"
 
 sh ./run_python_support_tests.sh
 
-mvn --settings="$TOPPATH/mvn_user_settings.xml" \
+/home/jenkins/apache-maven-3.9.11/bin/mvn --settings="$TOPPATH/mvn_user_settings.xml" \
     -f "$TOPPATH/base/uk.ac.stfc.isis.ibex.client.tycho.parent/pom.xml" \
     -DforceContextQualifier="$BUILD_NUMBER" \
     -DskipTests \

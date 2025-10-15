@@ -4034,5 +4034,69 @@
         </categories>
       </value>
     </entry>
+    <entry>
+      <key>Area Detector Diagnostics</key>
+      <value>
+        <type>DAE</type>
+        <path>areaDetector/ADTopView.opi</path>
+        <description>Area Detector diagnostic screens</description>
+        <macros>
+          <macro>
+            <name>IOC</name>
+            <description>IOC PV Prefix to use in addition to prefixes below e.g GENICAM_01: or DAE:</description>
+            <default/>
+          </macro>
+          <macro>
+            <name>SIMDETECTOR</name>
+            <description>PV prefix for simDetector e.g. SIMDET:</description>
+            <default/>
+          </macro>
+          <macro>
+            <name>OVERLAY</name>
+            <description>PV Prefix for NDoverlay e.g. OVER1:</description>
+            <default/>
+          </macro>
+          <macro>
+            <name>STDARRAYS</name>
+            <description>PV Prefix for NDDriverStdArrays</description>
+            <default/>
+          </macro>
+          <macro>
+            <name>PLUGINBASE</name>
+            <description>PV Prefix for NDPluginBase</description>
+            <default/>
+          </macro>
+          <macro>
+            <name>ROI</name>
+            <description>PV Prefix for NDROI</description>
+            <default/>
+          </macro>
+          <macro>
+            <name>STATS</name>
+            <description>PV Prefix for NDStats</description>
+            <default/>
+          </macro>
+        </macros>
+        <categories>
+          <category>Monitors</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>ASYN record</key>
+      <value>
+        <type>DEBUG</type>
+        <path>asyn/asynRecord.opi</path>
+        <description>ASYN record for port debugging.</description>
+        <macros>
+          <macro>
+            <name>R</name>
+            <description>This is the path to append to PV prefix to access the asyn record in the IOC</description>
+            <default />
+          </macro>
+        </macros>
+        <categories />
+      </value>
+    </entry>
   </opis>
 </descriptions>

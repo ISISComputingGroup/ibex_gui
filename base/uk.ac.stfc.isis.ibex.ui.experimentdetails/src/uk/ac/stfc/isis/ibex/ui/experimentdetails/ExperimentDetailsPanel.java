@@ -75,8 +75,10 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 	//private Button btnRemoveUserDetails;
 	private Button btnDisplayTitle;
 
-	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/gui/Experiment-Details.html";
 	private static final String DESCRIPTION = "Experiment Details View";
+	
+	private static final String HELP_LINK = Utils.getHelpLink(ExperimentDetailsPanel.class, "help_link");	
+	
 
 	/**
 	 * Create an instance of this panel.
@@ -187,7 +189,7 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 				.text("Show Title and Users in Dataweb Dashboard Page")
 				.layoutData(new GridData())
 				.get();
-
+		
 		new IBEXHelpButton(parent, HELP_LINK, DESCRIPTION);
 	}
 

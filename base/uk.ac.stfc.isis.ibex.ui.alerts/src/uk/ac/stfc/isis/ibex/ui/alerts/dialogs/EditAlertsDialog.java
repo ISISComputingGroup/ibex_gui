@@ -37,6 +37,8 @@ import uk.ac.stfc.isis.ibex.alerts.AlertsServer;
 import uk.ac.stfc.isis.ibex.ui.alerts.AlertsViewModel;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXHelpButton;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
+import uk.ac.stfc.isis.ibex.ui.Utils;
+
 
 /**
  * A dialog for editing the run control.
@@ -50,8 +52,8 @@ public class EditAlertsDialog extends TitleAreaDialog {
 	private final AlertsViewModel viewModel;
 	private static final String TITLE = "Alerts Settings";
 	private static final String SUB_TITLE = "Configure Alerts Control";
-
-	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/scripting/Alerts-on-Blocks.html";
+	private static final String HELP_LINK = Utils.getHelpLink(EditAlertsDialog.class, "help_link");
+	
 
 	/**
 	 * Creates a dialog for configuring the alerts-control settings.
@@ -87,6 +89,7 @@ public class EditAlertsDialog extends TitleAreaDialog {
 
 		editor = new AlertsControlSettingsPanel(this, parent, SWT.NONE, configServer, viewModel);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
 		new IBEXHelpButton(parent, HELP_LINK, TITLE);
 		return editor;
 	}
