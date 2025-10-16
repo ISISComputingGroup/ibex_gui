@@ -166,7 +166,7 @@ public class TempIocTest {
     @Test
     public void GIVEN_ioc_set_WHEN_changing_macros_THEN_macros_do_not_write_through_to_underlying_ioc_until_saved() {
         var testMacros = List.of(
-            new Macro("name_ignored", "inital_value", "", "", "", HasDefault.NO)
+            new Macro("name_ignored", "inital_value", "", "", "", HasDefault.NO, false)
         );
         
         var underlyingIoc = new EditableIoc(new Ioc(""), "");
