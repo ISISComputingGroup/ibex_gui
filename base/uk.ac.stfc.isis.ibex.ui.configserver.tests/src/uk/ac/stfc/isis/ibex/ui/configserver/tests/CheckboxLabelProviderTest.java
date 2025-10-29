@@ -25,6 +25,7 @@ package uk.ac.stfc.isis.ibex.ui.configserver.tests;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
+import java.util.EventListener;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -34,8 +35,8 @@ import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.TypedListener;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -47,7 +48,24 @@ import uk.ac.stfc.isis.ibex.ui.widgets.CheckboxLabelProvider.CheckboxSelectionAd
  *
  */
 public class CheckboxLabelProviderTest {
-    
+	
+	public class mockSelectionListener implements Listener {
+		private EventListener eventListener;
+		@Override
+		public void handleEvent(Event event) {
+			return;
+			
+		}    
+		
+		public mockSelectionListener (EventListener listener) {
+			this.eventListener = listener;
+		}
+		
+		public EventListener getEventListener() {
+			return this.eventListener;
+		}
+
+	}
     private CheckboxLabelProvider<String> modifiedCheckboxLabelProvider;
     
     private final String[] testModels = {"block", "ioc", "synoptic"};
@@ -228,9 +246,9 @@ public class CheckboxLabelProviderTest {
     public void GIVEN_checkbox_with_non_selection_listeners_WHEN_clear_checkbox_selection_listeners_THEN_no_listener_removed() {
         Button mockCheckBox = mock(Button.class);
         
-        TypedListener[] checkBoxListeners = new TypedListener[2];
-        checkBoxListeners[0] = new TypedListener(mock(SelectionListener.class));
-        checkBoxListeners[1] = new TypedListener(mock(SelectionListener.class));
+        Listener[] checkBoxListeners = new mockSelectionListener[2];
+        checkBoxListeners[0] = new mockSelectionListener(mock(SelectionListener.class));
+        checkBoxListeners[1] = new mockSelectionListener(mock(SelectionListener.class));
         
         when(mockCheckBox.getListeners(SWT.Selection)).thenReturn(checkBoxListeners);
         
