@@ -100,6 +100,7 @@ public class XmlFile {
 	    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	    DocumentBuilder builder = factory.newDocumentBuilder();
 	    InputSource source = new InputSource(new StringReader(xml));
+	    System.out.println("XML Document:::" + xml);
 
 	    doc = builder.parse(source);
 	}
