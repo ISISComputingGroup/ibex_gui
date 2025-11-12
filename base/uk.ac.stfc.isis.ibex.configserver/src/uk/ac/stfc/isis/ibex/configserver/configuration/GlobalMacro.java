@@ -18,8 +18,8 @@
 
 package uk.ac.stfc.isis.ibex.configserver.configuration;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import uk.ac.stfc.isis.ibex.model.ModelObject;
@@ -30,11 +30,11 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  * Contains the IOC name, or none, and a list of associated macros
  * 
  */
-public class GlobalMacro extends ModelObject  {
+public class GlobalMacro extends ModelObject  implements Comparable<GlobalMacro> {
 
 	private final String name;	
 	
-	private List<Macro> macros;
+	private Map<String, String> macros;
 	
     /**
      * Create a Global Macro with a given name.
@@ -52,7 +52,8 @@ public class GlobalMacro extends ModelObject  {
      */
 	public GlobalMacro(GlobalMacro globalMacro) {
 		this.name = globalMacro.getName();
-		this.macros = new ArrayList<>(globalMacro.getMacros());
+		//this.macros = new ArrayList<>(globalMacro.getMacros());
+		this.macros = new HashMap<String, String>(globalMacro.getMacros());
 	}
 
     /**
@@ -65,16 +66,19 @@ public class GlobalMacro extends ModelObject  {
     /**
      * @return A collection of  macros
      */
-	public List<Macro> getMacros() {
-		return Optional.ofNullable(macros).orElseGet(ArrayList::new);
+	public Map<String, String> getMacros() {
+		return Optional.ofNullable(macros).orElseGet(HashMap::new);
 	}
-	
-    /**
-     * @param macros
-     *            Set the IOC macros
-     */
-	public void setMacros(List<Macro> macros) {
-		firePropertyChange("macros", this.macros, this.macros = macros);
+
+	/**
+	 * Compares this GlobalMacro to another based on name. Used for sorting.
+	 */
+	@Override
+	public int compareTo(GlobalMacro other) {
+		if (this.name != null && other.name != null) {
+			return this.name.compareTo(other.name);
+		}
+		return 0;
 	}
 
 }

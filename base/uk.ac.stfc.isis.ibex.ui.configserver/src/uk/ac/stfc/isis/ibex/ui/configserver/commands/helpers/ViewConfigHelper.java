@@ -1,7 +1,6 @@
-
 /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2016 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2025 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -21,6 +20,8 @@
  * 
  */
 package uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers;
+
+import java.util.Optional;
 
 import org.eclipse.swt.widgets.Shell;
 
@@ -58,7 +59,10 @@ public class ViewConfigHelper extends ConfigHelper {
     protected void openDialog(EditableConfiguration config, boolean isCurrent,
             boolean editBlockFirst) {
     	final String configName = getConfigDisplayName(config, isCurrent);
-        final String subTitle = "Viewing the " + configName + " configuration";
+        String subTitle = "Viewing the " + configName + " configuration";
+		if (Optional.ofNullable(config.getGlobalmacros()).map(l -> l.isEmpty()).orElse(true)) {
+			subTitle += "\n\nNote: There also are global macros defined. See the Global Macros tab.\nThey over-ride IOC level macro";
+		}
         config.setIsComponent(false);
 
         ConfigDetailsDialog dialog =

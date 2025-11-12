@@ -91,8 +91,8 @@
 	</location>
 	<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 		<repository location="http://shadow.nd.rl.ac.uk/ICP_P2/Pydev/features/org.python.pydev.p2-repo/target/repository/"/>
-		<unit id="org.python.pydev.feature.feature.group" version="11.0.3.202408070859"/>
-		<unit id="org.python.pydev.feature.source.feature.group" version="11.0.3.202408070859"/>
+		<unit id="org.python.pydev.feature.feature.group" version="13.1.0.202511051529"/>
+		<unit id="org.python.pydev.feature.source.feature.group" version="13.1.0.202511051529"/>
 	</location>
 	<location includeDependencyDepth="none" includeDependencyScopes="compile" includeSource="true" missingManifest="generate" type="Maven">
 		<dependencies>
