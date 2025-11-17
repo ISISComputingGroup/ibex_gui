@@ -81,4 +81,31 @@ public class GlobalMacro extends ModelObject  implements Comparable<GlobalMacro>
 		return 0;
 	}
 
+	@Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        GlobalMacro other = (GlobalMacro) obj;
+        if (this.name == null && other.name == null) {
+            return true;
+        }
+        if (this.name == null || other.name == null) {
+            return false;
+        }
+        return this.name.equals(other.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name == null ? 0 : name.hashCode();
+    }
+    
+    @Override
+	public String toString() {
+		return "GlobalMacro [name=" + name + ", macros=" + macros + "]";
+	}
 }

@@ -125,7 +125,7 @@ public class ConfigEditorPanel extends Composite {
 		setConfigToEdit(config);
 		
 		if (!config.getGlobalmacros().isEmpty()) {
-			final GlobalMacroOverviewPanel globalMacros = new GlobalMacroOverviewPanel(editorTabs, SWT.NONE, config);
+			final GlobalMacroOverviewPanel globalMacros = new GlobalMacroOverviewPanel(editorTabs, config);
 			TabItem globalMacrosTab = new TabItem(editorTabs, SWT.NONE);
 			globalMacrosTab.setText("Global Macros");
 			globalMacrosTab.setControl(globalMacros);

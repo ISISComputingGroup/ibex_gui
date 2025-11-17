@@ -45,10 +45,9 @@ public class GlobalMacroOverviewPanel extends Composite {
      * Constructor for the Macro panel.
      * 
      * @param parent The parent composite.
-     * @param style The SWT style.
      * @param config The configuration details.
      */
-	public GlobalMacroOverviewPanel(Composite parent, int style, EditableConfiguration config) {
+	public GlobalMacroOverviewPanel(Composite parent, EditableConfiguration config) {
 		super(parent, SWT.NONE);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		table = new GlobalMacroTable(this, SWT.NONE, SWT.V_SCROLL | SWT.MULTI | SWT.FULL_SELECTION);
