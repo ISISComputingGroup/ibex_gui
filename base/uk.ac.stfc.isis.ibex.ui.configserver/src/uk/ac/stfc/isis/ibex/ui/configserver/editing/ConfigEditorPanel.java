@@ -51,7 +51,6 @@ public class ConfigEditorPanel extends Composite {
     private TabItem blocksTab;
 
     private TabFolder editorTabs;
-    private final GlobalMacroOverviewPanel globalMacros;
 
     /**
      * The constructor for the overall panel that is used for editing and
@@ -125,10 +124,12 @@ public class ConfigEditorPanel extends Composite {
 
 		setConfigToEdit(config);
 		
-		globalMacros = new GlobalMacroOverviewPanel(editorTabs, SWT.NONE, config);
-		TabItem globalMacrosTab = new TabItem(editorTabs, SWT.NONE);
-		globalMacrosTab.setText("Global Macros");
-		globalMacrosTab.setControl(globalMacros);
+		if (!config.getGlobalmacros().isEmpty()) {
+			final GlobalMacroOverviewPanel globalMacros = new GlobalMacroOverviewPanel(editorTabs, SWT.NONE, config);
+			TabItem globalMacrosTab = new TabItem(editorTabs, SWT.NONE);
+			globalMacrosTab.setText("Global Macros");
+			globalMacrosTab.setControl(globalMacros);
+		}
 	}
 
     /**

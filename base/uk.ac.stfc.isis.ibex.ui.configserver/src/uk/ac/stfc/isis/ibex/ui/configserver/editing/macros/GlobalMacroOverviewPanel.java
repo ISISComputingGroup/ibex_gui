@@ -71,5 +71,4 @@ public class GlobalMacroOverviewPanel extends Composite {
 								entry -> new GlobalMacroViewModel(macro.getName(), entry.getKey(), entry.getValue())))
 						.collect(Collectors.toList());
 	}
-
 }
