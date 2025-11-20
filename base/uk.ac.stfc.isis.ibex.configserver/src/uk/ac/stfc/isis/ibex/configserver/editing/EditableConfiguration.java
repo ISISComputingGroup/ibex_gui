@@ -1,6 +1,6 @@
 
 /*
- * This file is part of the ISIS IBEX application. Copyright (C) 2012-2017
+ * This file is part of the ISIS IBEX application. Copyright (C) 2012-2025
  * Science & Technology Facilities Council. All rights reserved.
  *
  * This program is distributed in the hope that it will be useful. This program
@@ -36,6 +36,7 @@ import java.util.stream.Collectors;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.configuration.ComponentInfo;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Configuration;
+import uk.ac.stfc.isis.ibex.configserver.configuration.GlobalMacro;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Group;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Ioc;
 import uk.ac.stfc.isis.ibex.configserver.configuration.Macro;
@@ -142,7 +143,8 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
     /** Current error message to be displayed **/
     private String currentErrorMessage = noError;
 
-
+    /** The global macros associated with any configuration. */
+    private List<GlobalMacro> globalmacros;
 
     /**
      * Listener for block renaming events.
@@ -180,69 +182,67 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
      * @param pvs
      *            The PVs available to the configuration
      */
-    public EditableConfiguration(
-	    Configuration config,
-	    Collection<EditableIoc> iocs,
-	    Collection<Configuration> components, 
-	    Collection<PV> pvs) {
-	this.name = config.name();
-	this.description = config.description();
-	this.synoptic = config.synoptic();
-	this.isProtected = config.isProtected();
-	this.isDynamic = config.isDynamic();
-	this.configuresBlockGWAndArchiver = config.configuresBlockGWAndArchiver();
-	originalProtectedFlag = this.isProtected;
-	this.allIocs = new ArrayList<>();
-	this.managerMode = ManagerModeModel.getInstance();
-	this.isSaveButtonEnabled = true;
-	this.enableSaveAsButton = true;
-	managerModePv = managerMode.getManagerModeObservable();
+	public EditableConfiguration(Configuration config, Collection<EditableIoc> iocs,
+			Collection<Configuration> components, Collection<PV> pvs) {
+		this.name = config.name();
+		this.description = config.description();
+		this.synoptic = config.synoptic();
+		this.isProtected = config.isProtected();
+		this.isDynamic = config.isDynamic();
+		this.configuresBlockGWAndArchiver = config.configuresBlockGWAndArchiver();
+		originalProtectedFlag = this.isProtected;
+		this.allIocs = new ArrayList<>();
+		this.managerMode = ManagerModeModel.getInstance();
+		this.isSaveButtonEnabled = true;
+		this.enableSaveAsButton = true;
+		managerModePv = managerMode.getManagerModeObservable();
 
-	for (EditableIoc ioc : iocs) {
-	    EditableIoc newIoc = new EditableIoc(ioc, ioc.getDescription());
-	    newIoc.setAvailableMacros(new ArrayList<>(ioc.getAvailableMacros()));
-	    this.allIocs.add(newIoc);
-	}
-
-	this.history = new ArrayList<>();
-
-	for (String date : config.getHistory()) {
-	    this.history.add(date);
-	}
-
-	this.pvs = new ArrayList<>(pvs);
-
-	for (Block block : config.getBlocks()) {
-	    EditableBlock eb = new EditableBlock(block);
-	    allBlocks.add(eb);
-	    addRenameListener(eb);
-	}
-
-	for (Group group : config.getGroups()) {
-		if (!group.hasComponent()) {
-			editableGroups.add(new EditableGroup(this, group));
+		for (EditableIoc ioc : iocs) {
+			EditableIoc newIoc = new EditableIoc(ioc, ioc.getDescription());
+			newIoc.setAvailableMacros(new ArrayList<>(ioc.getAvailableMacros()));
+			this.allIocs.add(newIoc);
 		}
+
+		this.history = new ArrayList<>();
+
+		for (String date : config.getHistory()) {
+			this.history.add(date);
+		}
+
+		this.pvs = new ArrayList<>(pvs);
+
+		for (Block block : config.getBlocks()) {
+			EditableBlock eb = new EditableBlock(block);
+			allBlocks.add(eb);
+			addRenameListener(eb);
+		}
+
+		for (Group group : config.getGroups()) {
+			if (!group.hasComponent()) {
+				editableGroups.add(new EditableGroup(this, group));
+			}
+		}
+
+		editableGroups = new ArrayList<>(DisplayUtils.removeOtherGroup(editableGroups));
+
+		for (EditableIoc ioc : allIocs) {
+			iocMap.put(ioc.getName(), ioc);
+		}
+		initMacros(iocMap);
+
+		for (Ioc ioc : config.getIocs()) {
+			addIoc(convertIoc(ioc));
+		}
+
+		Collection<Configuration> selectedComponents = getComponentDetails(config.getComponents(), components);
+		editableComponents = new EditableComponents(selectedComponents, components);
+		editableComponents.addPropertyChangeListener(evt -> updateComponents());
+
+		updateComponents();
+		setEnableSaveAsButton();
+		addObserver();
+		this.globalmacros = config.getGlobalmacros();
 	}
-	
-	editableGroups = new ArrayList<>(DisplayUtils.removeOtherGroup(editableGroups));
-
-	for (EditableIoc ioc : allIocs) {
-	    iocMap.put(ioc.getName(), ioc);
-	}
-	initMacros(iocMap);
-
-	for (Ioc ioc : config.getIocs()) {
-	    addIoc(convertIoc(ioc));
-	}
-
-	Collection<Configuration> selectedComponents = getComponentDetails(config.getComponents(), components);
-	editableComponents = new EditableComponents(selectedComponents, components);
-	editableComponents.addPropertyChangeListener(evt -> updateComponents());
-
-	updateComponents();
-	setEnableSaveAsButton();
-	addObserver();
-    }
 
     private EditableIoc convertIoc(Ioc ioc) {
 	final EditableIoc generalIOC = iocMap.get(ioc.getName());
@@ -666,28 +666,31 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	firePropertyChange("groups", groupsBefore, transformGroups());
     }
 
-    /**
-     * Return in a form suitable for saving as a configuration.
-     * 
-     * @return the underlying configuration
-     */
-    public Configuration asConfiguration() {
-	Configuration config = new Configuration(getName(), getDescription(), getSynoptic(), transformIocs(), transformBlocks(),
-		transformGroups(), transformComponents(), getHistory(), getIsProtected(), getIsDynamic(), getIfconfiguresBlockGWAndArchiver());
-	return new ComponentFilteredConfiguration(config);
-    }
+	/**
+	 * Return in a form suitable for saving as a configuration.
+	 * 
+	 * @return the underlying configuration
+	 */
+	public Configuration asConfiguration() {
+		Configuration config = new Configuration(getName(), getDescription(), getSynoptic(), transformIocs(),
+				transformBlocks(), transformGroups(), transformComponents(), getHistory(), getIsProtected(),
+				getIsDynamic(), getIfconfiguresBlockGWAndArchiver(), getGlobalmacros());
+		return new ComponentFilteredConfiguration(config);
+	}
 
-    /**
-     * Return in a form suitable for saving as a component - ie without
-     * contained components.
-     * 
-     * @return the configuration as a component
-     */
-    public Configuration asComponent() {
-	Configuration config = asConfiguration();
-	return new Configuration(config.name(), config.description(), config.synoptic(), config.getIocs(),
-		config.getBlocks(), config.getGroups(), Collections.<ComponentInfo>emptyList(), config.getHistory(), config.isProtected(), config.isDynamic(), config.configuresBlockGWAndArchiver());
-    }
+	/**
+	 * Return in a form suitable for saving as a component - ie without contained
+	 * components.
+	 * 
+	 * @return the configuration as a component
+	 */
+	public Configuration asComponent() {
+		Configuration config = asConfiguration();
+		return new Configuration(config.name(), config.description(), config.synoptic(), config.getIocs(),
+				config.getBlocks(), config.getGroups(), Collections.<ComponentInfo>emptyList(), config.getHistory(),
+				config.isProtected(), config.isDynamic(), config.configuresBlockGWAndArchiver(),
+				config.getGlobalmacros());
+	}
 
     /**
      * Swaps the indices of two groups in the configuration (for moving them up
@@ -898,4 +901,11 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 	this.managerModeObservable.ifPresent(ManagerModeObserver::close);
 	this.managerModeObservable = Optional.empty();
     }
+
+	/**
+	 * @return the globalmacros
+	 */
+	public List<GlobalMacro> getGlobalmacros() {
+		return globalmacros;
+	}
 }
