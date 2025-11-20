@@ -60,7 +60,7 @@ public class EditConfigHelper extends ConfigHelper {
 		final String configName = getConfigDisplayName(config, isCurrent);
 		String subTitle = "Editing the " + configName + " configuration";
 		if (!(null == config.getGlobalmacros()) && !config.getGlobalmacros().isEmpty()) {
-			subTitle += "\n\nNote: There also are global macros defined. See the Global Macros tab.\nThey over-ride IOC level macro";
+			subTitle += "\nNote: There also are global macros defined. See the Global Macros tab.\nThey over-ride IOC level macro";
 		}
 
 		EditConfigDialog dialog = new EditConfigDialog(shell, title, subTitle, config, false, configurationViewModels,

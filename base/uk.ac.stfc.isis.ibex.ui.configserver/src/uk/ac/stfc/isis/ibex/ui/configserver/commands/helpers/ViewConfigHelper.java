@@ -61,7 +61,7 @@ public class ViewConfigHelper extends ConfigHelper {
     	final String configName = getConfigDisplayName(config, isCurrent);
         String subTitle = "Viewing the " + configName + " configuration";
 		if (Optional.ofNullable(config.getGlobalmacros()).map(l -> l.isEmpty()).orElse(true)) {
-			subTitle += "\n\nNote: There also are global macros defined. See the Global Macros tab.\nThey over-ride IOC level macro";
+			subTitle += "\nNote: There also are global macros defined. See the Global Macros tab.\nThey over-ride IOC level macro";
 		}
         config.setIsComponent(false);
 
