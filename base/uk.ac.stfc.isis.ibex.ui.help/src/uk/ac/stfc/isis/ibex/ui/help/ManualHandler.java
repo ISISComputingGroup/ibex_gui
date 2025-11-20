@@ -32,20 +32,20 @@ import org.eclipse.ui.browser.IWebBrowser;
 
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 
 /**
  * The handler for opening the user manual via the menu.
  */
 public class ManualHandler {
-
-    private static final String USER_MANUAL_ADDRESS = "https://shadow.nd.rl.ac.uk/ibex_user_manual";
-
-    /**
+    
+	private static final String USER_MANUAL_ADDRESS = Utils.getHelpLink(ManualHandler.class, "user_manual_address");
+	
+	/**
      * Opens the 'User Manual' URL in help menu.
      */
 	@Execute
 	public void execute() {
-
         URL url = null;
         try {
             url = new URI(USER_MANUAL_ADDRESS).toURL();

@@ -29,6 +29,7 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import uk.ac.stfc.isis.ibex.dae.actions.DaeActions;
 import uk.ac.stfc.isis.ibex.model.Action;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXHelpButton;
 
@@ -39,10 +40,9 @@ import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXHelpButton;
  */
 @SuppressWarnings("checkstyle:magicnumber")
 public class DaeActionButtonPanel extends Composite {
-
-	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/how_to/Manage-the-DAE.html";
 	private static final String DESCRIPTION = "DAE View";
-
+	private static final String HELP_LINK = Utils.getHelpLink(DaeActionButtonPanel.class, "help_link");
+	
 	/**
 	 * Create the panel with all the buttons inside.
 	 * 
@@ -53,7 +53,6 @@ public class DaeActionButtonPanel extends Composite {
 	 */
 	public DaeActionButtonPanel(Composite parent, int style, DaeActions actions) {
 		super(parent, style);
-
 		GridLayout gridLayout = new GridLayout(1, false);
 		gridLayout.verticalSpacing = 10;
 		setLayout(gridLayout);
@@ -76,8 +75,10 @@ public class DaeActionButtonPanel extends Composite {
 
 		Label bottomSpacer = new Label(this, SWT.NONE);
 		bottomSpacer.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, 1, 1));
-
+		
+		
 		new IBEXHelpButton(parent, HELP_LINK, DESCRIPTION);
+		
 	}
 
 	private void addActionButton(String text, String imageFileName, final Action action) {

@@ -39,7 +39,9 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 import uk.ac.stfc.isis.ibex.configserver.IocControl;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXHelpButton;
+
 
 /**
  * Class to display a dialog to start/stop IOCs.
@@ -51,7 +53,7 @@ public class IocControlDialog extends TitleAreaDialog {
 	
 	private static final Point INITIAL_SIZE = new Point(800, 600);
 	
-	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/how_to/Start-and-Stop-IOCs.html";
+	private static final String HELP_LINK = Utils.getHelpLink(IocControlDialog.class, "help_link");
 	
 	private final IocControl control;
 	/**

@@ -35,9 +35,11 @@ import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlActivator;
 import uk.ac.stfc.isis.ibex.runcontrol.RunControlServer;
+import uk.ac.stfc.isis.ibex.ui.Utils;
 import uk.ac.stfc.isis.ibex.ui.runcontrol.RunControlViewModel;
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXHelpButton;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessage;
+
 
 /**
  * A dialog for editing the run control.
@@ -50,9 +52,9 @@ public class EditRunControlDialog extends TitleAreaDialog {
 	private RunControlSettingsPanel editor;
 	private final RunControlViewModel viewModel;
 	private static final String TITLE = "Run-Control Settings";
-
-	private static final String HELP_LINK = "https://shadow.nd.rl.ac.uk/ibex_user_manual/gui/Menu-Bar.html#run-control-menu";
-
+	private static final String HELP_LINK = Utils.getHelpLink(EditRunControlDialog.class, "help_link");
+	
+	
 	/**
 	 * Creates a dialog for configuring the run-control settings.
 	 * 
@@ -87,6 +89,7 @@ public class EditRunControlDialog extends TitleAreaDialog {
 
 		editor = new RunControlSettingsPanel(this, parent, SWT.NONE, configServer, runControlServer, viewModel);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
 		new IBEXHelpButton(parent, HELP_LINK, TITLE);
 		return editor;
 	}

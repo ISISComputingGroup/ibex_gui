@@ -1,4 +1,5 @@
 Manifest-Version: 1.0
+Eclipse-BundleShape: dir
 Bundle-ManifestVersion: 2
 Bundle-Name: Nicos
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.nicos;singleton:=true

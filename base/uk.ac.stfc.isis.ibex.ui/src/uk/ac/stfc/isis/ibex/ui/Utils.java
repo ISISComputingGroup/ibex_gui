@@ -22,7 +22,15 @@
  */
 package uk.ac.stfc.isis.ibex.ui;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 import org.apache.commons.lang.SystemUtils;
+import org.eclipse.core.runtime.FileLocator;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 
 /**
  * Set of general utility methods and constants used in the UI.
@@ -70,5 +78,24 @@ public final class Utils {
      * more accurate way of identifying IDAAS machines and use that here instead.
      */
     public static final boolean SHOULD_HIDE_USER_INFORMATION = SystemUtils.IS_OS_LINUX;
-
+    
+    /**
+     * Gets a help URL from it's resource file.
+     * @param className class used to determine the path of the resources folder.
+     * @param linkName the name of the help link in the resource folder
+     * @return the help URL
+     */
+    public static String getHelpLink(Class<?> className, String linkName) {
+		Properties linkProps = new Properties();
+		try {
+			final var resourceFilePath = FileLocator.resolve(className.getResource("/resources/helplink.properties")).getPath();
+			try (FileInputStream fis = new FileInputStream(resourceFilePath)) {
+				linkProps.load(fis);
+			}
+		} catch (IOException | IllegalArgumentException ex) {
+			LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(className), ex.getMessage(), ex);
+		}
+		return linkProps.getProperty(linkName);
+	}
 }
+
