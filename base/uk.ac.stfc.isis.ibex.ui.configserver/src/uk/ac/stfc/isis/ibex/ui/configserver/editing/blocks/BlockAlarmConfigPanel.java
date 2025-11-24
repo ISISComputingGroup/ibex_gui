@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
 
@@ -107,9 +108,10 @@ public class BlockAlarmConfigPanel extends Composite {
         highLimitSeverity.setToolTipText("High Limit Severity - Alarm severity when the high limit is breached");
         highLimitSeverity.setEnabled(false); // currently not editable.
 		if (viewModel.isNoAlarmSeveritySet()) {
-			Label label = new Label(alarmConfigGroup, SWT.BALLOON);
+			Label label = new Label(alarmConfigGroup, SWT.BOLD);
 			label.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 8, 1));
 			label.setText("Note: If no severity is set then the corresponding alarm will not trigger.");
+			label.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
 		}
         setModel(viewModel);
     }
