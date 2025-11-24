@@ -44,6 +44,8 @@ public class BlockAlarmConfigPanel extends Composite {
     private Text guidance;
     private Button enabled;
 	private Button latched;
+    private Text lowLimitSeverity;
+    private Text highLimitSeverity;
 
     /**
      * Standard constructor.
@@ -58,36 +60,21 @@ public class BlockAlarmConfigPanel extends Composite {
 
         Group alarmConfigGroup = new Group(this, SWT.NONE);
         alarmConfigGroup.setText("Alarm Configurations");
-        alarmConfigGroup.setLayout(new GridLayout(6, false));
-
-        addLabel(alarmConfigGroup, "Low Limit:");
-        lowLimit = new Text(alarmConfigGroup, SWT.BORDER);
-        lowLimit.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        lowLimit.setToolTipText("Alarm Low limit - not managed at block level");
-        lowLimit.setEnabled(false); // Low limit is currently not editable.
-        //lowLimit.setText(viewModel.getLowLimit());
-
-        addLabel(alarmConfigGroup, "High Limit:");
-        highLimit = new Text(alarmConfigGroup, SWT.BORDER);
-        highLimit.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        highLimit.setToolTipText("Alarm High limit - not managed at block level");
-        highLimit.setEnabled(false); // High limit is currently not editable.
-        //highLimit.setText(viewModel.getHighLimit());
-
-        addLabel(alarmConfigGroup, "Delay:");
-        delay = new Text(alarmConfigGroup, SWT.BORDER);
-        delay.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        delay.setToolTipText("Delay before the alarm is triggered");
+        alarmConfigGroup.setLayout(new GridLayout(8, false));
 
         enabled = new IBEXButton(alarmConfigGroup, SWT.CHECK)
         		.layoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1))
-        		.text("Enabled").tooltip("Enable or disable the alarm")
+        		.text("Enabled").tooltip("Enable or disable the alarm").enabled(true)
         		.get();
 
         latched = new IBEXButton(alarmConfigGroup, SWT.CHECK)
         		.layoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1))
-        		.text("Latched").tooltip("Enable or disable latched alarm behavior")
+        		.text("Latched").tooltip("Enable or disable latched alarm behavior").enabled(true)
         		.get();
+        addLabel(alarmConfigGroup, "Delay:");
+        delay = new Text(alarmConfigGroup, SWT.BORDER);
+        delay.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        delay.setToolTipText("Delay before the alarm is triggered");
 
         addLabel(alarmConfigGroup, "Guidance:");
         guidance = new Text(alarmConfigGroup, SWT.BORDER);
@@ -95,6 +82,35 @@ public class BlockAlarmConfigPanel extends Composite {
         grid.widthHint = 200;
         guidance.setLayoutData(grid);
         guidance.setToolTipText("Guidance text for the alarm configuration");
+
+        addLabel(alarmConfigGroup, "Low Limit:");
+        lowLimit = new Text(alarmConfigGroup, SWT.BOLD);
+        lowLimit.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+        lowLimit.setToolTipText("Alarm Low limit - not managed at block level");
+        lowLimit.setEnabled(false); // Low limit is currently not editable.
+
+        addLabel(alarmConfigGroup, "Low Limit Severity:");
+        lowLimitSeverity = new Text(alarmConfigGroup, SWT.BOLD);
+        lowLimitSeverity.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+        lowLimitSeverity.setToolTipText("Low Limit Severity - Alarm severity when the low limit is breached");
+        lowLimitSeverity.setEnabled(false); // currently not editable.
+
+        addLabel(alarmConfigGroup, "High Limit:");
+        highLimit = new Text(alarmConfigGroup, SWT.BOLD);
+        highLimit.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+        highLimit.setToolTipText("Alarm High limit - not managed at block level");
+        highLimit.setEnabled(false); // High limit is currently not editable.
+
+        addLabel(alarmConfigGroup, "High Limit Severity:");
+        highLimitSeverity = new Text(alarmConfigGroup, SWT.BOLD);
+        highLimitSeverity.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+        highLimitSeverity.setToolTipText("High Limit Severity - Alarm severity when the high limit is breached");
+        highLimitSeverity.setEnabled(false); // currently not editable.
+		if (viewModel.isNoAlarmSeveritySet()) {
+			Label label = new Label(alarmConfigGroup, SWT.BALLOON);
+			label.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 8, 1));
+			label.setText("Note: If no severity is set then the corresponding alarm will not trigger.");
+		}
         setModel(viewModel);
     }
 
@@ -104,7 +120,7 @@ public class BlockAlarmConfigPanel extends Composite {
 	 */
 	private void addLabel(Group alarmConfigGroup, String labelText) {
 		Label label = new Label(alarmConfigGroup, SWT.NONE);
-        label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        label.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1));
         label.setText(labelText);
 	}
 	
@@ -127,5 +143,9 @@ public class BlockAlarmConfigPanel extends Composite {
                 BeanProperties.value(BlockAlarmConfigViewModel.LOWLIMIT_BINDING_NAME).observe(viewModel));
         bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(highLimit),
                 BeanProperties.value(BlockAlarmConfigViewModel.HIGHLIMIT_BINDING_NAME).observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(lowLimitSeverity),
+                BeanProperties.value(BlockAlarmConfigViewModel.LOWLIMIT_SEVERITY_BINDING_NAME).observe(viewModel));
+        bindingContext.bindValue(WidgetProperties.text(SWT.Modify).observe(highLimitSeverity),
+                BeanProperties.value(BlockAlarmConfigViewModel.HIGHLIMIT_SEVERITY_BINDING_NAME).observe(viewModel));
 	}
 }

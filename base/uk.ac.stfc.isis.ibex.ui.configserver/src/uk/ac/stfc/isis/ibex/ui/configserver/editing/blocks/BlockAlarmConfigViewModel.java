@@ -18,12 +18,14 @@
 
 package uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks;
 
+import uk.ac.stfc.isis.ibex.configserver.AlarmState;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
 import uk.ac.stfc.isis.ibex.epics.switching.ObservableFactory;
 import uk.ac.stfc.isis.ibex.epics.switching.OnInstrumentSwitch;
 import uk.ac.stfc.isis.ibex.instrument.channels.DoubleChannel;
+import uk.ac.stfc.isis.ibex.instrument.channels.EnumChannel;
 import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 
@@ -45,6 +47,8 @@ public class BlockAlarmConfigViewModel extends ErrorMessageProvider {
     private ForwardingObservable<Double> alarmHighLimitObservable = null;
     private String lowLimit = null;
     private String highLimit = null;
+    private boolean noLowAlarmSeverity = false;
+    private boolean noHighAlarmSeverity = false;
 
     private final BaseObserver<Double> alarmLowLimitAdapter = new BaseObserver<Double>() {
         @Override
@@ -86,6 +90,54 @@ public class BlockAlarmConfigViewModel extends ErrorMessageProvider {
 		}
 	};
 
+    // Observables for alarm severity definitions
+    private ForwardingObservable<AlarmState> alarmLowLimitSeverityObservable = null;
+    private ForwardingObservable<AlarmState> alarmHighLimitSeverityObservable = null;
+    private String lowLimitSeverity = null;
+    private String highLimitSeverity = null;
+
+    private final BaseObserver<AlarmState> alarmLowLimitSeverityAdapter = new BaseObserver<AlarmState>() {
+        @Override
+        public void onValue(AlarmState value) {
+        	noLowAlarmSeverity = (value == AlarmState.NO_ALARM);
+        	setLowLimitSeverity((null == value) ? "" : value.toString());
+        }
+
+        @Override
+        public void onError(Exception e) {
+        	lowLimitSeverity = "";
+            IsisLog.getLogger(getClass()).error("Exception in alarm low limit adapter: " + e.getMessage());
+        }
+
+        @Override
+        public void onConnectionStatus(boolean isConnected) {
+            if (!isConnected) {
+            	lowLimitSeverity = "";
+            }
+        }
+    };
+
+	private final BaseObserver<AlarmState> alarmHighLimitSeverityAdapter = new BaseObserver<AlarmState>() {
+		@Override
+		public void onValue(AlarmState value) {
+			noHighAlarmSeverity = (value == AlarmState.NO_ALARM);
+			setHighLimitSeverity((null == value) ? "" : value.toString());
+		}
+
+		@Override
+		public void onError(Exception e) {
+			highLimitSeverity = "";
+			IsisLog.getLogger(getClass()).error("Exception in alarm high limit adapter: " + e.getMessage());
+		}
+
+		@Override
+		public void onConnectionStatus(boolean isConnected) {
+			if (!isConnected) {
+				highLimitSeverity = "";
+			}
+		}
+	};
+
     /**
      * Field that the GUI should bind to to update delay value.
      */
@@ -115,7 +167,17 @@ public class BlockAlarmConfigViewModel extends ErrorMessageProvider {
      * Field that the GUI should bind to to update highLimit value.
      */
     public static final String HIGHLIMIT_BINDING_NAME = "highLimit";
+
+    /**
+     * Field that the GUI should bind to to update lowLimit value.
+     */
+    public static final String LOWLIMIT_SEVERITY_BINDING_NAME = "lowLimitSeverity";
     
+    /**
+     * Field that the GUI should bind to to update highLimit value.
+     */
+    public static final String HIGHLIMIT_SEVERITY_BINDING_NAME = "highLimitSeverity";
+
     /**
      * Constructor.
      * 
@@ -255,6 +317,39 @@ public class BlockAlarmConfigViewModel extends ErrorMessageProvider {
 		}
 	}
 
+	/**
+	 * Gets the severity defined for low limit.
+	 * @return the low limit severity
+	 */
+	public String getLowLimitSeverity() {
+		return lowLimitSeverity;
+	}
+
+	/**
+	 * Sets the severity defined for low limit.
+	 * @param lowLimitSeverity
+	 */
+    public void setLowLimitSeverity(String lowLimitSeverity) {
+    	firePropertyChange("lowLimitSeverity", this.lowLimitSeverity, this.lowLimitSeverity = lowLimitSeverity);
+	}
+    
+	/**
+	 * Gets the severity defined for high limit.
+	 * @return the high limit severity
+	 */
+	public String getHighLimitSeverity() {
+		return highLimitSeverity;
+	}
+
+	/**
+	 * Sets the severity defined for High limit.
+	 * @param highLimitSeverity
+	 */
+    public void setHighLimitSeverity(String highLimitSeverity) {
+    	firePropertyChange("highLimitSeverity", this.highLimitSeverity, this.highLimitSeverity = highLimitSeverity);
+	}
+    
+
     /**
      * Update the settings on the block.
      */
@@ -266,15 +361,25 @@ public class BlockAlarmConfigViewModel extends ErrorMessageProvider {
     }
 
     /**
-     * Creates an observable for the PV holding the current state of this banner
+     * Creates an observable for the PV holding the current state of the alarm
      * item.
      */
-    private void createAlarmObservables() {
+	private void createAlarmObservables() {
 		alarmLowLimitObservable = observableFactory.getSwitchableObservable(new DoubleChannel(),
 				editingBlock.getPV() + ".LOW");
 		alarmHighLimitObservable = observableFactory.getSwitchableObservable(new DoubleChannel(),
 				editingBlock.getPV() + ".HIGH");
 		alarmLowLimitObservable.subscribe(alarmLowLimitAdapter);
 		alarmHighLimitObservable.subscribe(alarmHighLimitAdapter);
-    }  
+		alarmLowLimitSeverityObservable = observableFactory.getSwitchableObservable(new EnumChannel<>(AlarmState.class),
+				editingBlock.getPV() + ".LSV");
+		alarmHighLimitSeverityObservable = observableFactory
+				.getSwitchableObservable(new EnumChannel<>(AlarmState.class), editingBlock.getPV() + ".HSV");
+		alarmLowLimitSeverityObservable.subscribe(alarmLowLimitSeverityAdapter);
+		alarmHighLimitSeverityObservable.subscribe(alarmHighLimitSeverityAdapter);
+	} 
+	
+	public boolean isNoAlarmSeveritySet() {
+		return noLowAlarmSeverity || noHighAlarmSeverity;
+	}
 }
