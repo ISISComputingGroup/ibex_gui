@@ -379,6 +379,10 @@ public class BlockAlarmConfigViewModel extends ErrorMessageProvider {
 		alarmHighLimitSeverityObservable.subscribe(alarmHighLimitSeverityAdapter);
 	} 
 	
+	/**
+	 * Checks if no alarm severity is set for breaching low or high limit.
+	 * @return true if no alarm severity is set for low or high limit
+	 */
 	public boolean isNoAlarmSeveritySet() {
 		return noLowAlarmSeverity || noHighAlarmSeverity;
 	}
