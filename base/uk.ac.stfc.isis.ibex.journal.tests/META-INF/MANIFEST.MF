@@ -4,7 +4,7 @@ Bundle-Name: Tests
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.journal.tests
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: uk.ac.stfc.isis.ibex.journal;bundle-version="1.0.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Require-Bundle: org.junit;bundle-version="4.11.0",
  org.hamcrest,
  org.mockito.mockito-core;bundle-version="4.7.0",
