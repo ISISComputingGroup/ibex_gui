@@ -40,7 +40,7 @@
    </launcher>
 
    <vm>
-      <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-25</windows>
+      <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-21</windows>
    </vm>
 
    <plugins>
@@ -62,7 +62,6 @@
       <plugin id="org.eclipse.osgi" autoStart="true" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.activemq" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.alarm" autoStart="false" startLevel="0" />
-      <plugin id="uk.ac.stfc.isis.ibex.alerts" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.banner" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.beamstatus" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.configserver" autoStart="false" startLevel="0" />
@@ -94,7 +93,6 @@
       <plugin id="uk.ac.stfc.isis.ibex.targets" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.alarm" autoStart="false" startLevel="0" />
-      <plugin id="uk.ac.stfc.isis.ibex.ui.alerts" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.banner" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.beamstatus" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.blocks" autoStart="false" startLevel="0" />
@@ -121,6 +119,8 @@
       <plugin id="uk.ac.stfc.isis.ibex.ui.weblinks" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.widgets" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.validators" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.alerts" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.alerts" autoStart="false" startLevel="0" />
       <property name="osgi.splashPath" value="platform:/base/plugins/uk.ac.stfc.isis.ibex.e4.product" />
    </configurations>
 
