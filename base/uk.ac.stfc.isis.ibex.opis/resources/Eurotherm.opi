@@ -1167,9 +1167,9 @@
         <transparent>false</transparent>
         <visible>true</visible>
         <widget_type>Grouping Container</widget_type>
-        <width>217</width>
+        <width>205</width>
         <wuid>-620d3863:17acd4438eb:-78c0</wuid>
-        <x>-12</x>
+        <x>0</x>
         <y>10</y>
         <widget typeId="org.csstudio.opibuilder.widgets.TextUpdate" version="1.0.0">
           <actions hook="false" hook_all="false" />
@@ -2138,10 +2138,10 @@ $(pv_value)</tooltip>
           <vertical_alignment>1</vertical_alignment>
           <visible>true</visible>
           <widget_type>Label</widget_type>
-          <width>105</width>
+          <width>117</width>
           <wrap_words>true</wrap_words>
           <wuid>6f14bb61:19ad99326c7:-792d</wuid>
-          <x>6</x>
+          <x>-6</x>
           <y>189</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.LED" version="1.0.0">
@@ -2253,9 +2253,9 @@ else:
 $(pv_value)</tooltip>
           <visible>true</visible>
           <widget_type>Action Button</widget_type>
-          <width>69</width>
+          <width>48</width>
           <wuid>6f14bb61:19ad99326c7:-7921</wuid>
-          <x>135</x>
+          <x>131</x>
           <y>186</y>
         </widget>
         <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
