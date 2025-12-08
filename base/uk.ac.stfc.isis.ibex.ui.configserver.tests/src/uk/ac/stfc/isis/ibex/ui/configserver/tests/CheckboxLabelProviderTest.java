@@ -49,7 +49,7 @@ import uk.ac.stfc.isis.ibex.ui.widgets.CheckboxLabelProvider.CheckboxSelectionAd
  */
 public class CheckboxLabelProviderTest {
 	
-	public class mockSelectionListener implements Listener {
+	public static class mockSelectionListener implements Listener {
 		private EventListener eventListener;
 		@Override
 		public void handleEvent(Event event) {
