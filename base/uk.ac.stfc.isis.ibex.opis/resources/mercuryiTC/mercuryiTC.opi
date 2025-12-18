@@ -10,7 +10,7 @@
   <background_color>
     <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
   </background_color>
-  <boy_version>5.1.0.201707071649</boy_version>
+  <boy_version>5.1.0</boy_version>
   <foreground_color>
     <color red="192" green="192" blue="192" />
   </foreground_color>
@@ -266,7 +266,19 @@ $(pv_value)</tooltip>
     </tab_8_foreground_color>
     <tab_8_icon_path></tab_8_icon_path>
     <tab_8_title>System</tab_8_title>
-    <tab_count>9</tab_count>
+    <tab_9_background_color>
+      <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+    </tab_9_background_color>
+    <tab_9_enabled>true</tab_9_enabled>
+    <tab_9_font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_TabTitle_NEW</opifont.name>
+    </tab_9_font>
+    <tab_9_foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </tab_9_foreground_color>
+    <tab_9_icon_path></tab_9_icon_path>
+    <tab_9_title>Automatic Pressure Control</tab_9_title>
+    <tab_count>10</tab_count>
     <tooltip></tooltip>
     <visible>true</visible>
     <widget_type>Tabbed Container</widget_type>
@@ -960,7 +972,7 @@ $(pv_value)</tooltip>
       <show_scrollbar>true</show_scrollbar>
       <tooltip></tooltip>
       <transparent>true</transparent>
-      <visible>true</visible>
+      <visible>false</visible>
       <widget_type>Grouping Container</widget_type>
       <width>791</width>
       <wuid>d2963b:1723cd72607:-7c6d</wuid>
@@ -1004,6 +1016,88 @@ $(pv_value)</tooltip>
         <widget_type>Linking Container</widget_type>
         <width>787</width>
         <wuid>-7a54cfd:174f9315a9d:-7cf1</wuid>
+        <x>0</x>
+        <y>0</y>
+      </widget>
+    </widget>
+    <widget typeId="org.csstudio.opibuilder.widgets.groupingContainer" version="1.0.0">
+      <actions hook="false" hook_all="false" />
+      <background_color>
+        <color red="240" green="240" blue="240" />
+      </background_color>
+      <border_color>
+        <color red="0" green="128" blue="255" />
+      </border_color>
+      <border_style>0</border_style>
+      <border_width>1</border_width>
+      <enabled>true</enabled>
+      <fc>false</fc>
+      <font>
+        <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+      </font>
+      <foreground_color>
+        <color red="192" green="192" blue="192" />
+      </foreground_color>
+      <height>502</height>
+      <lock_children>false</lock_children>
+      <macros>
+        <include_parent_macros>true</include_parent_macros>
+      </macros>
+      <name>Automatic Pressure Control</name>
+      <rules />
+      <scale_options>
+        <width_scalable>true</width_scalable>
+        <height_scalable>true</height_scalable>
+        <keep_wh_ratio>false</keep_wh_ratio>
+      </scale_options>
+      <scripts />
+      <show_scrollbar>true</show_scrollbar>
+      <tooltip></tooltip>
+      <transparent>true</transparent>
+      <visible>true</visible>
+      <widget_type>Grouping Container</widget_type>
+      <width>791</width>
+      <wuid>-2e77eee8:17ce60572b3:-7e5c</wuid>
+      <x>1</x>
+      <y>1</y>
+      <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
+        <actions hook="false" hook_all="false" />
+        <background_color>
+          <color name="ISIS_OPI_Background" red="240" green="240" blue="240" />
+        </background_color>
+        <border_color>
+          <color red="0" green="128" blue="255" />
+        </border_color>
+        <border_style>0</border_style>
+        <border_width>1</border_width>
+        <enabled>true</enabled>
+        <font>
+          <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">Default</opifont.name>
+        </font>
+        <foreground_color>
+          <color red="192" green="192" blue="192" />
+        </foreground_color>
+        <group_name></group_name>
+        <height>495</height>
+        <macros>
+          <include_parent_macros>true</include_parent_macros>
+          <CARD_NUM>7</CARD_NUM>
+        </macros>
+        <name>Tab9</name>
+        <opi_file>mercuryiTC_single_auto_pressure_control.opi</opi_file>
+        <resize_behaviour>3</resize_behaviour>
+        <rules />
+        <scale_options>
+          <width_scalable>true</width_scalable>
+          <height_scalable>true</height_scalable>
+          <keep_wh_ratio>false</keep_wh_ratio>
+        </scale_options>
+        <scripts />
+        <tooltip></tooltip>
+        <visible>true</visible>
+        <widget_type>Linking Container</widget_type>
+        <width>787</width>
+        <wuid>-2e77eee8:17ce60572b3:-7c92</wuid>
         <x>0</x>
         <y>0</y>
       </widget>
