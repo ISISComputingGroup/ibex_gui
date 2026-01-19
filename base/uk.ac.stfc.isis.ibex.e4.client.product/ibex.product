@@ -25,6 +25,8 @@
 -XX:ErrorFile=C:\Instrument\Scratch\CrashDumps\ibex_client_%p.log
 -Dlog4j2.formatMsgNoLookups=true
 -Djdk.util.zip.disableZip64ExtraFieldValidation=true
+-DEPICS_PVA_ADDR_LIST=127.0.0.1
+-DEPICS_PVA_AUTO_ADDR_LIST=NO
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>
@@ -32,12 +34,14 @@
 
    <windowImages i16="platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web16.gif" i32="platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web32.gif" i48="platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web48.gif" i64="platform:/plugin/uk.ac.stfc.isis.ibex.e4.product/icons/IBEX-icon-web64.gif"/>
 
+
    <launcher name="ibex-client">
       <win useIco="true">
          <ico path="../uk.ac.stfc.isis.ibex.e4.client.product/icons/ibex.ico"/>
          <bmp/>
       </win>
    </launcher>
+
 
    <vm>
       <windows include="true">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-21</windows>
@@ -62,6 +66,7 @@
       <plugin id="org.eclipse.osgi" autoStart="true" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.activemq" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.alarm" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.alerts" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.banner" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.beamstatus" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.configserver" autoStart="false" startLevel="0" />
@@ -93,6 +98,7 @@
       <plugin id="uk.ac.stfc.isis.ibex.targets" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.alarm" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.alerts" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.banner" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.beamstatus" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.blocks" autoStart="false" startLevel="0" />
@@ -119,8 +125,6 @@
       <plugin id="uk.ac.stfc.isis.ibex.ui.weblinks" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.widgets" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.validators" autoStart="false" startLevel="0" />
-      <plugin id="uk.ac.stfc.isis.ibex.alerts" autoStart="false" startLevel="0" />
-      <plugin id="uk.ac.stfc.isis.ibex.ui.alerts" autoStart="false" startLevel="0" />
       <property name="osgi.splashPath" value="platform:/base/plugins/uk.ac.stfc.isis.ibex.e4.product" />
    </configurations>
 
