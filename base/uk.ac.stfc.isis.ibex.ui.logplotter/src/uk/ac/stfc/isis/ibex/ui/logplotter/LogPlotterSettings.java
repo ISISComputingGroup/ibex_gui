@@ -101,8 +101,8 @@ public class LogPlotterSettings extends InstrumentInfoReceiverAdapter {
      * @return The database URL corresponding to the given instrument.
      */
     private static String buildDatabaseUrl(String hostName) {
-        return "jdbc:mysql://" + hostName + "/archive?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true"
-        		+ "*jdbc:mysql://130.246.39.152/archive?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true";
+        return "jdbc:mysql://" + hostName + "/archive?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true&allowPublicKeyRetrieval=true"
+        		+ "*jdbc:mysql://130.246.39.152/archive?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true&allowPublicKeyRetrieval=true";
     }
 
     /**
@@ -110,7 +110,7 @@ public class LogPlotterSettings extends InstrumentInfoReceiverAdapter {
      * @return The archives URL corresponding to the given instrument.
      */
     private static String buildArchivesUrl(String hostName) {
-        return "RDB|1|jdbc:mysql://" + hostName + "/archive?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true"
-        		+ "*RDB|2|jdbc:mysql://130.246.39.152/archive?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true";
+        return "RDB|1|jdbc:mysql://" + hostName + "/archive?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true&allowPublicKeyRetrieval=true"
+        		+ "*RDB|2|jdbc:mysql://130.246.39.152/archive?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true&allowPublicKeyRetrieval=true";
     }
 }

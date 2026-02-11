@@ -31,7 +31,7 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
  * Represents the RDB connection.
  */
 public class Rdb {
-    private static final String MYSQL_OPTIONS = "?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true";
+    private static final String MYSQL_OPTIONS = "?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true&allowPublicKeyRetrieval=true";
 	private static final Logger LOG = IsisLog.getLogger(Rdb.class);
     private final String schema;
     private static final String PROTOCOL = "jdbc:mysql:";

@@ -69,9 +69,9 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
-      - uses: github/codeql-action/init@v3
+      - uses: github/codeql-action/init@v4
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.buildmode }}
           queries: +security-and-quality
-      - uses: github/codeql-action/analyze@v3
+      - uses: github/codeql-action/analyze@v4
