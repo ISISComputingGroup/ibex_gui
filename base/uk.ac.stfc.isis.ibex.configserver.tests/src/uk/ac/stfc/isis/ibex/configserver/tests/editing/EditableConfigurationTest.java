@@ -132,7 +132,8 @@ public class EditableConfigurationTest {
 				Collections.<String>emptyList(),
 				true,
 				false, 
-				false);
+				false,
+				null);
 	}
 	
 	protected void populateConfig() {
@@ -146,7 +147,7 @@ public class EditableConfigurationTest {
 	}
 	
 	protected Configuration config() {
-		return new Configuration(NAME, DESCRIPTION, SYNOPTIC, iocs, blocks, groups, components, history, true, false, false);
+		return new Configuration(NAME, DESCRIPTION, SYNOPTIC, iocs, blocks, groups, components, history, true, false, false, null);
 	}
 	
 	protected EditableConfiguration edit(Configuration config) {
@@ -217,9 +218,9 @@ public class EditableConfigurationTest {
 
 		var component = new Configuration("comp", "desc", "", Collections.emptyList(), 
 				List.of(new Block("comp_blockname", "", false, false)), 
-				Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), false, true, false);
+				Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), false, true, false, null);
 		
-		var config = new Configuration("name", "description", "", iocs, blocks, groups, components, history, false, true, false);
+		var config = new Configuration("name", "description", "", iocs, blocks, groups, components, history, false, true, false, null);
 		var editable = new EditableConfiguration(config, Collections.emptyList(), List.of(component), Collections.emptyList());
 		
 		assertEquals(editable.getAllBlocks().size(), 0);
@@ -238,7 +239,7 @@ public class EditableConfigurationTest {
 	public void GIVEN_component_with_group_WHEN_component_added_THEN_group_from_component_read_only() {
 		var group = new Group("comp_group", Collections.emptyList(), "comp");
 		var component = new Configuration("comp", "desc", "", Collections.emptyList(), Collections.emptyList(),
-				List.of(group), Collections.emptyList(), Collections.emptyList(), false, true, false);
+				List.of(group), Collections.emptyList(), Collections.emptyList(), false, true, false, null);
 		var editable = new EditableConfiguration(emptyConfig(), Collections.emptyList(), List.of(component), Collections.emptyList());
 		
 		assertEquals(editable.getEditableGroups().size(), 0);
@@ -261,7 +262,7 @@ public class EditableConfigurationTest {
 	public void GIVEN_component_with_block_not_in_group_WHEN_component_added_THEN_block_from_component() {
 		var block = new Block("block", "PV", true, true);
 		var component = new Configuration("comp", "desc", "", Collections.emptyList(), List.of(block), Collections.emptyList(),
-				Collections.emptyList(), Collections.emptyList(), false, true, false);
+				Collections.emptyList(), Collections.emptyList(), false, true, false, null);
 		var editable = new EditableConfiguration(emptyConfig(), Collections.emptyList(), List.of(component), Collections.emptyList());
 		
 		assertEquals(editable.getBlocksOutsideGroup().size(), 0);
