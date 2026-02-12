@@ -58,11 +58,7 @@ public class EditConfigHelper extends ConfigHelper {
 	protected void openDialog(EditableConfiguration config, boolean isCurrent, boolean editBlockFirst) {
 		config.setIsComponent(false);
 		final String configName = getConfigDisplayName(config, isCurrent);
-		String subTitle = "Editing the " + configName + " configuration";
-		if (!(null == config.getGlobalmacros()) && !config.getGlobalmacros().isEmpty()) {
-			subTitle += "\nNote: There also are global macros defined. See the Global Macros tab.\nThey over-ride IOC level macro";
-		}
-
+		final String subTitle = createSubTitle(config, configName);
 		EditConfigDialog dialog = new EditConfigDialog(shell, title, subTitle, config, false, configurationViewModels,
 				editBlockFirst);
 		if (dialog.open() == Window.OK) {
@@ -74,4 +70,17 @@ public class EditConfigHelper extends ConfigHelper {
 		}
 	}
 
+	/**
+	 * @param config the configuration
+	 * @param configName the name to be displayed for the configuration
+	 * @return the title of the dialog
+	 */
+	public static String createSubTitle(EditableConfiguration config, final String configName) {
+		String subTitle = "Editing the " + configName + " configuration";
+		var macros = config.getGlobalmacros();
+		if (null != macros && !macros.isEmpty()) {
+			subTitle += "\nNote: There also are global macros defined. See the Global Macros tab.\nThey over-ride IOC level macro";			
+		}
+		return subTitle;
+	}
 }

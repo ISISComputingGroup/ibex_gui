@@ -18,10 +18,10 @@
 package uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
+
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
@@ -40,7 +40,6 @@ public class AddBlockToConfigHelper extends EditConfigHelper {
 	 */
 	public AddBlockToConfigHelper(Shell shell, ConfigServer server) {
 		super(shell, server);
-
 	}
 
 	/**
@@ -59,18 +58,12 @@ public class AddBlockToConfigHelper extends EditConfigHelper {
 			boolean openEditBlockDialog, String pvName) throws IOException {
 		config.setIsComponent(false);
 		final String configName = getConfigDisplayName(config, isCurrent);
-		String subTitle = "Editing the " + configName + " configuration";
-		if (Optional.ofNullable(config.getGlobalmacros()).map(l -> l.isEmpty()).orElse(true)) {
-			subTitle += "\n\nNote: There also are global macros defined. See the Global Macros tab.\\n\\nThey over-ride IOC level macro";			
-		}
+		final String subTitle = createSubTitle(config, configName);
 		EditConfigDialog dialog = new EditConfigDialog(shell, title, subTitle, config, false, configurationViewModels,
 				editBlockFirst, openEditBlockDialog, pvName); // Creating dialog to edit configuration
 		dialog.addNew(config);  // Open edit block dialog before editing the configuration
 		if (dialog.open() == Window.OK) {  // Edit configuration dialog
-
 			server.saveAs().write(config.asConfiguration()); // Saving the block to the configuration
-
 		}
 	}
-
 }
