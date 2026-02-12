@@ -65,9 +65,18 @@ public class GlobalMacroOverviewPanel extends Composite {
      */
 	public void setMacros(final List<GlobalMacro> globalmacros) {
 		macros = (globalmacros == null) ? new ArrayList<>()
-				: globalmacros.stream().sorted().filter(Objects::nonNull)
-						.flatMap(macro -> macro.getMacros().entrySet().stream().sorted(Map.Entry.comparingByKey()).map(
-								entry -> new GlobalMacroViewModel(macro.getName(), entry.getKey(), entry.getValue())))
-						.collect(Collectors.toList());
+				: globalmacros.stream()
+					.sorted()
+					.filter(Objects::nonNull)
+					.flatMap(macro -> macro.getMacros()
+						.entrySet().stream()
+						.sorted(Map.Entry.comparingByKey())
+						.map(entry -> new GlobalMacroViewModel(
+							macro.getName(), 
+							entry.getKey(), 
+							entry.getValue()
+							))
+						)
+					.collect(Collectors.toList());
 	}
 }
