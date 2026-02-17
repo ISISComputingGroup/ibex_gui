@@ -28,8 +28,6 @@ public class GlobalMacroViewModel extends ModelObject {
 	private final String macroName;
 	private final String macroValue;
 
-	private static final String IOC_SEPARATOR = "__";
-	private static final String ALL_IOCS = "All IOCs";
 	
 	/**
 	 * Constructor. Sets the use default based on provided macro.
@@ -39,7 +37,7 @@ public class GlobalMacroViewModel extends ModelObject {
 	 * @param macroValue The Macro Value.
 	 */
 	public GlobalMacroViewModel(String iocName, String macroName, String macroValue) {
-		this.iocName = !IOC_SEPARATOR.equals(iocName) ? iocName : ALL_IOCS;
+		this.iocName = iocName;
 		this.macroName = macroName;
 		this.macroValue = macroValue;
 	}
