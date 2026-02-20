@@ -53,7 +53,7 @@ def _add_macros(widget, name, value):
 
 def populate_list(pv, widget_name_prefix, macro_prefix, has_type, max):
     value = PVUtil.getStringArray(pv)
-    value = "".join(chr(int(i)) for i in value)
+    value = "".join(chr(int(i)) for i in value if int(i) != 0)
     value = zlib.decompress(value.decode("hex"))
     params = json.loads(value)
 
