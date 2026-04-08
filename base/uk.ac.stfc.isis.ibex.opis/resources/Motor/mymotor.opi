@@ -2152,25 +2152,11 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
-        <scriptName>HasEngineeringView</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
-
-ioc_name = PVUtil.getString(pvs[0]).split("_")[0]
-
-if PVUtil.getDouble(pvs[1]) == 1:
-    if ioc_name in ["GALIL", "GALILMUL", "TC"]:
-        widget.setPropertyValue("visible", True)
-]]></scriptText>
-        <pv trig="true">$(M)_IOCNAME</pv>
-        <pv trig="true">$(P)CS:MANAGER.RVAL</pv>
-      </path>
-    </scripts>
+    <scripts />
     <show_scrollbar>true</show_scrollbar>
     <tooltip></tooltip>
     <transparent>false</transparent>
-    <visible>false</visible>
+    <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
     <width>445</width>
     <wuid>-67b0e0c6:18b188bbd12:-7ef9</wuid>
