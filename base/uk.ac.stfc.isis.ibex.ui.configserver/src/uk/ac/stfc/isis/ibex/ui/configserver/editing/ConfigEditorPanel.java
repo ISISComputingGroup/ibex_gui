@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2025 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -35,6 +35,7 @@ import uk.ac.stfc.isis.ibex.ui.configserver.editing.blocks.BlocksEditorViewModel
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.components.ComponentEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.groups.GroupsEditorPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.iocs.IocOverviewPanel;
+import uk.ac.stfc.isis.ibex.ui.configserver.editing.macros.GlobalMacroOverviewPanel;
 import uk.ac.stfc.isis.ibex.ui.configserver.editing.summary.SummaryPanel;
 import uk.ac.stfc.isis.ibex.validators.MessageDisplayer;
 
@@ -122,6 +123,13 @@ public class ConfigEditorPanel extends Composite {
 		groupsTab.setControl(groups);
 
 		setConfigToEdit(config);
+		
+		if (!config.getGlobalmacros().isEmpty()) {
+			final GlobalMacroOverviewPanel globalMacros = new GlobalMacroOverviewPanel(editorTabs, config);
+			TabItem globalMacrosTab = new TabItem(editorTabs, SWT.NONE);
+			globalMacrosTab.setText("Global Macros");
+			globalMacrosTab.setControl(globalMacros);
+		}
 	}
 
     /**

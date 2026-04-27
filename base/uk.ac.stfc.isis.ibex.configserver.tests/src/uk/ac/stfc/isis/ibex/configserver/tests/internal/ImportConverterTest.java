@@ -74,9 +74,9 @@ public class ImportConverterTest {
 		editableIocs.add(editableIoc);
 		
 		source = new Configuration(COMPONENT_NAME, COMPONENT_DESC, null, Arrays.asList(new Ioc(editableIoc)), Arrays.asList(BLOCK),
-				 Arrays.asList(GROUP), Collections.emptyList(), Collections.emptyList(), false, false, false);
+				 Arrays.asList(GROUP), Collections.emptyList(), Collections.emptyList(), false, false, false, null);
 		empty = new Configuration("EMPTY", "EMTPY DESC", null, Collections.emptyList(), Collections.emptyList(),
-				Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), false, false, false);
+				Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), false, false, false, null);
 		destination = new EditableConfiguration(empty, Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
 
 		ImportConverter.convert(source, destination, SOURCE_PREFIX, DESTINATION_PREFIX, editableIocs);
