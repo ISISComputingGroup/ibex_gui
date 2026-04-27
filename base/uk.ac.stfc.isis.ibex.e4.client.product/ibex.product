@@ -25,6 +25,9 @@
 -XX:ErrorFile=C:\Instrument\Scratch\CrashDumps\ibex_client_%p.log
 -Dlog4j2.formatMsgNoLookups=true
 -Djdk.util.zip.disableZip64ExtraFieldValidation=true
+&quot;-DEPICS_PVA_ADDR_LIST=127.0.0.1 130.246.51.255&quot;
+-DEPICS_PVA_AUTO_ADDR_LIST=NO
+-DEPICS_PVA_CONN_TMO=5
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>
@@ -62,6 +65,7 @@
       <plugin id="org.eclipse.osgi" autoStart="true" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.activemq" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.alarm" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.alerts" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.banner" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.beamstatus" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.configserver" autoStart="false" startLevel="0" />
@@ -93,6 +97,7 @@
       <plugin id="uk.ac.stfc.isis.ibex.targets" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.alarm" autoStart="false" startLevel="0" />
+      <plugin id="uk.ac.stfc.isis.ibex.ui.alerts" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.banner" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.beamstatus" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.blocks" autoStart="false" startLevel="0" />
@@ -119,8 +124,6 @@
       <plugin id="uk.ac.stfc.isis.ibex.ui.weblinks" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.ui.widgets" autoStart="false" startLevel="0" />
       <plugin id="uk.ac.stfc.isis.ibex.validators" autoStart="false" startLevel="0" />
-      <plugin id="uk.ac.stfc.isis.ibex.alerts" autoStart="false" startLevel="0" />
-      <plugin id="uk.ac.stfc.isis.ibex.ui.alerts" autoStart="false" startLevel="0" />
       <property name="osgi.splashPath" value="platform:/base/plugins/uk.ac.stfc.isis.ibex.e4.product" />
    </configurations>
 

@@ -4098,5 +4098,15 @@
         <categories />
       </value>
     </entry>
+    <entry>
+      <key>Kafka DAE Diagnostics</key>
+      <value>
+        <type>DEBUG</type>
+        <path>kafka_dae_diagnostics.opi</path>
+        <description>Kafka DAE Diagnostics</description>
+        <macros />
+        <categories />
+      </value>
+    </entry>
   </opis>
 </descriptions>
