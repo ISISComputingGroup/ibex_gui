@@ -16,7 +16,7 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.configserver,
  uk.ac.stfc.isis.ibex.instrument.status;bundle-version="1.0.0",
  jakarta.annotation-api;bundle-version="[1.3.5,1.3.5]"
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.ui.banner.models,
  uk.ac.stfc.isis.ibex.ui.banner.views;uses:="org.eclipse.ui,org.eclipse.ui.part,org.eclipse.swt.widgets"
