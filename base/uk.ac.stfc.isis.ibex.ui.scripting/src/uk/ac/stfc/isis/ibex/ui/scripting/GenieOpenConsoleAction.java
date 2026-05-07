@@ -34,6 +34,7 @@ public class GenieOpenConsoleAction extends OpenConsoleAction {
 	
 	/**
 	 * Initialise factory extensions.
+	 * @param consoleView the console view
 	 */
 	public GenieOpenConsoleAction(ConsoleView consoleView) {
 		super(consoleView);
