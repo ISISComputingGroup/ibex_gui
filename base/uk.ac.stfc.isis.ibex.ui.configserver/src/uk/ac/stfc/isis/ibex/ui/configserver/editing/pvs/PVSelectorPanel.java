@@ -165,7 +165,7 @@ public class PVSelectorPanel extends Composite {
 		Timer pvSearch = new Timer(pvSearchDelay, pvSearchTaskPerformer);
 		pvSearch.setRepeats(false); // Set timer to go off only once
 		
-		pvAddress.addModifyListener(e -> pvSearch.restart());
+		pvAddress.addModifyListener(_ -> pvSearch.restart());
 	}
 	
     /**

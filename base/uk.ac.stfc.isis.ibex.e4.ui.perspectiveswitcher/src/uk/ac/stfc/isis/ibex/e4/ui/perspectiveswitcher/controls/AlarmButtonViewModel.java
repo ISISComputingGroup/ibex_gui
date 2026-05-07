@@ -36,7 +36,7 @@ public final class AlarmButtonViewModel extends PerspectiveButtonViewModel {
         flash = new FlashingButton(this, ALARM_ERROR_COLOR);
         flash.setDefaultColour(DEFOCUSSED);
 
-        alarmCounter.addPropertyChangeListener("alarmCount", ignored -> {
+        alarmCounter.addPropertyChangeListener("alarmCount", _ -> {
                 alarmCount = alarmCounter.getCount();
                 if (!active) {
                     alarmSeen = false;

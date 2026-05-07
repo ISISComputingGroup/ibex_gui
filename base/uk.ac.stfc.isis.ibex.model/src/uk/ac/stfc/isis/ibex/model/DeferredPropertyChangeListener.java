@@ -89,7 +89,7 @@ public class DeferredPropertyChangeListener implements PropertyChangeListener, C
 	@Override
 	public final void propertyChange(PropertyChangeEvent evt) {
 		final var key = new PropertyChangeEventProperties(evt.getSource(), evt.getPropertyName());
-		batchedEvents.compute(key, (k, v) -> {
+		batchedEvents.compute(key, (_, v) -> {
 			if (v == null) {
 				return new BatchedPropertyChangeEvent(evt.getOldValue(), evt.getNewValue());
 			} else {

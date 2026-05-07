@@ -237,7 +237,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 
 	Collection<Configuration> selectedComponents = getComponentDetails(config.getComponents(), components);
 	editableComponents = new EditableComponents(selectedComponents, components);
-	editableComponents.addPropertyChangeListener(evt -> updateComponents());
+	editableComponents.addPropertyChangeListener(_ -> updateComponents());
 
 	updateComponents();
 	setEnableSaveAsButton();
