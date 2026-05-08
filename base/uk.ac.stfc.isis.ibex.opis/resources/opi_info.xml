@@ -4108,5 +4108,23 @@
         <categories />
       </value>
     </entry>
+    <entry>
+      <key>Nanodac</key>
+      <value>
+        <type>EUROTHERM</type>
+        <path>nanodac.opi</path>
+        <description>Nanodac (Eurotherm) temperature controller</description>
+        <macros>
+          <macro>
+            <name>NANODAC</name>
+            <description>The Nanodac PV prefix (e.g. NANODAC_01).</description>
+            <default>NANODAC_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+      </value>
+    </entry>
   </opis>
 </descriptions>
