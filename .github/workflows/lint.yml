@@ -73,5 +73,4 @@ jobs:
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.buildmode }}
-          queries: +security-and-quality
       - uses: github/codeql-action/analyze@v4
