@@ -632,6 +632,22 @@
       </value>
     </entry>
     <entry>
+      <key>Moxa E1213</key>
+      <value>
+        <type>MOXA_12XX</type>
+        <path>moxa1213.opi</path>
+        <description>The OPI for a Moxa E1213 remote I/O.</description>
+        <macros>
+          <macro>
+            <name>MOXA1210</name>
+            <description>The Moxa E1213 PV prefix (e.g. MOXA12XX_01).</description>
+            <default>MOXA12XX_01</default>
+          </macro>
+        </macros>
+        <categories/>
+      </value>
+    </entry>
+    <entry>
       <key>Moxa E1240</key>
       <value>
         <type>MOXA_12XX</type>
