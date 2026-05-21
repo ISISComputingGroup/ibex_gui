@@ -33,10 +33,11 @@ import java.beans.PropertyChangeListener;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import uk.ac.stfc.isis.ibex.configserver.Configurations;
@@ -51,7 +52,7 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
  */
 public class MoxasViewModel extends ModelObject {
 
-	private HashMap<String, MoxaList> moxaPorts = new HashMap<String, MoxaList>();
+	private Map<String, MoxaList> moxaPorts = new TreeMap<String, MoxaList>();
 	private final Configurations control;
 	private final UpdatedObservableAdapter<Configuration> currentConfig;
 	private static final String MIB_DELIM = "::";
@@ -66,11 +67,11 @@ public class MoxasViewModel extends ModelObject {
 	 * 
 	 * @return a map of Moxa port to serial port mappings by Moxa device
 	 */
-	public HashMap<String, MoxaList> getMoxaPorts() {
-		HashMap<String, MoxaList> map = new HashMap<String, MoxaList>();
+	public Map<String, MoxaList> getMoxaPorts() {
+		var map = new TreeMap<String, MoxaList>();
 		Collection<Ioc> iocsInConfig = getIocsInConfig();
 
-		HashMap<String, ArrayList<ArrayList<String>>> ret = control.moxaMappings().getValue();
+		var ret = control.moxaMappings().getValue();
 		if (ret != null) {
 			ret.forEach((key, value) -> {
 				MoxaList list = new MoxaList(key);
