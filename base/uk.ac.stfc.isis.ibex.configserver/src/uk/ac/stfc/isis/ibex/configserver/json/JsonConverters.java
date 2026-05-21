@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.Collection;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -189,7 +190,7 @@ public class JsonConverters implements Converters {
     }
 	
 	@Override 
-	public Function<String, HashMap<String, ArrayList<ArrayList<String>>>> toMoxaMappings() {
+	public Function<String, TreeMap<String, ArrayList<ArrayList<String>>>> toMoxaMappings() {
 		return new JsonDeserialisingConverter<>(Map.class).andThen(new MoxaMappingsConverter());
 		
 	}

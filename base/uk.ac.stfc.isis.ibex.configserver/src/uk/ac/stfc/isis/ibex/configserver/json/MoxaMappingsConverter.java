@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.configserver.json;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.function.Function;
 
 import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
@@ -30,14 +31,13 @@ import uk.ac.stfc.isis.ibex.epics.conversion.ConversionException;
  * Converts a JSON representation of a PV into a java object representation.
  */
 @SuppressWarnings({ "checkstyle:magicnumber", "rawtypes", "unchecked" })
-public class MoxaMappingsConverter implements Function<Map, HashMap<String, ArrayList<ArrayList<String>>>> {
+public class MoxaMappingsConverter implements Function<Map, TreeMap<String, ArrayList<ArrayList<String>>>> {
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public HashMap<String, ArrayList<ArrayList<String>>> apply(Map value) throws ConversionException {
-		HashMap<String, ArrayList<ArrayList<String>>> namesToPorts = new HashMap<String, ArrayList<ArrayList<String>>>(value);
-		return namesToPorts;
+	public TreeMap<String, ArrayList<ArrayList<String>>> apply(Map value) throws ConversionException {
+		return new TreeMap<String, ArrayList<ArrayList<String>>>(value);
 	}
 }
