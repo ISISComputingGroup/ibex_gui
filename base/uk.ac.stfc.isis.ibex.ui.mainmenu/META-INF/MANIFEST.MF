@@ -23,7 +23,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jface.databinding;bundle-version="1.9.0",
  org.apache.commons.lang,
  uk.ac.stfc.isis.ibex.ui
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Bundle-ActivationPolicy: lazy
 Import-Package: uk.ac.stfc.isis.ibex.epics.switching,
  uk.ac.stfc.isis.ibex.model,

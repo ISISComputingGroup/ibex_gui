@@ -56,8 +56,8 @@ public class SearchTime extends JournalSearch {
 
             ArrayList<String> parts = new ArrayList<String>();
 
-            fromTime.ifPresent(x -> parts.add(field.getSqlFieldName() + " >= ?"));
-            toTime.ifPresent(x -> parts.add(field.getSqlFieldName() + " <= ?"));
+            fromTime.ifPresent(_ -> parts.add(field.getSqlFieldName() + " >= ?"));
+            toTime.ifPresent(_ -> parts.add(field.getSqlFieldName() + " <= ?"));
 
             query.append(String.join(" AND ", parts));
         }

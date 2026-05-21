@@ -122,7 +122,7 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 		rbNumberTextBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		rbNumberTextBox.setToolTip(RB_NUM_INPUT_TIP_MESSAGE);
 
-		btnRBLookup = new IBEXButton(parent, SWT.NONE, event -> {
+		btnRBLookup = new IBEXButton(parent, SWT.NONE, _ -> {
 			RBLookupViewModel lookupViewModel = new RBLookupViewModel();
 			RBLookupDialog lookupDialog = new RBLookupDialog(shell, lookupViewModel);
 			if (lookupDialog.open() == Window.OK) {
@@ -146,14 +146,14 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 		userDetails.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 
 		updateUserDetails();
-		viewModel.model.addPropertyChangeListener(propertyChangeEvent -> {
+		viewModel.model.addPropertyChangeListener(_ -> {
 			updateUserDetails();
 		});
 
 		experimentTeamButtons = new Composite(parent, SWT.NONE);
 		experimentTeamButtons.setLayout(new GridLayout(1, false));
 
-		btnAddUserDetails = new IBEXButton(experimentTeamButtons, SWT.NONE, event -> {
+		btnAddUserDetails = new IBEXButton(experimentTeamButtons, SWT.NONE, _ -> {
 			viewModel.model.addDefaultUser();
 			viewModel.model.sendUserDetails();
 		})
@@ -161,14 +161,14 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 				.layoutData(new GridData(SWT.LEFT, SWT.FILL, false, false))
 				.get();
 
-		new IBEXButton(experimentTeamButtons, SWT.NONE, event -> {
+		new IBEXButton(experimentTeamButtons, SWT.NONE, _ -> {
 			viewModel.model.removeUsers(userDetails.selectedRows());
 			viewModel.model.sendUserDetails();
 		})
 		.text("Remove")
 		.layoutData(new GridData(SWT.LEFT, SWT.FILL, false, false));
 
-		btnClearUserDetails = new IBEXButton(experimentTeamButtons, SWT.NONE, event -> {
+		btnClearUserDetails = new IBEXButton(experimentTeamButtons, SWT.NONE, _ -> {
 			viewModel.model.clearUserDetails();
 			viewModel.model.sendUserDetails();
 		})
@@ -176,14 +176,14 @@ public class ExperimentDetailsPanel extends ScrolledComposite {
 				.layoutData(new GridData(SWT.LEFT, SWT.FILL, false, false))
 				.get();
 
-		btnSetRBNumber = new IBEXButton(experimentTeamButtons, SWT.NONE, event -> {
+		btnSetRBNumber = new IBEXButton(experimentTeamButtons, SWT.NONE, _ -> {
 			viewModel.model.sendUserDetails();
 		})
 				.text("Set")
 				.layoutData(new GridData(SWT.LEFT, SWT.FILL, false, false))
 				.get();
 
-		btnDisplayTitle = new IBEXButton(experimentTeamButtons, SWT.CHECK, event -> {
+		btnDisplayTitle = new IBEXButton(experimentTeamButtons, SWT.CHECK, _ -> {
 			viewModel.displayTitle.uncheckedSetValue(btnDisplayTitle.getSelection());
 		})
 				.text("Show Title and Users in Dataweb Dashboard Page")

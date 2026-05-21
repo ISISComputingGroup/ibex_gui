@@ -258,7 +258,7 @@ public class SaveConfigDialog extends TitleAreaDialog {
 
         if (isConfig) {
         	
-        	btnAsComponent = new IBEXButton(composite, SWT.CHECK, evt -> {
+        	btnAsComponent = new IBEXButton(composite, SWT.CHECK, _ -> {
         		updateConfigType();
         		update();
         		asComponentSelected = true;
