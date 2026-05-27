@@ -7,5 +7,5 @@ Export-Package: uk.ac.stfc.isis.ibex.ui.about
 Bundle-Activator: uk.ac.stfc.isis.ibex.ui.about.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.about

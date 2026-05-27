@@ -15,7 +15,7 @@ Require-Bundle: org.eclipse.ui,
  org.hamcrest,
  uk.ac.stfc.isis.ibex.ui,
  wrapped.org.apache.activemq.activemq-all;bundle-version="5.18.6"
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Export-Package: uk.ac.stfc.isis.ibex.log,
  uk.ac.stfc.isis.ibex.log.message,
  uk.ac.stfc.isis.ibex.log.preferences,
