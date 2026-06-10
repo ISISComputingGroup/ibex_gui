@@ -4126,5 +4126,23 @@
         </categories>
       </value>
     </entry>
+    <entry>
+      <key>Quantum Northwest NeutronIQ</key>
+      <value>
+        <type>SAMPLECHANGER</type>
+        <path>quantumnorthwest.opi</path>
+        <description>Quantum Northwest NeutronIQ</description>
+        <macros>
+          <macro>
+            <name>QNW</name>
+            <description>The QNW PV prefix (e.g. QNW_01).</description>
+            <default>QNW_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+      </value>
+    </entry>
   </opis>
 </descriptions>
