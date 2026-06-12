@@ -4098,5 +4098,21 @@
         <categories />
       </value>
     </entry>
+    </entry>
+      <key>Lakeshore 625</key>
+      <path>lakeshore625.opi</path>
+      <description>Lakeshore 625 Superconducting Magnet Power Supply</description>
+      <macros>
+        <macro>
+          <name>LKSH625</name>
+          <description>The Lakeshore 625 PV prefix (e.g. LKSH625_01).</description>
+          <default>LKSH625_01</default>
+        </macro>
+        </macros>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
+      </value>
+    </entry>
   </opis>
 </descriptions>
