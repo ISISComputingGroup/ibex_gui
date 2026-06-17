@@ -612,6 +612,27 @@
       </children>
     </children>
   </snippets>
+  <snippets xsi:type="advanced:Perspective" xmi:id="_iX2kcJIBEe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.streamingdae" accessibilityPhrase="Streaming DAE" selectedElement="_iX2kcZIBEe-V38_cTZ3ImZ" label="Streaming DAE" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.streamingdae/icons/server16_24x24.png" tooltip="The front panel for Streaming DAE">
+    <children xsi:type="basic:PartSashContainer" xmi:id="_iX2kcZIBEe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.127" selectedElement="_iX2kd5IBEe-V38_cTZ3ImZ">
+      <children xsi:type="basic:PartSashContainer" xmi:id="_iX2kcpIBEe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.128" containerData="30" horizontal="true">
+        <children xsi:type="basic:PartStack" xmi:id="_iX2kc5IBEe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.130" containerData="35">
+          <children xsi:type="advanced:Placeholder" xmi:id="_iX2kdJIBEe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.6" ref="_RgW1RIjKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
+        </children>
+        <children xsi:type="basic:PartStack" xmi:id="_iX2kdZIBEe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.31" containerData="65">
+          <children xsi:type="advanced:Placeholder" xmi:id="_iX2kdpIBEe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.e4.client.placeholder.12" ref="_RgW1RojKEee8_tONW2Z5Qw">
+            <tags>NoClose</tags>
+          </children>
+        </children>
+      </children>
+      <children xsi:type="basic:PartSashContainer" xmi:id="_iX2kd5IBEe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.29" containerData="70" horizontal="true">
+        <children xsi:type="basic:PartStack" xmi:id="_iX2keZIBEe-V38_cTZ3InZ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.37" containerData="64">
+          <children xsi:type="basic:Part" xmi:id="_iXnT6JIBEe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeDiagnosticsOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Streaming Diagnostics"/>
+        </children>
+      </children>
+    </children>
+  </snippets>
   <snippets xsi:type="advanced:Perspective" xmi:id="_iX4ZoJIBEe-V38_cTZ3ImQ" elementId="uk.ac.stfc.isis.ibex.client.e4.product.perspective.moxas" accessibilityPhrase="Moxa Ports" label="Moxa Ports" iconURI="platform:/plugin/uk.ac.stfc.isis.ibex.ui.moxas/icons/moxa_24x24.png" tooltip="The front panel for viewing Moxa mappings">
     <children xsi:type="basic:PartSashContainer" xmi:id="_iX4ZoZIBEe-V38_cTZ3ImQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.30">
       <children xsi:type="basic:PartSashContainer" xmi:id="_iX4ZopIBEe-V38_cTZ3ImQ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.19" containerData="30" horizontal="true">
