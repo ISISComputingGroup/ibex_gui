@@ -210,6 +210,12 @@
         <tags>type:user</tags>
       </parameters>
     </bindings>
+    <bindings xmi:id="_s_S0QIQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+K" command="_UJcx8IOSEeizju06Crxm-g">
+      <tags>type:user</tags>
+      <parameters xmi:id="_s_S0QYQ0Eeizju06Crxm-g" elementId="uk.ac.stfc.isis.ibex.e4.client.parameter.0" name="uk.ac.stfc.isis.ibex.e4.client.switchperspectives.perspectiveid" value="uk.ac.stfc.isis.ibex.client.e4.product.perspective.streamingdae">
+        <tags>type:user</tags>
+      </parameters>
+    </bindings>
     <bindings xmi:id="_fq1XQJZmEeilnu5vNzjU3w" elementId="uk.ac.stfc.isis.ibex.e4.client.keybindings" keySequence="M2+M3+Z" command="_NufGcJZmEeilnu5vNzjU3w">
       <tags>type:user</tags>
     </bindings>
@@ -628,7 +634,9 @@
       </children>
       <children xsi:type="basic:PartSashContainer" xmi:id="_iX2kd5IBEe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.29" containerData="70" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_iX2keZIBEe-V38_cTZ3InZ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.37" containerData="64">
-          <children xsi:type="basic:Part" xmi:id="_iXnT6JIBEe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeDiagnosticsOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Streaming Diagnostics"/>
+          <children xsi:type="basic:Part" xmi:id="_iXnT6JIBFe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeRunInfoOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Run Information"/>
+          <children xsi:type="basic:Part" xmi:id="_iX2kfZIBEe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeSpectraPlotsOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Spectra Plots"/>
+          <children xsi:type="basic:Part" xmi:id="_iX2kgpIBEe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeVetoDiagnosticsOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Veto Diagnostics"/>
         </children>
       </children>
     </children>
