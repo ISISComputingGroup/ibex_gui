@@ -86,6 +86,8 @@
 				        <arg>-Alog4j.graalvm.groupId=${project.groupId}</arg>
 				        <arg>-Alog4j.graalvm.artifactId=${project.artifactId}</arg>
 				    </compilerArgs>
+				    <deriveReleaseCompilerArgumentFromTargetLevel>false</deriveReleaseCompilerArgumentFromTargetLevel>
+				    <release>21</release>
 				</configuration>
 			</plugin>
 
