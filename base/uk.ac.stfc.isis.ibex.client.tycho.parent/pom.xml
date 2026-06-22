@@ -89,6 +89,7 @@
                     <deriveReleaseCompilerArgumentFromTargetLevel>true</deriveReleaseCompilerArgumentFromTargetLevel>
                     <source>21</source>
 				    <target>21</target>
+				    <release>21</release>
 				</configuration>
 			</plugin>
 
