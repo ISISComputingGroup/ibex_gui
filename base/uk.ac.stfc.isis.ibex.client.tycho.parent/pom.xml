@@ -87,7 +87,7 @@
 				        <arg>-Alog4j.graalvm.groupId=${project.groupId}</arg>
 				        <arg>-Alog4j.graalvm.artifactId=${project.artifactId}</arg>
 				    </compilerArgs>
-                    <!--deriveReleaseCompilerArgumentFromTargetLevel>true</deriveReleaseCompilerArgumentFromTargetLevel-->
+                    <deriveReleaseCompilerArgumentFromTargetLevel>false</deriveReleaseCompilerArgumentFromTargetLevel>
                     <!--source>${maven.compiler.release}</source-->
 				    <!--target>${maven.compiler.release}</target-->
 				    <release>${maven.compiler.release}</release>
