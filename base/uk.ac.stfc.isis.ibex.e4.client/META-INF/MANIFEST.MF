@@ -36,7 +36,7 @@ Require-Bundle: uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;bundle-version="1
  uk.ac.stfc.isis.ibex.ui.moxas;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.alerts;bundle-version="1.0.0"
 Bundle-ManifestVersion: 2
-Bundle-RequiredExecutionEnvironment: JavaSE-25
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Bundle-Vendor: ISIS
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.e4.client
 

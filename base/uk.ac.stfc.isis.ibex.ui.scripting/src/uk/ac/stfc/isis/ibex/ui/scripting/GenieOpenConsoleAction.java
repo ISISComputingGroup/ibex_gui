@@ -14,7 +14,6 @@ import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsoleFactory;
 import org.eclipse.ui.internal.console.ConsoleFactoryExtension;
 import org.eclipse.ui.internal.console.ConsoleManager;
-import org.eclipse.ui.internal.console.ConsoleView;
 import org.eclipse.ui.internal.console.OpenConsoleAction;
 
 /**
@@ -34,10 +33,9 @@ public class GenieOpenConsoleAction extends OpenConsoleAction {
 	
 	/**
 	 * Initialise factory extensions.
-	 * @param consoleView the console view
 	 */
-	public GenieOpenConsoleAction(ConsoleView consoleView) {
-		super(consoleView);
+	public GenieOpenConsoleAction() {
+		super();
 		fFactoryExtensions = getFactories();
 	}
 	

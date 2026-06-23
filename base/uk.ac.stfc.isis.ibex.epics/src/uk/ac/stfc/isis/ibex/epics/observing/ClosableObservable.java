@@ -122,7 +122,7 @@ public abstract class ClosableObservable<T> implements Observable<T>, Closable {
      */
     protected void setValue(T value) {
     	this.value = Optional.ofNullable(value);
-    	this.value.ifPresent(_ -> currentError = Optional.empty());
+    	this.value.ifPresent(val -> currentError = Optional.empty());
 
     	for (Observer<T> observer : observers) {
     		logErrorsAndContinue(() -> this.value.ifPresent(observer::onValue));

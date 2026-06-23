@@ -78,7 +78,7 @@ public class DeviceScreenListPanel extends Composite {
 		GridLayout compositeLayout = new GridLayout(1, true);
 		this.setLayout(compositeLayout);
 
-		new IBEXButton(this, SWT.NONE, _ -> {
+		new IBEXButton(this, SWT.NONE, event -> {
 			try {
 				configureDeviceScreensHandler.execute(new ExecutionEvent());
 			} catch (ExecutionException ex) {
