@@ -13,6 +13,7 @@
 		<photon-repo.url>http://download.eclipse.org/releases/2026-03</photon-repo.url>
 		<photon-updates-repo.url>http://download.eclipse.org/eclipse/updates/4.39</photon-updates-repo.url>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>21</maven.compiler.release>
 	</properties>
 
 	<repositories>
@@ -86,10 +87,10 @@
 				        <arg>-Alog4j.graalvm.groupId=${project.groupId}</arg>
 				        <arg>-Alog4j.graalvm.artifactId=${project.artifactId}</arg>
 				    </compilerArgs>
-                    <deriveReleaseCompilerArgumentFromTargetLevel>true</deriveReleaseCompilerArgumentFromTargetLevel>
-                    <source>21</source>
-				    <target>21</target>
-				    <release>21</release>
+                    <!--deriveReleaseCompilerArgumentFromTargetLevel>true</deriveReleaseCompilerArgumentFromTargetLevel-->
+                    <!--source>${maven.compiler.release}</source-->
+				    <!--target>${maven.compiler.release}</target-->
+				    <release>${maven.compiler.release}</release>
 				</configuration>
 			</plugin>
 
