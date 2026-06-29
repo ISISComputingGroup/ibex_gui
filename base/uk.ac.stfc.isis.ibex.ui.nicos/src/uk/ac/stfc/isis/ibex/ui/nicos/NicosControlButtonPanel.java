@@ -91,7 +91,7 @@ public class NicosControlButtonPanel extends Composite {
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnStop),
                 BeanProperties.value("enableButtons").observe(statusModel));
         
-        btnTogglePause.addListener(SWT.Selection, e -> statusModel.toggleExecution());
-        btnStop.addListener(SWT.Selection, e -> statusModel.stopExecution());
+        btnTogglePause.addListener(SWT.Selection, _ -> statusModel.toggleExecution());
+        btnStop.addListener(SWT.Selection, _ -> statusModel.stopExecution());
     }
 }

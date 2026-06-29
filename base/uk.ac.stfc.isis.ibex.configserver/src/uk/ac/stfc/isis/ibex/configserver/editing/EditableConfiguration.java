@@ -244,6 +244,7 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 		this.globalmacros = config.getGlobalmacros();
 	}
 
+
     private EditableIoc convertIoc(Ioc ioc) {
 	final EditableIoc generalIOC = iocMap.get(ioc.getName());
 

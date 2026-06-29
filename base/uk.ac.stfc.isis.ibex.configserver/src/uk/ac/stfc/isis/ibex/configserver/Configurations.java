@@ -21,8 +21,8 @@ package uk.ac.stfc.isis.ibex.configserver;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
+import java.util.TreeMap;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
@@ -59,7 +59,7 @@ public class Configurations extends Closer implements BundleActivator {
 	private final Displaying displaying;
 	private final Editing editing;
 	private final IocControl iocControl;
-	private final UpdatedObservableAdapter<HashMap<String, ArrayList<ArrayList<String>>>> moxaMappings;
+	private final UpdatedObservableAdapter<TreeMap<String, ArrayList<ArrayList<String>>>> moxaMappings;
 	private final RecentConfigList recent;
 
 	private final ConfigServerVariables variables;
@@ -140,7 +140,7 @@ public class Configurations extends Closer implements BundleActivator {
 	/**
 	 * @return Moxa mapping information
 	 */
-	public UpdatedObservableAdapter<HashMap<String, ArrayList<ArrayList<String>>>> moxaMappings() { 
+	public UpdatedObservableAdapter<TreeMap<String, ArrayList<ArrayList<String>>>> moxaMappings() { 
 		return moxaMappings;
 	}
 	/**
@@ -212,6 +212,6 @@ public class Configurations extends Closer implements BundleActivator {
 	private void addLogging() {
 		loggingSubscriptions.add(variables.currentConfig.subscribe(new LoggingConfigurationObserver(LOG, "Current config")));
 		loggingSubscriptions.add(variables.serverStatus.subscribe(new LoggingObserver<ServerStatus>(LOG, "Server status")));
-		loggingSubscriptions.add(variables.moxaMappings.subscribe(new LoggingObserver<HashMap<String, ArrayList<ArrayList<String>>>>(LOG, "Moxa status", Level.DEBUG)));
+		loggingSubscriptions.add(variables.moxaMappings.subscribe(new LoggingObserver<TreeMap<String, ArrayList<ArrayList<String>>>>(LOG, "Moxa status", Level.DEBUG)));
 		}
 }
