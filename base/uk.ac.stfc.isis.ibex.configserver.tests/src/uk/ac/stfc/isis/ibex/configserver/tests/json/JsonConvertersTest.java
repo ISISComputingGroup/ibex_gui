@@ -242,7 +242,7 @@ public class JsonConvertersTest {
 		//Arrange
 		Function<Configuration, String> conv = new JsonConverters().configToString();
 		Configuration testConfig = new Configuration(configName, configDescription);
-		String expected = "{\"name\":\"" + configName + "\",\"description\":\"" + configDescription + "\",\"isProtected\":false,\"isDynamic\":false,\"configuresBlockGWAndArchiver\":false,\"iocs\":[],\"blocks\":[],\"groups\":[],\"components\":[],\"history\":[]}";
+		String expected = "{\"name\":\"" + configName + "\",\"description\":\"" + configDescription + "\",\"isProtected\":false,\"isDynamic\":false,\"configuresBlockGWAndArchiver\":false,\"iocs\":[],\"blocks\":[],\"groups\":[],\"components\":[],\"history\":[],\"globalmacros\":[]}";
 		
 		//Act
 		String test = conv.apply(testConfig);
