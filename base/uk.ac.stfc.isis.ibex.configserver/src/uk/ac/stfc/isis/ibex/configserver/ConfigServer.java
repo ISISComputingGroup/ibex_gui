@@ -21,8 +21,8 @@ package uk.ac.stfc.isis.ibex.configserver;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.function.Function;
 
 import uk.ac.stfc.isis.ibex.alarm.AlarmReloadManager;
@@ -363,7 +363,7 @@ public class ConfigServer extends Closer {
 	 * 
 	 * @return the map of hostname and ip addresses to moxa port mappings
 	 */
-	public ForwardingObservable<HashMap<String, ArrayList<ArrayList<String>>>> moxaMappings() {
+	public ForwardingObservable<TreeMap<String, ArrayList<ArrayList<String>>>> moxaMappings() {
 		return variables.moxaMappings;
 	}
 

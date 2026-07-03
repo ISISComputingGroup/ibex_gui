@@ -632,6 +632,22 @@
       </value>
     </entry>
     <entry>
+      <key>Moxa E1213</key>
+      <value>
+        <type>MOXA_12XX</type>
+        <path>moxa1213.opi</path>
+        <description>The OPI for a Moxa E1213 remote I/O.</description>
+        <macros>
+          <macro>
+            <name>MOXA1210</name>
+            <description>The Moxa E1213 PV prefix (e.g. MOXA12XX_01).</description>
+            <default>MOXA12XX_01</default>
+          </macro>
+        </macros>
+        <categories/>
+      </value>
+    </entry>
+    <entry>
       <key>Moxa E1240</key>
       <value>
         <type>MOXA_12XX</type>
@@ -4096,6 +4112,42 @@
           </macro>
         </macros>
         <categories />
+      </value>
+    </entry>
+    <entry>
+      <key>Nanodac</key>
+      <value>
+        <type>EUROTHERM</type>
+        <path>nanodac.opi</path>
+        <description>Nanodac (Eurotherm) temperature controller</description>
+        <macros>
+          <macro>
+            <name>NANODAC</name>
+            <description>The Nanodac PV prefix (e.g. NANODAC_01).</description>
+            <default>NANODAC_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Quantum Northwest NeutronIQ</key>
+      <value>
+        <type>SAMPLECHANGER</type>
+        <path>quantumnorthwest.opi</path>
+        <description>Quantum Northwest NeutronIQ</description>
+        <macros>
+          <macro>
+            <name>QNW</name>
+            <description>The QNW PV prefix (e.g. QNW_01).</description>
+            <default>QNW_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Temperature controllers</category>
+        </categories>
       </value>
     </entry>
   </opis>

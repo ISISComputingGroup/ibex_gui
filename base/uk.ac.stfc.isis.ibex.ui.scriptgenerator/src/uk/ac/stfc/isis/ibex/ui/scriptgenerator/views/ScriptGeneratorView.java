@@ -232,7 +232,7 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 		final FontDescriptor largeDescriptor = FontDescriptor.createFrom(messageLabel.getFont()).setHeight(16);
 		final Font largeFont = largeDescriptor.createFont(Display.getDefault());
 		messageLabel.setFont(largeFont);
-		messageLabel.addDisposeListener(e -> largeFont.dispose()); // Need to dispose of new font's resources
+		messageLabel.addDisposeListener(_ -> largeFont.dispose()); // Need to dispose of new font's resources
 
 		messageLabel.setText(message);
 		parent.layout();
@@ -361,7 +361,7 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 		actionsControlsGrp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 
 		// Pause
-		new IBEXButton(actionsControlsGrp, SWT.RADIO, event -> {
+		new IBEXButton(actionsControlsGrp, SWT.RADIO, _ -> {
 			ScriptGeneratorSettingsSingleton.getInstance().setSkipEnabled(false); //sets skipEnabled to false, causing Pause on invalid actions during run of script
 		})
 				.text(Constants.CHECKBOX_TITLE_INVALID_PAUSE)
@@ -369,7 +369,7 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 				.selected(!Constants.INVALID_SKIP_DEFAULT);
 
 		// Skip
-		new IBEXButton(actionsControlsGrp, SWT.RADIO, event -> {
+		new IBEXButton(actionsControlsGrp, SWT.RADIO, _ -> {
 			ScriptGeneratorSettingsSingleton.getInstance().setSkipEnabled(true); //sets skipEnabled to true, skipping over invalid actions during run of script
 		})
 				.text(Constants.CHECKBOX_TITLE_INVALID_SKIP)
@@ -390,21 +390,21 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 		actionsControlsGrp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 
 		// Make buttons for insert new/delete/duplicate actions
-		btnAddAction = new IBEXButton(actionsControlsGrp, SWT.NONE, event -> {
+		btnAddAction = new IBEXButton(actionsControlsGrp, SWT.NONE, _ -> {
 			scriptGeneratorViewModel.addEmptyAction();
 		})
 				.text(Constants.BUTTON_TITLE_ADD_ROW_TO_END)
 				.tooltip(Constants.BUTTON_TOOLTIP_ADD_ROW_TO_END)
 				.layoutData(IBEXButton.expandingGrid)
 				.get();
-		btnInsertAction = new IBEXButton(actionsControlsGrp, SWT.NONE, event -> {
+		btnInsertAction = new IBEXButton(actionsControlsGrp, SWT.NONE, _ -> {
 			scriptGeneratorViewModel.insertEmptyAction(table.getSelectionIndex() + 1);
 		})
 				.text(Constants.BUTTON_TITLE_INSERT_ROW_BELOW)
 				.tooltip(Constants.BUTTON_TOOLTIP_INSERT_ROW_BELOW)
 				.layoutData(IBEXButton.expandingGrid)
 				.get();
-		new IBEXButton(actionsControlsGrp, SWT.NONE, event -> {
+		new IBEXButton(actionsControlsGrp, SWT.NONE, _ -> {
 			scriptGeneratorViewModel.clearAction();
 		})
 		.text(Constants.BUTTON_TITLE_DELETE_ROWS)
@@ -425,21 +425,21 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 		generateButtonsGrp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 
 		// Buttons to generate a script
-		generateScriptButton = new IBEXButton(generateButtonsGrp, SWT.NONE, event -> {
+		generateScriptButton = new IBEXButton(generateButtonsGrp, SWT.NONE, _ -> {
 			scriptGeneratorViewModel.generateScriptToCurrentFilepath();
 		})
 				.text(Constants.BUTTON_TITLE_SAVE)
 				.tooltip(Constants.BUTTON_TITLE_SAVE)
 				.layoutData(IBEXButton.expandingGrid)
 				.get();
-		generateScriptAsButton = new IBEXButton(generateButtonsGrp, SWT.NONE, event -> {
+		generateScriptAsButton = new IBEXButton(generateButtonsGrp, SWT.NONE, _ -> {
 			scriptGeneratorViewModel.generateScript();
 		})
 				.text(Constants.BUTTON_TITLE_SAVE_AS)
 				.tooltip(Constants.BUTTON_TITLE_SAVE_AS)
 				.layoutData(IBEXButton.expandingGrid)
 				.get();
-		new IBEXButton(generateButtonsGrp, SWT.NONE, event -> {
+		new IBEXButton(generateButtonsGrp, SWT.NONE, _ -> {
 			scriptGeneratorViewModel.loadParameterValues();
 		})
 		.text(Constants.BUTTON_TITLE_LOAD)
@@ -498,7 +498,7 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 		final Font estimateFont = boldDescriptor.createFont(Display.getDefault());
 		estimateText.setFont(estimateFont);
 		estimateText.setText("Total estimated run time: 0 seconds");
-		estimateText.addDisposeListener(e -> estimateFont.dispose()); // Need to dispose of new font's resources
+		estimateText.addDisposeListener(_ -> estimateFont.dispose()); // Need to dispose of new font's resources
 
 		// Label for the expected finish time
 		expectedFinishText = new Label(scriptTimeGrp, SWT.BOTTOM);
@@ -506,7 +506,7 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 		final Font expectedFinishFont = boldDescriptor.createFont(Display.getDefault());
 		expectedFinishText.setFont(expectedFinishFont);
 		expectedFinishText.setText("Expected Finish Time: 00:00:00");
-		expectedFinishText.addDisposeListener(e -> expectedFinishFont.dispose()); // Need to dispose of new font's
+		expectedFinishText.addDisposeListener(_ -> expectedFinishFont.dispose()); // Need to dispose of new font's
 																					// resources
 	}
 
@@ -532,14 +532,14 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 		moveComposite.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
 
 		// Make buttons to move an action up and down the list
-		btnMoveActionUp = new IBEXButton(moveComposite, SWT.NONE, event -> {
+		btnMoveActionUp = new IBEXButton(moveComposite, SWT.NONE, _ -> {
 			scriptGeneratorViewModel.moveActionUp(table.selectedRows());
 		})
 				.image(Constants.IMAGE_UP_ARROW)
 				.tooltip("Move selected row up")
 				.layoutData(IBEXButton.compactGrid)
 				.get();
-		btnMoveActionDown = new IBEXButton(moveComposite, SWT.NONE, event -> {
+		btnMoveActionDown = new IBEXButton(moveComposite, SWT.NONE, _ -> {
 			scriptGeneratorViewModel.moveActionDown(table.selectedRows());
 		})
 				.image(Constants.IMAGE_DOWN_ARROW)
@@ -685,7 +685,7 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 
 		scriptGeneratorViewModel.bindActionProperties(table);
 
-		table.addSelectionChangedListener(event -> scriptGeneratorViewModel.setSelected(table.selectedRows()));
+		table.addSelectionChangedListener(_ -> scriptGeneratorViewModel.setSelected(table.selectedRows()));
 
 		bindingContext.bindValue(WidgetProperties.text().observe(parametersFileText),
 				BeanProperties.value("parametersFile").observe(scriptGeneratorViewModel));
@@ -775,7 +775,7 @@ public class ScriptGeneratorView implements ScriptGeneratorViewModelDelegate {
 						globalParamTextCurrent.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
 						globalParamTextCurrent.setEnabled(true);
 						final int index = paramIndex;
-						globalParamTextCurrent.addListener(SWT.Modify, e -> {
+						globalParamTextCurrent.addListener(SWT.Modify, _ -> {
 							viewModel.updateGlobalParams(index, globalParamTextCurrent.getText());
 						});
 						globalParamTextCurrent.setText(paramVal);

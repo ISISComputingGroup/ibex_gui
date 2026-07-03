@@ -75,8 +75,8 @@ public class LogPlotterSettingsTest {
      *         instrument.
      */
     private static String BuildArchiveSettings(String instrumentName) {
-        return "RDB|1|jdbc:mysql://" + instrumentName + "/archive?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true"
-        		+ "*RDB|2|jdbc:mysql://130.246.39.152/archive?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true";
+        return "RDB|1|jdbc:mysql://" + instrumentName + "/archive?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true&allowPublicKeyRetrieval=true"
+        		+ "*RDB|2|jdbc:mysql://130.246.39.152/archive?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true&allowPublicKeyRetrieval=true";
     }
 
     /**
@@ -84,8 +84,8 @@ public class LogPlotterSettingsTest {
      * @return The URLs settings string corresponding to the given instrument.
      */
     private static String BuildUrlsSettings(String instrumentName) {
-        return "jdbc:mysql://" + instrumentName + "/archive?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true"
-        		+ "*jdbc:mysql://130.246.39.152/archive?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true";
+        return "jdbc:mysql://" + instrumentName + "/archive?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true&allowPublicKeyRetrieval=true"
+        		+ "*jdbc:mysql://130.246.39.152/archive?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Europe/London&autoReconnect=true&allowPublicKeyRetrieval=true";
     }
 
     // These settings represent the defaults, as set in

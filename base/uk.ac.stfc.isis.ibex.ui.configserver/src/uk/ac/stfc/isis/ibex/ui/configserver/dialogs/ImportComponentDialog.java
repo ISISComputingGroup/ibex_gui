@@ -223,7 +223,7 @@ public class ImportComponentDialog extends TitleAreaDialog  {
 		Text text = new Text(group, SWT.BORDER);
 		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-		new IBEXButton(group, SWT.NONE, event -> {
+		new IBEXButton(group, SWT.NONE, _ -> {
 			importVariables.selectInstrument(text.getText());
 		})
 		.text("Select")

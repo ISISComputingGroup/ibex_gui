@@ -15,7 +15,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.e4.core.di.annotations,
  uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Export-Package: uk.ac.stfc.isis.ibex.ui.help
 Import-Package: com.google.common.io
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.help

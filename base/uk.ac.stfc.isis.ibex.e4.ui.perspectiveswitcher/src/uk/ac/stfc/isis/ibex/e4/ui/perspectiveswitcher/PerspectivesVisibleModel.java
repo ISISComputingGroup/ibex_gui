@@ -85,7 +85,7 @@ public class PerspectivesVisibleModel extends ModelObject {
         writePerspectiveSettings = switchingWritableFactory.getSwitchableWritable(new CompressedCharWaveformChannel(),
                 InstrumentUtils.addPrefix(PERSPECTIVE_CONFIG_PV));
         
-        ManagerModeModel.getInstance().addPropertyChangeListener(ManagerModeModel.IN_MANAGER_MODE_STR, event -> {
+        ManagerModeModel.getInstance().addPropertyChangeListener(ManagerModeModel.IN_MANAGER_MODE_STR, _ -> {
             setRemoteInManager();
         });
         setRemoteInManager();

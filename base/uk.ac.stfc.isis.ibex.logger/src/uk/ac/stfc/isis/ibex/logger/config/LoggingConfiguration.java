@@ -147,15 +147,15 @@ public final class LoggingConfiguration {
 	    int fileSizeInBytes = fileSizeKB * BYTES_PER_KB;
 
 	    Layout<? extends Serializable> layout = PatternLayout.newBuilder()
-		    .withPattern(patternLayout)
-		    .withConfiguration(this)
-		    .withAlwaysWriteExceptions(false)
-		    .withNoConsoleNoAnsi(false)
+		    .setPattern(patternLayout)
+		    .setConfiguration(this)
+		    .setAlwaysWriteExceptions(false)
+		    .setNoConsoleNoAnsi(false)
 		    .build();
 
 	    final TimeBasedTriggeringPolicy timeBasedTriggeringPolicy = TimeBasedTriggeringPolicy.newBuilder()
-		    .withInterval(1)
-		    .withModulate(false)
+		    .setInterval(1)
+		    .setModulate(false)
 		    .build();
 
 	    final SizeBasedTriggeringPolicy sizeBasedTriggeringPolicy = SizeBasedTriggeringPolicy
@@ -165,22 +165,22 @@ public final class LoggingConfiguration {
 			    sizeBasedTriggeringPolicy);
 
 	    final DefaultRolloverStrategy strategy = DefaultRolloverStrategy.newBuilder()
-		    .withMax(Integer.toString(maxFiles))
-		    .withMin(Integer.toString(1))
-		    .withConfig(this)
+		    .setMax(Integer.toString(maxFiles))
+		    .setMin(Integer.toString(1))
+		    .setConfig(this)
 		    .build();
 
 
 	    final Appender fileAppender = RollingFileAppender.newBuilder()
-		    .withFileName(filename)
-		    .withFilePattern(pattern)
-		    .withAppend(true)
+		    .setFileName(filename)
+		    .setFilePattern(pattern)
+		    .setAppend(true)
 		    .setName("isis-log-file-appender")
 		    .setBufferedIo(true)
 		    .setBufferSize(fileSizeInBytes)
 		    .setImmediateFlush(true)
-		    .withPolicy(policy)
-		    .withStrategy(strategy)
+		    .setPolicy(policy)
+		    .setStrategy(strategy)
 		    .setLayout(layout)
 		    .setConfiguration(this)
 		    .build();

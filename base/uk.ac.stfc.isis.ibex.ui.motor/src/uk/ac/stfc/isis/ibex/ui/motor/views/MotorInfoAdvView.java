@@ -92,12 +92,12 @@ public class MotorInfoAdvView extends MotorInfoView {
         encoderStatus = new BooleanImageLabel(iconContainer, ENCODER_ENABLED, ENCODER_DISABLED, "Using the encoder", "Not using an encoder");
         encoderStatus.setIsEnabled(minimalMotorViewModel.getUsingEncoder());
         minimalMotorViewModel.addUiThreadPropertyChangeListener("usingEncoder", 
-        		evt -> encoderStatus.setIsEnabled(minimalMotorViewModel.getUsingEncoder()));
+        		_ -> encoderStatus.setIsEnabled(minimalMotorViewModel.getUsingEncoder()));
         
         energisedStatus = new BooleanImageLabel(iconContainer, ENERGISED_ENABLED, ENERGISED_DISABLED, "Motor energised", "Motor not energised");
         energisedStatus.setIsEnabled(minimalMotorViewModel.getEnergised());
         minimalMotorViewModel.addUiThreadPropertyChangeListener("energised", 
-        		evt -> energisedStatus.setIsEnabled(minimalMotorViewModel.getEnergised()));
+        		_ -> energisedStatus.setIsEnabled(minimalMotorViewModel.getEnergised()));
         
         setMouseListeners();
         
