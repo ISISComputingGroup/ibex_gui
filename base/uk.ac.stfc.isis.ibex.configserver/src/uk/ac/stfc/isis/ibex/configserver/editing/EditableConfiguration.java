@@ -244,15 +244,6 @@ public class EditableConfiguration extends ModelObject implements GroupNamesProv
 		this.globalmacros = config.getGlobalmacros();
 	}
 
-	Collection<Configuration> selectedComponents = getComponentDetails(config.getComponents(), components);
-	editableComponents = new EditableComponents(selectedComponents, components);
-	editableComponents.addPropertyChangeListener(evt -> updateComponents());
-
-	updateComponents();
-	setEnableSaveAsButton();
-	addObserver();
-    }
-
     private EditableIoc convertIoc(Ioc ioc) {
 	final EditableIoc generalIOC = iocMap.get(ioc.getName());
 
