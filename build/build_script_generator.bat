@@ -19,7 +19,8 @@ if %errcode% GEQ 4 (
 
 call copy_in_maven.bat
 if %errorlevel% neq 0 exit /b %errorlevel%
-set "M2=%~dp0maven\bin"
+set "M2_HOME=%~dp0maven"
+set "M2=%M2_HOME%\bin"
 set "PATH=%M2%;%PATH%"
 
 SET "JAVA_HOME=%LOCAL_JRE_LOCATION%"
