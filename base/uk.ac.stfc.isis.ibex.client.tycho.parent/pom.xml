@@ -234,6 +234,7 @@
 		<module>../uk.ac.stfc.isis.ibex.ui.alerts</module>
 		<module>../uk.ac.stfc.isis.ibex.alerts.tests</module>
 		<module>../uk.ac.stfc.isis.ibex.ui.alerts.tests</module>
+		<module>../uk.ac.stfc.isis.ibex.ui.streamingdae</module>
 	</modules>
 </project>
 

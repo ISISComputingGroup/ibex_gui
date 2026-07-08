@@ -852,4 +852,7 @@
          id="wrapped.org.glassfish.tyrus.bundles.tyrus-standalone-client"
          version="0.0.0"/>
 
+   <plugin
+         id="uk.ac.stfc.isis.ibex.ui.streamingdae"
+         version="0.0.0"/>
 </feature>

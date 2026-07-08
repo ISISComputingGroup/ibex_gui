@@ -1,8 +1,27 @@
+/**
+* This file is part of the ISIS IBEX application.
+* Copyright (C) 2012-2025 Science & Technology Facilities Council.
+* All rights reserved.
+*
+* This program is distributed in the hope that it will be useful.
+* This program and the accompanying materials are made available under the
+* terms of the Eclipse Public License v1.0 which accompanies this distribution.
+* EXCEPT AS EXPRESSLY SET FORTH IN THE ECLIPSE PUBLIC LICENSE V1.0, THE PROGRAM 
+* AND ACCOMPANYING MATERIALS ARE PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES 
+* OR CONDITIONS OF ANY KIND.  See the Eclipse Public License v1.0 for more details.
+*
+* You should have received a copy of the Eclipse Public License v1.0
+* along with this program; if not, you can obtain a copy from
+* https://www.eclipse.org/org/documents/epl-v10.php or 
+* http://opensource.org/licenses/eclipse-1.0.php
+*/
 package uk.ac.stfc.isis.ibex.ui.configserver.commands.helpers;
 
 import java.io.IOException;
+
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
+
 import uk.ac.stfc.isis.ibex.configserver.ConfigServer;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.EditConfigDialog;
@@ -21,7 +40,6 @@ public class AddBlockToConfigHelper extends EditConfigHelper {
 	 */
 	public AddBlockToConfigHelper(Shell shell, ConfigServer server) {
 		super(shell, server);
-
 	}
 
 	/**
@@ -40,16 +58,12 @@ public class AddBlockToConfigHelper extends EditConfigHelper {
 			boolean openEditBlockDialog, String pvName) throws IOException {
 		config.setIsComponent(false);
 		final String configName = getConfigDisplayName(config, isCurrent);
-		final String subTitle = "Editing the " + configName + " configuration";
-
+		final String subTitle = createSubTitle(config, configName);
 		EditConfigDialog dialog = new EditConfigDialog(shell, title, subTitle, config, false, configurationViewModels,
 				editBlockFirst, openEditBlockDialog, pvName); // Creating dialog to edit configuration
 		dialog.addNew(config);  // Open edit block dialog before editing the configuration
 		if (dialog.open() == Window.OK) {  // Edit configuration dialog
-
 			server.saveAs().write(config.asConfiguration()); // Saving the block to the configuration
-
 		}
 	}
-
 }

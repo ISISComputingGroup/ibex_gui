@@ -3,11 +3,8 @@ setlocal enabledelayedexpansion
 
 set BASEDIR=%~dp0
 
-set M2=%MAVEN%bin
 set PYTHON3=%WORKSPACE%\Python3\python.exe
 set PYTHON_HOME=%WORKSPACE%\Python3
-
-set PATH=%M2%;%JAVA_HOME%;%PATH%
 
 if "%IS_E4%" == "YES" (
     set BUILT_CLIENT_DIR=base\uk.ac.stfc.isis.ibex.e4.client.product\target\products\ibex.product\win32\win32\x86_64

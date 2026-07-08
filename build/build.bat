@@ -23,9 +23,12 @@ if %errcode% GEQ 4 (
 
 call copy_in_maven.bat
 if %errorlevel% neq 0 exit /b %errorlevel%
-set "PATH=%PATH%;%~dp0maven\bin"
+set "M2_HOME=%~dp0maven"
+set "M2=%M2_HOME%\bin"
+set "PATH=%M2%;%PATH%"
 
-SET "JAVA_HOME=%~dp0jdk"
+SET "JAVA_HOME=%LOCAL_JRE_LOCATION%"
+set "PATH=%JAVA_HOME%\bin;%PATH%"
 
 REM temporarily disable checks as workaround for JDK CEN header issue
 set "JAVA_TOOL_OPTIONS=-Djdk.util.zip.disableZip64ExtraFieldValidation=true"
