@@ -22,6 +22,7 @@ package uk.ac.stfc.isis.ibex.ui.journalviewer;
 import uk.ac.stfc.isis.ibex.journal.JournalFieldCategoriser;
 
 import java.util.Map;
+import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,6 +43,7 @@ import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowData;
@@ -109,6 +111,8 @@ public class JournalViewerView {
 	private Composite searchControls;
 	private Composite basicControls;
 
+	private final Map<JournalField, Button> checkboxes = new HashMap<>();
+
 	/**
 	 * Create contents of the view part.
 	 * 
@@ -128,6 +132,18 @@ public class JournalViewerView {
 		Label lblTitle = new Label(parent, SWT.NONE);
 		lblTitle.setFont(SWTResourceManager.getFont("Segoe UI", 16, SWT.BOLD));
 		lblTitle.setText("Journal Viewer");
+
+		Composite searchRow = new Composite(parent, SWT.FILL);
+		searchRow.setLayout(new GridLayout(2, false));
+		searchRow.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+		Label searchLabel = new Label(searchRow, SWT.NONE);
+		searchLabel.setText("Search: ");
+		searchLabel.setLayoutData(new GridData(SWT.END, SWT.CENTER, false, false));
+
+		Text checkboxSearch = new Text(searchRow, SWT.BORDER);
+		checkboxSearch.setLayoutData(new GridData(SWT.END, SWT.CENTER, false, false));
+		checkboxSearch.addModifyListener(e -> filterCheckboxes(checkboxSearch.getText()));
 
 		Composite selectedContainer = new Composite(parent, SWT.FILL);
 		RowLayout rl = new RowLayout();
@@ -159,20 +175,12 @@ public class JournalViewerView {
 		btnFirstPage = new IBEXButton(basicControls, SWT.NONE, _ -> {
 			setProgressIndicatorsVisible(true);
 			model.firstPage().thenAccept(_ -> setProgressIndicatorsVisible(false));
-		})
-				.text("<<")
-				.tooltip("Go to the first page.")
-				.layoutData(IBEXButton.defaultRow)
-				.get();
+		}).text("<<").tooltip("Go to the first page.").layoutData(IBEXButton.defaultRow).get();
 
 		btnPrevPage = new IBEXButton(basicControls, SWT.NONE, _ -> {
 			setProgressIndicatorsVisible(true);
 			model.prevPage().thenAccept(_ -> setProgressIndicatorsVisible(false));
-		})
-				.text("< Prev")
-				.tooltip("Go to the previous page.")
-				.layoutData(IBEXButton.defaultRow)
-				.get();
+		}).text("< Prev").tooltip("Go to the previous page.").layoutData(IBEXButton.defaultRow).get();
 
 		textPageNumber = new Text(basicControls, SWT.BORDER);
 		RowData textPageNumberData = new RowData();
@@ -183,29 +191,18 @@ public class JournalViewerView {
 		btnNextPage = new IBEXButton(basicControls, SWT.NONE, _ -> {
 			setProgressIndicatorsVisible(true);
 			model.nextPage().thenAccept(_ -> setProgressIndicatorsVisible(false));
-		})
-				.text("Next >")
-				.tooltip("Go to the next page.")
-				.layoutData(IBEXButton.defaultRow)
-				.get();
+		}).text("Next >").tooltip("Go to the next page.").layoutData(IBEXButton.defaultRow).get();
 
 		btnLastPage = new IBEXButton(basicControls, SWT.NONE, _ -> {
 			setProgressIndicatorsVisible(true);
 			model.lastPage().thenAccept(_ -> setProgressIndicatorsVisible(false));
-		})
-				.text(">>")
-				.tooltip("Go to the last page.")
-				.layoutData(IBEXButton.defaultRow)
-				.get();
+		}).text(">>").tooltip("Go to the last page.").layoutData(IBEXButton.defaultRow).get();
 
 		new IBEXButton(basicControls, SWT.NONE, _ -> {
 			resetPageNumber();
 			setProgressIndicatorsVisible(true);
 			model.setPageNumber(1).thenAccept(_ -> setProgressIndicatorsVisible(false));
-		})
-		.text("Refresh")
-		.tooltip("Refresh the journal.")
-		.layoutData(IBEXButton.defaultRow);
+		}).text("Refresh").tooltip("Refresh the journal.").layoutData(IBEXButton.defaultRow);
 
 		searchControls = new Composite(controls, SWT.NONE);
 		RowLayout rlSearchControls = new RowLayout(SWT.HORIZONTAL);
@@ -216,11 +213,8 @@ public class JournalViewerView {
 		RowLayout rlFilterControl = new RowLayout(SWT.HORIZONTAL);
 		searchInput.setLayout(rlFilterControl);
 
-		btnSearch = new IBEXButton(searchControls, SWT.NONE, _ -> search())
-				.text("Search")
-				.tooltip("Search the journal.")
-				.layoutData(new RowData(80, SWT.DEFAULT))
-				.get();
+		btnSearch = new IBEXButton(searchControls, SWT.NONE, _ -> search()).text("Search")
+				.tooltip("Search the journal.").layoutData(new RowData(80, SWT.DEFAULT)).get();
 
 		new IBEXButton(searchControls, SWT.NONE, _ -> {
 			resetPageNumber();
@@ -228,10 +222,7 @@ public class JournalViewerView {
 			model.resetActiveSearch();
 			setProgressIndicatorsVisible(true);
 			model.setPageNumber(1).thenAccept(_ -> setProgressIndicatorsVisible(false));
-		})
-		.text("Clear")
-		.tooltip("Clear the search.")
-		.layoutData(IBEXButton.defaultRow);
+		}).text("Clear").tooltip("Clear the search.").layoutData(IBEXButton.defaultRow);
 
 		progressBar = new ProgressBar(searchControls, SWT.INDETERMINATE);
 		progressBar.setMaximum(80);
@@ -241,17 +232,11 @@ public class JournalViewerView {
 		error.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_RED));
 		error.setLayoutData(new RowData(200, SWT.DEFAULT));
 
-		
-		
-		
-		
-		
-		
-		
-		// Instead of putting all JournalFields into selectedContainer, we will categorise them.
-		
+		// Instead of putting all JournalFields into selectedContainer, we will
+		// categorise them.
+
 		// 1. Sort all by category
-		
+
 		final Map<String, List<JournalField>> fieldsByCategory = new TreeMap<>();
 		for (final JournalField property : JournalField.values()) {
 			final String category = property.getCategory().toString();
@@ -261,23 +246,22 @@ public class JournalViewerView {
 				fieldsByCategory.put(category, new ArrayList<JournalField>());
 			}
 		}
-		
+
 		// 2. Create containers to house each category
-		
+
 		fieldsByCategory.forEach((catName, journalFields) -> {
 //			Group flexRow = new Group(selectedContainer, SWT.DEFAULT);
 //			flexRow.setLayout(new RowLayout(SWT.HORIZONTAL));
 			Group catGroup = new Group(selectedContainer, SWT.SHADOW_ETCHED_IN);
 			catGroup.setText(JournalFieldCategoriser.getFriendlyCategoryName(catName));
 			catGroup.setLayout(new RowLayout(SWT.VERTICAL));
-			
+
 			// 3. Loop through each list in the map as we create the containers
 			for (final JournalField jField : journalFields) {
-				final Button checkbox = new IBEXButton(catGroup, SWT.CHECK)
-						.text(jField.getFriendlyName())
-						.selected(model.getFieldSelected(jField))
-						.layoutData(IBEXButton.defaultRow)
-						.get();
+				final Button checkbox = new IBEXButton(catGroup, SWT.CHECK).text(jField.getFriendlyName())
+						.selected(model.getFieldSelected(jField)).layoutData(IBEXButton.defaultRow).get();
+
+				checkboxes.put(jField, checkbox);
 
 				checkbox.addSelectionListener(new SelectionAdapter() {
 					@Override
@@ -289,11 +273,15 @@ public class JournalViewerView {
 				});
 			}
 		});
-		
-		
 
-		
-		
+		// Group searchLayout = new Group(selectedContainer, SWT.NONE);
+		// searchLayout.setText("Search");
+		// searchLayout.setLayout(new RowLayout(SWT.VERTICAL));
+		// Text checkboxSearch = new Text(searchRow, SWT.BORDER);
+		// checkboxSearch.setLayoutData(new GridData(SWT.END, SWT.CENTER, false,
+		// false));
+		// checkboxSearch.addModifyListener(e ->
+		// filterCheckboxes(checkboxSearch.getText()));
 
 		final int tableStyle = SWT.FILL | SWT.FULL_SELECTION;
 		journalTable = new DataboundTable<JournalRow>(parent, tableStyle, tableStyle) {
@@ -395,6 +383,20 @@ public class JournalViewerView {
 
 	private void resetPageNumber() {
 		DISPLAY.asyncExec(() -> textPageNumber.setText("1"));
+	}
+
+	private void filterCheckboxes(final String searchInput) {
+		String searchInputLow = searchInput.toLowerCase();
+		for (Map.Entry<JournalField, Button> entry : checkboxes.entrySet()) {
+			if (entry.getKey().getFriendlyName().toLowerCase().contains(searchInputLow)) {
+				final Color black = new Color(DISPLAY, 0, 0, 0);
+				entry.getValue().setForeground(black);
+			} else {
+				final Color grey = new Color(DISPLAY, 200, 200, 200);
+				entry.getValue().setForeground(grey);
+			}
+		}
+
 	}
 
 	private void bind() {
