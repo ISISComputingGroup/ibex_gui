@@ -59,7 +59,6 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.journal.JournalField;
-import uk.ac.stfc.isis.ibex.journal.JournalFieldCategoriser.JournalFieldCategory;
 import uk.ac.stfc.isis.ibex.journal.JournalRow;
 import uk.ac.stfc.isis.ibex.journal.JournalSearch;
 import uk.ac.stfc.isis.ibex.journal.JournalSort;
@@ -245,7 +244,9 @@ public class JournalViewerView {
 			if (fieldsByCategory.containsKey(category)) {
 				fieldsByCategory.get(category).add(property);
 			} else {
-				fieldsByCategory.put(category, new ArrayList<JournalField>());
+				final List<JournalField> catList = new ArrayList<>();
+				catList.add(property);
+				fieldsByCategory.put(category, catList);
 			}
 		}
 
