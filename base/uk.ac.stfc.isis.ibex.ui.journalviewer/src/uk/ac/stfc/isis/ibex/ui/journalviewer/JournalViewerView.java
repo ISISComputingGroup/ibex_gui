@@ -112,7 +112,9 @@ public class JournalViewerView {
 	private Composite basicControls;
 
 	private final Map<JournalField, Button> checkboxes = new HashMap<>();
-
+	private static final Color CHECKBOXMATCH = SWTResourceManager.getColor(SWT.COLOR_BLACK);
+	private static final Color CHECKBOXNOTMATCH = SWTResourceManager.getColor(SWT.COLOR_GRAY);
+	
 	/**
 	 * Create contents of the view part.
 	 * 
@@ -389,11 +391,9 @@ public class JournalViewerView {
 		String searchInputLow = searchInput.toLowerCase();
 		for (Map.Entry<JournalField, Button> entry : checkboxes.entrySet()) {
 			if (entry.getKey().getFriendlyName().toLowerCase().contains(searchInputLow)) {
-				final Color black = new Color(DISPLAY, 0, 0, 0);
-				entry.getValue().setForeground(black);
+				entry.getValue().setForeground(CHECKBOXMATCH);
 			} else {
-				final Color grey = new Color(DISPLAY, 200, 200, 200);
-				entry.getValue().setForeground(grey);
+				entry.getValue().setForeground(CHECKBOXNOTMATCH);
 			}
 		}
 
