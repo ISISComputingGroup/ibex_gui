@@ -113,7 +113,7 @@ public class JournalViewerView {
 	private final Map<JournalField, Button> checkboxes = new HashMap<>();
 	private static final Color CHECKBOXMATCH = SWTResourceManager.getColor(SWT.COLOR_BLACK);
 	private static final Color CHECKBOXNOTMATCH = SWTResourceManager.getColor(SWT.COLOR_GRAY);
-	
+
 	/**
 	 * Create contents of the view part.
 	 * 
@@ -233,33 +233,17 @@ public class JournalViewerView {
 		error.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_RED));
 		error.setLayoutData(new RowData(200, SWT.DEFAULT));
 
-		// Instead of putting all JournalFields into selectedContainer, we will
-		// categorise them.
+		// 1. Calculate a TreeMap of all JournalFields organised into categories.
+		final Map<String, List<JournalField>> fieldsByCategory = JournalFieldCategoriser.calculateCategoryMap();
 
-		// 1. Sort all by category
-
-		final Map<String, List<JournalField>> fieldsByCategory = new TreeMap<>();
-		for (final JournalField property : JournalField.values()) {
-			final String category = property.getCategory().toString();
-			if (fieldsByCategory.containsKey(category)) {
-				fieldsByCategory.get(category).add(property);
-			} else {
-				final List<JournalField> catList = new ArrayList<>();
-				catList.add(property);
-				fieldsByCategory.put(category, catList);
-			}
-		}
-
-		// 2. Create containers to house each category
-
+		// 2. Create containers to house each category.
 		fieldsByCategory.forEach((catName, journalFields) -> {
-//			Group flexRow = new Group(selectedContainer, SWT.DEFAULT);
-//			flexRow.setLayout(new RowLayout(SWT.HORIZONTAL));
 			Group catGroup = new Group(selectedContainer, SWT.SHADOW_ETCHED_IN);
 			catGroup.setText(JournalFieldCategoriser.getFriendlyCategoryName(catName));
 			catGroup.setLayout(new RowLayout(SWT.VERTICAL));
 
-			// 3. Loop through each list in the map as we create the containers
+			// 3. Loop through each list of JournalFields in the map as we create the
+			// containers
 			for (final JournalField jField : journalFields) {
 				final Button checkbox = new IBEXButton(catGroup, SWT.CHECK).text(jField.getFriendlyName())
 						.selected(model.getFieldSelected(jField)).layoutData(IBEXButton.defaultRow).get();
