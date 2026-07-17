@@ -114,7 +114,7 @@ public class JournalViewerView {
 	private final Map<JournalField, Button> checkboxes = new HashMap<>();
 	private static final Color CHECKBOXMATCH = SWTResourceManager.getColor(SWT.COLOR_BLACK);
 	private static final Color CHECKBOXNOTMATCH = SWTResourceManager.getColor(SWT.COLOR_GRAY);
-	
+
 	/**
 	 * Create contents of the view part.
 	 * 
@@ -275,15 +275,6 @@ public class JournalViewerView {
 				});
 			}
 		});
-
-		// Group searchLayout = new Group(selectedContainer, SWT.NONE);
-		// searchLayout.setText("Search");
-		// searchLayout.setLayout(new RowLayout(SWT.VERTICAL));
-		// Text checkboxSearch = new Text(searchRow, SWT.BORDER);
-		// checkboxSearch.setLayoutData(new GridData(SWT.END, SWT.CENTER, false,
-		// false));
-		// checkboxSearch.addModifyListener(e ->
-		// filterCheckboxes(checkboxSearch.getText()));
 
 		final int tableStyle = SWT.FILL | SWT.FULL_SELECTION;
 		journalTable = new DataboundTable<JournalRow>(parent, tableStyle, tableStyle) {
