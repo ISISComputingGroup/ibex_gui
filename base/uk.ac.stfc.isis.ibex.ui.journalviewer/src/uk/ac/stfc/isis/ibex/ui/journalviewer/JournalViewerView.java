@@ -59,7 +59,6 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import uk.ac.stfc.isis.ibex.journal.JournalField;
-import uk.ac.stfc.isis.ibex.journal.JournalFieldCategoriser.JournalFieldCategory;
 import uk.ac.stfc.isis.ibex.journal.JournalRow;
 import uk.ac.stfc.isis.ibex.journal.JournalSearch;
 import uk.ac.stfc.isis.ibex.journal.JournalSort;
@@ -234,31 +233,17 @@ public class JournalViewerView {
 		error.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_RED));
 		error.setLayoutData(new RowData(200, SWT.DEFAULT));
 
-		// Instead of putting all JournalFields into selectedContainer, we will
-		// categorise them.
+		// 1. Calculate a TreeMap of all JournalFields organised into categories.
+		final Map<String, List<JournalField>> fieldsByCategory = JournalFieldCategoriser.calculateCategoryMap();
 
-		// 1. Sort all by category
-
-		final Map<String, List<JournalField>> fieldsByCategory = new TreeMap<>();
-		for (final JournalField property : JournalField.values()) {
-			final String category = property.getCategory().toString();
-			if (fieldsByCategory.containsKey(category)) {
-				fieldsByCategory.get(category).add(property);
-			} else {
-				fieldsByCategory.put(category, new ArrayList<JournalField>());
-			}
-		}
-
-		// 2. Create containers to house each category
-
+		// 2. Create containers to house each category.
 		fieldsByCategory.forEach((catName, journalFields) -> {
-//			Group flexRow = new Group(selectedContainer, SWT.DEFAULT);
-//			flexRow.setLayout(new RowLayout(SWT.HORIZONTAL));
 			Group catGroup = new Group(selectedContainer, SWT.SHADOW_ETCHED_IN);
 			catGroup.setText(JournalFieldCategoriser.getFriendlyCategoryName(catName));
 			catGroup.setLayout(new RowLayout(SWT.VERTICAL));
 
-			// 3. Loop through each list in the map as we create the containers
+			// 3. Loop through each list of JournalFields in the map as we create the
+			// containers
 			for (final JournalField jField : journalFields) {
 				final Button checkbox = new IBEXButton(catGroup, SWT.CHECK).text(jField.getFriendlyName())
 						.selected(model.getFieldSelected(jField)).layoutData(IBEXButton.defaultRow).get();
