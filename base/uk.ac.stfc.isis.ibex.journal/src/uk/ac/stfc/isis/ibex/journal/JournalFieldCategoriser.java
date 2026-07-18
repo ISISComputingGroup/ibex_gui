@@ -118,10 +118,10 @@ public class JournalFieldCategoriser {
 	JournalFieldCategory category;
 
 	/**
-	 * Create a journal sort class.
+	 * Create a journal field category class.
 	 * 
-	 * @param sortField The field to sort with
-	 * @param direction The direction to sort in
+	 * @param categoryField A JournalField belonging in a category.
+	 * @param category The JournalFieldCategory that encompasses the categoryField.
 	 */
 	public JournalFieldCategoriser(JournalField categoryField, JournalFieldCategory category) {
 		this.categoryField = categoryField;
@@ -150,7 +150,7 @@ public class JournalFieldCategoriser {
 	}
 
 	/**
-	 * @return the sortField
+	 * @return the categoryField
 	 */
 	public JournalField getCategoryField() {
 		return categoryField;
@@ -165,7 +165,7 @@ public class JournalFieldCategoriser {
 	}
 
 	/**
-	 * @return the direction
+	 * @return the category
 	 */
 	public JournalFieldCategory getCategory() {
 		return category;
