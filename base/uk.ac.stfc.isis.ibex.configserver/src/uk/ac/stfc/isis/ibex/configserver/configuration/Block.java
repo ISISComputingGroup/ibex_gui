@@ -64,10 +64,10 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
     private String set_block_val;
 
     // Alarms config information
-    private boolean alarmenabled;
-    private boolean alarmlatched;
-    private double alarmdelay;
-    private String alarmguidance;
+    private boolean alarm_enabled;
+    private boolean alarm_latched;
+    private double alarm_delay;
+    private String alarm_guidance;
  
     /**
      * Creates a new block given input properties.
@@ -123,10 +123,10 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
 		this.suspend_on_invalid = suspendOnInvalid;
 		this.set_block = blockSet;
 		this.set_block_val = blockSetVal;
-		this.alarmenabled = alarmEnabled;
-		this.alarmlatched = alarmLatched;
-		this.alarmdelay = alarmDelay;
-		this.alarmguidance = alarmGuidance;
+		this.alarm_enabled = alarmEnabled;
+		this.alarm_latched = alarmLatched;
+		this.alarm_delay = alarmDelay;
+		this.alarm_guidance = alarmGuidance;
 	}
 	
     /**
@@ -137,7 +137,8 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
 	public Block(Block other) {
 		this(other.name, other.pv, other.visible, other.local, other.component, other.lowlimit, other.highlimit,
 				other.suspend_on_invalid, other.runcontrol, other.log_periodic, other.log_rate, other.log_deadband,
-				other.set_block, other.set_block_val, other.alarmenabled, other.alarmlatched, other.alarmdelay, other.alarmguidance);
+				other.set_block, other.set_block_val, other.alarm_enabled, other.alarm_latched, other.alarm_delay,
+				other.alarm_guidance);
 	}
 
     /**
@@ -404,59 +405,59 @@ public class Block extends ModelObject implements IRuncontrol, INamedInComponent
     }
 	
 	/**
-	 * @return the alarmEnabled
+	 * @return the alarm_enabled
 	 */
 	public boolean isAlarmEnabled() {
-		return alarmenabled;
+		return alarm_enabled;
 	}
 
 	/**
-	 * @param alarmEnabled the alarmEnabled to set
+	 * @param alarmEnabled the alarm_enabled to set
 	 */
 	public void setAlarmEnabled(boolean alarmEnabled) {
-		firePropertyChange("alarmEnabled", this.alarmenabled, this.alarmenabled = alarmEnabled);
+		firePropertyChange("alarm_enabled", this.alarm_enabled, this.alarm_enabled = alarmEnabled);
 	}
 
 	/**
-	 * @return the alarmLatched
+	 * @return the alarm_latched
 	 */
 	public boolean isAlarmLatched() {
-		return alarmlatched;
+		return alarm_latched;
 	}
 
 	/**
-	 * @param alarmLatched the alarmLatched to set
+	 * @param alarmLatched the alarm_latched to set
 	 */
 	public void setAlarmLatched(boolean alarmLatched) {
-		firePropertyChange("alarmLatched", this.alarmlatched, this.alarmlatched = alarmLatched);
+		firePropertyChange("alarm_latched", this.alarm_latched, this.alarm_latched = alarmLatched);
 	}
 
 	/**
-	 * @return the alarmDelay
+	 * @return the alarm_delay
 	 */
 	public double getAlarmDelay() {
-		return alarmdelay;
+		return alarm_delay;
 	}
 
 	/**
-	 * @param alarmDelay the alarmDelay to set
+	 * @param alarmDelay the alarm_delay to set
 	 */
 	public void setAlarmDelay(double alarmDelay) {
-		firePropertyChange("alarmDelay", this.alarmdelay, this.alarmdelay = alarmDelay);
+		firePropertyChange("alarm_delay", this.alarm_delay, this.alarm_delay = alarmDelay);
 	}
 
 	/**
-	 * @return the alarmGuidance
+	 * @return the alarm_guidance
 	 */
 	public String getAlarmGuidance() {
-		return alarmguidance;
+		return alarm_guidance;
 	}
 
 	/**
 	 * @param alarmGuidance the alarmGuidance to set
 	 */
 	public void setAlarmGuidance(String alarmGuidance) {
-		firePropertyChange("alarmGuidance", this.alarmguidance, this.alarmguidance = alarmGuidance);
+		firePropertyChange("alarm_guidance", this.alarm_guidance, this.alarm_guidance = alarmGuidance);
 	}
 
 	@Override
