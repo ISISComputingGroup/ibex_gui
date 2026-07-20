@@ -55,7 +55,7 @@ public class QueueScriptDialog extends ScriptDialog {
 	protected void createButtonsForButtonBar(Composite parent) {
         queueBtn = createButton(parent, IDialogConstants.OK_ID, "Queue", false);
         queueBtn.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.dae", "icons/play.png"));
-        queueBtn.addListener(SWT.Selection, _ -> model.queueScript());
+        queueBtn.addListener(SWT.Selection, e -> model.queueScript());
 		super.createButtonsForButtonBar(parent);
 	}	
 

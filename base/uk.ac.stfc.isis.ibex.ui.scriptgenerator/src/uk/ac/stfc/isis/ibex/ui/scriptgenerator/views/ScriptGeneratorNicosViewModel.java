@@ -68,7 +68,7 @@ public class ScriptGeneratorNicosViewModel implements PropertyChangeListener {
 		bindPauseButton(pauseButton);
 		bindStopButton(stopButton);
 		formatButtonsBasedOnStatus(dynamicScriptingManager.getDynamicScriptingStatus());
-		nicosModel.addUiThreadPropertyChangeListener(_ -> updateButtonEnablement());
+		nicosModel.addUiThreadPropertyChangeListener(e -> updateButtonEnablement());
 	}
 	
 	/**
@@ -85,21 +85,21 @@ public class ScriptGeneratorNicosViewModel implements PropertyChangeListener {
 	
 	private void bindRunButton(Button runButton) {
 		this.runButton = runButton;
-		runButton.addListener(SWT.Selection, _ -> {
+		runButton.addListener(SWT.Selection, e -> {
         	playScript();
         });
 	}
 	
 	private void bindPauseButton(Button pauseButton) {
 		this.pauseButton = pauseButton;
-		pauseButton.addListener(SWT.Selection, _ -> {
+		pauseButton.addListener(SWT.Selection, e -> {
         	pauseScript();
         });
 	}
 	
 	private void bindStopButton(Button stopButton) {
 		this.stopButton = stopButton;
-		stopButton.addListener(SWT.Selection, _ -> {
+		stopButton.addListener(SWT.Selection, e -> {
         	stopScript();
         });
 	}

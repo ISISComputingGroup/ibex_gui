@@ -92,7 +92,7 @@ public class ComponentValidator extends ErrorAggregator {
     private void addPVListener(PV pv) {
         SynopticPvValidator pvValid = new SynopticPvValidator(pv);
         validators.put(System.identityHashCode(pv), pvValid);
-        pv.addPropertyChangeListener(_ -> duplicatePVNameValidator.checkForDuplicatePVs(component.pvs()));
+        pv.addPropertyChangeListener((PropertyChangeEvent evt) -> duplicatePVNameValidator.checkForDuplicatePVs(component.pvs()));
         pvValid.addPropertyChangeListener("error", errorListener);
     }
 

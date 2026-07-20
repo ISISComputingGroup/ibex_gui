@@ -148,18 +148,18 @@ public class JournalViewerView {
 		lblResultsData.width = 180;
 		lblResults.setLayoutData(lblResultsData);
 
-		btnFirstPage = new IBEXButton(basicControls, SWT.NONE, _ -> {
+		btnFirstPage = new IBEXButton(basicControls, SWT.NONE, event -> {
 			setProgressIndicatorsVisible(true);
-			model.firstPage().thenAccept(_ -> setProgressIndicatorsVisible(false));
+			model.firstPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
 		})
 				.text("<<")
 				.tooltip("Go to the first page.")
 				.layoutData(IBEXButton.defaultRow)
 				.get();
 
-		btnPrevPage = new IBEXButton(basicControls, SWT.NONE, _ -> {
+		btnPrevPage = new IBEXButton(basicControls, SWT.NONE, event -> {
 			setProgressIndicatorsVisible(true);
-			model.prevPage().thenAccept(_ -> setProgressIndicatorsVisible(false));
+			model.prevPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
 		})
 				.text("< Prev")
 				.tooltip("Go to the previous page.")
@@ -172,28 +172,28 @@ public class JournalViewerView {
 		textPageNumber.setLayoutData(textPageNumberData);
 		textPageNumber.setTextLimit(9);
 
-		btnNextPage = new IBEXButton(basicControls, SWT.NONE, _ -> {
+		btnNextPage = new IBEXButton(basicControls, SWT.NONE, event -> {
 			setProgressIndicatorsVisible(true);
-			model.nextPage().thenAccept(_ -> setProgressIndicatorsVisible(false));
+			model.nextPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
 		})
 				.text("Next >")
 				.tooltip("Go to the next page.")
 				.layoutData(IBEXButton.defaultRow)
 				.get();
 
-		btnLastPage = new IBEXButton(basicControls, SWT.NONE, _ -> {
+		btnLastPage = new IBEXButton(basicControls, SWT.NONE, event -> {
 			setProgressIndicatorsVisible(true);
-			model.lastPage().thenAccept(_ -> setProgressIndicatorsVisible(false));
+			model.lastPage().thenAccept(ignored -> setProgressIndicatorsVisible(false));
 		})
 				.text(">>")
 				.tooltip("Go to the last page.")
 				.layoutData(IBEXButton.defaultRow)
 				.get();
 
-		new IBEXButton(basicControls, SWT.NONE, _ -> {
+		new IBEXButton(basicControls, SWT.NONE, event -> {
 			resetPageNumber();
 			setProgressIndicatorsVisible(true);
-			model.setPageNumber(1).thenAccept(_ -> setProgressIndicatorsVisible(false));
+			model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
 		})
 		.text("Refresh")
 		.tooltip("Refresh the journal.")
@@ -208,18 +208,18 @@ public class JournalViewerView {
 		RowLayout rlFilterControl = new RowLayout(SWT.HORIZONTAL);
 		searchInput.setLayout(rlFilterControl);
 
-		btnSearch = new IBEXButton(searchControls, SWT.NONE, _ -> search())
+		btnSearch = new IBEXButton(searchControls, SWT.NONE, event -> search())
 				.text("Search")
 				.tooltip("Search the journal.")
 				.layoutData(new RowData(80, SWT.DEFAULT))
 				.get();
 
-		new IBEXButton(searchControls, SWT.NONE, _ -> {
+		new IBEXButton(searchControls, SWT.NONE, event -> {
 			resetPageNumber();
 			searchInput.clearInput();
 			model.resetActiveSearch();
 			setProgressIndicatorsVisible(true);
-			model.setPageNumber(1).thenAccept(_ -> setProgressIndicatorsVisible(false));
+			model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
 		})
 		.text("Clear")
 		.tooltip("Clear the search.")
@@ -245,7 +245,7 @@ public class JournalViewerView {
 				public void widgetSelected(SelectionEvent e) {
 					setProgressIndicatorsVisible(true);
 					model.setFieldSelected(property, checkbox.getSelection())
-							.thenAccept(_ -> setProgressIndicatorsVisible(false));
+							.thenAccept(ignored -> setProgressIndicatorsVisible(false));
 				}
 			});
 		}
@@ -282,7 +282,7 @@ public class JournalViewerView {
 					public void widgetSelected(SelectionEvent e) {
 						JournalField field = JournalField.getFieldFromFriendlyName(column.getText());
 						setProgressIndicatorsVisible(true);
-						model.sortBy(field).thenAccept(_ -> setProgressIndicatorsVisible(false));
+						model.sortBy(field).thenAccept(ignored -> setProgressIndicatorsVisible(false));
 					}
 				};
 			}
@@ -325,7 +325,7 @@ public class JournalViewerView {
 
 		model.setActiveSearch(search);
 		setProgressIndicatorsVisible(true);
-		model.setPageNumber(1).thenAccept(_ -> setProgressIndicatorsVisible(false));
+		model.setPageNumber(1).thenAccept(ignored -> setProgressIndicatorsVisible(false));
 	}
 
 	/**
@@ -393,16 +393,16 @@ public class JournalViewerView {
 			if (e.detail == SWT.TRAVERSE_RETURN) {
 				setProgressIndicatorsVisible(true);
 				model.goToPage(Integer.parseInt(textPageNumber.getText()))
-						.thenAccept(_ -> setProgressIndicatorsVisible(false));
+						.thenAccept(ignored -> setProgressIndicatorsVisible(false));
 			}
 			textPageNumber.selectAll();
 		});
 
-		textPageNumber.addListener(SWT.FocusIn, _ -> {
+		textPageNumber.addListener(SWT.FocusIn, e -> {
 			textPageNumber.selectAll();
 		});
 
-		model.addPropertyChangeListener("runs", _ -> DISPLAY.asyncExec(() -> {
+		model.addPropertyChangeListener("runs", e -> DISPLAY.asyncExec(() -> {
 			setProgressIndicatorsVisible(true);
 			journalTable.updateTableColumns();
 			updateSortIndicator();

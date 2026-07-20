@@ -203,7 +203,7 @@ public class RunControlEditorPanel extends Composite {
         setModel(viewModel);
         setBlock(null);
         
-        parent.addDisposeListener(_ -> configServer.saveAs().removeOnCanWriteChangeListener(canWriteListener));
+        parent.addDisposeListener(e -> configServer.saveAs().removeOnCanWriteChangeListener(canWriteListener));
 	}
 
     private void setModel(RunControlViewModel viewModel) {

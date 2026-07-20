@@ -111,17 +111,17 @@ public class MinimalMotionIndicator extends Composite {
      */
 	public void setMotor(final Motor motor) {
 		setArrows(motor);
-		motor.addUiThreadPropertyChangeListener("direction", _ -> setArrows(motor));
-		motor.addUiThreadPropertyChangeListener("moving", _ -> setArrows(motor));
+		motor.addUiThreadPropertyChangeListener("direction", evt -> setArrows(motor));
+		motor.addUiThreadPropertyChangeListener("moving", evt -> setArrows(motor));
 		
 		enableHome(motor.getAtHome());
-		motor.addUiThreadPropertyChangeListener("atHome", _ -> enableHome(motor.getAtHome()));
+		motor.addUiThreadPropertyChangeListener("atHome", evt -> enableHome(motor.getAtHome()));
 
 		setLowerLimit(motor.getAtLowerLimitSwtich());
-		motor.addUiThreadPropertyChangeListener("atLowerLimitSwitch", _ -> setLowerLimit(motor.getAtLowerLimitSwtich()));
+		motor.addUiThreadPropertyChangeListener("atLowerLimitSwitch", evt -> setLowerLimit(motor.getAtLowerLimitSwtich()));
 		
 		setUpperLimit(motor.getAtUpperLimitSwitch());
-		motor.addUiThreadPropertyChangeListener("atUpperLimitSwitch", _ -> setUpperLimit(motor.getAtUpperLimitSwitch()));
+		motor.addUiThreadPropertyChangeListener("atUpperLimitSwitch", evt -> setUpperLimit(motor.getAtUpperLimitSwitch()));
 	}
 
 	@Override

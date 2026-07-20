@@ -4,7 +4,7 @@ Bundle-Name: StreamingDAE
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.streamingdae;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.streamingdae
-Bundle-RequiredExecutionEnvironment: JavaSE-25
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Require-Bundle: uk.ac.stfc.isis.ibex.ui;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
  org.eclipse.ui;bundle-version="3.113.0",
