@@ -47,8 +47,7 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 if "%BUILD_NUMBER%" == "" SET BUILD_NUMBER=SNAPSHOT
 
 set mvnErr=
-REM removing "-T 1C" from mvn for the moment to check if it is causing the occasional "file in use" build fail error
-call mvn --settings=%~dp0..\mvn_user_settings.xml -f %~dp0..\base\uk.ac.stfc.isis.ibex.client.tycho.parent\pom.xml -DforceContextQualifier=%BUILD_NUMBER% -Dmaven.repo.local=%~dp0\.m2 clean verify || set mvnErr=1
+call mvn -T1C --settings=%~dp0..\mvn_user_settings.xml -f %~dp0..\base\uk.ac.stfc.isis.ibex.client.tycho.parent\pom.xml -DforceContextQualifier=%BUILD_NUMBER% -Dmaven.repo.local=%~dp0\.m2 clean verify || set mvnErr=1
 if defined mvnErr exit /b 1
 
 REM Copy built client into a sensible directory to run it
