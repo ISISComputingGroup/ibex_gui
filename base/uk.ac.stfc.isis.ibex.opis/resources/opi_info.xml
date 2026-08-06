@@ -4150,5 +4150,23 @@
         </categories>
       </value>
     </entry>
+    <entry>
+      <key>Merlin OPC</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>Merlin_Vacuum_System.opi</path>
+        <description>The OPI for the Merlin' OPC Server, which controls two TPGs.</description>
+        <macros>
+          <macro>
+            <name>OPCUA</name>
+            <description>The OPCUA PV prefix (e.g. OPCUA_01).</description>
+            <default>OPCUA_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Pressure sensors</category>
+        </categories>
+      </value>
+    </entry>
   </opis>
 </descriptions>
