@@ -134,6 +134,7 @@ public class Configuration extends ModelObject {
 				other.getComponents(), other.getHistory(), other.isProtected, other.isDynamic,
 				other.configuresBlockGWAndArchiver, other.getGlobalmacros());
 		this.pv = other.pv;
+		this.iocs.forEach(ioc -> ioc.getMacros().forEach(macro -> macro.setUseDefault(false)));
 	}
 
 	/**
