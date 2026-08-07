@@ -25,6 +25,6 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.epics.switching,
  org.apache.commons.lang
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-25
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Export-Package: uk.ac.stfc.isis.ibex.ui.dashboard.views
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.dashboard

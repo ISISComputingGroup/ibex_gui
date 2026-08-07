@@ -54,8 +54,8 @@ public class SearchNumber extends JournalSearch {
             
             ArrayList<String> parts = new ArrayList<String>();
             
-            fromNumber.ifPresent(_ -> parts.add(field.getSqlFieldName() + " >= ?"));
-            toNumber.ifPresent(_ -> parts.add(field.getSqlFieldName() + " <= ?"));
+            fromNumber.ifPresent(x -> parts.add(field.getSqlFieldName() + " >= ?"));
+            toNumber.ifPresent(x -> parts.add(field.getSqlFieldName() + " <= ?"));
             
             query.append(String.join(" AND ", parts));
         }

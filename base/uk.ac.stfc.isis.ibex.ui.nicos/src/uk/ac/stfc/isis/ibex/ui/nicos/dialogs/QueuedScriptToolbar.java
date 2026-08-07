@@ -34,11 +34,11 @@ public class QueuedScriptToolbar {
 	 */
 	public QueuedScriptToolbar(Composite parent, QueuedScript script, boolean writePermission) {		
 		toolbar = new ToolBar(parent, SWT.FLAT | SWT.WRAP | SWT.LEFT);
-		ToolItem loadScript = createToolItem("Load Script", "open_folder.png", _ ->
+		ToolItem loadScript = createToolItem("Load Script", "open_folder.png", e ->
 				(new LoadScriptAction(parent.getShell(), script)).execute());
 	    loadScript.setEnabled(writePermission);
 	    
-	    createToolItem("Save Script", "save.png", _ ->
+	    createToolItem("Save Script", "save.png", e ->
 				(new SaveScriptAction(parent.getShell(), script)).execute());
 	}
 

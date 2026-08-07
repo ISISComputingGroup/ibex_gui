@@ -373,17 +373,17 @@ public class MinimalMotorViewModel extends ModelObject {
             }
         });
 
-        motor.addPropertyChangeListener("setpoint", _ -> setSetpoint(formatForMotorDisplay("SP", motor.getSetpoint())));
-        motor.addPropertyChangeListener("value", _ -> setValue(formatForMotorDisplay("Val", motor.getValue())));
+        motor.addPropertyChangeListener("setpoint", evt -> setSetpoint(formatForMotorDisplay("SP", motor.getSetpoint())));
+        motor.addPropertyChangeListener("value", evt -> setValue(formatForMotorDisplay("Val", motor.getValue())));
         
-        motor.addPropertyChangeListener("lowerLimit", _ -> setLowLimit(formatForMotorDisplay("Lo", motor.getLowerLimit())));
-        motor.addPropertyChangeListener("upperLimit", _ -> setHighLimit(formatForMotorDisplay("Hi", motor.getUpperLimit())));
+        motor.addPropertyChangeListener("lowerLimit", evt -> setLowLimit(formatForMotorDisplay("Lo", motor.getLowerLimit())));
+        motor.addPropertyChangeListener("upperLimit", evt -> setHighLimit(formatForMotorDisplay("Hi", motor.getUpperLimit())));
         
-        motor.addPropertyChangeListener("offset", _ -> setOffset(formatForMotorDisplay("Off", motor.getOffset())));
-        motor.addPropertyChangeListener("error", _ -> setError(formatForMotorDisplay("Err", motor.getError())));
+        motor.addPropertyChangeListener("offset", evt -> setOffset(formatForMotorDisplay("Off", motor.getOffset())));
+        motor.addPropertyChangeListener("error", evt -> setError(formatForMotorDisplay("Err", motor.getError())));
         
-        motor.addPropertyChangeListener("usingEncoder", _ -> setUsingEncoder(motor.getUsingEncoder()));
-        motor.addPropertyChangeListener("energised", _ -> setEnergised(motor.getEnergised()));
+        motor.addPropertyChangeListener("usingEncoder", evt -> setUsingEncoder(motor.getUsingEncoder()));
+        motor.addPropertyChangeListener("energised", evt -> setEnergised(motor.getEnergised()));
 
         motor.addPropertyChangeListener("enabled", new PropertyChangeListener() {
             @Override
@@ -394,7 +394,7 @@ public class MinimalMotorViewModel extends ModelObject {
             }
         });
         
-        motor.addPropertyChangeListener("withinTolerance", _ -> setBorderColor(chooseBorderColor()));
+        motor.addPropertyChangeListener("withinTolerance", event -> setBorderColor(chooseBorderColor()));
     }
     
     private Color chooseBorderColor() {
