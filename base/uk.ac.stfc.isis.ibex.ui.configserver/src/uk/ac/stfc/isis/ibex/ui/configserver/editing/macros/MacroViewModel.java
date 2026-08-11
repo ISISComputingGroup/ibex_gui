@@ -19,7 +19,7 @@ public class MacroViewModel extends ModelObject {
 	public MacroViewModel(Macro macro) {
 		this.macro = macro;
 		macro.addPropertyChangeListener("value", passThrough());
-		setUseDefault((macro.getValue() == null) || (macro.getValue().equals("")));
+		macro.addPropertyChangeListener("useDefault", passThrough());
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class MacroViewModel extends ModelObject {
 	 */
 	public String getDisplayValue() {
 		String macroDisplayVal = "(default)";
-		if (macro.getValue() != "") {
+		if (!macro.getUseDefault()) {
 			macroDisplayVal = macro.getValue();
 		}
 		return macroDisplayVal;

@@ -37,7 +37,7 @@ public class Macro extends ModelObject {
 	 * The currently set value of the macro. If this is null the default is used.
 	 * Ideally an Optional should be here but GSON doesn't understand optionals :(
 	 */
-	private String value;
+	private String value = "";
 	/**
 	 * The description of the macro.
 	 */
