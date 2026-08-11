@@ -100,9 +100,6 @@ public class MacroViewModel extends ModelObject {
 	 */
 	public String getDisplayValue() {
 		String macroDisplayVal = "(default)";
-		//if (macro.getValue() != "") {
-			//macroDisplayVal = macro.getValue();
-		//}
 		if (!macro.getUseDefault()) {
 			macroDisplayVal = macro.getValue();
 		}
