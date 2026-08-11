@@ -101,12 +101,12 @@ public class MacroViewModelTest {
     
     @Test
     public void test_GIVEN_macro_with_value_WHEN_view_model_created_THEN_use_default_is_false() {
-    	Macro m = new Macro("name", "A_VALUE", "description", "pattern", null, HasDefault.YES, true);
+    	Macro m = new Macro("name", "A_VALUE", "description", "pattern", null, HasDefault.YES, false);
         MacroViewModel macroViewModel = new MacroViewModel(m);
         
         boolean useDefault = macroViewModel.getUseDefault();
         
-        assertTrue(useDefault);
+        assertFalse(useDefault);
     }
     
     @Test
@@ -149,8 +149,6 @@ public class MacroViewModelTest {
         macroViewModel.setUseDefault(true);
         
         assertEquals("", m.getValue());
-        
-        m.setValue(null);
     }
     
     @Test

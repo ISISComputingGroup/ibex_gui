@@ -185,6 +185,7 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 					existingMacro.get().setValue(macroValue);
 					existingMacro.get().setUseDefault(false);
 				} else {
+					displayMacro.setValue(macroValue);
 					setMacros.add(new Macro(displayMacro));
 				}
 			}
