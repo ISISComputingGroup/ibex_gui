@@ -167,7 +167,8 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 	}
 
 	// If the Use Default flag is set or reset add or remove the selected macro from the set of existing Macros.
-	private PropertyChangeListener onUseDefaultChangeListener(final Macro displayMacro, final Collection<Macro> setMacros) {
+	private PropertyChangeListener onUseDefaultChangeListener(final Macro displayMacro,
+			final Collection<Macro> setMacros) {
 		return new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent newValue) {
