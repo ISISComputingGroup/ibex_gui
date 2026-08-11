@@ -140,7 +140,6 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 			displayMacros.add(displayMacro);
 			
 			displayMacro.addPropertyChangeListener("value", addSetMacroListener(displayMacro, setMacros));
-			
 			displayMacro.addPropertyChangeListener("useDefault", onUseDefaultChangeListener(displayMacro, setMacros));
 		}
 		
