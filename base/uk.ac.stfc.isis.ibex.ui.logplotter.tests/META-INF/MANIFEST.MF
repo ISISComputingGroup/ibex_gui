@@ -4,7 +4,7 @@ Bundle-Name: Tests
 Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.logplotter.tests
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: uk.ac.stfc.isis.ibex.ui.logplotter;bundle-version="1.0.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-25
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Require-Bundle: org.junit;bundle-version="4.11.0",
  org.eclipse.ui,
  org.eclipse.core.runtime,
