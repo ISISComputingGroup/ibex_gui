@@ -44,6 +44,9 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 %PYTHON3% .\check_build.py ..\base\
 if %errorlevel% neq 0 exit /b %errorlevel%
 
+%PYTHON3% .\check_tests.py ..\base\
+if %errorlevel% neq 0 exit /b %errorlevel%
+
 if "%BUILD_NUMBER%" == "" SET BUILD_NUMBER=SNAPSHOT
 
 set mvnErr=
