@@ -4150,5 +4150,23 @@
         </categories>
       </value>
     </entry>
+    <entry>
+      <key>iSorb HP</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>isorbhp.opi</path>
+        <description>Anton Paar iSorb HP</description>
+        <macros>
+          <macro>
+            <name>ISORBHP</name>
+            <description>The ISORBHP PV prefix (e.g. ISORBHP_01).</description>
+            <default>ISORBHP_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Pressure sensors</category>
+        </categories>
+      </value>
+    </entry>
   </opis>
 </descriptions>
