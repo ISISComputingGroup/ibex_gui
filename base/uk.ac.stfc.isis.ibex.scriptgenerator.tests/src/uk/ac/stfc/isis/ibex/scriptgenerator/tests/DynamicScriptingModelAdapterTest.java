@@ -45,10 +45,10 @@ public class DynamicScriptingModelAdapterTest {
 	
 	private void setUpModelAdapter() {
 		modelAdapter = new DynamicScriptingModelAdapter(scriptGeneratorMockBuilder.getMockScriptGeneratorModel());
-		modelAdapter.addPropertyChangeListener(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, _ -> {
+		modelAdapter.addPropertyChangeListener(DynamicScriptingProperties.NICOS_SCRIPT_GENERATED_PROPERTY, evt -> {
 			scriptsGeneratedCount++;
 		});
-		modelAdapter.addPropertyChangeListener(ScriptGeneratorProperties.SCRIPT_GENERATION_ERROR_PROPERTY, _ -> {
+		modelAdapter.addPropertyChangeListener(ScriptGeneratorProperties.SCRIPT_GENERATION_ERROR_PROPERTY, evt -> {
 			scriptGenerationErrorsCount++;
 		});
 	}
