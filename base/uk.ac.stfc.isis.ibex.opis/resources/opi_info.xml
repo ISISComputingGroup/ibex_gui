@@ -4171,5 +4171,38 @@
         </categories>
       </value>
     </entry>
+    <entry>
+      <key>Muon Beam Correction</key>
+      <value>
+        <type>DEBUG</type>
+        <path>muon_overviews/muon_beam_correction.opi</path>
+        <description>The OPI for the beam correction IOC for muons.</description>
+        <macros>
+			<macro>
+	            <name>STEER_1</name>
+	            <description>The first steering magnet.</description>
+	            <default>Steering Magnet 1</default>
+	        </macro>
+	        <macro>
+	            <name>STEER_2</name>
+	            <description>The first steering magnet.</description>
+	            <default>Steering Magnet 2</default>
+	        </macro>
+	        <macro>
+	            <name>STEER_3</name>
+	            <description>The first steering magnet.</description>
+	            <default>Steering Magnet 3</default>
+	        </macro>
+	        <macro>
+	            <name>STEER_4</name>
+	            <description>The first steering magnet.</description>
+	            <default>Steering Magnet 4</default>
+	        </macro>
+	    </macros>
+        <categories>
+          <category>Pressure sensors</category>
+        </categories>
+      </value>
+    </entry>
   </opis>
 </descriptions>
