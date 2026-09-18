@@ -24,7 +24,7 @@ Require-Bundle: uk.ac.stfc.isis.ibex.logger,
  uk.ac.stfc.isis.ibex.e4.ui.perspectiveswitcher;bundle-version="1.0.0",
  jakarta.annotation-api;bundle-version="[1.3.5,1.3.5]"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Export-Package: uk.ac.stfc.isis.ibex.ui.blocks,
  uk.ac.stfc.isis.ibex.ui.blocks.groups,
  uk.ac.stfc.isis.ibex.ui.blocks.views

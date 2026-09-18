@@ -180,7 +180,7 @@ public class MatplotlibFigure extends Composite {
 					}
 				});
 		cursorTypeListener = viewModel.getCursorType()
-				.addUiThreadPropertyChangeListener(e -> {
+				.addUiThreadPropertyChangeListener(_ -> {
 					if (!container.isDisposed()) {
 					    if (MatplotlibCursorType.CROSSHAIR.equals(viewModel.getCursorType().getValue())) {
 					    	container.setCursor(zoomCursor);
@@ -193,7 +193,7 @@ public class MatplotlibFigure extends Composite {
 					}
 				});
 		canvasListener = viewModel.getCanvasData()
-				.addUiThreadPropertyChangeListener(e -> {
+				.addUiThreadPropertyChangeListener(_ -> {
 					drawImage(viewModel.getCanvasData().getValue().image());
 				});
 	}

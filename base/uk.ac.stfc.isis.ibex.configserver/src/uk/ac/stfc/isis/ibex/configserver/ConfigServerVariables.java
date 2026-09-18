@@ -21,8 +21,8 @@ package uk.ac.stfc.isis.ibex.configserver;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Locale;
+import java.util.TreeMap;
 
 import org.apache.logging.log4j.Logger;
 
@@ -125,7 +125,7 @@ public class ConfigServerVariables extends Closer {
 	/** Provides the description for the spangle banner. */
 	public final ForwardingObservable<CustomBannerData> bannerDescription;
 	/** Provides the details for the Moxa port mappings. */
-	public final ForwardingObservable<HashMap<String, ArrayList<ArrayList<String>>>> moxaMappings;
+	public final ForwardingObservable<TreeMap<String, ArrayList<ArrayList<String>>>> moxaMappings;
 
 	/**
 	 * Default Constructor.

@@ -18,7 +18,7 @@ Require-Bundle: org.eclipse.ui,
  uk.ac.stfc.isis.ibex.ui.configserver;bundle-version="1.0.0",
  uk.ac.stfc.isis.ibex.ui.widgets;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.alerts
 Import-Package: uk.ac.stfc.isis.ibex.ui.blocks.groups,
  uk.ac.stfc.isis.ibex.ui.widgets

@@ -2,7 +2,7 @@ setlocal
 cd /d %~dp0
 
 REM We bundle our own JRE with the client, this is where it is
-set "JRELOCATION=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\ibex_client_jdk-21.0.6+7"
+set "JRELOCATION=\\isis.cclrc.ac.uk\inst$\Kits$\CompGroup\ICP\ibex_client_jdk-25.0.3+9"
 set "LOCAL_JRE_LOCATION=%~dp0\jdk"
 set "TARGET_DIR=%2"
 if "%TARGET_DIR%" == "" (
@@ -19,9 +19,12 @@ if %errcode% GEQ 4 (
 
 call copy_in_maven.bat
 if %errorlevel% neq 0 exit /b %errorlevel%
-set "PATH=%PATH%;%~dp0maven\bin"
+set "M2_HOME=%~dp0maven"
+set "M2=%M2_HOME%\bin"
+set "PATH=%M2%;%PATH%"
 
 SET "JAVA_HOME=%LOCAL_JRE_LOCATION%"
+set "PATH=%JAVA_HOME%\bin;%PATH%"
 
 REM temporarily disable checks as workaround for JDK CEN header issue
 set "JAVA_TOOL_OPTIONS=-Djdk.util.zip.disableZip64ExtraFieldValidation=true"

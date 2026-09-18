@@ -50,7 +50,7 @@ public class ImportConverterTest {
 	private final static boolean IOC_AUTOSTART = true;
 	private final static boolean IOC_RESTART = true;
 	
-	private final static Macro MACRO = new Macro("MACRO", "10", "DESC", "pattern", "1", HasDefault.YES);
+	private final static Macro MACRO = new Macro("MACRO", "10", "DESC", "pattern", "1", HasDefault.YES, false);
 	private final static PVDefaultValue PV = new PVDefaultValue(SOURCE_PREFIX.concat(":PV"), "10");
 	private final static PVSet PV_SET = new PVSet(SOURCE_PREFIX.concat(":PV_SET"), true);
 	private final static Block BLOCK = new Block("BLOCK", SOURCE_PREFIX.concat(":PV"), true, true);
@@ -74,9 +74,9 @@ public class ImportConverterTest {
 		editableIocs.add(editableIoc);
 		
 		source = new Configuration(COMPONENT_NAME, COMPONENT_DESC, null, Arrays.asList(new Ioc(editableIoc)), Arrays.asList(BLOCK),
-				 Arrays.asList(GROUP), Collections.emptyList(), Collections.emptyList(), false, false, false);
+				 Arrays.asList(GROUP), Collections.emptyList(), Collections.emptyList(), false, false, false, null);
 		empty = new Configuration("EMPTY", "EMTPY DESC", null, Collections.emptyList(), Collections.emptyList(),
-				Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), false, false, false);
+				Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), false, false, false, null);
 		destination = new EditableConfiguration(empty, Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
 
 		ImportConverter.convert(source, destination, SOURCE_PREFIX, DESTINATION_PREFIX, editableIocs);

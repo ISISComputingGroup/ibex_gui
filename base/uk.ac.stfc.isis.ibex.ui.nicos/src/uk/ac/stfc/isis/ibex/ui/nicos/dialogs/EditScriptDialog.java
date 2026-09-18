@@ -49,7 +49,7 @@ public class EditScriptDialog extends ScriptDialog {
 		
 		actionButton = createButton(parent, IDialogConstants.OK_ID, "Update", false);
 		actionButton.setImage(ResourceManager.getPluginImage("uk.ac.stfc.isis.ibex.ui.alarm", "icons/refresh.png"));
-		actionButton.addListener(SWT.Selection, e -> model.updateScript(script));
+		actionButton.addListener(SWT.Selection, _ -> model.updateScript(script));
 
 		bindingContext.bindValue(WidgetProperties.enabled().observe(actionButton),
 				BeanProperties.value("updateButtonEnabled").observe(model));

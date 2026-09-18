@@ -202,7 +202,7 @@ public class BeamGraphView extends ModelListenerAdapter {
 
 	private void createButton(final Composite parent, final String name, final long timeDuration) {
 
-		new IBEXButton(parent, SWT.RADIO, evt -> {
+		new IBEXButton(parent, SWT.RADIO, _ -> {
 			setTimeRange(timeDuration);
 		})
 		.layoutData(new RowData())

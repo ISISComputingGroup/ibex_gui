@@ -88,7 +88,7 @@ public abstract class CheckboxLabelProvider<T> extends ButtonCellLabelProvider<T
 		super(stateProperties);
 		
         for (IObservableMap<T, ?> attributeMap : stateProperties) {
-            attributeMap.addMapChangeListener(event -> {
+            attributeMap.addMapChangeListener(_ -> {
                 updateCheckboxListenerUpdateFlags(attributeMap);
             });
         }

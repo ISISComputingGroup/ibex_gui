@@ -165,7 +165,7 @@ public class Consoles extends AbstractUIPlugin {
 					IToolBarManager tbm = view.getViewSite().getActionBars().getToolBarManager();
 					IContributionItem[] items = tbm.getItems();
 					// Add our "Open Console" action
-					GenieOpenConsoleAction openConsoleAction = new GenieOpenConsoleAction();
+					GenieOpenConsoleAction openConsoleAction = new GenieOpenConsoleAction(view);
 					tbm.insertBefore(CLEAR_CONSOLE_ID, openConsoleAction);
 					
 					// Console view icons that are not required. We are removing OpenConsoleAction so that we can add our Action

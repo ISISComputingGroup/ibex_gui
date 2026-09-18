@@ -1,7 +1,7 @@
 
 /*
 * This file is part of the ISIS IBEX application.
-* Copyright (C) 2012-2015 Science & Technology Facilities Council.
+* Copyright (C) 2012-2025 Science & Technology Facilities Council.
 * All rights reserved.
 *
 * This program is distributed in the hope that it will be useful.
@@ -41,9 +41,10 @@ public class ComponentFilteredConfiguration extends Configuration {
      *            The unfiltered configuration
      */
 	public ComponentFilteredConfiguration(Configuration other) {
-        super(other.name(), other.description(), other.synoptic(), filterIocs(other.getIocs()),
-                filterBlocks(other.getBlocks()), filterGroups(other.getGroups()), other.getComponents(),
-                other.getHistory(), other.isProtected(), other.isDynamic(), other.configuresBlockGWAndArchiver());
+		super(other.name(), other.description(), other.synoptic(), filterIocs(other.getIocs()),
+				filterBlocks(other.getBlocks()), filterGroups(other.getGroups()), other.getComponents(),
+				other.getHistory(), other.isProtected(), other.isDynamic(), other.configuresBlockGWAndArchiver(),
+				other.getGlobalmacros());
 	}
 	
     /**

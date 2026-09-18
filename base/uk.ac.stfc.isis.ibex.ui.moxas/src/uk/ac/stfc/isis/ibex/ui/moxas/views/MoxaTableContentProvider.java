@@ -1,7 +1,7 @@
 package uk.ac.stfc.isis.ibex.ui.moxas.views;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.TreeMap;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 
@@ -11,7 +11,7 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 public class MoxaTableContentProvider implements ITreeContentProvider {
 	@Override
 	public Object[] getElements(Object inputElement) {
-		return HashMap.class.cast(inputElement).values().toArray();
+		return TreeMap.class.cast(inputElement).values().toArray();
 	}
 
 	@Override

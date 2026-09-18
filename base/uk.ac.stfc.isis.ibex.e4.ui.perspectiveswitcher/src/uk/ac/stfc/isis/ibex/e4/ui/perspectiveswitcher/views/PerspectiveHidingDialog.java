@@ -67,7 +67,7 @@ public class PerspectiveHidingDialog extends TitleAreaDialog {
         
         model = new PerspectivesVisibleModel(app, partService, modelService);
         
-        model.addPropertyChangeListener("remoteErrors", event -> {
+        model.addPropertyChangeListener("remoteErrors", _ -> {
             setRemoteErrors(model.getRemoteErrors());
         });
         setRemoteErrors(model.getRemoteErrors());

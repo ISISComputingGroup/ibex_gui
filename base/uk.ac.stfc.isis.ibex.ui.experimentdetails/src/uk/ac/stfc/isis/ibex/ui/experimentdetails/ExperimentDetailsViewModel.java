@@ -56,7 +56,7 @@ public class ExperimentDetailsViewModel extends ModelObject {
         this.model = model; 
         displayTitle = new BooleanWritableObservableAdapter(model.displayTitleSetter(), model.displayTitle());
         rbNumber = new StringWritableObservableAdapter(model.rbNumberSetter(), model.rbNumber());
-        model.addPropertyChangeListener("userDetails", event -> {
+        model.addPropertyChangeListener("userDetails", _ -> {
             setUserDetailsWarningVisible();
         });
     }

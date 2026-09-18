@@ -68,7 +68,7 @@ public class IocMacroDetailsPanel extends Composite {
         GridData gdAvailableMacrosTable = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
         gdAvailableMacrosTable.widthHint = 428;
         displayMacrosTable.setLayoutData(gdAvailableMacrosTable);
-        displayMacrosTable.addSelectionChangedListener(arg0 -> setSelectedMacro(displayMacrosTable.firstSelectedRow()));
+        displayMacrosTable.addSelectionChangedListener(_ -> setSelectedMacro(displayMacrosTable.firstSelectedRow()));
 
         Composite cmpSelectedPv = new Composite(this, SWT.NONE);
         cmpSelectedPv.setLayout(new GridLayout(3, false));

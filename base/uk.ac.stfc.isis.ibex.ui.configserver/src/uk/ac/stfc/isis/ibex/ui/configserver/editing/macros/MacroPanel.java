@@ -133,12 +133,14 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 			for (final Macro setMacro : setMacros) {
 				if (setMacro.getName().equals(availableMacro.getName())) {
 					displayMacro.setValue(setMacro.getValue());
+					displayMacro.setUseDefault(setMacro.getUseDefault());
 				}
 			}
 
 			displayMacros.add(displayMacro);
 			
 			displayMacro.addPropertyChangeListener("value", addSetMacroListener(displayMacro, setMacros));
+			displayMacro.addPropertyChangeListener("useDefault", onUseDefaultChangeListener(displayMacro, setMacros));
 		}
 		
 		return displayMacros;
@@ -152,6 +154,7 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
 			    if (existingMacro.isPresent()) {
 			        if (displayMacro.getValue() != null) {
 			            existingMacro.get().setValue(displayMacro.getValue());
+			            existingMacro.get().setUseDefault(displayMacro.getUseDefault());
 			        } else {
 			            setMacros.remove(existingMacro.get());
 			        }
@@ -159,6 +162,31 @@ public class MacroPanel extends Composite implements IIocDependentPanel {
                     Macro newMacro = new Macro(displayMacro);
                     setMacros.add(newMacro);
                 }
+			}
+		};
+	}
+
+	// If the Use Default flag is set or reset add or remove the selected macro from the set of existing Macros.
+	private PropertyChangeListener onUseDefaultChangeListener(final Macro displayMacro,
+			final Collection<Macro> setMacros) {
+		return new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent newValue) {
+				boolean useDefault = displayMacro.getUseDefault();
+				if (useDefault) {
+					setMacros.removeIf(m -> m.getName().equals(displayMacro.getName()));
+					return;
+				}
+
+				String macroValue = displayMacro.getValue() != null ? displayMacro.getValue() : "";
+				Optional<Macro> existingMacro = setMacros.stream()
+						.filter(m -> m.getName().equals(displayMacro.getName())).findFirst();
+				if (existingMacro.isPresent()) {
+					existingMacro.get().setValue(macroValue);
+					existingMacro.get().setUseDefault(false);
+				} else {
+					setMacros.add(new Macro(displayMacro));
+				}
 			}
 		};
 	}

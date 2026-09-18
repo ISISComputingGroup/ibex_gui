@@ -32,7 +32,7 @@ public final class ScriptServerButtonViewModel extends PerspectiveButtonViewMode
 		flash = new FlashingButton(this, SCRIPT_BUTTON_COLOR);
 		label = buttonLabel;
 		
-		model.addPropertyChangeListener("scriptStatus", ignored -> {
+		model.addPropertyChangeListener("scriptStatus", _ -> {
 			status = model.getScriptStatus();
 			setButtonColor();
 			updateFlashing();

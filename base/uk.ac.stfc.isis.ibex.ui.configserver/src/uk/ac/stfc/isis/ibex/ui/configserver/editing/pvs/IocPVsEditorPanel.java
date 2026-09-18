@@ -90,7 +90,7 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 		GridData gdBtnAdd = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
 		gdBtnAdd.widthHint = 70;
 		
-		btnAdd = new IBEXButton(composite, SWT.NONE, evt -> {
+		btnAdd = new IBEXButton(composite, SWT.NONE, _ -> {
 			addPVValue(new PVDefaultValue(generateNewName(newPVName), "NEW_VALUE"));
 		})
 				.layoutData(gdBtnAdd)
@@ -101,7 +101,7 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 		GridData gdBtnCopy = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
 		gdBtnCopy.widthHint = 70;
 		
-		btnCopy = new IBEXButton(composite, SWT.NONE, evt -> {
+		btnCopy = new IBEXButton(composite, SWT.NONE, _ -> {
 			copySelected();
 		})
 				.layoutData(gdBtnCopy)
@@ -113,7 +113,7 @@ public class IocPVsEditorPanel extends Composite implements IIocDependentPanel {
 		GridData gdBtnRemove = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
 		gdBtnRemove.widthHint = 70;
 		
-		btnRemove = new IBEXButton(composite, SWT.NONE, evt -> {
+		btnRemove = new IBEXButton(composite, SWT.NONE, _ -> {
 			removeSelectedPV();
 		})
 				.layoutData(gdBtnCopy)

@@ -173,7 +173,7 @@ public class RunSummary {
 		new Label(infoComposite, SWT.NONE);
 		new Label(infoComposite, SWT.NONE);
 
-		btnDisplayTitle = new IBEXButton(infoComposite, SWT.CHECK, event -> {
+		btnDisplayTitle = new IBEXButton(infoComposite, SWT.CHECK, _ -> {
 			model.displayTitle().uncheckedSetValue(btnDisplayTitle.getSelection());
 		})
 				.text("Show Title and Users in Dataweb Dashboard Page")

@@ -144,10 +144,10 @@ public class NicosQueueContainer {
 		
         queuedScriptsViewer.viewer().setInput(BeanProperties.list("queuedScripts").observe(model));
 
-        queuedScriptsViewer.viewer().addDoubleClickListener(e ->
+        queuedScriptsViewer.viewer().addDoubleClickListener(_ ->
 				(new EditScriptDialog(shell, queueScriptViewModel)).open());
         
-        queuedScriptsViewer.addSelectionChangedListener(e ->
+        queuedScriptsViewer.addSelectionChangedListener(_ ->
                 queueScriptViewModel.setSelectedScript(queuedScriptsViewer.firstSelectedRow()));
 
         createQueuedScriptMenu(queuedScriptsViewer.viewer());
@@ -181,18 +181,18 @@ public class NicosQueueContainer {
         btnDequeueScript.setText("Dequeue Selected Script");
         btnDequeueScript.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         
-        btnCreateScript.addListener(SWT.Selection, e -> (new QueueScriptDialog(shell, queueScriptViewModel)).open());
-        btnDequeueScript.addListener(SWT.Selection, e -> queueScriptViewModel.dequeueScript());
+        btnCreateScript.addListener(SWT.Selection, _ -> (new QueueScriptDialog(shell, queueScriptViewModel)).open());
+        btnDequeueScript.addListener(SWT.Selection, _ -> queueScriptViewModel.dequeueScript());
         
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnDequeueScript), 
         		BeanProperties.value("dequeueButtonEnabled").observe(queueScriptViewModel));
 
-        btnScriptUp.addListener(SWT.Selection, e -> queueScriptViewModel.moveScript(true));
+        btnScriptUp.addListener(SWT.Selection, _ -> queueScriptViewModel.moveScript(true));
         
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnScriptUp), 
         		BeanProperties.value("upButtonEnabled").observe(queueScriptViewModel));
 
-        btnScriptDown.addListener(SWT.Selection, e -> queueScriptViewModel.moveScript(false));
+        btnScriptDown.addListener(SWT.Selection, _ -> queueScriptViewModel.moveScript(false));
         
         bindingContext.bindValue(WidgetProperties.enabled().observe(btnScriptDown), 
         		BeanProperties.value("downButtonEnabled").observe(queueScriptViewModel));

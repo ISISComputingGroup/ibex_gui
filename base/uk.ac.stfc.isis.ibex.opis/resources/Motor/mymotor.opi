@@ -18,7 +18,7 @@
   <height>250</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <M>$(P)$(MM)</M>
+    <MOTOR_PV>$(P)$(MM)</MOTOR_PV>
   </macros>
   <name>$(P)$(MM)</name>
   <rules />
@@ -1856,6 +1856,100 @@ $(pv_value)</tooltip>
     <actions hook="false" hook_all="false" />
     <auto_size>false</auto_size>
     <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <border_color>
+      <color red="0" green="0" blue="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="17" style="1" pixels="false">Header 1</opifont.name>
+    </font>
+    <foreground_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </foreground_color>
+    <height>37</height>
+    <horizontal_alignment>2</horizontal_alignment>
+    <name>Label</name>
+    <rules>
+      <rule name="Rule" prop_id="visible" out_exp="false">
+        <exp bool_exp="pv0 != 0">
+          <value>true</value>
+        </exp>
+        <pv trig="true">$(P)$(MM).JOGF</pv>
+      </rule>
+    </rules>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <text>JOG (FORWARDS) ACTIVE</text>
+    <tooltip></tooltip>
+    <transparent>false</transparent>
+    <vertical_alignment>1</vertical_alignment>
+    <visible>false</visible>
+    <widget_type>Label</widget_type>
+    <width>438</width>
+    <wrap_words>false</wrap_words>
+    <wuid>71dc9f17:1995d2d655e:-7f1c</wuid>
+    <x>0</x>
+    <y>245</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <actions hook="false" hook_all="false" />
+    <auto_size>false</auto_size>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <border_color>
+      <color red="0" green="0" blue="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="17" style="1" pixels="false">Header 1</opifont.name>
+    </font>
+    <foreground_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </foreground_color>
+    <height>37</height>
+    <horizontal_alignment>2</horizontal_alignment>
+    <name>Label_3</name>
+    <rules>
+      <rule name="Rule" prop_id="visible" out_exp="false">
+        <exp bool_exp="pv0 != 0">
+          <value>true</value>
+        </exp>
+        <pv trig="true">$(P)$(MM).JOGR</pv>
+      </rule>
+    </rules>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <text>JOG (REVERSE) ACTIVE</text>
+    <tooltip></tooltip>
+    <transparent>false</transparent>
+    <vertical_alignment>1</vertical_alignment>
+    <visible>false</visible>
+    <widget_type>Label</widget_type>
+    <width>439</width>
+    <wrap_words>false</wrap_words>
+    <wuid>71dc9f17:1995d2d655e:-7f19</wuid>
+    <x>-1</x>
+    <y>245</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <actions hook="false" hook_all="false" />
+    <auto_size>false</auto_size>
+    <background_color>
       <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
     </background_color>
     <border_color>
@@ -1863,7 +1957,7 @@ $(pv_value)</tooltip>
     </border_color>
     <border_style>0</border_style>
     <border_width>1</border_width>
-    <enabled>true</enabled>
+    <enabled>false</enabled>
     <font>
       <opifont.name fontName="Segoe UI" height="14" style="1" pixels="false">ISIS_Header2_NEW</opifont.name>
     </font>
@@ -2058,25 +2152,11 @@ $(pv_value)</tooltip>
       <height_scalable>true</height_scalable>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
-    <scripts>
-      <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
-        <scriptName>HasEngineeringView</scriptName>
-        <scriptText><![CDATA[from org.csstudio.opibuilder.scriptUtil import PVUtil
-
-ioc_name = PVUtil.getString(pvs[0]).split("_")[0]
-
-if PVUtil.getDouble(pvs[1]) == 1:
-    if ioc_name in ["GALIL", "GALILMUL", "TC"]:
-        widget.setPropertyValue("visible", True)
-]]></scriptText>
-        <pv trig="true">$(M)_IOCNAME</pv>
-        <pv trig="true">$(P)CS:MANAGER.RVAL</pv>
-      </path>
-    </scripts>
+    <scripts />
     <show_scrollbar>true</show_scrollbar>
     <tooltip></tooltip>
     <transparent>false</transparent>
-    <visible>false</visible>
+    <visible>true</visible>
     <widget_type>Grouping Container</widget_type>
     <width>445</width>
     <wuid>-67b0e0c6:18b188bbd12:-7ef9</wuid>
@@ -2110,7 +2190,7 @@ if PVUtil.getDouble(pvs[1]) == 1:
       <name>ErrorTextUpdate</name>
       <precision>0</precision>
       <precision_from_pv>false</precision_from_pv>
-      <pv_name>$(M)_IOCNAME</pv_name>
+      <pv_name>$(MOTOR_PV)_IOCNAME</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -2141,7 +2221,7 @@ elif motor_name == "TC":
 else:
     widget.setPropertyValue("text", "UNKNOWN")
 ]]></scriptText>
-          <pv trig="true">$(M)_IOCNAME</pv>
+          <pv trig="true">$(MOTOR_PV)_IOCNAME</pv>
         </path>
         <path pathString="EmbeddedPy" checkConnect="true" sfe="false" seoe="false">
           <scriptName>FormatType</scriptName>
@@ -2154,7 +2234,7 @@ if ioc_name == "TC":
 else:
     widget.setPropertyValue("format_type", 4)
 ]]></scriptText>
-          <pv trig="true">$(M)_IOCNAME</pv>
+          <pv trig="true">$(MOTOR_PV)_IOCNAME</pv>
         </path>
       </scripts>
       <show_units>false</show_units>
@@ -2210,7 +2290,7 @@ elif ioc_name == "TC":
       <image></image>
       <name>OpenEngineeringViewButton</name>
       <push_action_index>0</push_action_index>
-      <pv_name>$(M)_IOCNAME</pv_name>
+      <pv_name>$(MOTOR_PV)_IOCNAME</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -2268,7 +2348,7 @@ PVUtil.writePV(pv, 1)
       <image></image>
       <name>ResetErrorButton</name>
       <push_action_index>0</push_action_index>
-      <pv_name>$(M)_IOCNAME</pv_name>
+      <pv_name>$(MOTOR_PV)_IOCNAME</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -2286,7 +2366,7 @@ ioc_name = PVUtil.getString(pvs[0]).split("_")[0]
 if ioc_name == "TC":
     widget.setPropertyValue("visible", True)
 ]]></scriptText>
-          <pv trig="true">$(M)_IOCNAME</pv>
+          <pv trig="true">$(MOTOR_PV)_IOCNAME</pv>
         </path>
       </scripts>
       <style>1</style>
@@ -2370,7 +2450,7 @@ $(pv_value)</tooltip>
       <name>AxisUpdate</name>
       <precision>0</precision>
       <precision_from_pv>false</precision_from_pv>
-      <pv_name>$(M)_AXIS_NUM</pv_name>
+      <pv_name>$(MOTOR_PV)_AXIS_NUM</pv_name>
       <pv_value />
       <rotation_angle>0.0</rotation_angle>
       <rules />
@@ -2538,7 +2618,7 @@ if ioc_name == "TC":
         <color name="ISIS_Green_LED_On" red="0" green="255" blue="0" />
       </on_color>
       <on_label>ON</on_label>
-      <pv_name>$(M)_ON_STATUS</pv_name>
+      <pv_name>$(MOTOR_PV)_ON_STATUS</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -2586,7 +2666,7 @@ $(pv_value)</tooltip>
       <image></image>
       <name>TweakReverseButton</name>
       <push_action_index>0</push_action_index>
-      <pv_name>$(M)_ON_CMD</pv_name>
+      <pv_name>$(MOTOR_PV)_ON_CMD</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -2635,7 +2715,7 @@ $(pv_value)</tooltip>
       <image></image>
       <name>TweakReverseButton_1</name>
       <push_action_index>0</push_action_index>
-      <pv_name>$(M)_ON_CMD</pv_name>
+      <pv_name>$(MOTOR_PV)_ON_CMD</pv_name>
       <pv_value />
       <rules />
       <scale_options>
@@ -2695,6 +2775,134 @@ $(pv_value)</tooltip>
     <width>1</width>
     <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
     <x>1</x>
+    <y>12</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <actions hook="false" hook_all="false" />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <height>1</height>
+    <image></image>
+    <name>Dummy</name>
+    <push_action_index>0</push_action_index>
+    <pv_name></pv_name>
+    <pv_value />
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <style>1</style>
+    <text></text>
+    <toggle_button>false</toggle_button>
+    <tooltip></tooltip>
+    <visible>true</visible>
+    <widget_type>Action Button</widget_type>
+    <width>1</width>
+    <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
+    <x>0</x>
+    <y>12</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.Label" version="1.0.0">
+    <actions hook="false" hook_all="false" />
+    <auto_size>false</auto_size>
+    <background_color>
+      <color name="ISIS_Label_Background" red="240" green="240" blue="240" />
+    </background_color>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>false</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="14" style="1" pixels="false">ISIS_Header2_NEW</opifont.name>
+    </font>
+    <foreground_color>
+      <color name="Major" red="255" green="0" blue="0" />
+    </foreground_color>
+    <height>37</height>
+    <horizontal_alignment>0</horizontal_alignment>
+    <name>Label_17</name>
+    <rules>
+      <rule name="Rule" prop_id="visible" out_exp="false">
+        <exp bool_exp="pv0 != 0">
+          <value>true</value>
+        </exp>
+        <pv trig="true">$(P)$(MM).SET</pv>
+      </rule>
+    </rules>
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <show_scrollbar>false</show_scrollbar>
+    <text>Motor is in redefinition mode (SET/USE toggle)</text>
+    <tooltip></tooltip>
+    <transparent>false</transparent>
+    <vertical_alignment>1</vertical_alignment>
+    <visible>false</visible>
+    <widget_type>Label</widget_type>
+    <width>443</width>
+    <wrap_words>true</wrap_words>
+    <wuid>59354c4e:19dab609583:-7fc2</wuid>
+    <x>4</x>
+    <y>245</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">
+    <actions hook="false" hook_all="false" />
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <border_color>
+      <color name="ISIS_Border" red="0" green="0" blue="0" />
+    </border_color>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Segoe UI" height="9" style="0" pixels="false">ISIS_Button_NEW</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
+    </foreground_color>
+    <height>1</height>
+    <image></image>
+    <name>Dummy</name>
+    <push_action_index>0</push_action_index>
+    <pv_name></pv_name>
+    <pv_value />
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <style>1</style>
+    <text></text>
+    <toggle_button>false</toggle_button>
+    <tooltip></tooltip>
+    <visible>true</visible>
+    <widget_type>Action Button</widget_type>
+    <width>1</width>
+    <wuid>-648922a4:1624e4fa0bd:-7f69</wuid>
+    <x>-1</x>
     <y>12</y>
   </widget>
 </display>

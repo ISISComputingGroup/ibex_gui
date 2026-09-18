@@ -1,7 +1,7 @@
 
 /*
  * This file is part of the ISIS IBEX application.
- * Copyright (C) 2012-2016 Science & Technology Facilities Council.
+ * Copyright (C) 2012-2025 Science & Technology Facilities Council.
  * All rights reserved.
  *
  * This program is distributed in the hope that it will be useful.
@@ -58,8 +58,7 @@ public class EditConfigHelper extends ConfigHelper {
 	protected void openDialog(EditableConfiguration config, boolean isCurrent, boolean editBlockFirst) {
 		config.setIsComponent(false);
 		final String configName = getConfigDisplayName(config, isCurrent);
-		final String subTitle = "Editing the " + configName + " configuration";
-
+		final String subTitle = createSubTitle(config, configName);
 		EditConfigDialog dialog = new EditConfigDialog(shell, title, subTitle, config, false, configurationViewModels,
 				editBlockFirst);
 		if (dialog.open() == Window.OK) {
@@ -71,4 +70,17 @@ public class EditConfigHelper extends ConfigHelper {
 		}
 	}
 
+	/**
+	 * @param config the configuration
+	 * @param configName the name to be displayed for the configuration
+	 * @return the title of the dialog
+	 */
+	public static String createSubTitle(EditableConfiguration config, final String configName) {
+		String subTitle = "Editing the " + configName + " configuration";
+		var macros = config.getGlobalmacros();
+		if (null != macros && !macros.isEmpty()) {
+			subTitle += "\nNote: There also are global macros defined. See the Global Macros tab.\nThey over-ride IOC level macro";			
+		}
+		return subTitle;
+	}
 }

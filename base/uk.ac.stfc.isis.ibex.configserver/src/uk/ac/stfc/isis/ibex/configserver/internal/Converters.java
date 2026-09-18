@@ -21,7 +21,7 @@ package uk.ac.stfc.isis.ibex.configserver.internal;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.function.Function;
 
 import uk.ac.stfc.isis.ibex.configserver.BlockRules;
@@ -118,5 +118,5 @@ public interface Converters {
     /**
      * @return Converter for the moxa mapping information.
      */
-    Function<String, HashMap<String, ArrayList<ArrayList<String>>>> toMoxaMappings();
+    Function<String, TreeMap<String, ArrayList<ArrayList<String>>>> toMoxaMappings();
 }

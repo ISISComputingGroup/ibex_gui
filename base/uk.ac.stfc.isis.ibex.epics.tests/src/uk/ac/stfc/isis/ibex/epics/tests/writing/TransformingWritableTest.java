@@ -261,7 +261,7 @@ public class TransformingWritableTest {
         // Arrange
         StubWritable<String> stubDestination = new StubWritable<>();
         Exception exception = new Exception();
-        Function<String, String> badConverter = input -> null;
+        Function<String, String> badConverter = _ -> null;
 
         TransformingWritable<String, String> forwardingWritable = new TransformingWritable<String, String>(stubDestination, badConverter);
 

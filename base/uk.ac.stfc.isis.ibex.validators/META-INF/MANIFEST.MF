@@ -13,7 +13,7 @@ Require-Bundle: org.eclipse.core.runtime,
  uk.ac.stfc.isis.ibex.instrument;bundle-version="1.0.0",
  org.eclipse.core.databinding;bundle-version="1.7.0",
  uk.ac.stfc.isis.ibex.jaxb;bundle-version="1.0.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.validators;uses:="org.osgi.framework"
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.validators

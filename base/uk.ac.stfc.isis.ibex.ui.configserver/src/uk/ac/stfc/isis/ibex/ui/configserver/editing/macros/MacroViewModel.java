@@ -10,10 +10,6 @@ import uk.ac.stfc.isis.ibex.model.ModelObject;
 public class MacroViewModel extends ModelObject {
 	private final Macro macro;
 
-	/**
-	 * Whether the default value should be used or not.
-	 */
-	private boolean useDefault;
 
 	/**
 	 * Constructor. Sets the use default based on provided macro.
@@ -23,7 +19,7 @@ public class MacroViewModel extends ModelObject {
 	public MacroViewModel(Macro macro) {
 		this.macro = macro;
 		macro.addPropertyChangeListener("value", passThrough());
-		setUseDefault((macro.getValue() == null) || (macro.getValue().equals("")));
+		macro.addPropertyChangeListener("useDefault", passThrough());
 	}
 
 	/**
@@ -67,7 +63,7 @@ public class MacroViewModel extends ModelObject {
 	 * @return whether the default value should be used or not
 	 */
 	public boolean getUseDefault() {
-		return useDefault;
+		return macro.getUseDefault();
 	}
 
 	/**
@@ -81,7 +77,7 @@ public class MacroViewModel extends ModelObject {
 		if (useDefault) {
 			macro.setValue("");
 		}
-		firePropertyChange("useDefault", this.useDefault, this.useDefault = useDefault);
+		macro.setUseDefault(useDefault);
 	}
 
 	/**
@@ -104,7 +100,7 @@ public class MacroViewModel extends ModelObject {
 	 */
 	public String getDisplayValue() {
 		String macroDisplayVal = "(default)";
-		if (macro.getValue() != "") {
+		if (!macro.getUseDefault()) {
 			macroDisplayVal = macro.getValue();
 		}
 		return macroDisplayVal;

@@ -20,7 +20,7 @@ public class OutputLogViewModel extends ModelObject {
      *            the NicosModel to observe
      */
 	public OutputLogViewModel(final NicosModel model) {
-        model.addPropertyChangeListener("logEntries", e -> appendLog(model.getLogEntries()));
+        model.addPropertyChangeListener("logEntries", _ -> appendLog(model.getLogEntries()));
 	}
 	
     private void appendLog(List<NicosLogEntry> log) {

@@ -55,7 +55,7 @@ public class QueueScriptViewModel extends ModelObject {
         this.model = model;
         this.scriptToSend = new QueuedScript();
         
-        model.addPropertyChangeListener("queuedScripts", e -> updateButtonEnablement());
+        model.addPropertyChangeListener("queuedScripts", _ -> updateButtonEnablement());
     }
 
     /**

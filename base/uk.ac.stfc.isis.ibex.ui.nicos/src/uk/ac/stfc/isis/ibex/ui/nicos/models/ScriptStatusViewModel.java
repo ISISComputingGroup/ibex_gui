@@ -60,13 +60,13 @@ public class ScriptStatusViewModel extends ModelObject {
 	public ScriptStatusViewModel(final NicosModel model) {
         this.model = model;
 		
-		model.addPropertyChangeListener("lineNumber", e ->
+		model.addPropertyChangeListener("lineNumber", _ ->
 				setCombinedScriptInfo(model.getLineNumber(), model.getScriptStatus(), model.getScriptName()));
 		
-		model.addPropertyChangeListener("scriptStatus", e ->
+		model.addPropertyChangeListener("scriptStatus", _ ->
 				setCombinedScriptInfo(model.getLineNumber(), model.getScriptStatus(), model.getScriptName()));
 		
-		model.addPropertyChangeListener("scriptName", e ->
+		model.addPropertyChangeListener("scriptName", _ ->
 				setCombinedScriptInfo(model.getLineNumber(), model.getScriptStatus(), model.getScriptName()));
 	}
 

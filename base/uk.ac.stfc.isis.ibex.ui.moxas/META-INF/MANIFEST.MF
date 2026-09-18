@@ -5,7 +5,7 @@ Bundle-SymbolicName: uk.ac.stfc.isis.ibex.ui.moxas;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.moxas
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Require-Bundle: org.eclipse.ui;bundle-version="3.201.200",
  org.eclipse.core.databinding;bundle-version="1.4.1",
  org.eclipse.core.databinding.beans;bundle-version="1.2.200",
