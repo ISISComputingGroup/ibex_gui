@@ -19,7 +19,7 @@ Require-Bundle: uk.ac.stfc.isis.ibex.epics,
  com.google.gson;bundle-version="2.1.0",
  com.google.guava,
  uk.ac.stfc.isis.ibex.jaxb;bundle-version="1.0.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-25
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Bundle-ActivationPolicy: lazy
 Export-Package: uk.ac.stfc.isis.ibex.synoptic,
  uk.ac.stfc.isis.ibex.synoptic.internal,

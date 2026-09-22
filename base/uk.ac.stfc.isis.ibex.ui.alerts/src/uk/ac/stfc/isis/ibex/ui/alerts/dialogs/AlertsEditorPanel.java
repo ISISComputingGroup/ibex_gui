@@ -147,7 +147,7 @@ public class AlertsEditorPanel extends Composite {
 		setModel(viewModel);
 		setAlertDetails(null);
 
-		parent.addDisposeListener(_ -> configServer.saveAs().removeOnCanWriteChangeListener(canWriteListener));
+		parent.addDisposeListener(e -> configServer.saveAs().removeOnCanWriteChangeListener(canWriteListener));
 	}
 
 	/**

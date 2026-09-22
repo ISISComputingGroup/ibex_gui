@@ -51,9 +51,9 @@ public abstract class MatplotlibAllFiguresView {
 		this.parent = parent;
 		recreateFigures();
 		figuresChangedListener = getFigures()
-				.addUiThreadPropertyChangeListener(_ -> recreateFigures());
+				.addUiThreadPropertyChangeListener(evt -> recreateFigures());
 		urlListener = getConnectionUrl()
-				.addUiThreadPropertyChangeListener(_ -> recreateFigures());
+				.addUiThreadPropertyChangeListener(evt -> recreateFigures());
 		
 		thisPerspectiveId = perspective.getElementId();
 		currentPerspectiveId = thisPerspectiveId;

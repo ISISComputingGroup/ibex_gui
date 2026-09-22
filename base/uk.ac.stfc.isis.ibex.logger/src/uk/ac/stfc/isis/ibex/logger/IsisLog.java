@@ -146,7 +146,7 @@ public class IsisLog extends AbstractUIPlugin {
 		}
 		
 		logger.setUseParentHandlers(false);
-		logger.setFilter(_ -> true);
+		logger.setFilter(record -> true);
 		logger.setLevel(java.util.logging.Level.INFO);
 		
 		logger.addHandler(new java.util.logging.Handler() {

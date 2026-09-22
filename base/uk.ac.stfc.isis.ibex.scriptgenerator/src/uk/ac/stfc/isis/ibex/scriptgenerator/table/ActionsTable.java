@@ -110,7 +110,7 @@ public class ActionsTable extends ModelObject {
 		}
 		// Create action and attach listeners
 		ScriptGeneratorAction newAction = new ScriptGeneratorAction(newParamsMap);
-		newAction.addPropertyChangeListener(ScriptGeneratorProperties.VALUE_PROPERTY, _ -> {
+		newAction.addPropertyChangeListener(ScriptGeneratorProperties.VALUE_PROPERTY, evt -> {
 			firePropertyChange(ScriptGeneratorProperties.ACTIONS_PROPERTY, null, actions);
 		});
 		return newAction;

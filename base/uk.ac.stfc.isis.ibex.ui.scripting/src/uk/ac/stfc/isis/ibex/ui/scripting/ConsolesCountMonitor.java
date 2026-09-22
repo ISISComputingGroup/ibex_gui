@@ -35,7 +35,7 @@ public class ConsolesCountMonitor extends WorkbenchWindowControlContribution {
 		Consoles.getDefault().addConsoleCountListener(this::updateLabelText);
 
 		// When this widget gets disposed, remove the listener
-		label.addDisposeListener(_ -> Consoles.getDefault().removeConsoleCountListener(this::updateLabelText));
+		label.addDisposeListener(e_ignored -> Consoles.getDefault().removeConsoleCountListener(this::updateLabelText));
 
 		return label;
 	}

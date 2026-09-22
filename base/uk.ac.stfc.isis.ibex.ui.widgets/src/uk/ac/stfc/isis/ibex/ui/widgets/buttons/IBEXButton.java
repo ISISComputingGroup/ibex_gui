@@ -142,7 +142,7 @@ public class IBEXButton {
 	 * @return IBEXButton
 	 */
 	public IBEXButton link(String url) {
-		this.button.addListener(SWT.Selection, _ -> {
+		this.button.addListener(SWT.Selection, e -> {
 			try {
 				PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser().openURL(new URI(url).toURL());
 			} catch (PartInitException | MalformedURLException | URISyntaxException ex) {
@@ -167,7 +167,7 @@ public class IBEXButton {
 		bindingContext.bindValue(WidgetProperties.enabled().observe(this.button),
 				BeanProperties.value("canExecute").observe(action));
 
-		this.listener(SWT.Selection, _ -> {
+		this.listener(SWT.Selection, event -> {
 			action.execute();
 		});
 

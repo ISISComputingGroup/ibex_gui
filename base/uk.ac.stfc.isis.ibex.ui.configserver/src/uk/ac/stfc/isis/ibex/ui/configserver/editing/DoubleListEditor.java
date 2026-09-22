@@ -133,8 +133,8 @@ public class DoubleListEditor<T> extends Composite {
 		selectedItems = ViewerProperties.<ISelectionProvider, T>multipleSelection().observe(selectedViewer);
 		unselectedItems = ViewerProperties.<ISelectionProvider, T>multipleSelection().observe(unselectedViewer);
 
-        selectedList.addListener(SWT.MouseDoubleClick, _ -> listDoubleClick(unselect));
-        unselectedList.addListener(SWT.MouseDoubleClick, _ -> listDoubleClick(select));
+        selectedList.addListener(SWT.MouseDoubleClick, e -> listDoubleClick(unselect));
+        unselectedList.addListener(SWT.MouseDoubleClick, e -> listDoubleClick(select));
 
 		// Allow only one list to have a selection
 		clearUnselectedItems = new IListChangeListener<T>() {	
@@ -146,7 +146,7 @@ public class DoubleListEditor<T> extends Composite {
 			}
 		};
 				
-		selectedItems.addListChangeListener(_ -> unselect.setEnabled(!selectedItems.isEmpty()));
+		selectedItems.addListChangeListener(e -> unselect.setEnabled(!selectedItems.isEmpty()));
 		selectedItems.addListChangeListener(clearUnselectedItems);
 		
 		clearSelectedItems = new IListChangeListener<T>() {	
@@ -158,14 +158,14 @@ public class DoubleListEditor<T> extends Composite {
 			}
 		};
 		
-		unselectedItems.addListChangeListener(_ -> select.setEnabled(!unselectedItems.isEmpty()));
+		unselectedItems.addListChangeListener(e -> select.setEnabled(!unselectedItems.isEmpty()));
 		unselectedItems.addListChangeListener(clearSelectedItems);
 		
 		//Can not reorder if no selection or selected the top or bottom item
-		selectedItems.addListChangeListener(_ -> setUpDownEnabled(selectedList.getSelectionIndex()));
+		selectedItems.addListChangeListener(e -> setUpDownEnabled(selectedList.getSelectionIndex()));
 		
-		btnUp.addListener(SWT.Selection, _ -> swapSelectedItems(true));	
-		btnDown.addListener(SWT.Selection, _ -> swapSelectedItems(false));	
+		btnUp.addListener(SWT.Selection, e -> swapSelectedItems(true));	
+		btnDown.addListener(SWT.Selection, e -> swapSelectedItems(false));	
 	}
 	
 	private void listDoubleClick(Button selectButton) {

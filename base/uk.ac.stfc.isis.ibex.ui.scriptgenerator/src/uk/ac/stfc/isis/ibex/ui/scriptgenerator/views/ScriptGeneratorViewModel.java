@@ -198,11 +198,11 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		});
 		// Listen for model threading errors and display to the user if there is one
 		// Model is responsible for logging it
-		scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.THREAD_ERROR_PROPERTY, _ -> {
+		scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.THREAD_ERROR_PROPERTY, evt -> {
 			dispatchErrorMessage("Error", "Generating or parameter validity checking error. Threading issue.");
 		});
 		scriptGeneratorModel.addPropertyChangeListener(ScriptGeneratorProperties.SCRIPT_GENERATION_ERROR_PROPERTY,
-				_ -> {
+				evt -> {
 					LOG.info("Generation error");
 					dispatchErrorMessage("Error", "Error when generating a script, are your parameters valid?");
 				});
@@ -480,7 +480,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 		this.scriptGeneratorModel.getScriptGeneratorTable()
 				.addPropertyChangeListener(ScriptGeneratorProperties.ACTIONS_PROPERTY, actionChangeListener);
 		this.scriptGeneratorModel.getScriptGeneratorTable()
-				.addPropertyChangeListener(ScriptGeneratorProperties.ACTIONS_PROPERTY, _ -> {
+				.addPropertyChangeListener(ScriptGeneratorProperties.ACTIONS_PROPERTY, evt -> {
 					updateParametersFileModifiedStatus();
 				});
 		this.scriptGeneratorModel.removePropertyChangeListener(
@@ -1015,7 +1015,7 @@ public class ScriptGeneratorViewModel extends ModelObject {
 	 */
 	protected void addActionParamPropertyListener(ActionsViewTable viewTable) {
 		scriptGeneratorModel.getScriptGeneratorTable().addPropertyChangeListener("actionParameters",
-				_ -> Constants.DISPLAY.asyncExec(() -> {
+				e -> Constants.DISPLAY.asyncExec(() -> {
 					if (!viewTable.isDisposed()) {
 						viewTable.updateTableColumns();
 					}

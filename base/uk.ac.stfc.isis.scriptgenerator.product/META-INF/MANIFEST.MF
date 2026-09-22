@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: CSS ISIS
 Bundle-SymbolicName: uk.ac.stfc.isis.scriptgenerator.product;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-25
+Bundle-RequiredExecutionEnvironment: JavaSE-21
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.scriptgenerator.product
 Require-Bundle: org.eclipse.ui;bundle-version="3.111.0",
