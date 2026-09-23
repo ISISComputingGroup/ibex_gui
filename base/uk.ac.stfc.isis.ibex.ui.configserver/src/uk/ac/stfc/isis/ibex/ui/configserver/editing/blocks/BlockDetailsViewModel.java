@@ -29,6 +29,7 @@ import uk.ac.stfc.isis.ibex.configserver.configuration.Block;
 import uk.ac.stfc.isis.ibex.configserver.editing.BlockNameValidator;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableBlock;
 import uk.ac.stfc.isis.ibex.configserver.editing.EditableConfiguration;
+import uk.ac.stfc.isis.ibex.instrument.Instrument;
 import uk.ac.stfc.isis.ibex.ui.configserver.dialogs.PvSelectorDialog;
 import uk.ac.stfc.isis.ibex.validators.ErrorMessageProvider;
 import uk.ac.stfc.isis.ibex.validators.PvValidator;
@@ -48,6 +49,8 @@ public class BlockDetailsViewModel extends ErrorMessageProvider {
     private final EditableConfiguration config;
     
     private final List<String> facilityPvList;
+    
+    
 
     /**
      * Constructor.
@@ -150,8 +153,26 @@ public class BlockDetailsViewModel extends ErrorMessageProvider {
      * @param local true for local
      */
 	public void setLocal(boolean local) {
+		String prefix = Instrument.getInstance().getPvPrefix();
+		String pvAddress1 = pvAddress;
+		if (local) {
+			if (!pvAddress.startsWith(prefix)) {
+				pvAddress = prefix + pvAddress;
+			}
+		}else {
+			if (pvAddress.startsWith(prefix)) {
+				pvAddress = pvAddress.substring(prefix.length());
+			}
+		}
 		firePropertyChange("local", this.local, this.local = local);
+		firePropertyChange("pvAddress", pvAddress1, pvAddress);
 	}
+	
+	public String getPrefix() {
+		return Instrument.getInstance().getPvPrefix();
+	}
+
+	
     
     /**
      * Open the PV dialog window.
@@ -169,7 +190,6 @@ public class BlockDetailsViewModel extends ErrorMessageProvider {
     public void updateBlock() {
     	editingBlock.setName(name);
     	editingBlock.setPV(pvAddress);
-
     	editingBlock.setIsLocal(local);
     	editingBlock.setIsVisible(visible);
     }
