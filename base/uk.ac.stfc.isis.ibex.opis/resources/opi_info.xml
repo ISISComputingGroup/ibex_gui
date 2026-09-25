@@ -225,6 +225,27 @@
       </value>
     </entry>
     <entry>
+      <key>CHIPIR YZ table</key>
+      <value>
+        <type>SAMPLESTACK</type>
+        <path>chipir_yz_table.opi</path>
+        <description>The OPI for the CHIPIR YZ table.</description>
+        <macros>
+          <macro>
+            <name>MOT_Y</name>
+            <description>The motor for Y e.g. MTR0102</description>
+          </macro>
+          <macro>
+            <name>MOT_Z</name>
+            <description>The motor for Z e.g. MTR0103</description>
+          </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Fermi chopper</key>
       <value>
         <type>FERMI_CHOPPER</type>
@@ -576,7 +597,7 @@
       </value>
     </entry>
     <entry>
-      <key>File editor</key>
+      <key>TPAR editor</key>
       <value>
         <type>DEBUG</type>
         <path>TPAR_Editor/tpar_editor.opi</path>
@@ -1434,24 +1455,6 @@
         </macros>
         <categories>
           <category>Pressure sensors</category>
-        </categories>
-      </value>
-    </entry>
-    <entry>
-      <key>Mk2 Chopper</key>
-      <value>
-        <type>CHOPPER</type>
-        <path>Mk2Chopper.opi</path>
-        <description>The OPI for the Mk2 chopper.</description>
-        <macros>
-          <macro>
-            <name>MK2CHOPR</name>
-            <description>The Mk2 Chopper PV prefix (e.g. MK2CHOPR_01).</description>
-            <default>MK2CHOPR_01</default>
-          </macro>
-        </macros>
-        <categories>
-          <category>Choppers</category>
         </categories>
       </value>
     </entry>
@@ -4147,6 +4150,42 @@
         </macros>
         <categories>
           <category>Temperature controllers</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Merlin OPC</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>Merlin_Vacuum_System.opi</path>
+        <description>The OPI for the Merlin' OPC Server, which controls two TPGs.</description>
+        <macros>
+          <macro>
+            <name>OPCUA</name>
+            <description>The OPCUA PV prefix (e.g. OPCUA_01).</description>
+            <default>OPCUA_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Pressure sensors</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>iSorb HP</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>isorbhp.opi</path>
+        <description>Anton Paar iSorb HP</description>
+        <macros>
+          <macro>
+            <name>ISORBHP</name>
+            <description>The ISORBHP PV prefix (e.g. ISORBHP_01).</description>
+            <default>ISORBHP_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Gas and liquid handling systems</category>
         </categories>
       </value>
     </entry>
