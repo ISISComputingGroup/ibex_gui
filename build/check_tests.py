@@ -11,24 +11,24 @@ FILE_TYPE = ".tests"
 def check_tests_in_pom(ibex_gui_base):
     pathsxml = ibex_gui_base + r"uk.ac.stfc.isis.ibex.client.tycho.parent\pom.xml"
 
-    folder_files = os.listdir(ibex_gui_base)
-    test_files = [name for name in folder_files if name.endswith(FILE_TYPE)]
+    folderfiles = os.listdir(ibex_gui_base)
+    testfiles = [name for name in folderfiles if name.endswith(FILE_TYPE)]
 
     tree = ET.parse(pathsxml)
     root = tree.getroot()
     xmlmodulenames = []
     for module in root.iter():
         if module.tag.endswith("module"):
-            whole_name = module.text
+            wholename = module.text
 
-            if whole_name:
-                name = whole_name[3:]
+            if wholename:
+                name = wholename[3:]
             else:
                 name = ""
 
             if name.endswith(FILE_TYPE):
                 xmlmodulenames.append(name)
-    missingtests = [file for file in test_files if file not in xmlmodulenames]
+    missingtests = [file for file in testfiles if file not in xmlmodulenames]
 
     if missingtests:
         print(".test files in base/ not found in pom.xml")
