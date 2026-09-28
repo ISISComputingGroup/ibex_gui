@@ -225,6 +225,27 @@
       </value>
     </entry>
     <entry>
+      <key>CHIPIR YZ table</key>
+      <value>
+        <type>SAMPLESTACK</type>
+        <path>chipir_yz_table.opi</path>
+        <description>The OPI for the CHIPIR YZ table.</description>
+        <macros>
+          <macro>
+            <name>MOT_Y</name>
+            <description>The motor for Y e.g. MTR0102</description>
+          </macro>
+          <macro>
+            <name>MOT_Z</name>
+            <description>The motor for Z e.g. MTR0103</description>
+          </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Fermi chopper</key>
       <value>
         <type>FERMI_CHOPPER</type>
@@ -4165,6 +4186,24 @@
         </macros>
         <categories>
           <category>Pressure sensors</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>iSorb HP</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>isorbhp.opi</path>
+        <description>Anton Paar iSorb HP</description>
+        <macros>
+          <macro>
+            <name>ISORBHP</name>
+            <description>The ISORBHP PV prefix (e.g. ISORBHP_01).</description>
+            <default>ISORBHP_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Gas and liquid handling systems</category>
         </categories>
       </value>
     </entry>
