@@ -4176,7 +4176,7 @@
       <value>
         <type>PRESSURE_GAUGE</type>
         <path>GEM_Vacuum_System.opi</path>
-        <description>The OPI for the GEM's OPC Server, which controls two TPGs.</description>
+        <description>The OPI for GEM's OPC Server, which controls two TPGs.</description>
         <macros>
           <macro>
             <name>OPCUA</name>
