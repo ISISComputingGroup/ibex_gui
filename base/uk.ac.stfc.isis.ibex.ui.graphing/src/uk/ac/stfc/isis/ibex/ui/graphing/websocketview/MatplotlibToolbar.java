@@ -51,15 +51,15 @@ public class MatplotlibToolbar {
 		this.viewModel = viewModel;
 		
 		homeButton = new MatplotlibButton(viewModel.getHomeButtonState(), toolBar, 
-				SelectionListener.widgetSelectedAdapter(_ -> viewModel.navigatePlot(MatplotlibButtonType.HOME)), HOME_ICON, "Reset original view");
+				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.HOME)), HOME_ICON, "Reset original view");
 		homeButton.getButton().setToolTipText(homeButton.getDescription());
 		
 		backButton = new MatplotlibButton(viewModel.getBackButtonState(), toolBar, 
-				SelectionListener.widgetSelectedAdapter(_ -> viewModel.navigatePlot(MatplotlibButtonType.BACK)), BACK_ICON, "Back to previous view");
+				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.BACK)), BACK_ICON, "Back to previous view");
 		backButton.getButton().setToolTipText(backButton.getDescription());
 		
 		forwardButton = new MatplotlibButton(viewModel.getForwardButtonState(), toolBar, 
-				SelectionListener.widgetSelectedAdapter(_ -> viewModel.navigatePlot(MatplotlibButtonType.FORWARD)), FORWARD_ICON, "Forward to next view");
+				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.FORWARD)), FORWARD_ICON, "Forward to next view");
 		forwardButton.getButton().setToolTipText(forwardButton.getDescription());
 		
 		// This is used, but only to be added to the toolbar.
@@ -67,11 +67,11 @@ public class MatplotlibToolbar {
 		var separator = new ToolItem(toolBar, SWT.SEPARATOR);
 		
 		panButton = new MatplotlibButton(viewModel.getPanButtonState(), toolBar, 
-				SelectionListener.widgetSelectedAdapter(_ -> viewModel.navigatePlot(MatplotlibButtonType.PAN)), PAN_ACTIVE, PAN_INACTIVE, "Pan");
+				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.PAN)), PAN_ACTIVE, PAN_INACTIVE, "Pan");
 		panButton.getButton().setToolTipText(panButton.getDescription());
 		
 		zoomButton = new MatplotlibButton(viewModel.getZoomButtonState(), toolBar, 
-				SelectionListener.widgetSelectedAdapter(_ -> viewModel.navigatePlot(MatplotlibButtonType.ZOOM)), ZOOM_ACTIVE, ZOOM_INACTIVE, "Zoom");
+				SelectionListener.widgetSelectedAdapter(e -> viewModel.navigatePlot(MatplotlibButtonType.ZOOM)), ZOOM_ACTIVE, ZOOM_INACTIVE, "Zoom");
 		zoomButton.getButton().setToolTipText(zoomButton.getDescription());
 	}
 	

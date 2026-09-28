@@ -33,26 +33,25 @@ public class Compressor implements Function<byte[], byte[]> {
 
     @Override
 	public byte[] apply(byte[] value) throws ConversionException {
-		try (Deflater compressor = new Deflater()) {
-			compressor.setInput(value);
-			compressor.finish();
-	
-			ByteArrayOutputStream outputStream = new ByteArrayOutputStream(value.length); 
-			
-	        byte[] buffer = new byte[KB_IN_BYTES];
-			while (!compressor.finished()) {  
-				int count = compressor.deflate(buffer);  
-				outputStream.write(buffer, 0, count);  
-			}  
-			
-			compressor.end();
-			try {
-				outputStream.close();
-			} catch (IOException e) {
-				throw new ConversionException(e.getMessage());
-			}
-					   
-			return outputStream.toByteArray();
+		final Deflater compressor = new Deflater();
+		compressor.setInput(value);
+		compressor.finish();
+
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream(value.length); 
+		
+        byte[] buffer = new byte[KB_IN_BYTES];
+		while (!compressor.finished()) {  
+			int count = compressor.deflate(buffer);  
+			outputStream.write(buffer, 0, count);  
+		}  
+		
+		compressor.end();
+		try {
+			outputStream.close();
+		} catch (IOException e) {
+			throw new ConversionException(e.getMessage());
 		}
+				   
+		return outputStream.toByteArray();
 	}	
 }	

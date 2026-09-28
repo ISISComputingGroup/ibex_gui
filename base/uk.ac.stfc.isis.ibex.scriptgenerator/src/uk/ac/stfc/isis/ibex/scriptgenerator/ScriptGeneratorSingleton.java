@@ -228,10 +228,10 @@ public class ScriptGeneratorSingleton extends ModelObject {
 			
 		});
 
-		scriptDefinitionLoader.addPropertyChangeListener("parameters", _ -> {
+		scriptDefinitionLoader.addPropertyChangeListener("parameters", evt -> {
 			setActionParameters(scriptDefinitionLoader.getParameters());
 		});
-		this.scriptGeneratorTable.addPropertyChangeListener(ScriptGeneratorProperties.ACTIONS_PROPERTY, _ -> {
+		this.scriptGeneratorTable.addPropertyChangeListener(ScriptGeneratorProperties.ACTIONS_PROPERTY, evt -> {
 			// The table has changed so update the validity checks and time estimate
 			try {
 				refreshParameterValidityChecking();

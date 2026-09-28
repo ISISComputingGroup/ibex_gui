@@ -60,7 +60,7 @@ public class ConsoleLengthMonitor extends WorkbenchWindowControlContribution {
 		Consoles.getDefault().addConsoleLengthListener(this::updateButtonText);
 
 		// When this widget gets disposed, remove the listener
-		button.addDisposeListener(_ -> Consoles.getDefault().removeConsoleLengthListener(this::updateButtonText));
+		button.addDisposeListener(e_ignored -> Consoles.getDefault().removeConsoleLengthListener(this::updateButtonText));
 
 		return button;
 	}

@@ -90,6 +90,6 @@ public class SynopticWritable extends TransformingWritable<SynopticDescription, 
 
     @Override
     public void close() {
-        destination.ifPresent(_ -> addOnCanWriteChangeListener(canWriteListener));
+        destination.ifPresent(dest -> addOnCanWriteChangeListener(canWriteListener));
     }
 }
