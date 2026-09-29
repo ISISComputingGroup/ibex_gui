@@ -637,6 +637,7 @@
           <children xsi:type="basic:Part" xmi:id="_iXnT6JIBFe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeRunInfoOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Run Information"/>
           <children xsi:type="basic:Part" xmi:id="_iX2kfZIBEe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeSpectraPlotsOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Spectra Plots"/>
           <children xsi:type="basic:Part" xmi:id="_iX2kgpIBEe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeVetoDiagnosticsOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Veto Diagnostics"/>
+          <children xsi:type="basic:Part" xmi:id="_iX2khpIBEe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeExpSetupOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Experiment Setup"/>
         </children>
       </children>
     </children>
