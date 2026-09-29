@@ -2287,7 +2287,7 @@ if value0 ==0:
         <image></image>
         <name>Button</name>
         <push_action_index>0</push_action_index>
-        <pv_name>pva://$(P)KDAECTRL:DAE:BEGINRUNEX</pv_name>
+        <pv_name>pva://$(P)KDAECTRL:BEGINRUNEX</pv_name>
         <pv_value />
         <rules />
         <scale_options>
@@ -2343,7 +2343,7 @@ if value0 ==0:
         <image></image>
         <name>Button</name>
         <push_action_index>0</push_action_index>
-        <pv_name>pva://$(P)KDAECTRL:DAE:ENDRUN</pv_name>
+        <pv_name>pva://$(P)KDAECTRL:ENDRUN</pv_name>
         <pv_value />
         <rules />
         <scale_options>
@@ -2399,7 +2399,7 @@ if value0 ==0:
         <image></image>
         <name>Button</name>
         <push_action_index>0</push_action_index>
-        <pv_name>pva://$(P)KDAECTRL:DAE:PAUSERUN</pv_name>
+        <pv_name>pva://$(P)KDAECTRL:PAUSERUN</pv_name>
         <pv_value />
         <rules />
         <scale_options>
@@ -2455,7 +2455,7 @@ if value0 ==0:
         <image></image>
         <name>Button</name>
         <push_action_index>0</push_action_index>
-        <pv_name>pva://$(P)KDAECTRL:DAE:RESUMERUN</pv_name>
+        <pv_name>pva://$(P)KDAECTRL:RESUMERUN</pv_name>
         <pv_value />
         <rules />
         <scale_options>
@@ -2772,7 +2772,7 @@ $(pv_value)</tooltip>
         <name>Text Update</name>
         <precision>4</precision>
         <precision_from_pv>false</precision_from_pv>
-        <pv_name>pva://$(P)KDAECTRL:DAE:RUNNUMBER</pv_name>
+        <pv_name>pva://$(P)KDAECTRL:RUNNUMBER</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -2865,7 +2865,7 @@ $(pv_value)</tooltip>
         <name>Text Update</name>
         <precision>4</precision>
         <precision_from_pv>false</precision_from_pv>
-        <pv_name>pva://$(P)KDAECTRL:DAE:PERIOD</pv_name>
+        <pv_name>pva://$(P)KDAECTRL:PERIOD</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -2958,7 +2958,7 @@ $(pv_value)</tooltip>
         <name>Text Update</name>
         <precision>4</precision>
         <precision_from_pv>false</precision_from_pv>
-        <pv_name>pva://$(P)KDAECTRL:DAE:NUMPERIODS</pv_name>
+        <pv_name>pva://$(P)KDAECTRL:NUMPERIODS</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -3051,7 +3051,7 @@ $(pv_value)</tooltip>
         <name>Text Update</name>
         <precision>4</precision>
         <precision_from_pv>false</precision_from_pv>
-        <pv_name>pva://$(P)KDAECTRL:DAE:DAETIMINGSOURCE</pv_name>
+        <pv_name>pva://$(P)KDAECTRL:DAETIMINGSOURCE</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -3103,7 +3103,7 @@ $(pv_value)</tooltip>
         <name>Text Update</name>
         <precision>0</precision>
         <precision_from_pv>false</precision_from_pv>
-        <pv_name>pva://$(P)KDAECTRL:DAE:HWRUNNING</pv_name>
+        <pv_name>pva://$(P)KDAECTRL:HWRUNNING</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />

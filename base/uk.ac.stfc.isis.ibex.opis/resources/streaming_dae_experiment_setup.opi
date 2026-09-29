@@ -311,7 +311,7 @@ $(pv_value)</tooltip>
         <height>27</height>
         <items_from_pv>true</items_from_pv>
         <name>Combo_1</name>
-        <pv_name>pva://$(P)KDAECTRL:DAE:PERIODTYPE:SP</pv_name>
+        <pv_name>pva://$(P)KDAECTRL:PERIODTYPE:SP</pv_name>
         <pv_value />
         <rules />
         <scale_options>
@@ -353,7 +353,7 @@ $(pv_value)</tooltip>
         <height>27</height>
         <items_from_pv>true</items_from_pv>
         <name>Combo_1</name>
-        <pv_name>pva://$(P)KDAECTRL:DAE:DAETIMINGSOURCE:SP</pv_name>
+        <pv_name>pva://$(P)KDAECTRL:DAETIMINGSOURCE:SP</pv_name>
         <pv_value />
         <rules />
         <scale_options>
@@ -404,7 +404,7 @@ $(pv_value)</tooltip>
         <name>Text Input</name>
         <precision>0</precision>
         <precision_from_pv>true</precision_from_pv>
-        <pv_name>pva://$(P)KDAECTRL:DAE:NUMPERIODS:SP</pv_name>
+        <pv_name>pva://$(P)KDAECTRL:NUMPERIODS:SP</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -456,7 +456,7 @@ $(pv_value)</tooltip>
         <name>Text Update</name>
         <precision>4</precision>
         <precision_from_pv>false</precision_from_pv>
-        <pv_name>pva://$(P)KDAECTRL:DAE:DAETIMINGSOURCE</pv_name>
+        <pv_name>pva://$(P)KDAECTRL:DAETIMINGSOURCE</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -508,7 +508,7 @@ $(pv_value)</tooltip>
         <name>Text Update_1</name>
         <precision>4</precision>
         <precision_from_pv>false</precision_from_pv>
-        <pv_name>pva://$(P)KDAECTRL:DAE:NUMPERIODS</pv_name>
+        <pv_name>pva://$(P)KDAECTRL:NUMPERIODS</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
@@ -560,7 +560,7 @@ $(pv_value)</tooltip>
         <name>Text Update_1</name>
         <precision>4</precision>
         <precision_from_pv>false</precision_from_pv>
-        <pv_name>pva://$(P)KDAECTRL:DAE:PERIODTYPE</pv_name>
+        <pv_name>pva://$(P)KDAECTRL:PERIODTYPE</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
