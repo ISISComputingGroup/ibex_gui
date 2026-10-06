@@ -4164,17 +4164,17 @@
 	        </macro>
 	        <macro>
 	            <name>STEER_2</name>
-	            <description>The first steering magnet.</description>
+	            <description>The second steering magnet.</description>
 	            <default>Steering Magnet 2</default>
 	        </macro>
 	        <macro>
 	            <name>STEER_3</name>
-	            <description>The first steering magnet.</description>
+	            <description>The third steering magnet.</description>
 	            <default>Steering Magnet 3</default>
 	        </macro>
 	        <macro>
 	            <name>STEER_4</name>
-	            <description>The first steering magnet.</description>
+	            <description>The fourth steering magnet.</description>
 	            <default>Steering Magnet 4</default>
 	        </macro>
 	    </macros>
