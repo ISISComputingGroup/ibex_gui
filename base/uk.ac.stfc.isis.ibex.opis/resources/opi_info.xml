@@ -4125,7 +4125,7 @@
         <description>Lakeshore 625 Superconducting Magnet Power Supply</description>
         <macros>
           <macro>
-            <name>LKSH625</name>
+            <name>LAKESHORE625</name>
             <description>The Lakeshore 625 PV prefix (e.g. LKSH625_01).</description>
             <default>LKSH625_01</default>
           </macro>
