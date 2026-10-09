@@ -81,7 +81,7 @@ public class WaitFor {
 			try {
 				Waiting waiter = (Waiting) element.createExecutableExtension("class");	
 				waiters.add(waiter);
-				waiter.addPropertyChangeListener("isWaiting", _ -> updateWait());
+				waiter.addPropertyChangeListener("isWaiting", evt -> updateWait());
 			} catch (CoreException e) {
 				LoggerUtils.logErrorWithStackTrace(LOG, 
 						String.format("Error while configuring WaitFor: %s", e.getMessage()), e);

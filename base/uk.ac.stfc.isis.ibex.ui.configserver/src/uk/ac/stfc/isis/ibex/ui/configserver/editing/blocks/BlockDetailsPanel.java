@@ -90,7 +90,7 @@ public class BlockDetailsPanel extends Composite {
 		gdPvAddress.minimumWidth = 380;
 		pvAddress.setLayoutData(gdPvAddress);
 		
-		btnPickPV = new IBEXButton(grpBlock, SWT.NONE, _ -> viewModel.openPvDialog())
+		btnPickPV = new IBEXButton(grpBlock, SWT.NONE, evt -> viewModel.openPvDialog())
 				.layoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1))
 				.text("Select PV")
 				.get();

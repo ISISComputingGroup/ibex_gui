@@ -53,7 +53,7 @@ public class SpectraPlotConfiguration {
         this.specPeriodStr = new PersistedLocalChannel<String>(
                 getLocalPvName("PERIOD_STR"), 
                 new StringChannel(), 
-                _ -> { }, 
+                i -> { }, 
                 () -> String.valueOf(preferences.getDouble(PERIOD_PREF_KEY, 1.))
         );
     	

@@ -125,7 +125,7 @@ public class AlertsViewModel extends ErrorMessageProvider {
      */
     public AlertsViewModel(final Displaying config, final AlertsServer alertsServer) {
         setters = Collections.unmodifiableMap(config.getDisplayAlerts().stream()
-                .collect(Collectors.toMap(alert -> alert, alert -> new AlertsSetter(alert.getName(), alertsServer), (v1, _) -> v1)));
+                .collect(Collectors.toMap(alert -> alert, alert -> new AlertsSetter(alert.getName(), alertsServer), (v1, v2) -> v1)));
         topLevelSetters = new AlertsTopLevelSetter(alertsServer);
         topLevelSource = config.getTopLevelAlertSettings();
         resetTopLevelSettings(this);

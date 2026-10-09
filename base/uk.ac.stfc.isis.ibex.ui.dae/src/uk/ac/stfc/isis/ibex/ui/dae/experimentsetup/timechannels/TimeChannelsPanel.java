@@ -122,7 +122,7 @@ public class TimeChannelsPanel extends Composite {
         timeRegimesPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
         timeRegimesPanel.setLayout(new GridLayout(3, false));
         
-        this.addDisposeListener(_ -> removeListeners());
+        this.addDisposeListener(evt -> removeListeners());
         
         fillWidgetLists();
 	}

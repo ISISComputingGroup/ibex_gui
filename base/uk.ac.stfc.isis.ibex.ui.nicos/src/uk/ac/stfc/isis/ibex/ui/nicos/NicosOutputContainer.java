@@ -38,6 +38,6 @@ public class NicosOutputContainer {
         bindingContext.bindValue(WidgetProperties.text().observe(txtOutput),
                 BeanProperties.value("log").observe(outputLogViewModel));
         
-        txtOutput.addListener(SWT.Modify, _ -> txtOutput.setTopIndex(txtOutput.getLineCount() - 1));
+        txtOutput.addListener(SWT.Modify, e -> txtOutput.setTopIndex(txtOutput.getLineCount() - 1));
     }
 }

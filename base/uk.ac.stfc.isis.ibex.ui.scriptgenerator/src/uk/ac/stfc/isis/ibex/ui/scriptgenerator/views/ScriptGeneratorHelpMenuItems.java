@@ -69,7 +69,7 @@ public class ScriptGeneratorHelpMenuItems extends SelectionAdapter {
 	private void setUpOpenManualButtonWithUrl(MenuItem openManualItem, URL url) {
 		openManualItem.setEnabled(true);
 		openManualItem.setToolTipText(url.toString());
-		openManualItem.addListener(SWT.Selection, _ -> {
+		openManualItem.addListener(SWT.Selection, e1 -> {
 	        try {
 	            IWebBrowser browser = PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser();
 	            browser.openURL(url);
@@ -87,7 +87,7 @@ public class ScriptGeneratorHelpMenuItems extends SelectionAdapter {
 	private void setUpAboutButtonItem(Menu helpMenu) {
 		var aboutItem = new MenuItem(helpMenu, SWT.PUSH);
         aboutItem.setText("About");
-        aboutItem.addListener(SWT.Selection, _ -> {
+        aboutItem.addListener(SWT.Selection, e2 -> {
             displayAbout();
         });
 	}
