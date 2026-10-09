@@ -57,5 +57,5 @@ if __name__ == "__main__":
         print("Incorrect arguments, expected path to build base directory")
         result = INCORRECT_ARGS
     else:
-        success = main(sys.argv[1])
+        result = main(sys.argv[1])
     sys.exit(success)
