@@ -52,7 +52,7 @@ def main(ibex_gui_base):
 
 
 if __name__ == "__main__":
-    success = SUCCESS
+    result = SUCCESS
     if len(sys.argv) != 2:
         print("Incorrect arguments, expected path to build base directory")
         success = INCORRECT_ARGS
