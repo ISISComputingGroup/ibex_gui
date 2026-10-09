@@ -31,8 +31,8 @@
     <SPECTRUM_PV2>loc://_LOCAL:SPEC:SPEC2</SPECTRUM_PV2>
     <SPECTRUM_PV3>loc://_LOCAL:SPEC:SPEC3</SPECTRUM_PV3>
     <SPECTRUM_PV4>loc://_LOCAL:SPEC:SPEC4</SPECTRUM_PV4>
-    <SOURCE>DAE:SPEC</SOURCE>
-    <PROTOCOL></PROTOCOL>
+    <SOURCE>KDAEDIAG:SPEC</SOURCE>
+    <PROTOCOL>pva://</PROTOCOL>
   </macros>
   <name>Combined Spectra Plot</name>
   <rules />
@@ -688,7 +688,7 @@ $(trace_0_y_pv_value)</tooltip>
         <color red="255" green="0" blue="0" />
       </foreground_color>
       <gradient>false</gradient>
-      <height>43</height>
+      <height>42</height>
       <horizontal_fill>true</horizontal_fill>
       <line_color>
         <color red="128" green="0" blue="255" />
@@ -710,7 +710,7 @@ $(pv_value)</tooltip>
       <transparent>false</transparent>
       <visible>true</visible>
       <widget_type>Rectangle</widget_type>
-      <width>192</width>
+      <width>190</width>
       <wuid>-7ed7ade9:18a1c73b1c3:-7702</wuid>
       <x>0</x>
       <y>0</y>
@@ -733,7 +733,7 @@ $(pv_value)</tooltip>
       <foreground_color>
         <color name="ISIS_Standard_Text" red="0" green="0" blue="0" />
       </foreground_color>
-      <height>36</height>
+      <height>33</height>
       <horizontal_alignment>0</horizontal_alignment>
       <name>Label_3</name>
       <rules />
@@ -750,11 +750,11 @@ $(pv_value)</tooltip>
       <vertical_alignment>1</vertical_alignment>
       <visible>true</visible>
       <widget_type>Label</widget_type>
-      <width>51</width>
+      <width>49</width>
       <wrap_words>true</wrap_words>
       <wuid>-7ed7ade9:18a1c73b1c3:-7a76</wuid>
-      <x>6</x>
-      <y>3</y>
+      <x>4</x>
+      <y>0</y>
     </widget>
     <widget typeId="org.csstudio.opibuilder.widgets.combo" version="1.0.0">
       <actions hook="false" hook_all="false" />
@@ -799,10 +799,10 @@ $(pv_value)</tooltip>
 $(pv_value)</tooltip>
       <visible>true</visible>
       <widget_type>Combo</widget_type>
-      <width>123</width>
+      <width>121</width>
       <wuid>-7ed7ade9:18a1c73b1c3:-7a75</wuid>
-      <x>60</x>
-      <y>7</y>
+      <x>58</x>
+      <y>4</y>
     </widget>
   </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.ActionButton" version="2.0.0">

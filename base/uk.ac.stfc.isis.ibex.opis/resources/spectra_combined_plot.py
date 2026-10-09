@@ -67,8 +67,8 @@ def main():
             value = 1
             checkboxPV.setValue(value)
         
-        widget.setPropertyValue("trace_" + str(counter) + "_x_pv","$(P)DAE:SPEC:" + str(period) + ":" + str(spectrum) + ":X")
-        widget.setPropertyValue("trace_" + str(counter) + "_y_pv","$(P)DAE:SPEC:" + str(period) + ":" + str(spectrum) + ":" + mode)
+        widget.setPropertyValue("trace_" + str(counter) + "_x_pv","$(PROTOCOL)$(P)$(SOURCE):" + str(period) + ":" + str(spectrum) + ":X")
+        widget.setPropertyValue("trace_" + str(counter) + "_y_pv","$(PROTOCOL)$(P)$(SOURCE):" + str(period) + ":" + str(spectrum) + ":" + mode)
         
         # set visibility of trace based on checkbox
         checkbox_val = PVUtil.getDouble(checkboxPV)

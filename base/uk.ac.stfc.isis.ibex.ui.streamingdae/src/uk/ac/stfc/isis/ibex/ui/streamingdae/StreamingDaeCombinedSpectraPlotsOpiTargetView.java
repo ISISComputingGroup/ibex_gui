@@ -19,21 +19,21 @@
 package uk.ac.stfc.isis.ibex.ui.streamingdae;
 
 /**
- * A standalone view for the Streaming DAE Diagnostics OPI.
+ * A standalone view for the Streaming DAE Run Information OPI.
  */
-public class StreamingDaeDiagnosticsOpiTargetView extends StreamingDaeOpiTargetView {
+public class StreamingDaeCombinedSpectraPlotsOpiTargetView extends StreamingDaeOpiTargetView {
 	/**
 	 * Class ID.
 	 */
-	public static final String ID = "uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeDiagnosticsOpiTargetView";
+	public static final String ID = "uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeCombinedSpectraPlotsOpiTargetView";
 
 	/**
-	 * File name of the Streaming DAE Diagnostics OPI.
+	 * File name of the Streaming DAE Run Information OPI.
 	 * 
 	 * @return the OPI file name
 	 */
 	protected String getOpiName() {
-		return "kafka_dae_diagnostics.opi";
+		return "streaming_dae_spectra_combined_plot.opi";
 	}
 
 	/**
@@ -42,6 +42,6 @@ public class StreamingDaeDiagnosticsOpiTargetView extends StreamingDaeOpiTargetV
 	 * @return the OPI title
 	 */
 	protected String getOpiTitle() {
-		return "DAE Diagonostics";
+		return "Combined Spectra Plot";
 	}
 }

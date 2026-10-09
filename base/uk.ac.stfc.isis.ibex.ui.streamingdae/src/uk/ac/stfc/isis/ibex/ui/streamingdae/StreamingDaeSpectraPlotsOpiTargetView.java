@@ -18,6 +18,19 @@
 
 package uk.ac.stfc.isis.ibex.ui.streamingdae;
 
+import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import org.csstudio.opibuilder.util.MacrosInput;
+import org.eclipse.ui.IViewSite;
+import org.eclipse.ui.PartInitException;
+
+import uk.ac.stfc.isis.ibex.logger.IsisLog;
+import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
+import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
+import uk.ac.stfc.isis.ibex.ui.dae.common.SpectraPlotConfiguration;
+
 /**
  * A standalone view for the Streaming DAE Spectra Plots OPI.
  */
@@ -26,6 +39,10 @@ public class StreamingDaeSpectraPlotsOpiTargetView extends StreamingDaeOpiTarget
 	 * Class ID.
 	 */
 	public static final String ID = "uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeSpectraPlotsOpiTargetView";
+
+    private static final int NUMBER_OF_PLOTS = 4;
+    
+    private final Collection<SpectraPlotConfiguration> plotConfigurations;
 
 	/**
 	 * File name of the Streaming DAE Spectra Plots OPI.
@@ -44,4 +61,42 @@ public class StreamingDaeSpectraPlotsOpiTargetView extends StreamingDaeOpiTarget
 	protected String getOpiTitle() {
 		return "DAE Spectra Plots";
 	}
+    
+    /**
+     * Create a new instance.
+     */
+    public StreamingDaeSpectraPlotsOpiTargetView() {
+        plotConfigurations = IntStream.range(0, NUMBER_OF_PLOTS)
+            .mapToObj(SpectraPlotConfiguration::new)
+            .collect(Collectors.toList());
+    }
+      
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void init(IViewSite site) throws PartInitException {
+        super.init(site);
+        try {
+            initialiseOPI();
+            this.initializeMacros();
+        } catch (OPIViewCreationException e) {
+            LoggerUtils.logErrorWithStackTrace(IsisLog.getLogger(getClass()), e.getMessage(), e);
+            throw new PartInitException(e.getMessage(), e);
+        }
+    }
+    
+    /**
+     * Initialises the macros.
+     */
+    public void initializeMacros() {
+        plotConfigurations.stream().forEach(conf -> conf.initializeFromPreferenceStore());
+    }
+
+    @Override
+    public MacrosInput macros() {
+        MacrosInput macros = super.macros();
+        plotConfigurations.stream().forEach(conf -> macros.getMacrosMap().putAll(conf.getMacros()));
+        return macros;
+    }
 }
