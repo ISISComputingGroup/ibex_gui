@@ -1,4 +1,4 @@
-package uk.ac.stfc.isis.ibex.ui.dae.spectraplots;
+package uk.ac.stfc.isis.ibex.ui.dae.common;
 
 import java.io.IOException;
 import java.util.concurrent.Executors;

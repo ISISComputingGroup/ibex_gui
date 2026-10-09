@@ -5,33 +5,9 @@
          point="org.eclipse.ui.views">
       <view
             allowMultiple="true"
-            class="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeDiagnosticsOpiTargetView"
-            id="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeDiagnosticsOpiTargetView"
-            name="Streaming DAE Diagnostics"
-            restorable="true">
-      </view>
-
-      <view
-            allowMultiple="true"
             class="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeRunInfoOpiTargetView"
             id="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeRunInfoOpiTargetView"
             name="Streaming DAE Run Info"
-            restorable="true">
-      </view>
-      
-      <view
-            allowMultiple="true"
-            class="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeSpectraPlotsOpiTargetView"
-            id="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeSpectraPlotsOpiTargetView"
-            name="Streaming DAE Spectra Plots"
-            restorable="true">
-      </view>
-      
-      <view
-            allowMultiple="true"
-            class="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeVetoDiagnosticsOpiTargetView"
-            id="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeVetoDiagnosticsOpiTargetView"
-            name="Streaming DAE Veto Diagnostics"
             restorable="true">
       </view>
 
@@ -42,6 +18,31 @@
             name="Streaming DAE Experiment Setup"
             restorable="true">
       </view>
+
+      <view
+            allowMultiple="true"
+            class="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeVetoDiagnosticsOpiTargetView"
+            id="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeVetoDiagnosticsOpiTargetView"
+            name="Streaming DAE Veto Diagnostics"
+            restorable="true">
+      </view>
+      
+      <view
+            allowMultiple="true"
+            class="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeSpectraPlotsOpiTargetView"
+            id="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeSpectraPlotsOpiTargetView"
+            name="Streaming DAE Spectra Plots"
+            restorable="true">
+      </view>
+ 
+       <view
+            allowMultiple="true"
+            class="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeCombinedSpectraPlotsOpiTargetView"
+            id="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeCombinedSpectraPlotsOpiTargetView"
+            name="Streaming DAE Combined Spectra Plot"
+            restorable="true">
+      </view>
+
    </extension>
    <extension point="org.eclipse.ui.handlers">
       <handler class="uk.ac.stfc.isis.ibex.ui.scripting.InterruptScript"
