@@ -58,4 +58,4 @@ if __name__ == "__main__":
         result = INCORRECT_ARGS
     else:
         result = main(sys.argv[1])
-    sys.exit(success)
+    sys.exit(result)
