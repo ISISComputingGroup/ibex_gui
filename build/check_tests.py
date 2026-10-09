@@ -2,6 +2,7 @@ import os
 import sys
 import xml.etree.ElementTree as ET
 
+# Error level returned by script
 SUCCESS = 0
 INCORRECT_ARGS = 1
 TESTS_NOT_IN_POM = 2
