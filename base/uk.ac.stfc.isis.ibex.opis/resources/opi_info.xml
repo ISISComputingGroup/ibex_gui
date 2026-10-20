@@ -4207,5 +4207,33 @@
         </categories>
       </value>
     </entry>
+    <entry>
+      <key>Streaming DAE Spectra plot</key>
+      <value>
+        <categories>
+          <category>Monitors</category>
+        </categories>
+        <type>DAE</type>
+        <path>streaming_dae_spectra_plots.opi</path>
+        <description>A spectrum plot.</description>
+        <macros>
+          <macro>
+            <name>SPECTRUM_PV</name>
+            <description>e.g. loc://_KDAEDIAG:SPECTRUM1</description>
+            <default>loc://_KDAEDIAG:SPECTRUM1</default>
+          </macro>
+          <macro>
+            <name>PERIOD_PV</name>
+            <description>e.g. loc://_KDAEDIAG:PERIOD1</description>
+            <default>loc://_KDAEDIAG:PERIOD1</default>
+          </macro>
+          <macro>
+            <name>MODE_PV</name>
+            <description>e.g. loc://_LOCAL:SPEC:MODE1</description>
+            <default>loc://_LOCAL:SPEC:MODE1</default>
+          </macro>
+        </macros>
+      </value>
+    </entry>
   </opis>
 </descriptions>
