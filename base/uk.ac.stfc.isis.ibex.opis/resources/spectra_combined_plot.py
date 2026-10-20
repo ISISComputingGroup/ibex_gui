@@ -9,7 +9,7 @@ yAxisUnitsPv = pvs[14]
 
 def main():
     
-    widget.clearGraph()
+    #widget.clearGraph()
     
     # set axis titles
     # axis title logic requires modePv != null
