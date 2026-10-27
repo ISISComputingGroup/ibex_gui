@@ -19,14 +19,19 @@ Require-Bundle: org.eclipse.ui,
  javax.inject;bundle-version="1.0.0",
  jakarta.annotation-api;bundle-version="[1.3.5,1.3.5]",
  org.apache.commons.lang,
- uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0"
+ uk.ac.stfc.isis.ibex.logger;bundle-version="1.0.0",
+ com.google.guava,
+ uk.ac.stfc.isis.ibex.epics,
+ uk.ac.stfc.isis.ibex.instrument,
+ uk.ac.stfc.isis.ibex.epics.switching
 Bundle-RequiredExecutionEnvironment: JavaSE-25
 Export-Package: org.eclipse.wb.swt,
  org.mihalis.opal,
  org.mihalis.opal.breadcrumb,
  uk.ac.stfc.isis.ibex.ui,
  uk.ac.stfc.isis.ibex.ui.dialogs,
- uk.ac.stfc.isis.ibex.ui.tables
+ uk.ac.stfc.isis.ibex.ui.tables,
+ uk.ac.stfc.isis.ibex.ui.dae.common
 Import-Package: org.eclipse.wb.swt
 Bundle-ClassPath: lib/opal-1.0.0.jar,
  .
