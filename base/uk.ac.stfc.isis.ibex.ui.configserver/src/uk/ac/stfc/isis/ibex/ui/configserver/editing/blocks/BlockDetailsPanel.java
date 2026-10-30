@@ -31,6 +31,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.custom.StyleRange;
 
 import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
 
@@ -42,11 +45,14 @@ import uk.ac.stfc.isis.ibex.ui.widgets.buttons.IBEXButton;
 public class BlockDetailsPanel extends Composite {
 	
 	private final Text name;
-	private final Text pvAddress;
+	private final StyledText pvAddress;
 	private final Button visible;
 	private final Button local;
 	private final Button btnPickPV;
 
+	private final Color prefixColor = new Color(getDisplay(), 166,28,0);
+	private final Color prefixHighlight = new Color(getDisplay(), 244, 204, 204);
+	
 	/**
      * Standard constructor.
      * 
@@ -85,10 +91,13 @@ public class BlockDetailsPanel extends Composite {
 		lblPvAddress.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblPvAddress.setText("PV address:");
 		
-		pvAddress = new Text(grpBlock, SWT.BORDER);
+		pvAddress = new StyledText(grpBlock, SWT.BORDER);
 		GridData gdPvAddress = new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1);
 		gdPvAddress.minimumWidth = 380;
 		pvAddress.setLayoutData(gdPvAddress);
+		pvAddress.addExtendedModifyListener(e->updateStyle(viewModel.getPrefix()));
+				
+		
 		
 		btnPickPV = new IBEXButton(grpBlock, SWT.NONE, _ -> viewModel.openPvDialog())
 				.layoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1))
@@ -97,6 +106,21 @@ public class BlockDetailsPanel extends Composite {
 		
 		setModel(viewModel);
 	}
+	
+	
+	
+	private void updateStyle(String prefix) {
+		StyleRange prefixStyle = new StyleRange();
+		prefixStyle.start = 0;
+		prefixStyle.length = prefix.length();
+		prefixStyle.foreground = prefixColor;
+		prefixStyle.fontStyle = SWT.ITALIC;
+		prefixStyle.background = prefixHighlight;
+		if (pvAddress.getText().startsWith(prefix)){
+			pvAddress.setStyleRange(prefixStyle);
+		}
+	}
+	
 	
 	private void setModel(BlockDetailsViewModel viewModel) {
 		DataBindingContext bindingContext = new DataBindingContext();
@@ -122,4 +146,5 @@ public class BlockDetailsPanel extends Composite {
                 BeanProperties.value("visible").observe(viewModel));
         
 	}
+	
 }
