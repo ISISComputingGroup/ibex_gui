@@ -225,6 +225,27 @@
       </value>
     </entry>
     <entry>
+      <key>CHIPIR YZ table</key>
+      <value>
+        <type>SAMPLESTACK</type>
+        <path>chipir_yz_table.opi</path>
+        <description>The OPI for the CHIPIR YZ table.</description>
+        <macros>
+          <macro>
+            <name>MOT_Y</name>
+            <description>The motor for Y e.g. MTR0102</description>
+          </macro>
+          <macro>
+            <name>MOT_Z</name>
+            <description>The motor for Z e.g. MTR0103</description>
+          </macro>
+        </macros>
+        <categories>
+          <category>Miscellaneous motion control</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
       <key>Fermi chopper</key>
       <value>
         <type>FERMI_CHOPPER</type>
@@ -4093,7 +4114,25 @@
             <default />
           </macro>
         </macros>
-        <categories />
+        <categories/>
+      </value>
+    </entry>
+    <entry>
+      <key>Lakeshore 625</key>
+      <value>
+        <type>LAKESHORE</type>
+        <path>lakeshore625.opi</path>
+        <description>Lakeshore 625 Superconducting Magnet Power Supply</description>
+        <macros>
+          <macro>
+            <name>LAKESHORE625</name>
+            <description>The Lakeshore 625 PV prefix (e.g. LKSH625_01).</description>
+            <default>LKSH625_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Power supplies</category>
+        </categories>
       </value>
     </entry>
     <entry>
@@ -4148,6 +4187,70 @@
         <categories>
           <category>Pressure sensors</category>
         </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>GEM OPC</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>GEM_Vacuum_System.opi</path>
+        <description>The OPI for GEM's OPC Server, which controls two TPGs.</description>
+        <macros>
+          <macro>
+            <name>OPCUA</name>
+            <description>The OPCUA PV prefix (e.g. OPCUA_01).</description>
+            <default>OPCUA_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Pressure sensors</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>iSorb HP</key>
+      <value>
+        <type>PRESSURE_GAUGE</type>
+        <path>isorbhp.opi</path>
+        <description>Anton Paar iSorb HP</description>
+        <macros>
+          <macro>
+            <name>ISORBHP</name>
+            <description>The ISORBHP PV prefix (e.g. ISORBHP_01).</description>
+            <default>ISORBHP_01</default>
+          </macro>
+        </macros>
+        <categories>
+          <category>Gas and liquid handling systems</category>
+        </categories>
+      </value>
+    </entry>
+    <entry>
+      <key>Streaming DAE Spectra plot</key>
+      <value>
+        <categories>
+          <category>Monitors</category>
+        </categories>
+        <type>DAE</type>
+        <path>streaming_dae_spectra_plots.opi</path>
+        <description>A spectrum plot.</description>
+        <macros>
+          <macro>
+            <name>SPECTRUM_PV</name>
+            <description>e.g. loc://_KDAEDIAG:SPECTRUM1</description>
+            <default>loc://_KDAEDIAG:SPECTRUM1</default>
+          </macro>
+          <macro>
+            <name>PERIOD_PV</name>
+            <description>e.g. loc://_KDAEDIAG:PERIOD1</description>
+            <default>loc://_KDAEDIAG:PERIOD1</default>
+          </macro>
+          <macro>
+            <name>MODE_PV</name>
+            <description>e.g. loc://_LOCAL:SPEC:MODE1</description>
+            <default>loc://_LOCAL:SPEC:MODE1</default>
+          </macro>
+        </macros>
       </value>
     </entry>
   </opis>

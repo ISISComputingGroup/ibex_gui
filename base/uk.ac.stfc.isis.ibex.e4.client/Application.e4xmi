@@ -635,8 +635,10 @@
       <children xsi:type="basic:PartSashContainer" xmi:id="_iX2kd5IBEe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.e4.client.partsashcontainer.29" containerData="70" horizontal="true">
         <children xsi:type="basic:PartStack" xmi:id="_iX2keZIBEe-V38_cTZ3InZ" elementId="uk.ac.stfc.isis.ibex.e4.client.partstack.37" containerData="64">
           <children xsi:type="basic:Part" xmi:id="_iXnT6JIBFe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeRunInfoOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Run Information"/>
-          <children xsi:type="basic:Part" xmi:id="_iX2kfZIBEe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeSpectraPlotsOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Spectra Plots"/>
           <children xsi:type="basic:Part" xmi:id="_iX2kgpIBEe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeVetoDiagnosticsOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Veto Diagnostics"/>
+          <children xsi:type="basic:Part" xmi:id="_iX2khpIBEe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeExpSetupOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Experiment Setup"/>
+          <children xsi:type="basic:Part" xmi:id="_iX2kfZIBEe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeSpectraPlotsOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Spectra Plots"/>
+          <children xsi:type="basic:Part" xmi:id="_iX2kgZIBEe-V38_cTZ3ImZ" elementId="uk.ac.stfc.isis.ibex.ui.streamingdae.StreamingDaeCombinedSpectraPlotsOpiTargetView" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Combined Spectra Plots"/>
         </children>
       </children>
     </children>

@@ -35,5 +35,6 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-25
 Export-Package: uk.ac.stfc.isis.ibex.ui.dae,
  uk.ac.stfc.isis.ibex.ui.dae.detectordiagnostics,
- uk.ac.stfc.isis.ibex.ui.dae.experimentsetup
+ uk.ac.stfc.isis.ibex.ui.dae.experimentsetup,
+ uk.ac.stfc.isis.ibex.ui.dae.spectraplots
 Automatic-Module-Name: uk.ac.stfc.isis.ibex.ui.dae

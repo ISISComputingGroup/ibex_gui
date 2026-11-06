@@ -38,9 +38,9 @@ def main():
     else:
         x_axis_title = "Time of flight (us)"
 
-    widget.clearGraph();
-    widget.setPropertyValue("trace_0_x_pv","$(P)DAE:SPEC:" + str(period) + ":" + str(spectrum) + ":X")
-    widget.setPropertyValue("trace_0_y_pv","$(P)DAE:SPEC:" + str(period) + ":" + str(spectrum) + ":" + mode)
+    #widget.clearGraph();
+    widget.setPropertyValue("trace_0_x_pv","$(PROTOCOL)$(P)$(SOURCE):" + str(period) + ":" + str(spectrum) + ":X")
+    widget.setPropertyValue("trace_0_y_pv","$(PROTOCOL)$(P)$(SOURCE):" + str(period) + ":" + str(spectrum) + ":" + mode)
     widget.setPropertyValue("axis_0_axis_title", x_axis_title)
     widget.setPropertyValue("axis_1_axis_title", y_axis_title)
 

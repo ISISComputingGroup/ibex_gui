@@ -1284,7 +1284,7 @@ $(pv_value)</tooltip>
         <name>Text Update_1</name>
         <precision>2</precision>
         <precision_from_pv>false</precision_from_pv>
-        <pv_name>$(PV_ROOT):$(R):THRESHOLD_LOW_B2</pv_name>
+        <pv_name>$(PV_ROOT):$(R):THRESHOLD_HI_B2</pv_name>
         <pv_value />
         <rotation_angle>0.0</rotation_angle>
         <rules />
