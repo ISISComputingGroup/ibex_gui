@@ -1,9 +1,11 @@
 package uk.ac.stfc.isis.ibex.ui.banner.models;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
 import uk.ac.stfc.isis.ibex.epics.observing.BaseObserver;
+import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.status.ServerStatusVariables;
 import uk.ac.stfc.isis.ibex.model.ModelObject;
 
@@ -20,7 +22,12 @@ public class ServerStatusViewModel extends ModelObject {
 	private ServerStatus dbServerStatus = ServerStatus.UNKNOWN;
 	private ServerStatus psControlStatus = ServerStatus.UNKNOWN;
 	private ServerStatus alarmServerStatus = ServerStatus.UNKNOWN;
+	private ServerStatus archiveInstetcStatus = ServerStatus.UNKNOWN;
+	private ServerStatus archiveBlockserverStatus = ServerStatus.UNKNOWN;
 	private ServerStatus overallStatus = ServerStatus.UNKNOWN;
+	private boolean restartAvailable = false;
+	
+	private final Writable<String> protectedRestartIoc;
 	
 	/**
 	 * The constructor.
@@ -36,6 +43,9 @@ public class ServerStatusViewModel extends ModelObject {
 		variables.getDatabaseServerPV().subscribe(dbServerStatusObserver);
 		variables.getProcservControlPV().subscribe(psControlStatusObserver);
 		variables.getAlarmServerPV().subscribe(alarmServerStatusObserver);
+		variables.getArchiveInstetcPV().subscribe(archiveInstetcStatusObserver);
+		variables.getArchiveBlockserverPV().subscribe(archiveBlockserverStatusObserver);
+		protectedRestartIoc = variables.getProtectedRestartIoc();
 		refreshOverallStatus();
 	}
 	
@@ -115,6 +125,42 @@ public class ServerStatusViewModel extends ModelObject {
 		}
 	};
 	
+	private final BaseObserver<String> archiveInstetcStatusObserver = new BaseObserver<String>() {
+		@Override
+		public void onValue(String value) {
+			if (value.equals("Shutdown")) {
+				setArchiveInstetcStatus(ServerStatus.DOWN);
+			} else if (value.equals("Running")) {
+				setArchiveInstetcStatus(ServerStatus.UP);
+			}
+		}
+		
+		@Override
+		public void onConnectionStatus(boolean isConnected) {
+			if (!isConnected) {
+				setArchiveInstetcStatus(ServerStatus.UNKNOWN);
+			}
+		}
+	};
+	
+	private final BaseObserver<String> archiveBlockserverStatusObserver = new BaseObserver<String>() {
+		@Override
+		public void onValue(String value) {
+			if (value.equals("Shutdown")) {
+				setArchiveBlockserverStatus(ServerStatus.DOWN);
+			} else if (value.equals("Running")) {
+				setArchiveBlockserverStatus(ServerStatus.UP);
+			}
+		}
+		
+		@Override
+		public void onConnectionStatus(boolean isConnected) {
+			if (!isConnected) {
+				setArchiveBlockserverStatus(ServerStatus.UNKNOWN);
+			}
+		}
+	};
+	
 	/**
 	 * Set the run control status and alert listeners.
 	 * 
@@ -132,6 +178,7 @@ public class ServerStatusViewModel extends ModelObject {
 	 */
 	public void setBlockServerStatus(ServerStatus status) {
         firePropertyChange("blockServerStatus", this.blockServerStatus, this.blockServerStatus = status);
+		setRestartAvailable(status == ServerStatus.UP);
 		refreshOverallStatus();
 	}
 
@@ -196,6 +243,35 @@ public class ServerStatusViewModel extends ModelObject {
 	}
 	
 	/**
+	 * Set the archive INSTETC status and alert listeners.
+	 * 
+	 * @param status The new status
+	 */
+	public void setArchiveInstetcStatus(ServerStatus status) {
+		firePropertyChange("archiveInstetcStatus", this.archiveInstetcStatus, this.archiveInstetcStatus = status);
+		refreshOverallStatus();
+	}
+
+	/**
+	 * Set the archive blockserver status and alert listeners.
+	 * 
+	 * @param status The new status
+	 */
+	public void setArchiveBlockserverStatus(ServerStatus status) {
+		firePropertyChange("archiveBlockserverStatus", this.archiveBlockserverStatus, this.archiveBlockserverStatus = status);
+		refreshOverallStatus();
+	}
+	
+	/**
+	 * Set whether a restart can be requested from the block server and alert listeners.
+	 * 
+	 * @param available The new availability
+	 */
+	private void setRestartAvailable(boolean available) {
+		firePropertyChange("restartAvailable", this.restartAvailable, this.restartAvailable = available);
+	}
+	
+	/**
 	 * @return The run control status
 	 */
 	public ServerStatus getRunControlStatus() {
@@ -252,6 +328,37 @@ public class ServerStatusViewModel extends ModelObject {
 	}
 
 	/**
+	 * @return The archive INSTETC status
+	 */
+	public ServerStatus getArchiveInstetcStatus() {
+		return archiveInstetcStatus;
+	}
+
+	/**
+	 * @return The archive blockserver status
+	 */
+	public ServerStatus getArchiveBlockserverStatus() {
+		return archiveBlockserverStatus;
+	}
+
+	/**
+	 * @return True if a restart can be requested from the block server
+	 */
+	public boolean getRestartAvailable() {
+		return restartAvailable;
+	}
+
+	/**
+	 * Request the block server to restart the named protected server IOC.
+	 * 
+	 * @param iocName The logical name of the IOC to restart
+	 * @throws IOException if the request could not be written to the block server
+	 */
+	public void restart(String iocName) throws IOException {
+		protectedRestartIoc.write(iocName);
+	}
+
+	/**
 	 * Update the overall status of the IBEX server and notify listeners.
 	 */
 	public void refreshOverallStatus() {
@@ -265,7 +372,9 @@ public class ServerStatusViewModel extends ModelObject {
 				instetcStatus, 
 				dbServerStatus, 
 				psControlStatus, 
-				alarmServerStatus);
+				alarmServerStatus, 
+				archiveInstetcStatus, 
+				archiveBlockserverStatus);
 
 		if (individualStatus.stream().allMatch(t -> Objects.equals(t, ServerStatus.UP))) {
 			statusToSet = ServerStatus.UP;

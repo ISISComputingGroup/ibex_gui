@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.status.ServerStatusVariables;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusViewModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatus;
@@ -30,6 +31,9 @@ public class ServerStatusViewModelTest {
         when(pvs.getDatabaseServerPV()).thenReturn(mock(ForwardingObservable.class));
         when(pvs.getProcservControlPV()).thenReturn(mock(ForwardingObservable.class));
         when(pvs.getAlarmServerPV()).thenReturn(mock(ForwardingObservable.class));
+        when(pvs.getArchiveInstetcPV()).thenReturn(mock(ForwardingObservable.class));
+        when(pvs.getArchiveBlockserverPV()).thenReturn(mock(ForwardingObservable.class));
+        when(pvs.getProtectedRestartIoc()).thenReturn(mock(Writable.class));
         viewModel = new ServerStatusViewModel(pvs);
     }
     
@@ -42,6 +46,8 @@ public class ServerStatusViewModelTest {
     	viewModel.setIsisDaeStatus(statusToSet);
     	viewModel.setPsControlStatus(statusToSet);
     	viewModel.setRunControlStatus(statusToSet);
+    	viewModel.setArchiveInstetcStatus(statusToSet);
+    	viewModel.setArchiveBlockserverStatus(statusToSet);
     }
 
     @Test
@@ -110,6 +116,8 @@ public class ServerStatusViewModelTest {
 	    	assertEquals(statusToSet, viewModel.getIsisDaeStatus());
 	    	assertEquals(statusToSet, viewModel.getPsControlStatus());
 	    	assertEquals(statusToSet, viewModel.getRunControlStatus());
+	    	assertEquals(statusToSet, viewModel.getArchiveInstetcStatus());
+	    	assertEquals(statusToSet, viewModel.getArchiveBlockserverStatus());
     	}
     	
     	

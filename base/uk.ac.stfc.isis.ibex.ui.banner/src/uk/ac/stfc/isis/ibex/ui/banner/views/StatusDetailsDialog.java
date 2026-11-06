@@ -5,6 +5,7 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.typed.BeanProperties;
 import org.eclipse.jface.databinding.swt.typed.WidgetProperties;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -53,23 +54,26 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 		
 		Composite container = (Composite) super.createDialogArea(parent);
 		Composite detailsPanel = new Composite(container, SWT.NONE);
-		detailsPanel.setLayout(new GridLayout(2, true));
+		detailsPanel.setLayout(new GridLayout(3, false));
 		detailsPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
 
-		addIndicator(detailsPanel, "runControlStatus", "Run Control");
-		addIndicator(detailsPanel, "blockServerStatus", "Block Server");
-		addIndicator(detailsPanel, "blockGatewayStatus", "Block Gateway");
-		addIndicator(detailsPanel, "isisDaeStatus", "DAE");
-		addIndicator(detailsPanel, "instetcStatus", "INSTETC");
-		addIndicator(detailsPanel, "dbServerStatus", "Database Server");
-		addIndicator(detailsPanel, "psControlStatus", "Procserv Control IOC");
-		addIndicator(detailsPanel, "alarmServerStatus", "Alarm Server");
+		addIndicator(detailsPanel, "runControlStatus", "Run Control", "RUNCTRL_01");
+		addIndicator(detailsPanel, "blockServerStatus", "Block Server", "BLOCKSVR");
+		addIndicator(detailsPanel, "blockGatewayStatus", "Block Gateway", "GWBLOCK");
+		addIndicator(detailsPanel, "isisDaeStatus", "DAE", "ISISDAE_01");
+		addIndicator(detailsPanel, "instetcStatus", "INSTETC", "INSTETC_01");
+		addIndicator(detailsPanel, "dbServerStatus", "Database Server", null);
+		addIndicator(detailsPanel, "psControlStatus", "Procserv Control IOC", "PSCTRL_01");
+		addIndicator(detailsPanel, "alarmServerStatus", "Alarm Server", null);
+		addIndicator(detailsPanel, "archiveInstetcStatus", "Archive (ARINST)", "ARINST");
+		addIndicator(detailsPanel, "archiveBlockserverStatus", "Archive (ARBLOCK)", "ARBLOCK");
 
-		new Label(detailsPanel, SWT.NONE);  // spacer
+		Label spacer = new Label(detailsPanel, SWT.NONE);
+		spacer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		
 		Label message = new Label(detailsPanel, SWT.NONE);
-		message.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		message.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		message.setText(
 				"Note: Services may have issues even if they are running (more info in IOC logs). \n"
 				+ "Contact experiment controls support if you are experiencing server issues.");
@@ -77,14 +81,27 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 		return container;
 	}
 
-	private void addIndicator(Composite parent, String propertyName, String displayName) {
+	private void addIndicator(Composite parent, String propertyName, String displayName, String iocName) {
 
 		Label lblDescription = new Label(parent, SWT.NONE);
 		lblDescription.setText(displayName + " status is: ");
 		lblDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, true));
 		Label lblStatus = new Label(parent, SWT.NONE);
 		lblStatus.setText("");
-		lblStatus.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
+		GridData statusLayout = new GridData(SWT.LEFT, SWT.CENTER, false, true);
+		statusLayout.widthHint = 80;
+		lblStatus.setLayoutData(statusLayout);
+
+		if (iocName == null) {
+			new Label(parent, SWT.NONE);
+		} else {
+			Button restartButton = new Button(parent, SWT.PUSH);
+			restartButton.setText("Restart");
+			restartButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+			restartButton.addListener(SWT.Selection, e -> restartIoc(iocName, displayName));
+			bindingContext.bindValue(WidgetProperties.enabled().observe(restartButton),
+					BeanProperties.<ServerStatusViewModel, Boolean>value("restartAvailable").observe(this.viewModel));
+		}
 
 		bindingContext.bindValue(WidgetProperties.background().observe(lblStatus),
 				BeanProperties.<ServerStatusViewModel, ServerStatus>value(propertyName).observe(this.viewModel),
@@ -92,6 +109,27 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 		bindingContext.bindValue(WidgetProperties.text().observe(lblStatus),
 				BeanProperties.<ServerStatusViewModel, ServerStatus>value(propertyName).observe(this.viewModel),
 				null, textStrategy);
+	}
+
+	/**
+	 * Confirms and requests a restart of the named protected server IOC via the block server.
+	 * 
+	 * @param iocName     The procServ name of the IOC to restart
+	 * @param displayName The display name of the service (for messages)
+	 */
+	private void restartIoc(String iocName, String displayName) {
+		boolean confirmed = MessageDialog.openConfirm(getShell(), "Restart " + displayName,
+				"Are you sure you want to restart " + displayName + "?\n\n"
+						+ "The service will be temporarily unavailable while it restarts.");
+		if (!confirmed) {
+			return;
+		}
+		try {
+			viewModel.restart(iocName);
+		} catch (Exception e) {
+			MessageDialog.openError(getShell(), "Restart failed",
+					"Failed to request restart of " + displayName + ":\n" + e);
+		}
 	}
 
 	@Override
