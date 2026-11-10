@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Widget;
 
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatus;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusColourConverter;
@@ -63,11 +64,11 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 		addIndicator(detailsPanel, "blockGatewayStatus", "Block Gateway", "GWBLOCK");
 		addIndicator(detailsPanel, "isisDaeStatus", "DAE", "ISISDAE_01");
 		addIndicator(detailsPanel, "instetcStatus", "INSTETC", "INSTETC_01");
-		addIndicator(detailsPanel, "dbServerStatus", "Database Server", null);
-		addIndicator(detailsPanel, "psControlStatus", "Procserv Control IOC", "PSCTRL_01");
-		addIndicator(detailsPanel, "alarmServerStatus", "Alarm Server", null);
-		addIndicator(detailsPanel, "archiveInstetcStatus", "Archive (ARINST)", "ARINST");
-		addIndicator(detailsPanel, "archiveBlockserverStatus", "Archive (ARBLOCK)", "ARBLOCK");
+		addIndicator(detailsPanel, "dbServerStatus", "Database Server", "DBSRV");
+		addIndicator(detailsPanel, "psControlStatus", "Procserv Control IOC", null);
+		addIndicator(detailsPanel, "alarmServerStatus", "Alarm Server", "ALARM");
+		addIndicator(detailsPanel, "archiveInstetcStatus", "Instrument Archive", "ARINST");
+		addIndicator(detailsPanel, "archiveBlockserverStatus", "Block Archive", "ARBLOCK");
 
 		Label spacer = new Label(detailsPanel, SWT.NONE);
 		spacer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
@@ -85,7 +86,7 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 
 		Label lblDescription = new Label(parent, SWT.NONE);
 		lblDescription.setText(displayName + " status is: ");
-		lblDescription.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, true));
+		lblDescription.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true));
 		Label lblStatus = new Label(parent, SWT.NONE);
 		lblStatus.setText("");
 		GridData statusLayout = new GridData(SWT.LEFT, SWT.CENTER, false, true);
@@ -97,7 +98,7 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 		} else {
 			Button restartButton = new Button(parent, SWT.PUSH);
 			restartButton.setText("Restart");
-			restartButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+			restartButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
 			restartButton.addListener(SWT.Selection, e -> restartIoc(iocName, displayName));
 			bindingContext.bindValue(WidgetProperties.enabled().observe(restartButton),
 					BeanProperties.<ServerStatusViewModel, Boolean>value("restartAvailable").observe(this.viewModel));
@@ -117,10 +118,21 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 	 * @param iocName     The procServ name of the IOC to restart
 	 * @param displayName The display name of the service (for messages)
 	 */
+
 	private void restartIoc(String iocName, String displayName) {
-		boolean confirmed = MessageDialog.openConfirm(getShell(), "Restart " + displayName,
-				"Are you sure you want to restart " + displayName + "?\n\n"
-						+ "The service will be temporarily unavailable while it restarts.");
+		MessageDialog confirmDialog = new MessageDialog(getShell(), "Restart " + displayName, null,
+		        "Are you sure you want to restart " + displayName + "?", MessageDialog.CONFIRM, 0,
+		        IDialogConstants.OK_LABEL, IDialogConstants.CANCEL_LABEL) {
+		    @Override
+		    protected Control createCustomArea(Composite parent) {
+		        Label warning = new Label(parent, SWT.WRAP);
+		        warning.setText("WARNING: You are restarting parts of the system. This action requires manager mode.");
+		        warning.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_RED));
+		        warning.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		        return warning;
+		    }
+		};
+		boolean confirmed = confirmDialog.open() == 0;
 		if (!confirmed) {
 			return;
 		}
