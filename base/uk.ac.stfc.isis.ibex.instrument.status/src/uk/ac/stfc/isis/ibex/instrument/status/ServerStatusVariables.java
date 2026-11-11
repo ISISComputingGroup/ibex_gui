@@ -41,7 +41,7 @@ public final class ServerStatusVariables {
     /** PV for existence of Runcontrol IOC */
     private static final String RUNCTRL_PV = "CS:RC:INRANGE";
     /** PV for existence of Blockserver */
-    private static final String BLOCKSVR_PV = "CS:BLOCKSERVER:SERVER_STATUS";
+    private static final String BLOCKSRV_PV = "CS:BLOCKSERVER:SERVER_STATUS";
     /** PV for existence of Block Gateway */
     private static final String BLOCKGW_PV = "CS:GATEWAY:BLOCKSERVER:pvtotal";
     /** PV for existence of ISISDAE IOC */
@@ -59,7 +59,7 @@ public final class ServerStatusVariables {
     /** PV for status of Archive Blockserver IOC */
     private static final String ARBLOCK_PV = "CS:PS:ARBLOCK:STATUS";
     /** PV on the block server to restart a protected server IOC by name */
-    private static final String PROTECTED_RESTART_IOC_PV = "CS:BLOCKSERVER:RESTART_PROTECTED_IOC";
+    private static final String RESTART_SERVICE_IOC_PV = "CS:BLOCKSERVER:RESTART_SERVICE_IOC";
     
     private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
     private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);
@@ -68,7 +68,7 @@ public final class ServerStatusVariables {
             obsFactory.getSwitchableObservable(new BooleanChannel(), InstrumentUtils.addPrefix(RUNCTRL_PV));
 
     private final ForwardingObservable<Boolean> blockServerPV = 
-            obsFactory.getSwitchableObservable(new BooleanChannel(), InstrumentUtils.addPrefix(BLOCKSVR_PV));
+            obsFactory.getSwitchableObservable(new BooleanChannel(), InstrumentUtils.addPrefix(BLOCKSRV_PV));
 
     private final ForwardingObservable<Boolean> blockGatewayPV = 
             obsFactory.getSwitchableObservable(new BooleanChannel(), InstrumentUtils.addPrefix(BLOCKGW_PV));
@@ -88,15 +88,15 @@ public final class ServerStatusVariables {
     private final ForwardingObservable<String> alarmServerPV = 
             obsFactory.getSwitchableObservable(new DefaultChannel(), InstrumentUtils.addPrefix(ALARMSVR_PV));
 
-    private final ForwardingObservable<String> archiveInstetcPV = 
+    private final ForwardingObservable<String> archiveInstPV = 
             obsFactory.getSwitchableObservable(new DefaultChannel(), InstrumentUtils.addPrefix(ARINST_PV));
 
     private final ForwardingObservable<String> archiveBlockserverPV = 
             obsFactory.getSwitchableObservable(new DefaultChannel(), InstrumentUtils.addPrefix(ARBLOCK_PV));
 
-    private final Writable<String> protectedRestartIoc = InstrumentUtils.convert(
+    private final Writable<String> restartServiceIoc = InstrumentUtils.convert(
             writeFactory.getSwitchableWritable(new CompressedCharWaveformChannel(),
-                    InstrumentUtils.addPrefix(PROTECTED_RESTART_IOC_PV)),
+                    InstrumentUtils.addPrefix(RESTART_SERVICE_IOC_PV)),
             ((Function<String, String[]>) name -> new String[] {name})
                     .andThen(new JsonSerialisingConverter<String[]>(String[].class)));
 
@@ -152,10 +152,10 @@ public final class ServerStatusVariables {
 	}
 
     /**
-     * @return Observable for PV of Archive INSTETC IOC
+     * @return Observable for PV of Archive Inst IOC
      */
-    public ForwardingObservable<String> getArchiveInstetcPV() {
-		return archiveInstetcPV;
+    public ForwardingObservable<String> getArchiveInstPV() {
+		return archiveInstPV;
 	}
 
     /**
@@ -166,10 +166,10 @@ public final class ServerStatusVariables {
 	}
 
     /**
-     * @return Writable that asks the block server to restart a protected server IOC by name
+     * @return Writable that asks the block server to restart a service IOC by name
      */
-    public Writable<String> getProtectedRestartIoc() {
-		return protectedRestartIoc;
+    public Writable<String> getRestartServiceIoc() {
+		return restartServiceIoc;
 	}
 
 

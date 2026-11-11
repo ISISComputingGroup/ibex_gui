@@ -31,9 +31,9 @@ public class ServerStatusViewModelTest {
         when(pvs.getDatabaseServerPV()).thenReturn(mock(ForwardingObservable.class));
         when(pvs.getProcservControlPV()).thenReturn(mock(ForwardingObservable.class));
         when(pvs.getAlarmServerPV()).thenReturn(mock(ForwardingObservable.class));
-        when(pvs.getArchiveInstetcPV()).thenReturn(mock(ForwardingObservable.class));
+        when(pvs.getArchiveInstPV()).thenReturn(mock(ForwardingObservable.class));
         when(pvs.getArchiveBlockserverPV()).thenReturn(mock(ForwardingObservable.class));
-        when(pvs.getProtectedRestartIoc()).thenReturn(mock(Writable.class));
+        when(pvs.getRestartServiceIoc()).thenReturn(mock(Writable.class));
         viewModel = new ServerStatusViewModel(pvs);
     }
     
@@ -46,7 +46,7 @@ public class ServerStatusViewModelTest {
     	viewModel.setIsisDaeStatus(statusToSet);
     	viewModel.setPsControlStatus(statusToSet);
     	viewModel.setRunControlStatus(statusToSet);
-    	viewModel.setArchiveInstetcStatus(statusToSet);
+    	viewModel.setArchiveInstStatus(statusToSet);
     	viewModel.setArchiveBlockserverStatus(statusToSet);
     }
 
@@ -116,7 +116,7 @@ public class ServerStatusViewModelTest {
 	    	assertEquals(statusToSet, viewModel.getIsisDaeStatus());
 	    	assertEquals(statusToSet, viewModel.getPsControlStatus());
 	    	assertEquals(statusToSet, viewModel.getRunControlStatus());
-	    	assertEquals(statusToSet, viewModel.getArchiveInstetcStatus());
+	    	assertEquals(statusToSet, viewModel.getArchiveInstStatus());
 	    	assertEquals(statusToSet, viewModel.getArchiveBlockserverStatus());
     	}
     	

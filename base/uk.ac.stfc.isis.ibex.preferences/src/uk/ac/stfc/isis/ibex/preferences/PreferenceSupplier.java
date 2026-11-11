@@ -225,6 +225,11 @@ public class PreferenceSupplier {
      * Default location for temporary folder for use by GUI.
      */
     private static final String DEFAULT_USER_TEMP_PATH = Paths.get(System.getProperty("user.home"), "AppData", "Local", "IBEX").toString();
+    
+    /**
+     * Prefix of the preferences holding the warning shown before restarting a server process.
+     */
+    private static final String RESTART_WARNING_PREFIX = "restart_warning_";
 	
     /**
      * Gets a string from the IBEX preference store.
@@ -351,5 +356,15 @@ public class PreferenceSupplier {
 	 */
 	public boolean hideScriptGenScriptDefinitionErrorTable() {
 		return getBoolean(HIDE_SCRIPT_DEFINITION_ERRORS, DEFAULT_HIDE_SCRIPT_DEFINITION_ERRORS);
+	}
+	
+	/**
+	 * Get the warning to show before restarting a server process.
+	 * 
+	 * @param process The process key used in the preference name, e.g. "runctrl" for restart_warning_runctrl
+	 * @return The warning text, or an empty string if no warning is set
+	 */
+	public String restartWarning(String process) {
+		return getString(RESTART_WARNING_PREFIX + process, "");
 	}
 }

@@ -22,11 +22,11 @@ public class ServerStatusViewModel extends ModelObject {
 	private ServerStatus dbServerStatus = ServerStatus.UNKNOWN;
 	private ServerStatus psControlStatus = ServerStatus.UNKNOWN;
 	private ServerStatus alarmServerStatus = ServerStatus.UNKNOWN;
-	private ServerStatus archiveInstetcStatus = ServerStatus.UNKNOWN;
+	private ServerStatus archiveInstStatus = ServerStatus.UNKNOWN;
 	private ServerStatus archiveBlockserverStatus = ServerStatus.UNKNOWN;
 	private ServerStatus overallStatus = ServerStatus.UNKNOWN;
 	private boolean restartAvailable = false;
-	private final Writable<String> restartProtectedIoc;
+	private final Writable<String> restartServiceIoc;
 	
 	/**
 	 * The constructor.
@@ -42,9 +42,9 @@ public class ServerStatusViewModel extends ModelObject {
 		variables.getDatabaseServerPV().subscribe(dbServerStatusObserver);
 		variables.getProcservControlPV().subscribe(psControlStatusObserver);
 		variables.getAlarmServerPV().subscribe(alarmServerStatusObserver);
-		variables.getArchiveInstetcPV().subscribe(archiveInstetcStatusObserver);
+		variables.getArchiveInstPV().subscribe(archiveInstStatusObserver);
 		variables.getArchiveBlockserverPV().subscribe(archiveBlockserverStatusObserver);
-		restartProtectedIoc = variables.getProtectedRestartIoc();
+		restartServiceIoc = variables.getRestartServiceIoc();
 		refreshOverallStatus();
 	}
 	
@@ -124,20 +124,20 @@ public class ServerStatusViewModel extends ModelObject {
 		}
 	};
 	
-	private final BaseObserver<String> archiveInstetcStatusObserver = new BaseObserver<String>() {
+	private final BaseObserver<String> archiveInstStatusObserver = new BaseObserver<String>() {
 		@Override
 		public void onValue(String value) {
 			if (value.equals("Shutdown")) {
-				setArchiveInstetcStatus(ServerStatus.DOWN);
+				setArchiveInstStatus(ServerStatus.DOWN);
 			} else if (value.equals("Running")) {
-				setArchiveInstetcStatus(ServerStatus.UP);
+				setArchiveInstStatus(ServerStatus.UP);
 			}
 		}
 		
 		@Override
 		public void onConnectionStatus(boolean isConnected) {
 			if (!isConnected) {
-				setArchiveInstetcStatus(ServerStatus.UNKNOWN);
+				setArchiveInstStatus(ServerStatus.UNKNOWN);
 			}
 		}
 	};
@@ -177,7 +177,6 @@ public class ServerStatusViewModel extends ModelObject {
 	 */
 	public void setBlockServerStatus(ServerStatus status) {
         firePropertyChange("blockServerStatus", this.blockServerStatus, this.blockServerStatus = status);
-		setRestartAvailable(status == ServerStatus.UP);
 		refreshOverallStatus();
 	}
 
@@ -242,12 +241,12 @@ public class ServerStatusViewModel extends ModelObject {
 	}
 	
 	/**
-	 * Set the archive INSTETC status and alert listeners.
+	 * Set the instrument archive status and alert listeners.
 	 * 
 	 * @param status The new status
 	 */
-	public void setArchiveInstetcStatus(ServerStatus status) {
-		firePropertyChange("archiveInstetcStatus", this.archiveInstetcStatus, this.archiveInstetcStatus = status);
+	public void setArchiveInstStatus(ServerStatus status) {
+		firePropertyChange("archiveInstStatus", this.archiveInstStatus, this.archiveInstStatus = status);
 		refreshOverallStatus();
 	}
 
@@ -329,8 +328,8 @@ public class ServerStatusViewModel extends ModelObject {
 	/**
 	 * @return The archive INSTETC status
 	 */
-	public ServerStatus getArchiveInstetcStatus() {
-		return archiveInstetcStatus;
+	public ServerStatus getArchiveInstStatus() {
+		return archiveInstStatus;
 	}
 
 	/**
@@ -354,7 +353,7 @@ public class ServerStatusViewModel extends ModelObject {
 	 * @throws IOException if the request could not be written to the block server
 	 */
 	public void restart(String iocName) throws IOException {
-		restartProtectedIoc.write(iocName);
+		restartServiceIoc.write(iocName);
 	}
 
 	/**
@@ -372,15 +371,18 @@ public class ServerStatusViewModel extends ModelObject {
 				dbServerStatus, 
 				psControlStatus, 
 				alarmServerStatus, 
-				archiveInstetcStatus, 
+				archiveInstStatus, 
 				archiveBlockserverStatus);
 
 		if (individualStatus.stream().allMatch(t -> Objects.equals(t, ServerStatus.UP))) {
 			statusToSet = ServerStatus.UP;
+			setRestartAvailable(true);
 		} else if (individualStatus.stream().allMatch(t -> Objects.equals(t, ServerStatus.DOWN) || Objects.equals(t, ServerStatus.UNKNOWN))) {
 			statusToSet = ServerStatus.DOWN;
+			setRestartAvailable(false);
 		} else {
 			statusToSet = ServerStatus.PARTIAL;
+			setRestartAvailable(false);
 		}
 			
         firePropertyChange("overallStatus", this.overallStatus, this.overallStatus = statusToSet);

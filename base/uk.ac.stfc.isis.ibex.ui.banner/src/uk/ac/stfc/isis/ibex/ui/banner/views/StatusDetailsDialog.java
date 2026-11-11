@@ -9,6 +9,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -17,6 +18,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
+import uk.ac.stfc.isis.ibex.preferences.PreferenceSupplier;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatus;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusColourConverter;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusTextConverter;
@@ -26,6 +28,8 @@ import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusViewModel;
  * A dialog box displaying the status of various services in the IBEX Server.
  */
 public class StatusDetailsDialog extends TitleAreaDialog {
+    
+    private static final int CONFIRM_DIALOG_WIDTH = 600;
     
     private ServerStatusViewModel viewModel;
     private DataBindingContext bindingContext;
@@ -58,15 +62,16 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 		detailsPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
 
-		addIndicator(detailsPanel, "runControlStatus", "Run Control", "RUNCTRL_01", "This may cause 'temporary' runcontrol overrides (e.g. via script) to be lost.");
-		addIndicator(detailsPanel, "blockServerStatus", "Block Server", "BLOCKSVR", "Restarts all IOCs in the current configuration.");
-		addIndicator(detailsPanel, "blockGatewayStatus", "Block Gateway", "GWBLOCK", "This may briefly interrupt connections to all blocks");
-		addIndicator(detailsPanel, "isisDaeStatus", "DAE", "ISISDAE_01", "");
-		addIndicator(detailsPanel, "instetcStatus", "INSTETC", "INSTETC_01", "");
-		addIndicator(detailsPanel, "dbServerStatus", "Database Server", "DBSRV", "");
-		addIndicator(detailsPanel, "alarmServerStatus", "Alarm Server", "ALARM", "");
-		addIndicator(detailsPanel, "archiveInstetcStatus", "Instrument Archive", "ARINST", "");
-		addIndicator(detailsPanel, "archiveBlockserverStatus", "Block Archive", "ARBLOCK", "");
+		PreferenceSupplier preferences = new PreferenceSupplier();
+		addIndicator(detailsPanel, "runControlStatus", "Run Control", "RUNCTRL_01", preferences.restartWarning("runctrl"));
+		addIndicator(detailsPanel, "blockServerStatus", "Block Server", "BLOCKSVR", preferences.restartWarning("blocksvr"));
+		addIndicator(detailsPanel, "blockGatewayStatus", "Block Gateway", "GWBLOCK", preferences.restartWarning("gwblock"));
+		addIndicator(detailsPanel, "isisDaeStatus", "ISISDAE IOC", "ISISDAE_01", preferences.restartWarning("isisdae"));
+		addIndicator(detailsPanel, "instetcStatus", "INSTETC", "INSTETC_01", preferences.restartWarning("instetc"));
+		addIndicator(detailsPanel, "dbServerStatus", "Database Server", "DBSVR", preferences.restartWarning("dbsvr"));
+		addIndicator(detailsPanel, "alarmServerStatus", "Alarm Server", "ALARM", preferences.restartWarning("alarm"));
+		addIndicator(detailsPanel, "archiveInstStatus", "Instrument Archive", "ARINST", preferences.restartWarning("arinst"));
+		addIndicator(detailsPanel, "archiveBlockserverStatus", "Block Archive", "ARBLOCK", preferences.restartWarning("arblock"));
 		addIndicator(detailsPanel, "psControlStatus", "Procserv Control IOC", null, null);
 
 		Label spacer = new Label(detailsPanel, SWT.NONE);
@@ -131,6 +136,17 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 			    },
 			    0
 			) {
+		    @Override
+		    protected boolean isResizable() {
+		        return true;
+		    }
+		    
+		    @Override
+		    protected Point getInitialSize() {
+		        // Lay out at a fixed width so the warning wraps onto multiple lines
+		        return getShell().computeSize(CONFIRM_DIALOG_WIDTH, SWT.DEFAULT, true);
+		    }
+		    
 		    @Override
 		    protected Control createCustomArea(Composite parent) {
 		        Label warning = new Label(parent, SWT.WRAP);
