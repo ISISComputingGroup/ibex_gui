@@ -59,7 +59,7 @@ public final class ServerStatusVariables {
     /** PV for status of Archive Blockserver IOC */
     private static final String ARBLOCK_PV = "CS:PS:ARBLOCK:STATUS";
     /** PV on the block server to restart a protected server IOC by name */
-    private static final String PROTECTED_RESTART_IOC_PV = "CS:BLOCKSERVER:RESTART_PR_IOC";
+    private static final String PROTECTED_RESTART_IOC_PV = "CS:BLOCKSERVER:RESTART_PROTECTED_IOC";
     
     private final ObservableFactory obsFactory = new ObservableFactory(OnInstrumentSwitch.SWITCH);
     private final WritableFactory writeFactory = new WritableFactory(OnInstrumentSwitch.SWITCH);

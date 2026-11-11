@@ -26,7 +26,7 @@ public class ServerStatusViewModel extends ModelObject {
 	private ServerStatus archiveBlockserverStatus = ServerStatus.UNKNOWN;
 	private ServerStatus overallStatus = ServerStatus.UNKNOWN;
 	private boolean restartAvailable = false;
-	private final Writable<String> restartIoc;
+	private final Writable<String> restartProtectedIoc;
 	
 	/**
 	 * The constructor.
@@ -44,7 +44,7 @@ public class ServerStatusViewModel extends ModelObject {
 		variables.getAlarmServerPV().subscribe(alarmServerStatusObserver);
 		variables.getArchiveInstetcPV().subscribe(archiveInstetcStatusObserver);
 		variables.getArchiveBlockserverPV().subscribe(archiveBlockserverStatusObserver);
-		restartIoc = variables.getProtectedRestartIoc();
+		restartProtectedIoc = variables.getProtectedRestartIoc();
 		refreshOverallStatus();
 	}
 	
@@ -354,7 +354,7 @@ public class ServerStatusViewModel extends ModelObject {
 	 * @throws IOException if the request could not be written to the block server
 	 */
 	public void restart(String iocName) throws IOException {
-		restartIoc.write(iocName);
+		restartProtectedIoc.write(iocName);
 	}
 
 	/**

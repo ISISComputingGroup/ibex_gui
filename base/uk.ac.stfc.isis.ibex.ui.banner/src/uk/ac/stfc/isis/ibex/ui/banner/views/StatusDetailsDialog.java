@@ -16,7 +16,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Widget;
 
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatus;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusColourConverter;
@@ -59,16 +58,16 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 		detailsPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
 
-		addIndicator(detailsPanel, "runControlStatus", "Run Control", "RUNCTRL_01");
-		addIndicator(detailsPanel, "blockServerStatus", "Block Server", "BLOCKSVR");
-		addIndicator(detailsPanel, "blockGatewayStatus", "Block Gateway", "GWBLOCK");
-		addIndicator(detailsPanel, "isisDaeStatus", "DAE", "ISISDAE_01");
-		addIndicator(detailsPanel, "instetcStatus", "INSTETC", "INSTETC_01");
-		addIndicator(detailsPanel, "dbServerStatus", "Database Server", "DBSRV");
-		addIndicator(detailsPanel, "psControlStatus", "Procserv Control IOC", null);
-		addIndicator(detailsPanel, "alarmServerStatus", "Alarm Server", "ALARM");
-		addIndicator(detailsPanel, "archiveInstetcStatus", "Instrument Archive", "ARINST");
-		addIndicator(detailsPanel, "archiveBlockserverStatus", "Block Archive", "ARBLOCK");
+		addIndicator(detailsPanel, "runControlStatus", "Run Control", "RUNCTRL_01", "This may cause 'temporary' runcontrol overrides (e.g. via script) to be lost.");
+		addIndicator(detailsPanel, "blockServerStatus", "Block Server", "BLOCKSVR", "Restarts all IOCs in the current configuration.");
+		addIndicator(detailsPanel, "blockGatewayStatus", "Block Gateway", "GWBLOCK", "This may briefly interrupt connections to all blocks");
+		addIndicator(detailsPanel, "isisDaeStatus", "DAE", "ISISDAE_01", "");
+		addIndicator(detailsPanel, "instetcStatus", "INSTETC", "INSTETC_01", "");
+		addIndicator(detailsPanel, "dbServerStatus", "Database Server", "DBSRV", "");
+		addIndicator(detailsPanel, "alarmServerStatus", "Alarm Server", "ALARM", "");
+		addIndicator(detailsPanel, "archiveInstetcStatus", "Instrument Archive", "ARINST", "");
+		addIndicator(detailsPanel, "archiveBlockserverStatus", "Block Archive", "ARBLOCK", "");
+		addIndicator(detailsPanel, "psControlStatus", "Procserv Control IOC", null, null);
 
 		Label spacer = new Label(detailsPanel, SWT.NONE);
 		spacer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
@@ -82,7 +81,7 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 		return container;
 	}
 
-	private void addIndicator(Composite parent, String propertyName, String displayName, String iocName) {
+	private void addIndicator(Composite parent, String propertyName, String displayName, String iocName, String comment) {
 
 		Label lblDescription = new Label(parent, SWT.NONE);
 		lblDescription.setText(displayName + " status is: ");
@@ -99,7 +98,7 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 			Button restartButton = new Button(parent, SWT.PUSH);
 			restartButton.setText("Restart");
 			restartButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
-			restartButton.addListener(SWT.Selection, e -> restartIoc(iocName, displayName));
+			restartButton.addListener(SWT.Selection, e -> restartIoc(iocName, displayName, comment));
 			bindingContext.bindValue(WidgetProperties.enabled().observe(restartButton),
 					BeanProperties.<ServerStatusViewModel, Boolean>value("restartAvailable").observe(this.viewModel));
 		}
@@ -119,20 +118,29 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 	 * @param displayName The display name of the service (for messages)
 	 */
 
-	private void restartIoc(String iocName, String displayName) {
-		MessageDialog confirmDialog = new MessageDialog(getShell(), "Restart " + displayName, null,
-		        "Are you sure you want to restart " + displayName + "?", MessageDialog.CONFIRM, 0,
-		        IDialogConstants.OK_LABEL, IDialogConstants.CANCEL_LABEL) {
+	private void restartIoc(String iocName, String displayName, String comment) {
+		MessageDialog confirmDialog = new MessageDialog(
+			    getShell(), 
+			    "Restart " + displayName, 
+			    null, 
+			    "Are you sure you want to restart " + displayName + "?", 
+			    MessageDialog.CONFIRM, 
+			    new String[] { 
+			        IDialogConstants.CANCEL_LABEL, 
+			        IDialogConstants.OK_LABEL 
+			    },
+			    0
+			) {
 		    @Override
 		    protected Control createCustomArea(Composite parent) {
 		        Label warning = new Label(parent, SWT.WRAP);
-		        warning.setText("WARNING: You are restarting parts of the system. This action requires manager mode.");
+		        warning.setText("WARNING: " + comment + " This action requires manager mode.");
 		        warning.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_RED));
 		        warning.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		        return warning;
 		    }
 		};
-		boolean confirmed = confirmDialog.open() == 0;
+		boolean confirmed = confirmDialog.open() == 1;
 		if (!confirmed) {
 			return;
 		}
