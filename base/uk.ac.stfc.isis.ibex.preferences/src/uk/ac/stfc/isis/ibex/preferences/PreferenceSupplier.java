@@ -229,7 +229,7 @@ public class PreferenceSupplier {
     /**
      * Prefix of the preferences holding the warning shown before restarting a server process.
      */
-    private static final String RESTART_WARNING_PREFIX = "restart_warning_";
+    private static final String RESTART_WARNING_PREFIX = "RESTART_WARNING_";
 	
     /**
      * Gets a string from the IBEX preference store.

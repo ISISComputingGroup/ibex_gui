@@ -62,17 +62,16 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 		detailsPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
 
-		PreferenceSupplier preferences = new PreferenceSupplier();
-		addIndicator(detailsPanel, "runControlStatus", "Run Control", "RUNCTRL_01", preferences.restartWarning("runctrl"));
-		addIndicator(detailsPanel, "blockServerStatus", "Block Server", "BLOCKSVR", preferences.restartWarning("blocksvr"));
-		addIndicator(detailsPanel, "blockGatewayStatus", "Block Gateway", "GWBLOCK", preferences.restartWarning("gwblock"));
-		addIndicator(detailsPanel, "isisDaeStatus", "ISISDAE IOC", "ISISDAE_01", preferences.restartWarning("isisdae"));
-		addIndicator(detailsPanel, "instetcStatus", "INSTETC", "INSTETC_01", preferences.restartWarning("instetc"));
-		addIndicator(detailsPanel, "dbServerStatus", "Database Server", "DBSVR", preferences.restartWarning("dbsvr"));
-		addIndicator(detailsPanel, "alarmServerStatus", "Alarm Server", "ALARM", preferences.restartWarning("alarm"));
-		addIndicator(detailsPanel, "archiveInstStatus", "Instrument Archive", "ARINST", preferences.restartWarning("arinst"));
-		addIndicator(detailsPanel, "archiveBlockserverStatus", "Block Archive", "ARBLOCK", preferences.restartWarning("arblock"));
-		addIndicator(detailsPanel, "psControlStatus", "Procserv Control IOC", null, null);
+		addIndicator(detailsPanel, "runControlStatus", "Run Control", "RUNCTRL_01");
+		addIndicator(detailsPanel, "blockServerStatus", "Block Server", "BLOCKSVR");
+		addIndicator(detailsPanel, "blockGatewayStatus", "Block Gateway", "GWBLOCK");
+		addIndicator(detailsPanel, "isisDaeStatus", "ISISDAE IOC", "ISISDAE_01");
+		addIndicator(detailsPanel, "instetcStatus", "INSTETC", "INSTETC_01");
+		addIndicator(detailsPanel, "dbServerStatus", "Database Server", "DBSVR");
+		addIndicator(detailsPanel, "alarmServerStatus", "Alarm Server", "ALARM");
+		addIndicator(detailsPanel, "archiveInstStatus", "Instrument Archive", "ARINST");
+		addIndicator(detailsPanel, "archiveBlockserverStatus", "Block Archive", "ARBLOCK");
+		addIndicator(detailsPanel, "psControlStatus", "Procserv Control IOC", null);
 
 		Label spacer = new Label(detailsPanel, SWT.NONE);
 		spacer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
@@ -86,8 +85,10 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 		return container;
 	}
 
-	private void addIndicator(Composite parent, String propertyName, String displayName, String iocName, String comment) {
+	private void addIndicator(Composite parent, String propertyName, String displayName, String iocName) {
 
+		PreferenceSupplier preferences = new PreferenceSupplier();
+		
 		Label lblDescription = new Label(parent, SWT.NONE);
 		lblDescription.setText(displayName + " status is: ");
 		lblDescription.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true));
@@ -103,7 +104,7 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 			Button restartButton = new Button(parent, SWT.PUSH);
 			restartButton.setText("Restart");
 			restartButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
-			restartButton.addListener(SWT.Selection, e -> restartIoc(iocName, displayName, comment));
+			restartButton.addListener(SWT.Selection, e -> restartIoc(iocName, displayName, preferences.restartWarning(iocName)));
 			bindingContext.bindValue(WidgetProperties.enabled().observe(restartButton),
 					BeanProperties.<ServerStatusViewModel, Boolean>value("restartAvailable").observe(this.viewModel));
 		}
