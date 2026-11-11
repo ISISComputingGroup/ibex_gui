@@ -1,8 +1,14 @@
 package uk.ac.stfc.isis.ibex.ui.banner.tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -60,6 +66,7 @@ public class ServerStatusViewModelTest {
 
         // Assert
         assertEquals(expected, actual);
+        assertEquals(false, viewModel.getRestartAvailable());
     }
 
     @Test
@@ -74,6 +81,7 @@ public class ServerStatusViewModelTest {
 
         // Assert
         assertEquals(expected, actual);
+        assertEquals(false, viewModel.getRestartAvailable());
     }
     
     @Test
@@ -87,6 +95,7 @@ public class ServerStatusViewModelTest {
 
         // Assert
         assertEquals(expected, actual);
+        assertEquals(true, viewModel.getRestartAvailable());
     }
 
     @Test
@@ -102,6 +111,7 @@ public class ServerStatusViewModelTest {
 
         // Assert
         assertEquals(expected, actual);
+        assertEquals(false, viewModel.getRestartAvailable());
     }
     
     @Test 
@@ -118,8 +128,15 @@ public class ServerStatusViewModelTest {
 	    	assertEquals(statusToSet, viewModel.getRunControlStatus());
 	    	assertEquals(statusToSet, viewModel.getArchiveInstStatus());
 	    	assertEquals(statusToSet, viewModel.getArchiveBlockserverStatus());
-    	}
+    	}	
+    }
+    
+    @Test
+    public void GIVEN_ioc_name_WHEN_call_restart_ioc_THEN_correct_pv_sent() throws IOException {
+    	String iocName = "BLAH_01";
     	
-    	
+    	viewModel.restart(iocName);
+
+    	verify(pvs.getRestartServiceIoc(), times(1)).write(eq(iocName));
     }
 }

@@ -30,6 +30,9 @@ import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusViewModel;
 public class StatusDetailsDialog extends TitleAreaDialog {
     
     private static final int CONFIRM_DIALOG_WIDTH = 600;
+    private static final int NUM_COLUMBS = 3;
+    private static final int VERTICAL_SPAN = 1;
+    private static final int STATUS_WIDTH = 80;
     
     private ServerStatusViewModel viewModel;
     private DataBindingContext bindingContext;
@@ -58,7 +61,7 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 		
 		Composite container = (Composite) super.createDialogArea(parent);
 		Composite detailsPanel = new Composite(container, SWT.NONE);
-		detailsPanel.setLayout(new GridLayout(3, false));
+		detailsPanel.setLayout(new GridLayout(NUM_COLUMBS, false));
 		detailsPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
 
@@ -74,10 +77,10 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 		addIndicator(detailsPanel, "psControlStatus", "Procserv Control IOC", null);
 
 		Label spacer = new Label(detailsPanel, SWT.NONE);
-		spacer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		spacer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, NUM_COLUMBS, VERTICAL_SPAN));
 		
 		Label message = new Label(detailsPanel, SWT.NONE);
-		message.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		message.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, NUM_COLUMBS, VERTICAL_SPAN));
 		message.setText(
 				"Note: Services may have issues even if they are running (more info in IOC logs). \n"
 				+ "Contact experiment controls support if you are experiencing server issues.");
@@ -95,7 +98,7 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 		Label lblStatus = new Label(parent, SWT.NONE);
 		lblStatus.setText("");
 		GridData statusLayout = new GridData(SWT.LEFT, SWT.CENTER, false, true);
-		statusLayout.widthHint = 80;
+		statusLayout.widthHint = STATUS_WIDTH;
 		lblStatus.setLayoutData(statusLayout);
 
 		if (iocName == null) {
@@ -131,7 +134,7 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 			    null, 
 			    "Are you sure you want to restart " + displayName + "?", 
 			    MessageDialog.CONFIRM, 
-			    new String[] { 
+			    new String[] {
 			        IDialogConstants.CANCEL_LABEL, 
 			        IDialogConstants.OK_LABEL 
 			    },
