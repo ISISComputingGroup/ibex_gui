@@ -107,7 +107,7 @@ public class StatusDetailsDialog extends TitleAreaDialog {
 			Button restartButton = new Button(parent, SWT.PUSH);
 			restartButton.setText("Restart");
 			restartButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
-			restartButton.addListener(SWT.Selection, e -> restartIoc(iocName, displayName, preferences.restartWarning(iocName)));
+			restartButton.addListener(SWT.Selection, _ -> restartIoc(iocName, displayName, preferences.restartWarning(iocName)));
 			bindingContext.bindValue(WidgetProperties.enabled().observe(restartButton),
 					BeanProperties.<ServerStatusViewModel, Boolean>value("restartAvailable").observe(this.viewModel));
 		}
