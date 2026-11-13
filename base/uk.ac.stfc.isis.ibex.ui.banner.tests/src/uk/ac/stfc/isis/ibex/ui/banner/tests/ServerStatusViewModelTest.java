@@ -1,12 +1,19 @@
 package uk.ac.stfc.isis.ibex.ui.banner.tests;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import uk.ac.stfc.isis.ibex.epics.observing.ForwardingObservable;
+import uk.ac.stfc.isis.ibex.epics.writing.Writable;
 import uk.ac.stfc.isis.ibex.instrument.status.ServerStatusVariables;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatusViewModel;
 import uk.ac.stfc.isis.ibex.ui.banner.models.ServerStatus;
@@ -30,6 +37,9 @@ public class ServerStatusViewModelTest {
         when(pvs.getDatabaseServerPV()).thenReturn(mock(ForwardingObservable.class));
         when(pvs.getProcservControlPV()).thenReturn(mock(ForwardingObservable.class));
         when(pvs.getAlarmServerPV()).thenReturn(mock(ForwardingObservable.class));
+        when(pvs.getArchiveInstPV()).thenReturn(mock(ForwardingObservable.class));
+        when(pvs.getArchiveBlockserverPV()).thenReturn(mock(ForwardingObservable.class));
+        when(pvs.getRestartServiceIoc()).thenReturn(mock(Writable.class));
         viewModel = new ServerStatusViewModel(pvs);
     }
     
@@ -42,6 +52,8 @@ public class ServerStatusViewModelTest {
     	viewModel.setIsisDaeStatus(statusToSet);
     	viewModel.setPsControlStatus(statusToSet);
     	viewModel.setRunControlStatus(statusToSet);
+    	viewModel.setArchiveInstStatus(statusToSet);
+    	viewModel.setArchiveBlockserverStatus(statusToSet);
     }
 
     @Test
@@ -54,6 +66,7 @@ public class ServerStatusViewModelTest {
 
         // Assert
         assertEquals(expected, actual);
+        assertEquals(false, viewModel.getRestartAvailable());
     }
 
     @Test
@@ -68,6 +81,7 @@ public class ServerStatusViewModelTest {
 
         // Assert
         assertEquals(expected, actual);
+        assertEquals(false, viewModel.getRestartAvailable());
     }
     
     @Test
@@ -81,6 +95,7 @@ public class ServerStatusViewModelTest {
 
         // Assert
         assertEquals(expected, actual);
+        assertEquals(true, viewModel.getRestartAvailable());
     }
 
     @Test
@@ -96,6 +111,7 @@ public class ServerStatusViewModelTest {
 
         // Assert
         assertEquals(expected, actual);
+        assertEquals(false, viewModel.getRestartAvailable());
     }
     
     @Test 
@@ -110,8 +126,17 @@ public class ServerStatusViewModelTest {
 	    	assertEquals(statusToSet, viewModel.getIsisDaeStatus());
 	    	assertEquals(statusToSet, viewModel.getPsControlStatus());
 	    	assertEquals(statusToSet, viewModel.getRunControlStatus());
-    	}
+	    	assertEquals(statusToSet, viewModel.getArchiveInstStatus());
+	    	assertEquals(statusToSet, viewModel.getArchiveBlockserverStatus());
+    	}	
+    }
+    
+    @Test
+    public void GIVEN_ioc_name_WHEN_call_restart_ioc_THEN_correct_pv_sent() throws IOException {
+    	String iocName = "BLAH_01";
     	
-    	
+    	viewModel.restart(iocName);
+
+    	verify(pvs.getRestartServiceIoc(), times(1)).write(eq(iocName));
     }
 }
