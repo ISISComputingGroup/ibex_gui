@@ -2606,7 +2606,7 @@ if value0 ==0:
         <image></image>
         <name>Button</name>
         <push_action_index>0</push_action_index>
-        <pv_name>pva://$(P)KDAECTRL:BEGINRUNEX</pv_name>
+        <pv_name>pva://$(P)KDAECTRL:BEGINRUN</pv_name>
         <pv_value />
         <rules />
         <scale_options>
