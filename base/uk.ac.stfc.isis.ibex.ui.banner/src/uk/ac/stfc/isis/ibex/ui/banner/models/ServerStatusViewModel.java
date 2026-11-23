@@ -382,7 +382,7 @@ public class ServerStatusViewModel extends ModelObject {
 			setRestartAvailable(false);
 		} else {
 			statusToSet = ServerStatus.PARTIAL;
-			setRestartAvailable(false);
+			setRestartAvailable(true);
 		}
 			
         firePropertyChange("overallStatus", this.overallStatus, this.overallStatus = statusToSet);
