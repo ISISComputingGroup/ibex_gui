@@ -1,4 +1,4 @@
-package uk.ac.stfc.isis.ibex.ui.dae.spectraplots;
+package uk.ac.stfc.isis.ibex.ui.dae.common;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -90,7 +90,12 @@ public class SpectraPlotConfiguration {
     	return res;
     }
     
-    private String getLocalPvName(String name) {
+    /**
+     * 
+     * @param name the identifier of the local PV required.
+     * @return the local PV name.
+     */
+    public String getLocalPvName(String name) {
     	return String.format("loc://_LOCAL:SPEC:%s%s", name, plotNumber);
     }
 }

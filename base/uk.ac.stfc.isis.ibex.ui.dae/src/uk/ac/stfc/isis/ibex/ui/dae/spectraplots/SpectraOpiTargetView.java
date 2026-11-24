@@ -35,6 +35,7 @@ import uk.ac.stfc.isis.ibex.logger.IsisLog;
 import uk.ac.stfc.isis.ibex.logger.LoggerUtils;
 import uk.ac.stfc.isis.ibex.opis.OPIViewCreationException;
 import uk.ac.stfc.isis.ibex.opis.Opi;
+import uk.ac.stfc.isis.ibex.ui.dae.common.SpectraPlotConfiguration;
 import uk.ac.stfc.isis.ibex.ui.targets.OpiTargetView;
 
 /**
